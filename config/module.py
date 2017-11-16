@@ -1,4 +1,4 @@
 def loadModule():
-	print("Core")
+    print("Load Module: Harmony Drivers & System Services")
 	
-	coreComponent = Module.CreateSharedComponent("core", "Core", "/", "config/core.py")
+
