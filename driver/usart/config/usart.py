@@ -1,10 +1,12 @@
-def instantiateComponent(usartComponent):
-	num = usartComponent.getID()[-1:]
+def instantiateComponent(usartComponent, index):
 
 	usartMenu = usartComponent.createMenuSymbol(None, None)
-	usartMenu.setLabel("USART " + num)
+	usartMenu.setLabel("USART Driver " + str(index))
 
-	useUsart = usartComponent.createBooleanSymbol("USE_USART_" + num, usartMenu)
-	useUsart.setLabel("Use USART " + num + "?")
-	useUsart.setDescription("Enables usart instance " + num)
+	useUsart = usartComponent.createBooleanSymbol("USE_USART_" + str(index), usartMenu)
+	useUsart.setLabel("Use USART " + str(index) + "?")
+	useUsart.setDescription("Enables usart instance " + str(index))
+
+	print("Set USART0 Config1 " + str(Database.setSymbolValue("usart0", "Config1", "Leonard", True, 1)))
+
 
