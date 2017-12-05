@@ -12,7 +12,12 @@ def instantiateComponent(usartComponent, index):
 
 
 
-def usartBusinessLogic(ChangedSym, dummy):
-	ChangedSym.getComponent().getDependencyComponent("USART_Dependency").setValue("Config1", "Leonard", True, 1)
+def usartBusinessLogic(usartBL, usartEnable):
+	if (usartEnable.getValue() == True):
+		print("USART Driver is enabled. setting plib...")
+		usartBL.getComponent().getDependencyComponent("USART_Dependency").setSymbolValue("Config1", "Leonard", True, 1)
+	else:
+		print("USART Driver is disabled. clearing plib...")
+		usartBL.getComponent().getDependencyComponent("USART_Dependency").setSymbolValue("Config1", "Leonard", False, 1)
 
 
