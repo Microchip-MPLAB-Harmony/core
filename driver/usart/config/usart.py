@@ -3,13 +3,25 @@ def instantiateComponent(usartComponent, index):
 	usartMenu = usartComponent.createMenuSymbol(None, None)
 	usartMenu.setLabel("USART Driver " + str(index))
 
-	usartEnable = usartComponent.createBooleanSymbol("USE_USART_" + str(index), usartMenu)
-	usartEnable.setLabel("Use USART " + str(index) + "?")
-	usartEnable.setDescription("Enables usart instance " + str(index))
+	usartEnable = usartComponent.createBooleanSymbol("USE_USART", usartMenu)
+	usartEnable.setLabel("Use USART Driver?")
+	usartEnable.setDescription("Enables usart driver instance " + str(index))
 
-	usartBL = usartComponent.createBooleanSymbol("BL" + str(index), usartMenu)
-	usartBL.setDependencies(usartBusinessLogic, ["USE_USART_" + str(index)])
+	usartBL = usartComponent.createBooleanSymbol("BL", usartMenu)
+	usartBL.setVisible(False)
+	usartBL.setDependencies(usartBusinessLogic, ["USE_USART"])
 
+	usartIndex = usartComponent.createIntegerSymbol("INDEX", usartMenu)
+	usartIndex.setVisible(False)
+	usartIndex.setDefaultValue(index)
+
+	configName = Variables.get("__CONFIGURATION_NAME")
+
+	usartSource1File = usartComponent.createFileSymbol(None, None)
+	usartSource1File.setSourcePath("driver/usart/templates/usart.c.ftl")
+	usartSource1File.setDestPath("system_config/" + configName + "/usart_drv" + str(index) + ".c")
+	usartSource1File.setType("SOURCE")
+#	usartSource1File.setProjectPath("system_config/" + configName)
 
 
 def usartBusinessLogic(usartBL, usartEnable):
