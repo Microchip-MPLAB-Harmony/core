@@ -1,7 +1,7 @@
 def instantiateComponent(usartComponent, index):
 
 	usartMenu = usartComponent.createMenuSymbol(None, None)
-	usartMenu.setLabel("USART Driver " + str(index))
+	usartMenu.setLabel("Driver Settings")
 
 	usartEnable = usartComponent.createBooleanSymbol("USE_USART", usartMenu)
 	usartEnable.setLabel("Use USART Driver?")
@@ -18,18 +18,19 @@ def instantiateComponent(usartComponent, index):
 	configName = Variables.get("__CONFIGURATION_NAME")
 
 	usartSource1File = usartComponent.createFileSymbol(None, None)
-	usartSource1File.setSourcePath("driver/usart/templates/usart.c.ftl")
-	usartSource1File.setDestPath("system_config/" + configName + "/usart_drv" + str(index) + ".c")
+	usartSource1File.setSourcePath("driver/usart/templates/drv_usart.c.ftl")
+	usartSource1File.setOutputName("drv_usart" + str(index) + ".c")
+	usartSource1File.setDestPath("system_config/" + configName + "/")
+	usartSource1File.setProjectPath("system_config/" + configName + "/")
 	usartSource1File.setType("SOURCE")
-#	usartSource1File.setProjectPath("system_config/" + configName)
 
 
 def usartBusinessLogic(usartBL, usartEnable):
 	if (usartEnable.getValue() == True):
 		print("USART Driver is enabled. setting plib...")
-		usartBL.getComponent().getDependencyComponent("USART_Dependency").setSymbolValue("Config1", "Leonard", True, 1)
+		usartBL.getComponent().getDependencyComponent("DRV_USART_Dependency").setSymbolValue("Config1", "Leonard", True, 1)
 	else:
 		print("USART Driver is disabled. clearing plib...")
-		usartBL.getComponent().getDependencyComponent("USART_Dependency").setSymbolValue("Config1", "Leonard", False, 1)
+		usartBL.getComponent().getDependencyComponent("DRV_USART_Dependency").setSymbolValue("Config1", "Leonard", False, 1)
 
 

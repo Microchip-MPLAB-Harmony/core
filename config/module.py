@@ -3,9 +3,9 @@ def loadModule():
 
 	if (Peripheral.moduleExists("USART")):
 		print("create component: Driver USART")
-		usartComponent = Module.CreateGeneratorComponent("drv_usart", "USART Driver", "/Drivers/", "driver/usart/config/usart.py")
+		usartComponent = Module.CreateGeneratorComponent("drv_usart", "USART Driver", "/Drivers/", "driver/usart/config/drv_usart.py")
 		usartComponent.addCapability("DRV_USART")
-		usartComponent.addDependency("USART_Dependency", "USART")
+		usartComponent.addDependency("DRV_USART_Dependency", "USART")
 	else:
 		print("No USART peripheral")
 
