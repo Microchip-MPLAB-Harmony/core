@@ -20,8 +20,8 @@ def instantiateComponent(usartComponent, index):
 	usartSource1File = usartComponent.createFileSymbol(None, None)
 	usartSource1File.setSourcePath("driver/usart/templates/drv_usart.c.ftl")
 	usartSource1File.setOutputName("drv_usart" + str(index) + ".c")
-	usartSource1File.setDestPath("system_config/" + configName + "/")
-	usartSource1File.setProjectPath("system_config/" + configName + "/")
+	usartSource1File.setDestPath("system_config/" + configName + "/driver/usart/")
+	usartSource1File.setProjectPath("system_config/" + configName + "/driver/usart/")
 	usartSource1File.setType("SOURCE")
 
 
