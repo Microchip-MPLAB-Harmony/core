@@ -28,9 +28,9 @@ def instantiateComponent(usartComponent, index):
 def usartBusinessLogic(usartBL, usartEnable):
 	if (usartEnable.getValue() == True):
 		print("USART Driver is enabled. setting plib...")
-		usartBL.getComponent().getDependencyComponent("DRV_USART_Dependency").setSymbolValue("Config1", "Leonard", True, 1)
+#		usartBL.getComponent().getDependencyComponent("DRV_USART_Dependency").setSymbolValue("Config1", "Leonard", True, 1)
 	else:
 		print("USART Driver is disabled. clearing plib...")
-		usartBL.getComponent().getDependencyComponent("DRV_USART_Dependency").setSymbolValue("Config1", "Leonard", False, 1)
+#		usartBL.getComponent().getDependencyComponent("DRV_USART_Dependency").setSymbolValue("Config1", "Leonard", False, 1)
 
 
