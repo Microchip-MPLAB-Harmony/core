@@ -15,11 +15,13 @@ def instantiateComponent(usartComponent, index):
 	usartIndex.setVisible(False)
 	usartIndex.setDefaultValue(index)
 
+	configName = Variables.get("__CONFIGURATION_NAME")
+
 	usartSource1File = usartComponent.createFileSymbol(None, None)
 	usartSource1File.setSourcePath("driver/usart/templates/drv_usart.c.ftl")
 	usartSource1File.setOutputName("drv_usart" + str(index) + ".c")
 	usartSource1File.setDestPath("driver/usart/")
-	usartSource1File.setProjectPath("driver/usart/")
+	usartSource1File.setProjectPath("config/" + configName + "/driver/usart/")
 	usartSource1File.setType("SOURCE")
 
 def usartBusinessLogic(usartBL, usartEnable):
