@@ -22,11 +22,6 @@ def instantiateComponent(usartComponent, index):
 	usartSource1File.setProjectPath("driver/usart/")
 	usartSource1File.setType("SOURCE")
 
-	#Add usart related code to common files
-	systemDefinitionsHeadersList = Database.getSymbolByID("core", "LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-	systemDefinitionsHeadersList.addValue("#include \"driver/usart/drv_usart_static.h\"")
-
-
 def usartBusinessLogic(usartBL, usartEnable):
 	if (usartEnable.getValue() == True):
 		print("USART Driver is enabled. setting plib...")
