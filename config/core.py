@@ -32,4 +32,3 @@ for coreComponent in coreComponents:
 			if "dependency" in coreComponent:
 				for item in coreComponent['dependency']:
 					Component.addDependency("drv_" + Name + "_" + item + "_dependency", item)
-
