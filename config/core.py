@@ -8,6 +8,8 @@ harmonySystemService.addCapability("sys_core", "sys_core")
 harmonyDriver = Module.CreateSharedComponent("drv_core", "Harmony Core Driver", "/Drivers", "driver/config/driver.py")
 harmonyDriver.addCapability("drv_core", "drv_core")
 
+osalComponent = Module.CreateSharedComponent("OSAL", "Operating System Abstraction Layer", "/OSAL/", "osal/config/osal.py")
+osalComponent.addCapability("OSAL", "OSAL")
 #load hamrony drivers and system services from the list 
 for coreComponent in coreComponents:
 
