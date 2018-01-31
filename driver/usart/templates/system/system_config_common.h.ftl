@@ -1,0 +1,3 @@
+/* USART Driver Global Configuration Options */
+#define DRV_USART_INSTANCES_NUMBER         ${DRV_USART_NUM_INSTANCES}
+#define DRV_USART_QUEUE_DEPTH_COMBINED     ${DRV_USART_BUFFER_POOL_SIZE}
