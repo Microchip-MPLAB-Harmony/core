@@ -12,3 +12,5 @@ def loadModule():
         print("No USART peripheral")
 
     intComponent = Module.CreateSharedComponent("sys_int", "Interrupt System Service", "/System/", "system/int/config/sys_int.py")
+
+    dmaComponent = Module.CreateSharedComponent("sys_dma", "DMA System Service", "/System/", "system/dma/config/sys_dma.py")
