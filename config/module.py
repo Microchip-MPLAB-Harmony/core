@@ -10,3 +10,5 @@ def loadModule():
         usartComponent.addDependency("DRV_USART_Dependency", "USART")
     else:
         print("No USART peripheral")
+
+    intComponent = Module.CreateSharedComponent("sys_int", "Interrupt System Service", "/System/", "system/int/config/sys_int.py")
