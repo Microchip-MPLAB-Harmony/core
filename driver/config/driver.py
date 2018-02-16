@@ -5,7 +5,6 @@ enabledDriversCount = 0
 
 def genDriverFiles(driverFile, event):
     global enabledDriversCount
-    Log.writeInfoMessage("Called...")
 
     if event["value"] == True:
         enabledDriversCount += 1
@@ -14,11 +13,9 @@ def genDriverFiles(driverFile, event):
 
     driverFile.clearValue()
     if enabledDriversCount > 0:
-        Log.writeInfoMessage("Generates...")
         driverFile.setValue(True, 2)
     else:
         driverFile.setValue(False, 2)
-        Log.writeInfoMessage("Doesn't Generate...")
 
 def genDrvFile(driverFile, event):
     driverFile.setEnabled(event["value"])

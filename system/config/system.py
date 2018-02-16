@@ -5,7 +5,6 @@ enabledSysServicesCount = 0
 
 def genSysServiceFiles(systemFile, event):
     global enabledSysServicesCount
-    Log.writeInfoMessage("Called...")
 
     if event["value"] == True:
         enabledSysServicesCount += 1
@@ -14,11 +13,9 @@ def genSysServiceFiles(systemFile, event):
 
     systemFile.clearValue()
     if enabledSysServicesCount > 0:
-        Log.writeInfoMessage("Generates...")
         systemFile.setValue(True, 2)
     else:
         systemFile.setValue(False, 2)
-        Log.writeInfoMessage("Doesn't Generate...")
 
 def genSysFile(systemFile, event):
     systemFile.setEnabled(event["value"])
