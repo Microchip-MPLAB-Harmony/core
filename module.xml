@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Module name="Drv_Sys" id="E893DB28-C3A0-44E0-A155-BB28E38ECDBF" version="1.0.0">
     <ConfigRoot path="config/module.py"/>
-    <AutoLoad>
-        <ID>harmonyCore</ID>
-    </AutoLoad>
 </Module>
