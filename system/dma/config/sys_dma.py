@@ -5,7 +5,11 @@
 ################################################################################
 #### Business Logic ####
 ################################################################################
-
+def requestDMAComment(Sym, event):
+    if(event["value"] == -2):
+        Sym.setVisible(True)
+    else:
+        Sym.setVisible(False)
 ################################################################################
 #### Component ####
 ################################################################################
@@ -18,8 +22,23 @@ def instantiateComponent(dmaComponent):
     useSysDMA.setDefaultValue(True)
     useSysDMA.setVisible(False)
 
+    dmaPLIB = dmaComponent.createStringSymbol("SYS_DMA_PLIB", None)
+    dmaPLIB.setLabel("PLIB Used")
+    dmaPLIB.setReadOnly(True)
+    dmaPLIB.setDefaultValue("XDMAC")
+
     useSysDMAComment = dmaComponent.createCommentSymbol("USE_SYS_DMA_COMMENT", None)
     useSysDMAComment.setLabel("*** Configure DMA channels using DMA Manager ***")
+
+    # Reserve a DMA Channel for SYS_DMA
+    perID = "Software Trigger"
+    Database.clearSymbolValue("core", "DMA_CH_NEEDED_FOR_" + perID)
+    Database.setSymbolValue("core", "DMA_CH_NEEDED_FOR_" + perID, True, 2)
+
+    dmaChannelComment = dmaComponent.createCommentSymbol("SYS_DMA_CH_COMMENT", None)
+    dmaChannelComment.setLabel("Warning!!! Couldn't Allocate any DMA Channel. Check DMA manager.")
+    dmaChannelComment.setDependencies(requestDMAComment, ["core.DMA_CH_FOR_" + perID])
+    dmaChannelComment.setVisible(False)
 
     ############################################################################
     #### Code Generation ####

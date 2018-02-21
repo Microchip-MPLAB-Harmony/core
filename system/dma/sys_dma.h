@@ -58,6 +58,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 */
 
 #include "system/system.h"
+#include "peripheral/xdmac/plib_xdmac.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -116,6 +117,22 @@ typedef enum {
     DMA_CHANNELS_NUMBER
 
 } DMA_CHANNEL;
+
+
+// *****************************************************************************
+/* DMA System Service Channel None
+
+  Summary:
+    DMA channel none
+
+  Description:
+    This constant identifies the specification of no choice from client
+    for allocating a particular DMA channel.
+
+  Remarks:
+    This constant should be used in place of hard-coded numeric literals.
+*/
+#define DMA_CHANNEL_NONE  /*DOM-IGNORE-BEGIN*/((DMA_CHANNEL)-1)/*DOM-IGNORE-END*/
 
 
 // *****************************************************************************
