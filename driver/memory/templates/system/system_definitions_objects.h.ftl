@@ -1,0 +1,1 @@
+    SYS_MODULE_OBJ  drvMemory${INDEX?string};
