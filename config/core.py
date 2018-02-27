@@ -30,5 +30,6 @@ for coreComponent in coreComponents:
 			Component.addCapability("drv_" + Name, "drv_" + Name)
 			Component.addDependency("drv_dependency", "drv_core")
 			if "dependency" in coreComponent:
-				Component.addDependency("drv_" + Name + "_dependency", coreComponent['dependency'])
+				for item in coreComponent['dependency']:
+					Component.addDependency("drv_" + Name + "_" + item + "_dependency", item)
 
