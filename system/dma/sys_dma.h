@@ -342,6 +342,54 @@ void SYS_DMA_ChannelCallbackRegister (DMA_CHANNEL channel, const SYS_DMA_CHANNEL
 void SYS_DMA_ChannelTransfer (DMA_CHANNEL channel, const void *srcAddr, const void *destAddr, size_t blockSize);
 
 
+//******************************************************************************
+/* Function:
+    bool SYS_DMA_ChannelIsBusy (DMA_CHANNEL channel)
+
+  Summary:
+    Returns the busy status of a specific DMA Channel.
+
+  Description:
+    This function returns the busy status of the DMA channel.
+    DMA channel will be busy if any transfer is in progress.
+
+    This function can be used to check the status of the channel prior to
+    submitting a transfer request. And this can also be used to check the status
+    of the submitted request if callback mechanism is not preferred.
+
+  Precondition:
+    DMA Controller should have been initialized.
+
+  Parameters:
+    channel - A specific DMA channel
+
+  Returns:
+    Busy status of the specific channel.
+    True - Channel is busy
+    False - Channel is free
+
+  Example:
+    <code>
+    // Transfer 10 bytes of data to UART TX using DMA channel 1
+    MY_APP_OBJ myAppObj;
+    uint8_t buf[10] = {0,1,2,3,4,5,6,7,8,9};
+    void *srcAddr = (uint8_t *) buf;
+    void *destAddr = (uin8_t*) &U1TXREG;
+    size_t size = 10;
+
+    if(false == SYS_DMA_ChannelIsBusy(DMA_CHANNEL_1))
+    {
+        SYS_DMA_ChannelTransfer(DMA_CHANNEL_1, srcAddr, destAddr, size);
+    }
+    </code>
+
+  Remarks:
+    None.
+*/
+
+bool SYS_DMA_ChannelIsBusy (DMA_CHANNEL channel);
+
+
 #include "sys_dma_mapping.h"
 
 // DOM-IGNORE-BEGIN

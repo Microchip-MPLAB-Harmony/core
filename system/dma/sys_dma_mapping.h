@@ -53,5 +53,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #define SYS_DMA_ChannelTransfer(channel, srcAddr, destAddr, blockSize)  XDMAC_ChannelTransfer((XDMAC_CHANNEL)channel, srcAddr, destAddr, blockSize)
 
+#define SYS_DMA_ChannelIsBusy(channel)  XDMAC_ChannelIsBusy((XDMAC_CHANNEL)channel)
+
 
 #endif // SYS_DMA_MAPPING_H
