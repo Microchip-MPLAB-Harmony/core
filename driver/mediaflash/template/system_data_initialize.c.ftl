@@ -53,10 +53,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 	<#lt>const DRV_MEDIAFLASH_INIT drvMediaflashInit =
 	<#lt>{
-	<#lt>		.moduleInit.sys.powerState = SYS_MODULE_POWER_RUN_FULL,
 	<#lt>		.mediaflashID = DRV_MEDIAFLASH_HW_ID ,
 	<#lt>	<#if DRV_MEDIAFLASH_MEDIA_START_ADDRESS?has_content>
-	<#lt>		.mediaStartAddress = ${DRV_MEDIAFLASH_MEDIA_START_ADDRESS},
+	<#lt>		.mediaStartAddress = 0x${DRV_MEDIAFLASH_MEDIA_START_ADDRESS},
 	<#lt>		.mediaflashMediaGeometry = (SYS_FS_MEDIA_GEOMETRY *)&MEDIAFLASHGeometry
 	<#lt>	</#if>
 

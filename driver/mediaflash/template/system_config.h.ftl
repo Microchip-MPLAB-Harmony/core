@@ -42,10 +42,10 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /*** MEDIAFLASH Driver Configuration ***/
 <#if USE_DRV_MEDIAFLASH == true>
 	<#lt><#-- MEDIAFLASH Media Driver Defines -->
-	<#lt>#define DRV_MEDIAFLASH_INSTANCES_NUMBER     	1
+	<#lt>#define DRV_MEDIAFLASH_INSTANCES_NUMBER     	${DRV_MEDIAFLASH_NUM_INSTANCES}
 	<#lt>#define DRV_MEDIAFLASH_CLIENTS_NUMBER        	${DRV_MEDIAFLASH_CLIENTS_NUMBER}
 	<#lt>#define DRV_MEDIAFLASH_BUFFER_OBJECT_NUMBER  	${DRV_MEDIAFLASH_BUFFER_OBJECT_NUMBER}
-	<#lt>#define DRV_MEDIAFLASH_MEDIA_START_ADDRESS     ${DRV_MEDIAFLASH_MEDIA_START_ADDRESS}
+	<#lt>#define DRV_MEDIAFLASH_MEDIA_START_ADDRESS     0x${DRV_MEDIAFLASH_MEDIA_START_ADDRESS}
 	<#lt>#define DRV_MEDIAFLASH_MEDIA_SIZE              ${DRV_MEDIAFLASH_MEDIA_SIZE}
 	<#lt>#define DRV_MEDIAFLASH_INTERRUPT_MODE        	true
 
@@ -66,6 +66,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     <#lt>#define  DRV_MEDIAFLASH_HW_WRITE_SIZE                          EEFC0_PAGESIZE
     <#lt>#define  DRV_MEDIAFLASH_HW_ERASE_SIZE                          EEFC0_ROWSIZE
     <#lt>#define  DRV_MEDIAFLASH_HW_ID                                  0
+	<#lt>#define  DRV_MEDIAFLASH_HW_HEADER								peripheral/eefc/plib_eefc0.h
 </#if>
 <#--
 /*******************************************************************************

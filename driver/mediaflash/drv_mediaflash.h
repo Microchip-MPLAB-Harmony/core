@@ -59,6 +59,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "osal/osal.h"
 #include "system/fs/sys_fs_media_manager.h"
 #include "driver/mediaflash/src/drv_mediaflash_variant_mapping.h"
+#include "DRV_MEDIAFLASH_HW_HEADER"
+
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 

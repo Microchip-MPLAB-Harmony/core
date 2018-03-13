@@ -48,7 +48,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include "driver/mediaflash/src/drv_mediaflash_local.h"
-#include <strings.h>
 
 // *****************************************************************************
 // *****************************************************************************

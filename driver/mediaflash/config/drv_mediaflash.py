@@ -7,8 +7,9 @@ def instantiateComponent(mediaflashComponent, index):
 	except:
 		numInstances = 0
 		
-	numInstances = numInstances + 1
-	Database.setSymbolValue("drv_mediaflash", "DRV_MEDIAFLASH_NUM_INSTANCES", numInstances, 1)
+	if numInstances < (index+1):
+		Database.clearSymbolValue("drv_mediaflash", "DRV_MEDIAFLASH_NUM_INSTANCES")
+		Database.setSymbolValue("drv_mediaflash", "DRV_MEDIAFLASH_NUM_INSTANCES", (index+1), 2)
 	
 	mediaflashSymIndex = mediaflashComponent.createIntegerSymbol("INDEX", None)
 	mediaflashSymIndex.setVisible(False)
@@ -18,7 +19,7 @@ def instantiateComponent(mediaflashComponent, index):
 	mediaflashEnable.setLabel("Use MediaFlash Driver?")
 	mediaflashEnable.setDefaultValue(False)
 	
-	mediaflashMenu = mediaflashComponent.createMenuSymbol(None, None)
+	mediaflashMenu = mediaflashComponent.createMenuSymbol("DRV_MEDIAFLASH_MENU_0", None)
 	mediaflashMenu.setLabel("Driver Settings")
 	mediaflashMenu.setVisible(False)
 	mediaflashMenu.setDependencies(showMenu, ["USE_DRV_MEDIAFLASH"])
@@ -57,35 +58,35 @@ def instantiateComponent(mediaflashComponent, index):
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 
-	mediaflashHeaderFile = mediaflashComponent.createFileSymbol(None, None)
+	mediaflashHeaderFile = mediaflashComponent.createFileSymbol("MEDIAFLASH_FILE_0", None)
 	mediaflashHeaderFile.setSourcePath("driver/mediaflash/drv_mediaflash.h")
 	mediaflashHeaderFile.setOutputName("drv_mediaflash.h")
 	mediaflashHeaderFile.setDestPath("/driver/mediaflash/")
 	mediaflashHeaderFile.setProjectPath("/driver/mediaflash/")
 	mediaflashHeaderFile.setType("HEADER")
 	
-	mediaflashSource1File = mediaflashComponent.createFileSymbol(None, None)
+	mediaflashSource1File = mediaflashComponent.createFileSymbol("MEDIAFLASH_FILE_1", None)
 	mediaflashSource1File.setSourcePath("driver/mediaflash/src/drv_mediaflash.c")
 	mediaflashSource1File.setOutputName("drv_mediaflash.c")
 	mediaflashSource1File.setDestPath("/driver/mediaflash/src/")
 	mediaflashSource1File.setProjectPath("/driver/mediaflash/src/")
 	mediaflashSource1File.setType("SOURCE")
 	
-	mediaflashHeaderLocalFile = mediaflashComponent.createFileSymbol(None, None)
+	mediaflashHeaderLocalFile = mediaflashComponent.createFileSymbol("MEDIAFLASH_FILE_2", None)
 	mediaflashHeaderLocalFile.setSourcePath("driver/mediaflash/src/drv_mediaflash_local.h")
 	mediaflashHeaderLocalFile.setOutputName("drv_mediaflash_local.h")
 	mediaflashHeaderLocalFile.setDestPath("/driver/mediaflash/src/")
 	mediaflashHeaderLocalFile.setProjectPath("/driver/mediaflash/src/")
 	mediaflashHeaderLocalFile.setType("HEADER")
 	
-	mediaflashHeaderVmapFile = mediaflashComponent.createFileSymbol(None, None)
+	mediaflashHeaderVmapFile = mediaflashComponent.createFileSymbol("MEDIAFLASH_FILE_3", None)
 	mediaflashHeaderVmapFile.setSourcePath("driver/mediaflash/src/drv_mediaflash_variant_mapping.h")
 	mediaflashHeaderVmapFile.setOutputName("drv_mediaflash_variant_mapping.h")
 	mediaflashHeaderVmapFile.setDestPath("/driver/mediaflash/src/")
 	mediaflashHeaderVmapFile.setProjectPath("/driver/mediaflash/src/")
 	mediaflashHeaderVmapFile.setType("HEADER")
 	
-	mediaflashSourceEraseWriteFile = mediaflashComponent.createFileSymbol(None, None)
+	mediaflashSourceEraseWriteFile = mediaflashComponent.createFileSymbol("MEDIAFLASH_FILE_4", None)
 	mediaflashSourceEraseWriteFile.setSourcePath("driver/mediaflash/src/drv_mediaflash_erasewrite.c")
 	mediaflashSourceEraseWriteFile.setOutputName("drv_mediaflash_erasewrite.c")
 	mediaflashSourceEraseWriteFile.setDestPath("/driver/mediaflash/src/")
@@ -94,31 +95,31 @@ def instantiateComponent(mediaflashComponent, index):
 	mediaflashSourceEraseWriteFile.setEnabled(False)
 	mediaflashSourceEraseWriteFile.setDependencies(genSourceFile, ["USE_DRV_MEDIAFLASH_ERASE_WRITE"])
 	
-	mediaflashSystemDefFile = mediaflashComponent.createFileSymbol(None, None)
+	mediaflashSystemDefFile = mediaflashComponent.createFileSymbol("MEDIAFLASH_FILE_5", None)
 	mediaflashSystemDefFile.setType("STRING")
 	mediaflashSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
 	mediaflashSystemDefFile.setSourcePath("/driver/mediaflash/template/system_definitions.h.ftl")
 	mediaflashSystemDefFile.setMarkup(True)
 	
-	mediaflashSystemInitFile = mediaflashComponent.createFileSymbol(None, None)
+	mediaflashSystemInitFile = mediaflashComponent.createFileSymbol("MEDIAFLASH_FILE_6", None)
 	mediaflashSystemInitFile.setType("STRING")
 	mediaflashSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_SYS_INITIALIZE_CORE")
 	mediaflashSystemInitFile.setSourcePath("/driver/mediaflash/template/system_initialize.c.ftl")
 	mediaflashSystemInitFile.setMarkup(True)
 	
-	mediaflashSystemConfFile = mediaflashComponent.createFileSymbol(None, None)
+	mediaflashSystemConfFile = mediaflashComponent.createFileSymbol("MEDIAFLASH_FILE_7", None)
 	mediaflashSystemConfFile.setType("STRING")
 	mediaflashSystemConfFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_DRIVER_CONFIGURATION")
 	mediaflashSystemConfFile.setSourcePath("/driver/mediaflash/template/system_config.h.ftl")
 	mediaflashSystemConfFile.setMarkup(True)
 	
-	mediaflashSystemDataFile = mediaflashComponent.createFileSymbol(None, None)
+	mediaflashSystemDataFile = mediaflashComponent.createFileSymbol("MEDIAFLASH_FILE_8", None)
 	mediaflashSystemDataFile.setType("STRING")
 	mediaflashSystemDataFile.setOutputName("core.LIST_SYSTEM_INIT_C_DRIVER_INITIALIZATION_DATA")
 	mediaflashSystemDataFile.setSourcePath("/driver/mediaflash/template/system_data_initialize.c.ftl")
 	mediaflashSystemDataFile.setMarkup(True)
 	
-	mediaflashSystemObjFile = mediaflashComponent.createFileSymbol(None, None)
+	mediaflashSystemObjFile = mediaflashComponent.createFileSymbol("MEDIAFLASH_FILE_9", None)
 	mediaflashSystemObjFile.setType("STRING")
 	mediaflashSystemObjFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_OBJECTS")
 	mediaflashSystemObjFile.setSourcePath("/driver/mediaflash/template/system_objects.h.ftl")
