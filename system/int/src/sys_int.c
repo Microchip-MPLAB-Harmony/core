@@ -105,7 +105,7 @@ bool SYS_INT_SourceDisable( INT_SOURCE source )
 
     processorStatus = SYS_INT_Disable();
 
-    intSrcStatus = (NVIC->ISER[(uint32_t)((int32_t)source) >> 5] & ((uint32_t)(1 << ((uint32_t)((int32_t)source) & (uint32_t)0x1F))))?1:0;
+    intSrcStatus = NVIC_GetEnableIRQ(source);
 
     NVIC_DisableIRQ( source );
 
