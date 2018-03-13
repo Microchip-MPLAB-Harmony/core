@@ -37,7 +37,7 @@ def	instantiateComponent(osalComponent):
 	global osalSourceEmbosFile
 	global osalHeaderFreeRtosFile
 	global osalSourceFreeRtosFile
-	osalMenu = osalComponent.createMenuSymbol(None, None)
+	osalMenu = osalComponent.createMenuSymbol("OSAL_MENU", None)
 	osalMenu.setLabel("OSAL Settings")
 	osalMenu.setDescription("Configuration for OSAL layer")
 	osalRTOS = osalComponent.createKeyValueSetSymbol("OSAL_RTOS", osalMenu)
@@ -58,41 +58,41 @@ def	instantiateComponent(osalComponent):
 	# osalRTOS = osalComponent.createComboSymbol("OSAL_RTOS", osalMenu, osalDIC.keys())
 	# osalRTOS.setLabel("RTOS to be used")
 	# osalRTOS.setDefaultValue("NO_RTOS")
-	
+
 	configName = Variables.get("__CONFIGURATION_NAME")
-	
-	osalHeaderFile = osalComponent.createFileSymbol(None, None)
+
+	osalHeaderFile = osalComponent.createFileSymbol("OSAL_H", None)
 	osalHeaderFile.setSourcePath("/osal/osal.h")
 	osalHeaderFile.setOutputName("osal.h")
 	osalHeaderFile.setDestPath("/osal/")
 	osalHeaderFile.setProjectPath("/osal/")
 	osalHeaderFile.setType("HEADER")
-	
-	osalHeaderDefFile = osalComponent.createFileSymbol(None, None)
+
+	osalHeaderDefFile = osalComponent.createFileSymbol("OSAL_DEFINITIONS_H", None)
 	osalHeaderDefFile.setSourcePath("/osal/osal_definitions.h")
 	osalHeaderDefFile.setOutputName("osal_definitions.h")
 	osalHeaderDefFile.setDestPath("/osal/")
 	osalHeaderDefFile.setProjectPath("/osal/")
 	osalHeaderDefFile.setType("HEADER")
-	
-	osalHeaderImpBasicFile = osalComponent.createFileSymbol(None, None)
+
+	osalHeaderImpBasicFile = osalComponent.createFileSymbol("OSAL_IMPL_BASIC_H", None)
 	osalHeaderImpBasicFile.setSourcePath("/osal/osal_impl_basic.h")
 	osalHeaderImpBasicFile.setOutputName("osal_impl_basic.h")
 	osalHeaderImpBasicFile.setDestPath("/osal/")
 	osalHeaderImpBasicFile.setProjectPath("/osal/")
 	osalHeaderImpBasicFile.setType("HEADER")
 	osalHeaderImpBasicFile.setEnabled(True)
-	osalHeaderImpBasicFile.setDependencies(osalFile, ["OSAL_RTOS"])	
-	
-	osalHeaderFreeRtos7File = osalComponent.createFileSymbol(None, None)
+	osalHeaderImpBasicFile.setDependencies(osalFile, ["OSAL_RTOS"])
+
+	osalHeaderFreeRtos7File = osalComponent.createFileSymbol("OSAL_FREERTOS_V7XX_H", None)
 	osalHeaderFreeRtos7File.setSourcePath("/osal/osal_freertos_v7xx.h")
 	osalHeaderFreeRtos7File.setOutputName("osal_freertos_v7xx.h")
 	osalHeaderFreeRtos7File.setDestPath("/osal/")
 	osalHeaderFreeRtos7File.setProjectPath("/osal/")
 	osalHeaderFreeRtos7File.setType("HEADER")
 	osalHeaderFreeRtos7File.setEnabled(False)
-		
-	osalSourceFreeRtos7File = osalComponent.createFileSymbol(None, None)
+
+	osalSourceFreeRtos7File = osalComponent.createFileSymbol("OSAL_FREERTOS_V7XX_C", None)
 	osalSourceFreeRtos7File.setSourcePath("/osal/src/osal_freertos_v7xx.c")
 	osalSourceFreeRtos7File.setOutputName("osal_freertos_v7xx.c")
 	osalSourceFreeRtos7File.setDestPath("/osal/")
@@ -101,7 +101,7 @@ def	instantiateComponent(osalComponent):
 	osalSourceFreeRtos7File.setEnabled(False)
 
 
-	osalHeaderOpenRTOSFile = osalComponent.createFileSymbol(None, None)
+	osalHeaderOpenRTOSFile = osalComponent.createFileSymbol("OSAL_OPENRTOS_H", None)
 	osalHeaderOpenRTOSFile.setSourcePath("/osal/osal_openrtos.h")
 	osalHeaderOpenRTOSFile.setOutputName("osal_openrtos.h")
 	osalHeaderOpenRTOSFile.setDestPath("/osal/")
@@ -109,8 +109,8 @@ def	instantiateComponent(osalComponent):
 	osalHeaderOpenRTOSFile.setType("HEADER")
 	osalHeaderOpenRTOSFile.setEnabled(False)
 
-		
-	osalSourceOpenRTOSFile = osalComponent.createFileSymbol(None, None)
+
+	osalSourceOpenRTOSFile = osalComponent.createFileSymbol("OSAL_OPENRTOS_C", None)
 	osalSourceOpenRTOSFile.setSourcePath("/osal/src/osal_openrtos.c")
 	osalSourceOpenRTOSFile.setOutputName("osal_openrtos.c")
 	osalSourceOpenRTOSFile.setDestPath("/osal/")
@@ -119,7 +119,7 @@ def	instantiateComponent(osalComponent):
 	osalSourceOpenRTOSFile.setEnabled(False)
 
 
-	osalHeaderOpenRTOSV7File = osalComponent.createFileSymbol(None, None)
+	osalHeaderOpenRTOSV7File = osalComponent.createFileSymbol("OSAL_OPENRTOS_V7XX_H", None)
 	osalHeaderOpenRTOSV7File.setSourcePath("/osal/osal_openrtos_v7xx.h")
 	osalHeaderOpenRTOSV7File.setOutputName("osal_openrtos_v7xx.h")
 	osalHeaderOpenRTOSV7File.setDestPath("/osal/")
@@ -127,8 +127,8 @@ def	instantiateComponent(osalComponent):
 	osalHeaderOpenRTOSV7File.setType("HEADER")
 	osalHeaderOpenRTOSV7File.setEnabled(False)
 
-		
-	osalSourceOpenRTOSV7File = osalComponent.createFileSymbol(None, None)
+
+	osalSourceOpenRTOSV7File = osalComponent.createFileSymbol("OSAL_OPENRTOS_V7XX_C", None)
 	osalSourceOpenRTOSV7File.setSourcePath("/osal/src/osal_openrtos_v7xx.c")
 	osalSourceOpenRTOSV7File.setOutputName("osal_openrtos_v7xx.c")
 	osalSourceOpenRTOSV7File.setDestPath("/osal/")
@@ -137,25 +137,25 @@ def	instantiateComponent(osalComponent):
 	osalSourceOpenRTOSV7File.setEnabled(False)
 
 
-	osalHeaderUcos3File = osalComponent.createFileSymbol(None, None)
+	osalHeaderUcos3File = osalComponent.createFileSymbol("OSAL_UCOS3_H", None)
 	osalHeaderUcos3File.setSourcePath("/osal/osal_ucos3.h")
 	osalHeaderUcos3File.setOutputName("osal_ucos3.h")
 	osalHeaderUcos3File.setDestPath("/osal/")
 	osalHeaderUcos3File.setProjectPath("/osal/")
 	osalHeaderUcos3File.setType("HEADER")
 	osalHeaderUcos3File.setEnabled(False)
-	
-		
-	osalSourceUcos3File = osalComponent.createFileSymbol(None, None)
+
+
+	osalSourceUcos3File = osalComponent.createFileSymbol("OSAL_UCOS3_C", None)
 	osalSourceUcos3File.setSourcePath("/osal/src/osal_ucos3.c")
 	osalSourceUcos3File.setOutputName("osal_ucos3.c")
 	osalSourceUcos3File.setDestPath("/osal/")
 	osalSourceUcos3File.setProjectPath("/osal/")
 	osalSourceUcos3File.setType("SOURCE")
 	osalSourceUcos3File.setEnabled(False)
-	
 
-	osalHeaderUcos2File = osalComponent.createFileSymbol(None, None)
+
+	osalHeaderUcos2File = osalComponent.createFileSymbol("osal_ucos2_h", None)
 	osalHeaderUcos2File.setSourcePath("/osal/osal_ucos2.h")
 	osalHeaderUcos2File.setOutputName("osal_ucos2.h")
 	osalHeaderUcos2File.setDestPath("/osal/")
@@ -163,8 +163,8 @@ def	instantiateComponent(osalComponent):
 	osalHeaderUcos2File.setType("HEADER")
 	osalHeaderUcos2File.setEnabled(False)
 
-		
-	osalSourceUcos2File = osalComponent.createFileSymbol(None, None)
+
+	osalSourceUcos2File = osalComponent.createFileSymbol("OSAL_UCOS2_C", None)
 	osalSourceUcos2File.setSourcePath("/osal/src/osal_ucos2.c")
 	osalSourceUcos2File.setOutputName("osal_ucos2.c")
 	osalSourceUcos2File.setDestPath("/osal/")
@@ -172,9 +172,9 @@ def	instantiateComponent(osalComponent):
 	osalSourceUcos2File.setType("SOURCE")
 	osalSourceUcos2File.setEnabled(False)
 
-	
 
-	osalHeaderThreadxFile = osalComponent.createFileSymbol(None, None)
+
+	osalHeaderThreadxFile = osalComponent.createFileSymbol("OSAL_THREADX_H", None)
 	osalHeaderThreadxFile.setSourcePath("/osal/osal_threadx.h")
 	osalHeaderThreadxFile.setOutputName("osal_threadx.h")
 	osalHeaderThreadxFile.setDestPath("/osal/")
@@ -182,18 +182,18 @@ def	instantiateComponent(osalComponent):
 	osalHeaderThreadxFile.setType("HEADER")
 	osalHeaderThreadxFile.setEnabled(False)
 
-		
-	osalSourceThreadxFile = osalComponent.createFileSymbol(None, None)
+
+	osalSourceThreadxFile = osalComponent.createFileSymbol("OSAL_THREADX_C", None)
 	osalSourceThreadxFile.setSourcePath("/osal/src/osal_threadx.c")
 	osalSourceThreadxFile.setOutputName("osal_threadx.c")
 	osalSourceThreadxFile.setDestPath("/osal/")
 	osalSourceThreadxFile.setProjectPath("/osal/")
 	osalSourceThreadxFile.setType("SOURCE")
 	osalSourceThreadxFile.setEnabled(False)
-	
-	
 
-	osalHeaderEmbosFile = osalComponent.createFileSymbol(None, None)
+
+
+	osalHeaderEmbosFile = osalComponent.createFileSymbol("OSAL_EMBOS_H", None)
 	osalHeaderEmbosFile.setSourcePath("/osal/osal_embos.h")
 	osalHeaderEmbosFile.setOutputName("osal_embos.h")
 	osalHeaderEmbosFile.setDestPath("/osal/")
@@ -201,42 +201,42 @@ def	instantiateComponent(osalComponent):
 	osalHeaderEmbosFile.setType("HEADER")
 	osalHeaderEmbosFile.setEnabled(False)
 
-		
-	osalSourceEmbosFile = osalComponent.createFileSymbol(None, None)
+
+	osalSourceEmbosFile = osalComponent.createFileSymbol("OSAL_EMBOS_C", None)
 	osalSourceEmbosFile.setSourcePath("/osal/src/osal_embos.c")
 	osalSourceEmbosFile.setOutputName("osal_embos.c")
 	osalSourceEmbosFile.setDestPath("/osal/")
 	osalSourceEmbosFile.setProjectPath("/osal/")
 	osalSourceEmbosFile.setType("SOURCE")
 	osalSourceEmbosFile.setEnabled(False)
-	
 
-	osalHeaderFreeRtosFile = osalComponent.createFileSymbol(None, None)
+
+	osalHeaderFreeRtosFile = osalComponent.createFileSymbol("OSAL_FREERTOS_H", None)
 	osalHeaderFreeRtosFile.setSourcePath("/osal/osal_freertos.h")
 	osalHeaderFreeRtosFile.setOutputName("osal_freertos.h")
 	osalHeaderFreeRtosFile.setDestPath("/osal/")
 	osalHeaderFreeRtosFile.setProjectPath("/osal/")
 	osalHeaderFreeRtosFile.setType("HEADER")
 	osalHeaderFreeRtosFile.setEnabled(False)
-		
-		
-	osalSourceFreeRtosFile = osalComponent.createFileSymbol(None, None)
+
+
+	osalSourceFreeRtosFile = osalComponent.createFileSymbol("OSAL_FREERTOS_C", None)
 	osalSourceFreeRtosFile.setSourcePath("/osal/src/osal_freertos.c")
 	osalSourceFreeRtosFile.setOutputName("osal_freertos.c")
 	osalSourceFreeRtosFile.setDestPath("/osal/")
 	osalSourceFreeRtosFile.setProjectPath("/osal/")
 	osalSourceFreeRtosFile.setType("SOURCE")
 	osalSourceFreeRtosFile.setEnabled(False)
-	
 
 
-	osalSystemDefFile = osalComponent.createFileSymbol(None, None)
+
+	osalSystemDefFile = osalComponent.createFileSymbol("OSAL_DEFINITIONS_H", None)
 	osalSystemDefFile.setType("STRING")
 	osalSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
 	osalSystemDefFile.setSourcePath("/osal/templates/system/system_definitions.h.ftl")
 	osalSystemDefFile.setMarkup(True)
-	
-	osalSystemConfFile = osalComponent.createFileSymbol(None, None)
+
+	osalSystemConfFile = osalComponent.createFileSymbol("OSAL_CONFIG_H", None)
 	osalSystemConfFile.setType("STRING")
 	osalSystemConfFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")
 	osalSystemConfFile.setSourcePath("/osal/templates/system/system_config.h.ftl")
@@ -245,7 +245,7 @@ def	instantiateComponent(osalComponent):
 
 def osalFile(osalHeaderFile, genFiles):
 	osalHeaderImpBasicFile.setEnabled(genFiles["value"] == 0)
-	osalHeaderFreeRtos7File.setEnabled(genFiles["value"] == 2)	
+	osalHeaderFreeRtos7File.setEnabled(genFiles["value"] == 2)
 	osalSourceFreeRtos7File.setEnabled(genFiles["value"] == 2)
 	osalHeaderOpenRTOSFile.setEnabled(genFiles["value"] == 3)
 	osalSourceOpenRTOSFile.setEnabled(genFiles["value"] == 3)
