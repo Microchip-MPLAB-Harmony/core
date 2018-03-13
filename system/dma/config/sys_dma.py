@@ -45,21 +45,21 @@ def instantiateComponent(dmaComponent):
     ############################################################################
     configName = Variables.get("__CONFIGURATION_NAME")
 
-    dmaHeaderFile = dmaComponent.createFileSymbol(None, None)
+    dmaHeaderFile = dmaComponent.createFileSymbol("DMA_HEADER", None)
     dmaHeaderFile.setSourcePath("system/dma/sys_dma.h")
     dmaHeaderFile.setOutputName("sys_dma.h")
     dmaHeaderFile.setDestPath("system/dma/")
     dmaHeaderFile.setProjectPath("config/" + configName + "/system/dma/")
     dmaHeaderFile.setType("HEADER")
 
-    dmaHeaderMappingFile = dmaComponent.createFileSymbol(None, None)
+    dmaHeaderMappingFile = dmaComponent.createFileSymbol("DMA_MAPPING", None)
     dmaHeaderMappingFile.setSourcePath("system/dma/sys_dma_mapping.h")
     dmaHeaderMappingFile.setOutputName("sys_dma_mapping.h")
     dmaHeaderMappingFile.setDestPath("system/dma/")
     dmaHeaderMappingFile.setProjectPath("config/" + configName + "/system/dma/")
     dmaHeaderMappingFile.setType("HEADER")
 
-    dmaSystemDefFile = dmaComponent.createFileSymbol(None, None)
+    dmaSystemDefFile = dmaComponent.createFileSymbol("DMA_DEF", None)
     dmaSystemDefFile.setType("STRING")
     dmaSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
     dmaSystemDefFile.setSourcePath("system/dma/templates/system/system_definitions.h.ftl")

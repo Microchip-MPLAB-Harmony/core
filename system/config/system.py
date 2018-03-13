@@ -2,7 +2,7 @@ def instantiateComponent(harmonySystemComponent):
 
 	configName = Variables.get("__CONFIGURATION_NAME")
 
-	systemHeaderRootFile = harmonySystemComponent.createFileSymbol(None, None)
+	systemHeaderRootFile = harmonySystemComponent.createFileSymbol("SYSTEM_ROOT", None)
 	systemHeaderRootFile.setSourcePath("system/system.h")
 	systemHeaderRootFile.setOutputName("system.h")
 	systemHeaderRootFile.setDestPath("system/")
@@ -11,7 +11,7 @@ def instantiateComponent(harmonySystemComponent):
 	systemHeaderRootFile.setOverwrite(True)
 	systemHeaderRootFile.setEnabled(True)
 
-	systemHeaderCommonFile = harmonySystemComponent.createFileSymbol(None, None)
+	systemHeaderCommonFile = harmonySystemComponent.createFileSymbol("SYSTEM_COMMON", None)
 	systemHeaderCommonFile.setSourcePath("system/system_common.h")
 	systemHeaderCommonFile.setOutputName("system_common.h")
 	systemHeaderCommonFile.setDestPath("system/")
@@ -20,7 +20,7 @@ def instantiateComponent(harmonySystemComponent):
 	systemHeaderCommonFile.setOverwrite(True)
 	systemHeaderCommonFile.setEnabled(True)
 
-	systemHeaderModuleFile = harmonySystemComponent.createFileSymbol(None, None)
+	systemHeaderModuleFile = harmonySystemComponent.createFileSymbol("SYSTEM_MODULE", None)
 	systemHeaderModuleFile.setSourcePath("system/system_module.h")
 	systemHeaderModuleFile.setOutputName("system_module.h")
 	systemHeaderModuleFile.setDestPath("system/")

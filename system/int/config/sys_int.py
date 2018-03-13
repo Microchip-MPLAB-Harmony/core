@@ -26,28 +26,28 @@ def instantiateComponent(intComponent):
     ############################################################################
     configName = Variables.get("__CONFIGURATION_NAME")
 
-    intHeaderFile = intComponent.createFileSymbol(None, None)
+    intHeaderFile = intComponent.createFileSymbol("INT_HEADER", None)
     intHeaderFile.setSourcePath("system/int/sys_int.h")
     intHeaderFile.setOutputName("sys_int.h")
     intHeaderFile.setDestPath("system/int/")
     intHeaderFile.setProjectPath("config/" + configName + "/system/int/")
     intHeaderFile.setType("HEADER")
 
-    intHeaderMappingFile = intComponent.createFileSymbol(None, None)
+    intHeaderMappingFile = intComponent.createFileSymbol("INT_MAPPING", None)
     intHeaderMappingFile.setSourcePath("system/int/sys_int_mapping.h")
     intHeaderMappingFile.setOutputName("sys_int_mapping.h")
     intHeaderMappingFile.setDestPath("system/int/")
     intHeaderMappingFile.setProjectPath("config/" + configName + "/system/int/")
     intHeaderMappingFile.setType("HEADER")
 
-    intSourceFile = intComponent.createFileSymbol(None, None)
+    intSourceFile = intComponent.createFileSymbol("INT_SOURCE", None)
     intSourceFile.setSourcePath("system/int/src/sys_int.c")
     intSourceFile.setOutputName("sys_int.c")
     intSourceFile.setDestPath("system/int/src/")
     intSourceFile.setProjectPath("config/" + configName + "/system/int/")
     intSourceFile.setType("SOURCE")
 
-    intSystemDefFile = intComponent.createFileSymbol(None, None)
+    intSystemDefFile = intComponent.createFileSymbol("INT_DEF", None)
     intSystemDefFile.setType("STRING")
     intSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
     intSystemDefFile.setSourcePath("system/int/templates/system/system_definitions.h.ftl")
