@@ -138,7 +138,7 @@ def instantiateComponent(usartComponent, index):
     ############################################################################
     configName = Variables.get("__CONFIGURATION_NAME")
 
-    usartHeaderFile = usartComponent.createFileSymbol(None, None)
+    usartHeaderFile = usartComponent.createFileSymbol("USART_HEADER", None)
     usartHeaderFile.setSourcePath("driver/usart/drv_usart.h")
     usartHeaderFile.setOutputName("drv_usart.h")
     usartHeaderFile.setDestPath("driver/usart/")
@@ -146,7 +146,7 @@ def instantiateComponent(usartComponent, index):
     usartHeaderFile.setType("HEADER")
     usartHeaderFile.setOverwrite(True)
 
-    usartHeaderDefFile = usartComponent.createFileSymbol(None, None)
+    usartHeaderDefFile = usartComponent.createFileSymbol("USART_DEF", None)
     usartHeaderDefFile.setSourcePath("driver/usart/drv_usart_definitions.h")
     usartHeaderDefFile.setOutputName("drv_usart_definitions.h")
     usartHeaderDefFile.setDestPath("driver/usart/")
@@ -154,7 +154,7 @@ def instantiateComponent(usartComponent, index):
     usartHeaderDefFile.setType("HEADER")
     usartHeaderDefFile.setOverwrite(True)
 
-    usartSourceFile = usartComponent.createFileSymbol(None, None)
+    usartSourceFile = usartComponent.createFileSymbol("USART_SOURCE", None)
     usartSourceFile.setSourcePath("driver/usart/src/drv_usart.c")
     usartSourceFile.setOutputName("drv_usart.c")
     usartSourceFile.setDestPath("driver/usart/src")
@@ -162,7 +162,7 @@ def instantiateComponent(usartComponent, index):
     usartSourceFile.setType("SOURCE")
     usartSourceFile.setOverwrite(True)
 
-    usartHeaderLocalFile = usartComponent.createFileSymbol(None, None)
+    usartHeaderLocalFile = usartComponent.createFileSymbol("USART_LOCAL", None)
     usartHeaderLocalFile.setSourcePath("driver/usart/src/drv_usart_local.h")
     usartHeaderLocalFile.setOutputName("drv_usart_local.h")
     usartHeaderLocalFile.setDestPath("driver/usart/src")
@@ -170,31 +170,31 @@ def instantiateComponent(usartComponent, index):
     usartHeaderLocalFile.setType("SOURCE")
     usartHeaderLocalFile.setOverwrite(True)
 
-    usartSystemDefFile = usartComponent.createFileSymbol(None, None)
+    usartSystemDefFile = usartComponent.createFileSymbol("USART_DEF", None)
     usartSystemDefFile.setType("STRING")
     usartSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
     usartSystemDefFile.setSourcePath("driver/usart/templates/system/system_definitions.h.ftl")
     usartSystemDefFile.setMarkup(True)
 
-    usartSystemDefObjFile = usartComponent.createFileSymbol(None, None)
+    usartSystemDefObjFile = usartComponent.createFileSymbol("USART_DEF_OBJ", None)
     usartSystemDefObjFile.setType("STRING")
     usartSystemDefObjFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_OBJECTS")
     usartSystemDefObjFile.setSourcePath("driver/usart/templates/system/system_definitions_objects.h.ftl")
     usartSystemDefObjFile.setMarkup(True)
 
-    usartSystemConfigFile = usartComponent.createFileSymbol(None, None)
+    usartSystemConfigFile = usartComponent.createFileSymbol("USART_CONFIG", None)
     usartSystemConfigFile.setType("STRING")
     usartSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_DRIVER_CONFIGURATION")
     usartSystemConfigFile.setSourcePath("driver/usart/templates/system/system_config.h.ftl")
     usartSystemConfigFile.setMarkup(True)
 
-    usartSystemInitDataFile = usartComponent.createFileSymbol(None, None)
+    usartSystemInitDataFile = usartComponent.createFileSymbol("USART_INIT_DATA", None)
     usartSystemInitDataFile.setType("STRING")
     usartSystemInitDataFile.setOutputName("core.LIST_SYSTEM_INIT_C_DRIVER_INITIALIZATION_DATA")
     usartSystemInitDataFile.setSourcePath("driver/usart/templates/system/system_initialize_data.c.ftl")
     usartSystemInitDataFile.setMarkup(True)
 
-    usartSystemInitFile = usartComponent.createFileSymbol(None, None)
+    usartSystemInitFile = usartComponent.createFileSymbol("USART_INIT", None)
     usartSystemInitFile.setType("STRING")
     usartSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_SYS_INITIALIZE_DRIVERS")
     usartSystemInitFile.setSourcePath("driver/usart/templates/system/system_initialize.c.ftl")

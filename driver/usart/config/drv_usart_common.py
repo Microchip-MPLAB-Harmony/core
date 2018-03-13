@@ -13,7 +13,7 @@ def instantiateComponent(usartComponent):
     usartSymBufPool.setDefaultValue(10)
     usartSymBufPool.setVisible(False)
 
-    usartSymCommonSysCfgFile = usartComponent.createFileSymbol(None, None)
+    usartSymCommonSysCfgFile = usartComponent.createFileSymbol("USART_COMMON_CFG", None)
     usartSymCommonSysCfgFile.setType("STRING")
     usartSymCommonSysCfgFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_DRIVER_CONFIGURATION")
     usartSymCommonSysCfgFile.setSourcePath("driver/usart/templates/system/system_config_common.h.ftl")

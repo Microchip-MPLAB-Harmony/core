@@ -3,7 +3,7 @@ def instantiateComponent(harmonyDriverComponent):
 	# Driver layer level common content
 	configName = Variables.get("__CONFIGURATION_NAME")
 
-	driverHeaderRootFile = harmonyDriverComponent.createFileSymbol(None, None)
+	driverHeaderRootFile = harmonyDriverComponent.createFileSymbol("DRIVER_ROOT", None)
 	driverHeaderRootFile.setSourcePath("driver/driver.h")
 	driverHeaderRootFile.setOutputName("driver.h")
 	driverHeaderRootFile.setDestPath("driver/")
@@ -12,7 +12,7 @@ def instantiateComponent(harmonyDriverComponent):
 	driverHeaderRootFile.setOverwrite(True)
 	driverHeaderRootFile.setEnabled(True)
 
-	driverHeaderCommonFile = harmonyDriverComponent.createFileSymbol(None, None)
+	driverHeaderCommonFile = harmonyDriverComponent.createFileSymbol("DRIVER_COMMON", None)
 	driverHeaderCommonFile.setSourcePath("driver/driver_common.h")
 	driverHeaderCommonFile.setOutputName("driver_common.h")
 	driverHeaderCommonFile.setDestPath("driver/")

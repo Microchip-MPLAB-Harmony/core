@@ -1,5 +1,5 @@
 def instantiateComponent(timerComponent, index):
-	timerMenu = timerComponent.createMenuSymbol(None, None)
+	timerMenu = timerComponent.createMenuSymbol("TIMER_DRV_MENU", None)
 	timerMenu.setLabel("Driver Settings")
 	
 	timerEnable = timerComponent.createBooleanSymbol("USE_TIMER", timerMenu)
