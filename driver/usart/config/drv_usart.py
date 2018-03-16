@@ -146,7 +146,7 @@ def instantiateComponent(usartComponent, index):
     usartHeaderFile.setType("HEADER")
     usartHeaderFile.setOverwrite(True)
 
-    usartHeaderDefFile = usartComponent.createFileSymbol("USART_DEF", None)
+    usartHeaderDefFile = usartComponent.createFileSymbol("USART_HEADER_DEF", None)
     usartHeaderDefFile.setSourcePath("driver/usart/drv_usart_definitions.h")
     usartHeaderDefFile.setOutputName("drv_usart_definitions.h")
     usartHeaderDefFile.setDestPath("driver/usart/")
