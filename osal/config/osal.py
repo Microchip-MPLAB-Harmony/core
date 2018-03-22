@@ -230,7 +230,7 @@ def	instantiateComponent(osalComponent):
 
 
 
-	osalSystemDefFile = osalComponent.createFileSymbol("OSAL_DEFINITIONS_H", None)
+	osalSystemDefFile = osalComponent.createFileSymbol("OSAL_SYSDEF_H", None)
 	osalSystemDefFile.setType("STRING")
 	osalSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
 	osalSystemDefFile.setSourcePath("/osal/templates/system/system_definitions.h.ftl")
