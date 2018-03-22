@@ -15,6 +15,9 @@ for coreComponent in coreComponents:
 			print("create component: " + Name.upper() + " System Service")
 			Component = Module.CreateSharedComponent("sys_" + Name, Name.upper() + " System Service", "/Harmony/System Services", "system/" + Name + "/config/sys_" + Name + ".py")
 			Component.addCapability("sys_" + Name, "sys_" + Name)
+			if "dependency" in coreComponent:
+				for item in coreComponent['dependency']:
+					Component.addDependency("sys_" + Name + "_" + item + "_dependency", item)
 		#create drvier component
 		else:
 			print("create component: " + Name.upper() + " Driver")
