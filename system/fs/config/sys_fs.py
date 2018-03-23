@@ -1,6 +1,6 @@
 def	instantiateComponent(sysFSComponent):
 	fsTypes = ["FAT","MPFS2"]
-	mediaTypes =  ["SYS_FS_MEDIA_TYPE_MEDIAFLASH",
+	mediaTypes =  ["SYS_FS_MEDIA_TYPE_NVM",
 					"SYS_FS_MEDIA_TYPE_MSD",
 					"SYS_FS_MEDIA_TYPE_SD_CARD",
 					"SYS_FS_MEDIA_TYPE_RAM",
@@ -53,9 +53,8 @@ def	instantiateComponent(sysFSComponent):
 	sysFSBlockSize.setReadOnly(True)
 	
 	sysFSBufferSize = sysFSComponent.createIntegerSymbol("SYS_FS_MEDIA_MANAGER_BUFFER_SIZE", sysFSMenu)
-	sysFSBufferSize.setLabel("Size Of Media Flash Page Buffer")
-	sysFSBufferSize.setDefaultValue(8192)
-	sysFSBufferSize.setReadOnly(True)
+	sysFSBufferSize.setLabel("Size Of Media Manager Buffer")
+	sysFSBufferSize.setDefaultValue(2048)
 	
 	sysFSAutoMount = sysFSComponent.createBooleanSymbol("SYS_FS_AUTO_MOUNT", sysFSMenu)
 	sysFSAutoMount.setLabel("Use File System Auto Mount Feature?")
@@ -74,7 +73,7 @@ def	instantiateComponent(sysFSComponent):
 	sysFSMediaConfMenu = []
 	sysFSMediaType = []
 	sysFSMediaFsType = []
-	sysFSMediaMEDIAFLASH = []
+	sysFSMediaNVM = []
 	sysFSMediaSRAM = []
 	sysFSMediaVol = []
 	sysFSMediaxVOL = []
@@ -109,12 +108,12 @@ def	instantiateComponent(sysFSComponent):
 		sysFSMediaFsType[i].setLabel("File System Type")
 		sysFSMediaFsType[i].setDefaultValue("FAT")
 		
-		sysFSMediaMEDIAFLASH.append(i)
-		sysFSMediaMEDIAFLASH[i] = sysFSComponent.createBooleanSymbol("SYS_FS_USE_MEDIAFLASH_MBR" + str(i), sysFSMediaConfMenu[i])
-		sysFSMediaMEDIAFLASH[i].setLabel("Create FAT12 in MEDIAFLASH")
-		sysFSMediaMEDIAFLASH[i].setDefaultValue(False)	
-		sysFSMediaMEDIAFLASH[i].setVisible(False)
-		sysFSMediaMEDIAFLASH[i].setDependencies(showMediaMEDIAFLASHFAT12, ["SYS_FS_TYPE_DEFINE_IDX" + str(i), "SYS_FS_MEDIA_TYPE_DEFINE_IDX" + str(i)])
+		sysFSMediaNVM.append(i)
+		sysFSMediaNVM[i] = sysFSComponent.createBooleanSymbol("SYS_FS_USE_NVM_MBR" + str(i), sysFSMediaConfMenu[i])
+		sysFSMediaNVM[i].setLabel("Create FAT12 in NVM")
+		sysFSMediaNVM[i].setDefaultValue(False)	
+		sysFSMediaNVM[i].setVisible(False)
+		sysFSMediaNVM[i].setDependencies(showMediaNVMFAT12, ["SYS_FS_TYPE_DEFINE_IDX" + str(i), "SYS_FS_MEDIA_TYPE_DEFINE_IDX" + str(i)])
 
 		sysFSMediaSRAM.append(i)	
 		sysFSMediaSRAM[i] = sysFSComponent.createBooleanSymbol("SYS_FS_USE_SRAM_MBR" + str(i), sysFSMediaConfMenu[i])
@@ -324,7 +323,7 @@ def	instantiateComponent(sysFSComponent):
 	sysFSSystemTaskFile.setSourcePath("/system/fs/templates/system/system_tasks.c.ftl")
 	sysFSSystemTaskFile.setMarkup(True)	
 ###########################################################################################################
-deviceNames = { 'SYS_FS_MEDIA_TYPE_MEDIAFLASH' : '/dev/nvma',
+deviceNames = { 'SYS_FS_MEDIA_TYPE_NVM' : '/dev/nvma',
 	'SYS_FS_MEDIA_TYPE_MSD' : '/dev/sda',
 	'SYS_FS_MEDIA_TYPE_SD_CARD' : '/dev/mmcblka',
 	'SYS_FS_MEDIA_TYPE_RAM' : '/dev/rama',
@@ -358,12 +357,12 @@ def showMediaConfMenu(sysFSMediaConfMenu, enable):
 		media = component.getSymbolValue("SYS_FS_IDX" + str(i))
 		component.getSymbolByID("MEDIA_CONF_MENU" + str(i)).setVisible((media==True) & (auto_mount==True))
 		
-def showMediaMEDIAFLASHFAT12(sysFSMediaMEDIAFLASH, enable):
-	component = sysFSMediaMEDIAFLASH.getComponent()
+def showMediaNVMFAT12(sysFSMediaNVM, enable):
+	component = sysFSMediaNVM.getComponent()
 	for i in range(0,4):
 		fs = component.getSymbolValue("SYS_FS_TYPE_DEFINE_IDX" + str(i))
 		media = component.getSymbolValue("SYS_FS_MEDIA_TYPE_DEFINE_IDX" + str(i))
-		component.getSymbolByID("SYS_FS_USE_MEDIAFLASH_MBR" + str(i)).setVisible((media == "SYS_FS_MEDIA_TYPE_MEDIAFLASH") & (fs == "FAT"))
+		component.getSymbolByID("SYS_FS_USE_NVM_MBR" + str(i)).setVisible((media == "SYS_FS_MEDIA_TYPE_NVM") & (fs == "FAT"))
 
 def showMediaSRAMFAT12(sysFSMediaSRAM, enable):
 	component = sysFSMediaSRAM.getComponent()

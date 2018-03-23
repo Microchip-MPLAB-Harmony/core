@@ -51,8 +51,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 						<#assign VOL_ENABLE = "SYS_FS_VOL_" + j + "_IDX" + i>
 						<#if .vars[VOL_ENABLE]?has_content>
 							<#if (.vars[VOL_ENABLE] != false)>
-								<#lt>#define SYS_FS_MEDIA_IDX${i}_MOUNT_NAME_VOLUME_IDX${j - 1} 			${.vars["SYS_FS_MEDIA_MOUNT_" + j + "_NAME_IDX" + i]}	
-								<#lt>#define SYS_FS_MEDIA_IDX${i}_DEVICE_NAME_VOLUME_IDX${j - 1}			${.vars["SYS_FS_MEDIA_DEVICE_" + j + "_NAME_IDX" + i]}
+								<#lt>#define SYS_FS_MEDIA_IDX${i}_MOUNT_NAME_VOLUME_IDX${j - 1} 			"${.vars["SYS_FS_MEDIA_MOUNT_" + j + "_NAME_IDX" + i]}"
+								<#lt>#define SYS_FS_MEDIA_IDX${i}_DEVICE_NAME_VOLUME_IDX${j - 1}			"${.vars["SYS_FS_MEDIA_DEVICE_" + j + "_NAME_IDX" + i]}"
 								
 							</#if>
 						</#if>

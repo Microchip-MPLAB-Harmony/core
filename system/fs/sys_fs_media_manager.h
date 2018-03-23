@@ -256,7 +256,7 @@ typedef enum
 typedef enum
 {
     /* Media is of type NVM (internal flash (non volatile) memory)*/
-    SYS_FS_MEDIA_TYPE_MEDIAFLASH,
+    SYS_FS_MEDIA_TYPE_NVM,
     
     /* Media is of type mass storage device */
     SYS_FS_MEDIA_TYPE_MSD,
