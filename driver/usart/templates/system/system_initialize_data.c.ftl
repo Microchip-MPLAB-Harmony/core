@@ -9,7 +9,8 @@ USART_PLIB_API drvUsart${INDEX?string}PlibAPI = {
         .write = (USART_Write)${DRV_USART_PLIB}_Write,
         .writeIsBusy = (USART_WriteIsBusy)${DRV_USART_PLIB}_WriteIsBusy,
         .writeCountGet = (USART_WriteCountGet)${DRV_USART_PLIB}_WriteCountGet,
-        .errorGet = (USART_ErrorGet)${DRV_USART_PLIB}_ErrorGet
+        .errorGet = (USART_ErrorGet)${DRV_USART_PLIB}_ErrorGet,
+        .serialSetup = (USART_SerialSetup)${DRV_USART_PLIB}_SerialSetup
 };
 
 DRV_USART_INIT drvUsart${INDEX?string}InitData =

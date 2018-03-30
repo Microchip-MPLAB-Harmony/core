@@ -160,6 +160,23 @@ typedef enum
 typedef enum _DRV_USART_ERROR DRV_USART_ERROR;
 
 // *****************************************************************************
+/* USART Driver Serial Setup Data
+
+  Summary:
+    Defines the data required to dynamically set the serial settings.
+
+  Description:
+    This data type defines the data required to dynamically set the serial
+    settings for the specific USART driver instance.
+
+  Remarks:
+    This structure is implementation specific. It is fully defined in
+    drv_usart_definitions.h.
+*/
+
+typedef struct _DRV_USART_SERIAL_SETUP DRV_USART_SERIAL_SETUP;
+
+// *****************************************************************************
 /* USART Driver Initialization Data
 
   Summary:
@@ -522,7 +539,8 @@ void DRV_USART_Close( const DRV_HANDLE handle);
     DRV_USART_Open must have been called to obtain a valid opened device handle.
 
    Parameters:
-    None.
+    handle - A valid open-instance handle, returned from the driver's
+    open routine
 
    Returns:
     Errors occurred as listed by DRV_USART_ERROR.
@@ -546,6 +564,50 @@ void DRV_USART_Close( const DRV_HANDLE handle);
 */
 
 DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle );
+
+// *****************************************************************************
+/* Function:
+    bool DRV_USART_SerialSetup(const DRV_HANDLE handle,
+        DRV_USART_SERIAL_SETUP * setup)
+
+   Summary:
+    Sets the USART serial communication settings dynamically.
+
+   Description:
+    This function sets the USART serial communication settings dynamically.
+
+   Precondition:
+    DRV_USART_Open must have been called to obtain a valid opened device handle.
+    The USART transmit or receive transfer status should not be busy.
+
+   Parameters:
+    handle - A valid open-instance handle, returned from the driver's
+    open routine
+    setup - Pointer to the structure containing the serial setup.
+
+   Returns:
+    true - Serial setup was updated successfully.
+    false - Failure while updating serial setup.
+
+   Example:
+    <code>
+    // 'handle', returned from the DRV_USART_Open
+
+    DRV_USART_SERIAL_SETUP setup = {
+            115200,
+            DRV_USART_DATA_8_BIT,
+            DRV_USART_PARITY_ODD,
+            DRV_USART_STOP_1_BIT
+        };
+
+    DRV_USART_SerialSetup(handle, &setup);
+    </code>
+
+   Remarks:
+    None.
+*/
+
+bool DRV_USART_SerialSetup(const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP * setup);
 
 // *****************************************************************************
 // *****************************************************************************

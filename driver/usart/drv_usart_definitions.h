@@ -77,6 +77,58 @@ typedef enum _DRV_USART_ERROR
     DRV_USART_ERROR_FRAMING = 4
 }_DRV_USART_ERROR;
 
+// *****************************************************************************
+/* USART Serial Setup */
+
+typedef enum
+{
+    DRV_USART_DATA_5_BIT = 0,
+
+    DRV_USART_DATA_6_BIT = 1,
+
+    DRV_USART_DATA_7_BIT = 2,
+
+    DRV_USART_DATA_8_BIT = 3,
+
+    DRV_USART_DATA_9_BIT = 4
+
+} DRV_USART_DATA_BIT;
+
+typedef enum
+{
+    DRV_USART_PARITY_NONE = 0,
+
+    DRV_USART_PARITY_ODD = 1,
+
+    DRV_USART_PARITY_EVEN = 2,
+
+    DRV_USART_PARITY_MARK = 3,
+
+    DRV_USART_PARITY_SPACE = 4
+
+} DRV_USART_PARITY;
+
+typedef enum
+{
+    DRV_USART_STOP_1_BIT = 0,
+
+    DRV_USART_STOP_1_5_BIT = 1,
+
+    DRV_USART_STOP_2_BIT = 2
+
+} DRV_USART_STOP_BIT;
+
+typedef struct _DRV_USART_SERIAL_SETUP
+{
+    uint32_t baudRate;
+
+    DRV_USART_DATA_BIT dataWidth;
+
+    DRV_USART_PARITY parity;
+
+    DRV_USART_STOP_BIT stopBits;
+
+} _DRV_USART_SERIAL_SETUP;
 
 // *****************************************************************************
 /* USART PLIB API Set needed by the driver */
@@ -92,6 +144,7 @@ typedef bool(*USART_WriteIsBusy)(void);
 typedef size_t(*USART_WriteCountGet)(void);
 
 typedef _DRV_USART_ERROR(*USART_ErrorGet)(void);
+typedef bool(*USART_SerialSetup)(_DRV_USART_SERIAL_SETUP* setup, uint32_t clkSrc);
 
 typedef struct
 {
@@ -106,6 +159,7 @@ typedef struct
     USART_WriteCountGet writeCountGet;
 
     USART_ErrorGet errorGet;
+    USART_SerialSetup serialSetup;
 
 } USART_PLIB_API;
 

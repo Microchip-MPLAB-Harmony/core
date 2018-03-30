@@ -580,6 +580,23 @@ DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
 
     return errors;
 }
+
+bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* setup )
+{
+    DRV_USART_OBJ * dObj = NULL;
+
+    /* Validate the request */
+    if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
+    {
+        //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Handle");
+        return DRV_USART_ERROR_NONE;
+    }
+
+    /* Clock source cannot be modified dynamically, so passing the '0' to pick
+     * the configured clock source value */
+    return dObj->usartPlib->serialSetup(setup, 0);
+}
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: USART Driver Buffer Queue Interface Implementation
