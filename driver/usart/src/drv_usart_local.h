@@ -50,7 +50,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 #include "driver/usart/drv_usart_definitions.h"
 #include "driver/usart/drv_usart.h"
-#include "osal/osal.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -143,33 +142,6 @@ typedef enum
 } DRV_USART_DIRECTION;
 
 // *****************************************************************************
-/* USART Driver Global Instances Object
-
-  Summary:
-    Object used to keep track of data that is common to all instances of the
-    USART driver.
-
-  Description:
-    None.
-
-  Remarks:
-    None.
-*/
-
-typedef struct
-{
-    /* Set to true if members are initialized once */
-    bool membersAreInitialized;
-
-    /* Mutex to protect driver object pool */
-    OSAL_MUTEX_DECLARE(mutexDriverObjects);
-
-    /* Mutex to protect buffer queue object pool */
-    OSAL_MUTEX_DECLARE(mutexBufferQueueObjects);
-
-} DRV_USART_COMMON_DATA_OBJ;
-
-// *****************************************************************************
 /* USART Driver Buffer Object
 
   Summary:
@@ -252,9 +224,6 @@ typedef struct
 
     /* Interrupt Source of USART */
     INT_SOURCE interruptUSART;
-
-    /* Hardware instance mutex */
-    OSAL_MUTEX_DECLARE(mutexDriverInstance);
 
     /* The buffer queue for the write operations */
     DRV_USART_BUFFER_OBJ  *queueWrite;

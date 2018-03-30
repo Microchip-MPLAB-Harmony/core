@@ -50,7 +50,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 #include "system/int/sys_int.h"
 #include "system/dma/sys_dma.h"
-#include "peripheral/usart/plib_usart.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

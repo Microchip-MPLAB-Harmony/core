@@ -48,18 +48,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "system_config.h"
 #include "driver/usart/drv_usart.h"
 #include "drv_usart_local.h"
-//SYS_DEBUG is not available yet, hence commented for now.
-//#include "system/debug/sys_debug.h"
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data
 // *****************************************************************************
 // *****************************************************************************
-
-/* This object maintains data that is required by all USART
-   driver instances. */
-DRV_USART_COMMON_DATA_OBJ gDrvUSARTCommonDataObj;
 
 /* This is the driver instance object array. */
 DRV_USART_OBJ gDrvUSARTObj[DRV_USART_INSTANCES_NUMBER] ;
@@ -96,14 +90,6 @@ static bool _DRV_USART_ResourceLock(DRV_USART_OBJ * object)
 {
     DRV_USART_OBJ * dObj = object;
 
-    /* Grab a mutex to avoid other threads to modify driver resource
-     * asynchronously. */
-    if(OSAL_MUTEX_Lock(&(dObj->mutexDriverInstance), OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
-    {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Mutex Acquisition Failed");
-        return false;
-    }
-
     /* We will disable USART and/or DMA interrupt so that the driver resource
      * is not updated asynchronously. */
     if( (DMA_CHANNEL_NONE != dObj->txDMAChannel) || (DMA_CHANNEL_NONE != dObj->rxDMAChannel))
@@ -127,8 +113,6 @@ static bool _DRV_USART_ResourceUnlock(DRV_USART_OBJ * object)
     }
 
     SYS_INT_SourceEnable(dObj->interruptUSART);
-
-    OSAL_MUTEX_Unlock(&(dObj->mutexDriverInstance));
 
     return true;
 }
@@ -235,7 +219,6 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
 
     if((false == dObj->inUse) || (SYS_STATUS_READY != dObj->status))
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Driver Is Not Initialized");
         return;
     }
 
@@ -403,13 +386,11 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     /* Validate the request */
     if(DRV_USART_INSTANCES_NUMBER <= drvIndex)
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid driver instance");
         return SYS_MODULE_OBJ_INVALID;
     }
 
     if(false != gDrvUSARTObj[drvIndex].inUse)
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Instance already in use");
         return SYS_MODULE_OBJ_INVALID;
     }
 
@@ -430,29 +411,6 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     dObj->txAddress             = usartInit->usartTransmitAddress;
     dObj->rxAddress             = usartInit->usartReceiveAddress;
     dObj->interruptDMA          = usartInit->interruptDMA;
-
-    /* Create the Mutexes needed for RTOS mode. These calls always passes in the
-     * non-RTOS mode */
-    if(OSAL_RESULT_TRUE != OSAL_MUTEX_Create(&(dObj->mutexDriverInstance)))
-    {
-        return SYS_MODULE_OBJ_INVALID;
-    }
-
-    if(false == gDrvUSARTCommonDataObj.membersAreInitialized)
-    {
-        if(OSAL_RESULT_TRUE != OSAL_MUTEX_Create(&(gDrvUSARTCommonDataObj.mutexDriverObjects)))
-        {
-            return SYS_MODULE_OBJ_INVALID;
-        }
-
-        if(OSAL_RESULT_TRUE != OSAL_MUTEX_Create(&(gDrvUSARTCommonDataObj.mutexBufferQueueObjects)))
-        {
-            return SYS_MODULE_OBJ_INVALID;
-        }
-
-        /* Set this flag so that global mutexes get allocated only once */
-        gDrvUSARTCommonDataObj.membersAreInitialized = true;
-    }
 
     /* Register a callback with either DMA or USART PLIB based on configuration.
      * dObj is used as a context parameter, that will be used to distinguish the
@@ -488,7 +446,6 @@ SYS_STATUS DRV_USART_Status( SYS_MODULE_OBJ object)
     /* Validate the request */
     if( (SYS_MODULE_OBJ_INVALID == object) || (DRV_USART_INSTANCES_NUMBER <= object) )
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid system object handle");
         return SYS_STATUS_UNINITIALIZED;
     }
 
@@ -503,7 +460,6 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
     /* Validate the request */
     if (DRV_USART_INSTANCES_NUMBER <= drvIndex)
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Instance");
         return DRV_HANDLE_INVALID;
     }
 
@@ -511,14 +467,12 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
 
     if((SYS_STATUS_READY != dObj->status) || (false == dObj->inUse))
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Was the driver initialized?");
         return DRV_HANDLE_INVALID;
     }
 
     if(true == dObj->clientInUse)
     {
         /* This driver supports only one client per instance */
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Driver already opened");
         return DRV_HANDLE_INVALID;
     }
 
@@ -539,7 +493,6 @@ void DRV_USART_Close( DRV_HANDLE handle )
     /* Validate the request */
     if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Handle");
         return;
     }
 
@@ -547,13 +500,11 @@ void DRV_USART_Close( DRV_HANDLE handle )
 
     if(false == _DRV_USART_WriteBufferQueueFlush(dObj))
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Could not flush the client's write queue objects");
         return;
     }
 
     if(false == _DRV_USART_ReadBufferQueueFlush(dObj))
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Could not flush the client's read queue objects");
         return;
     }
 
@@ -570,7 +521,6 @@ DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
     /* Validate the request */
     if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Handle");
         return DRV_USART_ERROR_NONE;
     }
 
@@ -588,7 +538,6 @@ bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* set
     /* Validate the request */
     if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Handle");
         return DRV_USART_ERROR_NONE;
     }
 
@@ -612,7 +561,6 @@ void DRV_USART_BufferEventHandlerSet( const DRV_HANDLE handle, const DRV_USART_B
     /* Validate the Request */
     if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Handle");
         return;
     }
 
@@ -634,7 +582,6 @@ void DRV_USART_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t si
     /* Validate the Request */
     if (bufferHandle == NULL)
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "NULL Buffer Handle Pointer");
         return;
     }
 
@@ -642,7 +589,6 @@ void DRV_USART_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t si
 
     if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Handle");
         return;
     }
 
@@ -650,13 +596,11 @@ void DRV_USART_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t si
 
     if((size == 0) || (NULL == buffer))
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Buffer Size or Buffer Pointer");
         return;
     }
 
     if(dObj->queueSizeCurrentWrite >= dObj->queueSizeWrite)
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Transmit Queue Is Full");
         return;
     }
 
@@ -732,7 +676,6 @@ void DRV_USART_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t siz
     /* Validate the Request */
     if (bufferHandle == NULL)
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "NULL Buffer Handle Pointer");
         return;
     }
 
@@ -740,7 +683,6 @@ void DRV_USART_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t siz
 
     if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Handle");
         return;
     }
 
@@ -748,13 +690,11 @@ void DRV_USART_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t siz
 
     if((size == 0) || (NULL == buffer))
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Buffer Size Or Buffer Pointer");
         return;
     }
 
     if(dObj->queueSizeCurrentRead >= dObj->queueSizeRead)
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Receive Queue Is Full");
         return;
     }
 
@@ -829,7 +769,6 @@ size_t DRV_USART_BufferCompletedBytesGet( DRV_USART_BUFFER_HANDLE bufferHandle )
     /* Validate the Request */
     if(DRV_USART_BUFFER_HANDLE_INVALID == bufferHandle)
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Buffer Handle");
         return DRV_USART_BUFFER_HANDLE_INVALID;
     }
 
@@ -872,7 +811,6 @@ DRV_USART_BUFFER_EVENT DRV_USART_BufferStatusGet( const DRV_USART_BUFFER_HANDLE 
     /* Validate the Request */
     if(DRV_USART_BUFFER_HANDLE_INVALID == bufferHandle)
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Buffer Handle");
         return DRV_USART_BUFFER_EVENT_ERROR;
     }
 
@@ -891,7 +829,6 @@ bool DRV_USART_WriteQueueFlush( const DRV_HANDLE handle )
     /* Validate the Request */
     if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Handle");
         return false;
     }
 
@@ -908,7 +845,6 @@ bool DRV_USART_ReadQueueFlush( const DRV_HANDLE handle )
     /* Validate the Request */
     if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
     {
-        //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Handle");
         return false;
     }
 
