@@ -53,11 +53,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include <stdint.h>
-
-/* Compiler Header. */
-#if defined(__XC32)
-    #include <xc.h>
-#endif
+#include <assert.h>
 
 #ifdef __cplusplus
     extern "C" {
