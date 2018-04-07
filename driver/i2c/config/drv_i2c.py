@@ -16,7 +16,7 @@ def instantiateComponent(i2cComponent, index):
     i2cSymPLIB = i2cComponent.createStringSymbol("DRV_I2C_PLIB", None)
     i2cSymPLIB.setLabel("PLIB Used")
     i2cSymPLIB.setReadOnly(True)
-    i2cSymPLIB.setDefaultValue("TWI0")
+    i2cSymPLIB.setDefaultValue("TWIHS0")
     
     i2cSymNumClients = i2cComponent.createIntegerSymbol("DRV_I2C_NUM_CLIENTS", None)
     i2cSymNumClients.setLabel("Number of clients")
@@ -99,7 +99,7 @@ def destroyComponent(i2cComponent):
     Database.setSymbolValue("drv_i2c", "DRV_I2C_NUM_INSTANCES", numInstances, 1)
     
 def onDependentComponentAdded(drv_i2c, id, i2c):
-    if id == "drv_i2c_TWI_dependency" :
+    if id == "drv_i2c_TWIHS_dependency" :
         plibUsed = drv_i2c.getSymbolByID("DRV_I2C_PLIB")
         plibUsed.clearValue()
         plibUsed.setValue(i2c.getID().upper(), 2)
