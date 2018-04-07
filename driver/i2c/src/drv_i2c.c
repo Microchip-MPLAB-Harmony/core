@@ -56,7 +56,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 
 /* This is the driver instance object array. */
-DRV_I2C_OBJ gDrvI2CObj[DRV_I2C_INSTANCES_NUMBER] ;
+static DRV_I2C_OBJ gDrvI2CObj[DRV_I2C_INSTANCES_NUMBER] ;
 
 /* This a global token counter used to generate unique buffer handles */
 static uint16_t gDrvI2CTokenCount = 0;
@@ -67,7 +67,7 @@ static uint16_t gDrvI2CTokenCount = 0;
 // *****************************************************************************
 // *****************************************************************************
 
-void DRV_I2C_TransferObjectsInit( DRV_I2C_OBJ * dObj )
+static void DRV_I2C_TransferObjectsInit( DRV_I2C_OBJ * dObj )
 {
     uint32_t i;
     
@@ -86,7 +86,7 @@ void DRV_I2C_TransferObjectsInit( DRV_I2C_OBJ * dObj )
     }
 }
 
-DRV_I2C_CLIENT_OBJ * DRV_I2C_DriverHandleValidate(DRV_HANDLE handle)
+static DRV_I2C_CLIENT_OBJ * DRV_I2C_DriverHandleValidate(DRV_HANDLE handle)
 {
     /* This function returns the pointer to the client object that is
        associated with this handle if the handle is valid. Returns NULL
@@ -174,7 +174,7 @@ static bool DRV_I2C_TransferQueueFlush( DRV_I2C_CLIENT_OBJ * clientObj )
     return true;
 }
 
-void DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
+static void DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
 {
     DRV_I2C_OBJ            * dObj             = (DRV_I2C_OBJ *)            contextHandle;
     DRV_I2C_CLIENT_OBJ     * client           = (DRV_I2C_CLIENT_OBJ *)     NULL;
@@ -662,27 +662,26 @@ void DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP * se
 
 // *****************************************************************************
 /* Function:
-    void DRV_I2C_TransferReadAdd
+    void DRV_I2C_ReadTransferAdd
     ( 
-        const DRV_HANDLE handle, 
-        DRV_I2C_TRANSFER_HANDLE * const transferHandle, 
+        const DRV_HANDLE handle,  
         void * buffer, 
-        const size_t size 
-        
+        const size_t size,
+        DRV_I2C_TRANSFER_HANDLE * const transferHandle
     )
 
   Summary:
-    Dynamic implementation of DRV_I2C_TransferReadAdd system interface function.
+    Dynamic implementation of DRV_I2C_ReadTransferAdd system interface function.
 
   Description:
-    This is the dynamic implementation of DRV_I2C_TransferReadAdd system interface
+    This is the dynamic implementation of DRV_I2C_ReadTransferAdd system interface
     function.
 
   Remarks:
     See drv_i2c.h for usage information.
 */
 
-void DRV_I2C_TransferReadAdd( const DRV_HANDLE handle, DRV_I2C_TRANSFER_HANDLE * const transferHandle, void * buffer, const size_t size )
+void DRV_I2C_ReadTransferAdd( const DRV_HANDLE handle, void * buffer, const size_t size, DRV_I2C_TRANSFER_HANDLE * const transferHandle )
 {
     DRV_I2C_CLIENT_OBJ     * clientObj        = (DRV_I2C_CLIENT_OBJ *)     NULL;
     DRV_I2C_OBJ            * hDriver          = (DRV_I2C_OBJ *)            NULL;
@@ -808,27 +807,26 @@ void DRV_I2C_TransferReadAdd( const DRV_HANDLE handle, DRV_I2C_TRANSFER_HANDLE *
 
 // *****************************************************************************
 /* Function:
-    void DRV_I2C_TransferWriteAdd
+    void DRV_I2C_WriteTransferAdd
     ( 
-        const DRV_HANDLE handle, 
-        DRV_I2C_TRANSFER_HANDLE * const transferHandle, 
+        const DRV_HANDLE handle,  
         void * buffer, 
-        const size_t size 
-        
+        const size_t size,
+        DRV_I2C_TRANSFER_HANDLE * const transferHandle
     )
 
   Summary:
-    Dynamic implementation of DRV_I2C_TransferWriteAdd system interface function.
+    Dynamic implementation of DRV_I2C_WriteTransferAdd system interface function.
 
   Description:
-    This is the dynamic implementation of DRV_I2C_TransferWriteAdd system interface
+    This is the dynamic implementation of DRV_I2C_WriteTransferAdd system interface
     function.
 
   Remarks:
     See drv_i2c.h for usage information.
 */
 
-void DRV_I2C_TransferWriteAdd( const DRV_HANDLE handle, DRV_I2C_TRANSFER_HANDLE * transferHandle, void * buffer, const size_t size )
+void DRV_I2C_WriteTransferAdd( const DRV_HANDLE handle, void * buffer, const size_t size, DRV_I2C_TRANSFER_HANDLE * transferHandle )
 {
     DRV_I2C_CLIENT_OBJ     * clientObj        = (DRV_I2C_CLIENT_OBJ *)     NULL;
     DRV_I2C_OBJ            * hDriver          = (DRV_I2C_OBJ *)            NULL;
@@ -954,28 +952,28 @@ void DRV_I2C_TransferWriteAdd( const DRV_HANDLE handle, DRV_I2C_TRANSFER_HANDLE 
 
 // *****************************************************************************
 /* Function:
-    void DRV_I2C_TransferWriteReadAdd
+    void DRV_I2C_WriteReadTransferAdd
     ( 
         const DRV_HANDLE handle, 
-        DRV_I2C_TRANSFER_HANDLE * const transferHandle, 
         void * writeBuffer, 
         const size_t writeSize, 
         void * readBuffer, 
         const size_t readSize,
+        DRV_I2C_TRANSFER_HANDLE * const transferHandle
     )
 
   Summary:
-    Dynamic implementation of DRV_I2C_TransferWriteReadAdd system interface function.
+    Dynamic implementation of DRV_I2C_WriteReadTransferAdd system interface function.
 
   Description:
-    This is the dynamic implementation of DRV_I2C_TransferWriteReadAdd system interface
+    This is the dynamic implementation of DRV_I2C_WriteReadTransferAdd system interface
     function.
 
   Remarks:
     See drv_i2c.h for usage information.
 */
 
-void DRV_I2C_TransferWriteReadAdd ( const DRV_HANDLE handle, DRV_I2C_TRANSFER_HANDLE * transferHandle, void *writeBuffer, size_t writeSize, void *readBuffer, size_t readSize )
+void DRV_I2C_WriteReadTransferAdd ( const DRV_HANDLE handle, void *writeBuffer, size_t writeSize, void *readBuffer, size_t readSize, DRV_I2C_TRANSFER_HANDLE * transferHandle )
 {
     DRV_I2C_CLIENT_OBJ     * clientObj        = (DRV_I2C_CLIENT_OBJ *)     NULL;
     DRV_I2C_OBJ            * hDriver          = (DRV_I2C_OBJ *)            NULL;

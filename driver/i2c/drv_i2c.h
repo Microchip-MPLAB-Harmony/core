@@ -74,8 +74,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     the driver.
 
   Description:
-    A transfer handle value is returned by a call to the DRV_I2C_TransferReadAdd/
-    DRV_I2C_TransferWriteAdd or DRV_I2C_TransferWriteReadAdd functions. This 
+    A transfer handle value is returned by a call to the DRV_I2C_ReadTransferAdd/
+    DRV_I2C_WriteTransferAdd or DRV_I2C_WriteReadTransferAdd functions. This 
     handle is associated with the transfer passed into the function and it allows
     the application to track the completion of the data from (or into) that
     transfer. The transfer handle value returned from the "transfer add" function
@@ -101,7 +101,7 @@ typedef uintptr_t DRV_I2C_TRANSFER_HANDLE;
 
   Description:
     This is the definition of an invalid transfer handle. An invalid transfer 
-    handle is returned by DRV_I2C_TransferReadAdd, DRV_I2C_TransferWriteAdd and 
+    handle is returned by DRV_I2C_ReadTransferAdd, DRV_I2C_WriteTransferAdd and 
     DRV_I2C_TransferWriteRead functions if the buffer add request was not 
     successful.
 
@@ -151,7 +151,7 @@ typedef enum
    Description
     This enumeration identifies the possible events that can result from a
     buffer add request caused by the client calling either the
-    DRV_I2C_TransferReadAdd or DRV_I2C_TransferWriteAdd functions.
+    DRV_I2C_ReadTransferAdd or DRV_I2C_WriteTransferAdd functions.
 
    Remarks:
     One of these values is passed in the "event" parameter of the event
@@ -247,8 +247,8 @@ typedef enum
     context. It is recommended of the application to not perform process 
     intensive or blocking operations with in this function.
 
-    The DRV_I2C_TransferReadAdd, DRV_I2C_TransferWriteAdd and 
-    DRV_I2C_TransferWriteReadAdd functions can be called in the event handler to 
+    The DRV_I2C_ReadTransferAdd, DRV_I2C_WriteTransferAdd and 
+    DRV_I2C_WriteReadTransferAdd functions can be called in the event handler to 
     add a buffer to the driver queue. These functions can only be called to add 
     buffers to the driver whose event handler is running. For example, I2C2 
     driver buffers cannot be added in I2C1 driver event handler.
@@ -552,12 +552,12 @@ DRV_I2C_CLIENT_STATUS DRV_I2C_ClientStatus ( DRV_HANDLE handle );
 
 // *****************************************************************************
 /* Function:
-    void DRV_I2C_TransferWriteAdd
+    void DRV_I2C_WriteTransferAdd
     (
         const DRV_HANDLE handle,
-        DRV_I2C_TRANSFER_HANDLE * transferHandle,
         void * buffer,
-        const size_t size
+        const size_t size,
+        DRV_I2C_TRANSFER_HANDLE * transferHandle
     )
 
   Summary:
@@ -589,16 +589,16 @@ DRV_I2C_CLIENT_STATUS DRV_I2C_ClientStatus ( DRV_HANDLE handle );
     handle - Handle of the communication channel as return by the
     DRV_I2C_Open function.
 
-    transferHandle - Pointer to an argument that will contain the return 
-    transfer handle.
-
     buffer - Data to be written.
 
     size - Transfer size in bytes.
+    
+    transferHandle - Pointer to an argument that will contain the return 
+    transfer handle. This will be DRV_I2C_TRANSFER_HANDLE_INVALID if the 
+    function was not successful.
 
   Returns:
-    The transferHandle parameter will contain the return transfer handle. This will 
-    be DRV_I2C_TRANSFER_HANDLE_INVALID if the function was not successful.
+    None.
 
   Example:
     <code>
@@ -610,8 +610,7 @@ DRV_I2C_CLIENT_STATUS DRV_I2C_ClientStatus ( DRV_HANDLE handle );
     // myI2CHandle is the handle returned
     // by the DRV_I2C_Open function.
 
-    DRV_I2C_TransferWriteAdd(myI2CHandle, &transferHandle,
-                                        myTransfer, MY_BUFFER_SIZE);
+    DRV_I2C_WriteTransferAdd(myI2CHandle, mybuffer, MY_BUFFER_SIZE, &transferHandle);
 
     if(DRV_I2C_TRANSFER_HANDLE_INVALID == transferHandle)
     {
@@ -630,16 +629,16 @@ DRV_I2C_CLIENT_STATUS DRV_I2C_ClientStatus ( DRV_HANDLE handle );
 
 */
 
-void DRV_I2C_TransferWriteAdd( const DRV_HANDLE handle, DRV_I2C_TRANSFER_HANDLE * transferHandle, void * buffer, const size_t size );
+void DRV_I2C_WriteTransferAdd( const DRV_HANDLE handle, void * buffer, const size_t size, DRV_I2C_TRANSFER_HANDLE * transferHandle );
 
 // *****************************************************************************
 /* Function:
-    void DRV_I2C_TransferReadAdd
+    void DRV_I2C_ReadTransferAdd
     (
         const DRV_HANDLE handle,
-        DRV_I2C_TRANSFER_HANDLE * transferHandle,
         void * buffer,
-        const size_t size
+        const size_t size,
+        DRV_I2C_TRANSFER_HANDLE * transferHandle
     )
 
   Summary:
@@ -670,17 +669,17 @@ void DRV_I2C_TransferWriteAdd( const DRV_HANDLE handle, DRV_I2C_TRANSFER_HANDLE 
   Parameters:
     handle - Handle of the communication channel as returned by the
     DRV_I2C_Open function.
-
-    transferHandle - Pointer to an argument that will contain the return 
-    transfer handle.
                    
     buffer - buffer where the read data will be stored.
 
     size - Transfer size in bytes.
+    
+    transferHandle - Pointer to an argument that will contain the return 
+    transfer handle. This is DRV_I2C_TRANSFER_HANDLE_INVALID if the 
+    request was not successful.
 
   Returns:
-     The transfer handle is returned in the transferHandle argument. This is
-     DRV_I2C_TRANSFER_HANDLE_INVALID if the request was not successful.
+     None
 
   Example:
     <code>
@@ -692,8 +691,7 @@ void DRV_I2C_TransferWriteAdd( const DRV_HANDLE handle, DRV_I2C_TRANSFER_HANDLE 
     // myI2CHandle is the handle returned
     // by the DRV_I2C_Open function.
 
-    DRV_I2C_TransferReadAdd(myI2Chandle, &transferHandle,
-                                        myTransfer, MY_BUFFER_SIZE);
+    DRV_I2C_ReadTransferAdd(myI2Chandle, mybuffer, MY_BUFFER_SIZE, &transferHandle);
 
     if(DRV_I2C_TRANSFER_HANDLE_INVALID == transferHandle)
     {
@@ -711,18 +709,18 @@ void DRV_I2C_TransferWriteAdd( const DRV_HANDLE handle, DRV_I2C_TRANSFER_HANDLE 
     I2C driver instance. It should not be called directly in an ISR.
 */
 
-void DRV_I2C_TransferReadAdd( const DRV_HANDLE handle, DRV_I2C_TRANSFER_HANDLE * transferHandle, void * buffer, const size_t size );
+void DRV_I2C_ReadTransferAdd( const DRV_HANDLE handle, void * buffer, const size_t size, DRV_I2C_TRANSFER_HANDLE * transferHandle );
 
 // *****************************************************************************
 /* Function:
-    void DRV_I2C_TransferWriteReadAdd 
+    void DRV_I2C_WriteReadTransferAdd 
     ( 
-        const DRV_HANDLE handle, 
-        DRV_I2C_TRANSFER_HANDLE * transferHandle, 
+        const DRV_HANDLE handle,  
         void *writeBuffer, 
         size_t writeSize, 
         void *readBuffer, 
-        size_t readSize 
+        size_t readSize,
+        DRV_I2C_TRANSFER_HANDLE * transferHandle
     )
 
   Summary:
@@ -754,9 +752,6 @@ void DRV_I2C_TransferReadAdd( const DRV_HANDLE handle, DRV_I2C_TRANSFER_HANDLE *
     handle - Handle of the communication channel as return by the
     DRV_I2C_Open function.
 
-    transferHandle - Pointer to an argument that will contain the return 
-    transfer handle.
-
     writeBuffer - Data to be written.
 
     writeSize - Size of write buffer in bytes.
@@ -764,23 +759,26 @@ void DRV_I2C_TransferReadAdd( const DRV_HANDLE handle, DRV_I2C_TRANSFER_HANDLE *
     readBuffer - buffer where data to be read is stored.
     
     readSize - Size of the read buffer in bytes.
+    
+    transferHandle - Pointer to an argument that will contain the return 
+    transfer handle. This will be DRV_I2C_TRANSFER_HANDLE_INVALID if the 
+    function was not successful.
 
   Returns:
-    The transferHandle parameter will contain the return transfer handle. This will 
-    be DRV_I2C_TRANSFER_HANDLE_INVALID if the function was not successful.
+    None. 
 
   Example:
     <code>
 
     MY_APP_OBJ myAppObj;
-    uint8_t mybuffer[MY_BUFFER_SIZE];
+    uint8_t myTxbuffer[MY_TX_BUFFER_SIZE];
+    uint8_t myRxbuffer[MY_RX_BUFFER_SIZE];
     DRV_I2C_TRANSFER_HANDLE transferHandle;
 
     // myI2CHandle is the handle returned
     // by the DRV_I2C_Open function.
 
-    DRV_I2C_TransferWriteAdd(myI2Chandle, &transferHandle,
-                                        myTransfer, MY_BUFFER_SIZE);
+    DRV_I2C_WriteTransferAdd(myI2Chandle, myTxbuffer, MY_TX_BUFFER_SIZE, myRxbuffer, MY_RX_BUFFER_SIZE, &transferHandle);
 
     if(DRV_I2C_TRANSFER_HANDLE_INVALID == transferHandle)
     {
@@ -799,7 +797,7 @@ void DRV_I2C_TransferReadAdd( const DRV_HANDLE handle, DRV_I2C_TRANSFER_HANDLE *
 
 */
 
-void DRV_I2C_TransferWriteReadAdd ( const DRV_HANDLE handle, DRV_I2C_TRANSFER_HANDLE * transferHandle, void *writeBuffer, const size_t writeSize, void *readBuffer, const size_t readSize );
+void DRV_I2C_WriteReadTransferAdd ( const DRV_HANDLE handle, void *writeBuffer, const size_t writeSize, void *readBuffer, const size_t readSize, DRV_I2C_TRANSFER_HANDLE * transferHandle );
 
 // *****************************************************************************
 /* Function:
@@ -817,8 +815,8 @@ void DRV_I2C_TransferWriteReadAdd ( const DRV_HANDLE handle, DRV_I2C_TRANSFER_HA
   Description:
     This function allows a client to register a transfer event handling function
     with the driver to call back when queued transfers have finished.
-    When a client calls either the DRV_I2C_TransferReadAdd, DRV_I2C_TransferWriteAdd 
-    or DRV_I2C_TransferWriteReadAdd function, it is provided with a handle identifying
+    When a client calls either the DRV_I2C_ReadTransferAdd, DRV_I2C_WriteTransferAdd 
+    or DRV_I2C_WriteReadTransferAdd function, it is provided with a handle identifying
     the transfer that was added to the driver's transfer queue. The driver will
     pass this handle back to the client by calling "eventHandler" function when
     the transfer has completed.
@@ -862,7 +860,7 @@ void DRV_I2C_TransferWriteReadAdd ( const DRV_HANDLE handle, DRV_I2C_TRANSFER_HA
     DRV_I2C_TransferEventHandlerSet( myI2CHandle, APP_I2CTransferEventHandler,
                                      (uintptr_t)&myAppObj );
 
-    DRV_I2C_TransferReadAdd(myI2Chandle, &transferHandle
+    DRV_I2C_ReadTransferAdd(myI2Chandle, &transferHandle
                                         myBuffer, MY_BUFFER_SIZE);
 
     if(DRV_I2C_TRANSFER_HANDLE_INVALID == transferHandle)
@@ -922,8 +920,8 @@ void DRV_I2C_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_I2C_TRA
   Precondition:
     DRV_I2C_Open must have been called to obtain a valid opened device handle.
 
-    Either the DRV_I2C_TransferReadAdd, DRV_I2C_TransferWriteAdd or 
-    DRV_I2C_TransferWriteReadAdd function must have been called and a valid 
+    Either the DRV_I2C_ReadTransferAdd, DRV_I2C_WriteTransferAdd or 
+    DRV_I2C_WriteReadTransferAdd function must have been called and a valid 
     buffer handle returned.
     
   Parameters:
@@ -953,7 +951,7 @@ void DRV_I2C_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_I2C_TRA
     DRV_I2C_TransferEventHandlerSet( myI2CHandle, APP_I2CTransferEventHandle,
                                      (uintptr_t)&myAppObj );
 
-    DRV_I2C_TransferReadAdd( myI2Chandle, transferHandle
+    DRV_I2C_ReadTransferAdd( myI2Chandle, transferHandle
                                             myBuffer, MY_BUFFER_SIZE );
 
     if(DRV_I2C_TRANSFER_HANDLE_INVALID == transferHandle)
