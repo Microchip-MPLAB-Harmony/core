@@ -112,37 +112,6 @@ typedef enum
 } DRV_I2C_TRANSFER_OBJ_FLAGS;
 
 // *****************************************************************************
-/* I2C Client-Specific Driver Status
-
-  Summary:
-    Defines the client-specific status of the I2C driver.
-
-  Description:
-    This enumeration defines the client-specific status codes of the I2C
-    driver.
-
-  Remarks:
-    Returned by the DRV_I2C_ClientStatus function.
-*/
-
-typedef enum
-{
-    /* An error has occurred.*/
-    DRV_I2C_CLIENT_STATUS_ERROR    = DRV_CLIENT_STATUS_ERROR,
-
-    /* The driver is closed, no operations for this client are ongoing,
-    and/or the given handle is invalid. */
-    DRV_I2C_CLIENT_STATUS_CLOSED   = DRV_CLIENT_STATUS_CLOSED,
-
-    /* The driver is currently busy and cannot start additional operations. */
-    DRV_I2C_CLIENT_STATUS_BUSY     = DRV_CLIENT_STATUS_BUSY,
-
-    /* The module is running and ready for additional operations */
-    DRV_I2C_CLIENT_STATUS_READY    = DRV_CLIENT_STATUS_READY
-
-} DRV_I2C_CLIENT_STATUS;
-
-// *****************************************************************************
 /* I2C Driver Transfer Object
 
   Summary:
