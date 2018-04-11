@@ -2,9 +2,11 @@
 
 uint8_t gDrvMemory${INDEX?string}EraseBuffer[DRV_MEMORY_ERASE_BUFFER_SIZE_IDX${INDEX?string}] __attribute__((aligned(32)));
 
-DRV_MEMORY_BUFFER_OBJECT gDrvMemory${INDEX?string}BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX${INDEX?string}] = { 0 };
-
 DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX${INDEX?string}] = { 0 };
+
+<#if drv_memory.DRV_MEMORY_COMMON_MODE == "ASYNC" >
+    <#lt>DRV_MEMORY_BUFFER_OBJECT gDrvMemory${INDEX?string}BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX${INDEX?string}] = { 0 };
+</#if>
 
 const MEMORY_DEVICE_API drvMemory${INDEX?string}DeviceAPI = {
     .SectorErase        = ${DRV_MEMORY_DEVICE}_SectorErase,
@@ -17,7 +19,7 @@ const MEMORY_DEVICE_API drvMemory${INDEX?string}DeviceAPI = {
 const DRV_MEMORY_INIT drvMemory${INDEX?string}InitData =
 {
     .memoryDevice         = &drvMemory${INDEX?string}DeviceAPI,
-<#if DRV_MEMORY_FS_ENABLE >
+<#if drv_memory.DRV_MEMORY_COMMON_FS_ENABLE >
     .deviceMediaType      = (uint8_t)${DRV_MEMORY_DEVICE_TYPE},
 </#if>
     .inInterruptMode      = ${DRV_MEMORY_INTERRUPT_ENABLE?string},
@@ -25,9 +27,11 @@ const DRV_MEMORY_INIT drvMemory${INDEX?string}InitData =
     .interruptSource      = DRV_MEMORY_INT_SRC_IDX${INDEX?string},
 </#if>
     .ewBuffer             = &gDrvMemory${INDEX?string}EraseBuffer[0],
-    .bufferObj            = (uintptr_t)&gDrvMemory${INDEX?string}BufferObject[0],
     .clientObjPool        = (uintptr_t)&gDrvMemory${INDEX?string}ClientObject[0],
+<#if drv_memory.DRV_MEMORY_COMMON_MODE == "ASYNC" >
+    .bufferObj            = (uintptr_t)&gDrvMemory${INDEX?string}BufferObject[0],
     .queueSize            = DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX${INDEX?string},
+</#if>
     .nClientsMax          = DRV_MEMORY_CLIENTS_NUMBER_IDX${INDEX?string}
 };
 

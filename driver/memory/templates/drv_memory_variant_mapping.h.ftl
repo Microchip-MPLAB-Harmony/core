@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    drv_sst26_variant_mapping.h
+    drv_memory_variant_mapping.h
 
   Summary:
     MEMORY Driver Feature Variant Implementations
@@ -43,8 +43,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #ifndef _DRV_MEMORY_VARIANT_MAPPING_H
 #define _DRV_MEMORY_VARIANT_MAPPING_H
 
-#include "configuration.h"
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Feature Variant Mapping
@@ -57,137 +55,60 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 <#if DRV_MEMORY_COMMON_FS_ENABLE >
 
-#include "system/fs/sys_fs_media_manager.h"
+    <#lt>#include "system/fs/sys_fs_media_manager.h"
+    <#lt>
+    <#lt>// *****************************************************************************
+    <#lt>
 
-// *****************************************************************************
+    <#lt>/* Registers the MEMORY driver services with the File System */
 
-/* Registers the MEMORY driver services with the File System */
+    <#lt>void DRV_MEMORY_RegisterWithSysFs( const SYS_MODULE_INDEX drvIndex, uint8_t mediaType);
 
-void DRV_MEMORY_RegisterWithSysFs( const SYS_MODULE_INDEX drvIndex, uint8_t mediaType);
+    <#lt>#define _DRV_MEMORY_RegisterWithSysFs(x, y) DRV_MEMORY_RegisterWithSysFs(x, y)
 
-#define _DRV_MEMORY_RegisterWithSysFs(x, y) DRV_MEMORY_RegisterWithSysFs(x, y)
+    <#if DRV_MEMORY_COMMON_MODE == "SYNC" >
+        <#lt>void DRV_MEMORY_FS_Erase
+        <#lt>(
+        <#lt>    const DRV_HANDLE handle,
+        <#lt>    SYS_MEDIA_BLOCK_COMMAND_HANDLE *commandHandle,
+        <#lt>    uint32_t blockStart,
+        <#lt>    uint32_t nBlock
+        <#lt>);
 
-typedef SYS_FS_MEDIA_REGION_GEOMETRY        _DRV_MEMORY_REGION_GEOMETRY;
+        <#lt>void DRV_MEMORY_FS_EraseWrite
+        <#lt>(
+        <#lt>    const DRV_HANDLE handle,    
+        <#lt>    SYS_MEDIA_BLOCK_COMMAND_HANDLE *commandHandle,
+        <#lt>    void *sourceBuffer,
+        <#lt>    uint32_t blockStart,
+        <#lt>    uint32_t nBlock
+        <#lt>);
 
-typedef SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE   _DRV_MEMORY_COMMAND_HANDLE;
+        <#lt>void DRV_MEMORY_FS_Write
+        <#lt>(
+        <#lt>    const DRV_HANDLE handle,        
+        <#lt>    SYS_MEDIA_BLOCK_COMMAND_HANDLE *commandHandle,
+        <#lt>    void *sourceBuffer,
+        <#lt>    uint32_t blockStart,
+        <#lt>    uint32_t nBlock
+        <#lt>);
 
-typedef SYS_FS_MEDIA_GEOMETRY               _DRV_MEMORY_GEOMETRY;
+        <#lt>void DRV_MEMORY_FS_Read
+        <#lt>(
+        <#lt>    const DRV_HANDLE handle,
+        <#lt>    SYS_MEDIA_BLOCK_COMMAND_HANDLE *commandHandle,
+        <#lt>    void *targetBuffer,
+        <#lt>    uint32_t blockStart,
+        <#lt>    uint32_t nBlock
+        <#lt>);
+    </#if>
 
-typedef SYS_FS_MEDIA_EVENT_HANDLER          _DRV_MEMORY_TRANSFER_HANDLER;
-
-#define DRV_MEMORY_SUPPORTS_BYTE_WRITES     SYS_FS_MEDIA_SUPPORTS_BYTE_WRITES
-
-#define DRV_MEMORY_SUPPORTS_READ_ONLY       SYS_FS_MEDIA_SUPPORTS_READ_ONLY
-
-#define DRV_MEMORY_SUPPORTS_ONE_TIME_PROGRAMING SYS_FS_MEDIA_SUPPORTS_ONE_TIME_PROGRAMING
-
-#define DRV_MEMORY_READ_IS_BLOCKING         SYS_FS_MEDIA_READ_IS_BLOCKING
-
-#define DRV_MEMORY_WRITE_IS_BLOCKING        SYS_FS_MEDIA_WRITE_IS_BLOCKING
-
-#define _DRV_MEMORY_COMMAND_HANDLE_INVALID  SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID
-
-#define _DRV_MEMORY_EVENT_COMMAND_COMPLETE  SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE
-
-#define _DRV_MEMORY_EVENT_COMMAND_ERROR     SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_ERROR
-
-#define _DRV_MEMORY_COMMAND_COMPLETED       SYS_FS_MEDIA_COMMAND_COMPLETED
-
-#define _DRV_MEMORY_COMMAND_QUEUED          SYS_FS_MEDIA_COMMAND_QUEUED
-
-#define _DRV_MEMORY_COMMAND_IN_PROGRESS     SYS_FS_MEDIA_COMMAND_IN_PROGRESS
-
-#define _DRV_MEMORY_COMMAND_ERROR_UNKNOWN   SYS_FS_MEDIA_COMMAND_UNKNOWN
-
-<#else >
-
-typedef enum
-{
-    /* Media supports Byte Write */
-    DRV_MEMORY_SUPPORTS_BYTE_WRITES = 0x01,
-
-    /* Media supports only Read operation */
-    DRV_MEMORY_SUPPORTS_READ_ONLY = 0x02,
-
-    /* Media supports OTP (One Time Programming) */
-    DRV_MEMORY_SUPPORTS_ONE_TIME_PROGRAMING = 0x04,
-
-    /* Read in blocking */
-    DRV_MEMORY_READ_IS_BLOCKING = 0x08,
-
-    /* Write is blocking */
-    DRV_MEMORY_WRITE_IS_BLOCKING = 0x10,
-
-} DRV_MEMORY_PROPERTY;
-
-typedef struct
-{
-    /* Size of a each block in Bytes */
-    uint32_t blockSize;
-
-    /* Number of Blocks of identical size within the Region */
-    uint32_t numBlocks;
-
-} _DRV_MEMORY_REGION_GEOMETRY;
-
-typedef struct 
-{
-    /* Properties of a Media. For a device, if multiple properties  are
-       applicable, they can be ORed */
-    DRV_MEMORY_PROPERTY mediaProperty;
-
-    /* Number of Read Regions */
-    uint32_t numReadRegions;
-
-    /* Number of Write Regions */
-    uint32_t numWriteRegions;
-
-    /* Number of Erase Regions */
-    uint32_t numEraseRegions;
-
-    /* Pointer to the table containing the geometry information */
-    _DRV_MEMORY_REGION_GEOMETRY *geometryTable;
-
-} _DRV_MEMORY_GEOMETRY;
-
-typedef uintptr_t           _DRV_MEMORY_COMMAND_HANDLE;
-
-typedef enum
-{
-    /* Block operation has been completed successfully. */
-    _DRV_MEMORY_EVENT_COMMAND_COMPLETE,
-
-    /* There was an error during the block operation */
-    _DRV_MEMORY_EVENT_COMMAND_ERROR
-
-} _DRV_MEMORY_EVENT;
-
-typedef enum
-{
-    /*Done OK and ready */
-    _DRV_MEMORY_COMMAND_COMPLETED          = 0 ,
-
-    /*Scheduled but not started */
-    _DRV_MEMORY_COMMAND_QUEUED             = 1,
-
-    /*Currently being in transfer */
-    _DRV_MEMORY_COMMAND_IN_PROGRESS        = 2,
-
-    /*Unknown buffer */
-    _DRV_MEMORY_COMMAND_ERROR_UNKNOWN      = -1,
-
-} _DRV_MEMORY_COMMAND_STATUS;
-
-typedef void (* _DRV_MEMORY_TRANSFER_HANDLER)
-(
-    _DRV_MEMORY_EVENT event,
-    _DRV_MEMORY_COMMAND_HANDLE commandHandle,
-    uintptr_t context
-);
-
-#define _DRV_MEMORY_RegisterWithSysFs(x, y)
-
-#define _DRV_MEMORY_COMMAND_HANDLE_INVALID  ((_DRV_MEMORY_COMMAND_HANDLE)(-1))
+<#else>
+    <#lt>#include "system/system_media.h"
+    <#lt>
+    <#lt>// *****************************************************************************
+    <#lt>
+    <#lt>#define _DRV_MEMORY_RegisterWithSysFs(x, y)
 
 </#if>
 

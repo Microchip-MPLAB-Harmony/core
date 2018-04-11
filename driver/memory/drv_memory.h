@@ -89,11 +89,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     None.
 */
 
-typedef _DRV_MEMORY_COMMAND_HANDLE  DRV_MEMORY_COMMAND_HANDLE;
-
-typedef _DRV_MEMORY_GEOMETRY        DRV_MEMORY_GEOMETRY;
-
-typedef _DRV_MEMORY_REGION_GEOMETRY DRV_MEMORY_REGION_GEOMETRY;
+typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE  DRV_MEMORY_COMMAND_HANDLE;
 
 // *****************************************************************************
 /* MEMORY Driver Invalid Command Handle.
@@ -110,7 +106,7 @@ typedef _DRV_MEMORY_REGION_GEOMETRY DRV_MEMORY_REGION_GEOMETRY;
     None.
 */
 
-#define DRV_MEMORY_COMMAND_HANDLE_INVALID _DRV_MEMORY_COMMAND_HANDLE_INVALID
+#define DRV_MEMORY_COMMAND_HANDLE_INVALID SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID
 
 // *****************************************************************************
 /* MEMORY Driver Events
@@ -131,10 +127,10 @@ typedef _DRV_MEMORY_REGION_GEOMETRY DRV_MEMORY_REGION_GEOMETRY;
 typedef enum
 {
     /* Operation has been completed successfully. */
-    DRV_MEMORY_EVENT_COMMAND_COMPLETE = _DRV_MEMORY_EVENT_COMMAND_COMPLETE,
+    DRV_MEMORY_EVENT_COMMAND_COMPLETE = SYS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE,
 
     /* There was an error during the operation */
-    DRV_MEMORY_EVENT_COMMAND_ERROR = _DRV_MEMORY_EVENT_COMMAND_ERROR 
+    DRV_MEMORY_EVENT_COMMAND_ERROR    = SYS_MEDIA_EVENT_BLOCK_COMMAND_ERROR 
 
 } DRV_MEMORY_EVENT;
 
@@ -154,16 +150,16 @@ typedef enum
 typedef enum
 {
     /* Done OK and ready */
-    DRV_MEMORY_COMMAND_COMPLETED          = _DRV_MEMORY_COMMAND_COMPLETED,
+    DRV_MEMORY_COMMAND_COMPLETED          = SYS_MEDIA_COMMAND_COMPLETED,
 
     /* Scheduled but not started */
-    DRV_MEMORY_COMMAND_QUEUED             = _DRV_MEMORY_COMMAND_QUEUED,
+    DRV_MEMORY_COMMAND_QUEUED             = SYS_MEDIA_COMMAND_QUEUED,
 
     /* Currently being in transfer */
-    DRV_MEMORY_COMMAND_IN_PROGRESS        = _DRV_MEMORY_COMMAND_IN_PROGRESS,
+    DRV_MEMORY_COMMAND_IN_PROGRESS        = SYS_MEDIA_COMMAND_IN_PROGRESS,
 
     /* Unknown Command */
-    DRV_MEMORY_COMMAND_ERROR_UNKNOWN      = _DRV_MEMORY_COMMAND_ERROR_UNKNOWN,
+    DRV_MEMORY_COMMAND_ERROR_UNKNOWN      = SYS_MEDIA_COMMAND_UNKNOWN,
 
 } DRV_MEMORY_COMMAND_STATUS;
 
@@ -240,7 +236,7 @@ typedef enum
     recommended of the application to not perform process intensive or blocking
     operations within this function.
 */
-typedef _DRV_MEMORY_TRANSFER_HANDLER DRV_MEMORY_TRANSFER_HANDLER;
+typedef SYS_MEDIA_EVENT_HANDLER   DRV_MEMORY_TRANSFER_HANDLER;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -323,52 +319,6 @@ typedef _DRV_MEMORY_TRANSFER_HANDLER DRV_MEMORY_TRANSFER_HANDLER;
 */
 
 SYS_MODULE_OBJ DRV_MEMORY_Initialize( const SYS_MODULE_INDEX index, const SYS_MODULE_INIT * const init );
-
-// ****************************************************************************
-/* Function:
-    void DRV_MEMORY_Deinitialize( SYS_MODULE_OBJ object );
-    
-  Summary:
-    Deinitializes the specified instance of the MEMORY driver module
-
-  Description:
-    Deinitializes the specified instance of the MEMORY driver module, disabling its
-    operation (and any hardware). Invalidates all the internal data.
-  
-  Preconditions:
-    Function DRV_MEMORY_Initialize should have been called before calling
-    this function.
-  
-  Parameter:
-    object -  Driver object handle, returned from the DRV_MEMORY_Initialize
-              routine
-
-  Returns:
-    None.
-
-  Example:
-    <code>
-    // This code snippet shows an example of deinitializing the driver.
-    
-    SYS_MODULE_OBJ      object;     //  Returned from DRV_MEMORY_Initialize
-    SYS_STATUS          status;
-    
-    DRV_MEMORY_Deinitialize(object);
-    
-    status = DRV_MEMORY_Status(object);
-    if (SYS_MODULE_DEINITIALIZED != status)
-    {
-        // Check again later if you need to know when the driver is
-        // deinitialized.
-    }
-    </code>
-  
-  Remarks:
-    Once the Initialize operation has been called, the Deinitialize operation
-    must be called before the Initialize operation can be called again.
-*/
-
-void DRV_MEMORY_Deinitialize( SYS_MODULE_OBJ object );
 
 // *************************************************************************
 /* Function:
@@ -578,7 +528,7 @@ void DRV_MEMORY_Close( const DRV_HANDLE handle );
 
 // **************************************************************************
 /* Function:
-    void DRV_MEMORY_Erase
+    void DRV_MEMORY_AsyncErase
     (
         const DRV_HANDLE handle,
         DRV_MEMORY_COMMAND_HANDLE *commandHandle,
@@ -688,7 +638,7 @@ void DRV_MEMORY_Close( const DRV_HANDLE handle );
     None.
 */
 
-void DRV_MEMORY_Erase
+void DRV_MEMORY_AsyncErase
 (
     const DRV_HANDLE handle,
     DRV_MEMORY_COMMAND_HANDLE *commandHandle,
@@ -696,9 +646,16 @@ void DRV_MEMORY_Erase
     uint32_t nBlock
 );
 
+bool DRV_MEMORY_SyncErase
+(
+    const DRV_HANDLE handle,    
+    uint32_t blockStart,
+    uint32_t nBlock
+);
+
 // *****************************************************************************
 /* Function:
-    void DRV_MEMORY_EraseWrite
+    void DRV_MEMORY_AsyncEraseWrite
     (
         const DRV_HANDLE handle,
         DRV_MEMORY_COMMAND_HANDLE * commandHandle,
@@ -820,7 +777,7 @@ void DRV_MEMORY_Erase
     None.
 */
 
-void DRV_MEMORY_EraseWrite
+void DRV_MEMORY_AsyncEraseWrite
 (
     const DRV_HANDLE handle,
     DRV_MEMORY_COMMAND_HANDLE *commandHandle,
@@ -829,9 +786,17 @@ void DRV_MEMORY_EraseWrite
     uint32_t nBlock
 );
 
+bool DRV_MEMORY_SyncEraseWrite
+(
+    const DRV_HANDLE handle,    
+    void *sourceBuffer,
+    uint32_t blockStart,
+    uint32_t nBlock
+);
+
 // *****************************************************************************
 /* Function:
-    void DRV_MEMORY_Write
+    void DRV_MEMORY_AsyncWrite
     (
         const DRV_HANDLE handle,
         DRV_MEMORY_COMMAND_HANDLE *commandHandle,
@@ -959,7 +924,7 @@ void DRV_MEMORY_EraseWrite
     None.
 */
 
-void DRV_MEMORY_Write
+void DRV_MEMORY_AsyncWrite
 (
     const DRV_HANDLE handle,
     DRV_MEMORY_COMMAND_HANDLE *commandHandle,
@@ -968,9 +933,17 @@ void DRV_MEMORY_Write
     uint32_t nBlock
 );
 
+bool DRV_MEMORY_SyncWrite
+(
+    const DRV_HANDLE handle,        
+    void *sourceBuffer,
+    uint32_t blockStart,
+    uint32_t nBlock
+);
+
 // *****************************************************************************
 /* Function:
-    void DRV_MEMORY_Read
+    void DRV_MEMORY_AsyncRead
     (
         const DRV_HANDLE handle,
         DRV_MEMORY_COMMAND_HANDLE *commandHandle,
@@ -1080,7 +1053,7 @@ Summary:
     None.
 */
 
-void DRV_MEMORY_Read
+void DRV_MEMORY_AsyncRead
 (
     const DRV_HANDLE handle,
     DRV_MEMORY_COMMAND_HANDLE *commandHandle,
@@ -1089,9 +1062,17 @@ void DRV_MEMORY_Read
     uint32_t nBlock
 );
 
+bool DRV_MEMORY_SyncRead
+(
+    const DRV_HANDLE handle,    
+    void *targetBuffer,
+    uint32_t blockStart,
+    uint32_t nBlock
+);
+
 // *****************************************************************************
 /* Function:
-    DRV_MEMORY_GEOMETRY * DRV_MEMORY_GeometryGet
+    SYS_MEDIA_GEOMETRY * DRV_MEMORY_GeometryGet
     (
         const DRV_HANDLE handle
     );
@@ -1117,12 +1098,12 @@ void DRV_MEMORY_Read
                    open function
 
   Returns:
-    DRV_MEMORY_GEOMETRY - Pointer to structure which holds the media geometry information.
+    SYS_MEDIA_GEOMETRY - Pointer to structure which holds the media geometry information.
 
   Example:
     <code> 
     
-    DRV_MEMORY_GEOMETRY geometry;
+    SYS_MEDIA_GEOMETRY geometry;
     uint32_t readBlockSize, writeBlockSize, eraseBlockSize;
     uint32_t nReadBlocks, nReadRegions, totalFlashSize;
 
@@ -1146,7 +1127,7 @@ void DRV_MEMORY_Read
     None.
 */
 
-DRV_MEMORY_GEOMETRY * DRV_MEMORY_GeometryGet
+SYS_MEDIA_GEOMETRY * DRV_MEMORY_GeometryGet
 (
     const DRV_HANDLE handle
 );

@@ -162,11 +162,11 @@ typedef struct
     /* Erase Write Buffer pointer */
     uint8_t *ewBuffer;
 
-    /* Pointer to Buffer Objects array */
-    uintptr_t  bufferObj;
-
     /* Memory pool for Client Objects */
     uintptr_t  clientObjPool;
+
+    /* Pointer to Buffer Objects array */
+    uintptr_t  bufferObj;
 
     /* Buffer Queue Size */
     size_t queueSize;

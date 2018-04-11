@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    drv_serialflash_local.h
+    drv_memory_local.h
 
   Summary:
     MEMORY driver local declarations and definitions
@@ -55,6 +55,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "configuration.h"
 #include "driver/memory/drv_memory.h"
 
+#include "osal/osal.h"
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Version Numbers
@@ -99,30 +101,31 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 // *****************************************************************************
-/* MEMORY Driver Buffer Handle Macros
+/* MEMORY Driver Buffer/Client Handle Macros
 
   Summary:
-    MEMORY driver Buffer Handle Macros
+    MEMORY driver Buffer/Client Handle Macros
 
   Description:
-    Buffer handle related utility macros. MEMORY driver buffer handle is a 
-    combination of buffer token and the buffer object index. The buffertoken
-    is a 16 bit number that is incremented for every new write or erase request
-    and is used along with the buffer object index to generate a new buffer 
-    handle for every request.
+    Buffer/Client handle related utility macros. Memory buffer/client handle is
+    a combination of client/buffer index (8-bit), instance index (8-bit) and
+    token (16-bit). The token is incremented for every new driver open request Or
+    a transfer request.
 
   Remarks:
     None
 */
 
-#define DRV_MEMORY_BUF_TOKEN_MAX             (0xFFFF)
-#define DRV_MEMORY_MAKE_HANDLE(token, index) ((token) << 16 | (index))
-#define DRV_MEMORY_UPDATE_BUF_TOKEN(token) \
-{ \
-    (token)++; \
-    (token) = ((token) == DRV_MEMORY_BUF_TOKEN_MAX) ? 0: (token); \
-}
+#define DRV_MEMORY_TOKEN_MAX                            (0xFFFF)
+#define DRV_MEMORY_INDEX_MASK                           (0x000000FF)
+#define DRV_MEMORY_INSTANCE_INDEX_MASK                  (0x0000FF00)
+#define DRV_MEMORY_MAKE_HANDLE(token, instance, index)  ((token) << 16 | (instance << 8) | (index))
 
+static inline void DRV_MEMORY_UPDATE_TOKEN(uint16_t token)
+{
+    (token)++;
+    (token) = ((token) == DRV_MEMORY_TOKEN_MAX) ? 1: (token);
+}
 
 // *****************************************************************************
 /* MEMORY Read/Write/Erase Region Index Numbers
@@ -280,12 +283,9 @@ typedef enum
  **************************************/
 typedef struct DRV_MEMORY_CLIENT_OBJ_STRUCT
 {
-    /* The hardware instance object associate with the client */
-    void * driverObj;
-
-    /* Status of the client object */
-    SYS_STATUS sysStatus;
-
+    /* The hardware instance index associate with the client */
+    uint8_t drvIndex;
+    
     /* The intent with which the client was opened */
     DRV_IO_INTENT intent;
 
@@ -294,6 +294,9 @@ typedef struct DRV_MEMORY_CLIENT_OBJ_STRUCT
 
     /* Client specific event handler */
     DRV_MEMORY_TRANSFER_HANDLER transferHandler;
+    
+    /* Client handle assigned to this client object when it was opened */
+    DRV_HANDLE clientHandle;
 
     /* Client specific context */
     uintptr_t context;
@@ -391,7 +394,17 @@ typedef struct
 
     /* Erase Block size */
     uint32_t eraseBlockSize;
+    
+    /* This is an instance specific token counter used to generate unique client
+     * handles 
+     */
+    uint16_t clientToken;
 
+    /* This is an instance specific token counter used to generate unique buffer
+     * handles 
+     */
+    uint16_t bufferToken;
+        
     /* Interrupt mode for attached device */
     bool inInterruptMode;
 
@@ -432,10 +445,13 @@ typedef struct
     size_t nClientsMax;
 
     /* MEMORY driver geometry object */
-    DRV_MEMORY_GEOMETRY mediaGeometryObj;
+    SYS_MEDIA_GEOMETRY mediaGeometryObj;
 
     /* MEMORY driver media geometry table. */
-    DRV_MEMORY_REGION_GEOMETRY mediaGeometryTable[3];
+    SYS_MEDIA_REGION_GEOMETRY mediaGeometryTable[3];
+
+    /* Mutex to serialize access to the underlying media */    
+    OSAL_MUTEX_DECLARE(instanceMutex);
     
 } DRV_MEMORY_OBJECT;
 

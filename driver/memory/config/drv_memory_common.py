@@ -11,12 +11,21 @@ def instantiateComponent(memoryCommonComponent):
     memoryCommonSymNumInst.setLabel("Number of Instances")
     memoryCommonSymNumInst.setMin(1)
     memoryCommonSymNumInst.setMax(10)
-    memoryCommonSymNumInst.setDefaultValue(1)
     memoryCommonSymNumInst.setVisible(True)
+
+    memoryCommonMode = memoryCommonComponent.createKeyValueSetSymbol("DRV_MEMORY_COMMON_MODE", None)
+    memoryCommonMode.setLabel("Driver Mode")
+    memoryCommonMode.addKey("ASYNC", "0", "Asynchronous")
+    memoryCommonMode.addKey("SYNC", "1", "Synchronous")
+    memoryCommonMode.setDisplayMode("Description")
+    memoryCommonMode.setOutputMode("Key")
+    memoryCommonMode.setVisible(True)
+    memoryCommonMode.setDefaultValue(0)
 
     memoryCommonFsEnable = memoryCommonComponent.createBooleanSymbol("DRV_MEMORY_COMMON_FS_ENABLE", None)
     memoryCommonFsEnable.setLabel("Enable File system for Memory Driver")
     memoryCommonFsEnable.setDefaultValue(False)
+
 
     ############################################################################
     #### Code Generation ####
@@ -25,14 +34,15 @@ def instantiateComponent(memoryCommonComponent):
     configName = Variables.get("__CONFIGURATION_NAME")
 
     memoryCommonFsSourceFile = memoryCommonComponent.createFileSymbol("DRV_MEMORY_FS_SOURCE", None)
-    memoryCommonFsSourceFile.setSourcePath("driver/memory/src/drv_memory_file_system.c")
+    memoryCommonFsSourceFile.setSourcePath("driver/memory/templates/drv_memory_file_system.c.ftl")
     memoryCommonFsSourceFile.setOutputName("drv_memory_file_system.c")
     memoryCommonFsSourceFile.setDestPath("driver/memory/src")
     memoryCommonFsSourceFile.setProjectPath("config/" + configName + "/driver/memory/")
     memoryCommonFsSourceFile.setType("SOURCE")
     memoryCommonFsSourceFile.setOverwrite(True)
+    memoryCommonFsSourceFile.setMarkup(True)
     memoryCommonFsSourceFile.setEnabled((memoryCommonFsEnable.getValue() == True))
-    memoryCommonFsSourceFile.setDependencies(enableFileSystemIntegration, ["DRV_MEMORY_FS_ENABLE"])
+    memoryCommonFsSourceFile.setDependencies(enableFileSystemIntegration, ["DRV_MEMORY_COMMON_FS_ENABLE"])
 
     memoryCommonHeaderVariantFile = memoryCommonComponent.createFileSymbol("DRV_MEMORY_HEADER_VARIANT", None)
     memoryCommonHeaderVariantFile.setSourcePath("driver/memory/templates/drv_memory_variant_mapping.h.ftl")

@@ -1,19 +1,20 @@
 /******************************************************************************
-  MEMORY Driver Interface Implementation
+  MEMORY Driver File System Interface Implementation
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    drv_memory.c
+    drv_memory_file_system.c
 
   Summary:
     MEMORY Driver Interface Definition
 
   Description:
     The MEMORY Driver provides a interface to access the MEMORY on the PIC32
-    microcontroller. This file implements the MEMORY Driver interface. This file
-    should be included in the project if MEMORY driver functionality is needed.
+    microcontroller. This file implements the MEMORY Driver file system interface.
+    This file should be included in the project if MEMORY driver functionality with
+    File system is needed.
 *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -56,21 +57,40 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 /* FS Function registration table. */
-const SYS_FS_MEDIA_FUNCTIONS memoryMediaFunctions =
-{
-    .mediaStatusGet     = DRV_MEMORY_IsAttached,
-    .mediaGeometryGet   = DRV_MEMORY_GeometryGet,
-    .sectorRead         = DRV_MEMORY_Read,
-    .sectorWrite        = DRV_MEMORY_EraseWrite,
-    .eventHandlerset    = DRV_MEMORY_TransferHandlerSet,
-    .commandStatusGet   = (void *)DRV_MEMORY_CommandStatusGet,
-    .Read               = DRV_MEMORY_Read,
-    .erase              = DRV_MEMORY_Erase,
-    .addressGet         = DRV_MEMORY_AddressGet,
-    .open               = DRV_MEMORY_Open,
-    .close              = DRV_MEMORY_Close,
-    .tasks              = DRV_MEMORY_Tasks,
-};
+
+<#if DRV_MEMORY_COMMON_MODE == "ASYNC" >
+    <#lt>const SYS_FS_MEDIA_FUNCTIONS memoryMediaFunctions =
+    <#lt>{
+    <#lt>    .mediaStatusGet     = DRV_MEMORY_IsAttached,
+    <#lt>    .mediaGeometryGet   = DRV_MEMORY_GeometryGet,
+    <#lt>    .sectorRead         = DRV_MEMORY_AsyncRead,
+    <#lt>    .sectorWrite        = DRV_MEMORY_AsyncEraseWrite,
+    <#lt>    .eventHandlerset    = DRV_MEMORY_TransferHandlerSet,
+    <#lt>    .commandStatusGet   = (void *)DRV_MEMORY_CommandStatusGet,
+    <#lt>    .Read               = DRV_MEMORY_AsyncRead,
+    <#lt>    .erase              = DRV_MEMORY_AsyncErase,
+    <#lt>    .addressGet         = DRV_MEMORY_AddressGet,
+    <#lt>    .open               = DRV_MEMORY_Open,
+    <#lt>    .close              = DRV_MEMORY_Close,
+    <#lt>    .tasks              = DRV_MEMORY_Tasks,
+    <#lt>};
+<#else>
+    <#lt>const SYS_FS_MEDIA_FUNCTIONS memoryMediaFunctions =
+    <#lt>{
+    <#lt>    .mediaStatusGet     = DRV_MEMORY_IsAttached,
+    <#lt>    .mediaGeometryGet   = DRV_MEMORY_GeometryGet,
+    <#lt>    .sectorRead         = DRV_MEMORY_FS_Read,
+    <#lt>    .sectorWrite        = DRV_MEMORY_FS_EraseWrite,
+    <#lt>    .eventHandlerset    = DRV_MEMORY_TransferHandlerSet,
+    <#lt>    .commandStatusGet   = (void *)DRV_MEMORY_CommandStatusGet,
+    <#lt>    .Read               = DRV_MEMORY_FS_Read,
+    <#lt>    .erase              = DRV_MEMORY_FS_Erase,
+    <#lt>    .addressGet         = DRV_MEMORY_AddressGet,
+    <#lt>    .open               = DRV_MEMORY_Open,
+    <#lt>    .close              = DRV_MEMORY_Close,
+    <#lt>    .tasks              = DRV_MEMORY_Tasks,
+    <#lt>};
+</#if>
 
 // *****************************************************************************
 // *****************************************************************************
