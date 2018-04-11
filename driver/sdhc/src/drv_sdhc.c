@@ -49,7 +49,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-#include "system_config.h"
+#include "configuration.h"
 #include "osal/osal.h"
 #include "driver/sdhc/drv_sdhc.h"
 #include "driver/sdhc/src/drv_sdhc_local.h"

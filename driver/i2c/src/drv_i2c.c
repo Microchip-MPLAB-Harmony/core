@@ -45,7 +45,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-#include "system_config.h"
+#include "configuration.h"
 //#include "system/debug/sys_debug.h"
 #include "driver/i2c/drv_i2c.h"
 

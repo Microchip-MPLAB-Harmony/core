@@ -1209,7 +1209,7 @@ void DRV_MEDIAFLASH_Erase
 
   Remarks:
     In order to use this function, the DRV_MEDIAFLASH_ERASE_WRITE_ENABLE must be
-    defined in system_config.h and the drv_mediaflash_erasewrite.c file must be
+    defined in configuration.h and the drv_mediaflash_erasewrite.c file must be
     included in the project.
 */
 

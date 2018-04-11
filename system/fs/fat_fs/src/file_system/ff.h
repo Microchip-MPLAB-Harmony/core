@@ -27,7 +27,7 @@ extern "C" {
 #include <stdbool.h>
 #include <stddef.h>
 
-#include "system_config.h"
+#include "configuration.h"
 
 #include "ffconf.h"		/* FatFs configuration options */
 #include "system/fs/src/sys_fs_media_manager_local.h"

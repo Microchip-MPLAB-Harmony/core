@@ -43,7 +43,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #ifndef _DRV_MEMORY_VARIANT_MAPPING_H
 #define _DRV_MEMORY_VARIANT_MAPPING_H
 
-#include "system_config.h"
+#include "configuration.h"
 
 // *****************************************************************************
 // *****************************************************************************

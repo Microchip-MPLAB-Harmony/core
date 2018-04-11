@@ -1,7 +1,7 @@
 #ifndef _SYS_FS_MEDIA_MANAGER_LOCAL_H_
 #define _SYS_FS_MEDIA_MANAGER_LOCAL_H_
 
-#include "system_config.h"
+#include "configuration.h"
 #include "system/int/sys_int.h"
 #include "system/system.h"
 #include "system/fs/sys_fs_media_manager.h"

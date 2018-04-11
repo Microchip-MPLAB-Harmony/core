@@ -6,7 +6,7 @@
     Microchip Technology Inc.
 
   File Name:
-    system_config.h.ftl
+    configuration.h.ftl
 
   Summary:
     MEDIAFLASH Driver Freemarker Template File

@@ -44,7 +44,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #ifndef _SYS_FS_PRIVATE_H
 #define _SYS_FS_PRIVATE_H
 
-#include "system_config.h"
+#include "configuration.h"
 #include "system/system.h"
 #include "system/fs/sys_fs.h"
 #include "system/fs/fat_fs/src/file_system/ff.h"

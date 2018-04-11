@@ -135,7 +135,7 @@ typedef void (* DRV_I2C_CALLBACK_REGISTER_CALLBACK)(DRV_I2C_PLIB_CALLBACK, uintp
     This data type defines the data required to initialize the I2C driver PLib
     Interface. If the driver is built statically, the members of this data
     structure are statically over-ridden by static override definitions in the
-    system_config.h file.
+    configuration.h file.
 
   Remarks:
     None.
@@ -173,7 +173,7 @@ typedef struct
     This data type defines the data required to initialize or the I2C driver.
     If the driver is built statically, the members of this data structure are 
     statically over-ridden by static override definitions in the
-    system_config.h file.
+    configuration.h file.
 
   Remarks:
     None.
