@@ -115,19 +115,6 @@ SYS_FS_OBJ gSYSFSFileObj[SYS_FS_MAX_FILES];
     None
 */
 SYS_FS_DIR_OBJ  gSYSFSDirObj[SYS_FS_MAX_FILES];
-// *****************************************************************************
-/* File System Event Handler
-
-  Summary:
-    Defines the File system Event handler that stores the application event handler.
-
-  Description:
-    This data type defines the file system event handler
-    the part.
-  Remarks:
-    None
-*/
-SYS_FS_EVENT_HANDLER gSYSFSEventHandler = NULL;
 
 /* File system object instance mutex */
 OSAL_MUTEX_DECLARE(gSysFsMutex);
@@ -372,6 +359,14 @@ SYS_FS_RESULT SYS_FS_Initialize
     {
         return SYS_FS_RES_FAILURE;
     }
+    
+    for (index = 0; index != SYS_FS_VOLUME_NUMBER; index++)
+    {
+        if (OSAL_MUTEX_Create(&(gSYSFSMountPoint[index].mutexDiskVolume)) != OSAL_RESULT_TRUE)
+        {
+            return SYS_FS_RES_FAILURE;
+        }
+    }
 
     return SYS_FS_RES_SUCCESS;
 }
@@ -400,6 +395,7 @@ void SYS_FS_Tasks ( void )
     SYS_FS_MEDIA_MANAGER_Tasks();
 }
 
+#if SYS_FS_AUTOMOUNT_ENABLE == true
 //******************************************************************************
 /*Function:
     void SYS_FS_EventHandlerSet
@@ -419,6 +415,8 @@ void SYS_FS_Tasks ( void )
     "eventHandler".
 
   Returns:
+    None
+
     See sys_fs.h for usage information.
 ***************************************************************************/
 void SYS_FS_EventHandlerSet
@@ -427,12 +425,10 @@ void SYS_FS_EventHandlerSet
     const uintptr_t context
 )
 {
-    /* Context parameter is not used for now */
-    (void)context;
-
-    /* Set the event handler */
-    gSYSFSEventHandler = eventHandler;
+    SYS_FS_MEDIA_MANAGER_EventHandlerSet(eventHandler, context)
 }
+
+#endif // SYS_FS_AUTOMOUNT_ENABLE == true
 
 //******************************************************************************
 /*Function:
@@ -599,17 +595,6 @@ SYS_FS_RESULT SYS_FS_Mount
         return SYS_FS_RES_FAILURE;
     }
 
-    /* Create mutex for this Mount/volume */
-    osalResult = OSAL_MUTEX_Create(&(disk->mutexDiskVolume));
-    if (osalResult != OSAL_RESULT_TRUE)
-    {
-        /* Release the acquired mutex. */
-        OSAL_MUTEX_Unlock (&gSysFsMutex);
-
-        errorValue = SYS_FS_ERROR_DENIED;
-        return SYS_FS_RES_FAILURE;
-    }
-
     /* Populate the disk members. */
     disk->fsType = filesystemtype;
     disk->fsFunctions = gSYSFSObj[index].nativeFileSystemFunctions;
@@ -769,8 +754,6 @@ SYS_FS_RESULT SYS_FS_Unmount
             gSYSFSCurrentMountPoint.inUse = false;
         }
         
-        OSAL_MUTEX_Delete(&disk->mutexDiskVolume);
-
         /* Release the mutex. */
         OSAL_MUTEX_Unlock (&gSysFsMutex);
         
@@ -885,7 +868,7 @@ SYS_FS_HANDLE SYS_FS_FileOpen
             mode = FA_READ;
             break;
         case SYS_FS_FILE_OPEN_WRITE:
-             mode = FA_WRITE | FA_OPEN_ALWAYS;
+             mode = FA_WRITE | FA_CREATE_ALWAYS;
             break;
         case SYS_FS_FILE_OPEN_APPEND:
             mode = FA_WRITE | FA_OPEN_ALWAYS;
@@ -894,7 +877,7 @@ SYS_FS_HANDLE SYS_FS_FileOpen
             mode = FA_READ | FA_WRITE;
             break;
         case SYS_FS_FILE_OPEN_WRITE_PLUS:
-            mode = FA_READ | FA_WRITE | FA_OPEN_ALWAYS;
+            mode = FA_READ | FA_WRITE | FA_CREATE_ALWAYS;
             break;
         case SYS_FS_FILE_OPEN_APPEND_PLUS:
             mode = FA_READ | FA_WRITE | FA_OPEN_ALWAYS;

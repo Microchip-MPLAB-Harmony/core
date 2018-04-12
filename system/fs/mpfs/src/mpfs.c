@@ -266,16 +266,20 @@ static bool MPFSDiskRead
     SYS_FS_MEDIA_COMMAND_STATUS commandStatus = SYS_FS_MEDIA_COMMAND_UNKNOWN;
 
     commandHandle = SYS_FS_MEDIA_MANAGER_Read (diskNum, destination, source, nBytes);
+
     if (commandHandle == SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
     {
         return false;
     }
 
-    do 
+    commandStatus = SYS_FS_MEDIA_MANAGER_CommandStatusGet(diskNum, commandHandle);
+
+    while ( (commandStatus == SYS_FS_MEDIA_COMMAND_IN_PROGRESS) ||
+            (commandStatus == SYS_FS_MEDIA_COMMAND_QUEUED))
     {
         SYS_FS_MEDIA_MANAGER_TransferTask (diskNum);
         commandStatus = SYS_FS_MEDIA_MANAGER_CommandStatusGet(diskNum, commandHandle);
-    } while (commandStatus == SYS_FS_MEDIA_COMMAND_IN_PROGRESS);
+    }
 
     return (commandStatus == SYS_FS_MEDIA_COMMAND_COMPLETED) ? true : false;
 }

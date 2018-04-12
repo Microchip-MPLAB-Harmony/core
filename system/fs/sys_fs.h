@@ -975,8 +975,8 @@ SYS_FS_RESULT SYS_FS_Unmount
       This function allows a client to identify an event handling function for
       the File System to call back when mount/unmount operation has completed.
       The file system will pass mount name back to the client by calling
-      "eventHandler".
-   
+      "eventHandler" when AutoMount feature is enabled for File system.
+
     Precondition:
       The SYS_FS_Initialize() routine must have been called.
 
@@ -1010,26 +1010,25 @@ SYS_FS_RESULT SYS_FS_Unmount
             switch(event)
             {
                 case SYS_FS_EVENT_MOUNT:
-                    if(0 == strcmp((const char *)mountName,"/mnt/myDrive1"))
+                    if(strcmp((const char *)eventData,"/mnt/myDrive1") == 0)
                     {
                         gSDCardMountFlag = true;
                     }
-                    else if(0 == strcmp((const char *)mountName,"/mnt/myDrive2"))
+                    else if(strcmp((const char *)eventData,"/mnt/myDrive2") == 0)
                     {
                         gNVMMountFlag = true;
                     }
                     break;
 
                 case SYS_FS_EVENT_UNMOUNT:
-                    if(0 == strcmp((const char *)mountName,"/mnt/myDrive1"))
+                    if(strcmp((const char *)eventData,"/mnt/myDrive1") == 0)
                     {
                         gSDCardMountFlag = false;
                     }
-                    else if(0 == strcmp((const char *)mountName,"/mnt/myDrive2"))
+                    else if(strcmp((const char *)eventData,"/mnt/myDrive2") == 0)
                     {
                         gNVMMountFlag = false;
                     }
-                    appData.state = APP_ERROR;
                     break;
 
                 case SYS_FS_EVENT_ERROR:
@@ -1039,8 +1038,15 @@ SYS_FS_RESULT SYS_FS_Unmount
       </code>
 
     Remarks:
+      On Mount/Un-Mount of a volume all the registered clients will be notified.
+      The client should check if the mount name passed when event handler is called
+      is the one it is expecting and then proceed as demonstrated in above example.
+
       If the client does not want to be notified when the mount/unmount
       operation has completed, it does not need to register a callback.
+
+    Note:
+      This API is Available only when SYS_FS_AUTOMOUNT_ENABLE is set to true.
 */
 
 void SYS_FS_EventHandlerSet

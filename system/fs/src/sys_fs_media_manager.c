@@ -87,6 +87,8 @@ SYS_FS_MEDIA gSYSFSMediaObject[SYS_FS_MEDIA_NUMBER];
     None
 */
 SYS_FS_VOLUME gSYSFSVolumeObject[SYS_FS_VOLUME_NUMBER];
+
+#if SYS_FS_AUTOMOUNT_ENABLE == true
 // *****************************************************************************
 /* Media Event Handler
 
@@ -99,7 +101,16 @@ SYS_FS_VOLUME gSYSFSVolumeObject[SYS_FS_VOLUME_NUMBER];
   Remarks:
     None
 */
-extern SYS_FS_EVENT_HANDLER gSYSFSEventHandler;
+typedef struct
+{
+    SYS_FS_EVENT_HANDLER eventHandler;
+    uintptr_t context;
+} _SYS_FS_EVENT_HANDLER;
+
+static _SYS_FS_EVENT_HANDLER gSYSFSEventHandler[SYS_FS_CLIENT_NUMBER];
+static uint8_t gNumOfFSClients = 0;
+
+#endif // SYS_FS_AUTOMOUNT_ENABLE == true
 
 // *****************************************************************************
 /* Media Page Buffer
@@ -219,9 +230,7 @@ static void _SYS_FS_MEDIA_MANAGER_HandleMediaDetach
 )
 {
     uint8_t volIndex = 0;
-    uint8_t index = 0;
     SYS_FS_VOLUME *volumeObj = NULL;
-    const SYS_FS_MEDIA_MOUNT_DATA *fsMount = (const SYS_FS_MEDIA_MOUNT_DATA *)&gSYSFSMediaManagerObj.fsMountTable[0];
 
     for (volIndex = 0; volIndex < SYS_FS_VOLUME_NUMBER; volIndex++)
     {
@@ -233,12 +242,12 @@ static void _SYS_FS_MEDIA_MANAGER_HandleMediaDetach
 
         volumeObj->inUse = false;
 
-        /* Unmount the media if auto mount feature is enabled */
-        if (SYS_FS_AUTOMOUNT_ENABLE == false)
-        {
-            continue;
-        }
+#if SYS_FS_AUTOMOUNT_ENABLE == true
+        uint8_t index = 0;
+        uint8_t handlerIndex = 0;
+        const SYS_FS_MEDIA_MOUNT_DATA *fsMount = (const SYS_FS_MEDIA_MOUNT_DATA *)&gSYSFSMediaManagerObj.fsMountTable[0];
 
+        /* Unmount the media */
         for (index = 0; index < SYS_FS_VOLUME_NUMBER; index++)
         {
             /* Find out the mount name from the media mount table */
@@ -259,16 +268,23 @@ static void _SYS_FS_MEDIA_MANAGER_HandleMediaDetach
                 continue;
             }
 
-            if (gSYSFSEventHandler)
+            for (handlerIndex = 0; handlerIndex < SYS_FS_CLIENT_NUMBER; handlerIndex++)
             {
-                gSYSFSEventHandler (SYS_FS_EVENT_UNMOUNT, (void*)fsMount[index].mountName, (uintptr_t)NULL);
+                if (gSYSFSEventHandler[handlerIndex].eventHandler)
+                {
+                    gSYSFSEventHandler[handlerIndex].eventHandler(SYS_FS_EVENT_UNMOUNT,
+                            (void*)fsMount[index].mountName,
+                            gSYSFSEventHandler[handlerIndex].context);
+                }
             }
 
             break;
         }
+#endif // SYS_FS_AUTOMOUNT_ENABLE == true
     }
 }
 
+#if SYS_FS_AUTOMOUNT_ENABLE == true
 // *****************************************************************************
 /* Function:
     static void _SYS_FS_MountVolume 
@@ -293,6 +309,7 @@ static void _SYS_FS_MountVolume
 )
 {
     uint8_t volumeIndex = 0;
+    uint8_t handlerIndex = 0;
     const SYS_FS_MEDIA_MOUNT_DATA *fsMount = (const SYS_FS_MEDIA_MOUNT_DATA *)&gSYSFSMediaManagerObj.fsMountTable[0];
 
     for (volumeIndex = 0; volumeIndex < SYS_FS_VOLUME_NUMBER; volumeIndex++)
@@ -309,15 +326,21 @@ static void _SYS_FS_MountVolume
 
         if (SYS_FS_RES_SUCCESS == SYS_FS_Mount(fsMount[volumeIndex].devName, fsMount[volumeIndex].mountName, fsMount[volumeIndex].fsType, 0, NULL))
         {
-            if (gSYSFSEventHandler)
+            for (handlerIndex = 0; handlerIndex < SYS_FS_CLIENT_NUMBER; handlerIndex++)
             {
-                gSYSFSEventHandler(SYS_FS_EVENT_MOUNT, (void*)fsMount[volumeIndex].mountName, (uintptr_t)NULL);
+                if (gSYSFSEventHandler[handlerIndex].eventHandler)
+                {
+                    gSYSFSEventHandler[handlerIndex].eventHandler(SYS_FS_EVENT_MOUNT,
+                            (void*)fsMount[volumeIndex].mountName,
+                            gSYSFSEventHandler[handlerIndex].context);
+                }
             }
         }
 
         break;
     }
 }
+#endif // SYS_FS_AUTOMOUNT_ENABLE == true
 
 // *****************************************************************************
 /* Function:
@@ -440,11 +463,13 @@ static void _SYS_FS_MEDIA_MANAGER_PopulateVolume
         /* Update the inUse flag to indicate that the volume is now in use.*/
         volumeObj->inUse = true;
 
-        /* Mount the Media if Auto mount feature is enable */
-        if (SYS_FS_AUTOMOUNT_ENABLE && (fsType != 0xFF))
+#if SYS_FS_AUTOMOUNT_ENABLE == true
+        /* Mount the Media */
+        if (fsType != 0xFF)
         {
             _SYS_FS_MountVolume (mediaObj->mediaType, (const uint8_t *)(volumeObj->volumeName));
         }
+#endif // SYS_FS_AUTOMOUNT_ENABLE == true
 
         /* Continue if there is more than one partition on media */
         if (!partitionMap)
@@ -1284,6 +1309,39 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
     return false;
 }
 
+#if SYS_FS_AUTOMOUNT_ENABLE == true
+//*****************************************************************************
+/* Function:
+    void SYS_FS_MEDIA_MANAGER_EventHandlerSet
+    (
+        const void * eventHandler,
+        const uintptr_t context
+    );
+ 
+  Summary:
+    Register the event handler for Mount/Un-Mount events .
+    
+  Description:
+    This function is used to register a FS client event handler for notifying the
+    Mount/Un-Mount events when AutoMount feature is enabled for File system.
+
+***************************************************************************/
+void SYS_FS_MEDIA_MANAGER_EventHandlerSet
+(
+    const void * eventHandler,
+    const uintptr_t context
+)
+{
+    if (gNumOfFSClients == SYS_FS_CLIENT_NUMBER)
+    {
+        return;
+    }
+    gSYSFSEventHandler[gNumOfFSClients].eventHandler = eventHandler;
+    gSYSFSEventHandler[gNumOfFSClients].context = context;
+    gNumOfFSClients++;    
+}
+#endif // SYS_FS_AUTOMOUNT_ENABLE == true
+
 //*****************************************************************************
 /* Function:
     void SYS_FS_MEDIA_MANAGER_RegisterTransferHandler
@@ -1295,10 +1353,8 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
     Register the event handler for data transfer events.
     
   Description:
-    This function gets the media geometry information.
- 
-  Remarks:
-    See sys_fs_media_manager.h for usage information.
+    This function is used to send the command status for the disk operation.
+
 ***************************************************************************/
 void SYS_FS_MEDIA_MANAGER_RegisterTransferHandler
 (
@@ -1349,7 +1405,7 @@ void SYS_FS_MEDIA_MANAGER_EventHandler
 
     if ((gSYSFSMediaManagerObj.eventHandler != NULL) && (gSYSFSMediaManagerObj.muteEventNotification == false))
     {
-        gSYSFSMediaManagerObj.eventHandler (event, (void *)commandHandle, context);
+        gSYSFSMediaManagerObj.eventHandler (event, (void *)commandHandle, ((SYS_FS_MEDIA*)context)->driverIndex);
     }
 }
 
@@ -1475,6 +1531,11 @@ void SYS_FS_MEDIA_MANAGER_Tasks
 
     if (mediaObj->isMediaDisconnected == true)
     {
+        /* If the media driver was de-registered in this state, then the media
+         * had use of the media buffer and no longer needs it. */
+         if(SYS_FS_MEDIA_ANALYZE_FS == mediaObj->mediaState)
+            gSYSFSMediaManagerObj.bufferInUse =false;
+
         /* If media driver has de-registered then switch to the DEREGISTERED
          * state and handle the media detach. */
         mediaObj->mediaState = SYS_FS_MEDIA_STATE_DEREGISTERED;

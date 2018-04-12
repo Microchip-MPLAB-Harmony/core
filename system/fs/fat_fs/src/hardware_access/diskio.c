@@ -10,8 +10,13 @@
 #include "system/fs/fat_fs/src/hardware_access/diskio.h"		/* FatFs lower layer API */
 #include "system/fs/sys_fs_media_manager.h"
 
-SYS_FS_MEDIA_COMMAND_STATUS gDiskCommandStatus = SYS_FS_MEDIA_COMMAND_UNKNOWN;
-SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE gDiskCommandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
+typedef struct
+{
+    SYS_FS_MEDIA_COMMAND_STATUS commandStatus;
+    SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE commandHandle;
+} SYS_FS_DISK_STATUS;
+
+static SYS_FS_DISK_STATUS gSysFsDiskStatus[SYS_FS_MEDIA_NUMBER];
 
 void diskEventHandler
 (
@@ -23,10 +28,10 @@ void diskEventHandler
     switch(event)
     {
         case SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE:
-            gDiskCommandStatus = SYS_FS_MEDIA_COMMAND_COMPLETED;
+            gSysFsDiskStatus[context].commandStatus = SYS_FS_MEDIA_COMMAND_COMPLETED;
             break;
         case SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_ERROR:
-            gDiskCommandStatus= SYS_FS_MEDIA_COMMAND_UNKNOWN;
+            gSysFsDiskStatus[context].commandStatus= SYS_FS_MEDIA_COMMAND_UNKNOWN;
             break;
         default:
             break;
@@ -84,29 +89,29 @@ DRESULT disk_read
     uint32_t count   /* Number of sectors to read (1..128) */
 )
 {
-    gDiskCommandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
+    gSysFsDiskStatus[pdrv].commandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
 
-    gDiskCommandStatus = SYS_FS_MEDIA_COMMAND_IN_PROGRESS;
+    gSysFsDiskStatus[pdrv].commandStatus = SYS_FS_MEDIA_COMMAND_IN_PROGRESS;
     /* submit the read request */
-    gDiskCommandHandle = SYS_FS_MEDIA_MANAGER_SectorRead(pdrv /* DISK 0 */ ,
+    gSysFsDiskStatus[pdrv].commandHandle = SYS_FS_MEDIA_MANAGER_SectorRead(pdrv /* DISK 0 */ ,
             buff /* Destination Sector*/,
             sector,
             count /* Number of Sectors */);
     
     /* Buffer is invalid report error */
-    if (SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID == gDiskCommandHandle)
+    if (gSysFsDiskStatus[pdrv].commandHandle == SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
     {
         return RES_PARERR;
     }
 
     /* process the read request by blocking on the task routine that process the 
      I/O request */
-    while (SYS_FS_MEDIA_COMMAND_IN_PROGRESS == gDiskCommandStatus)
+    while (gSysFsDiskStatus[pdrv].commandStatus == SYS_FS_MEDIA_COMMAND_IN_PROGRESS)
     {
         SYS_FS_MEDIA_MANAGER_TransferTask (pdrv);
     }
 
-    if (SYS_FS_MEDIA_COMMAND_COMPLETED == gDiskCommandStatus)
+    if (gSysFsDiskStatus[pdrv].commandStatus == SYS_FS_MEDIA_COMMAND_COMPLETED)
     {
         /* Buffer processed successfully */
         return RES_OK;
@@ -117,8 +122,6 @@ DRESULT disk_read
         return RES_ERROR;
     }
 }
-
-
 
 /*-----------------------------------------------------------------------*/
 /* Write Sector(s)                                                       */
@@ -133,27 +136,28 @@ DRESULT disk_write
     uint32_t count       /* Number of sectors to write (1..128) */
 )
 {
-    gDiskCommandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
-    gDiskCommandStatus = SYS_FS_MEDIA_COMMAND_IN_PROGRESS;
-
+    gSysFsDiskStatus[pdrv].commandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
+    gSysFsDiskStatus[pdrv].commandStatus = SYS_FS_MEDIA_COMMAND_IN_PROGRESS;
+    
     /* Submit the write request to media */
-    gDiskCommandHandle = SYS_FS_MEDIA_MANAGER_SectorWrite(pdrv /* DISK 0 */ ,
+    gSysFsDiskStatus[pdrv].commandHandle = SYS_FS_MEDIA_MANAGER_SectorWrite(pdrv /* DISK 0 */ ,
             sector /* Destination Sector*/,
             (uint8_t *)buff,
             count /* Number of Sectors */);
+   
     /* Write request failed , return with error */
-    if(SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID == gDiskCommandHandle)
+    if(gSysFsDiskStatus[pdrv].commandHandle == SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
     {
         return RES_PARERR;
     }
 
     /* Run the task routine of media to process the request  */
-    while(SYS_FS_MEDIA_COMMAND_IN_PROGRESS == gDiskCommandStatus)
+    while(gSysFsDiskStatus[pdrv].commandStatus == SYS_FS_MEDIA_COMMAND_IN_PROGRESS)
     {
         SYS_FS_MEDIA_MANAGER_TransferTask (pdrv);
     }
     
-    if(SYS_FS_MEDIA_COMMAND_COMPLETED == gDiskCommandStatus)
+    if(gSysFsDiskStatus[pdrv].commandStatus == SYS_FS_MEDIA_COMMAND_COMPLETED)
     {
         /* Buffer processed successfully */
         return RES_OK;

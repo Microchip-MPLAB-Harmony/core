@@ -814,6 +814,43 @@ uintptr_t SYS_FS_MEDIA_MANAGER_AddressGet
 
 //*****************************************************************************
 /* Function:
+    void SYS_FS_MEDIA_MANAGER_EventHandlerSet
+    (
+        const void * eventHandler,
+        const uintptr_t context
+    );
+ 
+  Summary:
+    Register the event handler for Mount/Un-Mount events.
+
+  Parameters:
+    eventHandler - FS Client event handler pointer
+    context - FS Client context
+
+  Description:
+    This function is used to register a FS client event handler for notifying the
+    Mount/Un-Mount events when AutoMount feature is enabled for File system.
+
+    On Mount/Un-Mount of a volume all the registered clients will be notified.
+    The client should check if the mount name passed when event handler is called
+    is the one it is expecting and then proceed.
+
+  Note:
+    This API should not be called directly from Application. Application should use
+    SYS_FS_EventHandlerSet() instead.
+
+    This API is Available only when SYS_FS_AUTOMOUNT_ENABLE is set to true.
+
+    See sys_fs.h for usage information.
+***************************************************************************/
+void SYS_FS_MEDIA_MANAGER_EventHandlerSet
+(
+    const void * eventHandler,
+    const uintptr_t context
+);
+
+//*****************************************************************************
+/* Function:
     void SYS_FS_MEDIA_MANAGER_RegisterTransferHandler
     (
         const void *eventHandler
@@ -823,13 +860,13 @@ uintptr_t SYS_FS_MEDIA_MANAGER_AddressGet
     Register the event handler for data transfer events.
     
   Description:
-    This function gets the media geometry information.
+    This function is used to send the command status for the disk operation.
  
   Precondition:
     None.
  
   Parameters:
-    diskNum - Media disk number.
+    eventHandler - Event handler pointer.
  
   Returns:
     Pointer to the media geometry on Success else NULL.

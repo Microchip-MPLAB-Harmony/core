@@ -58,7 +58,7 @@ def	instantiateComponent(sysFSComponent):
 	
 	sysFSAutoMount = sysFSComponent.createBooleanSymbol("SYS_FS_AUTO_MOUNT", sysFSMenu)
 	sysFSAutoMount.setLabel("Use File System Auto Mount Feature?")
-	sysFSAutoMount.setDefaultValue(False)	
+	sysFSAutoMount.setDefaultValue(False)
 	
 	sysFSMedia = sysFSComponent.createIntegerSymbol("SYS_FS_INSTANCES_NUMBER", sysFSMenu)
 	sysFSMedia.setLabel("Total Number Of Media")
@@ -69,6 +69,14 @@ def	instantiateComponent(sysFSComponent):
 	sysFSVol.setLabel("Total Number Of Volumes")
 	sysFSVol.setDefaultValue(1)
 	sysFSVol.setDependencies(showFSVol, ["SYS_FS_AUTO_MOUNT"])
+
+	sysFSClientNum = sysFSComponent.createIntegerSymbol("SYS_FS_CLIENT_NUMBER", sysFSMenu)
+	sysFSClientNum.setLabel("Total Number File System Clients")
+	sysFSClientNum.setDescription("Indicates Number of clients who want to receive events on Mount or Unmount of volumes")
+	sysFSClientNum.setDefaultValue(1)
+	sysFSClientNum.setVisible(False)
+	sysFSClientNum.setDependencies(showFSClientNum, ["SYS_FS_AUTO_MOUNT"])
+
 	sysFSMedia = []
 	sysFSMediaConfMenu = []
 	sysFSMediaType = []
@@ -330,20 +338,23 @@ deviceNames = { 'SYS_FS_MEDIA_TYPE_NVM' : '/dev/nvma',
 	'SYS_FS_MEDIA_TYPE_SPIFLASH' : '/dev/mtda'
 	}
 
-	
+
 def showRTOSMenu(sysFSRTOSMenu,enable):
 	#print (Database.getSymbolByID("osal", "OSAL_RTOS"))
 	sysFSRTOSMenu.setVisible(False)
-	
+
 def showRTOSTaskDel(sysFSRTOSTaskDelayVal, enable):
 	sysFSRTOSTaskDelayVal.setVisible(enable["value"])
-	
+
 def showMenu(sysFSMenu,enable):
 	sysFSMenu.setVisible(enable["value"])
-	
+
 def showFSVol(sysFSVol,enable):
 	sysFSVol.setVisible(not enable["value"])
-	
+
+def showFSClientNum(sysFSClientNum,enable):
+	sysFSClientNum.setVisible(enable["value"])
+
 def showMedia(sysFSMedia, count):
 	component = sysFSMedia.getComponent()
 	for i in range(0,4):
