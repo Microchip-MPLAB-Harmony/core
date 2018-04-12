@@ -46,7 +46,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include <stdint.h>
 #include "driver/sdhc/src/drv_sdhc_host_local.h"
-#include "system/dma/sys_dma.h"
 #include <stdbool.h>
 #include <string.h>
 

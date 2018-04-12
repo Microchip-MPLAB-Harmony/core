@@ -57,6 +57,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "driver/sdhc/src/drv_sdhc_host.h"
 #include "driver/sdhc/src/drv_sdhc_variant_mapping.h"
 #include "osal/osal.h"
+#include "system/time/sys_time.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -381,7 +382,7 @@ typedef struct _DRV_SDHC_OBJ_STRUCT
     SYS_FS_MEDIA_STATUS mediaState;
 
     /* System Timer Handle */
-    uint32_t tmrHandle;
+    SYS_TIME_HANDLE tmrHandle;
 
     /* Pointer to the card context. */
     SDHOST_CARD_CTXT *cardCtxt;
@@ -409,7 +410,7 @@ typedef struct _DRV_SDHC_OBJ_STRUCT
     DRV_SDHC_BUFFER_OBJ *queue;
 
     /* Timer command handle. */
-    uint32_t cmdTimerHandle;
+    SYS_TIME_HANDLE cmdTimerHandle;
 
     /* Timer command state. */
     bool cmdTimerState;

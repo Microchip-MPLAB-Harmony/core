@@ -60,6 +60,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
  SDHOST_CARD_CTXT gSDHOSTCardCtxt;
 
+ #define CHANNEL					${SDHC_DMA}
+ 
 static void sdhostInitVariables ( SDHOST_CARD_CTXT* cardCtxt )
 {
     cardCtxt->isAttached = false;
@@ -148,18 +150,18 @@ void sdhostWriteProtectDisable ( void )
 
 void sdhostResetError ( SDHOST_RESET_TYPE resetType )
 {
-    _HSMCI_REGS->HSMCI_CR.w |= HSMCI_CR_SWRST_Msk;
+    HSMCI_REGS->HSMCI_CR |= HSMCI_CR_SWRST_Msk;
 }
 
 void sdhostSetBusWidth ( SDHOST_BUS_WIDTH busWidth )
 {
     if (busWidth == SDHOST_BUS_WIDTH_4_BIT)
     {
-       _HSMCI_REGS->HSMCI_SDCR.w |= HSMCI_SDCR_SDCBUS_4;
+       HSMCI_REGS->HSMCI_SDCR |= HSMCI_SDCR_SDCBUS_4;
     }
     else
     {
-       _HSMCI_REGS->HSMCI_SDCR.w |= HSMCI_SDCR_SDCBUS_1;
+       HSMCI_REGS->HSMCI_SDCR |= HSMCI_SDCR_SDCBUS_1;
     }
 }
 
@@ -167,23 +169,23 @@ void sdhostSetSpeedMode ( SDHOST_SPEED_MODE speedMode )
 {
     if (speedMode == SDHOST_SPEED_MODE_HIGH)
     {
-       _HSMCI_REGS->HSMCI_CFG.w |= HSMCI_CFG_HSMODE_Msk;
+       HSMCI_REGS->HSMCI_CFG |= HSMCI_CFG_HSMODE_Msk;
     }
     else
     {
-        _HSMCI_REGS->HSMCI_CFG.w &= ~HSMCI_CFG_HSMODE_Msk;
+        HSMCI_REGS->HSMCI_CFG &= ~HSMCI_CFG_HSMODE_Msk;
     }
 }
 
 void sdhostSetupDma ( uint8_t *buffer, uint16_t numBytes, DRV_SDHC_OPERATION_TYPE operation )
 {
-    _HSMCI_REGS->HSMCI_DMA.w = HSMCI_DMA_DMAEN_Msk;
+    HSMCI_REGS->HSMCI_DMA = HSMCI_DMA_DMAEN_Msk;
     if (operation == DRV_SDHC_OPERATION_TYPE_READ)
     {
-        _XDMAC_REGS->XDMAC_CHID[0].XDMAC_CSA.w = (uint32_t)&(_HSMCI_REGS->HSMCI_FIFO[0].w);
-        _XDMAC_REGS->XDMAC_CHID[0].XDMAC_CDA.w = (uint32_t) buffer;
-        _XDMAC_REGS->XDMAC_CHID[0].XDMAC_CUBC.w = XDMAC_CUBC_UBLEN((numBytes)/4);
-        _XDMAC_REGS->XDMAC_CHID[0].XDMAC_CC.w = XDMAC_CC_TYPE_PER_TRAN
+        XDMAC_REGS->XDMAC_CHID[CHANNEL].XDMAC_CSA = (uint32_t)&(HSMCI_REGS->HSMCI_FIFO[0]);
+        XDMAC_REGS->XDMAC_CHID[CHANNEL].XDMAC_CDA = (uint32_t) buffer;
+        XDMAC_REGS->XDMAC_CHID[CHANNEL].XDMAC_CUBC = XDMAC_CUBC_UBLEN((numBytes)/4);
+        XDMAC_REGS->XDMAC_CHID[CHANNEL].XDMAC_CC = XDMAC_CC_TYPE_PER_TRAN
                             | XDMAC_CC_MBSIZE_SINGLE
                             | XDMAC_CC_DSYNC_PER2MEM
                             | XDMAC_CC_CSIZE_CHK_1
@@ -192,16 +194,16 @@ void sdhostSetupDma ( uint8_t *buffer, uint16_t numBytes, DRV_SDHC_OPERATION_TYP
                             | XDMAC_CC_DIF_AHB_IF0
                             | XDMAC_CC_SAM_FIXED_AM
                             | XDMAC_CC_DAM_INCREMENTED_AM
-                            | XDMAC_CC_PERID(0);
-        SCB_CleanInvalidateDCache();
-        _XDMAC_REGS->XDMAC_GE.w = (XDMAC_GE_EN0_Msk << 0);
+                            | XDMAC_CC_PERID(CHANNEL);
+        SCB_InvalidateDCache_by_Addr((uint32_t*)buffer, (int32_t)numBytes);
+        XDMAC_REGS->XDMAC_GE = (XDMAC_GE_EN0_Msk << CHANNEL);
     }
     else
     {
-        _XDMAC_REGS->XDMAC_CHID[0].XDMAC_CSA.w = (uint32_t) buffer;
-        _XDMAC_REGS->XDMAC_CHID[0].XDMAC_CDA.w = (uint32_t)&(_HSMCI_REGS->HSMCI_FIFO[0].w);
-        _XDMAC_REGS->XDMAC_CHID[0].XDMAC_CUBC.w = XDMAC_CUBC_UBLEN((numBytes)/4);
-        _XDMAC_REGS->XDMAC_CHID[0].XDMAC_CC.w = XDMAC_CC_TYPE_PER_TRAN
+        XDMAC_REGS->XDMAC_CHID[CHANNEL].XDMAC_CSA = (uint32_t) buffer;
+        XDMAC_REGS->XDMAC_CHID[CHANNEL].XDMAC_CDA = (uint32_t)&(HSMCI_REGS->HSMCI_FIFO[0]);
+        XDMAC_REGS->XDMAC_CHID[CHANNEL].XDMAC_CUBC = XDMAC_CUBC_UBLEN((numBytes)/4);
+        XDMAC_REGS->XDMAC_CHID[CHANNEL].XDMAC_CC = XDMAC_CC_TYPE_PER_TRAN
 						| XDMAC_CC_MBSIZE_SINGLE
 						| XDMAC_CC_DSYNC_MEM2PER
 						| XDMAC_CC_CSIZE_CHK_1
@@ -210,23 +212,23 @@ void sdhostSetupDma ( uint8_t *buffer, uint16_t numBytes, DRV_SDHC_OPERATION_TYP
 						| XDMAC_CC_DIF_AHB_IF1
 						| XDMAC_CC_SAM_INCREMENTED_AM
 						| XDMAC_CC_DAM_FIXED_AM
-						| XDMAC_CC_PERID(0);
-        SCB_CleanInvalidateDCache();
-        _XDMAC_REGS->XDMAC_GE.w = (XDMAC_GE_EN0_Msk << 0);
+						| XDMAC_CC_PERID(CHANNEL);
+        SCB_CleanDCache_by_Addr((uint32_t*)buffer, (int32_t)numBytes);
+        XDMAC_REGS->XDMAC_GE = (XDMAC_GE_EN0_Msk << CHANNEL);
    }
 }
 
 void sdhostSetBlockSize ( uint16_t blockSize )
 {
     hsmci_block_size = blockSize;
-    _HSMCI_REGS->HSMCI_BLKR.w &= ~(HSMCI_BLKR_BLKLEN_Msk);
-    _HSMCI_REGS->HSMCI_BLKR.w = (blockSize << HSMCI_BLKR_BLKLEN_Pos);
+    HSMCI_REGS->HSMCI_BLKR &= ~(HSMCI_BLKR_BLKLEN_Msk);
+    HSMCI_REGS->HSMCI_BLKR |= (blockSize << HSMCI_BLKR_BLKLEN_Pos);
 }
 
 void sdhostSetBlockCount ( uint16_t numBlocks )
 {
-    _HSMCI_REGS->HSMCI_BLKR.w &= ~(HSMCI_BLKR_BCNT_Msk);
-    _HSMCI_REGS->HSMCI_BLKR.w |= (numBlocks << HSMCI_BLKR_BCNT_Pos);
+    HSMCI_REGS->HSMCI_BLKR &= ~(HSMCI_BLKR_BCNT_Msk);
+    HSMCI_REGS->HSMCI_BLKR |= (numBlocks << HSMCI_BLKR_BCNT_Pos);
 }
 
 bool sdhostIsCardAttached ( void )
@@ -234,7 +236,7 @@ bool sdhostIsCardAttached ( void )
 <#if DRV_SDHC_SDCDEN == true>
     if(DRV_SDHC_CARD_DETECT_ENABLE)
     {
-        if(CARD_DETECTStateGet()== false)
+        if(SDCD_Get()== false)
         {
             gSDHOSTCardCtxt.isAttached = true;
         }
@@ -251,7 +253,7 @@ bool sdhostIsCardAttached ( void )
 
 void sdhostSetClock ( uint32_t clock )
 {
-    uint32_t mck = ${CLK_MASTER};
+    uint32_t mck = ${SDHC_CLK};
     uint32_t clkdiv = 0;
     uint32_t rest = 0;
 
@@ -277,8 +279,8 @@ void sdhostSetClock ( uint32_t clock )
         clkdiv = 0;
     }
 
-    _HSMCI_REGS->HSMCI_MR.w &= ~HSMCI_MR_CLKDIV_Msk;
-    _HSMCI_REGS->HSMCI_MR.w |= HSMCI_MR_CLKDIV(clkdiv);
+    HSMCI_REGS->HSMCI_MR &= ~HSMCI_MR_CLKDIV_Msk;
+    HSMCI_REGS->HSMCI_MR |= HSMCI_MR_CLKDIV(clkdiv);
 }
 
 void sdhostClockEnable ( void )
@@ -294,8 +296,8 @@ void sdhostInterruptHandler( SDHOST_CARD_CTXT* cardCtxt )
     volatile uint32_t intMask = 0;
     volatile uint32_t intFlags = 0;
 
-    intMask = _HSMCI_REGS->HSMCI_IMR.w;
-    intFlags = _HSMCI_REGS->HSMCI_SR.w;
+    intMask = HSMCI_REGS->HSMCI_IMR;
+    intFlags = HSMCI_REGS->HSMCI_SR;
     if ((intMask & intFlags) == 0)
     {
         return;
@@ -356,7 +358,7 @@ void sdhostInterruptHandler( SDHOST_CARD_CTXT* cardCtxt )
                 if (intFlags & (HSMCI_SR_XFRDONE_Msk))
                 {
                     cardCtxt->dataCompleted = true;
-                    _HSMCI_REGS->HSMCI_IDR.w = 0xffffffff;
+                    HSMCI_REGS->HSMCI_IDR = 0xffffffff;
                 }
             }
         }
@@ -364,24 +366,24 @@ void sdhostInterruptHandler( SDHOST_CARD_CTXT* cardCtxt )
 
     if (cardCtxt->waitForData == false)
     {
-        _HSMCI_REGS->HSMCI_IDR.w = 0xffffffff;
+        HSMCI_REGS->HSMCI_IDR = 0xffffffff;
     }
 }
 
 bool sdhostIsCmdLineBusy ( void )
 {
-    return (!(_HSMCI_REGS->HSMCI_SR.w & HSMCI_SR_CMDRDY_Msk));
+    return (!(HSMCI_REGS->HSMCI_SR & HSMCI_SR_CMDRDY_Msk));
 }
 
 bool sdhostIsDat0LineBusy ( void )
 {
-    return (!(_HSMCI_REGS->HSMCI_SR.w & HSMCI_SR_TXRDY_Msk));
+    return (!(HSMCI_REGS->HSMCI_SR & HSMCI_SR_TXRDY_Msk));
 }
 
 void sdhostReadResponse ( SDHOST_READ_RESPONSE_REG respReg, uint32_t* response )
 {
     uint32_t response_reg[4] = {0,0,0,0};
-    memcpy(response_reg,(void*)&(_HSMCI_REGS->HSMCI_RSPR[0].w),16);
+    memcpy(response_reg,(void*)&(HSMCI_REGS->HSMCI_RSPR[0]),16);
     switch (respReg)
     {
         case SDHOST_READ_RESP_REG_0:
@@ -501,10 +503,10 @@ void sdhostSendCommand ( uint8_t opCode, uint8_t respType, uint8_t dataPresent, 
     }
     if (!dataPresent)
     {
-        _HSMCI_REGS->HSMCI_DMA.w = 0;
+        HSMCI_REGS->HSMCI_DMA = 0;
     }
 
-    _HSMCI_REGS->HSMCI_MR.w &= ~(HSMCI_MR_WRPROOF_Msk | HSMCI_MR_RDPROOF_Msk | HSMCI_MR_FBYTE_Msk);
+    HSMCI_REGS->HSMCI_MR &= ~(HSMCI_MR_WRPROOF_Msk | HSMCI_MR_RDPROOF_Msk | HSMCI_MR_FBYTE_Msk);
 
     cmd |= HSMCI_CMDR_CMDNB(opcode_32) | HSMCI_CMDR_SPCMD_STD;
     if (opcode_32 & SDMMC_RESP_PRESENT)
@@ -541,14 +543,14 @@ void sdhostSendCommand ( uint8_t opCode, uint8_t respType, uint8_t dataPresent, 
     }
     if (dataPresent)
     {
-        _HSMCI_REGS->HSMCI_MR.w |= HSMCI_MR_WRPROOF_Msk | HSMCI_MR_RDPROOF_Msk;
+        HSMCI_REGS->HSMCI_MR |= HSMCI_MR_WRPROOF_Msk | HSMCI_MR_RDPROOF_Msk;
         if (hsmci_block_size & 0x3)
         {
-            _HSMCI_REGS->HSMCI_MR.w |= HSMCI_MR_FBYTE_Msk;
+            HSMCI_REGS->HSMCI_MR |= HSMCI_MR_FBYTE_Msk;
         }
         else
         {
-            _HSMCI_REGS->HSMCI_MR.w &= ~HSMCI_MR_FBYTE_Msk;
+            HSMCI_REGS->HSMCI_MR &= ~HSMCI_MR_FBYTE_Msk;
         }
         /* Configure the transfer mode register. */
         cardCtxt->isDataPresent = true;
@@ -556,10 +558,10 @@ void sdhostSendCommand ( uint8_t opCode, uint8_t respType, uint8_t dataPresent, 
         interrupt |= (HSMCI_SR_XFRDONE_Msk | HSMCI_SR_UNRE_Msk | HSMCI_SR_OVRE_Msk | HSMCI_SR_DTOE_Msk | HSMCI_SR_DCRCE_Msk);
     }
     // Write argument
-    _HSMCI_REGS->HSMCI_ARGR.w = argument;
+    HSMCI_REGS->HSMCI_ARGR = argument;
     // Write and start command
-    _HSMCI_REGS->HSMCI_CMDR.w = cmd;
-    _HSMCI_REGS->HSMCI_IER.w = interrupt;
+    HSMCI_REGS->HSMCI_CMDR = cmd;
+    HSMCI_REGS->HSMCI_IER = interrupt;
 }
 
 bool sdhostIsWriteProtected ( void )
@@ -567,7 +569,7 @@ bool sdhostIsWriteProtected ( void )
 <#if DRV_SDHC_SDWPEN == true>
     if(DRV_SDHC_WRITE_PROTECT_ENABLE)
     {
-        if(WRITE_PROTECTStateGet()== true)
+        if(SDWP_Get()== true)
         {
             return true;
         }
@@ -584,30 +586,30 @@ bool sdhostIsWriteProtected ( void )
 bool sdhostInit ( SDHOST_CARD_CTXT** cardCtxt )
 {
     // Set the Data Timeout Register to 2 Mega Cycles
-    _HSMCI_REGS->HSMCI_DTOR.w = HSMCI_DTOR_DTOMUL_1048576 | HSMCI_DTOR_DTOCYC(2);
+    HSMCI_REGS->HSMCI_DTOR = HSMCI_DTOR_DTOMUL_1048576 | HSMCI_DTOR_DTOCYC(2);
     // Set Completion Signal Timeout to 2 Mega Cycles
-    _HSMCI_REGS->HSMCI_CSTOR.w = HSMCI_CSTOR_CSTOMUL_1048576 | HSMCI_CSTOR_CSTOCYC(2);
+    HSMCI_REGS->HSMCI_CSTOR = HSMCI_CSTOR_CSTOMUL_1048576 | HSMCI_CSTOR_CSTOCYC(2);
     // Set Configuration Register
-    _HSMCI_REGS->HSMCI_CFG.w = HSMCI_CFG_FIFOMODE_Msk | HSMCI_CFG_FERRCTRL_Msk;
+    HSMCI_REGS->HSMCI_CFG = HSMCI_CFG_FIFOMODE_Msk | HSMCI_CFG_FERRCTRL_Msk;
     // Set power saving to maximum value
-    _HSMCI_REGS->HSMCI_MR.w = HSMCI_MR_PWSDIV_Msk;
+    HSMCI_REGS->HSMCI_MR = HSMCI_MR_PWSDIV_Msk;
     // Enable the HSMCI and the Power Saving
-    _HSMCI_REGS->HSMCI_CR.w = HSMCI_CR_MCIEN_Msk | HSMCI_CR_PWSEN_Msk;
+    HSMCI_REGS->HSMCI_CR = HSMCI_CR_MCIEN_Msk | HSMCI_CR_PWSEN_Msk;
 
     *cardCtxt = (SDHOST_CARD_CTXT *)&gSDHOSTCardCtxt;
     sdhostInitVariables (*cardCtxt);
-    _HSMCI_REGS->HSMCI_CFG.w &= ~HSMCI_CFG_HSMODE_Msk;
+    HSMCI_REGS->HSMCI_CFG &= ~HSMCI_CFG_HSMODE_Msk;
     sdhostSetClock (SDHOST_CLOCK_FREQ_400_KHZ);
     // Configure command
-    _HSMCI_REGS->HSMCI_MR.w &= ~(HSMCI_MR_WRPROOF_Msk | HSMCI_MR_RDPROOF_Msk | HSMCI_MR_FBYTE_Msk);
+    HSMCI_REGS->HSMCI_MR &= ~(HSMCI_MR_WRPROOF_Msk | HSMCI_MR_RDPROOF_Msk | HSMCI_MR_FBYTE_Msk);
     // Write argument
-    _HSMCI_REGS->HSMCI_ARGR.w = 0;
+    HSMCI_REGS->HSMCI_ARGR = 0;
     // Write and start initialization command
-    _HSMCI_REGS->HSMCI_CMDR.w = HSMCI_CMDR_RSPTYP_NORESP
+    HSMCI_REGS->HSMCI_CMDR = HSMCI_CMDR_RSPTYP_NORESP
             | HSMCI_CMDR_SPCMD_INIT
             | HSMCI_CMDR_OPDCMD_OPENDRAIN;
     // Wait end of initialization command
-    while (!(_HSMCI_REGS->HSMCI_SR.w & HSMCI_SR_CMDRDY_Msk));
+    while (!(HSMCI_REGS->HSMCI_SR & HSMCI_SR_CMDRDY_Msk));
 
     return true;
 }

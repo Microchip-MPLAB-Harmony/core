@@ -50,12 +50,11 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include "configuration.h"
-#include "osal/osal.h"
 #include "driver/sdhc/drv_sdhc.h"
 #include "driver/sdhc/src/drv_sdhc_local.h"
 #include "driver/sdhc/src/drv_sdhc_host.h"
 #include "system/fs/sys_fs_media_manager.h"
-#include "peripheral/systick/plib_systick.h"
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: File Scope Variables
@@ -71,6 +70,7 @@ OSAL_MUTEX_DECLARE(gDrvSDHCClientMutex);
  * a different buffer handle for every request.
  ***********************************************/
 uint16_t gDrvSDHCBufferToken = 0;
+
 
 /*************************************
  * SDHC driver geometry object
@@ -142,7 +142,6 @@ const SYS_FS_MEDIA_FUNCTIONS sdhcMediaFunctions =
 
 DRV_SDHC_OBJ gDrvSDHCObj[DRV_SDHC_INSTANCES_NUMBER];
 
-bool timeout = false;
 // *****************************************************************************
 /* Driver Client instance objects.
 
@@ -455,17 +454,21 @@ static void DRV_SDHC_SetClock
         default:
             {
                 sdhostSetClock(clock);
-                dObj->clockState = DRV_SDHC_CLOCK_PRE_ENABLE_DELAY;
-                timeout = false;
-                SYSTICK_TimerStop();
-                SYSTICK_TimerPeriodSet(0x2DC6C);
-                SYSTICK_TimerStart();
+				dObj->tmrHandle = SYS_TIME_HANDLE_INVALID;
+				if (SYS_TIME_DelayMS(5, &(dObj->tmrHandle)) != SYS_TIME_SUCCESS)
+       			{
+           			dObj->clockState = DRV_SDHC_CLOCK_SET_DIVIDER;
+       			}
+				else
+				{
+					dObj->clockState = DRV_SDHC_CLOCK_PRE_ENABLE_DELAY;
+				}				
                 break;
             }
 
         case DRV_SDHC_CLOCK_PRE_ENABLE_DELAY:
             {
-                if (timeout)
+                if (SYS_TIME_DelayIsComplete(dObj->tmrHandle))
                 {
                     /* Delay is elapsed. */
                     dObj->clockState = DRV_SDHC_CLOCK_ENABLE;
@@ -476,17 +479,21 @@ static void DRV_SDHC_SetClock
         case DRV_SDHC_CLOCK_ENABLE:
             {
                 sdhostClockEnable ();   
-                timeout = false;
-                SYSTICK_TimerStop();
-                SYSTICK_TimerPeriodSet(0x2DC6C);
-                SYSTICK_TimerStart();
-                dObj->clockState = DRV_SDHC_CLOCK_POST_ENABLE_DELAY;
+				dObj->tmrHandle = SYS_TIME_HANDLE_INVALID;
+				if ( SYS_TIME_DelayMS(5, &(dObj->tmrHandle)) != SYS_TIME_SUCCESS)
+       			{
+           			dObj->clockState = DRV_SDHC_CLOCK_ENABLE;
+       			}
+				else
+				{
+					dObj->clockState = DRV_SDHC_CLOCK_POST_ENABLE_DELAY;
+				}
                 break;
             }
 
         case DRV_SDHC_CLOCK_POST_ENABLE_DELAY:
             {
-                if (timeout)
+                if (SYS_TIME_DelayIsComplete(dObj->tmrHandle))
                 {
                     /* Delay is elapsed. */
                     dObj->clockState = DRV_SDHC_CLOCK_SET_COMPLETE;
@@ -501,8 +508,8 @@ static void DRV_SDHC_TimerCallback
     uintptr_t context
 )
 {
-    timeout = true;
-    SYSTICK_TimerStop();
+    volatile bool *flag = (bool *) context;
+    *flag = true;
 }
 
 static void DRV_SDHC_CommandSend
@@ -519,9 +526,14 @@ static void DRV_SDHC_CommandSend
         case DRV_SDHC_CMD_EXEC_IS_COMPLETE:
         default:
             {
-                dObj->cmdState = DRV_SDHC_CMD_LINE_STATE_CHECK;
-
                 dObj->cmdTimerState = false;
+                dObj->cmdTimerHandle = SYS_TIME_CallbackRegisterMS (DRV_SDHC_TimerCallback, (uintptr_t)&dObj->cmdTimerState, 10, SYS_TIME_SINGLE);
+				if(dObj->cmdTimerHandle == SYS_TIME_HANDLE_INVALID)
+				{
+					break;
+				}
+				dObj->cmdState = DRV_SDHC_CMD_LINE_STATE_CHECK;
+                /* Fall through to the next state. */
 
             }
 
@@ -540,7 +552,7 @@ static void DRV_SDHC_CommandSend
                     }
                     break;
                 }
-                //if ((flags) && (sdhostIsDat0LineBusy() == true))
+                
                 if (sdhostIsDat0LineBusy() == true)
                 {
                     /* This command requires the use of the DAT line, but the
@@ -589,7 +601,7 @@ static void DRV_SDHC_CommandSend
                 }
 
                 /* Stop the timer. */
-                SYSTICK_TimerStop();
+                SYS_TIME_TimerDestroy(dObj->cmdTimerHandle);
                 dObj->cmdTimerState = false;
 
                 if (dObj->cardCtxt->commandError)
@@ -602,7 +614,7 @@ static void DRV_SDHC_CommandSend
                     {
                         dObj->commandStatus = DRV_SDHC_COMMAND_STATUS_CRC_ERROR;
                     }
-                    else //if (dObj->cardCtxt->errorFlag & (DRV_SDHC_COMMAND_INDEX_ERROR | DRV_SDHC_COMMAND_END_BIT_ERROR))
+                    else 
                     {
                         dObj->commandStatus = DRV_SDHC_COMMAND_STATUS_ERROR;
                     }
@@ -638,23 +650,27 @@ static void DRV_SDHC_MediaInitialize
     {
         case DRV_SDHC_INIT_RESET_CARD:
             {
-                SYSTICK_TimerCallbackSet(DRV_SDHC_TimerCallback, (uintptr_t) NULL );
                 DRV_SDHC_CommandSend (dObj, DRV_SDHC_CMD_GO_IDLE_STATE, 0x0, SDHOST_CMD_RESP_NONE, 0x0);
                 if (dObj->cmdState == DRV_SDHC_CMD_EXEC_IS_COMPLETE)
                 {
                     dObj->initState = DRV_SDHC_INIT_RESET_DELAY;
-                    /* Wait for approx. 2 ms after issuing the reset command. */
-                    timeout = false;
-                    SYSTICK_TimerStop();
-                    SYSTICK_TimerPeriodSet(0x124F8);
-                    SYSTICK_TimerStart();
+	                    /* Wait for approx. 2 ms after issuing the reset command. */
+					dObj->tmrHandle = SYS_TIME_HANDLE_INVALID;
+					if (SYS_TIME_DelayMS(2, &(dObj->tmrHandle)) != SYS_TIME_SUCCESS)
+	       			{
+	           			dObj->clockState = DRV_SDHC_INIT_RESET_CARD;
+	       			}
+					else
+					{
+						dObj->clockState = DRV_SDHC_INIT_RESET_DELAY;
+					}
                 }
                 break;
             }
 
         case DRV_SDHC_INIT_RESET_DELAY:
             {
-                if (timeout)
+                if (SYS_TIME_DelayIsComplete(dObj->tmrHandle))
                 {
                     /* Delay is elapsed. */
                     dObj->initState = DRV_SDHC_INIT_CHK_IFACE_CONDITION;

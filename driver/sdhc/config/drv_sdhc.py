@@ -1,5 +1,4 @@
 def instantiateComponent(sdhcComponent, index):
-
 	numInstances = 0
 
 	try:
@@ -12,7 +11,31 @@ def instantiateComponent(sdhcComponent, index):
 	if numInstances < (index+1):
 		Database.clearSymbolValue("drv_sdhc", "DRV_SDHC_NUM_INSTANCES")
 		Database.setSymbolValue("drv_sdhc", "DRV_SDHC_NUM_INSTANCES", (index+1), 2)
-
+		
+	peripId = Interrupt.getInterruptIndex("HSMCI")
+	NVICVector = "NVIC_" + str(peripId) + "_ENABLE"
+	NVICHandler = "NVIC_" + str(peripId) + "_HANDLER"
+	NVICHandlerLock = "NVIC_" + str(peripId) + "_HANDLER_LOCK"
+	
+	sdhcDMA = sdhcComponent.createIntegerSymbol("SDHC_DMA", None)
+	sdhcDMA.setVisible(False)
+	sdhcDMA.setDependencies(dmaChannel, ["core.DMA_CH_FOR_HSMCI"])
+	
+	sdhcCLK = sdhcComponent.createIntegerSymbol("SDHC_CLK", None)
+	sdhcCLK.setVisible(False)
+	sdhcCLK.setDependencies(sdhcClock, ["core.CLK_MASTER"])
+	sdhcCLK.setDefaultValue(150000000)
+	
+	Database.clearSymbolValue("core", NVICVector)
+	Database.setSymbolValue("core", NVICVector, True, 2)
+	Database.clearSymbolValue("core", NVICHandler)
+	Database.setSymbolValue("core", NVICHandler, "SDHC_InterruptHandler", 2)
+	Database.clearSymbolValue("core", NVICHandlerLock)
+	Database.setSymbolValue("core", NVICHandlerLock, True, 2)
+	Database.clearSymbolValue("core", "PMC_ID_HSMCI")
+	Database.setSymbolValue("core", "PMC_ID_HSMCI", True, 2)
+	Database.setSymbolValue("core","DMA_CH_NEEDED_FOR_HSMCI", True, 2)
+	
 	sdhcEnable = sdhcComponent.createBooleanSymbol("USE_DRV_SDHC", None)
 	sdhcEnable.setLabel("Use SDHC Driver?")
 	sdhcEnable.setDefaultValue(False)
@@ -90,7 +113,8 @@ def instantiateComponent(sdhcComponent, index):
 	sdhcInstances.setLabel("Number of SDHC Instances")
 	sdhcInstances.setDefaultValue(1)
 	sdhcInstances.setMax(1)
-
+	sdhcInstances.setMin(0)
+	
 	sdhcRegisterFS = sdhcComponent.createBooleanSymbol("DRV_SDHC_SYS_FS_REGISTER", sdhcMenu)
 	sdhcRegisterFS.setLabel("Register with File System?")
 	sdhcRegisterFS.setDefaultValue(False)
@@ -110,7 +134,8 @@ def instantiateComponent(sdhcComponent, index):
 	sdhcSource1File.setDestPath("/driver/sdhc/src/")
 	sdhcSource1File.setProjectPath("/driver/sdhc/src/")
 	sdhcSource1File.setType("SOURCE")
-
+	
+	
 	sdhcHeaderLocalFile = sdhcComponent.createFileSymbol("DRV_SDHC_LOCAL_H", None)
 	sdhcHeaderLocalFile.setSourcePath("driver/sdhc/src/drv_sdhc_local.h")
 	sdhcHeaderLocalFile.setOutputName("drv_sdhc_local.h")
@@ -210,3 +235,9 @@ def deinstantiateComponent(i2cComponent):
     print("#####destroyComponent Component: instances = ", numInstances)
     numInstances = numInstances - 1
     Database.setSymbolValue("drv_sdhc", "DRV_SDHC_NUM_INSTANCES", numInstances, 1)
+
+def dmaChannel(sym, channel):
+	sym.setValue(channel[value], 2)
+
+def sdhcClock(sym, clock):
+	sym.setValue(channel[value], 2)

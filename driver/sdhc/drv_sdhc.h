@@ -66,7 +66,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Handle identifying commands queued in the driver.
 
   Description:
-    A command handle is returned by a call to the Read or Write 
+    A command handle is returned by a call to the Read or Write
     functions. This handle allows the application to track the completion
     of the operation. This command handle is also returned to the client
     along with the event that has occurred with respect to the command.
@@ -76,7 +76,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     The command handle associated with the command request expires when the
     client has been notified of the completion of the command (after event
     handler function that notifies the client returns) or after the command
-    has been retired by the driver if no event handler callback was set. 
+    has been retired by the driver if no event handler callback was set.
 
   Remarks:
     None.
@@ -108,11 +108,11 @@ typedef SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE DRV_SDHC_COMMAND_HANDLE;
     Identifies the possible events that can result from a request.
 
    Description
-    This enumeration identifies the possible events that can result from a 
+    This enumeration identifies the possible events that can result from a
     read or a write request issued by the client.
 
    Remarks:
-    One of these values is passed in the "event" parameter of the event 
+    One of these values is passed in the "event" parameter of the event
     handling callback function that client registered with the driver by
     calling the DRV_SDHC_EventHandlerSet function when a request is completed.
 */
@@ -123,7 +123,7 @@ typedef enum
     DRV_SDHC_EVENT_COMMAND_COMPLETE = SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE,
 
     /* There was an error during the operation */
-    DRV_SDHC_EVENT_COMMAND_ERROR = SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_ERROR 
+    DRV_SDHC_EVENT_COMMAND_ERROR = SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_ERROR
 
 } DRV_SDHC_EVENT;
 
@@ -135,11 +135,11 @@ typedef enum
     Identifies the possible events that can result from a request.
 
    Description
-    This enumeration identifies the possible events that can result from a 
+    This enumeration identifies the possible events that can result from a
     read or a write request made by the client.
 
    Remarks:
-    One of these values is passed in the "event" parameter of the event 
+    One of these values is passed in the "event" parameter of the event
     handling callback function that client registered with the driver by
     calling the DRV_SDHC_EventHandlerSet function when a request is completed.
 */
@@ -272,17 +272,17 @@ typedef struct _DRV_SDHC_INIT
 {
     /* System module initialization */
     SYS_MODULE_INIT moduleInit;
-    
+
     bool sdCardDetectEnable;
-    
+
     bool sdWriteProtectEnable;
 
     DRV_SDHC_SPEED_MODE speedMode;
 
     DRV_SDHC_BUS_WIDTH busWidth;
-    
+
     bool registerWithFs;
-    
+
 } DRV_SDHC_INIT;
 
 
@@ -295,18 +295,18 @@ typedef struct _DRV_SDHC_INIT
    Description
     This data type defines the required function signature for the SDHC event
     handling callback function. A client must register a pointer to an event
-    handling function whose function signature (parameter and return value 
-    types) match the types specified by this function pointer in order to 
+    handling function whose function signature (parameter and return value
+    types) match the types specified by this function pointer in order to
     receive event calls back from the driver.
-    
+
     The parameters and return values are described here and a partial example
     implementation is provided.
 
   Parameters:
     event           - Identifies the type of event
-    
+
     commandHandle   - Handle returned from the Read/Write requests
-    
+
     context         - Value identifying the context of the application that
                       registered the event handling function
 
@@ -323,14 +323,14 @@ typedef struct _DRV_SDHC_INIT
     )
     {
         MY_APP_DATA_STRUCT pAppData = (MY_APP_DATA_STRUCT) context;
-        
+
         switch(event)
         {
             case DRV_SDHC_EVENT_COMMAND_COMPLETE:
 
-                // Handle the completed buffer. 
+                // Handle the completed buffer.
                 break;
-            
+
             case DRV_SDHC_EVENT_COMMAND_ERROR:
             default:
 
@@ -342,11 +342,11 @@ typedef struct _DRV_SDHC_INIT
 
   Remarks:
     If the event is DRV_SDHC_EVENT_COMMAND_COMPLETE, it means that the
-    write or a erase operation was completed successfully. 
-    
+    write or a erase operation was completed successfully.
+
     If the event is DRV_SDHC_EVENT_COMMAND_ERROR, it means that the scheduled
     operation was not completed successfully.
-     
+
     The context parameter contains the handle to the client context, provided
     at the time the event handling function was  registered using the
     DRV_SDHC_EventHandlerSet function. This context handle value is
@@ -366,7 +366,7 @@ typedef SYS_FS_MEDIA_EVENT_HANDLER DRV_SDHC_EVENT_HANDLER;
 
 // *****************************************************************************
 /* Function:
-    SYS_MODULE_OBJ DRV_SDHC_Initialize 
+    SYS_MODULE_OBJ DRV_SDHC_Initialize
      (
          const SYS_MODULE_INDEX index,
          const SYS_MODULE_INIT  * const init
@@ -425,7 +425,7 @@ typedef SYS_FS_MEDIA_EVENT_HANDLER DRV_SDHC_EVENT_HANDLER;
     using this routine.
 */
 
-SYS_MODULE_OBJ DRV_SDHC_Initialize 
+SYS_MODULE_OBJ DRV_SDHC_Initialize
 (
     const SYS_MODULE_INDEX index,
     const SYS_MODULE_INIT  *const init
@@ -434,7 +434,7 @@ SYS_MODULE_OBJ DRV_SDHC_Initialize
 
 // *****************************************************************************
 /* Function:
-    void DRV_SDHC_Reinitialize 
+    void DRV_SDHC_Reinitialize
      (
          SYS_MODULE_OBJ          object,
          const SYS_MODULE_INIT * const init
@@ -489,7 +489,7 @@ SYS_MODULE_OBJ DRV_SDHC_Initialize
     using this routine.
 */
 
-void DRV_SDHC_Reinitialize 
+void DRV_SDHC_Reinitialize
 (
     SYS_MODULE_OBJ          object,
     const SYS_MODULE_INIT * const init
@@ -497,9 +497,9 @@ void DRV_SDHC_Reinitialize
 
 // *****************************************************************************
 /* Function:
-    void DRV_SDHC_Deinitialize 
-     ( 
-         SYS_MODULE_OBJ object 
+    void DRV_SDHC_Deinitialize
+     (
+         SYS_MODULE_OBJ object
      );
 
   Summary:
@@ -542,21 +542,21 @@ void DRV_SDHC_Reinitialize
 
     This routine will NEVER block waiting for hardware. If the operation
     requires time to allow the hardware to complete, this will be reported by
-    the DRV_SDHC_Status operation.  The system has to use DRV_SDHC_Status to 
+    the DRV_SDHC_Status operation.  The system has to use DRV_SDHC_Status to
 	check if the de-initialization is complete.
 */
 
-void DRV_SDHC_Deinitialize 
-( 
+void DRV_SDHC_Deinitialize
+(
     SYS_MODULE_OBJ object
 );
 
 
 // *****************************************************************************
 /* Function:
-    void DRV_SDHC_InterruptServiceRoutine 
-     ( 
-         SYS_MODULE_OBJ object 
+    void DRV_SDHC_InterruptServiceRoutine
+     (
+         SYS_MODULE_OBJ object
      );
 
   Summary:
@@ -588,8 +588,8 @@ void DRV_SDHC_InterruptServiceRoutine
 
 // *****************************************************************************
 /* Function:
-    SYS_STATUS DRV_SDHC_Status 
-     ( 
+    SYS_STATUS DRV_SDHC_Status
+     (
          SYS_MODULE_OBJ object
      );
 
@@ -674,8 +674,8 @@ SYS_STATUS DRV_SDHC_Status
 
 // *****************************************************************************
 /* Function:
-    void DRV_SDHC_Tasks 
-     ( 
+    void DRV_SDHC_Tasks
+     (
          SYS_MODULE_OBJ object
      );
 
@@ -731,7 +731,7 @@ void DRV_SDHC_Tasks
 
 // *****************************************************************************
 /* Function:
-    DRV_HANDLE DRV_SDHC_Open 
+    DRV_HANDLE DRV_SDHC_Open
      (
          const SYS_MODULE_INDEX drvIndex,
          const DRV_IO_INTENT    intent
@@ -788,7 +788,7 @@ void DRV_SDHC_Tasks
     DRV_HANDLE_INVALID.
 */
 
-DRV_HANDLE DRV_SDHC_Open 
+DRV_HANDLE DRV_SDHC_Open
 (
     const SYS_MODULE_INDEX drvIndex,
     const DRV_IO_INTENT    intent
@@ -874,8 +874,8 @@ void DRV_SDHC_Close
     in the commandHandle argument if the read request was scheduled successfully.
     The function adds the request to the hardware instance queue and returns
     immediately. While the request is in the queue, the application buffer is
-    owned by the driver and should not be modified. The function returns 
-    DRV_SDHC_COMMAND_HANDLE_INVALID in the commandHandle argument under the 
+    owned by the driver and should not be modified. The function returns
+    DRV_SDHC_COMMAND_HANDLE_INVALID in the commandHandle argument under the
     following circumstances:
     - if the driver handle is invalid
     - if the target buffer pointer is NULL
@@ -890,10 +890,10 @@ void DRV_SDHC_Close
     event if the buffer was not processed successfully.
 
   Precondition:
-    The DRV_SDHC_Initialize routine must have been called for the specified SDHC 
+    The DRV_SDHC_Initialize routine must have been called for the specified SDHC
     driver instance.
 
-    DRV_SDHC_Open must have been called with DRV_IO_INTENT_READ or 
+    DRV_SDHC_Open must have been called with DRV_IO_INTENT_READ or
     DRV_IO_INTENT_READWRITE as the ioIntent to obtain a valid opened device handle.
 
   Parameters:
@@ -902,7 +902,7 @@ void DRV_SDHC_Close
 
     commandHandle - Pointer to an argument that will contain the return buffer
                     handle
-                   
+
     targetBuffer  - Buffer into which the data read from the SD Card will be placed
 
     blockStart    - Start block address of the SD Card from where the read should begin.
@@ -917,16 +917,16 @@ void DRV_SDHC_Close
     <code>
 
     uint8_t myBuffer[MY_BUFFER_SIZE];
-    
+
     // address should be block aligned.
     uint32_t blockStart = 0x00;
     uint32_t    nBlock = 2;
     DRV_SDHC_COMMAND_HANDLE commandHandle;
-    MY_APP_OBJ myAppObj;    
+    MY_APP_OBJ myAppObj;
 
-    // mySDHCHandle is the handle returned 
+    // mySDHCHandle is the handle returned
     // by the DRV_SDHC_Open function.
-    
+
     DRV_SDHC_Read(mySDHCHandle, &commandHandle, &myBuffer, blockStart, nBlock);
 
     if(DRV_SDHC_COMMAND_HANDLE_INVALID == commandHandle)
@@ -973,8 +973,8 @@ void DRV_SDHC_Read
     in the commandHandle argument if the write request was scheduled successfully.
     The function adds the request to the hardware instance queue and returns
     immediately. While the request is in the queue, the application buffer is
-    owned by the driver and should not be modified. The function returns 
-    DRV_SDHC_COMMAND_HANDLE_INVALID in the commandHandle argument under the 
+    owned by the driver and should not be modified. The function returns
+    DRV_SDHC_COMMAND_HANDLE_INVALID in the commandHandle argument under the
     following circumstances:
     - if a buffer object could not be allocated to the request
     - if the source buffer pointer is NULL
@@ -982,7 +982,7 @@ void DRV_SDHC_Read
     - if the number of blocks to be written is either zero or more than the number
       of blocks actually available
     - if the write queue size is full or queue depth is insufficient
-    - if the driver handle is invalid 
+    - if the driver handle is invalid
 
     If the requesting client registered an event callback with the driver, the
     driver will issue a DRV_SDHC_EVENT_COMMAND_COMPLETE event if the
@@ -1003,12 +1003,12 @@ void DRV_SDHC_Read
 
     commandHandle - Pointer to an argument that will contain the return buffer
                     handle
-                   
+
     sourceBuffer  - The source buffer containing data to be programmed to the SD Card.
 
-    blockStart    - Start block address of SD Card where the writes should begin. 
+    blockStart    - Start block address of SD Card where the writes should begin.
 
-    nBlock        - Total number of blocks to be written. 
+    nBlock        - Total number of blocks to be written.
 
   Returns:
     The buffer handle is returned in the commandHandle argument. It will be
@@ -1016,18 +1016,18 @@ void DRV_SDHC_Read
 
   Example:
     <code>
-    
+
     uint8_t myBuffer[MY_BUFFER_SIZE];
-    
+
     // address should be block aligned.
     uint32_t blockStart = 0x00;
     uint32_t    nBlock = 2;
     DRV_SDHC_COMMAND_HANDLE commandHandle;
-    MY_APP_OBJ myAppObj;    
+    MY_APP_OBJ myAppObj;
 
-    // mySDHCHandle is the handle returned 
+    // mySDHCHandle is the handle returned
     // by the DRV_SDHC_Open function.
-    
+
     // Client registers an event handler with driver
 
     DRV_SDHC_EventHandlerSet(mySDHCHandle, APP_SDHCEventHandler, (uintptr_t)&myAppObj);
@@ -1042,7 +1042,7 @@ void DRV_SDHC_Read
     // Event is received when
     // the buffer is processed.
 
-    void APP_SDHCEventHandler(DRV_SDHC_EVENT event, 
+    void APP_SDHCEventHandler(DRV_SDHC_EVENT event,
             DRV_SDHC_COMMAND_HANDLE commandHandle, uintptr_t contextHandle)
     {
         // contextHandle points to myAppObj.
@@ -1051,9 +1051,9 @@ void DRV_SDHC_Read
         {
             case DRV_SDHC_EVENT_COMMAND_COMPLETE:
 
-                // This means the data was transferred. 
+                // This means the data was transferred.
                 break;
-            
+
             case DRV_SDHC_EVENT_COMMAND_ERROR:
 
                 // Error handling here.
@@ -1083,7 +1083,7 @@ void DRV_SDHC_Write
 /* Function:
     DRV_SDHC_COMMAND_STATUS DRV_SDHC_CommandStatus
     (
-        const DRV_HANDLE handle, 
+        const DRV_HANDLE handle,
         const DRV_SDHC_COMMAND_HANDLE commandHandle
     );
 
@@ -1120,7 +1120,7 @@ void DRV_SDHC_Write
     DRV_HANDLE                     handle;         // Returned from DRV_SDHC_Open
     DRV_SDHC_COMMAND_HANDLE      commandHandle;
     DRV_SDHC_COMMAND_STATUS      status;
- 
+
     status = DRV_SDHC_CommandStatus(handle, commandHandle);
     if(status == DRV_SDHC_COMMAND_COMPLETED)
     {
@@ -1135,7 +1135,7 @@ void DRV_SDHC_Write
 
 DRV_SDHC_COMMAND_STATUS DRV_SDHC_CommandStatus
 (
-    const DRV_HANDLE handle, 
+    const DRV_HANDLE handle,
     const DRV_SDHC_COMMAND_HANDLE commandHandle
 );
 
@@ -1170,8 +1170,8 @@ DRV_SDHC_COMMAND_STATUS DRV_SDHC_CommandStatus
     SYS_FS_MEDIA_GEOMETRY - Pointer to structure which holds the media geometry information.
 
   Example:
-    <code> 
-    
+    <code>
+
     SYS_FS_MEDIA_GEOMETRY * SDHCGeometry;
     uint32_t readBlockSize, writeBlockSize, eraseBlockSize;
     uint32_t nReadBlocks, nReadRegions, totalSize;
@@ -1214,12 +1214,12 @@ SYS_FS_MEDIA_GEOMETRY * DRV_SDHC_GeometryGet
 
   Description:
     This function allows a client to identify an event handling function for
-    the driver to call back when queued operation has completed.  
-    When a client queues a request for a read or a write operation, it is provided 
+    the driver to call back when queued operation has completed.
+    When a client queues a request for a read or a write operation, it is provided
     with a handle identifying the buffer that was added to the driver's buffer queue.
     The driver will pass this handle back to the client by calling "eventHandler"
     function when the queued operation has completed.
-    
+
     The event handler should be set before the client performs any read or write
     operations that could generate events. The event handler once set, persists
     until the client closes the driver or sets another event handler (which could
@@ -1237,11 +1237,11 @@ SYS_FS_MEDIA_GEOMETRY * DRV_SDHC_GeometryGet
                    open function
 
     eventHandler - Pointer to the event handler function implemented by the user
-    
-    context      - The value of parameter will be passed back to the client 
+
+    context      - The value of parameter will be passed back to the client
                    unchanged, when the eventHandler function is called. It can
-                   be used to identify any client specific data object that 
-                   identifies the instance of the client module (for example, 
+                   be used to identify any client specific data object that
+                   identifies the instance of the client module (for example,
                    it may be a pointer to the client module's state structure).
 
   Returns:
@@ -1256,9 +1256,9 @@ SYS_FS_MEDIA_GEOMETRY * DRV_SDHC_GeometryGet
     uint32_t blockStart, nBlock;
     DRV_SDHC_COMMAND_HANDLE commandHandle;
 
-    // drvSDHCHandle is the handle returned 
+    // drvSDHCHandle is the handle returned
     // by the DRV_SDHC_Open function.
-    
+
     // Client registers an event handler with driver. This is done once.
 
     DRV_SDHC_EventHandlerSet(drvSDHCHandle, APP_SDHCEventHandler, (uintptr_t)&myAppObj);
@@ -1272,7 +1272,7 @@ SYS_FS_MEDIA_GEOMETRY * DRV_SDHC_GeometryGet
 
     // Event Processing Technique. Event is received when operation is done.
 
-    void APP_SDHCEventHandler(DRV_SDHC_EVENT event, 
+    void APP_SDHCEventHandler(DRV_SDHC_EVENT event,
             DRV_SDHC_COMMAND_HANDLE handle, uintptr_t context)
     {
         // The context handle was set to an application specific
@@ -1283,9 +1283,9 @@ SYS_FS_MEDIA_GEOMETRY * DRV_SDHC_GeometryGet
         {
             case DRV_SDHC_EVENT_COMMAND_COMPLETE:
 
-                // This means the data was transferred. 
+                // This means the data was transferred.
                 break;
-            
+
             case DRV_SDHC_EVENT_COMMAND_ERROR:
 
                 // Error handling here.
@@ -1313,8 +1313,8 @@ void DRV_SDHC_EventHandlerSet
 // *****************************************************************************
 /* Function:
     bool DRV_SDHC_IsAttached
-    ( 
-        const DRV_HANDLE handle 
+    (
+        const DRV_HANDLE handle
     );
 
   Summary:
@@ -1324,7 +1324,7 @@ void DRV_SDHC_EventHandlerSet
     This function returns the physical attach status of the SD Card.
 
   Precondition:
-    The DRV_SDHC_Initialize() routine must have been called for the specified 
+    The DRV_SDHC_Initialize() routine must have been called for the specified
     SDHC driver instance.
 
     The DRV_SDHC_Open() routine must have been called to obtain a valid opened
@@ -1340,9 +1340,9 @@ void DRV_SDHC_EventHandlerSet
     SDHC driver otherwise returns false.
 
   Example:
-    <code> 
+    <code>
 
-    
+
     bool isSDHCAttached;
     isSDHCAttached = DRV_SDHC_isAttached(drvSDHCHandle);
 
@@ -1356,23 +1356,23 @@ bool DRV_SDHC_IsAttached
 (
     const DRV_HANDLE handle
 );
-    
+
 // *****************************************************************************
 /* Function:
     bool DRV_SDHC_IsWriteProtected
-    ( 
-        const DRV_HANDLE handle 
+    (
+        const DRV_HANDLE handle
     );
 
   Summary:
     Returns the write protect status of the SDHC.
 
   Description:
-    This function returns the physical attach status of the SDHC. This function 
+    This function returns the physical attach status of the SDHC. This function
     returns true if the SD Card is write protected otherwise it returns false.
 
   Precondition:
-    The DRV_SDHC_Initialize() routine must have been called for the specified 
+    The DRV_SDHC_Initialize() routine must have been called for the specified
     SDHC driver instance.
 
     The DRV_SDHC_Open() routine must have been called to obtain a valid opened
@@ -1416,4 +1416,3 @@ bool DRV_SDHC_IsWriteProtected
 /*******************************************************************************
  End of File
 */
-
