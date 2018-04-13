@@ -44,7 +44,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-#include "system_config.h"
+#include "configuration.h"
 #include "driver/spi/drv_spi.h"
 
 // *****************************************************************************
