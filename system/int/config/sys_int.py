@@ -1,58 +1,54 @@
-################################################################################
-#### Global Variables ####
-################################################################################
 
 ################################################################################
 #### Business Logic ####
 ################################################################################
 
-################################################################################
-#### Component ####
-################################################################################
-def instantiateComponent(intComponent):
-    Log.writeInfoMessage("Running Interrupt System Service ")
+def genIntHeaderFile(symbol, event):
+    symbol.setEnabled(event["value"])
 
-    useSysInt = intComponent.createBooleanSymbol("USE_SYS_INT", None)
-    useSysInt.setLabel("Use Interrupt System Service?")
-    useSysInt.setDescription("Enables Interrupt System Service")
-    useSysInt.setDefaultValue(True)
-    useSysInt.setVisible(False)
+def genIntHeaderMappingFile(symbol, event):
+    symbol.setEnabled(event["value"])
 
-    useSysIntComment = intComponent.createCommentSymbol("USE_SYS_INT_COMMENT", None)
-    useSysIntComment.setLabel("*** Configure Interrupts using Interrupt Manager ***")
+def genIntSourceFile(symbol, event):
+    symbol.setEnabled(event["value"])
 
-    ############################################################################
-    #### Code Generation ####
-    ############################################################################
-    configName = Variables.get("__CONFIGURATION_NAME")
+def genIntSystemDefFile(symbol, event):
+    symbol.setEnabled(event["value"])
 
-    intHeaderFile = intComponent.createFileSymbol("INT_HEADER", None)
-    intHeaderFile.setSourcePath("system/int/sys_int.h")
-    intHeaderFile.setOutputName("sys_int.h")
-    intHeaderFile.setDestPath("system/int/")
-    intHeaderFile.setProjectPath("config/" + configName + "/system/int/")
-    intHeaderFile.setType("HEADER")
+############################################################################
+#### Code Generation ####
+############################################################################
+genSysIntCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_INT", coreMenu)
+genSysIntCommonFiles.setLabel("Enable System Interrupt")
+genSysIntCommonFiles.setDefaultValue(True)
 
-    intHeaderMappingFile = intComponent.createFileSymbol("INT_MAPPING", None)
-    intHeaderMappingFile.setSourcePath("system/int/sys_int_mapping.h")
-    intHeaderMappingFile.setOutputName("sys_int_mapping.h")
-    intHeaderMappingFile.setDestPath("system/int/")
-    intHeaderMappingFile.setProjectPath("config/" + configName + "/system/int/")
-    intHeaderMappingFile.setType("HEADER")
+intHeaderFile = harmonyCoreComponent.createFileSymbol("INT_HEADER", None)
+intHeaderFile.setSourcePath("system/int/sys_int.h")
+intHeaderFile.setOutputName("sys_int.h")
+intHeaderFile.setDestPath("system/int/")
+intHeaderFile.setProjectPath("config/" + configName + "/system/int/")
+intHeaderFile.setType("HEADER")
+intHeaderFile.setDependencies(genIntHeaderFile, ["ENABLE_SYS_INT"])
 
-    intSourceFile = intComponent.createFileSymbol("INT_SOURCE", None)
-    intSourceFile.setSourcePath("system/int/src/sys_int.c")
-    intSourceFile.setOutputName("sys_int.c")
-    intSourceFile.setDestPath("system/int/src/")
-    intSourceFile.setProjectPath("config/" + configName + "/system/int/")
-    intSourceFile.setType("SOURCE")
+intHeaderMappingFile = harmonyCoreComponent.createFileSymbol("INT_MAPPING", None)
+intHeaderMappingFile.setSourcePath("system/int/sys_int_mapping.h")
+intHeaderMappingFile.setOutputName("sys_int_mapping.h")
+intHeaderMappingFile.setDestPath("system/int/")
+intHeaderMappingFile.setProjectPath("config/" + configName + "/system/int/")
+intHeaderMappingFile.setType("HEADER")
+intHeaderMappingFile.setDependencies(genIntHeaderMappingFile, ["ENABLE_SYS_INT"])
 
-    intSystemDefFile = intComponent.createFileSymbol("INT_DEF", None)
-    intSystemDefFile.setType("STRING")
-    intSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-    intSystemDefFile.setSourcePath("system/int/templates/system/system_definitions.h.ftl")
-    intSystemDefFile.setMarkup(True)
+intSourceFile = harmonyCoreComponent.createFileSymbol("INT_SOURCE", None)
+intSourceFile.setSourcePath("system/int/src/sys_int.c")
+intSourceFile.setOutputName("sys_int.c")
+intSourceFile.setDestPath("system/int/src/")
+intSourceFile.setProjectPath("config/" + configName + "/system/int/")
+intSourceFile.setType("SOURCE")
+intSourceFile.setDependencies(genIntSourceFile, ["ENABLE_SYS_INT"])
 
-    # Adding System Service common files to the project
-    Database.clearSymbolValue("harmonyCore", "SYSTEM_SERVICE_NEEDED")
-    Database.setSymbolValue("harmonyCore", "SYSTEM_SERVICE_NEEDED", True, 2)
+intSystemDefFile = harmonyCoreComponent.createFileSymbol("INT_DEF", None)
+intSystemDefFile.setType("STRING")
+intSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
+intSystemDefFile.setSourcePath("system/int/templates/system/system_definitions.h.ftl")
+intSystemDefFile.setMarkup(True)
+intSystemDefFile.setDependencies(genIntSystemDefFile, ["ENABLE_SYS_INT"])
