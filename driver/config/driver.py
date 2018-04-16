@@ -13,8 +13,8 @@ def genDriverHeaderCommonFile(symbol, event):
 #### Code Generation ####
 ############################################################################
 genDriverCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_DRV_COMMON", coreMenu)
-genDriverCommonFiles.setLabel("Generate Harmony Driver Common Files?")
-genDriverCommonFiles.setDefaultValue(True)
+genDriverCommonFiles.setLabel("Generate Harmony Driver Common Files")
+genDriverCommonFiles.setDefaultValue(False)
 	
 driverHeaderRootFile = harmonyCoreComponent.createFileSymbol("DRIVER_ROOT", None)
 driverHeaderRootFile.setSourcePath("driver/driver.h")
@@ -23,7 +23,7 @@ driverHeaderRootFile.setDestPath("driver/")
 driverHeaderRootFile.setProjectPath("config/" + configName + "/driver/")
 driverHeaderRootFile.setType("HEADER")
 driverHeaderRootFile.setOverwrite(True)
-driverHeaderRootFile.setEnabled(True)
+driverHeaderRootFile.setEnabled(False)
 driverHeaderRootFile.setDependencies(genDriverHeaderRootFile, ["ENABLE_DRV_COMMON"])
 
     
@@ -34,7 +34,7 @@ driverHeaderCommonFile.setDestPath("driver/")
 driverHeaderCommonFile.setProjectPath("config/" + configName + "/driver/")
 driverHeaderCommonFile.setType("HEADER")
 driverHeaderCommonFile.setOverwrite(True)
-driverHeaderCommonFile.setEnabled(True)
+driverHeaderCommonFile.setEnabled(False)
 driverHeaderCommonFile.setDependencies(genDriverHeaderCommonFile, ["ENABLE_DRV_COMMON"])
 
 
