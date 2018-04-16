@@ -1,5 +1,3 @@
-
-
 ################################################################################
 #### Business Logic ####
 ################################################################################
@@ -53,7 +51,6 @@ enableOSAL = harmonyCoreComponent.createBooleanSymbol("ENABLE_OSAL", coreMenu)
 enableOSAL.setLabel("Generate OSAL Files")
 enableOSAL.setDefaultValue(False)
     
-    
 selectRTOS = harmonyCoreComponent.createKeyValueSetSymbol("SELECT_RTOS", enableOSAL)
 selectRTOS.setLabel("Select RTOS or Bare-metal")
 selectRTOS.addKey("BARE_METAL", "0", "Bare-metal")
@@ -61,7 +58,6 @@ selectRTOS.addKey("FREE_RTOS_V10", "1", "FreeRTOS V10.x.x")
 selectRTOS.setOutputMode("Key")
 selectRTOS.setDisplayMode("Description")
 selectRTOS.setSelectedKey("BARE_METAL",1)
-
 
 osalHeaderFile = harmonyCoreComponent.createFileSymbol("OSAL_H", None)
 osalHeaderFile.setSourcePath("/osal/osal.h")
@@ -71,7 +67,6 @@ osalHeaderFile.setProjectPath("/osal/")
 osalHeaderFile.setType("HEADER")
 osalHeaderFile.setOverwrite(True)
 osalHeaderFile.setEnabled(False)
-
 
 osalHeaderDefFile = harmonyCoreComponent.createFileSymbol("OSAL_DEFINITIONS_H", None)
 osalHeaderDefFile.setSourcePath("/osal/osal_definitions.h")
@@ -110,8 +105,6 @@ osalSourceFreeRtosFile.setType("SOURCE")
 osalSourceFreeRtosFile.setOverwrite(True)
 osalSourceFreeRtosFile.setEnabled(False)
 
-
-
 osalSystemDefFile = harmonyCoreComponent.createFileSymbol("OSAL_SYSDEF_H", None)
 osalSystemDefFile.setType("STRING")
 osalSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
@@ -127,6 +120,3 @@ osalSystemConfFile.setSourcePath("/osal/templates/system/system_config.h.ftl")
 osalSystemConfFile.setMarkup(True)
 osalSystemConfFile.setOverwrite(True)
 osalSystemConfFile.setEnabled(False)
-
-
-

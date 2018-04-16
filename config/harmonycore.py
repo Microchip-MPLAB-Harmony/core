@@ -22,16 +22,20 @@ def instantiateComponent(harmonyCoreComponent):
     genAppFiles.setLabel("Generate Harmony Application Files")
     genAppFiles.setVisible(False)       
     genAppFiles.setDependencies(generateAppFiles, ["ENABLE_APP_FILE"])
-        
-    
+
     configName = Variables.get("__CONFIGURATION_NAME")
 
+    # Harmony Core Driver Common files
     execfile(Module.getPath() + "/driver/config/driver.py")
  
+    # Harmony Core System Service Common files
     execfile(Module.getPath() + "/system/config/system.py")
-        
+
+    # Harmony Core System Interrupt files
     execfile(Module.getPath() + "/system/int/config/sys_int.py")
 
+    # Harmony Core System DMA files
     execfile(Module.getPath() + "/system/dma/config/sys_dma.py")
 
+    # Harmony Core Operating System Abstraction Layer (OSAL) files
     execfile(Module.getPath() + "/osal/config/osal.py")

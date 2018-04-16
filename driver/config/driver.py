@@ -1,5 +1,3 @@
-
-
 ################################################################################
 #### Business Logic ####
 ################################################################################
@@ -15,7 +13,7 @@ def genDriverHeaderCommonFile(symbol, event):
 genDriverCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_DRV_COMMON", coreMenu)
 genDriverCommonFiles.setLabel("Generate Harmony Driver Common Files")
 genDriverCommonFiles.setDefaultValue(False)
-	
+
 driverHeaderRootFile = harmonyCoreComponent.createFileSymbol("DRIVER_ROOT", None)
 driverHeaderRootFile.setSourcePath("driver/driver.h")
 driverHeaderRootFile.setOutputName("driver.h")
@@ -26,7 +24,6 @@ driverHeaderRootFile.setOverwrite(True)
 driverHeaderRootFile.setEnabled(False)
 driverHeaderRootFile.setDependencies(genDriverHeaderRootFile, ["ENABLE_DRV_COMMON"])
 
-    
 driverHeaderCommonFile = harmonyCoreComponent.createFileSymbol("DRIVER_COMMON", None)
 driverHeaderCommonFile.setSourcePath("driver/driver_common.h")
 driverHeaderCommonFile.setOutputName("driver_common.h")
@@ -36,7 +33,3 @@ driverHeaderCommonFile.setType("HEADER")
 driverHeaderCommonFile.setOverwrite(True)
 driverHeaderCommonFile.setEnabled(False)
 driverHeaderCommonFile.setDependencies(genDriverHeaderCommonFile, ["ENABLE_DRV_COMMON"])
-
-
-
-

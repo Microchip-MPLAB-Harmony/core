@@ -225,8 +225,8 @@ void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
 OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uint8_t maxCount, uint8_t initialCount)
 {
    switch (type) {
-      case OSAL_SEM_TYPE_BINARY:
-         vSemaphoreCreateBinary(*(SemaphoreHandle_t*)semID);
+	   case OSAL_SEM_TYPE_BINARY:
+         *(SemaphoreHandle_t*)semID = xSemaphoreCreateBinary();
          break;
 
       case OSAL_SEM_TYPE_COUNTING:
