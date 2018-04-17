@@ -170,12 +170,6 @@ def instantiateComponent(usartComponent, index):
     usartHeaderLocalFile.setType("SOURCE")
     usartHeaderLocalFile.setOverwrite(True)
 
-    usartSystemDefFile = usartComponent.createFileSymbol("USART_DEF", None)
-    usartSystemDefFile.setType("STRING")
-    usartSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-    usartSystemDefFile.setSourcePath("driver/usart/templates/system/system_definitions.h.ftl")
-    usartSystemDefFile.setMarkup(True)
-
     usartSystemDefObjFile = usartComponent.createFileSymbol("USART_DEF_OBJ", None)
     usartSystemDefObjFile.setType("STRING")
     usartSystemDefObjFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_OBJECTS")
