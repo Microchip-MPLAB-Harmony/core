@@ -3,7 +3,7 @@ print("Load Module: Harmony Drivers & System Services")
 
 harmonySystemService = Module.CreateSharedComponent("Harmony", "Harmony Core", "/Harmony", "config/harmonycore.py")
 
-#load hamrony drivers and system services from the list 
+#load harmony drivers and system services from the list 
 for coreComponent in coreComponents:
 
 	#check if component should be created
@@ -19,7 +19,7 @@ for coreComponent in coreComponents:
 				for item in coreComponent['dependency']:
 					Component.addDependency("sys_" + Name + "_" + item + "_dependency", item)
 			Component.setDisplayType("System Service")
-		#create drvier component
+		#create driver component
 		else:
 			print("create component: " + Name.upper() + " Driver")
 			Component = Module.CreateGeneratorComponent("drv_" + Name, Name.upper(), "/Harmony/Drivers/", "driver/" + Name + "/config/drv_" + Name + "_common.py", "driver/" + Name + "/config/drv_" + Name + ".py")

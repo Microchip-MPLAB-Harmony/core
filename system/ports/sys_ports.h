@@ -47,6 +47,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include <stdbool.h>
 #include <stddef.h>
 
+
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 
@@ -929,6 +930,7 @@ void SYS_PORT_PinInterruptEnable(SYS_PORT_PIN pin);
 */
 void SYS_PORT_PinInterruptDisable(SYS_PORT_PIN pin);
 
+#include "sys_ports_mapping.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

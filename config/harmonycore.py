@@ -34,6 +34,9 @@ def instantiateComponent(harmonyCoreComponent):
     # Harmony Core System Interrupt files
     execfile(Module.getPath() + "/system/int/config/sys_int.py")
 
+    # Harmony Core System Ports files
+    execfile(Module.getPath() + "/system/ports/config/sys_ports.py")
+    
     # Harmony Core System DMA files
     execfile(Module.getPath() + "/system/dma/config/sys_dma.py")
 
