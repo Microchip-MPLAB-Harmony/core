@@ -12,6 +12,24 @@ def instantiateComponent(spiComponent, index):
     Database.clearSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES")
     Database.setSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES", spiNumInstances, 1)
     
+    # Enable "Generate Harmony Application Files" option in MHC
+    Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", True, 1)
+    
+    # Enable "Generate Harmony Driver Common Files" option in MHC
+    Database.setSymbolValue("Harmony", "ENABLE_DRV_COMMON", True, 1)
+    
+    # Enable "Generate Harmony System Service Common Files" option in MHC
+    Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", True, 1)
+    
+    # Enable "Enable System Interrupt" option in MHC
+    Database.setSymbolValue("Harmony", "ENABLE_SYS_INT", True, 1)
+    
+    # Enable "Enable System Ports" option in MHC
+    Database.setSymbolValue("Harmony", "ENABLE_SYS_PORTS", True, 1)
+    
+    # Enable "Enable System DMA" option in MHC
+    Database.setSymbolValue("Harmony", "ENABLE_SYS_DMA", True, 1)
+    
     spiSymIndex = spiComponent.createIntegerSymbol("INDEX", None)
     spiSymIndex.setVisible(False)
     spiSymIndex.setDefaultValue(index)
@@ -149,7 +167,7 @@ def onDependentComponentAdded(drv_spi, id, spi):
         spi.setSymbolValue("SPI_INTERRUPT_MODE", True, 1)
         #spiIntSymPLIB = spi.getSymbolByID("SPI_INTERRUPT_MODE")
         #spiIntSymPLIB.setReadOnly(True)
-
+        
 def requestDMAChannel(Sym, event):
     global drvSpiInstanceSpace
     spiPeripheral = Database.getSymbolValue(drvSpiInstanceSpace, "DRV_SPI_PLIB")
@@ -183,7 +201,24 @@ def commonTxRxOption(Sym, event):
     Sym.setValue(event["value"], 1)
 
 def destroyComponent(spiComponent):
-    print("bug_arpan")
     spiNumInstances = Database.getSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES")   
     spiNumInstances = spiNumInstances - 1   
     Database.setSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES", spiNumInstances, 1)
+
+    # Disable "Generate Harmony Application Files" option in MHC
+    Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", False, 3)
+    
+    # Disable "Generate Harmony Driver Common Files" option in MHC
+    Database.setSymbolValue("Harmony", "ENABLE_DRV_COMMON", False, 3)
+    
+    # Disable "Generate Harmony System Service Common Files" option in MHC
+    Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", False, 3)
+    
+    # Disable "Enable System Interrupt" option in MHC
+    Database.setSymbolValue("Harmony", "ENABLE_SYS_INT", False, 3)
+    
+    # Disable "Enable System Ports" option in MHC
+    Database.setSymbolValue("Harmony", "ENABLE_SYS_PORTS", False, 3)
+    
+    # Disable "Enable System DMA" option in MHC
+    Database.setSymbolValue("Harmony", "ENABLE_SYS_DMA", False, 3)
