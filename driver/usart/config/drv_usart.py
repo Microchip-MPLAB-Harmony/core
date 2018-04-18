@@ -92,6 +92,23 @@ def instantiateComponent(usartComponent, index):
     global drvUsartInstanceSpace
     drvUsartInstanceSpace = "drv_usart_" + str(index)
 
+    # Enable dependent Harmony core components
+    Database.clearSymbolValue("Harmony", "ENABLE_DRV_COMMON")
+    Database.setSymbolValue("Harmony", "ENABLE_DRV_COMMON", True, 2)
+
+    Database.clearSymbolValue("Harmony", "ENABLE_SYS_INT")
+    Database.setSymbolValue("Harmony", "ENABLE_SYS_INT", True, 2)
+
+    Database.clearSymbolValue("Harmony", "ENABLE_SYS_DMA")
+    Database.setSymbolValue("Harmony", "ENABLE_SYS_DMA", True, 2)
+
+    Database.clearSymbolValue("Harmony", "ENABLE_OSAL")
+    Database.setSymbolValue("Harmony", "ENABLE_OSAL", True, 2)
+
+    Database.clearSymbolValue("Harmony", "ENABLE_APP_FILE")
+    Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", True, 2)
+
+    # Menu
     usartIndex = usartComponent.createIntegerSymbol("INDEX", None)
     usartIndex.setVisible(False)
     usartIndex.setDefaultValue(index)

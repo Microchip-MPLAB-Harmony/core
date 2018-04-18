@@ -11,6 +11,11 @@ def genDmaHeaderMappingFile(symbol, event):
 def genDmaSystemDefFile(symbol, event):
     symbol.setEnabled(event["value"])
 
+def enableDependencySymbols(symbol, event):
+    if(event["value"] == True):
+        Database.clearSymbolValue("Harmony", "ENABLE_SYS_COMMON")
+        Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", True, 2)
+
 ############################################################################
 #### Code Generation ####
 ############################################################################
@@ -18,6 +23,12 @@ def genDmaSystemDefFile(symbol, event):
 genSysDMACommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_DMA", coreMenu)
 genSysDMACommonFiles.setLabel("Enable System DMA")
 genSysDMACommonFiles.setDefaultValue(False)
+
+enableDependency = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_DMA_DEPENDENCY", coreMenu)
+enableDependency.setLabel("Enable System DMA Dependencies")
+enableDependency.setVisible(False)
+enableDependency.setDependencies(enableDependencySymbols, ["ENABLE_SYS_DMA"])
+enableDependency.setDefaultValue(False)
 
 dmaHeaderFile = harmonyCoreComponent.createFileSymbol("DMA_HEADER", None)
 dmaHeaderFile.setSourcePath("system/dma/sys_dma.h")

@@ -15,12 +15,23 @@ def genIntSourceFile(symbol, event):
 def genIntSystemDefFile(symbol, event):
     symbol.setEnabled(event["value"])
 
+def enableDependencySymbols(symbol, event):
+    if(event["value"] == True):
+        Database.clearSymbolValue("Harmony", "ENABLE_SYS_COMMON")
+        Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", True, 2)
+
 ############################################################################
 #### Code Generation ####
 ############################################################################
 genSysIntCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_INT", coreMenu)
 genSysIntCommonFiles.setLabel("Enable System Interrupt")
 genSysIntCommonFiles.setDefaultValue(False)
+
+enableDependency = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_INT_DEPENDENCY", coreMenu)
+enableDependency.setLabel("Enable System INT Dependencies")
+enableDependency.setVisible(False)
+enableDependency.setDependencies(enableDependencySymbols, ["ENABLE_SYS_INT"])
+enableDependency.setDefaultValue(False)
 
 intHeaderFile = harmonyCoreComponent.createFileSymbol("INT_HEADER", None)
 intHeaderFile.setSourcePath("system/int/sys_int.h")
