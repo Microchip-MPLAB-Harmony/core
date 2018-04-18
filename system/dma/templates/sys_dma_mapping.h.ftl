@@ -49,11 +49,21 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: DMA System Service Mapping
 // *****************************************************************************
 // *****************************************************************************
+<#if core.XDMAC_ENABLE == true>
+#include "peripheral/xdmac/plib_xdmac.h"
+
 #define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)  XDMAC_ChannelCallbackRegister((XDMAC_CHANNEL)channel, (XDMAC_CHANNEL_CALLBACK)eventHandler, context)
 
 #define SYS_DMA_ChannelTransfer(channel, srcAddr, destAddr, blockSize)  XDMAC_ChannelTransfer((XDMAC_CHANNEL)channel, srcAddr, destAddr, blockSize)
 
 #define SYS_DMA_ChannelIsBusy(channel)  XDMAC_ChannelIsBusy((XDMAC_CHANNEL)channel)
+<#else>
 
+#define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)
+
+#define SYS_DMA_ChannelTransfer(channel, srcAddr, destAddr, blockSize)
+
+#define SYS_DMA_ChannelIsBusy(channel)
+</#if>
 
 #endif // SYS_DMA_MAPPING_H
