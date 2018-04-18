@@ -71,9 +71,13 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 typedef enum _DRV_USART_ERROR
 {
     DRV_USART_ERROR_NONE = 0,
+
     DRV_USART_ERROR_OVERRUN = 1,
+
     DRV_USART_ERROR_PARITY = 2,
+
     DRV_USART_ERROR_FRAMING = 4
+
 }_DRV_USART_ERROR;
 
 // *****************************************************************************
@@ -172,19 +176,6 @@ struct _DRV_USART_INIT
      * peripheral. */
     USART_PLIB_API *usartPlib;
 
-    /* Interrupt source ID for the USART interrupt. */
-    INT_SOURCE interruptUSART;
-
-    /* This is the receive buffer queue size. This is the maximum
-     * number of read requests that driver will queue. This can be updated
-     * through DRV_USART_RCV_QUEUE_SIZE_IDXn macro in configuration.h */
-    unsigned int queueSizeReceive;
-
-    /* This is the transmit buffer queue size. This is the maximum
-     * number of write requests that driver will queue. This can be updated
-     * through DRV_USART_XMIT_QUEUE_SIZE_IDXn macro in configuration.h */
-    unsigned int queueSizeTransmit;
-
     /* This is the USART transmit DMA channel. */
     DMA_CHANNEL dmaChannelTransmit;
 
@@ -196,10 +187,33 @@ struct _DRV_USART_INIT
 
     /* This is the USART receive register address. Used for DMA operation. */
     void * usartReceiveAddress;
+<#if DRV_USART_MODE == "ASYNC">
+
+    /* This is the receive buffer queue size. This is the maximum
+     * number of read requests that driver will queue. This can be updated
+     * through DRV_USART_RCV_QUEUE_SIZE_IDXn macro in configuration.h */
+    unsigned int queueSizeReceive;
+
+    /* This is the transmit buffer queue size. This is the maximum
+     * number of write requests that driver will queue. This can be updated
+     * through DRV_USART_XMIT_QUEUE_SIZE_IDXn macro in configuration.h */
+    unsigned int queueSizeTransmit;
+
+    /* Interrupt source ID for the USART interrupt. */
+    INT_SOURCE interruptUSART;
 
     /* This is the DMA channel interrupt source. */
     INT_SOURCE interruptDMA;
 
+<#else>
+
+    /* Memory Pool for Client Objects */
+    uintptr_t clientObjPool;
+    
+    /* Number of clients */
+    uint32_t numClients;
+
+</#if>
 };
 
 

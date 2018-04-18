@@ -422,6 +422,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     else
     {
         dObj->usartPlib->writeCallbackRegister(_DRV_USART_TX_PLIB_CallbackHandler, (uintptr_t)dObj);
+        (void)_DRV_USART_TX_DMA_CallbackHandler;
     }
 
     if(DMA_CHANNEL_NONE != dObj->rxDMAChannel)
@@ -431,6 +432,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     else
     {
         dObj->usartPlib->readCallbackRegister(_DRV_USART_RX_PLIB_CallbackHandler, (uintptr_t)dObj);
+        (void)_DRV_USART_RX_DMA_CallbackHandler;
     }
 
     /* Update the status */

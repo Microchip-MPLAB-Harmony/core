@@ -1,4 +1,8 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_USART Instance ${INDEX?string} Initialization Data">
+<#if DRV_USART_MODE == "SYNC">
+
+DRV_USART_CLIENT_OBJ drvUSART${INDEX?string}ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
+</#if>
 
 USART_PLIB_API drvUsart${INDEX?string}PlibAPI = {
         .readCallbackRegister = (USART_ReadCallbackRegister)${DRV_USART_PLIB}_ReadCallbackRegister,
@@ -17,12 +21,6 @@ DRV_USART_INIT drvUsart${INDEX?string}InitData =
 {
     .usartPlib = &drvUsart${INDEX?string}PlibAPI,
 
-    .interruptUSART = ${DRV_USART_PLIB}_IRQn,
-
-    .queueSizeTransmit = DRV_USART_XMIT_QUEUE_SIZE_IDX${INDEX?string},
-
-    .queueSizeReceive = DRV_USART_RCV_QUEUE_SIZE_IDX${INDEX?string},
-
 <#if DRV_USART_TX_DMA == true>
     .dmaChannelTransmit = DRV_USART_XMIT_DMA_CH_IDX${INDEX?string},
 
@@ -38,8 +36,22 @@ DRV_USART_INIT drvUsart${INDEX?string}InitData =
 <#else>
     .dmaChannelReceive = DMA_CHANNEL_NONE,
 </#if>
+<#if DRV_USART_MODE == "ASYNC">
+
+    .queueSizeTransmit = DRV_USART_XMIT_QUEUE_SIZE_IDX${INDEX?string},
+
+    .queueSizeReceive = DRV_USART_RCV_QUEUE_SIZE_IDX${INDEX?string},
+
+    .interruptUSART = ${DRV_USART_PLIB}_IRQn,
 
     .interruptDMA = XDMAC_IRQn,
+<#else>
+
+    .numClients = DRV_USART_CLIENTS_NUMBER_IDX0,
+
+    .clientObjPool = (uintptr_t)&drvUSART${INDEX?string}ClientObjPool[0],
+</#if>
+
 };
 
 // </editor-fold>

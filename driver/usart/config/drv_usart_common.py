@@ -1,5 +1,14 @@
 def instantiateComponent(usartComponent):
 
+    usartMode = usartComponent.createKeyValueSetSymbol("DRV_USART_COMMON_MODE", None)
+    usartMode.setLabel("Driver Mode")
+    usartMode.addKey("ASYNC", "0", "Asynchronous")
+    usartMode.addKey("SYNC", "1", "Synchronous")
+    usartMode.setDisplayMode("Description")
+    usartMode.setOutputMode("Key")
+    usartMode.setVisible(False)
+    usartMode.setDefaultValue(0)
+
     usartSymNumInst = usartComponent.createIntegerSymbol("DRV_USART_NUM_INSTANCES", None)
     usartSymNumInst.setLabel("Number of Instances")
     usartSymNumInst.setMin(1)

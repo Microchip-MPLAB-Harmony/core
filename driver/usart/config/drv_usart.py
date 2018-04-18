@@ -49,6 +49,40 @@ def requestDMAComment(Sym, event):
     else:
         Sym.setVisible(False)
 
+def syncModeOptions(Sym, event):
+    if(event["value"] == 1):
+       Sym.setVisible(True)
+    elif(event["value"] == 0):
+       Sym.setVisible(False)
+
+def asyncModeOptions(Sym, event):
+    if(event["value"] == 0):
+       Sym.setVisible(True)
+    elif(event["value"] == 1):
+       Sym.setVisible(False)
+
+def syncFileGen(Sym, event):
+    if(event["value"] == 1):
+       Sym.setEnabled(True)
+    elif(event["value"] == 0):
+       Sym.setEnabled(False)
+
+def asyncFileGen(Sym, event):
+    if(event["value"] == 0):
+       Sym.setEnabled(True)
+    elif(event["value"] == 1):
+       Sym.setEnabled(False)
+
+def driverModeUpdate(Sym, event):
+    global drvUsartInstanceSpace
+    bufPoolSize = Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE")
+    Database.clearSymbolValue("drv_usart", "DRV_USART_COMMON_MODE")
+
+    if(event["value"] == 0):
+        Database.setSymbolValue("drv_usart", "DRV_USART_COMMON_MODE", event["value"], 2)
+    elif(event["value"] == 1):
+        Database.setSymbolValue("drv_usart", "DRV_USART_COMMON_MODE", event["value"], 2)
+
 ################################################################################
 #### Component ####
 ################################################################################
@@ -68,17 +102,38 @@ def instantiateComponent(usartComponent, index):
     usartPLIB.setDefaultValue("USART1")
     # Used onDependencyComponentAdd\Remove callbacks to get connected PLIB
 
+    usartMode = usartComponent.createKeyValueSetSymbol("DRV_USART_MODE", None)
+    usartMode.setLabel("Driver Mode")
+    usartMode.addKey("ASYNC", "0", "Asynchronous")
+    usartMode.addKey("SYNC", "1", "Synchronous")
+    usartMode.setDisplayMode("Description")
+    usartMode.setOutputMode("Key")
+    usartMode.setDefaultValue(0)
+
+    usartGlobalMode = usartComponent.createBooleanSymbol("DRV_USART_MODE_UPDATE", None)
+    usartGlobalMode.setLabel("**** Driver Mode Update ****")
+    usartGlobalMode.setDependencies(driverModeUpdate, ["DRV_USART_MODE"])
+    usartGlobalMode.setVisible(False)
+
+    usartNumClients = usartComponent.createIntegerSymbol("DRV_USART_CLIENTS_NUM", None)
+    usartNumClients.setLabel("Number of Clients")
+    usartNumClients.setMax(50)
+    usartNumClients.setVisible(False)
+    usartNumClients.setDefaultValue(1)
+    usartNumClients.setDependencies(syncModeOptions, ["DRV_USART_MODE"])
+
     usartTXQueueSize = usartComponent.createIntegerSymbol("DRV_USART_TX_QUEUE_SIZE", None)
     usartTXQueueSize.setLabel("Transmit Queue Size")
     usartTXQueueSize.setMax(50)
     usartTXQueueSize.setDefaultValue(5)
+    usartTXQueueSize.setDependencies(asyncModeOptions, ["DRV_USART_MODE"])
     currentTxBufSize = usartTXQueueSize.getValue()
-
 
     usartRXQueueSize = usartComponent.createIntegerSymbol("DRV_USART_RX_QUEUE_SIZE", None)
     usartRXQueueSize.setLabel("Receive Queue Size")
     usartRXQueueSize.setMax(50)
     usartRXQueueSize.setDefaultValue(5)
+    usartRXQueueSize.setDependencies(asyncModeOptions, ["DRV_USART_MODE"])
     currentRxBufSize = usartRXQueueSize.getValue()
 
     usartBufPool = usartComponent.createBooleanSymbol("DRV_USART_BUFFER_POOL", None)
@@ -138,6 +193,7 @@ def instantiateComponent(usartComponent, index):
     ############################################################################
     configName = Variables.get("__CONFIGURATION_NAME")
 
+    # Global Header Files
     usartHeaderFile = usartComponent.createFileSymbol("USART_HEADER", None)
     usartHeaderFile.setSourcePath("driver/usart/drv_usart.h")
     usartHeaderFile.setOutputName("drv_usart.h")
@@ -147,29 +203,57 @@ def instantiateComponent(usartComponent, index):
     usartHeaderFile.setOverwrite(True)
 
     usartHeaderDefFile = usartComponent.createFileSymbol("USART_HEADER_DEF", None)
-    usartHeaderDefFile.setSourcePath("driver/usart/drv_usart_definitions.h")
+    usartHeaderDefFile.setSourcePath("driver/usart/templates/drv_usart_definitions.h.ftl")
     usartHeaderDefFile.setOutputName("drv_usart_definitions.h")
     usartHeaderDefFile.setDestPath("driver/usart/")
     usartHeaderDefFile.setProjectPath("config/" + configName + "/driver/usart/")
     usartHeaderDefFile.setType("HEADER")
+    usartHeaderDefFile.setMarkup(True)
     usartHeaderDefFile.setOverwrite(True)
 
-    usartSourceFile = usartComponent.createFileSymbol("USART_SOURCE", None)
-    usartSourceFile.setSourcePath("driver/usart/src/drv_usart.c")
-    usartSourceFile.setOutputName("drv_usart.c")
-    usartSourceFile.setDestPath("driver/usart/src")
-    usartSourceFile.setProjectPath("config/" + configName + "/driver/usart/")
-    usartSourceFile.setType("SOURCE")
-    usartSourceFile.setOverwrite(True)
+    # Async Source Files
+    usartAsyncSourceFile = usartComponent.createFileSymbol("USART_ASYNC_SOURCE", None)
+    usartAsyncSourceFile.setSourcePath("driver/usart/src/async/drv_usart.c")
+    usartAsyncSourceFile.setOutputName("drv_usart.c")
+    usartAsyncSourceFile.setDestPath("driver/usart/src")
+    usartAsyncSourceFile.setProjectPath("config/" + configName + "/driver/usart/")
+    usartAsyncSourceFile.setType("SOURCE")
+    usartAsyncSourceFile.setOverwrite(True)
+    usartAsyncSourceFile.setEnabled(True)
+    usartAsyncSourceFile.setDependencies(asyncFileGen, ["DRV_USART_MODE"])
 
-    usartHeaderLocalFile = usartComponent.createFileSymbol("USART_LOCAL", None)
-    usartHeaderLocalFile.setSourcePath("driver/usart/src/drv_usart_local.h")
-    usartHeaderLocalFile.setOutputName("drv_usart_local.h")
-    usartHeaderLocalFile.setDestPath("driver/usart/src")
-    usartHeaderLocalFile.setProjectPath("config/" + configName + "/driver/usart/")
-    usartHeaderLocalFile.setType("SOURCE")
-    usartHeaderLocalFile.setOverwrite(True)
+    usartAsyncHeaderLocalFile = usartComponent.createFileSymbol("USART_ASYNC_LOCAL", None)
+    usartAsyncHeaderLocalFile.setSourcePath("driver/usart/src/async/drv_usart_local.h")
+    usartAsyncHeaderLocalFile.setOutputName("drv_usart_local.h")
+    usartAsyncHeaderLocalFile.setDestPath("driver/usart/src")
+    usartAsyncHeaderLocalFile.setProjectPath("config/" + configName + "/driver/usart/")
+    usartAsyncHeaderLocalFile.setType("SOURCE")
+    usartAsyncHeaderLocalFile.setOverwrite(True)
+    usartAsyncHeaderLocalFile.setEnabled(True)
+    usartAsyncHeaderLocalFile.setDependencies(asyncFileGen, ["DRV_USART_MODE"])
 
+    # Sync Source Files
+    usartSyncSourceFile = usartComponent.createFileSymbol("USART_SYNC_SOURCE", None)
+    usartSyncSourceFile.setSourcePath("driver/usart/src/sync/drv_usart.c")
+    usartSyncSourceFile.setOutputName("drv_usart.c")
+    usartSyncSourceFile.setDestPath("driver/usart/src")
+    usartSyncSourceFile.setProjectPath("config/" + configName + "/driver/usart/")
+    usartSyncSourceFile.setType("SOURCE")
+    usartSyncSourceFile.setOverwrite(True)
+    usartSyncSourceFile.setEnabled(False)
+    usartSyncSourceFile.setDependencies(syncFileGen, ["DRV_USART_MODE"])
+
+    usartSyncHeaderLocalFile = usartComponent.createFileSymbol("USART_SYNC_LOCAL", None)
+    usartSyncHeaderLocalFile.setSourcePath("driver/usart/src/sync/drv_usart_local.h")
+    usartSyncHeaderLocalFile.setOutputName("drv_usart_local.h")
+    usartSyncHeaderLocalFile.setDestPath("driver/usart/src")
+    usartSyncHeaderLocalFile.setProjectPath("config/" + configName + "/driver/usart/")
+    usartSyncHeaderLocalFile.setType("SOURCE")
+    usartSyncHeaderLocalFile.setOverwrite(True)
+    usartSyncHeaderLocalFile.setEnabled(False)
+    usartSyncHeaderLocalFile.setDependencies(syncFileGen, ["DRV_USART_MODE"])
+
+    # System Template Files
     usartSystemDefObjFile = usartComponent.createFileSymbol("USART_DEF_OBJ", None)
     usartSystemDefObjFile.setType("STRING")
     usartSystemDefObjFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_OBJECTS")
