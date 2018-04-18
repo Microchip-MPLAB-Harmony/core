@@ -301,9 +301,9 @@ static void _DRV_SPI_UpdateTransferSetupAndAssertCS(DRV_SPI_CLIENT_OBJ* clientOb
     }
     
     /* Assert chip select if configured */
-    if(clientObj->setup.chipSelect != PIO_PIN_NONE)
+    if(clientObj->setup.chipSelect != SYS_PORT_PIN_NONE)
     {
-        PIO_PinWrite(clientObj->setup.chipSelect, (bool)(clientObj->setup.csPolarity)); 
+        SYS_PORT_PinWrite(clientObj->setup.chipSelect, (bool)(clientObj->setup.csPolarity)); 
     }
 }
         
@@ -325,9 +325,9 @@ static void _DRV_SPI_PlibCallbackHandler(void* contextHandle)
     clientObj = (DRV_SPI_CLIENT_OBJ *)transferObj->hClient;
     
     /* De-assert Chip Select if it is defined by user */
-    if(clientObj->setup.chipSelect != PIO_PIN_NONE)
+    if(clientObj->setup.chipSelect != SYS_PORT_PIN_NONE)
     { 
-        PIO_PinWrite(clientObj->setup.chipSelect, !((bool)(clientObj->setup.csPolarity))); 
+        SYS_PORT_PinWrite(clientObj->setup.chipSelect, !((bool)(clientObj->setup.csPolarity))); 
     }
        
     errorStatus = dObj->spiPlib->errorGet();
@@ -398,9 +398,9 @@ static void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintpt
     else
     {                
         /* De-assert Chip Select if it is defined by user */
-        if(clientObj->setup.chipSelect != PIO_PIN_NONE)
+        if(clientObj->setup.chipSelect != SYS_PORT_PIN_NONE)
         { 
-            PIO_PinWrite(clientObj->setup.chipSelect, !((bool)(clientObj->setup.csPolarity))); 
+            SYS_PORT_PinWrite(clientObj->setup.chipSelect, !((bool)(clientObj->setup.csPolarity))); 
         }
         
         /* Set the events */
@@ -599,7 +599,7 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             /* Initialize other elements in Client Object */
             clientObj->eventHandler = NULL;
             clientObj->context      = NULL;
-            clientObj->setup.chipSelect = PIO_PIN_NONE;
+            clientObj->setup.chipSelect = SYS_PORT_PIN_NONE;
             
             if(ioIntent & DRV_IO_INTENT_EXCLUSIVE)
             {

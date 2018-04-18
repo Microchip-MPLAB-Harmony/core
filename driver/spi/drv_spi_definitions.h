@@ -52,7 +52,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include <device.h>
 #include "system/int/sys_int.h"
 #include "system/dma/sys_dma.h"
-#include "peripheral/pio/plib_pio.h"
+#include "system/ports/sys_ports.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -129,7 +129,7 @@ typedef struct
 
     DRV_SPI_DATA_BITS               dataBits;
 
-    PIO_PIN                         chipSelect;
+    SYS_PORT_PIN                   chipSelect;
 
     DRV_SPI_CS_POLARITY             csPolarity;
     

@@ -513,7 +513,7 @@ void DRV_SPI_Close( const DRV_HANDLE handle);
         setup.clockPhase = DRV_SPI_CLOCK_PHASE_TRAILING_EDGE;
         setup.clockPolarity = DRV_SPI_CLOCK_POLARITY_IDLE_LOW;
         setup.dataBits = DRV_SPI_DATA_BITS_16;
-        setup.chipSelect = PIO_PIN_RC5;
+        setup.chipSelect = SYS_PORT_PIN_PC5;
         setup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;
         
         DRV_SPI_TransferSetup ( mySPIHandle, &setup );
