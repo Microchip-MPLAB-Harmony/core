@@ -129,7 +129,7 @@ typedef struct
 
     DRV_SPI_DATA_BITS               dataBits;
 
-    SYS_PORT_PIN                   chipSelect;
+    SYS_PORT_PIN                    chipSelect;
 
     DRV_SPI_CS_POLARITY             csPolarity;
     
@@ -220,6 +220,18 @@ typedef struct
     
     /* Driver Queue Size */
     size_t                      queueSize;
+
+    /* Default baud rate */
+    uint32_t                    baudRateInHz;
+
+    /* Default clock phase */
+    DRV_SPI_CLOCK_PHASE         clockPhase;
+    
+    /* Default clock polarity */
+    DRV_SPI_CLOCK_POLARITY      clockPolarity;
+    
+    /* Default data bits */
+    DRV_SPI_DATA_BITS           dataBits;
     
     /* SPI transmit DMA channel. */
     DMA_CHANNEL                 dmaChannelTransmit;

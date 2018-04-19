@@ -46,6 +46,13 @@ DRV_SPI_INIT drvSPI${INDEX?string}InitData =
     /* SPI Client Objects Pool */
     .clientObjPool = (uintptr_t)&drvSPI${INDEX?string}ClientObjPool[0],
     
+    /* SPI setup parameters */
+    .baudRateInHz = (uint32_t)${.vars["spi${INDEX?string}"].SPI_BAUD_RATE},
+    .clockPhase = (DRV_SPI_CLOCK_PHASE)SPI_CSR_NCPHA_${.vars["spi${INDEX?string}"].SPI_CSR_NCPHA},
+    .clockPolarity = (DRV_SPI_CLOCK_POLARITY)SPI_CSR_CPOL_${.vars["spi${INDEX?string}"].SPI_CSR_CPOL},
+    .dataBits = (DRV_SPI_DATA_BITS)SPI_CSR_BITS${.vars["spi${INDEX?string}"].SPI_CSR_BITS},
+    
+     /* SPI DMA parameters */
 <#if DRV_SPI_TX_RX_DMA == true>
     .dmaChannelTransmit = DRV_SPI_XMIT_DMA_CH_IDX${INDEX?string},
     .dmaChannelReceive  = DRV_SPI_RCV_DMA_CH_IDX${INDEX?string},

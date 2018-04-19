@@ -122,6 +122,19 @@ typedef enum
             
 }DRV_SPI_CONFIG_DMA;
 
+typedef enum
+{
+    /* DMA data width 8 bit */
+    DRV_SPI_DMA_WIDTH_8_BIT = 0,
+    
+    /* DMA data width 16 bit */
+    DRV_SPI_DMA_WIDTH_16_BIT,
+            
+    /* DMA data width 32 bit */
+    DRV_SPI_DMA_WIDTH_32_BIT,
+            
+}DRV_SPI_DMA_WIDTH;
+
 // *****************************************************************************
 /* SPI Driver Transfer Object
 
@@ -219,8 +232,19 @@ typedef struct
     /* new objects will be added at this end */
     uint8_t queueTailIndex;
     
-    /* DMA related elements */
+    /* Default baud rate */
+    uint32_t    baudRateInHz;
+
+    /* Default clock phase */
+    DRV_SPI_CLOCK_PHASE clockPhase;
     
+    /* Default clock polarity */
+    DRV_SPI_CLOCK_POLARITY  clockPolarity;
+    
+    /* Default data bits */
+    DRV_SPI_DATA_BITS   dataBits;
+    
+    /* DMA related elements */
     /* Transmit DMA Channel */
     DMA_CHANNEL txDMAChannel;
     
