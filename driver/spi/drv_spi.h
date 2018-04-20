@@ -80,10 +80,10 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     The transfer handle value returned from the "transfer add"
     function is returned back to the client by the "event handler callback"
     function registered with the driver.
-    
+
     This handle can also be used to poll the transfer completion status using
     DRV_SPI_TransferStatusGet API.
-    
+
     The transfer handle assigned to a client request expires when a new transfer
     request is made after the completion of the current request.
 
@@ -100,7 +100,7 @@ typedef uintptr_t DRV_SPI_TRANSFER_HANDLE;
     Definition of an invalid transfer handle.
 
   Description:
-    This is the definition of an invalid transfer handle. An invalid transfer 
+    This is the definition of an invalid transfer handle. An invalid transfer
     handle is returned by DRV_SPI_WriteReadTransferAdd or DRV_SPI_WriteTransferAdd
     or DRV_SPI_ReadTransferAdd function if the buffer add request was not
     successful. It can happen due to invalid arguments or lack of space in the
@@ -129,7 +129,7 @@ typedef uintptr_t DRV_SPI_TRANSFER_HANDLE;
     handling callback function that the client registered with the driver by
     calling the DRV_SPI_TransferEventHandlerSet function when a
     transfer request is completed.
-    
+
     When status polling is used, one of these events is returned by
     DRV_SPI_TransferStatusGet function.
 */
@@ -138,19 +138,19 @@ typedef enum
 {
     /* Transfer request is pending */
     DRV_SPI_TRANSFER_EVENT_PENDING,
-    
+
     /* All data were transfered successfully. */
     DRV_SPI_TRANSFER_EVENT_COMPLETE,
 
     /* There was an error while processing transfer request. */
     DRV_SPI_TRANSFER_EVENT_ERROR = -1,
-    
+
     /* Driver handle provided to get the Transfer event is wrong */
     DRV_SPI_HANDLE_INVALID = -2,
 
     /* Transfer Handle given is invalid or expired */
     DRV_SPI_TRANSFER_HANDLE_INVALID_OR_EXPIRED = -3
-    
+
 } DRV_SPI_TRANSFER_EVENT;
 
 // *****************************************************************************
@@ -174,7 +174,7 @@ typedef enum
 
     transferHandle -    Handle identifying the transfer to which the event relates
 
-    context -           Value identifying the context of the application that 
+    context -           Value identifying the context of the application that
                         registered the event handling function.
 
   Returns:
@@ -260,8 +260,8 @@ typedef void ( *DRV_SPI_TRANSFER_EVENT_HANDLER )( DRV_SPI_TRANSFER_EVENT event, 
     number of driver objects allocated are insufficient or if the specified
     driver instance is already initialized. The driver instance index is
     independent of the SPI module ID. For example, driver instance 0 can be
-    assigned to SPI2. Some of the initialization parameters are overridden by 
-	configuration macros in system_config.h file.
+    assigned to SPI2. Some of the initialization parameters are overridden by
+    configuration macros in system_config.h file.
 
   Precondition:
     None.
@@ -296,16 +296,16 @@ typedef void ( *DRV_SPI_TRANSFER_EVENT_HANDLER )( DRV_SPI_TRANSFER_EVENT event, 
     {
         .spiPlib = &drvSPI0PlibAPI,
         .interruptSPI = DRV_SPI_INT_SRC_IDX0,
-        
+
         .queueSize = DRV_SPI_QUEUE_SIZE_IDX0,
         .transferObjPool = (uintptr_t)&drvSPI0TransferObjPool[0],
-        
+
         .numClients = DRV_SPI_CLIENTS_NUMBER_IDX0,
-        .clientObjPool = (uintptr_t)&drvSPI0ClientObjPool[0], 
+        .clientObjPool = (uintptr_t)&drvSPI0ClientObjPool[0],
 
         .dmaChannelTransmit = DMA_CHANNEL_NONE,
         .dmaChannelReceive = DMA_CHANNEL_NONE,
-        .interruptDMA = XDMAC_IRQn    
+        .interruptDMA = XDMAC_IRQn
     };
 
     objectHandle = DRV_SPI_Initialize(DRV_SPI_INDEX_0,(SYS_MODULE_INIT*)&drvSpi0InitData);
@@ -318,7 +318,7 @@ typedef void ( *DRV_SPI_TRANSFER_EVENT_HANDLER )( DRV_SPI_TRANSFER_EVENT event, 
   Remarks:
     This routine must be called before any other SPI routine is called.
 
-    This routine should only be called once during system initialization. 
+    This routine should only be called once during system initialization.
     This routine will NEVER block for hardware access.
 */
 
@@ -342,8 +342,8 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX index, const SYS_MODUL
     object - Driver object handle, returned from the DRV_SPI_Initialize routine
 
   Returns:
-    SYS_STATUS_READY -  Initialization have succeeded and the SPI is 
-                        ready for additional operations 
+    SYS_STATUS_READY -  Initialization have succeeded and the SPI is
+                        ready for additional operations
 
     SYS_STATUS_DEINITIALIZED -  Indicates that the driver has been
                                 deinitialized
@@ -401,8 +401,8 @@ SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object);
   Parameters:
     index  -    Identifier for the object instance to be opened
 
-    intent -    Zero or more of the values from the enumeration DRV_IO_INTENT 
-                "ORed" together to indicate the intended use of the driver. 
+    intent -    Zero or more of the values from the enumeration DRV_IO_INTENT
+                "ORed" together to indicate the intended use of the driver.
                 See function description for details.
 
   Returns:
@@ -452,7 +452,7 @@ DRV_HANDLE DRV_SPI_Open(const SYS_MODULE_INDEX index, const DRV_IO_INTENT ioInte
   Description:
     This routine closes an opened-instance of the SPI driver, invalidating the
     handle. Any transfer request in the driver queue that were submitted by this
-    client will be removed. A new handle must be obtained by calling DRV_SPI_Open 
+    client will be removed. A new handle must be obtained by calling DRV_SPI_Open
     before the caller may use the driver again.
 
   Precondition:
@@ -486,12 +486,12 @@ void DRV_SPI_Close( const DRV_HANDLE handle);
 
   Summary:
     Sets the dynamic configuration of the driver.
-    
+
   Description:
     This function should be used to update any of the DRV_SPI_TRANSFER_SETUP
     parameters for the selected client of the driver dynamically. It is mainly
     helpful for multi client scenario where different clients need different
-    setup like baud rate, clock settings, chip select etc.   
+    setup like baud rate, clock settings, chip select etc.
 
   Preconditions:
     DRV_SPI_Open must have been called to obtain a valid opened device handle.
@@ -508,20 +508,20 @@ void DRV_SPI_Close( const DRV_HANDLE handle);
     <code>
         // mySPIHandle is the handle returned by the DRV_SPI_Open function.
         DRV_SPI_TRANSFER_SETUP setup;
-        
+
         setup.baudRateInHz = 10000000;
         setup.clockPhase = DRV_SPI_CLOCK_PHASE_TRAILING_EDGE;
         setup.clockPolarity = DRV_SPI_CLOCK_POLARITY_IDLE_LOW;
         setup.dataBits = DRV_SPI_DATA_BITS_16;
         setup.chipSelect = SYS_PORT_PIN_PC5;
         setup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;
-        
+
         DRV_SPI_TransferSetup ( mySPIHandle, &setup );
     </code>
 
   Remarks:
     None.
-    
+
 */
 bool DRV_SPI_TransferSetup ( DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * setup );
 
@@ -537,8 +537,8 @@ bool DRV_SPI_TransferSetup ( DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * setup )
     (
         const DRV_HANDLE handle,
         void*       pTransmitData,
-        size_t      txSize,    
-        void*       pReceiveData, 
+        size_t      txSize,
+        void*       pReceiveData,
         size_t      rxSize,
         DRV_SPI_TRANSFER_HANDLE * const transferHandle
     );
@@ -552,11 +552,11 @@ bool DRV_SPI_TransferSetup ( DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * setup )
     the request was scheduled successfully. The function adds the request to
     the instance specific software queue and returns immediately. While the
     request is in the queue, the application buffer is owned by the driver
-    and should not be modified. 
+    and should not be modified.
     This API will write txSize and at the same time counting of rxSize to be
     read will start. If user wants 'n' bytes to be read after txSize has been
     written, then he should keep rxSize value as 'txSize + n'.
-    
+
     The function returns DRV_SPI_TRANSFER_HANDLE_INVALID in the
     transferHandle argument:
     - if neither of the transmit or receive arguments are valid.
@@ -575,7 +575,7 @@ bool DRV_SPI_TransferSetup ( DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * setup )
   Parameters:
     handle -    Handle of the communication channel as returned by the
                 DRV_SPI_Open function.
-                   
+
     *pTransmitData  Pointer to the data which has to be transmitted. if it is
                     NULL, that means only data receiving is expected. For 9
                     to 15bit mode, data should be right aligned in the 16 bit
@@ -593,9 +593,9 @@ bool DRV_SPI_TransferSetup ( DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * setup )
                     if "n" number of bytes has to be received AFTER transmitting
                     "m" number of bytes, then "txSize" should be set as "m" and
                     "rxSize" should be set as "m+n".
-    
-    transferHandle - Handle which is returned by transfer add function. 
-    
+
+    transferHandle - Handle which is returned by transfer add function.
+
   Returns:
     None.
 
@@ -630,8 +630,8 @@ bool DRV_SPI_TransferSetup ( DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * setup )
 void DRV_SPI_WriteReadTransferAdd(
     const   DRV_HANDLE  handle,
     void*   pTransmitData,
-    size_t  txSize,    
-    void*   pReceiveData, 
+    size_t  txSize,
+    void*   pReceiveData,
     size_t  rxSize,
     DRV_SPI_TRANSFER_HANDLE * const transferHandle);
 
@@ -667,7 +667,7 @@ void DRV_SPI_WriteReadTransferAdd(
     DRV_SPI_Open must have been called to obtain a valid open instance handle.
 
   Parameters:
-    handle -    A valid open-instance handle, returned from the driver's open 
+    handle -    A valid open-instance handle, returned from the driver's open
                 routine.
 
     eventHandler - Pointer to the event handler function.
@@ -741,9 +741,9 @@ void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRA
 // *****************************************************************************
 /* Function:
     DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet
-    ( 
+    (
         const DRV_HANDLE handle,
-        const DRV_SPI_TRANSFER_HANDLE transferHandle 
+        const DRV_SPI_TRANSFER_HANDLE transferHandle
     )
 
   Summary:
@@ -758,13 +758,13 @@ void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRA
     Either DRV_SPI_ReadTransferAdd or DRV_SPI_WriteTransferAdd or
     DRV_SPI_WriteReadTransferAdd function must have been called and a valid
     transfer handle must have been returned.
-    
+
   Parameters:
-    handle         - A valid open-instance handle, returned from the driver's open 
+    handle         - A valid open-instance handle, returned from the driver's open
                      routine.
     transferHandle - Handle of the transfer request of which status has to be
                      obtained.
-	
+
   Returns:
     One of the elements of the enum "DRV_SPI_TRANSFER_EVENT".
 
@@ -785,18 +785,27 @@ void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRA
     {
         // Error handling here
     }
-    
+
     //Check the status of the transfer request
     //This call can be used to wait until the transfer is completed.
     event  = DRV_SPI_TransferStatusGet(mySPIhandle, transferHandle);
   </code>
 
   Remarks:
-    None.   
+    None.
 */
 
 DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet( const DRV_HANDLE handle, const DRV_SPI_TRANSFER_HANDLE transferHandle );
 
+bool DRV_SPI_WriteTransfer(const DRV_HANDLE handle, void* pTransmitData,  size_t txSize );
+
+bool DRV_SPI_ReadTransfer(const DRV_HANDLE handle, void* pReceiveData,  size_t rxSize );
+
+bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
+    void* pTransmitData,
+    size_t txSize,
+    void* pReceiveData,
+    size_t rxSize);
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
@@ -805,5 +814,5 @@ DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet( const DRV_HANDLE handle, const
 //DOM-IGNORE-END
 
 #include "driver/spi/src/drv_spi_local.h"
-    
+
 #endif // #ifndef DRV_SPI_H

@@ -248,7 +248,7 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
     /* Register callbacks for DMA */
     SYS_DMA_ChannelCallbackRegister(hDriver->txDMAChannel, _DRV_SPI_TX_DMA_CallbackHandler, (uintptr_t)transferObj);
     SYS_DMA_ChannelCallbackRegister(hDriver->rxDMAChannel, _DRV_SPI_RX_DMA_CallbackHandler, (uintptr_t)transferObj);
-    
+
     if(clientObj->setup.dataBits == DRV_SPI_DATA_BITS_8)
     {
         _DRV_SPI_ConfigureDmaDataWidth(hDriver->rxDMAChannel, DRV_SPI_DMA_WIDTH_8_BIT);
@@ -259,7 +259,7 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
         _DRV_SPI_ConfigureDmaDataWidth(hDriver->rxDMAChannel, DRV_SPI_DMA_WIDTH_16_BIT);
         _DRV_SPI_ConfigureDmaDataWidth(hDriver->txDMAChannel, DRV_SPI_DMA_WIDTH_16_BIT);
     }
-    
+
     if (transferObj->rxSize == 0)
     {
         /* Configure the RX DMA channel - to receive dummy data */
@@ -362,7 +362,7 @@ static void _DRV_SPI_PlibCallbackHandler(void* contextHandle)
     {
         transferObj->event = DRV_SPI_TRANSFER_EVENT_ERROR;
     }
-        
+
     if(clientObj->eventHandler != NULL)
     {
         clientObj->eventHandler(transferObj->event, transferObj->transferHandle, clientObj->context);
@@ -506,12 +506,12 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->clientObjPool         = spiInit->clientObjPool;
     dObj->nClientsMax           = spiInit->numClients;
     dObj->nClients              = 0;
-    
+
     dObj->baudRateInHz          = spiInit->baudRateInHz;
     dObj->clockPhase            = spiInit->clockPhase;
     dObj->clockPolarity         = spiInit->clockPolarity;
     dObj->dataBits              = spiInit->dataBits;
-    
+
     dObj->isExclusive           = false;
     dObj->txDMAChannel          = spiInit->dmaChannelTransmit;
     dObj->rxDMAChannel          = spiInit->dmaChannelReceive;
@@ -627,14 +627,14 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             /* Initialize other elements in Client Object */
             clientObj->eventHandler = NULL;
             clientObj->context      = NULL;
-            
-            clientObj->setup.baudRateInHz   = dObj->baudRateInHz; 
-            clientObj->setup.clockPhase     = dObj->clockPhase;  
+
+            clientObj->setup.baudRateInHz   = dObj->baudRateInHz;
+            clientObj->setup.clockPhase     = dObj->clockPhase;
             clientObj->setup.clockPolarity  = dObj->clockPolarity;
             clientObj->setup.dataBits       = dObj->dataBits;
             clientObj->setup.chipSelect     = SYS_PORT_PIN_NONE;
             clientObj->setupChanged = true;
-            
+
             if(ioIntent & DRV_IO_INTENT_EXCLUSIVE)
             {
                 /* Set the driver exclusive flag */
@@ -797,7 +797,7 @@ bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * se
     (
         const DRV_HANDLE handle,
         void*       pTransmitData,
-        size_t      txSize,     
+        size_t      txSize,
         void*       pReceiveData,
         size_t      rxSize,
         DRV_SPI_TRANSFER_HANDLE * const transferHandle
@@ -814,7 +814,7 @@ void DRV_SPI_WriteReadTransferAdd
 (
     const DRV_HANDLE handle,
     void*       pTransmitData,
-    size_t      txSize,     
+    size_t      txSize,
     void*       pReceiveData,
     size_t      rxSize,
     DRV_SPI_TRANSFER_HANDLE * const transferHandle

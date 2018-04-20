@@ -11,8 +11,8 @@
     SPI Driver Definitions Header File
 
   Description:
-    This file provides implementation-specific definitions for the SPI 
-	driver's system interface. 
+    This file provides implementation-specific definitions for the SPI
+    driver's system interface.
 *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -73,14 +73,14 @@ typedef enum
 {
     DRV_SPI_CLOCK_PHASE_TRAILING_EDGE = 0 << SPI_CSR_NCPHA_Pos,
     DRV_SPI_CLOCK_PHASE_LEADING_EDGE = 1 << SPI_CSR_NCPHA_Pos
-    
+
 }DRV_SPI_CLOCK_PHASE;
 
 typedef enum
 {
     DRV_SPI_CLOCK_POLARITY_IDLE_LOW = 0 << SPI_CSR_CPOL_Pos,
     DRV_SPI_CLOCK_POLARITY_IDLE_HIGH = 1 << SPI_CSR_CPOL_Pos
-    
+
 }DRV_SPI_CLOCK_POLARITY;
 
 typedef enum
@@ -101,7 +101,7 @@ typedef enum
 {
     DRV_SPI_CS_POLARITY_ACTIVE_LOW = 0,
     DRV_SPI_CS_POLARITY_ACTIVE_HIGH = 1
-    
+
 }DRV_SPI_CS_POLARITY;
 
 // *****************************************************************************
@@ -120,7 +120,7 @@ typedef enum
 */
 
 typedef struct
-{     
+{
     uint32_t                        baudRateInHz;
 
     DRV_SPI_CLOCK_PHASE             clockPhase;
@@ -132,10 +132,10 @@ typedef struct
     SYS_PORT_PIN                    chipSelect;
 
     DRV_SPI_CS_POLARITY             csPolarity;
-    
+
 } DRV_SPI_TRANSFER_SETUP;
 
-typedef enum 
+typedef enum
 {
     DRV_SPI_ERROR_NONE = 0,
     DRV_SPI_ERROR_OVERRUN = 1 << SPI_SR_OVRES_Pos
@@ -145,15 +145,15 @@ typedef enum
 typedef void (* DRV_SPI_PLIB_CALLBACK)( void* );
 
 typedef    bool (* DRV_SETUP) (DRV_SPI_TRANSFER_SETUP *, uint32_t);
-    
+
 typedef    bool (* DRV_WRITEREAD)(void*, size_t, void *, size_t);
-    
+
 typedef    bool (* DRV_IS_BUSY)(void);
-    
+
 typedef    DRV_SPI_ERROR (* DRV_ERROR_GET)(void);
-    
+
 typedef    void (* DRV_CALLBACK_REGISTER)(DRV_SPI_PLIB_CALLBACK, void*);
-    
+
 // *****************************************************************************
 /* SPI Driver PLIB Interface Data
 
@@ -167,24 +167,24 @@ typedef    void (* DRV_CALLBACK_REGISTER)(DRV_SPI_PLIB_CALLBACK, void*);
   Remarks:
     None.
 */
-  
+
 typedef struct
 {
     /* SPI PLIB Setup API */
     DRV_SETUP                   setup;
-    
+
     /* SPI PLIB writeRead API */
-    DRV_WRITEREAD                writeRead;
-    
+    DRV_WRITEREAD               writeRead;
+
     /* SPI PLIB Transfer status API */
     DRV_IS_BUSY                 isBusy;
-    
+
     /* SPI PLIB Error get API */
     DRV_ERROR_GET               errorGet;
-    
+
     /* SPI PLIB callback register API */
     DRV_CALLBACK_REGISTER       callbackRegister;
-    
+
 } DRV_SPI_PLIB_INTERFACE;
 
 // *****************************************************************************
@@ -202,52 +202,59 @@ typedef struct
 
 typedef struct
 {
-    /* Identifies the PLIB API set to be used by the driver to access the 
+    /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
     DRV_SPI_PLIB_INTERFACE      *spiPlib;
 
-    /* Interrupt source ID for the SPI interrupt. */
-    INT_SOURCE                  interruptSPI;
+    /* SPI transmit DMA channel. */
+    DMA_CHANNEL                 dmaChannelTransmit;
 
-	/* Memory Pool for Client Objects */
-	uintptr_t                   clientObjPool;
-    
-    /* Number of clients */
-    size_t                      numClients;
+    /* SPI receive DMA channel. */
+    DMA_CHANNEL                 dmaChannelReceive;
 
-    /* Queue for Transfer Objects */
-    uintptr_t                   transferObjPool;
-    
-    /* Driver Queue Size */
-    size_t                      queueSize;
+    /* SPI transmit register address used for DMA operation. */
+    void                        *spiTransmitAddress;
+
+    /* SPI receive register address used for DMA operation. */
+    void                        *spiReceiveAddress;
 
     /* Default baud rate */
     uint32_t                    baudRateInHz;
 
     /* Default clock phase */
     DRV_SPI_CLOCK_PHASE         clockPhase;
-    
+
     /* Default clock polarity */
     DRV_SPI_CLOCK_POLARITY      clockPolarity;
-    
+
     /* Default data bits */
     DRV_SPI_DATA_BITS           dataBits;
-    
-    /* SPI transmit DMA channel. */
-    DMA_CHANNEL                 dmaChannelTransmit;
 
-    /* SPI receive DMA channel. */
-    DMA_CHANNEL                 dmaChannelReceive;
-    
-    /* SPI transmit register address used for DMA operation. */
-    void                        *spiTransmitAddress;
+<#if DRV_SPI_MODE == "ASYNC">
+    /* Queue for Transfer Objects */
+    uintptr_t                   transferObjPool;
 
-    /* SPI receive register address used for DMA operation. */
-    void                        *spiReceiveAddress;
-    
+    /* Driver Queue Size */
+    size_t                      queueSize;
+
+    /* Interrupt source ID for the SPI interrupt. */
+    INT_SOURCE                  interruptSPI;
+
     /* Interrupt source ID for DMA interrupt. */
     INT_SOURCE                  interruptDMA;
-    
+
+    /* Memory Pool for Client Objects */
+    uintptr_t                   clientObjPool;
+
+    /* Number of clients */
+    size_t                      numClients;
+<#else>
+    /* Memory Pool for Client Objects */
+    uintptr_t                   clientObjPool;
+
+    /* Number of clients */
+    size_t                      numClients;
+</#if>
 } DRV_SPI_INIT;
 
 

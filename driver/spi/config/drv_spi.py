@@ -1,55 +1,72 @@
 def instantiateComponent(spiComponent, index):
     global drvSpiInstanceSpace
     drvSpiInstanceSpace = "drv_spi_" + str(index)
-    
+
     spiNumInstances = Database.getSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES")
-  
+
     if spiNumInstances is None:
         spiNumInstances = 1
     else:
         spiNumInstances = spiNumInstances + 1
-    
+
     Database.clearSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES")
     Database.setSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES", spiNumInstances, 1)
-    
+
     # Enable "Generate Harmony Application Files" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", True, 1)
-    
+
     # Enable "Generate Harmony Driver Common Files" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_DRV_COMMON", True, 1)
-    
+
     # Enable "Generate Harmony System Service Common Files" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", True, 1)
-    
+
     # Enable "Enable System Interrupt" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_SYS_INT", True, 1)
-    
+
     # Enable "Enable System Ports" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_SYS_PORTS", True, 1)
-    
+
     # Enable "Enable System DMA" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_SYS_DMA", True, 1)
-    
+
+    # Enable "Enable OSAL" option in MHC
+    Database.setSymbolValue("Harmony", "ENABLE_OSAL", True, 1)
+
     spiSymIndex = spiComponent.createIntegerSymbol("INDEX", None)
     spiSymIndex.setVisible(False)
     spiSymIndex.setDefaultValue(index)
-    
+
     spiSymPLIB = spiComponent.createStringSymbol("DRV_SPI_PLIB", None)
     spiSymPLIB.setLabel("PLIB Used")
     spiSymPLIB.setReadOnly(True)
     spiSymPLIB.setDefaultValue("SPI0")
-    
+
+    spiMode = spiComponent.createKeyValueSetSymbol("DRV_SPI_MODE", None)
+    spiMode.setLabel("Driver Mode")
+    spiMode.addKey("ASYNC", "0", "Asynchronous")
+    spiMode.addKey("SYNC", "1", "Synchronous")
+    spiMode.setDisplayMode("Description")
+    spiMode.setOutputMode("Key")
+    spiMode.setDefaultValue(0)
+
+    spiGlobalMode = spiComponent.createBooleanSymbol("DRV_SPI_MODE_UPDATE", None)
+    spiGlobalMode.setLabel("**** Driver Mode Update ****")
+    spiGlobalMode.setDependencies(driverModeUpdate, ["DRV_SPI_MODE"])
+    spiGlobalMode.setVisible(False)
+
     spiSymNumClients = spiComponent.createIntegerSymbol("DRV_SPI_NUM_CLIENTS", None)
     spiSymNumClients.setLabel("Number of clients")
     spiSymNumClients.setMin(1)
     spiSymNumClients.setMax(10)
     spiSymNumClients.setDefaultValue(1)
-    
+
     spiSymQueueSize = spiComponent.createIntegerSymbol("DRV_SPI_QUEUE_SIZE", None)
     spiSymQueueSize.setLabel("Transfer Queue Size")
     spiSymQueueSize.setMin(1)
     spiSymQueueSize.setMax(250)
     spiSymQueueSize.setDefaultValue(2)
+    spiSymQueueSize.setDependencies(asyncModeOptions, ["DRV_SPI_MODE"])
 
     spiTXRXDMA = spiComponent.createBooleanSymbol("DRV_SPI_TX_RX_DMA", None)
     spiTXRXDMA.setLabel("Use DMA for Transmit and Receive?")
@@ -60,7 +77,7 @@ def instantiateComponent(spiComponent, index):
     spiTXDMA.setDefaultValue(False)
     spiTXDMA.setVisible(False)
     spiTXDMA.setDependencies(commonTxRxOption, ["DRV_SPI_TX_RX_DMA"])
-    
+
     spiTXDMAChannel = spiComponent.createIntegerSymbol("DRV_SPI_TX_DMA_CHANNEL", None)
     spiTXDMAChannel.setLabel("DMA Channel For Transmit")
     spiTXDMAChannel.setDefaultValue(0)
@@ -78,7 +95,7 @@ def instantiateComponent(spiComponent, index):
     spiRXDMA.setDefaultValue(False)
     spiRXDMA.setVisible(False)
     spiRXDMA.setDependencies(commonTxRxOption, ["DRV_SPI_TX_RX_DMA"])
-    
+
     spiRXDMAChannel = spiComponent.createIntegerSymbol("DRV_SPI_RX_DMA_CHANNEL", None)
     spiRXDMAChannel.setLabel("DMA Channel For Receive")
     spiRXDMAChannel.setDefaultValue(1)
@@ -90,13 +107,14 @@ def instantiateComponent(spiComponent, index):
     spiRXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate any DMA Channel. Check DMA manager.")
     spiRXDMAChannelComment.setDependencies(requestDMAComment, ["core.DMA_CH_FOR_" + str(spiSymPLIB.getValue()) + "_Receive"])
     spiRXDMAChannelComment.setVisible(False)
-    
+
     ############################################################################
     #### Code Generation ####
     ############################################################################
-    
+
     configName = Variables.get("__CONFIGURATION_NAME")
-    
+
+    # Global Header Files
     spiSymHeaderFile = spiComponent.createFileSymbol("DRV_SPI_HEADER", None)
     spiSymHeaderFile.setSourcePath("driver/spi/drv_spi.h")
     spiSymHeaderFile.setOutputName("drv_spi.h")
@@ -104,37 +122,65 @@ def instantiateComponent(spiComponent, index):
     spiSymHeaderFile.setProjectPath("config/" + configName + "/driver/spi/")
     spiSymHeaderFile.setType("HEADER")
     spiSymHeaderFile.setOverwrite(True)
-    
+
     spiSymHeaderDefFile = spiComponent.createFileSymbol("DRV_SPI_DEF", None)
-    spiSymHeaderDefFile.setSourcePath("driver/spi/drv_spi_definitions.h")
+    spiSymHeaderDefFile.setSourcePath("driver/spi/templates/drv_spi_definitions.h.ftl")
     spiSymHeaderDefFile.setOutputName("drv_spi_definitions.h")
     spiSymHeaderDefFile.setDestPath("driver/spi/")
     spiSymHeaderDefFile.setProjectPath("config/" + configName + "/driver/spi/")
     spiSymHeaderDefFile.setType("HEADER")
+    spiSymHeaderDefFile.setMarkup(True)
     spiSymHeaderDefFile.setOverwrite(True)
 
-    spiSymSourceFile = spiComponent.createFileSymbol("DRV_SPI_SOURCE", None)
-    spiSymSourceFile.setSourcePath("driver/spi/src/drv_spi.c")
-    spiSymSourceFile.setOutputName("drv_spi.c")
-    spiSymSourceFile.setDestPath("driver/spi/src")
-    spiSymSourceFile.setProjectPath("config/" + configName + "/driver/spi/")
-    spiSymSourceFile.setType("SOURCE")
-    spiSymSourceFile.setOverwrite(True)
+    # Async Source Files
+    spiAsyncSymSourceFile = spiComponent.createFileSymbol("DRV_SPI_ASYNC_SOURCE", None)
+    spiAsyncSymSourceFile.setSourcePath("driver/spi/async/drv_spi.c")
+    spiAsyncSymSourceFile.setOutputName("drv_spi.c")
+    spiAsyncSymSourceFile.setDestPath("driver/spi/src")
+    spiAsyncSymSourceFile.setProjectPath("config/" + configName + "/driver/spi/")
+    spiAsyncSymSourceFile.setType("SOURCE")
+    spiAsyncSymSourceFile.setOverwrite(True)
+    spiAsyncSymSourceFile.setEnabled(True)
+    spiAsyncSymSourceFile.setDependencies(asyncFileGen, ["DRV_SPI_MODE"])
 
-    spiSymHeaderLocalFile = spiComponent.createFileSymbol("DRV_SPI_HEADER_LOCAL", None)
-    spiSymHeaderLocalFile.setSourcePath("driver/spi/src/drv_spi_local.h")
-    spiSymHeaderLocalFile.setOutputName("drv_spi_local.h")
-    spiSymHeaderLocalFile.setDestPath("driver/spi/src")
-    spiSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/spi/")
-    spiSymHeaderLocalFile.setType("SOURCE")
-    spiSymHeaderLocalFile.setOverwrite(True)
-    
+    spiAsyncSymHeaderLocalFile = spiComponent.createFileSymbol("DRV_SPI_ASYNC_HEADER_LOCAL", None)
+    spiAsyncSymHeaderLocalFile.setSourcePath("driver/spi/async/drv_spi_local.h")
+    spiAsyncSymHeaderLocalFile.setOutputName("drv_spi_local.h")
+    spiAsyncSymHeaderLocalFile.setDestPath("driver/spi/src")
+    spiAsyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/spi/")
+    spiAsyncSymHeaderLocalFile.setType("SOURCE")
+    spiAsyncSymHeaderLocalFile.setOverwrite(True)
+    spiAsyncSymHeaderLocalFile.setEnabled(True)
+    spiAsyncSymHeaderLocalFile.setDependencies(asyncFileGen, ["DRV_SPI_MODE"])
+
+    # Sync Source Files
+    spiSyncSymSourceFile = spiComponent.createFileSymbol("DRV_SPI_SYNC_SOURCE", None)
+    spiSyncSymSourceFile.setSourcePath("driver/spi/sync/drv_spi.c")
+    spiSyncSymSourceFile.setOutputName("drv_spi.c")
+    spiSyncSymSourceFile.setDestPath("driver/spi/src")
+    spiSyncSymSourceFile.setProjectPath("config/" + configName + "/driver/spi/")
+    spiSyncSymSourceFile.setType("SOURCE")
+    spiSyncSymSourceFile.setOverwrite(True)
+    spiSyncSymSourceFile.setEnabled(False)
+    spiSyncSymSourceFile.setDependencies(syncFileGen, ["DRV_SPI_MODE"])
+
+    spiSyncSymHeaderLocalFile = spiComponent.createFileSymbol("DRV_SPI_SYNC_HEADER_LOCAL", None)
+    spiSyncSymHeaderLocalFile.setSourcePath("driver/spi/sync/drv_spi_local.h")
+    spiSyncSymHeaderLocalFile.setOutputName("drv_spi_local.h")
+    spiSyncSymHeaderLocalFile.setDestPath("driver/spi/src")
+    spiSyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/spi/")
+    spiSyncSymHeaderLocalFile.setType("SOURCE")
+    spiSyncSymHeaderLocalFile.setOverwrite(True)
+    spiSyncSymHeaderLocalFile.setEnabled(False)
+    spiSyncSymHeaderLocalFile.setDependencies(syncFileGen, ["DRV_SPI_MODE"])
+
+    # System Template Files
     spiSymSystemDefIncFile = spiComponent.createFileSymbol("DRV_SPI_SYSTEM_DEF", None)
     spiSymSystemDefIncFile.setType("STRING")
     spiSymSystemDefIncFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
     spiSymSystemDefIncFile.setSourcePath("driver/spi/templates/system/system_definitions.h.ftl")
     spiSymSystemDefIncFile.setMarkup(True)
-    
+
     spiSymSystemDefObjFile = spiComponent.createFileSymbol("DRV_SPI_SYSTEM_DEF_OBJECT", None)
     spiSymSystemDefObjFile.setType("STRING")
     spiSymSystemDefObjFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_OBJECTS")
@@ -155,10 +201,10 @@ def instantiateComponent(spiComponent, index):
 
     spiSymSystemInitFile = spiComponent.createFileSymbol("DRV_SPI_SYS_INIT", None)
     spiSymSystemInitFile.setType("STRING")
-    spiSymSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_SYS_INITIALIZE_DRIVERS")  
+    spiSymSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_SYS_INITIALIZE_DRIVERS")
     spiSymSystemInitFile.setSourcePath("driver/spi/templates/system/system_initialize.c.ftl")
     spiSymSystemInitFile.setMarkup(True)
-    
+
 def onDependentComponentAdded(drv_spi, id, spi):
     if id == "drv_spi_SPI_dependency" :
         plibUsed = drv_spi.getSymbolByID("DRV_SPI_PLIB")
@@ -167,15 +213,15 @@ def onDependentComponentAdded(drv_spi, id, spi):
         spi.setSymbolValue("SPI_INTERRUPT_MODE", True, 1)
         #spiIntSymPLIB = spi.getSymbolByID("SPI_INTERRUPT_MODE")
         #spiIntSymPLIB.setReadOnly(True)
-        
+
 def requestDMAChannel(Sym, event):
     global drvSpiInstanceSpace
     spiPeripheral = Database.getSymbolValue(drvSpiInstanceSpace, "DRV_SPI_PLIB")
-    
+
     # Control visibility
     if event["id"] == "DRV_SPI_TX_RX_DMA":
         Sym.setVisible(event["value"])
-        
+
     # Request from Driver
     elif event["id"] == "DRV_SPI_TX_DMA" or event["id"] == "DRV_SPI_RX_DMA":
         if event["id"] == "DRV_SPI_TX_DMA":
@@ -195,30 +241,60 @@ def requestDMAComment(Sym, event):
     if(event["value"] == -2):
         Sym.setVisible(True)
     else:
-        Sym.setVisible(False)        
-        
+        Sym.setVisible(False)
+
 def commonTxRxOption(Sym, event):
     Sym.setValue(event["value"], 1)
 
 def destroyComponent(spiComponent):
-    spiNumInstances = Database.getSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES")   
-    spiNumInstances = spiNumInstances - 1   
+    spiNumInstances = Database.getSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES")
+    spiNumInstances = spiNumInstances - 1
     Database.setSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES", spiNumInstances, 1)
 
     # Disable "Generate Harmony Application Files" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", False, 3)
-    
+
     # Disable "Generate Harmony Driver Common Files" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_DRV_COMMON", False, 3)
-    
+
     # Disable "Generate Harmony System Service Common Files" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", False, 3)
-    
+
     # Disable "Enable System Interrupt" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_SYS_INT", False, 3)
-    
+
     # Disable "Enable System Ports" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_SYS_PORTS", False, 3)
-    
+
     # Disable "Enable System DMA" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_SYS_DMA", False, 3)
+
+    # Enable "Enable OSAL" option in MHC
+    Database.setSymbolValue("Harmony", "ENABLE_OSAL", False, 1)
+
+def driverModeUpdate(Sym, event):
+    Database.getSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE")
+    Database.clearSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE")
+
+    if(event["value"] == 0):
+        Database.setSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE", event["value"], 2)
+    elif(event["value"] == 1):
+        Database.setSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE", event["value"], 2)
+
+def asyncModeOptions(Sym, event):
+    if(event["value"] == 0):
+       Sym.setVisible(True)
+    elif(event["value"] == 1):
+       Sym.setVisible(False)
+
+def syncFileGen(Sym, event):
+    if(event["value"] == 1):
+       Sym.setEnabled(True)
+    elif(event["value"] == 0):
+       Sym.setEnabled(False)
+
+def asyncFileGen(Sym, event):
+    if(event["value"] == 0):
+       Sym.setEnabled(True)
+    elif(event["value"] == 1):
+       Sym.setEnabled(False)
