@@ -23,7 +23,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  *******************************************************************************/
 -->
 /*** File System Initialization Data ***/
-<#if USE_SYS_FS == true> 
 
 <#if SYS_FS_AUTO_MOUNT == true>    
 const SYS_FS_MEDIA_MOUNT_DATA sysfsMountTable[SYS_FS_VOLUME_NUMBER] = 
@@ -76,9 +75,7 @@ const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
 
 </#if>
 </#if>
-</#if>
 
-<#if USE_SYS_FS == true> 
 <#if SYS_FS_MPFS == true> 
 <#if SYS_FS_FAT == false> 
 const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
@@ -90,9 +87,7 @@ const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
 };
 </#if>
 </#if>
-</#if>
 
-<#if USE_SYS_FS == true> 
 <#if SYS_FS_FAT == true> 
 <#if SYS_FS_MPFS == false> 
 const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
@@ -102,7 +97,6 @@ const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
         .nativeFileSystemFunctions = &FatFsFunctions
     }
 };
-</#if>
 </#if>
 </#if>
 

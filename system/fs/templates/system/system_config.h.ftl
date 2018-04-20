@@ -39,41 +39,46 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 -->
 
-/*** File System Service Configuration ***/
+/* File System Service Configuration */
 
-<#if USE_SYS_FS == true>
-#define SYS_FS_MEDIA_NUMBER         	${SYS_FS_INSTANCES_NUMBER}
+#define SYS_FS_MEDIA_NUMBER               ${SYS_FS_INSTANCES_NUMBER}
 
 <#if SYS_FS_AUTO_MOUNT != true>
-#define SYS_FS_VOLUME_NUMBER		${SYS_FS_VOLUME_NUMBER}
+    <#lt>#define SYS_FS_VOLUME_NUMBER              ${SYS_FS_VOLUME_NUMBER}
 <#elseif SYS_FS_IDX0 == true && SYS_FS_IDX1 == true && SYS_FS_IDX2 == true && SYS_FS_IDX3 == true>
-#define SYS_FS_VOLUME_NUMBER		(${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX0} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX1} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX2} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX3})
+    <#lt>#define SYS_FS_VOLUME_NUMBER            (${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX0} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX1} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX2} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX3})
 <#elseif SYS_FS_IDX0 == true && SYS_FS_IDX1 == true && SYS_FS_IDX2 == true>
-#define SYS_FS_VOLUME_NUMBER		(${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX0} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX1} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX2})
+    <#lt>#define SYS_FS_VOLUME_NUMBER             (${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX0} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX1} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX2})
 <#elseif SYS_FS_IDX0 == true && SYS_FS_IDX1 == true>
-#define SYS_FS_VOLUME_NUMBER		(${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX0} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX1})
+    <#lt>#define SYS_FS_VOLUME_NUMBER              (${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX0} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX1})
 <#elseif SYS_FS_IDX0 == true>
-#define SYS_FS_VOLUME_NUMBER		(${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX0})
+    <#lt>#define SYS_FS_VOLUME_NUMBER              (${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX0})
 </#if>
 
 <#if SYS_FS_AUTO_MOUNT == true>
-#define SYS_FS_AUTOMOUNT_ENABLE		true
-#define SYS_FS_CLIENT_NUMBER        ${SYS_FS_CLIENT_NUMBER}
+    <#lt>#define SYS_FS_AUTOMOUNT_ENABLE           true
+    <#lt>#define SYS_FS_CLIENT_NUMBER              ${SYS_FS_CLIENT_NUMBER}
 <#else>
-#define SYS_FS_AUTOMOUNT_ENABLE		false
+    <#lt>#define SYS_FS_AUTOMOUNT_ENABLE           false
 </#if>
-#define SYS_FS_MAX_FILES	    	${SYS_FS_MAX_FILES}
-#define SYS_FS_MAX_FILE_SYSTEM_TYPE 	${SYS_FS_MAX_FILE_SYSTEM_TYPE}
+    <#lt>#define SYS_FS_MAX_FILES                  ${SYS_FS_MAX_FILES}
+    <#lt>#define SYS_FS_MAX_FILE_SYSTEM_TYPE       ${SYS_FS_MAX_FILE_SYSTEM_TYPE}
 <#if SYS_FS_MEDIA_MAX_BLOCK_SIZE?has_content>
-#define SYS_FS_MEDIA_MAX_BLOCK_SIZE  	${SYS_FS_MEDIA_MAX_BLOCK_SIZE}
-#define SYS_FS_MEDIA_MANAGER_BUFFER_SIZE ${SYS_FS_MEDIA_MANAGER_BUFFER_SIZE}
-#define SYS_FS_FILE_NAME_LEN ${SYS_FS_FILE_NAME_LEN}
-#define SYS_FS_CWD_STRING_LEN ${SYS_FS_CWD_STRING_LEN}
+    <#lt>#define SYS_FS_MEDIA_MAX_BLOCK_SIZE       ${SYS_FS_MEDIA_MAX_BLOCK_SIZE}
+    <#lt>#define SYS_FS_MEDIA_MANAGER_BUFFER_SIZE  ${SYS_FS_MEDIA_MANAGER_BUFFER_SIZE}
+    <#lt>#define SYS_FS_FILE_NAME_LEN              ${SYS_FS_FILE_NAME_LEN}
+    <#lt>#define SYS_FS_CWD_STRING_LEN             ${SYS_FS_CWD_STRING_LEN}
 </#if>
 
+<#if Harmony.SELECT_RTOS != "BareMetal">
+    <#lt>/* File System RTOS Configurations*/
+    <#lt>#define SYS_FS_STACK_SIZE                 ${SYS_FS_RTOS_STACK_SIZE}
+    <#lt>#define SYS_FS_PRIORITY                   ${SYS_FS_RTOS_TASK_PRIORITY}
 </#if>
+
 <#--
 /*******************************************************************************
  End of File
 */
 -->
+

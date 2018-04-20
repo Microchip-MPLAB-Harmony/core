@@ -425,7 +425,7 @@ void SYS_FS_EventHandlerSet
     const uintptr_t context
 )
 {
-    SYS_FS_MEDIA_MANAGER_EventHandlerSet(eventHandler, context)
+    SYS_FS_MEDIA_MANAGER_EventHandlerSet(eventHandler, context);
 }
 
 #endif // SYS_FS_AUTOMOUNT_ENABLE == true
@@ -877,7 +877,7 @@ SYS_FS_HANDLE SYS_FS_FileOpen
             mode = FA_READ | FA_WRITE;
             break;
         case SYS_FS_FILE_OPEN_WRITE_PLUS:
-            mode = FA_READ | FA_WRITE | FA_CREATE_ALWAYS;
+            mode = FA_READ | FA_WRITE | FA_OPEN_ALWAYS;
             break;
         case SYS_FS_FILE_OPEN_APPEND_PLUS:
             mode = FA_READ | FA_WRITE | FA_OPEN_ALWAYS;

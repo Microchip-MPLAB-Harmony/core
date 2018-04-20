@@ -45,6 +45,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "driver/driver_common.h"
 #include "system/fs/sys_fs.h"
+#include "system/system_media.h"
 #include "system/system.h"
 
 // DOM-IGNORE-BEGIN
@@ -76,7 +77,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     None.
 */
 
-typedef uintptr_t SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE;
+typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE  SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE;
 
 // *****************************************************************************
 /* SYS FS Media Handle
@@ -124,7 +125,7 @@ typedef uintptr_t SYS_FS_MEDIA_HANDLE;
     None.
 */
 
-#define SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID /*DOM-IGNORE-BEGIN*/((SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE)(-1))/*DOM-IGNORE-END*/
+#define SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID
 
 // *****************************************************************************
 /* SYS FS Media Events
@@ -145,10 +146,10 @@ typedef uintptr_t SYS_FS_MEDIA_HANDLE;
 typedef enum
 {
     /* Block operation has been completed successfully. */
-    SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE,
+    SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE = SYS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE,
 
     /* There was an error during the block operation */
-    SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_ERROR
+    SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_ERROR    = SYS_MEDIA_EVENT_BLOCK_COMMAND_ERROR
 
 } SYS_FS_MEDIA_BLOCK_EVENT;
 
@@ -169,19 +170,19 @@ typedef enum
 typedef enum
 {
     /* Media supports Byte Write */
-    SYS_FS_MEDIA_SUPPORTS_BYTE_WRITES = 0x01,
+    SYS_FS_MEDIA_SUPPORTS_BYTE_WRITES = SYS_MEDIA_SUPPORTS_BYTE_WRITES,
     
     /* Media supports only Read operation */
-    SYS_FS_MEDIA_SUPPORTS_READ_ONLY = 0x02,
+    SYS_FS_MEDIA_SUPPORTS_READ_ONLY = SYS_MEDIA_SUPPORTS_READ_ONLY,
     
     /* Media supports OTP (One Time Programming) */
-    SYS_FS_MEDIA_SUPPORTS_ONE_TIME_PROGRAMING = 0x04,
+    SYS_FS_MEDIA_SUPPORTS_ONE_TIME_PROGRAMING = SYS_MEDIA_SUPPORTS_ONE_TIME_PROGRAMING,
 
     /* Read in blocking */
-    SYS_FS_MEDIA_READ_IS_BLOCKING = 0x08,
+    SYS_FS_MEDIA_READ_IS_BLOCKING = SYS_MEDIA_READ_IS_BLOCKING,
 
     /* Write is blocking */
-    SYS_FS_MEDIA_WRITE_IS_BLOCKING = 0x10,
+    SYS_FS_MEDIA_WRITE_IS_BLOCKING = SYS_MEDIA_WRITE_IS_BLOCKING,
   
 } SYS_FS_MEDIA_PROPERTY;
 
@@ -201,10 +202,10 @@ typedef enum
 typedef enum
 {
     /* Media is detached */
-    SYS_FS_MEDIA_DETACHED,
+    SYS_FS_MEDIA_DETACHED = SYS_MEDIA_DETACHED,
 
     /* Media is attached */
-    SYS_FS_MEDIA_ATTACHED
+    SYS_FS_MEDIA_ATTACHED = SYS_MEDIA_ATTACHED
 
 } SYS_FS_MEDIA_STATUS;
 
@@ -287,16 +288,16 @@ typedef enum
 typedef enum
 {
     /*Done OK and ready */
-    SYS_FS_MEDIA_COMMAND_COMPLETED          = 0 ,
+    SYS_FS_MEDIA_COMMAND_COMPLETED          = SYS_MEDIA_COMMAND_COMPLETED,
 
     /*Scheduled but not started */
-    SYS_FS_MEDIA_COMMAND_QUEUED             = 1,
+    SYS_FS_MEDIA_COMMAND_QUEUED             = SYS_MEDIA_COMMAND_QUEUED,
 
     /*Currently being in transfer */
-    SYS_FS_MEDIA_COMMAND_IN_PROGRESS        = 2,
+    SYS_FS_MEDIA_COMMAND_IN_PROGRESS        = SYS_MEDIA_COMMAND_IN_PROGRESS,
 
     /*Unknown buffer */
-    SYS_FS_MEDIA_COMMAND_UNKNOWN            = -1,
+    SYS_FS_MEDIA_COMMAND_UNKNOWN            = SYS_MEDIA_COMMAND_UNKNOWN,
 
 } SYS_FS_MEDIA_COMMAND_STATUS;
 
@@ -315,15 +316,7 @@ typedef enum
     of identical size.
 */
 
-typedef struct
-{
-    /* Size of a each block in Bytes */
-    uint32_t blockSize;
-    
-    /* Number of Blocks of identical size within the Region */
-    uint32_t numBlocks;
-    
-} SYS_FS_MEDIA_REGION_GEOMETRY;
+typedef SYS_MEDIA_REGION_GEOMETRY SYS_FS_MEDIA_REGION_GEOMETRY;
 
 // *****************************************************************************
 /* SYS FS Media Device Geometry
@@ -341,25 +334,7 @@ typedef struct
     regions is the total memory size of the device.
 */
 
-typedef struct 
-{
-    /* Properties of a Media. For a device, if multiple properties  are
-       applicable, they can be ORed */
-    SYS_FS_MEDIA_PROPERTY mediaProperty;
-    
-    /* Number of Read Regions */
-    uint32_t numReadRegions;
-    
-    /* Number of Write Regions */
-    uint32_t numWriteRegions;
-    
-    /* Number of Erase Regions */
-    uint32_t numEraseRegions;
-    
-    /* Pointer to the table containing the geometry information */
-    SYS_FS_MEDIA_REGION_GEOMETRY *geometryTable;
-    
-} SYS_FS_MEDIA_GEOMETRY;
+typedef SYS_MEDIA_GEOMETRY SYS_FS_MEDIA_GEOMETRY;
 
 // *****************************************************************************
 /* Media Mount Data
@@ -485,12 +460,7 @@ typedef struct
   Remarks:
     None.
 */
-typedef void (* SYS_FS_MEDIA_EVENT_HANDLER)
-(
-    SYS_FS_MEDIA_BLOCK_EVENT event,
-    SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE commandHandle,
-    uintptr_t context
-);
+typedef SYS_MEDIA_EVENT_HANDLER SYS_FS_MEDIA_EVENT_HANDLER;
 
 //*****************************************************************************
 /* Function:
