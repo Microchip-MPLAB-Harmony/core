@@ -42,18 +42,11 @@ def instantiateComponent(spiComponent, index):
     spiSymPLIB.setReadOnly(True)
     spiSymPLIB.setDefaultValue("SPI0")
 
-    spiMode = spiComponent.createKeyValueSetSymbol("DRV_SPI_MODE", None)
-    spiMode.setLabel("Driver Mode")
-    spiMode.addKey("ASYNC", "0", "Asynchronous")
-    spiMode.addKey("SYNC", "1", "Synchronous")
-    spiMode.setDisplayMode("Description")
-    spiMode.setOutputMode("Key")
-    spiMode.setDefaultValue(0)
-
-    spiGlobalMode = spiComponent.createBooleanSymbol("DRV_SPI_MODE_UPDATE", None)
+    spiGlobalMode = spiComponent.createBooleanSymbol("DRV_SPI_MODE", None)
     spiGlobalMode.setLabel("**** Driver Mode Update ****")
-    spiGlobalMode.setDependencies(driverModeUpdate, ["DRV_SPI_MODE"])
+    spiGlobalMode.setValue(Database.getSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE"), 1)
     spiGlobalMode.setVisible(False)
+    spiGlobalMode.setDependencies(spiDriverMode, ["drv_spi.DRV_SPI_COMMON_MODE"])
 
     spiSymNumClients = spiComponent.createIntegerSymbol("DRV_SPI_NUM_CLIENTS", None)
     spiSymNumClients.setLabel("Number of clients")
@@ -134,7 +127,7 @@ def instantiateComponent(spiComponent, index):
 
     # Async Source Files
     spiAsyncSymSourceFile = spiComponent.createFileSymbol("DRV_SPI_ASYNC_SOURCE", None)
-    spiAsyncSymSourceFile.setSourcePath("driver/spi/async/drv_spi.c")
+    spiAsyncSymSourceFile.setSourcePath("driver/spi/src/async/drv_spi.c")
     spiAsyncSymSourceFile.setOutputName("drv_spi.c")
     spiAsyncSymSourceFile.setDestPath("driver/spi/src")
     spiAsyncSymSourceFile.setProjectPath("config/" + configName + "/driver/spi/")
@@ -144,7 +137,7 @@ def instantiateComponent(spiComponent, index):
     spiAsyncSymSourceFile.setDependencies(asyncFileGen, ["DRV_SPI_MODE"])
 
     spiAsyncSymHeaderLocalFile = spiComponent.createFileSymbol("DRV_SPI_ASYNC_HEADER_LOCAL", None)
-    spiAsyncSymHeaderLocalFile.setSourcePath("driver/spi/async/drv_spi_local.h")
+    spiAsyncSymHeaderLocalFile.setSourcePath("driver/spi/src/async/drv_spi_local.h")
     spiAsyncSymHeaderLocalFile.setOutputName("drv_spi_local.h")
     spiAsyncSymHeaderLocalFile.setDestPath("driver/spi/src")
     spiAsyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/spi/")
@@ -155,7 +148,7 @@ def instantiateComponent(spiComponent, index):
 
     # Sync Source Files
     spiSyncSymSourceFile = spiComponent.createFileSymbol("DRV_SPI_SYNC_SOURCE", None)
-    spiSyncSymSourceFile.setSourcePath("driver/spi/sync/drv_spi.c")
+    spiSyncSymSourceFile.setSourcePath("driver/spi/src/sync/drv_spi.c")
     spiSyncSymSourceFile.setOutputName("drv_spi.c")
     spiSyncSymSourceFile.setDestPath("driver/spi/src")
     spiSyncSymSourceFile.setProjectPath("config/" + configName + "/driver/spi/")
@@ -165,7 +158,7 @@ def instantiateComponent(spiComponent, index):
     spiSyncSymSourceFile.setDependencies(syncFileGen, ["DRV_SPI_MODE"])
 
     spiSyncSymHeaderLocalFile = spiComponent.createFileSymbol("DRV_SPI_SYNC_HEADER_LOCAL", None)
-    spiSyncSymHeaderLocalFile.setSourcePath("driver/spi/sync/drv_spi_local.h")
+    spiSyncSymHeaderLocalFile.setSourcePath("driver/spi/src/sync/drv_spi_local.h")
     spiSyncSymHeaderLocalFile.setOutputName("drv_spi_local.h")
     spiSyncSymHeaderLocalFile.setDestPath("driver/spi/src")
     spiSyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/spi/")
@@ -204,6 +197,9 @@ def instantiateComponent(spiComponent, index):
     spiSymSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_SYS_INITIALIZE_DRIVERS")
     spiSymSystemInitFile.setSourcePath("driver/spi/templates/system/system_initialize.c.ftl")
     spiSymSystemInitFile.setMarkup(True)
+
+def spiDriverMode (Sym, event):
+    Sym.setValue(Database.getSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE"), 1)
 
 def onDependentComponentAdded(drv_spi, id, spi):
     if id == "drv_spi_SPI_dependency" :
@@ -272,29 +268,20 @@ def destroyComponent(spiComponent):
     # Enable "Enable OSAL" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_OSAL", False, 1)
 
-def driverModeUpdate(Sym, event):
-    Database.getSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE")
-    Database.clearSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE")
-
-    if(event["value"] == 0):
-        Database.setSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE", event["value"], 2)
-    elif(event["value"] == 1):
-        Database.setSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE", event["value"], 2)
-
 def asyncModeOptions(Sym, event):
-    if(event["value"] == 0):
+    if(event["value"] == False):
        Sym.setVisible(True)
-    elif(event["value"] == 1):
+    elif(event["value"] == True):
        Sym.setVisible(False)
 
 def syncFileGen(Sym, event):
-    if(event["value"] == 1):
+    if(event["value"] == True):
        Sym.setEnabled(True)
-    elif(event["value"] == 0):
+    elif(event["value"] == False):
        Sym.setEnabled(False)
 
 def asyncFileGen(Sym, event):
-    if(event["value"] == 0):
+    if(event["value"] == False):
        Sym.setEnabled(True)
-    elif(event["value"] == 1):
+    elif(event["value"] == True):
        Sym.setEnabled(False)

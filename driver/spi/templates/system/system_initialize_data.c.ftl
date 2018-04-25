@@ -1,7 +1,7 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance ${INDEX?string} Initialization Data">
 /* SPI Client Objects Pool */
 DRV_SPI_CLIENT_OBJ drvSPI${INDEX}ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
-<#if DRV_SPI_MODE == "ASYNC">
+<#if DRV_SPI_MODE == false>
 
 /* SPI Transfer Objects Pool */
 DRV_SPI_TRANSFER_OBJ drvSPI${INDEX?string}TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX${INDEX?string}] = {0};
@@ -39,13 +39,13 @@ DRV_SPI_INIT drvSPI${INDEX?string}InitData =
     .clientObjPool = (uintptr_t)&drvSPI${INDEX?string}ClientObjPool[0],
 
     /* SPI setup parameters */
-    .baudRateInHz = (uint32_t)${.vars["spi${INDEX?string}"].SPI_BAUD_RATE},
+    .baudRateInHz = (uint32_t)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_BAUD_RATE},
 
-    .clockPhase = (DRV_SPI_CLOCK_PHASE)SPI_CSR_NCPHA_${.vars["spi${INDEX?string}"].SPI_CSR_NCPHA},
+    .clockPhase = (DRV_SPI_CLOCK_PHASE)SPI_CSR_NCPHA_${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CSR_NCPHA},
 
-    .clockPolarity = (DRV_SPI_CLOCK_POLARITY)SPI_CSR_CPOL_${.vars["spi${INDEX?string}"].SPI_CSR_CPOL},
+    .clockPolarity = (DRV_SPI_CLOCK_POLARITY)SPI_CSR_CPOL_${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CSR_CPOL},
 
-    .dataBits = (DRV_SPI_DATA_BITS)SPI_CSR_BITS${.vars["spi${INDEX?string}"].SPI_CSR_BITS},
+    .dataBits = (DRV_SPI_DATA_BITS)SPI_CSR_BITS${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CSR_BITS},
 
 <#if DRV_SPI_TX_RX_DMA == true>
     .dmaChannelTransmit = DRV_SPI_XMIT_DMA_CH_IDX${INDEX?string},
@@ -61,7 +61,7 @@ DRV_SPI_INIT drvSPI${INDEX?string}InitData =
     .dmaChannelReceive = DMA_CHANNEL_NONE,
 </#if>
 
-<#if DRV_SPI_MODE == "ASYNC">
+<#if DRV_SPI_MODE == false>
      /* DMA IRQ */
     .interruptDMA = XDMAC_IRQn,
 

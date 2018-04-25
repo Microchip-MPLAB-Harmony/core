@@ -5,7 +5,7 @@ def instantiateComponent(spiComponentCommon):
     spiMode.addKey("SYNC", "1", "Synchronous")
     spiMode.setDisplayMode("Description")
     spiMode.setOutputMode("Key")
-    spiMode.setVisible(False)
+    spiMode.setVisible(True)
     spiMode.setDefaultValue(0)
 
     spiSymNumInst = spiComponentCommon.createIntegerSymbol("DRV_SPI_NUM_INSTANCES", None)

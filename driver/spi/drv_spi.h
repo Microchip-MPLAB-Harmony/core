@@ -145,11 +145,8 @@ typedef enum
     /* There was an error while processing transfer request. */
     DRV_SPI_TRANSFER_EVENT_ERROR = -1,
 
-    /* Driver handle provided to get the Transfer event is wrong */
-    DRV_SPI_HANDLE_INVALID = -2,
-
     /* Transfer Handle given is invalid or expired */
-    DRV_SPI_TRANSFER_HANDLE_INVALID_OR_EXPIRED = -3
+    DRV_SPI_TRANSFER_HANDLE_INVALID_OR_EXPIRED = -2
 
 } DRV_SPI_TRANSFER_EVENT;
 
@@ -233,7 +230,7 @@ typedef enum
     in event handler of any other peripheral.
 */
 
-typedef void ( *DRV_SPI_TRANSFER_EVENT_HANDLER )( DRV_SPI_TRANSFER_EVENT event, DRV_SPI_TRANSFER_HANDLE transferHandle, void* context );
+typedef void ( *DRV_SPI_TRANSFER_EVENT_HANDLER )( DRV_SPI_TRANSFER_EVENT event, DRV_SPI_TRANSFER_HANDLE transferHandle, uintptr_t context );
 
 
 // *****************************************************************************
@@ -641,7 +638,7 @@ void DRV_SPI_WriteReadTransferAdd(
     (
         const DRV_HANDLE handle,
         const DRV_SPI_TRANSFER_EVENT_HANDLER eventHandler,
-        const void* context
+        const uintptr_t context
     )
 
   Summary:
@@ -695,7 +692,7 @@ void DRV_SPI_WriteReadTransferAdd(
     // Client registers an event handler with driver. This is done once
 
     DRV_SPI_TransferEventHandlerSet( mySPIHandle, APP_SPITransferEventHandler,
-                                     (void*)&myAppObj );
+                                     (uintptr_t)&myAppObj );
 
     DRV_SPI_WriteReadTransferAdd(mySPIhandle, myTxBuffer,
                                 MY_TX_BUFFER_SIZE, myRxBuffer,
@@ -709,7 +706,7 @@ void DRV_SPI_WriteReadTransferAdd(
     // Event is received when the transfer is completed.
 
     void APP_SPITransferEventHandler(DRV_SPI_TRANSFER_EVENT event,
-            DRV_SPI_TRANSFER_HANDLE handle, void* context)
+            DRV_SPI_TRANSFER_HANDLE handle, uintptr_t context)
     {
         // The context handle was set to an application specific
         // object. It is now retrievable easily in the event handler.
@@ -736,15 +733,11 @@ void DRV_SPI_WriteReadTransferAdd(
     has completed, it does not need to register a callback.
 */
 
-void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRANSFER_EVENT_HANDLER eventHandler, void* context );
+void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRANSFER_EVENT_HANDLER eventHandler, uintptr_t context );
 
 // *****************************************************************************
 /* Function:
-    DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet
-    (
-        const DRV_HANDLE handle,
-        const DRV_SPI_TRANSFER_HANDLE transferHandle
-    )
+    DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE transferHandle)
 
   Summary:
     Returns transfer add request status.
@@ -760,8 +753,6 @@ void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRA
     transfer handle must have been returned.
 
   Parameters:
-    handle         - A valid open-instance handle, returned from the driver's open
-                     routine.
     transferHandle - Handle of the transfer request of which status has to be
                      obtained.
 
@@ -788,14 +779,14 @@ void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRA
 
     //Check the status of the transfer request
     //This call can be used to wait until the transfer is completed.
-    event  = DRV_SPI_TransferStatusGet(mySPIhandle, transferHandle);
+    event  = DRV_SPI_TransferStatusGet(transferHandle);
   </code>
 
   Remarks:
     None.
 */
 
-DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet( const DRV_HANDLE handle, const DRV_SPI_TRANSFER_HANDLE transferHandle );
+DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE transferHandle );
 
 bool DRV_SPI_WriteTransfer(const DRV_HANDLE handle, void* pTransmitData,  size_t txSize );
 

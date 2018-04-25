@@ -52,6 +52,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include <device.h>
 #include "system/int/sys_int.h"
 #include "system/dma/sys_dma.h"
+#include "peripheral/xdmac/plib_xdmac.h"
 #include "system/ports/sys_ports.h"
 
 // DOM-IGNORE-BEGIN
@@ -142,7 +143,7 @@ typedef enum
 
 }DRV_SPI_ERROR;
 
-typedef void (* DRV_SPI_PLIB_CALLBACK)( void* );
+typedef void (* DRV_SPI_PLIB_CALLBACK)( uintptr_t );
 
 typedef    bool (* DRV_SETUP) (DRV_SPI_TRANSFER_SETUP *, uint32_t);
 
@@ -152,7 +153,7 @@ typedef    bool (* DRV_IS_BUSY)(void);
 
 typedef    DRV_SPI_ERROR (* DRV_ERROR_GET)(void);
 
-typedef    void (* DRV_CALLBACK_REGISTER)(DRV_SPI_PLIB_CALLBACK, void*);
+typedef    void (* DRV_CALLBACK_REGISTER)(DRV_SPI_PLIB_CALLBACK, uintptr_t);
 
 // *****************************************************************************
 /* SPI Driver PLIB Interface Data
@@ -230,7 +231,13 @@ typedef struct
     /* Default data bits */
     DRV_SPI_DATA_BITS           dataBits;
 
-<#if DRV_SPI_MODE == "ASYNC">
+    /* Memory Pool for Client Objects */
+    uintptr_t                   clientObjPool;
+
+    /* Number of clients */
+    size_t                      numClients;
+
+<#if DRV_SPI_MODE == false>
     /* Queue for Transfer Objects */
     uintptr_t                   transferObjPool;
 
@@ -242,18 +249,6 @@ typedef struct
 
     /* Interrupt source ID for DMA interrupt. */
     INT_SOURCE                  interruptDMA;
-
-    /* Memory Pool for Client Objects */
-    uintptr_t                   clientObjPool;
-
-    /* Number of clients */
-    size_t                      numClients;
-<#else>
-    /* Memory Pool for Client Objects */
-    uintptr_t                   clientObjPool;
-
-    /* Number of clients */
-    size_t                      numClients;
 </#if>
 } DRV_SPI_INIT;
 

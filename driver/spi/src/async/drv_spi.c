@@ -54,10 +54,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 
 /* This is the driver instance object array. */
-DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER] ;
-
-/* This a global token counter used to generate unique buffer handles */
-static uint16_t gDrvSPITokenCount = 0;
+DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER];
 
 // *****************************************************************************
 // *****************************************************************************
@@ -66,6 +63,22 @@ static uint16_t gDrvSPITokenCount = 0;
 // *****************************************************************************
 static void _DRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context);
 static void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context);
+
+static inline uint32_t  _DRV_SPI_MAKE_HANDLE(uint16_t token, uint8_t drvIndex, uint8_t index)
+{
+    return ((token << 16) | (drvIndex << 8) | index);
+}
+
+static inline uint16_t _DRV_SPI_UPDATE_TOKEN(uint16_t token)
+{
+    token++;
+    if (token >= DRV_SPI_TOKEN_MAX)
+    {
+        token = 1;
+    }
+    
+    return token;
+}
 
 static bool _DRV_SPI_ResourceLock(DRV_SPI_OBJ * dObj)
 {
@@ -107,19 +120,31 @@ static DRV_SPI_CLIENT_OBJ * _DRV_SPI_DriverHandleValidate(DRV_HANDLE handle)
        associated with this handle if the handle is valid. Returns NULL
        otherwise. */
 
-    DRV_SPI_CLIENT_OBJ * clientObj;
+    uint32_t drvInstance = 0;
+    DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ*)NULL;
 
-    if((handle == DRV_HANDLE_INVALID) || (handle == 0))
+    if((handle != DRV_HANDLE_INVALID) && (handle != 0))
     {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Handle");
-        return(NULL);
-    }
+        /* Extract the drvInstance value from the handle */
+        drvInstance = ((handle & DRV_SPI_INSTANCE_MASK) >> 8);
 
-    clientObj = (DRV_SPI_CLIENT_OBJ *)handle;
+        if (drvInstance >= DRV_SPI_INSTANCES_NUMBER)
+        {
+            return (NULL);
+        }
+        
+        if ((handle & DRV_SPI_INDEX_MASK) >= gDrvSPIObj[drvInstance].nClientsMax)
+        {
+            return (NULL);
+        }
+        
+        /* Extract the client index and obtain the client object */
+        clientObj = &((DRV_SPI_CLIENT_OBJ *)gDrvSPIObj[drvInstance].clientObjPool)[handle & DRV_SPI_INDEX_MASK];
 
-    if(!clientObj->inUse)
-    {
-        return(NULL);
+        if ((clientObj->clientHandle != handle) || (clientObj->inUse == false))
+        {
+            return (NULL);
+        }
     }
 
     return(clientObj);
@@ -127,7 +152,7 @@ static DRV_SPI_CLIENT_OBJ * _DRV_SPI_DriverHandleValidate(DRV_HANDLE handle)
 
 static void _DRV_SPI_TransferQueueFlush( DRV_SPI_CLIENT_OBJ * clientObj )
 {
-    DRV_SPI_OBJ * dObj = clientObj->hDriver;
+    DRV_SPI_OBJ * dObj = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
     bool interruptWasEnabled = false;
     uint8_t currentIndex = NULL_INDEX;
     uint8_t previousIndex = NULL_INDEX;
@@ -229,8 +254,12 @@ static void _DRV_SPI_ConfigureDmaDataWidth(DMA_CHANNEL dmaChannel, DRV_SPI_DMA_W
 static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
 {
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)transferObj->hClient;
-    DRV_SPI_OBJ *hDriver = (DRV_SPI_OBJ *)clientObj->hDriver;
-
+    DRV_SPI_OBJ *hDriver = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
+    
+    uint32_t temp;
+    /* To avoid build error when DMA mode is not used */
+    (void)temp;
+    
     hDriver->txDummyDataSize = 0;
     hDriver->rxDummyDataSize = 0;
 
@@ -264,8 +293,9 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
     {
         /* Configure the RX DMA channel - to receive dummy data */
         _DRV_SPI_ConfigureDMA(hDriver->rxDMAChannel, DRV_SPI_CONFIG_DMA_RX_DUMMY_DATA_XFER);
-        SYS_DMA_ChannelTransfer(hDriver->rxDMAChannel, (const void*)hDriver->rxAddress, (const void *)&hDriver->rxDummyData, hDriver->rxDummyDataSize);
+        temp = hDriver->rxDummyDataSize;
         hDriver->rxDummyDataSize = 0;
+        SYS_DMA_ChannelTransfer(hDriver->rxDMAChannel, (const void*)hDriver->rxAddress, (const void *)&hDriver->rxDummyData, temp);
     }
     else
     {
@@ -278,8 +308,9 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
     {
         /* Configure the TX DMA channel - to send dummy data */
         _DRV_SPI_ConfigureDMA(hDriver->txDMAChannel, DRV_SPI_CONFIG_DMA_TX_DUMMY_DATA_XFER);
-        SYS_DMA_ChannelTransfer(hDriver->txDMAChannel, (const void *)&hDriver->txDummyData, (const void*)hDriver->txAddress, hDriver->txDummyDataSize);
+        temp = hDriver->txDummyDataSize;
         hDriver->txDummyDataSize = 0;
+        SYS_DMA_ChannelTransfer(hDriver->txDMAChannel, (const void *)&hDriver->txDummyData, (const void*)hDriver->txAddress, temp);
     }
     else
     {
@@ -301,7 +332,7 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
 static void _DRV_SPI_ReleaseBufferObject(DRV_SPI_TRANSFER_OBJ    *transferObj)
 {
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)transferObj->hClient;
-    DRV_SPI_OBJ *dObj = (DRV_SPI_OBJ *)clientObj->hDriver;
+    DRV_SPI_OBJ *dObj = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
     uint8_t     tempQueueHeadIndex = dObj->queueHeadIndex;
 
     /* Get the next buffer in the queue and deallocate this buffer */
@@ -312,7 +343,7 @@ static void _DRV_SPI_ReleaseBufferObject(DRV_SPI_TRANSFER_OBJ    *transferObj)
 
 static void _DRV_SPI_UpdateTransferSetupAndAssertCS(DRV_SPI_CLIENT_OBJ* clientObj)
 {
-    DRV_SPI_OBJ *dObj = (DRV_SPI_OBJ *)clientObj->hDriver;
+    DRV_SPI_OBJ *dObj = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
 
     /* Update the PLIB Setup if current request is from a different client or
     setup has been changed dynamically for the client */
@@ -329,7 +360,7 @@ static void _DRV_SPI_UpdateTransferSetupAndAssertCS(DRV_SPI_CLIENT_OBJ* clientOb
     }
 }
 
-static void _DRV_SPI_PlibCallbackHandler(void* contextHandle)
+static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
 {
     DRV_SPI_OBJ             *dObj             = (DRV_SPI_OBJ *)contextHandle;
     DRV_SPI_CLIENT_OBJ      *clientObj        = (DRV_SPI_CLIENT_OBJ *)NULL;
@@ -386,7 +417,7 @@ static void _DRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintpt
 {
     DRV_SPI_TRANSFER_OBJ    *transferObj      = (DRV_SPI_TRANSFER_OBJ *)context;
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)transferObj->hClient;
-    DRV_SPI_OBJ *dObj = (DRV_SPI_OBJ *)clientObj->hDriver;
+    DRV_SPI_OBJ *dObj = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
 
     if (dObj->txDummyDataSize > 0)
     {
@@ -405,7 +436,7 @@ static void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintpt
 {
     DRV_SPI_TRANSFER_OBJ    *transferObj      = (DRV_SPI_TRANSFER_OBJ *)context;
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)transferObj->hClient;
-    DRV_SPI_OBJ *dObj = (DRV_SPI_OBJ *)clientObj->hDriver;
+    DRV_SPI_OBJ *dObj = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
 
     if (dObj->rxDummyDataSize > 0)
     {
@@ -506,7 +537,8 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->clientObjPool         = spiInit->clientObjPool;
     dObj->nClientsMax           = spiInit->numClients;
     dObj->nClients              = 0;
-
+    dObj->spiTokenCount         = 1;
+    
     dObj->baudRateInHz          = spiInit->baudRateInHz;
     dObj->clockPhase            = spiInit->clockPhase;
     dObj->clockPolarity         = spiInit->clockPolarity;
@@ -531,7 +563,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
         /* Register a callback with SPI PLIB.
         * dObj as a context parameter will be used to distinguish the events
         * from different instances. */
-        dObj->spiPlib->callbackRegister(&_DRV_SPI_PlibCallbackHandler, (void*)dObj);
+        dObj->spiPlib->callbackRegister(&_DRV_SPI_PlibCallbackHandler, (uintptr_t)dObj);
     }
     else
     {
@@ -619,14 +651,14 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
         {
             /* This means we have a free client object to use */
             clientObj->inUse        = true;
-            clientObj->hDriver      = dObj;
+            clientObj->drvIndex     = drvIndex;
 
             /* This driver will always work on Non-Blocking mode */
             clientObj->ioIntent     = (ioIntent | DRV_IO_INTENT_NONBLOCKING);
 
             /* Initialize other elements in Client Object */
             clientObj->eventHandler = NULL;
-            clientObj->context      = NULL;
+            clientObj->context      = (uintptr_t)NULL;
 
             clientObj->setup.baudRateInHz   = dObj->baudRateInHz;
             clientObj->setup.clockPhase     = dObj->clockPhase;
@@ -642,10 +674,17 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             }
 
             dObj->nClients ++;
+            
+            /* Generate the client handle */
+            clientObj->clientHandle = (DRV_HANDLE)_DRV_SPI_MAKE_HANDLE(dObj->spiTokenCount, (uint8_t)drvIndex, iClient);
 
+            /* Increment the instance specific token counter */
+            dObj->spiTokenCount = _DRV_SPI_UPDATE_TOKEN(dObj->spiTokenCount);
+            
             /* Update the client status */
             clientObj->status = DRV_SPI_CLIENT_STATUS_READY;
-            return ((DRV_HANDLE) clientObj );
+            
+            return clientObj->clientHandle;
         }
     }
 
@@ -684,7 +723,7 @@ void DRV_SPI_Close( DRV_HANDLE handle )
         return;
     }
 
-    dObj = (DRV_SPI_OBJ *)clientObj->hDriver;
+    dObj = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
 
     /* Remove all buffers that this client owns from the driver queue. */
     _DRV_SPI_TransferQueueFlush(clientObj);
@@ -708,7 +747,7 @@ void DRV_SPI_Close( DRV_HANDLE handle )
     (
         const DRV_HANDLE handle,
         const DRV_SPI_TRANSFER_EVENT_HANDLER eventHandler,
-        void* context
+        uintptr_t context
     )
 
   Summary:
@@ -722,7 +761,7 @@ void DRV_SPI_Close( DRV_HANDLE handle )
     See drv_spi.h for usage information.
 */
 
-void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRANSFER_EVENT_HANDLER eventHandler, void* context )
+void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRANSFER_EVENT_HANDLER eventHandler, uintptr_t context )
 {
     DRV_SPI_CLIENT_OBJ * clientObj = NULL;
 
@@ -834,7 +873,7 @@ void DRV_SPI_WriteReadTransferAdd
     if((clientObj != NULL) && (transferHandle != NULL) && (((txSize > 0) && (pTransmitData != NULL)) || ((rxSize > 0) && (pReceiveData != NULL))))
     {
 
-        hDriver = clientObj->hDriver;
+        hDriver = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
         if(hDriver->freePoolHeadIndex == NULL_INDEX)
         {
             /* This means we could not find a buffer. This
@@ -872,15 +911,11 @@ void DRV_SPI_WriteReadTransferAdd
         }
 
         /* Update transferHandle object with unique ID.
-        ID is combination of an incrementing token and allocated location from the free pool */
-        transferObj->transferHandle = (gDrvSPITokenCount << 16) | hDriver->freePoolHeadIndex;
-
+        ID is combination of an incrementing token, driver instance number and allocated location from the free pool */
+        transferObj->transferHandle = (DRV_HANDLE)_DRV_SPI_MAKE_HANDLE(hDriver->spiTokenCount, (uint8_t)clientObj->drvIndex, hDriver->freePoolHeadIndex);
+        
         /* Update the Token for next time */
-        gDrvSPITokenCount++;
-        if (gDrvSPITokenCount >= _DRV_SPI_TRANSFER_TOKEN_MAX)
-        {
-            gDrvSPITokenCount = 0;
-        }
+        hDriver->spiTokenCount = _DRV_SPI_UPDATE_TOKEN(hDriver->spiTokenCount);
 
         /* Update the unique transfer handle in output parameter.
         This handle can be used by user to poll the status of transfer operation */
@@ -936,11 +971,7 @@ void DRV_SPI_WriteReadTransferAdd
 
 // *****************************************************************************
 /* Function:
-    DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet
-    (
-        const DRV_HANDLE handle,
-        const DRV_SPI_TRANSFER_HANDLE transferHandle
-    )
+    DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE transferHandle)
 
   Summary:
     Function to poll transfer status.
@@ -949,24 +980,24 @@ void DRV_SPI_WriteReadTransferAdd
     See drv_spi.h for usage information.
 */
 
-DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet( const DRV_HANDLE handle, const DRV_SPI_TRANSFER_HANDLE transferHandle )
+DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE transferHandle)
 {
     DRV_SPI_OBJ          * dObj        = NULL;
-    DRV_SPI_CLIENT_OBJ   * clientObj   = NULL;
-    uint16_t             transferIndex;
+    uint8_t             transferIndex;
+    uint32_t            drvInstance = 0;
 
-    /* Validate the driver handle */
-    clientObj = _DRV_SPI_DriverHandleValidate(handle);
-    if(clientObj == NULL)
+    /* Extract drvInstance value from the transfer handle */
+    drvInstance = ((transferHandle & DRV_SPI_INSTANCE_MASK) >> 8);
+    if(drvInstance >= DRV_SPI_INSTANCES_NUMBER)
     {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Transfer Handle");
-        return DRV_SPI_HANDLE_INVALID;
+        SYS_DEBUG(SYS_ERROR_ERROR, "Transfer Handle Invalid");
+        return DRV_SPI_TRANSFER_HANDLE_INVALID_OR_EXPIRED;
     }
+        
+    dObj = (DRV_SPI_OBJ*)&gDrvSPIObj[drvInstance];
 
-    dObj = clientObj->hDriver;
-
-    /* transferHandle has transferIndex and token both, mask out transferIndex */
-    transferIndex = transferHandle & _DRV_SPI_TRANSFER_INDEX_MASK;
+    /* Extract transfer index value from the transfer handle */
+    transferIndex = transferHandle & DRV_SPI_INDEX_MASK;
 
     /* Validate the transferIndex and corresponding request */
     if(transferIndex >= dObj->transferQueueSize)
