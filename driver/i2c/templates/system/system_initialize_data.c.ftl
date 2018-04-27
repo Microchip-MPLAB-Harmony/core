@@ -2,9 +2,11 @@
 
 /* I2C Client Objects Pool */
 DRV_I2C_CLIENT_OBJ drvI2C${INDEX}ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
+<#if DRV_I2C_MODE == false>
 
 /* I2C Transfer Objects Pool */
 DRV_I2C_TRANSFER_OBJ drvI2C${INDEX?string}TransferObj[DRV_I2C_QUEUE_SIZE_IDX${INDEX?string}] = {0};
+</#if>
 
 /* I2C PLib Interface Initialization */
 DRV_I2C_PLIB_INTERFACE drvI2C${INDEX?string}PLibAPI = {
@@ -34,6 +36,13 @@ DRV_I2C_INIT drvI2C${INDEX?string}InitData =
     /* I2C PLib API */
     .i2cPlib = &drvI2C${INDEX?string}PLibAPI,
 
+    /* I2C Number of clients */
+    .numClients = DRV_I2C_CLIENTS_NUMBER_IDX${INDEX?string},
+
+    /* I2C Client Objects Pool */
+    .clientObjPool = (uintptr_t)&drvI2C${INDEX?string}ClientObjPool[0],
+<#if DRV_I2C_MODE == false>
+
     /* I2C IRQ */
     .interruptI2C = DRV_I2C_INT_SRC_IDX${INDEX?string},
     
@@ -42,13 +51,10 @@ DRV_I2C_INIT drvI2C${INDEX?string}InitData =
     
     /* I2C Transfer Objects */
     .transferObj = (uintptr_t)&drvI2C${INDEX?string}TransferObj[0],
-    
-    /* I2C Number of clients */
-    .numClients = DRV_I2C_CLIENTS_NUMBER_IDX${INDEX?string},
-    
-    /* I2C Client Objects Pool */
-    .clientObjPool = (uintptr_t)&drvI2C${INDEX?string}ClientObjPool[0],
-    
+</#if>
+
+    /* I2C Clock Speed */
+    .clockSpeed = DRV_I2C_CLOCK_SPEED_IDX${INDEX?string},
 };
 
 // </editor-fold>

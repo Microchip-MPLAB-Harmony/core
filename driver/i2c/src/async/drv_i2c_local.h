@@ -48,6 +48,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
+#include "osal/osal.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -55,35 +56,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-// *****************************************************************************
-/* I2C Driver transfer Handle Macros
+/* I2C Driver Handle Macros*/
+#define DRV_I2C_INDEX_MASK                      (0x000000FF)
 
-  Summary:
-    I2C driver transfer Handle Macros
+#define DRV_I2C_INSTANCE_MASK                   (0x0000FF00)
 
-  Description:
-    transfer handle related utility macros. I2C driver transfer handle is equal
-    to transfer token. The token is a 32 bit number that is incremented for 
-    every new read, write or write followed by read request.
-
-  Remarks:
-    None
-*/
-
-#define DRV_I2C_TRANSFER_INDEX_MASK              (0x0000FFFF)
-
-#define DRV_I2C_TRANSFER_TOKEN_MASK              (0xFFFF0000)
-
-#define DRV_I2C_MAKE_HANDLE(token, index)       ((token) << 16 | (index))
-
-#define DRV_I2C_UPDATE_TRANSFER_TOKEN(token) \
-{ \
-    (token)++; \
-    if ((token) >= DRV_I2C_TRANSFER_INDEX_MASK) \
-        (token) = 0; \
-    else \
-        (token) = (token); \
-}
+#define DRV_I2C_TOKEN_MAX                       (0xFFFF)
 
 // *****************************************************************************
 /* I2C Buffer Object Flags
@@ -129,6 +107,9 @@ typedef struct _DRV_I2C_TRANSFER_OBJ
     /* Transfer Object array index */
     uint32_t index;
     
+    /* Slave address */
+    uint16_t slaveAddress;
+    
     /* Pointer to the application read buffer */
     void * readBuffer;
 
@@ -147,7 +128,7 @@ typedef struct _DRV_I2C_TRANSFER_OBJ
     /* Current status of the buffer */
     DRV_I2C_TRANSFER_EVENT event;
 
-    /* The hardware instance object that owns this buffer */
+    /* The client object that owns this buffer */
     void * hClient;
     
     /* Buffer Handle object that was assigned to this buffer when it was added to the
@@ -189,14 +170,14 @@ typedef struct
     
     /* The status of the driver */
     SYS_STATUS status;
-    
+       
     /* PLIB API list that will be used by the driver to access the hardware */
     DRV_I2C_PLIB_INTERFACE *i2cPlib;
     
     /* current transfer setup will be used to 
      * verify change in the transfer setup by client 
      */
-    DRV_I2C_PLIB_TRANSFER_SETUP curPLibTransferSetup;
+    DRV_I2C_TRANSFER_SETUP drvTransferSetup;
 
     /* Interrupt Source of I2C */
     IRQn_Type interruptI2C;
@@ -218,6 +199,9 @@ typedef struct
     
     /* Transfer Queue Size */
     size_t trQueueSize;
+    
+    /* Hardware instance mutex */
+    OSAL_MUTEX_DECLARE (mutexDriverInstance);
     
     /* Count to keep track of interrupt nesting */ 
     uint32_t interruptNestingCount;
@@ -241,10 +225,13 @@ typedef struct
 typedef struct
 {
     /* The hardware instance object associated with the client */
-    DRV_I2C_OBJ                  * hDriver;
+    uint32_t                       drvIndex;
 
     /* The IO intent with which the client was opened */
     DRV_IO_INTENT                  ioIntent;
+    
+    /* Errors associated with the I2C transfer */
+    DRV_I2C_ERROR                  errors;
 
     /* This flags indicates if the object is in use or is
      * available */
@@ -252,9 +239,6 @@ typedef struct
 
     /* Event handler for this function */
     DRV_I2C_TRANSFER_EVENT_HANDLER eventHandler;
-    
-    /* Client status */
-    DRV_I2C_CLIENT_STATUS          status;
 
     /* Application Context associated with this client */
     uintptr_t                      context;

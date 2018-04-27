@@ -50,7 +50,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 
 #include "stddef.h"
-#include "system/system.h"
+#include "system/system_module.h"
 #include "driver/driver.h"
 #include "driver/driver_common.h"
 #include "system/int/sys_int.h"
@@ -70,21 +70,28 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
+// *****************************************************************************
+/* I2C Driver Error
+
+  Summary:
+    Defines the error values
+
+  Description:
+    This data type defines the error values for the errors occured during transfer.
+
+  Remarks:
+    None.
+*/
+
 typedef enum
 {
     /* Busy*/
-    DRV_I2C_PLIB_ERROR_NONE,
+    DRV_I2C_ERROR_NONE,
 	
 	/* Transfer Successful */
-    DRV_I2C_PLIB_ERROR_NACK,
+    DRV_I2C_ERROR_NACK,
 
-} DRV_I2C_PLIB_ERROR;
-
-typedef struct
-{
-    uint32_t clockSpeed; 
-            
-} DRV_I2C_PLIB_TRANSFER_SETUP;
+} DRV_I2C_ERROR;
 
 // *****************************************************************************
 /* I2C Driver Transfer Setup Data
@@ -103,17 +110,14 @@ typedef struct
 
 typedef struct
 {   
-    /* Slave address */
-    uint16_t slaveAddress;
-    
-    /* TWI transfer setup */
-    DRV_I2C_PLIB_TRANSFER_SETUP plibTransferSetup;
+    /* clock speed */
+    uint32_t clockSpeed;
     
 } DRV_I2C_TRANSFER_SETUP;
 
 typedef void (* DRV_I2C_PLIB_CALLBACK)( uintptr_t );
 
-typedef void (* DRV_I2C_TRANSFER_SETUP_CALLBACK)( DRV_I2C_PLIB_TRANSFER_SETUP *, uint32_t );
+typedef void (* DRV_I2C_TRANSFER_SETUP_CALLBACK)( DRV_I2C_TRANSFER_SETUP *, uint32_t );
 
 typedef bool (* DRV_I2C_READ_CALLBACK)( uint16_t, uint8_t *, uint8_t );
 
@@ -121,7 +125,7 @@ typedef bool (* DRV_I2C_WRITE_CALLBACK)( uint16_t, uint8_t *, uint8_t );
 
 typedef bool (* DRV_I2C_WRITE_READ_CALLBACK)( uint16_t, uint8_t *, uint8_t, uint8_t *, uint8_t );
 
-typedef DRV_I2C_PLIB_ERROR (* DRV_I2C_ERROR_GET_CALLBACK)( void );
+typedef DRV_I2C_ERROR (* DRV_I2C_ERROR_GET_CALLBACK)( void );
 
 typedef void (* DRV_I2C_CALLBACK_REGISTER_CALLBACK)(DRV_I2C_PLIB_CALLBACK, uintptr_t);
 
@@ -185,20 +189,24 @@ typedef struct
      * peripheral. */
     DRV_I2C_PLIB_INTERFACE *i2cPlib;
 
+    /* Memory Pool for Client Objects */
+    uintptr_t clientObjPool;
+
+    /* Number of clients */
+    uint32_t numClients;
+<#if DRV_I2C_MODE == false>
+
     /* Interrupt source ID for the I2C interrupt. */
     INT_SOURCE interruptI2C;
     
     /* Driver Queue Size */
     size_t queueSize;
 
-	/* Memory Pool for Client Objects */
-	uintptr_t clientObjPool;
-    
-    /* Number of clients */
-    uint32_t numClients;
-
     /* Memory Pool for Transfer Objects */
     uintptr_t transferObj;
+</#if>    
+    /* peripheral clock speed */
+    uint32_t clockSpeed;
     
 } DRV_I2C_INIT;
 

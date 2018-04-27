@@ -59,13 +59,72 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 static DRV_I2C_OBJ gDrvI2CObj[DRV_I2C_INSTANCES_NUMBER] ;
 
 /* This a global token counter used to generate unique buffer handles */
-static uint16_t gDrvI2CTokenCount = 0;
+static uint16_t gDrvI2CTokenCount = 1;
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: File scope functions
 // *****************************************************************************
 // *****************************************************************************
+
+static inline uint32_t  DRV_I2C_MAKE_HANDLE(uint16_t token, uint8_t drvIndex, uint8_t index)
+{
+    return ((token << 16) | (drvIndex << 8) | index);
+}
+
+static inline uint16_t DRV_I2C_UPDATE_TOKEN(uint16_t token)
+{
+    token++;
+    if (token >= DRV_I2C_TOKEN_MAX)
+    {
+        token = 1;
+    }
+    
+    return token;
+}
+
+static bool DRV_I2C_ResourceLock(DRV_I2C_OBJ * dObj)
+{
+    /* We will allow buffers to be added in the interrupt
+       context of this I2C driver. But we must make
+       sure that if we are in interrupt, then we should
+       not modify mutexes. */
+    if(dObj->interruptNestingCount == 0)
+    {
+        /* Grab a mutex. This is okay because we are not in an
+           interrupt context */
+        if(OSAL_MUTEX_Lock(&(dObj->mutexDriverInstance), OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+        {
+            /* We will disable interrupts so that the queue
+               status does not get updated asynchronously.
+               This code will always execute. */
+            SYS_INT_SourceDisable(dObj->interruptI2C);
+               
+            return true; 
+        }
+        else
+        {
+            /* The mutex acquisition timed out. Return with an
+               invalid handle. This code will not execute
+               if there is no RTOS. */
+            return false;
+        }
+    }
+    
+    return false;
+}
+
+static void DRV_I2C_ResourceUnlock(DRV_I2C_OBJ * dObj)
+{
+    /* Restore the interrupt if it was enabled */
+    SYS_INT_SourceEnable(dObj->interruptI2C);
+    
+    if(dObj->interruptNestingCount == 0)
+    {
+        /* Release mutex */
+        OSAL_MUTEX_Unlock(&(dObj->mutexDriverInstance));
+    }
+}
 
 static void DRV_I2C_TransferObjectsInit( DRV_I2C_OBJ * dObj )
 {
@@ -113,7 +172,7 @@ static DRV_I2C_CLIENT_OBJ * DRV_I2C_DriverHandleValidate(DRV_HANDLE handle)
 
 static bool DRV_I2C_TransferQueueFlush( DRV_I2C_CLIENT_OBJ * clientObj )
 {
-    DRV_I2C_OBJ * dObj = clientObj->hDriver;
+    DRV_I2C_OBJ * dObj = &gDrvI2CObj[clientObj->drvIndex];
     DRV_I2C_TRANSFER_OBJ * current = NULL;
     DRV_I2C_TRANSFER_OBJ * previous = NULL;
     DRV_I2C_TRANSFER_OBJ * dirty = NULL;
@@ -180,7 +239,6 @@ static void DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
     DRV_I2C_CLIENT_OBJ     * client           = (DRV_I2C_CLIENT_OBJ *)     NULL;
     DRV_I2C_TRANSFER_OBJ   * transferObj      = (DRV_I2C_TRANSFER_OBJ *)   NULL;
     DRV_I2C_TRANSFER_SETUP * drvTransferSetup = (DRV_I2C_TRANSFER_SETUP *) NULL;
-    DRV_I2C_PLIB_ERROR       error;
     
     if((!dObj->inUse) || (dObj->status != SYS_STATUS_READY))
     {
@@ -192,7 +250,7 @@ static void DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
     transferObj = dObj->trQueueHead;
     client = (DRV_I2C_CLIENT_OBJ *)transferObj->hClient;
     
-    error = dObj->i2cPlib->errorGet();
+    client->errors = dObj->i2cPlib->errorGet();
     
     if( NULL != client->eventHandler )
     {   
@@ -204,7 +262,7 @@ static void DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
 
         dObj->interruptNestingCount ++;
 
-        if( DRV_I2C_PLIB_ERROR_NONE == error )
+        if( DRV_I2C_ERROR_NONE == client->errors )
         {
             transferObj->event = DRV_I2C_TRANSFER_EVENT_COMPLETE;
         }
@@ -237,29 +295,29 @@ static void DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
          * different from the current Transfer setup 
          */
         drvTransferSetup = &client->drvTransferSetup;
-        if( drvTransferSetup->plibTransferSetup.clockSpeed != dObj->curPLibTransferSetup.clockSpeed )
+        if( drvTransferSetup->clockSpeed != dObj->drvTransferSetup.clockSpeed )
         {
-            dObj->i2cPlib->transferSetup(&drvTransferSetup->plibTransferSetup, 0);
-            dObj->curPLibTransferSetup.clockSpeed = drvTransferSetup->plibTransferSetup.clockSpeed;
+            dObj->i2cPlib->transferSetup(drvTransferSetup, 0);
+            dObj->drvTransferSetup.clockSpeed = drvTransferSetup->clockSpeed;
         }
         
         switch(transferObj->flag)
         {
             case DRV_I2C_TRANSFER_OBJ_FLAG_READ:
             {
-                dObj->i2cPlib->read(drvTransferSetup->slaveAddress, transferObj->readBuffer, transferObj->readSize);
+                dObj->i2cPlib->read(transferObj->slaveAddress, transferObj->readBuffer, transferObj->readSize);
                 break;
             }
             
             case DRV_I2C_TRANSFER_OBJ_FLAG_WRITE:
             {
-                dObj->i2cPlib->write(drvTransferSetup->slaveAddress, transferObj->writeBuffer, transferObj->writeSize);
+                dObj->i2cPlib->write(transferObj->slaveAddress, transferObj->writeBuffer, transferObj->writeSize);
                 break;
             }
             
             case DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_READ:
             {
-                dObj->i2cPlib->writeRead(drvTransferSetup->slaveAddress, transferObj->writeBuffer, transferObj->writeSize, transferObj->readBuffer, transferObj->readSize);
+                dObj->i2cPlib->writeRead(transferObj->slaveAddress, transferObj->writeBuffer, transferObj->writeSize, transferObj->readBuffer, transferObj->readSize);
                 break;
             }
         }   
@@ -318,18 +376,19 @@ SYS_MODULE_OBJ DRV_I2C_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->inUse = true;
     
     /* Update the driver parameters */
-    dObj->i2cPlib               = i2cInit->i2cPlib;
-    dObj->interruptI2C          = i2cInit->interruptI2C;
-    dObj->clientObjPool         = i2cInit->clientObjPool;
-    dObj->nClientsMax           = i2cInit->numClients;
-    dObj->trObjArr              = (DRV_I2C_TRANSFER_OBJ *)i2cInit->transferObj;
-    dObj->trQueueSize           = i2cInit->queueSize;
-    dObj->trObjFree             = (DRV_I2C_TRANSFER_OBJ *)NULL;
-    dObj->trQueueHead           = (DRV_I2C_TRANSFER_OBJ *)NULL;
-    dObj->trQueueTail           = (DRV_I2C_TRANSFER_OBJ *)NULL;
-    dObj->nClients              = 0;
-    dObj->isExclusive           = false;
-    dObj->interruptNestingCount = 0;
+    dObj->i2cPlib                     = i2cInit->i2cPlib;
+    dObj->interruptI2C                = i2cInit->interruptI2C;
+    dObj->clientObjPool               = i2cInit->clientObjPool;
+    dObj->nClientsMax                 = i2cInit->numClients;
+    dObj->trObjArr                    = (DRV_I2C_TRANSFER_OBJ *)i2cInit->transferObj;
+    dObj->trQueueSize                 = i2cInit->queueSize;
+    dObj->drvTransferSetup.clockSpeed = i2cInit->clockSpeed;
+    dObj->trObjFree                   = (DRV_I2C_TRANSFER_OBJ *)NULL;
+    dObj->trQueueHead                 = (DRV_I2C_TRANSFER_OBJ *)NULL;
+    dObj->trQueueTail                 = (DRV_I2C_TRANSFER_OBJ *)NULL;
+    dObj->nClients                    = 0;
+    dObj->isExclusive                 = false;
+    dObj->interruptNestingCount       = 0;
     
     DRV_I2C_TransferObjectsInit(dObj);
     
@@ -435,7 +494,7 @@ DRV_HANDLE DRV_I2C_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
         {
             /* This means we have a free client object to use */
             clientObj->inUse        = true;
-            clientObj->hDriver      = dObj;
+            clientObj->drvIndex     = drvIndex;
 
             /* In a case where the driver is configured for polled
                and bare metal operation, it will not support blocking operation */
@@ -443,6 +502,9 @@ DRV_HANDLE DRV_I2C_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             clientObj->ioIntent     = (ioIntent | DRV_IO_INTENT_NONBLOCKING);
             clientObj->eventHandler = NULL;
             clientObj->context      = (uintptr_t)NULL;
+            clientObj->errors        = DRV_I2C_ERROR_NONE;
+            clientObj->drvTransferSetup.clockSpeed = 
+                                            dObj->drvTransferSetup.clockSpeed;
 
             if(ioIntent & DRV_IO_INTENT_EXCLUSIVE)
             {
@@ -452,8 +514,6 @@ DRV_HANDLE DRV_I2C_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
 
             dObj->nClients ++;
             
-            /* Update the client status */
-            clientObj->status = DRV_I2C_CLIENT_STATUS_READY;
             return ((DRV_HANDLE) clientObj );
         }
     }
@@ -497,7 +557,7 @@ void DRV_I2C_Close( DRV_HANDLE handle )
         return;
     }
     
-    dObj = (DRV_I2C_OBJ *)clientObj->hDriver;
+    dObj = &gDrvI2CObj[clientObj->drvIndex];
 
     /* Remove all buffers that this client owns from the driver queue. This
        function will map to _DRV_I2C_ClientBufferQueueObjectsRemove() if the
@@ -508,7 +568,6 @@ void DRV_I2C_Close( DRV_HANDLE handle )
     {
         /* The function could fail if the mutex time out occurred */
         SYS_DEBUG(SYS_ERROR_ERROR, "Could not flush the client queue objects");
-        clientObj->status = DRV_I2C_CLIENT_STATUS_ERROR;
         return;
     }
     
@@ -518,45 +577,9 @@ void DRV_I2C_Close( DRV_HANDLE handle )
     /* Reset the exclusive flag */
     dObj->isExclusive = false;
 
-    /* De-allocate the object */
-    clientObj->status = DRV_I2C_CLIENT_STATUS_CLOSED;
     clientObj->inUse = false;
 
     return;
-}
-
-// *****************************************************************************
-/* Function:
-    DRV_I2C_CLIENT_STATUS DRV_I2C_ClientStatus (DRV_HANDLE handle )
-
-  Summary:
-    Dynamic implementation of DRV_I2C_ClientStatus client interface function.
-
-  Description:
-    This is the dynamic implementation of DRV_I2C_ClientStatus client interface
-    function.
-
-  Remarks:
-    See drv_usart.h for usage information.
-*/
-
-DRV_I2C_CLIENT_STATUS DRV_I2C_ClientStatus(DRV_HANDLE handle)
-{
-    DRV_I2C_CLIENT_OBJ * client;
-
-    /* Validate the driver handle */
-    client = DRV_I2C_DriverHandleValidate(handle);
-
-    if(client == NULL)
-    {
-        /* Driver handle is not valid */
-
-        SYS_DEBUG(0, "Invalid driver handle");
-        return DRV_I2C_CLIENT_STATUS_CLOSED;
-    }
-
-    /* Return the client status */
-    return(client->status);
 }
 
 // *****************************************************************************
@@ -619,16 +642,16 @@ void DRV_I2C_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_I2C_TRA
   Remarks:
     See drv_i2c.h for usage information.
 */
-void DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP * setup )
+bool DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP * setup )
 {
     DRV_I2C_CLIENT_OBJ * client = NULL;
-    DRV_I2C_PLIB_TRANSFER_SETUP * plibTransferSetup = NULL;
+    DRV_I2C_TRANSFER_SETUP * transferSetup = NULL;
 
     /* Validate the Request */
     if(DRV_HANDLE_INVALID == handle)
     {
         SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Handle");
-        return;
+        return false;
     }
 
     client = (DRV_I2C_CLIENT_OBJ *)handle;
@@ -636,21 +659,54 @@ void DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP * se
     if(false == client->inUse)
     {
         SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Handle");
-        return;
+        return false;
     }
     
     if( NULL == setup )
     {
         SYS_DEBUG(SYS_ERROR_ERROR, "Invalid input setup");
-        return;
+        return false;
     }
     
-    /* client specific slave address */
-    client->drvTransferSetup.slaveAddress = setup->slaveAddress;
+    /* client specific transfer setup */
+    transferSetup = &client->drvTransferSetup;
+    transferSetup->clockSpeed = setup->clockSpeed;
     
-    /* client specific PLib transfer setup */
-    plibTransferSetup = &client->drvTransferSetup.plibTransferSetup;
-    plibTransferSetup->clockSpeed = setup->plibTransferSetup.clockSpeed;
+    return true;
+}
+
+// *****************************************************************************
+/* Function:
+    DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_HANDLE handle )
+
+   Summary:
+    Gets the I2C hardware errors associated with the client.
+
+   Description:
+    This function returns the errors associated with the given client.
+    The call to this function also clears all the associated error flags.
+
+   Remarks:
+    See drv_i2c.h for usage information.
+*/
+ 
+DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_HANDLE handle )
+{
+    DRV_I2C_CLIENT_OBJ * clientObj = NULL;
+    DRV_I2C_ERROR errors = DRV_I2C_ERROR_NONE;
+
+    /* Validate the driver handle */
+    clientObj = DRV_I2C_DriverHandleValidate(handle);
+    if(clientObj == NULL)
+    {
+        SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Transfer Handle");
+        return DRV_I2C_ERROR_NONE;
+    }
+    
+    errors = clientObj->errors;
+    clientObj->errors = DRV_I2C_ERROR_NONE;
+
+    return errors;
 }
 
 // *****************************************************************************
@@ -681,13 +737,12 @@ void DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP * se
     See drv_i2c.h for usage information.
 */
 
-void DRV_I2C_ReadTransferAdd( const DRV_HANDLE handle, void * buffer, const size_t size, DRV_I2C_TRANSFER_HANDLE * const transferHandle )
+void DRV_I2C_ReadTransferAdd( const DRV_HANDLE handle, const uint16_t address, void * buffer, const size_t size, DRV_I2C_TRANSFER_HANDLE * const transferHandle )
 {
     DRV_I2C_CLIENT_OBJ     * clientObj        = (DRV_I2C_CLIENT_OBJ *)     NULL;
     DRV_I2C_OBJ            * hDriver          = (DRV_I2C_OBJ *)            NULL;
     DRV_I2C_TRANSFER_OBJ   * transferObj      = (DRV_I2C_TRANSFER_OBJ *)   NULL;
     DRV_I2C_TRANSFER_SETUP * drvTransferSetup = (DRV_I2C_TRANSFER_SETUP *) NULL;
-    bool interruptWasEnabled = false;
     
     *transferHandle = DRV_I2C_TRANSFER_HANDLE_INVALID;
     
@@ -720,14 +775,12 @@ void DRV_I2C_ReadTransferAdd( const DRV_HANDLE handle, void * buffer, const size
         return;
     }
     
-    hDriver = clientObj->hDriver;
+    hDriver = &gDrvI2CObj[clientObj->drvIndex];
     
-    if(0 == hDriver->interruptNestingCount)
+    if(DRV_I2C_ResourceLock(hDriver) == true)
     {
-        /* We will disable interrupts so that the queue
-           status does not get updated asynchronously.
-           This code will always execute. */
-        interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptI2C);
+        SYS_DEBUG(SYS_ERROR_ERROR, "Failed to get resource lock");
+        return;
     }
     
     if( ( DRV_I2C_TRANSFER_OBJ * ) NULL == hDriver->trObjFree )
@@ -738,11 +791,7 @@ void DRV_I2C_ReadTransferAdd( const DRV_HANDLE handle, void * buffer, const size
 
         SYS_ASSERT(false, "Insufficient Combined Queue Depth");
 
-        /* Enable the interrupt if it was enabled */
-        if(interruptWasEnabled)
-        {
-            SYS_INT_SourceEnable(hDriver->interruptI2C);
-        }
+        DRV_I2C_ResourceUnlock(hDriver);
 
         return;
     }
@@ -751,21 +800,22 @@ void DRV_I2C_ReadTransferAdd( const DRV_HANDLE handle, void * buffer, const size
     transferObj = hDriver->trObjFree;
     hDriver->trObjFree = hDriver->trObjFree->next;
     
-    /* Configure the object and then */
-    transferObj->readBuffer  = ( uint8_t *)buffer;
-    transferObj->readSize    = size;
-    transferObj->writeBuffer = ( uint8_t *)NULL;
-    transferObj->writeSize   = 0;
-    transferObj->hClient     = clientObj;
-    transferObj->next        = ( DRV_I2C_TRANSFER_OBJ * ) NULL;
-    transferObj->event       = DRV_I2C_TRANSFER_EVENT_PENDING;
-    transferObj->flag        = DRV_I2C_TRANSFER_OBJ_FLAG_READ;
+    /* Configure the object */
+    transferObj->slaveAddress = address;
+    transferObj->readBuffer   = ( uint8_t *)buffer;
+    transferObj->readSize     = size;
+    transferObj->writeBuffer  = ( uint8_t *)NULL;
+    transferObj->writeSize    = 0;
+    transferObj->hClient      = clientObj;
+    transferObj->next         = ( DRV_I2C_TRANSFER_OBJ * ) NULL;
+    transferObj->event        = DRV_I2C_TRANSFER_EVENT_PENDING;
+    transferObj->flag         = DRV_I2C_TRANSFER_OBJ_FLAG_READ;
     
     /* update transferHandle object with unique Id */
-    transferObj->transferHandle = DRV_I2C_MAKE_HANDLE(gDrvI2CTokenCount, transferObj->index);
+    transferObj->transferHandle = DRV_I2C_MAKE_HANDLE(gDrvI2CTokenCount, clientObj->drvIndex, transferObj->index);
     *transferHandle = transferObj->transferHandle;
     
-    DRV_I2C_UPDATE_TRANSFER_TOKEN(gDrvI2CTokenCount);
+    DRV_I2C_UPDATE_TOKEN(gDrvI2CTokenCount);
 
     if(hDriver->trQueueHead == NULL)
     {
@@ -777,17 +827,15 @@ void DRV_I2C_ReadTransferAdd( const DRV_HANDLE handle, void * buffer, const size
          * different from the current Transfer setup 
          */
         drvTransferSetup = &clientObj->drvTransferSetup;
-        if( drvTransferSetup->plibTransferSetup.clockSpeed != hDriver->curPLibTransferSetup.clockSpeed )
+        if( drvTransferSetup->clockSpeed != hDriver->drvTransferSetup.clockSpeed )
         {
-            hDriver->i2cPlib->transferSetup(&drvTransferSetup->plibTransferSetup, 0);
-            hDriver->curPLibTransferSetup.clockSpeed = drvTransferSetup->plibTransferSetup.clockSpeed;
+            hDriver->i2cPlib->transferSetup(drvTransferSetup, 0);
+            hDriver->drvTransferSetup.clockSpeed = drvTransferSetup->clockSpeed;
         }
         
         /* Because this is the first transfer in the queue, we need to submit the
          * transfer to the PLIB to start processing. */
-        hDriver->i2cPlib->read(clientObj->drvTransferSetup.slaveAddress, transferObj->readBuffer, transferObj->readSize);
-        
-        SYS_INT_SourceEnable(hDriver->interruptI2C);
+        hDriver->i2cPlib->read(transferObj->slaveAddress, transferObj->readBuffer, transferObj->readSize);
     }
     else
     {
@@ -795,12 +843,9 @@ void DRV_I2C_ReadTransferAdd( const DRV_HANDLE handle, void * buffer, const size
          * the buffer object to the end of the queue */
         hDriver->trQueueTail->next = transferObj;
         hDriver->trQueueTail = transferObj;
-        
-        if(interruptWasEnabled)
-        {
-            SYS_INT_SourceEnable(hDriver->interruptI2C);
-        }
     }
+    
+    DRV_I2C_ResourceUnlock(hDriver);
     
     return;
 }
@@ -826,13 +871,12 @@ void DRV_I2C_ReadTransferAdd( const DRV_HANDLE handle, void * buffer, const size
     See drv_i2c.h for usage information.
 */
 
-void DRV_I2C_WriteTransferAdd( const DRV_HANDLE handle, void * buffer, const size_t size, DRV_I2C_TRANSFER_HANDLE * transferHandle )
+void DRV_I2C_WriteTransferAdd( const DRV_HANDLE handle, const uint16_t address, void * buffer, const size_t size, DRV_I2C_TRANSFER_HANDLE * transferHandle )
 {
     DRV_I2C_CLIENT_OBJ     * clientObj        = (DRV_I2C_CLIENT_OBJ *)     NULL;
     DRV_I2C_OBJ            * hDriver          = (DRV_I2C_OBJ *)            NULL;
     DRV_I2C_TRANSFER_OBJ   * transferObj      = (DRV_I2C_TRANSFER_OBJ *)   NULL;
     DRV_I2C_TRANSFER_SETUP * drvTransferSetup = (DRV_I2C_TRANSFER_SETUP *) NULL;
-    bool interruptWasEnabled = false;
     
     *transferHandle = DRV_I2C_TRANSFER_HANDLE_INVALID;
     
@@ -865,14 +909,12 @@ void DRV_I2C_WriteTransferAdd( const DRV_HANDLE handle, void * buffer, const siz
         return;
     }
     
-    hDriver = clientObj->hDriver;
+    hDriver = &gDrvI2CObj[clientObj->drvIndex];
     
-    if(0 == hDriver->interruptNestingCount)
+    if(DRV_I2C_ResourceLock(hDriver) == true)
     {
-        /* We will disable interrupts so that the queue
-           status does not get updated asynchronously.
-           This code will always execute. */
-        interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptI2C);
+        SYS_DEBUG(SYS_ERROR_ERROR, "Failed to get resource lock");
+        return;
     }
     
     if( ( DRV_I2C_TRANSFER_OBJ * ) NULL == hDriver->trObjFree )
@@ -883,11 +925,7 @@ void DRV_I2C_WriteTransferAdd( const DRV_HANDLE handle, void * buffer, const siz
 
         SYS_ASSERT(false, "Insufficient Combined Queue Depth");
 
-        /* Enable the interrupt if it was enabled */
-        if(interruptWasEnabled)
-        {
-            SYS_INT_SourceEnable(hDriver->interruptI2C);
-        }
+        DRV_I2C_ResourceUnlock(hDriver);
 
         return;
     }
@@ -896,21 +934,22 @@ void DRV_I2C_WriteTransferAdd( const DRV_HANDLE handle, void * buffer, const siz
     transferObj = hDriver->trObjFree;
     hDriver->trObjFree = hDriver->trObjFree->next;
     
-    /* Configure the object and then */
-    transferObj->readBuffer  = ( uint8_t *)NULL;
-    transferObj->readSize    = 0;
-    transferObj->writeBuffer = ( uint8_t *)buffer;
-    transferObj->writeSize   = size;
-    transferObj->hClient     = clientObj;
-    transferObj->next        = ( DRV_I2C_TRANSFER_OBJ * ) NULL;
-    transferObj->event       = DRV_I2C_TRANSFER_EVENT_PENDING;
-    transferObj->flag        = DRV_I2C_TRANSFER_OBJ_FLAG_READ;
+    /* Configure the object */
+    transferObj->slaveAddress = address;
+    transferObj->readBuffer   = ( uint8_t *)NULL;
+    transferObj->readSize     = 0;
+    transferObj->writeBuffer  = ( uint8_t *)buffer;
+    transferObj->writeSize    = size;
+    transferObj->hClient      = clientObj;
+    transferObj->next         = ( DRV_I2C_TRANSFER_OBJ * ) NULL;
+    transferObj->event        = DRV_I2C_TRANSFER_EVENT_PENDING;
+    transferObj->flag         = DRV_I2C_TRANSFER_OBJ_FLAG_READ;
     
     /* update transferHandle object with unique Id */
-    transferObj->transferHandle = DRV_I2C_MAKE_HANDLE(gDrvI2CTokenCount, transferObj->index);
+    transferObj->transferHandle = DRV_I2C_MAKE_HANDLE(gDrvI2CTokenCount, clientObj->drvIndex, transferObj->index);
     *transferHandle = transferObj->transferHandle;
     
-    DRV_I2C_UPDATE_TRANSFER_TOKEN(gDrvI2CTokenCount);
+    DRV_I2C_UPDATE_TOKEN(gDrvI2CTokenCount);
 
     if(hDriver->trQueueHead == NULL)
     {
@@ -922,17 +961,15 @@ void DRV_I2C_WriteTransferAdd( const DRV_HANDLE handle, void * buffer, const siz
          * different from the current Transfer setup 
          */
         drvTransferSetup = &clientObj->drvTransferSetup;
-        if( drvTransferSetup->plibTransferSetup.clockSpeed != hDriver->curPLibTransferSetup.clockSpeed )
+        if( drvTransferSetup->clockSpeed != hDriver->drvTransferSetup.clockSpeed )
         {
-            hDriver->i2cPlib->transferSetup(&drvTransferSetup->plibTransferSetup, 0);
-            hDriver->curPLibTransferSetup.clockSpeed = drvTransferSetup->plibTransferSetup.clockSpeed;
+            hDriver->i2cPlib->transferSetup(drvTransferSetup, 0);
+            hDriver->drvTransferSetup.clockSpeed = drvTransferSetup->clockSpeed;
         }
         
         /* Because this is the first transfer in the queue, we need to submit the
          * transfer to the PLIB to start processing. */
-        hDriver->i2cPlib->write(clientObj->drvTransferSetup.slaveAddress, transferObj->writeBuffer, transferObj->writeSize);
-
-        SYS_INT_SourceEnable(hDriver->interruptI2C);
+        hDriver->i2cPlib->write(transferObj->slaveAddress, transferObj->writeBuffer, transferObj->writeSize);
     }
     else
     {
@@ -940,12 +977,9 @@ void DRV_I2C_WriteTransferAdd( const DRV_HANDLE handle, void * buffer, const siz
          * the buffer object to the end of the queue */
         hDriver->trQueueTail->next = transferObj;
         hDriver->trQueueTail = transferObj;
-        
-        if(interruptWasEnabled)
-        {
-            SYS_INT_SourceEnable(hDriver->interruptI2C);
-        }
     }
+    
+    DRV_I2C_ResourceUnlock(hDriver);
     
     return;
 }
@@ -973,13 +1007,12 @@ void DRV_I2C_WriteTransferAdd( const DRV_HANDLE handle, void * buffer, const siz
     See drv_i2c.h for usage information.
 */
 
-void DRV_I2C_WriteReadTransferAdd ( const DRV_HANDLE handle, void *writeBuffer, size_t writeSize, void *readBuffer, size_t readSize, DRV_I2C_TRANSFER_HANDLE * transferHandle )
+void DRV_I2C_WriteReadTransferAdd ( const DRV_HANDLE handle, const uint16_t address, void *writeBuffer, size_t writeSize, void *readBuffer, size_t readSize, DRV_I2C_TRANSFER_HANDLE * transferHandle )
 {
     DRV_I2C_CLIENT_OBJ     * clientObj        = (DRV_I2C_CLIENT_OBJ *)     NULL;
     DRV_I2C_OBJ            * hDriver          = (DRV_I2C_OBJ *)            NULL;
     DRV_I2C_TRANSFER_OBJ   * transferObj      = (DRV_I2C_TRANSFER_OBJ *)   NULL;
     DRV_I2C_TRANSFER_SETUP * drvTransferSetup = (DRV_I2C_TRANSFER_SETUP *) NULL;
-    bool interruptWasEnabled = false;
     
     *transferHandle = DRV_I2C_TRANSFER_HANDLE_INVALID;
     
@@ -1012,15 +1045,12 @@ void DRV_I2C_WriteReadTransferAdd ( const DRV_HANDLE handle, void *writeBuffer, 
         return;
     }
     
-    hDriver = clientObj->hDriver;
+    hDriver = &gDrvI2CObj[clientObj->drvIndex];
     
-    if(0 == hDriver->interruptNestingCount)
+    if(DRV_I2C_ResourceLock(hDriver) == true)
     {
-        /* We will disable interrupts so that the queue
-           status does not get updated asynchronously.
-           This code will always execute. */
-        interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptI2C);
-        
+        SYS_DEBUG(SYS_ERROR_ERROR, "Failed to get resource lock");
+        return;
     }
     
     if( ( DRV_I2C_TRANSFER_OBJ * ) NULL == hDriver->trObjFree )
@@ -1031,11 +1061,7 @@ void DRV_I2C_WriteReadTransferAdd ( const DRV_HANDLE handle, void *writeBuffer, 
 
         SYS_ASSERT(false, "Insufficient Combined Queue Depth");
 
-        /* Enable the interrupt if it was enabled */
-        if(interruptWasEnabled)
-        {
-            SYS_INT_SourceEnable(hDriver->interruptI2C);
-        }
+        DRV_I2C_ResourceUnlock(hDriver);
 
         return;
     }
@@ -1044,21 +1070,22 @@ void DRV_I2C_WriteReadTransferAdd ( const DRV_HANDLE handle, void *writeBuffer, 
     transferObj = hDriver->trObjFree;
     hDriver->trObjFree = hDriver->trObjFree->next;
     
-    /* Configure the object and then */
-    transferObj->readBuffer  = ( uint8_t *)readBuffer;
-    transferObj->readSize    = readSize;
-    transferObj->writeBuffer = ( uint8_t *)writeBuffer;
-    transferObj->writeSize   = writeSize;
-    transferObj->hClient     = clientObj;
-    transferObj->next        = ( DRV_I2C_TRANSFER_OBJ * ) NULL;
-    transferObj->event       = DRV_I2C_TRANSFER_EVENT_PENDING;
-    transferObj->flag        = DRV_I2C_TRANSFER_OBJ_FLAG_READ;
+    /* Configure the object */
+    transferObj->slaveAddress = address;
+    transferObj->readBuffer   = ( uint8_t *)readBuffer;
+    transferObj->readSize     = readSize;
+    transferObj->writeBuffer  = ( uint8_t *)writeBuffer;
+    transferObj->writeSize    = writeSize;
+    transferObj->hClient      = clientObj;
+    transferObj->next         = ( DRV_I2C_TRANSFER_OBJ * ) NULL;
+    transferObj->event        = DRV_I2C_TRANSFER_EVENT_PENDING;
+    transferObj->flag         = DRV_I2C_TRANSFER_OBJ_FLAG_READ;
     
     /* update transferHandle object with unique Id */
-    transferObj->transferHandle = DRV_I2C_MAKE_HANDLE(gDrvI2CTokenCount, transferObj->index);
+    transferObj->transferHandle = DRV_I2C_MAKE_HANDLE(gDrvI2CTokenCount, clientObj->drvIndex, transferObj->index);
     *transferHandle = transferObj->transferHandle;
     
-    DRV_I2C_UPDATE_TRANSFER_TOKEN(gDrvI2CTokenCount);
+    DRV_I2C_UPDATE_TOKEN(gDrvI2CTokenCount);
 
     if(hDriver->trQueueHead == NULL)
     {
@@ -1070,17 +1097,15 @@ void DRV_I2C_WriteReadTransferAdd ( const DRV_HANDLE handle, void *writeBuffer, 
          * different from the current Transfer setup 
          */
         drvTransferSetup = &clientObj->drvTransferSetup;
-        if( drvTransferSetup->plibTransferSetup.clockSpeed != hDriver->curPLibTransferSetup.clockSpeed )
+        if( drvTransferSetup->clockSpeed != hDriver->drvTransferSetup.clockSpeed )
         {
-            hDriver->i2cPlib->transferSetup(&drvTransferSetup->plibTransferSetup, 0);
-            hDriver->curPLibTransferSetup.clockSpeed = drvTransferSetup->plibTransferSetup.clockSpeed;
+            hDriver->i2cPlib->transferSetup(drvTransferSetup, 0);
+            hDriver->drvTransferSetup.clockSpeed = drvTransferSetup->clockSpeed;
         }
         
         /* Because this is the first transfer in the queue, we need to submit the
          * transfer to the PLIB to start processing. */
-        hDriver->i2cPlib->writeRead(clientObj->drvTransferSetup.slaveAddress, transferObj->writeBuffer, transferObj->writeSize, transferObj->readBuffer, transferObj->readSize);
-
-        SYS_INT_SourceEnable(hDriver->interruptI2C);
+        hDriver->i2cPlib->writeRead(transferObj->slaveAddress, transferObj->writeBuffer, transferObj->writeSize, transferObj->readBuffer, transferObj->readSize);
     }
     else
     {
@@ -1088,12 +1113,9 @@ void DRV_I2C_WriteReadTransferAdd ( const DRV_HANDLE handle, void *writeBuffer, 
          * the buffer object to the end of the queue */
         hDriver->trQueueTail->next = transferObj;
         hDriver->trQueueTail = transferObj;
-        
-        if(interruptWasEnabled)
-        {
-            SYS_INT_SourceEnable(hDriver->interruptI2C);
-        }
     }
+    
+    DRV_I2C_ResourceUnlock(hDriver);
     
     return;  
 }
@@ -1113,38 +1135,40 @@ void DRV_I2C_WriteReadTransferAdd ( const DRV_HANDLE handle, void *writeBuffer, 
     See drv_i2c.h for usage information.
 */
 
-DRV_I2C_TRANSFER_EVENT DRV_I2C_TransferStatusGet( const DRV_HANDLE handle, const DRV_I2C_TRANSFER_HANDLE transferHandle )
+DRV_I2C_TRANSFER_EVENT DRV_I2C_TransferStatusGet( const DRV_I2C_TRANSFER_HANDLE transferHandle )
 {
-    DRV_I2C_OBJ          * dObj        = NULL;
-    DRV_I2C_CLIENT_OBJ   * clientObj   = NULL;
-    DRV_I2C_TRANSFER_OBJ * transferObj = NULL;
+    DRV_I2C_OBJ * dObj        = NULL;
+    uint32_t      drvInstance;
+    uint32_t      transferIndex;
     
-    /* Validate the driver handle */
-    clientObj = DRV_I2C_DriverHandleValidate(handle);
-    if(clientObj == NULL)
+    /* Extract drvInstance value from the transfer handle */
+    drvInstance = ((transferHandle & DRV_I2C_INSTANCE_MASK) >> 8);
+    if(drvInstance >= DRV_I2C_INSTANCES_NUMBER)
     {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Transfer Handle");
-        return DRV_I2C_TRANSFER_EVENT_ERROR;
+        SYS_DEBUG(SYS_ERROR_ERROR, "Transfer Handle Invalid");
+        return (DRV_I2C_TRANSFER_EVENT) DRV_I2C_TRANSFER_HANDLE_INVALID;
     }
+    
+    dObj = (DRV_I2C_OBJ*)&gDrvI2CObj[drvInstance];
+    
+    /* Extract transfer index value from the transfer handle */
+    transferIndex = transferHandle & DRV_I2C_INDEX_MASK;
 
-    /* Validate the Request */
-    if(DRV_I2C_TRANSFER_HANDLE_INVALID == transferHandle)
+    /* Validate the transferIndex and corresponding request */
+    if(transferIndex >= dObj->trQueueSize)
     {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Transfer Handle");
-        return DRV_I2C_TRANSFER_EVENT_ERROR;
+        SYS_DEBUG(SYS_ERROR_ERROR, "Transfer Handle Invalid");
+        return (DRV_I2C_TRANSFER_EVENT) DRV_I2C_TRANSFER_HANDLE_INVALID;
     }
-    
-    dObj = clientObj->hDriver;
-    
-    /* The buffer index is the contained in the lower 16 bits of the buffer 
-     * handle */
-    transferObj = &dObj->trObjArr[transferHandle & DRV_I2C_TRANSFER_INDEX_MASK];
-    if( (transferHandle & DRV_I2C_TRANSFER_TOKEN_MASK) != (transferObj->transferHandle & DRV_I2C_TRANSFER_TOKEN_MASK) )
+    else if(transferHandle != dObj->trObjArr[transferIndex].transferHandle)
     {
-        return DRV_I2C_TRANSFER_EVENT_ERROR;
+        SYS_DEBUG(SYS_ERROR_ERROR, "Transfer Handle Expired");
+        return (DRV_I2C_TRANSFER_EVENT) DRV_I2C_TRANSFER_HANDLE_INVALID;
     }
-    
-    return transferObj->event;
+    else
+    {
+        return dObj->trObjArr[transferIndex].event;
+    }
 }
 
 /*******************************************************************************

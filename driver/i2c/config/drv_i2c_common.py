@@ -1,14 +1,25 @@
-def instantiateComponent(i2cComponent):
-    
-    i2cSymNumInst = i2cComponent.createIntegerSymbol("DRV_I2C_NUM_INSTANCES", None)
+def instantiateComponent(i2cComponentCommon):
+    i2cMode = i2cComponentCommon.createKeyValueSetSymbol("DRV_I2C_COMMON_MODE", None)
+    i2cMode.setLabel("Driver Mode")
+    i2cMode.addKey("ASYNC", "0", "Asynchronous")
+    i2cMode.addKey("SYNC", "1", "Synchronous")
+    i2cMode.setDisplayMode("Description")
+    i2cMode.setOutputMode("Key")
+    i2cMode.setVisible(True)
+    i2cMode.setDefaultValue(0)
+
+    i2cSymNumInst = i2cComponentCommon.createIntegerSymbol("DRV_I2C_NUM_INSTANCES", None)
     i2cSymNumInst.setMax(10)
-    i2cSymNumInst.setDefaultValue(1)
+    i2cSymNumInst.setDefaultValue(0)
     
-    i2cSymCommonSysCfgFile = i2cComponent.createFileSymbol(None, None)
+    i2cSymCommonSysCfgFile = i2cComponentCommon.createFileSymbol(None, None)
     i2cSymCommonSysCfgFile.setType("STRING")
     i2cSymCommonSysCfgFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_DRIVER_CONFIGURATION")
     i2cSymCommonSysCfgFile.setSourcePath("driver/i2c/templates/system/system_config_common.h.ftl")
     i2cSymCommonSysCfgFile.setMarkup(True)
 
-    
-    
+    i2cSymSystemDefIncFile = i2cComponentCommon.createFileSymbol("DRV_I2C_SYSTEM_DEF", None)
+    i2cSymSystemDefIncFile.setType("STRING")
+    i2cSymSystemDefIncFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
+    i2cSymSystemDefIncFile.setSourcePath("driver/i2c/templates/system/system_definitions.h.ftl")
+    i2cSymSystemDefIncFile.setMarkup(True)
