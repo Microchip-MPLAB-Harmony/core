@@ -113,6 +113,12 @@ static const DRV_MEMORY_TransferOperation gMemoryXferFuncPtr[4] =
 // *****************************************************************************
 // *****************************************************************************
 
+static inline void DRV_MEMORY_UPDATE_TOKEN(uint16_t token)
+{
+    token++;
+    token = (token == DRV_MEMORY_TOKEN_MAX) ? 1: token;
+}
+
 static void DRV_MEMORY_CallbackHandler( uintptr_t context )
 {
     return;
@@ -647,11 +653,11 @@ static void DRV_MEMORY_SetupXfer
         return;
     }
 
-    if (OSAL_MUTEX_Lock(&dObj->instanceMutex, OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
     {
         DRV_MEMORY_AllocateBufferObject (clientObj, commandHandle, buffer, blockStart, nBlock, opType);
 
-        OSAL_MUTEX_Unlock(&dObj->instanceMutex);
+        OSAL_MUTEX_Unlock(&dObj->transferMutex);
     }
 }
 
@@ -660,6 +666,15 @@ static void DRV_MEMORY_SetupXfer
 // Section: MEMORY Driver System Routines
 // *****************************************************************************
 // *****************************************************************************
+
+void __attribute ((weak)) DRV_MEMORY_RegisterWithSysFs
+(
+    const SYS_MODULE_INDEX drvIndex,
+    uint8_t mediaType
+)
+{
+
+}
 
 SYS_MODULE_OBJ DRV_MEMORY_Initialize
 (
@@ -724,9 +739,18 @@ SYS_MODULE_OBJ DRV_MEMORY_Initialize
         dObj->memoryDevice->callbackRegister(DRV_MEMORY_CallbackHandler, (uintptr_t)dObj);
     }
 
-    _DRV_MEMORY_RegisterWithSysFs(drvIndex, memoryInit->deviceMediaType);
+    if (memoryInit->isFsEnabled == true)
+    {
+        DRV_MEMORY_RegisterWithSysFs(drvIndex, memoryInit->deviceMediaType);
+    }
 
-    if (OSAL_MUTEX_Create(&dObj->instanceMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FALSE)
+    {
+        /* There was insufficient memory available for the mutex to be created */
+        return SYS_MODULE_OBJ_INVALID;
+    }
+
+    if (OSAL_MUTEX_Create(&dObj->transferMutex) == OSAL_RESULT_FALSE)
     {
         /* There was insufficient memory available for the mutex to be created */
         return SYS_MODULE_OBJ_INVALID;
@@ -787,7 +811,7 @@ DRV_HANDLE DRV_MEMORY_Open
     /* Acquire the instance specific mutex to protect the instance specific
      * client pool
      */
-    if (OSAL_MUTEX_Lock(&dObj->instanceMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
     {
         return DRV_HANDLE_INVALID;
     }
@@ -796,7 +820,7 @@ DRV_HANDLE DRV_MEMORY_Open
     if (dObj->isExclusive)
     {
         SYS_DEBUG_PRINT(SYS_ERROR_INFO, "DRV_MEMORY_Open(): Driver is already open in exclusive mode.\n");
-        OSAL_MUTEX_Unlock( &dObj->instanceMutex);
+        OSAL_MUTEX_Unlock( &dObj->clientMutex);
         return DRV_HANDLE_INVALID;
     }
 
@@ -804,7 +828,7 @@ DRV_HANDLE DRV_MEMORY_Open
     if ((dObj->numClients > 0) && (ioIntent & DRV_IO_INTENT_EXCLUSIVE))
     {
         SYS_DEBUG_PRINT(SYS_ERROR_INFO, "DRV_MEMORY_Open(): Driver is already open. Can't be opened in exclusive mode.\n");
-        OSAL_MUTEX_Unlock( &dObj->instanceMutex);
+        OSAL_MUTEX_Unlock( &dObj->clientMutex);
         return DRV_HANDLE_INVALID;
     }
 
@@ -839,7 +863,7 @@ DRV_HANDLE DRV_MEMORY_Open
         }
     }
 
-    OSAL_MUTEX_Unlock(&dObj->instanceMutex);
+    OSAL_MUTEX_Unlock(&dObj->clientMutex);
 
     return clientObj ? ((DRV_HANDLE)clientObj->clientHandle) : DRV_HANDLE_INVALID;
 }
@@ -864,7 +888,7 @@ void DRV_MEMORY_Close
 
     dObj = &gDrvMemoryObj[clientObj->drvIndex];
 
-    if (OSAL_MUTEX_Lock(&dObj->instanceMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
     {
         DRV_MEMORY_RemoveClientBufferObjects (clientObj, dObj);
 
@@ -876,7 +900,7 @@ void DRV_MEMORY_Close
         clientObj->inUse = false;
 
         /* Release the instance specific mutex */
-        OSAL_MUTEX_Unlock( &dObj->instanceMutex );
+        OSAL_MUTEX_Unlock( &dObj->clientMutex );
 
         SYS_DEBUG_PRINT (SYS_ERROR_INFO, "DRV_MEMORY_Close(): Close successful.\n");
     }
@@ -986,7 +1010,7 @@ DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
     }
 
     dObj = &gDrvMemoryObj[clientObj->drvIndex];
-    
+
     /* The lower 8 bits of the command handle is the buffer index and the
      * upper 24 bits of the command handle are the token and driver index.
      */
@@ -995,7 +1019,7 @@ DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
     /* Acquire the instance specific mutex to protect the instance specific
      * client pool
      */
-    if (OSAL_MUTEX_Lock(&dObj->instanceMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->transferMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
     {
         /* Compare the buffer handle with buffer handle in the object */
         if(dObj->buffObjArr[iEntry].commandHandle == commandHandle)
@@ -1003,7 +1027,7 @@ DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
             /* Return the last known buffer object status */
             status = (dObj->buffObjArr[iEntry].status);
         }
-        OSAL_MUTEX_Unlock(&dObj->instanceMutex);
+        OSAL_MUTEX_Unlock(&dObj->transferMutex);
     }
 
     return status;
@@ -1026,7 +1050,7 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object )
 
     dObj = &gDrvMemoryObj[object];
 
-    if (OSAL_MUTEX_Lock(&dObj->instanceMutex , OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->transferMutex , OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
     {
         return;
     }
@@ -1130,7 +1154,7 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object )
         }
     }
 
-    OSAL_MUTEX_Unlock(&dObj->instanceMutex);
+    OSAL_MUTEX_Unlock(&dObj->transferMutex);
 }
 
 void DRV_MEMORY_TransferHandlerSet

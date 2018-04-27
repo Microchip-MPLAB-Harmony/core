@@ -76,6 +76,12 @@ def setMemoryBuffer(symbol, event):
         else:
             symbol.setReadOnly(False)
 
+def setFileSystemCounter(symbol, event):
+    if (event["value"] == True):
+        Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_COUNTER", True, 1)
+    else:
+        Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_COUNTER", False, 1)
+
 def instantiateComponent(memoryComponent, index):
     global memoryDeviceUsed
     global memoryDeviceStartAddr
@@ -116,6 +122,15 @@ def instantiateComponent(memoryComponent, index):
     memoryIndex.setVisible(False)
     memoryIndex.setDefaultValue(index)
 
+    memoryFsEnable = memoryComponent.createBooleanSymbol("DRV_MEMORY_FS_ENABLE", None)
+    memoryFsEnable.setLabel("Enable File system for Memory Driver")
+    memoryFsEnable.setDefaultValue(False)
+
+    memoryfsCounter = memoryComponent.createBooleanSymbol("DRV_MEMORY_FS_COUNTER", None)
+    memoryfsCounter.setLabel("FS Counter")
+    memoryfsCounter.setVisible(False)
+    memoryfsCounter.setDependencies(setFileSystemCounter, ["DRV_MEMORY_FS_ENABLE"])
+
     memorySymNumClients = memoryComponent.createIntegerSymbol("DRV_MEMORY_NUM_CLIENTS", None)
     memorySymNumClients.setLabel("Number of Clients")
     memorySymNumClients.setMin(1)
@@ -128,8 +143,8 @@ def instantiateComponent(memoryComponent, index):
     memorySymBufPool.setMin(1)
     memorySymBufPool.setDefaultValue(1)
     memorySymBufPool.setVisible(True)
-    memorySymBufPool.setReadOnly((Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_ENABLE") == True))
-    memorySymBufPool.setDependencies(setMemoryBuffer, ["drv_memory.DRV_MEMORY_COMMON_FS_ENABLE", "drv_memory.DRV_MEMORY_COMMON_MODE"])
+    memorySymBufPool.setReadOnly((memoryFsEnable.getValue() == True))
+    memorySymBufPool.setDependencies(setMemoryBuffer, ["DRV_MEMORY_FS_ENABLE", "drv_memory.DRV_MEMORY_COMMON_MODE"])
 
     memoryDeviceUsed = memoryComponent.createStringSymbol("DRV_MEMORY_DEVICE", None)
     memoryDeviceUsed.setLabel("Memory Device Used")
@@ -167,8 +182,8 @@ def instantiateComponent(memoryComponent, index):
     memoryDeviceMediaType = memoryComponent.createComboSymbol("DRV_MEMORY_DEVICE_TYPE", None, mediaTypes)
     memoryDeviceMediaType.setLabel("Memory Device Type")
     memoryDeviceMediaType.setDefaultValue("SYS_FS_MEDIA_TYPE_SPIFLASH")
-    memoryDeviceMediaType.setVisible((Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_ENABLE") == True))
-    memoryDeviceMediaType.setDependencies(setVisible, ["drv_memory.DRV_MEMORY_COMMON_FS_ENABLE"])
+    memoryDeviceMediaType.setVisible((memoryFsEnable.getValue() == True))
+    memoryDeviceMediaType.setDependencies(setVisible, ["DRV_MEMORY_FS_ENABLE"])
 
     memoryRTOSMenu = memoryComponent.createMenuSymbol(None, None)
     memoryRTOSMenu.setLabel("RTOS settings")
@@ -264,12 +279,6 @@ def instantiateComponent(memoryComponent, index):
     memorySyncHeaderLocalFile.setDependencies(syncFileGen, ["drv_memory.DRV_MEMORY_COMMON_MODE"])
 
     # System Template Files
-    memorySystemDefFile = memoryComponent.createFileSymbol("DRV_MEMORY_SYS_DEF", None)
-    memorySystemDefFile.setType("STRING")
-    memorySystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-    memorySystemDefFile.setSourcePath("driver/memory/templates/system/system_definitions.h.ftl")
-    memorySystemDefFile.setMarkup(True)
-
     memorySystemDefObjFile = memoryComponent.createFileSymbol("DRV_MEMORY_SYS_DEF_OBJ", None)
     memorySystemDefObjFile.setType("STRING")
     memorySystemDefObjFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_OBJECTS")
@@ -321,7 +330,7 @@ def onDependentComponentAdded(memoryComponent, id, remoteComponent):
     global memoryDeviceInterruptEnable
     global memoryDeviceInterruptSource
 
-    if (id == "drv_memory_memory_dev_dependency") :
+    if (id == "drv_memory_MEMORY_dependency") :
         remoteId = remoteComponent.getID()
 
         memoryDeviceUsed.clearValue()

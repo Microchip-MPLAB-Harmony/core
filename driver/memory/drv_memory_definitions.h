@@ -1,5 +1,5 @@
 /*******************************************************************************
-  SERIALFLASH Driver Interface Definition
+  Memory Driver Interface Definition
 
   Company:
     Microchip Technology Inc.
@@ -8,12 +8,11 @@
     drv_memory_definitions.h
 
   Summary:
-    SERIALFLASH Driver Interface Definition
+    Memory Driver Interface Definition
 
   Description:
-    The SERIALFLASH driver provides a simple interface to manage the SERIALFLASHVF series
-    of SQI Flash Memory connected to Microchip microcontrollers. This file
-    defines the interface definition for the SERIALFLASH driver.
+    The Memory driver provides a simple interface to manage the various memory
+    devices. This file defines the interface definition for the Memory driver.
 *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -54,6 +53,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system/system.h"
 #include "system/system_common.h"
 #include "system/system_module.h"
+#include "system/system_media.h"
 #include "system/int/sys_int.h"
 
 // DOM-IGNORE-BEGIN
@@ -118,7 +118,7 @@ typedef void (*DRV_MEMORY_CALLBACK)(uintptr_t context);
 typedef struct
 {
     bool (*SectorErase)(uint32_t address);
-    
+
     bool (*Read)( uint32_t *rx_data, uint32_t rx_data_length, uint32_t address );
 
     bool (*PageWrite)( uint32_t *tx_data, uint32_t address );
@@ -126,7 +126,7 @@ typedef struct
     GEOMETRY_GET GeometryGet;
 
     TRANSFER_STATUS_GET TransferStatusGet;
-    
+
     void (*callbackRegister)(DRV_MEMORY_CALLBACK callback, uintptr_t context);
 
 } MEMORY_DEVICE_API;
@@ -150,6 +150,9 @@ typedef struct
     /* Flash Device functions */
     const MEMORY_DEVICE_API *memoryDevice;
 
+    /* FS enabled */
+    bool isFsEnabled;
+
     /* Memory Device Type */
     uint8_t deviceMediaType;
 
@@ -158,7 +161,7 @@ typedef struct
 
     /* Interrupt source number */
     INT_SOURCE interruptSource;
-    
+
     /* Erase Write Buffer pointer */
     uint8_t *ewBuffer;
 

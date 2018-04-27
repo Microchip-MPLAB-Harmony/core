@@ -64,8 +64,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
     <#lt>void DRV_MEMORY_RegisterWithSysFs( const SYS_MODULE_INDEX drvIndex, uint8_t mediaType);
 
-    <#lt>#define _DRV_MEMORY_RegisterWithSysFs(x, y) DRV_MEMORY_RegisterWithSysFs(x, y)
-
     <#if DRV_MEMORY_COMMON_MODE == "SYNC" >
         <#lt>void DRV_MEMORY_FS_Erase
         <#lt>(
@@ -102,14 +100,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
         <#lt>    uint32_t nBlock
         <#lt>);
     </#if>
-
-<#else>
-    <#lt>#include "system/system_media.h"
-    <#lt>
-    <#lt>// *****************************************************************************
-    <#lt>
-    <#lt>#define _DRV_MEMORY_RegisterWithSysFs(x, y)
-
 </#if>
 
 // *****************************************************************************

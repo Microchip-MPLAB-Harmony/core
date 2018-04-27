@@ -83,7 +83,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     The command handle associated with the command request expires when the
     client has been notified of the completion of the command (after event
     handler function that notifies the client returns) or after the command has
-    been retired by the driver if no event handler callback was set. 
+    been retired by the driver if no event handler callback was set.
 
   Remarks:
     None.
@@ -115,7 +115,7 @@ typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE  DRV_MEMORY_COMMAND_HANDLE;
     Identifies the possible events that can result from a request.
 
    Description
-    This enumeration identifies the possible events that can result from a 
+    This enumeration identifies the possible events that can result from a
     read, write, erase or erasewrite request caused by the client.
 
    Remarks:
@@ -130,7 +130,7 @@ typedef enum
     DRV_MEMORY_EVENT_COMMAND_COMPLETE = SYS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE,
 
     /* There was an error during the operation */
-    DRV_MEMORY_EVENT_COMMAND_ERROR    = SYS_MEDIA_EVENT_BLOCK_COMMAND_ERROR 
+    DRV_MEMORY_EVENT_COMMAND_ERROR    = SYS_MEDIA_EVENT_BLOCK_COMMAND_ERROR
 
 } DRV_MEMORY_EVENT;
 
@@ -139,14 +139,14 @@ typedef enum
 
   Summary:
     MEMORY Driver command Status
-	
+
   Description:
     Specifies the status of the command for the read, write, erase and
     erasewrite operations.
-    
+
   Remarks:
-    None.                                                               
-*/  
+    None.
+*/
 typedef enum
 {
     /* Done OK and ready */
@@ -172,19 +172,19 @@ typedef enum
    Description
     This data type defines the required function signature for the MEMORY event
     handling callback function. A client must register a pointer to an event
-    handling function whose function signature (parameter and return value 
-    types) match the types specified by this function pointer in order to 
+    handling function whose function signature (parameter and return value
+    types) match the types specified by this function pointer in order to
     receive event calls back from the driver.
-    
+
     The parameters and return values are described here and a partial example
     implementation is provided.
 
   Parameters:
     event           - Identifies the type of event
-    
+
     commandHandle   - Handle returned from the Read/Write/Erase/EraseWrite
                       requests
-    
+
     context         - Value identifying the context of the application that
                       registered the event handling function
 
@@ -218,11 +218,11 @@ typedef enum
 
   Remarks:
     If the event is DRV_MEMORY_EVENT_COMMAND_COMPLETE, it means that the
-    requested operation was completed successfully. 
-    
+    requested operation was completed successfully.
+
     If the event is DRV_MEMORY_EVENT_COMMAND_ERROR, it means that the scheduled
     operation was not completed successfully.
-     
+
     The context parameter contains the handle to the client context, provided
     at the time the event handling function was registered using the
     DRV_MEMORY_TransferHandlerSet function. This context handle value is passed
@@ -231,10 +231,14 @@ typedef enum
     the client's data) instance of the client that made the read/write/erase
     request.
 
-    The event handler function executes in the driver peripheral's interrupt
+    The event handler function executes in the driver peripherals interrupt
     context when the driver is configured for interrupt mode operation. It is
     recommended of the application to not perform process intensive or blocking
     operations within this function.
+
+    Used in Asynchronous mode of operation.
+
+    Refer to sys_media.h for definition.
 */
 typedef SYS_MEDIA_EVENT_HANDLER   DRV_MEMORY_TRANSFER_HANDLER;
 
@@ -253,7 +257,7 @@ typedef SYS_MEDIA_EVENT_HANDLER   DRV_MEMORY_TRANSFER_HANDLER;
 // *****************************************************************************
 /* Function:
     SYS_MODULE_OBJ DRV_MEMORY_Initialize( const SYS_MODULE_INDEX index, const SYS_MODULE_INIT * const init );
-    
+
   Summary:
     Initializes the MEMORY instance for the specified driver index
 
@@ -263,27 +267,25 @@ typedef SYS_MEDIA_EVENT_HANDLER   DRV_MEMORY_TRANSFER_HANDLER;
 
   Precondition:
     None.
-  
+
   Parameters:
     index -  Identifier for the instance to be initialized
     init -   Pointer to a data structure containing any data necessary to
              initialize the driver.
-  
+
   Returns:
     If successful, returns a valid handle to a driver instance object.
     Otherwise it returns SYS_MODULE_OBJ_INVALID.
-  
+
   Example:
     <code>
-    // This code snippet shows an example of initializing the MEMORY Driver.
-    
+    // This code snippet shows an example of initializing the MEMORY Driver
+    // with SST26 serial flash device attached.
+
     SYS_MODULE_OBJ  objectHandle;
 
     const MEMORY_DEVICE_API drvMemory0DeviceAPI = {
-        .ReadDeviceId       = SST26_ReadJedecId,
         .SectorErase        = SST26_SectorErase,
-        .BulkErase          = SST26_BulkErase,
-        .ChipErase          = SST26_ChipErase,
         .Read               = SST26_Read,
         .PageWrite          = SST26_PageWrite,
         .GeometryGet        = (GEOMETRY_GET)SST26_GeometryGet,
@@ -306,16 +308,14 @@ typedef SYS_MEDIA_EVENT_HANDLER   DRV_MEMORY_TRANSFER_HANDLER;
 
   Remarks:
     This routine must be called before any other MEMORY routine is called.
-    
-    This routine should only be called once during system initialization
-    unless DRV_MEMORY_Deinitialize is called to deinitialize the driver
-    instance.
-    
+
+    This routine should only be called once during system initialization.
+
     This routine will NEVER block for hardware access. If the operation
     requires time to allow the hardware to initialize, it will be reported by
     the DRV_MEMORY_Status operation. The system must use DRV_MEMORY_Status to
     find out when the driver is in the ready state.
-    
+
 */
 
 SYS_MODULE_OBJ DRV_MEMORY_Initialize( const SYS_MODULE_INDEX index, const SYS_MODULE_INIT * const init );
@@ -323,39 +323,39 @@ SYS_MODULE_OBJ DRV_MEMORY_Initialize( const SYS_MODULE_INDEX index, const SYS_MO
 // *************************************************************************
 /* Function:
     SYS_STATUS DRV_MEMORY_Status( SYS_MODULE_OBJ object );
-    
+
   Summary:
     Gets the current status of the MEMORY driver module.
-  
+
   Description:
     This routine provides the current status of the MEMORY driver module.
-  
+
   Preconditions:
     Function DRV_MEMORY_Initialize should have been called before calling
     this function.
-  
+
   Parameters:
     object -  Driver object handle, returned from the DRV_MEMORY_Initialize
               routine
-  
+
   Returns:
     SYS_STATUS_READY - Indicates that the driver is ready and accept
     requests for new operations.
-    
+
     SYS_STATUS_UNINITIALIZED - Indicates the driver is not initialized.
 
   Example:
     <code>
     SYS_MODULE_OBJ      object;     // Returned from DRV_MEMORY_Initialize
     SYS_STATUS          MEMORYStatus;
-    
+
     MEMORYStatus = DRV_MEMORY_Status(object);
     else if (SYS_STATUS_ERROR >= MEMORYStatus)
     {
         // Handle error
     }
     </code>
-  
+
   Remarks:
     This routine will NEVER block waiting for hardware.
 */
@@ -365,37 +365,37 @@ SYS_STATUS DRV_MEMORY_Status( SYS_MODULE_OBJ object );
 // ****************************************************************************
 /* Function:
     void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object );
-    
+
   Summary:
     Maintains the MEMORY driver's internal state machine.
-  
+
   Description:
     This routine maintains the driver's internal state machine. Part of the
     driver initialization is done in this routine.
     - Updates the Geometry information of the attached memory device.
- 
+
     Once the above configuration is done DRV_MEMORY is put to Idle state
     so that, driver can accept transfer requests(open, erase, read,
     write, etc) from client.
-    
+
     This routine is also responsible for checking the status of Erase and Write
     transfer requests and notify the client through transferHandler registered
     if any.
 
     The state of driver will be busy until transfer is completed. Once transfer
     is done the state goes back to Process sate until new requests is received.
-  
+
   Preconditions:
     The DRV_MEMORY_Initialize routine must have been called for the specified
     MEMORY driver instance.
-  
+
   Parameters:
     object -  Driver object handle, returned from the DRV_MEMORY_Initialize
               routine
 
   Returns:
     None.
-  
+
   Example:
     <code>
     SYS_MODULE_OBJ      object;     // Returned from DRV_MEMORY_Initialize
@@ -408,11 +408,14 @@ SYS_STATUS DRV_MEMORY_Status( SYS_MODULE_OBJ object );
     </code>
 
   Remarks:
-    This routine is normally not called directly by an application. It is
-    called by the system's Tasks routine (SYS_Tasks).
-    
-    This routine will never block or access any resources that may cause it to
-    block.                        
+    This routine is normally not called directly by an application.
+    Bare Metal:
+        It will be called by the system's Tasks routine (SYS_Tasks).
+
+    RTOS:
+        A separate Thread will be created for this task and will be
+        called in the thread context when RTOS is used.
+
 */
 
 void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object );
@@ -426,33 +429,33 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object );
 // ****************************************************************************
 /* Function:
     DRV_HANDLE DRV_MEMORY_Open( const SYS_MODULE_OBJ object );
-    
+
   Summary:
     Opens the specified MEMORY driver instance and returns a handle to it
-  
+
   Description:
-    This routine opens the specified MEMORY driver instance and provides a handle. 
+    This routine opens the specified MEMORY driver instance and provides a handle.
     This handle must be provided to all other client-level operations to identify
     the caller and the instance of the driver.
-  
+
   Preconditions:
     Function DRV_MEMORY_Initialize must have been called before calling this
     function.
 
     Driver should be in ready state to accept the request. Can be checked by
     calling DRV_MEMORY_Status().
-  
+
   Parameters:
     object -  Driver object handle, returned from the DRV_MEMORY_Initialize
               routine
-  
+
   Returns:
     If successful, the routine returns a valid open-instance handle (a
     number identifying both the caller and the module instance).
-    
+
     If an error occurs, DRV_HANDLE_INVALID is returned. Errors can occur
     under the following circumstances:
-        - if the number of client objects allocated via DRV_MEMORY_CLIENTS_NUMBER 
+        - if the number of client objects allocated via DRV_MEMORY_CLIENTS_NUMBER
           is insufficient
         - if the client is trying to open the driver but driver has been opened
           exclusively by another client
@@ -460,22 +463,22 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object );
           been opened in a non exclusive mode by another client.
         - if the driver hardware instance being opened is not initialized or is
           invalid
-  
+
   Example:
     <code>
     DRV_HANDLE handle;
     SYS_MODULE_OBJ      object;     // Returned from DRV_MEMORY_Initialize
-    
+
     handle = DRV_MEMORY_Open(object);
     if (DRV_HANDLE_INVALID == handle)
     {
         // Unable to open the driver
     }
     </code>
-  
+
   Remarks:
     The handle returned is valid until the DRV_MEMORY_Close routine is called.
-    This routine will NEVER block waiting for hardware. If the driver has 
+    This routine will NEVER block waiting for hardware. If the driver has
     has already been opened, it cannot be opened again.
 */
 
@@ -535,11 +538,12 @@ void DRV_MEMORY_Close( const DRV_HANDLE handle );
         uint32_t blockStart,
         uint32_t nBlock
     );
-    
+
   Summary:
-    Erase the specified number of memory blocks from the specified block start
-    address.
-  
+    Erase the specified number of memory blocks from the specified block start.
+
+    Each block is equal to sector size of the memory device attached.
+
   Description:
     This function schedules a non-blocking sector erase operation on attached
     memory device.
@@ -563,7 +567,7 @@ void DRV_MEMORY_Close( const DRV_HANDLE handle );
 
     If the requesting client has not registered any transfer handler callback
     with the driver, he can call DRV_MEMORY_CommandStatus() API to know
-    the current status of the request. 
+    the current status of the request.
 
   Preconditions:
     The DRV_MEMORY_Initialize() routine must have been called for the specified
@@ -572,7 +576,7 @@ void DRV_MEMORY_Close( const DRV_HANDLE handle );
     The DRV_MEMORY_Open() must have been called with DRV_IO_INTENT_WRITE or
     DRV_IO_INTENT_READWRITE as a parameter to obtain a valid opened device
     handle.
-    
+
   Parameters:
     handle        - A valid open-instance handle, returned from the
                     driver's open function
@@ -580,8 +584,7 @@ void DRV_MEMORY_Close( const DRV_HANDLE handle );
     commandHandle - Pointer to an argument that will contain the return buffer
                     handle
 
-    blockStart    - Erase block start address from where the blocks should be
-                    erased.
+    blockStart    - Block start from where the blocks should be  erased.
 
     nBlock        - Total number of blocks to be erased.
 
@@ -591,14 +594,14 @@ void DRV_MEMORY_Close( const DRV_HANDLE handle );
 
   Example:
     <code>
-    
+
     // Use DRV_MEMORY_GeometryGet () to find the write region geometry.
     uint32_t blockStart = 0;
     uint32_t nBlocks = 10;
     bool xfer_done = false;
 
     // memoryHandle is the handle returned by the DRV_MEMORY_Open function.
- 
+
     // Event is received when the erase request is completed.
     void appTransferHandler
     (
@@ -621,8 +624,8 @@ void DRV_MEMORY_Close( const DRV_HANDLE handle );
     }
 
     DRV_MEMORY_TransferHandlerSet(memoryHandle, appTransferHandler, (uintptr_t)NULL);
- 
-    DRV_MEMORY_Erase( memoryHandle, &commandHandle, blockStart, nBlock );
+
+    DRV_MEMORY_AsyncErase( memoryHandle, &commandHandle, blockStart, nBlock );
 
     if(DRV_MEMORY_COMMAND_HANDLE_INVALID == commandHandle)
     {
@@ -631,9 +634,9 @@ void DRV_MEMORY_Close( const DRV_HANDLE handle );
 
     // Wait for erase to be completed
     while(!xfer_done);
-    
+
     </code>
-    
+
   Remarks:
     None.
 */
@@ -646,9 +649,73 @@ void DRV_MEMORY_AsyncErase
     uint32_t nBlock
 );
 
+// **************************************************************************
+/* Function:
+    bool DRV_MEMORY_SyncErase
+    (
+        const DRV_HANDLE handle,
+        uint32_t blockStart,
+        uint32_t nBlock
+    );
+
+  Summary:
+    Erase the specified number of memory blocks from the specified block start.
+
+    Each block is equal to sector size of the memory device attached.
+
+  Description:
+    This function schedules a blocking sector erase operation on attached
+    memory device.
+
+  Preconditions:
+    The DRV_MEMORY_Initialize() routine must have been called for the specified
+    MEMORY driver instance.
+
+    The DRV_MEMORY_Open() must have been called with DRV_IO_INTENT_WRITE or
+    DRV_IO_INTENT_READWRITE as a parameter to obtain a valid opened device
+    handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the
+                    driver's open function
+
+    blockStart    - block start from where the blocks should be erased.
+
+    nBlock        - Total number of blocks to be erased.
+
+  Returns:
+    true:
+        - If the transfer request is successfully completed.
+
+    false:
+        - If the client opened the driver for read only
+        - If the number of blocks to be erased is either zero or more than the number
+          of blocks actually available
+        - If the driver handle is invalid
+
+  Example:
+    <code>
+
+    // Use DRV_MEMORY_GeometryGet () to find the erase region geometry.
+    uint32_t blockStart = 0;
+    uint32_t nBlocks = 10;
+
+    // memoryHandle is the handle returned by the DRV_MEMORY_Open function.
+
+    if(DRV_MEMORY_SyncErase( memoryHandle, blockStart, nBlock ) == false)
+    {
+        // Error handling here
+    }
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
 bool DRV_MEMORY_SyncErase
 (
-    const DRV_HANDLE handle,    
+    const DRV_HANDLE handle,
     uint32_t blockStart,
     uint32_t nBlock
 );
@@ -660,19 +727,18 @@ bool DRV_MEMORY_SyncErase
         const DRV_HANDLE handle,
         DRV_MEMORY_COMMAND_HANDLE * commandHandle,
         void * sourceBuffer,
-        uint32_t writeBlockStart,
-        uint32_t nWriteBlock
+        uint32_t blockStart,
+        uint32_t nBlock
     );
 
   Summary:
-    Erase and Write blocks of data starting from a specified block start
-    address.
+    Erase and Write blocks of data in the sectors where the block start belongs.
 
   Description:
     This function combines the step of erasing a sector and then writing the
     page. The application can use this function if it wants to avoid having to
     explicitly delete a sector in order to update the pages contained in the
-    sector. 
+    sector.
 
     This function schedules a non-blocking operation to erase and write blocks
     of data into attached device memory. The function returns with a valid command handle
@@ -683,11 +749,11 @@ bool DRV_MEMORY_SyncErase
     returns DRV_MEMORY_COMMAND_HANDLE_INVALID in the commandHandle argument
     under the following circumstances:
     - if a buffer could not be allocated to the request
-    - if the input buffer pointer is NULL
+    - if the sourceBuffer pointer is NULL
     - if the client opened the driver for read only
     - if the number of blocks to be written is either zero or more than the
       number of blocks actually available
-    - if the driver handle is invalid 
+    - if the driver handle is invalid
 
     If the requesting client registered an event callback with the driver, the
     driver will issue a DRV_MEMORY_EVENT_COMMAND_COMPLETE event if the buffer
@@ -696,7 +762,7 @@ bool DRV_MEMORY_SyncErase
 
     If the requesting client has not registered any transfer handler callback
     with the driver, he can call DRV_MEMORY_CommandStatus() API to know
-    the current status of the request. 
+    the current status of the request.
 
   Precondition:
     The DRV_MEMORY_Initialize() routine must have been called for the specified
@@ -712,13 +778,13 @@ bool DRV_MEMORY_SyncErase
 
     commandHandle - Pointer to an argument that will contain the return command
                     handle. If NULL, then command handle is not returned.
-                   
+
     sourceBuffer  - The source buffer containing data to be programmed into MEMORY
                     Flash
 
-    writeBlockStart - Write block start address where the write should begin.
+    blockStart    - Write block start where the write should begin.
 
-    nWriteBlock   - Total number of blocks to be written. 
+    nBlock        - Total number of blocks to be written.
 
   Returns:
     The command handle is returned in the commandHandle argument. It Will be
@@ -726,13 +792,13 @@ bool DRV_MEMORY_SyncErase
 
   Example:
     <code>
-    
+
+    #define BUFFER_SIZE    4096
     uint8_t buffer[BUFFER_SIZE];
-    
+
     // Use DRV_MEMORY_GeometryGet () to find the write region geometry.
-    // Find the block address to which data is to be written.
     uint32_t blockStart = 0x0;
-    uint32_t nBlock = 2;
+    uint32_t nBlock = BUFFER_SIZE / block_size; // block_size for write geometry
     DRV_MEMORY_COMMAND_HANDLE commandHandle;
 
     // memoryHandle is the handle returned by the DRV_MEMORY_Open function.
@@ -760,7 +826,7 @@ bool DRV_MEMORY_SyncErase
     }
 
     DRV_MEMORY_TransferHandlerSet(memoryHandle, appTransferHandler, (uintptr_t)NULL);
- 
+
     DRV_MEMORY_EraseWrite(memoryHandle, &commandHandle, &myBuffer, blockStart, nBlock);
 
     if(DRV_MEMORY_COMMAND_HANDLE_INVALID == commandHandle)
@@ -786,9 +852,85 @@ void DRV_MEMORY_AsyncEraseWrite
     uint32_t nBlock
 );
 
+// *****************************************************************************
+/* Function:
+    bool DRV_MEMORY_SyncEraseWrite
+    (
+        const DRV_HANDLE handle,
+        void *sourceBuffer,
+        uint32_t blockStart,
+        uint32_t nBlock
+    );
+
+  Summary:
+    Erase and Write blocks of data in the sectors where the block start belongs.
+
+  Description:
+    This function combines the step of erasing a sector and then writing the
+    page. The application can use this function if it wants to avoid having to
+    explicitly delete a sector in order to update the pages contained in the
+    sector.
+
+    This function schedules a blocking operation to erase and write blocks
+    of data into attached device memory.
+
+  Precondition:
+    The DRV_MEMORY_Initialize() routine must have been called for the specified
+    MEMORY driver instance.
+
+    The DRV_MEMORY_Open() must have been called with DRV_IO_INTENT_WRITE or
+    DRV_IO_INTENT_READWRITE as a parameter to obtain a valid opened device
+    handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    sourceBuffer  - The source buffer containing data to be programmed into MEMORY
+                    Flash
+
+    blockStart    - block start where the write should begin.
+
+    nBlock        - Total number of blocks to be written.
+
+  Returns:
+    true:
+        - If the transfer request is successfully completed.
+
+    false:
+        - If the sourceBuffer pointer is NULL
+        - If the client opened the driver for read only
+        - If the number of blocks to be written is either zero or more than the
+          number of blocks actually available
+        - If the driver handle is invalid
+
+  Example:
+    <code>
+
+    #define BUFFER_SIZE    4096
+
+    uint8_t buffer[BUFFER_SIZE];
+
+    // Use DRV_MEMORY_GeometryGet () to find the write region geometry.
+    uint32_t blockStart = 0x0;
+    uint32_t nBlock = BUFFER_SIZE / block_size; // block_size for write geometry
+
+    // memoryHandle is the handle returned by the DRV_MEMORY_Open function.
+
+    if(DRV_MEMORY_EraseWrite(memoryHandle, &myBuffer, blockStart, nBlock) == false)
+    {
+        // Error handling here
+    }
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
 bool DRV_MEMORY_SyncEraseWrite
 (
-    const DRV_HANDLE handle,    
+    const DRV_HANDLE handle,
     void *sourceBuffer,
     uint32_t blockStart,
     uint32_t nBlock
@@ -806,7 +948,7 @@ bool DRV_MEMORY_SyncEraseWrite
     );
 
   Summary:
-    Writes nblocks of data starting at the specified block start address.
+    Writes nblocks of data starting at the specified block start.
 
   Description:
     This function schedules a non-blocking write operation for writing blocks
@@ -822,7 +964,7 @@ bool DRV_MEMORY_SyncEraseWrite
     - if the client opened the driver for read only
     - if the number of blocks to be written is either zero or more than the
       number of blocks actually available
-    - if the driver handle is invalid 
+    - if the driver handle is invalid
 
     If the requesting client registered an event callback with the driver, the
     driver will issue a DRV_MEMORY_EVENT_COMMAND_COMPLETE event if the buffer
@@ -839,7 +981,7 @@ bool DRV_MEMORY_SyncEraseWrite
 
     DRV_MEMORY_Open() routine must have been called to obtain a valid opened device
     handle.
-    
+
     The memory address location which has to be written, must have been erased
     before using the DRV_MEMORY_xxxErase() routine.
 
@@ -849,14 +991,13 @@ bool DRV_MEMORY_SyncEraseWrite
 
     commandHandle - Pointer to an argument that will contain the return buffer
                     handle
-                   
-    sourceBuffer  - The source buffer containing data to be programmed into MEMORY 
+
+    sourceBuffer  - The source buffer containing data to be programmed into MEMORY
                     Flash
 
-    blockStart    - Write block start address from where the data should be
-                    written to.
+    blockStart    - Block start from where the data should be written to.
 
-    nBlock        - Total number of blocks to be written. 
+    nBlock        - Total number of blocks to be written.
 
   Returns:
     The command handle is returned in the commandHandle argument. It will be
@@ -864,17 +1005,19 @@ bool DRV_MEMORY_SyncEraseWrite
 
   Example:
     <code>
-    
+
+    #define BUFFER_SIZE    4096
     uint8_t writeBuffer[BUFFER_SIZE];
-    
+
     // Use DRV_MEMORY_GeometryGet () to find the write region geometry.
     uint32_t blockStart = 0x0;
-    uint32_t nBlocks = BUFFER_SIZE >> 8;
+    uint32_t nBlock = BUFFER_SIZE / block_size; // block_size for write geometry
     bool xfer_done = false;
+
     DRV_MEMORY_COMMAND_HANDLE commandHandle;
 
     // memoryHandle is the handle returned by the DRV_MEMORY_Open function.
- 
+
     // Event is received when the write request is completed.
     void appTransferHandler
     (
@@ -897,7 +1040,7 @@ bool DRV_MEMORY_SyncEraseWrite
     }
 
     DRV_MEMORY_TransferHandlerSet(memoryHandle, appTransferHandler, (uintptr_t)NULL);
- 
+
     DRV_MEMORY_Erase(memoryHandle, &commandHandle, blockStart, nBlock);
 
     if(DRV_MEMORY_COMMAND_HANDLE_INVALID == commandHandle)
@@ -907,7 +1050,7 @@ bool DRV_MEMORY_SyncEraseWrite
 
     // Wait for erase to be completed
     while(!xfer_done);
- 
+
     DRV_MEMORY_Write(memoryHandle, &commandHandle, &writeBuffer, blockStart, nBlock);
 
     if(DRV_MEMORY_COMMAND_HANDLE_INVALID == commandHandle)
@@ -933,9 +1076,86 @@ void DRV_MEMORY_AsyncWrite
     uint32_t nBlock
 );
 
+// *****************************************************************************
+/* Function:
+    bool DRV_MEMORY_SyncWrite
+    (
+        const DRV_HANDLE handle,
+        void *sourceBuffer,
+        uint32_t blockStart,
+        uint32_t nBlock
+    );
+
+  Summary:
+    Writes nblock of data starting at the specified block start.
+
+  Description:
+    This function schedules a blocking write operation for writing blocks
+    of data into attached devices memory.
+
+  Preconditions:
+    The DRV_MEMORY_Initialize() routine must have been called for the specified
+    MEMORY driver instance.
+
+    DRV_MEMORY_Open() routine must have been called to obtain a valid opened device
+    handle.
+
+    The memory block which has to be written, must have been erased
+    before using the DRV_MEMORY_xxxErase() routine.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    sourceBuffer  - The source buffer containing data to be programmed into MEMORY
+                    Flash
+
+    blockStart    - Block start from where the data should be written to.
+
+    nBlock        - Total number of blocks to be written.
+
+  Returns:
+    true:
+        - If the transfer request is successfully completed.
+
+    false:
+        - If the source buffer pointer is NULL
+        - If the client opened the driver for read only
+        - If the number of blocks to be written is either zero or more than the
+          number of blocks actually available
+        - If the driver handle is invalid
+
+  Example:
+    <code>
+
+    #define BUFFER_SIZE    4096
+    uint8_t writeBuffer[BUFFER_SIZE];
+
+    // Use DRV_MEMORY_GeometryGet () to find the write region geometry.
+    uint32_t blockStart = 0x0;
+    uint32_t nBlock = BUFFER_SIZE / block_size; // block_size for write geometry
+
+    // memoryHandle is the handle returned by the DRV_MEMORY_Open function.
+
+    if(DRV_MEMORY_Erase(memoryHandle, blockStart, nBlock) == false)
+    {
+        // Error handling here
+    }
+
+    if(DRV_MEMORY_Write(memoryHandle, &writeBuffer, blockStart, nBlock) == false)
+    {
+        // Error handling here
+    }
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
 bool DRV_MEMORY_SyncWrite
 (
-    const DRV_HANDLE handle,        
+    const DRV_HANDLE handle,
     void *sourceBuffer,
     uint32_t blockStart,
     uint32_t nBlock
@@ -953,7 +1173,7 @@ bool DRV_MEMORY_SyncWrite
     );
 
 Summary:
-    Reads nblocks of data from the specified block start address.
+    Reads nblocks of data from the specified block start.
 
   Description:
     This function schedules a non-blocking read operation for reading blocks of
@@ -969,7 +1189,7 @@ Summary:
     - if the client opened the driver for write only
     - if the number of blocks to be read is either zero or more than the number
       of blocks actually available
-    - if the driver handle is invalid 
+    - if the driver handle is invalid
 
   Precondition:
     The DRV_MEMORY_Initialize routine must have been called for the specified
@@ -984,24 +1204,23 @@ Summary:
                     open function
 
     commandHandle - Pointer to an argument that will contain the command handle
-                   
+
     targetBuffer  - Buffer into which the data read from the MEMORY Flash memory
                     will be placed
 
-    blockStart    - Read block start address from where the data should be
-                    read.
+    blockStart    - Block start from where the data should be read.
 
     nBlock        - Total number of blocks to be read.
 
   Returns:
     The command handle is returned in the commandHandle argument. It will be
     DRV_MEMORY_COMMAND_HANDLE_INVALID if the request was not successful.
- 
+
   Example:
     <code>
 
     uint8_t readBuffer[BUFFER_SIZE];
-    
+
     // Use DRV_MEMORY_GeometryGet () to find the read region geometry.
     // Find the block address from which to read data.
     uint32_t blockStart = 0x0;
@@ -1040,11 +1259,7 @@ Summary:
     {
         // Error handling here
     }
-    else
-    {
-        // Read queued successfully.
-    }
- 
+
     while(!xfer_done);
 
     </code>
@@ -1062,9 +1277,79 @@ void DRV_MEMORY_AsyncRead
     uint32_t nBlock
 );
 
+// *****************************************************************************
+/* Function:
+    bool DRV_MEMORY_SyncRead
+    (
+        const DRV_HANDLE handle,
+        void *targetBuffer,
+        uint32_t blockStart,
+        uint32_t nBlock
+    );
+
+Summary:
+    Reads nblock of data from the specified block start.
+
+  Description:
+    This function schedules a blocking read operation for reading blocks of
+    data from the memory device attached.
+
+  Precondition:
+    The DRV_MEMORY_Initialize routine must have been called for the specified
+    MEMORY driver instance.
+
+    DRV_MEMORY_Open must have been called with DRV_IO_INTENT_READ or
+    DRV_IO_INTENT_READWRITE as the ioIntent to obtain a valid opened device
+    handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    targetBuffer  - Buffer into which the data read from the MEMORY Flash memory
+                    will be placed
+
+    blockStart    - Block start from where the data should be read.
+
+    nBlock        - Total number of blocks to be read.
+
+  Returns:
+    true:
+        - If the transfer request is successfully completed.
+
+    false:
+        - If the target buffer pointer is NULL
+        - If the client opened the driver for write only
+        - If the number of blocks to be read is either zero or more than the number
+          of blocks actually available
+        - If the driver handle is invalid
+
+  Example:
+    <code>
+
+    #define BUFFER_SIZE    4096
+    uint8_t readBuffer[BUFFER_SIZE];
+
+    // Use DRV_MEMORY_GeometryGet () to find the read region geometry.
+    uint32_t blockStart = 0x0;
+    uint32_t nBlock = BUFFER_SIZE / block_size; // block_size for read geometry
+
+    // memoryHandle is the handle returned by the DRV_MEMORY_Open function.
+
+    if(DRV_MEMORY_Read(memoryHandle, &readBuffer, blockStart, nBlock) == false)
+    {
+        // Error handling here
+    }
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
 bool DRV_MEMORY_SyncRead
 (
-    const DRV_HANDLE handle,    
+    const DRV_HANDLE handle,
     void *targetBuffer,
     uint32_t blockStart,
     uint32_t nBlock
@@ -1101,8 +1386,8 @@ bool DRV_MEMORY_SyncRead
     SYS_MEDIA_GEOMETRY - Pointer to structure which holds the media geometry information.
 
   Example:
-    <code> 
-    
+    <code>
+
     SYS_MEDIA_GEOMETRY geometry;
     uint32_t readBlockSize, writeBlockSize, eraseBlockSize;
     uint32_t nReadBlocks, nReadRegions, totalFlashSize;
@@ -1112,26 +1397,25 @@ bool DRV_MEMORY_SyncRead
         // Handle Error
     }
 
-    readBlockSize  = geometry.read_blockSize;
-    nReadBlocks = geometry.read_numBlocks;
+    readBlockSize  = geometry.geometryTable[0].blockSize;
+    nReadBlocks = geometry.geometryTable[0].numBlocks;
     nReadRegions = geometry.numReadRegions;
 
-    writeBlockSize  = geometry.write_blockSize;
-    eraseBlockSize  = geometry.erase_blockSize;
+    writeBlockSize  = geometry.geometryTable[1].blockSize;
+    eraseBlockSize  = geometry.geometryTable[2].blockSize;
 
     totalFlashSize = readBlockSize * nReadBlocks * nReadRegions;
 
     </code>
 
   Remarks:
-    None.
+    Refer sys_media.h for definition of SYS_MEDIA_GEOMETRY.
 */
 
 SYS_MEDIA_GEOMETRY * DRV_MEMORY_GeometryGet
 (
     const DRV_HANDLE handle
 );
-
 
 // *****************************************************************************
 /* Function:
@@ -1163,15 +1447,15 @@ SYS_MEDIA_GEOMETRY * DRV_MEMORY_GeometryGet
 
   Returns:
     MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN
-    - If the handle is invalid
-    - If the status read request fails
- 
+        - If the handle is invalid
+        - If the status read request fails
+
     MEMORY_DEVICE_TRANSFER_BUSY
-    - If the current transfer request is still being processed
+        - If the current transfer request is still being processed
 
     MEMORY_DEVICE_TRANSFER_COMPLETED
-    - If the transfer request is completed
- 
+        - If the transfer request is completed
+
   Example:
     <code>
 
@@ -1185,6 +1469,8 @@ SYS_MEDIA_GEOMETRY * DRV_MEMORY_GeometryGet
 
   Remarks:
     This routine will block for hardware access.
+
+    Used in Async mode of operation.
 */
 
 MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_TransferStatusGet
@@ -1196,7 +1482,7 @@ MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_TransferStatusGet
 /* Function:
     DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
     (
-        const DRV_HANDLE handle, 
+        const DRV_HANDLE handle,
         const DRV_MEMORY_COMMAND_HANDLE commandHandle
     );
 
@@ -1213,6 +1499,41 @@ MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_TransferStatusGet
 
     The application can alternatively register an event handler to receive write
     or erase operation completion events.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    commandHandle - Pointer to an argument that will contain the command handle
+
+  Returns:
+    DRV_MEMORY_COMMAND_COMPLETED
+        - If the transfer request is completed
+
+    DRV_MEMORY_COMMAND_QUEUED
+        - If the command is Queued and waiting to be processed.
+
+    DRV_MEMORY_COMMAND_IN_PROGRESS
+    - If the current transfer request is still being processed
+
+    DRV_MEMORY_COMMAND_ERROR_UNKNOWN
+        - If the handle is invalid
+        - If the status read request fails
+
+  Example:
+    <code>
+
+     // memoryHandle is the handle returned by the DRV_MEMORY_Open function.
+
+    if (DRV_MEMORY_COMMAND_COMPLETED == DRV_MEMORY_TransferStatusGet(memoryHandle))
+    {
+        // Operation Done
+    }
+
+    </code>
+
+  Remarks:
+    Used in Async mode of operation.
 
 */
 
@@ -1242,7 +1563,7 @@ DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
     handle identifying the command that was added to the driver's buffer queue.
     The driver will pass this handle back to the client by calling
     "transferHandler" function when the queued operation has completed.
-    
+
     The event handler should be set before the client performs any operations
     that could generate events. The event handler once set, persists until the
     client closes the driver or sets another event handler (which could be a
@@ -1261,11 +1582,11 @@ DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
 
     transferHandler - Pointer to the event handler function implemented by the
                    user
-    
-    context      - The value of parameter will be passed back to the client 
+
+    context      - The value of parameter will be passed back to the client
                    unchanged, when the transferHandler function is called. It can
-                   be used to identify any client specific data object that 
-                   identifies the instance of the client module (for example, 
+                   be used to identify any client specific data object that
+                   identifies the instance of the client module (for example,
                    it may be a pointer to the client module's state structure).
 
   Returns:
@@ -1300,12 +1621,14 @@ DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
     }
 
     DRV_MEMORY_TransferHandlerSet(memoryHandle, appTransferHandler, (uintptr_t)NULL);
- 
+
     </code>
 
   Remarks:
     If the client does not want to be notified when the queued operation has
     completed, it does not need to register a callback.
+
+    Used in Async Mode of operation
 */
 
 void DRV_MEMORY_TransferHandlerSet
@@ -1318,8 +1641,8 @@ void DRV_MEMORY_TransferHandlerSet
 // *****************************************************************************
 /* Function:
     bool DRV_MEMORY_IsAttached
-    ( 
-        const DRV_HANDLE handle 
+    (
+        const DRV_HANDLE handle
     );
 
   Summary:
@@ -1343,7 +1666,7 @@ void DRV_MEMORY_TransferHandlerSet
     Returns false if the handle is invalid otherwise returns true.
 
   Example:
-    <code> 
+    <code>
 
     bool isMEMORYAttached;
     isMEMORYAttached = DRV_MEMORY_isAttached(drvMEMORYHandle);
@@ -1362,8 +1685,8 @@ bool DRV_MEMORY_IsAttached
 // *****************************************************************************
 /* Function:
     bool DRV_MEMORY_IsWriteProtected
-    ( 
-        const DRV_HANDLE handle 
+    (
+        const DRV_HANDLE handle
     );
 
   Summary:

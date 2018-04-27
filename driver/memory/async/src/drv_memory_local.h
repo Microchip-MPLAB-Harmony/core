@@ -116,16 +116,12 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     None
 */
 
-#define DRV_MEMORY_TOKEN_MAX                            (0xFFFF)
+
 #define DRV_MEMORY_INDEX_MASK                           (0x000000FF)
 #define DRV_MEMORY_INSTANCE_INDEX_MASK                  (0x0000FF00)
+#define DRV_MEMORY_TOKEN_MASK                           (0xFFFF0000)
+#define DRV_MEMORY_TOKEN_MAX                            (DRV_MEMORY_TOKEN_MASK >> 16)
 #define DRV_MEMORY_MAKE_HANDLE(token, instance, index)  ((token) << 16 | (instance << 8) | (index))
-
-static inline void DRV_MEMORY_UPDATE_TOKEN(uint16_t token)
-{
-    (token)++;
-    (token) = ((token) == DRV_MEMORY_TOKEN_MAX) ? 1: (token);
-}
 
 // *****************************************************************************
 /* MEMORY Read/Write/Erase Region Index Numbers
@@ -156,7 +152,7 @@ static inline void DRV_MEMORY_UPDATE_TOKEN(uint16_t token)
     None
 */
 
-typedef enum 
+typedef enum
 {
     /* Request is read operation. */
     DRV_MEMORY_OPERATION_TYPE_READ = 0,
@@ -240,7 +236,7 @@ typedef enum
 {
     /* Erase write init state. */
     DRV_MEMORY_EW_INIT = 0,
-    
+
     /* Erase write read state */
     DRV_MEMORY_EW_READ_SECTOR,
 
@@ -279,13 +275,13 @@ typedef enum
 } DRV_MEMORY_STATE;
 
 /**************************************
- * MEMORY Driver Client 
+ * MEMORY Driver Client
  **************************************/
 typedef struct DRV_MEMORY_CLIENT_OBJ_STRUCT
 {
     /* The hardware instance index associate with the client */
     uint8_t drvIndex;
-    
+
     /* The intent with which the client was opened */
     DRV_IO_INTENT intent;
 
@@ -294,7 +290,7 @@ typedef struct DRV_MEMORY_CLIENT_OBJ_STRUCT
 
     /* Client specific event handler */
     DRV_MEMORY_TRANSFER_HANDLER transferHandler;
-    
+
     /* Client handle assigned to this client object when it was opened */
     DRV_HANDLE clientHandle;
 
@@ -361,7 +357,7 @@ typedef struct
 
     /* Flag to indicate in use  */
     bool inUse;
-    
+
     /* Flag to indicate that the driver is used in exclusive access mode */
     bool isExclusive;
 
@@ -388,23 +384,23 @@ typedef struct
 
     /* Pointer to user write buffer */
     uint8_t *writePtr;
-    
+
     /* Write Block size */
     uint32_t writeBlockSize;
 
     /* Erase Block size */
     uint32_t eraseBlockSize;
-    
+
     /* This is an instance specific token counter used to generate unique client
-     * handles 
+     * handles
      */
     uint16_t clientToken;
 
     /* This is an instance specific token counter used to generate unique buffer
-     * handles 
+     * handles
      */
     uint16_t bufferToken;
-        
+
     /* Interrupt mode for attached device */
     bool inInterruptMode;
 
@@ -428,10 +424,10 @@ typedef struct
 
     /* The Buffer Q tail pointer */
     DRV_MEMORY_BUFFER_OBJECT *queueTail;
-    
+
     /* Pointer to the current buffer object */
     DRV_MEMORY_BUFFER_OBJECT *currentBufObj;
-    
+
     /* Memory pool for Client Objects */
     DRV_MEMORY_CLIENT_OBJECT *clientObjPool;
 
@@ -450,9 +446,13 @@ typedef struct
     /* MEMORY driver media geometry table. */
     SYS_MEDIA_REGION_GEOMETRY mediaGeometryTable[3];
 
-    /* Mutex to serialize access to the underlying media */    
-    OSAL_MUTEX_DECLARE(instanceMutex);
-    
+    /* Mutex to serialize access to the underlying media */
+    OSAL_MUTEX_DECLARE(transferMutex);
+
+    /* Mutex to protect the client object pool */
+    OSAL_MUTEX_DECLARE(clientMutex);
+
+
 } DRV_MEMORY_OBJECT;
 
 typedef MEMORY_DEVICE_TRANSFER_STATUS (*DRV_MEMORY_TransferOperation)(

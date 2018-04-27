@@ -19,8 +19,11 @@ const MEMORY_DEVICE_API drvMemory${INDEX?string}DeviceAPI = {
 const DRV_MEMORY_INIT drvMemory${INDEX?string}InitData =
 {
     .memoryDevice         = &drvMemory${INDEX?string}DeviceAPI,
-<#if drv_memory.DRV_MEMORY_COMMON_FS_ENABLE >
+<#if DRV_MEMORY_FS_ENABLE >
+    .isFsEnabled          = true,
     .deviceMediaType      = (uint8_t)${DRV_MEMORY_DEVICE_TYPE},
+<#else>
+    .isFsEnabled          = false,
 </#if>
     .inInterruptMode      = ${DRV_MEMORY_INTERRUPT_ENABLE?string},
 <#if DRV_MEMORY_INTERRUPT_ENABLE >

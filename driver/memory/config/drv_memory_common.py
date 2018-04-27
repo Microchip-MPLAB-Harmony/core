@@ -1,3 +1,6 @@
+global fsCounter
+
+fsCounter = 0
 
 def enableFileSystemIntegration(symbol, event):
     if (event["value"] == True):
@@ -5,7 +8,22 @@ def enableFileSystemIntegration(symbol, event):
     else:
         symbol.setEnabled(False)
 
+def setFileSystem(symbol, event):
+    global fsCounter
+
+    if (event["value"] == True):
+        fsCounter = fsCounter + 1
+        symbol.clearValue()
+        symbol.setValue(True, 1)
+    else:
+        fsCounter = fsCounter - 1
+
+    if (fsCounter == 0):
+        symbol.clearValue()
+        symbol.setValue(False, 1)
+
 def instantiateComponent(memoryCommonComponent):
+    global memoryCommonFsEnable
 
     memoryCommonSymNumInst = memoryCommonComponent.createIntegerSymbol("DRV_MEMORY_NUM_INSTANCES", None)
     memoryCommonSymNumInst.setLabel("Number of Instances")
@@ -22,9 +40,16 @@ def instantiateComponent(memoryCommonComponent):
     memoryCommonMode.setVisible(True)
     memoryCommonMode.setDefaultValue(0)
 
+    memoryCommonfsCounter = memoryCommonComponent.createBooleanSymbol("DRV_MEMORY_COMMON_FS_COUNTER", None)
+    memoryCommonfsCounter.setLabel("Number of Instances Using FS")
+    memoryCommonfsCounter.setDefaultValue(False)
+    memoryCommonfsCounter.setVisible(False)
+
     memoryCommonFsEnable = memoryCommonComponent.createBooleanSymbol("DRV_MEMORY_COMMON_FS_ENABLE", None)
-    memoryCommonFsEnable.setLabel("Enable File system for Memory Driver")
+    memoryCommonFsEnable.setLabel("Enable Common File system for Memory Driver")
     memoryCommonFsEnable.setDefaultValue(False)
+    memoryCommonFsEnable.setVisible(False)
+    memoryCommonFsEnable.setDependencies(setFileSystem, ["DRV_MEMORY_COMMON_FS_COUNTER"])
 
 
     ############################################################################
@@ -52,6 +77,12 @@ def instantiateComponent(memoryCommonComponent):
     memoryCommonHeaderVariantFile.setType("HEADER")
     memoryCommonHeaderVariantFile.setOverwrite(True)
     memoryCommonHeaderVariantFile.setMarkup(True)
+
+    memoryCommonSystemDefFile = memoryCommonComponent.createFileSymbol("DRV_MEMORY_SYS_DEF_COMMON", None)
+    memoryCommonSystemDefFile.setType("STRING")
+    memoryCommonSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
+    memoryCommonSystemDefFile.setSourcePath("driver/memory/templates/system/system_definitions_common.h.ftl")
+    memoryCommonSystemDefFile.setMarkup(True)
 
     memoryCommonSymCommonSysCfgFile = memoryCommonComponent.createFileSymbol("DRV_MEMORY_SYS_CFG_COMMON", None)
     memoryCommonSymCommonSysCfgFile.setType("STRING")
