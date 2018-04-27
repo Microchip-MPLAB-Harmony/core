@@ -66,29 +66,21 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
   Description:
     Client handle related utility macros. USART client handle is a combination
-    of client index (8-bit), instance index (8-bit) and token (16-bit). The token 
+    of client index (8-bit), instance index (8-bit) and token (16-bit). The token
     is incremented for every new driver open request.
 
   Remarks:
     None
 */
 
-#define DRV_USART_INDEX_MASK                      (0x000000FF)
+#define DRV_USART_CLIENT_INDEX_MASK               (0x000000FF)
 
-#define DRV_USART_INSTANCE_MASK                   (0x0000FF00)
+#define DRV_USART_INSTANCE_INDEX_MASK             (0x0000FF00)
 
 #define DRV_USART_TOKEN_MASK                      (0xFFFF0000)
 
-#define DRV_USART_MAKE_HANDLE(token, instance, index)  ((token) << 16 | (instance << 8) | (index))
+#define DRV_USART_TOKEN_MAX                       (DRV_USART_TOKEN_MASK >> 16)
 
-#define DRV_USART_UPDATE_TOKEN(token) \
-{ \
-    (token)++; \
-    if ((token) >= (DRV_USART_TOKEN_MASK >> 16)) \
-        (token) = 1; \
-    else \
-        (token) = (token); \
-}
 
 // *****************************************************************************
 /* USART Driver Buffer Events
@@ -135,26 +127,26 @@ typedef struct
 {
     /* Flag to indicate this object is in use  */
     bool inUse;
-    
+
      /* Flag to indicate that driver has been opened Exclusively*/
     bool isExclusive;
-    
-    /* Keep track of the number of clients 
+
+    /* Keep track of the number of clients
       that have opened this driver */
     size_t nClients;
-    
+
     /* Maximum number of clients */
     size_t nClientsMax;
 
     /* The status of the driver */
-    SYS_STATUS status;   
-    
+    SYS_STATUS status;
+
     /* PLIB API list that will be used by the driver to access the hardware */
     USART_PLIB_API *usartPlib;
-    
+
     /* Memory pool for Client Objects */
-    uintptr_t clientObjPool;             
-        
+    uintptr_t clientObjPool;
+
     /* TX DMA Channel */
     DMA_CHANNEL txDMAChannel;
 
@@ -166,38 +158,38 @@ typedef struct
 
     /* This is the USART receive register address. Used for DMA operation. */
     void * rxAddress;
-        
-    /* This is an instance specific token counter used to generate unique 
-     * client handles 
+
+    /* This is an instance specific token counter used to generate unique
+     * client handles
      */
     uint16_t usartTokenCount;
-    
+
     /* Active receive client allows reporting errors directly to the client */
-    uintptr_t currentRxClient;       
-    
+    uintptr_t currentRxClient;
+
     /* Active transmit client allows reporting errors directly to the client */
-    uintptr_t currentTxClient;           
-    
+    uintptr_t currentTxClient;
+
     /* Indicates transmit requests status */
-    DRV_USART_REQUEST_STATUS txRequestStatus;         
-    
+    DRV_USART_REQUEST_STATUS txRequestStatus;
+
     /* Indicates receive requests status */
-    DRV_USART_REQUEST_STATUS rxRequestStatus;         
-    
+    DRV_USART_REQUEST_STATUS rxRequestStatus;
+
     /* Transmit mutex */
-    OSAL_MUTEX_DECLARE(instanceMutex);
-    
+    OSAL_MUTEX_DECLARE(clientMutex);
+
     /* Transmit mutex */
-    OSAL_MUTEX_DECLARE(txMutex);
-    
+    OSAL_MUTEX_DECLARE(txTransferMutex);
+
     /* Receive mutex */
-    OSAL_MUTEX_DECLARE(rxMutex);
-    
+    OSAL_MUTEX_DECLARE(rxTransferMutex);
+
     /* Transmit complete semaphore. This is released from ISR*/
     OSAL_SEM_DECLARE (txTransferDone);
-    
+
     /* Receive complete semaphore. This is released from ISR*/
-    OSAL_SEM_DECLARE (rxTransferDone);                
+    OSAL_SEM_DECLARE (rxTransferDone);
 
 } DRV_USART_OBJ;
 
@@ -208,10 +200,10 @@ typedef struct
 
     /* The IO intent with which the client was opened */
     DRV_IO_INTENT                   ioIntent;
-    
+
     /* Errors associated with the USART hardware instance */
-    DRV_USART_ERROR                 errors;        
-    
+    DRV_USART_ERROR                 errors;
+
     /* Client handle that was assigned to this client object when it was
      * opened by the user.
      */
@@ -219,7 +211,7 @@ typedef struct
 
     /* This flags indicates if the object is in use or is
      * available */
-    bool                            inUse;                    
+    bool                            inUse;
 
 } DRV_USART_CLIENT_OBJ;
 

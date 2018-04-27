@@ -1142,8 +1142,8 @@ bool DRV_USART_ReadQueueFlush( const DRV_HANDLE handle );
 
 
 // *****************************************************************************
-bool DRV_USART_Write( const DRV_HANDLE handle, void * buffer, const size_t size);
-bool DRV_USART_Read( const DRV_HANDLE handle, void * buffer, const size_t size);
+bool DRV_USART_WriteBuffer( const DRV_HANDLE handle, void * buffer, const size_t size);
+bool DRV_USART_ReadBuffer( const DRV_HANDLE handle, void * buffer, const size_t size);
 
 #include "driver/usart/src/drv_usart_local.h"
 

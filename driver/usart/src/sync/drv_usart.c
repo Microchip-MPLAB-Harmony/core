@@ -67,9 +67,25 @@ DRV_USART_OBJ gDrvUSARTObj[DRV_USART_INSTANCES_NUMBER] ;
 // *****************************************************************************
 // *****************************************************************************
 
+static inline uint32_t  _DRV_USART_MAKE_HANDLE(uint16_t token, uint8_t drvIndex, uint8_t clientIndex)
+{
+    return ((token << 16) | (drvIndex << 8) | clientIndex);
+}
+
+static inline uint16_t _DRV_USART_UPDATE_TOKEN(uint16_t token)
+{
+    token++;
+    if (token >= DRV_USART_TOKEN_MAX)
+    {
+        token = 1;
+    }
+
+    return token;
+}
+
 static void _DRV_USART_TX_PLIB_CallbackHandler( uintptr_t context )
 {
-    DRV_USART_OBJ *dObj = (DRV_USART_OBJ *)context;    
+    DRV_USART_OBJ *dObj = (DRV_USART_OBJ *)context;
 
     dObj->txRequestStatus = DRV_USART_REQUEST_STATUS_COMPLETE;
 
@@ -97,7 +113,7 @@ static void _DRV_USART_RX_PLIB_CallbackHandler( uintptr_t context )
 
 static void _DRV_USART_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
 {
-    DRV_USART_OBJ *dObj = (DRV_USART_OBJ *)context;    
+    DRV_USART_OBJ *dObj = (DRV_USART_OBJ *)context;
 
     if(event == SYS_DMA_TRANSFER_COMPLETE)
     {
@@ -113,7 +129,7 @@ static void _DRV_USART_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uint
 
 static void _DRV_USART_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
 {
-    DRV_USART_OBJ *dObj = (DRV_USART_OBJ *)context;    
+    DRV_USART_OBJ *dObj = (DRV_USART_OBJ *)context;
 
     if(event == SYS_DMA_TRANSFER_COMPLETE)
     {
@@ -127,11 +143,11 @@ static void _DRV_USART_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uint
     OSAL_SEM_PostISR(&dObj->rxTransferDone);
 }
 
-static DRV_USART_CLIENT_OBJ* DRV_USART_DriverHandleValidate(DRV_HANDLE handle)
+static DRV_USART_CLIENT_OBJ* _DRV_USART_DriverHandleValidate(DRV_HANDLE handle)
 {
     /* This function returns the pointer to the client object that is
        associated with this handle if the handle is valid. Returns NULL
-       otherwise. 
+       otherwise.
     */
     uint32_t drvInstance = 0;
     DRV_USART_CLIENT_OBJ* clientObj = NULL;
@@ -139,9 +155,17 @@ static DRV_USART_CLIENT_OBJ* DRV_USART_DriverHandleValidate(DRV_HANDLE handle)
     if((handle != DRV_HANDLE_INVALID) && (handle != 0))
     {
         /* Extract the instance value from the handle */
-        drvInstance = ((handle & DRV_USART_INSTANCE_MASK) >> 8);
+        drvInstance = ((handle & DRV_USART_INSTANCE_INDEX_MASK) >> 8);
+        if (drvInstance >= DRV_USART_INSTANCES_NUMBER)
+        {
+            return (NULL);
+        }
+        if ((handle & DRV_USART_CLIENT_INDEX_MASK) >= gDrvUSARTObj[drvInstance].nClientsMax)
+        {
+            return (NULL);
+        }
 
-        clientObj = &((DRV_USART_CLIENT_OBJ *)gDrvUSARTObj[drvInstance].clientObjPool)[handle & DRV_USART_INDEX_MASK];
+        clientObj = &((DRV_USART_CLIENT_OBJ *)gDrvUSARTObj[drvInstance].clientObjPool)[handle & DRV_USART_CLIENT_INDEX_MASK];
 
         if ((handle != clientObj->clientHandle) || (clientObj->inUse == false))
         {
@@ -187,27 +211,27 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     dObj->currentRxClient       = (uintptr_t)NULL;
     dObj->currentTxClient       = (uintptr_t)NULL;
     dObj->isExclusive           = false;
-    dObj->usartTokenCount       = 1;  
+    dObj->usartTokenCount       = 1;
     dObj->txDMAChannel          = usartInit->dmaChannelTransmit;
     dObj->rxDMAChannel          = usartInit->dmaChannelReceive;
     dObj->txAddress             = usartInit->usartTransmitAddress;
-    dObj->rxAddress             = usartInit->usartReceiveAddress;    
+    dObj->rxAddress             = usartInit->usartReceiveAddress;
 
-    if (OSAL_MUTEX_Create(&dObj->instanceMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FALSE)
     {
         /*  If the mutex was not created because the memory required to
             hold the mutex could not be allocated then NULL is returned. */
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if (OSAL_MUTEX_Create(&dObj->txMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->txTransferMutex) == OSAL_RESULT_FALSE)
     {
         /*  If the mutex was not created because the memory required to
             hold the mutex could not be allocated then NULL is returned. */
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if (OSAL_MUTEX_Create(&dObj->rxMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->rxTransferMutex) == OSAL_RESULT_FALSE)
     {
         /*  If the mutex was not created because the memory required to
             hold the mutex could not be allocated then NULL is returned. */
@@ -296,7 +320,7 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
     /* Acquire the instance specific mutex to protect the instance specific
      * client pool
      */
-    if (OSAL_MUTEX_Lock(&dObj->instanceMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
     {
         return DRV_HANDLE_INVALID;
     }
@@ -305,7 +329,7 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
     {
         /* This means the another client has opened the driver in exclusive
            mode. The driver cannot be opened again */
-        OSAL_MUTEX_Unlock( &dObj->instanceMutex);
+        OSAL_MUTEX_Unlock( &dObj->clientMutex);
         return DRV_HANDLE_INVALID;
     }
 
@@ -314,20 +338,20 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
         /* This means the driver was already opened and another driver was
            trying to open it exclusively.  We cannot give exclusive access in
            this case */
-        OSAL_MUTEX_Unlock( &dObj->instanceMutex);
+        OSAL_MUTEX_Unlock( &dObj->clientMutex);
         return(DRV_HANDLE_INVALID);
     }
 
     /* Enter here only if the lock was obtained */
 
     for(iClient = 0; iClient != dObj->nClientsMax; iClient++)
-    {        
+    {
         if(false == ((DRV_USART_CLIENT_OBJ *)dObj->clientObjPool)[iClient].inUse)
         {
             /* This means we have a free client object to use */
-            
+
             clientObj = &((DRV_USART_CLIENT_OBJ *)dObj->clientObjPool)[iClient];
-                        
+
             clientObj->inUse        = true;
 
             clientObj->hDriver      = dObj;
@@ -347,16 +371,16 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
             /* Generate and save client handle in the client object, which will
              * be then used to verify the validity of the client handle.
              */
-            clientObj->clientHandle = DRV_USART_MAKE_HANDLE(dObj->usartTokenCount, drvIndex, iClient);
+            clientObj->clientHandle = _DRV_USART_MAKE_HANDLE(dObj->usartTokenCount, drvIndex, iClient);
 
             /* Increment the instance specific token counter */
-            DRV_USART_UPDATE_TOKEN(dObj->usartTokenCount);
+            _DRV_USART_UPDATE_TOKEN(dObj->usartTokenCount);
 
             break;
         }
     }
 
-    OSAL_MUTEX_Unlock(&dObj->instanceMutex);
+    OSAL_MUTEX_Unlock(&dObj->clientMutex);
 
     /* Driver index is the handle */
     return clientObj ? ((DRV_HANDLE)clientObj->clientHandle) : DRV_HANDLE_INVALID;
@@ -364,17 +388,20 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
 
 bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* setup )
 {
-    DRV_USART_OBJ * dObj = NULL;
+    DRV_USART_OBJ* dObj;
+    DRV_USART_CLIENT_OBJ* clientObj;
+    bool isSuccess = false;
 
     /* Validate the request */
-    if(DRV_USART_DriverHandleValidate(handle) == NULL)
+    clientObj = _DRV_USART_DriverHandleValidate(handle);
+    if ((clientObj != NULL) && (setup != NULL))
     {
-        return DRV_USART_ERROR_NONE;
+        dObj = (DRV_USART_OBJ *)clientObj->hDriver;
+        isSuccess = dObj->usartPlib->serialSetup(setup, 0);
     }
-
+    return isSuccess;
     /* Clock source cannot be modified dynamically, so passing the '0' to pick
      * the configured clock source value */
-    return dObj->usartPlib->serialSetup(setup, 0);
 }
 
 // *****************************************************************************
@@ -384,7 +411,7 @@ void DRV_USART_Close( DRV_HANDLE handle )
     DRV_USART_OBJ* dObj;
 
     /* Validate the handle */
-    clientObj = DRV_USART_DriverHandleValidate(handle);
+    clientObj = _DRV_USART_DriverHandleValidate(handle);
 
     if(clientObj != NULL)
     {
@@ -393,7 +420,7 @@ void DRV_USART_Close( DRV_HANDLE handle )
         /* Acquire the instance specifc mutex to protect the instance specific
          * client pool
          */
-        if (OSAL_MUTEX_Lock(&dObj->instanceMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+        if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
         {
             /* Reduce the number of clients */
             dObj->nClients --;
@@ -405,7 +432,7 @@ void DRV_USART_Close( DRV_HANDLE handle )
             clientObj->inUse = false;
 
             /* Release the instance specific mutex */
-            OSAL_MUTEX_Unlock( &dObj->instanceMutex );
+            OSAL_MUTEX_Unlock( &dObj->clientMutex );
         }
     }
 }
@@ -416,7 +443,7 @@ DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
     DRV_USART_ERROR errors = DRV_USART_ERROR_NONE;
 
     /* Validate the handle */
-    clientObj = DRV_USART_DriverHandleValidate(handle);
+    clientObj = _DRV_USART_DriverHandleValidate(handle);
 
     if(clientObj != NULL)
     {
@@ -426,7 +453,7 @@ DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
     return errors;
 }
 // *****************************************************************************
-bool DRV_USART_Write
+bool DRV_USART_WriteBuffer
 (
     const DRV_HANDLE handle,
     void* buffer,
@@ -438,14 +465,14 @@ bool DRV_USART_Write
     bool isSuccess = false;
 
     /* Validate the driver handle */
-    clientObj = DRV_USART_DriverHandleValidate(handle);
+    clientObj = _DRV_USART_DriverHandleValidate(handle);
 
     if((clientObj != NULL) && (numbytes != 0) && (buffer != NULL))
     {
         dObj = clientObj->hDriver;
 
         /* Obtain transmit mutex */
-        if (OSAL_MUTEX_Lock(&dObj->txMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+        if (OSAL_MUTEX_Lock(&dObj->txTransferMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
         {
             /* Error is cleared for every new transfer */
             clientObj->errors = DRV_USART_ERROR_NONE;
@@ -467,17 +494,17 @@ bool DRV_USART_Write
                 if (dObj->txRequestStatus == DRV_USART_REQUEST_STATUS_COMPLETE)
                 {
                    isSuccess = true;
-                }                
+                }
             }
             /* Release transmit mutex */
-            OSAL_MUTEX_Unlock(&dObj->txMutex);
+            OSAL_MUTEX_Unlock(&dObj->txTransferMutex);
         }
     }
     return isSuccess;
 }
 
 // *****************************************************************************
-bool DRV_USART_Read
+bool DRV_USART_ReadBuffer
 (
     const DRV_HANDLE handle,
     void* buffer,
@@ -489,14 +516,14 @@ bool DRV_USART_Read
     bool isSuccess = false;
 
     /* Validate the driver handle */
-    clientObj = DRV_USART_DriverHandleValidate(handle);
+    clientObj = _DRV_USART_DriverHandleValidate(handle);
 
     if((clientObj != NULL) && (numbytes != 0) && (buffer != NULL))
     {
         dObj = clientObj->hDriver;
 
         /* Obtain receive mutex */
-        if (OSAL_MUTEX_Lock(&dObj->rxMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+        if (OSAL_MUTEX_Lock(&dObj->rxTransferMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
         {
             /* Error is cleared for every new transfer */
             clientObj->errors = DRV_USART_ERROR_NONE;
@@ -519,10 +546,10 @@ bool DRV_USART_Read
                 if (dObj->rxRequestStatus == DRV_USART_REQUEST_STATUS_COMPLETE)
                 {
                     isSuccess = true;
-                }                
+                }
             }
             /* Release receive mutex */
-            OSAL_MUTEX_Unlock(&dObj->rxMutex);
+            OSAL_MUTEX_Unlock(&dObj->rxTransferMutex);
         }
     }
     return isSuccess;
