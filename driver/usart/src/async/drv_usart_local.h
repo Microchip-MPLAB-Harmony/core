@@ -91,11 +91,11 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
    Summary
     Identifies the possible state of the buffer that can result from a
-    buffer request add or queue flush request.
+    buffer request add or queue purge request.
 
    Description
     This enumeration identifies the possible state of the buffer that can
-    result from a buffer request add or queue flush request by the client.
+    result from a buffer request add or queue purge request by the client.
 
    Remarks:
     DRV_USART_BUFFER_IS_FREE is the state of the buffer which is in the

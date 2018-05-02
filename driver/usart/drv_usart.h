@@ -1044,14 +1044,14 @@ DRV_USART_BUFFER_EVENT DRV_USART_BufferStatusGet( const DRV_USART_BUFFER_HANDLE 
 
 // *****************************************************************************
 /* Function:
-    bool DRV_USART_WriteQueueFlush( const DRV_HANDLE handle )
+    bool DRV_USART_WriteQueuePurge( const DRV_HANDLE handle )
 
   Summary:
     Removes all buffer requests from the write queue.
 
   Description:
     This function removes all the buffer requests from the write queue.
-    The client can use this function to flush the queue on timeout or to remove
+    The client can use this function to purge the queue on timeout or to remove
     unwanted stalled buffer requests or in any other use case.
 
   Precondition:
@@ -1062,8 +1062,8 @@ DRV_USART_BUFFER_EVENT DRV_USART_BufferStatusGet( const DRV_USART_BUFFER_HANDLE 
     DRV_USART_Open function.
 
   Returns:
-    True - Write queue flush is successful.
-    False - Write queue flush has failed.
+    True - Write queue purge is successful.
+    False - Write queue purge has failed.
 
   Example:
     <code>
@@ -1073,13 +1073,13 @@ DRV_USART_BUFFER_EVENT DRV_USART_BufferStatusGet( const DRV_USART_BUFFER_HANDLE 
     // Application timeout function, where remove queued buffers.
     void APP_TimeOut(void)
     {
-        if(false == DRV_USART_WriteQueueFlush(myUSARThandle))
+        if(false == DRV_USART_WriteQueuePurge(myUSARThandle))
         {
-            //Couldn't flush the write queue, try again.
+            //Couldn't purge the write queue, try again.
         }
         else
         {
-            //Queue flush successful.
+            //Queue purge successful.
         }
     }
     </code>
@@ -1089,18 +1089,18 @@ DRV_USART_BUFFER_EVENT DRV_USART_BufferStatusGet( const DRV_USART_BUFFER_HANDLE 
     Avoid this function call from within the callback.
 */
 
-bool DRV_USART_WriteQueueFlush( const DRV_HANDLE handle );
+bool DRV_USART_WriteQueuePurge( const DRV_HANDLE handle );
 
 // *****************************************************************************
 /* Function:
-    bool DRV_USART_ReadQueueFlush( const DRV_HANDLE handle )
+    bool DRV_USART_ReadQueuePurge( const DRV_HANDLE handle )
 
   Summary:
     Removes all buffer requests from the read queue.
 
   Description:
     This function removes all the buffer requests from the read queue.
-    The client can use this function to flush the queue on timeout or to remove
+    The client can use this function to purge the queue on timeout or to remove
     unwanted stalled buffer requests or in any other use case.
 
   Precondition:
@@ -1111,8 +1111,8 @@ bool DRV_USART_WriteQueueFlush( const DRV_HANDLE handle );
     DRV_USART_Open function.
 
   Returns:
-    True - Read queue flush is successful.
-    False - Read queue flush has failed.
+    True - Read queue purge is successful.
+    False - Read queue purge has failed.
 
   Example:
     <code>
@@ -1122,13 +1122,13 @@ bool DRV_USART_WriteQueueFlush( const DRV_HANDLE handle );
     // Application timeout function, where remove queued buffers.
     void APP_TimeOut(void)
     {
-        if(false == DRV_USART_ReadQueueFlush(myUSARThandle))
+        if(false == DRV_USART_ReadQueuePurge(myUSARThandle))
         {
-            //Couldn't flush the read queue, try again.
+            //Couldn't purge the read queue, try again.
         }
         else
         {
-            //Queue flush successful.
+            //Queue purge successful.
         }
     }
     </code>
@@ -1138,7 +1138,7 @@ bool DRV_USART_WriteQueueFlush( const DRV_HANDLE handle );
     Avoid this function call from within the callback.
 */
 
-bool DRV_USART_ReadQueueFlush( const DRV_HANDLE handle );
+bool DRV_USART_ReadQueuePurge( const DRV_HANDLE handle );
 
 
 // *****************************************************************************

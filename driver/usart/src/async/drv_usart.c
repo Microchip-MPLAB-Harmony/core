@@ -168,7 +168,7 @@ static void _DRV_USART_BufferObjectRelease( DRV_USART_BUFFER_OBJ * object )
     bufferObj->currentState = DRV_USART_BUFFER_IS_FREE;
 }
 
-static bool _DRV_USART_WriteBufferQueueFlush( DRV_USART_OBJ * object )
+static bool _DRV_USART_WriteBufferQueuePurge( DRV_USART_OBJ * object )
 {
     DRV_USART_OBJ * dObj = object;
     DRV_USART_BUFFER_OBJ * iterator = NULL;
@@ -194,7 +194,7 @@ static bool _DRV_USART_WriteBufferQueueFlush( DRV_USART_OBJ * object )
     return true;
 }
 
-static bool _DRV_USART_ReadBufferQueueFlush( DRV_USART_OBJ * object )
+static bool _DRV_USART_ReadBufferQueuePurge( DRV_USART_OBJ * object )
 {
     DRV_USART_OBJ * dObj = object;
     DRV_USART_BUFFER_OBJ * iterator = NULL;
@@ -315,7 +315,7 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
     }
     else
     {
-        /* Queue flush has been called. Do nothing. */
+        /* Queue purge has been called. Do nothing. */
     }
 
     return;
@@ -516,12 +516,12 @@ void DRV_USART_Close( DRV_HANDLE handle )
 
     dObj = &gDrvUSARTObj[handle];
 
-    if(false == _DRV_USART_WriteBufferQueueFlush(dObj))
+    if(false == _DRV_USART_WriteBufferQueuePurge(dObj))
     {
         return;
     }
 
-    if(false == _DRV_USART_ReadBufferQueueFlush(dObj))
+    if(false == _DRV_USART_ReadBufferQueuePurge(dObj))
     {
         return;
     }
@@ -840,7 +840,7 @@ DRV_USART_BUFFER_EVENT DRV_USART_BufferStatusGet( const DRV_USART_BUFFER_HANDLE 
 }
 
 // *****************************************************************************
-bool DRV_USART_WriteQueueFlush( const DRV_HANDLE handle )
+bool DRV_USART_WriteQueuePurge( const DRV_HANDLE handle )
 {
     DRV_USART_OBJ * dObj = NULL;
 
@@ -852,11 +852,11 @@ bool DRV_USART_WriteQueueFlush( const DRV_HANDLE handle )
 
     dObj = &gDrvUSARTObj[handle];
 
-    return _DRV_USART_WriteBufferQueueFlush(dObj);
+    return _DRV_USART_WriteBufferQueuePurge(dObj);
 }
 
 // *****************************************************************************
-bool DRV_USART_ReadQueueFlush( const DRV_HANDLE handle )
+bool DRV_USART_ReadQueuePurge( const DRV_HANDLE handle )
 {
     DRV_USART_OBJ * dObj = NULL;
 
@@ -868,5 +868,5 @@ bool DRV_USART_ReadQueueFlush( const DRV_HANDLE handle )
 
     dObj = &gDrvUSARTObj[handle];
 
-    return _DRV_USART_ReadBufferQueueFlush(dObj);
+    return _DRV_USART_ReadBufferQueuePurge(dObj);
 }
