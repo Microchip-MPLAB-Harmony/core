@@ -56,7 +56,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 /*  This section lists the other files that are included in this file.
 */
-
+#include <stddef.h>
 #include "system/system.h"
 
 // DOM-IGNORE-BEGIN
