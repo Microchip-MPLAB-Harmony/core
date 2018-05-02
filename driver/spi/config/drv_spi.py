@@ -119,12 +119,21 @@ def instantiateComponent(spiComponent, index):
     spiSymHeaderDefFile = spiComponent.createFileSymbol("DRV_SPI_DEF", None)
     spiSymHeaderDefFile.setSourcePath("driver/spi/templates/drv_spi_definitions.h.ftl")
     spiSymHeaderDefFile.setOutputName("drv_spi_definitions.h")
-    spiSymHeaderDefFile.setDestPath("driver/spi/")
+    spiSymHeaderDefFile.setDestPath("driver/spi")
     spiSymHeaderDefFile.setProjectPath("config/" + configName + "/driver/spi/")
     spiSymHeaderDefFile.setType("HEADER")
     spiSymHeaderDefFile.setMarkup(True)
     spiSymHeaderDefFile.setOverwrite(True)
 
+    spiSymVariantMappingFile = spiComponent.createFileSymbol("DRV_SPI_VARIANT_MAPPING", None)
+    spiSymVariantMappingFile.setSourcePath("driver/spi/src/drv_spi_variant_mapping.h")
+    spiSymVariantMappingFile.setOutputName("drv_spi_variant_mapping.h")
+    spiSymVariantMappingFile.setDestPath("driver/spi/src")
+    spiSymVariantMappingFile.setProjectPath("config/" + configName + "/driver/spi/")
+    spiSymVariantMappingFile.setType("SOURCE")
+    spiSymVariantMappingFile.setMarkup(False)
+    spiSymVariantMappingFile.setOverwrite(True)
+    
     # Async Source Files
     spiAsyncSymSourceFile = spiComponent.createFileSymbol("DRV_SPI_ASYNC_SOURCE", None)
     spiAsyncSymSourceFile.setSourcePath("driver/spi/src/async/drv_spi.c")

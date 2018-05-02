@@ -805,5 +805,6 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
 //DOM-IGNORE-END
 
 #include "driver/spi/src/drv_spi_local.h"
+#include "driver/spi/src/drv_spi_variant_mapping.h"
 
 #endif // #ifndef DRV_SPI_H

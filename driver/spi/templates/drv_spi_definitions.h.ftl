@@ -52,8 +52,10 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include <device.h>
 #include "system/int/sys_int.h"
 #include "system/dma/sys_dma.h"
-#include "peripheral/xdmac/plib_xdmac.h"
 #include "system/ports/sys_ports.h"
+<#if DRV_SPI_TX_RX_DMA == true>
+#include "peripheral/xdmac/plib_xdmac.h"
+</#if>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

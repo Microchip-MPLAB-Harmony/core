@@ -120,7 +120,7 @@ static void _DRV_SPI_ConfigureDMA(DMA_CHANNEL dmaChannel, DRV_SPI_CONFIG_DMA cfg
 {
     uint32_t config;
 
-    config = XDMAC_ChannelSettingsGet(dmaChannel);
+    config = _DRV_SPI_DMAChannelSettingsGet(dmaChannel);
 
     switch(cfgDMA)
     {
@@ -146,18 +146,18 @@ static void _DRV_SPI_ConfigureDMA(DMA_CHANNEL dmaChannel, DRV_SPI_CONFIG_DMA cfg
             break;
     }
 
-    XDMAC_ChannelSettingsSet(dmaChannel, (XDMAC_CHANNEL_CONFIG)config);
+    _DRV_SPI_DMAChannelSettingsSet(dmaChannel, (XDMAC_CHANNEL_CONFIG)config);
 }
 
 static void _DRV_SPI_ConfigureDmaDataWidth(DMA_CHANNEL dmaChannel, DRV_SPI_DMA_WIDTH DmaWidth)
 {
     uint32_t config;
 
-    config = XDMAC_ChannelSettingsGet(dmaChannel);
+    config = _DRV_SPI_DMAChannelSettingsGet(dmaChannel);
     config &= ~(0x03U << 11);
     config |= (DmaWidth << 11);
 
-    XDMAC_ChannelSettingsSet(dmaChannel, (XDMAC_CHANNEL_CONFIG)config);
+    _DRV_SPI_DMAChannelSettingsSet(dmaChannel, (XDMAC_CHANNEL_CONFIG)config);
 }
 
 static bool _DRV_SPI_StartDMATransfer(
@@ -278,7 +278,7 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
     OSAL_SEM_PostISR( &dObj->transferDone);
 }
 
-static void _DRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
+void _DRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
 {
     DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ *)context;
 
@@ -296,7 +296,7 @@ static void _DRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintpt
     }
 }
 
-static void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
+void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
 {
     DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ *)context;
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)NULL;

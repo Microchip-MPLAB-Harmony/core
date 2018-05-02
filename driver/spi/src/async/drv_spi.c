@@ -61,8 +61,8 @@ DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER];
 // Section: File scope functions
 // *****************************************************************************
 // *****************************************************************************
-static void _DRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context);
-static void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context);
+void _DRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context);
+void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context);
 
 static inline uint32_t  _DRV_SPI_MAKE_HANDLE(uint16_t token, uint8_t drvIndex, uint8_t index)
 {
@@ -203,7 +203,7 @@ static void _DRV_SPI_ConfigureDMA(DMA_CHANNEL dmaChannel, DRV_SPI_CONFIG_DMA cfg
 {
     uint32_t config;
 
-    config = XDMAC_ChannelSettingsGet(dmaChannel);
+    config = _DRV_SPI_DMAChannelSettingsGet(dmaChannel);
 
     switch(cfgDMA)
     {
@@ -237,18 +237,18 @@ static void _DRV_SPI_ConfigureDMA(DMA_CHANNEL dmaChannel, DRV_SPI_CONFIG_DMA cfg
             break;
     }
 
-    XDMAC_ChannelSettingsSet(dmaChannel, (XDMAC_CHANNEL_CONFIG)config);
+    _DRV_SPI_DMAChannelSettingsSet(dmaChannel, (XDMAC_CHANNEL_CONFIG)config);
 }
 
 static void _DRV_SPI_ConfigureDmaDataWidth(DMA_CHANNEL dmaChannel, DRV_SPI_DMA_WIDTH DmaWidth)
 {
     uint32_t config;
 
-    config = XDMAC_ChannelSettingsGet(dmaChannel);
+    config = _DRV_SPI_DMAChannelSettingsGet(dmaChannel);
     config &= ~(0x03U << 11);
     config |= (DmaWidth << 11);
 
-    XDMAC_ChannelSettingsSet(dmaChannel, (XDMAC_CHANNEL_CONFIG)config);
+    _DRV_SPI_DMAChannelSettingsSet(dmaChannel, (XDMAC_CHANNEL_CONFIG)config);
 }
 
 static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
@@ -413,7 +413,7 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
     }
 }
 
-static void _DRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
+void _DRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
 {
     DRV_SPI_TRANSFER_OBJ    *transferObj      = (DRV_SPI_TRANSFER_OBJ *)context;
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)transferObj->hClient;
@@ -432,7 +432,7 @@ static void _DRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintpt
     }
 }
 
-static void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
+void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
 {
     DRV_SPI_TRANSFER_OBJ    *transferObj      = (DRV_SPI_TRANSFER_OBJ *)context;
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)transferObj->hClient;
