@@ -90,6 +90,13 @@ static bool _DRV_USART_ResourceLock(DRV_USART_OBJ * object)
 {
     DRV_USART_OBJ * dObj = object;
 
+    /* Grab a mutex to avoid other threads to modify driver resource
+     * asynchronously. */
+    if(OSAL_MUTEX_Lock(&(dObj->mutexDriverInstance), OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
+    {
+        return false;
+    }
+
     /* We will disable USART and/or DMA interrupt so that the driver resource
      * is not updated asynchronously. */
     if( (DMA_CHANNEL_NONE != dObj->txDMAChannel) || (DMA_CHANNEL_NONE != dObj->rxDMAChannel))
@@ -113,6 +120,8 @@ static bool _DRV_USART_ResourceUnlock(DRV_USART_OBJ * object)
     }
 
     SYS_INT_SourceEnable(dObj->interruptUSART);
+
+    OSAL_MUTEX_Unlock(&(dObj->mutexDriverInstance));
 
     return true;
 }
@@ -411,6 +420,13 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     dObj->txAddress             = usartInit->usartTransmitAddress;
     dObj->rxAddress             = usartInit->usartReceiveAddress;
     dObj->interruptDMA          = usartInit->interruptDMA;
+
+    /* Create the Mutexes needed for RTOS mode. These calls always passes in the
+     * non-RTOS mode */
+    if(OSAL_RESULT_TRUE != OSAL_MUTEX_Create(&(dObj->mutexDriverInstance)))
+    {
+        return SYS_MODULE_OBJ_INVALID;
+    }
 
     /* Register a callback with either DMA or USART PLIB based on configuration.
      * dObj is used as a context parameter, that will be used to distinguish the

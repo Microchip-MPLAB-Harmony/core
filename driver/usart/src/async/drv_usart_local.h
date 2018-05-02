@@ -50,6 +50,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 #include "driver/usart/drv_usart_definitions.h"
 #include "driver/usart/drv_usart.h"
+#include "osal/osal.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -224,6 +225,9 @@ typedef struct
 
     /* Interrupt Source of USART */
     INT_SOURCE interruptUSART;
+
+    /* Hardware instance mutex */
+    OSAL_MUTEX_DECLARE(mutexDriverInstance);
 
     /* The buffer queue for the write operations */
     DRV_USART_BUFFER_OBJ  *queueWrite;
