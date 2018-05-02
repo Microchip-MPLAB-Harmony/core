@@ -389,6 +389,38 @@ void SYS_DMA_ChannelTransfer (DMA_CHANNEL channel, const void *srcAddr, const vo
 bool SYS_DMA_ChannelIsBusy (DMA_CHANNEL channel);
 
 
+//******************************************************************************
+/* Function:
+    void SYS_DMA_ChannelDisable (DMA_CHANNEL channel)
+
+  Summary:
+    Disables the specified channel.
+
+  Description:
+    This function disables the specified channel and resets it.
+    Ongoing transfer will be aborted.
+
+  Precondition:
+    DMA Controller should have been initialized.
+
+  Parameters:
+    channel - A specific DMA channel
+
+  Returns:
+    None.
+
+  Example:
+    <code>
+    SYS_DMA_ChannelDisable(DMA_CHANNEL_1);
+    </code>
+
+  Remarks:
+    None.
+*/
+
+void SYS_DMA_ChannelDisable (DMA_CHANNEL channel);
+
+
 #include "sys_dma_mapping.h"
 
 // DOM-IGNORE-BEGIN

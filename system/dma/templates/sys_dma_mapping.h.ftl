@@ -57,6 +57,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define SYS_DMA_ChannelTransfer(channel, srcAddr, destAddr, blockSize)  XDMAC_ChannelTransfer((XDMAC_CHANNEL)channel, srcAddr, destAddr, blockSize)
 
 #define SYS_DMA_ChannelIsBusy(channel)  XDMAC_ChannelIsBusy((XDMAC_CHANNEL)channel)
+
+#define SYS_DMA_ChannelDisable(channel)  XDMAC_ChannelDisable((XDMAC_CHANNEL)channel)
 <#else>
 
 #define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)
@@ -64,6 +66,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define SYS_DMA_ChannelTransfer(channel, srcAddr, destAddr, blockSize)
 
 #define SYS_DMA_ChannelIsBusy(channel)
+
+#define SYS_DMA_ChannelDisable(channel)
 </#if>
 
 #endif // SYS_DMA_MAPPING_H
