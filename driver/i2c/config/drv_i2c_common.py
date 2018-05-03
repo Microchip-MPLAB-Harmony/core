@@ -30,6 +30,8 @@ def instantiateComponent(i2cComponentCommon):
     i2cSymNumInst = i2cComponentCommon.createIntegerSymbol("DRV_I2C_NUM_INSTANCES", None)
     i2cSymNumInst.setMax(10)
     i2cSymNumInst.setDefaultValue(0)
+    i2cSymNumInst.setUseSingleDynamicValue(True)
+    i2cSymNumInst.setVisible(False)
 
     i2cSymCommonSysCfgFile = i2cComponentCommon.createFileSymbol(None, None)
     i2cSymCommonSysCfgFile.setType("STRING")
