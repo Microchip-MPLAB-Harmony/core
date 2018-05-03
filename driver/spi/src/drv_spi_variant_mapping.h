@@ -57,7 +57,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     #define _DRV_SPI_DMAChannelSettingsGet(dmaChannel)              XDMAC_ChannelSettingsGet(dmaChannel)
     #define _DRV_SPI_DMAChannelSettingsSet(dmaChannel,config)       XDMAC_ChannelSettingsSet(dmaChannel,config)
 #else
-    #define _DRV_SPI_DMAChannelSettingsGet(dmaChannel)              0
+    #define _DRV_SPI_DMAChannelSettingsGet(dmaChannel)              (0)
     #define _DRV_SPI_DMAChannelSettingsSet(dmaChannel,config)  
 #endif
 

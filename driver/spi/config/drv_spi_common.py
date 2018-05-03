@@ -10,8 +10,9 @@ def instantiateComponent(spiComponentCommon):
 
     spiSymNumInst = spiComponentCommon.createIntegerSymbol("DRV_SPI_NUM_INSTANCES", None)
     spiSymNumInst.setLabel("Number of Instances")
-    spiSymNumInst.setDefaultValue(1)
+    spiSymNumInst.setDefaultValue(0)
     spiSymNumInst.setVisible(False)
+    spiSymNumInst.setUseSingleDynamicValue(True)
 
     spiSymCommonSysCfgFile = spiComponentCommon.createFileSymbol("DRV_SPI_COMMON_CFG", None)
     spiSymCommonSysCfgFile.setType("STRING")

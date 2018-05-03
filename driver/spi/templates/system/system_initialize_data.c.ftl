@@ -54,19 +54,20 @@ DRV_SPI_INIT drvSPI${INDEX?string}InitData =
 
     .spiTransmitAddress = (void *)${DRV_SPI_PLIB}_TRANSMIT_ADDRESS,
 
-    .spiReceiveAddress = (void *)${DRV_SPI_PLIB}_RECEIVE_ADDRESS,
+    .spiReceiveAddress  = (void *)${DRV_SPI_PLIB}_RECEIVE_ADDRESS,
+    
+     /* DMA IRQ */
+    .interruptSource    = XDMAC_IRQn,
 <#else>
     .dmaChannelTransmit = DMA_CHANNEL_NONE,
 
-    .dmaChannelReceive = DMA_CHANNEL_NONE,
+    .dmaChannelReceive  = DMA_CHANNEL_NONE,
+    
+     /* SPI IRQ */
+    .interruptSource    = DRV_SPI_INT_SRC_IDX${INDEX?string},
 </#if>
 
 <#if DRV_SPI_MODE == false>
-     /* DMA IRQ */
-    .interruptDMA = XDMAC_IRQn,
-
-    /* SPI IRQ */
-    .interruptSPI = DRV_SPI_INT_SRC_IDX${INDEX?string},
 
     /* SPI Queue Size */
     .queueSize = DRV_SPI_QUEUE_SIZE_IDX${INDEX?string},

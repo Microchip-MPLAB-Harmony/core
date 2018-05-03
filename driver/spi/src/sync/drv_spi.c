@@ -525,7 +525,16 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
         OSAL_MUTEX_Unlock( &dObj->clientMutex);
         return DRV_HANDLE_INVALID;
     }
-
+    
+    if((dObj->nClients > 0) && (ioIntent & DRV_IO_INTENT_EXCLUSIVE))
+    {
+        /* This means the driver was already opened and another driver was
+           trying to open it exclusively.  We cannot give exclusive access in
+           this case */
+        OSAL_MUTEX_Unlock( &dObj->clientMutex);   
+        return DRV_HANDLE_INVALID;
+    }
+    
     for(iClient = 0; iClient != dObj->nClientsMax; iClient++)
     {
         if(false == ((DRV_SPI_CLIENT_OBJ *)dObj->clientObjPool)[iClient].inUse)

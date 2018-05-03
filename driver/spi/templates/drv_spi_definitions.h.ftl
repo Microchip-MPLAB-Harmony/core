@@ -246,11 +246,8 @@ typedef struct
     /* Driver Queue Size */
     size_t                      queueSize;
 
-    /* Interrupt source ID for the SPI interrupt. */
-    INT_SOURCE                  interruptSPI;
-
-    /* Interrupt source ID for DMA interrupt. */
-    INT_SOURCE                  interruptDMA;
+    /* Interrupt source ID for SPI or DMA based on the mode used */
+    INT_SOURCE                  interruptSource;
 </#if>
 } DRV_SPI_INIT;
 

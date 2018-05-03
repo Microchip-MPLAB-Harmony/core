@@ -48,7 +48,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
+#include "osal/osal.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -206,9 +206,6 @@ typedef struct
     /* PLIB API list that will be used by the driver to access the hardware */
     DRV_SPI_PLIB_INTERFACE *spiPlib;
 
-    /* Interrupt Source of SPI */
-    IRQn_Type interruptSPI;
-
     /* start of the memory pool for transfer objects */
     DRV_SPI_TRANSFER_OBJ *transferArray;
 
@@ -239,6 +236,9 @@ typedef struct
     /* Instance specific token counter used to generate unique client/transfer handles */
     uint16_t spiTokenCount;
     
+    /* to identify if we are running from interrupt context or not */
+    uint8_t interruptNestingCount;
+    
     /* DMA related elements */
     /* Transmit DMA Channel */
     DMA_CHANNEL txDMAChannel;
@@ -264,8 +264,14 @@ typedef struct
     /* This holds the number of dummy data to be received */
     size_t rxDummyDataSize;
 
-    /* Interrupt source ID for DMA interrupt. */
-    INT_SOURCE interruptDMA;
+    /* Interrupt source ID for SPI or DMA interrupt. */
+    INT_SOURCE interruptSource;
+    
+    /* Mutex to protect access to the client objects */    
+    OSAL_MUTEX_DECLARE(mutexClientObjects);
+    
+    /* Mutex to protect access to the transfer objects */
+    OSAL_MUTEX_DECLARE(mutexTransferObjects);
 
 } DRV_SPI_OBJ;
 
@@ -276,7 +282,7 @@ typedef struct
     Object used to track a single client.
 
   Description:
-    This object is used to keep the data necesssary to keep track of a single
+    This object is used to keep the data necessary to keep track of a single
     client.
 
   Remarks:
@@ -300,9 +306,6 @@ typedef struct _DRV_SPI_CLIENT_OBJ
 
     /* Application Context associated with this client */
     uintptr_t                       context;
-
-    /* Client status */
-    DRV_SPI_CLIENT_STATUS           status;
 
     /* Client specific setup */
     DRV_SPI_TRANSFER_SETUP          setup;

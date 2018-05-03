@@ -82,35 +82,43 @@ static inline uint16_t _DRV_SPI_UPDATE_TOKEN(uint16_t token)
 
 static bool _DRV_SPI_ResourceLock(DRV_SPI_OBJ * dObj)
 {
-    bool interruptWasEnabled;
-
-    /* Disable SPI or DMA interrupt so that the driver resource
-     * is not updated asynchronously. */
-    if((dObj->txDMAChannel != DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != DMA_CHANNEL_NONE))
+    /* We will allow buffers to be added in the interrupt
+       context of the SPI driver. But we must make
+       sure that if we are inside interrupt, then we should
+       not modify mutexes. */
+    if(dObj->interruptNestingCount == 0)
     {
-        interruptWasEnabled = SYS_INT_SourceDisable(dObj->interruptDMA);
-    }
-    else
-    {
-        interruptWasEnabled = SYS_INT_SourceDisable(dObj->interruptSPI);
-    }
-
-    return interruptWasEnabled;
-}
-
-static void _DRV_SPI_ResourceUnlock(DRV_SPI_OBJ * dObj, bool interruptWasEnabled)
-{
-    /* Restore the interrupt if it was enabled */
-    if(interruptWasEnabled == true)
-    {
-        if((dObj->txDMAChannel != DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != DMA_CHANNEL_NONE))
+        /* Grab a mutex. This is okay because we are not in an
+           interrupt context */
+        if(OSAL_MUTEX_Lock(&(dObj->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
         {
-            SYS_INT_SourceEnable(dObj->interruptDMA);
+            /* We will disable interrupts so that the queue
+               status does not get updated asynchronously.
+               This code will always execute. */
+            SYS_INT_SourceDisable(dObj->interruptSource);
+               
+            return true; 
         }
         else
         {
-            SYS_INT_SourceEnable(dObj->interruptSPI);
+            /* The mutex acquisition timed out. Return with an
+               invalid handle. This code will not execute
+               if there is no RTOS. */
+            return false;
         }
+    }
+    
+    return false;
+}
+
+static void _DRV_SPI_ResourceUnlock(DRV_SPI_OBJ * dObj)
+{
+    SYS_INT_SourceEnable(dObj->interruptSource);
+    
+    if(dObj->interruptNestingCount == 0)
+    {
+        /* Release mutex */
+        OSAL_MUTEX_Unlock(&(dObj->mutexTransferObjects));
     }
 }
 
@@ -150,16 +158,12 @@ static DRV_SPI_CLIENT_OBJ * _DRV_SPI_DriverHandleValidate(DRV_HANDLE handle)
     return(clientObj);
 }
 
-static void _DRV_SPI_TransferQueueFlush( DRV_SPI_CLIENT_OBJ * clientObj )
+static void _DRV_SPI_TransferQueuePurge( DRV_SPI_CLIENT_OBJ * clientObj )
 {
     DRV_SPI_OBJ * dObj = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
-    bool interruptWasEnabled = false;
     uint8_t currentIndex = NULL_INDEX;
     uint8_t previousIndex = NULL_INDEX;
     uint8_t savedNextIndex = NULL_INDEX;
-
-    /* Disable the interrupt to safeguard queue, enable it back when queue operations are done */
-    interruptWasEnabled =  _DRV_SPI_ResourceLock(dObj);
 
     dObj->queueTailIndex = NULL_INDEX;
     currentIndex = dObj->queueHeadIndex;
@@ -194,9 +198,6 @@ static void _DRV_SPI_TransferQueueFlush( DRV_SPI_CLIENT_OBJ * clientObj )
         }
         currentIndex = savedNextIndex;
     }
-
-    /* Enable back the interrupt if it was enabled earlier */
-    _DRV_SPI_ResourceUnlock(dObj, interruptWasEnabled);
 }
 
 static void _DRV_SPI_ConfigureDMA(DMA_CHANNEL dmaChannel, DRV_SPI_CONFIG_DMA cfgDMA)
@@ -396,7 +397,16 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
 
     if(clientObj->eventHandler != NULL)
     {
+        /* Call the event handler. We additionally increment the
+        interrupt nesting count which lets the driver functions
+        that are called from the event handler know that an
+        interrupt context is active. */
+        dObj->interruptNestingCount++;
+                
         clientObj->eventHandler(transferObj->event, transferObj->transferHandle, clientObj->context);
+        
+        /* Event handler has completed, so decrement the nesting count now */
+        dObj->interruptNestingCount--;
     }
 
     _DRV_SPI_ReleaseBufferObject(transferObj);
@@ -466,10 +476,18 @@ void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
             transferObj->event = DRV_SPI_TRANSFER_EVENT_ERROR;
         }
 
-        /* Call the event handler if it was registered with the driver */
         if(clientObj->eventHandler != NULL)
         {
+            /* Call the event handler. We additionally increment the
+            interrupt nesting count which lets the driver functions
+            that are called from the event handler know that an
+            interrupt context is active. */
+            dObj->interruptNestingCount++;
+            
             clientObj->eventHandler(transferObj->event, transferObj->transferHandle, clientObj->context);
+            
+            /* Event handler has completed, so decrement the nesting count now */
+            dObj->interruptNestingCount--;
         }
 
         _DRV_SPI_ReleaseBufferObject(transferObj);
@@ -528,7 +546,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
 
     /* Update the driver parameters */
     dObj->spiPlib               = spiInit->spiPlib;
-    dObj->interruptSPI          = spiInit->interruptSPI;
+    dObj->interruptSource       = spiInit->interruptSource;
     dObj->transferArray         =(DRV_SPI_TRANSFER_OBJ *)spiInit->transferObjPool;
     dObj->transferQueueSize     = spiInit->queueSize;
     dObj->freePoolHeadIndex     = 0;
@@ -538,6 +556,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->nClientsMax           = spiInit->numClients;
     dObj->nClients              = 0;
     dObj->spiTokenCount         = 1;
+    dObj->interruptNestingCount = 0;
     
     dObj->baudRateInHz          = spiInit->baudRateInHz;
     dObj->clockPhase            = spiInit->clockPhase;
@@ -569,6 +588,16 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     {
         /* This means DMA has to be used for SPI transfer.
         DMA Callbacks will be set for every transfer later. */
+    }
+    
+    /* Create mutexes */
+    if(OSAL_MUTEX_Create(&(dObj->mutexClientObjects)) != OSAL_RESULT_TRUE)
+    {
+        return SYS_MODULE_OBJ_INVALID;
+    }
+    if(OSAL_MUTEX_Create(&(dObj->mutexTransferObjects)) != OSAL_RESULT_TRUE)
+    {
+        return SYS_MODULE_OBJ_INVALID;
     }
 
     /* Update the status */
@@ -628,11 +657,19 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
         return DRV_HANDLE_INVALID;
     }
 
+    /* Acquire the instance specific mutex to protect the instance specific
+     * client pool */
+    if (OSAL_MUTEX_Lock(&dObj->mutexClientObjects , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    {
+        return DRV_HANDLE_INVALID;
+    }
+    
     /* Take care of Exclusive mode intent of driver */
     if(dObj->isExclusive)
     {
         /* This means the another client has opened the driver in exclusive
            mode. So the driver cannot be opened by any other client. */
+        OSAL_MUTEX_Unlock( &dObj->mutexClientObjects);
         return DRV_HANDLE_INVALID;
     }
     if((dObj->nClients > 0) && (ioIntent & DRV_IO_INTENT_EXCLUSIVE))
@@ -640,9 +677,10 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
         /* This means the driver was already opened and another driver was
            trying to open it exclusively.  We cannot give exclusive access in
            this case */
+        OSAL_MUTEX_Unlock( &dObj->mutexClientObjects);   
         return(DRV_HANDLE_INVALID);
     }
-
+    
     for(iClient = 0; iClient != dObj->nClientsMax; iClient++)
     {
         clientObj = &((DRV_SPI_CLIENT_OBJ *)dObj->clientObjPool)[iClient];
@@ -651,22 +689,7 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
         {
             /* This means we have a free client object to use */
             clientObj->inUse        = true;
-            clientObj->drvIndex     = drvIndex;
-
-            /* This driver will always work on Non-Blocking mode */
-            clientObj->ioIntent     = (ioIntent | DRV_IO_INTENT_NONBLOCKING);
-
-            /* Initialize other elements in Client Object */
-            clientObj->eventHandler = NULL;
-            clientObj->context      = (uintptr_t)NULL;
-
-            clientObj->setup.baudRateInHz   = dObj->baudRateInHz;
-            clientObj->setup.clockPhase     = dObj->clockPhase;
-            clientObj->setup.clockPolarity  = dObj->clockPolarity;
-            clientObj->setup.dataBits       = dObj->dataBits;
-            clientObj->setup.chipSelect     = SYS_PORT_PIN_NONE;
-            clientObj->setupChanged = true;
-
+            
             if(ioIntent & DRV_IO_INTENT_EXCLUSIVE)
             {
                 /* Set the driver exclusive flag */
@@ -681,14 +704,31 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             /* Increment the instance specific token counter */
             dObj->spiTokenCount = _DRV_SPI_UPDATE_TOKEN(dObj->spiTokenCount);
             
-            /* Update the client status */
-            clientObj->status = DRV_SPI_CLIENT_STATUS_READY;
+            /* We have found a client object and also updated corresponding driver object members, now release the mutex */
+            OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
+            
+            /* This driver will always work in Non-Blocking mode */
+            clientObj->ioIntent             = (ioIntent | DRV_IO_INTENT_NONBLOCKING);
+
+            /* Initialize other elements in Client Object */
+            clientObj->eventHandler         = NULL;
+            clientObj->context              = (uintptr_t)NULL;
+
+            clientObj->setup.baudRateInHz   = dObj->baudRateInHz;
+            clientObj->setup.clockPhase     = dObj->clockPhase;
+            clientObj->setup.clockPolarity  = dObj->clockPolarity;
+            clientObj->setup.dataBits       = dObj->dataBits;
+            clientObj->setup.chipSelect     = SYS_PORT_PIN_NONE;
+            clientObj->setupChanged         = true;
+            clientObj->drvIndex             = drvIndex;
             
             return clientObj->clientHandle;
         }
     }
 
-    /* If we have reached here, it means we could not find a spare client object */
+    /* If we have reached here, it means we could not find a spare client object. 
+       So now release the mutex and return with an invalid handle. */
+    OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
     return DRV_HANDLE_INVALID;
 }
 
@@ -725,19 +765,26 @@ void DRV_SPI_Close( DRV_HANDLE handle )
 
     dObj = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
 
+    if(_DRV_SPI_ResourceLock(dObj) == false)
+    {
+        SYS_DEBUG(SYS_ERROR_ERROR, "Failed to get resource lock");
+        return;
+    }
+    
     /* Remove all buffers that this client owns from the driver queue. */
-    _DRV_SPI_TransferQueueFlush(clientObj);
+    _DRV_SPI_TransferQueuePurge(clientObj);
 
     /* Reduce the number of clients */
     dObj->nClients--;
 
     /* Reset the exclusive flag */
     dObj->isExclusive = false;
-
+    
     /* De-allocate the client object */
-    clientObj->status = DRV_SPI_CLIENT_STATUS_CLOSED;
     clientObj->inUse = false;
 
+    _DRV_SPI_ResourceUnlock(dObj);
+    
     return;
 }
 
@@ -863,7 +910,6 @@ void DRV_SPI_WriteReadTransferAdd
     DRV_SPI_CLIENT_OBJ          * clientObj         = (DRV_SPI_CLIENT_OBJ *)NULL;
     DRV_SPI_OBJ                 * hDriver           = (DRV_SPI_OBJ *)NULL;
     DRV_SPI_TRANSFER_OBJ        * transferObj       = (DRV_SPI_TRANSFER_OBJ *)NULL;
-    bool                        interruptWasEnabled = false;
     uint8_t                     nextFreePoolHeadIndex;
 
     *transferHandle = DRV_SPI_TRANSFER_HANDLE_INVALID;
@@ -884,8 +930,11 @@ void DRV_SPI_WriteReadTransferAdd
             return;
         }
 
-        /* Disable the interrupt to safeguard queue, enable it back when queue operations are done */
-        interruptWasEnabled =  _DRV_SPI_ResourceLock(hDriver);
+        if(_DRV_SPI_ResourceLock(hDriver) == false)
+        {
+            SYS_DEBUG(SYS_ERROR_ERROR, "Failed to get resource lock");
+            return;
+        }
 
         /* Allocate a free object from the free pool */
         transferObj = &hDriver->transferArray[hDriver->freePoolHeadIndex];
@@ -963,8 +1012,7 @@ void DRV_SPI_WriteReadTransferAdd
             transferObj->hClient = clientObj;
         }
 
-        /* Enable back the interrupt if it was enabled earlier */
-        _DRV_SPI_ResourceUnlock(hDriver, interruptWasEnabled);
+        _DRV_SPI_ResourceUnlock(hDriver);
     }
     return;
 }
