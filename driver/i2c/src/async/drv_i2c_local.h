@@ -202,9 +202,12 @@ typedef struct
     
     /* token for creating transfer handle */
     uint16_t tokenCount;
-
-    /* Hardware instance mutex */
-    OSAL_MUTEX_DECLARE (mutexDriverInstance);
+    
+    /* client array protection mutex */
+    OSAL_MUTEX_DECLARE (mutexClientObjects);
+    
+    /* transfer onject projection mutex */
+    OSAL_MUTEX_DECLARE (mutexTransferObjects);
     
     /* Count to keep track of interrupt nesting */ 
     uint32_t interruptNestingCount;

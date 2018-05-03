@@ -90,7 +90,7 @@ static bool DRV_I2C_ResourceLock(DRV_I2C_OBJ * dObj)
     {
         /* Grab a mutex. This is okay because we are not in an
            interrupt context */
-        if(OSAL_MUTEX_Lock(&(dObj->mutexDriverInstance), OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+        if(OSAL_MUTEX_Lock(&(dObj->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
         {
             /* We will disable interrupts so that the queue
                status does not get updated asynchronously.
@@ -119,7 +119,7 @@ static void DRV_I2C_ResourceUnlock(DRV_I2C_OBJ * dObj)
     if(dObj->interruptNestingCount == 0)
     {
         /* Release mutex */
-        OSAL_MUTEX_Unlock(&(dObj->mutexDriverInstance));
+        OSAL_MUTEX_Unlock(&(dObj->mutexTransferObjects));
     }
 }
 
@@ -395,6 +395,16 @@ SYS_MODULE_OBJ DRV_I2C_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
      * from different instances. */
     dObj->i2cPlib->callbackRegister(DRV_I2C_PLibCallbackHandler, (uintptr_t)dObj);
     
+    /* create mutexes */
+    if(OSAL_MUTEX_Create(&(dObj->mutexClientObjects)) != OSAL_RESULT_TRUE)
+    {
+        return SYS_MODULE_OBJ_INVALID;
+    }
+    if(OSAL_MUTEX_Create(&(dObj->mutexTransferObjects)) != OSAL_RESULT_TRUE)
+    {
+        return SYS_MODULE_OBJ_INVALID;
+    }
+    
     /* Enable the system interrupt flag */
     SYS_INT_SourceEnable(dObj->interruptI2C);
 
@@ -484,36 +494,46 @@ DRV_HANDLE DRV_I2C_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
         return(DRV_HANDLE_INVALID);
     }
 
-    for(iClient = 0; iClient != dObj->nClientsMax; iClient++)
+    if(OSAL_MUTEX_Lock(&(dObj->mutexClientObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
     {
-        clientObj = &((DRV_I2C_CLIENT_OBJ *)dObj->clientObjPool)[iClient];
-        
-        if(!clientObj->inUse)
+        for(iClient = 0; iClient != dObj->nClientsMax; iClient++)
         {
-            /* This means we have a free client object to use */
-            clientObj->inUse        = true;
-            clientObj->drvIndex     = drvIndex;
-
-            /* In a case where the driver is configured for polled
-               and bare metal operation, it will not support blocking operation */
-
-            clientObj->ioIntent     = (ioIntent | DRV_IO_INTENT_NONBLOCKING);
-            clientObj->eventHandler = NULL;
-            clientObj->context      = (uintptr_t)NULL;
-            clientObj->errors        = DRV_I2C_ERROR_NONE;
-            clientObj->drvTransferSetup.clockSpeed = 
-                                            dObj->drvTransferSetup.clockSpeed;
-
-            if(ioIntent & DRV_IO_INTENT_EXCLUSIVE)
-            {
-                /* Set the driver exclusive flag */
-                dObj->isExclusive = true;
-            }
-
-            dObj->nClients ++;
+            clientObj = &((DRV_I2C_CLIENT_OBJ *)dObj->clientObjPool)[iClient];
             
-            return ((DRV_HANDLE) clientObj );
+            if(!clientObj->inUse)
+            {
+                /* This means we have a free client object to use */
+                clientObj->inUse        = true;
+                
+                if(ioIntent & DRV_IO_INTENT_EXCLUSIVE)
+                {
+                    /* Set the driver exclusive flag */
+                    dObj->isExclusive = true;
+                }
+
+                dObj->nClients ++;
+                
+                /* We have found a client object. Release the mutex */
+                OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
+                
+                clientObj->drvIndex     = drvIndex;
+
+                /* In a case where the driver is configured for polled
+                   and bare metal operation, it will not support blocking operation */
+
+                clientObj->ioIntent     = (ioIntent | DRV_IO_INTENT_NONBLOCKING);
+                clientObj->eventHandler = NULL;
+                clientObj->context      = (uintptr_t)NULL;
+                clientObj->errors        = DRV_I2C_ERROR_NONE;
+                clientObj->drvTransferSetup.clockSpeed = 
+                                                dObj->drvTransferSetup.clockSpeed;
+                return ((DRV_HANDLE) clientObj );
+            }
         }
+        
+        /* Could not find a client object. Release the mutex and
+           return with an invalid handle. */
+        OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
     }
 
     /* If we have reached here, it means either we could not find a spare
@@ -775,7 +795,7 @@ void DRV_I2C_ReadTransferAdd( const DRV_HANDLE handle, const uint16_t address, v
     
     hDriver = &gDrvI2CObj[clientObj->drvIndex];
     
-    if(DRV_I2C_ResourceLock(hDriver) == true)
+    if(DRV_I2C_ResourceLock(hDriver) == false)
     {
         SYS_DEBUG(SYS_ERROR_ERROR, "Failed to get resource lock");
         return;
@@ -909,7 +929,7 @@ void DRV_I2C_WriteTransferAdd( const DRV_HANDLE handle, const uint16_t address, 
     
     hDriver = &gDrvI2CObj[clientObj->drvIndex];
     
-    if(DRV_I2C_ResourceLock(hDriver) == true)
+    if(DRV_I2C_ResourceLock(hDriver) == false)
     {
         SYS_DEBUG(SYS_ERROR_ERROR, "Failed to get resource lock");
         return;
@@ -1045,7 +1065,7 @@ void DRV_I2C_WriteReadTransferAdd ( const DRV_HANDLE handle, const uint16_t addr
     
     hDriver = &gDrvI2CObj[clientObj->drvIndex];
     
-    if(DRV_I2C_ResourceLock(hDriver) == true)
+    if(DRV_I2C_ResourceLock(hDriver) == false)
     {
         SYS_DEBUG(SYS_ERROR_ERROR, "Failed to get resource lock");
         return;
