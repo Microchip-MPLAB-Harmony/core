@@ -58,9 +58,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /* This is the driver instance object array. */
 static DRV_I2C_OBJ gDrvI2CObj[DRV_I2C_INSTANCES_NUMBER] ;
 
-/* This a global token counter used to generate unique buffer handles */
-static uint16_t gDrvI2CTokenCount = 1;
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: File scope functions
@@ -389,6 +386,7 @@ SYS_MODULE_OBJ DRV_I2C_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->nClients                    = 0;
     dObj->isExclusive                 = false;
     dObj->interruptNestingCount       = 0;
+    dObj->tokenCount                  = 1;
     
     DRV_I2C_TransferObjectsInit(dObj);
     
@@ -812,10 +810,10 @@ void DRV_I2C_ReadTransferAdd( const DRV_HANDLE handle, const uint16_t address, v
     transferObj->flag         = DRV_I2C_TRANSFER_OBJ_FLAG_READ;
     
     /* update transferHandle object with unique Id */
-    transferObj->transferHandle = DRV_I2C_MAKE_HANDLE(gDrvI2CTokenCount, clientObj->drvIndex, transferObj->index);
+    transferObj->transferHandle = DRV_I2C_MAKE_HANDLE(hDriver->tokenCount, clientObj->drvIndex, transferObj->index);
     *transferHandle = transferObj->transferHandle;
     
-    DRV_I2C_UPDATE_TOKEN(gDrvI2CTokenCount);
+    hDriver->tokenCount = DRV_I2C_UPDATE_TOKEN(hDriver->tokenCount);
 
     if(hDriver->trQueueHead == NULL)
     {
@@ -946,10 +944,10 @@ void DRV_I2C_WriteTransferAdd( const DRV_HANDLE handle, const uint16_t address, 
     transferObj->flag         = DRV_I2C_TRANSFER_OBJ_FLAG_READ;
     
     /* update transferHandle object with unique Id */
-    transferObj->transferHandle = DRV_I2C_MAKE_HANDLE(gDrvI2CTokenCount, clientObj->drvIndex, transferObj->index);
+    transferObj->transferHandle = DRV_I2C_MAKE_HANDLE(hDriver->tokenCount, clientObj->drvIndex, transferObj->index);
     *transferHandle = transferObj->transferHandle;
     
-    DRV_I2C_UPDATE_TOKEN(gDrvI2CTokenCount);
+    hDriver->tokenCount = DRV_I2C_UPDATE_TOKEN(hDriver->tokenCount);
 
     if(hDriver->trQueueHead == NULL)
     {
@@ -1082,10 +1080,10 @@ void DRV_I2C_WriteReadTransferAdd ( const DRV_HANDLE handle, const uint16_t addr
     transferObj->flag         = DRV_I2C_TRANSFER_OBJ_FLAG_READ;
     
     /* update transferHandle object with unique Id */
-    transferObj->transferHandle = DRV_I2C_MAKE_HANDLE(gDrvI2CTokenCount, clientObj->drvIndex, transferObj->index);
+    transferObj->transferHandle = DRV_I2C_MAKE_HANDLE(hDriver->tokenCount, clientObj->drvIndex, transferObj->index);
     *transferHandle = transferObj->transferHandle;
     
-    DRV_I2C_UPDATE_TOKEN(gDrvI2CTokenCount);
+    hDriver->tokenCount = DRV_I2C_UPDATE_TOKEN(hDriver->tokenCount);
 
     if(hDriver->trQueueHead == NULL)
     {

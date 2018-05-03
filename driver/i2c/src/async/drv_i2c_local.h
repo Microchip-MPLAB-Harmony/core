@@ -200,6 +200,9 @@ typedef struct
     /* Transfer Queue Size */
     size_t trQueueSize;
     
+    /* token for creating transfer handle */
+    uint16_t tokenCount;
+
     /* Hardware instance mutex */
     OSAL_MUTEX_DECLARE (mutexDriverInstance);
     
