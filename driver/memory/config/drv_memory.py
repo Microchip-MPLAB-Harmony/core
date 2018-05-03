@@ -111,12 +111,8 @@ def instantiateComponent(memoryComponent, index):
     Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", True, 2)
 
     numInstances = Database.getSymbolValue("drv_memory", "DRV_MEMORY_NUM_INSTANCES")
-
-    if numInstances is None:
-        numInstances = 1
-    else:
-        numInstances = numInstances + 1
-        Database.setSymbolValue("drv_memory", "DRV_MEMORY_NUM_INSTANCES", numInstances, 1)
+    numInstances = numInstances + 1
+    Database.setSymbolValue("drv_memory", "DRV_MEMORY_NUM_INSTANCES", numInstances, 1)
 
     memoryIndex = memoryComponent.createIntegerSymbol("INDEX", None)
     memoryIndex.setVisible(False)

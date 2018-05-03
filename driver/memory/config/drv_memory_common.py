@@ -29,7 +29,8 @@ def instantiateComponent(memoryCommonComponent):
     memoryCommonSymNumInst.setLabel("Number of Instances")
     memoryCommonSymNumInst.setMin(1)
     memoryCommonSymNumInst.setMax(10)
-    memoryCommonSymNumInst.setVisible(True)
+    memoryCommonSymNumInst.setVisible(False)
+    memoryCommonSymNumInst.setUseSingleDynamicValue(True)
 
     memoryCommonMode = memoryCommonComponent.createKeyValueSetSymbol("DRV_MEMORY_COMMON_MODE", None)
     memoryCommonMode.setLabel("Driver Mode")
