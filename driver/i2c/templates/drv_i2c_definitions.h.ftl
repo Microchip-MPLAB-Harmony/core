@@ -194,7 +194,7 @@ typedef struct
 
     /* Number of clients */
     uint32_t numClients;
-<#if DRV_I2C_MODE == false>
+<#if DRV_I2C_MODE == "ASYNC">
 
     /* Interrupt source ID for the I2C interrupt. */
     INT_SOURCE interruptI2C;
@@ -204,7 +204,8 @@ typedef struct
 
     /* Memory Pool for Transfer Objects */
     uintptr_t transferObj;
-</#if>    
+</#if>
+
     /* peripheral clock speed */
     uint32_t clockSpeed;
     
