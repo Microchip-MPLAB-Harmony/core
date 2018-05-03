@@ -1,5 +1,5 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_USART Instance ${INDEX?string} Initialization Data">
-<#if DRV_USART_MODE == "SYNC">
+<#if drv_usart.DRV_USART_MODE == "SYNC">
 
 DRV_USART_CLIENT_OBJ drvUSART${INDEX?string}ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
 </#if>
@@ -36,7 +36,7 @@ DRV_USART_INIT drvUsart${INDEX?string}InitData =
 <#else>
     .dmaChannelReceive = DMA_CHANNEL_NONE,
 </#if>
-<#if DRV_USART_MODE == "ASYNC">
+<#if drv_usart.DRV_USART_MODE == "ASYNC">
 
     .queueSizeTransmit = DRV_USART_XMIT_QUEUE_SIZE_IDX${INDEX?string},
 

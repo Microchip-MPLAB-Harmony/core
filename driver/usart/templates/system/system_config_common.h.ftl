@@ -1,5 +1,5 @@
 /* USART Driver Global Configuration Options */
 #define DRV_USART_INSTANCES_NUMBER         ${DRV_USART_NUM_INSTANCES}
-<#if DRV_USART_COMMON_MODE == "ASYNC">
+<#if DRV_USART_MODE == "ASYNC">
 #define DRV_USART_QUEUE_DEPTH_COMBINED     ${DRV_USART_BUFFER_POOL_SIZE}
 </#if>

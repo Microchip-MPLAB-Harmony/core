@@ -61,28 +61,6 @@ def asyncModeOptions(Sym, event):
     elif(event["value"] == 1):
        Sym.setVisible(False)
 
-def syncFileGen(Sym, event):
-    if(event["value"] == 1):
-       Sym.setEnabled(True)
-    elif(event["value"] == 0):
-       Sym.setEnabled(False)
-
-def asyncFileGen(Sym, event):
-    if(event["value"] == 0):
-       Sym.setEnabled(True)
-    elif(event["value"] == 1):
-       Sym.setEnabled(False)
-
-def driverModeUpdate(Sym, event):
-    global drvUsartInstanceSpace
-    bufPoolSize = Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE")
-    Database.clearSymbolValue("drv_usart", "DRV_USART_COMMON_MODE")
-
-    if(event["value"] == 0):
-        Database.setSymbolValue("drv_usart", "DRV_USART_COMMON_MODE", event["value"], 2)
-    elif(event["value"] == 1):
-        Database.setSymbolValue("drv_usart", "DRV_USART_COMMON_MODE", event["value"], 2)
-
 ################################################################################
 #### Component ####
 ################################################################################
@@ -119,38 +97,25 @@ def instantiateComponent(usartComponent, index):
     usartPLIB.setDefaultValue("USART1")
     # Used onDependencyComponentAdd\Remove callbacks to get connected PLIB
 
-    usartMode = usartComponent.createKeyValueSetSymbol("DRV_USART_MODE", None)
-    usartMode.setLabel("Driver Mode")
-    usartMode.addKey("ASYNC", "0", "Asynchronous")
-    usartMode.addKey("SYNC", "1", "Synchronous")
-    usartMode.setDisplayMode("Description")
-    usartMode.setOutputMode("Key")
-    usartMode.setDefaultValue(0)
-
-    usartGlobalMode = usartComponent.createBooleanSymbol("DRV_USART_MODE_UPDATE", None)
-    usartGlobalMode.setLabel("**** Driver Mode Update ****")
-    usartGlobalMode.setDependencies(driverModeUpdate, ["DRV_USART_MODE"])
-    usartGlobalMode.setVisible(False)
-
     usartNumClients = usartComponent.createIntegerSymbol("DRV_USART_CLIENTS_NUM", None)
     usartNumClients.setLabel("Number of Clients")
     usartNumClients.setMax(50)
     usartNumClients.setVisible(False)
     usartNumClients.setDefaultValue(1)
-    usartNumClients.setDependencies(syncModeOptions, ["DRV_USART_MODE"])
+    usartNumClients.setDependencies(syncModeOptions, ["drv_usart.DRV_USART_MODE"])
 
     usartTXQueueSize = usartComponent.createIntegerSymbol("DRV_USART_TX_QUEUE_SIZE", None)
     usartTXQueueSize.setLabel("Transmit Queue Size")
     usartTXQueueSize.setMax(50)
     usartTXQueueSize.setDefaultValue(5)
-    usartTXQueueSize.setDependencies(asyncModeOptions, ["DRV_USART_MODE"])
+    usartTXQueueSize.setDependencies(asyncModeOptions, ["drv_usart.DRV_USART_MODE"])
     currentTxBufSize = usartTXQueueSize.getValue()
 
     usartRXQueueSize = usartComponent.createIntegerSymbol("DRV_USART_RX_QUEUE_SIZE", None)
     usartRXQueueSize.setLabel("Receive Queue Size")
     usartRXQueueSize.setMax(50)
     usartRXQueueSize.setDefaultValue(5)
-    usartRXQueueSize.setDependencies(asyncModeOptions, ["DRV_USART_MODE"])
+    usartRXQueueSize.setDependencies(asyncModeOptions, ["drv_usart.DRV_USART_MODE"])
     currentRxBufSize = usartRXQueueSize.getValue()
 
     usartBufPool = usartComponent.createBooleanSymbol("DRV_USART_BUFFER_POOL", None)
@@ -192,83 +157,17 @@ def instantiateComponent(usartComponent, index):
     #### Dependency ####
     ############################################################################
     # DRV_USART Common Dependency
-    try:
-        numInstances  = Database.getSymbolValue("drv_usart", "DRV_USART_NUM_INSTANCES")
-        bufPoolSize = Database.getSymbolValue("drv_usart", "DRV_USART_BUFFER_POOL_SIZE")
 
-        Database.clearSymbolValue("drv_usart", "DRV_USART_BUFFER_POOL_SIZE")
-        Database.setSymbolValue("drv_usart", "DRV_USART_BUFFER_POOL_SIZE", (bufPoolSize + currentTxBufSize + currentRxBufSize), 2)
+    numInstances  = Database.getSymbolValue("drv_usart", "DRV_USART_NUM_INSTANCES")
+    numInstances = numInstances + 1
+    Database.setSymbolValue("drv_usart", "DRV_USART_NUM_INSTANCES", numInstances, 1)
 
-        if numInstances < (index+1):
-            Database.clearSymbolValue("drv_usart", "DRV_USART_NUM_INSTANCES")
-            Database.setSymbolValue("drv_usart", "DRV_USART_NUM_INSTANCES", (index+1), 2)
-    except:
-        Log.writeDebugMessage("USART driver common file error")
+    bufPoolSize = Database.getSymbolValue("drv_usart", "DRV_USART_BUFFER_POOL_SIZE")
+    Database.setSymbolValue("drv_usart", "DRV_USART_BUFFER_POOL_SIZE", (bufPoolSize + currentTxBufSize + currentRxBufSize), 1)
 
     ############################################################################
     #### Code Generation ####
     ############################################################################
-    configName = Variables.get("__CONFIGURATION_NAME")
-
-    # Global Header Files
-    usartHeaderFile = usartComponent.createFileSymbol("USART_HEADER", None)
-    usartHeaderFile.setSourcePath("driver/usart/drv_usart.h")
-    usartHeaderFile.setOutputName("drv_usart.h")
-    usartHeaderFile.setDestPath("driver/usart/")
-    usartHeaderFile.setProjectPath("config/" + configName + "/driver/usart/")
-    usartHeaderFile.setType("HEADER")
-    usartHeaderFile.setOverwrite(True)
-
-    usartHeaderDefFile = usartComponent.createFileSymbol("USART_HEADER_DEF", None)
-    usartHeaderDefFile.setSourcePath("driver/usart/templates/drv_usart_definitions.h.ftl")
-    usartHeaderDefFile.setOutputName("drv_usart_definitions.h")
-    usartHeaderDefFile.setDestPath("driver/usart/")
-    usartHeaderDefFile.setProjectPath("config/" + configName + "/driver/usart/")
-    usartHeaderDefFile.setType("HEADER")
-    usartHeaderDefFile.setMarkup(True)
-    usartHeaderDefFile.setOverwrite(True)
-
-    # Async Source Files
-    usartAsyncSourceFile = usartComponent.createFileSymbol("USART_ASYNC_SOURCE", None)
-    usartAsyncSourceFile.setSourcePath("driver/usart/src/async/drv_usart.c")
-    usartAsyncSourceFile.setOutputName("drv_usart.c")
-    usartAsyncSourceFile.setDestPath("driver/usart/src")
-    usartAsyncSourceFile.setProjectPath("config/" + configName + "/driver/usart/")
-    usartAsyncSourceFile.setType("SOURCE")
-    usartAsyncSourceFile.setOverwrite(True)
-    usartAsyncSourceFile.setEnabled(True)
-    usartAsyncSourceFile.setDependencies(asyncFileGen, ["DRV_USART_MODE"])
-
-    usartAsyncHeaderLocalFile = usartComponent.createFileSymbol("USART_ASYNC_LOCAL", None)
-    usartAsyncHeaderLocalFile.setSourcePath("driver/usart/src/async/drv_usart_local.h")
-    usartAsyncHeaderLocalFile.setOutputName("drv_usart_local.h")
-    usartAsyncHeaderLocalFile.setDestPath("driver/usart/src")
-    usartAsyncHeaderLocalFile.setProjectPath("config/" + configName + "/driver/usart/")
-    usartAsyncHeaderLocalFile.setType("SOURCE")
-    usartAsyncHeaderLocalFile.setOverwrite(True)
-    usartAsyncHeaderLocalFile.setEnabled(True)
-    usartAsyncHeaderLocalFile.setDependencies(asyncFileGen, ["DRV_USART_MODE"])
-
-    # Sync Source Files
-    usartSyncSourceFile = usartComponent.createFileSymbol("USART_SYNC_SOURCE", None)
-    usartSyncSourceFile.setSourcePath("driver/usart/src/sync/drv_usart.c")
-    usartSyncSourceFile.setOutputName("drv_usart.c")
-    usartSyncSourceFile.setDestPath("driver/usart/src")
-    usartSyncSourceFile.setProjectPath("config/" + configName + "/driver/usart/")
-    usartSyncSourceFile.setType("SOURCE")
-    usartSyncSourceFile.setOverwrite(True)
-    usartSyncSourceFile.setEnabled(False)
-    usartSyncSourceFile.setDependencies(syncFileGen, ["DRV_USART_MODE"])
-
-    usartSyncHeaderLocalFile = usartComponent.createFileSymbol("USART_SYNC_LOCAL", None)
-    usartSyncHeaderLocalFile.setSourcePath("driver/usart/src/sync/drv_usart_local.h")
-    usartSyncHeaderLocalFile.setOutputName("drv_usart_local.h")
-    usartSyncHeaderLocalFile.setDestPath("driver/usart/src")
-    usartSyncHeaderLocalFile.setProjectPath("config/" + configName + "/driver/usart/")
-    usartSyncHeaderLocalFile.setType("SOURCE")
-    usartSyncHeaderLocalFile.setOverwrite(True)
-    usartSyncHeaderLocalFile.setEnabled(False)
-    usartSyncHeaderLocalFile.setDependencies(syncFileGen, ["DRV_USART_MODE"])
 
     # System Template Files
     usartSystemDefObjFile = usartComponent.createFileSymbol("USART_DEF_OBJ", None)
@@ -296,7 +195,7 @@ def instantiateComponent(usartComponent, index):
     usartSystemInitFile.setMarkup(True)
 
 def onDependentComponentAdded(drv_usart, id, usart):
-    if id == "drv_usart_USART_dependency" :
+    if id == "drv_usart_USART_dependency" or id == "drv_usart_UART_dependency":
         plibUsed = drv_usart.getSymbolByID("DRV_USART_PLIB")
         plibUsed.clearValue()
         plibUsed.setValue(usart.getID().upper(), 2)
