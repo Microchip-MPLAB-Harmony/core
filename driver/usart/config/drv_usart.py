@@ -28,20 +28,21 @@ def requestDMAChannel(Sym, event):
     global drvUsartInstanceSpace
     usartPeripheral = Database.getSymbolValue(drvUsartInstanceSpace, "DRV_USART_PLIB")
 
-    # Request from Driver
-    if event["id"] == "DRV_USART_TX_DMA" or event["id"] == "DRV_USART_RX_DMA":
-        if event["id"] == "DRV_USART_TX_DMA":
-            dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(usartPeripheral) + "_Transmit"
-        elif event["id"] == "DRV_USART_RX_DMA":
-            dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(usartPeripheral) + "_Receive"
+    if event["id"] == "DRV_USART_TX_DMA":
+        dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(usartPeripheral) + "_Transmit"
+        dmaChannelID = "DMA_CH_FOR_" + str(usartPeripheral) + "_Transmit"
+    elif event["id"] == "DRV_USART_RX_DMA":
+        dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(usartPeripheral) + "_Receive"
+        dmaChannelID = "DMA_CH_FOR_" + str(usartPeripheral) + "_Receive"
 
-        Database.clearSymbolValue("core", dmaRequestID)
-        Database.setSymbolValue("core", dmaRequestID, event["value"], 2)
+    # Request/Release a channel
+    Database.setSymbolValue("core", dmaRequestID, event["value"], 2)
 
-    # Response from DMA Manager
-    else:
+    # Get the allocated channel
+    channel = Database.getSymbolValue("core", dmaChannelID)
+    if channel >= 0:
         Sym.clearValue()
-        Sym.setValue(event["value"], 2)
+        Sym.setValue(Database.getSymbolValue("core", dmaChannelID), 2)
 
 def requestDMAComment(Sym, event):
     if(event["value"] == -2):
@@ -129,14 +130,9 @@ def instantiateComponent(usartComponent, index):
 
     usartTXDMAChannel = usartComponent.createIntegerSymbol("DRV_USART_TX_DMA_CHANNEL", None)
     usartTXDMAChannel.setLabel("DMA Channel To Use")
-    usartTXDMAChannel.setDependencies(requestDMAChannel, ["DRV_USART_TX_DMA", "core.DMA_CH_FOR_" + str(usartPLIB.getValue()) + "_Transmit"])
+    usartTXDMAChannel.setDependencies(requestDMAChannel, ["DRV_USART_TX_DMA"])
     usartTXDMAChannel.setDefaultValue(0)
     usartTXDMAChannel.setVisible(False)
-
-    usartTXDMAChannelComment = usartComponent.createCommentSymbol("DRV_USART_TX_DMA_CH_COMMENT", None)
-    usartTXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate any DMA Channel. Check DMA manager.")
-    usartTXDMAChannelComment.setDependencies(requestDMAComment, ["core.DMA_CH_FOR_" + str(usartPLIB.getValue()) + "_Transmit"])
-    usartTXDMAChannelComment.setVisible(False)
 
     usartRXDMA = usartComponent.createBooleanSymbol("DRV_USART_RX_DMA", None)
     usartRXDMA.setLabel("Use DMA for Receive?")
@@ -144,14 +140,9 @@ def instantiateComponent(usartComponent, index):
 
     usartRXDMAChannel = usartComponent.createIntegerSymbol("DRV_USART_RX_DMA_CHANNEL", None)
     usartRXDMAChannel.setLabel("DMA Channel To Use")
-    usartRXDMAChannel.setDependencies(requestDMAChannel, ["DRV_USART_RX_DMA", "core.DMA_CH_FOR_" + str(usartPLIB.getValue()) + "_Receive"])
+    usartRXDMAChannel.setDependencies(requestDMAChannel, ["DRV_USART_RX_DMA"])
     usartRXDMAChannel.setDefaultValue(1)
     usartRXDMAChannel.setVisible(False)
-
-    usartRXDMAChannelComment = usartComponent.createCommentSymbol("DRV_USART_RX_DMA_CH_COMMENT", None)
-    usartRXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate any DMA Channel. Check DMA manager.")
-    usartRXDMAChannelComment.setDependencies(requestDMAComment, ["core.DMA_CH_FOR_" + str(usartPLIB.getValue()) + "_Receive"])
-    usartRXDMAChannelComment.setVisible(False)
 
     ############################################################################
     #### Dependency ####
