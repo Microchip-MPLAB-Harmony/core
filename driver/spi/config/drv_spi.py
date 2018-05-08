@@ -64,42 +64,30 @@ def instantiateComponent(spiComponent, index):
     spiTXRXDMA = spiComponent.createBooleanSymbol("DRV_SPI_TX_RX_DMA", None)
     spiTXRXDMA.setLabel("Use DMA for Transmit and Receive?")
     spiTXRXDMA.setDefaultValue(False)
-
-    spiTXDMA = spiComponent.createBooleanSymbol("DRV_SPI_TX_DMA", None)
-    spiTXDMA.setLabel("Use DMA for Transmit?")
-    spiTXDMA.setDefaultValue(False)
-    spiTXDMA.setVisible(False)
-    spiTXDMA.setDependencies(commonTxRxOption, ["DRV_SPI_TX_RX_DMA"])
-
+    
     spiTXDMAChannel = spiComponent.createIntegerSymbol("DRV_SPI_TX_DMA_CHANNEL", None)
     spiTXDMAChannel.setLabel("DMA Channel For Transmit")
     spiTXDMAChannel.setDefaultValue(0)
     spiTXDMAChannel.setVisible(False)
     spiTXDMAChannel.setReadOnly(True)
-    spiTXDMAChannel.setDependencies(requestDMAChannel, ["DRV_SPI_TX_RX_DMA","DRV_SPI_TX_DMA", "core.DMA_CH_FOR_" + str(spiSymPLIB.getValue()) + "_Transmit"])
+    spiTXDMAChannel.setDependencies(requestAndAssignDMAChannel, ["DRV_SPI_TX_RX_DMA"])    
 
     spiTXDMAChannelComment = spiComponent.createCommentSymbol("DRV_SPI_TX_DMA_CH_COMMENT", None)
-    spiTXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate any DMA Channel. Check DMA manager.")
-    spiTXDMAChannelComment.setDependencies(requestDMAComment, ["core.DMA_CH_FOR_" + str(spiSymPLIB.getValue()) + "_Transmit"])
+    spiTXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Transmit. Check DMA manager.")
     spiTXDMAChannelComment.setVisible(False)
-
-    spiRXDMA = spiComponent.createBooleanSymbol("DRV_SPI_RX_DMA", None)
-    spiRXDMA.setLabel("Use DMA for Receive?")
-    spiRXDMA.setDefaultValue(False)
-    spiRXDMA.setVisible(False)
-    spiRXDMA.setDependencies(commonTxRxOption, ["DRV_SPI_TX_RX_DMA"])
+    spiTXDMAChannelComment.setDependencies(requestDMAComment, ["DRV_SPI_TX_DMA_CHANNEL"])
 
     spiRXDMAChannel = spiComponent.createIntegerSymbol("DRV_SPI_RX_DMA_CHANNEL", None)
     spiRXDMAChannel.setLabel("DMA Channel For Receive")
     spiRXDMAChannel.setDefaultValue(1)
     spiRXDMAChannel.setVisible(False)
     spiRXDMAChannel.setReadOnly(True)
-    spiRXDMAChannel.setDependencies(requestDMAChannel, ["DRV_SPI_TX_RX_DMA","DRV_SPI_RX_DMA", "core.DMA_CH_FOR_" + str(spiSymPLIB.getValue()) + "_Receive"])
-
+    spiRXDMAChannel.setDependencies(requestAndAssignDMAChannel, ["DRV_SPI_TX_RX_DMA"])
+    
     spiRXDMAChannelComment = spiComponent.createCommentSymbol("DRV_SPI_RX_DMA_CH_COMMENT", None)
-    spiRXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate any DMA Channel. Check DMA manager.")
-    spiRXDMAChannelComment.setDependencies(requestDMAComment, ["core.DMA_CH_FOR_" + str(spiSymPLIB.getValue()) + "_Receive"])
+    spiRXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Receive. Check DMA manager.")
     spiRXDMAChannelComment.setVisible(False)
+    spiRXDMAChannelComment.setDependencies(requestDMAComment, ["DRV_SPI_RX_DMA_CHANNEL"])
 
     ############################################################################
     #### Code Generation ####
@@ -219,29 +207,28 @@ def onDependentComponentAdded(drv_spi, id, spi):
         #spiIntSymPLIB = spi.getSymbolByID("SPI_INTERRUPT_MODE")
         #spiIntSymPLIB.setReadOnly(True)
 
-def requestDMAChannel(Sym, event):
+def requestAndAssignDMAChannel(Sym, event):
     global drvSpiInstanceSpace
     spiPeripheral = Database.getSymbolValue(drvSpiInstanceSpace, "DRV_SPI_PLIB")
 
     # Control visibility
-    if event["id"] == "DRV_SPI_TX_RX_DMA":
-        Sym.setVisible(event["value"])
-
-    # Request from Driver
-    elif event["id"] == "DRV_SPI_TX_DMA" or event["id"] == "DRV_SPI_RX_DMA":
-        if event["id"] == "DRV_SPI_TX_DMA":
-            dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
-        elif event["id"] == "DRV_SPI_RX_DMA":
-            dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
-
-        Database.clearSymbolValue("core", dmaRequestID)
-        Database.setSymbolValue("core", dmaRequestID, event["value"], 2)
-
-    # Response from DMA Manager
+    Sym.setVisible(event["value"])
+    
+    # Request/Release a channel from driver
+    if Sym.getID() == "DRV_SPI_TX_DMA_CHANNEL":
+        dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
+        dmaChannelID = "DMA_CH_FOR_" + str(spiPeripheral) + "_Transmit"
     else:
-        Sym.clearValue()
-        Sym.setValue(event["value"], 2)
+        # if Sym.getID() == "DRV_SPI_RX_DMA_CHANNEL":
+        dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
+        dmaChannelID = "DMA_CH_FOR_" + str(spiPeripheral) + "_Receive"
+        
+    Database.setSymbolValue("core", dmaRequestID, event["value"], 2)
 
+    # Get the allocated channel and assign it
+    channel = Database.getSymbolValue("core", dmaChannelID)
+    Sym.setValue(channel, 2)
+        
 def requestDMAComment(Sym, event):
     if(event["value"] == -2):
         Sym.setVisible(True)
