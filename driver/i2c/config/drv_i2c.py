@@ -72,7 +72,7 @@ def destroyComponent(i2cComponent):
     Database.setSymbolValue("drv_i2c", "DRV_I2C_NUM_INSTANCES", i2cNumInstances, 1)
 
 def onDependentComponentAdded(drv_i2c, id, i2c):
-    if id == "drv_i2c_TWIHS_dependency" :
+    if id == "drv_i2c_I2C_dependency" :
         plibUsed = drv_i2c.getSymbolByID("DRV_I2C_PLIB")
         plibUsed.clearValue()
         plibUsed.setValue(i2c.getID().upper(), 2)
