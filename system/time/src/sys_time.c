@@ -41,6 +41,7 @@ static void timeToCounter_update(SYS_TIME_COUNTER_OBJ * counterObj)
     if(tempCount > COUNTER_MAX)
     {
         counterObj->timeToCounter = counterObj->tmrActive->timeRelActive - (COUNTER_MAX - counterObj->counter);
+        counterObj->tmrRollover = true;
     }
     else
     {
@@ -186,6 +187,7 @@ static void counter_update(SYS_TIME_COUNTER_OBJ * counterObj)
         }
         else
         {
+            counterObj->tmrRollover = false;
             counterHigh = 0;
         }
     }
@@ -206,8 +208,11 @@ static void counter_task(void)
 
     if((counterObj->tmrActive != NULL) && (counterObj->timeToCounter <= counterObj->counter))
     {
-        counterObj->tmrElapsed = true;
-        timer_update(counterObj);
+        if(counterObj->tmrRollover == false)
+        {
+            counterObj->tmrElapsed = true;
+            timer_update(counterObj);
+        }
 
     }
 }
@@ -303,7 +308,7 @@ TIME SYS_TIME_CounterGet ( void )
 {
     SYS_TIME_COUNTER_OBJ * counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
 
-    return (counterObj->counter & ~HW_COUNTER_MAX) | (counterObj->timePlib->timerCounterGet() & HW_COUNTER_MAX);
+    return (counterObj->counter + counterObj->timePlib->timerCounterGet());
 }
 
 void SYS_TIME_CounterSet ( TIME count )

@@ -133,6 +133,7 @@ typedef struct{
     volatile TIME counter;    /* Software counter */
     volatile TIME timeToCounter;     /* Active timer expiry point or software period */
     int tmrElapsed;    /* On every active timer elapsed */
+    int tmrRollover; /* True if first timer object crosses rollover but base counter is not */
     SYS_TIME_TIMER_OBJ * tmrActive;
 
 } SYS_TIME_COUNTER_OBJ;   /* set of timers */

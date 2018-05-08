@@ -5,6 +5,9 @@
 ################################################################################
 #### Business Logic ####
 ################################################################################
+def sysTimeFrequencyCalculate(symbol, event):
+    timeFreq = 1000000/event["value"]
+    symbol.setLabel("**** Timer Frequency is " + str(timeFreq) + " Hz ****")
 
 ################################################################################
 #### Component ####
@@ -25,9 +28,14 @@ def instantiateComponent(sysTimeComponent):
     sysTimeObjects.setDefaultValue(10)
 
     sysTimeUnitResolution = sysTimeComponent.createIntegerSymbol("SYS_TIME_RESOLUTION", None)
-    sysTimeUnitResolution.setLabel("Time Unit or Resolution in Micro Seconds")
+    sysTimeUnitResolution.setLabel("Timer Resolution (Micro Seconds)")
     sysTimeUnitResolution.setMin(1)
     sysTimeUnitResolution.setDefaultValue(100)
+
+    timeFreq = (1000000/sysTimeUnitResolution.getValue())
+    sysTimeRunningFrequency = sysTimeComponent.createCommentSymbol("SYS_TIME_RUNNING_FREQ", None)
+    sysTimeRunningFrequency.setLabel("**** Timer Frequency is " + str(timeFreq) + " Hz ****")
+    sysTimeRunningFrequency.setDependencies(sysTimeFrequencyCalculate, ["SYS_TIME_RESOLUTION"])
 
     sysTimeUnitResolutionComment = sysTimeComponent.createCommentSymbol("SYS_TIME_RESOLUTION_COMMENT", None)
     sysTimeUnitResolutionComment.setLabel("**** Check The H/W Timer Connected For The Possible Timer Resolution ****")
