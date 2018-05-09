@@ -1,0 +1,2 @@
+    /* SPI${DRV_AT25M_INDEX} Driver Object */
+    SYS_MODULE_OBJ drvAT25M${DRV_AT25M_INDEX};
