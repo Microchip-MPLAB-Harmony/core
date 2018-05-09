@@ -29,7 +29,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     <#lt>    while(1)
     <#lt>    {
     <#lt>        SYS_FS_Tasks();
-    <#lt>        vTaskDelay(10 / portTICK_PERIOD_MS);
+             <#if SYS_FS_RTOS_USE_DELAY >
+    <#lt>        vTaskDelay(${SYS_FS_RTOS_DELAY} / portTICK_PERIOD_MS);
+             </#if>
     <#lt>    }
     <#lt>}
 </#if>

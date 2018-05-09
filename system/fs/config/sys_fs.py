@@ -52,7 +52,7 @@ def instantiateComponent(sysFSComponent):
     
     sysFSRTOSTaskDelayVal = sysFSComponent.createIntegerSymbol("SYS_FS_RTOS_DELAY", sysFSRTOSMenu)
     sysFSRTOSTaskDelayVal.setLabel("Task Delay")
-    sysFSRTOSTaskDelayVal.setDefaultValue(1000) 
+    sysFSRTOSTaskDelayVal.setDefaultValue(10) 
     sysFSRTOSTaskDelayVal.setDependencies(showRTOSTaskDel, ["SYS_FS_RTOS_USE_DELAY"])   
     
     sysFSMaxFiles = sysFSComponent.createIntegerSymbol("SYS_FS_MAX_FILES", sysFSMenu)

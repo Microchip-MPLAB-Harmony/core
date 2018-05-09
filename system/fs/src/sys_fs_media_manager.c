@@ -88,7 +88,7 @@ SYS_FS_MEDIA gSYSFSMediaObject[SYS_FS_MEDIA_NUMBER];
 */
 SYS_FS_VOLUME gSYSFSVolumeObject[SYS_FS_VOLUME_NUMBER];
 
-#if SYS_FS_AUTOMOUNT_ENABLE == true
+#if (SYS_FS_AUTOMOUNT_ENABLE == true)
 // *****************************************************************************
 /* Media Event Handler
 
@@ -242,7 +242,7 @@ static void _SYS_FS_MEDIA_MANAGER_HandleMediaDetach
 
         volumeObj->inUse = false;
 
-#if SYS_FS_AUTOMOUNT_ENABLE == true
+#if (SYS_FS_AUTOMOUNT_ENABLE == true)
         uint8_t index = 0;
         uint8_t handlerIndex = 0;
         const SYS_FS_MEDIA_MOUNT_DATA *fsMount = (const SYS_FS_MEDIA_MOUNT_DATA *)&gSYSFSMediaManagerObj.fsMountTable[0];
@@ -284,7 +284,7 @@ static void _SYS_FS_MEDIA_MANAGER_HandleMediaDetach
     }
 }
 
-#if SYS_FS_AUTOMOUNT_ENABLE == true
+#if (SYS_FS_AUTOMOUNT_ENABLE == true)
 // *****************************************************************************
 /* Function:
     static void _SYS_FS_MountVolume 
@@ -463,7 +463,7 @@ static void _SYS_FS_MEDIA_MANAGER_PopulateVolume
         /* Update the inUse flag to indicate that the volume is now in use.*/
         volumeObj->inUse = true;
 
-#if SYS_FS_AUTOMOUNT_ENABLE == true
+#if (SYS_FS_AUTOMOUNT_ENABLE == true)
         /* Mount the Media */
         if (fsType != 0xFF)
         {
@@ -982,7 +982,7 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_SectorWrite
     uint32_t mediaWriteBlockSize = 0;
     uint32_t blocksPerSector = 0;
 
-    if(diskNum >= SYS_FS_VOLUME_NUMBER)
+    if(diskNum >= SYS_FS_MEDIA_NUMBER)
     {
         SYS_ASSERT(false, "Invalid Disk");
         return SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
@@ -1309,7 +1309,7 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
     return false;
 }
 
-#if SYS_FS_AUTOMOUNT_ENABLE == true
+#if (SYS_FS_AUTOMOUNT_ENABLE == true)
 //*****************************************************************************
 /* Function:
     void SYS_FS_MEDIA_MANAGER_EventHandlerSet
@@ -1405,7 +1405,7 @@ void SYS_FS_MEDIA_MANAGER_EventHandler
 
     if ((gSYSFSMediaManagerObj.eventHandler != NULL) && (gSYSFSMediaManagerObj.muteEventNotification == false))
     {
-        gSYSFSMediaManagerObj.eventHandler (event, (void *)commandHandle, ((SYS_FS_MEDIA*)context)->driverIndex);
+        gSYSFSMediaManagerObj.eventHandler (event, (void *)commandHandle, ((SYS_FS_MEDIA*)context)->mediaIndex);
     }
 }
 
