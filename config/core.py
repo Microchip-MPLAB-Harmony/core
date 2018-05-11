@@ -10,13 +10,13 @@ for coreComponent in coreComponents:
     if eval(coreComponent['condition']):
         Name = coreComponent['name']
         Label = coreComponent['label']
+        Capability = coreComponent['capability']
 
         #create system component
         if coreComponent['type'] == "system":
             print("create component: " + Name.upper() + " System Service")
             Component = Module.CreateSharedComponent("sys_" + Name, Label, "/Harmony/System Services", "system/" + Name + "/config/sys_" + Name + ".py")
-            DependencyName  = "sys_"+Name
-            Component.addCapability("sys_" + Name, DependencyName.upper())
+            Component.addCapability("sys_" + Name, Capability)
             if "dependency" in coreComponent:
                 for item in coreComponent['dependency']:
                     Component.addDependency("sys_" + Name + "_" + item + "_dependency", item)
@@ -24,9 +24,13 @@ for coreComponent in coreComponents:
         #create driver component
         else:
             print("create component: " + Name.upper() + " Driver")
-            Component = Module.CreateGeneratorComponent("drv_" + Name, Label, "/Harmony/Drivers/", "driver/" + Name + "/config/drv_" + Name + "_common.py", "driver/" + Name + "/config/drv_" + Name + ".py")
-            DependencyName  = "drv_"+Name
-            Component.addCapability("drv_" + Name, DependencyName.upper())
+
+            if coreComponent['instance'] == "multi":
+                Component = Module.CreateGeneratorComponent("drv_" + Name, Label, "/Harmony/Drivers/", "driver/" + Name + "/config/drv_" + Name + "_common.py", "driver/" + Name + "/config/drv_" + Name + ".py")
+            elif coreComponent['instance'] == "single":
+                Component = Module.CreateComponent("drv_" + Name, Label, "/Harmony/Drivers/", "driver/" + Name + "/config/drv_" + Name + ".py")
+
+            Component.addCapability("drv_" + Name, Capability)
             Component.setDisplayType("Driver")
             if "dependency" in coreComponent:
                 for item in coreComponent['dependency']:

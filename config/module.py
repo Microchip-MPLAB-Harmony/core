@@ -1,12 +1,13 @@
 def loadModule():
 
     #define drivers and system services
-    coreComponents = [{"name":"usart", "label": "USART", "type":"driver", "dependency":["USART","UART"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"])'},
-                    {"name":"memory", "label": "MEMORY", "type":"driver", "dependency":["MEMORY"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"])'},
-                    {"name":"sdhc", "label":"SDHC", "type":"driver", "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"])'},
-                    {"name":"time", "label": "TIME", "type":"system", "dependency":["TC"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"])'},
-                    {"name":"fs", "label": "FILE SYSTEM", "type":"system", "condition":"True"},
-                    {"name":"i2c", "label": "I2C", "type":"driver", "dependency":["I2C"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"])'},
-                    {"name":"spi", "label": "SPI", "type":"driver", "dependency":["SPI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"])'}]
+    coreComponents = [{"name":"usart", "label": "USART", "type":"driver", "instance":"multi", "capability":"DRV_USART", "dependency":["USART","UART"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"])'},
+                    {"name":"memory", "label": "MEMORY", "type":"driver", "instance":"multi", "capability":"DRV_MEMORY", "dependency":["MEMORY"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"])'},
+                    {"name":"sst26", "label": "SST26", "type":"driver", "instance":"single", "capability":"MEMORY", "dependency":["QSPI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAME70", "SAMS70", "PIC32CZ"])'},
+                    {"name":"sdhc", "label":"SDHC", "type":"driver", "instance":"multi", "capability":"DRV_SDHC", "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"])'},
+                    {"name":"time", "label": "TIME", "type":"system", "capability":"SYS_TIME", "dependency":["TC"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"])'},
+                    {"name":"fs", "label": "FILE SYSTEM", "type":"system", "capability":"SYS_FS", "condition":"True"},
+                    {"name":"i2c", "label": "I2C", "type":"driver", "instance":"multi", "capability":"DRV_I2C", "dependency":["I2C"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"])'},
+                    {"name":"spi", "label": "SPI", "type":"driver", "instance":"multi", "capability":"DRV_SPI", "dependency":["SPI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"])'}]
     #load drivers and system services defined above
     execfile(Module.getPath() + "/config/core.py")
