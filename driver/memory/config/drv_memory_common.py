@@ -45,6 +45,7 @@ def instantiateComponent(memoryCommonComponent):
     memoryCommonfsCounter.setLabel("Number of Instances Using FS")
     memoryCommonfsCounter.setDefaultValue(False)
     memoryCommonfsCounter.setVisible(False)
+    memoryCommonfsCounter.setUseSingleDynamicValue(True)
 
     memoryCommonFsEnable = memoryCommonComponent.createBooleanSymbol("DRV_MEMORY_COMMON_FS_ENABLE", None)
     memoryCommonFsEnable.setLabel("Enable Common File system for Memory Driver")

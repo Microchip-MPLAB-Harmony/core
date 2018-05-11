@@ -109,26 +109,27 @@ typedef struct
     uint32_t blockStartAddress;
 } MEMORY_DEVICE_GEOMETRY;
 
-typedef bool (*GEOMETRY_GET)(MEMORY_DEVICE_GEOMETRY *geometry);
+typedef bool (*GEOMETRY_GET)( const DRV_HANDLE handle, MEMORY_DEVICE_GEOMETRY *geometry );
 
-typedef uint32_t (*TRANSFER_STATUS_GET)(void);
-
-typedef void (*DRV_MEMORY_CALLBACK)(uintptr_t context);
+typedef uint32_t (*TRANSFER_STATUS_GET)( const DRV_HANDLE handle );
 
 typedef struct
 {
-    bool (*SectorErase)(uint32_t address);
+    DRV_HANDLE (*Open)( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent );
 
-    bool (*Read)( uint32_t *rx_data, uint32_t rx_data_length, uint32_t address );
+    void (*Close)( const DRV_HANDLE handle );
 
-    bool (*PageWrite)( uint32_t *tx_data, uint32_t address );
+    bool (*SectorErase)( const DRV_HANDLE handle, uint32_t address);
+
+    SYS_STATUS (*Status)( const SYS_MODULE_INDEX drvIndex );
+
+    bool (*Read)( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_length, uint32_t address );
+
+    bool (*PageWrite)( const DRV_HANDLE handle, void *tx_data, uint32_t address );
 
     GEOMETRY_GET GeometryGet;
 
     TRANSFER_STATUS_GET TransferStatusGet;
-
-    void (*callbackRegister)(DRV_MEMORY_CALLBACK callback, uintptr_t context);
-
 } MEMORY_DEVICE_API;
 
 // *****************************************************************************
@@ -147,6 +148,9 @@ typedef struct
 
 typedef struct
 {
+    /* Attached Memory Device index */
+    SYS_MODULE_INDEX memDevIndex;
+
     /* Flash Device functions */
     const MEMORY_DEVICE_API *memoryDevice;
 
@@ -155,12 +159,6 @@ typedef struct
 
     /* Memory Device Type */
     uint8_t deviceMediaType;
-
-    /* Interrupt Enabled */
-    bool inInterruptMode;
-
-    /* Interrupt source number */
-    INT_SOURCE interruptSource;
 
     /* Erase Write Buffer pointer */
     uint8_t *ewBuffer;

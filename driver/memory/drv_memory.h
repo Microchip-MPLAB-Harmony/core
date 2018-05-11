@@ -256,7 +256,11 @@ typedef SYS_MEDIA_EVENT_HANDLER   DRV_MEMORY_TRANSFER_HANDLER;
 
 // *****************************************************************************
 /* Function:
-    SYS_MODULE_OBJ DRV_MEMORY_Initialize( const SYS_MODULE_INDEX index, const SYS_MODULE_INIT * const init );
+    SYS_MODULE_OBJ DRV_MEMORY_Initialize
+    (
+        const SYS_MODULE_INDEX drvIndex,
+        const SYS_MODULE_INIT * const init
+    );
 
   Summary:
     Initializes the MEMORY instance for the specified driver index
@@ -269,9 +273,9 @@ typedef SYS_MEDIA_EVENT_HANDLER   DRV_MEMORY_TRANSFER_HANDLER;
     None.
 
   Parameters:
-    index -  Identifier for the instance to be initialized
-    init -   Pointer to a data structure containing any data necessary to
-             initialize the driver.
+    drvIndex -  Identifier for the instance to be initialized
+    init     -  Pointer to a data structure containing any data necessary to
+                initialize the driver.
 
   Returns:
     If successful, returns a valid handle to a driver instance object.
@@ -280,21 +284,38 @@ typedef SYS_MEDIA_EVENT_HANDLER   DRV_MEMORY_TRANSFER_HANDLER;
   Example:
     <code>
     // This code snippet shows an example of initializing the MEMORY Driver
-    // with SST26 serial flash device attached.
+    // with SST26 serial flash device attached and File system Enabled.
 
     SYS_MODULE_OBJ  objectHandle;
 
+    uint8_t gDrvMemory0EraseBuffer[DRV_MEMORY_ERASE_BUFFER_SIZE_IDX0] __attribute__((aligned(32)));
+
+    DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
+
+    DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0] = { 0 };
+
     const MEMORY_DEVICE_API drvMemory0DeviceAPI = {
-        .SectorErase        = SST26_SectorErase,
-        .Read               = SST26_Read,
-        .PageWrite          = SST26_PageWrite,
-        .GeometryGet        = (GEOMETRY_GET)SST26_GeometryGet,
-        .TransferStatusGet  = (TRANSFER_STATUS_GET)SST26_TransferStatusGet
+        .Open               = DRV_SST26_Open,
+        .Close              = DRV_SST26_Close,
+        .Status             = DRV_SST26_Status,
+        .SectorErase        = DRV_SST26_SectorErase,
+        .Read               = DRV_SST26_Read,
+        .PageWrite          = DRV_SST26_PageWrite,
+        .GeometryGet        = (GEOMETRY_GET)DRV_SST26_GeometryGet,
+        .TransferStatusGet  = (TRANSFER_STATUS_GET)DRV_SST26_TransferStatusGet
     };
 
     const DRV_MEMORY_INIT drvMemory0InitData =
     {
-        .memoryDevice         = &drvMemory0DeviceAPI
+        .memDevIndex          = DRV_SST26_INDEX,
+        .memoryDevice         = &drvMemory0DeviceAPI,
+        .isFsEnabled          = true,
+        .deviceMediaType      = (uint8_t)SYS_FS_MEDIA_TYPE_SPIFLASH,
+        .ewBuffer             = &gDrvMemory0EraseBuffer[0],
+        .clientObjPool        = (uintptr_t)&gDrvMemory0ClientObject[0],
+        .bufferObj            = (uintptr_t)&gDrvMemory0BufferObject[0],
+        .queueSize            = DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0,
+        .nClientsMax          = DRV_MEMORY_CLIENTS_NUMBER_IDX0
     };
 
     //usage of DRV_MEMORY_INDEX_0 indicates usage of Flash-related APIs
@@ -318,7 +339,11 @@ typedef SYS_MEDIA_EVENT_HANDLER   DRV_MEMORY_TRANSFER_HANDLER;
 
 */
 
-SYS_MODULE_OBJ DRV_MEMORY_Initialize( const SYS_MODULE_INDEX index, const SYS_MODULE_INIT * const init );
+SYS_MODULE_OBJ DRV_MEMORY_Initialize
+(
+    const SYS_MODULE_INDEX drvIndex,
+    const SYS_MODULE_INIT * const init
+);
 
 // *************************************************************************
 /* Function:
@@ -344,16 +369,15 @@ SYS_MODULE_OBJ DRV_MEMORY_Initialize( const SYS_MODULE_INDEX index, const SYS_MO
 
     SYS_STATUS_UNINITIALIZED - Indicates the driver is not initialized.
 
+    SYS_STATUS_BUSY - Indicates the driver is in busy state.
+
   Example:
     <code>
     SYS_MODULE_OBJ      object;     // Returned from DRV_MEMORY_Initialize
     SYS_STATUS          MEMORYStatus;
 
     MEMORYStatus = DRV_MEMORY_Status(object);
-    else if (SYS_STATUS_ERROR >= MEMORYStatus)
-    {
-        // Handle error
-    }
+
     </code>
 
   Remarks:
@@ -428,7 +452,11 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object );
 
 // ****************************************************************************
 /* Function:
-    DRV_HANDLE DRV_MEMORY_Open( const SYS_MODULE_OBJ object );
+    DRV_HANDLE DRV_MEMORY_Open
+    (
+        const SYS_MODULE_INDEX drvIndex,
+        const DRV_IO_INTENT ioIntent
+    );
 
   Summary:
     Opens the specified MEMORY driver instance and returns a handle to it
@@ -446,8 +474,10 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object );
     calling DRV_MEMORY_Status().
 
   Parameters:
-    object -  Driver object handle, returned from the DRV_MEMORY_Initialize
-              routine
+    drvIndex   -  Identifier for the instance to be opened
+    ioIntent   -  Zero or more of the values from the enumeration
+                  DRV_IO_INTENT "ORed" together to indicate the intended use
+                  of the driver
 
   Returns:
     If successful, the routine returns a valid open-instance handle (a
@@ -467,9 +497,8 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object );
   Example:
     <code>
     DRV_HANDLE handle;
-    SYS_MODULE_OBJ      object;     // Returned from DRV_MEMORY_Initialize
 
-    handle = DRV_MEMORY_Open(object);
+    handle = DRV_MEMORY_Open(DRV_MEMORY_INDEX_0);
     if (DRV_HANDLE_INVALID == handle)
     {
         // Unable to open the driver
@@ -570,9 +599,6 @@ void DRV_MEMORY_Close( const DRV_HANDLE handle );
     the current status of the request.
 
   Preconditions:
-    The DRV_MEMORY_Initialize() routine must have been called for the specified
-    MEMORY driver instance.
-
     The DRV_MEMORY_Open() must have been called with DRV_IO_INTENT_WRITE or
     DRV_IO_INTENT_READWRITE as a parameter to obtain a valid opened device
     handle.
@@ -668,9 +694,6 @@ void DRV_MEMORY_AsyncErase
     memory device.
 
   Preconditions:
-    The DRV_MEMORY_Initialize() routine must have been called for the specified
-    MEMORY driver instance.
-
     The DRV_MEMORY_Open() must have been called with DRV_IO_INTENT_WRITE or
     DRV_IO_INTENT_READWRITE as a parameter to obtain a valid opened device
     handle.
@@ -765,9 +788,6 @@ bool DRV_MEMORY_SyncErase
     the current status of the request.
 
   Precondition:
-    The DRV_MEMORY_Initialize() routine must have been called for the specified
-    MEMORY driver instance.
-
     The DRV_MEMORY_Open() must have been called with DRV_IO_INTENT_WRITE or
     DRV_IO_INTENT_READWRITE as a parameter to obtain a valid opened device
     handle.
@@ -875,9 +895,6 @@ void DRV_MEMORY_AsyncEraseWrite
     of data into attached device memory.
 
   Precondition:
-    The DRV_MEMORY_Initialize() routine must have been called for the specified
-    MEMORY driver instance.
-
     The DRV_MEMORY_Open() must have been called with DRV_IO_INTENT_WRITE or
     DRV_IO_INTENT_READWRITE as a parameter to obtain a valid opened device
     handle.
@@ -976,9 +993,6 @@ bool DRV_MEMORY_SyncEraseWrite
     the current status of the request.
 
   Preconditions:
-    The DRV_MEMORY_Initialize() routine must have been called for the specified
-    MEMORY driver instance.
-
     DRV_MEMORY_Open() routine must have been called to obtain a valid opened device
     handle.
 
@@ -1094,9 +1108,6 @@ void DRV_MEMORY_AsyncWrite
     of data into attached devices memory.
 
   Preconditions:
-    The DRV_MEMORY_Initialize() routine must have been called for the specified
-    MEMORY driver instance.
-
     DRV_MEMORY_Open() routine must have been called to obtain a valid opened device
     handle.
 
@@ -1192,10 +1203,7 @@ Summary:
     - if the driver handle is invalid
 
   Precondition:
-    The DRV_MEMORY_Initialize routine must have been called for the specified
-    MEMORY driver instance.
-
-    DRV_MEMORY_Open must have been called with DRV_IO_INTENT_READ or
+    DRV_MEMORY_Open() must have been called with DRV_IO_INTENT_READ or
     DRV_IO_INTENT_READWRITE as the ioIntent to obtain a valid opened device
     handle.
 
@@ -1295,10 +1303,7 @@ Summary:
     data from the memory device attached.
 
   Precondition:
-    The DRV_MEMORY_Initialize routine must have been called for the specified
-    MEMORY driver instance.
-
-    DRV_MEMORY_Open must have been called with DRV_IO_INTENT_READ or
+    DRV_MEMORY_Open() must have been called with DRV_IO_INTENT_READ or
     DRV_IO_INTENT_READWRITE as the ioIntent to obtain a valid opened device
     handle.
 
@@ -1372,9 +1377,6 @@ bool DRV_MEMORY_SyncRead
     - Number of Blocks and their size in each region of the device
 
   Precondition:
-    The DRV_MEMORY_Initialize() routine must have been called for the
-    specified MEMORY driver instance.
-
     The DRV_MEMORY_Open() routine must have been called to obtain a valid opened device
     handle.
 
@@ -1436,9 +1438,7 @@ SYS_MEDIA_GEOMETRY * DRV_MEMORY_GeometryGet
     transfer completion events.
 
   Preconditions:
-    The DRV_MEMORY_Initialize() routine must have been called.
-
-    DRV_MEMORY_Open must have been called to obtain a valid opened device
+    DRV_MEMORY_Open() must have been called to obtain a valid opened device
     handle.
 
   Parameters:
@@ -1499,6 +1499,10 @@ MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_TransferStatusGet
 
     The application can alternatively register an event handler to receive write
     or erase operation completion events.
+
+  Preconditions:
+    DRV_MEMORY_Open() must have been called to obtain a valid opened device
+    handle.
 
   Parameters:
     handle        - A valid open-instance handle, returned from the driver's
@@ -1570,9 +1574,6 @@ DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
     "NULL" pointer to indicate no callback).
 
   Precondition:
-    The DRV_MEMORY_Initialize() routine must have been called for the
-    specified MEMORY driver instance.
-
     The DRV_MEMORY_Open() routine must have been called to obtain a valid opened
     device handle.
 
@@ -1652,9 +1653,6 @@ void DRV_MEMORY_TransferHandlerSet
     This function returns the physical attach status of the MEMORY.
 
   Precondition:
-    The DRV_MEMORY_Initialize() routine must have been called for the specified
-    MEMORY driver instance.
-
     The DRV_MEMORY_Open() routine must have been called to obtain a valid opened
     device handle.
 
@@ -1696,9 +1694,6 @@ bool DRV_MEMORY_IsAttached
     This function returns the write protect status of the MEMORY.
 
   Precondition:
-    The DRV_MEMORY_Initialize() routine must have been called for the specified
-    MEMORY driver instance.
-
     The DRV_MEMORY_Open() routine must have been called to obtain a valid opened
     device handle.
 
@@ -1741,9 +1736,6 @@ bool DRV_MEMORY_IsWriteProtected
     This function returns the MEMORY Media start address.
 
   Precondition:
-    The DRV_MEMORY_Initialize() routine must have been called for the specified
-    MEMORY driver instance.
-
     The DRV_MEMORY_Open() routine must have been called to obtain a valid opened
     device handle.
 

@@ -119,11 +119,6 @@ static inline void DRV_MEMORY_UPDATE_TOKEN(uint16_t token)
     token = (token == DRV_MEMORY_TOKEN_MAX) ? 1: token;
 }
 
-static void DRV_MEMORY_CallbackHandler( uintptr_t context )
-{
-    return;
-}
-
 /* This functions generates the Free pool of buffer objects */
 static void DRV_MEMORY_BufferObjectsInit( DRV_MEMORY_OBJECT *dObj )
 {
@@ -313,7 +308,7 @@ static bool DRV_MEMORY_UpdateGeometry( DRV_MEMORY_OBJECT *dObj )
 {
     MEMORY_DEVICE_GEOMETRY  memoryDeviceGeometry = { 0 };
 
-    if (dObj->memoryDevice->GeometryGet(&memoryDeviceGeometry) == false)
+    if (dObj->memoryDevice->GeometryGet(dObj->memDevHandle, &memoryDeviceGeometry) == false)
     {
         return false;
     }
@@ -356,12 +351,38 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleRead
 )
 {
     uint32_t transferStatus = MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
+    uint32_t address = 0;
 
-    uint32_t address = (blockStart * dObj->mediaGeometryTable[0].blockSize) + dObj->blockStartAddress;
-
-    if (dObj->memoryDevice->Read((uint32_t *)data, nBlocks, address) == true)
+    switch (dObj->readState)
     {
-        transferStatus = MEMORY_DEVICE_TRANSFER_COMPLETED;
+        case DRV_MEMORY_READ_INIT:
+        default:
+        {
+            address = (blockStart * dObj->mediaGeometryTable[0].blockSize) + dObj->blockStartAddress;
+            dObj->readState = DRV_MEMORY_READ_MEM;
+            /* Fall through */
+        }
+
+        case DRV_MEMORY_READ_MEM:
+        {
+            if (dObj->memoryDevice->Read(dObj->memDevHandle, (void *)data, nBlocks, address) == true)
+            {
+                dObj->readState = DRV_MEMORY_READ_MEM_STATUS;
+                transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
+                /* Fall through For immediate check */
+            }
+            else
+            {
+                /* Break in case of failure */
+                break;
+            }
+        }
+
+        case DRV_MEMORY_READ_MEM_STATUS:
+        {
+            transferStatus = dObj->memoryDevice->TransferStatusGet(dObj->memDevHandle);
+            break;
+        }
     }
 
     return ((MEMORY_DEVICE_TRANSFER_STATUS)transferStatus);
@@ -392,7 +413,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleWrite
 
         case DRV_MEMORY_WRITE_MEM:
         {
-            if (dObj->memoryDevice->PageWrite((uint32_t *)dObj->writePtr, dObj->blockAddress) == true)
+            if (dObj->memoryDevice->PageWrite(dObj->memDevHandle, (void *)dObj->writePtr, dObj->blockAddress) == true)
             {
                 dObj->writeState = DRV_MEMORY_WRITE_MEM_STATUS;
                 transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
@@ -407,7 +428,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleWrite
 
         case DRV_MEMORY_WRITE_MEM_STATUS:
         {
-            transferStatus = dObj->memoryDevice->TransferStatusGet();
+            transferStatus = dObj->memoryDevice->TransferStatusGet(dObj->memDevHandle);
 
             if (transferStatus == MEMORY_DEVICE_TRANSFER_COMPLETED)
             {
@@ -454,7 +475,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleErase
 
         case DRV_MEMORY_ERASE_CMD:
         {
-            if (dObj->memoryDevice->SectorErase(dObj->blockAddress) == true)
+            if (dObj->memoryDevice->SectorErase(dObj->memDevHandle, dObj->blockAddress) == true)
             {
                 dObj->eraseState = DRV_MEMORY_ERASE_CMD_STATUS;
                 transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
@@ -469,7 +490,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleErase
 
         case DRV_MEMORY_ERASE_CMD_STATUS:
         {
-            transferStatus = dObj->memoryDevice->TransferStatusGet();
+            transferStatus = dObj->memoryDevice->TransferStatusGet(dObj->memDevHandle);
 
             if (transferStatus == MEMORY_DEVICE_TRANSFER_COMPLETED)
             {
@@ -511,6 +532,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
         case DRV_MEMORY_EW_INIT:
         default:
         {
+            dObj->readState  = DRV_MEMORY_READ_INIT;
             dObj->eraseState = DRV_MEMORY_ERASE_INIT;
             dObj->writeState = DRV_MEMORY_WRITE_INIT;
 
@@ -655,6 +677,21 @@ static void DRV_MEMORY_SetupXfer
 
     if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
     {
+        /* For Memory Device which do not support Erase */
+        if (dObj->memoryDevice->SectorErase == NULL)
+        {
+            if (opType == DRV_MEMORY_OPERATION_TYPE_ERASE)
+            {
+                OSAL_MUTEX_Unlock(&dObj->transferMutex);
+                return;
+            }
+            else if (opType == DRV_MEMORY_OPERATION_TYPE_ERASE_WRITE)
+            {
+                opType = DRV_MEMORY_OPERATION_TYPE_WRITE;
+            }
+            
+        }
+
         DRV_MEMORY_AllocateBufferObject (clientObj, commandHandle, buffer, blockStart, nBlock, opType);
 
         OSAL_MUTEX_Unlock(&dObj->transferMutex);
@@ -691,26 +728,24 @@ SYS_MODULE_OBJ DRV_MEMORY_Initialize
         return SYS_MODULE_OBJ_INVALID;
     }
 
+    dObj = &gDrvMemoryObj[drvIndex];
+
     /* Check if the instance has already been initialized. */
-    if (gDrvMemoryObj[drvIndex].inUse)
+    if (dObj->inUse)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    /* Assign to the local pointer the init data passed */
-    memoryInit = (DRV_MEMORY_INIT *)init;
-
-    dObj = &gDrvMemoryObj[drvIndex];
+    dObj->status = SYS_STATUS_UNINITIALIZED;
 
     /* Indicate that this object is in use */
     dObj->inUse = true;
 
+    /* Assign to the local pointer the init data passed */
+    memoryInit = (DRV_MEMORY_INIT *)init;
+
     /* Initialize number of clients */
     dObj->numClients = 0;
-
-    /* Set the driver state as busy as the Flash needs to be initialized and
-     * queried for the SFDP data. */
-    dObj->status              = SYS_STATUS_BUSY;
 
     dObj->clientObjPool       = (DRV_MEMORY_CLIENT_OBJECT *)memoryInit->clientObjPool;
     dObj->nClientsMax         = memoryInit->nClientsMax;
@@ -724,25 +759,16 @@ SYS_MODULE_OBJ DRV_MEMORY_Initialize
 
     DRV_MEMORY_BufferObjectsInit(dObj);
 
-    dObj->inInterruptMode = memoryInit->inInterruptMode;
-
     /* Initialize the attached memory device functions */
     dObj->memoryDevice = memoryInit->memoryDevice;
+
+    dObj->memDevIndex = memoryInit->memDevIndex;
+    dObj->memDevHandle = DRV_HANDLE_INVALID;
 
     /* Set the erase buffer */
     dObj->ewBuffer = memoryInit->ewBuffer;
 
     dObj->state = DRV_MEMORY_INIT_DEVICE;
-
-    if (dObj->memoryDevice->callbackRegister)
-    {
-        dObj->memoryDevice->callbackRegister(DRV_MEMORY_CallbackHandler, (uintptr_t)dObj);
-    }
-
-    if (memoryInit->isFsEnabled == true)
-    {
-        DRV_MEMORY_RegisterWithSysFs(drvIndex, memoryInit->deviceMediaType);
-    }
 
     if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FALSE)
     {
@@ -755,6 +781,15 @@ SYS_MODULE_OBJ DRV_MEMORY_Initialize
         /* There was insufficient memory available for the mutex to be created */
         return SYS_MODULE_OBJ_INVALID;
     }
+
+    if (memoryInit->isFsEnabled == true)
+    {
+        DRV_MEMORY_RegisterWithSysFs(drvIndex, memoryInit->deviceMediaType);
+    }
+
+    /* Set the driver state as busy as the attached memory device needs to be opened and
+     * queried for the geometry data. */
+    dObj->status  = SYS_STATUS_BUSY;
 
     /* Return the driver index */
     return drvIndex;
@@ -985,7 +1020,7 @@ MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_TransferStatusGet
 
     dObj = &gDrvMemoryObj[clientObj->drvIndex];
 
-    return ((MEMORY_DEVICE_TRANSFER_STATUS)dObj->memoryDevice->TransferStatusGet());
+    return ((MEMORY_DEVICE_TRANSFER_STATUS)dObj->memoryDevice->TransferStatusGet(dObj->memDevHandle));
 }
 
 DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
@@ -1059,6 +1094,32 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object )
     {
         case DRV_MEMORY_INIT_DEVICE:
         {
+            if (dObj->memoryDevice->Status != NULL)
+            {
+                if (dObj->memoryDevice->Status(dObj->memDevIndex) != SYS_STATUS_READY)
+                {
+                    /* Stay in same state until attached memory device is ready */
+                    break;
+                }
+            }
+
+            dObj->state = DRV_MEMORY_DEVICE_OPEN;
+            /* Fall Through */
+        }
+
+        case DRV_MEMORY_DEVICE_OPEN:
+        {
+            if (dObj->memoryDevice->Open != NULL)
+            {
+                dObj->memDevHandle = dObj->memoryDevice->Open(dObj->memDevIndex, DRV_IO_INTENT_EXCLUSIVE);
+
+                if (dObj->memDevHandle == DRV_HANDLE_INVALID)
+                {
+                    /* Stay here until Open is Successful */
+                    break;
+                }
+            }
+
             dObj->state = DRV_MEMORY_GEOMETRY_UPDATE;
             /* Fall Through */
         }
@@ -1069,7 +1130,6 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object )
             {
                 dObj->state = DRV_MEMORY_PROCESS_QUEUE;
                 dObj->status = SYS_STATUS_READY;
-
             }
 
             break;
@@ -1089,9 +1149,10 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object )
             else
             {
                 /* Init the various sub state machines. */
-                dObj->eraseState = DRV_MEMORY_ERASE_INIT;
+                dObj->readState  = DRV_MEMORY_READ_INIT;
                 dObj->writeState = DRV_MEMORY_WRITE_INIT;
-                dObj->ewState = DRV_MEMORY_EW_INIT;
+                dObj->eraseState = DRV_MEMORY_ERASE_INIT;
+                dObj->ewState    = DRV_MEMORY_EW_INIT;
 
                 dObj->state = DRV_MEMORY_TRANSFER;
 

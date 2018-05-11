@@ -3,16 +3,14 @@
 ################################################################################
 
 memoryDeviceUsed            = None
-memoryDeviceStartAddr       = None
-memoryDeviceEraseBufferSize = None
-memoryDeviceEraseComment    = None
-memoryDeviceInterruptEnable = None
-memoryDeviceInterruptSource = None
+memoryPlibUsed              = None
+memoryDeviceEraseEnable     = None
 memoryDeviceComment         = None
+memoryPlibSourceFile        = None
+memoryPlibHeaderFile        = None
+memoryPlibSystemDefFile     = None
 
 mediaTypes =  ["SYS_FS_MEDIA_TYPE_NVM",
-                "SYS_FS_MEDIA_TYPE_MSD",
-                "SYS_FS_MEDIA_TYPE_SD_CARD",
                 "SYS_FS_MEDIA_TYPE_RAM",
                 "SYS_FS_MEDIA_TYPE_SPIFLASH"]
 
@@ -84,12 +82,12 @@ def setFileSystemCounter(symbol, event):
 
 def instantiateComponent(memoryComponent, index):
     global memoryDeviceUsed
-    global memoryDeviceStartAddr
     global memoryDeviceComment
-    global memoryDeviceEraseBufferSize
-    global memoryDeviceInterruptEnable
-    global memoryDeviceInterruptSource
-    global memoryDeviceEraseComment
+    global memoryDeviceEraseEnable
+    global memoryPlibSourceFile
+    global memoryPlibHeaderFile
+    global memoryPlibSystemDefFile
+    global memoryPlibUsed
 
     # Enable dependent Harmony core components
     Database.clearSymbolValue("Harmony", "ENABLE_DRV_COMMON")
@@ -138,7 +136,7 @@ def instantiateComponent(memoryComponent, index):
     memorySymBufPool.setLabel("Buffer Queue Size")
     memorySymBufPool.setMin(1)
     memorySymBufPool.setDefaultValue(1)
-    memorySymBufPool.setVisible(True)
+    memorySymBufPool.setVisible((Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == 0))
     memorySymBufPool.setReadOnly((memoryFsEnable.getValue() == True))
     memorySymBufPool.setDependencies(setMemoryBuffer, ["DRV_MEMORY_FS_ENABLE", "drv_memory.DRV_MEMORY_COMMON_MODE"])
 
@@ -146,34 +144,21 @@ def instantiateComponent(memoryComponent, index):
     memoryDeviceUsed.setLabel("Memory Device Used")
     memoryDeviceUsed.setReadOnly(True)
 
+    memoryPlibUsed = memoryComponent.createStringSymbol("DRV_MEMORY_PLIB", None)
+    memoryPlibUsed.setLabel("Plib Used")
+    memoryPlibUsed.setVisible(False)
+    memoryPlibUsed.setReadOnly(True)
+
     memoryDeviceComment = memoryComponent.createCommentSymbol("DRV_MEMORY_DEVICE_COMMENT", None)
     memoryDeviceComment.setVisible(False)
     memoryDeviceComment.setLabel("*** Configure Memory Device in Memory Device Configurations ***")
 
-    memoryDeviceStartAddr = memoryComponent.createHexSymbol("DRV_MEMORY_DEVICE_START_ADDRESS", None)
-    memoryDeviceStartAddr.setLabel("Memory Device Start Address")
-    memoryDeviceStartAddr.setVisible(False)
-    memoryDeviceStartAddr.setReadOnly(True)
-    memoryDeviceStartAddr.setDependencies(setMemoryDeviceValue, ["drv_memory_memory_dev_dependency:START_ADDRESS"])
-
-    memoryDeviceEraseBufferSize = memoryComponent.createIntegerSymbol("DRV_MEMORY_ERASE_BUFF_SIZE", None)
-    memoryDeviceEraseBufferSize.setLabel("Memory Device Erase Buffer Size")
-    memoryDeviceEraseBufferSize.setVisible(False)
-    memoryDeviceEraseBufferSize.setReadOnly(True)
-    memoryDeviceEraseBufferSize.setDependencies(setMemoryDeviceValue, ["drv_memory_memory_dev_dependency:ERASE_BUFFER_SIZE"])
-
-    memoryDeviceInterruptEnable = memoryComponent.createBooleanSymbol("DRV_MEMORY_INTERRUPT_ENABLE", None)
-    memoryDeviceInterruptEnable.setLabel("Enable Interrupt Mode for Memory Driver")
-    memoryDeviceInterruptEnable.setVisible(False)
-    memoryDeviceInterruptEnable.setDefaultValue(False)
-    memoryDeviceInterruptEnable.setReadOnly(True)
-    memoryDeviceInterruptEnable.setDependencies(setMemoryDeviceValue, ["drv_memory_memory_dev_dependency:INTERRUPT_ENABLE"])
-
-    memoryDeviceInterruptSource = memoryComponent.createStringSymbol("DRV_MEMORY_INTERRUPT_SOURCE", None)
-    memoryDeviceInterruptSource.setLabel("Memory Device Interrupt Source")
-    memoryDeviceInterruptSource.setVisible(False)
-    memoryDeviceInterruptSource.setReadOnly(True)
-    memoryDeviceInterruptSource.setDependencies(setMemoryDeviceValue, ["drv_memory_memory_dev_dependency:INTERRUPT_SOURCE"])
+    memoryDeviceEraseEnable = memoryComponent.createBooleanSymbol("DRV_MEMORY_ERASE_ENABLE", None)
+    memoryDeviceEraseEnable.setLabel("Enable Erase for Memory Device")
+    memoryDeviceEraseEnable.setVisible(False)
+    memoryDeviceEraseEnable.setDefaultValue(False)
+    memoryDeviceEraseEnable.setReadOnly(True)
+    memoryDeviceEraseEnable.setDependencies(setMemoryDeviceValue, ["drv_memory_MEMORY_dependency:ERASE_ENABLE"])
 
     memoryDeviceMediaType = memoryComponent.createComboSymbol("DRV_MEMORY_DEVICE_TYPE", None, mediaTypes)
     memoryDeviceMediaType.setLabel("Memory Device Type")
@@ -181,6 +166,7 @@ def instantiateComponent(memoryComponent, index):
     memoryDeviceMediaType.setVisible((memoryFsEnable.getValue() == True))
     memoryDeviceMediaType.setDependencies(setVisible, ["DRV_MEMORY_FS_ENABLE"])
 
+    # RTOS Settings 
     memoryRTOSMenu = memoryComponent.createMenuSymbol(None, None)
     memoryRTOSMenu.setLabel("RTOS settings")
     memoryRTOSMenu.setDescription("RTOS settings")
@@ -209,7 +195,7 @@ def instantiateComponent(memoryComponent, index):
 
     memoryRTOSTaskDelayVal = memoryComponent.createIntegerSymbol("DRV_MEMORY_RTOS_DELAY", memoryRTOSMenu)
     memoryRTOSTaskDelayVal.setLabel("Task Delay")
-    memoryRTOSTaskDelayVal.setDefaultValue(1000) 
+    memoryRTOSTaskDelayVal.setDefaultValue(10) 
     memoryRTOSTaskDelayVal.setVisible((memoryRTOSTaskDelay.getValue() == True))
     memoryRTOSTaskDelayVal.setDependencies(setVisible, ["DRV_MEMORY_RTOS_USE_DELAY"])
 
@@ -235,6 +221,31 @@ def instantiateComponent(memoryComponent, index):
     memoryHeaderDefFile.setProjectPath("config/" + configName + "/driver/memory/")
     memoryHeaderDefFile.setType("HEADER")
     memoryHeaderDefFile.setOverwrite(True)
+
+    memoryPlibSourceFile = memoryComponent.createFileSymbol("DRV_MEMORY_PLIB_SOURCE", None)
+    memoryPlibSourceFile.setSourcePath("driver/memory/templates/drv_memory_plib.c.ftl")
+    memoryPlibSourceFile.setDestPath("driver/memory/src")
+    memoryPlibSourceFile.setProjectPath("config/" + configName + "/driver/memory/")
+    memoryPlibSourceFile.setType("SOURCE")
+    memoryPlibSourceFile.setOverwrite(True)
+    memoryPlibSourceFile.setMarkup(True)
+    memoryPlibSourceFile.setEnabled(False)
+
+    memoryPlibHeaderFile = memoryComponent.createFileSymbol("DRV_MEMORY_PLIB_HEADER", None)
+    memoryPlibHeaderFile.setSourcePath("driver/memory/templates/drv_memory_plib.h.ftl")
+    memoryPlibHeaderFile.setDestPath("driver/memory/")
+    memoryPlibHeaderFile.setProjectPath("config/" + configName + "/driver/memory/")
+    memoryPlibHeaderFile.setType("HEADER")
+    memoryPlibHeaderFile.setOverwrite(True)
+    memoryPlibHeaderFile.setMarkup(True)
+    memoryPlibHeaderFile.setEnabled(False)
+
+    memoryPlibSystemDefFile = memoryComponent.createFileSymbol("DRV_MEMORY_PLIB_SYS_DEF", None)
+    memoryPlibSystemDefFile.setType("STRING")
+    memoryPlibSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
+    memoryPlibSystemDefFile.setSourcePath("driver/memory/templates/system/system_definitions_plib.h.ftl")
+    memoryPlibSystemDefFile.setMarkup(True)
+    memoryPlibSystemDefFile.setEnabled(False)
 
     # Async Source Files
     memoryAsyncSourceFile = memoryComponent.createFileSymbol("DRV_MEMORY_ASYNC_SOURCE", None)
@@ -320,26 +331,60 @@ def destroyComponent(memoryComponent):
 
 def onDependentComponentAdded(memoryComponent, id, remoteComponent):
     global memoryDeviceUsed
-    global memoryDeviceStartAddr
     global memoryDeviceComment
-    global memoryDeviceEraseBufferSize
-    global memoryDeviceInterruptEnable
-    global memoryDeviceInterruptSource
+    global memoryDeviceEraseEnable
+    global memoryPlibSourceFile
+    global memoryPlibHeaderFile
+    global memoryPlibSystemDefFile
+    global memoryPlibUsed
 
     if (id == "drv_memory_MEMORY_dependency") :
         remoteId = remoteComponent.getID()
 
         memoryDeviceUsed.clearValue()
-        memoryDeviceUsed.setValue(remoteId.upper(), 2)
+        memoryDeviceUsed.setValue(remoteId.upper(), 1)
+
+        memoryPlibUsed.clearValue()
 
         memoryDeviceComment.setVisible(True)
 
-        memoryDeviceInterruptEnable.setValue(remoteComponent.getSymbolValue("INTERRUPT_ENABLE"), 1)
-
-        memoryDeviceInterruptSource.setValue(remoteComponent.getSymbolValue("INTERRUPT_SOURCE"), 1)
-
-        memoryDeviceStartAddr.setValue(remoteComponent.getSymbolValue("START_ADDRESS"), 1)
-
-        memoryDeviceEraseBufferSize.setValue(remoteComponent.getSymbolValue("ERASE_BUFFER_SIZE"), 1)
+        memoryDeviceEraseEnable.setValue(remoteComponent.getSymbolValue("ERASE_ENABLE"), 1)
 
         remoteComponent.setSymbolValue("DRV_MEMORY_CONNECTED", True, 1)
+
+        # If a PLIB is directly connected create plib wrappers
+        if ("drv_" not in remoteId):
+            memoryPlibUsed.setValue("DRV_" + remoteId.upper(), 1)
+            memoryPlibSourceFile.setOutputName("drv_memory_" + remoteId +".c")
+            memoryPlibHeaderFile.setOutputName("drv_memory_" + remoteId +".h")
+            memoryPlibSourceFile.setEnabled(True)
+            memoryPlibHeaderFile.setEnabled(True)
+            memoryPlibSystemDefFile.setEnabled(True)
+
+def onDependentComponentRemoved(memoryComponent, id, remoteComponent):
+    global memoryDeviceUsed
+    global memoryDeviceComment
+    global memoryDeviceEraseEnable
+    global memoryPlibSourceFile
+    global memoryPlibHeaderFile
+    global memoryPlibSystemDefFile
+    global memoryPlibUsed
+
+    if (id == "drv_memory_MEMORY_dependency") :
+        remoteId = remoteComponent.getID()
+
+        memoryDeviceUsed.clearValue()
+
+        memoryPlibUsed.clearValue()
+
+        memoryDeviceComment.setVisible(False)
+
+        memoryDeviceEraseEnable.clearValue()
+
+        remoteComponent.setSymbolValue("DRV_MEMORY_CONNECTED", False, 1)
+
+        # If PLIB was connected
+        if ("drv_" not in remoteId):
+            memoryPlibSourceFile.setEnabled(False)
+            memoryPlibHeaderFile.setEnabled(False)
+            memoryPlibSystemDefFile.setEnabled(False)

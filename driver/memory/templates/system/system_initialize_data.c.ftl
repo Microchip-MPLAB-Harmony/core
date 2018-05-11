@@ -1,6 +1,8 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance ${INDEX?string} Initialization Data">
 
-uint8_t gDrvMemory${INDEX?string}EraseBuffer[DRV_MEMORY_ERASE_BUFFER_SIZE_IDX${INDEX?string}] __attribute__((aligned(32)));
+<#if DRV_MEMORY_ERASE_ENABLE >
+    <#lt>uint8_t gDrvMemory${INDEX?string}EraseBuffer[${DRV_MEMORY_DEVICE}_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
+</#if>
 
 DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX${INDEX?string}] = { 0 };
 
@@ -8,16 +10,45 @@ DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY_CLIENT
     <#lt>DRV_MEMORY_BUFFER_OBJECT gDrvMemory${INDEX?string}BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX${INDEX?string}] = { 0 };
 </#if>
 
-const MEMORY_DEVICE_API drvMemory${INDEX?string}DeviceAPI = {
-    .SectorErase        = ${DRV_MEMORY_DEVICE}_SectorErase,
-    .Read               = ${DRV_MEMORY_DEVICE}_Read,
-    .PageWrite          = ${DRV_MEMORY_DEVICE}_PageWrite,
-    .GeometryGet        = (GEOMETRY_GET)${DRV_MEMORY_DEVICE}_GeometryGet,
-    .TransferStatusGet  = (TRANSFER_STATUS_GET)${DRV_MEMORY_DEVICE}_TransferStatusGet
-};
+<#if DRV_MEMORY_PLIB?has_content >
+    <#lt>const MEMORY_DEVICE_API drvMemory${INDEX?string}DeviceAPI = {
+    <#lt>    .Open               = ${DRV_MEMORY_PLIB}_Open,
+    <#lt>    .Close              = ${DRV_MEMORY_PLIB}_Close,
+    <#lt>    .Status             = ${DRV_MEMORY_PLIB}_Status,
+    <#lt><#if DRV_MEMORY_ERASE_ENABLE >
+    <#lt>    .SectorErase        = ${DRV_MEMORY_PLIB}_SectorErase,
+    <#lt><#else>
+    <#lt>    .SectorErase        = NULL,
+    <#lt></#if>
+    <#lt>    .Read               = ${DRV_MEMORY_PLIB}_Read,
+    <#lt>    .PageWrite          = ${DRV_MEMORY_PLIB}_PageWrite,
+    <#lt>    .GeometryGet        = (GEOMETRY_GET)${DRV_MEMORY_PLIB}_GeometryGet,
+    <#lt>    .TransferStatusGet  = (TRANSFER_STATUS_GET)${DRV_MEMORY_PLIB}_TransferStatusGet
+    <#lt>};
+<#else>
+    <#lt>const MEMORY_DEVICE_API drvMemory${INDEX?string}DeviceAPI = {
+    <#lt>    .Open               = ${DRV_MEMORY_DEVICE}_Open,
+    <#lt>    .Close              = ${DRV_MEMORY_DEVICE}_Close,
+    <#lt>    .Status             = ${DRV_MEMORY_DEVICE}_Status,
+    <#lt><#if DRV_MEMORY_ERASE_ENABLE >
+    <#lt>    .SectorErase        = ${DRV_MEMORY_DEVICE}_SectorErase,
+    <#lt><#else>
+    <#lt>    .SectorErase        = NULL,
+    <#lt></#if>
+    <#lt>    .Read               = ${DRV_MEMORY_DEVICE}_Read,
+    <#lt>    .PageWrite          = ${DRV_MEMORY_DEVICE}_PageWrite,
+    <#lt>    .GeometryGet        = (GEOMETRY_GET)${DRV_MEMORY_DEVICE}_GeometryGet,
+    <#lt>    .TransferStatusGet  = (TRANSFER_STATUS_GET)${DRV_MEMORY_DEVICE}_TransferStatusGet
+    <#lt>};
+</#if>
 
 const DRV_MEMORY_INIT drvMemory${INDEX?string}InitData =
 {
+<#if DRV_MEMORY_PLIB?has_content >
+    .memDevIndex          = 0,
+<#else>
+    .memDevIndex          = ${DRV_MEMORY_DEVICE}_INDEX,
+</#if>
     .memoryDevice         = &drvMemory${INDEX?string}DeviceAPI,
 <#if DRV_MEMORY_FS_ENABLE >
     .isFsEnabled          = true,
@@ -25,11 +56,11 @@ const DRV_MEMORY_INIT drvMemory${INDEX?string}InitData =
 <#else>
     .isFsEnabled          = false,
 </#if>
-    .inInterruptMode      = ${DRV_MEMORY_INTERRUPT_ENABLE?string},
-<#if DRV_MEMORY_INTERRUPT_ENABLE >
-    .interruptSource      = DRV_MEMORY_INT_SRC_IDX${INDEX?string},
-</#if>
+<#if DRV_MEMORY_ERASE_ENABLE >
     .ewBuffer             = &gDrvMemory${INDEX?string}EraseBuffer[0],
+<#else>
+    .ewBuffer             = NULL,
+</#if>
     .clientObjPool        = (uintptr_t)&gDrvMemory${INDEX?string}ClientObject[0],
 <#if drv_memory.DRV_MEMORY_COMMON_MODE == "ASYNC" >
     .bufferObj            = (uintptr_t)&gDrvMemory${INDEX?string}BufferObject[0],

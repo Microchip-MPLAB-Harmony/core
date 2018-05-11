@@ -183,6 +183,32 @@ typedef enum
 
 typedef enum
 {
+    /* Read init state */
+    DRV_MEMORY_READ_INIT = 0,
+
+    /* Read command state */
+    DRV_MEMORY_READ_MEM,
+
+    /* Read command status state */
+    DRV_MEMORY_READ_MEM_STATUS
+
+} DRV_MEMORY_READ_STATE;
+
+// *****************************************************************************
+/* MEMORY Driver write states.
+
+  Summary:
+    Enumeration listing the MEMORY driver's write states.
+
+  Description:
+    This enumeration defines the possible MEMORY driver's write states.
+
+  Remarks:
+    None
+*/
+
+typedef enum
+{
     /* Write init state */
     DRV_MEMORY_WRITE_INIT = 0,
 
@@ -250,9 +276,11 @@ typedef enum
 
 typedef enum
 {
-    /* Check if the SQI driver is ready. If ready open the SQI driver instance.
-     * */
+    /* Check if the attached memory device is ready. */
     DRV_MEMORY_INIT_DEVICE = 0,
+
+    /* Open Attached Memory Device if Ready */
+    DRV_MEMORY_DEVICE_OPEN,
 
     /* Read the SST flash ID */
     DRV_MEMORY_GEOMETRY_UPDATE,
@@ -337,11 +365,14 @@ typedef struct
     /* The status of the driver */
     SYS_STATUS status;
 
-    /* Erase state */
-    DRV_MEMORY_ERASE_STATE eraseState;
+    /* Read state */
+    DRV_MEMORY_READ_STATE readState;
 
     /* Write state */
     DRV_MEMORY_WRITE_STATE writeState;
+
+    /* Erase state */
+    DRV_MEMORY_ERASE_STATE eraseState;
 
     /* Erase write state */
     DRV_MEMORY_EW_STATE ewState;
@@ -395,16 +426,13 @@ typedef struct
      */
     uint16_t bufferToken;
 
-    /* Interrupt mode for attached device */
-    bool inInterruptMode;
+    /* Attached Memory Device index */
+    SYS_MODULE_INDEX memDevIndex;
 
-    /* Interrupt Source of Attached device */
-    INT_SOURCE interruptSource;
+    /* Attached Memory Device Handle */
+    DRV_HANDLE memDevHandle;
 
-    /* Interrupt status flag*/
-    bool intStatus;
-
-    /* Flash Device functions */
+    /* Attached Memory Device functions */
     const MEMORY_DEVICE_API *memoryDevice;
 
     /* Pointer to the current buffer object */

@@ -54,7 +54,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 */
 
 <#if DRV_MEMORY_COMMON_FS_ENABLE >
-
     <#lt>#include "system/fs/sys_fs_media_manager.h"
     <#lt>
     <#lt>// *****************************************************************************
@@ -101,28 +100,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
         <#lt>);
     </#if>
 </#if>
-
-// *****************************************************************************
-/* Interrupt Source Control
-
-  Summary:
-    Macros to enable, disable or clear the interrupt source
-
-  Description:
-    This macro enables, disables or clears the interrupt source
-
-    The macros get mapped to the respective SYS module APIs if the driver instance
-    is configured to interrupt mode.
- 
-  Remarks:
-    This macro is mandatory
-*/
-
-#define _DRV_MEMORY_InterruptSourceEnable(source)          SYS_INT_SourceEnable( source )
-#define _DRV_MEMORY_InterruptSourceDisable(source)         SYS_INT_SourceDisable( source )
-#define _DRV_MEMORY_InterruptSourceClear(source)           SYS_INT_SourceStatusClear( source )
-
-#define _DRV_MEMORY_InterruptSourceStatusGet(source)       SYS_INT_SourceStatusGet( source )
 
 #endif //_DRV_MEMORY_VARIANT_MAPPING_H
 
