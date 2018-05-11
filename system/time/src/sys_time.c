@@ -34,19 +34,37 @@ static SYS_TIME_TIMER_OBJ * time_getTimerObject(SYS_TIME_HANDLE handle)
     return (&timers[handle & _SYS_TIME_HANDLE_TOKEN_MAX]);
 }
 
-static void timeToCounter_update(SYS_TIME_COUNTER_OBJ * counterObj)
+static void timerHardwarePeriod_update(SYS_TIME_COUNTER_OBJ *counterObj)
 {
-    uintmax_t tempCount = ((uintmax_t)counterObj->counter + (uintmax_t)counterObj->tmrActive->timeRelActive);
+    uint32_t hardwareCounter = counterObj->timePlib->timerCounterGet();
+    TIME countNeeded = 0;
+    uint32_t hardwarePeriod = 0;
 
-    if(tempCount > COUNTER_MAX)
+    if(counterObj->tmrActive->timeRemaining > HW_COUNTER_MAX)
     {
-        counterObj->timeToCounter = counterObj->tmrActive->timeRelActive - (COUNTER_MAX - counterObj->counter);
-        counterObj->tmrRollover = true;
+        hardwarePeriod = HW_COUNTER_MAX;
     }
     else
     {
-        counterObj->timeToCounter = (TIME)tempCount;
+        countNeeded = (counterObj->tmrActive->timeRemaining + hardwareCounter);
+        if(countNeeded > HW_COUNTER_MAX)
+        {
+            hardwarePeriod = (countNeeded - HW_COUNTER_MAX);
+        }
+        else
+        {
+            hardwarePeriod = countNeeded;
+        }
     }
+
+    if(hardwarePeriod != counterObj->timePeriod)
+    {
+        counterObj->timePeriodPrevious = counterObj->timePeriod;
+        counterObj->timePeriod = hardwarePeriod;
+        counterObj->timePlib->timerPeriodSet(counterObj->timePeriod);
+    }
+
+    return;
 }
 
 static void timer_removeFromList(SYS_TIME_TIMER_OBJ *timer)
@@ -62,11 +80,14 @@ static void timer_removeFromList(SYS_TIME_TIMER_OBJ *timer)
         {
             if(counter->tmrElapsed == false)
             {
-                tmr->tmrNext->timeRelActive += (counter->timeToCounter - counter->counter);
+                tmr->tmrNext->timeRemaining += tmr->timeRemaining;;
             }
 
             counter->tmrActive = tmr->tmrNext;
-            timeToCounter_update(counter);
+
+            /* Reset removed timer */
+            timer->timeRemaining = timer->time;
+            timer->tmrNext = NULL;
             break;
         }
         else if(tmr->tmrNext == timer)
@@ -74,9 +95,10 @@ static void timer_removeFromList(SYS_TIME_TIMER_OBJ *timer)
             tmr->tmrNext = timer->tmrNext;
 
             /* Update next timer relative time */
-            tmr->tmrNext->timeRelActive += timer->timeRelActive;
+            tmr->tmrNext->timeRemaining += timer->timeRemaining;
 
-            timer->timeRelActive = timer->time;
+            /* Reset removed timer */
+            timer->timeRemaining = timer->time;
             timer->tmrNext = NULL;
             break;
         }
@@ -84,6 +106,10 @@ static void timer_removeFromList(SYS_TIME_TIMER_OBJ *timer)
         {
             tmr = tmr->tmrNext;
         }
+
+        /* Reset time remaining to requested time */
+        tmr->timeRemaining = tmr->time;
+
     }while(tmr->tmrNext != NULL);
 
     time_resourceUnlock();
@@ -104,12 +130,11 @@ static void timer_addToList(SYS_TIME_TIMER_OBJ *timer)
      * timeout */
     while(tmr != NULL)
     {
-        timeTotal += tmr->timeRelActive;
-        if(timeTotal > timer->time)
+        timeTotal += tmr->timeRemaining;
+        if(timeTotal > timer->timeRemaining)
         {
             break;
         }
-
         prevTmr = tmr;
         tmr = tmr->tmrNext;
     }
@@ -118,15 +143,27 @@ static void timer_addToList(SYS_TIME_TIMER_OBJ *timer)
     /* If new timer has to be first timer */
     if(tmr == counter->tmrActive)
     {
-        timer->timeRelActive = timer->time;
-        timer->tmrNext = tmr;
+        timer->tmrNext = prevTmr;
         counter->tmrActive = timer;
         counter->tmrElapsed = false;
-        timeToCounter_update(counter);
+
+        /* If application context, update period */
+        if(counter->interruptContext == false)
+        {
+            timerHardwarePeriod_update(counter);
+        }
     }
     else
     {
-        timer->timeRelActive = timer->time - (timeTotal - tmr->timeRelActive);
+        if(tmr != NULL)
+        {
+            timer->timeRemaining -= (timeTotal - tmr->timeRemaining);
+        }
+        else
+        {
+            timer->timeRemaining -= timeTotal;
+        }
+
         timer->tmrNext = tmr;
         prevTmr->tmrNext = timer;
     }
@@ -134,7 +171,7 @@ static void timer_addToList(SYS_TIME_TIMER_OBJ *timer)
     /* Adjust next timer to new relative time if it's not NULL */
     if(timer->tmrNext != NULL)
     {
-        timer->tmrNext->timeRelActive -= timer->timeRelActive;
+        timer->tmrNext->timeRemaining -= timer->timeRemaining;
     }
 
     time_resourceUnlock();
@@ -155,7 +192,6 @@ static void timer_update(SYS_TIME_COUNTER_OBJ * counterObj)
     else
     {
         timerObj->active = false;
-        counterObj->tmrActive = timerObj->tmrNext;
     }
 
     /* For periodic timer, elapsed flag is set if timer is expired at least
@@ -167,8 +203,6 @@ static void timer_update(SYS_TIME_COUNTER_OBJ * counterObj)
         timerObj->callback(timerObj->context);
     }
 
-    timeToCounter_update(counterObj);
-
     return;
 }
 
@@ -176,10 +210,25 @@ static void counter_update(SYS_TIME_COUNTER_OBJ * counterObj)
 {
     TIME counterLow = counterObj->counter & HW_COUNTER_MAX;
     TIME counterHigh = counterObj->counter >> HW_COUNTER_WIDTH;
+    TIME periodDelta = counterObj->timePeriod;
 
-    if((counterLow + counterObj->timePeriod) > HW_COUNTER_MAX)
+    if(counterObj->timePeriod != counterObj->timePeriodPrevious)
     {
-        counterLow = ((counterLow + counterObj->timePeriod) - HW_COUNTER_MAX);
+        if(counterObj->timePeriod > counterObj->timePeriodPrevious)
+        {
+            periodDelta = counterObj->timePeriod - counterObj->timePeriodPrevious;
+        }
+        else
+        {
+            periodDelta = (HW_COUNTER_MAX - counterObj->timePeriodPrevious) + counterObj->timePeriod;
+        }
+
+        counterObj->timePeriodPrevious = counterObj->timePeriod;
+    }
+
+    if((counterLow + periodDelta) > HW_COUNTER_MAX)
+    {
+        counterLow = ((counterLow + periodDelta) - HW_COUNTER_MAX);
 
         if(counterHigh < HIGH_COUNTER_MAX)
         {
@@ -187,34 +236,51 @@ static void counter_update(SYS_TIME_COUNTER_OBJ * counterObj)
         }
         else
         {
-            counterObj->tmrRollover = false;
             counterHigh = 0;
         }
     }
     else
     {
-        counterLow += counterObj->timePeriod;
+        counterLow += periodDelta;
     }
 
     counterObj->counter = ((counterHigh << HW_COUNTER_WIDTH) | (counterLow & HW_COUNTER_MAX));
 
+    if(counterObj->tmrActive != NULL)
+    {
+        if(counterObj->tmrActive->timeRemaining > counterObj->timePeriod)
+        {
+            counterObj->tmrActive->timeRemaining -= periodDelta;
+        }
+        else
+        {
+            counterObj->tmrActive->timeRemaining = 0;
+        }
+    }
 }
 
 static void counter_task(void)
 {
     SYS_TIME_COUNTER_OBJ * counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
 
+    counterObj->interruptContext = true;
+
     counter_update(counterObj);
 
-    if((counterObj->tmrActive != NULL) && (counterObj->timeToCounter <= counterObj->counter))
+    if((counterObj->tmrActive != NULL) && (counterObj->tmrActive->timeRemaining == 0))
     {
-        if(counterObj->tmrRollover == false)
-        {
-            counterObj->tmrElapsed = true;
-            timer_update(counterObj);
-        }
-
+        counterObj->tmrElapsed = true;
+        timer_update(counterObj);
     }
+
+    if(counterObj->tmrActive != NULL)
+    {
+        timerHardwarePeriod_update(counterObj);
+    }
+
+    counterObj->interruptContext = false;
+
+    return;
 }
 
 static void TIME_PLIB_Callback(uintptr_t context)
@@ -230,11 +296,13 @@ static void counter_init(SYS_MODULE_INIT * init)
     counterObj->timePlib = initData->timePlib;
     counterObj->timeFrequency = initData->timeFrequency;
     counterObj->timeInterrupt = initData->timeInterrupt;
-    counterObj->timePeriod = (initData->timeUnitResolution * (counterObj->timeFrequency/1000000));
+    counterObj->timePeriodPrevious = HW_COUNTER_MAX;
+    counterObj->timePeriod = HW_COUNTER_MAX;
 
     counterObj->counter = 0;
     counterObj->tmrActive = NULL;
     counterObj->tmrElapsed = false;
+    counterObj->interruptContext = false;
 
     counterObj->timePlib->timerCallbackSet(TIME_PLIB_Callback, 0);
     counterObj->timePlib->timerPeriodSet(counterObj->timePeriod);
@@ -307,8 +375,19 @@ TIME SYS_TIME_FrequencyGet ( void )
 TIME SYS_TIME_CounterGet ( void )
 {
     SYS_TIME_COUNTER_OBJ * counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
+    TIME counterDelta = 0;
+    TIME hardwareCounter = counterObj->timePlib->timerCounterGet();
 
-    return (counterObj->counter + counterObj->timePlib->timerCounterGet());
+    if((counterObj->timePeriod > counterObj->timePeriodPrevious) || (hardwareCounter > counterObj->timePeriod))
+    {
+        counterDelta = (hardwareCounter - counterObj->timePeriodPrevious);
+    }
+    else
+    {
+        counterDelta = (HW_COUNTER_MAX - counterObj->timePeriodPrevious) + hardwareCounter;
+    }
+
+    return (counterObj->counter + counterDelta);
 }
 
 void SYS_TIME_CounterSet ( TIME count )
@@ -363,7 +442,7 @@ SYS_TIME_HANDLE SYS_TIME_TimerCreate(TIME count, TIME period, SYS_TIME_CALLBACK 
                 tmr->time = period;
                 tmr->callback = callBack;
                 tmr->context = context;
-                tmr->timeRelActive = period - count;
+                tmr->timeRemaining = period - count;
 
                 /* Assign a handle to this request. The timer handle must be unique. */
                 tmr->tmrHandle = (SYS_TIME_HANDLE)_SYS_TIME_MAKE_HANDLE(gSysTimeTokenCount, tmrObjIndex);
@@ -398,7 +477,7 @@ SYS_TIME_RESULT SYS_TIME_TimerReload(SYS_TIME_HANDLE handle, TIME count, TIME pe
         tmr->time = period;
         tmr->callback = callBack;
         tmr->context = context;
-        tmr->timeRelActive = period - count;
+        tmr->timeRemaining = period - count;
         time_resourceUnlock();
         result = SYS_TIME_SUCCESS;
     }

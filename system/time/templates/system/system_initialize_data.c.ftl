@@ -12,8 +12,7 @@ SYS_TIME_INIT sysTimeInitData =
 {
     .timePlib = &sysTimePlibAPI,
     .timeInterrupt = ${SYS_TIME_PLIB}_IRQn,
-    .timeFrequency = ${SYS_TIME_PLIB}_TimerFrequencyGet(),
-    .timeUnitResolution = SYS_TIME_RESOLUTION
+    .timeFrequency = ${SYS_TIME_PLIB}_TimerFrequencyGet()
 };
 
 // </editor-fold>

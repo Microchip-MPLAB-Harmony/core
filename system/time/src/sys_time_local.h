@@ -113,8 +113,8 @@ typedef struct _SYS_TIME_TIMER_OBJ{
   int inuse;    /* TRUE if in use */
   int active;    /* TRUE if soft timer enabled */
   SYS_TIME_CALLBACK_TYPE type;    /* periodic or not */
-  TIME time;    /* time to wait */
-  TIME timeRelActive;    /* relative time to active timer */
+  TIME time;    /* time requested */
+  TIME timeRemaining;    /* time to wait, relative incase of timers in the list */
   SYS_TIME_CALLBACK callback;    /* set to TRUE at timeout */
   uintptr_t context; /* context */
   int tmrElapsed;   /* Useful only for single shot timer */
@@ -128,12 +128,12 @@ typedef struct{
     TIME_PLIB_API *timePlib;
     INT_SOURCE timeInterrupt;
     TIME timeFrequency;
-    TIME timeUnitResolution;
+    TIME timePeriodPrevious;
     TIME timePeriod;
     volatile TIME counter;    /* Software counter */
     volatile TIME timeToCounter;     /* Active timer expiry point or software period */
     int tmrElapsed;    /* On every active timer elapsed */
-    int tmrRollover; /* True if first timer object crosses rollover but base counter is not */
+    int interruptContext;    /* On every active timer elapsed */
     SYS_TIME_TIMER_OBJ * tmrActive;
 
 } SYS_TIME_COUNTER_OBJ;   /* set of timers */

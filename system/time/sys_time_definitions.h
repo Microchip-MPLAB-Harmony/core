@@ -99,9 +99,6 @@ struct _SYS_TIME_INIT
     /* Hardware timer frequency */
     uint32_t timeFrequency;
 
-    /* Hardware timer frequency */
-    uint32_t timeUnitResolution;
-
 };
 
 
