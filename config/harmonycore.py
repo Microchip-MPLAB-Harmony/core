@@ -42,3 +42,6 @@ def instantiateComponent(harmonyCoreComponent):
 
     # Harmony Core Operating System Abstraction Layer (OSAL) files
     execfile(Module.getPath() + "/osal/config/osal.py")
+
+    # Harmony Core Create and Configure Application Tasks/Threads
+    execfile(Module.getPath() + "/config/gen_app_tasks.py")
