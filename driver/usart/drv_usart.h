@@ -1140,9 +1140,125 @@ bool DRV_USART_WriteQueuePurge( const DRV_HANDLE handle );
 
 bool DRV_USART_ReadQueuePurge( const DRV_HANDLE handle );
 
+// *****************************************************************************
+// *****************************************************************************
+// Section: USART Driver Synchronous(Blocking Model) Transfer Interface Routines
+// *****************************************************************************
+// *****************************************************************************
 
 // *****************************************************************************
+/* Function:
+    bool DRV_USART_WriteBuffer
+    (
+        const DRV_HANDLE handle,
+        void * buffer,
+        const size_t size
+    );
+
+  Summary:
+    This is a blocking function that writes data over USART.
+
+  Description:
+    This function does a blocking write operation. The function blocks till
+    the data write is complete.
+    Function will return false to report failure. The failure will occur for
+    the following reasons:
+    - if the handle is invalid
+    - if the input buffer pointer is NULL
+    - if the buffer size is 0
+
+  Precondition:
+    DRV_USART_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle - Handle of the communication channel as return by the
+    DRV_USART_Open function.
+
+    buffer - Pointer to the data to be transmitted.
+
+    size - Buffer size in bytes.
+
+  Returns:
+    true - write is successful
+    false - error has occurred
+
+  Example:
+    <code>
+
+    MY_APP_OBJ myAppObj;
+    uint8_t myBuffer[MY_BUFFER_SIZE];
+
+    // myUSARTHandle is the handle returned
+    // by the DRV_USART_Open function.
+
+    if (DRV_USART_WriteBuffer(myUSARTHandle, myBuffer, MY_BUFFER_SIZE) == false)
+    {
+        // Error: Verify the input parameters
+    }
+    </code>
+
+  Remarks:
+    This function is thread safe in a RTOS application.
+    This function should not be called from an interrupt context.
+*/
 bool DRV_USART_WriteBuffer( const DRV_HANDLE handle, void * buffer, const size_t size);
+
+// *****************************************************************************
+/* Function:
+    bool DRV_USART_ReadBuffer
+    (
+        const DRV_HANDLE handle,
+        void * buffer,
+        const size_t size
+    );
+
+  Summary:
+    This is a blocking function that reads data over USART.
+
+  Description:
+    This function does a blocking read operation. The function blocks till
+    the data read is complete or error has occurred during read.
+    Function will return false to report failure. The failure will occur for
+    the following reasons:
+    - if the handle is invalid
+    - if the input buffer pointer is NULL
+    - if the buffer size is 0
+    - Hardware errors
+
+  Precondition:
+    DRV_USART_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle - Handle of the communication channel as return by the
+    DRV_USART_Open function.
+
+    buffer - Pointer to the receive buffer.
+
+    size - Buffer size in bytes.
+
+  Returns:
+    true - read is successful
+    false - error has occurred
+
+  Example:
+    <code>
+
+    MY_APP_OBJ myAppObj;
+    uint8_t myBuffer[MY_BUFFER_SIZE];
+
+    // myUSARTHandle is the handle returned
+    // by the DRV_USART_Open function.
+
+    if (DRV_USART_ReadBuffer(myUSARTHandle, myBuffer, MY_BUFFER_SIZE) == false)
+    {
+        // Error handling here
+    }
+    </code>
+
+  Remarks:
+    This function is thread safe in a RTOS application.
+    This function should not be called from an interrupt context.
+*/
 bool DRV_USART_ReadBuffer( const DRV_HANDLE handle, void * buffer, const size_t size);
 
 #include "driver/usart/src/drv_usart_local.h"
