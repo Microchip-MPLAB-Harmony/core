@@ -788,11 +788,208 @@ void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRA
 
 DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE transferHandle );
 
+// *****************************************************************************
+// *****************************************************************************
+// Section: SPI Driver Synchronous(Blocking Model) Transfer Interface Routines
+// *****************************************************************************
+// *****************************************************************************
+
+
+// *****************************************************************************
+/* Function:
+    void DRV_SPI_WriteTransfer
+    (
+        const DRV_HANDLE handle,
+        void*       pTransmitData,
+        size_t      txSize
+    );
+
+  Summary:
+    This is a blocking function that transmits data over SPI.
+
+  Description:
+    This function does a blocking write operation. The function blocks till
+    the data transmit is complete.
+    Function will return true if the transmit is successful or false in case of an error.
+    The failure will occur for the following reasons:
+    - if the handle is invalid
+    - if the pointer to the transmit buffer is NULL
+    - if the transmit size is 0
+
+  Precondition:
+    DRV_SPI_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle -    Handle of the communication channel as returned by the
+                DRV_SPI_Open function.
+
+    *pTransmitData  Pointer to the data which has to be transmitted. For 9
+                    to 15bit mode, data should be right aligned in the 16 bit
+                    memory location.
+
+    txSize          Number of bytes to be transmitted in bytes. For 9 to 15bit mode, size
+                    should be given in terms of bytes. For example, if 5 16-bit data
+                    are to be transmitted, the transmit size should be 10 bytes.
+
+  Returns:
+    true - transfer is successful
+    false - error has occurred
+
+  Example:
+    <code>
+
+    MY_APP_OBJ myAppObj;
+    uint8_t myTxbuffer[MY_TX_BUFFER_SIZE];
+
+    // mySPIHandle is the handle returned by the DRV_SPI_Open function.
+
+    if (DRV_SPI_WriteTransfer(mySPIhandle, myTxBuffer, MY_TX_BUFFER_SIZE) == false)
+    {
+        // Handle error here
+    }
+    </code>
+
+  Remarks:
+    This function is thread safe in a RTOS application.
+    This function should not be called from an interrupt context.
+*/
 bool DRV_SPI_WriteTransfer(const DRV_HANDLE handle, void* pTransmitData,  size_t txSize );
 
+// *****************************************************************************
+/* Function:
+    void DRV_SPI_ReadTransfer
+    (
+        const DRV_HANDLE handle,
+        void*       pReceiveData,
+        size_t      rxSize
+    );
+
+  Summary:
+    This is a blocking function that receives data over SPI.
+
+  Description:
+    This function does a blocking read operation. The function blocks till
+    the data receive is complete.
+    Function will return true if the receive is successful or false in case of an error.
+    The failure will occur for the following reasons:
+    - if the handle is invalid
+    - if the pointer to the receive buffer is NULL
+    - if the receive size is 0
+
+  Precondition:
+    DRV_SPI_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle -    Handle of the communication channel as returned by the
+                DRV_SPI_Open function.
+
+    *pReceiveData   Pointer to the buffer where the data is to be received. For 9
+                    to 15bit mode, data should be right aligned in the 16 bit
+                    memory location.
+
+    rxSize          Number of bytes to be received in bytes. For 9 to 15bit mode, size
+                    should be given in terms of bytes. For example, if 5 16-bit data
+                    are to be received, the receive size should be 10 bytes.
+
+  Returns:
+    true - receive is successful
+    false - error has occurred
+
+  Example:
+    <code>
+
+    MY_APP_OBJ myAppObj;
+    uint8_t myRxbuffer[MY_RX_BUFFER_SIZE];
+
+    // mySPIHandle is the handle returned by the DRV_SPI_Open function.
+
+    if (DRV_SPI_ReadTransfer(mySPIhandle, myRxbuffer, MY_RX_BUFFER_SIZE) == false)
+    {
+        // Handle error here
+    }
+    </code>
+
+  Remarks:
+    This function is thread safe in a RTOS application.
+    This function should not be called from an interrupt context.
+*/
 bool DRV_SPI_ReadTransfer(const DRV_HANDLE handle, void* pReceiveData,  size_t rxSize );
 
-bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
+// *****************************************************************************
+/* Function:
+    void DRV_SPI_WriteReadTransfer
+    (
+        const DRV_HANDLE handle,
+        void*       pTransmitData,
+        size_t      txSize,
+        void*       pReceiveData,
+        size_t      rxSize
+    );
+
+  Summary:
+    This is a blocking function that transmits and receives data over SPI.
+
+  Description:
+    This function does a blocking write-read operation. The function blocks till
+    the data receive is complete.
+    Function will return true if the receive is successful or false in case of an error.
+    The failure will occur for the following reasons:
+    - if the handle is invalid
+    - if the transmit size is non-zero and pointer to the transmit buffer is NULL
+    - if the receive size is non-zero and pointer to the receive buffer is NULL
+
+  Precondition:
+    DRV_SPI_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle -    Handle of the communication channel as returned by the
+                DRV_SPI_Open function.
+    *pTransmitData  Pointer to the data which has to be transmitted. For 9
+                    to 15bit mode, data should be right aligned in the 16 bit
+                    memory location.
+
+    txSize          Number of bytes to be transmitted in bytes. For 9 to 15bit mode, size
+                    should be given in terms of bytes. For example, if 5 16-bit data
+                    are to be transmitted, the transmit size should be 10 bytes.
+
+    *pReceiveData   Pointer to the buffer where the data is to be received. For 9
+                    to 15bit mode, data should be right aligned in the 16 bit
+                    memory location.
+
+    rxSize          Number of bytes to be received in bytes. For 9 to 15bit mode, size
+                    should be given in terms of bytes. For example, if 5 16-bit data
+                    are to be received, the receive size should be 10 bytes.
+                    If "n" number of bytes has to be received AFTER transmitting
+                    "m" number of bytes, then "txSize" should be set as "m" and
+                    "rxSize" should be set as "m+n".
+
+  Returns:
+    true - write-read is successful
+    false - error has occurred
+
+  Example:
+    <code>
+
+    MY_APP_OBJ myAppObj;
+    uint8_t myTxbuffer[MY_TX_BUFFER_SIZE];
+    uint8_t myRxbuffer[MY_RX_BUFFER_SIZE];
+
+    // mySPIHandle is the handle returned by the DRV_SPI_Open function.
+
+    if (DRV_SPI_WriteReadTransfer(mySPIhandle, myTxBuffer, MY_TX_BUFFER_SIZE,
+                                    myRxBuffer, MY_RX_BUFFER_SIZE) == false)
+    {
+        // Handle error here
+    }
+
+    </code>
+
+  Remarks:
+    This function is thread safe in a RTOS application.
+    This function should not be called from an interrupt context.
+*/
+bool DRV_SPI_WriteReadTransfer(
+    const DRV_HANDLE handle,
     void* pTransmitData,
     size_t txSize,
     void* pReceiveData,
