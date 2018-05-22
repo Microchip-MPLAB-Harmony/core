@@ -2771,7 +2771,16 @@ SYS_FS_RESULT SYS_FS_DirSearch
         }
 
         /* If we have come to end of directory */
-        if ((stat->lfname == '\0') && (stat->fname[0] == '\0'))
+        if (stat->lfname != NULL)
+        {
+            /* If LFN is Enabled but filename fits into Short file name */
+            if ((stat->lfname[0] == '\0') && (stat->fname[0] == '\0'))
+            {
+                errorValue = SYS_FS_ERROR_NO_FILE;
+                return SYS_FS_RES_FAILURE;
+            }
+        }
+        else if (stat->fname[0] == '\0')
         {
             errorValue = SYS_FS_ERROR_NO_FILE;
             return SYS_FS_RES_FAILURE;
@@ -2780,7 +2789,7 @@ SYS_FS_RESULT SYS_FS_DirSearch
         /* Firstly, match the file attribute with the requested attribute */
         if (stat->fattrib & attr)
         {
-            if(stat->lfname != '\0')
+            if((stat->lfname != NULL) && (stat->lfname[0] != '\0'))
             {
                 /* File name is LFN */
                 fileName = stat->lfname;
