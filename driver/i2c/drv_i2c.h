@@ -1013,7 +1013,7 @@ DRV_I2C_TRANSFER_EVENT DRV_I2C_TransferStatusGet( const DRV_I2C_TRANSFER_HANDLE 
     )
 
   Summary:
-    This function writes data over I2C Bus.
+    This is a blocking function that writes data over I2C Bus.
 
   Description:
     This function does a blocking write operation. The function blocks till
@@ -1051,8 +1051,7 @@ DRV_I2C_TRANSFER_EVENT DRV_I2C_TransferStatusGet( const DRV_I2C_TRANSFER_HANDLE 
     // slaveAddress is address of I2C slave device 
     // to which data is to be written
 
-    if (!DRV_I2C_WriteTransfer(myI2CHandle, slaveAddress,
-                             myTransfer, MY_BUFFER_SIZE))
+    if (DRV_I2C_WriteTransfer(myI2CHandle, slaveAddress, myTransfer, MY_BUFFER_SIZE) == false)
     {
         // Error handling here
     }
@@ -1061,6 +1060,7 @@ DRV_I2C_TRANSFER_EVENT DRV_I2C_TransferStatusGet( const DRV_I2C_TRANSFER_HANDLE 
 
   Remarks:
     This function is thread safe in a RTOS application.
+    This function should not be called from an interrupt context.
 */
 
 bool DRV_I2C_WriteTransfer( const DRV_HANDLE handle, uint16_t address, void * buffer, const size_t size );
@@ -1076,7 +1076,7 @@ bool DRV_I2C_WriteTransfer( const DRV_HANDLE handle, uint16_t address, void * bu
     )
 
   Summary:
-    This function reads data over I2C Bus.
+    This is a blocking function that reads data over I2C Bus.
 
   Description:
     This function does a blocking read operation. The function blocks till
@@ -1114,8 +1114,7 @@ bool DRV_I2C_WriteTransfer( const DRV_HANDLE handle, uint16_t address, void * bu
     // slaveAddress is address of I2C slave device 
     // to which data is to be written
 
-    if (!DRV_I2C_ReadTransfer(myI2CHandle, slaveAddress,
-                             myTransfer, MY_BUFFER_SIZE))
+    if (DRV_I2C_ReadTransfer(myI2CHandle, slaveAddress, myTransfer, MY_BUFFER_SIZE) == false)
     {
         // Error handling here
     }
@@ -1124,6 +1123,7 @@ bool DRV_I2C_WriteTransfer( const DRV_HANDLE handle, uint16_t address, void * bu
 
   Remarks:
     This function is thread safe in a RTOS application.
+    This function should not be called from an interrupt context.
 */
 
 bool DRV_I2C_ReadTransfer( const DRV_HANDLE handle, uint16_t address, void * buffer, const size_t size );
@@ -1141,7 +1141,7 @@ bool DRV_I2C_ReadTransfer( const DRV_HANDLE handle, uint16_t address, void * buf
     )
 
   Summary:
-    This function writes data over I2C Bus.
+    This is a blocking function that writes and reads data over I2C Bus.
 
   Description:
     This function does a blocking write and read operation. The function blocks till
@@ -1183,8 +1183,7 @@ bool DRV_I2C_ReadTransfer( const DRV_HANDLE handle, uint16_t address, void * buf
     // slaveAddress is address of I2C slave device 
     // to which data is to be written
 
-    if (!DRV_I2C_WriteTransfer(myI2CHandle, slaveAddress,
-                             myTransfer, MY_BUFFER_SIZE))
+    if (DRV_I2C_WriteTransfer(myI2CHandle, slaveAddress, myTransfer, MY_BUFFER_SIZE) == false)
     {
         // Error handling here
     }
@@ -1193,6 +1192,7 @@ bool DRV_I2C_ReadTransfer( const DRV_HANDLE handle, uint16_t address, void * buf
 
   Remarks:
     This function is thread safe in a RTOS application.
+    This function should not be called from an interrupt context.
 */
 
 bool DRV_I2C_WriteReadTransfer ( const DRV_HANDLE handle, uint16_t address, void* writeBuffer, const size_t writeSize, void* readBuffer, const size_t readSize );
