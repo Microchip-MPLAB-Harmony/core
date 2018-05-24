@@ -346,7 +346,7 @@ DRV_HANDLE DRV_I2C_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
 
             clientObj->hDriver      = dObj;
 
-            clientObj->ioIntent     = (ioIntent | DRV_IO_INTENT_NONBLOCKING);
+            clientObj->ioIntent     = ioIntent;
 
             clientObj->errors       = DRV_I2C_ERROR_NONE;
             
