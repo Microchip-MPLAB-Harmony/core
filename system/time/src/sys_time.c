@@ -183,6 +183,15 @@ static void timer_update(SYS_TIME_COUNTER_OBJ * counterObj)
 {
     SYS_TIME_TIMER_OBJ *timerObj = counterObj->tmrActive;
 
+    /* For periodic timer, elapsed flag is set if timer is expired at least
+     * once */
+    timerObj->tmrElapsed = true;
+
+    if(timerObj->callback != NULL)
+    {
+        timerObj->callback(timerObj->context);
+    }
+
     timer_removeFromList(timerObj);
 
     if(timerObj->type == SYS_TIME_PERIODIC)
@@ -192,15 +201,6 @@ static void timer_update(SYS_TIME_COUNTER_OBJ * counterObj)
     else
     {
         timerObj->active = false;
-    }
-
-    /* For periodic timer, elapsed flag is set if timer is expired at least
-     * once */
-    timerObj->tmrElapsed = true;
-
-    if(timerObj->callback != NULL)
-    {
-        timerObj->callback(timerObj->context);
     }
 
     return;
@@ -438,6 +438,7 @@ SYS_TIME_HANDLE SYS_TIME_TimerCreate(TIME count, TIME period, SYS_TIME_CALLBACK 
             {
                 tmr->inuse = true;
                 tmr->active = false;
+                tmr->tmrElapsed = false;
                 tmr->type = type;
                 tmr->time = period;
                 tmr->callback = callBack;
@@ -473,6 +474,7 @@ SYS_TIME_RESULT SYS_TIME_TimerReload(SYS_TIME_HANDLE handle, TIME count, TIME pe
     {
         time_resourceLock();
         tmr->active = false;
+        tmr->tmrElapsed = false;
         tmr->type = type;
         tmr->time = period;
         tmr->callback = callBack;
@@ -492,7 +494,7 @@ SYS_TIME_RESULT SYS_TIME_TimerDestroy(SYS_TIME_HANDLE handle)
 
     tmr = time_getTimerObject(handle);
 
-    if(tmr->inuse == true && tmr->active == true)
+    if(tmr->inuse == true)
     {
         time_resourceLock();
         if(tmr->active == true)
@@ -500,6 +502,7 @@ SYS_TIME_RESULT SYS_TIME_TimerDestroy(SYS_TIME_HANDLE handle)
             tmr->active = false;
             timer_removeFromList(tmr);
         }
+        tmr->tmrElapsed = false;
         tmr->inuse = false;
         time_resourceUnlock();
         result = SYS_TIME_SUCCESS;
@@ -555,10 +558,16 @@ SYS_TIME_RESULT SYS_TIME_TimerCounterGet(SYS_TIME_HANDLE handle, TIME *count)
 bool SYS_TIME_TimerPeriodHasExpired(SYS_TIME_HANDLE handle)
 {
     SYS_TIME_TIMER_OBJ *tmr = NULL;
+    bool status = false;
 
     tmr = time_getTimerObject(handle);
 
-    return tmr->tmrElapsed;
+    if(tmr->inuse == true)
+    {
+        status = tmr->tmrElapsed;
+    }
+
+    return status;
 }
 
 
@@ -601,7 +610,6 @@ bool SYS_TIME_DelayIsComplete ( SYS_TIME_HANDLE handle )
 
     if(true == SYS_TIME_TimerPeriodHasExpired(handle))
     {
-        SYS_TIME_TimerStop(handle);
         SYS_TIME_TimerDestroy(handle);
         status = true;
     }
