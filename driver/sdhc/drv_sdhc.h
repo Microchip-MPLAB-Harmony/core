@@ -176,9 +176,7 @@ typedef enum
 */
 
 #define DRV_SDHC_INDEX_0         (0)
-#define DRV_SDHC_INDEX_1         (1)
-#define DRV_SDHC_INDEX_2         (2)
-#define DRV_SDHC_INDEX_3         (3)
+
 
 // *****************************************************************************
 /* SD Card Driver Module Index Count

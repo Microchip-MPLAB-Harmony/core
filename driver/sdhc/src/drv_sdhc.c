@@ -658,11 +658,11 @@ static void DRV_SDHC_MediaInitialize
 					dObj->tmrHandle = SYS_TIME_HANDLE_INVALID;
 					if (SYS_TIME_DelayMS(2, &(dObj->tmrHandle)) != SYS_TIME_SUCCESS)
 	       			{
-	           			dObj->clockState = DRV_SDHC_INIT_RESET_CARD;
+	           			dObj->initState = DRV_SDHC_INIT_RESET_CARD;
 	       			}
 					else
 					{
-						dObj->clockState = DRV_SDHC_INIT_RESET_DELAY;
+						dObj->initState = DRV_SDHC_INIT_RESET_DELAY;
 					}
                 }
                 break;
@@ -2685,6 +2685,14 @@ bool DRV_SDHC_IsWriteProtected
     return dObj->cardCtxt->writeProtected;
 }
 
+/* Function:
+	SD Host controller Interrupt service routine
+*/
+void SDHC_InterruptHandler(void)
+{
+	SYS_INT_SourceStatusClear(HSMCI_IRQn);
+    DRV_SDHC_InterruptServiceRoutine((SYS_MODULE_OBJ)DRV_SDHC_INDEX_0);
+}
 /*******************************************************************************
 End of File
 */

@@ -125,14 +125,14 @@ def instantiateComponent(sdhcComponent, index):
 	sdhcHeaderFile.setSourcePath("driver/sdhc/drv_sdhc.h")
 	sdhcHeaderFile.setOutputName("drv_sdhc.h")
 	sdhcHeaderFile.setDestPath("/driver/sdhc/")
-	sdhcHeaderFile.setProjectPath("/driver/sdhc/")
+	sdhcHeaderFile.setProjectPath("config/" + configName + "/driver/sdhc/")
 	sdhcHeaderFile.setType("HEADER")
 
 	sdhcSource1File = sdhcComponent.createFileSymbol("DRV_SDHC_C", None)
 	sdhcSource1File.setSourcePath("driver/sdhc/src/drv_sdhc.c")
 	sdhcSource1File.setOutputName("drv_sdhc.c")
 	sdhcSource1File.setDestPath("/driver/sdhc/src/")
-	sdhcSource1File.setProjectPath("/driver/sdhc/src/")
+	sdhcSource1File.setProjectPath("config/" + configName + "/driver/sdhc/")
 	sdhcSource1File.setType("SOURCE")
 	
 	
@@ -140,28 +140,28 @@ def instantiateComponent(sdhcComponent, index):
 	sdhcHeaderLocalFile.setSourcePath("driver/sdhc/src/drv_sdhc_local.h")
 	sdhcHeaderLocalFile.setOutputName("drv_sdhc_local.h")
 	sdhcHeaderLocalFile.setDestPath("/driver/sdhc/src/")
-	sdhcHeaderLocalFile.setProjectPath("/driver/sdhc/src/")
+	sdhcHeaderLocalFile.setProjectPath("config/" + configName + "/driver/sdhc/")
 	sdhcHeaderLocalFile.setType("HEADER")
 
 	sdhcHeaderVmapFile = sdhcComponent.createFileSymbol("DRV_SDHC_VARIANT_MAPPING_H", None)
 	sdhcHeaderVmapFile.setSourcePath("driver/sdhc/src/drv_sdhc_variant_mapping.h")
 	sdhcHeaderVmapFile.setOutputName("drv_sdhc_variant_mapping.h")
 	sdhcHeaderVmapFile.setDestPath("/driver/sdhc/src/")
-	sdhcHeaderVmapFile.setProjectPath("/driver/sdhc/src/")
+	sdhcHeaderVmapFile.setProjectPath("config/" + configName + "/driver/sdhc/")
 	sdhcHeaderVmapFile.setType("HEADER")
 
 	sdhcHeaderHostLocFile = sdhcComponent.createFileSymbol("DRV_SDHC_HOST_LOCAL_H", None)
 	sdhcHeaderHostLocFile.setSourcePath("driver/sdhc/src/drv_sdhc_host_local.h")
 	sdhcHeaderHostLocFile.setOutputName("drv_sdhc_host_local.h")
 	sdhcHeaderHostLocFile.setDestPath("/driver/sdhc/src/")
-	sdhcHeaderHostLocFile.setProjectPath("/driver/sdhc/src/")
+	sdhcHeaderHostLocFile.setProjectPath("config/" + configName + "/driver/sdhc/")
 	sdhcHeaderHostLocFile.setType("HEADER")
 
 	sdhcHeaderHostFile = sdhcComponent.createFileSymbol("DRV_SDHC_HOST_H", None)
 	sdhcHeaderHostFile.setSourcePath("driver/sdhc/src/drv_sdhc_host.h")
 	sdhcHeaderHostFile.setOutputName("drv_sdhc_host.h")
 	sdhcHeaderHostFile.setDestPath("/driver/sdhc/src/")
-	sdhcHeaderHostFile.setProjectPath("/driver/sdhc/src/")
+	sdhcHeaderHostFile.setProjectPath("config/" + configName + "/driver/sdhc/")
 	sdhcHeaderHostFile.setType("HEADER")
 
 	sdhcSourceHostFile = sdhcComponent.createFileSymbol("DRV_SDHC_HOST_C", None)
@@ -169,7 +169,7 @@ def instantiateComponent(sdhcComponent, index):
 	sdhcSourceHostFile.setOutputName("drv_sdhc_host.c")
 	sdhcSourceHostFile.setSourcePath("/driver/sdhc/templates/drv_sdhc_host.c.ftl")
 	sdhcSourceHostFile.setDestPath("/driver/sdhc/src/")
-	sdhcSourceHostFile.setProjectPath("/driver/sdhc/src/")
+	sdhcSourceHostFile.setProjectPath("config/" + configName + "/driver/sdhc/")
 	sdhcSourceHostFile.setMarkup(True)
 
 	sdhcSystemDefFile = sdhcComponent.createFileSymbol("DRV_SDHC_DEFINITIONS_H", None)
@@ -180,7 +180,7 @@ def instantiateComponent(sdhcComponent, index):
 
 	sdhcSystemInitFile = sdhcComponent.createFileSymbol("DRV_SDHC_INITIALIZE_C", None)
 	sdhcSystemInitFile.setType("STRING")
-	sdhcSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_SYS_INITIALIZE_CORE")
+	sdhcSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_SYS_INITIALIZE_DRIVERS")
 	sdhcSystemInitFile.setSourcePath("/driver/sdhc/templates/system/system_initialize.c.ftl")
 	sdhcSystemInitFile.setMarkup(True)
 

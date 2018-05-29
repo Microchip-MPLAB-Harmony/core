@@ -51,11 +51,15 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "driver/sdhc/src/drv_sdhc_host.h"
 
- uint8_t gSDHOSTScrReg[SDHOST_SCR_REG_LEN] = {0};
+	/*NOTE:-Buffers need to be 32-byte address and size aligned
+	for cache management operations. 
+	*/
+	
+ uint8_t __attribute__((aligned(32))) gSDHOSTScrReg[32] = {0};
  uint8_t gSDHOSTCidReg[SDHOST_CID_REG_LEN] = {0};
  uint8_t gSDHOSTCsdReg[SDHOST_CSD_REG_LEN] = {0};
  uint8_t gSDHOSTOcrReg[SDHOST_OCR_REG_LEN] = {0};
- uint8_t gSDHOSTSwitchStatusReg[SDHOST_SWITCH_STATUS_REG_LEN] = {0};
+ uint8_t __attribute__((aligned(32))) gSDHOSTSwitchStatusReg[SDHOST_SWITCH_STATUS_REG_LEN] = {0};
  uint16_t hsmci_block_size = 0;
 
  SDHOST_CARD_CTXT gSDHOSTCardCtxt;
