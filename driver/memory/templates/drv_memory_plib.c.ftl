@@ -91,8 +91,8 @@ bool ${DRV_MEMORY_PLIB}_GeometryGet( const DRV_HANDLE handle, MEMORY_DEVICE_GEOM
     geometry->write_numBlocks = ((DRV_MEMORY_DEVICE_MEDIA_SIZE * DRV_MEMORY_DEVICE_MEDIA_SIZE) / ${DRV_MEMORY_DEVICE}_PAGESIZE);
 
     /* Erase block size and number of blocks */
-    geometry->erase_blockSize = ${DRV_MEMORY_DEVICE}_ROWSIZE;
-    geometry->erase_numBlocks = ((DRV_MEMORY_DEVICE_MEDIA_SIZE * DRV_MEMORY_DEVICE_MEDIA_SIZE) / ${DRV_MEMORY_DEVICE}_ROWSIZE);
+    geometry->erase_blockSize = ${DRV_MEMORY_DEVICE}_SECTORSIZE;
+    geometry->erase_numBlocks = ((DRV_MEMORY_DEVICE_MEDIA_SIZE * DRV_MEMORY_DEVICE_MEDIA_SIZE) / ${DRV_MEMORY_DEVICE}_SECTORSIZE);
 
     geometry->numReadRegions = 1;
     geometry->numWriteRegions = 1;
