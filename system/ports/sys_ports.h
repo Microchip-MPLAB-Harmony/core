@@ -597,11 +597,11 @@ typedef enum
 
     /* PE31 pin */
     SYS_PORT_PIN_PE31,
-    
+
     /* This element should not be used in any of the PORTS APIs.
        It will be used by other modules or application to denote that none of the PORT Pin is used */
     SYS_PORT_PIN_NONE = -1
-    
+
 } SYS_PORT_PIN;
 
 
@@ -641,7 +641,7 @@ typedef enum
   Remarks:
     None.
 */
-void SYS_PORT_PinWrite(SYS_PORT_PIN pin, bool value);
+static inline void SYS_PORT_PinWrite(SYS_PORT_PIN pin, bool value);
 
 // *****************************************************************************
 /* Function:
@@ -677,7 +677,7 @@ void SYS_PORT_PinWrite(SYS_PORT_PIN pin, bool value);
   Remarks:
        To read the latched value on this pin, SYS_PORT_PinReadLatch API should be used.
 */
-bool SYS_PORT_PinRead(SYS_PORT_PIN pin);
+static inline bool SYS_PORT_PinRead(SYS_PORT_PIN pin);
 
 // *****************************************************************************
 /* Function:
@@ -711,7 +711,7 @@ bool SYS_PORT_PinRead(SYS_PORT_PIN pin);
   Remarks:
     To read actual pin value, SYS_PORT_PinRead API should be used.
 */
-bool SYS_PORT_PinReadLatch(SYS_PORT_PIN pin);
+static inline bool SYS_PORT_PinReadLatch(SYS_PORT_PIN pin);
 
 // *****************************************************************************
 /* Function:
@@ -742,7 +742,7 @@ bool SYS_PORT_PinReadLatch(SYS_PORT_PIN pin);
   Remarks:
     None.
 */
-void SYS_PORT_PinToggle(SYS_PORT_PIN pin);
+static inline void SYS_PORT_PinToggle(SYS_PORT_PIN pin);
 
 // *****************************************************************************
 /* Function:
@@ -773,7 +773,7 @@ void SYS_PORT_PinToggle(SYS_PORT_PIN pin);
   Remarks:
     None.
 */
-void SYS_PORT_PinSet(SYS_PORT_PIN pin);
+static inline void SYS_PORT_PinSet(SYS_PORT_PIN pin);
 
 // *****************************************************************************
 /* Function:
@@ -804,7 +804,7 @@ void SYS_PORT_PinSet(SYS_PORT_PIN pin);
   Remarks:
     None.
 */
-void SYS_PORT_PinClear(SYS_PORT_PIN pin);
+static inline void SYS_PORT_PinClear(SYS_PORT_PIN pin);
 
 // *****************************************************************************
 /* Function:
@@ -835,7 +835,7 @@ void SYS_PORT_PinClear(SYS_PORT_PIN pin);
   Remarks:
     None.
 */
-void SYS_PORT_PinInputEnable(SYS_PORT_PIN pin);
+static inline void SYS_PORT_PinInputEnable(SYS_PORT_PIN pin);
 
 // *****************************************************************************
 /* Function:
@@ -866,7 +866,7 @@ void SYS_PORT_PinInputEnable(SYS_PORT_PIN pin);
   Remarks:
     None.
 */
- void SYS_PORT_PinOutputEnable(SYS_PORT_PIN pin);
+static inline void SYS_PORT_PinOutputEnable(SYS_PORT_PIN pin);
 
 // *****************************************************************************
 /* Function:
@@ -897,7 +897,7 @@ void SYS_PORT_PinInputEnable(SYS_PORT_PIN pin);
   Remarks:
     None.
 */
-void SYS_PORT_PinInterruptEnable(SYS_PORT_PIN pin);
+static inline void SYS_PORT_PinInterruptEnable(SYS_PORT_PIN pin);
 
 // *****************************************************************************
 /* Function:
@@ -928,7 +928,7 @@ void SYS_PORT_PinInterruptEnable(SYS_PORT_PIN pin);
   Remarks:
     None.
 */
-void SYS_PORT_PinInterruptDisable(SYS_PORT_PIN pin);
+static inline void SYS_PORT_PinInterruptDisable(SYS_PORT_PIN pin);
 
 #include "sys_ports_mapping.h"
 

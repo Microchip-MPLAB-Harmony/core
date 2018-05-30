@@ -51,26 +51,55 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: PORTS System Service Mapping
 // *****************************************************************************
 // *****************************************************************************
-#define SYS_PORT_PinWrite(pin, value)       PIO_PinWrite(pin, value)
+static inline void SYS_PORT_PinWrite(SYS_PORT_PIN pin, bool value)
+{
+    PIO_PinWrite((PIO_PIN)pin, value);
+}
 
-#define SYS_PORT_PinRead(pin)               PIO_PinRead(pin) 
+static inline bool SYS_PORT_PinRead(SYS_PORT_PIN pin)
+{
+    return(PIO_PinRead((PIO_PIN)pin));
+}
 
-#define SYS_PORT_PinReadLatch(pin)          PIO_PinReadLatch(pin)
+static inline bool SYS_PORT_PinReadLatch(SYS_PORT_PIN pin)
+{
+    return(PIO_PinReadLatch((PIO_PIN)pin));
+}
 
-#define SYS_PORT_PinToggle(pin)             PIO_PinToggle(pin)
+static inline void SYS_PORT_PinToggle(SYS_PORT_PIN pin)
+{
+    PIO_PinToggle((PIO_PIN)pin);
+}
 
-#define SYS_PORT_PinSet(pin)                PIO_PinSet(pin) 
+static inline void SYS_PORT_PinSet(SYS_PORT_PIN pin)
+{
+    PIO_PinSet((PIO_PIN)pin);
+}
 
-#define SYS_PORT_PinClear(pin)              PIO_PinClear(pin) 
+static inline void SYS_PORT_PinClear(SYS_PORT_PIN pin)
+{
+    PIO_PinClear((PIO_PIN)pin);
+}
 
-#define SYS_PORT_PinInputEnable(pin)        PIO_PinInputEnable(pin)
+static inline void SYS_PORT_PinInputEnable(SYS_PORT_PIN pin)
+{
+    PIO_PinInputEnable((PIO_PIN)pin);
+}
 
-#define SYS_PORT_PinOutputEnable(pin)       PIO_PinOutputEnable(pin)
+static inline void SYS_PORT_PinOutputEnable(SYS_PORT_PIN pin)
+{
+    PIO_PinOutputEnable((PIO_PIN)pin);
+}
 
-#define SYS_PORT_PinInterruptEnable(pin)    PIO_PinInterruptEnable(pin)
+static inline void SYS_PORT_PinInterruptEnable(SYS_PORT_PIN pin)
+{
+    PIO_PinInterruptEnable((PIO_PIN)pin);
+}
 
-#define SYS_PORT_PinInterruptDisable(pin)   PIO_PinInterruptDisable(pin)
-
+static inline void SYS_PORT_PinInterruptDisable(SYS_PORT_PIN pin)
+{
+    PIO_PinInterruptDisable((PIO_PIN)pin);
+}
 
 #endif // SYS_PORTS_MAPPING_H
 
