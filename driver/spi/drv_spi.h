@@ -137,10 +137,10 @@ typedef uintptr_t DRV_SPI_TRANSFER_HANDLE;
 typedef enum
 {
     /* Transfer request is pending */
-    DRV_SPI_TRANSFER_EVENT_PENDING,
+    DRV_SPI_TRANSFER_EVENT_PENDING = 0,
 
     /* All data were transfered successfully. */
-    DRV_SPI_TRANSFER_EVENT_COMPLETE,
+    DRV_SPI_TRANSFER_EVENT_COMPLETE = 1,
 
     /* There was an error while processing transfer request. */
     DRV_SPI_TRANSFER_EVENT_ERROR = -1,
@@ -577,17 +577,19 @@ bool DRV_SPI_TransferSetup ( DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * setup )
                     NULL, that means only data receiving is expected. For 9
                     to 15bit mode, data should be right aligned in the 16 bit
                     memory location.
-    txSize          Number of bytes to be transmitted. For 9 to 15bit mode, size
-                    should be given as if it is 16bit mode.
+    txSize          Number of bytes to be transmitted. Always, size should be
+                    given in terms of bytes. For example, if 10 15-bit data
+                    are to be transmitted, the transmit size should be 20 bytes.
     *pReceiveData   Pointer to the location where received data has to be stored.
                     It is user's responsibility to ensure pointed location has
                     sufficient memory to store the read data.
                     if it is NULL, that means only data transmission is expected.
                     For 9 to 15bit mode, received data will be right aligned in
                     the 16 bit memory location.
-    rxSize          Number of bytes to be received. For 9 to 15bit mode, size
-                    should be given as if it is 16bit mode.
-                    if "n" number of bytes has to be received AFTER transmitting
+    rxSize          Number of bytes to be received. Always, size should be
+                    given in terms of bytes. For example, if 10 15-bit data
+                    are to be received, the receive size should be 20 bytes.
+                    If "n" number of bytes has to be received AFTER transmitting
                     "m" number of bytes, then "txSize" should be set as "m" and
                     "rxSize" should be set as "m+n".
 
@@ -600,8 +602,8 @@ bool DRV_SPI_TransferSetup ( DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * setup )
     <code>
 
     MY_APP_OBJ myAppObj;
-    uint8_t myTxbuffer[MY_TX_BUFFER_SIZE];
-    uint8_t myRxbuffer[MY_RX_BUFFER_SIZE];
+    uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
+    uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
     DRV_SPI_TRANSFER_HANDLE transferHandle;
 
     // mySPIHandle is the handle returned by the DRV_SPI_Open function.
@@ -628,6 +630,180 @@ void DRV_SPI_WriteReadTransferAdd(
     const   DRV_HANDLE  handle,
     void*   pTransmitData,
     size_t  txSize,
+    void*   pReceiveData,
+    size_t  rxSize,
+    DRV_SPI_TRANSFER_HANDLE * const transferHandle);
+
+// *****************************************************************************
+/* Function:
+    void DRV_SPI_WriteTransferAdd
+    (
+        const DRV_HANDLE handle,
+        void*       pTransmitData,
+        size_t      txSize,
+        DRV_SPI_TRANSFER_HANDLE * const transferHandle
+    );
+
+  Summary:
+    Queues a write operation.
+
+  Description:
+    This function schedules a non-blocking write operation. The function
+    returns with a valid transfer handle in the transferHandle argument if
+    the request was scheduled successfully. The function adds the request to
+    the instance specific software queue and returns immediately. While the
+    request is in the queue, the application buffer is owned by the driver
+    and should not be modified.
+    This API will write txSize bytes of data and the dummy data received will
+    be ignored.
+
+    The function returns DRV_SPI_TRANSFER_HANDLE_INVALID in the
+    transferHandle argument:
+    - if pTransmitData is NULL.
+    - if txSize is zero.
+    - if the transfer handle is NULL.
+    - if the queue size is full or queue depth is insufficient.
+    - if the driver handle is invalid.
+
+    If the requesting client registered an event callback with the driver, the
+    driver will issue a DRV_SPI_TRANSFER_EVENT_COMPLETE event if the transfer
+    was processed successfully or DRV_SPI_TRANSFER_EVENT_ERROR event if the
+    transfer was not processed successfully.
+
+  Precondition:
+    DRV_SPI_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle -    Handle of the communication channel as returned by the
+                DRV_SPI_Open function.
+
+    *pTransmitData  Pointer to the data which has to be transmitted. For 9
+                    to 15bit mode, data should be right aligned in the 16 bit
+                    memory location.
+    txSize          Number of bytes to be transmitted. Always, size should be
+                    given in terms of bytes. For example, if 10 15-bit data
+                    are to be transmitted, the transmit size should be 20 bytes.
+    transferHandle - Handle which is returned by transfer add function.
+
+  Returns:
+    None.
+
+  Example:
+    <code>
+
+    MY_APP_OBJ myAppObj;
+    uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
+    DRV_SPI_TRANSFER_HANDLE transferHandle;
+
+    // mySPIHandle is the handle returned by the DRV_SPI_Open function.
+
+    DRV_SPI_WriteTransferAdd(mySPIhandle, myTxBuffer, MY_TX_BUFFER_SIZE, &transferHandle);
+
+    if(transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
+    {
+        // Error handling here
+    }
+
+    // Event is received when the transfer is processed.
+    </code>
+
+  Remarks:
+    This function can be called from within the SPI Driver Transfer Event
+    Handler that is registered by the client. It should NOT be called in the
+    event handler associated with another SPI driver instance or event handler
+    of any other peripheral. It should not be called directly in any ISR.
+*/
+
+void DRV_SPI_WriteTransferAdd(
+    const   DRV_HANDLE  handle,
+    void*   pTransmitData,
+    size_t  txSize,
+    DRV_SPI_TRANSFER_HANDLE * const transferHandle);
+
+// *****************************************************************************
+/* Function:
+    void DRV_SPI_ReadTransferAdd
+    (
+        const DRV_HANDLE handle,
+        void*       pReceiveData,
+        size_t      rxSize,
+        DRV_SPI_TRANSFER_HANDLE * const transferHandle
+    );
+
+  Summary:
+    Queues a read operation.
+
+  Description:
+    This function schedules a non-blocking read operation. The function
+    returns with a valid transfer handle in the transferHandle argument if
+    the request was scheduled successfully. The function adds the request to
+    the instance specific software queue and returns immediately. While the
+    request is in the queue, the application buffer is owned by the driver
+    and should not be modified.
+    This API will write rxSize bytes of dummy data and  will read rxSize bytes
+    of data in the memory location pointed by pReceiveData.
+
+    The function returns DRV_SPI_TRANSFER_HANDLE_INVALID in the
+    transferHandle argument:
+    - if pReceiveData is NULL.
+    - if rxSize is zero.
+    - if the transfer handle is NULL.
+    - if the queue size is full or queue depth is insufficient.
+    - if the driver handle is invalid.
+
+    If the requesting client registered an event callback with the driver, the
+    driver will issue a DRV_SPI_TRANSFER_EVENT_COMPLETE event if the transfer
+    was processed successfully or DRV_SPI_TRANSFER_EVENT_ERROR event if the
+    transfer was not processed successfully.
+
+  Precondition:
+    DRV_SPI_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle -    Handle of the communication channel as returned by the
+                DRV_SPI_Open function.
+    *pReceiveData   Pointer to the location where received data has to be stored.
+                    It is user's responsibility to ensure pointed location has
+                    sufficient memory to store the read data.
+                    For 9 to 15bit mode, received data will be right aligned in
+                    the 16 bit memory location.
+    rxSize          Number of bytes to be received. Always, size should be
+                    given in terms of bytes. For example, if 10 15-bit data
+                    are to be received, the receive size should be 20 bytes.
+
+    transferHandle - Handle which is returned by transfer add function.
+
+  Returns:
+    None.
+
+  Example:
+    <code>
+
+    MY_APP_OBJ myAppObj;
+    uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
+    DRV_SPI_TRANSFER_HANDLE transferHandle;
+
+    // mySPIHandle is the handle returned by the DRV_SPI_Open function.
+
+    DRV_SPI_ReadTransferAdd(mySPIhandle, myRxBuffer, MY_RX_BUFFER_SIZE, &transferHandle);
+
+    if(transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
+    {
+        // Error handling here
+    }
+
+    // Event is received when the transfer is processed.
+    </code>
+
+  Remarks:
+    This function can be called from within the SPI Driver Transfer Event
+    Handler that is registered by the client. It should not be called in the
+    event handler associated with another SPI driver instance or event handler
+    of any other peripheral. It should not be called directly in any ISR.
+*/
+
+void DRV_SPI_ReadTransferAdd(
+    const   DRV_HANDLE  handle,
     void*   pReceiveData,
     size_t  rxSize,
     DRV_SPI_TRANSFER_HANDLE * const transferHandle);
@@ -827,9 +1003,9 @@ DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE t
                     to 15bit mode, data should be right aligned in the 16 bit
                     memory location.
 
-    txSize          Number of bytes to be transmitted in bytes. For 9 to 15bit mode, size
-                    should be given in terms of bytes. For example, if 5 16-bit data
-                    are to be transmitted, the transmit size should be 10 bytes.
+    txSize          Number of bytes to be transmitted. Always, size should be
+                    given in terms of bytes. For example, if 10 15-bit data
+                    are to be transmitted, the transmit size should be 20 bytes.
 
   Returns:
     true - transfer is successful
@@ -839,7 +1015,7 @@ DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE t
     <code>
 
     MY_APP_OBJ myAppObj;
-    uint8_t myTxbuffer[MY_TX_BUFFER_SIZE];
+    uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
 
     // mySPIHandle is the handle returned by the DRV_SPI_Open function.
 
@@ -883,13 +1059,13 @@ bool DRV_SPI_WriteTransfer(const DRV_HANDLE handle, void* pTransmitData,  size_t
     handle -    Handle of the communication channel as returned by the
                 DRV_SPI_Open function.
 
-    *pReceiveData   Pointer to the buffer where the data is to be received. For 9
-                    to 15bit mode, data should be right aligned in the 16 bit
+    *pReceiveData   Pointer to the buffer where the data is to be received. For
+                    9 to 15bit mode, data should be right aligned in the 16 bit
                     memory location.
 
-    rxSize          Number of bytes to be received in bytes. For 9 to 15bit mode, size
-                    should be given in terms of bytes. For example, if 5 16-bit data
-                    are to be received, the receive size should be 10 bytes.
+    rxSize          Number of bytes to be received. Always, size should be
+                    given in terms of bytes. For example, if 10 15-bit data
+                    are to be received, the receive size should be 20 bytes.
 
   Returns:
     true - receive is successful
@@ -899,11 +1075,11 @@ bool DRV_SPI_WriteTransfer(const DRV_HANDLE handle, void* pTransmitData,  size_t
     <code>
 
     MY_APP_OBJ myAppObj;
-    uint8_t myRxbuffer[MY_RX_BUFFER_SIZE];
+    uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
 
     // mySPIHandle is the handle returned by the DRV_SPI_Open function.
 
-    if (DRV_SPI_ReadTransfer(mySPIhandle, myRxbuffer, MY_RX_BUFFER_SIZE) == false)
+    if (DRV_SPI_ReadTransfer(mySPIhandle, myRxBuffer, MY_RX_BUFFER_SIZE) == false)
     {
         // Handle error here
     }
@@ -948,17 +1124,17 @@ bool DRV_SPI_ReadTransfer(const DRV_HANDLE handle, void* pReceiveData,  size_t r
                     to 15bit mode, data should be right aligned in the 16 bit
                     memory location.
 
-    txSize          Number of bytes to be transmitted in bytes. For 9 to 15bit mode, size
-                    should be given in terms of bytes. For example, if 5 16-bit data
-                    are to be transmitted, the transmit size should be 10 bytes.
+    txSize          Number of bytes to be transmitted. Always, size should be
+                    given in terms of bytes. For example, if 10 15-bit data
+                    are to be transmitted, the transmit size should be 20 bytes.
 
     *pReceiveData   Pointer to the buffer where the data is to be received. For 9
                     to 15bit mode, data should be right aligned in the 16 bit
                     memory location.
 
-    rxSize          Number of bytes to be received in bytes. For 9 to 15bit mode, size
-                    should be given in terms of bytes. For example, if 5 16-bit data
-                    are to be received, the receive size should be 10 bytes.
+    rxSize          Number of bytes to be received. Always, size should be
+                    given in terms of bytes. For example, if 10 15-bit data
+                    are to be received, the receive size should be 20 bytes.
                     If "n" number of bytes has to be received AFTER transmitting
                     "m" number of bytes, then "txSize" should be set as "m" and
                     "rxSize" should be set as "m+n".
@@ -971,8 +1147,8 @@ bool DRV_SPI_ReadTransfer(const DRV_HANDLE handle, void* pReceiveData,  size_t r
     <code>
 
     MY_APP_OBJ myAppObj;
-    uint8_t myTxbuffer[MY_TX_BUFFER_SIZE];
-    uint8_t myRxbuffer[MY_RX_BUFFER_SIZE];
+    uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
+    uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
 
     // mySPIHandle is the handle returned by the DRV_SPI_Open function.
 

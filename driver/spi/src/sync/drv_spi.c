@@ -76,7 +76,7 @@ static inline uint16_t _DRV_SPI_UPDATE_TOKEN(uint16_t token)
     {
         token = 1;
     }
-    
+
     return token;
 }
 
@@ -85,7 +85,7 @@ static DRV_SPI_CLIENT_OBJ* _DRV_SPI_DriverHandleValidate(DRV_HANDLE handle)
     /* This function returns the pointer to the client object that is
        associated with this handle if the handle is valid. Returns NULL
        otherwise. */
-       
+
     uint32_t drvInstance = 0;
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ*)NULL;
 
@@ -93,12 +93,12 @@ static DRV_SPI_CLIENT_OBJ* _DRV_SPI_DriverHandleValidate(DRV_HANDLE handle)
     {
         /* Extract the drvInstance value from the handle */
         drvInstance = ((handle & DRV_SPI_INSTANCE_INDEX_MASK) >> 8);
-        
+
         if (drvInstance >= DRV_SPI_INSTANCES_NUMBER)
         {
             return (NULL);
         }
-        
+
         if ((handle & DRV_SPI_CLIENT_INDEX_MASK) >= gDrvSPIObj[drvInstance].nClientsMax)
         {
             return (NULL);
@@ -171,7 +171,7 @@ static bool _DRV_SPI_StartDMATransfer(
     uint32_t temp;
     /* To avoid build error when DMA mode is not used */
     (void)temp;
-    
+
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)hDriver->activeClient;
 
     hDriver->txDummyDataSize = 0;
@@ -353,10 +353,6 @@ void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
   Summary:
     Dynamic implementation of DRV_SPI_Initialize system interface function.
 
-  Description:
-    This is the dynamic implementation of DRV_SPI_Initialize system interface
-    function.
-
   Remarks:
     See drv_spi.h for usage information.
 */
@@ -407,7 +403,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
             hold the mutex could not be allocated then NULL is returned. */
         return SYS_MODULE_OBJ_INVALID;
     }
-    
+
     if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FALSE)
     {
         /*  If the mutex was not created because the memory required to
@@ -453,10 +449,6 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
   Summary:
     Dynamic implementation of DRV_SPI_Status system interface function.
 
-  Description:
-    This is the dynamic implementation of DRV_SPI_Status system interface
-    function.
-
   Remarks:
     See drv_spi.h for usage information.
 */
@@ -480,10 +472,6 @@ SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object)
 
   Summary:
     Dynamic implementation of DRV_SPI_Open client interface function.
-
-  Description:
-    This is the dynamic implementation of DRV_SPI_Open client interface
-    function.
 
   Remarks:
     See drv_spi.h for usage information.
@@ -525,16 +513,16 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
         OSAL_MUTEX_Unlock( &dObj->clientMutex);
         return DRV_HANDLE_INVALID;
     }
-    
+
     if((dObj->nClients > 0) && (ioIntent & DRV_IO_INTENT_EXCLUSIVE))
     {
         /* This means the driver was already opened and another driver was
            trying to open it exclusively.  We cannot give exclusive access in
            this case */
-        OSAL_MUTEX_Unlock( &dObj->clientMutex);   
+        OSAL_MUTEX_Unlock( &dObj->clientMutex);
         return DRV_HANDLE_INVALID;
     }
-    
+
     for(iClient = 0; iClient != dObj->nClientsMax; iClient++)
     {
         if(false == ((DRV_SPI_CLIENT_OBJ *)dObj->clientObjPool)[iClient].inUse)
@@ -588,10 +576,6 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
   Summary:
     Dynamic implementation of DRV_SPI_Close client interface function.
 
-  Description:
-    This is the dynamic implementation of DRV_SPI_Close client interface
-    function.
-
   Remarks:
     See drv_spi.h for usage information.
 */
@@ -632,17 +616,14 @@ void DRV_SPI_Close( DRV_HANDLE handle )
 
 // *****************************************************************************
 /* Function:
-    bool DRV_SPI_ExchangeSetup
+    bool DRV_SPI_TransferSetup
     (
         const DRV_HANDLE handle,
-        DRV_SPI_EXCHANGE_SETUP * setup
+        DRV_SPI_TRANSFER_SETUP * setup
     )
 
   Summary:
     Setup the driver for a client.
-
-  Description:
-    This function setups the driver for a client.
 
   Remarks:
     See drv_spi.h for usage information.
@@ -669,7 +650,7 @@ bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP* set
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: SPI Driver Exchange Queue Interface Implementation
+// Section: SPI Driver Transfer Interface Implementation
 // *****************************************************************************
 // *****************************************************************************
 // *****************************************************************************
@@ -685,21 +666,17 @@ bool DRV_SPI_ReadTransfer(const DRV_HANDLE handle, void* pReceiveData,  size_t r
 
 // *****************************************************************************
 /* Function:
-    void DRV_SPI_WriteReadTransfer
+    bool DRV_SPI_WriteReadTransfer
     (
-        const DRV_HANDLE handle,
-        void*       pTransmitData,
-        void*       pReceiveData,
-        uint32_t    exchangeSize,
-        DRV_SPI_EXCHANGE_HANDLE * const exchangeHandle
+    const DRV_HANDLE handle,
+    void* pTransmitData,
+    size_t txSize,
+    void* pReceiveData,
+    size_t rxSize
     )
 
   Summary:
     Dynamic implementation of DRV_SPI_WriteReadTransfer system interface function.
-
-  Description:
-    This is the dynamic implementation of DRV_SPI_WriteReadTransfer system interface
-    function.
 
   Remarks:
     See drv_spi.h for usage information.

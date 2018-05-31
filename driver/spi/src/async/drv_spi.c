@@ -76,7 +76,7 @@ static inline uint16_t _DRV_SPI_UPDATE_TOKEN(uint16_t token)
     {
         token = 1;
     }
-    
+
     return token;
 }
 
@@ -96,8 +96,8 @@ static bool _DRV_SPI_ResourceLock(DRV_SPI_OBJ * dObj)
                status does not get updated asynchronously.
                This code will always execute. */
             SYS_INT_SourceDisable(dObj->interruptSource);
-               
-            return true; 
+
+            return true;
         }
         else
         {
@@ -107,14 +107,14 @@ static bool _DRV_SPI_ResourceLock(DRV_SPI_OBJ * dObj)
             return false;
         }
     }
-    
+
     return false;
 }
 
 static void _DRV_SPI_ResourceUnlock(DRV_SPI_OBJ * dObj)
 {
     SYS_INT_SourceEnable(dObj->interruptSource);
-    
+
     if(dObj->interruptNestingCount == 0)
     {
         /* Release mutex */
@@ -140,12 +140,12 @@ static DRV_SPI_CLIENT_OBJ * _DRV_SPI_DriverHandleValidate(DRV_HANDLE handle)
         {
             return (NULL);
         }
-        
+
         if ((handle & DRV_SPI_INDEX_MASK) >= gDrvSPIObj[drvInstance].nClientsMax)
         {
             return (NULL);
         }
-        
+
         /* Extract the client index and obtain the client object */
         clientObj = &((DRV_SPI_CLIENT_OBJ *)gDrvSPIObj[drvInstance].clientObjPool)[handle & DRV_SPI_INDEX_MASK];
 
@@ -256,11 +256,11 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
 {
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)transferObj->hClient;
     DRV_SPI_OBJ *hDriver = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
-    
+
     uint32_t temp;
     /* To avoid build error when DMA mode is not used */
     (void)temp;
-    
+
     hDriver->txDummyDataSize = 0;
     hDriver->rxDummyDataSize = 0;
 
@@ -402,9 +402,9 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
         that are called from the event handler know that an
         interrupt context is active. */
         dObj->interruptNestingCount++;
-                
+
         clientObj->eventHandler(transferObj->event, transferObj->transferHandle, clientObj->context);
-        
+
         /* Event handler has completed, so decrement the nesting count now */
         dObj->interruptNestingCount--;
     }
@@ -483,9 +483,9 @@ void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
             that are called from the event handler know that an
             interrupt context is active. */
             dObj->interruptNestingCount++;
-            
+
             clientObj->eventHandler(transferObj->event, transferObj->transferHandle, clientObj->context);
-            
+
             /* Event handler has completed, so decrement the nesting count now */
             dObj->interruptNestingCount--;
         }
@@ -557,7 +557,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->nClients              = 0;
     dObj->spiTokenCount         = 1;
     dObj->interruptNestingCount = 0;
-    
+
     dObj->baudRateInHz          = spiInit->baudRateInHz;
     dObj->clockPhase            = spiInit->clockPhase;
     dObj->clockPolarity         = spiInit->clockPolarity;
@@ -589,7 +589,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
         /* This means DMA has to be used for SPI transfer.
         DMA Callbacks will be set for every transfer later. */
     }
-    
+
     /* Create mutexes */
     if(OSAL_MUTEX_Create(&(dObj->mutexClientObjects)) != OSAL_RESULT_TRUE)
     {
@@ -663,7 +663,7 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
     {
         return DRV_HANDLE_INVALID;
     }
-    
+
     /* Take care of Exclusive mode intent of driver */
     if(dObj->isExclusive)
     {
@@ -677,10 +677,10 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
         /* This means the driver was already opened and another driver was
            trying to open it exclusively.  We cannot give exclusive access in
            this case */
-        OSAL_MUTEX_Unlock( &dObj->mutexClientObjects);   
+        OSAL_MUTEX_Unlock( &dObj->mutexClientObjects);
         return(DRV_HANDLE_INVALID);
     }
-    
+
     for(iClient = 0; iClient != dObj->nClientsMax; iClient++)
     {
         clientObj = &((DRV_SPI_CLIENT_OBJ *)dObj->clientObjPool)[iClient];
@@ -689,7 +689,7 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
         {
             /* This means we have a free client object to use */
             clientObj->inUse        = true;
-            
+
             if(ioIntent & DRV_IO_INTENT_EXCLUSIVE)
             {
                 /* Set the driver exclusive flag */
@@ -697,16 +697,16 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             }
 
             dObj->nClients ++;
-            
+
             /* Generate the client handle */
             clientObj->clientHandle = (DRV_HANDLE)_DRV_SPI_MAKE_HANDLE(dObj->spiTokenCount, (uint8_t)drvIndex, iClient);
 
             /* Increment the instance specific token counter */
             dObj->spiTokenCount = _DRV_SPI_UPDATE_TOKEN(dObj->spiTokenCount);
-            
+
             /* We have found a client object and also updated corresponding driver object members, now release the mutex */
             OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
-            
+
             /* This driver will always work in Non-Blocking mode */
             clientObj->ioIntent             = (ioIntent | DRV_IO_INTENT_NONBLOCKING);
 
@@ -721,12 +721,12 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             clientObj->setup.chipSelect     = SYS_PORT_PIN_NONE;
             clientObj->setupChanged         = true;
             clientObj->drvIndex             = drvIndex;
-            
+
             return clientObj->clientHandle;
         }
     }
 
-    /* If we have reached here, it means we could not find a spare client object. 
+    /* If we have reached here, it means we could not find a spare client object.
        So now release the mutex and return with an invalid handle. */
     OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
     return DRV_HANDLE_INVALID;
@@ -770,7 +770,7 @@ void DRV_SPI_Close( DRV_HANDLE handle )
         SYS_DEBUG(SYS_ERROR_ERROR, "Failed to get resource lock");
         return;
     }
-    
+
     /* Remove all buffers that this client owns from the driver queue. */
     _DRV_SPI_TransferQueuePurge(clientObj);
 
@@ -779,12 +779,12 @@ void DRV_SPI_Close( DRV_HANDLE handle )
 
     /* Reset the exclusive flag */
     dObj->isExclusive = false;
-    
+
     /* De-allocate the client object */
     clientObj->inUse = false;
 
     _DRV_SPI_ResourceUnlock(dObj);
-    
+
     return;
 }
 
@@ -926,7 +926,7 @@ void DRV_SPI_WriteReadTransferAdd
                will happen if the the transfer queue size
                parameter is configured to be less */
 
-            SYS_ASSERT(false, "Insufficient Queue Depth");
+            SYS_DEBUG(SYS_ERROR_ERROR, "Insufficient Queue Depth");
             return;
         }
 
@@ -962,7 +962,7 @@ void DRV_SPI_WriteReadTransferAdd
         /* Update transferHandle object with unique ID.
         ID is combination of an incrementing token, driver instance number and allocated location from the free pool */
         transferObj->transferHandle = (DRV_HANDLE)_DRV_SPI_MAKE_HANDLE(hDriver->spiTokenCount, (uint8_t)clientObj->drvIndex, hDriver->freePoolHeadIndex);
-        
+
         /* Update the Token for next time */
         hDriver->spiTokenCount = _DRV_SPI_UPDATE_TOKEN(hDriver->spiTokenCount);
 
@@ -1019,6 +1019,60 @@ void DRV_SPI_WriteReadTransferAdd
 
 // *****************************************************************************
 /* Function:
+    void DRV_SPI_WriteTransferAdd
+    (
+        const DRV_HANDLE handle,
+        void*       pTransmitData,
+        size_t      txSize,
+        DRV_SPI_TRANSFER_HANDLE * const transferHandle
+    );
+
+  Summary:
+    Queues a write operation.
+
+  Remarks:
+    See drv_spi.h for usage information.
+*/
+void DRV_SPI_WriteTransferAdd
+(
+    const   DRV_HANDLE  handle,
+    void*   pTransmitData,
+    size_t  txSize,
+    DRV_SPI_TRANSFER_HANDLE * const transferHandle
+)
+{
+    DRV_SPI_WriteReadTransferAdd(handle, pTransmitData, txSize, NULL, 0, transferHandle);
+}
+
+// *****************************************************************************
+/* Function:
+    void DRV_SPI_ReadTransferAdd
+    (
+        const DRV_HANDLE handle,
+        void*       pReceiveData,
+        size_t      rxSize,
+        DRV_SPI_TRANSFER_HANDLE * const transferHandle
+    );
+
+  Summary:
+    Queues a read operation.
+
+  Remarks:
+    See drv_spi.h for usage information.
+*/
+void DRV_SPI_ReadTransferAdd
+(
+    const   DRV_HANDLE  handle,
+    void*   pReceiveData,
+    size_t  rxSize,
+    DRV_SPI_TRANSFER_HANDLE * const transferHandle
+)
+{
+    DRV_SPI_WriteReadTransferAdd(handle, NULL, 0, pReceiveData, rxSize, transferHandle);
+}
+
+// *****************************************************************************
+/* Function:
     DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE transferHandle)
 
   Summary:
@@ -1041,7 +1095,7 @@ DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE t
         SYS_DEBUG(SYS_ERROR_ERROR, "Transfer Handle Invalid");
         return DRV_SPI_TRANSFER_HANDLE_INVALID_OR_EXPIRED;
     }
-        
+
     dObj = (DRV_SPI_OBJ*)&gDrvSPIObj[drvInstance];
 
     /* Extract transfer index value from the transfer handle */
