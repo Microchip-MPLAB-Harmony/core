@@ -135,13 +135,13 @@ for count in range(0, genAppRtosTaskMaxCount):
         genAppRtosTaskConfMenu[count].setVisible(False)
 
     genAppRtosTaskSize.append(count)
-    genAppRtosTaskSize[count] = harmonyCoreComponent.createIntegerSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_PRIO", genAppRtosTaskConfMenu[count])
+    genAppRtosTaskSize[count] = harmonyCoreComponent.createIntegerSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_SIZE", genAppRtosTaskConfMenu[count])
     genAppRtosTaskSize[count].setLabel("Stack Size")
     genAppRtosTaskSize[count].setDescription("Stack Size")
     genAppRtosTaskSize[count].setDefaultValue(1024)
 
     genAppRtosTaskPrio.append(count)
-    genAppRtosTaskPrio[count] = harmonyCoreComponent.createIntegerSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_SIZE", genAppRtosTaskConfMenu[count])
+    genAppRtosTaskPrio[count] = harmonyCoreComponent.createIntegerSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_PRIO", genAppRtosTaskConfMenu[count])
     genAppRtosTaskPrio[count].setLabel("Task Priority")
     genAppRtosTaskPrio[count].setDescription("Task Priority")
     genAppRtosTaskPrio[count].setDefaultValue(1)
