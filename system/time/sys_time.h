@@ -568,7 +568,7 @@ Example:
   The following example call will register it, requesting a 20 microsecond
   periodic callback.
   <code>
-  SYS_TIME_HANDLE_64 handle = SYS_TIME_CallbackUS(Test_Callback, NULL, 20, SYS_TIME_PERIODIC);
+  SYS_TIME_HANDLE handle = SYS_TIME_CallbackUS(Test_Callback, NULL, 20, SYS_TIME_PERIODIC);
   </code>
 */
 
@@ -710,6 +710,41 @@ uint32_t SYS_TIME_FrequencyGet ( void );
 
 uint32_t SYS_TIME_CounterGet ( void );
 
+// *****************************************************************************
+/* Function:
+    uint64_t SYS_TIME_Counter64Get ( void )
+
+  Summary:
+    Get the common 64-bit system counter value.
+
+  Description:
+    Returns the current "live" value of the common 64-bit system counter.
+
+    There is a single common counter that is always present in the Time service
+    that provides a consitent time base from which all client-specific timer
+    counters provided by the service are implemented.
+
+  Precondition:
+    The SYS_TIME_Initialize function should have been called before calling this
+    function.
+
+  Parameters:
+    None
+
+  Returns:
+    The current "live" value of the common 64-bit system counter.
+
+  Remarks:
+    The value returned may be stale as soon as it is provided, as the timer is
+    live and running at full frequency resolution (as configured and as reported
+    by the SYS_TIME_FrequencyGet function).  If additional accuracy is required,
+    use a hardware timer instance.
+
+    Generally, it is only meaningful to use counter values to measure short time
+    intervals.  For current time and date, use the SYS_TIME_Get function.
+*/
+
+uint64_t SYS_TIME_Counter64Get ( void );
 
 // *****************************************************************************
 /* Function:

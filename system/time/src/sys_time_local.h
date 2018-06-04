@@ -59,14 +59,14 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 typedef uint32_t TIME;   /* how time is actually stored */
+typedef uint64_t TIME64;
 
 //////////////////////////Counter//////////////////////////////////////////////
 #define HW_COUNTER_ROLLOVER_CYCLE    1
 #define HW_COUNTER_WIDTH             16
 #define HW_COUNTER_MAX               0xFFFF
-#define HIGH_COUNTER_WIDTH           16
-#define HIGH_COUNTER_MAX             0xFFFF
 #define COUNTER_MAX                  0xFFFFFFFF
+#define COUNTER_WIDTH                32
 
 // *****************************************************************************
 /* Timer Handle Macros
@@ -131,6 +131,7 @@ typedef struct{
     TIME timePeriodPrevious;
     TIME timePeriod;
     volatile TIME counter;    /* Software counter */
+    volatile TIME highCounter;    /* Software 64-bit counter */
     volatile TIME timeToCounter;     /* Active timer expiry point or software period */
     int tmrElapsed;    /* On every active timer elapsed */
     int interruptContext;    /* On every active timer elapsed */

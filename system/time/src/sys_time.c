@@ -208,10 +208,9 @@ static void timer_update(SYS_TIME_COUNTER_OBJ * counterObj)
 
 static void counter_update(SYS_TIME_COUNTER_OBJ * counterObj)
 {
-    TIME counterLow = counterObj->counter & HW_COUNTER_MAX;
-    TIME counterHigh = counterObj->counter >> HW_COUNTER_WIDTH;
+    TIME counter32Low = counterObj->counter & HW_COUNTER_MAX;
+    TIME counter32High = counterObj->counter >> HW_COUNTER_WIDTH;
     TIME periodDelta = counterObj->timePeriod;
-
     if(counterObj->timePeriod != counterObj->timePeriodPrevious)
     {
         if(counterObj->timePeriod > counterObj->timePeriodPrevious)
@@ -226,25 +225,35 @@ static void counter_update(SYS_TIME_COUNTER_OBJ * counterObj)
         counterObj->timePeriodPrevious = counterObj->timePeriod;
     }
 
-    if((counterLow + periodDelta) > HW_COUNTER_MAX)
+    if((counter32Low + periodDelta) > HW_COUNTER_MAX)
     {
-        counterLow = ((counterLow + periodDelta) - HW_COUNTER_MAX);
+        counter32Low = ((counter32Low + periodDelta) - HW_COUNTER_MAX);
 
-        if(counterHigh < HIGH_COUNTER_MAX)
+        if(counter32High < HW_COUNTER_MAX)
         {
-            counterHigh++;
+            counter32High++;
         }
         else
         {
-            counterHigh = 0;
+            counter32High = 0;
+
+            /* Update high counter for 64 bit on each 32 bit counter overflow */
+            if(counterObj->highCounter < COUNTER_MAX)
+            {
+                counterObj->highCounter++;
+            }
+            else
+            {
+                counterObj->highCounter = 0;
+            }
         }
     }
     else
     {
-        counterLow += periodDelta;
+        counter32Low += periodDelta;
     }
 
-    counterObj->counter = ((counterHigh << HW_COUNTER_WIDTH) | (counterLow & HW_COUNTER_MAX));
+    counterObj->counter = ((counter32High << HW_COUNTER_WIDTH) | (counter32Low & HW_COUNTER_MAX));
 
     if(counterObj->tmrActive != NULL)
     {
@@ -388,6 +397,28 @@ TIME SYS_TIME_CounterGet ( void )
     }
 
     return (counterObj->counter + counterDelta);
+}
+
+TIME64 SYS_TIME_Counter64Get ( void )
+{
+    SYS_TIME_COUNTER_OBJ * counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
+    TIME counterDelta = 0;
+    TIME hardwareCounter = counterObj->timePlib->timerCounterGet();
+    TIME64 counter64 = counterObj->highCounter;
+
+    if((counterObj->timePeriod > counterObj->timePeriodPrevious) || (hardwareCounter > counterObj->timePeriod))
+    {
+        counterDelta = (hardwareCounter - counterObj->timePeriodPrevious);
+    }
+    else
+    {
+        counterDelta = (HW_COUNTER_MAX - counterObj->timePeriodPrevious) + hardwareCounter;
+    }
+    counterDelta = (HW_COUNTER_MAX - counterObj->timePeriodPrevious) + hardwareCounter;
+
+    counter64 = ((counter64 << COUNTER_WIDTH) + counterObj->counter + counterDelta);
+
+    return counter64;
 }
 
 void SYS_TIME_CounterSet ( TIME count )
