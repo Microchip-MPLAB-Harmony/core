@@ -2,15 +2,21 @@
 #### Global Variables ####
 ################################################################################
 # Maximum Application Tasks that can be created
-genAppRtosTaskMaxCount = 10
-genAppTaskConfMenu = []
-genAppTaskName = []
-genAppTaskNameCodingGuide = []
-genAppRtosTaskConfMenu = []
-genAppRtosTaskSize = []
-genAppRtosTaskPrio = []
-genAppRtosTaskUseDelay = []
-genAppRtosTaskDelay = []
+global genAppRtosTaskMaxCount
+
+global genAppTaskConfMenu
+global genAppRtosTaskConfMenu
+
+genAppRtosTaskMaxCount      = 10
+genAppRtosTaskConfMenu      = []
+genAppTaskConfMenu          = []
+genAppTaskName              = []
+genAppTaskNameCodingGuide   = []
+genAppRtosTaskSize          = []
+genAppRtosTaskPrio          = []
+genAppRtosTaskUseDelay      = []
+genAppRtosTaskDelay         = []
+
 
 ################################################################################
 #### Business Logic ####
@@ -84,7 +90,6 @@ def genAppSysInit(symbol, event):
         symbol.setEnabled(False)
 
 ############################################################################
-global genAppRtosTaskMaxCount
 
 enableRTOS = Database.getSymbolValue("Harmony", "SELECT_RTOS")
 
