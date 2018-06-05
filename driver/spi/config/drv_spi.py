@@ -203,9 +203,11 @@ def onDependentComponentAdded(drv_spi, id, spi):
         plibUsed = drv_spi.getSymbolByID("DRV_SPI_PLIB")
         plibUsed.clearValue()
         plibUsed.setValue(spi.getID().upper(), 1)
-        spi.setSymbolValue("SPI_INTERRUPT_MODE", True, 1)
-        #spiIntSymPLIB = spi.getSymbolByID("SPI_INTERRUPT_MODE")
-        #spiIntSymPLIB.setReadOnly(True)
+        Database.setSymbolValue(spi.getID(), "SPI_DRIVER_CONTROLLED", True, 1)
+
+def onDependentComponentRemoved(drv_spi, id, spi):
+    if id == "drv_spi_SPI_dependency" :
+        Database.setSymbolValue(spi.getID(), "SPI_DRIVER_CONTROLLED", False, 1)
 
 def requestAndAssignDMAChannel(Sym, event):
     global drvSpiInstanceSpace
@@ -234,9 +236,6 @@ def requestDMAComment(Sym, event):
         Sym.setVisible(True)
     else:
         Sym.setVisible(False)
-
-def commonTxRxOption(Sym, event):
-    Sym.setValue(event["value"], 1)
 
 def destroyComponent(spiComponent):
     spiNumInstances = Database.getSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES")
