@@ -249,6 +249,15 @@ static void DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
     
     client->errors = dObj->i2cPlib->errorGet();
     
+    if( DRV_I2C_ERROR_NONE == client->errors )
+    {
+        transferObj->event = DRV_I2C_TRANSFER_EVENT_COMPLETE;
+    }
+    else
+    {
+        transferObj->event = DRV_I2C_TRANSFER_EVENT_ERROR;
+    }
+        
     if( NULL != client->eventHandler )
     {   
         /* Before calling the event handler, the interrupt nesting
@@ -258,15 +267,6 @@ static void DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
            were submitted using the buffer add routine */
 
         dObj->interruptNestingCount ++;
-
-        if( DRV_I2C_ERROR_NONE == client->errors )
-        {
-            transferObj->event = DRV_I2C_TRANSFER_EVENT_COMPLETE;
-        }
-        else
-        {
-            transferObj->event = DRV_I2C_TRANSFER_EVENT_ERROR;
-        }
 
         client->eventHandler( transferObj->event,
                               transferObj->transferHandle,
