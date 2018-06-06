@@ -123,7 +123,10 @@ for count in range(0, genAppRtosTaskMaxCount):
     genAppTaskName[count] = harmonyCoreComponent.createStringSymbol("GEN_APP_TASK_NAME_" + str(count), genAppTaskConfMenu[count])
     genAppTaskName[count].setLabel("Application Name")
     genAppTaskName[count].setDescription("Application Name")
-    genAppTaskName[count].setDefaultValue("app" + str(count))
+    if (count == 0):
+        genAppTaskName[count].setDefaultValue("app")
+    else:
+        genAppTaskName[count].setDefaultValue("app" + str(count))
 
     genAppTaskNameCodingGuide.append(count)
     genAppTaskNameCodingGuide[count] = harmonyCoreComponent.createCommentSymbol("GEN_APP_TASK_NAME_CODING_GUIDE_" + str(count), genAppTaskConfMenu[count])
