@@ -1,17 +1,17 @@
-// <editor-fold defaultstate="collapsed" desc="DRV_AT25M Instance ${DRV_AT25M_INDEX?string} Initialization Data">
+// <editor-fold defaultstate="collapsed" desc="DRV_AT25M Initialization Data">
 
 /* SPI PLIB Interface Initialization for AT25M Driver */
-DRV_AT25M_PLIB_INTERFACE drvAT25M${DRV_AT25M_INDEX?string}PlibAPI = {
+DRV_AT25M_PLIB_INTERFACE drvAT25MPlibAPI = {
 
     /* SPI PLIB WriteRead function */
     .writeRead = (DRV_WRITEREAD)${DRV_AT25M_PLIB}_WriteRead,
 
     /* SPI PLIB Write function */
     .write = (DRV_WRITE)${DRV_AT25M_PLIB}_Write,
-    
+
     /* SPI PLIB Read function */
     .read = (DRV_READ)${DRV_AT25M_PLIB}_Read,
-    
+
     /* SPI PLIB Transfer Status function */
     .isBusy = (DRV_IS_BUSY)${DRV_AT25M_PLIB}_IsBusy,
 
@@ -23,20 +23,20 @@ DRV_AT25M_PLIB_INTERFACE drvAT25M${DRV_AT25M_INDEX?string}PlibAPI = {
 };
 
 /* AT25M Driver Initialization Data */
-DRV_AT25M_INIT drvAT25M${DRV_AT25M_INDEX?string}InitData =
+DRV_AT25M_INIT drvAT25MInitData =
 {
     /* SPI PLIB API  interface*/
-    .spiPlib = &drvAT25M${DRV_AT25M_INDEX?string}PlibAPI,
+    .spiPlib = &drvAT25MPlibAPI,
 
     /* AT25M Number of clients */
-    .numClients = DRV_AT25M_CLIENTS_NUMBER_IDX${DRV_AT25M_INDEX?string},
-    
-    .chipSelectPin    = DRV_AT25M_CHIP_SELECT_PIN_IDX${DRV_AT25M_INDEX?string},
-    
-    .holdPin    = DRV_AT25M_HOLD_PIN_IDX${DRV_AT25M_INDEX?string},
-    
-    .writeProtectPin    = DRV_AT25M_WP_PIN_IDX${DRV_AT25M_INDEX?string},
-    
+    .numClients = DRV_AT25M_CLIENTS_NUMBER_IDX,
+
+    .chipSelectPin    = DRV_AT25M_CHIP_SELECT_PIN_IDX,
+
+    .holdPin    = DRV_AT25M_HOLD_PIN_IDX,
+
+    .writeProtectPin    = DRV_AT25M_WP_PIN_IDX,
+
     .blockStartAddress =    0x${START_ADDRESS},
 };
 

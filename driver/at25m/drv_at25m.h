@@ -86,13 +86,13 @@ typedef enum
 {
     /* Transfer is being processed */
     DRV_AT25M_TRANSFER_BUSY,
-    
+
     /* Transfer is successfully completed*/
     DRV_AT25M_TRANSFER_COMPLETED,
-    
+
     /* Transfer had error or first transfer request is not made */
     DRV_AT25M_TRANSFER_ERROR
-    
+
 } DRV_AT25M_TRANSFER_STATUS;
 
 // *****************************************************************************
@@ -124,7 +124,7 @@ typedef struct
     uint32_t eraseNumRegions;
 
     uint32_t blockStartAddress;
-    
+
 } DRV_AT25M_GEOMETRY;
 
 // *****************************************************************************
@@ -136,7 +136,7 @@ typedef struct
 // *****************************************************************************
 /* Function:
     void DRV_AT25M_Initialize( void );
-    
+
   Summary:
     Initializes the AT25M EEPROM device
 
@@ -148,7 +148,7 @@ typedef struct
 
   Precondition:
     None.
-  
+
   Parameters:
     index - Identifier for the instance to be initialized
 
@@ -158,11 +158,11 @@ typedef struct
   Returns:
     If successful, returns a valid handle to a driver instance object.
     Otherwise, returns SYS_MODULE_OBJ_INVALID.
-  
+
   Example:
     <code>
     SYS_MODULE_OBJ   sysObjDrvAT25M0;
-    
+
     DRV_AT25M_PLIB_INTERFACE drvAT25M0PlibAPI = {
         .writeRead = (DRV_WRITEREAD)SPI0_WriteRead,
         .write = (DRV_WRITE)SPI0_Write,
@@ -194,6 +194,42 @@ typedef struct
 
 SYS_MODULE_OBJ DRV_AT25M_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT * const init);
 
+// *************************************************************************
+/* Function:
+    SYS_STATUS DRV_AT25M_Status( const SYS_MODULE_INDEX drvIndex );
+
+  Summary:
+    Gets the current status of the AT25M driver module.
+
+  Description:
+    This routine provides the current status of the AT25M driver module.
+
+  Preconditions:
+    Function DRV_AT25M_Initialize should have been called before calling
+    this function.
+
+  Parameters:
+    drvIndex   -  Identifier for the instance used to initialize driver
+
+  Returns:
+    SYS_STATUS_READY - Indicates that the driver is ready and accept
+                       requests for new operations.
+
+    SYS_STATUS_UNINITIALIZED - Indicates the driver is not initialized.
+
+  Example:
+    <code>
+    SYS_STATUS          Status;
+
+    Status = DRV_AT25M_Status(DRV_AT25M_INDEX);
+    </code>
+
+  Remarks:
+    This routine will NEVER block waiting for hardware.
+*/
+
+SYS_STATUS DRV_AT25M_Status( const SYS_MODULE_INDEX drvIndex );
+
 // *****************************************************************************
 /* Function:
     DRV_HANDLE DRV_AT25M_Open
@@ -213,7 +249,7 @@ SYS_MODULE_OBJ DRV_AT25M_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
 
     This driver is a single client driver, so DRV_AT25M_Open API should be
     called only once until driver is closed.
-    
+
   Precondition:
     Function DRV_AT25M_Initialize must have been called before calling this
     function.
@@ -299,7 +335,7 @@ void DRV_AT25M_Close(const DRV_HANDLE handle);
 
     The requesting client should call DRV_AT25M_TransferStatusGet() API to know
     the current status of the request.
-    
+
   Precondition:
     DRV_AT25M_Open must have been called to obtain a valid opened device handle.
 
@@ -329,7 +365,7 @@ void DRV_AT25M_Close(const DRV_HANDLE handle);
     #define MEM_ADDRESS  0x0
 
     uint8_t readBuffer[BUFFER_SIZE];
-    
+
     // myHandle is the handle returned from DRV_AT25M_Open API.
     if (true != DRV_AT25M_Read(myHandle, &readBuffer, BUFFER_SIZE, MEM_ADDRESS))
     {
@@ -346,29 +382,29 @@ bool DRV_AT25M_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength
 
 // *****************************************************************************
 /* Function:
-    bool DRV_AT25M_PageWrite(const DRV_HANDLE handle, uint32_t *txData, uint32_t txDataLength, uint32_t address);
+    bool DRV_AT25M_Write(const DRV_HANDLE handle, uint32_t *txData, uint32_t txDataLength, uint32_t address);
 
   Summary:
     Writes 'n' bytes of data starting at the specified address.
 
   Description:
     This function schedules a non-blocking write operation for writing
-    txDataLength bytes of data starting from given address of EEPROM. 
+    txDataLength bytes of data starting from given address of EEPROM.
 
     The requesting client should call DRV_AT25M_TransferStatusGet() API to know
     the current status of the request.
 
   Preconditions:
     DRV_AT25M_Open must have been called to obtain a valid opened device handle.
-   
+
   Parameters:
     handle         - A valid open-instance handle, returned from the driver's
                       open routine
-    *txData        - The source buffer containing data to be programmed into AT25M 
+    *txData        - The source buffer containing data to be programmed into AT25M
                       EEPROM
 
     txDataLength   - Total number of bytes to be written. It should not be greater
-                      than page size
+                      than page size of EEPROM
 
     address        - Write memory start address from where the data should be
                       written
@@ -389,10 +425,10 @@ bool DRV_AT25M_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength
     #define MEM_ADDRESS  0x0
 
     uint8_t writeBuffer[BUFFER_SIZE];
- 
+
     // myHandle is the handle returned from DRV_AT25M_Open API.
-     
-    if (true != DRV_AT25M_PageWrite(myHandle, &writeBuffer, PAGE_SIZE, MEM_ADDRESS))
+
+    if (true != DRV_AT25M_Write(myHandle, &writeBuffer, PAGE_SIZE, MEM_ADDRESS))
     {
         // Error handling here
     }
@@ -407,7 +443,76 @@ bool DRV_AT25M_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength
     None.
 */
 
-bool DRV_AT25M_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t txDataLength, uint32_t address );
+bool DRV_AT25M_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength, uint32_t address );
+
+// *****************************************************************************
+/* Function:
+    bool DRV_AT25M_PageWrite(const DRV_HANDLE handle, uint32_t *txData, uint32_t address);
+
+  Summary:
+    Writes one page of data starting at the specified address.
+
+  Description:
+    This function schedules a non-blocking write operation for writing
+    one page of data starting from given address of EEPROM.
+
+    The requesting client should call DRV_AT25M_TransferStatusGet() API to know
+    the current status of the request.
+
+  Preconditions:
+    DRV_AT25M_Open must have been called to obtain a valid opened device handle.
+
+    "address" provided must be page boundary aligned in order to avoid
+    overwriting the data in the beginning of the page.
+
+  Parameters:
+    handle         - A valid open-instance handle, returned from the driver's
+                      open routine
+    *txData        - The source buffer containing data to be programmed into AT25M
+                      EEPROM
+
+    txDataLength   - Total number of bytes to be written. It should not be greater
+                      than page size
+
+    address        - Write memory start address from where the data should be
+                      written.
+                     It must be page boundary aligned in order to avoid overwriting
+                      the data in the beginning of the page.
+
+  Returns:
+    false
+    - if handle is not right
+    - if the driver is busy handling another transfer request
+
+    true
+    - if the write request is successfully accepted.
+
+  Example:
+    <code>
+
+    #define BUFFER_SIZE  1024
+    #define MEM_ADDRESS  0x0
+
+    uint8_t writeBuffer[BUFFER_SIZE];
+
+    // myHandle is the handle returned from DRV_AT25M_Open API.
+
+    if (true != DRV_AT25M_PageWrite(myHandle, &writeBuffer, MEM_ADDRESS))
+    {
+        // Error handling here
+    }
+    else
+    {
+        // Wait for write to be completed
+        while(DRV_AT25M_TRANSFER_BUSY == DRV_AT25M_TransferStatusGet(myHandle));
+    }
+    </code>
+
+  Remarks:
+    None.
+*/
+
+bool DRV_AT25M_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t address );
 
 // *****************************************************************************
 /* Function:
@@ -429,11 +534,11 @@ bool DRV_AT25M_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t txDataL
 
   Returns:
     One of the status element from the enum DRV_AT25M_TRANSFER_STATUS.
- 
+
   Example:
     <code>
     // myHandle is the handle returned from DRV_AT25M_Open API.
-    
+
     if (DRV_AT25M_TRANSFER_COMPLETED == DRV_AT25M_TransferStatusGet(myHandle))
     {
         // Operation Done
@@ -473,14 +578,14 @@ DRV_AT25M_TRANSFER_STATUS DRV_AT25M_TransferStatusGet(const DRV_HANDLE handle);
     - if able to get the geometry details of the flash
 
   Example:
-    <code> 
-    
+    <code>
+
     DRV_AT25M_GEOMETRY eepromGeometry;
     uint32_t readBlockSize, writeBlockSize, eraseBlockSize;
     uint32_t nReadBlocks, nReadRegions, totalFlashSize;
 
     // myHandle is the handle returned from DRV_AT25M_Open API.
-    
+
     DRV_AT25M_GeometryGet(myHandle, &eepromGeometry);
 
     readBlockSize  = eepromGeometry.readBlockSize;

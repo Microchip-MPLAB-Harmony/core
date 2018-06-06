@@ -8,6 +8,7 @@ def loadModule():
                     {"name":"time", "label": "TIME", "type":"system", "capability":"SYS_TIME", "dependency":["TC"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"])'},
                     {"name":"fs", "label": "FILE SYSTEM", "type":"system", "capability":"SYS_FS", "condition":"True"},
                     {"name":"i2c", "label": "I2C", "type":"driver", "instance":"multi", "capability":"DRV_I2C", "dependency":["I2C"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"])'},
-                    {"name":"spi", "label": "SPI", "type":"driver", "instance":"multi", "capability":"DRV_SPI", "dependency":["SPI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"])'}]
+                    {"name":"spi", "label": "SPI", "type":"driver", "instance":"multi", "capability":"DRV_SPI", "dependency":["SPI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"])'},
+                    {"name":"at25m", "label": "AT25M", "type":"driver", "instance":"single", "capability":"MEMORY", "dependency":["SPI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAME70", "SAMS70", "PIC32CZ"])'}]
     #load drivers and system services defined above
     execfile(Module.getPath() + "/config/core.py")

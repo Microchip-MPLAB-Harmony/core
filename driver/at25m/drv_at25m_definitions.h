@@ -111,10 +111,10 @@ typedef struct
 
     /* AT25M PLIB write API */
     DRV_WRITE               write;
-    
+
     /* AT25M PLIB read API */
     DRV_READ               read;
-    
+
     /* AT25M PLIB Transfer status API */
     DRV_IS_BUSY                 isBusy;
 
@@ -147,14 +147,14 @@ typedef struct
 
     /* Number of clients */
     size_t                          numClients;
-    
+
     SYS_PORT_PIN                    chipSelectPin;
-    
+
     SYS_PORT_PIN                    holdPin;
-    
+
     SYS_PORT_PIN                    writeProtectPin;
- 
-    uint32_t                        blockStartAddress; 
+
+    uint32_t                        blockStartAddress;
 
 } DRV_AT25M_INIT;
 

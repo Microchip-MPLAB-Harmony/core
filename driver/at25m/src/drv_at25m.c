@@ -73,16 +73,16 @@ static bool _DRV_AT25M_WriteEnable(void)
 
     /* Assert Chip Select */
     SYS_PORT_PinClear(gDrvAT25MObj.chipSelectPin);
-    
+
     if(gDrvAT25MObj.spiPlib->write(gDrvAT25MObj.at25mCommand, 1) == true)
     {
         while(gDrvAT25MObj.spiPlib->isBusy() == true);
         status = true;
     }
-    
+
     /* De-assert the chip select */
     SYS_PORT_PinSet(gDrvAT25MObj.chipSelectPin);
-    
+
     return status;
 }
 
@@ -94,16 +94,16 @@ static uint8_t _DRV_AT25M_ReadStatus(void)
 
     /* Assert Chip Select */
     SYS_PORT_PinClear(gDrvAT25MObj.chipSelectPin);
-    
+
     if(gDrvAT25MObj.spiPlib->writeRead(gDrvAT25MObj.at25mCommand, 1, &gDrvAT25MObj.at25mCommand[2], 2 ) == true)
     {
         while(gDrvAT25MObj.spiPlib->isBusy() == true);
         status = gDrvAT25MObj.at25mCommand[3];
     }
-    
+
     /* De-assert the chip select */
     SYS_PORT_PinSet(gDrvAT25MObj.chipSelectPin);
-    
+
     return status;
 }
 
@@ -112,7 +112,7 @@ static void _SPIEventHandler(uintptr_t context )
 {
     /* De-assert the chip select */
     SYS_PORT_PinSet(gDrvAT25MObj.chipSelectPin);
-    
+
     if (gDrvAT25MObj.spiPlib->errorGet() != DRV_AT25M_SPI_ERROR_NONE)
     {
         gDrvAT25MObj.transferStatus = DRV_AT25M_TRANSFER_ERROR;
@@ -152,24 +152,26 @@ SYS_MODULE_OBJ DRV_AT25M_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     {
         return SYS_MODULE_OBJ_INVALID;
     }
-    
+
+    gDrvAT25MObj.status                = SYS_STATUS_UNINITIALIZED;
+
     gDrvAT25MObj.inUse                 = true;
     gDrvAT25MObj.nClients              = 0;
     gDrvAT25MObj.transferStatus        = DRV_AT25M_TRANSFER_ERROR;
     gDrvAT25MObj.writeCompleted        = true;
-    
+
     gDrvAT25MObj.spiPlib               = at25mInit->spiPlib;
     gDrvAT25MObj.nClientsMax           = at25mInit->numClients;
     gDrvAT25MObj.blockStartAddress     = at25mInit->blockStartAddress;
     gDrvAT25MObj.chipSelectPin         = at25mInit->chipSelectPin;
     gDrvAT25MObj.holdPin               = at25mInit->holdPin;
     gDrvAT25MObj.writeProtectPin       = at25mInit->writeProtectPin;
-    
+
     /* De-assert Chip Select, Hold and Write protect pin to begin with. */
     SYS_PORT_PinSet(gDrvAT25MObj.chipSelectPin);
     SYS_PORT_PinSet(gDrvAT25MObj.holdPin);
     SYS_PORT_PinSet(gDrvAT25MObj.writeProtectPin);
-    
+
     /* Update the status */
     gDrvAT25MObj.status                = SYS_STATUS_READY;
 
@@ -178,8 +180,14 @@ SYS_MODULE_OBJ DRV_AT25M_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
 
 }
 
+SYS_STATUS DRV_AT25M_Status( const SYS_MODULE_INDEX drvIndex )
+{
+    /* Return the driver status */
+    return (gDrvAT25MObj.status);
+}
+
 DRV_HANDLE DRV_AT25M_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
-{    
+{
     /* Validate the request */
     if (drvIndex >= DRV_AT25M_INSTANCES_NUMBER)
     {
@@ -190,14 +198,14 @@ DRV_HANDLE DRV_AT25M_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
     {
         return DRV_HANDLE_INVALID;
     }
-    
+
     gDrvAT25MObj.nClients++;
-    
+
     return ((DRV_HANDLE)0);
 }
 
 void DRV_AT25M_Close( const DRV_HANDLE handle )
-{    
+{
     if((handle != DRV_HANDLE_INVALID) && (handle == 0))
     {
         gDrvAT25MObj.nClients--;
@@ -207,26 +215,26 @@ void DRV_AT25M_Close( const DRV_HANDLE handle )
 bool DRV_AT25M_Read( const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength, uint32_t address )
 {
     bool status = false;
-    
+
     if((handle == DRV_HANDLE_INVALID) || (handle > 0))
     {
         return status;
     }
-    
+
     gDrvAT25MObj.at25mCommand[0] = DRV_AT25M_CMD_READ;
     gDrvAT25MObj.at25mCommand[1] = (uint8_t)(address>>16);
-    gDrvAT25MObj.at25mCommand[2] = (uint8_t)(address>>8);                 
+    gDrvAT25MObj.at25mCommand[2] = (uint8_t)(address>>8);
     gDrvAT25MObj.at25mCommand[3] = (uint8_t)(address);
-    
+
     /* Assert Chip Select */
     SYS_PORT_PinClear(gDrvAT25MObj.chipSelectPin);
-    
+
     if(gDrvAT25MObj.spiPlib->write(gDrvAT25MObj.at25mCommand, 4) == true)
     {
         while(gDrvAT25MObj.spiPlib->isBusy() == true);
-        
+
         gDrvAT25MObj.spiPlib->callbackRegister(&_SPIEventHandler, (uintptr_t)DRV_AT25M_CMD_READ);
-        
+
         if (gDrvAT25MObj.spiPlib->read((uint8_t*)rxData, rxDataLength) == true)
         {
             gDrvAT25MObj.transferStatus = DRV_AT25M_TRANSFER_BUSY;
@@ -242,31 +250,31 @@ bool DRV_AT25M_Read( const DRV_HANDLE handle, void *rxData, uint32_t rxDataLengt
     return status;
 }
 
-bool DRV_AT25M_PageWrite( const DRV_HANDLE handle, void *txData, uint32_t txDataLength, uint32_t address )
+bool DRV_AT25M_Write( const DRV_HANDLE handle, void *txData, uint32_t txDataLength, uint32_t address )
 {
     bool status = false;
-        
+
     if((handle == DRV_HANDLE_INVALID) || (handle > 0))
     {
         return status;
     }
-    
+
     if (_DRV_AT25M_WriteEnable() == true)
     {
         gDrvAT25MObj.at25mCommand[0] = DRV_AT25M_CMD_PAGE_PROGRAM;
         gDrvAT25MObj.at25mCommand[1] = (uint8_t)(address>>16);
-        gDrvAT25MObj.at25mCommand[2] = (uint8_t)(address>>8);                 
+        gDrvAT25MObj.at25mCommand[2] = (uint8_t)(address>>8);
         gDrvAT25MObj.at25mCommand[3] = (uint8_t)(address);
-        
+
         /* Assert Chip Select */
         SYS_PORT_PinClear(gDrvAT25MObj.chipSelectPin);
-        
+
         if(gDrvAT25MObj.spiPlib->write(gDrvAT25MObj.at25mCommand, 4) == true)
         {
             while(gDrvAT25MObj.spiPlib->isBusy() == true);
-            
+
             gDrvAT25MObj.spiPlib->callbackRegister(&_SPIEventHandler, (uintptr_t)DRV_AT25M_CMD_PAGE_PROGRAM);
-            
+
             if (gDrvAT25MObj.spiPlib->write((uint8_t*)txData, txDataLength) == true)
             {
                 gDrvAT25MObj.transferStatus = DRV_AT25M_TRANSFER_BUSY;
@@ -284,8 +292,13 @@ bool DRV_AT25M_PageWrite( const DRV_HANDLE handle, void *txData, uint32_t txData
     return status;
 }
 
+bool DRV_AT25M_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t address )
+{
+    return DRV_AT25M_Write(handle, txData, DRV_AT25M_PAGE_SIZE, address );
+}
+
 DRV_AT25M_TRANSFER_STATUS DRV_AT25M_TransferStatusGet(const DRV_HANDLE handle)
-{        
+{
     if((gDrvAT25MObj.spiPlib->isBusy() == false) && (gDrvAT25MObj.writeCompleted == false))
     {
         if ((_DRV_AT25M_ReadStatus() & 0x01) == 0x0)
@@ -300,7 +313,7 @@ DRV_AT25M_TRANSFER_STATUS DRV_AT25M_TransferStatusGet(const DRV_HANDLE handle)
 bool DRV_AT25M_GeometryGet(const DRV_HANDLE handle, DRV_AT25M_GEOMETRY *geometry)
 {
     uint32_t flashSize = 0x40000; // 2 MBit = 256 KByte
-        
+
     if((handle == DRV_HANDLE_INVALID) || (handle > 0))
     {
         return false;
@@ -317,12 +330,12 @@ bool DRV_AT25M_GeometryGet(const DRV_HANDLE handle, DRV_AT25M_GEOMETRY *geometry
     /* Erase block size and number of blocks */
     geometry->eraseBlockSize = 1;
     geometry->eraseNumBlocks = flashSize;
-    
+
     /* Number of regions */
     geometry->readNumRegions = 1;
     geometry->writeNumRegions = 1;
     geometry->eraseNumRegions = 1;
-    
+
     /* Block start address */
     geometry->blockStartAddress = gDrvAT25MObj.blockStartAddress;
 

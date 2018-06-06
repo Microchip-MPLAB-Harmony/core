@@ -2,13 +2,19 @@
 #### Component ####
 ################################################################################
 
-pioPinout = ATDF.getNode('/avr-tools-device-file/pinouts/pinout@[name= "LQFP144"]')
+myVariableValue = Database.getSymbolValue("core", "COMPONENT_PACKAGE")
+pioPinout = ATDF.getNode('/avr-tools-device-file/pinouts/pinout@[name= "' + str(myVariableValue) + '"]')
 
 def at25mSetMemoryDependency(symbol, event):
     if (event["value"] == True):
         symbol.setVisible(True)
     else:
         symbol.setVisible(False)
+
+#def updatePinPosition(symbol, event):
+    # TBD: "value" of at25mSymChipSelectPin and other pin symbols should be updated
+    # here based on the package selected in Pin manager.
+
 
 def instantiateComponent(at25mComponent):
 
@@ -28,17 +34,17 @@ def instantiateComponent(at25mComponent):
     at25mSymNumInst.setLabel("Number of Instances")
     at25mSymNumInst.setDefaultValue(1)
     at25mSymNumInst.setVisible(False)
-    
-    at25mSymIndex = at25mComponent.createIntegerSymbol("DRV_AT25M_INDEX", None)
-    at25mSymIndex.setLabel("Driver Index")
-    at25mSymIndex.setVisible(True)
-    at25mSymIndex.setDefaultValue(0)
-    at25mSymIndex.setReadOnly(True)
-    
+
+    #at25mSymIndex = at25mComponent.createIntegerSymbol("DRV_AT25M_INDEX", None)
+    #at25mSymIndex.setLabel("Driver Index")
+    #at25mSymIndex.setVisible(True)
+    #at25mSymIndex.setDefaultValue(0)
+    #at25mSymIndex.setReadOnly(True)
+
     at25mPLIB = at25mComponent.createStringSymbol("DRV_AT25M_PLIB", None)
     at25mPLIB.setLabel("PLIB Used")
     at25mPLIB.setReadOnly(True)
-    
+
     at25mSymNumClients = at25mComponent.createIntegerSymbol("DRV_AT25M_NUM_CLIENTS", None)
     at25mSymNumClients.setLabel("Number of Clients")
     at25mSymNumClients.setReadOnly(True)
@@ -56,26 +62,27 @@ def instantiateComponent(at25mComponent):
 
     at25mSymChipSelectPin = at25mComponent.createKeyValueSetSymbol("DRV_AT25M_CHIP_SELECT_PIN", None)
     at25mSymChipSelectPin.setLabel("Chip Select Pin")
-    at25mSymChipSelectPin.setDefaultValue(5) #PA5 
+    at25mSymChipSelectPin.setDefaultValue(5) #PA5
     at25mSymChipSelectPin.setOutputMode("Key")
     at25mSymChipSelectPin.setDisplayMode("Description")
-    
+#    at25mSymChipSelectPin.setDependencies(updatePinPosition, ["core.COMPONENT_PACKAGE"])
+
     at25mSymHoldPin = at25mComponent.createKeyValueSetSymbol("DRV_AT25M_HOLD_PIN", None)
     at25mSymHoldPin.setLabel("Hold Pin")
     at25mSymHoldPin.setDefaultValue(0) #PA0
     at25mSymHoldPin.setOutputMode("Key")
     at25mSymHoldPin.setDisplayMode("Description")
-    
+
     at25mSymWriteProtectPin = at25mComponent.createKeyValueSetSymbol("DRV_AT25M_WRITE_PROTECT_PIN", None)
     at25mSymWriteProtectPin.setLabel("Write Protect Pin")
     at25mSymWriteProtectPin.setDefaultValue(1) #PA1
     at25mSymWriteProtectPin.setOutputMode("Key")
     at25mSymWriteProtectPin.setDisplayMode("Description")
-    
+
     count = Database.getSymbolValue("core", "PIO_PIN_TOTAL")
     for id in range(0,count):
         if (pioPinout.getChildren()[id].getAttribute("pad")[0] == "P") and (pioPinout.getChildren()[id].getAttribute("pad")[-1].isdigit()):
-            key = "SYS_PORT_PIN_" + pioPinout.getChildren()[id].getAttribute("pad")        
+            key = "SYS_PORT_PIN_" + pioPinout.getChildren()[id].getAttribute("pad")
             value = pioPinout.getChildren()[id].getAttribute("position")
             description = pioPinout.getChildren()[id].getAttribute("pad")
             at25mSymChipSelectPin.addKey(key, value, description)
@@ -84,13 +91,13 @@ def instantiateComponent(at25mComponent):
 
     at25mSymPinConfigComment = at25mComponent.createCommentSymbol("DRV_AT25M_PINS_CONFIG_COMMENT", None)
     at25mSymPinConfigComment.setVisible(True)
-    at25mSymPinConfigComment.setLabel("Above selected pins must be configured as GPIO Output pin in Pin Manager")
-    
+    at25mSymPinConfigComment.setLabel("***Above selected pins must be configured as GPIO Output in Pin Manager***")
+
     at25mMemoryStartAddr = at25mComponent.createHexSymbol("START_ADDRESS", None)
     at25mMemoryStartAddr.setLabel("AT25M EEPROM Start Address")
     at25mMemoryStartAddr.setVisible(True)
     at25mMemoryStartAddr.setDefaultValue(0x0000000)
-    
+
     ############################################################################
     #### Code Generation ####
     ############################################################################
@@ -113,7 +120,7 @@ def instantiateComponent(at25mComponent):
     at25mSymHeaderDefFile.setType("HEADER")
     at25mSymHeaderDefFile.setMarkup(False)
     at25mSymHeaderDefFile.setOverwrite(True)
-    
+
     at25mSourceFile = at25mComponent.createFileSymbol("AT25M_SOURCE", None)
     at25mSourceFile.setSourcePath("driver/at25m/src/drv_at25m.c")
     at25mSourceFile.setOutputName("drv_at25m.c")
@@ -132,7 +139,7 @@ def instantiateComponent(at25mComponent):
     at25mAsyncSymHeaderLocalFile.setOverwrite(True)
     at25mAsyncSymHeaderLocalFile.setEnabled(True)
 
-    
+
     at25mSystemDefFile = at25mComponent.createFileSymbol("AT25M_DEF", None)
     at25mSystemDefFile.setType("STRING")
     at25mSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
@@ -144,28 +151,33 @@ def instantiateComponent(at25mComponent):
     at25mSymSystemDefObjFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_OBJECTS")
     at25mSymSystemDefObjFile.setSourcePath("driver/at25m/templates/system/definitions_objects.h.ftl")
     at25mSymSystemDefObjFile.setMarkup(True)
-    
+
     at25mSymSystemConfigFile = at25mComponent.createFileSymbol("DRV_AT25M_CONFIGIRUTION", None)
     at25mSymSystemConfigFile.setType("STRING")
     at25mSymSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_DRIVER_CONFIGURATION")
     at25mSymSystemConfigFile.setSourcePath("driver/at25m/templates/system/configuration.h.ftl")
     at25mSymSystemConfigFile.setMarkup(True)
-    
+
     at25mSymSystemInitDataFile = at25mComponent.createFileSymbol("DRV_AT25M_INIT_DATA", None)
     at25mSymSystemInitDataFile.setType("STRING")
     at25mSymSystemInitDataFile.setOutputName("core.LIST_SYSTEM_INIT_C_DRIVER_INITIALIZATION_DATA")
     at25mSymSystemInitDataFile.setSourcePath("driver/at25m/templates/system/initialize_data.c.ftl")
     at25mSymSystemInitDataFile.setMarkup(True)
-    
+
     at25mSystemInitFile = at25mComponent.createFileSymbol("AT25M_INIT", None)
     at25mSystemInitFile.setType("STRING")
     at25mSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_SYS_INITIALIZE_DRIVERS")
     at25mSystemInitFile.setSourcePath("driver/at25m/templates/system/initialize.c.ftl")
     at25mSystemInitFile.setMarkup(True)
-    
-def onDependentComponentAdded(at25mComponent, id, remoteComponent):
+
+def onDependentComponentAdded(at25mComponent, id, spi):
     if id == "drv_at25m_SPI_dependency" :
         plibUsed = at25mComponent.getSymbolByID("DRV_AT25M_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(remoteComponent.getID().upper(), 2)
+        plibUsed.setValue(spi.getID().upper(), 1)
+        Database.setSymbolValue(spi.getID(), "SPI_DRIVER_CONTROLLED", True, 1)
+
+def onDependentComponentRemoved(at25mComponent, id, spi):
+    if id == "drv_at25m_SPI_dependency" :
+        Database.setSymbolValue(spi.getID(), "SPI_DRIVER_CONTROLLED", False, 1)
 
