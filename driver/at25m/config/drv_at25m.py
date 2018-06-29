@@ -11,10 +11,16 @@ def at25mSetMemoryDependency(symbol, event):
     else:
         symbol.setVisible(False)
 
-#def updatePinPosition(symbol, event):
-    # TBD: "value" of at25mSymChipSelectPin and other pin symbols should be updated
+def updatePinPosition(symbol, event):
+    # "value" of at25mSymChipSelectPin and other pin symbols should be updated
     # here based on the package selected in Pin manager.
-
+    pioPinout = ATDF.getNode('/avr-tools-device-file/pinouts/pinout@[name= "' + event["value"] + '"]')
+    count = Database.getSymbolValue("core", "PIO_PIN_TOTAL")
+    for id in range(0,count):
+        if (pioPinout.getChildren()[id].getAttribute("pad")[0] == "P") and (pioPinout.getChildren()[id].getAttribute("pad")[-1].isdigit()):
+            key = "SYS_PORT_PIN_" + pioPinout.getChildren()[id].getAttribute("pad")
+            value = pioPinout.getChildren()[id].getAttribute("position")
+            symbol.setKeyValue(key, value)
 
 def instantiateComponent(at25mComponent):
 
@@ -65,19 +71,21 @@ def instantiateComponent(at25mComponent):
     at25mSymChipSelectPin.setDefaultValue(5) #PA5
     at25mSymChipSelectPin.setOutputMode("Key")
     at25mSymChipSelectPin.setDisplayMode("Description")
-#    at25mSymChipSelectPin.setDependencies(updatePinPosition, ["core.COMPONENT_PACKAGE"])
+    at25mSymChipSelectPin.setDependencies(updatePinPosition, ["core.COMPONENT_PACKAGE"])
 
     at25mSymHoldPin = at25mComponent.createKeyValueSetSymbol("DRV_AT25M_HOLD_PIN", None)
     at25mSymHoldPin.setLabel("Hold Pin")
     at25mSymHoldPin.setDefaultValue(0) #PA0
     at25mSymHoldPin.setOutputMode("Key")
     at25mSymHoldPin.setDisplayMode("Description")
+    at25mSymHoldPin.setDependencies(updatePinPosition, ["core.COMPONENT_PACKAGE"])
 
     at25mSymWriteProtectPin = at25mComponent.createKeyValueSetSymbol("DRV_AT25M_WRITE_PROTECT_PIN", None)
     at25mSymWriteProtectPin.setLabel("Write Protect Pin")
     at25mSymWriteProtectPin.setDefaultValue(1) #PA1
     at25mSymWriteProtectPin.setOutputMode("Key")
     at25mSymWriteProtectPin.setDisplayMode("Description")
+    at25mSymWriteProtectPin.setDependencies(updatePinPosition, ["core.COMPONENT_PACKAGE"])
 
     count = Database.getSymbolValue("core", "PIO_PIN_TOTAL")
     for id in range(0,count):
