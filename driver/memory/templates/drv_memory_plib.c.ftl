@@ -62,7 +62,14 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 MEMORY_DEVICE_TRANSFER_STATUS ${DRV_MEMORY_PLIB}_TransferStatusGet( const DRV_HANDLE handle )
 {
-    return (${DRV_MEMORY_DEVICE}_ErrorGet());
+    if (${DRV_MEMORY_DEVICE}_IsBusy() == true)
+    {
+        return MEMORY_DEVICE_TRANSFER_BUSY;
+    }
+    else
+    {
+        return MEMORY_DEVICE_TRANSFER_COMPLETED;
+    }
 }
 
 bool ${DRV_MEMORY_PLIB}_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_length, uint32_t address )

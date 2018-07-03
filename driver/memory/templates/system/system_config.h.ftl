@@ -6,8 +6,8 @@
     <#lt>#define DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX${INDEX?string}    ${DRV_MEMORY_BUFFER_QUEUE_SIZE?string}
 </#if>
 <#if DRV_MEMORY_PLIB?has_content >
-    <#lt>#define DRV_MEMORY_DEVICE_START_ADDRESS      ${DRV_MEMORY_DEVICE}_START_ADDRESS
-    <#lt>#define DRV_MEMORY_DEVICE_MEDIA_SIZE         ${DRV_MEMORY_DEVICE}_MEDIA_SIZE
+    <#lt>#define DRV_MEMORY_DEVICE_START_ADDRESS      0x${.vars["${DRV_MEMORY_DEVICE?lower_case}"].START_ADDRESS}
+    <#lt>#define DRV_MEMORY_DEVICE_MEDIA_SIZE         ${.vars["${DRV_MEMORY_DEVICE?lower_case}"].MEMORY_MEDIA_SIZE}UL
 </#if>
 
 <#if Harmony.SELECT_RTOS != "BareMetal">
