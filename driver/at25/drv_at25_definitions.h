@@ -1,5 +1,5 @@
 /*******************************************************************************
-  AT25M Driver Definitions Header File
+  AT25 Driver Definitions Header File
 
   Company:
     Microchip Technology Inc.
@@ -8,10 +8,10 @@
     drv_twi_definitions.h
 
   Summary:
-    AT25M Driver Definitions Header File
+    AT25 Driver Definitions Header File
 
   Description:
-    This file provides implementation-specific definitions for the AT25M
+    This file provides implementation-specific definitions for the AT25
     driver's system interface.
 *******************************************************************************/
 
@@ -40,8 +40,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef DRV_AT25M_DEFINITIONS_H
-#define DRV_AT25M_DEFINITIONS_H
+#ifndef DRV_AT25_DEFINITIONS_H
+#define DRV_AT25_DEFINITIONS_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -70,12 +70,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 typedef enum
 {
-    DRV_AT25M_SPI_ERROR_NONE = 0,
-    DRV_AT25M_SPI_ERROR_OVERRUN = 1 << SPI_SR_OVRES_Pos
+    DRV_AT25_SPI_ERROR_NONE = 0,
+    DRV_AT25_SPI_ERROR_OVERRUN = 1 << SPI_SR_OVRES_Pos
 
-}DRV_AT25M_SPI_ERROR;
+}DRV_AT25_SPI_ERROR;
 
-typedef void (* DRV_AT25M_PLIB_CALLBACK)( uintptr_t );
+typedef void (* DRV_AT25_PLIB_CALLBACK)( uintptr_t );
 
 typedef    bool (* DRV_WRITEREAD)(void*, size_t, void *, size_t);
 
@@ -85,18 +85,18 @@ typedef    bool (* DRV_READ)(void*, size_t);
 
 typedef    bool (* DRV_IS_BUSY)(void);
 
-typedef    DRV_AT25M_SPI_ERROR (* DRV_ERROR_GET)(void);
+typedef    DRV_AT25_SPI_ERROR (* DRV_ERROR_GET)(void);
 
-typedef    void (* DRV_CALLBACK_REGISTER)(DRV_AT25M_PLIB_CALLBACK, uintptr_t);
+typedef    void (* DRV_CALLBACK_REGISTER)(DRV_AT25_PLIB_CALLBACK, uintptr_t);
 
 // *****************************************************************************
-/* AT25M Driver PLIB Interface Data
+/* AT25 Driver PLIB Interface Data
 
   Summary:
-    Defines the data required to initialize the AT25M driver PLIB Interface.
+    Defines the data required to initialize the AT25 driver PLIB Interface.
 
   Description:
-    This data type defines the data required to initialize the AT25M driver
+    This data type defines the data required to initialize the AT25 driver
     PLIB Interface.
 
   Remarks:
@@ -106,34 +106,34 @@ typedef    void (* DRV_CALLBACK_REGISTER)(DRV_AT25M_PLIB_CALLBACK, uintptr_t);
 typedef struct
 {
 
-    /* AT25M PLIB writeRead API */
+    /* AT25 PLIB writeRead API */
     DRV_WRITEREAD               writeRead;
 
-    /* AT25M PLIB write API */
+    /* AT25 PLIB write API */
     DRV_WRITE               write;
 
-    /* AT25M PLIB read API */
+    /* AT25 PLIB read API */
     DRV_READ               read;
 
-    /* AT25M PLIB Transfer status API */
+    /* AT25 PLIB Transfer status API */
     DRV_IS_BUSY                 isBusy;
 
-    /* AT25M PLIB Error get API */
+    /* AT25 PLIB Error get API */
     DRV_ERROR_GET               errorGet;
 
-    /* AT25M PLIB callback register API */
+    /* AT25 PLIB callback register API */
     DRV_CALLBACK_REGISTER       callbackRegister;
 
-} DRV_AT25M_PLIB_INTERFACE;
+} DRV_AT25_PLIB_INTERFACE;
 
 // *****************************************************************************
-/* AT25M Driver Initialization Data
+/* AT25 Driver Initialization Data
 
   Summary:
-    Defines the data required to initialize the AT25M driver
+    Defines the data required to initialize the AT25 driver
 
   Description:
-    This data type defines the data required to initialize or the AT25M driver.
+    This data type defines the data required to initialize or the AT25 driver.
 
   Remarks:
     None.
@@ -143,7 +143,7 @@ typedef struct
 {
     /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
-    DRV_AT25M_PLIB_INTERFACE        *spiPlib;
+    DRV_AT25_PLIB_INTERFACE        *spiPlib;
 
     /* Number of clients */
     size_t                          numClients;
@@ -153,10 +153,16 @@ typedef struct
     SYS_PORT_PIN                    holdPin;
 
     SYS_PORT_PIN                    writeProtectPin;
+    
+    /* Page size (in Bytes) of the EEPROM */
+    uint32_t                        pageSize;
+    
+    /* Total size (in Bytes) of the EEPROM */
+    uint32_t                        flashSize;
 
     uint32_t                        blockStartAddress;
 
-} DRV_AT25M_INIT;
+} DRV_AT25_INIT;
 
 
 //DOM-IGNORE-BEGIN
@@ -165,7 +171,7 @@ typedef struct
 #endif
 //DOM-IGNORE-END
 
-#endif // #ifndef DRV_AT25M_DEFINITIONS_H
+#endif // #ifndef DRV_AT25_DEFINITIONS_H
 
 /*******************************************************************************
  End of File
