@@ -15,9 +15,6 @@ def instantiateComponent(i2cComponentCommon):
     # Enable "Enable System Ports" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_SYS_PORTS", True, 1)
 
-    # Enable "Enable OSAL" option in MHC
-    Database.setSymbolValue("Harmony", "ENABLE_OSAL", True, 1)
-
     i2cMode = i2cComponentCommon.createKeyValueSetSymbol("DRV_I2C_MODE", None)
     i2cMode.setLabel("Driver Mode")
     i2cMode.addKey("ASYNC", "0", "Asynchronous")

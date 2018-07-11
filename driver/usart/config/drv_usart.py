@@ -81,9 +81,6 @@ def instantiateComponent(usartComponent, index):
     Database.clearSymbolValue("Harmony", "ENABLE_SYS_DMA")
     Database.setSymbolValue("Harmony", "ENABLE_SYS_DMA", True, 2)
 
-    Database.clearSymbolValue("Harmony", "ENABLE_OSAL")
-    Database.setSymbolValue("Harmony", "ENABLE_OSAL", True, 2)
-
     Database.clearSymbolValue("Harmony", "ENABLE_APP_FILE")
     Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", True, 2)
 
