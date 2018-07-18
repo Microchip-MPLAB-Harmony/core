@@ -3,5 +3,6 @@
     <ConfigRoot path="config/module.py"/>
 	<AutoLoad>
 		<ID>Harmony</ID>
+		<ID>FreeRTOS</ID>
 	</AutoLoad>
 </Module>

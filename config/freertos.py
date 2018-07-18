@@ -1,6 +1,12 @@
 ###############################################################################
 ########################## FreeRTOS Configurations ############################ 
 ###############################################################################
+ComboVal_Scheduler_Type = ["Preemptive", "Co_Operative"]
+ComboVal_Task_Selection = ["Port_Optimized", "Generic_Task_Selection"]
+ComboVal_Tick_Mode        = ["Tickless_Idle", "Tick_Interrupt"]
+ComboVal_Mem_Mgmt_Type    = ["Heap_1", "Heap_2", "Heap_3", "Heap_4", "Heap_5"]
+ComboVal_Stack_Overflow    = ["No_Check", "Method_1", "Method_2"]
+
 def freeRtosExpIdleTimeVisibility(symbol, event):
     id = symbol.getID()[-1]
 
@@ -129,15 +135,18 @@ def freeRtosMemMangEnableHeap5(freeRtosMemMangHeap5, event):
     else :
         freeRtosMemMangHeap5.setEnabled(False)
 
-ComboVal_Scheduler_Type = ["Preemptive", "Co_Operative"]
-ComboVal_Task_Selection = ["Port_Optimized", "Generic_Task_Selection"]
-ComboVal_Tick_Mode        = ["Tickless_Idle", "Tick_Interrupt"]
-ComboVal_Mem_Mgmt_Type    = ["Heap_1", "Heap_2", "Heap_3", "Heap_4", "Heap_5"]
-ComboVal_Stack_Overflow    = ["No_Check", "Method_1", "Method_2"]
+def destroyComponent(thirdPartyFreeRTOS):
+    # Restore OSAL to Bare-metal
+    Database.clearSymbolValue("Harmony", "SELECT_RTOS")
+    Database.setSymbolValue("Harmony", "SELECT_RTOS", 0, 1)
 
 # Instatntiate FreeRTOS Component
 def    instantiateComponent(thirdPartyFreeRTOS):
     Log.writeInfoMessage("Running FreeRTOS")
+
+    # Set Generate Harmony Application Files to True
+    Database.clearSymbolValue("Harmony", "ENABLE_APP_FILE")
+    Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", True, 3)
 
     NVICSysTickHandlerId = Interrupt.getInterruptIndex("SysTick")
     NVICSysTicVector = "NVIC_" + str(NVICSysTickHandlerId) + "_ENABLE"

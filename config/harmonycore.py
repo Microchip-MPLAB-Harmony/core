@@ -7,31 +7,6 @@ global osalHeaderFreeRtosFile
 global osalSourceFreeRtosFile
 global osalSelectRTOS
 
-def onDependencyConnected(connectionInfo):
-    global osalHeaderImpBasicFile
-    global osalHeaderFreeRtosFile
-    global osalSourceFreeRtosFile
-    global osalSelectRTOS
-
-    if (connectionInfo["capabilityID"] == "FreeRTOS"):
-        print(connectionInfo["capabilityID"] + " selected")
-        osalHeaderImpBasicFile.setEnabled(False)
-        osalHeaderFreeRtosFile.setEnabled(True)
-        osalSourceFreeRtosFile.setEnabled(True)
-        osalSelectRTOS.setValue(1, 1)
-
-def onDependencyDisconnected(connectionInfo):
-    global osalHeaderImpBasicFile
-    global osalHeaderFreeRtosFile
-    global osalSourceFreeRtosFile
-    global osalSelectRTOS
-
-    print("Reverted back to Bare-metal")
-    osalHeaderImpBasicFile.setEnabled(True)
-    osalHeaderFreeRtosFile.setEnabled(False)
-    osalSourceFreeRtosFile.setEnabled(False)
-    osalSelectRTOS.setValue(0, 1)
-
 def genUserHeaderFile(userHeaderFile, event):
     userHeaderFile.setEnabled(event["value"])
 
