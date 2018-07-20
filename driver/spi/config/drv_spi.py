@@ -30,9 +30,6 @@ def instantiateComponent(spiComponent, index):
     # Enable "Enable System DMA" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_SYS_DMA", True, 1)
 
-    # Enable "Enable OSAL" option in MHC
-    Database.setSymbolValue("Harmony", "ENABLE_OSAL", True, 1)
-
     spiSymIndex = spiComponent.createIntegerSymbol("INDEX", None)
     spiSymIndex.setVisible(False)
     spiSymIndex.setDefaultValue(index)
