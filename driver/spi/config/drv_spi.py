@@ -30,6 +30,9 @@ def instantiateComponent(spiComponent, index):
     # Enable "Enable System DMA" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_SYS_DMA", True, 1)
 
+    # Enable "Enable OSAL" option in MHC
+    Database.setSymbolValue("Harmony", "ENABLE_OSAL", True, 1)
+
     spiSymIndex = spiComponent.createIntegerSymbol("INDEX", None)
     spiSymIndex.setVisible(False)
     spiSymIndex.setDefaultValue(index)
@@ -38,6 +41,11 @@ def instantiateComponent(spiComponent, index):
     spiSymPLIB.setLabel("PLIB Used")
     spiSymPLIB.setReadOnly(True)
     spiSymPLIB.setDefaultValue("SPI0")
+
+    global spiSymPLIBConnection
+    spiSymPLIBConnection = spiComponent.createBooleanSymbol("DRV_SPI_PLIB_CONNECTION", None)
+    spiSymPLIBConnection.setDefaultValue(False)
+    spiSymPLIBConnection.setVisible(False)
 
     spiGlobalMode = spiComponent.createBooleanSymbol("DRV_SPI_MODE", None)
     spiGlobalMode.setLabel("**** Driver Mode Update ****")
@@ -58,10 +66,12 @@ def instantiateComponent(spiComponent, index):
     spiSymQueueSize.setDefaultValue(4)
     spiSymQueueSize.setDependencies(asyncModeOptions, ["DRV_SPI_MODE"])
 
+    global spiTXRXDMA
     spiTXRXDMA = spiComponent.createBooleanSymbol("DRV_SPI_TX_RX_DMA", None)
     spiTXRXDMA.setLabel("Use DMA for Transmit and Receive?")
     spiTXRXDMA.setDefaultValue(False)
 
+    global spiTXDMAChannel
     spiTXDMAChannel = spiComponent.createIntegerSymbol("DRV_SPI_TX_DMA_CHANNEL", None)
     spiTXDMAChannel.setLabel("DMA Channel For Transmit")
     spiTXDMAChannel.setDefaultValue(0)
@@ -74,6 +84,7 @@ def instantiateComponent(spiComponent, index):
     spiTXDMAChannelComment.setVisible(False)
     spiTXDMAChannelComment.setDependencies(requestDMAComment, ["DRV_SPI_TX_DMA_CHANNEL"])
 
+    global spiRXDMAChannel
     spiRXDMAChannel = spiComponent.createIntegerSymbol("DRV_SPI_RX_DMA_CHANNEL", None)
     spiRXDMAChannel.setLabel("DMA Channel For Receive")
     spiRXDMAChannel.setDefaultValue(1)
@@ -196,33 +207,68 @@ def spiDriverMode (Sym, event):
     Sym.setValue(Database.getSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE"), 1)
 
 def onDependentComponentAdded(drv_spi, id, spi):
+    dmaRxRequestID = "DMA_CH_NEEDED_FOR_" + spi.getID().upper() + "_Receive"
+    dmaTxRequestID = "DMA_CH_NEEDED_FOR_" + spi.getID().upper() + "_Transmit"
+    dmaTxChannelID = "DMA_CH_FOR_" + spi.getID().upper() + "_Transmit"
+    dmaRxChannelID = "DMA_CH_FOR_" + spi.getID().upper() + "_Receive"
+
     if id == "drv_spi_SPI_dependency" :
+        drv_spi.setSymbolValue("DRV_SPI_PLIB_CONNECTION", True, 2)
+
         plibUsed = drv_spi.getSymbolByID("DRV_SPI_PLIB")
         plibUsed.clearValue()
         plibUsed.setValue(spi.getID().upper(), 1)
         Database.setSymbolValue(spi.getID(), "SPI_DRIVER_CONTROLLED", True, 1)
+        if drv_spi.getSymbolValue("DRV_SPI_TX_RX_DMA") == True:
+            Database.setSymbolValue("core", dmaRxRequestID, True, 2)
+            Database.setSymbolValue("core", dmaTxRequestID, True, 2)
+
+            # Get the allocated channel and assign it
+            txChannel = Database.getSymbolValue("core", dmaTxChannelID)
+            drv_spi.setSymbolValue("DRV_SPI_TX_DMA_CHANNEL", txChannel, 2)
+            rxChannel = Database.getSymbolValue("core", dmaRxChannelID)
+            drv_spi.setSymbolValue("DRV_SPI_RX_DMA_CHANNEL", rxChannel, 2)
 
 def onDependentComponentRemoved(drv_spi, id, spi):
+    dmaRxRequestID = "DMA_CH_NEEDED_FOR_" + spi.getID().upper() + "_Receive"
+    dmaTxRequestID = "DMA_CH_NEEDED_FOR_" + spi.getID().upper() + "_Transmit"
+    dmaTxChannelID = "DMA_CH_FOR_" + spi.getID().upper() + "_Transmit"
+    dmaRxChannelID = "DMA_CH_FOR_" + spi.getID().upper() + "_Receive"
+
     if id == "drv_spi_SPI_dependency" :
+        drv_spi.setSymbolValue("DRV_SPI_PLIB_CONNECTION", False, 2)
         Database.setSymbolValue(spi.getID(), "SPI_DRIVER_CONTROLLED", False, 1)
+        if drv_spi.getSymbolValue("DRV_SPI_TX_RX_DMA") == True:
+            Database.setSymbolValue("core", dmaRxRequestID, False, 2)
+            Database.setSymbolValue("core", dmaTxRequestID, False, 2)
+
+            # Get the allocated channel and assign it
+            txChannel = Database.getSymbolValue("core", dmaTxChannelID)
+            drv_spi.setSymbolValue("DRV_SPI_TX_DMA_CHANNEL", txChannel, 2)
+            rxChannel = Database.getSymbolValue("core", dmaRxChannelID)
+            drv_spi.setSymbolValue("DRV_SPI_RX_DMA_CHANNEL", rxChannel, 2)
 
 def requestAndAssignDMAChannel(Sym, event):
     global drvSpiInstanceSpace
+    global spiSymPLIBConnection
+
     spiPeripheral = Database.getSymbolValue(drvSpiInstanceSpace, "DRV_SPI_PLIB")
+
+    if Sym.getID() == "DRV_SPI_TX_DMA_CHANNEL":
+        dmaChannelID = "DMA_CH_FOR_" + str(spiPeripheral) + "_Transmit"
+        dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
+    else:
+        dmaChannelID = "DMA_CH_FOR_" + str(spiPeripheral) + "_Receive"
+        dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
 
     # Control visibility
     Sym.setVisible(event["value"])
 
-    # Request/Release a channel from driver
-    if Sym.getID() == "DRV_SPI_TX_DMA_CHANNEL":
-        dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
-        dmaChannelID = "DMA_CH_FOR_" + str(spiPeripheral) + "_Transmit"
+    if event["value"] == False:
+        Database.setSymbolValue("core", dmaRequestID, False, 2)
     else:
-        # if Sym.getID() == "DRV_SPI_RX_DMA_CHANNEL":
-        dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
-        dmaChannelID = "DMA_CH_FOR_" + str(spiPeripheral) + "_Receive"
-
-    Database.setSymbolValue("core", dmaRequestID, event["value"], 2)
+        if (spiSymPLIBConnection.getValue() == True) and (Database.getSymbolValue("core", dmaChannelID) == -1):
+            Database.setSymbolValue("core", dmaRequestID, True, 2)
 
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
@@ -239,24 +285,14 @@ def destroyComponent(spiComponent):
     spiNumInstances = spiNumInstances - 1
     Database.setSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES", spiNumInstances, 1)
 
-    # Disable "Generate Harmony Application Files" option in MHC
-    Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", False, 3)
+    global drvSpiInstanceSpace
+    spiPeripheral = Database.getSymbolValue(drvSpiInstanceSpace, "DRV_SPI_PLIB")
 
-    # Disable "Generate Harmony Driver Common Files" option in MHC
-    Database.setSymbolValue("Harmony", "ENABLE_DRV_COMMON", False, 3)
+    dmaTxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
+    dmaRxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
 
-    # Disable "Generate Harmony System Service Common Files" option in MHC
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", False, 3)
-
-    # Disable "Enable System Interrupt" option in MHC
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_INT", False, 3)
-
-    # Disable "Enable System Ports" option in MHC
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_PORTS", False, 3)
-
-    # Disable "Enable System DMA" option in MHC
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_DMA", False, 3)
-
+    Database.setSymbolValue("core", dmaTxID, False, 2)
+    Database.setSymbolValue("core", dmaRxID, False, 2)
 
 def asyncModeOptions(Sym, event):
     if(event["value"] == False):
