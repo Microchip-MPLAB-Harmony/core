@@ -13,8 +13,9 @@ def genDmaSystemDefFile(symbol, event):
 
 def enableDependencySymbols(symbol, event):
     if(event["value"] == True):
-        Database.clearSymbolValue("Harmony", "ENABLE_SYS_COMMON")
-        Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", True, 2)
+        Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", True, 1)
+    else:
+        Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", False, 2)
 
 ############################################################################
 #### Code Generation ####
