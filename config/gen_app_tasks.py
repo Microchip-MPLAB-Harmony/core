@@ -2,12 +2,14 @@
 #### Global Variables ####
 ################################################################################
 # Maximum Application Tasks that can be created
-global genAppRtosTaskMaxCount
+global genAppTaskMaxCount
 
 global genAppTaskConfMenu
 global genAppRtosTaskConfMenu
+global appHeaderFile
+global appSourceFile
 
-genAppRtosTaskMaxCount      = 10
+genAppTaskMaxCount          = 10
 genAppRtosTaskConfMenu      = []
 genAppTaskConfMenu          = []
 genAppTaskName              = []
@@ -16,51 +18,44 @@ genAppRtosTaskSize          = []
 genAppRtosTaskPrio          = []
 genAppRtosTaskUseDelay      = []
 genAppRtosTaskDelay         = []
-
+appSourceFile               = []
+appHeaderFile               = []
 
 ################################################################################
 #### Business Logic ####
 ################################################################################
 def genAppTaskMenuVisible(symbol, event):
-    if (event["value"] == True):
-        symbol.setVisible(True)
-    else:
-        symbol.setVisible(False)
+    symbol.setVisible(event["value"])
 
 def genAppRtosTaskDelayVisible(symbol, event):
-    if (event["value"] == True):
-        symbol.setVisible(True)
-    else:
-        symbol.setVisible(False)
+    symbol.setVisible(event["value"])
 
 def genAppTaskConfMenuVisible(symbol, event):
     global genAppTaskConfMenu
-    global genAppRtosTaskMaxCount
+    global genAppTaskMaxCount
 
     appCount = event["value"]
 
-    for count in range(0, genAppRtosTaskMaxCount):
+    for count in range(0, genAppTaskMaxCount):
         genAppTaskConfMenu[count].setVisible(False)
 
     for count in range(0, appCount):
         genAppTaskConfMenu[count].setVisible(True)
-        
+
 def genAppRtosTaskConfMenuVisible(symbol, event):
     global genAppRtosTaskConfMenu
-    global genAppRtosTaskMaxCount
+    global genAppTaskMaxCount
 
     appCount    = Database.getSymbolValue("Harmony", "GEN_APP_TASK_COUNT")
     selectRTOS  = Database.getSymbolValue("Harmony", "SELECT_RTOS")
 
-    if (selectRTOS == True):
-        for count in range(0, genAppRtosTaskMaxCount):
-            genAppRtosTaskConfMenu[count].setVisible(False)
+    for count in range(0, genAppTaskMaxCount):
+        genAppRtosTaskConfMenu[count].setVisible(False)
 
+    if (selectRTOS == True):
         for count in range(0, appCount):
             genAppRtosTaskConfMenu[count].setVisible(True)
-    else:
-        for count in range(0, genAppRtosTaskMaxCount):
-            genAppRtosTaskConfMenu[count].setVisible(False)
+
 
 def genAppTask(symbol, event):
     if (event["value"] == 0):
@@ -89,6 +84,38 @@ def genAppSysInit(symbol, event):
     else:
         symbol.setEnabled(False)
 
+def genAppSourceFile(symbol, event):
+    global appSourceFile
+    appName = None
+
+    appFileEnableCount = Database.getSymbolValue("Harmony", "GEN_APP_TASK_COUNT")
+    appGenFiles        = Database.getSymbolValue("Harmony", "ENABLE_APP_FILE")
+
+    for count in range(0, genAppTaskMaxCount):
+        appSourceFile[count].setEnabled(False)
+
+    if (appGenFiles == True):
+        for count in range(0, appFileEnableCount):
+            appName = Database.getSymbolValue("Harmony", "GEN_APP_TASK_NAME_" + str(count))
+            appSourceFile[count].setEnabled(True)
+            appSourceFile[count].setOutputName(appName.lower() + ".c")
+
+def genAppHeaderFile(symbol, event):
+    global appHeaderFile
+    appName = None
+
+    appFileEnableCount = Database.getSymbolValue("Harmony", "GEN_APP_TASK_COUNT")
+    appGenFiles        = Database.getSymbolValue("Harmony", "ENABLE_APP_FILE")
+
+    for count in range(0, genAppTaskMaxCount):
+        appHeaderFile[count].setEnabled(False)
+
+    if (appGenFiles == True):
+        for count in range(0, appFileEnableCount):
+            appName = Database.getSymbolValue("Harmony", "GEN_APP_TASK_NAME_" + str(count))
+            appHeaderFile[count].setEnabled(True)
+            appHeaderFile[count].setOutputName(appName.lower() + ".h")
+
 ############################################################################
 
 enableRTOS = Database.getSymbolValue("Harmony", "SELECT_RTOS")
@@ -102,10 +129,11 @@ genAppNumTask = harmonyCoreComponent.createIntegerSymbol("GEN_APP_TASK_COUNT", g
 genAppNumTask.setLabel("Number of Applications")
 genAppNumTask.setDescription("Number of Applications")
 genAppNumTask.setMin(1)
-genAppNumTask.setMax(genAppRtosTaskMaxCount)
+genAppNumTask.setMax(genAppTaskMaxCount)
 genAppNumTask.setDefaultValue(1)
 
-for count in range(0, genAppRtosTaskMaxCount):
+
+for count in range(0, genAppTaskMaxCount):
     global genAppTaskConfMenu
     global genAppRtosTaskConfMenu
 
@@ -113,7 +141,8 @@ for count in range(0, genAppRtosTaskMaxCount):
     genAppTaskConfMenu[count] = harmonyCoreComponent.createMenuSymbol("GEN_APP_TASK_CONF_MENU" + str(count), genAppTaskMenu)
     genAppTaskConfMenu[count].setLabel("Application " + str(count) + " Configuration")
     genAppTaskConfMenu[count].setDescription("Application " + str(count) + " Configuration")
-    genAppTaskConfMenu[count].setDependencies(genAppTaskConfMenuVisible, ["GEN_APP_TASK_COUNT"])
+    # Only 1 callback is sufficient
+    genAppTaskConfMenu[0].setDependencies(genAppTaskConfMenuVisible, ["GEN_APP_TASK_COUNT"])
     if (count == 0):
         genAppTaskConfMenu[count].setVisible(True)
     else:
@@ -132,11 +161,48 @@ for count in range(0, genAppRtosTaskMaxCount):
     genAppTaskNameCodingGuide[count] = harmonyCoreComponent.createCommentSymbol("GEN_APP_TASK_NAME_CODING_GUIDE_" + str(count), genAppTaskConfMenu[count])
     genAppTaskNameCodingGuide[count].setLabel("**** Application name must be valid C-Language identifier and should be short and lowercase. ****")
 
+    # generate app.c
+    appSourceFile.append(count)
+    appSourceFile[count] = harmonyCoreComponent.createFileSymbol("APP" + str(count) + "_C", None)
+    appSourceFile[count].setSourcePath("templates/app.c.ftl")
+    if (count == 0):
+        appSourceFile[count].setOutputName("app.c")
+    else:
+        appSourceFile[count].setOutputName("app" + str(count) + ".c")
+
+    appSourceFile[count].setMarkup(True)
+    appSourceFile[count].setOverwrite(False)
+    appSourceFile[count].setDestPath("../../")
+    appSourceFile[count].setProjectPath("")
+    appSourceFile[count].setType("SOURCE")
+    appSourceFile[count].setEnabled(False)
+    appSourceFile[count].setDependencies(genAppSourceFile, ["ENABLE_APP_FILE", "GEN_APP_TASK_COUNT", "GEN_APP_TASK_NAME_" + str(count)])
+    appSourceFile[count].addMarkupVariable("APP_NAME", "GEN_APP_TASK_NAME_" + str(count))
+
+    # generate app.h
+    appHeaderFile.append(count)
+    appHeaderFile[count] = harmonyCoreComponent.createFileSymbol("APP" + str(count) + "_H", None)
+    appHeaderFile[count].setSourcePath("templates/app.h.ftl")
+    if (count == 0):
+        appHeaderFile[count].setOutputName("app.h")
+    else:
+        appHeaderFile[count].setOutputName("app" + str(count) + ".h")
+    appHeaderFile[count].setMarkup(True)
+    appHeaderFile[count].setOverwrite(False)
+    appHeaderFile[count].setDestPath("../../")
+    appHeaderFile[count].setProjectPath("")
+    appHeaderFile[count].setType("HEADER")
+    appHeaderFile[count].setEnabled(False)
+    appHeaderFile[count].setDependencies(genAppHeaderFile, ["ENABLE_APP_FILE", "GEN_APP_TASK_COUNT", "GEN_APP_TASK_NAME_" + str(count)])
+    appHeaderFile[count].addMarkupVariable("APP_NAME", "GEN_APP_TASK_NAME_" + str(count))
+
+    # RTOS configurations
     genAppRtosTaskConfMenu.append(count)
-    genAppRtosTaskConfMenu[count] = harmonyCoreComponent.createMenuSymbol("GEN_APP_RTOS_TASK_CONF_MENU" + str(count), genAppTaskMenu)
+    genAppRtosTaskConfMenu[count] = harmonyCoreComponent.createMenuSymbol("GEN_APP_RTOS_TASK_CONF_MENU" + str(count), genAppTaskConfMenu[count])
     genAppRtosTaskConfMenu[count].setLabel("RTOS Configuration")
     genAppRtosTaskConfMenu[count].setDescription("RTOS Configuration")
-    genAppRtosTaskConfMenu[count].setDependencies(genAppRtosTaskConfMenuVisible, ["GEN_APP_TASK_COUNT", "Harmony.SELECT_RTOS"])
+    # Only 1 callback is sufficient
+    genAppRtosTaskConfMenu[0].setDependencies(genAppRtosTaskConfMenuVisible, ["GEN_APP_TASK_COUNT", "Harmony.SELECT_RTOS"])
     if (count == 0 and enableRTOS == True):
         genAppRtosTaskConfMenu[count].setVisible(True)
     else:
