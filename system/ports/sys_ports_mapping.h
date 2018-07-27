@@ -61,9 +61,9 @@ static inline bool SYS_PORT_PinRead(SYS_PORT_PIN pin)
     return(PIO_PinRead((PIO_PIN)pin));
 }
 
-static inline bool SYS_PORT_PinReadLatch(SYS_PORT_PIN pin)
+static inline bool SYS_PORT_PinLatchRead(SYS_PORT_PIN pin)
 {
-    return(PIO_PinReadLatch((PIO_PIN)pin));
+    return(PIO_PinLatchRead((PIO_PIN)pin));
 }
 
 static inline void SYS_PORT_PinToggle(SYS_PORT_PIN pin)

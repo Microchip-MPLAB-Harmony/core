@@ -675,13 +675,13 @@ static inline void SYS_PORT_PinWrite(SYS_PORT_PIN pin, bool value);
     </code>
 
   Remarks:
-       To read the latched value on this pin, SYS_PORT_PinReadLatch API should be used.
+       To read the latched value on this pin, SYS_PORT_PinLatchRead API should be used.
 */
 static inline bool SYS_PORT_PinRead(SYS_PORT_PIN pin);
 
 // *****************************************************************************
 /* Function:
-    bool SYS_PORT_PinReadLatch ( SYS_PORT_PIN pin )
+    bool SYS_PORT_PinLatchRead ( SYS_PORT_PIN pin )
 
   Summary:
     Read the value driven on the selected pin.
@@ -704,14 +704,14 @@ static inline bool SYS_PORT_PinRead(SYS_PORT_PIN pin);
     <code>
 
     bool value;
-    value = SYS_PORT_PinReadLatch(SYS_PORT_PIN_PB3);
+    value = SYS_PORT_PinLatchRead(SYS_PORT_PIN_PB3);
 
     </code>
 
   Remarks:
     To read actual pin value, SYS_PORT_PinRead API should be used.
 */
-static inline bool SYS_PORT_PinReadLatch(SYS_PORT_PIN pin);
+static inline bool SYS_PORT_PinLatchRead(SYS_PORT_PIN pin);
 
 // *****************************************************************************
 /* Function:
