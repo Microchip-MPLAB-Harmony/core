@@ -122,7 +122,7 @@ enableRTOS = Database.getSymbolValue("Harmony", "SELECT_RTOS")
 
 genAppTaskMenu = harmonyCoreComponent.createMenuSymbol("GEN_APP_TASK_MENU", coreAppFiles)
 genAppTaskMenu.setLabel("Application Configuration")
-genAppTaskMenu.setVisible(False)
+genAppTaskMenu.setVisible(True)
 genAppTaskMenu.setDependencies(genAppTaskMenuVisible, ["ENABLE_APP_FILE"])
 
 genAppNumTask = harmonyCoreComponent.createIntegerSymbol("GEN_APP_TASK_COUNT", genAppTaskMenu)

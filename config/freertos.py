@@ -135,18 +135,13 @@ def freeRtosMemMangEnableHeap5(freeRtosMemMangHeap5, event):
     else :
         freeRtosMemMangHeap5.setEnabled(False)
 
-def destroyComponent(thirdPartyFreeRTOS):
-    # Restore OSAL to Bare-metal
-    Database.clearSymbolValue("Harmony", "SELECT_RTOS")
-    Database.setSymbolValue("Harmony", "SELECT_RTOS", 0, 1)
-
 # Instatntiate FreeRTOS Component
-def    instantiateComponent(thirdPartyFreeRTOS):
+def instantiateComponent(thirdPartyFreeRTOS):
     Log.writeInfoMessage("Running FreeRTOS")
 
     # Set Generate Harmony Application Files to True
     Database.clearSymbolValue("Harmony", "ENABLE_APP_FILE")
-    Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", True, 3)
+    Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", True, 2)
 
     NVICSysTickHandlerId = Interrupt.getInterruptIndex("SysTick")
     NVICSysTicVector = "NVIC_" + str(NVICSysTickHandlerId) + "_ENABLE"

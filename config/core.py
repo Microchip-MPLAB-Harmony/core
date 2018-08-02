@@ -3,7 +3,7 @@ print("Load Module: Harmony Drivers & System Services")
 
 harmonySystemService = Module.CreateSharedComponent("Harmony", "Harmony", "/Harmony", "config/harmonycore.py")
 harmonySystemService.setDisplayType("Harmony Core Service")
-harmonySystemService.addDependency("harmony_RTOS_dependency", "RTOS", True)
+harmonySystemService.addDependency("harmony_RTOS_dependency", "RTOS", True, True)
 
 thirdPartyFreeRTOS = Module.CreateComponent("FreeRTOS", "FreeRTOS", "//Third Party Libraries/RTOS/", "config/freertos.py")
 thirdPartyFreeRTOS.setDisplayType("Third Party Library")

@@ -22,13 +22,9 @@ def osalSelectFiles(symbol, event):
 ############################################################################
 #### Code Generation ####
 ############################################################################
-osalSelectRTOS = harmonyCoreComponent.createKeyValueSetSymbol("SELECT_RTOS", None)
+osalSelectRTOS = harmonyCoreComponent.createComboSymbol("SELECT_RTOS", None, ["BareMetal", "FreeRTOS"])
 osalSelectRTOS.setLabel("Select any RTOS or Bare-metal")
-osalSelectRTOS.addKey("BareMetal", "0", "Bare-metal")
-osalSelectRTOS.addKey("FreeRTOS", "1", "FreeRTOS")
-osalSelectRTOS.setOutputMode("Key")
-osalSelectRTOS.setDisplayMode("Description")
-osalSelectRTOS.setDefaultValue(1)
+osalSelectRTOS.setDefaultValue("BareMetal")
 osalSelectRTOS.setReadOnly(True)
 osalSelectRTOS.setVisible(True)
 

@@ -104,3 +104,21 @@ def instantiateComponent(harmonyCoreComponent):
     taskRtosDefList = harmonyCoreComponent.createListSymbol("LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS", None)
     taskRtosSchedList = harmonyCoreComponent.createListSymbol("LIST_SYSTEM_RTOS_TASKS_C_CALL_SCHEDULAR", None)
     taskSourceFile.setDependencies(genTaskSourceFile, ["ENABLE_APP_FILE"])
+
+def onGenericDependencySatisfied(dependencyID, satisfierID):
+    print("satisfied: " + dependencyID + ", " + satisfierID)
+
+    if satisfierID == "FreeRTOS":
+        Database.clearSymbolValue("Harmony", "SELECT_RTOS")
+        Database.setSymbolValue("Harmony", "SELECT_RTOS", "FreeRTOS", 2)
+        Database.clearSymbolValue("Harmony", "ENABLE_APP_FILE")
+        Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", True, 2)
+
+def onGenericDependencyUnsatisfied(dependencyID, satisfierID):
+    print("unsatisfied: " + dependencyID + ", " + satisfierID)
+
+    if satisfierID == "FreeRTOS":
+        Database.clearSymbolValue("Harmony", "SELECT_RTOS")
+        Database.setSymbolValue("Harmony", "SELECT_RTOS", "BareMetal", 2)
+        Database.clearSymbolValue("Harmony", "ENABLE_APP_FILE")
+        Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", False, 2)
