@@ -622,7 +622,7 @@ typedef enum
     This function writes/drives the "value" on the selected I/O line/pin.
 
   Precondition:
-    None.
+    Port Initialization must have been done using appropriate Initialize API call.
 
   Parameters:
     pin       - One of the IO pins from the enum SYS_PORT_PIN
@@ -724,7 +724,7 @@ static inline bool SYS_PORT_PinLatchRead(SYS_PORT_PIN pin);
     This function toggles/inverts the value on the selected I/O line/pin.
 
   Precondition:
-    None.
+    Port Initialization must have been done using appropriate Initialize API call.
 
   Parameters:
     pin - One of the IO pins from the enum SYS_PORT_PIN
