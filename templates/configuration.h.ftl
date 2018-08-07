@@ -54,7 +54,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 /*  This section Includes other configuration headers necessary to completely
     define this configuration.
 */
-${LIST_SYSTEM_CONFIG_H_GLOBAL_INCLUDES}
+${core.LIST_SYSTEM_CONFIG_H_GLOBAL_INCLUDES}
 #include "user.h"
 
 // DOM-IGNORE-BEGIN
@@ -70,28 +70,28 @@ extern "C" {
 // Section: System Service Configuration
 // *****************************************************************************
 // *****************************************************************************
-${LIST_SYSTEM_CONFIG_H_SYSTEM_SERVICE_CONFIGURATION}
+${core.LIST_SYSTEM_CONFIG_H_SYSTEM_SERVICE_CONFIGURATION}
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
-${LIST_SYSTEM_CONFIG_H_DRIVER_CONFIGURATION}
+${core.LIST_SYSTEM_CONFIG_H_DRIVER_CONFIGURATION}
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Middleware & Other Library Configuration
 // *****************************************************************************
 // *****************************************************************************
-${LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION}
+${core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION}
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Configuration
 // *****************************************************************************
 // *****************************************************************************
-${LIST_SYSTEM_CONFIG_H_APPLICATION_CONFIGURATION}
+${core.LIST_SYSTEM_CONFIG_H_APPLICATION_CONFIGURATION}
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

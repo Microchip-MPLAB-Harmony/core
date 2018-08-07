@@ -99,12 +99,6 @@ def instantiateComponent(memoryComponent, index):
     Database.clearSymbolValue("Harmony", "ENABLE_SYS_MEDIA")
     Database.setSymbolValue("Harmony", "ENABLE_SYS_MEDIA", True, 2)
 
-    Database.clearSymbolValue("Harmony", "ENABLE_SYS_INT")
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_INT", True, 2)
-
-    Database.clearSymbolValue("Harmony", "ENABLE_APP_FILE")
-    Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", True, 2)
-
     numInstances = Database.getSymbolValue("drv_memory", "DRV_MEMORY_NUM_INSTANCES")
     numInstances = numInstances + 1
     Database.setSymbolValue("drv_memory", "DRV_MEMORY_NUM_INSTANCES", numInstances, 1)

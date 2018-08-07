@@ -2,37 +2,30 @@
 ################################################################################
 #### Business Logic ####
 ################################################################################
+def enableSysInt(symbol, event):
+    drv_common = Database.getSymbolValue("Harmony", "ENABLE_DRV_COMMON")
+    sys_common = Database.getSymbolValue("Harmony", "ENABLE_SYS_COMMON")
 
-def genIntHeaderFile(symbol, event):
-    symbol.setEnabled(event["value"])
-
-def genIntHeaderMappingFile(symbol, event):
-    symbol.setEnabled(event["value"])
-
-def genIntSourceFile(symbol, event):
-    symbol.setEnabled(event["value"])
-
-def genIntSystemDefFile(symbol, event):
-    symbol.setEnabled(event["value"])
-
-def enableDependencySymbols(symbol, event):
-    if(event["value"] == True):
-        Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", True, 1)
+    if ((drv_common == True) or (sys_common == True)):
+        symbol.setValue(True,1)
     else:
-        Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", False, 2)
+        symbol.setValue(False,1)
+
+def genSysIntFiles(symbol, event):
+    if (event["value"] == True):
+        symbol.setEnabled(True)
+    else:
+        symbol.setEnabled(False)
+
 
 ############################################################################
 #### Code Generation ####
 ############################################################################
-genSysIntCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_INT", coreMenu)
-genSysIntCommonFiles.setLabel("Enable System Interrupt")
-genSysIntCommonFiles.setDefaultValue(False)
+sysInt = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_INT", coreMenu)
+sysInt.setLabel("Enable System Interrupt")
+sysInt.setDefaultValue(False)
+sysInt.setDependencies(enableSysInt, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON"])
 
-enableDependency = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_INT_DEPENDENCY", coreMenu)
-enableDependency.setLabel("Enable System INT Dependencies")
-enableDependency.setVisible(False)
-enableDependency.setDependencies(enableDependencySymbols, ["ENABLE_SYS_INT"])
-enableDependency.setDefaultValue(False)
 
 intHeaderFile = harmonyCoreComponent.createFileSymbol("INT_HEADER", None)
 intHeaderFile.setSourcePath("system/int/sys_int.h")
@@ -42,7 +35,7 @@ intHeaderFile.setProjectPath("config/" + configName + "/system/int/")
 intHeaderFile.setType("HEADER")
 intHeaderFile.setOverwrite(True)
 intHeaderFile.setEnabled(False)
-intHeaderFile.setDependencies(genIntHeaderFile, ["ENABLE_SYS_INT"])
+intHeaderFile.setDependencies(genSysIntFiles, ["ENABLE_SYS_INT"])
 
 intHeaderMappingFile = harmonyCoreComponent.createFileSymbol("INT_MAPPING", None)
 intHeaderMappingFile.setSourcePath("system/int/sys_int_mapping.h")
@@ -52,7 +45,7 @@ intHeaderMappingFile.setProjectPath("config/" + configName + "/system/int/")
 intHeaderMappingFile.setType("HEADER")
 intHeaderMappingFile.setOverwrite(True)
 intHeaderMappingFile.setEnabled(False)
-intHeaderMappingFile.setDependencies(genIntHeaderMappingFile, ["ENABLE_SYS_INT"])
+intHeaderMappingFile.setDependencies(genSysIntFiles, ["ENABLE_SYS_INT"])
 
 intSourceFile = harmonyCoreComponent.createFileSymbol("INT_SOURCE", None)
 intSourceFile.setSourcePath("system/int/src/sys_int.c")
@@ -62,7 +55,7 @@ intSourceFile.setProjectPath("config/" + configName + "/system/int/")
 intSourceFile.setType("SOURCE")
 intSourceFile.setOverwrite(True)
 intSourceFile.setEnabled(False)
-intSourceFile.setDependencies(genIntSourceFile, ["ENABLE_SYS_INT"])
+intSourceFile.setDependencies(genSysIntFiles, ["ENABLE_SYS_INT"])
 
 intSystemDefFile = harmonyCoreComponent.createFileSymbol("INT_DEF", None)
 intSystemDefFile.setType("STRING")
@@ -71,4 +64,4 @@ intSystemDefFile.setSourcePath("system/int/templates/system/system_definitions.h
 intSystemDefFile.setMarkup(True)
 intSystemDefFile.setOverwrite(True)
 intSystemDefFile.setEnabled(False)
-intSystemDefFile.setDependencies(genIntSystemDefFile, ["ENABLE_SYS_INT"])
+intSystemDefFile.setDependencies(genSysIntFiles, ["ENABLE_SYS_INT"])

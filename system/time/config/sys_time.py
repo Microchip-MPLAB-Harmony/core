@@ -19,12 +19,6 @@ def instantiateComponent(sysTimeComponent):
     Database.clearSymbolValue("Harmony", "ENABLE_SYS_COMMON")
     Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", True, 2)
 
-    Database.clearSymbolValue("Harmony", "ENABLE_SYS_INT")
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_INT", True, 2)
-
-    Database.clearSymbolValue("Harmony", "ENABLE_APP_FILE")
-    Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", True, 2)
-
     sysTimePLIB = sysTimeComponent.createStringSymbol("SYS_TIME_PLIB", None)
     sysTimePLIB.setLabel("PLIB Used")
     sysTimePLIB.setReadOnly(True)

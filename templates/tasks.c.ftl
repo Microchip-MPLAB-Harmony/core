@@ -61,7 +61,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
-${LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS}
+${core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS}
 </#if>
 
 // *****************************************************************************
@@ -81,23 +81,23 @@ ${LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS}
 void SYS_Tasks ( void )
 {
     /* Maintain system services */
-    ${LIST_SYSTEM_TASKS_C_CALL_SYSTEM_TASKS}
+    ${core.LIST_SYSTEM_TASKS_C_CALL_SYSTEM_TASKS}
 
     /* Maintain Device Drivers */
-    ${LIST_SYSTEM_TASKS_C_CALL_DRIVER_TASKS}
+    ${core.LIST_SYSTEM_TASKS_C_CALL_DRIVER_TASKS}
 
     /* Maintain Middleware & Other Libraries */
-    ${LIST_SYSTEM_TASKS_C_CALL_LIB_TASKS}
+    ${core.LIST_SYSTEM_TASKS_C_CALL_LIB_TASKS}
 
     /* Maintain the application's state machine. */
 <#if SELECT_RTOS == "BareMetal">
-    ${LIST_SYSTEM_TASKS_C_GEN_APP}
+    ${core.LIST_SYSTEM_TASKS_C_GEN_APP}
 <#else>
-    ${LIST_SYSTEM_RTOS_TASKS_C_GEN_APP}
+    ${core.LIST_SYSTEM_RTOS_TASKS_C_GEN_APP}
 </#if>
 <#if SELECT_RTOS != "BareMetal">
     /* Start RTOS Scheduler. */
-    ${LIST_SYSTEM_RTOS_TASKS_C_CALL_SCHEDULAR}
+    ${core.LIST_SYSTEM_RTOS_TASKS_C_CALL_SCHEDULAR}
 </#if>
 }
 

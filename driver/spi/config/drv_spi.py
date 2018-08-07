@@ -12,17 +12,11 @@ def instantiateComponent(spiComponent, index):
     Database.clearSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES")
     Database.setSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES", spiNumInstances, 1)
 
-    # Enable "Generate Harmony Application Files" option in MHC
-    Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", True, 1)
-
     # Enable "Generate Harmony Driver Common Files" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_DRV_COMMON", True, 1)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", True, 1)
-
-    # Enable "Enable System Interrupt" option in MHC
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_INT", True, 1)
 
     # Enable "Enable System Ports" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_SYS_PORTS", True, 1)

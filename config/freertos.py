@@ -139,22 +139,21 @@ def freeRtosMemMangEnableHeap5(freeRtosMemMangHeap5, event):
 def instantiateComponent(thirdPartyFreeRTOS):
     Log.writeInfoMessage("Running FreeRTOS")
 
-    # Set Generate Harmony Application Files to True
-    Database.clearSymbolValue("Harmony", "ENABLE_APP_FILE")
-    Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", True, 2)
-
     NVICSysTickHandlerId = Interrupt.getInterruptIndex("SysTick")
-    NVICSysTicVector = "NVIC_" + str(NVICSysTickHandlerId) + "_ENABLE"
-    NVICSysTicHandler = "NVIC_" + str(NVICSysTickHandlerId) + "_HANDLER"
-    NVICSysTicHandlerLock = "NVIC_" + str(NVICSysTickHandlerId) + "_HANDLER_LOCK"
+    NVICSysTickVector = "NVIC_" + str(NVICSysTickHandlerId) + "_ENABLE"
+    NVICSysTickHandler = "NVIC_" + str(NVICSysTickHandlerId) + "_HANDLER"
+    NVICSysTickHandlerLock = "NVIC_" + str(NVICSysTickHandlerId) + "_HANDLER_LOCK"
+    NVICSysTickPriority = "NVIC_" + str(NVICSysTickHandlerId) + "_PRIORITY"
     NVICSysTickPriorityLock = "NVIC_" + str(NVICSysTickHandlerId) + "_PRIORITY_LOCK"
 
-    Database.clearSymbolValue("core", NVICSysTicVector)
-    Database.setSymbolValue("core", NVICSysTicVector, False, 2)
-    Database.clearSymbolValue("core", NVICSysTicHandler)
-    Database.setSymbolValue("core", NVICSysTicHandler, "xPortSysTickHandler", 2)
-    Database.clearSymbolValue("core", NVICSysTicHandlerLock)
-    Database.setSymbolValue("core", NVICSysTicHandlerLock, True, 2)
+    Database.clearSymbolValue("core", NVICSysTickVector)
+    Database.setSymbolValue("core", NVICSysTickVector, True, 2)
+    Database.clearSymbolValue("core", NVICSysTickHandler)
+    Database.setSymbolValue("core", NVICSysTickHandler, "xPortSysTickHandler", 2)
+    Database.clearSymbolValue("core", NVICSysTickHandlerLock)
+    Database.setSymbolValue("core", NVICSysTickHandlerLock, True, 2)
+    Database.clearSymbolValue("core", NVICSysTickPriority)
+    Database.setSymbolValue("core", NVICSysTickPriority, "7", 2)
     Database.clearSymbolValue("core", NVICSysTickPriorityLock)
     Database.setSymbolValue("core", NVICSysTickPriorityLock, True, 2)
 
@@ -164,7 +163,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     NVICPendSVHandlerLock = "NVIC_" + str(NVICPendSVHandlerId) + "_HANDLER_LOCK"
 
     Database.clearSymbolValue("core", NVICPendSVVector)
-    Database.setSymbolValue("core", NVICPendSVVector, False, 2)
+    Database.setSymbolValue("core", NVICPendSVVector, True, 2)
     Database.clearSymbolValue("core", NVICPendSVHandler)
     Database.setSymbolValue("core", NVICPendSVHandler, "PendSV_Handler", 2)
     Database.clearSymbolValue("core", NVICPendSVHandlerLock)
@@ -177,7 +176,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     NVICSVCallPriorityLock = "NVIC_" + str(NVICSVCallHandlerId) + "_PRIORITY_LOCK"
 
     Database.clearSymbolValue("core", NVICSVCallVector)
-    Database.setSymbolValue("core", NVICSVCallVector, False, 2)
+    Database.setSymbolValue("core", NVICSVCallVector, True, 2)
     Database.clearSymbolValue("core", NVICSVCallHandler)
     Database.setSymbolValue("core", NVICSVCallHandler, "SVCall_Handler", 2)
     Database.clearSymbolValue("core", NVICSVCallHandlerLock)
@@ -371,8 +370,8 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_CoRoutines.setDefaultValue(False)
 
     freeRtosSym_MaxCoRoutinePrio = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_MAX_CO_ROUTINE_PRIORITIES", freeRtosSymMenu)
-    freeRtosSym_MaxCoRoutinePrio.setLabel("Maximum task name length")
-    freeRtosSym_MaxCoRoutinePrio.setDescription("FreeRTOS - Maximum task name length")
+    freeRtosSym_MaxCoRoutinePrio.setLabel("Maximum Co-Routines priorities")
+    freeRtosSym_MaxCoRoutinePrio.setDescription("FreeRTOS - Maximum Co-Routines priorities")
     freeRtosSym_MaxCoRoutinePrio.setMin(1)
     freeRtosSym_MaxCoRoutinePrio.setMax(999999999)
     freeRtosSym_MaxCoRoutinePrio.setDefaultValue(2)
@@ -437,9 +436,9 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_MaxSysCalIntrPrio = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_MAX_SYSCALL_INTERRUPT_PRIORITY", freeRtosSymMenu)
     freeRtosSym_MaxSysCalIntrPrio.setLabel("Maximum system call interrupt priority")
     freeRtosSym_MaxSysCalIntrPrio.setDescription("FreeRTOS - Kernel interrupt priority")
-    freeRtosSym_MaxSysCalIntrPrio.setMin(1)
+    freeRtosSym_MaxSysCalIntrPrio.setMin(0)
     freeRtosSym_MaxSysCalIntrPrio.setMax(7)
-    freeRtosSym_MaxSysCalIntrPrio.setDefaultValue(0)
+    freeRtosSym_MaxSysCalIntrPrio.setDefaultValue(1)
 
     freeRtosSymMenu_IncludeComponents = thirdPartyFreeRTOS.createMenuSymbol("FREERTOS_INCLUDE_COMPONENTS", freeRtosSymMenu)
     freeRtosSymMenu_IncludeComponents.setLabel("Include components")

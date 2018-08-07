@@ -75,14 +75,8 @@ def instantiateComponent(usartComponent, index):
     Database.clearSymbolValue("Harmony", "ENABLE_DRV_COMMON")
     Database.setSymbolValue("Harmony", "ENABLE_DRV_COMMON", True, 2)
 
-    Database.clearSymbolValue("Harmony", "ENABLE_SYS_INT")
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_INT", True, 2)
-
     Database.clearSymbolValue("Harmony", "ENABLE_SYS_DMA")
     Database.setSymbolValue("Harmony", "ENABLE_SYS_DMA", True, 2)
-
-    Database.clearSymbolValue("Harmony", "ENABLE_APP_FILE")
-    Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", True, 2)
 
     # Menu
     usartIndex = usartComponent.createIntegerSymbol("INDEX", None)

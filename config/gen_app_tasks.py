@@ -52,37 +52,20 @@ def genAppRtosTaskConfMenuVisible(symbol, event):
     for count in range(0, genAppTaskMaxCount):
         genAppRtosTaskConfMenu[count].setVisible(False)
 
-    if (selectRTOS == True):
+    if (selectRTOS != "BareMetal"):
         for count in range(0, appCount):
             genAppRtosTaskConfMenu[count].setVisible(True)
 
 
-def genAppTask(symbol, event):
-    if (event["value"] == 0):
-        # If not Bare Metal
-        symbol.setEnabled(True)
-    else:
-        symbol.setEnabled(False)
 
 def genRtosTask(symbol, event):
-    if (event["value"] != 0):
-        # If not Bare Metal
+    selectRTOS = Database.getSymbolValue("Harmony", "SELECT_RTOS")
+
+    if (selectRTOS != "BareMetal"):
         symbol.setEnabled(True)
     else:
         symbol.setEnabled(False)
 
-def genRtosTaskDef(symbol, event):
-    if (event["value"] != 0):
-        # If not Bare Metal
-        symbol.setEnabled(True)
-    else:
-        symbol.setEnabled(False)
-
-def genAppSysInit(symbol, event):
-    if (event["value"] == True):
-        symbol.setEnabled(True)
-    else:
-        symbol.setEnabled(False)
 
 def genAppSourceFile(symbol, event):
     global appSourceFile
@@ -120,9 +103,9 @@ def genAppHeaderFile(symbol, event):
 
 enableRTOS = Database.getSymbolValue("Harmony", "SELECT_RTOS")
 
-genAppTaskMenu = harmonyCoreComponent.createMenuSymbol("GEN_APP_TASK_MENU", coreAppFiles)
+genAppTaskMenu = harmonyCoreComponent.createMenuSymbol("GEN_APP_TASK_MENU", harmonyAppFile)
 genAppTaskMenu.setLabel("Application Configuration")
-genAppTaskMenu.setVisible(True)
+genAppTaskMenu.setVisible(False)
 genAppTaskMenu.setDependencies(genAppTaskMenuVisible, ["ENABLE_APP_FILE"])
 
 genAppNumTask = harmonyCoreComponent.createIntegerSymbol("GEN_APP_TASK_COUNT", genAppTaskMenu)
@@ -203,7 +186,7 @@ for count in range(0, genAppTaskMaxCount):
     genAppRtosTaskConfMenu[count].setDescription("RTOS Configuration")
     # Only 1 callback is sufficient
     genAppRtosTaskConfMenu[0].setDependencies(genAppRtosTaskConfMenuVisible, ["GEN_APP_TASK_COUNT", "Harmony.SELECT_RTOS"])
-    if (count == 0 and enableRTOS == True):
+    if (count == 0 and enableRTOS != "BareMetal"):
         genAppRtosTaskConfMenu[count].setVisible(True)
     else:
         genAppRtosTaskConfMenu[count].setVisible(False)
@@ -248,7 +231,7 @@ genAppTasks.setOutputName("core.LIST_SYSTEM_TASKS_C_GEN_APP")
 genAppTasks.setSourcePath("templates/gen_app_tasks_macros.ftl")
 genAppTasks.setMarkup(True)
 genAppTasks.setEnabled(True)
-genAppTasks.setDependencies(genAppTask, ["Harmony.SELECT_RTOS"])
+genAppTasks.setDependencies(genRtosTask, ["Harmony.SELECT_RTOS"])
 
 genAppRtosTasks = harmonyCoreComponent.createFileSymbol("GEN_RTOS_APP_TASKS", None)
 genAppRtosTasks.setType("STRING")
@@ -264,7 +247,7 @@ genAppRtosTasksDef.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
 genAppRtosTasksDef.setSourcePath("/templates/gen_rtos_tasks.c.ftl")
 genAppRtosTasksDef.setMarkup(True)
 genAppRtosTasksDef.setEnabled((Database.getSymbolValue("Harmony", "SELECT_RTOS") != 0))
-genAppRtosTasksDef.setDependencies(genRtosTaskDef, ["Harmony.SELECT_RTOS"])
+genAppRtosTasksDef.setDependencies(genRtosTask, ["Harmony.SELECT_RTOS"])
 
 genappSystemInitFile = harmonyCoreComponent.createFileSymbol("APP_SYS_INIT", None)
 genappSystemInitFile.setType("STRING")

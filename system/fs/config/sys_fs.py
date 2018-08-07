@@ -16,9 +16,6 @@ def instantiateComponent(sysFSComponent):
     Database.clearSymbolValue("Harmony", "ENABLE_SYS_MEDIA")
     Database.setSymbolValue("Harmony", "ENABLE_SYS_MEDIA", True, 2)
 
-    Database.clearSymbolValue("Harmony", "ENABLE_SYS_INT")
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_INT", True, 2)
-
     sysFSMenu = sysFSComponent.createMenuSymbol(None, None)
     sysFSMenu.setLabel("File System settings")
     sysFSMenu.setDescription("File System settings")
