@@ -1,20 +1,20 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_USART Instance ${INDEX?string} Initialization Data">
-<#if drv_usart.DRV_USART_MODE == "SYNC">
+<#if DRV_USART_MODE == true>
 
 DRV_USART_CLIENT_OBJ drvUSART${INDEX?string}ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
 </#if>
 
 USART_PLIB_API drvUsart${INDEX?string}PlibAPI = {
-        .readCallbackRegister = (USART_ReadCallbackRegister)${DRV_USART_PLIB}_ReadCallbackRegister,
-        .read = (USART_Read)${DRV_USART_PLIB}_Read,
-        .readIsBusy = (USART_ReadIsBusy)${DRV_USART_PLIB}_ReadIsBusy,
-        .readCountGet = (USART_ReadCountGet)${DRV_USART_PLIB}_ReadCountGet,
-        .writeCallbackRegister = (USART_WriteCallbackRegister)${DRV_USART_PLIB}_WriteCallbackRegister,
-        .write = (USART_Write)${DRV_USART_PLIB}_Write,
-        .writeIsBusy = (USART_WriteIsBusy)${DRV_USART_PLIB}_WriteIsBusy,
-        .writeCountGet = (USART_WriteCountGet)${DRV_USART_PLIB}_WriteCountGet,
-        .errorGet = (USART_ErrorGet)${DRV_USART_PLIB}_ErrorGet,
-        .serialSetup = (USART_SerialSetup)${DRV_USART_PLIB}_SerialSetup
+        .readCallbackRegister = (USART_ReadCallbackRegister)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ReadCallbackRegister,
+        .read = (USART_Read)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_Read,
+        .readIsBusy = (USART_ReadIsBusy)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ReadIsBusy,
+        .readCountGet = (USART_ReadCountGet)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ReadCountGet,
+        .writeCallbackRegister = (USART_WriteCallbackRegister)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_WriteCallbackRegister,
+        .write = (USART_Write)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_Write,
+        .writeIsBusy = (USART_WriteIsBusy)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_WriteIsBusy,
+        .writeCountGet = (USART_WriteCountGet)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_WriteCountGet,
+        .errorGet = (USART_ErrorGet)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ErrorGet,
+        .serialSetup = (USART_SerialSetup)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_SerialSetup
 };
 
 DRV_USART_INIT drvUsart${INDEX?string}InitData =
@@ -36,7 +36,7 @@ DRV_USART_INIT drvUsart${INDEX?string}InitData =
 <#else>
     .dmaChannelReceive = DMA_CHANNEL_NONE,
 </#if>
-<#if drv_usart.DRV_USART_MODE == "ASYNC">
+<#if DRV_USART_MODE == false>
 
     .queueSizeTransmit = DRV_USART_XMIT_QUEUE_SIZE_IDX${INDEX?string},
 
@@ -44,7 +44,11 @@ DRV_USART_INIT drvUsart${INDEX?string}InitData =
 
     .interruptUSART = ${DRV_USART_PLIB}_IRQn,
 
+<#if core.XDMAC_ENABLE?has_content>
     .interruptDMA = XDMAC_IRQn,
+<#elseif core.DMAC_ENABLE?has_content>
+    .interruptDMA = DMAC_IRQn,
+</#if>
 <#else>
 
     .numClients = DRV_USART_CLIENTS_NUMBER_IDX0,

@@ -85,40 +85,70 @@ typedef enum _DRV_USART_ERROR
 
 typedef enum
 {
-    DRV_USART_DATA_5_BIT = 0,
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_5_BIT_MASK?has_content>
+        <#lt>    DRV_USART_DATA_5_BIT = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_5_BIT_MASK},
 
-    DRV_USART_DATA_6_BIT = 1,
+    </#if>
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_6_BIT_MASK?has_content>
+        <#lt>    DRV_USART_DATA_6_BIT = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_6_BIT_MASK},
 
-    DRV_USART_DATA_7_BIT = 2,
+    </#if>
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_7_BIT_MASK?has_content>
+        <#lt>    DRV_USART_DATA_7_BIT = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_7_BIT_MASK},
 
-    DRV_USART_DATA_8_BIT = 3,
+    </#if>
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_8_BIT_MASK?has_content>
+        <#lt>    DRV_USART_DATA_8_BIT = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_8_BIT_MASK},
 
-    DRV_USART_DATA_9_BIT = 4
+    </#if>
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_9_BIT_MASK?has_content>
+        <#lt>    DRV_USART_DATA_9_BIT = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_9_BIT_MASK},
 
+    </#if>
 } DRV_USART_DATA_BIT;
 
 typedef enum
 {
-    DRV_USART_PARITY_NONE = 0,
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_NONE_MASK?has_content>
+        <#lt>    DRV_USART_PARITY_NONE = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_NONE_MASK},
 
-    DRV_USART_PARITY_ODD = 1,
+    </#if>
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_ODD_MASK?has_content>
+        <#lt>    DRV_USART_PARITY_ODD = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_ODD_MASK},
 
-    DRV_USART_PARITY_EVEN = 2,
+    </#if>
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_EVEN_MASK?has_content>
+        <#lt>    DRV_USART_PARITY_EVEN = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_EVEN_MASK},
 
-    DRV_USART_PARITY_MARK = 3,
+    </#if>
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_MARK_MASK?has_content>
+        <#lt>    DRV_USART_PARITY_MARK = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_MARK_MASK},
 
-    DRV_USART_PARITY_SPACE = 4
+    </#if>
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_SPACE_MASK?has_content>
+        <#lt>    DRV_USART_PARITY_SPACE = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_SPACE_MASK},
 
+    </#if>
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_MULTIDROP_MASK?has_content>
+        <#lt>    DRV_USART_PARITY_MULTIDROP = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_MULTIDROP_MASK},
+
+    </#if>
 } DRV_USART_PARITY;
 
 typedef enum
 {
-    DRV_USART_STOP_1_BIT = 0,
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_BIT_MASK?has_content>
+        <#lt>    DRV_USART_STOP_1_BIT = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_BIT_MASK},
 
-    DRV_USART_STOP_1_5_BIT = 1,
+    </#if>
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_5_BIT_MASK?has_content>
+        <#lt>    DRV_USART_STOP_1_5_BIT = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_5_BIT_MASK},
 
-    DRV_USART_STOP_2_BIT = 2
+    </#if>
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_2_BIT_MASK?has_content>
+        <#lt>    DRV_USART_STOP_2_BIT = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_2_BIT_MASK},
 
+    </#if>
 } DRV_USART_STOP_BIT;
 
 typedef struct _DRV_USART_SERIAL_SETUP
@@ -187,7 +217,7 @@ struct _DRV_USART_INIT
 
     /* This is the USART receive register address. Used for DMA operation. */
     void * usartReceiveAddress;
-<#if DRV_USART_MODE == "ASYNC">
+<#if DRV_USART_MODE == false>
 
     /* This is the receive buffer queue size. This is the maximum
      * number of read requests that driver will queue. This can be updated
