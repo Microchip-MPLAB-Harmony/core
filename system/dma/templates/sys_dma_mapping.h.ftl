@@ -49,7 +49,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: DMA System Service Mapping
 // *****************************************************************************
 // *****************************************************************************
-<#if core.XDMAC_ENABLE == true>
+<#if core.XDMAC_ENABLE?has_content && core.XDMAC_ENABLE == true>
 #include "peripheral/xdmac/plib_xdmac.h"
 
 #define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)  XDMAC_ChannelCallbackRegister((XDMAC_CHANNEL)channel, (XDMAC_CHANNEL_CALLBACK)eventHandler, context)
