@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    drv_twi_definitions.h
+    drv_spi_definitions.h
 
   Summary:
     SPI Driver Definitions Header File
@@ -74,29 +74,47 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 typedef enum
 {
-    DRV_SPI_CLOCK_PHASE_TRAILING_EDGE = 0 << SPI_CSR_NCPHA_Pos,
-    DRV_SPI_CLOCK_PHASE_LEADING_EDGE = 1 << SPI_CSR_NCPHA_Pos
+    DRV_SPI_CLOCK_PHASE_VALID_TRAILING_EDGE = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_PHASE_TRAILING_MASK},
+    DRV_SPI_CLOCK_PHASE_VALID_LEADING_EDGE = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_PHASE_LEADING_MASK}
 
 }DRV_SPI_CLOCK_PHASE;
 
 typedef enum
 {
-    DRV_SPI_CLOCK_POLARITY_IDLE_LOW = 0 << SPI_CSR_CPOL_Pos,
-    DRV_SPI_CLOCK_POLARITY_IDLE_HIGH = 1 << SPI_CSR_CPOL_Pos
+    DRV_SPI_CLOCK_POLARITY_IDLE_LOW = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_POLARITY_LOW_MASK},
+    DRV_SPI_CLOCK_POLARITY_IDLE_HIGH = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_POLARITY_HIGH_MASK}
 
 }DRV_SPI_CLOCK_POLARITY;
 
 typedef enum
 {
-    DRV_SPI_DATA_BITS_8 = SPI_CSR_BITS_8_BIT_Val,
-    DRV_SPI_DATA_BITS_9 = SPI_CSR_BITS_9_BIT_Val,
-    DRV_SPI_DATA_BITS_10 = SPI_CSR_BITS_10_BIT_Val,
-    DRV_SPI_DATA_BITS_11 = SPI_CSR_BITS_11_BIT_Val,
-    DRV_SPI_DATA_BITS_12 = SPI_CSR_BITS_12_BIT_Val,
-    DRV_SPI_DATA_BITS_13 = SPI_CSR_BITS_13_BIT_Val,
-    DRV_SPI_DATA_BITS_14 = SPI_CSR_BITS_14_BIT_Val,
-    DRV_SPI_DATA_BITS_15 = SPI_CSR_BITS_15_BIT_Val,
-    DRV_SPI_DATA_BITS_16 = SPI_CSR_BITS_16_BIT_Val
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_8_BIT_MASK?has_content>
+    DRV_SPI_DATA_BITS_8_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_8_BIT_MASK},
+    </#if>
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_9_BIT_MASK?has_content>
+    DRV_SPI_DATA_BITS_9_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_9_BIT_MASK},
+    </#if>
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_10_BIT_MASK?has_content>
+    DRV_SPI_DATA_BITS_10_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_10_BIT_MASK},
+    </#if>
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_11_BIT_MASK?has_content>
+    DRV_SPI_DATA_BITS_11_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_11_BIT_MASK},
+    </#if>
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_12_BIT_MASK?has_content>
+    DRV_SPI_DATA_BITS_12_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_12_BIT_MASK},
+    </#if>
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_13_BIT_MASK?has_content>
+    DRV_SPI_DATA_BITS_13_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_13_BIT_MASK},
+    </#if>
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_14_BIT_MASK?has_content>
+    DRV_SPI_DATA_BITS_14_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_14_BIT_MASK},
+    </#if>
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_15_BIT_MASK?has_content>
+    DRV_SPI_DATA_BITS_15_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_15_BIT_MASK},
+    </#if>
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_16_BIT_MASK?has_content>
+    DRV_SPI_DATA_BITS_16_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_16_BIT_MASK},
+    </#if>
 
 }DRV_SPI_DATA_BITS;
 
@@ -141,7 +159,9 @@ typedef struct
 typedef enum
 {
     DRV_SPI_ERROR_NONE = 0,
-    DRV_SPI_ERROR_OVERRUN = 1 << SPI_SR_OVRES_Pos
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_STATUS_OVERRUN_MASK?has_content>
+    DRV_SPI_ERROR_OVERRUN = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_STATUS_OVERRUN_MASK},
+    </#if>
 
 }DRV_SPI_ERROR;
 
