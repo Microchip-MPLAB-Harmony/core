@@ -50,7 +50,7 @@ def instantiateComponent(sdhcComponent, index):
 	sdhcRTOSMenu.setLabel("RTOS Configuration")
 	sdhcRTOSMenu.setDescription("RTOS Configuration")
 	sdhcRTOSMenu.setVisible(False)
-	sdhcRTOSMenu.setDependencies(showRTOSMenu, ["USE_DRV_SDHC","OSAL.OSAL_RTOS"])
+	sdhcRTOSMenu.setDependencies(showRTOSMenu, ["USE_DRV_SDHC","Harmony.SELECT_RTOS"])
 
 	sdhcRTOSTask = sdhcComponent.createComboSymbol("DRV_SDHC_RTOS", sdhcRTOSMenu, ["Standalone"])
 	sdhcRTOSTask.setLabel("Run Library Tasks As")
@@ -214,8 +214,12 @@ def instantiateComponent(sdhcComponent, index):
 	sdhcSystemInterruptFile.setSourcePath("/driver/sdhc/templates/system/system_interrupt.c.ftl")
 	sdhcSystemInterruptFile.setMarkup(True)
 
-def showRTOSMenu(sdhcRTOSMenu,enable):
-	sdhcRTOSMenu.setVisible(False)
+def showRTOSMenu(symbol,event):
+    if (event["value"] != "BareMetal"):
+        # If not Bare Metal
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
 
 def showRTOSTaskDel(sdhcRTOSTaskDelayVal, enable):
 	sdhcRTOSTaskDelayVal.setVisible(enable["value"])

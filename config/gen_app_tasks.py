@@ -185,7 +185,7 @@ for count in range(0, genAppTaskMaxCount):
     genAppRtosTaskConfMenu[count].setLabel("RTOS Configuration")
     genAppRtosTaskConfMenu[count].setDescription("RTOS Configuration")
     # Only 1 callback is sufficient
-    genAppRtosTaskConfMenu[0].setDependencies(genAppRtosTaskConfMenuVisible, ["GEN_APP_TASK_COUNT", "Harmony.SELECT_RTOS"])
+    genAppRtosTaskConfMenu[0].setDependencies(genAppRtosTaskConfMenuVisible, ["GEN_APP_TASK_COUNT", "SELECT_RTOS"])
     if (count == 0 and enableRTOS != "BareMetal"):
         genAppRtosTaskConfMenu[count].setVisible(True)
     else:

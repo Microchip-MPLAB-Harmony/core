@@ -363,7 +363,7 @@ def genRtosTask(symbol, event):
         symbol.setEnabled(False)
 
 def showRTOSMenu(symbol, event):
-    if (event["value"] != 0):
+    if (event["value"] != "BareMetal"):
         # If not Bare Metal
         symbol.setVisible(True)
     else:

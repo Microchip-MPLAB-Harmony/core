@@ -27,7 +27,9 @@ def genOsalFiles(symbol, event):
     global osalSourceFreeRtosFile
     global osalSystemDefFile
 
-    if (event["value"] == True):
+    genOsal = Database.getSymbolValue("Harmony", "ENABLE_OSAL")
+
+    if (genOsal == True):
         osalHeaderFile.setEnabled(True)
         osalHeaderDefFile.setEnabled(True)
         osalSystemDefFile.setEnabled(True)
@@ -84,7 +86,7 @@ osalHeaderImpBasicFile.setProjectPath("/osal/")
 osalHeaderImpBasicFile.setType("HEADER")
 osalHeaderImpBasicFile.setOverwrite(True)
 osalHeaderImpBasicFile.setEnabled(False)
-osalHeaderImpBasicFile.setDependencies(genOsalFiles, ["ENABLE_OSAL"])
+osalHeaderImpBasicFile.setDependencies(genOsalFiles, ["ENABLE_OSAL", "SELECT_RTOS"])
 
 osalHeaderFreeRtosFile = harmonyCoreComponent.createFileSymbol("OSAL_FREERTOS_H", None)
 osalHeaderFreeRtosFile.setSourcePath("/osal/osal_freertos.h")
