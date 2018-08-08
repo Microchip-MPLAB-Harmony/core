@@ -367,7 +367,7 @@ DRV_HANDLE DRV_I2C_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             clientObj->clientHandle = _DRV_I2C_MAKE_HANDLE(dObj->i2cTokenCount, drvIndex, iClient);
 
             /* Increment the instance specific token counter */
-            _DRV_I2C_UPDATE_TOKEN(dObj->i2cTokenCount);
+            dObj->i2cTokenCount = _DRV_I2C_UPDATE_TOKEN(dObj->i2cTokenCount);
 
             break;
         }
