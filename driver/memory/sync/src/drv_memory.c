@@ -113,10 +113,15 @@ static const DRV_MEMORY_TransferOperation gMemoryXferFuncPtr[4] =
 // *****************************************************************************
 // *****************************************************************************
 
-static inline void DRV_MEMORY_UPDATE_TOKEN(uint16_t token)
+static inline uint16_t DRV_MEMORY_UPDATE_TOKEN(uint16_t token)
 {
     token++;
-    token = (token == DRV_MEMORY_TOKEN_MAX) ? 1: token;
+    if (token >= DRV_MEMORY_TOKEN_MAX)
+    {
+        token = 1;
+    }
+
+    return token;    
 }
 
 
@@ -148,7 +153,7 @@ void DRV_MEMORY_AllocateBufferObject
     bufferObj->status        = DRV_MEMORY_COMMAND_QUEUED;
 
     /* Update the token number. */
-    DRV_MEMORY_UPDATE_TOKEN(dObj->bufferToken);
+    dObj->bufferToken = DRV_MEMORY_UPDATE_TOKEN(dObj->bufferToken);
 
     if (handle != NULL)
     {
@@ -815,7 +820,7 @@ DRV_HANDLE DRV_MEMORY_Open
 
             clientObj->clientHandle = DRV_MEMORY_MAKE_HANDLE(dObj->clientToken, drvIndex, iClient);
 
-            DRV_MEMORY_UPDATE_TOKEN(dObj->clientToken);
+            dObj->clientToken = DRV_MEMORY_UPDATE_TOKEN(dObj->clientToken);
 
             SYS_DEBUG_PRINT(SYS_ERROR_INFO, "DRV_MEMORY_Open(): Open successful.\n");
 
