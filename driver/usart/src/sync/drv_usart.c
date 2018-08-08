@@ -425,7 +425,7 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
             clientObj->clientHandle = _DRV_USART_MAKE_HANDLE(dObj->usartTokenCount, drvIndex, iClient);
 
             /* Increment the instance specific token counter */
-            _DRV_USART_UPDATE_TOKEN(dObj->usartTokenCount);
+            dObj->usartTokenCount = _DRV_USART_UPDATE_TOKEN(dObj->usartTokenCount);
 
             break;
         }
