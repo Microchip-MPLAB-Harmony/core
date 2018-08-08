@@ -52,7 +52,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     extern "C" {
 #endif
 
-// This should be defined in system_config.h.  It is added here as a build safe-guard.
+// This should be defined in configuration.h.  It is added here as a build safe-guard.
 #ifndef SYS_DEBUG_BUFFER_DMA_READY
     #define SYS_DEBUG_BUFFER_DMA_READY
 #endif
@@ -421,7 +421,7 @@ SYS_STATUS SYS_DEBUG_Status( SYS_MODULE_OBJ object );
 
   Example:
     <code>
-    // In system_config.h:
+    // In configuration.h:
     #define SYS_MESSAGE(message)  SYS_DEBUG_Message(message)
 
     // In source (.c) files:
@@ -470,7 +470,7 @@ void SYS_DEBUG_Message(const char *message);
 
   Example:
     <code>
-    // In system_config.h
+    // In configuration.h
     #define SYS_PRINT(format, ...)  SYS_DEBUG_Print(format, ##__VA_ARG__)
 
     // In source code
@@ -592,7 +592,7 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 
   Example:
     <code>
-    // In system_config.h
+    // In configuration.h
     #define SYS_DEBUG_MESSAGE(level,message)  _SYS_DEBUG_MESSAGE(level,message)
 
     // In library source (.c) code.
@@ -640,7 +640,7 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 
   Example:
     <code>
-    // In system_config.h
+    // In configuration.h
     #define SYS_DEBUG_PRINT(level, format, ...)  _SYS_DEBUG_PRINT(level, format, ##__VA_ARG__)
 
     // In source code
@@ -672,7 +672,7 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 // *****************************************************************************
 /*  These definitions support the SYS_DEBUG_USE_CONSOLE build-time configuration
     option.  Defining SYS_DEBUG_USE_CONSOLE in the system configuration
-    (system_config.h) will map the macros below to the appropriate system
+    (configuration.h) will map the macros below to the appropriate system
     console functions.
 */
 
@@ -724,7 +724,7 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 
   Example:
     <code>
-    // In system_config.h:
+    // In configuration.h:
     #define SYS_MESSAGE(message)  _SYS_MESSAGE(message)
 
     // In source (.c) files:
@@ -739,7 +739,7 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 
     This macro can be mapped to the system console service (along with other
     system debug macros) by defining SYS_DEBUG_USE_CONSOLE in the system
-    configuration (system_config.h) instead of defining it individually.
+    configuration (configuration.h) instead of defining it individually.
 */
 
 #ifndef SYS_MESSAGE
@@ -784,7 +784,7 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 
     This macro can be mapped to the system console service (along with other
     system debug macros) by defining SYS_DEBUG_USE_CONSOLE in the system
-    configuration (system_config.h) instead of defining it individually.
+    configuration (configuration.h) instead of defining it individually.
 */
 
 #ifndef SYS_DEBUG_MESSAGE
@@ -818,7 +818,7 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 
   Example:
     <code>
-    // In system_config.h
+    // In configuration.h
     #define SYS_PRINT(format, ...)  _SYS_DEBUG_PRINT(format, ##__VA_ARG__)
 
     // In source code
@@ -843,7 +843,7 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 
     This macro can be mapped to the system console service (along with other
     system debug macros) by defining SYS_DEBUG_USE_CONSOLE in the system
-    configuration (system_config.h) instead of defining it individually.
+    configuration (configuration.h) instead of defining it individually.
 */
 
 #ifndef SYS_PRINT
@@ -878,7 +878,7 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 
   Example:
     <code>
-    // In system_config.h
+    // In configuration.h
     #define SYS_DEBUG_PRINT(level, format, ...)  _SYS_DEBUG_PRINT(level, format, ##__VA_ARG__)
 
     // In source code
@@ -903,7 +903,7 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 
     This macro can be mapped to the system console service (along with other
     system debug macros) by defining SYS_DEBUG_USE_CONSOLE in the system
-    configuration (system_config.h) instead of defining it individually.
+    configuration (configuration.h) instead of defining it individually.
 */
 
 #ifndef SYS_DEBUG_PRINT

@@ -258,7 +258,7 @@ typedef void ( *DRV_SPI_TRANSFER_EVENT_HANDLER )( DRV_SPI_TRANSFER_EVENT event, 
     driver instance is already initialized. The driver instance index is
     independent of the SPI module ID. For example, driver instance 0 can be
     assigned to SPI2. Some of the initialization parameters are overridden by
-    configuration macros in system_config.h file.
+    configuration macros in configuration.h file.
 
   Precondition:
     None.

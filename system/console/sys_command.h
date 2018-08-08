@@ -69,7 +69,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-//SYS_CMD_BUFFER_DMA_READY is defined in system_config.h by MHC, this is here in-case MHC is not used
+//SYS_CMD_BUFFER_DMA_READY is defined in configuration.h by MHC, this is here in-case MHC is not used
 #ifndef SYS_CMD_BUFFER_DMA_READY
     #define SYS_CMD_BUFFER_DMA_READY //Define this for MX
     /* #define SYS_CMD_BUFFER_DMA_READY        __attribute__((coherent)) __attribute__((aligned(4))) //Define this for MZ */
