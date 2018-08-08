@@ -92,11 +92,6 @@ def instantiateComponent(harmonyCoreComponent):
     confHeaderFile.setProjectPath("config/" + configName + "/")
     confHeaderFile.setType("HEADER")
     confHeaderFile.setEnabled(False)
-    systemConfigIncludesList = harmonyCoreComponent.createListSymbol("LIST_SYSTEM_CONFIG_H_GLOBAL_INCLUDES", None)
-    systemConfigSysList = harmonyCoreComponent.createListSymbol("LIST_SYSTEM_CONFIG_H_SYSTEM_SERVICE_CONFIGURATION", None)
-    systemConfigDrvList = harmonyCoreComponent.createListSymbol("LIST_SYSTEM_CONFIG_H_DRIVER_CONFIGURATION", None)
-    systemConfigMWList = harmonyCoreComponent.createListSymbol("LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION", None)
-    systemConfigAppList = harmonyCoreComponent.createListSymbol("LIST_SYSTEM_CONFIG_H_APPLICATION_CONFIGURATION", None)
     confHeaderFile.setDependencies(genHarmonyFiles, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON", "ENABLE_APP_FILE"])
 
     # generate tasks.c file
@@ -109,13 +104,6 @@ def instantiateComponent(harmonyCoreComponent):
     taskSourceFile.setProjectPath("config/" + configName + "/")
     taskSourceFile.setType("SOURCE")
     taskSourceFile.setEnabled(False)
-    taskSysList = harmonyCoreComponent.createListSymbol("LIST_SYSTEM_TASKS_C_CALL_SYSTEM_TASKS", None)
-    taskDrvList = harmonyCoreComponent.createListSymbol("LIST_SYSTEM_TASKS_C_CALL_DRIVER_TASKS", None)
-    taskLibList = harmonyCoreComponent.createListSymbol("LIST_SYSTEM_TASKS_C_CALL_LIB_TASKS", None)
-    taskGenAppList = harmonyCoreComponent.createListSymbol("LIST_SYSTEM_TASKS_C_GEN_APP", None)
-    taskGenRtosAppList = harmonyCoreComponent.createListSymbol("LIST_SYSTEM_RTOS_TASKS_C_GEN_APP", None)
-    taskRtosDefList = harmonyCoreComponent.createListSymbol("LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS", None)
-    taskRtosSchedList = harmonyCoreComponent.createListSymbol("LIST_SYSTEM_RTOS_TASKS_C_CALL_SCHEDULAR", None)
     taskSourceFile.setDependencies(genHarmonyFiles, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON", "ENABLE_APP_FILE"])
 
 def onGenericDependencySatisfied(dependencyID, satisfierID):
