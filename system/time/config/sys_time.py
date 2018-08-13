@@ -112,7 +112,7 @@ def instantiateComponent(sysTimeComponent):
 ############################################################################
 def onDependentComponentAdded(sys_time, id, time):
 
-    if id == "sys_time_TC_dependency" :
+    if id == "sys_time_TMR_dependency" :
         plibUsed = sys_time.getSymbolByID("SYS_TIME_PLIB")
         plibUsed.clearValue()
         plibUsed.setValue(time.getID().upper() + "_CH0", 2)
