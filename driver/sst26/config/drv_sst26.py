@@ -9,6 +9,9 @@ def sst26SetMemoryDependency(symbol, event):
         symbol.setVisible(False)
 
 def instantiateComponent(sst26Component):
+
+    res = Database.activateComponents(["HarmonyCore"])
+
     sst26PLIB = sst26Component.createStringSymbol("DRV_SST26_PLIB", None)
     sst26PLIB.setLabel("PLIB Used")
     sst26PLIB.setReadOnly(True)

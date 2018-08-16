@@ -13,6 +13,9 @@ def sysTimeFrequencyCalculate(symbol, event):
 #### Component ####
 ################################################################################
 def instantiateComponent(sysTimeComponent):
+
+    res = Database.activateComponents(["HarmonyCore"])
+
     Log.writeInfoMessage("Loading System Time Module...")
 
     # Enable dependent Harmony core components

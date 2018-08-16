@@ -1,5 +1,7 @@
 def instantiateComponent(i2sComponentCommon):
     
+    res = Database.activateComponents(["HarmonyCore"])
+
     i2sSymNumInst = i2sComponentCommon.createIntegerSymbol("DRV_I2S_NUM_INSTANCES", None)
     i2sSymNumInst.setLabel("Number of Instances")
     i2sSymNumInst.setMin(1)

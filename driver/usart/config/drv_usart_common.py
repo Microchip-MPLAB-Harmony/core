@@ -18,6 +18,8 @@ def asyncFileGen(Sym, event):
 ################################################################################
 def instantiateComponent(usartComponent):
 
+    res = Database.activateComponents(["HarmonyCore"])
+
     usartMode = usartComponent.createKeyValueSetSymbol("DRV_USART_MODE", None)
     usartMode.setLabel("Driver Mode")
     usartMode.addKey("ASYNC", "0", "Asynchronous")

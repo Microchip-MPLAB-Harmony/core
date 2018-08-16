@@ -1,4 +1,7 @@
 def instantiateComponent(spiComponentCommon):
+
+    res = Database.activateComponents(["HarmonyCore"])
+
     spiMode = spiComponentCommon.createKeyValueSetSymbol("DRV_SPI_COMMON_MODE", None)
     spiMode.setLabel("Driver Mode")
     spiMode.addKey("ASYNC", "0", "Asynchronous")

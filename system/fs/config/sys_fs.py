@@ -6,6 +6,8 @@ def instantiateComponent(sysFSComponent):
                     "SYS_FS_MEDIA_TYPE_RAM",
                     "SYS_FS_MEDIA_TYPE_SPIFLASH"]
 
+    res = Database.activateComponents(["HarmonyCore"])
+
     # Enable dependent Harmony core components
     Database.clearSymbolValue("Harmony", "ENABLE_DRV_COMMON")
     Database.setSymbolValue("Harmony", "ENABLE_DRV_COMMON", True, 2)

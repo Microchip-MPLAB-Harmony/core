@@ -36,6 +36,9 @@ def instantiateComponent(harmonyCoreComponent):
     global osalSourceFreeRtosFile
     global osalSelectRTOS
 
+    autoComponentIDTable = ["FreeRTOS"]
+    res = Database.activateComponents(autoComponentIDTable)
+
     coreMenu = harmonyCoreComponent.createMenuSymbol("HARMONY_CORE_MENU", None)
     coreMenu.setLabel("Harmony Core Configuration")
 

@@ -25,6 +25,8 @@ def setFileSystem(symbol, event):
 def instantiateComponent(memoryCommonComponent):
     global memoryCommonFsEnable
 
+    res = Database.activateComponents(["HarmonyCore"])
+
     memoryCommonSymNumInst = memoryCommonComponent.createIntegerSymbol("DRV_MEMORY_NUM_INSTANCES", None)
     memoryCommonSymNumInst.setLabel("Number of Instances")
     memoryCommonSymNumInst.setMin(1)

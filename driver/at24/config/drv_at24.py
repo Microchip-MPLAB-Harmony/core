@@ -27,6 +27,8 @@ def at24SetMemoryDependency(symbol, event):
 
 
 def instantiateComponent(at24Component):
+    res = Database.activateComponents(["HarmonyCore"])
+
     # Enable "Generate Harmony Driver Common Files" option in MHC
     Database.setSymbolValue("Harmony", "ENABLE_DRV_COMMON", True, 1)
 

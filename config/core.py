@@ -1,13 +1,14 @@
 
 print("Load Module: Harmony Drivers & System Services")
 
-harmonySystemService = Module.CreateSharedComponent("Harmony", "Harmony", "/Harmony", "config/harmonycore.py")
-harmonySystemService.setDisplayType("Harmony Core Service")
-harmonySystemService.addDependency("harmony_RTOS_dependency", "RTOS", True, True)
-
 thirdPartyFreeRTOS = Module.CreateComponent("FreeRTOS", "FreeRTOS", "//Third Party Libraries/RTOS/", "config/freertos.py")
 thirdPartyFreeRTOS.setDisplayType("Third Party Library")
 thirdPartyFreeRTOS.addCapability("FreeRTOS", "RTOS", True)
+
+harmonySystemService = Module.CreateSharedComponent("HarmonyCore", "Core", "/Harmony", "config/harmonycore.py")
+harmonySystemService.setDisplayType("Harmony Core Service")
+harmonySystemService.addDependency("harmony_RTOS_dependency", "RTOS", True, True)
+harmonySystemService.addCapability("HarmonyCoreService", "Core Service", True)
 
 #load harmony drivers and system services from the list 
 for coreComponent in coreComponents:
@@ -41,3 +42,5 @@ for coreComponent in coreComponents:
             if "dependency" in coreComponent:
                 for item in coreComponent['dependency']:
                     Component.addDependency("drv_" + Name + "_" + item + "_dependency", item)
+
+        Component.addDependency("drv_" + Name + "_HarmonyCoreDependency", "Core Service", "Core Service", True, True)

@@ -26,6 +26,8 @@ def genCommandFiles(symbol, event):
 #### Component ####
 ################################################################################
 def instantiateComponent(consoleComponent):
+    res = Database.activateComponents(["HarmonyCore"])
+
     Log.writeInfoMessage("Loading System Console Module...")
 
     # Enable dependent Harmony core components
