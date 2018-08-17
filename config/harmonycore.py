@@ -8,8 +8,8 @@ global osalSourceFreeRtosFile
 global osalSelectRTOS
 
 def enableAppFile(symbol, event):
-    drv_common = Database.getSymbolValue("Harmony", "ENABLE_DRV_COMMON")
-    sys_common = Database.getSymbolValue("Harmony", "ENABLE_SYS_COMMON")
+    drv_common = Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
+    sys_common = Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
 
     if ((drv_common == True) or (sys_common == True)):
         symbol.setValue(True,1)
@@ -18,9 +18,9 @@ def enableAppFile(symbol, event):
 
 
 def genHarmonyFiles(symbol, event):
-    drv_common = Database.getSymbolValue("Harmony", "ENABLE_DRV_COMMON")
-    sys_common = Database.getSymbolValue("Harmony", "ENABLE_SYS_COMMON")
-    appfile = Database.getSymbolValue("Harmony", "ENABLE_APP_FILE")
+    drv_common = Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
+    sys_common = Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
+    appfile = Database.getSymbolValue("HarmonyCore", "ENABLE_APP_FILE")
 
     if ((drv_common == True) or (sys_common == True) or (appfile == True)):
         symbol.setEnabled(True)
@@ -113,13 +113,13 @@ def onGenericDependencySatisfied(dependencyID, satisfierID):
     print("satisfied: " + dependencyID + ", " + satisfierID)
 
     if satisfierID == "FreeRTOS":
-        Database.clearSymbolValue("Harmony", "SELECT_RTOS")
-        Database.setSymbolValue("Harmony", "SELECT_RTOS", "FreeRTOS", 2)
+        Database.clearSymbolValue("HarmonyCore", "SELECT_RTOS")
+        Database.setSymbolValue("HarmonyCore", "SELECT_RTOS", "FreeRTOS", 2)
 
 def onGenericDependencyUnsatisfied(dependencyID, satisfierID):
     print("unsatisfied: " + dependencyID + ", " + satisfierID)
 
     if satisfierID == "FreeRTOS":
-        Database.clearSymbolValue("Harmony", "SELECT_RTOS")
-        Database.setSymbolValue("Harmony", "SELECT_RTOS", "BareMetal", 2)
+        Database.clearSymbolValue("HarmonyCore", "SELECT_RTOS")
+        Database.setSymbolValue("HarmonyCore", "SELECT_RTOS", "BareMetal", 2)
 

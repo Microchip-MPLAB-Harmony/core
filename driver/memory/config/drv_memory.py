@@ -90,14 +90,14 @@ def instantiateComponent(memoryComponent, index):
     global memoryPlibUsed
 
     # Enable dependent Harmony core components
-    Database.clearSymbolValue("Harmony", "ENABLE_DRV_COMMON")
-    Database.setSymbolValue("Harmony", "ENABLE_DRV_COMMON", True, 2)
+    Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
+    Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
     
-    Database.clearSymbolValue("Harmony", "ENABLE_SYS_COMMON")
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", True, 2)
+    Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
+    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
 
-    Database.clearSymbolValue("Harmony", "ENABLE_SYS_MEDIA")
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_MEDIA", True, 2)
+    Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA")
+    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True, 2)
 
     numInstances = Database.getSymbolValue("drv_memory", "DRV_MEMORY_NUM_INSTANCES")
     numInstances = numInstances + 1
@@ -161,7 +161,7 @@ def instantiateComponent(memoryComponent, index):
     memoryRTOSMenu = memoryComponent.createMenuSymbol(None, None)
     memoryRTOSMenu.setLabel("RTOS settings")
     memoryRTOSMenu.setDescription("RTOS settings")
-    memoryRTOSMenu.setVisible((Database.getSymbolValue("Harmony", "SELECT_RTOS") != 0))
+    memoryRTOSMenu.setVisible((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != 0))
     memoryRTOSMenu.setDependencies(showRTOSMenu, ["Harmony.SELECT_RTOS"])
 
     memoryRTOSTask = memoryComponent.createComboSymbol("DRV_MEMORY_RTOS", memoryRTOSMenu, ["Standalone"])
@@ -312,7 +312,7 @@ def instantiateComponent(memoryComponent, index):
     memorySystemRtosTasksFile.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
     memorySystemRtosTasksFile.setSourcePath("driver/memory/templates/system/system_rtos_tasks.c.ftl")
     memorySystemRtosTasksFile.setMarkup(True)
-    memorySystemRtosTasksFile.setEnabled((Database.getSymbolValue("Harmony", "SELECT_RTOS") != 0))
+    memorySystemRtosTasksFile.setEnabled((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != 0))
     memorySystemRtosTasksFile.setDependencies(genRtosTask, ["Harmony.SELECT_RTOS"])
 
 def destroyComponent(memoryComponent):

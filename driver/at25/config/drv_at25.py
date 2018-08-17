@@ -20,13 +20,13 @@ def instantiateComponent(at25Component):
     res = Database.activateComponents(["HarmonyCore"])
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
-    Database.setSymbolValue("Harmony", "ENABLE_DRV_COMMON", True, 1)
+    Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 1)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", True, 1)
+    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
 
     # Enable "Enable System Ports" option in MHC
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_PORTS", True, 1)
+    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True, 1)
 
     at25SymNumInst = at25Component.createIntegerSymbol("DRV_AT25_NUM_INSTANCES", None)
     at25SymNumInst.setLabel("Number of Instances")

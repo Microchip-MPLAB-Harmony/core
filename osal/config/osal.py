@@ -10,8 +10,8 @@ global osalSourceFreeRtosFile
 global osalSystemDefFile
 
 def enableOSAL(symbol, event):
-    drv_common = Database.getSymbolValue("Harmony", "ENABLE_DRV_COMMON")
-    sys_common = Database.getSymbolValue("Harmony", "ENABLE_SYS_COMMON")
+    drv_common = Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
+    sys_common = Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
 
     if ((drv_common == True) or (sys_common == True)):
         symbol.setValue(True,1)
@@ -27,7 +27,7 @@ def genOsalFiles(symbol, event):
     global osalSourceFreeRtosFile
     global osalSystemDefFile
 
-    genOsal = Database.getSymbolValue("Harmony", "ENABLE_OSAL")
+    genOsal = Database.getSymbolValue("HarmonyCore", "ENABLE_OSAL")
 
     if (genOsal == True):
         osalHeaderFile.setEnabled(True)

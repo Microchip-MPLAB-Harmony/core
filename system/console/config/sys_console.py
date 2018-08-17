@@ -31,11 +31,11 @@ def instantiateComponent(consoleComponent):
     Log.writeInfoMessage("Loading System Console Module...")
 
     # Enable dependent Harmony core components
-    Database.clearSymbolValue("Harmony", "ENABLE_SYS_COMMON")
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", True, 2)
+    Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
+    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
 
-    Database.clearSymbolValue("Harmony", "ENABLE_DRV_COMMON")
-    Database.setSymbolValue("Harmony", "ENABLE_DRV_COMMON", True, 2)
+    Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
+    Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
 
     consoleIndex = consoleComponent.createIntegerSymbol("INDEX", None)
     consoleIndex.setVisible(False)

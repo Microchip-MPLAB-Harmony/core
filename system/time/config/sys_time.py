@@ -19,8 +19,8 @@ def instantiateComponent(sysTimeComponent):
     Log.writeInfoMessage("Loading System Time Module...")
 
     # Enable dependent Harmony core components
-    Database.clearSymbolValue("Harmony", "ENABLE_SYS_COMMON")
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", True, 2)
+    Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
+    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
 
     sysTimePLIB = sysTimeComponent.createStringSymbol("SYS_TIME_PLIB", None)
     sysTimePLIB.setLabel("PLIB Used")

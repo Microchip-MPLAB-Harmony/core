@@ -3,8 +3,8 @@
 #### Business Logic ####
 ################################################################################
 def enableSysInt(symbol, event):
-    drv_common = Database.getSymbolValue("Harmony", "ENABLE_DRV_COMMON")
-    sys_common = Database.getSymbolValue("Harmony", "ENABLE_SYS_COMMON")
+    drv_common = Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
+    sys_common = Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
 
     if ((drv_common == True) or (sys_common == True)):
         symbol.setValue(True,1)

@@ -9,14 +9,14 @@ def instantiateComponent(sysFSComponent):
     res = Database.activateComponents(["HarmonyCore"])
 
     # Enable dependent Harmony core components
-    Database.clearSymbolValue("Harmony", "ENABLE_DRV_COMMON")
-    Database.setSymbolValue("Harmony", "ENABLE_DRV_COMMON", True, 2)
+    Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
+    Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
     
-    Database.clearSymbolValue("Harmony", "ENABLE_SYS_COMMON")
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_COMMON", True, 2)
+    Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
+    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
 
-    Database.clearSymbolValue("Harmony", "ENABLE_SYS_MEDIA")
-    Database.setSymbolValue("Harmony", "ENABLE_SYS_MEDIA", True, 2)
+    Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA")
+    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True, 2)
 
     sysFSMenu = sysFSComponent.createMenuSymbol(None, None)
     sysFSMenu.setLabel("File System settings")
@@ -26,7 +26,7 @@ def instantiateComponent(sysFSComponent):
     sysFSRTOSMenu = sysFSComponent.createMenuSymbol(None, None)
     sysFSRTOSMenu.setLabel("RTOS settings")
     sysFSRTOSMenu.setDescription("RTOS settings")
-    sysFSRTOSMenu.setVisible((Database.getSymbolValue("Harmony", "SELECT_RTOS") != 0))
+    sysFSRTOSMenu.setVisible((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != 0))
     sysFSRTOSMenu.setDependencies(showRTOSMenu, ["Harmony.SELECT_RTOS"])
     
     sysFSRTOSTask = sysFSComponent.createComboSymbol("SYS_FS_RTOS", sysFSRTOSMenu, ["Standalone"])
@@ -346,7 +346,7 @@ def instantiateComponent(sysFSComponent):
     sysFSSystemRtosTaskFile.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
     sysFSSystemRtosTaskFile.setSourcePath("/system/fs/templates/system/system_rtos_tasks.c.ftl")
     sysFSSystemRtosTaskFile.setMarkup(True)
-    sysFSSystemRtosTaskFile.setEnabled((Database.getSymbolValue("Harmony", "SELECT_RTOS") != 0))
+    sysFSSystemRtosTaskFile.setEnabled((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != 0))
     sysFSSystemRtosTaskFile.setDependencies(genRtosTask, ["Harmony.SELECT_RTOS"])
 
 ###########################################################################################################

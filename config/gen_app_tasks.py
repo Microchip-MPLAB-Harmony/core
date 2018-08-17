@@ -46,8 +46,8 @@ def genAppRtosTaskConfMenuVisible(symbol, event):
     global genAppRtosTaskConfMenu
     global genAppTaskMaxCount
 
-    appCount    = Database.getSymbolValue("Harmony", "GEN_APP_TASK_COUNT")
-    selectRTOS  = Database.getSymbolValue("Harmony", "SELECT_RTOS")
+    appCount    = Database.getSymbolValue("HarmonyCore", "GEN_APP_TASK_COUNT")
+    selectRTOS  = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
 
     for count in range(0, genAppTaskMaxCount):
         genAppRtosTaskConfMenu[count].setVisible(False)
@@ -58,7 +58,7 @@ def genAppRtosTaskConfMenuVisible(symbol, event):
 
 
 def genBareMetalAppTask(symbol, event):
-    selectRTOS = Database.getSymbolValue("Harmony", "SELECT_RTOS")
+    selectRTOS = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
 
     if (selectRTOS == "BareMetal"):
         symbol.setEnabled(True)
@@ -66,7 +66,7 @@ def genBareMetalAppTask(symbol, event):
         symbol.setEnabled(False)
 
 def genRtosAppTask(symbol, event):
-    selectRTOS = Database.getSymbolValue("Harmony", "SELECT_RTOS")
+    selectRTOS = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
 
     if (selectRTOS != "BareMetal"):
         symbol.setEnabled(True)
@@ -78,15 +78,15 @@ def genAppSourceFile(symbol, event):
     global appSourceFile
     appName = None
 
-    appFileEnableCount = Database.getSymbolValue("Harmony", "GEN_APP_TASK_COUNT")
-    appGenFiles        = Database.getSymbolValue("Harmony", "ENABLE_APP_FILE")
+    appFileEnableCount = Database.getSymbolValue("HarmonyCore", "GEN_APP_TASK_COUNT")
+    appGenFiles        = Database.getSymbolValue("HarmonyCore", "ENABLE_APP_FILE")
 
     for count in range(0, genAppTaskMaxCount):
         appSourceFile[count].setEnabled(False)
 
     if (appGenFiles == True):
         for count in range(0, appFileEnableCount):
-            appName = Database.getSymbolValue("Harmony", "GEN_APP_TASK_NAME_" + str(count))
+            appName = Database.getSymbolValue("HarmonyCore", "GEN_APP_TASK_NAME_" + str(count))
             appSourceFile[count].setEnabled(True)
             appSourceFile[count].setOutputName(appName.lower() + ".c")
 
@@ -94,21 +94,21 @@ def genAppHeaderFile(symbol, event):
     global appHeaderFile
     appName = None
 
-    appFileEnableCount = Database.getSymbolValue("Harmony", "GEN_APP_TASK_COUNT")
-    appGenFiles        = Database.getSymbolValue("Harmony", "ENABLE_APP_FILE")
+    appFileEnableCount = Database.getSymbolValue("HarmonyCore", "GEN_APP_TASK_COUNT")
+    appGenFiles        = Database.getSymbolValue("HarmonyCore", "ENABLE_APP_FILE")
 
     for count in range(0, genAppTaskMaxCount):
         appHeaderFile[count].setEnabled(False)
 
     if (appGenFiles == True):
         for count in range(0, appFileEnableCount):
-            appName = Database.getSymbolValue("Harmony", "GEN_APP_TASK_NAME_" + str(count))
+            appName = Database.getSymbolValue("HarmonyCore", "GEN_APP_TASK_NAME_" + str(count))
             appHeaderFile[count].setEnabled(True)
             appHeaderFile[count].setOutputName(appName.lower() + ".h")
 
 ############################################################################
 
-enableRTOS = Database.getSymbolValue("Harmony", "SELECT_RTOS")
+enableRTOS = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
 
 genAppTaskMenu = harmonyCoreComponent.createMenuSymbol("GEN_APP_TASK_MENU", harmonyAppFile)
 genAppTaskMenu.setLabel("Application Configuration")
