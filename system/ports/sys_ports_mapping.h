@@ -91,16 +91,6 @@ static inline void SYS_PORT_PinOutputEnable(SYS_PORT_PIN pin)
     PIO_PinOutputEnable((PIO_PIN)pin);
 }
 
-static inline void SYS_PORT_PinInterruptEnable(SYS_PORT_PIN pin)
-{
-    PIO_PinInterruptEnable((PIO_PIN)pin);
-}
-
-static inline void SYS_PORT_PinInterruptDisable(SYS_PORT_PIN pin)
-{
-    PIO_PinInterruptDisable((PIO_PIN)pin);
-}
-
 #endif // SYS_PORTS_MAPPING_H
 
 /*******************************************************************************

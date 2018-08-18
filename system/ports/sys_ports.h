@@ -868,67 +868,6 @@ static inline void SYS_PORT_PinInputEnable(SYS_PORT_PIN pin);
 */
 static inline void SYS_PORT_PinOutputEnable(SYS_PORT_PIN pin);
 
-// *****************************************************************************
-/* Function:
-    void SYS_PORT_PinInterruptEnable(SYS_PORT_PIN pin)
-
-  Summary:
-    Enables IO interrupt on selected IO pin.
-
-  Description:
-    This function enables interrupt on selected IO pin.
-
-  Precondition:
-    None.
-
-  Parameters:
-    pin - One of the IO pins from the enum SYS_PORT_PIN
-
-  Returns:
-    None.
-
-  Example:
-    <code>
-
-    SYS_PORT_PinInterruptEnable(SYS_PORT_PIN_PB3);
-
-    </code>
-
-  Remarks:
-    None.
-*/
-static inline void SYS_PORT_PinInterruptEnable(SYS_PORT_PIN pin);
-
-// *****************************************************************************
-/* Function:
-    void SYS_PORT_PinInterruptDisable(SYS_PORT_PIN pin)
-
-  Summary:
-    Disables IO interrupt on selected IO pin.
-
-  Description:
-    This function disables IO interrupt on selected IO pin.
-
-  Precondition:
-    None.
-
-  Parameters:
-    pin       - One of the IO pins from the enum SYS_PORT_PIN
-
-  Returns:
-    None.
-
-  Example:
-    <code>
-
-    SYS_PORT_PinInterruptDisable(SYS_PORT_PIN_PB3);
-
-    </code>
-
-  Remarks:
-    None.
-*/
-static inline void SYS_PORT_PinInterruptDisable(SYS_PORT_PIN pin);
 
 #include "sys_ports_mapping.h"
 
