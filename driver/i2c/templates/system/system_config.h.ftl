@@ -5,4 +5,4 @@
 <#if drv_i2c.DRV_I2C_MODE == "ASYNC">
 #define DRV_I2C_QUEUE_SIZE_IDX${INDEX?string}               ${DRV_I2C_QUEUE_SIZE?string}
 </#if>
-#define DRV_I2C_CLOCK_SPEED_IDX${INDEX?string}              ${.vars["${DRV_I2C_PLIB?lower_case}"].TWIHS_CLK_SPEED}
+#define DRV_I2C_CLOCK_SPEED_IDX${INDEX?string}              ${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_CLOCK_SPEED}
