@@ -37,7 +37,7 @@ static SYS_TIME_TIMER_OBJ * time_getTimerObject(SYS_TIME_HANDLE handle)
 static void timerHardwarePeriod_update(SYS_TIME_COUNTER_OBJ *counterObj)
 {
     uint32_t hardwareCounter = counterObj->timePlib->timerCounterGet();
-    TIME countNeeded = 0;
+    uint32_t countNeeded = 0;
     uint32_t hardwarePeriod = 0;
 
     if(counterObj->tmrActive->timeRemaining > HW_COUNTER_MAX)
@@ -122,7 +122,7 @@ static void timer_addToList(SYS_TIME_TIMER_OBJ *timer)
     SYS_TIME_COUNTER_OBJ *counter = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
     SYS_TIME_TIMER_OBJ *tmr = counter->tmrActive;
     SYS_TIME_TIMER_OBJ *prevTmr = counter->tmrActive;
-    TIME timeTotal = 0;
+    uint32_t timeTotal = 0;
 
     time_resourceLock();
 
@@ -208,9 +208,9 @@ static void timer_update(SYS_TIME_COUNTER_OBJ * counterObj)
 
 static void counter_update(SYS_TIME_COUNTER_OBJ * counterObj)
 {
-    TIME counter32Low = counterObj->counter & HW_COUNTER_MAX;
-    TIME counter32High = counterObj->counter >> HW_COUNTER_WIDTH;
-    TIME periodDelta = counterObj->timePeriod;
+    uint32_t counter32Low = counterObj->counter & HW_COUNTER_MAX;
+    uint32_t counter32High = counterObj->counter >> HW_COUNTER_WIDTH;
+    uint32_t periodDelta = counterObj->timePeriod;
     if(counterObj->timePeriod != counterObj->timePeriodPrevious)
     {
         if(counterObj->timePeriod > counterObj->timePeriodPrevious)
@@ -376,16 +376,16 @@ SYS_STATUS SYS_TIME_Status ( SYS_MODULE_OBJ object )
 // Section:  SYS TIME 32-bit Counter and Conversion Functions
 // *****************************************************************************
 // *****************************************************************************
-TIME SYS_TIME_FrequencyGet ( void )
+uint32_t SYS_TIME_FrequencyGet ( void )
 {
     return gSystemCounterObj.timeFrequency;
 }
 
-TIME SYS_TIME_CounterGet ( void )
+uint32_t SYS_TIME_CounterGet ( void )
 {
     SYS_TIME_COUNTER_OBJ * counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
-    TIME counterDelta = 0;
-    TIME hardwareCounter = counterObj->timePlib->timerCounterGet();
+    uint32_t counterDelta = 0;
+    uint32_t hardwareCounter = counterObj->timePlib->timerCounterGet();
 
     if((counterObj->timePeriod > counterObj->timePeriodPrevious) || (hardwareCounter > counterObj->timePeriod))
     {
@@ -399,12 +399,12 @@ TIME SYS_TIME_CounterGet ( void )
     return (counterObj->counter + counterDelta);
 }
 
-TIME64 SYS_TIME_Counter64Get ( void )
+uint64_t SYS_TIME_Counter64Get ( void )
 {
     SYS_TIME_COUNTER_OBJ * counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
-    TIME counterDelta = 0;
-    TIME hardwareCounter = counterObj->timePlib->timerCounterGet();
-    TIME64 counter64 = counterObj->highCounter;
+    uint32_t counterDelta = 0;
+    uint32_t hardwareCounter = counterObj->timePlib->timerCounterGet();
+    uint64_t counter64 = counterObj->highCounter;
 
     if((counterObj->timePeriod > counterObj->timePeriodPrevious) || (hardwareCounter > counterObj->timePeriod))
     {
@@ -421,29 +421,29 @@ TIME64 SYS_TIME_Counter64Get ( void )
     return counter64;
 }
 
-void SYS_TIME_CounterSet ( TIME count )
+void SYS_TIME_CounterSet ( uint32_t count )
 {
     time_resourceLock();
     gSystemCounterObj.counter = count;
     time_resourceUnlock();
 }
 
-uint32_t  SYS_TIME_CountToUS ( TIME count )
+uint32_t  SYS_TIME_CountToUS ( uint32_t count )
 {
     return ((count * 1000000)/gSystemCounterObj.timeFrequency);
 }
 
-uint32_t  SYS_TIME_CountToMS ( TIME count )
+uint32_t  SYS_TIME_CountToMS ( uint32_t count )
 {
     return ((count * 1000)/gSystemCounterObj.timeFrequency);
 }
 
-TIME SYS_TIME_USToCount ( uint32_t us )
+uint32_t SYS_TIME_USToCount ( uint32_t us )
 {
     return (us * (gSystemCounterObj.timeFrequency/1000000));
 }
 
-TIME SYS_TIME_MSToCount ( uint32_t ms )
+uint32_t SYS_TIME_MSToCount ( uint32_t ms )
 {
     return (ms * (gSystemCounterObj.timeFrequency/1000));
 }
@@ -454,7 +454,7 @@ TIME SYS_TIME_MSToCount ( uint32_t ms )
 // Section:  SYS TIME 32-bit Software Timers
 // *****************************************************************************
 // *****************************************************************************
-SYS_TIME_HANDLE SYS_TIME_TimerCreate(TIME count, TIME period, SYS_TIME_CALLBACK callBack, uintptr_t context, SYS_TIME_CALLBACK_TYPE type)
+SYS_TIME_HANDLE SYS_TIME_TimerCreate(uint32_t count, uint32_t period, SYS_TIME_CALLBACK callBack, uintptr_t context, SYS_TIME_CALLBACK_TYPE type)
 {
     SYS_TIME_HANDLE tmrHandle = SYS_TIME_HANDLE_INVALID;
     SYS_TIME_TIMER_OBJ *tmr;
@@ -494,7 +494,7 @@ SYS_TIME_HANDLE SYS_TIME_TimerCreate(TIME count, TIME period, SYS_TIME_CALLBACK 
     return tmrHandle;
 }
 
-SYS_TIME_RESULT SYS_TIME_TimerReload(SYS_TIME_HANDLE handle, TIME count, TIME period, SYS_TIME_CALLBACK callBack, uintptr_t context, SYS_TIME_CALLBACK_TYPE type)
+SYS_TIME_RESULT SYS_TIME_TimerReload(SYS_TIME_HANDLE handle, uint32_t count, uint32_t period, SYS_TIME_CALLBACK callBack, uintptr_t context, SYS_TIME_CALLBACK_TYPE type)
 {
     SYS_TIME_TIMER_OBJ *tmr = NULL;
     SYS_TIME_RESULT result = SYS_TIME_ERROR;
@@ -580,7 +580,7 @@ SYS_TIME_RESULT SYS_TIME_TimerStop(SYS_TIME_HANDLE handle)
     return result;
 }
 
-SYS_TIME_RESULT SYS_TIME_TimerCounterGet(SYS_TIME_HANDLE handle, TIME *count)
+SYS_TIME_RESULT SYS_TIME_TimerCounterGet(SYS_TIME_HANDLE handle, uint32_t *count)
 {
     /* TODO */
     return SYS_TIME_ERROR;

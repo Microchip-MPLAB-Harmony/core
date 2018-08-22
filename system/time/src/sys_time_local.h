@@ -58,9 +58,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-typedef uint32_t TIME;   /* how time is actually stored */
-typedef uint64_t TIME64;
-
 //////////////////////////Counter//////////////////////////////////////////////
 #define HW_COUNTER_ROLLOVER_CYCLE    1
 #define HW_COUNTER_WIDTH             16
@@ -113,8 +110,8 @@ typedef struct _SYS_TIME_TIMER_OBJ{
   int inuse;    /* TRUE if in use */
   int active;    /* TRUE if soft timer enabled */
   SYS_TIME_CALLBACK_TYPE type;    /* periodic or not */
-  TIME time;    /* time requested */
-  TIME timeRemaining;    /* time to wait, relative incase of timers in the list */
+  uint32_t time;    /* time requested */
+  uint32_t timeRemaining;    /* time to wait, relative incase of timers in the list */
   SYS_TIME_CALLBACK callback;    /* set to TRUE at timeout */
   uintptr_t context; /* context */
   int tmrElapsed;   /* Useful only for single shot timer */
@@ -127,12 +124,12 @@ typedef struct{
     SYS_STATUS status;
     TIME_PLIB_API *timePlib;
     INT_SOURCE timeInterrupt;
-    TIME timeFrequency;
-    TIME timePeriodPrevious;
-    TIME timePeriod;
-    volatile TIME counter;    /* Software counter */
-    volatile TIME highCounter;    /* Software 64-bit counter */
-    volatile TIME timeToCounter;     /* Active timer expiry point or software period */
+    uint32_t timeFrequency;
+    uint32_t timePeriodPrevious;
+    uint32_t timePeriod;
+    volatile uint32_t counter;    /* Software counter */
+    volatile uint32_t highCounter;    /* Software 64-bit counter */
+    volatile uint32_t timeToCounter;     /* Active timer expiry point or software period */
     int tmrElapsed;    /* On every active timer elapsed */
     int interruptContext;    /* On every active timer elapsed */
     SYS_TIME_TIMER_OBJ * tmrActive;
