@@ -266,50 +266,6 @@ SYS_MODULE_OBJ SYS_TIME_Initialize( const SYS_MODULE_INDEX index, const SYS_MODU
 
 // *****************************************************************************
 /* Function:
-   void SYS_TIME_Deinitialize ( SYS_MODULE_OBJ object )
-
-  Summary:
-       Deinitializes the specific module instance of the SYS TIMER module
-
-  Description:
-       This function deinitializes the specific module instance disabling its
- operation (and any hardware for driver modules). Resets all of the internal data
-       structures and fields for the specified instance to the default settings.
-
-  Precondition:
-       The SYS_TIME_Initialize function should have been called before calling
-       this function.
-
-  Parameters:
-       object   - SYS TIMER object handle, returned from SYS_TIME_Initialize
-
-  Returns:
-       None.
-
-  Example:
-        <code>
-        // Handle "object" valuue must have been returned from SYS_TIME_Initialize.
-
-        SYS_TIME_Deinitialize (object);
-
-        if (SYS_MODULE_UNINITIALIZED != SYS_TIME_Status (object))
-        {
-            // Check again later if you need to know
-            // when the SYS TIME is De-initialized.
-        }
-        </code>
-
-  Remarks:
-       Once the Initialize operation has been called, the De-initialize
-       operation must be called before the Initialize operation can be called
-       again.
-*/
-
-void  SYS_TIME_Deinitialize ( SYS_MODULE_OBJ object );
-
-
-// *****************************************************************************
-/* Function:
        SYS_STATUS SYS_TIME_Status ( SYS_MODULE_OBJ object )
 
   Summary:
