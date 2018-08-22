@@ -581,7 +581,7 @@ Example:
   The following example call will register it, requesting a 50 millisecond
   periodic callback.
   <code>
-  SYS_TIME_HANDLE handle = SYS_TIME_CallbackMS(MyCallback, NULL, 50, SYS_TIME_PERIODIC);
+  SYS_TIME_HANDLE handle = SYS_TIME_CallbackRegisterMS(MyCallback, (uintptr_t)NULL, 50, SYS_TIME_PERIODIC);
   </code>
 */
 
