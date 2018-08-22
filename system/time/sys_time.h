@@ -1187,7 +1187,7 @@ SYS_TIME_RESULT SYS_TIME_TimerDestroy ( SYS_TIME_HANDLE timer );
        software timer's current counter value.
        <code>
        uint32_t count;
-       if (SYS_TIME_SUCCESS != SYS_TIME_TimerCounterSet(timer, &count))
+       if (SYS_TIME_SUCCESS != SYS_TIME_TimerCounterGet(timer, &count))
        {
            // Handle error
        }
