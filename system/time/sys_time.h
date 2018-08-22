@@ -319,7 +319,7 @@ SYS_STATUS SYS_TIME_Status ( SYS_MODULE_OBJ object );
 
 // *****************************************************************************
 /* Function:
-       SYS_TIME_RESULT SYS_TIME_DelayUS ( int us, SYS_TIME_HANDLE *timer );
+       SYS_TIME_RESULT SYS_TIME_DelayUS ( uint32_t us, SYS_TIME_HANDLE *handle );
 
    Summary:
        This function is used to generate a delay of a given number of
@@ -340,7 +340,7 @@ SYS_STATUS SYS_TIME_Status ( SYS_MODULE_OBJ object );
    Parameters:
        us     - The desired number of microseconds to delay.
 
-       timer  - Address of the variable to receive the timer handle value.
+       handle  - Address of the variable to receive the timer handle value.
                 If the call fails or completes before returning, the handle
                 variable will be ignored (and may be passed as NULL in an
                 RTOS environment).
@@ -370,12 +370,12 @@ SYS_STATUS SYS_TIME_Status ( SYS_MODULE_OBJ object );
        non-blocking environment.
 */
 
-SYS_TIME_RESULT SYS_TIME_DelayUS ( int us, SYS_TIME_HANDLE *timer );
+SYS_TIME_RESULT SYS_TIME_DelayUS ( uint32_t us, SYS_TIME_HANDLE *handle );
 
 
 // *****************************************************************************
 /* Function:
-       SYS_TIME_RESULT SYS_TIME_DelayMS ( int ms, SYS_TIME_HANDLE *timer );
+       SYS_TIME_RESULT SYS_TIME_DelayMS ( uint32_t ms, SYS_TIME_HANDLE *handle );
 
    Summary:
        This function is used to generate a delay of a given number of
@@ -396,7 +396,7 @@ SYS_TIME_RESULT SYS_TIME_DelayUS ( int us, SYS_TIME_HANDLE *timer );
    Parameters:
        ms     - The desired number of milliseconds to delay.
 
-       timer  - Address of the variable to receive the timer handle value.
+       handle  - Address of the variable to receive the timer handle value.
                 If the call fails or completes before returning, the handle
                 variable will be ignored (and may be passed as NULL in an
                 RTOS environment).
@@ -426,7 +426,7 @@ SYS_TIME_RESULT SYS_TIME_DelayUS ( int us, SYS_TIME_HANDLE *timer );
        non-blocking environment.
 */
 
-SYS_TIME_RESULT SYS_TIME_DelayMS ( int ms, SYS_TIME_HANDLE *handle );
+SYS_TIME_RESULT SYS_TIME_DelayMS ( uint32_t ms, SYS_TIME_HANDLE *handle );
 
 
 // *****************************************************************************

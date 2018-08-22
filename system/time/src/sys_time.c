@@ -607,7 +607,7 @@ bool SYS_TIME_TimerPeriodHasExpired(SYS_TIME_HANDLE handle)
 // Section:  SYS TIME Delay Interface Functions
 // *****************************************************************************
 // *****************************************************************************
-SYS_TIME_RESULT SYS_TIME_DelayUS ( int us, SYS_TIME_HANDLE *handle )
+SYS_TIME_RESULT SYS_TIME_DelayUS ( uint32_t us, SYS_TIME_HANDLE *handle )
 {
     SYS_TIME_RESULT result = SYS_TIME_ERROR;
 
@@ -621,7 +621,7 @@ SYS_TIME_RESULT SYS_TIME_DelayUS ( int us, SYS_TIME_HANDLE *handle )
     return result;
 }
 
-SYS_TIME_RESULT SYS_TIME_DelayMS ( int ms, SYS_TIME_HANDLE *handle )
+SYS_TIME_RESULT SYS_TIME_DelayMS ( uint32_t ms, SYS_TIME_HANDLE *handle )
 {
     SYS_TIME_RESULT result = SYS_TIME_ERROR;
 
