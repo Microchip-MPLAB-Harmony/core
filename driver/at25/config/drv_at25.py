@@ -2,9 +2,6 @@
 #### Component ####
 ################################################################################
 
-myVariableValue = Database.getSymbolValue("core", "COMPONENT_PACKAGE")
-pioPinout = ATDF.getNode('/avr-tools-device-file/pinouts/pinout@[name= "' + str(myVariableValue) + '"]')
-
 def at25SetMemoryDependency(symbol, event):
     if (event["value"] == True):
         symbol.setVisible(True)
@@ -73,7 +70,6 @@ def instantiateComponent(at25Component):
     at25SymChipSelectPin.setDefaultValue(5) #PA5
     at25SymChipSelectPin.setOutputMode("Key")
     at25SymChipSelectPin.setDisplayMode("Description")
-#    at25SymChipSelectPin.setDependencies(updatePinPosition, ["core.COMPONENT_PACKAGE"])
 
     at25SymHoldPin = at25Component.createKeyValueSetSymbol("DRV_AT25_HOLD_PIN", None)
     at25SymHoldPin.setLabel("Hold Pin")
@@ -87,12 +83,15 @@ def instantiateComponent(at25Component):
     at25SymWriteProtectPin.setOutputMode("Key")
     at25SymWriteProtectPin.setDisplayMode("Description")
 
-    count = Database.getSymbolValue("core", "PIO_PIN_TOTAL")
-    for id in range(0,count):
-        if (pioPinout.getChildren()[id].getAttribute("pad")[0] == "P") and (pioPinout.getChildren()[id].getAttribute("pad")[-1].isdigit()):
-            key = "SYS_PORT_PIN_" + pioPinout.getChildren()[id].getAttribute("pad")
-            value = pioPinout.getChildren()[id].getAttribute("position")
-            description = pioPinout.getChildren()[id].getAttribute("pad")
+    pinOutNode = ATDF.getNode("/avr-tools-device-file/pinouts/pinout")
+    pinOut = pinOutNode.getChildren()
+
+    for pad in range(0, len(pinOut)):
+        pin = pinOut[pad].getAttribute("pad")
+        if (pin[0] == "P") and (pin[-1].isdigit()):
+            key = "SYS_PORT_PIN_" + pin
+            value = pinOut[pad].getAttribute("position")
+            description = pinOut[pad].getAttribute("pad")
             at25SymChipSelectPin.addKey(key, value, description)
             at25SymHoldPin.addKey(key, value, description)
             at25SymWriteProtectPin.addKey(key, value, description)
@@ -121,12 +120,12 @@ def instantiateComponent(at25Component):
     at25HeaderFile.setOverwrite(True)
 
     at25SymHeaderDefFile = at25Component.createFileSymbol("DRV_AT25_DEF", None)
-    at25SymHeaderDefFile.setSourcePath("driver/at25/drv_at25_definitions.h")
+    at25SymHeaderDefFile.setSourcePath("driver/at25/drv_at25_definitions.h.ftl")
     at25SymHeaderDefFile.setOutputName("drv_at25_definitions.h")
     at25SymHeaderDefFile.setDestPath("driver/at25")
     at25SymHeaderDefFile.setProjectPath("config/" + configName + "/driver/at25/")
     at25SymHeaderDefFile.setType("HEADER")
-    at25SymHeaderDefFile.setMarkup(False)
+    at25SymHeaderDefFile.setMarkup(True)
     at25SymHeaderDefFile.setOverwrite(True)
 
     at25SourceFile = at25Component.createFileSymbol("AT25_SOURCE", None)

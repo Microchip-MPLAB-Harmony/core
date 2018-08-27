@@ -235,12 +235,12 @@ typedef void ( *DRV_AT25_EVENT_HANDLER )( DRV_AT25_TRANSFER_STATUS event, uintpt
     SYS_MODULE_OBJ   sysObjDrvAT250;
 
     DRV_AT25_PLIB_INTERFACE drvAT250PlibAPI = {
-        .writeRead = (DRV_WRITEREAD)SPI0_WriteRead,
-        .write = (DRV_WRITE)SPI0_Write,
-        .read = (DRV_READ)SPI0_Read,
-        .isBusy = (DRV_IS_BUSY)SPI0_IsBusy,
-        .errorGet = (DRV_ERROR_GET)SPI0_ErrorGet,
-        .callbackRegister = (DRV_CALLBACK_REGISTER)SPI0_CallbackRegister,
+        .writeRead = (DRV_AT25_WRITEREAD)SPI0_WriteRead,
+        .write = (DRV_AT25_WRITE)SPI0_Write,
+        .read = (DRV_AT25_READ)SPI0_Read,
+        .isBusy = (DRV_AT25_IS_BUSY)SPI0_IsBusy,
+        .errorGet = (DRV_AT25_ERROR_GET)SPI0_ErrorGet,
+        .callbackRegister = (DRV_AT25_CALLBACK_REGISTER)SPI0_CallbackRegister,
     };
 
     DRV_AT25_INIT drvAT250InitData =
