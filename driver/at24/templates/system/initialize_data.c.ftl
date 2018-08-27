@@ -4,22 +4,22 @@
 DRV_AT24_PLIB_INTERFACE drvAT24PlibAPI = {
 
     /* I2C PLIB WriteRead function */
-    .writeRead = (DRV_WRITEREAD)${DRV_AT24_PLIB}_WriteRead,
+    .writeRead = (DRV_AT24_WRITEREAD)${.vars["${DRV_AT24_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_WriteRead,
 
     /* I2C PLIB Write function */
-    .write = (DRV_WRITE)${DRV_AT24_PLIB}_Write,
+    .write = (DRV_AT24_WRITE)${.vars["${DRV_AT24_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_Write,
 
     /* I2C PLIB Read function */
-    .read = (DRV_READ)${DRV_AT24_PLIB}_Read,
+    .read = (DRV_AT24_READ)${.vars["${DRV_AT24_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_Read,
 
     /* I2C PLIB Transfer Status function */
-    .isBusy = (DRV_IS_BUSY)${DRV_AT24_PLIB}_IsBusy,
+    .isBusy = (DRV_AT24_IS_BUSY)${.vars["${DRV_AT24_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_IsBusy,
 
     /* I2C PLIB Error Status function */
-    .errorGet = (DRV_ERROR_GET)${DRV_AT24_PLIB}_ErrorGet,
+    .errorGet = (DRV_AT24_ERROR_GET)${.vars["${DRV_AT24_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_ErrorGet,
 
     /* I2C PLIB Callback Register */
-    .callbackRegister = (DRV_CALLBACK_REGISTER)${DRV_AT24_PLIB}_CallbackRegister,
+    .callbackRegister = (DRV_AT24_CALLBACK_REGISTER)${.vars["${DRV_AT24_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_CallbackRegister,
 };
 
 /* AT24 Driver Initialization Data */
