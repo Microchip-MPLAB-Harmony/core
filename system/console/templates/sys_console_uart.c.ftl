@@ -47,8 +47,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system/console/sys_console.h"
 #include "sys_console_uart.h"
 #include "configuration.h"
-<#assign length = SYS_CONSOLE_DEVICE?length>
-#include "peripheral/${SYS_CONSOLE_DEVICE?lower_case?substring(0, length - 1)}/plib_${SYS_CONSOLE_DEVICE?lower_case}.h"
+#include "definitions.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -164,9 +163,9 @@ char Console_UART_ReadC(int fd)
 {
     char readBuffer;
 
-    ${SYS_CONSOLE_DEVICE}_Read(&readBuffer, 1);
+    ${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_Read(&readBuffer, 1);
 
-    while (${SYS_CONSOLE_DEVICE}_ReadCountGet() == 0);
+    while (${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_ReadCountGet() == 0);
 
     return readBuffer;
 }
@@ -213,7 +212,7 @@ void UARTDeviceWriteCallback(uintptr_t context)
 
 void UARTDeviceReadCallback(uintptr_t context)
 {
-    if ( ${SYS_CONSOLE_DEVICE}_ErrorGet() == 0)
+    if (${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_ErrorGet() == 0)
     {
         consUartData.isReadComplete = true;
     }
@@ -231,8 +230,8 @@ void Console_UART_Tasks(SYS_MODULE_OBJ object)
         case CONSOLE_UART_STATE_INIT:
 
             /* Register a callback with device layer to get event notification (for end point 0) */
-            ${SYS_CONSOLE_DEVICE}_WriteCallbackRegister(UARTDeviceWriteCallback, 0);
-            ${SYS_CONSOLE_DEVICE}_ReadCallbackRegister(UARTDeviceReadCallback, 0);
+            ${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_WriteCallbackRegister(UARTDeviceWriteCallback, 0);
+            ${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_ReadCallbackRegister(UARTDeviceReadCallback, 0);
 
             /* If the driver was opened, it is ready for operation */
             consUartData.state = CONSOLE_UART_STATE_READY;
@@ -248,7 +247,7 @@ void Console_UART_Tasks(SYS_MODULE_OBJ object)
                 consUartData.isReadComplete = false;
                 pkt = rdQueueElements[readQueue.tailPos];
 
-                ${SYS_CONSOLE_DEVICE}_Read (pkt.data.buf, pkt.sz);
+                ${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_Read (pkt.data.buf, pkt.sz);
             }
             break;
 
@@ -307,7 +306,7 @@ void Console_UART_Tasks(SYS_MODULE_OBJ object)
                      * either there are elements in the write or till USART
                      * driver buffer queue is full */
 
-                    bool status = ${SYS_CONSOLE_DEVICE}_Write(pkt.data.buf, pkt.sz);
+                    bool status = ${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_Write(pkt.data.buf, pkt.sz);
 
                     if(status == true)
                     {
