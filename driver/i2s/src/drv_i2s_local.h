@@ -164,7 +164,8 @@ typedef struct _DRV_I2S_BUFFER_OBJ
     volatile bool inUse;
 
     /* Pointer to the application read or write buffer */
-    void * buffer;
+    void *txbuffer;
+    void *rxbuffer;
 
     /* Number of bytes to be transferred */
     size_t size;

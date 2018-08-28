@@ -801,6 +801,66 @@ void DRV_I2S_WriteBufferAdd( const DRV_HANDLE handle, void * buffer, const size_
 
 // *****************************************************************************
 /* Function:
+	void DRV_I2S_BufferAddWriteRead(const DRV_HANDLE handle,                                        
+        void *transmitBuffer, void *receiveBuffer,
+        size_t size, DRV_I2S_BUFFER_HANDLE	*bufferHandle)
+
+  Summary:
+    Queues a write/read operation.
+
+  Description:
+    This function schedules a non-blocking write-read operation. The function
+    returns with a valid buffer handle in the bufferHandle argument if the
+    write-read request was scheduled successfully. The function adds the request
+    to the hardware instance queue and returns immediately. While the request is
+    in the queue, the application buffer is owned by the driver and should not
+    be modified. The function returns DRV_I2S_BUFFER_HANDLE_INVALID:
+    - if a buffer could not be allocated to the request
+    - if the input buffer pointer is NULL
+    - if the client opened the driver for read only or write only
+    - if the buffer size is 0
+    - if the queue is full or the queue depth is insufficient
+    If the requesting client registered an event callback with the driver,
+    the driver will issue a DRV_I2S_BUFFER_EVENT_COMPLETE event if the buffer
+    was processed successfully of DRV_I2S_BUFFER_EVENT_ERROR event if the
+    buffer was not processed successfully.
+
+  Precondition:
+    DRV_I2S_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle - Handle of the communication channel as return by the
+    DRV_I2S_Open function.
+
+    transmitBuffer - Data to be transmitted.
+
+    receiveBuffer - Will hold data that is received.
+
+    size - Buffer size in bytes (same for both buffers)
+
+    bufferHandle - Pointer to an argument that will contain the return
+    buffer handle.
+
+  Returns:
+    The bufferHandle parameter will contain the return buffer handle. This will
+    be DRV_I2S_BUFFER_HANDLE_INVALID if the function was not successful.
+
+  Remarks:
+    This function is thread safe in a RTOS application. It can be called from
+    within the I2S Driver Buffer Event Handler that is registered by this
+    client. It should not be called in the event handler associated with another
+    I2S driver instance. It should not otherwise be called directly in an ISR.
+
+    This function is useful when there is valid read expected for every
+    I2S write. The transmit and receive size must be same.
+*/
+
+void DRV_I2S_WriteReadBufferAdd(const DRV_HANDLE handle,
+    void *transmitBuffer, void *receiveBuffer,
+    size_t size, DRV_I2S_BUFFER_HANDLE	*bufferHandle);
+
+// *****************************************************************************
+/* Function:
     void DRV_I2S_ReadBufferAdd
     (
         const DRV_HANDLE handle,
@@ -1260,6 +1320,22 @@ bool DRV_I2S_WriteBuffer( const DRV_HANDLE handle, void * buffer, const size_t s
     This function should not be called from an interrupt context.
 */
 bool DRV_I2S_ReadBuffer( const DRV_HANDLE handle, void * buffer, const size_t size);
+
+<#if DRV_I2S_DMA_LL_ENABLE == true>
+typedef void (*DRV_I2S_LL_CALLBACK)();
+void DRV_I2S_InitWriteLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW_1* pLinkedListDesc,
+    uint16_t currDescrip, uint16_t nextDescrip, uint8_t* buffer, uint32_t bufferSize);
+void DRV_I2S_StartWriteLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW_1* pLinkedListDesc,
+    DRV_I2S_LL_CALLBACK callBack, bool blockInt);
+void DRV_I2S_WriteNextLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW_1* pLinkedListDesc,
+    uint16_t currDescrip, uint16_t nextDescrip, uint16_t nextNextDescrip, uint8_t* buffer, uint32_t bufferSize);
+void DRV_I2S_InitReadLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW_1* pLinkedListDesc,
+    uint16_t currDescrip, uint16_t nextDescrip, uint8_t* buffer, uint32_t bufferSize);
+void DRV_I2S_StartReadLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW_1* pLinkedListDesc,
+    DRV_I2S_LL_CALLBACK callBack, bool blockInt);
+void DRV_I2S_ReadNextLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW_1* pLinkedListDesc,
+    uint16_t currDescrip, uint16_t nextDescrip, uint16_t nextNextDescrip, uint8_t* buffer, uint32_t bufferSize);
+</#if>
 
 #include "driver/i2s/src/drv_i2s_local.h"
 

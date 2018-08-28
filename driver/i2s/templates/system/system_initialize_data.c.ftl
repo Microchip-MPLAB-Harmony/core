@@ -3,8 +3,6 @@
 /* I2S PLIB Interface Initialization */
 DRV_I2S_PLIB_INTERFACE drvI2S${INDEX?string}PlibAPI =
 {  
-    /* I2S PLIB Set Baud */
-    .setBaud = (DRV_BAUDSET)SSC0_BaudSet
 };
 
 /* I2S Driver Initialization Data */
@@ -22,15 +20,15 @@ DRV_I2S_INIT drvI2S${INDEX?string}InitData =
     /* I2S Queue Size */
     .queueSize = DRV_I2S_QUEUE_SIZE_IDX0,  
     
-<#if DRV_SSC_TX_RX_DMA == true>
-    .dmaChannelTransmit = DRV_SSC_XMIT_DMA_CH_IDX${INDEX?string},
-    .dmaChannelReceive  = DRV_SSC_RCV_DMA_CH_IDX${INDEX?string},
+<#if DRV_I2S_TX_RX_DMA == true>
+    .dmaChannelTransmit = DRV_I2S_XMIT_DMA_CH_IDX${INDEX?string},
+    .dmaChannelReceive  = DRV_I2S_RCV_DMA_CH_IDX${INDEX?string},
 <#if DRV_I2S_PLIB == "SSC0">
     .i2sTransmitAddress = (void *)SSC_TRANSMIT_ADDRESS,
     .i2sReceiveAddress = (void *)SSC_RECEIVE_ADDRESS,
 <#else>
-    .i2sTransmitAddress = (void *)${DRV_I2S_PLIB}_TRANSMIT_ADDRESS,
-    .i2sReceiveAddress = (void *)${DRV_I2S_PLIB}_RECEIVE_ADDRESS,
+    .i2sTransmitAddress = (void *)${DRV_I2S_PLIB}_TRANSMIT_LEFT_ADDRESS,
+    .i2sReceiveAddress = (void *)${DRV_I2S_PLIB}_RECEIVE_LEFT_ADDRESS,
 </#if>
 <#else>
     .dmaChannelTransmit = DMA_CHANNEL_NONE,

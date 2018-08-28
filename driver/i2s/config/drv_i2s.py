@@ -1,20 +1,37 @@
+def customUpdate(linkedList, event):
+    global customVisible 
+    global i2sLinkedListComment
+
+    if event["value"]==1:
+        customVisible = True    
+    else:
+        customVisible = False
+
+    i2sLinkedListComment.setVisible(customVisible)
+
 def requestDMAChannel(Sym, event):
-    global drvSpiInstanceSpace
-    sscPeripheral = Database.getSymbolValue(drvSpiInstanceSpace, "DRV_SSC_PLIB")
-    
+    global i2sPlibId
+
     # Control visibility
-    if event["id"] == "DRV_SSC_TX_RX_DMA":
+    if event["id"] == "DRV_I2S_TX_RX_DMA":
         Sym.setVisible(event["value"])
         
     # Request from Driver
-    elif event["id"] == "DRV_SSC_TX_DMA" or event["id"] == "DRV_SSC_RX_DMA":
-        if event["id"] == "DRV_SSC_TX_DMA":
-            dmaRequestID = "DMA_CH_NEEDED_FOR_" + "SSC" + "_Transmit"
-        elif event["id"] == "DRV_SSC_RX_DMA":
-            dmaRequestID = "DMA_CH_NEEDED_FOR_" + "SSC" + "_Receive"
-
-        Database.clearSymbolValue("core", dmaRequestID)
-        Database.setSymbolValue("core", dmaRequestID, event["value"], 2)
+    elif event["id"] == "DRV_I2S_TX_DMA" or event["id"] == "DRV_I2S_RX_DMA":
+        dmaRequestID = ""
+        if event["id"] == "DRV_I2S_TX_DMA":
+            if i2sPlibId[:3] == "SSC":
+                dmaRequestID = "DMA_CH_NEEDED_FOR_SSC_Transmit"
+            elif (i2sPlibId[:4] == "I2SC"):
+                dmaRequestID = "DMA_CH_NEEDED_FOR_" + i2sPlibId + "_Transmit_Left"
+        elif event["id"] == "DRV_I2S_RX_DMA":
+            if i2sPlibId[:3] == "SSC":
+                dmaRequestID = "DMA_CH_NEEDED_FOR_SSC_Receive"
+            elif (i2sPlibId[:4] == "I2SC"):
+                dmaRequestID = "DMA_CH_NEEDED_FOR_" + i2sPlibId + "_Receive_Left"
+        if dmaRequestID!="":
+            Database.clearSymbolValue("core", dmaRequestID)
+            Database.setSymbolValue("core", dmaRequestID, event["value"], 2)
 
     # Response from DMA Manager
     else:
@@ -36,8 +53,9 @@ def destroyComponent(i2sComponent):
     Database.setSymbolValue("drv_i2s", "DRV_I2S_NUM_INSTANCES", i2sNumInstances, 1)
 
 def instantiateComponent(i2sComponent, index):
-    global drvSpiInstanceSpace
-    drvSpiInstanceSpace = "drv_i2s_" + str(index)
+    global i2sPlibId
+    global customVisible 
+    global i2sLinkedListComment
     
     i2sNumInstances = Database.getSymbolValue("drv_i2s", "DRV_I2S_NUM_INSTANCES")
   
@@ -45,6 +63,9 @@ def instantiateComponent(i2sComponent, index):
         i2sNumInstances = 1
     else:
         i2sNumInstances = i2sNumInstances + 1
+
+    customVisible = False
+    customVisible2 = False
     
     Database.clearSymbolValue("drv_i2s", "DRV_I2S_NUM_INSTANCES")
     Database.setSymbolValue("drv_i2s", "DRV_I2S_NUM_INSTANCES", i2sNumInstances, 1)
@@ -57,7 +78,8 @@ def instantiateComponent(i2sComponent, index):
     i2sSymPLIB.setVisible(True)
     i2sSymPLIB.setLabel("PLIB Used")
     i2sSymPLIB.setReadOnly(True)
-    i2sSymPLIB.setDefaultValue("SSC")
+    i2sSymPLIB.setDefaultValue("")
+    i2sPlibId = "" 
     
     i2sSymNumClients = i2sComponent.createIntegerSymbol("DRV_I2S_NUM_CLIENTS", None)
     i2sSymNumClients.setVisible(True)
@@ -74,51 +96,65 @@ def instantiateComponent(i2sComponent, index):
     i2sSymQueueSize.setDefaultValue(8)
 
     i2sDataWidth = i2sComponent.createIntegerSymbol("I2S_DATA_LENGTH", None)
-    i2sDataWidth.setVisible(False)
-    i2sDataWidth.setDefaultValue(0)  
+    i2sDataWidth.setVisible(True)
+    i2sDataWidth.setLabel("I2S Data Length")
+    i2sDataWidth.setDefaultValue(0)
 
-    # FUTURE -- need to create either SSC or I2SC symbols for DMA based on peripheral chosen (DRV_I2S_PLIB)
-    i2sTXRXDMA = i2sComponent.createBooleanSymbol("DRV_SSC_TX_RX_DMA", None)
+    i2sDataLengthComment = i2sComponent.createCommentSymbol("I2S_DATA_LENGTH_COMMENT", None)
+    i2sDataLengthComment.setVisible(True)
+    i2sDataLengthComment.setLabel("Must match Data Length field in I2SC/SSC PLIB")") 
+
+    i2sTXRXDMA = i2sComponent.createBooleanSymbol("DRV_I2S_TX_RX_DMA", None)
     i2sTXRXDMA.setVisible(True)
     i2sTXRXDMA.setLabel("Use DMA for Transmit and Receive?")
     i2sTXRXDMA.setDefaultValue(False)
 
-    i2sTXDMA = i2sComponent.createBooleanSymbol("DRV_SSC_TX_DMA", None)
+    i2sTXDMA = i2sComponent.createBooleanSymbol("DRV_I2S_TX_DMA", None)
     i2sTXDMA.setLabel("Use DMA for Transmit?")
     i2sTXDMA.setDefaultValue(True)
     i2sTXDMA.setVisible(True)
-    i2sTXDMA.setDependencies(commonTxRxOption, ["DRV_SSC_TX_RX_DMA"])
+    i2sTXDMA.setDependencies(commonTxRxOption, ["DRV_I2S_TX_RX_DMA"])
     
-    i2sTXDMAChannel = i2sComponent.createIntegerSymbol("DRV_SSC_TX_DMA_CHANNEL", None)
-    i2sTXDMAChannel.setLabel("DMA Channel For Transmit")
+    i2sTXDMAChannel = i2sComponent.createIntegerSymbol("DRV_I2S_TX_DMA_CHANNEL", None)
+    i2sTXDMAChannel.setLabel("DMA Channel for Transmit")
     i2sTXDMAChannel.setDefaultValue(0)
     i2sTXDMAChannel.setVisible(True)
-    i2sTXDMAChannel.setReadOnly(True)
-    i2sTXDMAChannel.setDependencies(requestDMAChannel, ["DRV_SSC_TX_RX_DMA","DRV_SSC_TX_DMA", "core.DMA_CH_FOR_" + "SSC" + "_Transmit"])
+    i2sTXDMAChannel.setReadOnly(False)
+    i2sTXDMAChannel.setDependencies(requestDMAChannel, ["DRV_I2S_TX_RX_DMA","DRV_I2S_TX_DMA", "core.DMA_CH_FOR_" + "SSC" + "_Transmit", "core.DMA_CH_FOR_" + "I2SC0" + "_Transmit_Left", "core.DMA_CH_FOR_" + "I2SC1" + "_Transmit_Left"])
 
-    i2sTXDMAChannelComment = i2sComponent.createCommentSymbol("DRV_SSC_TX_DMA_CH_COMMENT", None)
+    i2sTXDMAChannelComment = i2sComponent.createCommentSymbol("DRV_I2S_TX_DMA_CH_COMMENT", None)
     i2sTXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate any DMA Channel. Check DMA manager.")
-    i2sTXDMAChannelComment.setDependencies(requestDMAComment, ["core.DMA_CH_FOR_" + "SSC" + "_Transmit"])
+    i2sTXDMAChannelComment.setDependencies(requestDMAComment, ["core.DMA_CH_FOR_" + "I2SC0" + "_Transmit_Left", "core.DMA_CH_FOR_" + "I2SC1" + "_Transmit_Left"])
     i2sTXDMAChannelComment.setVisible(False)
 
-    i2sRXDMA = i2sComponent.createBooleanSymbol("DRV_SSC_RX_DMA", None)
+    i2sRXDMA = i2sComponent.createBooleanSymbol("DRV_I2S_RX_DMA", None)
     i2sRXDMA.setLabel("Use DMA for Receive?")
     i2sRXDMA.setDefaultValue(True)
     i2sRXDMA.setVisible(True)
-    i2sRXDMA.setDependencies(commonTxRxOption, ["DRV_SSC_TX_RX_DMA"])
+    i2sRXDMA.setDependencies(commonTxRxOption, ["DRV_I2S_TX_RX_DMA"])
     
-    i2sRXDMAChannel = i2sComponent.createIntegerSymbol("DRV_SSC_RX_DMA_CHANNEL", None)
+    i2sRXDMAChannel = i2sComponent.createIntegerSymbol("DRV_I2S_RX_DMA_CHANNEL", None)
     i2sRXDMAChannel.setLabel("DMA Channel For Receive")
     i2sRXDMAChannel.setDefaultValue(1)
     i2sRXDMAChannel.setVisible(True)
-    i2sRXDMAChannel.setReadOnly(True)
-    i2sRXDMAChannel.setDependencies(requestDMAChannel, ["DRV_SSC_TX_RX_DMA","DRV_SSC_RX_DMA", "core.DMA_CH_FOR_" + "SSC" + "_Receive"])
+    i2sRXDMAChannel.setReadOnly(False)
+    i2sRXDMAChannel.setDependencies(requestDMAChannel, ["DRV_I2S_TX_RX_DMA","DRV_I2S_RX_DMA", "core.DMA_CH_FOR_" + "SSC" + "_Receive", "core.DMA_CH_FOR_" + "I2SC0" + "_Receive_Left", "core.DMA_CH_FOR_" + "I2SC1" + "_Receive_Left"])
 
-    i2sRXDMAChannelComment = i2sComponent.createCommentSymbol("DRV_SSC_RX_DMA_CH_COMMENT", None)
+    i2sRXDMAChannelComment = i2sComponent.createCommentSymbol("DRV_I2S_RX_DMA_CH_COMMENT", None)
     i2sRXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate any DMA Channel. Check DMA manager.")
-    i2sRXDMAChannelComment.setDependencies(requestDMAComment, ["core.DMA_CH_FOR_" + "SSC" + "_Receive"])
+    i2sRXDMAChannelComment.setDependencies(requestDMAComment, ["core.DMA_CH_FOR_" + "SSC" + "_Receive", "core.DMA_CH_FOR_" + "I2SC0" + "_Receive_Left", "core.DMA_CH_FOR_" + "I2SC1" + "_Receive_Left"])
     i2sRXDMAChannelComment.setVisible(False)
+
+    i2sDMALinkedList = i2sComponent.createBooleanSymbol("DRV_I2S_DMA_LL_ENABLE", None)
+    i2sDMALinkedList.setLabel("Include Linked List DMA Functions?")
+    i2sDMALinkedList.setDefaultValue(False)
+    i2sDMALinkedList.setDependencies(customUpdate, ["DRV_I2S_DMA_LL_ENABLE"])
     
+    # create comment to be shown first time user clicks on Linked List option
+    i2sLinkedListComment = i2sComponent.createCommentSymbol("DRV_I2S_DMA_LL_COMMENT", None)
+    i2sLinkedListComment.setVisible(customVisible)
+    i2sLinkedListComment.setLabel('"Use Linked List Mode" must also be checked under System -> DMA (XDMAC)')
+
     ############################################################################
     #### Code Generation ####
     ############################################################################
@@ -126,13 +162,23 @@ def instantiateComponent(i2sComponent, index):
     configName = Variables.get("__CONFIGURATION_NAME")
     
     i2sSymHeaderFile = i2sComponent.createFileSymbol("DRV_I2S_HEADER", None)
-    i2sSymHeaderFile.setSourcePath("driver/i2s/drv_i2s.h")
+    i2sSymHeaderFile.setMarkup(True)
+    i2sSymHeaderFile.setSourcePath("driver/i2s/templates/drv_i2s.h.ftl")
     i2sSymHeaderFile.setOutputName("drv_i2s.h")
     i2sSymHeaderFile.setDestPath("driver/i2s/")
     i2sSymHeaderFile.setProjectPath("config/" + configName + "/driver/i2s/")
     i2sSymHeaderFile.setType("HEADER")
     i2sSymHeaderFile.setOverwrite(True)
     
+    i2sSymSourceFile = i2sComponent.createFileSymbol("DRV_I2S_SOURCE", None)
+    i2sSymSourceFile.setMarkup(True) 
+    i2sSymSourceFile.setSourcePath("driver/i2s/templates/drv_i2s.c.ftl")
+    i2sSymSourceFile.setOutputName("drv_i2s.c")
+    i2sSymSourceFile.setDestPath("driver/i2s/src")
+    i2sSymSourceFile.setProjectPath("config/" + configName + "/driver/i2s/")
+    i2sSymSourceFile.setType("SOURCE")
+    i2sSymSourceFile.setOverwrite(True)
+
     i2sSymHeaderDefFile = i2sComponent.createFileSymbol("DRV_I2S_DEF", None)
     i2sSymHeaderDefFile.setSourcePath("driver/i2s/drv_i2s_definitions.h")
     i2sSymHeaderDefFile.setOutputName("drv_i2s_definitions.h")
@@ -140,14 +186,6 @@ def instantiateComponent(i2sComponent, index):
     i2sSymHeaderDefFile.setProjectPath("config/" + configName + "/driver/i2s/")
     i2sSymHeaderDefFile.setType("HEADER")
     i2sSymHeaderDefFile.setOverwrite(True)
-
-    i2sSymSourceFile = i2sComponent.createFileSymbol("DRV_I2S_SOURCE", None)
-    i2sSymSourceFile.setSourcePath("driver/i2s/src/drv_i2s.c")
-    i2sSymSourceFile.setOutputName("drv_i2s.c")
-    i2sSymSourceFile.setDestPath("driver/i2s/src")
-    i2sSymSourceFile.setProjectPath("config/" + configName + "/driver/i2s/")
-    i2sSymSourceFile.setType("SOURCE")
-    i2sSymSourceFile.setOverwrite(True)
 
     i2sSymHeaderLocalFile = i2sComponent.createFileSymbol("DRV_I2S_HEADER_LOCAL", None)
     i2sSymHeaderLocalFile.setSourcePath("driver/i2s/src/drv_i2s_local.h")
@@ -186,20 +224,33 @@ def instantiateComponent(i2sComponent, index):
     i2sSymSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_SYS_INITIALIZE_DRIVERS")  
     i2sSymSystemInitFile.setSourcePath("driver/i2s/templates/system/system_initialize.c.ftl")
     i2sSymSystemInitFile.setMarkup(True)
-    
-def onDependentComponentAdded(i2sComponent, id, i2sPlib):
-    if id == "drv_i2s_I2S_dependency":
-        plibUsed = i2sComponent.getSymbolByID("DRV_I2S_PLIB")
-        plibUsed.clearValue()
-        # i2sPlib.getID() returns ssc0 for example
-        i2sPlibId = i2sPlib.getID()
-        plibUsed.setValue(i2sPlibId.upper(), 1)
-        if i2sPlibId[:3] == "ssc":        
-            dataLength = i2sPlib.getSymbolValue("SSC_DATA_LENGTH")
-            i2sDataWidth = i2sComponent.getSymbolByID("I2S_DATA_LENGTH")
-            i2sDataWidth.setValue(dataLength, 1)
-            i2sTXRXDMA = i2sComponent.getSymbolByID("DRV_SSC_TX_RX_DMA")
-            i2sTXRXDMA.setValue(True, 1)
 
+# this callback occurs when user connects SSC0 or I2SCx block to I2S driver block in Project Graph    
+def onDependencyConnected(info):
+    global i2sPlibId
+    if info["dependencyID"] == "drv_i2s_I2S_dependency":
+        plibUsed = info["localComponent"].getSymbolByID("DRV_I2S_PLIB")
+        # info["remoteComponent"].getID() returns ssc0 or 12sc1 for example
+        i2sPlibId = info["remoteComponent"].getID().upper()
+        plibUsed.setValue(i2sPlibId, 1)
+        if i2sPlibId[:3] == "SSC":        
+            dataLength = info["remoteComponent"].getSymbolValue("SSC_DATA_LENGTH")
+            print("datalength:")
+            print(dataLength)
+            i2sDataWidth = info["localComponent"].getSymbolByID("I2S_DATA_LENGTH")
+            i2sDataWidth.setValue(dataLength, 1)
+            # force DMA channels to be allocated
+            i2sTXRXDMA = info["localComponent"].getSymbolByID("DRV_I2S_TX_RX_DMA")
+            i2sTXRXDMA.setValue(True, 1)
+        elif i2sPlibId[:4] == "I2SC":        
+            dataLengthIdx = info["remoteComponent"].getSymbolValue("I2SC_MR_DATALENGTH")
+            i2sDataWidth = info["localComponent"].getSymbolByID("I2S_DATA_LENGTH")
+            if dataLengthIdx==0:
+                i2sDataWidth.setValue(32, 1)
+            elif dataLengthIdx==4:
+                i2sDataWidth.setValue(16, 1)
+            # force DMA channels to be allocated
+            i2sTXRXDMA = info["localComponent"].getSymbolByID("DRV_I2S_TX_RX_DMA")
+            i2sTXRXDMA.setValue(True, 1)
 
 

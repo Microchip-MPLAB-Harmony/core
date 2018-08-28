@@ -220,7 +220,8 @@ static bool _DRV_I2S_ReadBufferQueuePurge( DRV_I2S_OBJ * object )
     return true;
 }
 
-static void _DRV_I2S_BufferQueueTask( DRV_I2S_OBJ *object, DRV_I2S_DIRECTION direction, DRV_I2S_BUFFER_EVENT event)
+static void _DRV_I2S_BufferQueueTask( DRV_I2S_OBJ *object, DRV_I2S_DIRECTION direction,
+    DRV_I2S_BUFFER_EVENT event)
 {
     DRV_I2S_OBJ * dObj = object;
     DRV_I2S_BUFFER_OBJ *currentObj = NULL;
@@ -274,7 +275,30 @@ static void _DRV_I2S_BufferQueueTask( DRV_I2S_OBJ *object, DRV_I2S_DIRECTION dir
 
                 if( (DMA_CHANNEL_NONE != dObj->rxDMAChannel))
                 {
-                    SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress, (const void *)newObj->buffer, newObj->size);
+                    SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress,
+                        (const void *)newObj->rxbuffer, newObj->size);
+
+#if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+                        /************ code specific to SAM E70 ********************/
+                        // Check if the data cache is enabled
+                        if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
+                        {
+                            uint32_t bufferSize = newObj->size;
+                            // if this is half word transfer, need to multiply size by 2           
+                            if (dObj->dmaDataLength == 16)
+                            {
+                                bufferSize *= 2;
+                            }
+                            // if this is full word transfer, need to multiply size by 4
+                            else if (dObj->dmaDataLength == 32)
+                            {
+                                bufferSize *= 4;
+                            }
+                            // Invalidate cache to force CPU to read from SRAM instead
+                            SCB_InvalidateDCache_by_Addr((uint32_t*)newObj->rxbuffer, bufferSize);
+                        }
+                        /************ end of E70 specific code ********************/
+#endif
                 }
             }
         }
@@ -288,18 +312,29 @@ static void _DRV_I2S_BufferQueueTask( DRV_I2S_OBJ *object, DRV_I2S_DIRECTION dir
 
                 if( (DMA_CHANNEL_NONE != dObj->txDMAChannel))
                 {
-#if defined(__SAME70Q21B__) || defined(__ATSAME70Q21B__)
+#if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
                     /************ code specific to SAM E70 ********************/
-                    /* Check if the data cache is enabled */
+                    // Check if the data cache is enabled
                     if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
                     {
-                        /* The data cache lines have to be flushed in case of DMA write to avoid 
-                         * coherency */
-                        SCB_CleanDCache();
+                        uint32_t bufferSize = newObj->size;
+                        // if this is half word transfer, need to divide size by 2           
+                        if (dObj->dmaDataLength == 16)
+                        {
+                            bufferSize *= 2;
+                        }
+                        // if this is full word transfer, need to divide size by 4
+                        else if (dObj->dmaDataLength == 32)
+                        {
+                            bufferSize *= 4;
+                        }
+                        // Flush cache to SRAM so DMA reads correct data
+                        SCB_CleanDCache_by_Addr((uint32_t*)newObj->txbuffer, bufferSize);
                     }
                     /************ end of E70 specific code ********************/
 #endif
-                    SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)newObj->buffer, (const void *)dObj->txAddress, newObj->size);
+                    SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)newObj->txbuffer,
+                        (const void *)dObj->txAddress, newObj->size);
                 }
             }
         }
@@ -308,8 +343,6 @@ static void _DRV_I2S_BufferQueueTask( DRV_I2S_OBJ *object, DRV_I2S_DIRECTION dir
     {
         /* Queue purge has been called. Do nothing. */
     }
-
-    return;
 }
 
 static void _DRV_I2S_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
@@ -324,8 +357,6 @@ static void _DRV_I2S_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintpt
     {
         _DRV_I2S_BufferQueueTask(dObj, DRV_I2S_DIRECTION_TX, DRV_I2S_BUFFER_EVENT_ERROR);
     }
-
-    return;
 }
 
 static void _DRV_I2S_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
@@ -340,8 +371,6 @@ static void _DRV_I2S_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintpt
     {
         _DRV_I2S_BufferQueueTask(dObj, DRV_I2S_DIRECTION_RX, DRV_I2S_BUFFER_EVENT_ERROR);
     }
-
-    return;
 }
 
 // *****************************************************************************
@@ -482,8 +511,6 @@ void DRV_I2S_Close( DRV_HANDLE handle )
     }
 
     dObj->clientInUse = false;
-
-    return;
 }
 
 DRV_I2S_ERROR DRV_I2S_ErrorGet( const DRV_HANDLE handle )
@@ -512,7 +539,8 @@ DRV_I2S_ERROR DRV_I2S_ErrorGet( const DRV_HANDLE handle )
 // *****************************************************************************
 
 // *****************************************************************************
-void DRV_I2S_BufferEventHandlerSet( const DRV_HANDLE handle, const DRV_I2S_BUFFER_EVENT_HANDLER eventHandler, const uintptr_t context )
+void DRV_I2S_BufferEventHandlerSet( const DRV_HANDLE handle, 
+    const DRV_I2S_BUFFER_EVENT_HANDLER eventHandler, const uintptr_t context )
 {
     DRV_I2S_OBJ * dObj = NULL;
 
@@ -526,12 +554,11 @@ void DRV_I2S_BufferEventHandlerSet( const DRV_HANDLE handle, const DRV_I2S_BUFFE
 
     dObj->eventHandler = eventHandler;
     dObj->context = context;
-
-    return;
 }
 
 // *****************************************************************************
-void DRV_I2S_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size, DRV_I2S_BUFFER_HANDLE * bufferHandle)
+void DRV_I2S_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size,
+    DRV_I2S_BUFFER_HANDLE * bufferHandle)
 {
     DRV_I2S_OBJ * dObj = NULL;
     DRV_I2S_BUFFER_OBJ * bufferObj = NULL;
@@ -578,7 +605,7 @@ void DRV_I2S_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size
     bufferObj->size         = size;
     bufferObj->nCount       = 0;
     bufferObj->inUse        = true;
-    bufferObj->buffer       = buffer;
+    bufferObj->txbuffer     = buffer;
     bufferObj->dObj         = dObj;
     bufferObj->next         = NULL;
     bufferObj->currentState = DRV_I2S_BUFFER_IS_IN_QUEUE;
@@ -598,14 +625,13 @@ void DRV_I2S_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size
 
         if( (DMA_CHANNEL_NONE != dObj->txDMAChannel))
         {
-#if defined(__SAME70Q21B__) || defined(__ATSAME70Q21B__)
+#if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
             /************ code specific to SAM E70 ********************/
-            /* Check if the data cache is enabled */
+            // Check if the data cache is enabled
             if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
             {
-                /* The data cache lines have to be flushed in case of DMA write to avoid 
-                 * coherency */
-                SCB_CleanDCache();
+                // Flush cache to SRAM so DMA reads correct data
+                SCB_CleanDCache_by_Addr((uint32_t*)bufferObj->txbuffer, bufferObj->size);
             }
             /************ end of E70 specific code ********************/
 #endif            
@@ -619,7 +645,8 @@ void DRV_I2S_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size
             {
                 bufferObj->size /= 4;
             }
-            SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)bufferObj->buffer, (const void *)dObj->txAddress, bufferObj->size);
+            SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)bufferObj->txbuffer,
+                (const void *)dObj->txAddress, bufferObj->size);
         }
     }
     else
@@ -637,12 +664,167 @@ void DRV_I2S_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size
     }
 
     _DRV_I2S_ResourceUnlock(dObj);
-
-    return;
 }
 
 // *****************************************************************************
-void DRV_I2S_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size, DRV_I2S_BUFFER_HANDLE * bufferHandle)
+/* Function:
+	void DRV_I2S_BufferAddWriteRead(const DRV_HANDLE handle,
+                                        DRV_I2S_BUFFER_HANDLE	*bufferHandle,
+                                        void *transmitBuffer, void *receiveBuffer,
+                                        size_t size)
+
+  Summary:
+    Schedule a non-blocking driver write-read operation.
+	<p><b>Implementation:</b> Dynamic</p>
+
+  Description:
+    This function schedules a non-blocking write-read operation. The function
+    returns with a valid buffer handle in the bufferHandle argument if the
+    write-read request was scheduled successfully. The function adds the request
+    to the hardware instance queue and returns immediately. While the request is
+    in the queue, the application buffer is owned by the driver and should not
+    be modified. The function returns DRV_I2S_BUFFER_HANDLE_INVALID:
+    - if a buffer could not be allocated to the request
+    - if the input buffer pointer is NULL
+    - if the client opened the driver for read only or write only
+    - if the buffer size is 0
+    - if the queue is full or the queue depth is insufficient
+    If the requesting client registered an event callback with the driver,
+    the driver will issue a DRV_I2S_BUFFER_EVENT_COMPLETE event if the buffer
+    was processed successfully of DRV_I2S_BUFFER_EVENT_ERROR event if the
+    buffer was not processed successfully.
+
+  Remarks:
+    This function is thread safe in a RTOS application. It can be called from
+    within the I2S Driver Buffer Event Handler that is registered by this
+    client. It should not be called in the event handler associated with another
+    I2S driver instance. It should not otherwise be called directly in an ISR.
+
+    This function is useful when there is valid read expected for every
+    I2S write. The transmit and receive size must be same.
+
+*/
+void DRV_I2S_WriteReadBufferAdd(const DRV_HANDLE handle,
+    void *transmitBuffer, void *receiveBuffer,
+    size_t size, DRV_I2S_BUFFER_HANDLE	*bufferHandle)
+{
+    DRV_I2S_OBJ * dObj = NULL;
+    DRV_I2S_BUFFER_OBJ * bufferObj = NULL;
+    DRV_I2S_BUFFER_OBJ * iterator = NULL;
+
+    /* Validate the Request */
+    if (bufferHandle == NULL)
+    {
+        return;
+    }
+
+    *bufferHandle = DRV_I2S_BUFFER_HANDLE_INVALID;
+
+    if( false == _DRV_I2S_ValidateClientHandle(dObj, handle))
+    {
+        return;
+    }
+
+    dObj = &gDrvI2SObj[handle];
+
+    if((size == 0) || (NULL == transmitBuffer) || (NULL == receiveBuffer))
+    {
+        return;
+    }
+
+    if(dObj->queueSizeCurrentWrite >= dObj->queueSizeWrite)
+    {
+        return;
+    }
+
+    _DRV_I2S_ResourceLock(dObj);
+
+    /* Search the buffer pool for a free buffer object */
+    bufferObj = _DRV_I2S_BufferObjectGet();
+
+    if(NULL == bufferObj)
+    {
+        /* Couldn't able to get the buffer object */
+        _DRV_I2S_ResourceUnlock(dObj);
+    return;
+}
+
+    /* Configure the buffer object */
+    bufferObj->size         = size;
+    bufferObj->nCount       = 0;
+    bufferObj->inUse        = true;
+    bufferObj->txbuffer     = transmitBuffer;
+    bufferObj->rxbuffer     = receiveBuffer;    
+    bufferObj->dObj         = dObj;
+    bufferObj->next         = NULL;
+    bufferObj->currentState = DRV_I2S_BUFFER_IS_IN_QUEUE;
+
+    *bufferHandle = bufferObj->bufferHandle;
+
+    dObj->queueSizeCurrentWrite ++;
+
+    if(dObj->queueWrite == NULL)
+    {
+        /* This is the first buffer in the queue */
+        dObj->queueWrite = bufferObj;
+
+        /* Because this is the first buffer in the queue, we need to submit the
+         * buffer to the DMA to start processing. */
+        bufferObj->currentState = DRV_I2S_BUFFER_IS_PROCESSING;
+
+        if( (DMA_CHANNEL_NONE != dObj->rxDMAChannel) && (DMA_CHANNEL_NONE != dObj->txDMAChannel))
+        {          
+            uint32_t bufferSize = bufferObj->size;
+            // if this is half word transfer, need to divide size by 2            
+            if (dObj->dmaDataLength == 16)
+            {
+                bufferSize /= 2;
+            }
+            // if this is full word transfer, need to divide size by 4
+            else if (dObj->dmaDataLength == 32)
+            {
+                bufferSize /= 4;
+            }
+            SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress,
+                (const void *)bufferObj->rxbuffer, bufferSize);
+            
+#if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+            /************ code specific to SAM E70 ********************/
+            // Check if the data cache is enabled
+            if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
+            {
+                // Invalidate cache to force CPU to read from SRAM instead
+                SCB_InvalidateDCache_by_Addr((uint32_t*)bufferObj->rxbuffer, bufferObj->size);
+                
+                // Flush cache to SRAM so DMA reads correct data
+                SCB_CleanDCache_by_Addr((uint32_t*)bufferObj->txbuffer, bufferObj->size);                
+            }
+            /************ end of E70 specific code ********************/            
+#endif                       
+            SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)bufferObj->txbuffer,
+                (const void *)dObj->txAddress, bufferSize);            
+        }
+    }
+    else
+    {
+        /* This means the write queue is not empty. We must add
+         * the buffer object to the end of the queue */
+        iterator = dObj->queueWrite;
+        while(iterator->next != NULL)
+        {
+            /* Get the next buffer object */
+            iterator = iterator->next;
+        }
+
+        iterator->next = bufferObj;
+    }
+
+    _DRV_I2S_ResourceUnlock(dObj);     
+}
+
+// *****************************************************************************
+void DRV_I2S_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size, 
+    DRV_I2S_BUFFER_HANDLE * bufferHandle)
 {
     DRV_I2S_OBJ * dObj = NULL;
     DRV_I2S_BUFFER_OBJ * bufferObj = NULL;
@@ -689,7 +871,7 @@ void DRV_I2S_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size,
     bufferObj->size            = size;
     bufferObj->nCount          = 0;
     bufferObj->inUse           = true;
-    bufferObj->buffer          = buffer;
+    bufferObj->rxbuffer        = buffer;
     bufferObj->dObj            = dObj;
     bufferObj->next            = NULL;
     bufferObj->currentState    = DRV_I2S_BUFFER_IS_IN_QUEUE;
@@ -709,7 +891,31 @@ void DRV_I2S_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size,
 
         if( (DMA_CHANNEL_NONE != dObj->rxDMAChannel))
         {
-            SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress, (const void *)bufferObj->buffer, bufferObj->size);
+            uint32_t bufferSize = bufferObj->size;
+            // if this is half word transfer, need to divide size by 2            
+            if (dObj->dmaDataLength == 16)
+            {
+                bufferSize /= 2;
+            }
+            // if this is full word transfer, need to divide size by 4
+            else if (dObj->dmaDataLength == 32)
+            {
+                bufferSize /= 4;
+            }
+
+            SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress,
+                (const void *)bufferObj->rxbuffer, bufferSize);
+
+#if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+            /************ code specific to SAM E70 ********************/
+            // Check if the data cache is enabled
+            if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
+            {
+                // Invalidate cache to force CPU to read from SRAM instead
+                SCB_InvalidateDCache_by_Addr((uint32_t*)bufferObj->rxbuffer, bufferObj->size);
+            }
+            /************ end of E70 specific code ********************/
+#endif
         }
     }
     else
@@ -726,8 +932,6 @@ void DRV_I2S_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size,
     }
 
     _DRV_I2S_ResourceUnlock(dObj);
-
-    return;
 }
 
 // *****************************************************************************
@@ -808,3 +1012,288 @@ bool DRV_I2S_ReadQueuePurge( const DRV_HANDLE handle )
 
     return _DRV_I2S_ReadBufferQueuePurge(dObj);
 }
+
+<#if DRV_I2S_DMA_LL_ENABLE == true>
+__attribute__((__aligned__(32))) static XDMAC_DESCRIPTOR_CONTROL _firstDescriptorControl =
+{
+    .fetchEnable = 1,
+    .sourceUpdate = 1,
+    .destinationUpdate = 1,
+    .view = 1
+};
+
+void _LinkedListCallBack(XDMAC_TRANSFER_EVENT event, uintptr_t contextHandle)
+{
+    if ((XDMAC_TRANSFER_COMPLETE==event) && (contextHandle!=(uintptr_t)NULL))
+    {
+        DRV_I2S_LL_CALLBACK callBack = (DRV_I2S_LL_CALLBACK)contextHandle;
+        callBack();    
+    }
+}
+
+void DRV_I2S_InitWriteLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW_1* pLinkedListDesc,
+    uint16_t currDescrip, uint16_t nextDescrip, uint8_t* buffer, uint32_t bufferSize)
+{
+    DRV_I2S_OBJ * dObj = NULL;
+    if( false == _DRV_I2S_ValidateClientHandle(dObj, handle))
+    {
+        return;
+    }
+    dObj = &gDrvI2SObj[handle];    
+    
+    // if currDescrip same as nextDescrip, then will loop
+    pLinkedListDesc[currDescrip].mbr_nda = (uint32_t)&pLinkedListDesc[nextDescrip];
+    pLinkedListDesc[currDescrip].mbr_sa = (uint32_t)buffer;
+    pLinkedListDesc[currDescrip].mbr_da = (uint32_t)dObj->txAddress;
+    // if this is half word transfer, need to divide size by 2           
+    if (dObj->dmaDataLength == 16)
+    {
+        bufferSize /= 2;
+    }
+    // if this is full word transfer, need to divide size by 4
+    else if (dObj->dmaDataLength == 32)
+    {
+        bufferSize /= 4;
+    }     
+    pLinkedListDesc[currDescrip].mbr_ubc.blockDataLength = bufferSize;
+    pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.fetchEnable = 1;
+    pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.sourceUpdate = 1;
+    pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.destinationUpdate = 0;
+    pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.view = 1;    
+} 
+
+void DRV_I2S_StartWriteLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW_1* pLinkedListDesc,
+        DRV_I2S_LL_CALLBACK callBack, bool blockInt)
+{
+    DRV_I2S_OBJ * dObj = NULL;
+    if( false == _DRV_I2S_ValidateClientHandle(dObj, handle))
+    {
+        return;
+    }
+    dObj = &gDrvI2SObj[handle];
+    
+    if( (DMA_CHANNEL_NONE != dObj->txDMAChannel))
+    {
+#if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+        /************ code specific to SAM E70 ********************/
+        // Check if the data cache is enabled
+        if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
+        {
+            // Flush cache to SRAM so DMA reads correct data
+            SCB_CleanDCache_by_Addr((uint32_t*)&_firstDescriptorControl, sizeof(XDMAC_DESCRIPTOR_CONTROL));
+            SCB_CleanDCache_by_Addr((uint32_t*)&pLinkedListDesc[0], sizeof(XDMAC_DESCRIPTOR_VIEW_1));
+            uint32_t bufferSize = pLinkedListDesc[0].mbr_ubc.blockDataLength;
+            // if this is half word transfer, need to multiply size by 2           
+            if (dObj->dmaDataLength == 16)
+            {
+                bufferSize *= 2;
+            }
+            // if this is full word transfer, need to multiply size by 4
+            else if (dObj->dmaDataLength == 32)
+            {
+                bufferSize *= 4;
+            }             
+            SCB_CleanDCache_by_Addr((uint32_t*)pLinkedListDesc[0].mbr_sa, bufferSize);
+        }
+        /************ end of E70 specific code ********************/
+#endif
+        XDMAC_ChannelLinkedListTransfer(dObj->txDMAChannel, (uint32_t)&pLinkedListDesc[0], &_firstDescriptorControl);
+
+        if ((void*)NULL!=callBack)
+        {
+            XDMAC_ChannelCallbackRegister(dObj->txDMAChannel,(XDMAC_CHANNEL_CALLBACK)_LinkedListCallBack, (uintptr_t)callBack);
+             
+            if (blockInt)
+            {
+                // disable end of linked list interrupt, and enable end of block instead
+                XDMAC_REGS->XDMAC_CHID[dObj->txDMAChannel].XDMAC_CID= XDMAC_CID_LID_Msk ;        
+                XDMAC_REGS->XDMAC_CHID[dObj->txDMAChannel].XDMAC_CIE= XDMAC_CIE_BIE_Msk ;
+            }
+        }
+    }
+}
+
+void DRV_I2S_WriteNextLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW_1* pLinkedListDesc,
+        uint16_t currDescrip, uint16_t nextDescrip, uint16_t nextNextDescrip, uint8_t* buffer, uint32_t bufferSize)
+{
+    DRV_I2S_OBJ * dObj = NULL;
+    if( false == _DRV_I2S_ValidateClientHandle(dObj, handle))
+    {
+        return;
+    }
+    dObj = &gDrvI2SObj[handle]; 
+
+#if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+    /************ code specific to SAM E70 ********************/
+    // Check if the data cache is enabled
+    if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
+    {
+        // Flush cache to SRAM so DMA reads correct data
+        SCB_CleanDCache_by_Addr((uint32_t*)&pLinkedListDesc[currDescrip], sizeof(XDMAC_DESCRIPTOR_VIEW_1));
+        SCB_CleanDCache_by_Addr((uint32_t*)&pLinkedListDesc[nextDescrip], sizeof(XDMAC_DESCRIPTOR_VIEW_1));
+        SCB_CleanDCache_by_Addr((uint32_t*)buffer, bufferSize);
+    }
+    /************ end of E70 specific code ********************/
+#endif   
+    pLinkedListDesc[nextDescrip].mbr_sa = (uint32_t)buffer;
+    // if this is half word transfer, need to divide size by 2           
+    if (dObj->dmaDataLength == 16)
+    {
+        bufferSize /= 2;
+    }
+    // if this is full word transfer, need to divide size by 4
+    else if (dObj->dmaDataLength == 32)
+    {
+        bufferSize /= 4;
+    }    
+    pLinkedListDesc[nextDescrip].mbr_ubc.blockDataLength = bufferSize;
+    // if nextDescrip same as nextNextDescrip, then will loop
+    pLinkedListDesc[nextDescrip].mbr_nda = (uint32_t)&pLinkedListDesc[nextNextDescrip];
+    // switch from currDescrip to nextDescrip next time
+    pLinkedListDesc[currDescrip].mbr_nda = (uint32_t)&pLinkedListDesc[nextDescrip];
+}
+
+void DRV_I2S_InitReadLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW_1* pLinkedListDesc,
+    uint16_t currDescrip, uint16_t nextDescrip, uint8_t* buffer, uint32_t bufferSize)
+{
+    DRV_I2S_OBJ * dObj = NULL;
+    if( false == _DRV_I2S_ValidateClientHandle(dObj, handle))
+    {
+        return;
+    }
+    dObj = &gDrvI2SObj[handle];    
+    
+    // if currDescrip same as nextDescrip, then will loop
+    pLinkedListDesc[currDescrip].mbr_nda = (uint32_t)&pLinkedListDesc[nextDescrip];
+    pLinkedListDesc[currDescrip].mbr_sa = (uint32_t)dObj->rxAddress;
+    pLinkedListDesc[currDescrip].mbr_da = (uint32_t)buffer;
+    // if this is half word transfer, need to divide size by 2           
+    if (dObj->dmaDataLength == 16)
+    {
+        bufferSize /= 2;
+    }
+    // if this is full word transfer, need to divide size by 4
+    else if (dObj->dmaDataLength == 32)
+    {
+        bufferSize /= 4;
+    }     
+    pLinkedListDesc[currDescrip].mbr_ubc.blockDataLength = bufferSize;
+    pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.fetchEnable = 1;
+    pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.sourceUpdate = 0;
+    pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.destinationUpdate = 1;
+    pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.view = 1;    
+} 
+
+void DRV_I2S_StartReadLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW_1* pLinkedListDesc,
+            DRV_I2S_LL_CALLBACK callBack, bool blockInt)
+{
+    DRV_I2S_OBJ * dObj = NULL;
+    if( false == _DRV_I2S_ValidateClientHandle(dObj, handle))
+    {
+        return;
+    }
+    dObj = &gDrvI2SObj[handle];
+    
+    if( (DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+    {
+#if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+        /************ code specific to SAM E70 ********************/
+        // Check if the data cache is enabled
+        if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
+        {
+            // Flush cache to SRAM so DMA reads correct data
+            SCB_CleanDCache_by_Addr((uint32_t*)&_firstDescriptorControl, sizeof(XDMAC_DESCRIPTOR_CONTROL));
+            SCB_CleanDCache_by_Addr((uint32_t*)&pLinkedListDesc[0], sizeof(XDMAC_DESCRIPTOR_VIEW_1));            
+        }
+        /************ end of E70 specific code ********************/
+#endif
+
+        XDMAC_ChannelLinkedListTransfer(dObj->rxDMAChannel, (uint32_t)&pLinkedListDesc[0], &_firstDescriptorControl);
+
+#if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+        /************ code specific to SAM E70 ********************/
+        // Check if the data cache is enabled
+        if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
+        {
+            uint32_t bufferSize = pLinkedListDesc[0].mbr_ubc.blockDataLength;
+            // if this is half word transfer, need to multiply size by 2           
+            if (dObj->dmaDataLength == 16)
+            {
+                bufferSize *= 2;
+            }
+            // if this is full word transfer, need to multiply size by 4
+            else if (dObj->dmaDataLength == 32)
+            {
+                bufferSize *= 4;
+            } 
+            // Invalidate cache to force CPU to read from SRAM instead
+            SCB_InvalidateDCache_by_Addr((uint32_t*)pLinkedListDesc[0].mbr_da, bufferSize);
+        }
+        /************ end of E70 specific code ********************/
+
+        if ((void*)NULL!=callBack)
+        {
+            XDMAC_ChannelCallbackRegister(dObj->rxDMAChannel,(XDMAC_CHANNEL_CALLBACK)_LinkedListCallBack, (uintptr_t)callBack);
+             
+            if (blockInt)
+            {
+                // disable end of linked list interrupt, and enable end of block instead
+                XDMAC_REGS->XDMAC_CHID[dObj->rxDMAChannel].XDMAC_CID= XDMAC_CID_LID_Msk ;        
+                XDMAC_REGS->XDMAC_CHID[dObj->rxDMAChannel].XDMAC_CIE= XDMAC_CIE_BIE_Msk ;
+            }
+        }
+#endif
+    }
+}
+
+void DRV_I2S_ReadNextLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW_1* pLinkedListDesc,
+        uint16_t currDescrip, uint16_t nextDescrip, uint16_t nextNextDescrip, uint8_t* buffer, uint32_t bufferSize)
+{
+    DRV_I2S_OBJ * dObj = NULL;
+    if( false == _DRV_I2S_ValidateClientHandle(dObj, handle))
+    {
+        return;
+    }
+    dObj = &gDrvI2SObj[handle]; 
+
+#if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+    /************ code specific to SAM E70 ********************/
+    // Check if the data cache is enabled
+    if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
+    {
+        // Flush cache to SRAM so DMA reads correct data
+        SCB_CleanDCache_by_Addr((uint32_t*)&pLinkedListDesc[currDescrip], sizeof(XDMAC_DESCRIPTOR_VIEW_1));
+        SCB_CleanDCache_by_Addr((uint32_t*)&pLinkedListDesc[nextDescrip], sizeof(XDMAC_DESCRIPTOR_VIEW_1));
+    }
+    /************ end of E70 specific code ********************/
+#endif   
+    pLinkedListDesc[nextDescrip].mbr_da = (uint32_t)buffer;
+    // if this is half word transfer, need to divide size by 2
+    uint32_t blockLength = bufferSize;           
+    if (dObj->dmaDataLength == 16)
+    {
+        blockLength /= 2;
+    }
+    // if this is full word transfer, need to divide size by 4
+    else if (dObj->dmaDataLength == 32)
+    {
+        blockLength /= 4;
+    }    
+    pLinkedListDesc[nextDescrip].mbr_ubc.blockDataLength = blockLength;
+    // if nextDescrip same as nextNextDescrip, then will loop
+    pLinkedListDesc[nextDescrip].mbr_nda = (uint32_t)&pLinkedListDesc[nextNextDescrip];
+    // switch from currDescrip to nextDescrip next time
+    pLinkedListDesc[currDescrip].mbr_nda = (uint32_t)&pLinkedListDesc[nextDescrip];
+#if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+    /************ code specific to SAM E70 ********************/
+    // Check if the data cache is enabled
+    if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
+    {
+        // Invalidate cache to force CPU to read from SRAM instead
+        SCB_InvalidateDCache_by_Addr((uint32_t*)buffer, bufferSize);
+    }
+    /************ end of E70 specific code ********************/
+#endif 
+}
+
+</#if>
