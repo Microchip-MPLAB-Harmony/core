@@ -44,21 +44,27 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #ifndef SYS_DMA_MAPPING_H
 #define SYS_DMA_MAPPING_H
 
+<#if core.DMA_NAME??>
+<#assign PLIB_NAME  = core.DMA_NAME?string>
+<#assign PLIB_NAME_LC  = core.DMA_NAME?lower_case>
+</#if>
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: DMA System Service Mapping
 // *****************************************************************************
 // *****************************************************************************
-<#if core.XDMAC_ENABLE?has_content && core.XDMAC_ENABLE == true>
-#include "peripheral/xdmac/plib_xdmac.h"
 
-#define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)  XDMAC_ChannelCallbackRegister((XDMAC_CHANNEL)channel, (XDMAC_CHANNEL_CALLBACK)eventHandler, context)
+<#if core.DMA_ENABLE?has_content && core.DMA_ENABLE == true>
+#include "peripheral/${PLIB_NAME_LC}/plib_${PLIB_NAME_LC}0.h"
 
-#define SYS_DMA_ChannelTransfer(channel, srcAddr, destAddr, blockSize)  XDMAC_ChannelTransfer((XDMAC_CHANNEL)channel, srcAddr, destAddr, blockSize)
+#define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)  ${PLIB_NAME}0_ChannelCallbackRegister((XDMAC_CHANNEL)channel, (XDMAC_CHANNEL_CALLBACK)eventHandler, context)
 
-#define SYS_DMA_ChannelIsBusy(channel)  XDMAC_ChannelIsBusy((XDMAC_CHANNEL)channel)
+#define SYS_DMA_ChannelTransfer(channel, srcAddr, destAddr, blockSize)  ${PLIB_NAME}0_ChannelTransfer((XDMAC_CHANNEL)channel, srcAddr, destAddr, blockSize)
 
-#define SYS_DMA_ChannelDisable(channel)  XDMAC_ChannelDisable((XDMAC_CHANNEL)channel)
+#define SYS_DMA_ChannelIsBusy(channel)  ${PLIB_NAME}0_ChannelIsBusy((${PLIB_NAME}_CHANNEL)channel)
+
+#define SYS_DMA_ChannelDisable(channel)  ${PLIB_NAME}0_ChannelDisable((${PLIB_NAME}_CHANNEL)channel)
 <#else>
 
 #define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)
