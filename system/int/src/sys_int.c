@@ -92,7 +92,8 @@ void SYS_INT_Restore( INT_CONTROLLER_STATUS state )
     }
     else
     {
-        /* Interrupt controller was not enabled */
+		__disable_irq();
+		__DMB();
     }
 
     return;
