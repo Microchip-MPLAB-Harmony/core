@@ -169,8 +169,8 @@ void SYS_INT_Enable( void );
        enabled within the interrupt controller.
 
    Precondition:
-    SYS_INT_Initialize must have been called.
-
+	None.
+ 
    Parameters:
     None.
 
@@ -206,7 +206,7 @@ INT_CONTROLLER_STATUS SYS_INT_Disable( void );
        to avoid spurious interrupts to the system in certain scenarios.
 
    Precondition:
-    SYS_INT_Initialize must have been called.
+    None.
 
    Parameters:
     None.
@@ -248,8 +248,7 @@ bool SYS_INT_IsEnabled( void );
        previously obtained state.
 
    Precondition:
-    SYS_INT_Initialize must have been called.
-       SYS_INT_Disable must have been called and INT_CONTROLLER_STATUS is available.
+    SYS_INT_Disable must have been called and INT_CONTROLLER_STATUS is available.
 
    Parameters:
     INT_CONTROLLER_STATUS - Interrupt controller status prior to disabling
@@ -283,7 +282,7 @@ void SYS_INT_Restore( INT_CONTROLLER_STATUS state );
        controller level.
 
    Precondition:
-    SYS_INT_Initialize must have been called.
+    None.
 
    Parameters:
     source - Interrupt source/line available at interrupt controller.
@@ -320,7 +319,7 @@ void SYS_INT_SourceEnable( INT_SOURCE source );
        level.
 
    Precondition:
-    SYS_INT_Initialize must have been called.
+    None.
 
    Parameters:
     source - Interrupt source/line available at interrupt controller.
@@ -357,7 +356,7 @@ bool SYS_INT_SourceDisable( INT_SOURCE source );
        source/line at the interrupt controller level.
 
    Precondition:
-    SYS_INT_Initialize must have been called.
+    None.
 
    Parameters:
     source - Interrupt source/line available at interrupt controller.
@@ -392,7 +391,7 @@ bool SYS_INT_SourceIsEnabled( INT_SOURCE source );
        at the interrupt controller level.
 
    Precondition:
-    SYS_INT_Initialize must have been called.
+    None.
 
    Parameters:
     source - Interrupt source/line available at interrupt controller.
@@ -428,7 +427,7 @@ bool SYS_INT_SourceStatusGet( INT_SOURCE source );
        hardware.
 
    Precondition:
-    SYS_INT_Initialize must have been called.
+    None.
 
    Parameters:
     source - Interrupt source/line available at interrupt controller.
@@ -462,7 +461,7 @@ void SYS_INT_SourceStatusSet( INT_SOURCE source );
        interrupt condition has already been cleared in hardware.
 
    Precondition:
-    SYS_INT_Initialize must have been called.
+    None.
 
    Parameters:
     source - Interrupt source/line available at interrupt controller.
