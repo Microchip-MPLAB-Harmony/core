@@ -70,7 +70,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     <#lt>#define SYS_FS_CWD_STRING_LEN             ${SYS_FS_CWD_STRING_LEN}
 </#if>
 
-<#if Harmony.SELECT_RTOS != "BareMetal">
+<#if HarmonyCore.SELECT_RTOS != "BareMetal">
     <#lt>/* File System RTOS Configurations*/
     <#lt>#define SYS_FS_STACK_SIZE                 ${SYS_FS_RTOS_STACK_SIZE}
     <#lt>#define SYS_FS_PRIORITY                   ${SYS_FS_RTOS_TASK_PRIORITY}

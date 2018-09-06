@@ -27,7 +27,7 @@ def instantiateComponent(sysFSComponent):
     sysFSRTOSMenu.setLabel("RTOS settings")
     sysFSRTOSMenu.setDescription("RTOS settings")
     sysFSRTOSMenu.setVisible((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != 0))
-    sysFSRTOSMenu.setDependencies(showRTOSMenu, ["Harmony.SELECT_RTOS"])
+    sysFSRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS"])
     
     sysFSRTOSTask = sysFSComponent.createComboSymbol("SYS_FS_RTOS", sysFSRTOSMenu, ["Standalone"])
     sysFSRTOSTask.setLabel("Run Library Tasks As")
@@ -347,7 +347,7 @@ def instantiateComponent(sysFSComponent):
     sysFSSystemRtosTaskFile.setSourcePath("/system/fs/templates/system/system_rtos_tasks.c.ftl")
     sysFSSystemRtosTaskFile.setMarkup(True)
     sysFSSystemRtosTaskFile.setEnabled((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != 0))
-    sysFSSystemRtosTaskFile.setDependencies(genRtosTask, ["Harmony.SELECT_RTOS"])
+    sysFSSystemRtosTaskFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS"])
 
 ###########################################################################################################
 deviceNames = { 'SYS_FS_MEDIA_TYPE_NVM' : '/dev/nvma',

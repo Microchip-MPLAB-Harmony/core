@@ -10,7 +10,7 @@
     <#lt>#define DRV_MEMORY_DEVICE_MEDIA_SIZE         ${.vars["${DRV_MEMORY_DEVICE?lower_case}"].MEMORY_MEDIA_SIZE}UL
 </#if>
 
-<#if Harmony.SELECT_RTOS != "BareMetal">
+<#if HarmonyCore.SELECT_RTOS != "BareMetal">
     <#lt>/* Memory Driver Instance ${INDEX?string} RTOS Configurations*/
     <#lt>#define DRV_MEMORY_STACK_SIZE_IDX${INDEX?string}           ${DRV_MEMORY_RTOS_STACK_SIZE}
     <#lt>#define DRV_MEMORY_PRIORITY_IDX${INDEX?string}             ${DRV_MEMORY_RTOS_TASK_PRIORITY}

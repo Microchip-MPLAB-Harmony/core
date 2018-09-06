@@ -50,7 +50,7 @@ def instantiateComponent(sdhcComponent, index):
 	sdhcRTOSMenu.setLabel("RTOS Configuration")
 	sdhcRTOSMenu.setDescription("RTOS Configuration")
 	sdhcRTOSMenu.setVisible(False)
-	sdhcRTOSMenu.setDependencies(showRTOSMenu, ["USE_DRV_SDHC","Harmony.SELECT_RTOS"])
+	sdhcRTOSMenu.setDependencies(showRTOSMenu, ["USE_DRV_SDHC","HarmonyCore.SELECT_RTOS"])
 
 	sdhcRTOSTask = sdhcComponent.createComboSymbol("DRV_SDHC_RTOS", sdhcRTOSMenu, ["Standalone"])
 	sdhcRTOSTask.setLabel("Run Library Tasks As")

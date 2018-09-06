@@ -162,7 +162,7 @@ def instantiateComponent(memoryComponent, index):
     memoryRTOSMenu.setLabel("RTOS settings")
     memoryRTOSMenu.setDescription("RTOS settings")
     memoryRTOSMenu.setVisible((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != 0))
-    memoryRTOSMenu.setDependencies(showRTOSMenu, ["Harmony.SELECT_RTOS"])
+    memoryRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS"])
 
     memoryRTOSTask = memoryComponent.createComboSymbol("DRV_MEMORY_RTOS", memoryRTOSMenu, ["Standalone"])
     memoryRTOSTask.setLabel("Run Library Tasks As")
@@ -313,7 +313,7 @@ def instantiateComponent(memoryComponent, index):
     memorySystemRtosTasksFile.setSourcePath("driver/memory/templates/system/system_rtos_tasks.c.ftl")
     memorySystemRtosTasksFile.setMarkup(True)
     memorySystemRtosTasksFile.setEnabled((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != 0))
-    memorySystemRtosTasksFile.setDependencies(genRtosTask, ["Harmony.SELECT_RTOS"])
+    memorySystemRtosTasksFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS"])
 
 def destroyComponent(memoryComponent):
     numInstances = Database.getSymbolValue("drv_memory", "DRV_MEMORY_NUM_INSTANCES")   

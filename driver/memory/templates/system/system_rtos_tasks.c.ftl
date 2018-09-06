@@ -1,4 +1,4 @@
-<#if Harmony.SELECT_RTOS == "FreeRTOS">
+<#if HarmonyCore.SELECT_RTOS == "FreeRTOS">
     <#lt>void _DRV_MEMORY_${INDEX?string}_Tasks(  void *pvParameters  )
     <#lt>{
     <#lt>    while(1)

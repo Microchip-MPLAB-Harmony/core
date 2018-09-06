@@ -23,9 +23,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  *******************************************************************************/
 -->
 
-<#if Harmony.SELECT_RTOS == "BareMetal">
+<#if HarmonyCore.SELECT_RTOS == "BareMetal">
     <#lt>SYS_FS_Tasks();
-<#elseif Harmony.SELECT_RTOS == "FreeRTOS">
+<#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
     <#lt>    xTaskCreate( _SYS_FS_Tasks,
     <#lt>        "SYS_FS_TASKS",
     <#lt>        SYS_FS_STACK_SIZE,

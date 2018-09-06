@@ -23,7 +23,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  *******************************************************************************/
 -->
 
-<#if Harmony.SELECT_RTOS == "FreeRTOS">
+<#if HarmonyCore.SELECT_RTOS == "FreeRTOS">
     <#lt>void _SYS_FS_Tasks(  void *pvParameters  )
     <#lt>{
     <#lt>    while(1)
