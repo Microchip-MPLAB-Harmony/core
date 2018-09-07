@@ -261,14 +261,13 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_TotalHeapSize = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_TOTAL_HEAP_SIZE", freeRtosSymMenu)
     freeRtosSym_TotalHeapSize.setLabel("Total heap size")
     freeRtosSym_TotalHeapSize.setDescription("FreeRTOS - Total heap size")
-    freeRtosSym_TotalHeapSize.setDefaultValue(40960)
     freeRtosSym_TotalHeapSize.setDependencies(freeRtosTotalHeapSizeVisibility, ["FREERTOS_MEMORY_MANAGEMENT_CHOICE"])
 
     freeRtosSym_MaxTaskNameLen = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_MAX_TASK_NAME_LEN", freeRtosSymMenu)
     freeRtosSym_MaxTaskNameLen.setLabel("Maximum task name length")
     freeRtosSym_MaxTaskNameLen.setDescription("FreeRTOS - Maximum task name length")
     freeRtosSym_MaxTaskNameLen.setMin(1)
-    freeRtosSym_MaxTaskNameLen.setMax(1024)
+    freeRtosSym_MaxTaskNameLen.setMax(32)
     freeRtosSym_MaxTaskNameLen.setDefaultValue(16)
 
     freeRtosSym_16BitTicks = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_USE_16_BIT_TICKS", freeRtosSymMenu)
@@ -520,11 +519,6 @@ def instantiateComponent(thirdPartyFreeRTOS):
 
     configName = Variables.get("__CONFIGURATION_NAME")
 
-    freeRtosdefSym = thirdPartyFreeRTOS.createSettingSymbol("FREERTOS_XC32_INCLUDE_DIRS", None)
-    freeRtosdefSym.setCategory("C32")
-    freeRtosdefSym.setKey("extra-include-directories")
-    freeRtosdefSym.setValue("../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/CM7;../src/third_party/rtos/FreeRTOS/Source/Include;")
-    freeRtosdefSym.setAppend(True, ";")
 
     freeRtosConfHeaderFile = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_CONFIG_H", None)
     freeRtosConfHeaderFile.setSourcePath("templates/FreeRTOSConfig.h.ftl")
@@ -596,22 +590,6 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosStreamBuffer.setType("SOURCE")
     freeRtosStreamBuffer.setMarkup(False)
     freeRtosStreamBuffer.setDependencies(buildStreamBuffer, ["FREERTOS_USE_TASK_NOTIFICATIONS"])
-
-    freeRtosPortSource = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SAM_PORT_C", None)
-    freeRtosPortSource.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.c")
-    freeRtosPortSource.setOutputName("port.c")
-    freeRtosPortSource.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/CM7")
-    freeRtosPortSource.setProjectPath("FreeRTOS/Source/portable/GCC/SAM/CM7")
-    freeRtosPortSource.setType("SOURCE")
-    freeRtosPortSource.setMarkup(False)
-
-    freeRtosPortHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SAM_PORTMACRO_H", None)
-    freeRtosPortHeader.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/portmacro.h")
-    freeRtosPortHeader.setOutputName("portmacro.h")
-    freeRtosPortHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/CM7")
-    freeRtosPortHeader.setProjectPath("FreeRTOS/Source/portable/GCC/SAM/CM7")
-    freeRtosPortHeader.setType("HEADER")
-    freeRtosPortHeader.setMarkup(False)
 
     freeRtosMemMangHeap1 = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_HEAP_1_C", None)
     freeRtosMemMangHeap1.setSourcePath("../CMSIS-FreeRTOS/Source/portable/MemMang/heap_1.c")
@@ -783,3 +761,8 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSystemTasksFile.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_CALL_SCHEDULAR")
     freeRtosSystemTasksFile.setSourcePath("templates/system/system_rtos_tasks.c.ftl")
     freeRtosSystemTasksFile.setMarkup(True) 
+
+    armArch     = Database.getSymbolValue("core", "CoreArchitecture")
+
+    # load family specific configuration
+    execfile(Module.getPath() + "config/arch/arm/devices_" + armArch.replace("-", "_").replace("+", "") + "/freertos_config.py")
