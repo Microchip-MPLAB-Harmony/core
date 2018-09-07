@@ -216,7 +216,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_ExpectedIdleTime.setVisible(False)
     freeRtosSym_ExpectedIdleTime.setDependencies(freeRtosExpIdleTimeVisibility, ["FREERTOS_TICKLESS_IDLE_CHOICE"])
 
-    cpuclk = Database.getSymbolValue("core", "PROCESSORCLK_FREQ")
+    cpuclk = Database.getSymbolValue("core", "CPU_CLOCK_FREQUENCY")
     cpuclk = int(cpuclk)
 
     freeRtosSym_CpuClockHz = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_CPU_CLOCK_HZ", freeRtosSymMenu)
