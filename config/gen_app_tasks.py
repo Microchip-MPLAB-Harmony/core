@@ -237,7 +237,7 @@ genAppTasks.setType("STRING")
 genAppTasks.setOutputName("core.LIST_SYSTEM_TASKS_C_GEN_APP")
 genAppTasks.setSourcePath("templates/gen_app_tasks_macros.ftl")
 genAppTasks.setMarkup(True)
-genAppTasks.setEnabled(False)
+genAppTasks.setEnabled(True)
 genAppTasks.setDependencies(genBareMetalAppTask, ["SELECT_RTOS"])
 
 genAppRtosTasks = harmonyCoreComponent.createFileSymbol("GEN_RTOS_APP_TASKS", None)
