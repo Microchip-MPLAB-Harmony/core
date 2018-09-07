@@ -346,7 +346,7 @@ def instantiateComponent(sysFSComponent):
     sysFSSystemRtosTaskFile.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
     sysFSSystemRtosTaskFile.setSourcePath("/system/fs/templates/system/system_rtos_tasks.c.ftl")
     sysFSSystemRtosTaskFile.setMarkup(True)
-    sysFSSystemRtosTaskFile.setEnabled((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != 0))
+    sysFSSystemRtosTaskFile.setEnabled((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") == "FreeRTOS"))
     sysFSSystemRtosTaskFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS"])
 
 ###########################################################################################################

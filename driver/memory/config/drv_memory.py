@@ -312,7 +312,7 @@ def instantiateComponent(memoryComponent, index):
     memorySystemRtosTasksFile.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
     memorySystemRtosTasksFile.setSourcePath("driver/memory/templates/system/system_rtos_tasks.c.ftl")
     memorySystemRtosTasksFile.setMarkup(True)
-    memorySystemRtosTasksFile.setEnabled((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != 0))
+    memorySystemRtosTasksFile.setEnabled((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") == "FreeRTOS"))
     memorySystemRtosTasksFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS"])
 
 def destroyComponent(memoryComponent):
