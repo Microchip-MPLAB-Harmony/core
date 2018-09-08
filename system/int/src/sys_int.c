@@ -69,11 +69,11 @@ void SYS_INT_Enable( void )
 
 
 // *****************************************************************************
-INT_CONTROLLER_STATUS SYS_INT_Disable( void )
+bool SYS_INT_Disable( void )
 {
-    INT_CONTROLLER_STATUS processorStatus;
+    bool processorStatus;
 
-    processorStatus = (INT_CONTROLLER_STATUS) (__get_PRIMASK() == 0);
+    processorStatus = (bool) (__get_PRIMASK() == 0);
 
     __disable_irq();
     __DMB();
@@ -83,9 +83,9 @@ INT_CONTROLLER_STATUS SYS_INT_Disable( void )
 
 
 // *****************************************************************************
-void SYS_INT_Restore( INT_CONTROLLER_STATUS state )
+void SYS_INT_Restore( bool state )
 {
-    if(0 != state )
+    if(state = true )
     {
         __DMB();
         __enable_irq();
@@ -101,7 +101,7 @@ void SYS_INT_Restore( INT_CONTROLLER_STATUS state )
 
 bool SYS_INT_SourceDisable( INT_SOURCE source )
 {
-    INT_CONTROLLER_STATUS processorStatus;
+    bool processorStatus;
     bool intSrcStatus;
 
     processorStatus = SYS_INT_Disable();

@@ -96,24 +96,6 @@ typedef IRQn_Type INT_SOURCE;
 
 
 // *****************************************************************************
-/* Interrupt Controller Status
-
-   Summary:
-    Defines the data type for the Interrupt controller status.
-
-   Description:
-    This data type will be used to get the interrupt controller status while
-    disabling the interrupt controller and restoring the interrupt controller
-    state later.
-
-   Remarks:
-    None.
-*/
-
-typedef uint32_t INT_CONTROLLER_STATUS;
-
-
-// *****************************************************************************
 // *****************************************************************************
 // Section: Interface Routines
 // *****************************************************************************
@@ -127,15 +109,13 @@ typedef uint32_t INT_CONTROLLER_STATUS;
     void SYS_INT_Enable( void )
 
    Summary:
-    Enables the interrupt controller.
+    Enable Global Interrupt
 
    Description:
-    This function enables the interrupt controller of the device if it is not
-    active and enables the global interrupt, allowing enabled sources to
-    interrupt the CPU.
+    This function enables global interrupt.
 
    Precondition:
-    Interrupt controller initialize must have been called.
+    None
 
    Parameters:
     None.
@@ -157,32 +137,39 @@ void SYS_INT_Enable( void );
 
 // *****************************************************************************
 /* Function:
-    INT_CONTROLLER_STATUS SYS_INT_Disable( void )
+    bool SYS_INT_Disable( void )
 
    Summary:
-    Disables the interrupt controller.
+    Disable Global Interrupt
 
    Description:
-    This function disables the interrupt controller of the device, masking
-       the global interrupt.
-       This will effectively suspend all the interrupt sources that are
-       enabled within the interrupt controller.
+    This function disables global interrupt and returns the state of the global interrupt prior to disabling it.
+    When global interrupt is disabled, only NMI and HardFault exceptions are allowed.
+    This may be used to disable global interrupt during critial section and restore the global interrupt state after the critial section.
 
    Precondition:
-	None.
- 
+    None.
+
    Parameters:
     None.
 
    Returns:
-    INT_CONTROLLER_STATUS - Interrupt controller status prior to disabling
-       the controller, preventing any interrupts from occuring.
+    This function disables the global interrupt and return the state of global interrupt prior to disabling it.
+    The state information will be used to restore the global interrput to the original state after the critical section
+    true -  Global Interrupt is enabled
+    false -  Global Interrupt is disabled
 
   Example:
     <code>
-       INT_CONTROLLER_STATUS status = 0;
+      bool interruptState;
 
-       status = SYS_INT_Disable();
+      // Save global interrupt state and disable interrupt
+      interruptState = SYS_INT_Disable();
+
+      // Critical Section
+
+      // Restore interrupt state
+      SYS_INT_Restore(interruptState)
     </code>
 
   Remarks:
@@ -190,7 +177,7 @@ void SYS_INT_Enable( void );
        global interrupt status (whether it was enabled or disabled).
 */
 
-INT_CONTROLLER_STATUS SYS_INT_Disable( void );
+bool SYS_INT_Disable( void );
 
 
 // *****************************************************************************
@@ -201,9 +188,7 @@ INT_CONTROLLER_STATUS SYS_INT_Disable( void );
     Returns the interrupt controller's global enable/disable status.
 
    Description:
-    This function returns the interrupt controller's global enable/disable status.
-       This may be helpful to check the status while disabling interrupt controller
-       to avoid spurious interrupts to the system in certain scenarios.
+    This function returns global interrupt enable status.
 
    Precondition:
     None.
@@ -212,20 +197,14 @@ INT_CONTROLLER_STATUS SYS_INT_Disable( void );
     None.
 
    Returns:
-    true - Interrupt controller is enabled.
-    false - Interrupt controller is disabled.
+    true - Global Interrupt is enabled.
+    false - Gloable Interrupt is disabled.
 
   Example:
     <code>
-       INT_CONTROLLER_STATUS status = 0;
-
        if(true == SYS_INT_IsEnabled())
        {
-              status = SYS_INT_Disable();
-       }
-       else
-       {
-              //Interrupt controller is already disabled
+             // Gloable Interrupt is enabled
        }
     </code>
 
@@ -238,36 +217,42 @@ bool SYS_INT_IsEnabled( void );
 
 // *****************************************************************************
 /* Function:
-    void SYS_INT_Restore( INT_CONTROLLER_STATUS state )
+    void SYS_INT_Restore( bool state )
 
    Summary:
-    Restores the interrupt controller state.
+    Restores the interrupt controller to the state specificed in the parameter.
 
    Description:
-    This function restores the interrupt controller of the device to the
-       previously obtained state.
+    This function restores the interrupt controller to the state specified in the parmeters.
 
    Precondition:
-    SYS_INT_Disable must have been called and INT_CONTROLLER_STATUS is available.
+    SYS_INT_Disable must have been called to get previous state of the global interrupt.
 
    Parameters:
-    INT_CONTROLLER_STATUS - Interrupt controller status prior to disabling
-       the controller, to prevent any interrupts.
+    true -  Enable Global Interrupt
+    false -  Disable Global Interrupt
 
    Returns:
     None.
 
   Example:
     <code>
-       // intStatus is the return value of SYS_INT_Disable
-       SYS_INT_Restore( intStatus );
+      bool interruptState;
+
+      // Save global interrupt state and disable interrupt
+      interruptState = SYS_INT_Disable();
+
+      // Critical Section
+
+      // Restore interrupt state
+      SYS_INT_Restore(interruptState)
     </code>
 
   Remarks:
     None.
 */
 
-void SYS_INT_Restore( INT_CONTROLLER_STATUS state );
+void SYS_INT_Restore( bool state );
 
 
 // *****************************************************************************
@@ -279,7 +264,7 @@ void SYS_INT_Restore( INT_CONTROLLER_STATUS state );
 
    Description:
     This function enables the specified interrupt source/line at the interrupt
-       controller level.
+    controller level.
 
    Precondition:
     None.
