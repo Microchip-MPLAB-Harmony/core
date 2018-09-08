@@ -254,7 +254,7 @@ void SYS_DMA_ChannelCallbackRegister (DMA_CHANNEL channel, const SYS_DMA_CHANNEL
 
 //******************************************************************************
 /* Function:
-    void SYS_DMA_ChannelTransfer
+    bool SYS_DMA_ChannelTransfer
     (
         DMA_CHANNEL channel,
         const void *srcAddr,
@@ -268,7 +268,8 @@ void SYS_DMA_ChannelCallbackRegister (DMA_CHANNEL channel, const SYS_DMA_CHANNEL
 
   Description:
     This function adds a single block data transfer characteristics for a
-    specific DMA channel. It also enables the channel to start data transfer.
+    specific XDMAC channel id it is not busy already. It also enables the
+    channel to start data transfer.
 
     If the requesting client registered an event callback with the PLIB,
     the PLIB will issue a SYS_DMA_TRANSFER_COMPLETE event if the transfer was
@@ -288,7 +289,8 @@ void SYS_DMA_ChannelCallbackRegister (DMA_CHANNEL channel, const SYS_DMA_CHANNEL
     blockSize - Size of the transfer block
 
   Returns:
-    None.
+    True - If transfer request is accepted.
+    False - If previous transfer is in progress and the request is rejected.
 
   Example:
     <code>
@@ -303,7 +305,14 @@ void SYS_DMA_ChannelCallbackRegister (DMA_CHANNEL channel, const SYS_DMA_CHANNEL
     SYS_DMA_ChannelCallbackRegister(APP_DMA_TransferEventHandler,
         (uintptr_t)&myAppObj);
 
-    SYS_DMA_ChannelTransfer(DMA_CHANNEL_1, srcAddr, destAddr, size);
+    if (SYS_DMA_ChannelTransfer(DMA_CHANNEL_1, srcAddr, destAddr, size) == true)
+    {
+        // do something else
+    }
+    else
+    {
+        // try again?
+    }
     </code>
 
   Remarks:
@@ -316,7 +325,7 @@ void SYS_DMA_ChannelCallbackRegister (DMA_CHANNEL channel, const SYS_DMA_CHANNEL
     </code>
 */
 
-void SYS_DMA_ChannelTransfer (DMA_CHANNEL channel, const void *srcAddr, const void *destAddr, size_t blockSize);
+bool SYS_DMA_ChannelTransfer (DMA_CHANNEL channel, const void *srcAddr, const void *destAddr, size_t blockSize);
 
 
 //******************************************************************************
