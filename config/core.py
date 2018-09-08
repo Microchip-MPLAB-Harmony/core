@@ -7,7 +7,7 @@ thirdPartyFreeRTOS.addCapability("FreeRTOS", "RTOS", True)
 
 harmonySystemService = Module.CreateSharedComponent("HarmonyCore", "Core", "/Harmony", "config/harmonycore.py")
 harmonySystemService.setDisplayType("Harmony Core Service")
-harmonySystemService.addDependency("harmony_RTOS_dependency", "RTOS", True, True)
+harmonySystemService.addDependency("harmony_RTOS_dependency", "RTOS", True, False)
 harmonySystemService.addCapability("HarmonyCoreService", "Core Service", True)
 
 #load harmony drivers and system services from the list 
@@ -26,7 +26,7 @@ for coreComponent in coreComponents:
             Component.addCapability("sys_" + Name, Capability)
             if "dependency" in coreComponent:
                 for item in coreComponent['dependency']:
-                    Component.addDependency("sys_" + Name + "_" + item + "_dependency", item)
+                    Component.addDependency("sys_" + Name + "_" + item + "_dependency", item, False, True)
             Component.setDisplayType("System Service")
         #create driver component
         else:
@@ -41,6 +41,6 @@ for coreComponent in coreComponents:
             Component.setDisplayType("Driver")
             if "dependency" in coreComponent:
                 for item in coreComponent['dependency']:
-                    Component.addDependency("drv_" + Name + "_" + item + "_dependency", item)
+                    Component.addDependency("drv_" + Name + "_" + item + "_dependency", item, False, True)
 
         Component.addDependency("drv_" + Name + "_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
