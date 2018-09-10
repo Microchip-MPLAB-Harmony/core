@@ -50,9 +50,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include <stdio.h>
-#include "configuration.h"
-#include "drv_memory_definitions.h"
-#include "peripheral/efc/plib_${DRV_MEMORY_DEVICE?lower_case}.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

@@ -16,7 +16,8 @@ def setFileSystem(symbol, event):
         symbol.clearValue()
         symbol.setValue(True, 1)
     else:
-        fsCounter = fsCounter - 1
+        if (fsCounter != 0):
+            fsCounter = fsCounter - 1
 
     if (fsCounter == 0):
         symbol.clearValue()
@@ -26,13 +27,6 @@ def instantiateComponent(memoryCommonComponent):
     global memoryCommonFsEnable
 
     res = Database.activateComponents(["HarmonyCore"])
-
-    memoryCommonSymNumInst = memoryCommonComponent.createIntegerSymbol("DRV_MEMORY_NUM_INSTANCES", None)
-    memoryCommonSymNumInst.setLabel("Number of Instances")
-    memoryCommonSymNumInst.setMin(1)
-    memoryCommonSymNumInst.setMax(10)
-    memoryCommonSymNumInst.setVisible(False)
-    memoryCommonSymNumInst.setUseSingleDynamicValue(True)
 
     memoryCommonMode = memoryCommonComponent.createKeyValueSetSymbol("DRV_MEMORY_COMMON_MODE", None)
     memoryCommonMode.setLabel("Driver Mode")
@@ -54,7 +48,6 @@ def instantiateComponent(memoryCommonComponent):
     memoryCommonFsEnable.setDefaultValue(False)
     memoryCommonFsEnable.setVisible(False)
     memoryCommonFsEnable.setDependencies(setFileSystem, ["DRV_MEMORY_COMMON_FS_COUNTER"])
-
 
     ############################################################################
     #### Code Generation ####

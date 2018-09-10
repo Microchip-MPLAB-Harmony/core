@@ -9,6 +9,7 @@ memoryDeviceComment         = None
 memoryPlibSourceFile        = None
 memoryPlibHeaderFile        = None
 memoryPlibSystemDefFile     = None
+memoryFsEnable              = None
 
 mediaTypes =  ["SYS_FS_MEDIA_TYPE_NVM",
                 "SYS_FS_MEDIA_TYPE_RAM",
@@ -88,6 +89,7 @@ def instantiateComponent(memoryComponent, index):
     global memoryPlibHeaderFile
     global memoryPlibSystemDefFile
     global memoryPlibUsed
+    global memoryFsEnable
 
     # Enable dependent Harmony core components
     Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
@@ -98,10 +100,6 @@ def instantiateComponent(memoryComponent, index):
 
     Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA")
     Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True, 2)
-
-    numInstances = Database.getSymbolValue("drv_memory", "DRV_MEMORY_NUM_INSTANCES")
-    numInstances = numInstances + 1
-    Database.setSymbolValue("drv_memory", "DRV_MEMORY_NUM_INSTANCES", numInstances, 1)
 
     memoryIndex = memoryComponent.createIntegerSymbol("INDEX", None)
     memoryIndex.setVisible(False)
@@ -315,12 +313,7 @@ def instantiateComponent(memoryComponent, index):
     memorySystemRtosTasksFile.setEnabled((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") == "FreeRTOS"))
     memorySystemRtosTasksFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS"])
 
-def destroyComponent(memoryComponent):
-    numInstances = Database.getSymbolValue("drv_memory", "DRV_MEMORY_NUM_INSTANCES")   
-    numInstances = numInstances - 1   
-    Database.setSymbolValue("drv_memory", "DRV_MEMORY_NUM_INSTANCES", numInstances, 1)
-
-def onDependentComponentAdded(memoryComponent, id, remoteComponent):
+def onDependencyConnected(connectionInfo):
     global memoryDeviceUsed
     global memoryDeviceComment
     global memoryDeviceEraseEnable
@@ -329,9 +322,11 @@ def onDependentComponentAdded(memoryComponent, id, remoteComponent):
     global memoryPlibSystemDefFile
     global memoryPlibUsed
 
-    if (id == "drv_memory_MEMORY_dependency") :
-        remoteId = remoteComponent.getID()
+    localComponent = connectionInfo["localComponent"]
+    remoteComponent = connectionInfo["remoteComponent"]
+    remoteId = connectionInfo["remoteComponent"].getID()
 
+    if (connectionInfo["dependencyID"] == "drv_memory_MEMORY_dependency"):
         memoryDeviceUsed.clearValue()
         memoryDeviceUsed.setValue(remoteId.upper(), 1)
 
@@ -352,7 +347,7 @@ def onDependentComponentAdded(memoryComponent, id, remoteComponent):
             memoryPlibHeaderFile.setEnabled(True)
             memoryPlibSystemDefFile.setEnabled(True)
 
-def onDependentComponentRemoved(memoryComponent, id, remoteComponent):
+def onDependencyDisconnected(connectionInfo):
     global memoryDeviceUsed
     global memoryDeviceComment
     global memoryDeviceEraseEnable
@@ -361,9 +356,11 @@ def onDependentComponentRemoved(memoryComponent, id, remoteComponent):
     global memoryPlibSystemDefFile
     global memoryPlibUsed
 
-    if (id == "drv_memory_MEMORY_dependency") :
-        remoteId = remoteComponent.getID()
+    localComponent = connectionInfo["localComponent"]
+    remoteComponent = connectionInfo["remoteComponent"]
+    remoteId = connectionInfo["remoteComponent"].getID()
 
+    if (connectionInfo["dependencyID"] == "drv_memory_MEMORY_dependency"):
         memoryDeviceUsed.clearValue()
 
         memoryPlibUsed.clearValue()
@@ -379,3 +376,23 @@ def onDependentComponentRemoved(memoryComponent, id, remoteComponent):
             memoryPlibSourceFile.setEnabled(False)
             memoryPlibHeaderFile.setEnabled(False)
             memoryPlibSystemDefFile.setEnabled(False)
+
+def onCapabilityConnected(connectionInfo):
+    global memoryFsEnable
+
+    capability = connectionInfo["capabilityID"]
+    localComponent = connectionInfo["localComponent"]
+    remoteComponent = connectionInfo["remoteComponent"]
+
+    if (remoteComponent.getID() == "sys_fs"):
+        memoryFsEnable.setValue(True, 1)
+
+def onCapabilityDisconnected(connectionInfo):
+    global memoryFsEnable
+
+    capability = connectionInfo["capabilityID"]
+    localComponent = connectionInfo["localComponent"]
+    remoteComponent = connectionInfo["remoteComponent"]
+
+    if (remoteComponent.getID() == "sys_fs"):
+        memoryFsEnable.setValue(False, 1)
