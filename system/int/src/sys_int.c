@@ -85,7 +85,7 @@ bool SYS_INT_Disable( void )
 // *****************************************************************************
 void SYS_INT_Restore( bool state )
 {
-    if(state = true )
+    if( state == true )
     {
         __DMB();
         __enable_irq();
