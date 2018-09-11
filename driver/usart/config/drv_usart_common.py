@@ -14,14 +14,6 @@ def instantiateComponent(usartComponent):
     usartMode.setVisible(True)
     usartMode.setDefaultValue(0)
 
-    usartSymNumInst = usartComponent.createIntegerSymbol("DRV_USART_NUM_INSTANCES", None)
-    usartSymNumInst.setLabel("Number of Instances")
-    usartSymNumInst.setMin(1)
-    usartSymNumInst.setMax(10)
-    usartSymNumInst.setDefaultValue(0)
-    usartSymNumInst.setUseSingleDynamicValue(True)
-    usartSymNumInst.setVisible(False)
-
     usartSymBufPool = usartComponent.createIntegerSymbol("DRV_USART_BUFFER_POOL_SIZE", None)
     usartSymBufPool.setLabel("Buffer Pool Size")
     usartSymBufPool.setMin(1)

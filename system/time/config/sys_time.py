@@ -107,14 +107,14 @@ def instantiateComponent(sysTimeComponent):
 ############################################################################
 #### Dependency ####
 ############################################################################
-def onDependentComponentAdded(sys_time, id, time):
-
-    if id == "sys_time_TMR_dependency" :
-        plibUsed = sys_time.getSymbolByID("SYS_TIME_PLIB")
+def onDependencyConnected(info):
+    if info["dependencyID"] == "sys_time_TMR_dependency" :
+        plibUsed = info["localComponent"].getSymbolByID("SYS_TIME_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(time.getID().upper() + "_CH0", 2)
+        remoteComponent = info["remoteComponent"]
+        plibUsed.setValue(sysTimePlibId + "_CH0", 2)
 
-        time.clearSymbolValue("TC0_ENABLE")
-        time.setSymbolValue("TC0_ENABLE", True, 2)
-        time.clearSymbolValue("TC0_OPERATING_MODE")
-        time.setSymbolValue("TC0_OPERATING_MODE", "Timer", 2)
+        remoteComponent.clearSymbolValue("TC0_ENABLE")
+        remoteComponent.setSymbolValue("TC0_ENABLE", True, 2)
+        remoteComponent.clearSymbolValue("TC0_OPERATING_MODE")
+        remoteComponent.setSymbolValue("TC0_OPERATING_MODE", "Timer", 2)

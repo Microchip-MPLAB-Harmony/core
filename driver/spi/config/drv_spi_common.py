@@ -11,12 +11,6 @@ def instantiateComponent(spiComponentCommon):
     spiMode.setVisible(True)
     spiMode.setDefaultValue(0)
 
-    spiSymNumInst = spiComponentCommon.createIntegerSymbol("DRV_SPI_NUM_INSTANCES", None)
-    spiSymNumInst.setLabel("Number of Instances")
-    spiSymNumInst.setDefaultValue(0)
-    spiSymNumInst.setVisible(False)
-    spiSymNumInst.setUseSingleDynamicValue(True)
-
     spiSymCommonSysCfgFile = spiComponentCommon.createFileSymbol("DRV_SPI_COMMON_CFG", None)
     spiSymCommonSysCfgFile.setType("STRING")
     spiSymCommonSysCfgFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_DRIVER_CONFIGURATION")

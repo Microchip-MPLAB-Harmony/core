@@ -177,14 +177,15 @@ def instantiateComponent(at25Component):
     at25SystemInitFile.setSourcePath("driver/at25/templates/system/initialize.c.ftl")
     at25SystemInitFile.setMarkup(True)
 
-def onDependentComponentAdded(at25Component, id, spi):
-    if id == "drv_at25_SPI_dependency" :
-        plibUsed = at25Component.getSymbolByID("DRV_AT25_PLIB")
+def onDependencyConnected(info):
+    if info["dependencyID"] == "drv_at25_SPI_dependency" :
+        plibUsed = info["localComponent"].getSymbolByID("DRV_AT25_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(spi.getID().upper(), 1)
-        Database.setSymbolValue(spi.getID(), "SPI_DRIVER_CONTROLLED", True, 1)
+        at25PlibId = info["remoteComponent"].getID().upper()
+        plibUsed.setValue(at25PlibId.upper(), 1)
+        Database.setSymbolValue(at25PlibId, "SPI_DRIVER_CONTROLLED", True, 1)
 
-def onDependentComponentRemoved(at25Component, id, spi):
-    if id == "drv_at25_SPI_dependency" :
-        Database.setSymbolValue(spi.getID(), "SPI_DRIVER_CONTROLLED", False, 1)
-
+def onDependencyDisconnected(info):
+    if info["dependencyID"] == "drv_at25_SPI_dependency":
+        at25PlibId = info["remoteComponent"].getID().upper()
+        Database.setSymbolValue(at25PlibId, "SPI_DRIVER_CONTROLLED", False, 1)

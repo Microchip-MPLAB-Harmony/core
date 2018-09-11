@@ -154,11 +154,6 @@ def instantiateComponent(usartComponent, index):
     #### Dependency ####
     ############################################################################
     # DRV_USART Common Dependency
-
-    numInstances  = Database.getSymbolValue("drv_usart", "DRV_USART_NUM_INSTANCES")
-    numInstances = numInstances + 1
-    Database.setSymbolValue("drv_usart", "DRV_USART_NUM_INSTANCES", numInstances, 1)
-
     bufPoolSize = Database.getSymbolValue("drv_usart", "DRV_USART_BUFFER_POOL_SIZE")
     Database.setSymbolValue("drv_usart", "DRV_USART_BUFFER_POOL_SIZE", (bufPoolSize + currentTxBufSize + currentRxBufSize), 1)
 
@@ -253,8 +248,8 @@ def instantiateComponent(usartComponent, index):
     usartSystemInitFile.setSourcePath("driver/usart/templates/system/system_initialize.c.ftl")
     usartSystemInitFile.setMarkup(True)
 
-def onDependentComponentAdded(drv_usart, id, usart):
-    if id == "drv_usart_USART_dependency" or id == "drv_usart_UART_dependency":
-        plibUsed = drv_usart.getSymbolByID("DRV_USART_PLIB")
+def onDependencyConnected(info):
+    if info["dependencyID"] == "drv_usart_USART_dependency" or info["dependencyID"]  == "drv_usart_UART_dependency":
+        plibUsed = info["localComponent"].getSymbolByID("DRV_USART_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(usart.getID().upper(), 2)
+        plibUsed.setValue(info["remoteComponent"].getID().upper(), 2)

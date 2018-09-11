@@ -2,16 +2,6 @@ def instantiateComponent(spiComponent, index):
     global drvSpiInstanceSpace
     drvSpiInstanceSpace = "drv_spi_" + str(index)
 
-    spiNumInstances = Database.getSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES")
-
-    if spiNumInstances is None:
-        spiNumInstances = 1
-    else:
-        spiNumInstances = spiNumInstances + 1
-
-    Database.clearSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES")
-    Database.setSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES", spiNumInstances, 1)
-
     # Enable "Generate Harmony Driver Common Files" option in MHC
     Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 1)
 
@@ -197,47 +187,52 @@ def instantiateComponent(spiComponent, index):
 def spiDriverMode (Sym, event):
     Sym.setValue(Database.getSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE"), 1)
 
-def onDependentComponentAdded(drv_spi, id, spi):
-    dmaRxRequestID = "DMA_CH_NEEDED_FOR_" + spi.getID().upper() + "_Receive"
-    dmaTxRequestID = "DMA_CH_NEEDED_FOR_" + spi.getID().upper() + "_Transmit"
-    dmaTxChannelID = "DMA_CH_FOR_" + spi.getID().upper() + "_Transmit"
-    dmaRxChannelID = "DMA_CH_FOR_" + spi.getID().upper() + "_Receive"
+def onDependencyConnected(info):
+    dmaRxRequestID = "DMA_CH_NEEDED_FOR_" + info["remoteComponent"].getID().upper() + "_Receive"
+    dmaTxRequestID = "DMA_CH_NEEDED_FOR_" + info["remoteComponent"].getID().upper() + "_Transmit"
+    dmaTxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Transmit"
+    dmaRxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Receive"
 
-    if id == "drv_spi_SPI_dependency" :
-        drv_spi.setSymbolValue("DRV_SPI_PLIB_CONNECTION", True, 2)
+    localComponent = connectionInfo["localComponent"]
 
-        plibUsed = drv_spi.getSymbolByID("DRV_SPI_PLIB")
+    if info["dependencyID"] == "drv_spi_SPI_dependency" :
+        localComponent.setSymbolValue("DRV_SPI_PLIB_CONNECTION", True, 2)
+        plibUsed = localComponent.getSymbolByID("DRV_SPI_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(spi.getID().upper(), 1)
-        Database.setSymbolValue(spi.getID(), "SPI_DRIVER_CONTROLLED", True, 1)
-        if drv_spi.getSymbolValue("DRV_SPI_TX_RX_DMA") == True:
+        plibUsed.setValue(info["remoteComponent"].getID().upper(), 1)
+        Database.setSymbolValue(info["remoteComponent"].getID().upper(), "SPI_DRIVER_CONTROLLED", True, 1)
+
+        if localComponent.getSymbolValue("DRV_SPI_TX_RX_DMA") == True:
             Database.setSymbolValue("core", dmaRxRequestID, True, 2)
             Database.setSymbolValue("core", dmaTxRequestID, True, 2)
 
             # Get the allocated channel and assign it
             txChannel = Database.getSymbolValue("core", dmaTxChannelID)
-            drv_spi.setSymbolValue("DRV_SPI_TX_DMA_CHANNEL", txChannel, 2)
+            localComponent.setSymbolValue("DRV_SPI_TX_DMA_CHANNEL", txChannel, 2)
             rxChannel = Database.getSymbolValue("core", dmaRxChannelID)
-            drv_spi.setSymbolValue("DRV_SPI_RX_DMA_CHANNEL", rxChannel, 2)
+            localComponent.setSymbolValue("DRV_SPI_RX_DMA_CHANNEL", rxChannel, 2)
 
-def onDependentComponentRemoved(drv_spi, id, spi):
-    dmaRxRequestID = "DMA_CH_NEEDED_FOR_" + spi.getID().upper() + "_Receive"
-    dmaTxRequestID = "DMA_CH_NEEDED_FOR_" + spi.getID().upper() + "_Transmit"
-    dmaTxChannelID = "DMA_CH_FOR_" + spi.getID().upper() + "_Transmit"
-    dmaRxChannelID = "DMA_CH_FOR_" + spi.getID().upper() + "_Receive"
+def onDependencyDisconnected(info):
+    dmaRxRequestID = "DMA_CH_NEEDED_FOR_" + info["remoteComponent"].getID().upper() + "_Receive"
+    dmaTxRequestID = "DMA_CH_NEEDED_FOR_" + info["remoteComponent"].getID().upper() + "_Transmit"
+    dmaTxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Transmit"
+    dmaRxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Receive"
 
-    if id == "drv_spi_SPI_dependency" :
-        drv_spi.setSymbolValue("DRV_SPI_PLIB_CONNECTION", False, 2)
-        Database.setSymbolValue(spi.getID(), "SPI_DRIVER_CONTROLLED", False, 1)
-        if drv_spi.getSymbolValue("DRV_SPI_TX_RX_DMA") == True:
+    localComponent = connectionInfo["localComponent"]
+
+    if info["dependencyID"] == "drv_spi_SPI_dependency" :
+        localComponent.setSymbolValue("DRV_SPI_PLIB_CONNECTION", False, 2)
+        Database.setSymbolValue(info["remoteComponent"].getID().upper(), "SPI_DRIVER_CONTROLLED", False, 1)
+
+        if localComponent.getSymbolValue("DRV_SPI_TX_RX_DMA") == True:
             Database.setSymbolValue("core", dmaRxRequestID, False, 2)
             Database.setSymbolValue("core", dmaTxRequestID, False, 2)
 
             # Get the allocated channel and assign it
             txChannel = Database.getSymbolValue("core", dmaTxChannelID)
-            drv_spi.setSymbolValue("DRV_SPI_TX_DMA_CHANNEL", txChannel, 2)
+            localComponent.setSymbolValue("DRV_SPI_TX_DMA_CHANNEL", txChannel, 2)
             rxChannel = Database.getSymbolValue("core", dmaRxChannelID)
-            drv_spi.setSymbolValue("DRV_SPI_RX_DMA_CHANNEL", rxChannel, 2)
+            localComponent.setSymbolValue("DRV_SPI_RX_DMA_CHANNEL", rxChannel, 2)
 
 def requestAndAssignDMAChannel(Sym, event):
     global drvSpiInstanceSpace
@@ -272,10 +267,6 @@ def requestDMAComment(Sym, event):
         Sym.setVisible(False)
 
 def destroyComponent(spiComponent):
-    spiNumInstances = Database.getSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES")
-    spiNumInstances = spiNumInstances - 1
-    Database.setSymbolValue("drv_spi", "DRV_SPI_NUM_INSTANCES", spiNumInstances, 1)
-
     global drvSpiInstanceSpace
     spiPeripheral = Database.getSymbolValue(drvSpiInstanceSpace, "DRV_SPI_PLIB")
 

@@ -237,9 +237,8 @@ def instantiateComponent(consoleComponent):
 ############################################################################
 #### Dependency ####
 ############################################################################
-def onDependentComponentAdded(sys_console, id, console):
-
-    if id == "sys_console_UART_dependency" :
-        deviceUsed = sys_console.getSymbolByID("SYS_CONSOLE_DEVICE")
+def onDependencyConnected(info):
+    if info["dependencyID"] == "sys_console_UART_dependency" :
+        deviceUsed = info["localComponent"].getSymbolByID("SYS_CONSOLE_DEVICE")
         deviceUsed.clearValue()
-        deviceUsed.setValue(console.getID().upper(), 2)
+        deviceUsed.setValue(info["remoteComponent"].getID().upper(), 2)

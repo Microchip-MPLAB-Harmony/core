@@ -176,14 +176,15 @@ def instantiateComponent(at24Component):
     at24SystemInitFile.setSourcePath("driver/at24/templates/system/initialize.c.ftl")
     at24SystemInitFile.setMarkup(True)
 
-def onDependentComponentAdded(at24Component, id, i2c):
-    if id == "drv_at24_I2C_dependency" :
-        plibUsed = at24Component.getSymbolByID("DRV_AT24_PLIB")
+def onDependencyConnected(info):
+    if info["dependencyID"] == "drv_at24_I2C_dependency" :
+        plibUsed = info["localComponent"].getSymbolByID("DRV_AT24_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(i2c.getID().upper(), 1)
-        Database.setSymbolValue(i2c.getID(), "I2C_DRIVER_CONTROLLED", True, 1)
+        at24PlibId = info["remoteComponent"].getID().upper()
+        plibUsed.setValue(at24PlibId, 1)
+        Database.setSymbolValue(at24PlibId, "I2C_DRIVER_CONTROLLED", True, 1)
 
-def onDependentComponentRemoved(at24Component, id, i2c):
-    if id == "drv_at24_I2C_dependency" :
-        Database.setSymbolValue(i2c.getID(), "I2C_DRIVER_CONTROLLED", False, 1)
-
+def onDependencyDisconnected(info):
+    if info["dependencyID"] == "drv_at24_I2C_dependency":
+        at24PlibId = info["remoteComponent"].getID().upper()
+        Database.setSymbolValue(at24PlibId, "I2C_DRIVER_CONTROLLED", False, 1)

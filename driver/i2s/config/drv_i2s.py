@@ -47,29 +47,14 @@ def requestDMAComment(Sym, event):
 def commonTxRxOption(Sym, event):
     Sym.setValue(event["value"], 1)
 
-def destroyComponent(i2sComponent):
-    i2sNumInstances = Database.getSymbolValue("drv_i2s", "DRV_I2S_NUM_INSTANCES")   
-    i2sNumInstances = i2sNumInstances - 1   
-    Database.setSymbolValue("drv_i2s", "DRV_I2S_NUM_INSTANCES", i2sNumInstances, 1)
-
 def instantiateComponent(i2sComponent, index):
     global i2sPlibId
     global customVisible 
     global i2sLinkedListComment
-    
-    i2sNumInstances = Database.getSymbolValue("drv_i2s", "DRV_I2S_NUM_INSTANCES")
-  
-    if i2sNumInstances is None:
-        i2sNumInstances = 1
-    else:
-        i2sNumInstances = i2sNumInstances + 1
 
     customVisible = False
     customVisible2 = False
-    
-    Database.clearSymbolValue("drv_i2s", "DRV_I2S_NUM_INSTANCES")
-    Database.setSymbolValue("drv_i2s", "DRV_I2S_NUM_INSTANCES", i2sNumInstances, 1)
-    
+
     i2sSymIndex = i2sComponent.createIntegerSymbol("INDEX", None)
     i2sSymIndex.setVisible(False)
     i2sSymIndex.setDefaultValue(index)
@@ -233,7 +218,7 @@ def onDependencyConnected(info):
         # info["remoteComponent"].getID() returns ssc0 or 12sc1 for example
         i2sPlibId = info["remoteComponent"].getID().upper()
         plibUsed.setValue(i2sPlibId, 1)
-        if i2sPlibId[:3] == "SSC":        
+        if i2sPlibId[:3] == "SSC":
             dataLength = info["remoteComponent"].getSymbolValue("SSC_DATA_LENGTH")
             print("datalength:")
             print(dataLength)
@@ -242,7 +227,7 @@ def onDependencyConnected(info):
             # force DMA channels to be allocated
             i2sTXRXDMA = info["localComponent"].getSymbolByID("DRV_I2S_TX_RX_DMA")
             i2sTXRXDMA.setValue(True, 1)
-        elif i2sPlibId[:4] == "I2SC":        
+        elif i2sPlibId[:4] == "I2SC":
             dataLengthIdx = info["remoteComponent"].getSymbolValue("I2SC_MR_DATALENGTH")
             i2sDataWidth = info["localComponent"].getSymbolByID("I2S_DATA_LENGTH")
             if dataLengthIdx==0:

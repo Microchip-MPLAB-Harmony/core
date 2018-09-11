@@ -113,13 +113,13 @@ def instantiateComponent(sst26Component):
     sst26SystemInitFile.setSourcePath("driver/sst26/templates/system/system_initialize.c.ftl")
     sst26SystemInitFile.setMarkup(True)
 
-def onDependentComponentAdded(sst26Component, id, remoteComponent):
-    if id == "drv_sst26_QSPI_dependency" :
-        plibUsed = sst26Component.getSymbolByID("DRV_SST26_PLIB")
+def onDependencyConnected(info):
+    if info["dependencyID"] == "drv_sst26_QSPI_dependency" :
+        plibUsed = info["localComponent"].getSymbolByID("DRV_SST26_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(remoteComponent.getID().upper(), 2)
+        plibUsed.setValue(info["remoteComponent"].getID().upper(), 2)
 
-def onDependentComponentRemoved(sst26Component, id, remoteComponent):
-    if id == "drv_sst26_QSPI_dependency" :
-        plibUsed = sst26Component.getSymbolByID("DRV_SST26_PLIB")
+def onDependencyDisconnected(info):
+    if info["dependencyID"] == "drv_sst26_QSPI_dependency" :
+        plibUsed = info["localComponent"].getSymbolByID("DRV_SST26_PLIB")
         plibUsed.clearValue()

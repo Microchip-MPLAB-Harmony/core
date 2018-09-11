@@ -1,17 +1,4 @@
 def instantiateComponent(sdhcComponent, index):
-	numInstances = 0
-
-	try:
-		numInstances = Database.getSymbolValue("drv_sdhc", "DRV_SDHC_NUM_INSTANCES")
-	except:
-		numInstances = 0
-
-	#numInstances = numInstances + 1
-
-	if numInstances < (index+1):
-		Database.clearSymbolValue("drv_sdhc", "DRV_SDHC_NUM_INSTANCES")
-		Database.setSymbolValue("drv_sdhc", "DRV_SDHC_NUM_INSTANCES", (index+1), 2)
-		
 	peripId = Interrupt.getInterruptIndex("HSMCI")
 	NVICVector = "NVIC_" + str(peripId) + "_ENABLE"
 	NVICHandler = "NVIC_" + str(peripId) + "_HANDLER"
@@ -232,13 +219,6 @@ def showCDComment(sdhcCDComment,enable):
 
 def showWPComment(sdhcWPComment,enable):
 	sdhcWPComment.setVisible(enable["value"])
-
-def deinstantiateComponent(i2cComponent):
-
-    numInstances = Database.getSymbolValue("drv_sdhc", "DRV_SDHC_NUM_INSTANCES")
-    print("#####destroyComponent Component: instances = ", numInstances)
-    numInstances = numInstances - 1
-    Database.setSymbolValue("drv_sdhc", "DRV_SDHC_NUM_INSTANCES", numInstances, 1)
 
 def dmaChannel(sym, channel):
 	sym.setValue(channel[value], 2)
