@@ -17,16 +17,27 @@ for coreComponent in coreComponents:
     if eval(coreComponent['condition']):
         Name = coreComponent['name']
         Label = coreComponent['label']
-        Capability = coreComponent['capability']
 
         #create system component
         if coreComponent['type'] == "system":
             print("create component: " + Name.upper() + " System Service")
             Component = Module.CreateSharedComponent("sys_" + Name, Label, "/Harmony/System Services", "system/" + Name + "/config/sys_" + Name + ".py")
-            Component.addCapability("sys_" + Name, Capability)
+
+            if "capability" in coreComponent:
+                for capability in coreComponent['capability']:
+                    Component.addCapability(capability.lower(), capability)
+
             if "dependency" in coreComponent:
-                for item in coreComponent['dependency']:
-                    Component.addDependency("sys_" + Name + "_" + item + "_dependency", item, False, True)
+                for dep in coreComponent['dependency']:
+                    if Name == "fs":
+                        for media_idx in range(1, 4):
+                            if (media_idx == 1):
+                                Component.addDependency("sys_" + Name + "_" + dep + str(media_idx) + "_dependency", dep, False, True)
+                            else:
+                                Component.addDependency("sys_" + Name + "_" + dep + str(media_idx) + "_dependency", dep, False, False)
+                    else:
+                        Component.addDependency("sys_" + Name + "_" + dep + "_dependency", dep, False, True)
+
             Component.setDisplayType("System Service")
         #create driver component
         else:
@@ -37,10 +48,13 @@ for coreComponent in coreComponents:
             elif coreComponent['instance'] == "single":
                 Component = Module.CreateComponent("drv_" + Name, Label, "/Harmony/Drivers/", "driver/" + Name + "/config/drv_" + Name + ".py")
 
-            Component.addCapability("drv_" + Name, Capability)
+            if "capability" in coreComponent:
+                for capability in coreComponent['capability']:
+                    Component.addCapability(capability.lower(), capability)
+
             Component.setDisplayType("Driver")
             if "dependency" in coreComponent:
-                for item in coreComponent['dependency']:
-                    Component.addDependency("drv_" + Name + "_" + item + "_dependency", item, False, True)
+                for dep in coreComponent['dependency']:
+                    Component.addDependency("drv_" + Name + "_" + dep + "_dependency", dep, False, True)
 
         Component.addDependency("drv_" + Name + "_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
