@@ -9,6 +9,6 @@
 <#else>
 #define DRV_I2S_INT_SRC_IDX${INDEX?string}                  ${DRV_I2S_PLIB}_IRQn
 </#if>
-#define DRV_I2S_XMIT_DMA_CH_IDX${INDEX?string}              DMA_CHANNEL_${DRV_I2S_TX_DMA_CHANNEL}
-#define DRV_I2S_RCV_DMA_CH_IDX${INDEX?string}               DMA_CHANNEL_${DRV_I2S_RX_DMA_CHANNEL}
+#define DRV_I2S_XMIT_DMA_CH_IDX${INDEX?string}              SYS_DMA_CHANNEL_${DRV_I2S_TX_DMA_CHANNEL}
+#define DRV_I2S_RCV_DMA_CH_IDX${INDEX?string}               SYS_DMA_CHANNEL_${DRV_I2S_RX_DMA_CHANNEL}
 

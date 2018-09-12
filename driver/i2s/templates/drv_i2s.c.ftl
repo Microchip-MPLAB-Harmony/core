@@ -99,7 +99,7 @@ static bool _DRV_I2S_ResourceLock(DRV_I2S_OBJ * object)
 
     /* We will disable I2S and/or DMA interrupt so that the driver resource
      * is not updated asynchronously. */
-    if( (DMA_CHANNEL_NONE != dObj->txDMAChannel) || (DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+    if( (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel) || (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
     {
         SYS_INT_SourceDisable(dObj->interruptDMA);
     }
@@ -114,7 +114,7 @@ static bool _DRV_I2S_ResourceUnlock(DRV_I2S_OBJ * object)
     DRV_I2S_OBJ * dObj = object;
 
     /* Restore the interrupt and release mutex. */
-    if( (DMA_CHANNEL_NONE != dObj->txDMAChannel) || (DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+    if( (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel) || (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
     {
         SYS_INT_SourceEnable(dObj->interruptDMA);
     }
@@ -273,7 +273,7 @@ static void _DRV_I2S_BufferQueueTask( DRV_I2S_OBJ *object, DRV_I2S_DIRECTION dir
             {
                 newObj->currentState = DRV_I2S_BUFFER_IS_PROCESSING;
 
-                if( (DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+                if( (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
                 {
                     SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress,
                         (const void *)newObj->rxbuffer, newObj->size);
@@ -284,7 +284,7 @@ static void _DRV_I2S_BufferQueueTask( DRV_I2S_OBJ *object, DRV_I2S_DIRECTION dir
                         if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
                         {
                             uint32_t bufferSize = newObj->size;
-                            // if this is half word transfer, need to multiply size by 2           
+                            // if this is half word transfer, need to multiply size by 2
                             if (dObj->dmaDataLength == 16)
                             {
                                 bufferSize *= 2;
@@ -310,7 +310,7 @@ static void _DRV_I2S_BufferQueueTask( DRV_I2S_OBJ *object, DRV_I2S_DIRECTION dir
             {
                 newObj->currentState = DRV_I2S_BUFFER_IS_PROCESSING;
 
-                if( (DMA_CHANNEL_NONE != dObj->txDMAChannel))
+                if( (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel))
                 {
 #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
                     /************ code specific to SAM E70 ********************/
@@ -318,7 +318,7 @@ static void _DRV_I2S_BufferQueueTask( DRV_I2S_OBJ *object, DRV_I2S_DIRECTION dir
                     if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
                     {
                         uint32_t bufferSize = newObj->size;
-                        // if this is half word transfer, need to divide size by 2           
+                        // if this is half word transfer, need to divide size by 2
                         if (dObj->dmaDataLength == 16)
                         {
                             bufferSize *= 2;
@@ -413,7 +413,7 @@ SYS_MODULE_OBJ DRV_I2S_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->txAddress             = i2sInit->i2sTransmitAddress;
     dObj->rxAddress             = i2sInit->i2sReceiveAddress;
     dObj->interruptDMA          = i2sInit->interruptDMA;
-    dObj->dmaDataLength         = i2sInit->dmaDataLength;  
+    dObj->dmaDataLength         = i2sInit->dmaDataLength;
 
     /* Create the Mutexes needed for RTOS mode. These calls always passes in the
      * non-RTOS mode */
@@ -425,12 +425,12 @@ SYS_MODULE_OBJ DRV_I2S_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     /* Register a callback with DMA.
      * dObj is used as a context parameter, that will be used to distinguish the
      * events for different driver instances. */
-    if(DMA_CHANNEL_NONE != dObj->txDMAChannel)
+    if(SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel)
     {
         SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, _DRV_I2S_TX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
 
-    if(DMA_CHANNEL_NONE != dObj->rxDMAChannel)
+    if(SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel)
     {
         SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, _DRV_I2S_RX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
@@ -539,7 +539,7 @@ DRV_I2S_ERROR DRV_I2S_ErrorGet( const DRV_HANDLE handle )
 // *****************************************************************************
 
 // *****************************************************************************
-void DRV_I2S_BufferEventHandlerSet( const DRV_HANDLE handle, 
+void DRV_I2S_BufferEventHandlerSet( const DRV_HANDLE handle,
     const DRV_I2S_BUFFER_EVENT_HANDLER eventHandler, const uintptr_t context )
 {
     DRV_I2S_OBJ * dObj = NULL;
@@ -623,7 +623,7 @@ void DRV_I2S_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size
          * buffer to the DMA to start processing. */
         bufferObj->currentState = DRV_I2S_BUFFER_IS_PROCESSING;
 
-        if( (DMA_CHANNEL_NONE != dObj->txDMAChannel))
+        if( (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel))
         {
 #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
             /************ code specific to SAM E70 ********************/
@@ -634,8 +634,8 @@ void DRV_I2S_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size
                 SCB_CleanDCache_by_Addr((uint32_t*)bufferObj->txbuffer, bufferObj->size);
             }
             /************ end of E70 specific code ********************/
-#endif            
-            // if this is half word transfer, need to divide size by 2           
+#endif
+            // if this is half word transfer, need to divide size by 2
             if (dObj->dmaDataLength == 16)
             {
                 bufferObj->size /= 2;
@@ -754,7 +754,7 @@ void DRV_I2S_WriteReadBufferAdd(const DRV_HANDLE handle,
     bufferObj->nCount       = 0;
     bufferObj->inUse        = true;
     bufferObj->txbuffer     = transmitBuffer;
-    bufferObj->rxbuffer     = receiveBuffer;    
+    bufferObj->rxbuffer     = receiveBuffer;
     bufferObj->dObj         = dObj;
     bufferObj->next         = NULL;
     bufferObj->currentState = DRV_I2S_BUFFER_IS_IN_QUEUE;
@@ -772,10 +772,10 @@ void DRV_I2S_WriteReadBufferAdd(const DRV_HANDLE handle,
          * buffer to the DMA to start processing. */
         bufferObj->currentState = DRV_I2S_BUFFER_IS_PROCESSING;
 
-        if( (DMA_CHANNEL_NONE != dObj->rxDMAChannel) && (DMA_CHANNEL_NONE != dObj->txDMAChannel))
-        {          
+        if( (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel) && (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel))
+        {
             uint32_t bufferSize = bufferObj->size;
-            // if this is half word transfer, need to divide size by 2            
+            // if this is half word transfer, need to divide size by 2
             if (dObj->dmaDataLength == 16)
             {
                 bufferSize /= 2;
@@ -787,7 +787,7 @@ void DRV_I2S_WriteReadBufferAdd(const DRV_HANDLE handle,
             }
             SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress,
                 (const void *)bufferObj->rxbuffer, bufferSize);
-            
+
 #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
             /************ code specific to SAM E70 ********************/
             // Check if the data cache is enabled
@@ -795,14 +795,14 @@ void DRV_I2S_WriteReadBufferAdd(const DRV_HANDLE handle,
             {
                 // Invalidate cache to force CPU to read from SRAM instead
                 SCB_InvalidateDCache_by_Addr((uint32_t*)bufferObj->rxbuffer, bufferObj->size);
-                
+
                 // Flush cache to SRAM so DMA reads correct data
-                SCB_CleanDCache_by_Addr((uint32_t*)bufferObj->txbuffer, bufferObj->size);                
+                SCB_CleanDCache_by_Addr((uint32_t*)bufferObj->txbuffer, bufferObj->size);
             }
-            /************ end of E70 specific code ********************/            
-#endif                       
+            /************ end of E70 specific code ********************/
+#endif
             SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)bufferObj->txbuffer,
-                (const void *)dObj->txAddress, bufferSize);            
+                (const void *)dObj->txAddress, bufferSize);
         }
     }
     else
@@ -819,11 +819,11 @@ void DRV_I2S_WriteReadBufferAdd(const DRV_HANDLE handle,
         iterator->next = bufferObj;
     }
 
-    _DRV_I2S_ResourceUnlock(dObj);     
+    _DRV_I2S_ResourceUnlock(dObj);
 }
 
 // *****************************************************************************
-void DRV_I2S_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size, 
+void DRV_I2S_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size,
     DRV_I2S_BUFFER_HANDLE * bufferHandle)
 {
     DRV_I2S_OBJ * dObj = NULL;
@@ -889,10 +889,10 @@ void DRV_I2S_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size,
          * buffer to the DMA to start processing. */
         bufferObj->currentState    = DRV_I2S_BUFFER_IS_PROCESSING;
 
-        if( (DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+        if( (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
         {
             uint32_t bufferSize = bufferObj->size;
-            // if this is half word transfer, need to divide size by 2            
+            // if this is half word transfer, need to divide size by 2
             if (dObj->dmaDataLength == 16)
             {
                 bufferSize /= 2;
@@ -1027,7 +1027,7 @@ void _LinkedListCallBack(XDMAC_TRANSFER_EVENT event, uintptr_t contextHandle)
     if ((XDMAC_TRANSFER_COMPLETE==event) && (contextHandle!=(uintptr_t)NULL))
     {
         DRV_I2S_LL_CALLBACK callBack = (DRV_I2S_LL_CALLBACK)contextHandle;
-        callBack();    
+        callBack();
     }
 }
 
@@ -1039,13 +1039,13 @@ void DRV_I2S_InitWriteLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIE
     {
         return;
     }
-    dObj = &gDrvI2SObj[handle];    
-    
+    dObj = &gDrvI2SObj[handle];
+
     // if currDescrip same as nextDescrip, then will loop
     pLinkedListDesc[currDescrip].mbr_nda = (uint32_t)&pLinkedListDesc[nextDescrip];
     pLinkedListDesc[currDescrip].mbr_sa = (uint32_t)buffer;
     pLinkedListDesc[currDescrip].mbr_da = (uint32_t)dObj->txAddress;
-    // if this is half word transfer, need to divide size by 2           
+    // if this is half word transfer, need to divide size by 2
     if (dObj->dmaDataLength == 16)
     {
         bufferSize /= 2;
@@ -1054,13 +1054,13 @@ void DRV_I2S_InitWriteLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIE
     else if (dObj->dmaDataLength == 32)
     {
         bufferSize /= 4;
-    }     
+    }
     pLinkedListDesc[currDescrip].mbr_ubc.blockDataLength = bufferSize;
     pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.fetchEnable = 1;
     pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.sourceUpdate = 1;
     pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.destinationUpdate = 0;
-    pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.view = 1;    
-} 
+    pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.view = 1;
+}
 
 void DRV_I2S_StartWriteLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW_1* pLinkedListDesc,
         DRV_I2S_LL_CALLBACK callBack, bool blockInt)
@@ -1071,8 +1071,8 @@ void DRV_I2S_StartWriteLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VI
         return;
     }
     dObj = &gDrvI2SObj[handle];
-    
-    if( (DMA_CHANNEL_NONE != dObj->txDMAChannel))
+
+    if( (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel))
     {
 #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
         /************ code specific to SAM E70 ********************/
@@ -1083,7 +1083,7 @@ void DRV_I2S_StartWriteLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VI
             SCB_CleanDCache_by_Addr((uint32_t*)&_firstDescriptorControl, sizeof(XDMAC_DESCRIPTOR_CONTROL));
             SCB_CleanDCache_by_Addr((uint32_t*)&pLinkedListDesc[0], sizeof(XDMAC_DESCRIPTOR_VIEW_1));
             uint32_t bufferSize = pLinkedListDesc[0].mbr_ubc.blockDataLength;
-            // if this is half word transfer, need to multiply size by 2           
+            // if this is half word transfer, need to multiply size by 2
             if (dObj->dmaDataLength == 16)
             {
                 bufferSize *= 2;
@@ -1092,7 +1092,7 @@ void DRV_I2S_StartWriteLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VI
             else if (dObj->dmaDataLength == 32)
             {
                 bufferSize *= 4;
-            }             
+            }
             SCB_CleanDCache_by_Addr((uint32_t*)pLinkedListDesc[0].mbr_sa, bufferSize);
         }
         /************ end of E70 specific code ********************/
@@ -1102,11 +1102,11 @@ void DRV_I2S_StartWriteLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VI
         if ((void*)NULL!=callBack)
         {
             XDMAC_ChannelCallbackRegister(dObj->txDMAChannel,(XDMAC_CHANNEL_CALLBACK)_LinkedListCallBack, (uintptr_t)callBack);
-             
+
             if (blockInt)
             {
                 // disable end of linked list interrupt, and enable end of block instead
-                XDMAC_REGS->XDMAC_CHID[dObj->txDMAChannel].XDMAC_CID= XDMAC_CID_LID_Msk ;        
+                XDMAC_REGS->XDMAC_CHID[dObj->txDMAChannel].XDMAC_CID= XDMAC_CID_LID_Msk ;
                 XDMAC_REGS->XDMAC_CHID[dObj->txDMAChannel].XDMAC_CIE= XDMAC_CIE_BIE_Msk ;
             }
         }
@@ -1121,7 +1121,7 @@ void DRV_I2S_WriteNextLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIE
     {
         return;
     }
-    dObj = &gDrvI2SObj[handle]; 
+    dObj = &gDrvI2SObj[handle];
 
 #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     /************ code specific to SAM E70 ********************/
@@ -1134,9 +1134,9 @@ void DRV_I2S_WriteNextLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIE
         SCB_CleanDCache_by_Addr((uint32_t*)buffer, bufferSize);
     }
     /************ end of E70 specific code ********************/
-#endif   
+#endif
     pLinkedListDesc[nextDescrip].mbr_sa = (uint32_t)buffer;
-    // if this is half word transfer, need to divide size by 2           
+    // if this is half word transfer, need to divide size by 2
     if (dObj->dmaDataLength == 16)
     {
         bufferSize /= 2;
@@ -1145,7 +1145,7 @@ void DRV_I2S_WriteNextLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIE
     else if (dObj->dmaDataLength == 32)
     {
         bufferSize /= 4;
-    }    
+    }
     pLinkedListDesc[nextDescrip].mbr_ubc.blockDataLength = bufferSize;
     // if nextDescrip same as nextNextDescrip, then will loop
     pLinkedListDesc[nextDescrip].mbr_nda = (uint32_t)&pLinkedListDesc[nextNextDescrip];
@@ -1161,13 +1161,13 @@ void DRV_I2S_InitReadLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW
     {
         return;
     }
-    dObj = &gDrvI2SObj[handle];    
-    
+    dObj = &gDrvI2SObj[handle];
+
     // if currDescrip same as nextDescrip, then will loop
     pLinkedListDesc[currDescrip].mbr_nda = (uint32_t)&pLinkedListDesc[nextDescrip];
     pLinkedListDesc[currDescrip].mbr_sa = (uint32_t)dObj->rxAddress;
     pLinkedListDesc[currDescrip].mbr_da = (uint32_t)buffer;
-    // if this is half word transfer, need to divide size by 2           
+    // if this is half word transfer, need to divide size by 2
     if (dObj->dmaDataLength == 16)
     {
         bufferSize /= 2;
@@ -1176,13 +1176,13 @@ void DRV_I2S_InitReadLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW
     else if (dObj->dmaDataLength == 32)
     {
         bufferSize /= 4;
-    }     
+    }
     pLinkedListDesc[currDescrip].mbr_ubc.blockDataLength = bufferSize;
     pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.fetchEnable = 1;
     pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.sourceUpdate = 0;
     pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.destinationUpdate = 1;
-    pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.view = 1;    
-} 
+    pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.view = 1;
+}
 
 void DRV_I2S_StartReadLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW_1* pLinkedListDesc,
             DRV_I2S_LL_CALLBACK callBack, bool blockInt)
@@ -1193,8 +1193,8 @@ void DRV_I2S_StartReadLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIE
         return;
     }
     dObj = &gDrvI2SObj[handle];
-    
-    if( (DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+
+    if( (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
     {
 #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
         /************ code specific to SAM E70 ********************/
@@ -1203,7 +1203,7 @@ void DRV_I2S_StartReadLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIE
         {
             // Flush cache to SRAM so DMA reads correct data
             SCB_CleanDCache_by_Addr((uint32_t*)&_firstDescriptorControl, sizeof(XDMAC_DESCRIPTOR_CONTROL));
-            SCB_CleanDCache_by_Addr((uint32_t*)&pLinkedListDesc[0], sizeof(XDMAC_DESCRIPTOR_VIEW_1));            
+            SCB_CleanDCache_by_Addr((uint32_t*)&pLinkedListDesc[0], sizeof(XDMAC_DESCRIPTOR_VIEW_1));
         }
         /************ end of E70 specific code ********************/
 #endif
@@ -1216,7 +1216,7 @@ void DRV_I2S_StartReadLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIE
         if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
         {
             uint32_t bufferSize = pLinkedListDesc[0].mbr_ubc.blockDataLength;
-            // if this is half word transfer, need to multiply size by 2           
+            // if this is half word transfer, need to multiply size by 2
             if (dObj->dmaDataLength == 16)
             {
                 bufferSize *= 2;
@@ -1225,7 +1225,7 @@ void DRV_I2S_StartReadLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIE
             else if (dObj->dmaDataLength == 32)
             {
                 bufferSize *= 4;
-            } 
+            }
             // Invalidate cache to force CPU to read from SRAM instead
             SCB_InvalidateDCache_by_Addr((uint32_t*)pLinkedListDesc[0].mbr_da, bufferSize);
         }
@@ -1234,11 +1234,11 @@ void DRV_I2S_StartReadLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIE
         if ((void*)NULL!=callBack)
         {
             XDMAC_ChannelCallbackRegister(dObj->rxDMAChannel,(XDMAC_CHANNEL_CALLBACK)_LinkedListCallBack, (uintptr_t)callBack);
-             
+
             if (blockInt)
             {
                 // disable end of linked list interrupt, and enable end of block instead
-                XDMAC_REGS->XDMAC_CHID[dObj->rxDMAChannel].XDMAC_CID= XDMAC_CID_LID_Msk ;        
+                XDMAC_REGS->XDMAC_CHID[dObj->rxDMAChannel].XDMAC_CID= XDMAC_CID_LID_Msk ;
                 XDMAC_REGS->XDMAC_CHID[dObj->rxDMAChannel].XDMAC_CIE= XDMAC_CIE_BIE_Msk ;
             }
         }
@@ -1254,7 +1254,7 @@ void DRV_I2S_ReadNextLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW
     {
         return;
     }
-    dObj = &gDrvI2SObj[handle]; 
+    dObj = &gDrvI2SObj[handle];
 
 #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     /************ code specific to SAM E70 ********************/
@@ -1266,10 +1266,10 @@ void DRV_I2S_ReadNextLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW
         SCB_CleanDCache_by_Addr((uint32_t*)&pLinkedListDesc[nextDescrip], sizeof(XDMAC_DESCRIPTOR_VIEW_1));
     }
     /************ end of E70 specific code ********************/
-#endif   
+#endif
     pLinkedListDesc[nextDescrip].mbr_da = (uint32_t)buffer;
     // if this is half word transfer, need to divide size by 2
-    uint32_t blockLength = bufferSize;           
+    uint32_t blockLength = bufferSize;
     if (dObj->dmaDataLength == 16)
     {
         blockLength /= 2;
@@ -1278,7 +1278,7 @@ void DRV_I2S_ReadNextLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW
     else if (dObj->dmaDataLength == 32)
     {
         blockLength /= 4;
-    }    
+    }
     pLinkedListDesc[nextDescrip].mbr_ubc.blockDataLength = blockLength;
     // if nextDescrip same as nextNextDescrip, then will loop
     pLinkedListDesc[nextDescrip].mbr_nda = (uint32_t)&pLinkedListDesc[nextNextDescrip];
@@ -1293,7 +1293,7 @@ void DRV_I2S_ReadNextLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW
         SCB_InvalidateDCache_by_Addr((uint32_t*)buffer, bufferSize);
     }
     /************ end of E70 specific code ********************/
-#endif 
+#endif
 }
 
 </#if>

@@ -11,8 +11,8 @@
     I2S Driver Definitions Header File
 
   Description:
-    This file provides implementation-specific definitions for the I2S 
-	driver's system interface. 
+    This file provides implementation-specific definitions for the I2S
+	driver's system interface.
 *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -90,22 +90,22 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     None.
 */
 
-typedef enum 
+typedef enum
 {
     DRV_I2S_ERROR_NONE = 0,
     DRV_I2S_ERROR_OVERRUN = 1
 
 }DRV_I2S_ERROR;
 
-typedef enum 
+typedef enum
 {
     DRV_I2S_DMA_WIDTH_8_BIT = 0,
     DRV_I2S_DMA_WIDTH_16_BIT = 1
 
 }DRV_I2S_DMA_WIDTH;
-    
+
 typedef    void (* DRV_BAUDSET)(const uint32_t);
-    
+
 // *****************************************************************************
 /* I2S Driver PLIB Interface Data
 
@@ -126,7 +126,7 @@ typedef struct
 	DRV_BAUDSET	setBaud;
 
 } DRV_I2S_PLIB_INTERFACE;
-  
+
 // *****************************************************************************
 /* I2S Driver Initialization Data
 
@@ -142,7 +142,7 @@ typedef struct
 
 typedef struct
 {
-    /* Identifies the PLIB API set to be used by the driver to access the 
+    /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
     DRV_I2S_PLIB_INTERFACE      *i2sPlib;
 
@@ -151,34 +151,34 @@ typedef struct
 
 	/* Memory Pool for Client Objects */
 	uintptr_t                   clientObjPool;
-    
+
     /* Number of clients */
     size_t                      numClients;
 
     /* Queue for Transfer Objects */
     uintptr_t                   transferObjPool;
-    
+
     /* Driver Queue Size */
     size_t                      queueSize;
-    
+
     /* I2S transmit DMA channel. */
-    DMA_CHANNEL                 dmaChannelTransmit;
+    SYS_DMA_CHANNEL                 dmaChannelTransmit;
 
     /* I2S receive DMA channel. */
-    DMA_CHANNEL                 dmaChannelReceive;
-    
+    SYS_DMA_CHANNEL                 dmaChannelReceive;
+
     /* I2S transmit register address used for DMA operation. */
     void                        *i2sTransmitAddress;
 
     /* I2S receive register address used for DMA operation. */
     void                        *i2sReceiveAddress;
-    
+
     /* Interrupt source ID for DMA interrupt. */
     INT_SOURCE                  interruptDMA;
 
     /* DMA data length from I2S or SSC PLIB */
     uint8_t                     dmaDataLength;
-    
+
 } DRV_I2S_INIT;
 
 

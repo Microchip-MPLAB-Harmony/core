@@ -31,8 +31,8 @@ DRV_I2S_INIT drvI2S${INDEX?string}InitData =
     .i2sReceiveAddress = (void *)${DRV_I2S_PLIB}_RECEIVE_LEFT_ADDRESS,
 </#if>
 <#else>
-    .dmaChannelTransmit = DMA_CHANNEL_NONE,
-    .dmaChannelReceive = DMA_CHANNEL_NONE,
+    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
+    .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
 </#if>
     .interruptDMA = XDMAC_IRQn,
 
