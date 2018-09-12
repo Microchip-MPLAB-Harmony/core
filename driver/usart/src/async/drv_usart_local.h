@@ -248,10 +248,10 @@ typedef struct
     size_t queueSizeCurrentWrite;
 
     /* TX DMA Channel */
-    DMA_CHANNEL txDMAChannel;
+    SYS_DMA_CHANNEL txDMAChannel;
 
     /* RX DMA Channel */
-    DMA_CHANNEL rxDMAChannel;
+    SYS_DMA_CHANNEL rxDMAChannel;
 
     /* This is the USART transmit register address. Used for DMA operation. */
     void * txAddress;

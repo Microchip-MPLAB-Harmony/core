@@ -273,7 +273,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     /* Register a callback with either DMA or USART PLIB based on configuration.
      * dObj is used as a context parameter, that will be used to distinguish the
      * events for different driver instances. */
-    if(dObj->txDMAChannel != DMA_CHANNEL_NONE)
+    if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
         SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, _DRV_USART_TX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
@@ -283,7 +283,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
         (void)_DRV_USART_TX_DMA_CallbackHandler;
     }
 
-    if(dObj->rxDMAChannel != DMA_CHANNEL_NONE)
+    if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
         SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, _DRV_USART_RX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
@@ -600,7 +600,7 @@ bool DRV_USART_WriteBuffer
 
             dObj->currentTxClient = (uintptr_t)clientObj;
 
-            if( dObj->txDMAChannel != DMA_CHANNEL_NONE)
+            if( dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
             {
                 SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)buffer, (const void *)dObj->txAddress, numbytes);
             }
@@ -669,7 +669,7 @@ bool DRV_USART_ReadBuffer
 
             dObj->currentRxClient = (uintptr_t)clientObj;
 
-            if(dObj->rxDMAChannel != DMA_CHANNEL_NONE)
+            if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
             {
                 SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress, (const void *)buffer, numbytes);
             }

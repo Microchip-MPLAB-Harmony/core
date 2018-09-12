@@ -207,10 +207,10 @@ struct _DRV_USART_INIT
     USART_PLIB_API *usartPlib;
 
     /* This is the USART transmit DMA channel. */
-    DMA_CHANNEL dmaChannelTransmit;
+    SYS_DMA_CHANNEL dmaChannelTransmit;
 
     /* This is the USART receive DMA channel. */
-    DMA_CHANNEL dmaChannelReceive;
+    SYS_DMA_CHANNEL dmaChannelReceive;
 
     /* This is the USART transmit register address. Used for DMA operation. */
     void * usartTransmitAddress;
@@ -239,7 +239,7 @@ struct _DRV_USART_INIT
 
     /* Memory Pool for Client Objects */
     uintptr_t clientObjPool;
-    
+
     /* Number of clients */
     uint32_t numClients;
 

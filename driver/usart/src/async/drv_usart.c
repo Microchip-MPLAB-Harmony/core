@@ -99,7 +99,7 @@ static bool _DRV_USART_ResourceLock(DRV_USART_OBJ * object)
 
     /* We will disable USART and/or DMA interrupt so that the driver resource
      * is not updated asynchronously. */
-    if( (DMA_CHANNEL_NONE != dObj->txDMAChannel) || (DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+    if( (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel) || (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
     {
         SYS_INT_SourceDisable(dObj->interruptDMA);
     }
@@ -114,7 +114,7 @@ static bool _DRV_USART_ResourceUnlock(DRV_USART_OBJ * object)
     DRV_USART_OBJ * dObj = object;
 
     /* Restore the interrupt and release mutex. */
-    if( (DMA_CHANNEL_NONE != dObj->txDMAChannel) || (DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+    if( (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel) || (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
     {
         SYS_INT_SourceEnable(dObj->interruptDMA);
     }
@@ -248,7 +248,7 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
 
         if(DRV_USART_BUFFER_EVENT_ERROR == currentObj->status)
         {
-            if( (DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+            if( (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
             {
                 /* DMA mode doesn't return number of bytes completed in case of
                  * an error. */
@@ -284,7 +284,7 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
             {
                 newObj->currentState = DRV_USART_BUFFER_IS_PROCESSING;
 
-                if( (DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+                if( (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
                 {
                     SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress, (const void *)newObj->buffer, newObj->size);
                 }
@@ -302,7 +302,7 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
             {
                 newObj->currentState = DRV_USART_BUFFER_IS_PROCESSING;
 
-                if( (DMA_CHANNEL_NONE != dObj->txDMAChannel))
+                if( (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel))
                 {
                     SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)newObj->buffer, (const void *)dObj->txAddress, newObj->size);
                 }
@@ -431,7 +431,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     /* Register a callback with either DMA or USART PLIB based on configuration.
      * dObj is used as a context parameter, that will be used to distinguish the
      * events for different driver instances. */
-    if(DMA_CHANNEL_NONE != dObj->txDMAChannel)
+    if(SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel)
     {
         SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, _DRV_USART_TX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
@@ -441,7 +441,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
         (void)_DRV_USART_TX_DMA_CallbackHandler;
     }
 
-    if(DMA_CHANNEL_NONE != dObj->rxDMAChannel)
+    if(SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel)
     {
         SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, _DRV_USART_RX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
@@ -656,7 +656,7 @@ void DRV_USART_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t si
          * buffer to the PLIB to start processing. */
         bufferObj->currentState = DRV_USART_BUFFER_IS_PROCESSING;
 
-        if( (DMA_CHANNEL_NONE != dObj->txDMAChannel))
+        if( (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel))
         {
             SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)bufferObj->buffer, (const void *)dObj->txAddress, bufferObj->size);
         }
@@ -750,7 +750,7 @@ void DRV_USART_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t siz
          * buffer to the PLIB to start processing. */
         bufferObj->currentState    = DRV_USART_BUFFER_IS_PROCESSING;
 
-        if( (DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+        if( (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
         {
             SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress, (const void *)bufferObj->buffer, bufferObj->size);
         }

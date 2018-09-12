@@ -26,7 +26,7 @@ DRV_USART_INIT drvUsart${INDEX?string}InitData =
 
     .usartTransmitAddress = (void *)${DRV_USART_PLIB}_TRANSMIT_ADDRESS,
 <#else>
-    .dmaChannelTransmit = DMA_CHANNEL_NONE,
+    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
 </#if>
 
 <#if DRV_USART_RX_DMA == true>
@@ -34,7 +34,7 @@ DRV_USART_INIT drvUsart${INDEX?string}InitData =
 
     .usartReceiveAddress = (void *)${DRV_USART_PLIB}_RECEIVE_ADDRESS,
 <#else>
-    .dmaChannelReceive = DMA_CHANNEL_NONE,
+    .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
 </#if>
 <#if DRV_USART_MODE == false>
 
