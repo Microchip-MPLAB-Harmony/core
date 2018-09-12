@@ -58,9 +58,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 <#if core.DMA_ENABLE?has_content && core.DMA_ENABLE == true>
 #include "peripheral/${PLIB_NAME_LC}/plib_${PLIB_NAME_LC}0.h"
 
-#define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)  ${PLIB_NAME}0_ChannelCallbackRegister((XDMAC_CHANNEL)channel, (XDMAC_CHANNEL_CALLBACK)eventHandler, context)
+#define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)  ${PLIB_NAME}0_ChannelCallbackRegister((${PLIB_NAME}_CHANNEL)channel, (XDMAC_CHANNEL_CALLBACK)eventHandler, context)
 
-#define SYS_DMA_ChannelTransfer(channel, srcAddr, destAddr, blockSize)  ${PLIB_NAME}0_ChannelTransfer((XDMAC_CHANNEL)channel, srcAddr, destAddr, blockSize)
+#define SYS_DMA_ChannelTransfer(channel, srcAddr, destAddr, blockSize)  ${PLIB_NAME}0_ChannelTransfer((${PLIB_NAME}_CHANNEL)channel, srcAddr, destAddr, blockSize)
 
 #define SYS_DMA_ChannelIsBusy(channel)  ${PLIB_NAME}0_ChannelIsBusy((${PLIB_NAME}_CHANNEL)channel)
 

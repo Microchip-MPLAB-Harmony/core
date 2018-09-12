@@ -89,50 +89,33 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 typedef enum {
 
-    DMA_CHANNEL_0,
-    DMA_CHANNEL_1,
-    DMA_CHANNEL_2,
-    DMA_CHANNEL_3,
-    DMA_CHANNEL_4,
-    DMA_CHANNEL_5,
-    DMA_CHANNEL_6,
-    DMA_CHANNEL_7,
-    DMA_CHANNEL_8,
-    DMA_CHANNEL_9,
-    DMA_CHANNEL_10,
-    DMA_CHANNEL_11,
-    DMA_CHANNEL_12,
-    DMA_CHANNEL_13,
-    DMA_CHANNEL_14,
-    DMA_CHANNEL_15,
-    DMA_CHANNEL_16,
-    DMA_CHANNEL_17,
-    DMA_CHANNEL_18,
-    DMA_CHANNEL_19,
-    DMA_CHANNEL_20,
-    DMA_CHANNEL_21,
-    DMA_CHANNEL_22,
-    DMA_CHANNEL_23,
-    DMA_CHANNELS_NUMBER
-
-} DMA_CHANNEL;
-
-
-// *****************************************************************************
-/* DMA System Service Channel None
-
-  Summary:
-    DMA channel none
-
-  Description:
-    This constant identifies the specification of no choice from client
-    for allocating a particular DMA channel.
-
-  Remarks:
-    This constant should be used in place of hard-coded numeric literals.
-*/
-#define DMA_CHANNEL_NONE  /*DOM-IGNORE-BEGIN*/((DMA_CHANNEL)-1)/*DOM-IGNORE-END*/
-
+    SYS_DMA_CHANNEL_0,
+    SYS_DMA_CHANNEL_1,
+    SYS_DMA_CHANNEL_2,
+    SYS_DMA_CHANNEL_3,
+    SYS_DMA_CHANNEL_4,
+    SYS_DMA_CHANNEL_5,
+    SYS_DMA_CHANNEL_6,
+    SYS_DMA_CHANNEL_7,
+    SYS_DMA_CHANNEL_8,
+    SYS_DMA_CHANNEL_9,
+    SYS_DMA_CHANNEL_10,
+    SYS_DMA_CHANNEL_11,
+    SYS_DMA_CHANNEL_12,
+    SYS_DMA_CHANNEL_13,
+    SYS_DMA_CHANNEL_14,
+    SYS_DMA_CHANNEL_15,
+    SYS_DMA_CHANNEL_16,
+    SYS_DMA_CHANNEL_17,
+    SYS_DMA_CHANNEL_18,
+    SYS_DMA_CHANNEL_19,
+    SYS_DMA_CHANNEL_20,
+    SYS_DMA_CHANNEL_21,
+    SYS_DMA_CHANNEL_22,
+    SYS_DMA_CHANNEL_23,
+    SYS_DMA_CHANNELS_NUMBER,
+    SYS_DMA_CHANNEL_NONE = -1
+} SYS_DMA_CHANNEL;
 
 // *****************************************************************************
 /* DMA Transfer Events
@@ -206,9 +189,9 @@ typedef void (*SYS_DMA_CHANNEL_CALLBACK) (SYS_DMA_TRANSFER_EVENT event, uintptr_
 //******************************************************************************
 /*
   Function:
-    void SYS_DMA_ChannelCallbackRegister
+    void SYS_DMA_CHANNELCallbackRegister
     (
-        DMA_CHANNEL channel,
+        SYS_DMA_CHANNEL channel,
         const SYS_DMA_CHANNEL_CALLBACK eventHandler,
         const uintptr_t contextHandle
     )
@@ -263,7 +246,7 @@ typedef void (*SYS_DMA_CHANNEL_CALLBACK) (SYS_DMA_TRANSFER_EVENT event, uintptr_
     }
 
     // User registers an event handler with DMA channel. This is done once.
-    SYS_DMA_ChannelCallbackRegister(channel, APP_DMA_TransferEventHandler,
+    SYS_DMA_CHANNELCallbackRegister(channel, APP_DMA_TransferEventHandler,
             (uintptr_t)&myAppObj);
     </code>
 
@@ -271,14 +254,14 @@ typedef void (*SYS_DMA_CHANNEL_CALLBACK) (SYS_DMA_TRANSFER_EVENT event, uintptr_
     None.
  */
 
-void SYS_DMA_ChannelCallbackRegister (DMA_CHANNEL channel, const SYS_DMA_CHANNEL_CALLBACK eventHandler, const uintptr_t contextHandle);
+void SYS_DMA_CHANNELCallbackRegister (SYS_DMA_CHANNEL channel, const SYS_DMA_CHANNEL_CALLBACK eventHandler, const uintptr_t contextHandle);
 
 
 //******************************************************************************
 /* Function:
-    bool SYS_DMA_ChannelTransfer
+    bool SYS_DMA_CHANNELTransfer
     (
-        DMA_CHANNEL channel,
+        SYS_DMA_CHANNEL channel,
         const void *srcAddr,
         const void *destAddr,
         size_t blockSize
@@ -324,10 +307,10 @@ void SYS_DMA_ChannelCallbackRegister (DMA_CHANNEL channel, const SYS_DMA_CHANNEL
     size_t size = 10;
 
     // User registers an event handler with PLIB. This is done once.
-    SYS_DMA_ChannelCallbackRegister(APP_DMA_TransferEventHandler,
+    SYS_DMA_CHANNELCallbackRegister(APP_DMA_TransferEventHandler,
         (uintptr_t)&myAppObj);
 
-    if (SYS_DMA_ChannelTransfer(DMA_CHANNEL_1, srcAddr, destAddr, size) == true)
+    if (SYS_DMA_CHANNELTransfer(SYS_DMA_CHANNEL_1, srcAddr, destAddr, size) == true)
     {
         // do something else
     }
@@ -347,12 +330,12 @@ void SYS_DMA_ChannelCallbackRegister (DMA_CHANNEL channel, const SYS_DMA_CHANNEL
     </code>
 */
 
-bool SYS_DMA_ChannelTransfer (DMA_CHANNEL channel, const void *srcAddr, const void *destAddr, size_t blockSize);
+bool SYS_DMA_CHANNELTransfer (SYS_DMA_CHANNEL channel, const void *srcAddr, const void *destAddr, size_t blockSize);
 
 
 //******************************************************************************
 /* Function:
-    bool SYS_DMA_ChannelIsBusy (DMA_CHANNEL channel)
+    bool SYS_DMA_CHANNELIsBusy (SYS_DMA_CHANNEL channel)
 
   Summary:
     Returns the busy status of a specific DMA Channel.
@@ -385,9 +368,9 @@ bool SYS_DMA_ChannelTransfer (DMA_CHANNEL channel, const void *srcAddr, const vo
     void *destAddr = (uin8_t*) &U1TXREG;
     size_t size = 10;
 
-    if(false == SYS_DMA_ChannelIsBusy(DMA_CHANNEL_1))
+    if(false == SYS_DMA_CHANNELIsBusy(SYS_DMA_CHANNEL_1))
     {
-        SYS_DMA_ChannelTransfer(DMA_CHANNEL_1, srcAddr, destAddr, size);
+        SYS_DMA_CHANNELTransfer(SYS_DMA_CHANNEL_1, srcAddr, destAddr, size);
     }
     </code>
 
@@ -395,12 +378,12 @@ bool SYS_DMA_ChannelTransfer (DMA_CHANNEL channel, const void *srcAddr, const vo
     None.
 */
 
-bool SYS_DMA_ChannelIsBusy (DMA_CHANNEL channel);
+bool SYS_DMA_CHANNELIsBusy (SYS_DMA_CHANNEL channel);
 
 
 //******************************************************************************
 /* Function:
-    void SYS_DMA_ChannelDisable (DMA_CHANNEL channel)
+    void SYS_DMA_CHANNELDisable (SYS_DMA_CHANNEL channel)
 
   Summary:
     Disables the specified channel.
@@ -420,14 +403,14 @@ bool SYS_DMA_ChannelIsBusy (DMA_CHANNEL channel);
 
   Example:
     <code>
-    SYS_DMA_ChannelDisable(DMA_CHANNEL_1);
+    SYS_DMA_CHANNELDisable(SYS_DMA_CHANNEL_1);
     </code>
 
   Remarks:
     None.
 */
 
-void SYS_DMA_ChannelDisable (DMA_CHANNEL channel);
+void SYS_DMA_CHANNELDisable (SYS_DMA_CHANNEL channel);
 
 
 #include "sys_dma_mapping.h"

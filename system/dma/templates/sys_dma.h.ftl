@@ -89,28 +89,12 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 typedef enum {
 <#if core.DMA_CHANNEL_COUNT?has_content>
-<#list 1..core.DMA_CHANNEL_COUNT as i>
-    DMA_CHANNEL_${i},
+<#list 0..(core.DMA_CHANNEL_COUNT-1) as i>
+    SYS_DMA_CHANNEL_${i},
 </#list>
 </#if>
-} DMA_CHANNEL;
-
-
-// *****************************************************************************
-/* DMA System Service Channel None
-
-  Summary:
-    DMA channel none
-
-  Description:
-    This constant identifies the specification of no choice from client
-    for allocating a particular DMA channel.
-
-  Remarks:
-    This constant should be used in place of hard-coded numeric literals.
-*/
-#define DMA_CHANNEL_NONE  /*DOM-IGNORE-BEGIN*/((DMA_CHANNEL)-1)/*DOM-IGNORE-END*/
-
+    SYS_DMA_CHANNEL_NONE = -1
+} SYS_DMA_CHANNEL;
 
 // *****************************************************************************
 /* DMA Transfer Events
@@ -186,7 +170,7 @@ typedef void (*SYS_DMA_CHANNEL_CALLBACK) (SYS_DMA_TRANSFER_EVENT event, uintptr_
   Function:
     void SYS_DMA_ChannelCallbackRegister
     (
-        DMA_CHANNEL channel,
+        SYS_DMA_CHANNEL channel,
         const SYS_DMA_CHANNEL_CALLBACK eventHandler,
         const uintptr_t contextHandle
     )
@@ -249,14 +233,14 @@ typedef void (*SYS_DMA_CHANNEL_CALLBACK) (SYS_DMA_TRANSFER_EVENT event, uintptr_
     None.
  */
 
-void SYS_DMA_ChannelCallbackRegister (DMA_CHANNEL channel, const SYS_DMA_CHANNEL_CALLBACK eventHandler, const uintptr_t contextHandle);
+void SYS_DMA_ChannelCallbackRegister (SYS_DMA_CHANNEL channel, const SYS_DMA_CHANNEL_CALLBACK eventHandler, const uintptr_t contextHandle);
 
 
 //******************************************************************************
 /* Function:
     bool SYS_DMA_ChannelTransfer
     (
-        DMA_CHANNEL channel,
+        SYS_DMA_CHANNEL channel,
         const void *srcAddr,
         const void *destAddr,
         size_t blockSize
@@ -325,12 +309,12 @@ void SYS_DMA_ChannelCallbackRegister (DMA_CHANNEL channel, const SYS_DMA_CHANNEL
     </code>
 */
 
-bool SYS_DMA_ChannelTransfer (DMA_CHANNEL channel, const void *srcAddr, const void *destAddr, size_t blockSize);
+bool SYS_DMA_ChannelTransfer (SYS_DMA_CHANNEL channel, const void *srcAddr, const void *destAddr, size_t blockSize);
 
 
 //******************************************************************************
 /* Function:
-    bool SYS_DMA_ChannelIsBusy (DMA_CHANNEL channel)
+    bool SYS_DMA_ChannelIsBusy (SYS_DMA_CHANNEL channel)
 
   Summary:
     Returns the busy status of a specific DMA Channel.
@@ -373,12 +357,12 @@ bool SYS_DMA_ChannelTransfer (DMA_CHANNEL channel, const void *srcAddr, const vo
     None.
 */
 
-bool SYS_DMA_ChannelIsBusy (DMA_CHANNEL channel);
+bool SYS_DMA_ChannelIsBusy (SYS_DMA_CHANNEL channel);
 
 
 //******************************************************************************
 /* Function:
-    void SYS_DMA_ChannelDisable (DMA_CHANNEL channel)
+    void SYS_DMA_ChannelDisable (SYS_DMA_CHANNEL channel)
 
   Summary:
     Disables the specified channel.
@@ -405,7 +389,7 @@ bool SYS_DMA_ChannelIsBusy (DMA_CHANNEL channel);
     None.
 */
 
-void SYS_DMA_ChannelDisable (DMA_CHANNEL channel);
+void SYS_DMA_ChannelDisable (SYS_DMA_CHANNEL channel);
 
 
 #include "sys_dma_mapping.h"
