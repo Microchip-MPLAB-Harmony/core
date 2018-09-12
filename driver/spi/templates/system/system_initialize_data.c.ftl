@@ -65,10 +65,10 @@ DRV_SPI_INIT drvSPI${INDEX?string}InitData =
     .spiReceiveAddress  = (void *)${DRV_SPI_PLIB}_RECEIVE_ADDRESS,
 <#else>
     /* DMA Channel for Transmit */
-    .dmaChannelTransmit = DMA_CHANNEL_NONE,
+    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
 
     /* DMA Channel for Receive */
-    .dmaChannelReceive  = DMA_CHANNEL_NONE,
+    .dmaChannelReceive  = SYS_DMA_CHANNEL_NONE,
 </#if>
 
 <#if DRV_SPI_MODE == false>

@@ -183,10 +183,10 @@ typedef struct _DRV_SPI_TRANSFER_OBJ
 */
 
 typedef struct
-{    
+{
     /* Flag to indicate this object is in use  */
     bool inUse;
- 
+
     /* Flag to indicate that driver has been opened Exclusively*/
     bool isExclusive;
 
@@ -235,16 +235,16 @@ typedef struct
 
     /* Instance specific token counter used to generate unique client/transfer handles */
     uint16_t spiTokenCount;
-    
+
     /* to identify if we are running from interrupt context or not */
     uint8_t interruptNestingCount;
-    
+
     /* DMA related elements */
     /* Transmit DMA Channel */
-    DMA_CHANNEL txDMAChannel;
+    SYS_DMA_CHANNEL txDMAChannel;
 
     /* Receive DMA Channel */
-    DMA_CHANNEL rxDMAChannel;
+    SYS_DMA_CHANNEL rxDMAChannel;
 
     /* This is the SPI transmit register address. Used for DMA operation. */
     void* txAddress;
@@ -266,10 +266,10 @@ typedef struct
 
     /* Interrupt source ID for SPI or DMA interrupt. */
     INT_SOURCE interruptSource;
-    
-    /* Mutex to protect access to the client objects */    
+
+    /* Mutex to protect access to the client objects */
     OSAL_MUTEX_DECLARE(mutexClientObjects);
-    
+
     /* Mutex to protect access to the transfer objects */
     OSAL_MUTEX_DECLARE(mutexTransferObjects);
 
@@ -312,7 +312,7 @@ typedef struct _DRV_SPI_CLIENT_OBJ
 
     /* Flag to save setup changed status */
     bool                            setupChanged;
-    
+
     /* Client handle assigned to this client object when it was opened */
     DRV_HANDLE                      clientHandle;
 

@@ -200,7 +200,7 @@ static void _DRV_SPI_TransferQueuePurge( DRV_SPI_CLIENT_OBJ * clientObj )
     }
 }
 
-static void _DRV_SPI_ConfigureDMA(DMA_CHANNEL dmaChannel, DRV_SPI_CONFIG_DMA cfgDMA)
+static void _DRV_SPI_ConfigureDMA(SYS_DMA_CHANNEL dmaChannel, DRV_SPI_CONFIG_DMA cfgDMA)
 {
     uint32_t config;
 
@@ -241,7 +241,7 @@ static void _DRV_SPI_ConfigureDMA(DMA_CHANNEL dmaChannel, DRV_SPI_CONFIG_DMA cfg
     _DRV_SPI_DMAChannelSettingsSet(dmaChannel, (XDMAC_CHANNEL_CONFIG)config);
 }
 
-static void _DRV_SPI_ConfigureDmaDataWidth(DMA_CHANNEL dmaChannel, DRV_SPI_DMA_WIDTH DmaWidth)
+static void _DRV_SPI_ConfigureDmaDataWidth(SYS_DMA_CHANNEL dmaChannel, DRV_SPI_DMA_WIDTH DmaWidth)
 {
     uint32_t config;
 
@@ -577,7 +577,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     }
     dObj->transferArray[freePoolIndex].nextIndex = NULL_INDEX;
 
-    if((dObj->txDMAChannel == DMA_CHANNEL_NONE) || (dObj->rxDMAChannel == DMA_CHANNEL_NONE))
+    if((dObj->txDMAChannel == SYS_DMA_CHANNEL_NONE) || (dObj->rxDMAChannel == SYS_DMA_CHANNEL_NONE))
     {
         /* Register a callback with SPI PLIB.
         * dObj as a context parameter will be used to distinguish the events
@@ -947,7 +947,7 @@ void DRV_SPI_WriteReadTransferAdd
         transferObj->pTransmitData  = pTransmitData;
         transferObj->event          = DRV_SPI_TRANSFER_EVENT_PENDING;
         transferObj->nextIndex      = NULL_INDEX;
-        if((hDriver->txDMAChannel != DMA_CHANNEL_NONE) && (hDriver->rxDMAChannel != DMA_CHANNEL_NONE) && (clientObj->setup.dataBits != DRV_SPI_DATA_BITS_8_BIT))
+        if((hDriver->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (hDriver->rxDMAChannel != SYS_DMA_CHANNEL_NONE) && (clientObj->setup.dataBits != DRV_SPI_DATA_BITS_8_BIT))
         {
             /* If its DMA mode and SPI data bits is other than 8 bit, then divide transmit sizes by 2 */
             transferObj->txSize = txSize >> 1;
@@ -988,7 +988,7 @@ void DRV_SPI_WriteReadTransferAdd
 
             /* Because this is the first request in the queue, we need to trigger the transfer either
             with DMA or PLIB based on MHC configuration */
-            if((hDriver->txDMAChannel != DMA_CHANNEL_NONE) && (hDriver->rxDMAChannel != DMA_CHANNEL_NONE))
+            if((hDriver->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (hDriver->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
             {
                 _DRV_SPI_StartDMATransfer(transferObj);
             }

@@ -116,7 +116,7 @@ static DRV_SPI_CLIENT_OBJ* _DRV_SPI_DriverHandleValidate(DRV_HANDLE handle)
     return(clientObj);
 }
 
-static void _DRV_SPI_ConfigureDMA(DMA_CHANNEL dmaChannel, DRV_SPI_CONFIG_DMA cfgDMA)
+static void _DRV_SPI_ConfigureDMA(SYS_DMA_CHANNEL dmaChannel, DRV_SPI_CONFIG_DMA cfgDMA)
 {
     uint32_t config;
 
@@ -149,7 +149,7 @@ static void _DRV_SPI_ConfigureDMA(DMA_CHANNEL dmaChannel, DRV_SPI_CONFIG_DMA cfg
     _DRV_SPI_DMAChannelSettingsSet(dmaChannel, (XDMAC_CHANNEL_CONFIG)config);
 }
 
-static void _DRV_SPI_ConfigureDmaDataWidth(DMA_CHANNEL dmaChannel, DRV_SPI_DMA_WIDTH DmaWidth)
+static void _DRV_SPI_ConfigureDmaDataWidth(SYS_DMA_CHANNEL dmaChannel, DRV_SPI_DMA_WIDTH DmaWidth)
 {
     uint32_t config;
 
@@ -418,7 +418,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if((dObj->txDMAChannel != DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != DMA_CHANNEL_NONE))
+    if((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
     {
         /* Register call-backs with the DMA System Service */
         SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, _DRV_SPI_TX_DMA_CallbackHandler, (uintptr_t)dObj);
@@ -723,7 +723,7 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
             /* Active client allows de-asserting the chip select line in ISR routine */
             hDriver->activeClient = (uintptr_t)clientObj;
 
-            if((hDriver->txDMAChannel != DMA_CHANNEL_NONE) && ((hDriver->rxDMAChannel != DMA_CHANNEL_NONE)))
+            if((hDriver->txDMAChannel != SYS_DMA_CHANNEL_NONE) && ((hDriver->rxDMAChannel != SYS_DMA_CHANNEL_NONE)))
             {
                 if (_DRV_SPI_StartDMATransfer(hDriver, pTransmitData, txSize, pReceiveData, rxSize) == true)
                 {

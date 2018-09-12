@@ -300,8 +300,8 @@ typedef void ( *DRV_SPI_TRANSFER_EVENT_HANDLER )( DRV_SPI_TRANSFER_EVENT event, 
         .numClients = DRV_SPI_CLIENTS_NUMBER_IDX0,
         .clientObjPool = (uintptr_t)&drvSPI0ClientObjPool[0],
 
-        .dmaChannelTransmit = DMA_CHANNEL_NONE,
-        .dmaChannelReceive = DMA_CHANNEL_NONE,
+        .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
+        .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
         .interruptDMA = XDMAC_IRQn
     };
 

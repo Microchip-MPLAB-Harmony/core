@@ -168,10 +168,10 @@ typedef struct
     DRV_SPI_DATA_BITS   dataBits;
 
     /* Transmit DMA Channel */
-    DMA_CHANNEL txDMAChannel;
+    SYS_DMA_CHANNEL txDMAChannel;
 
     /* Receive DMA Channel */
-    DMA_CHANNEL rxDMAChannel;
+    SYS_DMA_CHANNEL rxDMAChannel;
 
     /* This is the SPI transmit register address. Used for DMA operation. */
     void* txAddress;
@@ -207,14 +207,14 @@ typedef struct
 
     /* Status of the last data transfer on this driver instance */
     DRV_SPI_TRANSFER_STATUS transferStatus;
-    
-    /* Mutex to protect access to PLIB */    
+
+    /* Mutex to protect access to PLIB */
     OSAL_MUTEX_DECLARE(transferMutex);
-    
-    /* Mutex to protect access to the client object pool */    
+
+    /* Mutex to protect access to the client object pool */
     OSAL_MUTEX_DECLARE(clientMutex);
-    
-    /* Semaphore to wait for data exchange to complete. 
+
+    /* Semaphore to wait for data exchange to complete.
     *  This is released from ISR.
     */
     OSAL_SEM_DECLARE(transferDone);

@@ -230,10 +230,10 @@ typedef struct
     DRV_SPI_PLIB_INTERFACE      *spiPlib;
 
     /* SPI transmit DMA channel. */
-    DMA_CHANNEL                 dmaChannelTransmit;
+    SYS_DMA_CHANNEL                 dmaChannelTransmit;
 
     /* SPI receive DMA channel. */
-    DMA_CHANNEL                 dmaChannelReceive;
+    SYS_DMA_CHANNEL                 dmaChannelReceive;
 
     /* SPI transmit register address used for DMA operation. */
     void                        *spiTransmitAddress;
