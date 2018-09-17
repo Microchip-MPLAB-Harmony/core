@@ -1,5 +1,26 @@
-#Default Heap size for Cortex-M0+ architecture
+############################################################################
+############## Cortex-M0+ Architecture specific configuration ##############
+############################################################################
+
+#Default Heap size
 freeRtosSym_TotalHeapSize.setDefaultValue(4096)
+
+#Set SysTick Priority and Lock the Priority
+SysTickInterruptIndex        = Interrupt.getInterruptIndex("SysTick")
+SysTickInterruptPriority     = "NVIC_"+ str(SysTickInterruptIndex) +"_0_PRIORITY"
+SysTickInterruptPriorityLock = "NVIC_" + str(SysTickInterruptIndex) +"_0_PRIORITY_LOCK"
+
+Database.clearSymbolValue("core", SysTickInterruptPriority)
+Database.setSymbolValue("core", SysTickInterruptPriority, "0", 2)
+Database.clearSymbolValue("core", SysTickInterruptPriorityLock)
+Database.setSymbolValue("core", SysTickInterruptPriorityLock, True, 2)
+
+#Set SVCall Priority and Lock the Priority
+SVCallInterruptIndex        = Interrupt.getInterruptIndex("SVCall")
+SVCallInterruptPriorityLock = "NVIC_" + str(SVCallInterruptIndex) +"_0_PRIORITY_LOCK"
+
+Database.clearSymbolValue("core", SVCallInterruptPriorityLock)
+Database.setSymbolValue("core", SVCallInterruptPriorityLock, True, 2)
 
 ############################################################################
 #### Code Generation ####

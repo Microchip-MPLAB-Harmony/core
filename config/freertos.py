@@ -139,59 +139,44 @@ def freeRtosMemMangEnableHeap5(freeRtosMemMangHeap5, event):
 def instantiateComponent(thirdPartyFreeRTOS):
     Log.writeInfoMessage("Running FreeRTOS")
 
-    NVICSysTickHandlerId = Interrupt.getInterruptIndex("SysTick")
-    NVICSysTickVector = "NVIC_" + str(NVICSysTickHandlerId) + "_ENABLE"
-    NVICSysTickHandler = "NVIC_" + str(NVICSysTickHandlerId) + "_HANDLER"
-    NVICSysTickHandlerLock = "NVIC_" + str(NVICSysTickHandlerId) + "_HANDLER_LOCK"
-    NVICSysTickPriority = "NVIC_" + str(NVICSysTickHandlerId) + "_PRIORITY"
-    NVICSysTickPriorityLock = "NVIC_" + str(NVICSysTickHandlerId) + "_PRIORITY_LOCK"
+    #FreeRTOS Interrupt Handlers configurations
+    SysTickInterruptEnable      = "SysTick_INTERRUPT_ENABLE"
+    SysTickInterruptHandler     = "SysTick_INTERRUPT_HANDLER"
+    SysTickInterruptHandlerLock = "SysTick_INTERRUPT_HANDLER_LOCK"
 
-    Database.clearSymbolValue("core", NVICSysTickVector)
-    Database.setSymbolValue("core", NVICSysTickVector, True, 2)
-    Database.clearSymbolValue("core", NVICSysTickHandler)
-    Database.setSymbolValue("core", NVICSysTickHandler, "xPortSysTickHandler", 2)
-    Database.clearSymbolValue("core", NVICSysTickHandlerLock)
-    Database.setSymbolValue("core", NVICSysTickHandlerLock, True, 2)
-    Database.clearSymbolValue("core", NVICSysTickPriority)
-    Database.setSymbolValue("core", NVICSysTickPriority, "7", 2)
-    Database.clearSymbolValue("core", NVICSysTickPriorityLock)
-    Database.setSymbolValue("core", NVICSysTickPriorityLock, True, 2)
+    Database.clearSymbolValue("core", SysTickInterruptEnable)
+    Database.setSymbolValue("core", SysTickInterruptEnable, True, 2)
+    Database.clearSymbolValue("core", SysTickInterruptHandler)
+    Database.setSymbolValue("core", SysTickInterruptHandler, "xPortSysTickHandler", 2)
+    Database.clearSymbolValue("core", SysTickInterruptHandlerLock)
+    Database.setSymbolValue("core", SysTickInterruptHandlerLock, True, 2)
 
-    NVICPendSVHandlerId = Interrupt.getInterruptIndex("PendSV")
-    NVICPendSVVector = "NVIC_" + str(NVICPendSVHandlerId) + "_ENABLE"
-    NVICPendSVHandler = "NVIC_" + str(NVICPendSVHandlerId) + "_HANDLER"
-    NVICPendSVHandlerLock = "NVIC_" + str(NVICPendSVHandlerId) + "_HANDLER_LOCK"
+    PendSVInterruptEnable       = "PendSV_INTERRUPT_ENABLE"
+    PendSVInterruptHandler      = "PendSV_INTERRUPT_HANDLER"
+    PendSVInterruptHandlerLock  = "PendSV_INTERRUPT_HANDLER_LOCK"
 
-    Database.clearSymbolValue("core", NVICPendSVVector)
-    Database.setSymbolValue("core", NVICPendSVVector, True, 2)
-    Database.clearSymbolValue("core", NVICPendSVHandler)
-    Database.setSymbolValue("core", NVICPendSVHandler, "PendSV_Handler", 2)
-    Database.clearSymbolValue("core", NVICPendSVHandlerLock)
-    Database.setSymbolValue("core", NVICPendSVHandlerLock, True, 2)
+    Database.clearSymbolValue("core", PendSVInterruptEnable)
+    Database.setSymbolValue("core", PendSVInterruptEnable, True, 2)
+    Database.clearSymbolValue("core", PendSVInterruptHandler)
+    Database.setSymbolValue("core", PendSVInterruptHandler, "PendSV_Handler", 2)
+    Database.clearSymbolValue("core", PendSVInterruptHandlerLock)
+    Database.setSymbolValue("core", PendSVInterruptHandlerLock, True, 2)
 
-    NVICSVCallHandlerId = Interrupt.getInterruptIndex("SVCall")
-    NVICSVCallVector = "NVIC_" + str(NVICSVCallHandlerId) + "_ENABLE"
-    NVICSVCallHandler = "NVIC_" + str(NVICSVCallHandlerId) + "_HANDLER"
-    NVICSVCallHandlerLock = "NVIC_" + str(NVICSVCallHandlerId) + "_HANDLER_LOCK"
-    NVICSVCallPriorityLock = "NVIC_" + str(NVICSVCallHandlerId) + "_PRIORITY_LOCK"
+    SVCallInterruptEnable       = "SVCall_INTERRUPT_ENABLE"
+    SVCallInterruptHandler      = "SVCall_INTERRUPT_HANDLER"
+    SVCallInterruptHandlerLock  = "SVCall_INTERRUPT_HANDLER_LOCK"
 
-    Database.clearSymbolValue("core", NVICSVCallVector)
-    Database.setSymbolValue("core", NVICSVCallVector, True, 2)
-    Database.clearSymbolValue("core", NVICSVCallHandler)
-    Database.setSymbolValue("core", NVICSVCallHandler, "SVCall_Handler", 2)
-    Database.clearSymbolValue("core", NVICSVCallHandlerLock)
-    Database.setSymbolValue("core", NVICSVCallHandlerLock, True, 2)
-    Database.clearSymbolValue("core", NVICSVCallPriorityLock)
-    Database.setSymbolValue("core", NVICSVCallPriorityLock, True, 2)
+    Database.clearSymbolValue("core", SVCallInterruptEnable)
+    Database.setSymbolValue("core", SVCallInterruptEnable, True, 2)
+    Database.clearSymbolValue("core", SVCallInterruptHandler)
+    Database.setSymbolValue("core", SVCallInterruptHandler, "SVCall_Handler", 2)
+    Database.clearSymbolValue("core", SVCallInterruptHandlerLock)
+    Database.setSymbolValue("core", SVCallInterruptHandlerLock, True, 2)
 
+    #FreeRTOS Configuration Menu
     freeRtosSymMenu = thirdPartyFreeRTOS.createMenuSymbol("FREERTOS_MENU", None)
     freeRtosSymMenu.setLabel("RTOS Configuration")
     freeRtosSymMenu.setDescription("Select either the preemptive RTOS scheduler, or the cooperative RTOS scheduler")
-
-    # NVIC Dynamic settings
-    freeRtosInterrupts = thirdPartyFreeRTOS.createBooleanSymbol("sysTickEnableInterrupt", freeRtosSymMenu)
-    freeRtosInterrupts.setLabel("Enable xPortSysTickHandler Interrupt")
-    freeRtosInterrupts.setVisible(False)
 
     freeRtosSym_SchedulerType = thirdPartyFreeRTOS.createComboSymbol("FREERTOS_SCHEDULER", freeRtosSymMenu, ComboVal_Scheduler_Type)
     freeRtosSym_SchedulerType.setLabel("Scheduler Type")
