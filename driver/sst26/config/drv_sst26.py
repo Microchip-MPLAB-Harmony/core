@@ -26,6 +26,12 @@ def instantiateComponent(sst26Component):
     sst26MemoryStartAddr.setVisible(True)
     sst26MemoryStartAddr.setDefaultValue(0x0000000)
 
+    sst26MemoryInterruptEnable = sst26Component.createBooleanSymbol("INTERRUPT_ENABLE", None)
+    sst26MemoryInterruptEnable.setLabel("SST26 Interrupt Enable")
+    sst26MemoryInterruptEnable.setVisible(False)
+    sst26MemoryInterruptEnable.setDefaultValue(False)
+    sst26MemoryInterruptEnable.setReadOnly(True)
+
     sst26MemoryEraseEnable = sst26Component.createBooleanSymbol("ERASE_ENABLE", None)
     sst26MemoryEraseEnable.setLabel("SST26 Erase Enable")
     sst26MemoryEraseEnable.setVisible(False)
