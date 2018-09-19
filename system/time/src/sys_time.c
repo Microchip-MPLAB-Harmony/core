@@ -347,28 +347,13 @@ static void timer_add(SYS_TIME_TIMER_OBJ* newTimer)
     }
 }
 
-static void timer_updateTime(uint32_t elapsedCounts)
+static void timer_notify(void)
 {
     SYS_TIME_COUNTER_OBJ * counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
     SYS_TIME_TIMER_OBJ* tmrActive = counterObj->tmrActive;
-    bool checkForNextTimerExpiry = false;
-
-    while ((tmrActive != NULL) && ((elapsedCounts > 0) || (checkForNextTimerExpiry == true)))
+    
+    while (tmrActive != NULL)
     {
-        if (elapsedCounts > 0)
-        {
-            if (tmrActive->relativeTimePending >= elapsedCounts)
-            {
-                tmrActive->relativeTimePending -= elapsedCounts;
-                elapsedCounts = 0;
-            }
-            else
-            {
-                elapsedCounts -= tmrActive->relativeTimePending;
-                tmrActive->relativeTimePending = 0;
-            }
-        }
-
         if(tmrActive->relativeTimePending == 0)
         {
             tmrActive->tmrElapsed = true;            
@@ -379,15 +364,22 @@ static void timer_updateTime(uint32_t elapsedCounts)
             timer_removeFromList(tmrActive);
             /* Reload the relative pending time with the requested time */
             tmrActive->relativeTimePending = tmrActive->requestedTime;
-            tmrActive = counterObj->tmrActive;
-            checkForNextTimerExpiry = true;
+            tmrActive = counterObj->tmrActive;            
         }
         else
         {
-            checkForNextTimerExpiry = false;
-            tmrActive = tmrActive->tmrNext;
+            break;
         }
-    }
+    }    
+}
+
+static void timer_updateTime(uint32_t elapsedCounts)
+{    
+    timer_updateTimerList(elapsedCounts);
+    
+    timer_notify();
+           
+    /* Add the removed timers back into the linked list if the timer type is periodic. */
     for (uint8_t i = 0; i < SYS_TIME_MAX_TIMERS; i++)
     {
         if ((timers[i].tmrElapsed == true) && (timers[i].active == true))
@@ -410,7 +402,7 @@ static void TIME_PLIB_Callback(uintptr_t context)
     SYS_TIME_COUNTER_OBJ * counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
     SYS_TIME_TIMER_OBJ* tmrActive = counterObj->tmrActive;
     uint32_t elapsedCount = 0;
-    bool interruptState;        
+    bool interruptState;                
                 
     counterObj->interruptContext = true;
 
