@@ -559,6 +559,8 @@ bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* set
         return DRV_USART_ERROR_NONE;
     }
 
+    dObj = &gDrvUSARTObj[handle];
+
     /* Clock source cannot be modified dynamically, so passing the '0' to pick
      * the configured clock source value */
     return dObj->usartPlib->serialSetup(setup, 0);
