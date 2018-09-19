@@ -266,6 +266,50 @@ SYS_MODULE_OBJ SYS_TIME_Initialize( const SYS_MODULE_INDEX index, const SYS_MODU
 
 // *****************************************************************************
 /* Function:
+   void SYS_TIME_Deinitialize ( SYS_MODULE_OBJ object )
+
+  Summary:
+       Deinitializes the specific module instance of the SYS TIMER module
+
+  Description:
+       This function deinitializes the specific module instance disabling its
+ operation (and any hardware for driver modules). Resets all of the internal data
+       structures and fields for the specified instance to the default settings.
+
+  Precondition:
+       The SYS_TIME_Initialize function should have been called before calling
+       this function.
+
+  Parameters:
+       object   - SYS TIMER object handle, returned from SYS_TIME_Initialize
+
+  Returns:
+       None.
+
+  Example:
+        <code>
+        // Handle "object" valuue must have been returned from SYS_TIME_Initialize.
+
+        SYS_TIME_Deinitialize (object);
+
+        if (SYS_MODULE_UNINITIALIZED != SYS_TIME_Status (object))
+        {
+            // Check again later if you need to know
+            // when the SYS TIME is De-initialized.
+        }
+        </code>
+
+  Remarks:
+       Once the Initialize operation has been called, the De-initialize
+       operation must be called before the Initialize operation can be called
+       again.
+*/
+
+void  SYS_TIME_Deinitialize ( SYS_MODULE_OBJ object );
+
+
+// *****************************************************************************
+/* Function:
        SYS_STATUS SYS_TIME_Status ( SYS_MODULE_OBJ object )
 
   Summary:
@@ -319,7 +363,7 @@ SYS_STATUS SYS_TIME_Status ( SYS_MODULE_OBJ object );
 
 // *****************************************************************************
 /* Function:
-       SYS_TIME_RESULT SYS_TIME_DelayUS ( uint32_t us, SYS_TIME_HANDLE *handle );
+       SYS_TIME_RESULT SYS_TIME_DelayUS ( int us, SYS_TIME_HANDLE *timer );
 
    Summary:
        This function is used to generate a delay of a given number of
@@ -340,7 +384,7 @@ SYS_STATUS SYS_TIME_Status ( SYS_MODULE_OBJ object );
    Parameters:
        us     - The desired number of microseconds to delay.
 
-       handle  - Address of the variable to receive the timer handle value.
+       timer  - Address of the variable to receive the timer handle value.
                 If the call fails or completes before returning, the handle
                 variable will be ignored (and may be passed as NULL in an
                 RTOS environment).
@@ -370,12 +414,12 @@ SYS_STATUS SYS_TIME_Status ( SYS_MODULE_OBJ object );
        non-blocking environment.
 */
 
-SYS_TIME_RESULT SYS_TIME_DelayUS ( uint32_t us, SYS_TIME_HANDLE *handle );
+SYS_TIME_RESULT SYS_TIME_DelayUS ( int us, SYS_TIME_HANDLE *timer );
 
 
 // *****************************************************************************
 /* Function:
-       SYS_TIME_RESULT SYS_TIME_DelayMS ( uint32_t ms, SYS_TIME_HANDLE *handle );
+       SYS_TIME_RESULT SYS_TIME_DelayMS ( int ms, SYS_TIME_HANDLE *timer );
 
    Summary:
        This function is used to generate a delay of a given number of
@@ -396,7 +440,7 @@ SYS_TIME_RESULT SYS_TIME_DelayUS ( uint32_t us, SYS_TIME_HANDLE *handle );
    Parameters:
        ms     - The desired number of milliseconds to delay.
 
-       handle  - Address of the variable to receive the timer handle value.
+       timer  - Address of the variable to receive the timer handle value.
                 If the call fails or completes before returning, the handle
                 variable will be ignored (and may be passed as NULL in an
                 RTOS environment).
@@ -426,7 +470,7 @@ SYS_TIME_RESULT SYS_TIME_DelayUS ( uint32_t us, SYS_TIME_HANDLE *handle );
        non-blocking environment.
 */
 
-SYS_TIME_RESULT SYS_TIME_DelayMS ( uint32_t ms, SYS_TIME_HANDLE *handle );
+SYS_TIME_RESULT SYS_TIME_DelayMS ( int ms, SYS_TIME_HANDLE *handle );
 
 
 // *****************************************************************************
@@ -581,7 +625,7 @@ Example:
   The following example call will register it, requesting a 50 millisecond
   periodic callback.
   <code>
-  SYS_TIME_HANDLE handle = SYS_TIME_CallbackRegisterMS(MyCallback, (uintptr_t)NULL, 50, SYS_TIME_PERIODIC);
+  SYS_TIME_HANDLE handle = SYS_TIME_CallbackMS(MyCallback, NULL, 50, SYS_TIME_PERIODIC);
   </code>
 */
 
@@ -1143,7 +1187,7 @@ SYS_TIME_RESULT SYS_TIME_TimerDestroy ( SYS_TIME_HANDLE timer );
        software timer's current counter value.
        <code>
        uint32_t count;
-       if (SYS_TIME_SUCCESS != SYS_TIME_TimerCounterGet(timer, &count))
+       if (SYS_TIME_SUCCESS != SYS_TIME_TimerCounterSet(timer, &count))
        {
            // Handle error
        }

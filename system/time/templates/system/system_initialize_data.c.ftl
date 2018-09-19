@@ -1,18 +1,21 @@
 // <editor-fold defaultstate="collapsed" desc="SYS_TIME Initialization Data">
 
 TIME_PLIB_API sysTimePlibAPI = {
-    .timerCallbackSet = (TIME_CallbackSet)${SYS_TIME_PLIB}_TimerCallbackRegister,
-    .timerCounterGet = (TIME_CounterGet)${SYS_TIME_PLIB}_TimerCounterGet,
-    .timerPeriodSet = (TIME_PeriodSet)${SYS_TIME_PLIB}_TimerPeriodSet,
-    .timerStart = (TIME_Start)${SYS_TIME_PLIB}_TimerStart,
-    .timerStop = (TIME_Stop)${SYS_TIME_PLIB}_TimerStop
+    .timerCallbackSet = (TIME_CallbackSet)${.vars["${SYS_TIME_PLIB?lower_case}"].CALLBACK_API_NAME},
+    .timerCounterGet = (TIME_CounterGet)${.vars["${SYS_TIME_PLIB?lower_case}"].COUNTER_GET_API_NAME},
+    <#if .vars["${SYS_TIME_PLIB?lower_case}"].PERIOD_SET_API_NAME?has_content>
+     .timerPeriodSet = (TIME_PeriodSet)${.vars["${SYS_TIME_PLIB?lower_case}"].PERIOD_SET_API_NAME},
+    </#if>
+    .timerFrequencyGet = (TIME_FrequencyGet)${.vars["${SYS_TIME_PLIB?lower_case}"].FREQUENCY_GET_API_NAME},
+    .timerCompareSet = (TIME_CompareSet)${.vars["${SYS_TIME_PLIB?lower_case}"].COMPARE_SET_API_NAME},
+    .timerStart = (TIME_Start)${.vars["${SYS_TIME_PLIB?lower_case}"].TIMER_START_API_NAME},
+    .timerStop = (TIME_Stop)${.vars["${SYS_TIME_PLIB?lower_case}"].TIMER_STOP_API_NAME}
 };
 
 SYS_TIME_INIT sysTimeInitData =
 {
     .timePlib = &sysTimePlibAPI,
-    .timeInterrupt = ${SYS_TIME_PLIB}_IRQn,
-    .timeFrequency = ${SYS_TIME_PLIB}_TimerFrequencyGet()
+    .hwTimerIntNum = ${.vars["${SYS_TIME_PLIB?lower_case}"].IRQ_ENUM_NAME},
 };
 
 // </editor-fold>

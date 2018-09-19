@@ -69,6 +69,10 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 typedef void(*TIME_CallbackSet)(void * callback, uintptr_t context);
 typedef void(*TIME_PeriodSet)(uint32_t period);
+typedef uint32_t(*TIME_FrequencyGet)(void);
+typedef uint32_t(*TIME_PeriodGet)(void);
+typedef void (*TIME_CompareSet) (uint32_t compare);
+typedef uint32_t(*TIME_CompareGet)(void);
 typedef void(*TIME_Start)(void);
 typedef void(*TIME_Stop)(void);
 typedef uint32_t(*TIME_CounterGet)(void);
@@ -77,6 +81,8 @@ typedef struct
 {
     TIME_CallbackSet timerCallbackSet;
     TIME_PeriodSet timerPeriodSet;
+    TIME_FrequencyGet timerFrequencyGet;
+    TIME_CompareSet timerCompareSet;
     TIME_Start timerStart;
     TIME_Stop timerStop;
     TIME_CounterGet timerCounterGet;
@@ -94,10 +100,7 @@ struct _SYS_TIME_INIT
     TIME_PLIB_API *timePlib;
 
     /* Interrupt source ID for the TIMER interrupt. */
-    INT_SOURCE timeInterrupt;
-
-    /* Hardware timer frequency */
-    uint32_t timeFrequency;
+    INT_SOURCE hwTimerIntNum;
 
 };
 

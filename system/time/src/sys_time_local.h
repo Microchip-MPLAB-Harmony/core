@@ -58,13 +58,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-//////////////////////////Counter//////////////////////////////////////////////
-#define HW_COUNTER_ROLLOVER_CYCLE    1
-#define HW_COUNTER_WIDTH             16
-#define HW_COUNTER_MAX               0xFFFF
-#define COUNTER_MAX                  0xFFFFFFFF
-#define COUNTER_WIDTH                32
-
 // *****************************************************************************
 /* Timer Handle Macros
 
@@ -82,13 +75,13 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     None
 */
 
-#define _SYS_TIME_HANDLE_TOKEN_MAX         (0xFFFF)
-#define _SYS_TIME_MAKE_HANDLE(token, index) ((token) << 16 | (index))
+#define _SYS_TIME_HANDLE_TOKEN_MAX              (0xFFFF)
+#define _SYS_TIME_MAKE_HANDLE(token, index)     ((token) << 16 | (index))
 #define _SYS_TIME_UPDATE_HANDLE_TOKEN(token) \
 { \
     (token)++; \
     if ((token) >= _SYS_TIME_HANDLE_TOKEN_MAX) \
-        (token) = 0; \
+        (token) = 1; \
     else \
         (token) = (token); \
 }
@@ -107,15 +100,15 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 */
 
 typedef struct _SYS_TIME_TIMER_OBJ{
-  int inuse;    /* TRUE if in use */
-  int active;    /* TRUE if soft timer enabled */
+  bool inUse;    /* TRUE if in use */
+  bool active;    /* TRUE if soft timer enabled */
   SYS_TIME_CALLBACK_TYPE type;    /* periodic or not */
-  uint32_t time;    /* time requested */
-  uint32_t timeRemaining;    /* time to wait, relative incase of timers in the list */
+  uint32_t requestedTime;    /* time requested */
+  uint32_t relativeTimePending;    /* time to wait, relative incase of timers in the list */
   SYS_TIME_CALLBACK callback;    /* set to TRUE at timeout */
   uintptr_t context; /* context */
-  int tmrElapsed;   /* Useful only for single shot timer */
-  struct _SYS_TIME_TIMER_OBJ * tmrNext; /* Next timer */
+  bool tmrElapsed;   /* Useful only for single shot timer */
+  struct _SYS_TIME_TIMER_OBJ* tmrNext; /* Next timer */
   SYS_TIME_HANDLE tmrHandle; /* Unique handle for object */
 } SYS_TIME_TIMER_OBJ;
 
@@ -123,15 +116,16 @@ typedef struct _SYS_TIME_TIMER_OBJ{
 typedef struct{
     SYS_STATUS status;
     TIME_PLIB_API *timePlib;
-    INT_SOURCE timeInterrupt;
-    uint32_t timeFrequency;
-    uint32_t timePeriodPrevious;
-    uint32_t timePeriod;
-    volatile uint32_t counter;    /* Software counter */
-    volatile uint32_t highCounter;    /* Software 64-bit counter */
-    volatile uint32_t timeToCounter;     /* Active timer expiry point or software period */
-    int tmrElapsed;    /* On every active timer elapsed */
-    int interruptContext;    /* On every active timer elapsed */
+    INT_SOURCE hwTimerIntNum;
+    uint32_t hwTimerFrequency;
+    uint32_t hwTimerPreviousValue;
+    uint32_t hwTimerCurrentValue;
+    uint32_t hwTimerPeriodValue;
+    uint32_t hwTimerCompareValue;
+    uint32_t hwTimerCompareMargin;
+    volatile uint32_t swCounter64Low;           /* Software counter */
+    volatile uint32_t swCounter64High;          /* Software 64-bit counter */
+    bool interruptContext;                      /* On every active timer elapsed */
     SYS_TIME_TIMER_OBJ * tmrActive;
 
 } SYS_TIME_COUNTER_OBJ;   /* set of timers */
