@@ -2,6 +2,8 @@
 #### Component ####
 ################################################################################
 
+at25MemoryInterruptEnable = None
+
 def at25SetMemoryDependency(symbol, event):
     if (event["value"] == True):
         symbol.setVisible(True)
@@ -14,6 +16,8 @@ def at25SetMemoryDependency(symbol, event):
 
 
 def instantiateComponent(at25Component):
+    global at25MemoryInterruptEnable
+
     res = Database.activateComponents(["HarmonyCore"])
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
@@ -59,6 +63,12 @@ def instantiateComponent(at25Component):
     at25MemoryDriver.setLabel("Memory Driver Connected")
     at25MemoryDriver.setVisible(False)
     at25MemoryDriver.setDefaultValue(False)
+
+    at25MemoryInterruptEnable = at25Component.createBooleanSymbol("INTERRUPT_ENABLE", None)
+    at25MemoryInterruptEnable.setLabel("at25 Interrupt Enable")
+    at25MemoryInterruptEnable.setVisible(False)
+    at25MemoryInterruptEnable.setDefaultValue(False)
+    at25MemoryInterruptEnable.setReadOnly(True)
 
     at25MemoryEraseEnable = at25Component.createBooleanSymbol("ERASE_ENABLE", None)
     at25MemoryEraseEnable.setLabel("at25 Erase Enable")
@@ -178,6 +188,8 @@ def instantiateComponent(at25Component):
     at25SystemInitFile.setMarkup(True)
 
 def onDependencyConnected(info):
+    global at25MemoryInterruptEnable
+
     if info["dependencyID"] == "drv_at25_SPI_dependency" :
         plibUsed = info["localComponent"].getSymbolByID("DRV_AT25_PLIB")
         plibUsed.clearValue()
@@ -185,7 +197,13 @@ def onDependencyConnected(info):
         plibUsed.setValue(at25PlibId.upper(), 1)
         Database.setSymbolValue(at25PlibId, "SPI_DRIVER_CONTROLLED", True, 1)
 
+        at25MemoryInterruptEnable.setValue(Database.getSymbolValue("core", at25PlibId + "_INTERRUPT_ENABLE"), 1)
+
 def onDependencyDisconnected(info):
+    global at25MemoryInterruptEnable
+
     if info["dependencyID"] == "drv_at25_SPI_dependency":
         at25PlibId = info["remoteComponent"].getID().upper()
         Database.setSymbolValue(at25PlibId, "SPI_DRIVER_CONTROLLED", False, 1)
+
+        at25MemoryInterruptEnable.setValue(False, 1)
