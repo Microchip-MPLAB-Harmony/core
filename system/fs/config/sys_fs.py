@@ -26,7 +26,7 @@ def instantiateComponent(sysFSComponent):
     sysFSRTOSMenu = sysFSComponent.createMenuSymbol(None, None)
     sysFSRTOSMenu.setLabel("RTOS settings")
     sysFSRTOSMenu.setDescription("RTOS settings")
-    sysFSRTOSMenu.setVisible((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != 0))
+    sysFSRTOSMenu.setVisible((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"))
     sysFSRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS"])
 
     sysFSRTOSTask = sysFSComponent.createComboSymbol("SYS_FS_RTOS", sysFSRTOSMenu, ["Standalone"])
@@ -347,7 +347,7 @@ def instantiateComponent(sysFSComponent):
     sysFSSystemRtosTaskFile.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
     sysFSSystemRtosTaskFile.setSourcePath("/system/fs/templates/system/system_rtos_tasks.c.ftl")
     sysFSSystemRtosTaskFile.setMarkup(True)
-    sysFSSystemRtosTaskFile.setEnabled((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") == "FreeRTOS"))
+    sysFSSystemRtosTaskFile.setEnabled((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"))
     sysFSSystemRtosTaskFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS"])
 
 ###########################################################################################################
@@ -359,15 +359,13 @@ deviceNames = { 'SYS_FS_MEDIA_TYPE_NVM' : '/dev/nvma',
     }
 
 def genRtosTask(symbol, event):
-    if (event["value"] != 0):
-        # If not Bare Metal
+    if (event["value"] != "BareMetal"):
         symbol.setEnabled(True)
     else:
         symbol.setEnabled(False)
 
 def showRTOSMenu(symbol, event):
     if (event["value"] != "BareMetal"):
-        # If not Bare Metal
         symbol.setVisible(True)
     else:
         symbol.setVisible(False)
