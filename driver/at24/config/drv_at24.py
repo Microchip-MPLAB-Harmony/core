@@ -2,6 +2,7 @@
 #### Component ####
 ################################################################################
 
+at24MemoryInterruptEnable = None
 
 myVariableValue = Database.getSymbolValue("core", "COMPONENT_PACKAGE")
 pioPinout = ATDF.getNode('/avr-tools-device-file/pinouts/pinout@[name= "' + str(myVariableValue) + '"]')
@@ -27,6 +28,8 @@ def at24SetMemoryDependency(symbol, event):
 
 
 def instantiateComponent(at24Component):
+    global at24MemoryInterruptEnable
+
     res = Database.activateComponents(["HarmonyCore"])
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
@@ -62,6 +65,12 @@ def instantiateComponent(at24Component):
     at24MemoryDriver.setLabel("Memory Driver Connected")
     at24MemoryDriver.setVisible(False)
     at24MemoryDriver.setDefaultValue(False)
+
+    at24MemoryInterruptEnable = at24Component.createBooleanSymbol("INTERRUPT_ENABLE", None)
+    at24MemoryInterruptEnable.setLabel("at24 Interrupt Enable")
+    at24MemoryInterruptEnable.setVisible(False)
+    at24MemoryInterruptEnable.setDefaultValue(False)
+    at24MemoryInterruptEnable.setReadOnly(True)
 
     at24MemoryEraseEnable = at24Component.createBooleanSymbol("ERASE_ENABLE", None)
     at24MemoryEraseEnable.setLabel("at24 Erase Enable")
@@ -177,6 +186,8 @@ def instantiateComponent(at24Component):
     at24SystemInitFile.setMarkup(True)
 
 def onDependencyConnected(info):
+    global at24MemoryInterruptEnable
+
     if info["dependencyID"] == "drv_at24_I2C_dependency" :
         plibUsed = info["localComponent"].getSymbolByID("DRV_AT24_PLIB")
         plibUsed.clearValue()
@@ -184,7 +195,13 @@ def onDependencyConnected(info):
         plibUsed.setValue(at24PlibId, 1)
         Database.setSymbolValue(at24PlibId, "I2C_DRIVER_CONTROLLED", True, 1)
 
+        at24MemoryInterruptEnable.setValue(Database.getSymbolValue("core", at24PlibId + "_INTERRUPT_ENABLE"), 1)
+
 def onDependencyDisconnected(info):
+    global at24MemoryInterruptEnable
+
     if info["dependencyID"] == "drv_at24_I2C_dependency":
         at24PlibId = info["remoteComponent"].getID().upper()
         Database.setSymbolValue(at24PlibId, "I2C_DRIVER_CONTROLLED", False, 1)
+
+        at24MemoryInterruptEnable.setValue(False, 1)
