@@ -4,6 +4,7 @@
 
 memoryDeviceUsed            = None
 memoryPlibUsed              = None
+memoryDeviceInterruptEnable = None
 memoryDeviceEraseEnable     = None
 memoryDeviceComment         = None
 memoryPlibSourceFile        = None
@@ -21,19 +22,37 @@ def setVisible(symbol, event):
     else:
         symbol.setVisible(False)
 
+def setMemoryDevicePoll(symbol, event):
+    global memoryDeviceUsed
+    global memoryDeviceInterruptEnable
+
+
+    enable_poll = False
+
+    if (memoryDeviceInterruptEnable.getValue() == False):
+        if (Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_SYS_TIME_ENABLE") == True):
+            if (memoryDeviceUsed.getValue() != ""):
+                enable_poll = True
+
+    symbol.setVisible(enable_poll)
+
 def genRtosTask(symbol, event):
-    if (event["value"] != 0):
-        # If not Bare Metal
-        symbol.setEnabled(True)
-    else:
-        symbol.setEnabled(False)
+    gen_rtos_task = False
+
+    if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
+        if (Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == 0):
+            gen_rtos_task = True
+
+    symbol.setEnabled(gen_rtos_task)
 
 def showRTOSMenu(symbol, event):
-    if (event["value"] != "BareMetal"):
-        # If not Bare Metal
-        symbol.setVisible(True)
-    else:
-        symbol.setVisible(False)
+    show_rtos_menu = False
+
+    if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
+        if (Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == 0):
+            show_rtos_menu = True
+
+    symbol.setVisible(show_rtos_menu)
 
 def setMemoryDeviceValue(symbol, event):
     symbol.clearValue()
@@ -51,16 +70,6 @@ def aSyncFileGen(symbol, event):
     elif(event["value"] == 1):
        symbol.setEnabled(False)
 
-def setRtosUseDelay(symbol, event):
-    if (event["value"] == 0):
-        symbol.setVisible(True)
-        symbol.clearValue()
-        symbol.setValue(True, 1)
-    elif(event["value"] == 1):
-        symbol.setVisible(False)
-        symbol.clearValue()
-        symbol.setValue(False, 1)
-
 def setMemoryBuffer(symbol, event):
     if (event["id"] == "DRV_MEMORY_COMMON_MODE"):
         if (event["value"] == 0):
@@ -75,15 +84,10 @@ def setMemoryBuffer(symbol, event):
         else:
             symbol.setReadOnly(False)
 
-def setFileSystemCounter(symbol, event):
-    if (event["value"] == True):
-        Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_COUNTER", True, 1)
-    else:
-        Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_COUNTER", False, 1)
-
 def instantiateComponent(memoryComponent, index):
     global memoryDeviceUsed
     global memoryDeviceComment
+    global memoryDeviceInterruptEnable
     global memoryDeviceEraseEnable
     global memoryPlibSourceFile
     global memoryPlibHeaderFile
@@ -105,21 +109,18 @@ def instantiateComponent(memoryComponent, index):
     memoryIndex.setVisible(False)
     memoryIndex.setDefaultValue(index)
 
-    memoryFsEnable = memoryComponent.createBooleanSymbol("DRV_MEMORY_FS_ENABLE", None)
-    memoryFsEnable.setLabel("Enable File system for Memory Driver")
-    memoryFsEnable.setDefaultValue(False)
-
-    memoryfsCounter = memoryComponent.createBooleanSymbol("DRV_MEMORY_FS_COUNTER", None)
-    memoryfsCounter.setLabel("FS Counter")
-    memoryfsCounter.setVisible(False)
-    memoryfsCounter.setDependencies(setFileSystemCounter, ["DRV_MEMORY_FS_ENABLE"])
-
     memorySymNumClients = memoryComponent.createIntegerSymbol("DRV_MEMORY_NUM_CLIENTS", None)
     memorySymNumClients.setLabel("Number of Clients")
     memorySymNumClients.setMin(1)
     memorySymNumClients.setMax(10)
     memorySymNumClients.setDefaultValue(1)
     memorySymNumClients.setVisible(True)
+
+    memoryFsEnable = memoryComponent.createBooleanSymbol("DRV_MEMORY_FS_ENABLE", None)
+    memoryFsEnable.setLabel("Enable File system for Memory Driver")
+    memoryFsEnable.setDefaultValue(False)
+    memoryFsEnable.setVisible(False)
+    memoryFsEnable.setReadOnly(True)
 
     memorySymBufPool = memoryComponent.createIntegerSymbol("DRV_MEMORY_BUFFER_QUEUE_SIZE", None)
     memorySymBufPool.setLabel("Buffer Queue Size")
@@ -129,18 +130,45 @@ def instantiateComponent(memoryComponent, index):
     memorySymBufPool.setReadOnly((memoryFsEnable.getValue() == True))
     memorySymBufPool.setDependencies(setMemoryBuffer, ["DRV_MEMORY_FS_ENABLE", "drv_memory.DRV_MEMORY_COMMON_MODE"])
 
+    memoryDeviceMediaType = memoryComponent.createComboSymbol("DRV_MEMORY_DEVICE_TYPE", None, mediaTypes)
+    memoryDeviceMediaType.setLabel("Memory Device Type")
+    memoryDeviceMediaType.setDefaultValue("SYS_FS_MEDIA_TYPE_SPIFLASH")
+    memoryDeviceMediaType.setVisible((memoryFsEnable.getValue() == True))
+    memoryDeviceMediaType.setDependencies(setVisible, ["DRV_MEMORY_FS_ENABLE"])
+
     memoryDeviceUsed = memoryComponent.createStringSymbol("DRV_MEMORY_DEVICE", None)
     memoryDeviceUsed.setLabel("Memory Device Used")
     memoryDeviceUsed.setReadOnly(True)
+
+    memoryDeviceComment = memoryComponent.createCommentSymbol("DRV_MEMORY_DEVICE_COMMENT", None)
+    memoryDeviceComment.setVisible(False)
+    memoryDeviceComment.setLabel("*** Configure Memory Device in "+ memoryDeviceUsed.getValue() + " Configurations ***")
+
+    memoryDeviceInterruptEnable = memoryComponent.createBooleanSymbol("DRV_MEMORY_INTERRUPT_ENABLE", None)
+    memoryDeviceInterruptEnable.setLabel("Enable Interrupt for Memory Device")
+    memoryDeviceInterruptEnable.setVisible(False)
+    memoryDeviceInterruptEnable.setDefaultValue(False)
+    memoryDeviceInterruptEnable.setReadOnly(True)
+    memoryDeviceInterruptEnable.setDependencies(setMemoryDeviceValue, ["drv_memory_MEMORY_dependency:INTERRUPT_ENABLE"])
+
+    enable_poll = False
+
+    if (memoryDeviceInterruptEnable.getValue() == False):
+        if (Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_SYS_TIME_ENABLE") == True):
+            if (memoryDeviceUsed.getValue() != ""):
+                enable_poll = True
+
+    memoryDevicePollUs = memoryComponent.createIntegerSymbol("DRV_MEMORY_DEVICE_POLL_US", None)
+    memoryDevicePollUs.setLabel("Memory Device Status Polling Rate MicroSeconds")
+    memoryDevicePollUs.setMin(0)
+    memoryDevicePollUs.setDefaultValue(5)
+    memoryDevicePollUs.setVisible(enable_poll)
+    memoryDevicePollUs.setDependencies(setMemoryDevicePoll, ["DRV_MEMORY_INTERRUPT_ENABLE", "drv_memory.DRV_MEMORY_COMMON_SYS_TIME_ENABLE", "DRV_MEMORY_DEVICE"])
 
     memoryPlibUsed = memoryComponent.createStringSymbol("DRV_MEMORY_PLIB", None)
     memoryPlibUsed.setLabel("Plib Used")
     memoryPlibUsed.setVisible(False)
     memoryPlibUsed.setReadOnly(True)
-
-    memoryDeviceComment = memoryComponent.createCommentSymbol("DRV_MEMORY_DEVICE_COMMENT", None)
-    memoryDeviceComment.setVisible(False)
-    memoryDeviceComment.setLabel("*** Configure Memory Device in Memory Device Configurations ***")
 
     memoryDeviceEraseEnable = memoryComponent.createBooleanSymbol("DRV_MEMORY_ERASE_ENABLE", None)
     memoryDeviceEraseEnable.setLabel("Enable Erase for Memory Device")
@@ -149,18 +177,18 @@ def instantiateComponent(memoryComponent, index):
     memoryDeviceEraseEnable.setReadOnly(True)
     memoryDeviceEraseEnable.setDependencies(setMemoryDeviceValue, ["drv_memory_MEMORY_dependency:ERASE_ENABLE"])
 
-    memoryDeviceMediaType = memoryComponent.createComboSymbol("DRV_MEMORY_DEVICE_TYPE", None, mediaTypes)
-    memoryDeviceMediaType.setLabel("Memory Device Type")
-    memoryDeviceMediaType.setDefaultValue("SYS_FS_MEDIA_TYPE_SPIFLASH")
-    memoryDeviceMediaType.setVisible((memoryFsEnable.getValue() == True))
-    memoryDeviceMediaType.setDependencies(setVisible, ["DRV_MEMORY_FS_ENABLE"])
+    enable_rtos_settings = False
+
+    if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
+        if (Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == 0):
+            enable_rtos_settings = True
 
     # RTOS Settings 
     memoryRTOSMenu = memoryComponent.createMenuSymbol(None, None)
     memoryRTOSMenu.setLabel("RTOS settings")
     memoryRTOSMenu.setDescription("RTOS settings")
-    memoryRTOSMenu.setVisible((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != 0))
-    memoryRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS"])
+    memoryRTOSMenu.setVisible(enable_rtos_settings)
+    memoryRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS", "drv_memory.DRV_MEMORY_COMMON_MODE"])
 
     memoryRTOSTask = memoryComponent.createComboSymbol("DRV_MEMORY_RTOS", memoryRTOSMenu, ["Standalone"])
     memoryRTOSTask.setLabel("Run Library Tasks As")
@@ -178,9 +206,7 @@ def instantiateComponent(memoryComponent, index):
 
     memoryRTOSTaskDelay = memoryComponent.createBooleanSymbol("DRV_MEMORY_RTOS_USE_DELAY", memoryRTOSMenu)
     memoryRTOSTaskDelay.setLabel("Use Task Delay?")
-    memoryRTOSTaskDelay.setDefaultValue((Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == 0))
-    memoryRTOSTaskDelay.setVisible((Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == 0))
-    memoryRTOSTaskDelay.setDependencies(setRtosUseDelay, ["drv_memory.DRV_MEMORY_COMMON_MODE"])
+    memoryRTOSTaskDelay.setDefaultValue(True)
 
     memoryRTOSTaskDelayVal = memoryComponent.createIntegerSymbol("DRV_MEMORY_RTOS_DELAY", memoryRTOSMenu)
     memoryRTOSTaskDelayVal.setLabel("Task Delay")
@@ -310,12 +336,13 @@ def instantiateComponent(memoryComponent, index):
     memorySystemRtosTasksFile.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
     memorySystemRtosTasksFile.setSourcePath("driver/memory/templates/system/system_rtos_tasks.c.ftl")
     memorySystemRtosTasksFile.setMarkup(True)
-    memorySystemRtosTasksFile.setEnabled((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") == "FreeRTOS"))
-    memorySystemRtosTasksFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS"])
+    memorySystemRtosTasksFile.setEnabled(enable_rtos_settings)
+    memorySystemRtosTasksFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS", "drv_memory.DRV_MEMORY_COMMON_MODE"])
 
 def onDependencyConnected(connectionInfo):
     global memoryDeviceUsed
     global memoryDeviceComment
+    global memoryDeviceInterruptEnable
     global memoryDeviceEraseEnable
     global memoryPlibSourceFile
     global memoryPlibHeaderFile
@@ -327,12 +354,14 @@ def onDependencyConnected(connectionInfo):
     remoteId = connectionInfo["remoteComponent"].getID()
 
     if (connectionInfo["dependencyID"] == "drv_memory_MEMORY_dependency"):
-        memoryDeviceUsed.clearValue()
         memoryDeviceUsed.setValue(remoteId.upper(), 1)
 
         memoryPlibUsed.clearValue()
 
+        memoryDeviceComment.setLabel("*** Configure Memory Device in "+ memoryDeviceUsed.getValue() + " Configurations ***")
         memoryDeviceComment.setVisible(True)
+
+        memoryDeviceInterruptEnable.setValue(remoteComponent.getSymbolValue("INTERRUPT_ENABLE"), 1)
 
         memoryDeviceEraseEnable.setValue(remoteComponent.getSymbolValue("ERASE_ENABLE"), 1)
 
@@ -350,6 +379,7 @@ def onDependencyConnected(connectionInfo):
 def onDependencyDisconnected(connectionInfo):
     global memoryDeviceUsed
     global memoryDeviceComment
+    global memoryDeviceInterruptEnable
     global memoryDeviceEraseEnable
     global memoryPlibSourceFile
     global memoryPlibHeaderFile
@@ -366,6 +396,8 @@ def onDependencyDisconnected(connectionInfo):
         memoryPlibUsed.clearValue()
 
         memoryDeviceComment.setVisible(False)
+
+        memoryDeviceInterruptEnable.clearValue()
 
         memoryDeviceEraseEnable.clearValue()
 
@@ -386,6 +418,7 @@ def onCapabilityConnected(connectionInfo):
 
     if (remoteComponent.getID() == "sys_fs"):
         memoryFsEnable.setValue(True, 1)
+        Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_COUNTER", True, 1)
 
 def onCapabilityDisconnected(connectionInfo):
     global memoryFsEnable
@@ -396,3 +429,4 @@ def onCapabilityDisconnected(connectionInfo):
 
     if (remoteComponent.getID() == "sys_fs"):
         memoryFsEnable.setValue(False, 1)
+        Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_COUNTER", False, 1)

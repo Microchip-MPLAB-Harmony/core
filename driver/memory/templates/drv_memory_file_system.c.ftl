@@ -88,7 +88,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     <#lt>    .addressGet         = DRV_MEMORY_AddressGet,
     <#lt>    .open               = DRV_MEMORY_Open,
     <#lt>    .close              = DRV_MEMORY_Close,
-    <#lt>    .tasks              = DRV_MEMORY_Tasks,
+    <#lt>    .tasks              = NULL,
     <#lt>};
 </#if>
 

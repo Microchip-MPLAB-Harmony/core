@@ -113,6 +113,8 @@ typedef bool (*GEOMETRY_GET)( const DRV_HANDLE handle, MEMORY_DEVICE_GEOMETRY *g
 
 typedef uint32_t (*TRANSFER_STATUS_GET)( const DRV_HANDLE handle );
 
+typedef void (*EVENT_HANDLER)( uintptr_t context );
+
 typedef struct
 {
     DRV_HANDLE (*Open)( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent );
@@ -126,6 +128,8 @@ typedef struct
     bool (*Read)( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_length, uint32_t address );
 
     bool (*PageWrite)( const DRV_HANDLE handle, void *tx_data, uint32_t address );
+    
+    void (*EventHandlerSet) ( const DRV_HANDLE handle, EVENT_HANDLER eventHandler, uintptr_t context );
 
     GEOMETRY_GET GeometryGet;
 
@@ -153,6 +157,12 @@ typedef struct
 
     /* Flash Device functions */
     const MEMORY_DEVICE_API *memoryDevice;
+
+    /* Flag to indicate if attached memory device configured to interrupt mode */
+    bool isMemDevInterruptEnabled;
+
+    /* Number of milliseconds to poll for transfer status check */
+    uint32_t memDevStatusPollUs;
 
     /* FS enabled */
     bool isFsEnabled;

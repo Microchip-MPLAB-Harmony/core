@@ -22,6 +22,11 @@ DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY_CLIENT
     <#lt></#if>
     <#lt>    .Read               = ${DRV_MEMORY_PLIB}_Read,
     <#lt>    .PageWrite          = ${DRV_MEMORY_PLIB}_PageWrite,
+    <#lt><#if DRV_MEMORY_INTERRUPT_ENABLE >
+    <#lt>    .EventHandlerSet    = ${DRV_MEMORY_PLIB}_EventHandlerSet,
+    <#lt><#else>
+    <#lt>    .EventHandlerSet    = NULL,
+    <#lt></#if>
     <#lt>    .GeometryGet        = (GEOMETRY_GET)${DRV_MEMORY_PLIB}_GeometryGet,
     <#lt>    .TransferStatusGet  = (TRANSFER_STATUS_GET)${DRV_MEMORY_PLIB}_TransferStatusGet
     <#lt>};
@@ -37,6 +42,11 @@ DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY_CLIENT
     <#lt></#if>
     <#lt>    .Read               = ${DRV_MEMORY_DEVICE}_Read,
     <#lt>    .PageWrite          = ${DRV_MEMORY_DEVICE}_PageWrite,
+    <#lt><#if DRV_MEMORY_INTERRUPT_ENABLE >
+    <#lt>    .EventHandlerSet    = ${DRV_MEMORY_DEVICE}_EventHandlerSet,
+    <#lt><#else>
+    <#lt>    .EventHandlerSet    = NULL,
+    <#lt></#if>
     <#lt>    .GeometryGet        = (GEOMETRY_GET)${DRV_MEMORY_DEVICE}_GeometryGet,
     <#lt>    .TransferStatusGet  = (TRANSFER_STATUS_GET)${DRV_MEMORY_DEVICE}_TransferStatusGet
     <#lt>};
@@ -45,28 +55,39 @@ DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY_CLIENT
 const DRV_MEMORY_INIT drvMemory${INDEX?string}InitData =
 {
 <#if DRV_MEMORY_PLIB?has_content >
-    .memDevIndex          = 0,
+    .memDevIndex                = 0,
 <#else>
-    .memDevIndex          = ${DRV_MEMORY_DEVICE}_INDEX,
+    .memDevIndex                = ${DRV_MEMORY_DEVICE}_INDEX,
 </#if>
-    .memoryDevice         = &drvMemory${INDEX?string}DeviceAPI,
-<#if DRV_MEMORY_FS_ENABLE >
-    .isFsEnabled          = true,
-    .deviceMediaType      = (uint8_t)${DRV_MEMORY_DEVICE_TYPE},
+    .memoryDevice               = &drvMemory${INDEX?string}DeviceAPI,
+<#if DRV_MEMORY_INTERRUPT_ENABLE >
+    .isMemDevInterruptEnabled   = true,
+    <#if drv_memory.DRV_MEMORY_COMMON_SYS_TIME_ENABLE >
+        <#lt>    .memDevStatusPollUs         = 0,
+    </#if>
 <#else>
-    .isFsEnabled          = false,
+    .isMemDevInterruptEnabled   = false,
+    <#if drv_memory.DRV_MEMORY_COMMON_SYS_TIME_ENABLE >
+        <#lt>    .memDevStatusPollUs         = ${DRV_MEMORY_DEVICE_POLL_US},
+    </#if>
+</#if>
+<#if DRV_MEMORY_FS_ENABLE >
+    .isFsEnabled                = true,
+    .deviceMediaType            = (uint8_t)${DRV_MEMORY_DEVICE_TYPE},
+<#else>
+    .isFsEnabled                = false,
 </#if>
 <#if DRV_MEMORY_ERASE_ENABLE >
-    .ewBuffer             = &gDrvMemory${INDEX?string}EraseBuffer[0],
+    .ewBuffer                   = &gDrvMemory${INDEX?string}EraseBuffer[0],
 <#else>
-    .ewBuffer             = NULL,
+    .ewBuffer                   = NULL,
 </#if>
-    .clientObjPool        = (uintptr_t)&gDrvMemory${INDEX?string}ClientObject[0],
+    .clientObjPool              = (uintptr_t)&gDrvMemory${INDEX?string}ClientObject[0],
 <#if drv_memory.DRV_MEMORY_COMMON_MODE == "ASYNC" >
-    .bufferObj            = (uintptr_t)&gDrvMemory${INDEX?string}BufferObject[0],
-    .queueSize            = DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX${INDEX?string},
+    .bufferObj                  = (uintptr_t)&gDrvMemory${INDEX?string}BufferObject[0],
+    .queueSize                  = DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX${INDEX?string},
 </#if>
-    .nClientsMax          = DRV_MEMORY_CLIENTS_NUMBER_IDX${INDEX?string}
+    .nClientsMax                = DRV_MEMORY_CLIENTS_NUMBER_IDX${INDEX?string}
 };
 
 // </editor-fold>

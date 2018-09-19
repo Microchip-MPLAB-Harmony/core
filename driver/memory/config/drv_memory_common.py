@@ -23,6 +23,13 @@ def setFileSystem(symbol, event):
         symbol.clearValue()
         symbol.setValue(False, 1)
 
+def setSysTimeEnable(symbol, event):
+    if (event["value"] == 1):
+        symbol.setValue(True, 1)
+        res = Database.activateComponents(["sys_time"])
+    else:
+        symbol.setValue(False, 1)
+
 def instantiateComponent(memoryCommonComponent):
     global memoryCommonFsEnable
 
@@ -35,7 +42,16 @@ def instantiateComponent(memoryCommonComponent):
     memoryCommonMode.setDisplayMode("Description")
     memoryCommonMode.setOutputMode("Key")
     memoryCommonMode.setVisible(True)
-    memoryCommonMode.setDefaultValue(0)
+    memoryCommonMode.setDefaultValue((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"))
+
+    memorySysTimeEnable = memoryCommonComponent.createBooleanSymbol("DRV_MEMORY_COMMON_SYS_TIME_ENABLE", None)
+    memorySysTimeEnable.setLabel("Enable Timer System Service")
+    memorySysTimeEnable.setVisible(False)
+    memorySysTimeEnable.setDefaultValue((memoryCommonMode.getValue() == 1))
+    memorySysTimeEnable.setDependencies(setSysTimeEnable, ["DRV_MEMORY_COMMON_MODE"])
+
+    if (memorySysTimeEnable.getValue() == True):
+        res = Database.activateComponents(["sys_time"])
 
     memoryCommonfsCounter = memoryCommonComponent.createBooleanSymbol("DRV_MEMORY_COMMON_FS_COUNTER", None)
     memoryCommonfsCounter.setLabel("Number of Instances Using FS")

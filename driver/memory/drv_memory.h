@@ -470,9 +470,6 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object );
     Function DRV_MEMORY_Initialize must have been called before calling this
     function.
 
-    Driver should be in ready state to accept the request. Can be checked by
-    calling DRV_MEMORY_Status().
-
   Parameters:
     drvIndex   -  Identifier for the instance to be opened
     ioIntent   -  Zero or more of the values from the enumeration
@@ -493,6 +490,7 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object );
           been opened in a non exclusive mode by another client.
         - if the driver hardware instance being opened is not initialized or is
           invalid
+        - if the attached memory device open or geometry read fails for first time.
 
   Example:
     <code>
@@ -847,7 +845,7 @@ bool DRV_MEMORY_SyncErase
 
     DRV_MEMORY_TransferHandlerSet(memoryHandle, appTransferHandler, (uintptr_t)NULL);
 
-    DRV_MEMORY_EraseWrite(memoryHandle, &commandHandle, &myBuffer, blockStart, nBlock);
+    DRV_MEMORY_AsyncEraseWrite(memoryHandle, &commandHandle, &myBuffer, blockStart, nBlock);
 
     if(DRV_MEMORY_COMMAND_HANDLE_INVALID == commandHandle)
     {
@@ -934,7 +932,7 @@ void DRV_MEMORY_AsyncEraseWrite
 
     // memoryHandle is the handle returned by the DRV_MEMORY_Open function.
 
-    if(DRV_MEMORY_EraseWrite(memoryHandle, &myBuffer, blockStart, nBlock) == false)
+    if(DRV_MEMORY_SyncEraseWrite(memoryHandle, &myBuffer, blockStart, nBlock) == false)
     {
         // Error handling here
     }
@@ -1055,7 +1053,7 @@ bool DRV_MEMORY_SyncEraseWrite
 
     DRV_MEMORY_TransferHandlerSet(memoryHandle, appTransferHandler, (uintptr_t)NULL);
 
-    DRV_MEMORY_Erase(memoryHandle, &commandHandle, blockStart, nBlock);
+    DRV_MEMORY_AsyncErase(memoryHandle, &commandHandle, blockStart, nBlock);
 
     if(DRV_MEMORY_COMMAND_HANDLE_INVALID == commandHandle)
     {
@@ -1065,7 +1063,7 @@ bool DRV_MEMORY_SyncEraseWrite
     // Wait for erase to be completed
     while(!xfer_done);
 
-    DRV_MEMORY_Write(memoryHandle, &commandHandle, &writeBuffer, blockStart, nBlock);
+    DRV_MEMORY_AsyncWrite(memoryHandle, &commandHandle, &writeBuffer, blockStart, nBlock);
 
     if(DRV_MEMORY_COMMAND_HANDLE_INVALID == commandHandle)
     {
@@ -1148,12 +1146,12 @@ void DRV_MEMORY_AsyncWrite
 
     // memoryHandle is the handle returned by the DRV_MEMORY_Open function.
 
-    if(DRV_MEMORY_Erase(memoryHandle, blockStart, nBlock) == false)
+    if(DRV_MEMORY_SyncErase(memoryHandle, blockStart, nBlock) == false)
     {
         // Error handling here
     }
 
-    if(DRV_MEMORY_Write(memoryHandle, &writeBuffer, blockStart, nBlock) == false)
+    if(DRV_MEMORY_SyncWrite(memoryHandle, &writeBuffer, blockStart, nBlock) == false)
     {
         // Error handling here
     }
@@ -1261,7 +1259,7 @@ Summary:
 
     DRV_MEMORY_TransferHandlerSet(memoryHandle, appTransferHandler, (uintptr_t)NULL);
 
-    DRV_MEMORY_Read(memoryHandle, &commandHandle, &readBuffer, blockStart, nBlock);
+    DRV_MEMORY_AsyncRead(memoryHandle, &commandHandle, &readBuffer, blockStart, nBlock);
 
     if(DRV_MEMORY_COMMAND_HANDLE_INVALID == commandHandle)
     {
@@ -1341,7 +1339,7 @@ Summary:
 
     // memoryHandle is the handle returned by the DRV_MEMORY_Open function.
 
-    if(DRV_MEMORY_Read(memoryHandle, &readBuffer, blockStart, nBlock) == false)
+    if(DRV_MEMORY_SyncRead(memoryHandle, &readBuffer, blockStart, nBlock) == false)
     {
         // Error handling here
     }

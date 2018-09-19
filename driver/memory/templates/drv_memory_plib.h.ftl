@@ -70,6 +70,10 @@ bool ${DRV_MEMORY_PLIB}_Read( const DRV_HANDLE handle, void *rx_data, uint32_t r
 
 bool ${DRV_MEMORY_PLIB}_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t address );
 
+<#if DRV_MEMORY_INTERRUPT_ENABLE == true>
+    <#lt>void ${DRV_MEMORY_PLIB}_EventHandlerSet( const DRV_HANDLE handle, const EVENT_HANDLER eventHandler, const uintptr_t context );
+</#if>
+
 MEMORY_DEVICE_TRANSFER_STATUS ${DRV_MEMORY_PLIB}_TransferStatusGet( const DRV_HANDLE handle );
 
 bool ${DRV_MEMORY_PLIB}_GeometryGet( const DRV_HANDLE handle, MEMORY_DEVICE_GEOMETRY *geometry );

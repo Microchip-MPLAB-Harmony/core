@@ -43,6 +43,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #ifndef _DRV_MEMORY_VARIANT_MAPPING_H
 #define _DRV_MEMORY_VARIANT_MAPPING_H
 
+<#if DRV_MEMORY_COMMON_SYS_TIME_ENABLE >
+    <#lt>#include "system/time/sys_time.h"
+</#if>
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Feature Variant Mapping

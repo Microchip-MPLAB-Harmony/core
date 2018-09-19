@@ -113,6 +113,12 @@ static const DRV_MEMORY_TransferOperation gMemoryXferFuncPtr[4] =
 // *****************************************************************************
 // *****************************************************************************
 
+static void eventHandler( uintptr_t context )
+{
+    DRV_MEMORY_OBJECT *dObj = (DRV_MEMORY_OBJECT *)context;
+    OSAL_SEM_PostISR(&dObj->transferDone);
+}
+
 static inline uint16_t DRV_MEMORY_UPDATE_TOKEN(uint16_t token)
 {
     token++;
@@ -125,11 +131,10 @@ static inline uint16_t DRV_MEMORY_UPDATE_TOKEN(uint16_t token)
 }
 
 
-/* This function finds a free buffer object and populates it with the transfer
- * parameters. It also generates a new command handle for the request and
- * adds it to the queue head for processing.
+/* This function populates buffer object with the transfer
+ * parameters. It also generates a new command handle for the request.
  */
-void DRV_MEMORY_AllocateBufferObject
+static void DRV_MEMORY_AllocateBufferObject
 (
     DRV_MEMORY_CLIENT_OBJECT *clientObj,
     DRV_MEMORY_COMMAND_HANDLE *handle,
@@ -250,7 +255,6 @@ static bool DRV_MEMORY_UpdateGeometry( DRV_MEMORY_OBJECT *dObj )
     return true;
 }
 
-/* This function is responsible for handling the read operation. */
 static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleRead
 (
     DRV_MEMORY_OBJECT *dObj,
@@ -489,8 +493,13 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
                 dObj->ewState = DRV_MEMORY_EW_ERASE_SECTOR;
 
                 transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
+
+                /* Fall through for Erase operation. */
             }
-            break;
+            else
+            {
+                break;
+            }
         }
 
         case DRV_MEMORY_EW_ERASE_SECTOR:
@@ -532,6 +541,87 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
     }
 
     return ((MEMORY_DEVICE_TRANSFER_STATUS)transferStatus);
+}
+
+static bool DRV_MEMORY_StartXfer( DRV_MEMORY_OBJECT *dObj )
+{
+    DRV_MEMORY_CLIENT_OBJECT *clientObj = NULL;
+    DRV_MEMORY_BUFFER_OBJECT *bufferObj = NULL;
+    DRV_MEMORY_EVENT event = DRV_MEMORY_EVENT_COMMAND_ERROR;
+    MEMORY_DEVICE_TRANSFER_STATUS transferStatus = MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
+    bool isSuccess = false;
+    SYS_TIME_HANDLE handle = SYS_TIME_HANDLE_INVALID;
+
+    bufferObj = &dObj->currentBufObj;
+
+    /* Init the various sub state machines. */
+    dObj->readState  = DRV_MEMORY_READ_INIT;
+    dObj->writeState = DRV_MEMORY_WRITE_INIT;
+    dObj->eraseState = DRV_MEMORY_ERASE_INIT;
+    dObj->ewState = DRV_MEMORY_EW_INIT;
+
+    bufferObj->status = DRV_MEMORY_COMMAND_IN_PROGRESS;
+
+    transferStatus = gMemoryXferFuncPtr[bufferObj->opType](dObj, &bufferObj->buffer[0], bufferObj->blockStart, bufferObj->nBlocks);
+        
+    while (transferStatus == MEMORY_DEVICE_TRANSFER_BUSY)
+    {
+        if ((dObj->isMemDevInterruptEnabled == false) && (dObj->memDevStatusPollUs > 0))
+        {
+            handle = SYS_TIME_CallbackRegisterUS(eventHandler, (uintptr_t)dObj, dObj->memDevStatusPollUs, SYS_TIME_SINGLE);
+
+            if (handle == SYS_TIME_HANDLE_INVALID)
+            {
+                return false;
+            }
+            /* Wait for the request to process before checking status. This semaphore is released from the
+             * system timer handler
+            */
+            if (OSAL_RESULT_TRUE == OSAL_SEM_Pend( &dObj->transferDone, OSAL_WAIT_FOREVER ))
+            {
+                    SYS_TIME_TimerDestroy(handle);
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if ((dObj->isMemDevInterruptEnabled == true) && (dObj->memDevStatusPollUs == 0))
+        {
+            /* Wait for the request to process before checking status. This semaphore is released from the
+             * event handler called from attached memory device.
+            */
+            if (OSAL_RESULT_TRUE != OSAL_SEM_Pend( &dObj->transferDone, OSAL_WAIT_FOREVER ))
+            {
+                return false;
+            }
+        }
+
+        transferStatus = gMemoryXferFuncPtr[bufferObj->opType](dObj, &bufferObj->buffer[0], bufferObj->blockStart, bufferObj->nBlocks);
+    }
+
+    if (transferStatus == MEMORY_DEVICE_TRANSFER_COMPLETED)
+    {
+        bufferObj->status = DRV_MEMORY_COMMAND_COMPLETED;
+        event = DRV_MEMORY_EVENT_COMMAND_COMPLETE;
+        isSuccess = true;
+    }
+    else if (transferStatus >= MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN)
+    {
+        /* The operation has failed. */
+        bufferObj->status = DRV_MEMORY_COMMAND_ERROR_UNKNOWN;
+        event = DRV_MEMORY_EVENT_COMMAND_ERROR;
+    }
+
+    clientObj = (DRV_MEMORY_CLIENT_OBJECT *)bufferObj->hClient;
+
+    if(clientObj->transferHandler != NULL)
+    {
+        /* Call the event handler */
+        clientObj->transferHandler(event, bufferObj->commandHandle, clientObj->context);
+    }
+
+    return isSuccess;
 }
 
 static bool DRV_MEMORY_SetupXfer
@@ -604,22 +694,11 @@ static bool DRV_MEMORY_SetupXfer
 
         DRV_MEMORY_AllocateBufferObject (clientObj, commandHandle, buffer, blockStart, nBlock, opType);
 
-        /* Trigger the Memory Driver thread to process the request */
-        OSAL_SEM_Post(&dObj->transferRequest);
-
-        /* Wait for the request to complete. This semaphore is released from the
-         * Memory driver thread
-        */
-        if (OSAL_RESULT_TRUE == OSAL_SEM_Pend( &dObj->transferDone, OSAL_WAIT_FOREVER ))
-        {
-            if (DRV_MEMORY_COMMAND_COMPLETED == dObj->currentBufObj.status)
-            {
-                isSuccess = true;
-            }
-        }
+        isSuccess = DRV_MEMORY_StartXfer(dObj);
 
         OSAL_MUTEX_Unlock(&dObj->transferMutex);
     }
+
     return isSuccess;
 }
 
@@ -683,10 +762,11 @@ SYS_MODULE_OBJ DRV_MEMORY_Initialize
     dObj->memDevIndex = memoryInit->memDevIndex;
     dObj->memDevHandle = DRV_HANDLE_INVALID;
 
+    dObj->isMemDevInterruptEnabled = memoryInit->isMemDevInterruptEnabled;
+    dObj->memDevStatusPollUs = memoryInit->memDevStatusPollUs;
+
     /* Set the erase buffer */
     dObj->ewBuffer = memoryInit->ewBuffer;
-
-    dObj->state = DRV_MEMORY_INIT_DEVICE;
 
     if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FALSE)
     {
@@ -701,12 +781,6 @@ SYS_MODULE_OBJ DRV_MEMORY_Initialize
     }
 
     if (OSAL_RESULT_FALSE == OSAL_SEM_Create(&dObj->transferDone,OSAL_SEM_TYPE_BINARY, 0, 0))
-    {
-        /* There was insufficient memory available for the semaphore to be created */
-        return SYS_MODULE_OBJ_INVALID;
-    }
-
-    if (OSAL_RESULT_FALSE == OSAL_SEM_Create(&dObj->transferRequest,OSAL_SEM_TYPE_BINARY, 0, 0))
     {
         /* There was insufficient memory available for the semaphore to be created */
         return SYS_MODULE_OBJ_INVALID;
@@ -741,6 +815,37 @@ SYS_STATUS DRV_MEMORY_Status
     return (gDrvMemoryObj[object].status);
 }
 
+static SYS_STATUS DRV_MEMORY_IsReady(DRV_MEMORY_OBJECT *dObj)
+{
+    SYS_STATUS status = SYS_STATUS_BUSY;
+
+    if (dObj->memoryDevice->Status != NULL)
+    {
+        if (dObj->memoryDevice->Status(dObj->memDevIndex) != SYS_STATUS_READY)
+        {
+            /* Attached memory device is not ready */
+            return status;
+        }
+    }
+
+    if (dObj->memoryDevice->Open != NULL)
+    {
+        dObj->memDevHandle = dObj->memoryDevice->Open(dObj->memDevIndex, DRV_IO_INTENT_EXCLUSIVE);
+
+        if (dObj->memDevHandle == DRV_HANDLE_INVALID)
+        {
+             return status;
+        }
+    }
+
+    if (true == DRV_MEMORY_UpdateGeometry(dObj))
+    {
+        status = SYS_STATUS_READY;
+        dObj->status = SYS_STATUS_READY;
+    }
+
+    return status;
+}
 // *****************************************************************************
 // *****************************************************************************
 // Section: MEMORY Driver Client Routines
@@ -769,8 +874,11 @@ DRV_HANDLE DRV_MEMORY_Open
     /* Check if the driver is ready to be opened */
     if (dObj->status != SYS_STATUS_READY)
     {
-        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "DRV_MEMORY_Open(): Driver is not ready.\n");
-        return DRV_HANDLE_INVALID;
+        if (DRV_MEMORY_IsReady(dObj) != SYS_STATUS_READY)
+        {
+            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "DRV_MEMORY_Open(): Driver is not ready.\n");
+            return DRV_HANDLE_INVALID;
+        }
     }
 
     /* Acquire the instance specific mutex to protect the instance specific
@@ -821,6 +929,17 @@ DRV_HANDLE DRV_MEMORY_Open
             clientObj->clientHandle = DRV_MEMORY_MAKE_HANDLE(dObj->clientToken, drvIndex, iClient);
 
             dObj->clientToken = DRV_MEMORY_UPDATE_TOKEN(dObj->clientToken);
+
+            if (clientObj->clientHandle != DRV_HANDLE_INVALID)
+            {
+                if (dObj->isMemDevInterruptEnabled == true)
+                {
+                    if (dObj->memoryDevice->EventHandlerSet != NULL)
+                    {
+                        dObj->memoryDevice->EventHandlerSet(dObj->memDevHandle, eventHandler, (uintptr_t)dObj);
+                    }
+                }
+            }
 
             SYS_DEBUG_PRINT(SYS_ERROR_INFO, "DRV_MEMORY_Open(): Open successful.\n");
 
@@ -1020,146 +1139,6 @@ DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
     }
 
     return status;
-}
-
-void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object )
-{
-    DRV_MEMORY_OBJECT *dObj = NULL;
-    DRV_MEMORY_CLIENT_OBJECT *clientObj = NULL;
-    DRV_MEMORY_BUFFER_OBJECT *bufferObj = NULL;
-    DRV_MEMORY_EVENT event = DRV_MEMORY_EVENT_COMMAND_ERROR;
-    bool isDone = false;
-    MEMORY_DEVICE_TRANSFER_STATUS transferStatus = MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
-
-    if(object == SYS_MODULE_OBJ_INVALID)
-    {
-        /* Invalid system object */
-        return;
-    }
-
-    dObj = &gDrvMemoryObj[object];
-    bufferObj = &dObj->currentBufObj;
-
-    switch (dObj->state)
-    {
-        case DRV_MEMORY_INIT_DEVICE:
-        {
-            if (dObj->memoryDevice->Status != NULL)
-            {
-                if (dObj->memoryDevice->Status(dObj->memDevIndex) != SYS_STATUS_READY)
-                {
-                    /* Stay in same state until attached memory device is ready */
-                    break;
-                }
-            }
-
-            dObj->state = DRV_MEMORY_DEVICE_OPEN;
-            /* Fall Through */
-        }
-
-        case DRV_MEMORY_DEVICE_OPEN:
-        {
-            if (dObj->memoryDevice->Open != NULL)
-            {
-                dObj->memDevHandle = dObj->memoryDevice->Open(dObj->memDevIndex, DRV_IO_INTENT_EXCLUSIVE);
-
-                if (dObj->memDevHandle == DRV_HANDLE_INVALID)
-                {
-                    /* Stay here until Open is Successful */
-                    break;
-                }
-            }
-
-            dObj->state = DRV_MEMORY_GEOMETRY_UPDATE;
-            /* Fall Through */
-        }
-
-        case DRV_MEMORY_GEOMETRY_UPDATE:
-        {
-            if (true == DRV_MEMORY_UpdateGeometry(dObj))
-            {
-                dObj->state = DRV_MEMORY_PROCESS_QUEUE;
-                dObj->status = SYS_STATUS_READY;
-            }
-            else
-            {
-                /* Error reading geometry. Go block on the semaphore. This
-                 * semaphore should never unblock as the request would be
-                 * failed because the driver object status is not ready.
-                 */
-            }
-            /* Fall Through */
-        }
-
-        case DRV_MEMORY_PROCESS_QUEUE:
-        {
-            /* Block until there is a request to service */
-            OSAL_SEM_Pend( &dObj->transferRequest, OSAL_WAIT_FOREVER );
-
-            if (bufferObj->status == DRV_MEMORY_COMMAND_QUEUED)
-            {
-                /* Init the various sub state machines. */
-                dObj->readState  = DRV_MEMORY_READ_INIT;
-                dObj->writeState = DRV_MEMORY_WRITE_INIT;
-                dObj->eraseState = DRV_MEMORY_ERASE_INIT;
-                dObj->ewState = DRV_MEMORY_EW_INIT;
-                dObj->state = DRV_MEMORY_TRANSFER;
-
-                bufferObj->status = DRV_MEMORY_COMMAND_IN_PROGRESS;
-
-                transferStatus = MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
-
-                isDone = false;
-
-                /* Fall Through */
-            }
-        }
-
-        case DRV_MEMORY_TRANSFER:
-        {
-            transferStatus = gMemoryXferFuncPtr[bufferObj->opType](dObj, &bufferObj->buffer[0], bufferObj->blockStart, bufferObj->nBlocks);
-
-            if (transferStatus == MEMORY_DEVICE_TRANSFER_COMPLETED)
-            {
-                bufferObj->status = DRV_MEMORY_COMMAND_COMPLETED;
-                event = DRV_MEMORY_EVENT_COMMAND_COMPLETE;
-                isDone = true;
-            }
-            else if (transferStatus >= MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN)
-            {
-                /* The operation has failed. */
-                bufferObj->status = DRV_MEMORY_COMMAND_ERROR_UNKNOWN;
-                event = DRV_MEMORY_EVENT_COMMAND_ERROR;
-                isDone = true;
-            }
-
-            if (isDone)
-            {
-                clientObj = (DRV_MEMORY_CLIENT_OBJECT *)bufferObj->hClient;
-                if(clientObj->transferHandler != NULL)
-                {
-                    /* Call the event handler */
-                    clientObj->transferHandler(event, bufferObj->commandHandle, clientObj->context);
-                }
-                /* Go back waiting for the next request */
-                dObj->state = DRV_MEMORY_PROCESS_QUEUE;
-
-                OSAL_SEM_Post(&dObj->transferDone);
-            }
-            break;
-        }
-
-        case DRV_MEMORY_IDLE:
-        {
-            break;
-        }
-
-        case DRV_MEMORY_ERROR:
-        default:
-        {
-            break;
-        }
-    }
 }
 
 void DRV_MEMORY_TransferHandlerSet

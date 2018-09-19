@@ -274,34 +274,6 @@ typedef enum
 
 } DRV_MEMORY_EW_STATE;
 
-typedef enum
-{
-    /* Check if the attached memory device is ready. */
-    DRV_MEMORY_INIT_DEVICE = 0,
-
-    /* Open Attached Memory Device if Ready */
-    DRV_MEMORY_DEVICE_OPEN,
-
-    /* Read the SST flash ID */
-    DRV_MEMORY_GEOMETRY_UPDATE,
-
-    /* Perform a global unlock command. */
-    DRV_MEMORY_UNLOCK_FLASH,
-
-    /* Process the operations queued at the SST driver. */
-    DRV_MEMORY_PROCESS_QUEUE,
-
-    /* Perform the required transfer */
-    DRV_MEMORY_TRANSFER,
-
-    /* Idle state of the driver. */
-    DRV_MEMORY_IDLE,
-
-    /* Error state. */
-    DRV_MEMORY_ERROR
-
-} DRV_MEMORY_STATE;
-
 /**************************************
  * MEMORY Driver Client
  **************************************/
@@ -377,9 +349,6 @@ typedef struct
     /* Erase write state */
     DRV_MEMORY_EW_STATE ewState;
 
-    /* MEMORY main task routine's states */
-    DRV_MEMORY_STATE state;
-
     /* Flag to indicate in use  */
     bool inUse;
 
@@ -432,6 +401,12 @@ typedef struct
     /* Attached Memory Device Handle */
     DRV_HANDLE memDevHandle;
 
+    /* Flag to indicate if attached memory device configured to interrupt mode */
+    bool isMemDevInterruptEnabled;
+
+    /* Number of milliseconds to poll for transfer status check */
+    uint32_t memDevStatusPollUs;
+
     /* Attached Memory Device functions */
     const MEMORY_DEVICE_API *memoryDevice;
 
@@ -460,14 +435,9 @@ typedef struct
     OSAL_MUTEX_DECLARE(clientMutex);
 
     /* Semaphore to wait for transfer request to complete. This will be released
-     * from the Memory driver thread when the requested transfer is complete.
+     * from the System timer handler at regular interval expiry.
     */
     OSAL_SEM_DECLARE(transferDone);
-
-    /* Semaphore to start the Memory Driver thread to process the request. The
-     * memory driver thread will remain blocked on this semaphore.
-    */
-    OSAL_SEM_DECLARE(transferRequest);
 
 } DRV_MEMORY_OBJECT;
 

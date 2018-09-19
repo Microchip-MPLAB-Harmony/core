@@ -92,6 +92,13 @@ bool ${DRV_MEMORY_PLIB}_SectorErase( const DRV_HANDLE handle, uint32_t address )
 </#if>
 }
 
+<#if DRV_MEMORY_INTERRUPT_ENABLE == true>
+void ${DRV_MEMORY_PLIB}_EventHandlerSet( const DRV_HANDLE handle, const EVENT_HANDLER eventHandler, const uintptr_t context )
+{
+    ${DRV_MEMORY_DEVICE}_CallbackRegister(eventHandler, context);
+}
+</#if>
+
 bool ${DRV_MEMORY_PLIB}_GeometryGet( const DRV_HANDLE handle, MEMORY_DEVICE_GEOMETRY *geometry )
 {
     /* Read block size and number of blocks */

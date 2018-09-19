@@ -276,18 +276,6 @@ typedef enum
 
 typedef enum
 {
-    /* Check if the attached memory device is ready. */
-    DRV_MEMORY_INIT_DEVICE = 0,
-
-    /* Open Attached Memory Device if Ready */
-    DRV_MEMORY_DEVICE_OPEN,
-
-    /* Read the SST flash ID */
-    DRV_MEMORY_GEOMETRY_UPDATE,
-
-    /* Perform a global unlock command. */
-    DRV_MEMORY_UNLOCK_FLASH,
-
     /* Process the operations queued at the SST driver. */
     DRV_MEMORY_PROCESS_QUEUE,
 
@@ -437,6 +425,12 @@ typedef struct
 
     /* Attached Memory Device Handle */
     DRV_HANDLE memDevHandle;
+
+    /* Flag to indicate if attached memory device configured to interrupt mode */
+    bool isMemDevInterruptEnabled;
+
+    /* Flag to indicate if transfer is complete in interrupt mode */
+    volatile bool isTransferDone;
 
     /* Attached Memory Device functions */
     const MEMORY_DEVICE_API *memoryDevice;
