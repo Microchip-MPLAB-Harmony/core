@@ -21,6 +21,12 @@ def genDebugFiles(symbol, event):
 
 def genCommandFiles(symbol, event):
     symbol.setEnabled(event["value"])
+    
+def enableSysDebugConfigOptions(symbol, event):
+    symbol.setVisible(event["value"])
+    
+def enableCommandProcessorOptions(symbol, event):
+    symbol.setVisible(event["value"])
 
 ################################################################################
 #### Component ####
@@ -72,12 +78,19 @@ def instantiateComponent(consoleComponent):
     debugLevel = consoleComponent.createComboSymbol("SYS_DEBUG_LEVEL", debugEnable, ["SYS_ERROR_FATAL", "SYS_ERROR_ERROR", "SYS_ERROR_WARNING", "SYS_ERROR_INFO", "SYS_ERROR_DEBUG"])
     debugLevel.setLabel("Enable Debug?")
     debugLevel.setDefaultValue("SYS_ERROR_DEBUG")
+    debugLevel.setDependencies(enableSysDebugConfigOptions, ["SYS_DEBUG_ENABLE"])
 
     debugPrintBufferSize = consoleComponent.createIntegerSymbol("SYS_DEBUG_PRINT_BUFFER_SIZE", debugEnable)
     debugPrintBufferSize.setLabel("Debug Print Buffer Size (128-8192)")
     debugPrintBufferSize.setMin(128)
     debugPrintBufferSize.setMax(8192)
     debugPrintBufferSize.setDefaultValue(200)
+    debugPrintBufferSize.setDependencies(enableSysDebugConfigOptions, ["SYS_DEBUG_ENABLE"])
+
+    debugUseConsole = consoleComponent.createBooleanSymbol("SYS_DEBUG_USE_CONSOLE", debugEnable)
+    debugUseConsole.setLabel("Use Console for Debug?")
+    debugUseConsole.setDefaultValue(True)
+    debugUseConsole.setDependencies(enableSysDebugConfigOptions, ["SYS_DEBUG_ENABLE"])
 
     commandEnable = consoleComponent.createBooleanSymbol("SYS_COMMAND_ENABLE", None)
     commandEnable.setLabel("Enable Command Processor?")
@@ -88,14 +101,17 @@ def instantiateComponent(consoleComponent):
     commandPrintBufferSize.setMin(512)
     commandPrintBufferSize.setMax(8192)
     commandPrintBufferSize.setDefaultValue(1024)
+    commandPrintBufferSize.setDependencies(enableCommandProcessorOptions, ["SYS_COMMAND_ENABLE"])
 
     commandConsoleEnable = consoleComponent.createBooleanSymbol("SYS_COMMAND_CONSOLE_ENABLE", commandEnable)
     commandConsoleEnable.setLabel("Re-route Console Message/Print through Command Service?")
     commandConsoleEnable.setDefaultValue(True)
+    commandConsoleEnable.setDependencies(enableCommandProcessorOptions, ["SYS_COMMAND_ENABLE"])
 
     commandDebugEnable = consoleComponent.createBooleanSymbol("SYS_COMMAND_DEBUG_ENABLE", commandEnable)
     commandDebugEnable.setLabel("Re-route Debug Message/Print through Command Service?")
     commandDebugEnable.setDefaultValue(True)
+    commandDebugEnable.setDependencies(enableCommandProcessorOptions, ["SYS_COMMAND_ENABLE"])
 
     ############################################################################
     #### Dependency ####

@@ -10,6 +10,9 @@
 #define SYS_DEBUG_GLOBAL_ERROR_LEVEL       ${SYS_DEBUG_LEVEL}
 #define SYS_DEBUG_PRINT_BUFFER_SIZE        ${SYS_DEBUG_PRINT_BUFFER_SIZE}
 #define SYS_DEBUG_BUFFER_DMA_READY
+    <#if SYS_DEBUG_USE_CONSOLE == true>
+#define SYS_DEBUG_USE_CONSOLE              
+    </#if>
 </#if>
 
 <#if SYS_COMMAND_ENABLE == true>
