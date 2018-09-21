@@ -113,7 +113,9 @@ typedef bool (*GEOMETRY_GET)( const DRV_HANDLE handle, MEMORY_DEVICE_GEOMETRY *g
 
 typedef uint32_t (*TRANSFER_STATUS_GET)( const DRV_HANDLE handle );
 
-typedef void (*EVENT_HANDLER)( uintptr_t context );
+typedef void (*DRV_MEMORY_EVENT_HANDLER)( MEMORY_DEVICE_TRANSFER_STATUS status, uintptr_t context );
+
+typedef void (*EVENT_HANDLER_SET) ( const DRV_HANDLE handle, DRV_MEMORY_EVENT_HANDLER eventHandler, uintptr_t context );
 
 typedef struct
 {
@@ -129,7 +131,7 @@ typedef struct
 
     bool (*PageWrite)( const DRV_HANDLE handle, void *tx_data, uint32_t address );
     
-    void (*EventHandlerSet) ( const DRV_HANDLE handle, EVENT_HANDLER eventHandler, uintptr_t context );
+    EVENT_HANDLER_SET EventHandlerSet;
 
     GEOMETRY_GET GeometryGet;
 

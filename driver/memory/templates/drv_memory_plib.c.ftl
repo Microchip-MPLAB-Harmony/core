@@ -54,6 +54,21 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: Global objects
 // *****************************************************************************
 // *****************************************************************************
+<#if DRV_MEMORY_INTERRUPT_ENABLE == true>
+    <#lt>DRV_MEMORY_EVENT_HANDLER   ${DRV_MEMORY_DEVICE?lower_case}EventHandler;
+</#if>
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Driver ${DRV_MEMORY_DEVICE} Local Functions
+// *****************************************************************************
+// *****************************************************************************
+<#if DRV_MEMORY_INTERRUPT_ENABLE == true>
+    <#lt>static void ${DRV_MEMORY_PLIB}_EventHandler( uintptr_t context)
+    <#lt>{
+    <#lt>    ${DRV_MEMORY_DEVICE?lower_case}EventHandler(MEMORY_DEVICE_TRANSFER_COMPLETED, context);
+    <#lt>}
+</#if>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -93,10 +108,12 @@ bool ${DRV_MEMORY_PLIB}_SectorErase( const DRV_HANDLE handle, uint32_t address )
 }
 
 <#if DRV_MEMORY_INTERRUPT_ENABLE == true>
-void ${DRV_MEMORY_PLIB}_EventHandlerSet( const DRV_HANDLE handle, const EVENT_HANDLER eventHandler, const uintptr_t context )
-{
-    ${DRV_MEMORY_DEVICE}_CallbackRegister(eventHandler, context);
-}
+    <#lt>void ${DRV_MEMORY_PLIB}_EventHandlerSet( const DRV_HANDLE handle, const DRV_MEMORY_EVENT_HANDLER eventHandler, const uintptr_t context )
+    <#lt>{
+    <#lt>    ${DRV_MEMORY_DEVICE?lower_case}EventHandler = eventHandler;
+    <#lt>
+    <#lt>    ${DRV_MEMORY_DEVICE}_CallbackRegister(${DRV_MEMORY_PLIB}_EventHandler, context);
+    <#lt>}
 </#if>
 
 bool ${DRV_MEMORY_PLIB}_GeometryGet( const DRV_HANDLE handle, MEMORY_DEVICE_GEOMETRY *geometry )

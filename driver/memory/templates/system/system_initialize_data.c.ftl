@@ -23,7 +23,7 @@ DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY_CLIENT
     <#lt>    .Read               = ${DRV_MEMORY_PLIB}_Read,
     <#lt>    .PageWrite          = ${DRV_MEMORY_PLIB}_PageWrite,
     <#lt><#if DRV_MEMORY_INTERRUPT_ENABLE >
-    <#lt>    .EventHandlerSet    = ${DRV_MEMORY_PLIB}_EventHandlerSet,
+    <#lt>    .EventHandlerSet    = (EVENT_HANDLER_SET)${DRV_MEMORY_PLIB}_EventHandlerSet,
     <#lt><#else>
     <#lt>    .EventHandlerSet    = NULL,
     <#lt></#if>
@@ -43,7 +43,7 @@ DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY_CLIENT
     <#lt>    .Read               = ${DRV_MEMORY_DEVICE}_Read,
     <#lt>    .PageWrite          = ${DRV_MEMORY_DEVICE}_PageWrite,
     <#lt><#if DRV_MEMORY_INTERRUPT_ENABLE >
-    <#lt>    .EventHandlerSet    = ${DRV_MEMORY_DEVICE}_EventHandlerSet,
+    <#lt>    .EventHandlerSet    = (EVENT_HANDLER_SET)${DRV_MEMORY_DEVICE}_EventHandlerSet,
     <#lt><#else>
     <#lt>    .EventHandlerSet    = NULL,
     <#lt></#if>

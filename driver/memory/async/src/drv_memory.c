@@ -54,7 +54,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: Global objects
 // *****************************************************************************
 // *****************************************************************************
-#define SYS_DEBUG_PRINT(x,y)
+#ifndef SYS_DEBUG_PRINT
+    #define SYS_DEBUG_PRINT(x,y)
+#endif
 
 /*************************************************
  * Hardware instance objects
@@ -113,7 +115,7 @@ static const DRV_MEMORY_TransferOperation gMemoryXferFuncPtr[4] =
 // *****************************************************************************
 // *****************************************************************************
 
-static void eventHandler( uintptr_t context )
+static void DRV_MEMORY_EventHandler( MEMORY_DEVICE_TRANSFER_STATUS status, uintptr_t context )
 {
     DRV_MEMORY_OBJECT *dObj = (DRV_MEMORY_OBJECT *)context;
     dObj->isTransferDone = true;
@@ -423,6 +425,8 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleWrite
 
         case DRV_MEMORY_WRITE_MEM:
         {
+            dObj->isTransferDone = false;
+
             if (dObj->memoryDevice->PageWrite(dObj->memDevHandle, (void *)dObj->writePtr, dObj->blockAddress) == true)
             {
                 dObj->writeState = DRV_MEMORY_WRITE_MEM_STATUS;
@@ -485,6 +489,8 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleErase
 
         case DRV_MEMORY_ERASE_CMD:
         {
+            dObj->isTransferDone = false;
+
             if (dObj->memoryDevice->SectorErase(dObj->memDevHandle, dObj->blockAddress) == true)
             {
                 dObj->eraseState = DRV_MEMORY_ERASE_CMD_STATUS;
@@ -950,7 +956,7 @@ DRV_HANDLE DRV_MEMORY_Open
                 {
                     if (dObj->memoryDevice->EventHandlerSet != NULL)
                     {
-                        dObj->memoryDevice->EventHandlerSet(dObj->memDevHandle, eventHandler, (uintptr_t)dObj);
+                        dObj->memoryDevice->EventHandlerSet(dObj->memDevHandle, DRV_MEMORY_EventHandler, (uintptr_t)dObj);
                     }
                 }
             }
@@ -1188,15 +1194,11 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object )
                 dObj->state = DRV_MEMORY_TRANSFER;
 
                 dObj->currentBufObj->status = DRV_MEMORY_COMMAND_IN_PROGRESS;
-
-                dObj->isTransferDone = false;
             }
         }
 
         case DRV_MEMORY_TRANSFER:
         {
-            dObj->isTransferDone = false;
-
             bufferObj = dObj->currentBufObj;
 
             transferStatus = gMemoryXferFuncPtr[bufferObj->opType](dObj, &bufferObj->buffer[0], bufferObj->blockStart, bufferObj->nBlocks);
@@ -1219,11 +1221,7 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object )
             {
                 clientObj = (DRV_MEMORY_CLIENT_OBJECT *)bufferObj->hClient;
 
-                if(clientObj->transferHandler != NULL)
-                {
-                    /* Call the event handler */
-                    clientObj->transferHandler(event, bufferObj->commandHandle, clientObj->context);
-                }
+                dObj->isTransferDone = true;
 
                 /* Go back waiting for the next request */
                 dObj->state = DRV_MEMORY_PROCESS_QUEUE;
@@ -1235,7 +1233,11 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object )
                 bufferObj->next = dObj->buffObjFree;
                 dObj->buffObjFree = bufferObj;
 
-                dObj->isTransferDone = true;
+                if(clientObj->transferHandler != NULL)
+                {
+                    /* Call the event handler */
+                    clientObj->transferHandler(event, bufferObj->commandHandle, clientObj->context);
+                }
             }
             break;
         }

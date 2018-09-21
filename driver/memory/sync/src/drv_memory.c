@@ -54,7 +54,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: Global objects
 // *****************************************************************************
 // *****************************************************************************
-#define SYS_DEBUG_PRINT(x,y)
+#ifndef SYS_DEBUG_PRINT
+    #define SYS_DEBUG_PRINT(x,y)
+#endif
 
 /*************************************************
  * Hardware instance objects
@@ -113,7 +115,13 @@ static const DRV_MEMORY_TransferOperation gMemoryXferFuncPtr[4] =
 // *****************************************************************************
 // *****************************************************************************
 
-static void eventHandler( uintptr_t context )
+static void DRV_MEMORY_EventHandler( MEMORY_DEVICE_TRANSFER_STATUS status, uintptr_t context )
+{
+    DRV_MEMORY_OBJECT *dObj = (DRV_MEMORY_OBJECT *)context;
+    OSAL_SEM_PostISR(&dObj->transferDone);
+}
+
+static void DRV_MEMORY_TimerHandler( uintptr_t context )
 {
     DRV_MEMORY_OBJECT *dObj = (DRV_MEMORY_OBJECT *)context;
     OSAL_SEM_PostISR(&dObj->transferDone);
@@ -568,7 +576,7 @@ static bool DRV_MEMORY_StartXfer( DRV_MEMORY_OBJECT *dObj )
     {
         if ((dObj->isMemDevInterruptEnabled == false) && (dObj->memDevStatusPollUs > 0))
         {
-            handle = SYS_TIME_CallbackRegisterUS(eventHandler, (uintptr_t)dObj, dObj->memDevStatusPollUs, SYS_TIME_SINGLE);
+            handle = SYS_TIME_CallbackRegisterUS(DRV_MEMORY_TimerHandler, (uintptr_t)dObj, dObj->memDevStatusPollUs, SYS_TIME_SINGLE);
 
             if (handle == SYS_TIME_HANDLE_INVALID)
             {
@@ -936,7 +944,7 @@ DRV_HANDLE DRV_MEMORY_Open
                 {
                     if (dObj->memoryDevice->EventHandlerSet != NULL)
                     {
-                        dObj->memoryDevice->EventHandlerSet(dObj->memDevHandle, eventHandler, (uintptr_t)dObj);
+                        dObj->memoryDevice->EventHandlerSet(dObj->memDevHandle, DRV_MEMORY_EventHandler, (uintptr_t)dObj);
                     }
                 }
             }
