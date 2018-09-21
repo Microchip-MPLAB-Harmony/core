@@ -51,6 +51,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 #include "drv_spi_definitions.h"
 #include "driver/driver.h"
+#include "system/system.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -482,13 +483,15 @@ void DRV_SPI_Close( const DRV_HANDLE handle);
     bool DRV_SPI_TransferSetup ( DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * setup )
 
   Summary:
-    Sets the dynamic configuration of the driver.
+    Sets the dynamic configuration of the driver including chip select pin.
 
   Description:
-    This function should be used to update any of the DRV_SPI_TRANSFER_SETUP
-    parameters for the selected client of the driver dynamically. It is mainly
-    helpful for multi client scenario where different clients need different
-    setup like baud rate, clock settings, chip select etc.
+    This function is used to update any of the DRV_SPI_TRANSFER_SETUP
+    parameters for the selected client of the driver dynamically. For single
+    client scenario, if GPIO has to be used for chip select, then calling this
+    API with appropriate GPIO pin information becomes mandatory. For multi
+    client scenario where different clients need different setup like baud rate,
+    clock settings, chip select etc, then also calling this API is mandatory.
 
   Preconditions:
     DRV_SPI_Open must have been called to obtain a valid opened device handle.
@@ -1178,6 +1181,5 @@ bool DRV_SPI_WriteReadTransfer(
 //DOM-IGNORE-END
 
 #include "driver/spi/src/drv_spi_local.h"
-#include "driver/spi/src/drv_spi_variant_mapping.h"
 
 #endif // #ifndef DRV_SPI_H

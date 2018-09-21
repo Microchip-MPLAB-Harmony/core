@@ -11,9 +11,6 @@ def instantiateComponent(spiComponent, index):
     # Enable "Enable System Ports" option in MHC
     Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True, 1)
 
-    # Enable "Enable System DMA" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
-
     spiSymIndex = spiComponent.createIntegerSymbol("INDEX", None)
     spiSymIndex.setVisible(False)
     spiSymIndex.setDefaultValue(index)
@@ -102,15 +99,6 @@ def instantiateComponent(spiComponent, index):
     spiSymHeaderDefFile.setMarkup(True)
     spiSymHeaderDefFile.setOverwrite(True)
 
-    spiSymVariantMappingFile = spiComponent.createFileSymbol("DRV_SPI_VARIANT_MAPPING", None)
-    spiSymVariantMappingFile.setSourcePath("driver/spi/src/drv_spi_variant_mapping.h")
-    spiSymVariantMappingFile.setOutputName("drv_spi_variant_mapping.h")
-    spiSymVariantMappingFile.setDestPath("driver/spi/src")
-    spiSymVariantMappingFile.setProjectPath("config/" + configName + "/driver/spi/")
-    spiSymVariantMappingFile.setType("HEADER")
-    spiSymVariantMappingFile.setMarkup(False)
-    spiSymVariantMappingFile.setOverwrite(True)
-
     # Async Source Files
     spiAsyncSymSourceFile = spiComponent.createFileSymbol("DRV_SPI_ASYNC_SOURCE", None)
     spiAsyncSymSourceFile.setSourcePath("driver/spi/src/async/drv_spi.c")
@@ -193,7 +181,7 @@ def onDependencyConnected(info):
     dmaTxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Transmit"
     dmaRxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Receive"
 
-    localComponent = connectionInfo["localComponent"]
+    localComponent = info["localComponent"]
 
     if info["dependencyID"] == "drv_spi_SPI_dependency" :
         localComponent.setSymbolValue("DRV_SPI_PLIB_CONNECTION", True, 2)
@@ -218,7 +206,7 @@ def onDependencyDisconnected(info):
     dmaTxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Transmit"
     dmaRxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Receive"
 
-    localComponent = connectionInfo["localComponent"]
+    localComponent = info["localComponent"]
 
     if info["dependencyID"] == "drv_spi_SPI_dependency" :
         localComponent.setSymbolValue("DRV_SPI_PLIB_CONNECTION", False, 2)
@@ -259,6 +247,9 @@ def requestAndAssignDMAChannel(Sym, event):
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
     Sym.setValue(channel, 2)
+
+    # Enable "Enable System DMA" option in MHC
+    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
 
 def requestDMAComment(Sym, event):
     if(event["value"] == -2):

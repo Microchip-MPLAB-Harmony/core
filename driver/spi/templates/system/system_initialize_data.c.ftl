@@ -74,7 +74,9 @@ DRV_SPI_INIT drvSPI${INDEX?string}InitData =
 <#if DRV_SPI_MODE == false>
     <#if DRV_SPI_TX_RX_DMA == true>
         <#lt>    /* Interrupt source is DMA */
-        <#lt>    .interruptSource    = XDMAC_IRQn,
+		<#lt> <#if core.DMA_ENABLE?has_content>
+		<#lt>	.interruptSource = ${core.DMA_INSTANCE_NAME}_IRQn,
+		<#lt> </#if>
     <#else>
         <#lt>    /* Interrupt source is SPI */
         <#lt>    .interruptSource    = DRV_SPI_INT_SRC_IDX${INDEX?string},

@@ -108,7 +108,7 @@ static bool _DRV_SPI_ResourceLock(DRV_SPI_OBJ * dObj)
         }
     }
 
-    return false;
+    return true;
 }
 
 static void _DRV_SPI_ResourceUnlock(DRV_SPI_OBJ * dObj)
@@ -200,58 +200,6 @@ static void _DRV_SPI_TransferQueuePurge( DRV_SPI_CLIENT_OBJ * clientObj )
     }
 }
 
-static void _DRV_SPI_ConfigureDMA(SYS_DMA_CHANNEL dmaChannel, DRV_SPI_CONFIG_DMA cfgDMA)
-{
-    uint32_t config;
-
-    config = _DRV_SPI_DMAChannelSettingsGet(dmaChannel);
-
-    switch(cfgDMA)
-    {
-        case DRV_SPI_CONFIG_DMA_TX_DUMMY_DATA_XFER:
-        {
-            /* Source address (SAM) is fixed*/
-            config &= ~(0x03U << 16);
-            break;
-        }
-        case DRV_SPI_CONFIG_DMA_TX_BUFFER_DATA_XFER:
-        {
-            /* Source address (SAM) is incremented */
-            config &= ~(0x03U << 16);
-            config |= (0x01U << 16);
-            break;
-        }
-        case DRV_SPI_CONFIG_DMA_RX_DUMMY_DATA_XFER:
-        {
-            /* Destination address (DAM) is fixed */
-            config &= ~(0x03U << 18);
-            break;
-        }
-        case DRV_SPI_CONFIG_DMA_RX_BUFFER_DATA_XFER:
-        {
-            /* Destination address (DAM) is incremented */
-            config &= ~(0x03U << 18);
-            config |= (0x01U << 18);
-            break;
-        }
-        default:
-            break;
-    }
-
-    _DRV_SPI_DMAChannelSettingsSet(dmaChannel, (XDMAC_CHANNEL_CONFIG)config);
-}
-
-static void _DRV_SPI_ConfigureDmaDataWidth(SYS_DMA_CHANNEL dmaChannel, DRV_SPI_DMA_WIDTH DmaWidth)
-{
-    uint32_t config;
-
-    config = _DRV_SPI_DMAChannelSettingsGet(dmaChannel);
-    config &= ~(0x03U << 11);
-    config |= (DmaWidth << 11);
-
-    _DRV_SPI_DMAChannelSettingsSet(dmaChannel, (XDMAC_CHANNEL_CONFIG)config);
-}
-
 static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
 {
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)transferObj->hClient;
@@ -281,19 +229,19 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
 
     if(clientObj->setup.dataBits == DRV_SPI_DATA_BITS_8_BIT)
     {
-        _DRV_SPI_ConfigureDmaDataWidth(hDriver->rxDMAChannel, DRV_SPI_DMA_WIDTH_8_BIT);
-        _DRV_SPI_ConfigureDmaDataWidth(hDriver->txDMAChannel, DRV_SPI_DMA_WIDTH_8_BIT);
+        SYS_DMA_DataWidthSetup(hDriver->rxDMAChannel, DRV_SPI_DMA_WIDTH_8_BIT);
+        SYS_DMA_DataWidthSetup(hDriver->txDMAChannel, DRV_SPI_DMA_WIDTH_8_BIT);
     }
     else
     {
-        _DRV_SPI_ConfigureDmaDataWidth(hDriver->rxDMAChannel, DRV_SPI_DMA_WIDTH_16_BIT);
-        _DRV_SPI_ConfigureDmaDataWidth(hDriver->txDMAChannel, DRV_SPI_DMA_WIDTH_16_BIT);
+        SYS_DMA_DataWidthSetup(hDriver->rxDMAChannel, DRV_SPI_DMA_WIDTH_16_BIT);
+        SYS_DMA_DataWidthSetup(hDriver->txDMAChannel, DRV_SPI_DMA_WIDTH_16_BIT);
     }
 
     if (transferObj->rxSize == 0)
     {
         /* Configure the RX DMA channel - to receive dummy data */
-        _DRV_SPI_ConfigureDMA(hDriver->rxDMAChannel, DRV_SPI_CONFIG_DMA_RX_DUMMY_DATA_XFER);
+        SYS_DMA_AddressingModeSetup(hDriver->rxDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
         temp = hDriver->rxDummyDataSize;
         hDriver->rxDummyDataSize = 0;
         SYS_DMA_ChannelTransfer(hDriver->rxDMAChannel, (const void*)hDriver->rxAddress, (const void *)&hDriver->rxDummyData, temp);
@@ -301,14 +249,14 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
     else
     {
         /* Configure the RX DMA channel - to receive data in receive buffer */
-        _DRV_SPI_ConfigureDMA(hDriver->rxDMAChannel, DRV_SPI_CONFIG_DMA_RX_BUFFER_DATA_XFER);
+        SYS_DMA_AddressingModeSetup(hDriver->rxDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED);
         SYS_DMA_ChannelTransfer(hDriver->rxDMAChannel, (const void*)hDriver->rxAddress, (const void *)transferObj->pReceiveData, transferObj->rxSize);
     }
 
     if (transferObj->txSize == 0)
     {
         /* Configure the TX DMA channel - to send dummy data */
-        _DRV_SPI_ConfigureDMA(hDriver->txDMAChannel, DRV_SPI_CONFIG_DMA_TX_DUMMY_DATA_XFER);
+        SYS_DMA_AddressingModeSetup(hDriver->txDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
         temp = hDriver->txDummyDataSize;
         hDriver->txDummyDataSize = 0;
         SYS_DMA_ChannelTransfer(hDriver->txDMAChannel, (const void *)&hDriver->txDummyData, (const void*)hDriver->txAddress, temp);
@@ -316,7 +264,7 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
     else
     {
         /* Configure the transmit DMA channel - to send data from transmit buffer */
-        _DRV_SPI_ConfigureDMA(hDriver->txDMAChannel, DRV_SPI_CONFIG_DMA_TX_BUFFER_DATA_XFER);
+        SYS_DMA_AddressingModeSetup(hDriver->txDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_INCREMENTED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
 
         /* The DMA transfer is split into two for the case where rxSize > 0 && rxSize < txSize */
         if (hDriver->rxDummyDataSize > 0)
@@ -395,6 +343,8 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
         transferObj->event = DRV_SPI_TRANSFER_EVENT_ERROR;
     }
 
+    _DRV_SPI_ReleaseBufferObject(transferObj);
+
     if(clientObj->eventHandler != NULL)
     {
         /* Call the event handler. We additionally increment the
@@ -408,8 +358,6 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
         /* Event handler has completed, so decrement the nesting count now */
         dObj->interruptNestingCount--;
     }
-
-    _DRV_SPI_ReleaseBufferObject(transferObj);
 
     /* Process the next transfer in queue */
     if(dObj->queueHeadIndex != NULL_INDEX)
@@ -433,7 +381,7 @@ void _DRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
     {
         /* Configure DMA channel to transmit (dummy data) from the same location
          * (Source address not incremented) */
-        _DRV_SPI_ConfigureDMA(dObj->txDMAChannel, DRV_SPI_CONFIG_DMA_TX_DUMMY_DATA_XFER);
+        SYS_DMA_AddressingModeSetup(dObj->txDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
 
         /* Configure the transmit DMA channel */
         SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)&dObj->txDummyData, (const void*)dObj->txAddress, dObj->txDummyDataSize);
@@ -450,7 +398,8 @@ void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
 
     if (dObj->rxDummyDataSize > 0)
     {
-        _DRV_SPI_ConfigureDMA(dObj->rxDMAChannel, DRV_SPI_CONFIG_DMA_RX_DUMMY_DATA_XFER);
+		/* Configure DMA to receive dummy data */
+        SYS_DMA_AddressingModeSetup(dObj->txDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
 
         SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)&dObj->rxDummyData, dObj->rxDummyDataSize);
 
@@ -476,6 +425,8 @@ void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
             transferObj->event = DRV_SPI_TRANSFER_EVENT_ERROR;
         }
 
+        _DRV_SPI_ReleaseBufferObject(transferObj);
+
         if(clientObj->eventHandler != NULL)
         {
             /* Call the event handler. We additionally increment the
@@ -489,8 +440,6 @@ void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
             /* Event handler has completed, so decrement the nesting count now */
             dObj->interruptNestingCount--;
         }
-
-        _DRV_SPI_ReleaseBufferObject(transferObj);
 
         /* Process the next transfer in queue */
         if(dObj->queueHeadIndex != NULL_INDEX)
