@@ -57,7 +57,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 /*  This section lists the other files that are included in this file.
 */
 #include <stddef.h>
-#include "system/system.h"
+#include <stdint.h>
+#include <stdbool.h>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -120,6 +121,76 @@ typedef enum
 
 } SYS_DMA_TRANSFER_EVENT;
 
+// *****************************************************************************
+/* DMA Source addressing modes
+
+   Summary:
+    Enumeration of possible DMA source addressing modes.
+
+   Description:
+    This data type provides an enumeration of all possible DMA source
+    addressing modes.
+
+   Remarks:
+    None.
+*/
+typedef enum
+{
+    /* Source address is always fixed */
+    SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED = ${core.DMA_SRC_FIXED_AM_VALUE},
+
+    /* Source address is incremented after every transfer */
+    SYS_DMA_SOURCE_ADDRESSING_MODE_INCREMENTED = ${core.DMA_SRC_INCREMENTED_AM_VALUE}
+
+}SYS_DMA_SOURCE_ADDRESSING_MODE;
+
+// *****************************************************************************
+/* DMA destination addressing modes
+
+   Summary:
+    Enumeration of possible DMA destination addressing modes.
+
+   Description:
+    This data type provides an enumeration of all possible DMA destination
+    addressing modes.
+
+   Remarks:
+    None.
+*/
+typedef enum
+{
+    /* Destination address is always fixed */
+    SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED = ${core.DMA_DST_FIXED_AM_VALUE},
+
+    /* Destination address is incremented after every transfer */
+    SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED = ${core.DMA_DST_INCREMENTED_AM_VALUE}
+
+}SYS_DMA_DESTINATION_ADDRESSING_MODE;
+
+// *****************************************************************************
+/* DMA data width
+
+   Summary:
+    Enumeration of possible DMA data width
+
+   Description:
+    This data type provides an enumeration of all possible DMA data width.
+
+   Remarks:
+    None.
+*/
+typedef enum
+{
+    /* DMA data width 8 bit */
+    SYS_DMA_WIDTH_8_BIT = ${core.DMA_DATA_WIDTH_BYTE_VALUE},
+
+    /* DMA data width 16 bit */
+    SYS_DMA_WIDTH_16_BIT = ${core.DMA_DATA_WIDTH_HALFWORD_VALUE},
+
+    /* DMA data width 32 bit */
+    SYS_DMA_WIDTH_32_BIT =  ${core.DMA_DATA_WIDTH_WORD_VALUE},
+
+}SYS_DMA_WIDTH;
 
 // *****************************************************************************
 /* DMA Transfer Event Handler Function
@@ -289,7 +360,7 @@ void SYS_DMA_ChannelCallbackRegister (SYS_DMA_CHANNEL channel, const SYS_DMA_CHA
     SYS_DMA_ChannelCallbackRegister(APP_DMA_TransferEventHandler,
         (uintptr_t)&myAppObj);
 
-    if (SYS_DMA_ChannelTransfer(DMA_CHANNEL_1, srcAddr, destAddr, size) == true)
+    if (SYS_DMA_ChannelTransfer(SYS_DMA_CHANNEL_1, srcAddr, destAddr, size) == true)
     {
         // do something else
     }
@@ -300,15 +371,18 @@ void SYS_DMA_ChannelCallbackRegister (SYS_DMA_CHANNEL channel, const SYS_DMA_CHA
     </code>
 
   Remarks:
-    When DMA transfer buffers are placed in cacheable memory, cache maintenance operation must be performed by cleaning and invalidating cache
-    for DMA buffers located in cacheable SRAM region using CMSIS APIs. The buffer start address must be aligned to cache line
-    and buffer size must be multiple of cache line.
-    Refer to device documentation to find the cache line size.
+    When DMA transfer buffers are placed in cache-able memory, cache maintenance
+    operation must be performed by cleaning and invalidating cache for DMA
+    buffers located in cache-able SRAM region using CMSIS APIs. The buffer start
+    address must be aligned to cache line and buffer size must be multiple of
+    cache line. Refer to device documentation to find the cache line size.
 
-    Invalidate cache lines having received buffer before using it to load the latest data in the actual memory to the cache
+    Invalidate cache lines having received buffer before using it to load the
+    latest data in the actual memory to the cache
     SCB_InvalidateDCache_by_Addr((uint32_t *)&readBuffer, sizeof(readBuffer));
 
-    Clean cache lines having source buffer before submitting a transfer request to XDMAC to load the latest data in the cache to the actual memory
+    Clean cache lines having source buffer before submitting a transfer request
+    to XDMAC to load the latest data in the cache to the actual memory
     SCB_CleanDCache_by_Addr((uint32_t *)&writeBuffer, sizeof(writeBuffer));
 */
 
@@ -350,9 +424,9 @@ bool SYS_DMA_ChannelTransfer (SYS_DMA_CHANNEL channel, const void *srcAddr, cons
     void *destAddr = (uin8_t*) &U1TXREG;
     size_t size = 10;
 
-    if(false == SYS_DMA_ChannelIsBusy(DMA_CHANNEL_1))
+    if(false == SYS_DMA_ChannelIsBusy(SYS_DMA_CHANNEL_1))
     {
-        SYS_DMA_ChannelTransfer(DMA_CHANNEL_1, srcAddr, destAddr, size);
+        SYS_DMA_ChannelTransfer(SYS_DMA_CHANNEL_1, srcAddr, destAddr, size);
     }
     </code>
 
@@ -385,7 +459,7 @@ bool SYS_DMA_ChannelIsBusy (SYS_DMA_CHANNEL channel);
 
   Example:
     <code>
-    SYS_DMA_ChannelDisable(DMA_CHANNEL_1);
+    SYS_DMA_ChannelDisable(SYS_DMA_CHANNEL_1);
     </code>
 
   Remarks:
@@ -394,6 +468,72 @@ bool SYS_DMA_ChannelIsBusy (SYS_DMA_CHANNEL channel);
 
 void SYS_DMA_ChannelDisable (SYS_DMA_CHANNEL channel);
 
+//******************************************************************************
+/* Function:
+    void SYS_DMA_AddressingModeSetup(SYS_DMA_CHANNEL channel, SYS_DMA_SOURCE_ADDRESSING_MODE sourceAddrMode, SYS_DMA_DESTINATION_ADDRESSING_MODE destAddrMode);
+
+  Summary:
+    Setup addressing mode of selected DMA channel.
+
+  Description:
+    This function sets the addressing mode of selected DMA channel.
+
+    Any ongoing transaction of the specified XDMAC channel will be aborted when
+    this function is called.
+
+  Precondition:
+    DMA Controller should have been initialized.
+
+  Parameters:
+    channel - A specific DMA channel
+    sourceAddrMode -  Source addressing mode of type SYS_DMA_SOURCE_ADDRESSING_MODE
+    destAddrMode - Destination addressing mode of type SYS_DMA_DESTINATION_ADDRESSING_MODE
+
+  Returns:
+    None.
+
+  Example:
+    <code>
+        SYS_DMA_AddressingModeSetup(SYS_DMA_CHANNEL_1, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
+    </code>
+
+  Remarks:
+    None.
+*/
+void SYS_DMA_AddressingModeSetup(SYS_DMA_CHANNEL channel, SYS_DMA_SOURCE_ADDRESSING_MODE sourceAddrMode, SYS_DMA_DESTINATION_ADDRESSING_MODE destAddrMode);
+
+//******************************************************************************
+/* Function:
+    void SYS_DMA_DataWidthSetup(SYS_DMA_CHANNEL channel, SYS_DMA_WIDTH dataWidth);
+
+  Summary:
+    Setup data width of selected DMA channel.
+
+  Description:
+    This function sets data width of selected DMA channel.
+
+    Any ongoing transaction of the specified XDMAC channel will be aborted when
+    this function is called.
+
+  Precondition:
+    DMA Controller should have been initialized.
+
+  Parameters:
+    channel - A specific DMA channel
+    dataWidth -  Data width of DMA transfer of type SYS_DMA_WIDTH
+
+  Returns:
+    None.
+
+  Example:
+    <code>
+        SYS_DMA_DataWidthSetup(SYS_DMA_CHANNEL_1, SYS_DMA_WIDTH_16_BIT);
+    </code>
+
+  Remarks:
+    None.
+*/
+void SYS_DMA_DataWidthSetup(SYS_DMA_CHANNEL channel, SYS_DMA_WIDTH dataWidth);
 
 #include "sys_dma_mapping.h"
 

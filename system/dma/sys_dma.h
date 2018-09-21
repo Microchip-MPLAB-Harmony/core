@@ -189,7 +189,7 @@ typedef void (*SYS_DMA_CHANNEL_CALLBACK) (SYS_DMA_TRANSFER_EVENT event, uintptr_
 //******************************************************************************
 /*
   Function:
-    void SYS_DMA_CHANNELCallbackRegister
+    void SYS_DMA_ChannelCallbackRegister
     (
         SYS_DMA_CHANNEL channel,
         const SYS_DMA_CHANNEL_CALLBACK eventHandler,
@@ -246,7 +246,7 @@ typedef void (*SYS_DMA_CHANNEL_CALLBACK) (SYS_DMA_TRANSFER_EVENT event, uintptr_
     }
 
     // User registers an event handler with DMA channel. This is done once.
-    SYS_DMA_CHANNELCallbackRegister(channel, APP_DMA_TransferEventHandler,
+    SYS_DMA_ChannelCallbackRegister(channel, APP_DMA_TransferEventHandler,
             (uintptr_t)&myAppObj);
     </code>
 
@@ -254,12 +254,12 @@ typedef void (*SYS_DMA_CHANNEL_CALLBACK) (SYS_DMA_TRANSFER_EVENT event, uintptr_
     None.
  */
 
-void SYS_DMA_CHANNELCallbackRegister (SYS_DMA_CHANNEL channel, const SYS_DMA_CHANNEL_CALLBACK eventHandler, const uintptr_t contextHandle);
+void SYS_DMA_ChannelCallbackRegister (SYS_DMA_CHANNEL channel, const SYS_DMA_CHANNEL_CALLBACK eventHandler, const uintptr_t contextHandle);
 
 
 //******************************************************************************
 /* Function:
-    bool SYS_DMA_CHANNELTransfer
+    bool SYS_DMA_ChannelTransfer
     (
         SYS_DMA_CHANNEL channel,
         const void *srcAddr,
@@ -307,10 +307,10 @@ void SYS_DMA_CHANNELCallbackRegister (SYS_DMA_CHANNEL channel, const SYS_DMA_CHA
     size_t size = 10;
 
     // User registers an event handler with PLIB. This is done once.
-    SYS_DMA_CHANNELCallbackRegister(APP_DMA_TransferEventHandler,
+    SYS_DMA_ChannelCallbackRegister(APP_DMA_TransferEventHandler,
         (uintptr_t)&myAppObj);
 
-    if (SYS_DMA_CHANNELTransfer(SYS_DMA_CHANNEL_1, srcAddr, destAddr, size) == true)
+    if (SYS_DMA_ChannelTransfer(SYS_DMA_CHANNEL_1, srcAddr, destAddr, size) == true)
     {
         // do something else
     }
@@ -333,12 +333,12 @@ void SYS_DMA_CHANNELCallbackRegister (SYS_DMA_CHANNEL channel, const SYS_DMA_CHA
     SCB_CleanDCache_by_Addr((uint32_t *)&writeBuffer, sizeof(writeBuffer));
 */
 
-bool SYS_DMA_CHANNELTransfer (SYS_DMA_CHANNEL channel, const void *srcAddr, const void *destAddr, size_t blockSize);
+bool SYS_DMA_ChannelTransfer (SYS_DMA_CHANNEL channel, const void *srcAddr, const void *destAddr, size_t blockSize);
 
 
 //******************************************************************************
 /* Function:
-    bool SYS_DMA_CHANNELIsBusy (SYS_DMA_CHANNEL channel)
+    bool SYS_DMA_ChannelIsBusy (SYS_DMA_CHANNEL channel)
 
   Summary:
     Returns the busy status of a specific DMA Channel.
@@ -371,9 +371,9 @@ bool SYS_DMA_CHANNELTransfer (SYS_DMA_CHANNEL channel, const void *srcAddr, cons
     void *destAddr = (uin8_t*) &U1TXREG;
     size_t size = 10;
 
-    if(false == SYS_DMA_CHANNELIsBusy(SYS_DMA_CHANNEL_1))
+    if(false == SYS_DMA_ChannelIsBusy(SYS_DMA_CHANNEL_1))
     {
-        SYS_DMA_CHANNELTransfer(SYS_DMA_CHANNEL_1, srcAddr, destAddr, size);
+        SYS_DMA_ChannelTransfer(SYS_DMA_CHANNEL_1, srcAddr, destAddr, size);
     }
     </code>
 
@@ -381,12 +381,12 @@ bool SYS_DMA_CHANNELTransfer (SYS_DMA_CHANNEL channel, const void *srcAddr, cons
     None.
 */
 
-bool SYS_DMA_CHANNELIsBusy (SYS_DMA_CHANNEL channel);
+bool SYS_DMA_ChannelIsBusy (SYS_DMA_CHANNEL channel);
 
 
 //******************************************************************************
 /* Function:
-    void SYS_DMA_CHANNELDisable (SYS_DMA_CHANNEL channel)
+    void SYS_DMA_ChannelDisable (SYS_DMA_CHANNEL channel)
 
   Summary:
     Disables the specified channel.
@@ -406,14 +406,14 @@ bool SYS_DMA_CHANNELIsBusy (SYS_DMA_CHANNEL channel);
 
   Example:
     <code>
-    SYS_DMA_CHANNELDisable(SYS_DMA_CHANNEL_1);
+    SYS_DMA_ChannelDisable(SYS_DMA_CHANNEL_1);
     </code>
 
   Remarks:
     None.
 */
 
-void SYS_DMA_CHANNELDisable (SYS_DMA_CHANNEL channel);
+void SYS_DMA_ChannelDisable (SYS_DMA_CHANNEL channel);
 
 
 #include "sys_dma_mapping.h"

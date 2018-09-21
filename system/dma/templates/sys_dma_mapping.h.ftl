@@ -45,8 +45,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define SYS_DMA_MAPPING_H
 
 <#if core.DMA_NAME??>
-<#assign PLIB_NAME  = core.DMA_NAME?string>
-<#assign PLIB_NAME_LC  = core.DMA_NAME?lower_case>
+<#assign PLIB_NAME  = core.DMA_INSTANCE_NAME?string>
+<#assign PLIB_NAME_LC  = core.DMA_INSTANCE_NAME?lower_case>
 </#if>
 
 // *****************************************************************************
@@ -56,15 +56,15 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 <#if core.DMA_ENABLE?has_content && core.DMA_ENABLE == true>
-#include "peripheral/${PLIB_NAME_LC}/plib_${PLIB_NAME_LC}0.h"
+#include "peripheral/${PLIB_NAME_LC}/plib_${PLIB_NAME_LC}.h"
 
-#define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)  ${PLIB_NAME}0_ChannelCallbackRegister((${PLIB_NAME}_CHANNEL)channel, (XDMAC_CHANNEL_CALLBACK)eventHandler, context)
+#define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)  ${PLIB_NAME}_ChannelCallbackRegister((${PLIB_NAME}_CHANNEL)channel, (${PLIB_NAME}_CHANNEL_CALLBACK)eventHandler, context)
 
-#define SYS_DMA_ChannelTransfer(channel, srcAddr, destAddr, blockSize)  ${PLIB_NAME}0_ChannelTransfer((${PLIB_NAME}_CHANNEL)channel, srcAddr, destAddr, blockSize)
+#define SYS_DMA_ChannelTransfer(channel, srcAddr, destAddr, blockSize)  ${PLIB_NAME}_ChannelTransfer((${PLIB_NAME}_CHANNEL)channel, srcAddr, destAddr, blockSize)
 
-#define SYS_DMA_ChannelIsBusy(channel)  ${PLIB_NAME}0_ChannelIsBusy((${PLIB_NAME}_CHANNEL)channel)
+#define SYS_DMA_ChannelIsBusy(channel)  ${PLIB_NAME}_ChannelIsBusy((${PLIB_NAME}_CHANNEL)channel)
 
-#define SYS_DMA_ChannelDisable(channel)  ${PLIB_NAME}0_ChannelDisable((${PLIB_NAME}_CHANNEL)channel)
+#define SYS_DMA_ChannelDisable(channel)  ${PLIB_NAME}_ChannelDisable((${PLIB_NAME}_CHANNEL)channel)
 <#else>
 
 #define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)
