@@ -273,6 +273,16 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
             currentObj->nCount = currentObj->size;
         }
 
+        if (DATA_CACHE_ENABLED == true)
+        {
+            if((direction == DRV_USART_DIRECTION_RX) && (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+            {
+                /* Invalidate cache lines having received buffer before using it
+                 * to load the latest data in the actual memory to the cache */
+                SCB_InvalidateDCache_by_Addr((uint32_t *)currentObj->buffer, currentObj->size);
+            }
+        }
+
         if((dObj->eventHandler != NULL))
         {
             dObj->interruptNestingCount++;
@@ -316,6 +326,14 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
 
                 if( (dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE))
                 {
+                    if (DATA_CACHE_ENABLED == true)
+                    {
+                        /* Clean cache lines having source buffer before submitting a transfer
+                         * request to DMA to load the latest data in the cache to the actual
+                         * memory */
+                        SCB_CleanDCache_by_Addr((uint32_t *)newObj->buffer, newObj->size);
+                    }
+
                     SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)newObj->buffer, (const void *)dObj->txAddress, newObj->size);
                 }
                 else
@@ -425,7 +443,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    dObj->inUse = true;
+    dObj->inUse                 = true;
     dObj->clientInUse           = false;
     dObj->usartPlib             = usartInit->usartPlib;
     dObj->queueSizeRead         = usartInit->queueSizeReceive;
@@ -702,6 +720,14 @@ void DRV_USART_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t si
 
         if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
         {
+            if (DATA_CACHE_ENABLED == true)
+            {
+                /* Clean cache lines having source buffer before submitting a transfer
+                 * request to DMA to load the latest data in the cache to the actual
+                 * memory */
+                SCB_CleanDCache_by_Addr((uint32_t *)buffer, size);
+            }
+
             SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)bufferObj->buffer, (const void *)dObj->txAddress, bufferObj->size);
         }
         else

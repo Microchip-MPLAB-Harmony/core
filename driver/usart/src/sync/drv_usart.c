@@ -602,6 +602,14 @@ bool DRV_USART_WriteBuffer
 
             if( dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
             {
+                if (DATA_CACHE_ENABLED == true)
+                {
+                    /* Clean cache lines having source buffer before submitting a transfer
+                     * request to DMA to load the latest data in the cache to the actual
+                     * memory */
+                    SCB_CleanDCache_by_Addr((uint32_t *)buffer, numbytes);
+                }
+
                 SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)buffer, (const void *)dObj->txAddress, numbytes);
             }
             else
@@ -684,6 +692,13 @@ bool DRV_USART_ReadBuffer
                 /* Check and return status */
                 if (dObj->rxRequestStatus == DRV_USART_REQUEST_STATUS_COMPLETE)
                 {
+                    if ((dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE) && (DATA_CACHE_ENABLED == true))
+                    {
+                        /* Invalidate cache lines having received buffer before using it
+                         * to load the latest data in the actual memory to the cache */
+                        SCB_InvalidateDCache_by_Addr((uint32_t *)buffer, numbytes);
+                    }
+
                     isSuccess = true;
                 }
             }
