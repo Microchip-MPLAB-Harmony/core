@@ -211,6 +211,9 @@ typedef struct
     /* This flags indicates if the client has opened the driver */
     bool clientInUse;
 
+    /* to identify if we are running from interrupt context or not */
+    uint8_t interruptNestingCount;
+
     /* Event handler for the client */
     DRV_USART_BUFFER_EVENT_HANDLER eventHandler;
 

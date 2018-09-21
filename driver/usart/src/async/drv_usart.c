@@ -71,14 +71,14 @@ static uint16_t gDrvUSARTTokenCount = 0;
 // *****************************************************************************
 static bool _DRV_USART_ValidateClientHandle(DRV_USART_OBJ * object, DRV_HANDLE handle)
 {
-    if(DRV_HANDLE_INVALID == handle)
+    if(handle == DRV_HANDLE_INVALID)
     {
         return false;
     }
 
     object = &gDrvUSARTObj[handle];
 
-    if(false == object->clientInUse)
+    if(object->clientInUse == false)
     {
         return false;
     }
@@ -90,40 +90,56 @@ static bool _DRV_USART_ResourceLock(DRV_USART_OBJ * object)
 {
     DRV_USART_OBJ * dObj = object;
 
-    /* Grab a mutex to avoid other threads to modify driver resource
-     * asynchronously. */
-    if(OSAL_MUTEX_Lock(&(dObj->mutexDriverInstance), OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
+    /* We will allow buffers to be added in the interrupt
+       context of the SPI driver. But we must make
+       sure that if we are inside interrupt, then we should
+       not modify mutex. */
+    if(dObj->interruptNestingCount == 0)
     {
-        return false;
-    }
+        /* Grab a mutex. This is okay because we are not in an
+           interrupt context */
+        if(OSAL_MUTEX_Lock(&(dObj->mutexDriverInstance), OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+        {
+            /* We will disable interrupts so that the queue
+               status does not get updated asynchronously */
+            if( (dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) || (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
+            {
+                SYS_INT_SourceDisable(dObj->interruptDMA);
+            }
+            SYS_INT_SourceDisable(dObj->interruptUSART);
 
-    /* We will disable USART and/or DMA interrupt so that the driver resource
-     * is not updated asynchronously. */
-    if( (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel) || (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
-    {
-        SYS_INT_SourceDisable(dObj->interruptDMA);
+            return true;
+        }
+        else
+        {
+            /* If everything is good, this part of code is not executed in an
+             * RTOS environment */
+            return false;
+        }
     }
-
-    SYS_INT_SourceDisable(dObj->interruptUSART);
 
     return true;
 }
 
-static bool _DRV_USART_ResourceUnlock(DRV_USART_OBJ * object)
+static void _DRV_USART_ResourceUnlock(DRV_USART_OBJ * object)
 {
     DRV_USART_OBJ * dObj = object;
 
     /* Restore the interrupt and release mutex. */
-    if( (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel) || (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+    if( (dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) || (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
     {
         SYS_INT_SourceEnable(dObj->interruptDMA);
     }
 
     SYS_INT_SourceEnable(dObj->interruptUSART);
 
-    OSAL_MUTEX_Unlock(&(dObj->mutexDriverInstance));
-
-    return true;
+    if(dObj->interruptNestingCount == 0)
+    {
+        /* Mutex is never acquired from the interrupt context and hence should
+         * never be released if in interrupt context.
+         */
+        OSAL_MUTEX_Unlock(&(dObj->mutexDriverInstance));
+    }
 }
 
 static DRV_USART_BUFFER_OBJ * _DRV_USART_BufferObjectGet( void )
@@ -133,7 +149,7 @@ static DRV_USART_BUFFER_OBJ * _DRV_USART_BufferObjectGet( void )
     /* Search the buffer pool for a free buffer object */
     while(i < DRV_USART_QUEUE_DEPTH_COMBINED)
     {
-        if(false == gDrvUSARTBufferObj[i].inUse)
+        if(gDrvUSARTBufferObj[i].inUse == false)
         {
             /* This means this object is free. */
             /* Assign a handle to this buffer. The buffer handle must be unique.
@@ -174,8 +190,6 @@ static bool _DRV_USART_WriteBufferQueuePurge( DRV_USART_OBJ * object )
     DRV_USART_BUFFER_OBJ * iterator = NULL;
     DRV_USART_BUFFER_OBJ * nextBufferObj = NULL;
 
-    _DRV_USART_ResourceLock(dObj);
-
     iterator = dObj->queueWrite;
 
     while(iterator != NULL)
@@ -189,8 +203,6 @@ static bool _DRV_USART_WriteBufferQueuePurge( DRV_USART_OBJ * object )
     dObj->queueSizeCurrentWrite = 0;
     dObj->queueWrite = NULL;
 
-    _DRV_USART_ResourceUnlock(dObj);
-
     return true;
 }
 
@@ -199,8 +211,6 @@ static bool _DRV_USART_ReadBufferQueuePurge( DRV_USART_OBJ * object )
     DRV_USART_OBJ * dObj = object;
     DRV_USART_BUFFER_OBJ * iterator = NULL;
     DRV_USART_BUFFER_OBJ * nextBufferObj = NULL;
-
-    _DRV_USART_ResourceLock(dObj);
 
     iterator = dObj->queueRead;
 
@@ -215,8 +225,6 @@ static bool _DRV_USART_ReadBufferQueuePurge( DRV_USART_OBJ * object )
     dObj->queueSizeCurrentRead = 0;
     dObj->queueRead = NULL;
 
-    _DRV_USART_ResourceUnlock(dObj);
-
     return true;
 }
 
@@ -226,17 +234,17 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
     DRV_USART_BUFFER_OBJ *currentObj = NULL;
     DRV_USART_BUFFER_OBJ *newObj = NULL;
 
-    if((false == dObj->inUse) || (SYS_STATUS_READY != dObj->status))
+    if((dObj->inUse == false) || (dObj->status != SYS_STATUS_READY))
     {
         return;
     }
 
     /* Get the buffer object at queue head */
-    if(DRV_USART_DIRECTION_RX == direction)
+    if(direction == DRV_USART_DIRECTION_RX)
     {
         currentObj = dObj->queueRead;
     }
-    else if(DRV_USART_DIRECTION_TX == direction)
+    else if(direction == DRV_USART_DIRECTION_TX)
     {
         currentObj = dObj->queueWrite;
     }
@@ -246,9 +254,9 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
 
         currentObj->status = event;
 
-        if(DRV_USART_BUFFER_EVENT_ERROR == currentObj->status)
+        if(currentObj->status == DRV_USART_BUFFER_EVENT_ERROR)
         {
-            if( (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+            if( (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
             {
                 /* DMA mode doesn't return number of bytes completed in case of
                  * an error. */
@@ -267,7 +275,11 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
 
         if((dObj->eventHandler != NULL))
         {
+            dObj->interruptNestingCount++;
+
             dObj->eventHandler(currentObj->status, currentObj->bufferHandle, dObj->context);
+
+            dObj->interruptNestingCount--;
         }
 
         /* Get the next buffer object in the queue and deallocate the current
@@ -276,7 +288,7 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
         _DRV_USART_BufferObjectRelease(currentObj);
 
         /* Update the new buffer object head and submit it to the PLIB */
-        if(DRV_USART_DIRECTION_RX == direction)
+        if(direction == DRV_USART_DIRECTION_RX)
         {
             dObj->queueRead = newObj;
             dObj->queueSizeCurrentRead --;
@@ -284,7 +296,7 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
             {
                 newObj->currentState = DRV_USART_BUFFER_IS_PROCESSING;
 
-                if( (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+                if( (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
                 {
                     SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress, (const void *)newObj->buffer, newObj->size);
                 }
@@ -294,7 +306,7 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
                 }
             }
         }
-        else if(DRV_USART_DIRECTION_TX == direction)
+        else if(direction == DRV_USART_DIRECTION_TX)
         {
             dObj->queueWrite = newObj;
             dObj->queueSizeCurrentWrite --;
@@ -302,7 +314,7 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
             {
                 newObj->currentState = DRV_USART_BUFFER_IS_PROCESSING;
 
-                if( (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel))
+                if( (dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE))
                 {
                     SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)newObj->buffer, (const void *)dObj->txAddress, newObj->size);
                 }
@@ -336,7 +348,7 @@ static void _DRV_USART_RX_PLIB_CallbackHandler( uintptr_t context )
 
     dObj->errors = dObj->usartPlib->errorGet();
 
-    if(DRV_USART_ERROR_NONE == dObj->errors)
+    if(dObj->errors == DRV_USART_ERROR_NONE)
     {
         _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_RX, DRV_USART_BUFFER_EVENT_COMPLETE);
     }
@@ -352,11 +364,11 @@ static void _DRV_USART_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uint
 {
     DRV_USART_OBJ *dObj = (DRV_USART_OBJ *)context;
 
-    if(SYS_DMA_TRANSFER_COMPLETE == event)
+    if(event == SYS_DMA_TRANSFER_COMPLETE)
     {
         _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_TX, DRV_USART_BUFFER_EVENT_COMPLETE);
     }
-    else if(SYS_DMA_TRANSFER_ERROR == event)
+    else if(event == SYS_DMA_TRANSFER_ERROR)
     {
         _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_TX, DRV_USART_BUFFER_EVENT_ERROR);
     }
@@ -368,11 +380,11 @@ static void _DRV_USART_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uint
 {
     DRV_USART_OBJ *dObj = (DRV_USART_OBJ *)context;
 
-    if(SYS_DMA_TRANSFER_COMPLETE == event)
+    if(event == SYS_DMA_TRANSFER_COMPLETE)
     {
         _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_RX, DRV_USART_BUFFER_EVENT_COMPLETE);
     }
-    else if(SYS_DMA_TRANSFER_ERROR == event)
+    else if(event == SYS_DMA_TRANSFER_ERROR)
     {
         _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_RX, DRV_USART_BUFFER_EVENT_ERROR);
     }
@@ -393,18 +405,26 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     DRV_USART_INIT *usartInit = (DRV_USART_INIT *)init ;
 
     /* Validate the request */
-    if(DRV_USART_INSTANCES_NUMBER <= drvIndex)
+    if(drvIndex >= DRV_USART_INSTANCES_NUMBER)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if(false != gDrvUSARTObj[drvIndex].inUse)
+    if(gDrvUSARTObj[drvIndex].inUse != false)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
 
     /* Allocate the driver object */
     dObj = &gDrvUSARTObj[drvIndex];
+
+    /* Create the Mutexes needed for RTOS mode. These calls always passes in the
+     * non-RTOS mode */
+    if(OSAL_MUTEX_Create(&dObj->mutexDriverInstance) != OSAL_RESULT_TRUE)
+    {
+        return SYS_MODULE_OBJ_INVALID;
+    }
+
     dObj->inUse = true;
     dObj->clientInUse           = false;
     dObj->usartPlib             = usartInit->usartPlib;
@@ -420,18 +440,12 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     dObj->txAddress             = usartInit->usartTransmitAddress;
     dObj->rxAddress             = usartInit->usartReceiveAddress;
     dObj->interruptDMA          = usartInit->interruptDMA;
-
-    /* Create the Mutexes needed for RTOS mode. These calls always passes in the
-     * non-RTOS mode */
-    if(OSAL_RESULT_TRUE != OSAL_MUTEX_Create(&(dObj->mutexDriverInstance)))
-    {
-        return SYS_MODULE_OBJ_INVALID;
-    }
+    dObj->interruptNestingCount = 0;
 
     /* Register a callback with either DMA or USART PLIB based on configuration.
      * dObj is used as a context parameter, that will be used to distinguish the
      * events for different driver instances. */
-    if(SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel)
+    if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
         SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, _DRV_USART_TX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
@@ -441,7 +455,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
         (void)_DRV_USART_TX_DMA_CallbackHandler;
     }
 
-    if(SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel)
+    if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
         SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, _DRV_USART_RX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
@@ -462,7 +476,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
 SYS_STATUS DRV_USART_Status( SYS_MODULE_OBJ object)
 {
     /* Validate the request */
-    if( (SYS_MODULE_OBJ_INVALID == object) || (DRV_USART_INSTANCES_NUMBER <= object) )
+    if( (object == SYS_MODULE_OBJ_INVALID) || (object >= DRV_USART_INSTANCES_NUMBER) )
     {
         return SYS_STATUS_UNINITIALIZED;
     }
@@ -474,33 +488,34 @@ SYS_STATUS DRV_USART_Status( SYS_MODULE_OBJ object)
 DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
 {
     DRV_USART_OBJ *dObj = NULL;
+    DRV_HANDLE drvHandle = DRV_HANDLE_INVALID;
 
     /* Validate the request */
-    if (DRV_USART_INSTANCES_NUMBER <= drvIndex)
+    if (drvIndex >= DRV_USART_INSTANCES_NUMBER)
     {
-        return DRV_HANDLE_INVALID;
+        return drvHandle;
     }
 
     dObj = &gDrvUSARTObj[drvIndex];
 
-    if((SYS_STATUS_READY != dObj->status) || (false == dObj->inUse))
+    if (_DRV_USART_ResourceLock(dObj) == false)
     {
-        return DRV_HANDLE_INVALID;
+        return drvHandle;
     }
 
-    if(true == dObj->clientInUse)
+    if((dObj->status == SYS_STATUS_READY) && (dObj->inUse == true) && (dObj->clientInUse == false))
     {
-        /* This driver supports only one client per instance */
-        return DRV_HANDLE_INVALID;
+        /* Grab client object here */
+        dObj->clientInUse  = true;
+        dObj->eventHandler = NULL;
+        dObj->context      = (uintptr_t)NULL;
+        drvHandle = (DRV_HANDLE)drvIndex;
     }
 
-    /* Grab client object here */
-    dObj->clientInUse  = true;
-    dObj->eventHandler = NULL;
-    dObj->context      = (uintptr_t)NULL;
+    _DRV_USART_ResourceUnlock(dObj);
 
     /* Driver index is the handle */
-    return (DRV_HANDLE)drvIndex;
+    return drvHandle;
 }
 
 // *****************************************************************************
@@ -509,26 +524,34 @@ void DRV_USART_Close( DRV_HANDLE handle )
     DRV_USART_OBJ * dObj = NULL;
 
     /* Validate the request */
-    if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
+    if(_DRV_USART_ValidateClientHandle(dObj, handle) == false)
     {
         return;
     }
 
     dObj = &gDrvUSARTObj[handle];
 
-    if(false == _DRV_USART_WriteBufferQueuePurge(dObj))
+    if (_DRV_USART_ResourceLock(dObj) == false)
     {
         return;
     }
 
-    if(false == _DRV_USART_ReadBufferQueuePurge(dObj))
+    if(_DRV_USART_WriteBufferQueuePurge(dObj) == false)
     {
+        _DRV_USART_ResourceUnlock(dObj);
+        return;
+    }
+
+    if(_DRV_USART_ReadBufferQueuePurge(dObj) == false)
+    {
+        _DRV_USART_ResourceUnlock(dObj);
         return;
     }
 
     dObj->clientInUse = false;
 
-    return;
+    _DRV_USART_ResourceUnlock(dObj);
+
 }
 
 DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
@@ -537,14 +560,22 @@ DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
     DRV_USART_ERROR errors = DRV_USART_ERROR_NONE;
 
     /* Validate the request */
-    if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
+    if(_DRV_USART_ValidateClientHandle(dObj, handle) == false)
     {
-        return DRV_USART_ERROR_NONE;
+        return errors;
     }
 
     dObj = &gDrvUSARTObj[handle];
+
+    if (_DRV_USART_ResourceLock(dObj) == false)
+    {
+        return errors;
+    }
+
     errors = dObj->errors;
     dObj->errors = DRV_USART_ERROR_NONE;
+
+    _DRV_USART_ResourceUnlock(dObj);
 
     return errors;
 }
@@ -554,7 +585,7 @@ bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* set
     DRV_USART_OBJ * dObj = NULL;
 
     /* Validate the request */
-    if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
+    if(_DRV_USART_ValidateClientHandle(dObj, handle) == false)
     {
         return DRV_USART_ERROR_NONE;
     }
@@ -579,15 +610,22 @@ void DRV_USART_BufferEventHandlerSet( const DRV_HANDLE handle, const DRV_USART_B
     DRV_USART_OBJ * dObj = NULL;
 
     /* Validate the Request */
-    if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
+    if(_DRV_USART_ValidateClientHandle(dObj, handle) == false)
     {
         return;
     }
 
     dObj = &gDrvUSARTObj[handle];
 
+    if (_DRV_USART_ResourceLock(dObj) == false)
+    {
+        return;
+    }
+
     dObj->eventHandler = eventHandler;
     dObj->context = context;
+
+    _DRV_USART_ResourceUnlock(dObj);
 
     return;
 }
@@ -605,31 +643,35 @@ void DRV_USART_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t si
         return;
     }
 
+    if((size == 0) || (buffer == NULL))
+    {
+        return;
+    }
+
     *bufferHandle = DRV_USART_BUFFER_HANDLE_INVALID;
 
-    if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
+    if(_DRV_USART_ValidateClientHandle(dObj, handle) == false)
     {
         return;
     }
 
     dObj = &gDrvUSARTObj[handle];
 
-    if((size == 0) || (NULL == buffer))
+    if (_DRV_USART_ResourceLock(dObj) == false)
     {
         return;
     }
 
     if(dObj->queueSizeCurrentWrite >= dObj->queueSizeWrite)
     {
+        _DRV_USART_ResourceUnlock(dObj);
         return;
     }
-
-    _DRV_USART_ResourceLock(dObj);
 
     /* Search the buffer pool for a free buffer object */
     bufferObj = _DRV_USART_BufferObjectGet();
 
-    if(NULL == bufferObj)
+    if(bufferObj == NULL)
     {
         /* Couldn't able to get the buffer object */
         _DRV_USART_ResourceUnlock(dObj);
@@ -658,7 +700,7 @@ void DRV_USART_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t si
          * buffer to the PLIB to start processing. */
         bufferObj->currentState = DRV_USART_BUFFER_IS_PROCESSING;
 
-        if( (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel))
+        if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
         {
             SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)bufferObj->buffer, (const void *)dObj->txAddress, bufferObj->size);
         }
@@ -699,31 +741,35 @@ void DRV_USART_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t siz
         return;
     }
 
+    if((size == 0) || (buffer == NULL))
+    {
+        return;
+    }
+
     *bufferHandle = DRV_USART_BUFFER_HANDLE_INVALID;
 
-    if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
+    if(_DRV_USART_ValidateClientHandle(dObj, handle) == false)
     {
         return;
     }
 
     dObj = &gDrvUSARTObj[handle];
 
-    if((size == 0) || (NULL == buffer))
+    if (_DRV_USART_ResourceLock(dObj) == false)
     {
         return;
     }
 
     if(dObj->queueSizeCurrentRead >= dObj->queueSizeRead)
     {
+        _DRV_USART_ResourceUnlock(dObj);
         return;
     }
-
-    _DRV_USART_ResourceLock(dObj);
 
     /* Search the buffer pool for a free buffer object */
     bufferObj = _DRV_USART_BufferObjectGet();
 
-    if(NULL == bufferObj)
+    if(bufferObj == NULL)
     {
         /* Couldn't able to get the buffer object */
         _DRV_USART_ResourceUnlock(dObj);
@@ -752,7 +798,7 @@ void DRV_USART_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t siz
          * buffer to the PLIB to start processing. */
         bufferObj->currentState    = DRV_USART_BUFFER_IS_PROCESSING;
 
-        if( (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+        if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
         {
             SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress, (const void *)bufferObj->buffer, bufferObj->size);
         }
@@ -787,9 +833,9 @@ size_t DRV_USART_BufferCompletedBytesGet( DRV_USART_BUFFER_HANDLE bufferHandle )
     size_t processedBytes = DRV_USART_BUFFER_HANDLE_INVALID;
 
     /* Validate the Request */
-    if(DRV_USART_BUFFER_HANDLE_INVALID == bufferHandle)
+    if(bufferHandle == DRV_USART_BUFFER_HANDLE_INVALID)
     {
-        return DRV_USART_BUFFER_HANDLE_INVALID;
+        return processedBytes;
     }
 
     /* The buffer index is the contained in the lower 16 bits of the buffer
@@ -797,6 +843,11 @@ size_t DRV_USART_BufferCompletedBytesGet( DRV_USART_BUFFER_HANDLE bufferHandle )
     bufferObj = &gDrvUSARTBufferObj[bufferHandle & _DRV_USART_BUFFER_TOKEN_MAX];
 
     dObj = bufferObj->dObj;
+
+    if (_DRV_USART_ResourceLock(dObj) == false)
+    {
+        return processedBytes;
+    }
 
     /* Check if the buffer is currently submitted to PLIB */
     if( bufferObj->currentState == DRV_USART_BUFFER_IS_PROCESSING )
@@ -817,6 +868,8 @@ size_t DRV_USART_BufferCompletedBytesGet( DRV_USART_BUFFER_HANDLE bufferHandle )
         processedBytes = bufferObj->nCount;
     }
 
+    _DRV_USART_ResourceUnlock(dObj);
+
     /* Return the processed number of bytes..
      * If the buffer handle is invalid or bufferObj is expired
      * then return DRV_USART_BUFFER_HANDLE_INVALID */
@@ -829,7 +882,7 @@ DRV_USART_BUFFER_EVENT DRV_USART_BufferStatusGet( const DRV_USART_BUFFER_HANDLE 
     DRV_USART_BUFFER_OBJ * bufferObj = NULL;
 
     /* Validate the Request */
-    if(DRV_USART_BUFFER_HANDLE_INVALID == bufferHandle)
+    if(bufferHandle == DRV_USART_BUFFER_HANDLE_INVALID)
     {
         return DRV_USART_BUFFER_EVENT_ERROR;
     }
@@ -845,30 +898,50 @@ DRV_USART_BUFFER_EVENT DRV_USART_BufferStatusGet( const DRV_USART_BUFFER_HANDLE 
 bool DRV_USART_WriteQueuePurge( const DRV_HANDLE handle )
 {
     DRV_USART_OBJ * dObj = NULL;
+    bool status = false;
 
     /* Validate the Request */
-    if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
+    if( _DRV_USART_ValidateClientHandle(dObj, handle) == false)
     {
-        return false;
+        return status;
     }
 
     dObj = &gDrvUSARTObj[handle];
 
-    return _DRV_USART_WriteBufferQueuePurge(dObj);
+    if (_DRV_USART_ResourceLock(dObj) == false)
+    {
+        return status;
+    }
+
+    status = _DRV_USART_WriteBufferQueuePurge(dObj);
+
+    _DRV_USART_ResourceUnlock(dObj);
+
+    return status;
 }
 
 // *****************************************************************************
 bool DRV_USART_ReadQueuePurge( const DRV_HANDLE handle )
 {
     DRV_USART_OBJ * dObj = NULL;
+    bool status = false;
 
     /* Validate the Request */
-    if( false == _DRV_USART_ValidateClientHandle(dObj, handle))
+    if(_DRV_USART_ValidateClientHandle(dObj, handle) == false)
     {
-        return false;
+        return status;
     }
 
     dObj = &gDrvUSARTObj[handle];
 
-    return _DRV_USART_ReadBufferQueuePurge(dObj);
+    if (_DRV_USART_ResourceLock(dObj) == false)
+    {
+        return status;
+    }
+
+    status = _DRV_USART_ReadBufferQueuePurge(dObj);
+
+    _DRV_USART_ResourceUnlock(dObj);
+
+    return status;
 }
