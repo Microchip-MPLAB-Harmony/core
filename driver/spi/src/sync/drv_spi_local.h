@@ -179,9 +179,6 @@ typedef struct
     /* This is the SPI receive register address. Used for DMA operation. */
     void* rxAddress;
 
-    /* Dummy data being transmitted by TX DMA */
-    uint32_t txDummyData;
-
     /* Dummy data is read into this variable by RX DMA */
     uint32_t rxDummyData;
 

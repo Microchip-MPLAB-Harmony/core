@@ -58,6 +58,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /* This is the driver instance object array. */
 DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER] ;
 
+/* Dummy data being transmitted by TX DMA */
+uint8_t __attribute__((aligned(32))) txDummyData[32];
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: File scope functions
@@ -124,9 +127,9 @@ static bool _DRV_SPI_StartDMATransfer(
     size_t rxSize
 )
 {
-    uint32_t temp;
+    uint32_t size;
     /* To avoid build error when DMA mode is not used */
-    (void)temp;
+    (void)size;
 
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)hDriver->activeClient;
 
@@ -164,14 +167,15 @@ static bool _DRV_SPI_StartDMATransfer(
     {
         /* Configure the RX DMA channel - to receive dummy data */
         SYS_DMA_AddressingModeSetup(hDriver->rxDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
-        temp = hDriver->rxDummyDataSize;
+        size = hDriver->rxDummyDataSize;
         hDriver->rxDummyDataSize = 0;
-        SYS_DMA_ChannelTransfer(hDriver->rxDMAChannel, (const void*)hDriver->rxAddress, (const void *)&hDriver->rxDummyData, temp);
+        SYS_DMA_ChannelTransfer(hDriver->rxDMAChannel, (const void*)hDriver->rxAddress, (const void *)&hDriver->rxDummyData, size);
     }
     else
     {
         /* Configure the RX DMA channel - to receive data in receive buffer */
-		SYS_DMA_AddressingModeSetup(hDriver->rxDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED);
+        SYS_DMA_AddressingModeSetup(hDriver->rxDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED);
+
         SYS_DMA_ChannelTransfer(hDriver->rxDMAChannel, (const void*)hDriver->rxAddress, (const void *)pReceiveData, rxSize);
     }
 
@@ -179,9 +183,9 @@ static bool _DRV_SPI_StartDMATransfer(
     {
         /* Configure the TX DMA channel - to send dummy data */
         SYS_DMA_AddressingModeSetup(hDriver->txDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
-        temp = hDriver->txDummyDataSize;
+        size = hDriver->txDummyDataSize;
         hDriver->txDummyDataSize = 0;
-        SYS_DMA_ChannelTransfer(hDriver->txDMAChannel, (const void *)&hDriver->txDummyData, (const void*)hDriver->txAddress, temp);
+        SYS_DMA_ChannelTransfer(hDriver->txDMAChannel, (const void *)txDummyData, (const void*)hDriver->txAddress, size);
     }
     else
     {
@@ -193,13 +197,23 @@ static bool _DRV_SPI_StartDMATransfer(
          */
         if (hDriver->rxDummyDataSize > 0)
         {
+            size = rxSize;
             hDriver->pNextTransmitData = (uintptr_t)&((uint8_t*)pTransmitData)[rxSize];
-            SYS_DMA_ChannelTransfer(hDriver->txDMAChannel, (const void *)pTransmitData, (const void*)hDriver->txAddress, rxSize);
         }
         else
         {
-            SYS_DMA_ChannelTransfer(hDriver->txDMAChannel, (const void *)pTransmitData, (const void*)hDriver->txAddress, txSize);
+            size = txSize;
         }
+
+        if (DATA_CACHE_ENABLED == true)
+        {
+            /* Clean cache lines having source buffer before submitting a transfer
+             * request to DMA to load the latest data in the cache to the actual
+             * memory */
+            SCB_CleanDCache_by_Addr((uint32_t *)pTransmitData, size);
+        }
+
+        SYS_DMA_ChannelTransfer(hDriver->txDMAChannel, (const void *)pTransmitData, (const void*)hDriver->txAddress, size);
     }
 
     return true;
@@ -245,7 +259,7 @@ void _DRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
         SYS_DMA_AddressingModeSetup(dObj->txDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
 
         /* Configure the transmit DMA channel */
-        SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)&dObj->txDummyData, (const void*)dObj->txAddress, dObj->txDummyDataSize);
+        SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)txDummyData, (const void*)dObj->txAddress, dObj->txDummyDataSize);
 
         dObj->txDummyDataSize = 0;
     }
@@ -345,12 +359,24 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->rxDMAChannel          = spiInit->dmaChannelReceive;
     dObj->txAddress             = spiInit->spiTransmitAddress;
     dObj->rxAddress             = spiInit->spiReceiveAddress;
-    dObj->txDummyData           = 0xFFFFFFFF;
 
     dObj->baudRateInHz          = spiInit->baudRateInHz;
     dObj->clockPhase            = spiInit->clockPhase;
     dObj->clockPolarity         = spiInit->clockPolarity;
     dObj->dataBits              = spiInit->dataBits;
+
+    for (txDummyDataIdx = 0; txDummyDataIdx < sizeof(txDummyData); txDummyDataIdx++)
+    {
+        txDummyData[txDummyDataIdx] = 0xFF;
+    }
+
+    if ((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (DATA_CACHE_ENABLED == true))
+    {
+        /* Clean cache lines having source buffer before submitting a transfer
+         * request to DMA to load the latest data in the cache to the actual
+         * memory */
+        SCB_CleanDCache_by_Addr((uint32_t *)txDummyData, sizeof(txDummyData));
+    }
 
     if (OSAL_MUTEX_Create(&dObj->transferMutex) == OSAL_RESULT_FALSE)
     {
@@ -700,6 +726,13 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
                 {
                     if (hDriver->transferStatus == DRV_SPI_TRANSFER_STATUS_COMPLETE)
                     {
+                        if ((DATA_CACHE_ENABLED == true) && (rxSize != 0))
+                        {
+                            /* Invalidate cache lines having received buffer before using it
+                             * to load the latest data in the actual memory to the cache */
+                            SCB_InvalidateDCache_by_Addr((uint32_t *)pReceiveData, rxSize);
+                        }
+
                         isSuccess = true;
                     }
                 }
