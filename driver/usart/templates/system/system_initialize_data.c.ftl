@@ -44,10 +44,8 @@ DRV_USART_INIT drvUsart${INDEX?string}InitData =
 
     .interruptUSART = ${DRV_USART_PLIB}_IRQn,
 
-<#if core.XDMAC_ENABLE?has_content>
-    .interruptDMA = XDMAC_IRQn,
-<#elseif core.DMAC_ENABLE?has_content>
-    .interruptDMA = DMAC_IRQn,
+<#if core.DMA_ENABLE?has_content>
+    .interruptDMA = ${core.DMA_INSTANCE_NAME}_IRQn,
 </#if>
 <#else>
 
