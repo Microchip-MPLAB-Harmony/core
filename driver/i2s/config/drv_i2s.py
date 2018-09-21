@@ -220,8 +220,6 @@ def onDependencyConnected(info):
         plibUsed.setValue(i2sPlibId, 1)
         if i2sPlibId[:3] == "SSC":
             dataLength = info["remoteComponent"].getSymbolValue("SSC_DATA_LENGTH")
-            print("datalength:")
-            print(dataLength)
             i2sDataWidth = info["localComponent"].getSymbolByID("I2S_DATA_LENGTH")
             i2sDataWidth.setValue(dataLength, 1)
             # force DMA channels to be allocated
