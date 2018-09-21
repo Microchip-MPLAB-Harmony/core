@@ -44,9 +44,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #ifndef SYS_DMA_MAPPING_H
 #define SYS_DMA_MAPPING_H
 
-<#if core.DMA_NAME??>
-<#assign PLIB_NAME  = core.DMA_INSTANCE_NAME?string>
-<#assign PLIB_NAME_LC  = core.DMA_INSTANCE_NAME?lower_case>
+<#if core.DMA_INSTANCE_NAME??>
+<#assign DMA_INSTANCE_NAME  = core.DMA_INSTANCE_NAME?string>
+<#assign DMA_NAME  = core.DMA_NAME?string>
 </#if>
 
 // *****************************************************************************
@@ -56,15 +56,16 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 <#if core.DMA_ENABLE?has_content && core.DMA_ENABLE == true>
-#include "peripheral/${PLIB_NAME_LC}/plib_${PLIB_NAME_LC}.h"
+#include "peripheral/${core.DMA_INSTANCE_NAME?lower_case}/plib_${core.DMA_INSTANCE_NAME?lower_case}.h"
 
-#define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)  ${PLIB_NAME}_ChannelCallbackRegister((${PLIB_NAME}_CHANNEL)channel, (${PLIB_NAME}_CHANNEL_CALLBACK)eventHandler, context)
+#define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)  ${DMA_INSTANCE_NAME}_ChannelCallbackRegister((${DMA_NAME}_CHANNEL)channel, (${DMA_NAME}_CHANNEL_CALLBACK)eventHandler, context)
 
-#define SYS_DMA_ChannelTransfer(channel, srcAddr, destAddr, blockSize)  ${PLIB_NAME}_ChannelTransfer((${PLIB_NAME}_CHANNEL)channel, srcAddr, destAddr, blockSize)
+#define SYS_DMA_ChannelTransfer(channel, srcAddr, destAddr, blockSize)  ${DMA_INSTANCE_NAME}_ChannelTransfer((${DMA_NAME}_CHANNEL)channel, srcAddr, destAddr, blockSize)
 
-#define SYS_DMA_ChannelIsBusy(channel)  ${PLIB_NAME}_ChannelIsBusy((${PLIB_NAME}_CHANNEL)channel)
+#define SYS_DMA_ChannelIsBusy(channel)  ${DMA_INSTANCE_NAME}_ChannelIsBusy((${DMA_NAME}_CHANNEL)channel)
 
-#define SYS_DMA_ChannelDisable(channel)  ${PLIB_NAME}_ChannelDisable((${PLIB_NAME}_CHANNEL)channel)
+#define SYS_DMA_ChannelDisable(channel)  ${DMA_INSTANCE_NAME}_ChannelDisable((${DMA_NAME}_CHANNEL)channel)
+
 <#else>
 
 #define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)
@@ -75,5 +76,4 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #define SYS_DMA_ChannelDisable(channel)
 </#if>
-
 #endif // SYS_DMA_MAPPING_H
