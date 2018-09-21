@@ -51,6 +51,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 #include <stdint.h>
 #include "system/time/sys_time.h"
+#include "config/default/osal/osal.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -76,15 +77,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 */
 
 #define _SYS_TIME_HANDLE_TOKEN_MAX              (0xFFFF)
-#define _SYS_TIME_MAKE_HANDLE(token, index)     ((token) << 16 | (index))
-#define _SYS_TIME_UPDATE_HANDLE_TOKEN(token) \
-{ \
-    (token)++; \
-    if ((token) >= _SYS_TIME_HANDLE_TOKEN_MAX) \
-        (token) = 1; \
-    else \
-        (token) = (token); \
-}
+#define _SYS_TIME_INDEX_MASK                    (0x0000FFFFUL)
 
 // *****************************************************************************
 /* SYS TIME OBJECT INSTANCE structure
@@ -125,8 +118,10 @@ typedef struct{
     uint32_t hwTimerCompareMargin;
     volatile uint32_t swCounter64Low;           /* Software counter */
     volatile uint32_t swCounter64High;          /* Software 64-bit counter */
-    bool interruptContext;                      /* On every active timer elapsed */
+    uint8_t interruptNestingCount;
     SYS_TIME_TIMER_OBJ * tmrActive;
+    /* Mutex to protect access to the shared resources */
+    OSAL_MUTEX_DECLARE(timerMutex);
 
 } SYS_TIME_COUNTER_OBJ;   /* set of timers */
 
