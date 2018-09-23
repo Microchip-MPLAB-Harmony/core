@@ -46,8 +46,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 #include "configuration.h"
-#include <string.h>
-#include "drv_at24.h"
+#include "driver/at24/drv_at24.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -69,41 +68,43 @@ DRV_AT24_OBJ gDrvAT24Obj;
   * Returns true if the requested is accepted, false otherwise.
   */
 static uint8_t _DRV_AT24_ReadStatus(void)
-{                    
+{
     gDrvAT24Obj.writeBuffer[0] = 0x00;
-    
+
     /* Submit a dummy write to check internal write cycle status */
     if (gDrvAT24Obj.i2cPlib->write(gDrvAT24Obj.slaveAddress, \
             gDrvAT24Obj.writeBuffer, 1) == true)
     {
         return true;
     }
-    
+
     return false;
 }
 
 static bool _DRV_AT24_Write(
-    void* txData, 
-    uint32_t txDataLength, 
-    uint32_t address 
+    void* txData,
+    uint32_t txDataLength,
+    uint32_t address
 )
 {
     bool isRequestAccepted = false;
-    uint32_t nTransferBytes = 0;        
+    uint32_t nTransferBytes = 0;
     uint32_t nBytes = 0;
     uint16_t slaveAddr;
-    
+
     if ((address + txDataLength) > gDrvAT24Obj.flashSize)
     {
-        /* Writing past end of flash results in error */                
+        /* Writing past end of flash results in error */
         return isRequestAccepted;
     }
-    
+
+    gDrvAT24Obj.transferStatus = DRV_AT24_TRANSFER_STATUS_BUSY;
+
     /* Calculate the max number of bytes that can be written in the current page */
-    nTransferBytes = gDrvAT24Obj.pageSize - (address % gDrvAT24Obj.pageSize); 
-    
+    nTransferBytes = gDrvAT24Obj.pageSize - (address % gDrvAT24Obj.pageSize);
+
     /* Check if the pending bytes are greater than nTransferBytes */
-    nTransferBytes = txDataLength >= nTransferBytes? nTransferBytes: txDataLength;        
+    nTransferBytes = txDataLength >= nTransferBytes? nTransferBytes: txDataLength;
 
     slaveAddr = gDrvAT24Obj.slaveAddress;
     /* Frame the EEPROM address */
@@ -121,19 +122,18 @@ static bool _DRV_AT24_Write(
     }
     /* For 8-bit address */
     gDrvAT24Obj.writeBuffer[nBytes++] = (address & 0x000000FF);
-        
+
     for (uint16_t i = 0 ; i < nTransferBytes; i++)
     {
         gDrvAT24Obj.writeBuffer[nBytes + i] = ((uint8_t*)txData)[i];
     }
-    
+
     gDrvAT24Obj.nextMemoryAddr = address + nTransferBytes;
     gDrvAT24Obj.nextBufferAddr = txData + nTransferBytes;
     gDrvAT24Obj.nPendingBytes = txDataLength - nTransferBytes;
-        
-    gDrvAT24Obj.command = DRV_AT24_CMD_WRITE;    
-    gDrvAT24Obj.transferStatus = DRV_AT24_TRANSFER_STATUS_BUSY;
-    
+
+    gDrvAT24Obj.command = DRV_AT24_CMD_WRITE;
+
     /* Submit a write request to I2C PLIB */
     if (gDrvAT24Obj.i2cPlib->write(slaveAddr, \
             (uint8_t*)gDrvAT24Obj.writeBuffer, (nBytes + nTransferBytes)) == true)
@@ -144,7 +144,7 @@ static bool _DRV_AT24_Write(
     {
         gDrvAT24Obj.transferStatus = DRV_AT24_TRANSFER_STATUS_ERROR;
     }
-    
+
     return isRequestAccepted;
 }
 
@@ -175,9 +175,9 @@ static void _DRV_AT24_Handler(DRV_AT24_I2C_ERROR transferStatus)
             {
                 /* Internal write complete. Now check if more data pending */
                 if (gDrvAT24Obj.nPendingBytes)
-                {                                        
-                    if (_DRV_AT24_Write(gDrvAT24Obj.nextBufferAddr, 
-                            gDrvAT24Obj.nPendingBytes, 
+                {
+                    if (_DRV_AT24_Write(gDrvAT24Obj.nextBufferAddr,
+                            gDrvAT24Obj.nPendingBytes,
                             gDrvAT24Obj.nextMemoryAddr) == false)
                     {
                         gDrvAT24Obj.transferStatus = DRV_AT24_TRANSFER_STATUS_ERROR;
@@ -186,7 +186,7 @@ static void _DRV_AT24_Handler(DRV_AT24_I2C_ERROR transferStatus)
                 else
                 {
                     gDrvAT24Obj.transferStatus = DRV_AT24_TRANSFER_STATUS_COMPLETED;
-                }                
+                }
             }
             else
             {
@@ -206,19 +206,19 @@ static void _DRV_AT24_Handler(DRV_AT24_I2C_ERROR transferStatus)
             {
                 gDrvAT24Obj.transferStatus = DRV_AT24_TRANSFER_STATUS_ERROR;
             }
-            
+
             break;
         default:
             break;
-    }        
+    }
 }
 
 /* This function will be called by I2C PLIB when transfer is completed */
 static void _I2CEventHandler(uintptr_t context )
 {
     _DRV_AT24_Handler(gDrvAT24Obj.i2cPlib->errorGet());
-    
-    /* If transfer is complete, notify the application */        
+
+    /* If transfer is complete, notify the application */
     if (gDrvAT24Obj.transferStatus != DRV_AT24_TRANSFER_STATUS_BUSY)
     {
         if (gDrvAT24Obj.eventHandler)
@@ -234,8 +234,8 @@ static void _I2CEventHandler(uintptr_t context )
 // *****************************************************************************
 // *****************************************************************************
 
-SYS_MODULE_OBJ DRV_AT24_Initialize( 
-    const SYS_MODULE_INDEX drvIndex, 
+SYS_MODULE_OBJ DRV_AT24_Initialize(
+    const SYS_MODULE_INDEX drvIndex,
     const SYS_MODULE_INIT * const init
 )
 {
@@ -263,12 +263,12 @@ SYS_MODULE_OBJ DRV_AT24_Initialize(
     gDrvAT24Obj.flashSize                  = at24Init->flashSize;
     gDrvAT24Obj.nClientsMax                = at24Init->numClients;
     gDrvAT24Obj.blockStartAddress          = at24Init->blockStartAddress;
-    
+
     gDrvAT24Obj.eventHandler               = NULL;
     gDrvAT24Obj.context                    = 0;
-    
+
     gDrvAT24Obj.i2cPlib->callbackRegister(_I2CEventHandler, (uintptr_t)NULL);
-    
+
     /* Update the status */
     gDrvAT24Obj.status                     = SYS_STATUS_READY;
 
@@ -283,9 +283,9 @@ SYS_STATUS DRV_AT24_Status( const SYS_MODULE_INDEX drvIndex )
     return (gDrvAT24Obj.status);
 }
 
-DRV_HANDLE DRV_AT24_Open( 
-    const SYS_MODULE_INDEX drvIndex, 
-    const DRV_IO_INTENT ioIntent 
+DRV_HANDLE DRV_AT24_Open(
+    const SYS_MODULE_INDEX drvIndex,
+    const DRV_IO_INTENT ioIntent
 )
 {
     /* Validate the request */
@@ -314,42 +314,45 @@ void DRV_AT24_Close( const DRV_HANDLE handle )
     }
 }
 
-void DRV_AT24_EventHandlerSet( 
-    const DRV_HANDLE handle, 
-    const DRV_AT24_EVENT_HANDLER eventHandler, 
-    const uintptr_t context 
+void DRV_AT24_EventHandlerSet(
+    const DRV_HANDLE handle,
+    const DRV_AT24_EVENT_HANDLER eventHandler,
+    const uintptr_t context
 )
 {
-    if((handle != DRV_HANDLE_INVALID) && (handle == 0))
+    if((handle != DRV_HANDLE_INVALID) && (handle == 0) && \
+            gDrvAT24Obj.transferStatus != DRV_AT24_TRANSFER_STATUS_BUSY)
     {
         gDrvAT24Obj.eventHandler = eventHandler;
         gDrvAT24Obj.context = context;
     }
 }
 
-bool DRV_AT24_Read( 
-    const DRV_HANDLE handle, 
-    void* rxData, 
-    uint32_t rxDataLength, 
-    uint32_t address 
+bool DRV_AT24_Read(
+    const DRV_HANDLE handle,
+    void* rxData,
+    uint32_t rxDataLength,
+    uint32_t address
 )
 {
     bool isRequestAccepted = false;
     uint32_t nBytes = 0;
     uint16_t slaveAddr;
-    
+
     if((handle == DRV_HANDLE_INVALID) || (handle > 0) || \
             (gDrvAT24Obj.transferStatus == DRV_AT24_TRANSFER_STATUS_BUSY))
     {
         return isRequestAccepted;
     }
-    
+
     if ((address + rxDataLength) > gDrvAT24Obj.flashSize)
     {
-        /* Writing past end of flash results in error */                
+        /* Writing past end of flash results in error */
         return isRequestAccepted;
     }
-    
+
+    gDrvAT24Obj.transferStatus = DRV_AT24_TRANSFER_STATUS_BUSY;
+
     /* Frame the EEPROM address */
     slaveAddr = gDrvAT24Obj.slaveAddress;
     if (gDrvAT24Obj.flashSize > 131072)    /* For 18-bit address */
@@ -366,10 +369,9 @@ bool DRV_AT24_Read(
     }
     /* For 8-bit address */
     gDrvAT24Obj.writeBuffer[nBytes++] = (address & 0x000000FF);
-        
+
     gDrvAT24Obj.command = DRV_AT24_CMD_READ;
-    gDrvAT24Obj.transferStatus = DRV_AT24_TRANSFER_STATUS_BUSY;
-            
+
     if(gDrvAT24Obj.i2cPlib->writeRead(slaveAddr, \
             (uint8_t*)gDrvAT24Obj.writeBuffer, nBytes, rxData, rxDataLength) == true)
     {
@@ -379,17 +381,17 @@ bool DRV_AT24_Read(
     {
         gDrvAT24Obj.transferStatus = DRV_AT24_TRANSFER_STATUS_ERROR;
     }
-    
+
     return isRequestAccepted;
 }
 
-bool DRV_AT24_Write( 
-    const DRV_HANDLE handle, 
-    void* txData, 
-    uint32_t txDataLength, 
-    uint32_t address 
+bool DRV_AT24_Write(
+    const DRV_HANDLE handle,
+    void* txData,
+    uint32_t txDataLength,
+    uint32_t address
 )
-{        
+{
     if((handle != DRV_HANDLE_INVALID) && (handle == 0) && \
             (gDrvAT24Obj.transferStatus != DRV_AT24_TRANSFER_STATUS_BUSY))
     {
@@ -407,7 +409,7 @@ bool DRV_AT24_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t address 
 }
 
 DRV_AT24_TRANSFER_STATUS DRV_AT24_TransferStatusGet(const DRV_HANDLE handle)
-{        
+{
     if((handle != DRV_HANDLE_INVALID) && (handle == 0))
     {
         return gDrvAT24Obj.transferStatus;
