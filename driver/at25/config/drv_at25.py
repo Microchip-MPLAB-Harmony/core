@@ -141,7 +141,7 @@ def instantiateComponent(at25Component):
     at25SourceFile = at25Component.createFileSymbol("AT25_SOURCE", None)
     at25SourceFile.setSourcePath("driver/at25/src/drv_at25.c")
     at25SourceFile.setOutputName("drv_at25.c")
-    at25SourceFile.setDestPath("driver/at25/")
+    at25SourceFile.setDestPath("driver/at25/src")
     at25SourceFile.setProjectPath("config/" + configName + "/driver/at25/")
     at25SourceFile.setType("SOURCE")
     at25SourceFile.setOverwrite(True)
