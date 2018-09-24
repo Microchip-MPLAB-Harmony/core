@@ -11,6 +11,9 @@ def instantiateComponent(spiComponent, index):
     # Enable "Enable System Ports" option in MHC
     Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True, 1)
 
+	# Enable "Enable System DMA" option in MHC
+    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
+
     spiSymIndex = spiComponent.createIntegerSymbol("INDEX", None)
     spiSymIndex.setVisible(False)
     spiSymIndex.setDefaultValue(index)
@@ -247,9 +250,6 @@ def requestAndAssignDMAChannel(Sym, event):
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
     Sym.setValue(channel, 2)
-
-    # Enable "Enable System DMA" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
 
 def requestDMAComment(Sym, event):
     if(event["value"] == -2):

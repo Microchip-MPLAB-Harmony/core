@@ -59,10 +59,10 @@ DRV_SPI_INIT drvSPI${INDEX?string}InitData =
     .dmaChannelReceive  = DRV_SPI_RCV_DMA_CH_IDX${INDEX?string},
 
     /* SPI Transmit Register */
-    .spiTransmitAddress = (void *)${DRV_SPI_PLIB}_TRANSMIT_ADDRESS,
+    .spiTransmitAddress =  (void *)${.vars["${DRV_SPI_PLIB?lower_case}"].TRANSMIT_DATA_REGISTER},
 
     /* SPI Receive Register */
-    .spiReceiveAddress  = (void *)${DRV_SPI_PLIB}_RECEIVE_ADDRESS,
+    .spiReceiveAddress  = (void *)${.vars["${DRV_SPI_PLIB?lower_case}"].RECEIVE_DATA_REGISTER},
 <#else>
     /* DMA Channel for Transmit */
     .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,

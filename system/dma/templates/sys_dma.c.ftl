@@ -62,6 +62,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 */
 void SYS_DMA_AddressingModeSetup(SYS_DMA_CHANNEL channel, SYS_DMA_SOURCE_ADDRESSING_MODE sourceAddrMode, SYS_DMA_DESTINATION_ADDRESSING_MODE destAddrMode)
 {
+<#if (core.DMA_ENABLE?has_content) && (core.DMA_ENABLE = true)>
     uint32_t config;
 
     config = ${core.DMA_INSTANCE_NAME}_ChannelSettingsGet(channel);
@@ -70,6 +71,7 @@ void SYS_DMA_AddressingModeSetup(SYS_DMA_CHANNEL channel, SYS_DMA_SOURCE_ADDRESS
     config |= sourceAddrMode | destAddrMode;
 
     ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet(channel, config);
+</#if>
 }
 
 //******************************************************************************
@@ -84,6 +86,7 @@ void SYS_DMA_AddressingModeSetup(SYS_DMA_CHANNEL channel, SYS_DMA_SOURCE_ADDRESS
 */
 void SYS_DMA_DataWidthSetup(SYS_DMA_CHANNEL channel, SYS_DMA_WIDTH dataWidth)
 {
+<#if (core.DMA_ENABLE?has_content) && (core.DMA_ENABLE = true)>
     uint32_t config;
 
     config = ${core.DMA_INSTANCE_NAME}_ChannelSettingsGet(channel);
@@ -92,4 +95,5 @@ void SYS_DMA_DataWidthSetup(SYS_DMA_CHANNEL channel, SYS_DMA_WIDTH dataWidth)
     config |= dataWidth;
 
     ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet(channel, config);
+</#if>
 }

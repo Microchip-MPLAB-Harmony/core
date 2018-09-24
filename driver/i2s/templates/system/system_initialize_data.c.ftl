@@ -13,28 +13,27 @@ DRV_I2S_INIT drvI2S${INDEX?string}InitData =
 
     /* I2S IRQ */
     .interruptI2S = DRV_I2S_INT_SRC_IDX${INDEX?string},
-    
+
     /* I2S Number of clients */
     .numClients = DRV_I2S_CLIENTS_NUMBER_IDX${INDEX?string},
 
     /* I2S Queue Size */
     .queueSize = DRV_I2S_QUEUE_SIZE_IDX0,  
-    
+
 <#if DRV_I2S_TX_RX_DMA == true>
     .dmaChannelTransmit = DRV_I2S_XMIT_DMA_CH_IDX${INDEX?string},
     .dmaChannelReceive  = DRV_I2S_RCV_DMA_CH_IDX${INDEX?string},
-<#if DRV_I2S_PLIB == "SSC0">
-    .i2sTransmitAddress = (void *)SSC_TRANSMIT_ADDRESS,
-    .i2sReceiveAddress = (void *)SSC_RECEIVE_ADDRESS,
-<#else>
-    .i2sTransmitAddress = (void *)${DRV_I2S_PLIB}_TRANSMIT_LEFT_ADDRESS,
-    .i2sReceiveAddress = (void *)${DRV_I2S_PLIB}_RECEIVE_LEFT_ADDRESS,
-</#if>
+    .i2sTransmitAddress = (void *)${.vars["${DRV_I2S_PLIB?lower_case}"].TRANSMIT_DATA_REGISTER},
+    .i2sReceiveAddress = (void *)${.vars["${DRV_I2S_PLIB?lower_case}"].RECEIVE_DATA_REGISTER},
+
 <#else>
     .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
     .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
+
 </#if>
-    .interruptDMA = XDMAC_IRQn,
+<#if core.DMA_ENABLE?has_content>
+    .interruptDMA = ${core.DMA_INSTANCE_NAME}_IRQn,
+</#if>
 
     .dmaDataLength = DRV_I2S_DATA_LENGTH_IDX${INDEX?string},
 };
