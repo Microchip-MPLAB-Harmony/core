@@ -330,7 +330,7 @@ void  SYS_TIME_Deinitialize ( SYS_MODULE_OBJ object );
                              Any value less than SYS_STATUS_ERROR is also an
                              error state.
 
-       SYS_MODULE_UNINITIALIZED - Indicates that the driver has been De-initialized.
+       SYS_STATUS_UNINITIALIZED - Indicates that the driver is not initialized.
 
        SYS_STATUS_READY    - Indicates that the module initialization is
                              complete and it ready to be used.
@@ -341,7 +341,7 @@ void  SYS_TIME_Deinitialize ( SYS_MODULE_OBJ object );
 
   Example:
        <code>
-       // Handle "object" valuue must have been returned from SYS_TIME_Initialize.
+       // Handle "object" value must have been returned from SYS_TIME_Initialize.
        if ( SYS_STATUS_ERROR <= SYS_TIME_Status(object) )
        {
            // Handle error
@@ -363,7 +363,7 @@ SYS_STATUS SYS_TIME_Status ( SYS_MODULE_OBJ object );
 
 // *****************************************************************************
 /* Function:
-       SYS_TIME_RESULT SYS_TIME_DelayUS ( int us, SYS_TIME_HANDLE *timer );
+       SYS_TIME_RESULT SYS_TIME_DelayUS ( uint32_t us, SYS_TIME_HANDLE *timer );
 
    Summary:
        This function is used to generate a delay of a given number of
@@ -371,9 +371,7 @@ SYS_STATUS SYS_TIME_Status ( SYS_MODULE_OBJ object );
 
    Description:
        This function creates a single shot timer that will be deleted
-       automatically once the specified delay has completed.  If used in an RTOS
-       configuration the function will block until the requested delay has
-       expired.  In a non-blocking (bare-metal) configuration, the function will
+       automatically once the specified delay has completed. The function will
        return immediately, requiring the caller to use the handle provided to
        check the delay timer's status.
 
@@ -385,9 +383,6 @@ SYS_STATUS SYS_TIME_Status ( SYS_MODULE_OBJ object );
        us     - The desired number of microseconds to delay.
 
        timer  - Address of the variable to receive the timer handle value.
-                If the call fails or completes before returning, the handle
-                variable will be ignored (and may be passed as NULL in an
-                RTOS environment).
 
    Returns:
       SYS_TIME_SUCCESS - If the call succeeded.
@@ -414,12 +409,12 @@ SYS_STATUS SYS_TIME_Status ( SYS_MODULE_OBJ object );
        non-blocking environment.
 */
 
-SYS_TIME_RESULT SYS_TIME_DelayUS ( int us, SYS_TIME_HANDLE *timer );
+SYS_TIME_RESULT SYS_TIME_DelayUS ( uint32_t us, SYS_TIME_HANDLE *timer );
 
 
 // *****************************************************************************
 /* Function:
-       SYS_TIME_RESULT SYS_TIME_DelayMS ( int ms, SYS_TIME_HANDLE *timer );
+       SYS_TIME_RESULT SYS_TIME_DelayMS ( uint32_t ms, SYS_TIME_HANDLE *timer );
 
    Summary:
        This function is used to generate a delay of a given number of
@@ -427,9 +422,7 @@ SYS_TIME_RESULT SYS_TIME_DelayUS ( int us, SYS_TIME_HANDLE *timer );
 
    Description:
        This function creates a single shot timer that will be deleted
-       automatically once the specified delay has completed.  If used in an RTOS
-       configuration the function will block until the requested delay has
-       expired.  In a non-blocking (bare-metal) configuration, the function will
+       automatically once the specified delay has completed. The function will
        return immediately, requiring the caller to use the timer handle provided
        to check the delay timer's status.
 
@@ -441,9 +434,6 @@ SYS_TIME_RESULT SYS_TIME_DelayUS ( int us, SYS_TIME_HANDLE *timer );
        ms     - The desired number of milliseconds to delay.
 
        timer  - Address of the variable to receive the timer handle value.
-                If the call fails or completes before returning, the handle
-                variable will be ignored (and may be passed as NULL in an
-                RTOS environment).
 
    Returns:
       SYS_TIME_SUCCESS - If the call succeeded.
@@ -466,11 +456,10 @@ SYS_TIME_RESULT SYS_TIME_DelayUS ( int us, SYS_TIME_HANDLE *timer );
 
        Delay values of 0 or less will return SYS_TIME_ERROR.
 
-       Will return SYS_TIME_ERROR if the timer handle poiter is NULL in a
-       non-blocking environment.
+       Will return SYS_TIME_ERROR if the timer handle pointer is NULL.
 */
 
-SYS_TIME_RESULT SYS_TIME_DelayMS ( int ms, SYS_TIME_HANDLE *handle );
+SYS_TIME_RESULT SYS_TIME_DelayMS ( uint32_t ms, SYS_TIME_HANDLE *handle );
 
 
 // *****************************************************************************
@@ -481,16 +470,18 @@ SYS_TIME_RESULT SYS_TIME_DelayMS ( int ms, SYS_TIME_HANDLE *handle );
        Determines if the given delay timer has completed.
 
    Description:
-       This function deternines if the requested delay is completed or is still
+       This function determines if the requested delay is completed or is still
        in progress.
 
    Precondition:
-       A delay request must have been created using any of the SYS_TIME_Delay*
+       A delay request must have been created using any of the SYS_TIME_DelayMS
+       or SYS_TIME_DelayUS or SYS_TIME_CallbackRegisterUS or SYS_TIME_CallbackRegisterMS
        functions.
 
    Parameters:
-       timer  - A SYS_TIME_HANDLE value provided by any of the SYS_TIME_Delay*
-                functions.
+       timer  - A SYS_TIME_HANDLE value provided by any of the SYS_TIME_DelayMS
+       or SYS_TIME_DelayUS or SYS_TIME_CallbackRegisterUS or SYS_TIME_CallbackRegisterMS
+       functions.
 
    Returns:
        true  - If the delay has completed.
@@ -499,15 +490,18 @@ SYS_TIME_RESULT SYS_TIME_DelayMS ( int ms, SYS_TIME_HANDLE *handle );
 
   Example:
        <code>
-       if (true != SYS_TIME_DelayIsComplete(timer))
+       if (SYS_TIME_DelayIsComplete(timer) != true)
        {
            // Still waiting
        }
        </code>
 
   Remarks:
-       A timer handle value of SYS_TIME_HANDLE_INVALID will always return true,
-       indicating that the delay has completed.
+       The return value of SYS_TIME_DelayIsComplete is valid only for single shot
+       timers. That is, SYS_TIME_DelayIsComplete must be called to check the status
+       of the delay requested either through SYS_TIME_DelayMS or SYS_TIME_DelayUS
+       or single shot timers created using the SYS_TIME_CallbackRegisterMS or
+       SYS_TIME_CallbackRegisterUS APIs.
 */
 
 bool SYS_TIME_DelayIsComplete ( SYS_TIME_HANDLE timer );
@@ -522,7 +516,7 @@ bool SYS_TIME_DelayIsComplete ( SYS_TIME_HANDLE timer );
 // *****************************************************************************
 /* Function:
     SYS_TIME_HANDLE SYS_TIME_CallbackRegisterUS ( SYS_TIME_CALLBACK callback,
-                        uintptr_t context, int us, SYS_TIME_CALLBACK_TYPE type )
+                        uintptr_t context, uint32_t us, SYS_TIME_CALLBACK_TYPE type )
 
 Summary:
     Registers a function with the timer service to be called back when the
@@ -557,7 +551,7 @@ Parameters:
 
 Returns:
     SYS_TIME_HANDLE - A valid timer object handle if the call succeeds.
-                         SYS_TIME_HANDLE_INVALID if it fails.
+                      SYS_TIME_HANDLE_INVALID if it fails.
 
 Example:
   Given a callback function implementation matching the following prototype:
@@ -565,25 +559,25 @@ Example:
   void MyCallback ( uintptr_t context);
   </code>
 
-  The following example call will register it, requesting a 20 microsecond
+  The following example call will register it, requesting a 500 microsecond
   periodic callback.
   <code>
-  SYS_TIME_HANDLE handle = SYS_TIME_CallbackUS(Test_Callback, NULL, 20, SYS_TIME_PERIODIC);
+  SYS_TIME_HANDLE handle = SYS_TIME_CallbackUS(MyCallback, (uintptr_t)NULL, 500, SYS_TIME_PERIODIC);
   </code>
 */
 
 SYS_TIME_HANDLE SYS_TIME_CallbackRegisterUS ( SYS_TIME_CALLBACK callback, uintptr_t context,
-                                              int us, SYS_TIME_CALLBACK_TYPE type );
+                                              uint32_t us, SYS_TIME_CALLBACK_TYPE type );
 
 
 // *****************************************************************************
 /* Function:
     SYS_TIME_HANDLE SYS_TIME_CallbackRegisterMS ( SYS_TIME_CALLBACK callback,
-                        uintptr_t context, int ms, SYS_TIME_CALLBACK_TYPE type );
+                        uintptr_t context, uint32_t ms, SYS_TIME_CALLBACK_TYPE type );
 
 Summary:
     Registers a function with the timer service to be called back when the
-    reqeusted number of milliseconds has expired (either once or repeatedly).
+    requested number of milliseconds has expired (either once or repeatedly).
 
 Description:
     Creates a timer object and registers a function with it to be called back
@@ -625,12 +619,12 @@ Example:
   The following example call will register it, requesting a 50 millisecond
   periodic callback.
   <code>
-  SYS_TIME_HANDLE handle = SYS_TIME_CallbackMS(MyCallback, NULL, 50, SYS_TIME_PERIODIC);
+  SYS_TIME_HANDLE handle = SYS_TIME_CallbackRegisterMS(MyCallback, (uintptr_t)NULL, 50, SYS_TIME_PERIODIC);
   </code>
 */
 
 SYS_TIME_HANDLE SYS_TIME_CallbackRegisterMS ( SYS_TIME_CALLBACK callback, uintptr_t context,
-                                              int ms, SYS_TIME_CALLBACK_TYPE type );
+                                              uint32_t ms, SYS_TIME_CALLBACK_TYPE type );
 
 
 // *****************************************************************************
@@ -659,7 +653,7 @@ SYS_TIME_HANDLE SYS_TIME_CallbackRegisterMS ( SYS_TIME_CALLBACK callback, uintpt
 
   Returns:
     The frequency at which the common counter counts, if the timer has been
-    initialized and is ready.  Otherwise, it returns 0.
+    initialized and is ready. Otherwise, it returns 0.
 
   Example:
     <code>
@@ -685,7 +679,7 @@ uint32_t SYS_TIME_FrequencyGet ( void );
     Returns the current "live" value of the common 32-bit system counter.
 
     There is a single common counter that is always present in the Time service
-    that provides a consitent time base from which all client-specific timer
+    that provides a consistent time base from which all client-specific timer
     counters provided by the service are implemented.
 
   Precondition:
@@ -698,6 +692,24 @@ uint32_t SYS_TIME_FrequencyGet ( void );
   Returns:
     The current "live" value of the common 32-bit system counter.
 
+  Example:
+    <code>
+    uint32_t timeStamp1;
+    uint32_t timeStamp2;
+    uint32_t timeDiffMs;
+
+    timeStamp1 = SYS_TIME_CounterGet();
+
+    //Other application tasks...
+
+    timeStamp2 = SYS_TIME_CounterGet();
+
+    //Calculate the time difference. Use the appropriate function -
+    //SYS_TIME_CountToMS or SYS_TIME_CountToUS to calculate the time difference.
+
+    timeDiffMs = SYS_TIME_CountToMS((timeStamp2 - timeStamp1));
+    </code>
+
   Remarks:
     The value returned may be stale as soon as it is provided, as the timer is
     live and running at full frequency resolution (as configured and as reported
@@ -705,7 +717,7 @@ uint32_t SYS_TIME_FrequencyGet ( void );
     use a hardware timer instance.
 
     Generally, it is only meaningful to use counter values to measure short time
-    intervals.  For current time and date, use the SYS_TIME_Get function.
+    intervals.
 */
 
 uint32_t SYS_TIME_CounterGet ( void );
@@ -734,6 +746,24 @@ uint32_t SYS_TIME_CounterGet ( void );
   Returns:
     The current "live" value of the common 64-bit system counter.
 
+  Example:
+    <code>
+    uint64_t timeStamp1;
+    uint64_t timeStamp2;
+    uint32_t timeDiffMs;
+
+    timeStamp1 = SYS_TIME_CounterGet();
+
+    //Other application tasks
+
+    timeStamp2 = SYS_TIME_Counter64Get();
+
+    //Calculate the time difference. Use the appropriate function -
+    //SYS_TIME_CountToMS or SYS_TIME_CountToUS to calculate the time difference.
+
+    timeDiffMs = SYS_TIME_CountToMS((timeStamp2 - timeStamp1));
+    </code>
+
   Remarks:
     The value returned may be stale as soon as it is provided, as the timer is
     live and running at full frequency resolution (as configured and as reported
@@ -741,7 +771,7 @@ uint32_t SYS_TIME_CounterGet ( void );
     use a hardware timer instance.
 
     Generally, it is only meaningful to use counter values to measure short time
-    intervals.  For current time and date, use the SYS_TIME_Get function.
+    intervals.
 */
 
 uint64_t SYS_TIME_Counter64Get ( void );
@@ -757,7 +787,7 @@ uint64_t SYS_TIME_Counter64Get ( void );
     Sets the current "live" value of the common 32-bit system counter.
 
     There is a single common counter that is always present in the Time service
-    that provides a consitent time base from which all client-specific timer
+    that provides a consistent time base from which all client-specific timer
     counters provided by the service are implemented.  Setting the common
     counter will adjust all active timers and callbacks, but it may cause some
     small loss of accuracy, so it is best done only once at system startup or
@@ -889,7 +919,7 @@ uint32_t  SYS_TIME_CountToMS ( uint32_t count );
       counter value.
 
    Description:
-      This function coverts a given time interval (measured in microseconds) to
+      This function converts a given time interval (measured in microseconds) to
       an equivalent 32-bit counter value, based on the configured counter
       frequency as reported by SYS_TIME_FrequencyGet.
 
@@ -972,7 +1002,7 @@ uint32_t SYS_TIME_MSToCount ( uint32_t ms );
    Description:
     This function creates/allocates a new instance of a 32-bit software timer.
 
-    A software timer provides a counter that is seperate from other timer
+    A software timer provides a counter that is separate from other timer
     counters and is under control of the caller.  The counter created increments
     at the same frequency as the common system counter (as reported by
     SYS_TIME_FrequencyGet).  The counter can be started and stopped under caller
@@ -1000,7 +1030,7 @@ uint32_t SYS_TIME_MSToCount ( uint32_t ms );
 
                  If the callback pointer is given as NULL, no callback will
                  occur, but SYS_TIME_TimerPeriodHasExpired can still be polled
-                 to determine if the period has expired.
+                 to determine if the period has expired for a single shot timer.
 
     context    - A caller-defined value that's passed (unmodified) back to
                  the client as a parameter of callback function.  It can be
@@ -1022,7 +1052,7 @@ uint32_t SYS_TIME_MSToCount ( uint32_t ms );
     SYS_TIME_HANDLE_INVALID is returned.
 
   Example:
-    Given an implemention of the following function prototype:
+    Given an implementation of the following function prototype:
     <code>
     void MyCallback ( uintptr_t context);
     </code>
@@ -1071,7 +1101,7 @@ SYS_TIME_HANDLE SYS_TIME_TimerCreate ( uint32_t count, uint32_t period,
 
                  If the callback pointer is given as NULL, no callback will
                  occur, but SYS_TIME_TimerPeriodHasExpired can still be polled
-                 to determine if the period has expired.
+                 to determine if the period has expired for a single shot timer.
 
     context    - The new caller-defined value that's passed (unmodified) back to
                  the client as a parameter of callback function.
@@ -1091,7 +1121,7 @@ SYS_TIME_HANDLE SYS_TIME_TimerCreate ( uint32_t count, uint32_t period,
       SYS_TIME_ERROR   - If the call failed (and the timer was not modified).
 
   Example:
-    Given an implemention of the following function prototype:
+    Given an implementation of the following function prototype:
     <code>
     void MyNewCallback ( uintptr_t context);
     </code>
@@ -1187,7 +1217,7 @@ SYS_TIME_RESULT SYS_TIME_TimerDestroy ( SYS_TIME_HANDLE timer );
        software timer's current counter value.
        <code>
        uint32_t count;
-       if (SYS_TIME_SUCCESS != SYS_TIME_TimerCounterSet(timer, &count))
+       if (SYS_TIME_SUCCESS != SYS_TIME_TimerCounterGet(timer, &count))
        {
            // Handle error
        }
@@ -1195,7 +1225,7 @@ SYS_TIME_RESULT SYS_TIME_TimerDestroy ( SYS_TIME_HANDLE timer );
 
   Remarks:
         The counter value may be stale immediately  upon function return,
-        depending upon timer freuqency and system performance.
+        depending upon timer frequency and system performance.
 */
 
 SYS_TIME_RESULT SYS_TIME_TimerCounterGet ( SYS_TIME_HANDLE timer, uint32_t *count );
@@ -1208,7 +1238,7 @@ SYS_TIME_RESULT SYS_TIME_TimerCounterGet ( SYS_TIME_HANDLE timer, uint32_t *coun
         Starts a virtual timer running.
 
    Description:
-        This function starts a previously created virtual timer running (i.e.
+        This function starts a previously created virtual timer (i.e.
         starts the given timer's counter incrementing at the configured
         system timer rate as reported by SYS_TIME_FrequencyGet).
 
@@ -1264,7 +1294,7 @@ SYS_TIME_RESULT SYS_TIME_TimerStart ( SYS_TIME_HANDLE handle );
        SYS_TIME_SUCCESS if the operation succeeds.
 
        SYS_TIME_ERROR if the operation fails (due, for example, to an
-                  to an invalid handle).
+       to an invalid handle).
 
    Example:
        Given a "timer" handle variable who's value was returned from
@@ -1315,19 +1345,20 @@ SYS_TIME_RESULT SYS_TIME_TimerStop ( SYS_TIME_HANDLE timer );
        </code>
 
   Remarks:
-       This function atomically checks and clears the period expiration
-       tracking data.  So, it is safe to call it, even if a callback was
-       registered with the given software timer instance.
+       This function atomically checks the period expiration
+       tracking data.
 
-       1.  If the callback occurs before this function checks the period
-           status, this function will report "false".
+       1.  If the callback occurs before this function checks the period expiration
+           status, this function will report "true" for a single shot timer.
 
-       2.  If the function clears the period status (and thus reports "true",
-           the callback will not occur for that period.
+       2.  If this function is called on a periodic timer, then it reflects the
+           status of the currently ongoing time period.
 
-       3.  If this function is called from within the callback, it may
-           redundantly clear the status for the that period, but there will
-           be no side affects.
+       3.  If this function is called from within the callback, it returns true.
+
+       4.  If this function is called on a single shot timer after the timer has
+           has expired, then this function will return true until the timer object
+           is destroyed.
 */
 
 bool SYS_TIME_TimerPeriodHasExpired ( SYS_TIME_HANDLE timer );

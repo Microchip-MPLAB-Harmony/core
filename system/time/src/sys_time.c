@@ -1,10 +1,64 @@
+/*******************************************************************************
+  Timer System Service Implementation.
+
+  Company:
+    Microchip Technology Inc.
+
+  File Name:
+    sys_time.c
+
+  Summary:
+    Source code for the timer system service implementation.
+
+  Description:
+    This file contains the source code for the timer system service
+    implementation.
+*******************************************************************************/
+
+//DOM-IGNORE-BEGIN
+/*******************************************************************************
+Copyright (c) 2018 released Microchip Technology Inc.  All rights reserved.
+
+Microchip licenses to you the right to use, modify, copy and distribute Software
+only when embedded on a Microchip microcontroller or digital  signal  controller
+that is integrated into your product or third party  product  (pursuant  to  the
+sublicense terms in the accompanying license agreement).
+
+You should refer to the license agreement accompanying this Software for
+additional information regarding your rights and obligations.
+
+SOFTWARE AND DOCUMENTATION ARE PROVIDED AS IS  WITHOUT  WARRANTY  OF  ANY  KIND,
+EITHER EXPRESS  OR  IMPLIED,  INCLUDING  WITHOUT  LIMITATION,  ANY  WARRANTY  OF
+MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A  PARTICULAR  PURPOSE.
+IN NO EVENT SHALL MICROCHIP OR  ITS  LICENSORS  BE  LIABLE  OR  OBLIGATED  UNDER
+CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION,  BREACH  OF  WARRANTY,  OR
+OTHER LEGAL  EQUITABLE  THEORY  ANY  DIRECT  OR  INDIRECT  DAMAGES  OR  EXPENSES
+INCLUDING BUT NOT LIMITED TO ANY  INCIDENTAL,  SPECIAL,  INDIRECT,  PUNITIVE  OR
+CONSEQUENTIAL DAMAGES, LOST  PROFITS  OR  LOST  DATA,  COST  OF  PROCUREMENT  OF
+SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
+(INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
+*******************************************************************************/
+//DOM-IGNORE-END
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Included Files
+// *****************************************************************************
+// *****************************************************************************
+
 #include <string.h>
 #include "system/time/sys_time.h"
 #include "configuration.h"
 #include "sys_time_local.h"
 
-/* Number of CPU clock measured with cache disabled */ 
-#define COMPARE_UPDATE_EXECUTION_CYCLES          (900)  
+// *****************************************************************************
+// *****************************************************************************
+// Section: Global Data
+// *****************************************************************************
+// *****************************************************************************
+
+/* Number of CPU clock measured with cache disabled */
+#define COMPARE_UPDATE_EXECUTION_CYCLES          (900)
 
 static SYS_TIME_COUNTER_OBJ gSystemCounterObj;
 
@@ -46,29 +100,29 @@ static bool SYS_TIME_ResourceLock(void)
         /* Acquire mutex only if not in interrupt context.
          * Additionally, disable the interrupt to prevent it from modifying the
          * shared resources asynchronously */
-        
+
         if(OSAL_MUTEX_Lock(&gSystemCounterObj.timerMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
-        {            
+        {
             SYS_INT_SourceDisable(gSystemCounterObj.hwTimerIntNum);
             return true;
         }
         else
-        {            
+        {
             /* If everything is good, this part of code is not executed in an
              * RTOS environment */
             return false;
-        }        
+        }
     }
     /* There should not be a situation where it is not safe to update the shared
      * resources from the interrupt context. This is because, the interrupt is
-     * disabled by the thread after acquiring the mutex and enabled only after 
+     * disabled by the thread after acquiring the mutex and enabled only after
      * the update to the shared resource is complete. */
     return true;
 }
 
 static void SYS_TIME_ResourceUnlock(void)
 {
-    SYS_INT_SourceEnable(gSystemCounterObj.hwTimerIntNum);    
+    SYS_INT_SourceEnable(gSystemCounterObj.hwTimerIntNum);
 
     if(gSystemCounterObj.interruptNestingCount == 0)
     {
@@ -76,13 +130,13 @@ static void SYS_TIME_ResourceUnlock(void)
          * never be released if in interrupt context.
          */
         OSAL_MUTEX_Unlock(&gSystemCounterObj.timerMutex);
-    }    
+    }
 }
 
 static SYS_TIME_TIMER_OBJ* SYS_TIME_GetTimerObject(SYS_TIME_HANDLE handle)
 {
     SYS_TIME_TIMER_OBJ* timerObj = (SYS_TIME_TIMER_OBJ*)NULL;
-    
+
     if ((handle != SYS_TIME_HANDLE_INVALID) && (handle != 0))
     {
         /* Make sure the index is within the bounds */
@@ -91,19 +145,19 @@ static SYS_TIME_TIMER_OBJ* SYS_TIME_GetTimerObject(SYS_TIME_HANDLE handle)
             /* The timer index is the contained in the lower 16 bits of the buffer
              * handle */
             timerObj = &timers[handle & _SYS_TIME_INDEX_MASK];
-            
+
             /* Make sure the timer handle is still active */
             if ((timerObj->tmrHandle == handle) && (timerObj->inUse == true))
             {
                 return timerObj;
-            }            
-        }        
+            }
+        }
     }
-    return NULL;    
+    return NULL;
 }
 
 static void SYS_TIME_HwTimerCompareUpdate(void)
-{    
+{
     uint64_t nextHwCounterValue = 0;
     uint64_t currHwCounterValue;
     SYS_TIME_COUNTER_OBJ* counterObj = (SYS_TIME_COUNTER_OBJ* )&gSystemCounterObj;
@@ -125,7 +179,7 @@ static void SYS_TIME_HwTimerCompareUpdate(void)
     else
     {
         nextHwCounterValue = counterObj->hwTimerCurrentValue + SYS_TIME_HW_COUNTER_HALF_PERIOD;
-    }       
+    }
 
     currHwCounterValue = counterObj->timePlib->timerCounterGet();
 
@@ -151,9 +205,9 @@ static void SYS_TIME_HwTimerCompareUpdate(void)
         counterObj->hwTimerCompareValue = 1;
     }
 
-    counterObj->timePlib->timerCompareSet(counterObj->hwTimerCompareValue);          
+    counterObj->timePlib->timerCompareSet(counterObj->hwTimerCompareValue);
 }
-    
+
 static uint32_t SYS_TIME_Counter32Update(uint32_t elapsedCount, uint8_t* isSwCounter32Oveflow)
 {
     SYS_TIME_COUNTER_OBJ* counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
@@ -244,7 +298,7 @@ static bool SYS_TIME_AddToList(SYS_TIME_TIMER_OBJ* newTimer)
     {
         return isHeadTimerUpdated;
     }
-    
+
     newTimerTime = newTimer->relativeTimePending;
 
     if (tmr == NULL)
@@ -309,7 +363,7 @@ static uint32_t SYS_TIME_GetElapsedCount(uint32_t hwTimerCurrentValue)
     {
         elapsedCount = (SYS_TIME_HW_COUNTER_PERIOD - counterObj->hwTimerPreviousValue) + hwTimerCurrentValue + 1;
     }
-    
+
     return elapsedCount;
 
 }
@@ -321,7 +375,7 @@ static uint32_t SYS_TIME_GetTotalElapsedCount(SYS_TIME_TIMER_OBJ* tmr)
     uint32_t pendingCount = 0;
     uint32_t elapsedCount = 0;
     uint32_t hwTimerCurrentValue;
-    
+
     /* Add time from all timers in front */
     while ((tmrActive != NULL) && (tmrActive != tmr))
     {
@@ -331,8 +385,8 @@ static uint32_t SYS_TIME_GetTotalElapsedCount(SYS_TIME_TIMER_OBJ* tmr)
     /* Add the pending time of the requested timer */
     pendingCount += tmrActive->relativeTimePending;
     hwTimerCurrentValue = counterObj->timePlib->timerCounterGet();
-    elapsedCount = SYS_TIME_GetElapsedCount(hwTimerCurrentValue); 
-    
+    elapsedCount = SYS_TIME_GetElapsedCount(hwTimerCurrentValue);
+
     if (pendingCount >= elapsedCount)
     {
         pendingCount -= elapsedCount;
@@ -341,7 +395,7 @@ static uint32_t SYS_TIME_GetTotalElapsedCount(SYS_TIME_TIMER_OBJ* tmr)
     {
         pendingCount = 0;
     }
-    
+
     if (tmrActive->requestedTime >= pendingCount)
     {
         elapsedCount = tmrActive->requestedTime - pendingCount;
@@ -350,7 +404,7 @@ static uint32_t SYS_TIME_GetTotalElapsedCount(SYS_TIME_TIMER_OBJ* tmr)
     {
         elapsedCount = 0;
     }
-    
+
     return elapsedCount;
 }
 
@@ -407,14 +461,14 @@ static void SYS_TIME_TimerAdd(SYS_TIME_TIMER_OBJ* newTimer)
 
 static void SYS_TIME_ClientNotify(void)
 {
-    SYS_TIME_COUNTER_OBJ * counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
+    SYS_TIME_COUNTER_OBJ* counterObj = (SYS_TIME_COUNTER_OBJ* )&gSystemCounterObj;
     SYS_TIME_TIMER_OBJ* tmrActive = counterObj->tmrActive;
-    
+
     while (tmrActive != NULL)
     {
         if(tmrActive->relativeTimePending == 0)
         {
-            tmrActive->tmrElapsed = true;            
+            tmrActive->tmrElapsed = true;
             if(tmrActive->callback != NULL)
             {
                 tmrActive->callback(tmrActive->context);
@@ -422,21 +476,21 @@ static void SYS_TIME_ClientNotify(void)
             SYS_TIME_RemoveFromList(tmrActive);
             /* Reload the relative pending time with the requested time */
             tmrActive->relativeTimePending = tmrActive->requestedTime;
-            tmrActive = counterObj->tmrActive;            
+            tmrActive = counterObj->tmrActive;
         }
         else
         {
             break;
         }
-    }    
+    }
 }
 
 static void SYS_TIME_UpdateTime(uint32_t elapsedCounts)
-{    
+{
     SYS_TIME_UpdateTimerList(elapsedCounts);
-    
+
     SYS_TIME_ClientNotify();
-           
+
     /* Add the removed timers back into the linked list if the timer type is periodic. */
     for (uint8_t i = 0; i < SYS_TIME_MAX_TIMERS; i++)
     {
@@ -456,12 +510,12 @@ static void SYS_TIME_UpdateTime(uint32_t elapsedCounts)
 }
 
 static void SYS_TIME_PLIBCallback(uintptr_t context)
-{    
-    SYS_TIME_COUNTER_OBJ * counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
+{
+    SYS_TIME_COUNTER_OBJ* counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
     SYS_TIME_TIMER_OBJ* tmrActive = counterObj->tmrActive;
     uint32_t elapsedCount = 0;
-    bool interruptState;                
-                    
+    bool interruptState;
+
     counterObj->hwTimerCurrentValue = counterObj->timePlib->timerCounterGet();
 
     elapsedCount = SYS_TIME_GetElapsedCount(counterObj->hwTimerCurrentValue)                  ;
@@ -469,29 +523,29 @@ static void SYS_TIME_PLIBCallback(uintptr_t context)
     if (tmrActive != NULL)
     {
         counterObj->interruptNestingCount++;
-        
-        SYS_TIME_UpdateTime(elapsedCount);  
-        
+
+        SYS_TIME_UpdateTime(elapsedCount);
+
         counterObj->interruptNestingCount--;
     }
     SYS_TIME_Counter64Update(elapsedCount);
-    
+
     interruptState = SYS_INT_Disable();
     SYS_TIME_HwTimerCompareUpdate();
-    SYS_INT_Restore(interruptState);   
+    SYS_INT_Restore(interruptState);
 }
 
-static void SYS_TIME_CounterInit(SYS_MODULE_INIT * init)
+static void SYS_TIME_CounterInit(SYS_MODULE_INIT* init)
 {
-    SYS_TIME_COUNTER_OBJ * counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
-    SYS_TIME_INIT * initData = (SYS_TIME_INIT *)init;
+    SYS_TIME_COUNTER_OBJ* counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
+    SYS_TIME_INIT* initData = (SYS_TIME_INIT *)init;
     int32_t cpuCyclesPerTimerClock;
-        
+
     counterObj->timePlib = initData->timePlib;
     counterObj->hwTimerFrequency = counterObj->timePlib->timerFrequencyGet();
 
     cpuCyclesPerTimerClock=(SYS_TIME_CPU_CLOCK_FREQUENCY/counterObj->hwTimerFrequency);
-    counterObj->hwTimerCompareMargin=(COMPARE_UPDATE_EXECUTION_CYCLES/cpuCyclesPerTimerClock) +2;        
+    counterObj->hwTimerCompareMargin=(COMPARE_UPDATE_EXECUTION_CYCLES/cpuCyclesPerTimerClock) +2;
 
     counterObj->hwTimerIntNum = initData->hwTimerIntNum;
     counterObj->hwTimerPreviousValue = 0;
@@ -658,10 +712,10 @@ uint32_t SYS_TIME_MSToCount ( uint32_t ms )
 // *****************************************************************************
 // *****************************************************************************
 SYS_TIME_HANDLE SYS_TIME_TimerCreate(
-    uint32_t count, 
-    uint32_t period, 
-    SYS_TIME_CALLBACK callBack, 
-    uintptr_t context, 
+    uint32_t count,
+    uint32_t period,
+    SYS_TIME_CALLBACK callBack,
+    uintptr_t context,
     SYS_TIME_CALLBACK_TYPE type
 )
 {
@@ -707,17 +761,17 @@ SYS_TIME_HANDLE SYS_TIME_TimerCreate(
 }
 
 SYS_TIME_RESULT SYS_TIME_TimerReload(
-    SYS_TIME_HANDLE handle, 
-    uint32_t count, 
-    uint32_t period, 
-    SYS_TIME_CALLBACK callBack, 
-    uintptr_t context, 
+    SYS_TIME_HANDLE handle,
+    uint32_t count,
+    uint32_t period,
+    SYS_TIME_CALLBACK callBack,
+    uintptr_t context,
     SYS_TIME_CALLBACK_TYPE type
 )
 {
     SYS_TIME_TIMER_OBJ *tmr = NULL;
     SYS_TIME_RESULT result = SYS_TIME_ERROR;
-    
+
     if (SYS_TIME_ResourceLock() == false)
     {
         return result;
@@ -726,15 +780,15 @@ SYS_TIME_RESULT SYS_TIME_TimerReload(
     tmr = SYS_TIME_GetTimerObject(handle);
 
     if((tmr != NULL) && (period > 0) && (period >= count))
-    {        
+    {
         /* Temporarily remove the timer from the list. Update and then add it back */
-        SYS_TIME_RemoveFromList(tmr);                
+        SYS_TIME_RemoveFromList(tmr);
         tmr->tmrElapsed = false;
         tmr->type = type;
         tmr->requestedTime = period;
-        tmr->relativeTimePending = period - count;          
+        tmr->relativeTimePending = period - count;
         tmr->callback = callBack;
-        tmr->context = context;        
+        tmr->context = context;
         if (gSystemCounterObj.interruptNestingCount == 0)
         {
             SYS_TIME_TimerAdd(tmr);
@@ -743,10 +797,10 @@ SYS_TIME_RESULT SYS_TIME_TimerReload(
         {
             SYS_TIME_AddToList(tmr);
         }
-        tmr->active = true;                
+        tmr->active = true;
         result = SYS_TIME_SUCCESS;
     }
-    
+
     SYS_TIME_ResourceUnlock();
     return result;
 }
@@ -755,7 +809,7 @@ SYS_TIME_RESULT SYS_TIME_TimerDestroy(SYS_TIME_HANDLE handle)
 {
     SYS_TIME_TIMER_OBJ *tmr = NULL;
     SYS_TIME_RESULT result = SYS_TIME_ERROR;
-    
+
     if (SYS_TIME_ResourceLock() == false)
     {
         return result;
@@ -764,18 +818,18 @@ SYS_TIME_RESULT SYS_TIME_TimerDestroy(SYS_TIME_HANDLE handle)
     tmr = SYS_TIME_GetTimerObject(handle);
 
     if(tmr != NULL)
-    {        
+    {
         if(tmr->active == true)
         {
             SYS_TIME_RemoveFromList(tmr);
             tmr->active = false;
         }
         tmr->tmrElapsed = false;
-        tmr->inUse = false;        
+        tmr->inUse = false;
         result = SYS_TIME_SUCCESS;
     }
 
-    SYS_TIME_ResourceUnlock();    
+    SYS_TIME_ResourceUnlock();
     return result;
 }
 
@@ -783,7 +837,7 @@ SYS_TIME_RESULT SYS_TIME_TimerStart(SYS_TIME_HANDLE handle)
 {
     SYS_TIME_TIMER_OBJ *tmr = NULL;
     SYS_TIME_RESULT result = SYS_TIME_ERROR;
-    
+
     if (SYS_TIME_ResourceLock() == false)
     {
         return result;
@@ -791,20 +845,23 @@ SYS_TIME_RESULT SYS_TIME_TimerStart(SYS_TIME_HANDLE handle)
 
     tmr = SYS_TIME_GetTimerObject(handle);
 
-    if((tmr != NULL) && (tmr->active == false))
-    {        
-        if (gSystemCounterObj.interruptNestingCount == 0)
+    if(tmr != NULL)
+    {
+        if (tmr->active == false)
         {
-            SYS_TIME_TimerAdd(tmr);
+            if (gSystemCounterObj.interruptNestingCount == 0)
+            {
+                SYS_TIME_TimerAdd(tmr);
+            }
+            else
+            {
+                SYS_TIME_AddToList(tmr);
+            }
+            tmr->active = true;
         }
-        else
-        {
-            SYS_TIME_AddToList(tmr);
-        }
-        tmr->active = true;        
         result = SYS_TIME_SUCCESS;
     }
-    
+
     SYS_TIME_ResourceUnlock();
     return result;
 }
@@ -813,7 +870,7 @@ SYS_TIME_RESULT SYS_TIME_TimerStop(SYS_TIME_HANDLE handle)
 {
     SYS_TIME_TIMER_OBJ *tmr = NULL;
     SYS_TIME_RESULT result = SYS_TIME_ERROR;
-    
+
     if (SYS_TIME_ResourceLock() == false)
     {
         return result;
@@ -821,12 +878,15 @@ SYS_TIME_RESULT SYS_TIME_TimerStop(SYS_TIME_HANDLE handle)
 
     tmr = SYS_TIME_GetTimerObject(handle);
 
-    if((tmr != NULL) && (tmr->active == true))
-    {        
-        SYS_TIME_RemoveFromList(tmr);
-        tmr->active = false;
-        /* Make sure the timer is started fresh, when next time the timer start API is called */
-        tmr->relativeTimePending = tmr->requestedTime;        
+    if(tmr != NULL)
+    {
+        if (tmr->active == true)
+        {
+            SYS_TIME_RemoveFromList(tmr);
+            tmr->active = false;
+            /* Make sure the timer is started fresh, when next time the timer start API is called */
+            tmr->relativeTimePending = tmr->requestedTime;
+        }
         result = SYS_TIME_SUCCESS;
     }
 
@@ -834,29 +894,29 @@ SYS_TIME_RESULT SYS_TIME_TimerStop(SYS_TIME_HANDLE handle)
     return result;
 }
 
-SYS_TIME_RESULT SYS_TIME_TimerCounterGet(SYS_TIME_HANDLE handle, uint32_t *count)
-{    
+SYS_TIME_RESULT SYS_TIME_TimerCounterGet(SYS_TIME_HANDLE handle, uint32_t* count)
+{
     SYS_TIME_TIMER_OBJ *tmr = NULL;
     SYS_TIME_RESULT result = SYS_TIME_ERROR;
-    uint32_t elapsedCount;    
-    
+    uint32_t elapsedCount;
+
     if (SYS_TIME_ResourceLock() == false)
     {
         return result;
     }
-    
+
     if (count != NULL)
     {
         tmr = SYS_TIME_GetTimerObject(handle);
         if((tmr != NULL) && (tmr->active == true))
-        {            
-            elapsedCount = SYS_TIME_GetTotalElapsedCount(tmr);            
+        {
+            elapsedCount = SYS_TIME_GetTotalElapsedCount(tmr);
             *count = elapsedCount;
             result = SYS_TIME_SUCCESS;
         }
     }
-    
-    SYS_TIME_ResourceUnlock();            
+
+    SYS_TIME_ResourceUnlock();
     return result;
 }
 
@@ -864,7 +924,7 @@ bool SYS_TIME_TimerPeriodHasExpired(SYS_TIME_HANDLE handle)
 {
     SYS_TIME_TIMER_OBJ *tmr = NULL;
     bool status = false;
-    
+
     if (SYS_TIME_ResourceLock() == false)
     {
         return status;
@@ -876,8 +936,8 @@ bool SYS_TIME_TimerPeriodHasExpired(SYS_TIME_HANDLE handle)
     {
         status = tmr->tmrElapsed;
     }
-    
-    SYS_TIME_ResourceUnlock();            
+
+    SYS_TIME_ResourceUnlock();
     return status;
 }
 
@@ -887,7 +947,7 @@ bool SYS_TIME_TimerPeriodHasExpired(SYS_TIME_HANDLE handle)
 // Section:  SYS TIME Delay Interface Functions
 // *****************************************************************************
 // *****************************************************************************
-SYS_TIME_RESULT SYS_TIME_DelayUS ( int us, SYS_TIME_HANDLE* handle )
+SYS_TIME_RESULT SYS_TIME_DelayUS ( uint32_t us, SYS_TIME_HANDLE* handle )
 {
     SYS_TIME_RESULT result = SYS_TIME_ERROR;
 
@@ -906,7 +966,7 @@ SYS_TIME_RESULT SYS_TIME_DelayUS ( int us, SYS_TIME_HANDLE* handle )
     return result;
 }
 
-SYS_TIME_RESULT SYS_TIME_DelayMS ( int ms, SYS_TIME_HANDLE* handle )
+SYS_TIME_RESULT SYS_TIME_DelayMS ( uint32_t ms, SYS_TIME_HANDLE* handle )
 {
     SYS_TIME_RESULT result = SYS_TIME_ERROR;
 
@@ -944,7 +1004,7 @@ bool SYS_TIME_DelayIsComplete ( SYS_TIME_HANDLE handle )
 // Section:  SYS TIME Callback Interface Functions
 // *****************************************************************************
 // *****************************************************************************
-SYS_TIME_HANDLE SYS_TIME_CallbackRegisterUS ( SYS_TIME_CALLBACK callback, uintptr_t context, int us, SYS_TIME_CALLBACK_TYPE type )
+SYS_TIME_HANDLE SYS_TIME_CallbackRegisterUS ( SYS_TIME_CALLBACK callback, uintptr_t context, uint32_t us, SYS_TIME_CALLBACK_TYPE type )
 {
     SYS_TIME_HANDLE handle = SYS_TIME_HANDLE_INVALID;
 
@@ -960,7 +1020,7 @@ SYS_TIME_HANDLE SYS_TIME_CallbackRegisterUS ( SYS_TIME_CALLBACK callback, uintpt
     return handle;
 }
 
-SYS_TIME_HANDLE SYS_TIME_CallbackRegisterMS ( SYS_TIME_CALLBACK callback, uintptr_t context, int ms, SYS_TIME_CALLBACK_TYPE type )
+SYS_TIME_HANDLE SYS_TIME_CallbackRegisterMS ( SYS_TIME_CALLBACK callback, uintptr_t context, uint32_t ms, SYS_TIME_CALLBACK_TYPE type )
 {
     SYS_TIME_HANDLE handle = SYS_TIME_HANDLE_INVALID;
 
