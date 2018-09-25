@@ -379,7 +379,7 @@ typedef struct _DRV_SDHC_OBJ_STRUCT
     uint16_t trials;
 
     /* Status of the device */
-    SYS_FS_MEDIA_STATUS mediaState;
+    SYS_MEDIA_STATUS mediaState;
 
     /* System Timer Handle */
     SYS_TIME_HANDLE tmrHandle;

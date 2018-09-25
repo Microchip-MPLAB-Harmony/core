@@ -22,7 +22,17 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
 *******************************************************************************/
 -->
-    DRV_SDHC_Tasks(sysObj.drvSDHC);
+<#if HarmonyCore.SELECT_RTOS == "BareMetal">
+    <#lt>DRV_SDHC_Tasks(sysObj.drvSDHC);
+<#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
+    <#lt>    xTaskCreate( _DRV_SDHC_Tasks,
+    <#lt>        "DRV_SDHC_Tasks",
+    <#lt>        DRV_SDHC_STACK_SIZE,
+    <#lt>        (void*)NULL,
+    <#lt>        DRV_SDHC_PRIORITY,
+    <#lt>        (TaskHandle_t*)NULL
+    <#lt>    );
+</#if>
 
 <#--
 /*******************************************************************************

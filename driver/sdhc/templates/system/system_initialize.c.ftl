@@ -39,9 +39,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
 *******************************************************************************/
  -->
-<#if USE_DRV_SDHC == true>
-    sysObj.drvSDHC = DRV_SDHC_Initialize(DRV_SDHC_INDEX_0,(SYS_MODULE_INIT *)&drvSDHCInit);
-</#if>
+
+sysObj.drvSDHC = DRV_SDHC_Initialize(DRV_SDHC_INDEX_0,(SYS_MODULE_INIT *)&drvSDHCInit);
+
 <#--
 /*******************************************************************************
  End of File

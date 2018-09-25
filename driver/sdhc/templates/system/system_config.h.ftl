@@ -40,17 +40,17 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 -->
 
 
-<#if USE_DRV_SDHC == true>
 /*** SDHC Driver Configuration ***/
 <#-- Driver Instances -->
-#define DRV_SDHC_INSTANCES_NUMBER ${__INSTANCE_COUNT}
 #define DRV_SDHC_CLIENTS_NUMBER ${DRV_SDHC_CLIENTS_NUMBER}
 #define DRV_SDHC_BUFFER_OBJ_NUMBER ${DRV_SDHC_BUFFER_OBJECT_NUMBER}
 #define DRV_SDHC_CARD_DETECT_ENABLE  ${DRV_SDHC_SDCDEN?c}
 #define	DRV_SDHC_WRITE_PROTECT_ENABLE  ${DRV_SDHC_SDWPEN?c}
-<#if DRV_SDHC_SYS_FS_REGISTER == true>
-#define DRV_SDHC_SYS_FS_REGISTER
-</#if>
+
+<#if HarmonyCore.SELECT_RTOS != "BareMetal">
+    <#lt>/* SDHC Driver Instance RTOS Configurations*/
+    <#lt>#define DRV_SDHC_STACK_SIZE           ${DRV_SDHC_RTOS_STACK_SIZE}
+    <#lt>#define DRV_SDHC_PRIORITY             ${DRV_SDHC_RTOS_TASK_PRIORITY}
 </#if>
 
 <#--

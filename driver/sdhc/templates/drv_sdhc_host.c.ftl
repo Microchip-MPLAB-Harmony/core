@@ -49,23 +49,24 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
+#include "configuration.h"
 #include "driver/sdhc/src/drv_sdhc_host.h"
 
-	/*NOTE:-Buffers need to be 32-byte address and size aligned
-	for cache management operations. 
-	*/
-	
- uint8_t __attribute__((aligned(32))) gSDHOSTScrReg[32] = {0};
- uint8_t gSDHOSTCidReg[SDHOST_CID_REG_LEN] = {0};
- uint8_t gSDHOSTCsdReg[SDHOST_CSD_REG_LEN] = {0};
- uint8_t gSDHOSTOcrReg[SDHOST_OCR_REG_LEN] = {0};
- uint8_t __attribute__((aligned(32))) gSDHOSTSwitchStatusReg[SDHOST_SWITCH_STATUS_REG_LEN] = {0};
- uint16_t hsmci_block_size = 0;
+/*NOTE:-Buffers need to be 32-byte address and size aligned
+        for cache management operations. 
+*/
 
- SDHOST_CARD_CTXT gSDHOSTCardCtxt;
+uint8_t __attribute__((aligned(32))) gSDHOSTScrReg[32] = {0};
+uint8_t gSDHOSTCidReg[SDHOST_CID_REG_LEN] = {0};
+uint8_t gSDHOSTCsdReg[SDHOST_CSD_REG_LEN] = {0};
+uint8_t gSDHOSTOcrReg[SDHOST_OCR_REG_LEN] = {0};
+uint8_t __attribute__((aligned(32))) gSDHOSTSwitchStatusReg[SDHOST_SWITCH_STATUS_REG_LEN] = {0};
+uint16_t hsmci_block_size = 0;
 
- #define CHANNEL					${SDHC_DMA}
- 
+SDHOST_CARD_CTXT gSDHOSTCardCtxt;
+
+#define CHANNEL            ${SDHC_DMA}
+
 static void sdhostInitVariables ( SDHOST_CARD_CTXT* cardCtxt )
 {
     cardCtxt->isAttached = false;
@@ -199,7 +200,10 @@ void sdhostSetupDma ( uint8_t *buffer, uint16_t numBytes, DRV_SDHC_OPERATION_TYP
                             | XDMAC_CC_SAM_FIXED_AM
                             | XDMAC_CC_DAM_INCREMENTED_AM
                             | XDMAC_CC_PERID(CHANNEL);
-        SCB_InvalidateDCache_by_Addr((uint32_t*)buffer, (int32_t)numBytes);
+        if (DATA_CACHE_ENABLED == true)
+        {
+            DCACHE_INVALIDATE_BY_ADDR((uint32_t*)buffer, (int32_t)numBytes);
+        }
         XDMAC_REGS->XDMAC_GE = (XDMAC_GE_EN0_Msk << CHANNEL);
     }
     else
@@ -208,16 +212,20 @@ void sdhostSetupDma ( uint8_t *buffer, uint16_t numBytes, DRV_SDHC_OPERATION_TYP
         XDMAC_REGS->XDMAC_CHID[CHANNEL].XDMAC_CDA = (uint32_t)&(HSMCI_REGS->HSMCI_FIFO[0]);
         XDMAC_REGS->XDMAC_CHID[CHANNEL].XDMAC_CUBC = XDMAC_CUBC_UBLEN((numBytes)/4);
         XDMAC_REGS->XDMAC_CHID[CHANNEL].XDMAC_CC = XDMAC_CC_TYPE_PER_TRAN
-						| XDMAC_CC_MBSIZE_SINGLE
-						| XDMAC_CC_DSYNC_MEM2PER
-						| XDMAC_CC_CSIZE_CHK_1
-						| XDMAC_CC_DWIDTH_WORD
-						| XDMAC_CC_SIF_AHB_IF0
-						| XDMAC_CC_DIF_AHB_IF1
-						| XDMAC_CC_SAM_INCREMENTED_AM
-						| XDMAC_CC_DAM_FIXED_AM
-						| XDMAC_CC_PERID(CHANNEL);
-        SCB_CleanDCache_by_Addr((uint32_t*)buffer, (int32_t)numBytes);
+                        | XDMAC_CC_MBSIZE_SINGLE
+                        | XDMAC_CC_DSYNC_MEM2PER
+                        | XDMAC_CC_CSIZE_CHK_1
+                        | XDMAC_CC_DWIDTH_WORD
+                        | XDMAC_CC_SIF_AHB_IF0
+                        | XDMAC_CC_DIF_AHB_IF1
+                        | XDMAC_CC_SAM_INCREMENTED_AM
+                        | XDMAC_CC_DAM_FIXED_AM
+                        | XDMAC_CC_PERID(CHANNEL);
+        if (DATA_CACHE_ENABLED == true)
+        {
+            DCACHE_CLEAN_BY_ADDR((uint32_t*)buffer, (int32_t)numBytes);
+        }
+
         XDMAC_REGS->XDMAC_GE = (XDMAC_GE_EN0_Msk << CHANNEL);
    }
 }

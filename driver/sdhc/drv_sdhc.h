@@ -57,7 +57,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system/system.h"
 #include "driver/driver_common.h"
 #include "system/int/sys_int.h"
-#include "system/fs/sys_fs_media_manager.h"
+#include "system/system_media.h"
 
 // *****************************************************************************
 /* SDHC Driver command handle.
@@ -81,7 +81,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
   Remarks:
     None.
 */
-typedef SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE DRV_SDHC_COMMAND_HANDLE;
+typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE DRV_SDHC_COMMAND_HANDLE;
 
 
 // *****************************************************************************
@@ -99,7 +99,7 @@ typedef SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE DRV_SDHC_COMMAND_HANDLE;
     None.
 */
 
-#define DRV_SDHC_COMMAND_HANDLE_INVALID SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID
+#define DRV_SDHC_COMMAND_HANDLE_INVALID SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID
 
 // *****************************************************************************
 /* SDHC Driver Events
@@ -120,10 +120,10 @@ typedef SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE DRV_SDHC_COMMAND_HANDLE;
 typedef enum
 {
     /* Operation has been completed successfully. */
-    DRV_SDHC_EVENT_COMMAND_COMPLETE = SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE,
+    DRV_SDHC_EVENT_COMMAND_COMPLETE = SYS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE,
 
     /* There was an error during the operation */
-    DRV_SDHC_EVENT_COMMAND_ERROR = SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_ERROR
+    DRV_SDHC_EVENT_COMMAND_ERROR = SYS_MEDIA_EVENT_BLOCK_COMMAND_ERROR
 
 } DRV_SDHC_EVENT;
 
@@ -146,16 +146,16 @@ typedef enum
 typedef enum
 {
     /*Done OK and ready */
-    DRV_SDHC_COMMAND_COMPLETED          = SYS_FS_MEDIA_COMMAND_COMPLETED,
+    DRV_SDHC_COMMAND_COMPLETED          = SYS_MEDIA_COMMAND_COMPLETED,
 
     /*Scheduled but not started */
-    DRV_SDHC_COMMAND_QUEUED             = SYS_FS_MEDIA_COMMAND_QUEUED,
+    DRV_SDHC_COMMAND_QUEUED             = SYS_MEDIA_COMMAND_QUEUED,
 
     /*Currently being in transfer */
-    DRV_SDHC_COMMAND_IN_PROGRESS        = SYS_FS_MEDIA_COMMAND_IN_PROGRESS,
+    DRV_SDHC_COMMAND_IN_PROGRESS        = SYS_MEDIA_COMMAND_IN_PROGRESS,
 
     /*Unknown Command */
-    DRV_SDHC_COMMAND_ERROR_UNKNOWN      = SYS_FS_MEDIA_COMMAND_UNKNOWN,
+    DRV_SDHC_COMMAND_ERROR_UNKNOWN      = SYS_MEDIA_COMMAND_UNKNOWN,
 
 } DRV_SDHC_COMMAND_STATUS;
 
@@ -279,7 +279,7 @@ typedef struct _DRV_SDHC_INIT
 
     DRV_SDHC_BUS_WIDTH busWidth;
 
-    bool registerWithFs;
+    bool isFsEnabled;
 
 } DRV_SDHC_INIT;
 
@@ -353,7 +353,7 @@ typedef struct _DRV_SDHC_INIT
     the client's data) instance of the client that made the read/write/erase
     request.
 */
-typedef SYS_FS_MEDIA_EVENT_HANDLER DRV_SDHC_EVENT_HANDLER;
+typedef SYS_MEDIA_EVENT_HANDLER DRV_SDHC_EVENT_HANDLER;
 
 
 // *****************************************************************************
@@ -1139,7 +1139,7 @@ DRV_SDHC_COMMAND_STATUS DRV_SDHC_CommandStatus
 
 // *****************************************************************************
 /* Function:
-    SYS_FS_MEDIA_GEOMETRY * DRV_SDHC_GeometryGet
+    SYS_MEDIA_GEOMETRY * DRV_SDHC_GeometryGet
     (
         const DRV_HANDLE handle
     );
@@ -1165,12 +1165,12 @@ DRV_SDHC_COMMAND_STATUS DRV_SDHC_CommandStatus
                    open function
 
   Returns:
-    SYS_FS_MEDIA_GEOMETRY - Pointer to structure which holds the media geometry information.
+    SYS_MEDIA_GEOMETRY - Pointer to structure which holds the media geometry information.
 
   Example:
     <code>
 
-    SYS_FS_MEDIA_GEOMETRY * SDHCGeometry;
+    SYS_MEDIA_GEOMETRY * SDHCGeometry;
     uint32_t readBlockSize, writeBlockSize, eraseBlockSize;
     uint32_t nReadBlocks, nReadRegions, totalSize;
 
@@ -1191,7 +1191,7 @@ DRV_SDHC_COMMAND_STATUS DRV_SDHC_CommandStatus
     None.
 */
 
-SYS_FS_MEDIA_GEOMETRY * DRV_SDHC_GeometryGet
+SYS_MEDIA_GEOMETRY * DRV_SDHC_GeometryGet
 (
     const DRV_HANDLE handle
 );

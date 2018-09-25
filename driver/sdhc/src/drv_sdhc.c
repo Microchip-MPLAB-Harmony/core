@@ -53,7 +53,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "driver/sdhc/drv_sdhc.h"
 #include "driver/sdhc/src/drv_sdhc_local.h"
 #include "driver/sdhc/src/drv_sdhc_host.h"
-#include "system/fs/sys_fs_media_manager.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -75,57 +74,15 @@ uint16_t gDrvSDHCBufferToken = 0;
 /*************************************
  * SDHC driver geometry object
  ************************************/
-SYS_FS_MEDIA_GEOMETRY gDrvSDHCMediaGeometry;
+SYS_MEDIA_GEOMETRY gDrvSDHCMediaGeometry;
 
 /*****************************************
  * Media Geomtery Table.
  ****************************************/
-SYS_FS_MEDIA_REGION_GEOMETRY gDrvSDHCGeometryTable[3];
+SYS_MEDIA_REGION_GEOMETRY gDrvSDHCGeometryTable[3];
 
 DRV_SDHC_BUFFER_OBJ gDrvSDHCBufferObj[DRV_SDHC_BUFFER_OBJ_NUMBER];
 
-// *****************************************************************************
-/* SD card media functions.
-
-  Summary:
-    These functions are used by the 'media manager' to access the SD card.
-
-  Description:
-	These functions are used by the 'media manager' to access the SD card. The
-	call will be by using a function pointer. So SD card driver must attach these
-	functions to the media manager on initialize.
-
-  Remarks:
-    None.
-*/
-
-// *****************************************************************************
-/* SD card media functions.
-
-  Summary:
-    These functions are used by the 'media manager' to access the SD card.
-
-  Description:
-	These functions are used by the 'media manager' to access the SD card. The
-	call will be by using a function pointer. So SD card driver must attach these
-	functions to the media manager on initialize.
-
-  Remarks:
-    None.
-*/
-
-const SYS_FS_MEDIA_FUNCTIONS sdhcMediaFunctions =
-{
-    .mediaStatusGet     = DRV_SDHC_IsAttached,
-    .mediaGeometryGet   = DRV_SDHC_GeometryGet,
-    .sectorRead         = DRV_SDHC_Read,
-    .sectorWrite        = DRV_SDHC_Write,
-    .eventHandlerset    = DRV_SDHC_EventHandlerSet,
-    .commandStatusGet   = (void *)DRV_SDHC_CommandStatus,
-    .open               = DRV_SDHC_Open,
-    .close              = DRV_SDHC_Close,
-    .tasks              = DRV_SDHC_Tasks
-};
 // *****************************************************************************
 /* Driver Hardware instance objects.
 
@@ -218,7 +175,7 @@ static void DRV_SDHC_UpdateGeometry
     gDrvSDHCMediaGeometry.numReadRegions = 1,
     gDrvSDHCMediaGeometry.numWriteRegions = 1,
     gDrvSDHCMediaGeometry.numEraseRegions = 1,
-    gDrvSDHCMediaGeometry.geometryTable = (SYS_FS_MEDIA_REGION_GEOMETRY *)&gDrvSDHCGeometryTable;
+    gDrvSDHCMediaGeometry.geometryTable = (SYS_MEDIA_REGION_GEOMETRY *)&gDrvSDHCGeometryTable;
 }
 
 /* This function finds a free buffer object and populates it with the transfer
@@ -1146,6 +1103,13 @@ static void DRV_SDHC_MediaInitialize
 // *****************************************************************************
 // *****************************************************************************
 
+void __attribute ((weak)) DRV_SDHC_RegisterWithSysFs(
+    const SYS_MODULE_INDEX drvIndex
+)
+{
+
+}
+
 // *****************************************************************************
 /* Function:
     SYS_MODULE_OBJ DRV_SDHC_Initialize 
@@ -1273,9 +1237,9 @@ SYS_MODULE_OBJ DRV_SDHC_Initialize
     dObj->cardDetectEnable = sdhcInit->sdCardDetectEnable;
     dObj->writeProtectEnable = sdhcInit->sdWriteProtectEnable;
 
-    if (sdhcInit->registerWithFs)
+    if (sdhcInit->isFsEnabled)
     {
-        DRV_SDHC_RegisterWithSysFs(drvIndex, drvIndex, sdhcMediaFunctions);
+        DRV_SDHC_RegisterWithSysFs(drvIndex);
     }
     
     if (sdhostInit(&dObj->cardCtxt) == true)
@@ -1634,7 +1598,7 @@ void DRV_SDHC_Tasks
                     /* Update the Media Geometry structure */
                     DRV_SDHC_UpdateGeometry (dObj);
 
-                    dObj->mediaState = SYS_FS_MEDIA_ATTACHED;
+                    dObj->mediaState = SYS_MEDIA_ATTACHED;
                     dObj->taskState = DRV_SDHC_TASK_PROCESS_QUEUE;
                 }
                 else if (dObj->initState == DRV_SDHC_INIT_ERROR)
@@ -1923,7 +1887,7 @@ void DRV_SDHC_Tasks
             {
                 DRV_SDHC_RemoveBufferObjects (dObj);
                 sdhostInit(&dObj->cardCtxt);
-                dObj->mediaState = SYS_FS_MEDIA_DETACHED;
+                dObj->mediaState = SYS_MEDIA_DETACHED;
                 dObj->taskState = DRV_SDHC_TASK_WAIT_FOR_DEVICE_ATTACH;
                 break;
             }
@@ -2009,7 +1973,7 @@ DRV_HANDLE DRV_SDHC_Open
     dObj = &gDrvSDHCObj[drvIndex];
 
     /* Acquire the driver object mutex */
-    retVal = OSAL_MUTEX_Lock(&dObj->mutex, OSAL_WAIT_FOREVER);
+    retVal = OSAL_MUTEX_Lock(&gDrvSDHCClientMutex, OSAL_WAIT_FOREVER);
     if (retVal != OSAL_RESULT_TRUE)
     {
         return DRV_HANDLE_INVALID;
@@ -2017,7 +1981,7 @@ DRV_HANDLE DRV_SDHC_Open
 
     if ((dObj->status != SYS_STATUS_READY) || (dObj->inUse == false)) 
     {
-        OSAL_MUTEX_Unlock(&dObj->mutex);
+        OSAL_MUTEX_Unlock(&gDrvSDHCClientMutex);
         return DRV_HANDLE_INVALID;
     }
 
@@ -2032,15 +1996,8 @@ DRV_HANDLE DRV_SDHC_Open
         (dObj->isExclusive) || 
         ((dObj->numClients > 0) && DRV_IO_ISEXCLUSIVE(ioIntent)))
     {
-        OSAL_MUTEX_Unlock(&dObj->mutex);
+        OSAL_MUTEX_Unlock(&gDrvSDHCClientMutex);
         return DRV_HANDLE_INVALID;
-    }
-
-    retVal = OSAL_MUTEX_Lock(&gDrvSDHCClientMutex, OSAL_WAIT_FOREVER);
-    if (retVal != OSAL_RESULT_TRUE)
-    {
-        OSAL_MUTEX_Unlock(&dObj->mutex);
-		return DRV_HANDLE_INVALID;
     }
 
     clientObj = DRV_SDHC_AllocateClientObject ();
@@ -2064,7 +2021,6 @@ DRV_HANDLE DRV_SDHC_Open
     }
 
     OSAL_MUTEX_Unlock(&gDrvSDHCClientMutex);
-    OSAL_MUTEX_Unlock(&dObj->mutex);
 
     return clientObj ? ((DRV_HANDLE)clientObj) : DRV_HANDLE_INVALID;
 
@@ -2134,7 +2090,7 @@ void DRV_SDHC_Close
 
     dObj = clientObj->driverObj;
 
-    if (OSAL_MUTEX_Lock(&dObj->mutex, OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&gDrvSDHCClientMutex, OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
     {
         SYS_ASSERT(false, "SDHC Driver: OSAL_MUTEX_Lock failed");
     }
@@ -2152,7 +2108,7 @@ void DRV_SDHC_Close
 
     dObj->numClients--;
 
-    OSAL_MUTEX_Unlock(&dObj->mutex);
+    OSAL_MUTEX_Unlock(&gDrvSDHCClientMutex);
 
 } /* DRV_SDHC_Close */
 
@@ -2464,7 +2420,7 @@ DRV_SDHC_COMMAND_STATUS DRV_SDHC_CommandStatus
 
 // *****************************************************************************
 /* Function:
-    SYS_FS_MEDIA_GEOMETRY * DRV_SDHC_GeometryGet
+    SYS_MEDIA_GEOMETRY * DRV_SDHC_GeometryGet
     (
         const DRV_HANDLE handle
     );
@@ -2490,13 +2446,13 @@ DRV_SDHC_COMMAND_STATUS DRV_SDHC_CommandStatus
                    open function
 
   Returns:
-    SYS_FS_MEDIA_GEOMETRY - Pointer to structure which holds the media geometry information.
+    SYS_MEDIA_GEOMETRY - Pointer to structure which holds the media geometry information.
 
   Remarks:
     None.
 */
 
-SYS_FS_MEDIA_GEOMETRY * DRV_SDHC_GeometryGet
+SYS_MEDIA_GEOMETRY * DRV_SDHC_GeometryGet
 (
     const DRV_HANDLE handle
 )
@@ -2573,13 +2529,22 @@ void DRV_SDHC_EventHandlerSet
 )
 {
     DRV_SDHC_CLIENT_OBJ *clientObj = NULL;
+    DRV_SDHC_OBJ            *dObj = NULL;
 
     clientObj = DRV_SDHC_ValidateDriverHandle (handle);
+
     if (clientObj != NULL)
     {
-        /* Set the event handler */
-        clientObj->eventHandler = eventHandler;
-        clientObj->context = context;
+        dObj = (DRV_SDHC_OBJ*)clientObj->driverObj;
+
+        if (OSAL_MUTEX_Lock(&dObj->mutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+        {
+            /* Set the event handler */
+            clientObj->eventHandler = eventHandler;
+            clientObj->context = context;
+            OSAL_MUTEX_Unlock(&dObj->mutex);
+        }
+
     }
 }
 
@@ -2624,13 +2589,18 @@ bool DRV_SDHC_IsAttached
 {
     DRV_SDHC_CLIENT_OBJ *clientObj = NULL;
     DRV_SDHC_OBJ *dObj = NULL;
+    bool isAttached = false;
 
     clientObj = DRV_SDHC_ValidateDriverHandle (handle);
     if (clientObj == NULL)
         return false;
 
     dObj = (DRV_SDHC_OBJ*)clientObj->driverObj;
-    return dObj->mediaState;
+
+    if (dObj->mediaState == SYS_MEDIA_ATTACHED)
+        isAttached = true;
+
+    return isAttached;
 }
     
 // *****************************************************************************
@@ -2679,7 +2649,7 @@ bool DRV_SDHC_IsWriteProtected
         return false;
 
     dObj = (DRV_SDHC_OBJ*)clientObj->driverObj;
-    if (dObj->mediaState == SYS_FS_MEDIA_DETACHED)
+    if (dObj->mediaState == SYS_MEDIA_DETACHED)
         return false;
 
     return dObj->cardCtxt->writeProtected;
