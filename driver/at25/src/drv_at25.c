@@ -464,8 +464,8 @@ bool DRV_AT25_Read(
 {
     bool isRequestAccepted = false;
 
-    if((handle == DRV_HANDLE_INVALID) || (handle > 0) || \
-            (gDrvAT25Obj.transferStatus == DRV_AT25_TRANSFER_STATUS_BUSY))
+    if((handle == DRV_HANDLE_INVALID) || (handle > 0) || (rxData == NULL) \
+            || (rxDataLength == 0) || (gDrvAT25Obj.transferStatus == DRV_AT25_TRANSFER_STATUS_BUSY))
     {
         return isRequestAccepted;
     }
@@ -500,8 +500,8 @@ bool DRV_AT25_Read(
 
 bool DRV_AT25_Write( const DRV_HANDLE handle, void *txData, uint32_t txDataLength, uint32_t address )
 {
-    if((handle == DRV_HANDLE_INVALID) || (handle > 0) || \
-            (gDrvAT25Obj.transferStatus == DRV_AT25_TRANSFER_STATUS_BUSY))
+    if((handle == DRV_HANDLE_INVALID) || (handle > 0) || (txData == NULL) \
+            || (txDataLength == 0) || (gDrvAT25Obj.transferStatus == DRV_AT25_TRANSFER_STATUS_BUSY))
     {
         return false;
     }
