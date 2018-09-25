@@ -51,7 +51,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 #include <stdint.h>
 #include "system/time/sys_time.h"
-#include "config/default/osal/osal.h"
+#include "osal/osal.h"
 
 // *****************************************************************************
 // *****************************************************************************
