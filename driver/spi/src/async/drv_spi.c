@@ -747,9 +747,9 @@ void DRV_SPI_Close( DRV_HANDLE handle )
 
     dObj = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
 
-    if(_DRV_SPI_ResourceLock(dObj) == false)
+    if (OSAL_MUTEX_Lock(&dObj->mutexClientObjects , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
     {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Failed to get resource lock");
+        SYS_DEBUG(SYS_ERROR_ERROR, "Failed to get client mutex lock");
         return;
     }
 
@@ -765,7 +765,7 @@ void DRV_SPI_Close( DRV_HANDLE handle )
     /* De-allocate the client object */
     clientObj->inUse = false;
 
-    _DRV_SPI_ResourceUnlock(dObj);
+    OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
 
     return;
 }
@@ -793,6 +793,7 @@ void DRV_SPI_Close( DRV_HANDLE handle )
 void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRANSFER_EVENT_HANDLER eventHandler, uintptr_t context )
 {
     DRV_SPI_CLIENT_OBJ * clientObj = NULL;
+    DRV_SPI_OBJ* hDriver           = (DRV_SPI_OBJ *)NULL;
 
     /* Validate the driver handle */
     clientObj = _DRV_SPI_DriverHandleValidate(handle);
@@ -802,9 +803,19 @@ void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRA
         return;
     }
 
+    hDriver = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
+
+    if(_DRV_SPI_ResourceLock(hDriver) == false)
+    {
+        SYS_DEBUG(SYS_ERROR_ERROR, "Failed to get resource lock");
+        return;
+    }
+
     /* Save the event handler and context */
     clientObj->eventHandler = eventHandler;
     clientObj->context = context;
+
+    _DRV_SPI_ResourceUnlock(hDriver);
 }
 
 // *****************************************************************************
