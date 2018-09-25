@@ -246,11 +246,13 @@ typedef void ( *DRV_AT25_EVENT_HANDLER )( DRV_AT25_TRANSFER_STATUS event, uintpt
     DRV_AT25_INIT drvAT250InitData =
     {
         .spiPlib = &drvAT250PlibAPI,
-        .numClients = 1,
+        .numClients = DRV_AT25_CLIENTS_NUMBER_IDX,
+        .pageSize = DRV_AT25_EEPROM_PAGE_SIZE,
+        .flashSize = DRV_AT25_EEPROM_FLASH_SIZE,
+        .blockStartAddress =    0x0,
         .chipSelectPin = SYS_PORT_PIN_PA5,
         .holdPin = SYS_PORT_PIN_PA0,
         .writeProtectPin = SYS_PORT_PIN_PD11,
-        .blockStartAddress = 0x0,
     };
 
     sysObjDrvAT250 = DRV_AT25_Initialize(DRV_AT25_INDEX_0, (SYS_MODULE_INIT *)&drvAT250InitData);
@@ -423,7 +425,8 @@ void DRV_AT25_Close(const DRV_HANDLE handle);
 
   Returns:
     false
-    - if handle is not right
+    - if handle is invalid
+    - if the pointer to the receive buffer is NULL or number of bytes to read is 0
     - if the driver is busy handling another transfer request
 
     true
@@ -438,7 +441,7 @@ void DRV_AT25_Close(const DRV_HANDLE handle);
     uint8_t readBuffer[BUFFER_SIZE];
 
     // myHandle is the handle returned from DRV_AT25_Open API.
-    if (true != DRV_AT25_Read(myHandle, &readBuffer, BUFFER_SIZE, MEM_ADDRESS))
+    if (true != DRV_AT25_Read(myHandle, readBuffer, BUFFER_SIZE, MEM_ADDRESS))
     {
         // Error handling here
     }
@@ -474,15 +477,15 @@ bool DRV_AT25_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength,
     *txData        - The source buffer containing data to be programmed into AT25
                       EEPROM
 
-    txDataLength   - Total number of bytes to be written. It should not be greater
-                      than page size of EEPROM
+    txDataLength   - Total number of bytes to be written.
 
     address        - Write memory start address from where the data should be
                       written
 
   Returns:
     false
-    - if handle is not right
+    - if handle is invalid
+    - if the pointer to transmit buffer is NULL or number of bytes to write is 0
     - if the driver is busy handling another transfer request
 
     true
@@ -499,14 +502,14 @@ bool DRV_AT25_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength,
 
     // myHandle is the handle returned from DRV_AT25_Open API.
 
-    if (true != DRV_AT25_Write(myHandle, &writeBuffer, PAGE_SIZE, MEM_ADDRESS))
+    if (true != DRV_AT25_Write(myHandle, writeBuffer, BUFFER_SIZE, MEM_ADDRESS))
     {
         // Error handling here
     }
     else
     {
         // Wait for write to be completed
-        while(DRV_AT25_TRANSFER_BUSY == DRV_AT25_TransferStatusGet(myHandle));
+        while(DRV_AT25_TRANSFER_STATUS_BUSY == DRV_AT25_TransferStatusGet(myHandle));
     }
     </code>
 
@@ -539,12 +542,8 @@ bool DRV_AT25_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength
   Parameters:
     handle         - A valid open-instance handle, returned from the driver's
                       open routine
-    *txData        - The source buffer containing data to be programmed into AT25
+    *txData        - The source buffer containing data to be written to the AT25
                       EEPROM
-
-    txDataLength   - Total number of bytes to be written. It should not be greater
-                      than page size
-
     address        - Write memory start address from where the data should be
                       written.
                      It must be page boundary aligned in order to avoid overwriting
@@ -552,7 +551,8 @@ bool DRV_AT25_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength
 
   Returns:
     false
-    - if handle is not right
+    - if handle is invalid
+    - if the pointer to the transmit data is NULL
     - if the driver is busy handling another transfer request
 
     true
@@ -561,21 +561,21 @@ bool DRV_AT25_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength
   Example:
     <code>
 
-    #define BUFFER_SIZE  1024
+    #define PAGE_SIZE  256
     #define MEM_ADDRESS  0x0
 
-    uint8_t writeBuffer[BUFFER_SIZE];
+    uint8_t writeBuffer[PAGE_SIZE];
 
     // myHandle is the handle returned from DRV_AT25_Open API.
 
-    if (true != DRV_AT25_PageWrite(myHandle, &writeBuffer, MEM_ADDRESS))
+    if (true != DRV_AT25_PageWrite(myHandle, writeBuffer, MEM_ADDRESS))
     {
         // Error handling here
     }
     else
     {
         // Wait for write to be completed
-        while(DRV_AT25_TRANSFER_BUSY == DRV_AT25_TransferStatusGet(myHandle));
+        while(DRV_AT25_TRANSFER_STATUS_BUSY == DRV_AT25_TransferStatusGet(myHandle));
     }
     </code>
 
@@ -610,7 +610,7 @@ bool DRV_AT25_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t address 
     <code>
     // myHandle is the handle returned from DRV_AT25_Open API.
 
-    if (DRV_AT25_TRANSFER_COMPLETED == DRV_AT25_TransferStatusGet(myHandle))
+    if (DRV_AT25_TRANSFER_STATUS_COMPLETED == DRV_AT25_TransferStatusGet(myHandle))
     {
         // Operation Done
     }
@@ -748,7 +748,7 @@ bool DRV_AT25_GeometryGet(const DRV_HANDLE handle, DRV_AT25_GEOMETRY *geometry);
 
         switch(event)
         {
-            case DRV_AT25_TRANSFER_STATUS_COMPLETE:
+            case DRV_AT25_TRANSFER_STATUS_COMPLETED:
                 // This means the data was transferred.
                 break;
 
