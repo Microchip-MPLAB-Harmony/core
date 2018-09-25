@@ -284,7 +284,7 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
             /* Clean cache lines having source buffer before submitting a transfer
              * request to DMA to load the latest data in the cache to the actual
              * memory */
-            SCB_CleanDCache_by_Addr((uint32_t *)transferObj->pTransmitData, size);
+            DCACHE_CLEAN_BY_ADDR((uint32_t *)transferObj->pTransmitData, size);
         }
 
         SYS_DMA_ChannelTransfer(hDriver->txDMAChannel, (const void *)transferObj->pTransmitData, (const void*)hDriver->txAddress, size);
@@ -444,7 +444,7 @@ void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
         {
             /* Invalidate cache lines having received buffer before using it
              * to load the latest data in the actual memory to the cache */
-            SCB_InvalidateDCache_by_Addr((uint32_t *)transferObj->pReceiveData, transferObj->rxSize);
+            DCACHE_INVALIDATE_BY_ADDR((uint32_t *)transferObj->pReceiveData, transferObj->rxSize);
         }
 
         if(clientObj->eventHandler != NULL)
@@ -549,7 +549,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
         /* Clean cache lines having source buffer before submitting a transfer
          * request to DMA to load the latest data in the cache to the actual
          * memory */
-        SCB_CleanDCache_by_Addr((uint32_t *)txDummyData, sizeof(txDummyData));
+        DCACHE_CLEAN_BY_ADDR((uint32_t *)txDummyData, sizeof(txDummyData));
     }
 
     /* initialize buffer free pool*/

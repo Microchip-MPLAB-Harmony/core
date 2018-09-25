@@ -210,7 +210,7 @@ static bool _DRV_SPI_StartDMATransfer(
             /* Clean cache lines having source buffer before submitting a transfer
              * request to DMA to load the latest data in the cache to the actual
              * memory */
-            SCB_CleanDCache_by_Addr((uint32_t *)pTransmitData, size);
+            DCACHE_CLEAN_BY_ADDR((uint32_t *)pTransmitData, size);
         }
 
         SYS_DMA_ChannelTransfer(hDriver->txDMAChannel, (const void *)pTransmitData, (const void*)hDriver->txAddress, size);
@@ -375,7 +375,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
         /* Clean cache lines having source buffer before submitting a transfer
          * request to DMA to load the latest data in the cache to the actual
          * memory */
-        SCB_CleanDCache_by_Addr((uint32_t *)txDummyData, sizeof(txDummyData));
+        DCACHE_CLEAN_BY_ADDR((uint32_t *)txDummyData, sizeof(txDummyData));
     }
 
     if (OSAL_MUTEX_Create(&dObj->transferMutex) == OSAL_RESULT_FALSE)
@@ -730,7 +730,7 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
                         {
                             /* Invalidate cache lines having received buffer before using it
                              * to load the latest data in the actual memory to the cache */
-                            SCB_InvalidateDCache_by_Addr((uint32_t *)pReceiveData, rxSize);
+                            DCACHE_INVALIDATE_BY_ADDR((uint32_t *)pReceiveData, rxSize);
                         }
 
                         isSuccess = true;
