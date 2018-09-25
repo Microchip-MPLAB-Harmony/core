@@ -339,8 +339,8 @@ bool DRV_AT24_Read(
     uint32_t nBytes = 0;
     uint16_t slaveAddr;
 
-    if((handle == DRV_HANDLE_INVALID) || (handle > 0) || \
-            (gDrvAT24Obj.transferStatus == DRV_AT24_TRANSFER_STATUS_BUSY))
+    if((handle == DRV_HANDLE_INVALID) || (handle > 0) || (rxData == NULL) || \
+            (rxDataLength == 0) || (gDrvAT24Obj.transferStatus == DRV_AT24_TRANSFER_STATUS_BUSY))
     {
         return isRequestAccepted;
     }
@@ -392,8 +392,8 @@ bool DRV_AT24_Write(
     uint32_t address
 )
 {
-    if((handle != DRV_HANDLE_INVALID) && (handle == 0) && \
-            (gDrvAT24Obj.transferStatus != DRV_AT24_TRANSFER_STATUS_BUSY))
+    if((handle != DRV_HANDLE_INVALID) && (handle == 0) && (txData != NULL) \
+            && (txDataLength != 0) && (gDrvAT24Obj.transferStatus != DRV_AT24_TRANSFER_STATUS_BUSY))
     {
         return _DRV_AT24_Write(txData, txDataLength, address);
     }
