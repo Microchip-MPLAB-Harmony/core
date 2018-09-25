@@ -71,13 +71,19 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 <#if core.DATA_CACHE_ENABLE?? >
+    <#lt>#define DCACHE_CLEAN_BY_ADDR(data, size)       SCB_CleanDCache_by_Addr((uint32_t *)data, size)
+    <#lt>#define DCACHE_INVALIDATE_BY_ADDR(data, size)  SCB_InvalidateDCache_by_Addr((uint32_t *)data, size)
+
     <#if core.DATA_CACHE_ENABLE == true >
-        <#lt>#define DATA_CACHE_ENABLED      true
+        <#lt>#define DATA_CACHE_ENABLED                     true
     <#else>
-        <#lt>#define DATA_CACHE_ENABLED      false
+        <#lt>#define DATA_CACHE_ENABLED                     false
     </#if>
 <#else>
-    <#lt>#define DATA_CACHE_ENABLED      false
+    <#lt>#define DCACHE_CLEAN_BY_ADDR(data, size)
+    <#lt>#define DCACHE_INVALIDATE_BY_ADDR(data, size)
+
+    <#lt>#define DATA_CACHE_ENABLED                         false
 </#if>
 
 // *****************************************************************************
