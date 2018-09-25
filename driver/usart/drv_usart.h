@@ -1193,7 +1193,7 @@ bool DRV_USART_ReadQueuePurge( const DRV_HANDLE handle );
 
     if (DRV_USART_WriteBuffer(myUSARTHandle, myBuffer, MY_BUFFER_SIZE) == false)
     {
-        // Error: Verify the input parameters
+        // Error handling here
     }
     </code>
 
