@@ -161,7 +161,7 @@ def instantiateComponent(memoryComponent, index):
     memoryDevicePollUs = memoryComponent.createIntegerSymbol("DRV_MEMORY_DEVICE_POLL_US", None)
     memoryDevicePollUs.setLabel("Memory Device Status Polling Rate MicroSeconds")
     memoryDevicePollUs.setMin(0)
-    memoryDevicePollUs.setDefaultValue(5)
+    memoryDevicePollUs.setDefaultValue(500)
     memoryDevicePollUs.setVisible(enable_poll)
     memoryDevicePollUs.setDependencies(setMemoryDevicePoll, ["DRV_MEMORY_INTERRUPT_ENABLE", "drv_memory.DRV_MEMORY_COMMON_SYS_TIME_ENABLE", "DRV_MEMORY_DEVICE"])
 
