@@ -426,6 +426,7 @@ void DRV_AT24_Close(const DRV_HANDLE handle);
   Returns:
     false
     - if handle is not right
+    - if the receive buffer pointer is NULL or number of bytes to read is zero
     - if the driver is busy handling another transfer request
 
     true
@@ -485,6 +486,7 @@ bool DRV_AT24_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength,
   Returns:
     false
     - if handle is not right
+    - if the pointer to the buffer to be written is NULL or number of bytes to write is zero
     - if the driver is busy handling another transfer request
 
     true
@@ -543,10 +545,6 @@ bool DRV_AT24_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength
                       open routine
     *txData        - The source buffer containing data to be programmed into AT24
                       EEPROM
-
-    txDataLength   - Total number of bytes to be written. It should not be greater
-                      than page size
-
     address        - Write memory start address from where the data should be
                       written.
                      It must be page boundary aligned in order to avoid overwriting
@@ -555,6 +553,7 @@ bool DRV_AT24_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength
   Returns:
     false
     - if handle is not right
+    - if the pointer to the transmit data buffer is NULL
     - if the driver is busy handling another transfer request
 
     true
@@ -602,8 +601,8 @@ bool DRV_AT24_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t address 
     status of transfer.
 
   Parameters:
-    handle      - A valid open-instance handle, returned from the driver's
-                   open routine
+    handle - A valid open-instance handle, returned from the driver's
+    open routine
 
   Returns:
     One of the status element from the enum DRV_AT24_TRANSFER_STATUS.
@@ -612,7 +611,7 @@ bool DRV_AT24_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t address 
     <code>
     // myHandle is the handle returned from DRV_AT24_Open API.
 
-    if (DRV_AT2_TRANSFER_STATUS_COMPLETED == DRV_AT24_TransferStatusGet(myHandle))
+    if (DRV_AT24_TRANSFER_STATUS_COMPLETED == DRV_AT24_TransferStatusGet(myHandle))
     {
         // Operation Done
     }
@@ -696,7 +695,7 @@ DRV_AT24_TRANSFER_STATUS DRV_AT24_TransferStatusGet(const DRV_HANDLE handle);
 
         switch(event)
         {
-            case DRV_AT24_TRANSFER_STATUS_COMPLETE:
+            case DRV_AT24_TRANSFER_STATUS_COMPLETED:
                 // This means the data was transferred.
                 break;
 
