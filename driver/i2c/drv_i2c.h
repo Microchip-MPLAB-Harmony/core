@@ -803,7 +803,7 @@ void DRV_I2C_ReadTransferAdd( const DRV_HANDLE handle,  const uint16_t address, 
     // slaveAddress is address of I2C slave device 
     // to which data is to be written
 
-    DRV_I2C_WriteTransferAdd(myI2Chandle, slaveAddress, myTxbuffer, MY_TX_BUFFER_SIZE, myRxbuffer, MY_RX_BUFFER_SIZE, &transferHandle);
+    DRV_I2C_WriteReadTransferAdd(myI2Chandle, slaveAddress, myTxbuffer, MY_TX_BUFFER_SIZE, myRxbuffer, MY_RX_BUFFER_SIZE, &transferHandle);
 
     if(DRV_I2C_TRANSFER_HANDLE_INVALID == transferHandle)
     {
@@ -950,12 +950,12 @@ void DRV_I2C_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_I2C_TRA
     buffer handle returned.
     
   Parameters:
-    handle         - A valid open-instance handle, returned from the driver's open 
-	                 routine.
-                     
+    handle - A valid open-instance handle, returned from the driver's open 
+    routine.
+
     transferHandle - Handle for the buffer of which the processed number of 
     bytes to be obtained.
-	
+
   Returns:
     The success or error event of the transfer.
 
@@ -1033,7 +1033,7 @@ DRV_I2C_TRANSFER_EVENT DRV_I2C_TransferStatusGet( const DRV_I2C_TRANSFER_HANDLE 
 
     buffer - Source buffer containing data to be written.
 
-    size - size in bytes of data to be written.
+    size - Size in bytes of data to be written.
 
   Returns:
     true - write is successful
@@ -1043,7 +1043,7 @@ DRV_I2C_TRANSFER_EVENT DRV_I2C_TransferStatusGet( const DRV_I2C_TRANSFER_HANDLE 
     <code>
 
     MY_APP_OBJ myAppObj;
-    uint8_t myTransfer[MY_BUFFER_SIZE];
+    uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
 
     // myI2CHandle is the handle returned
     // by the DRV_I2C_Open function.
@@ -1051,7 +1051,7 @@ DRV_I2C_TRANSFER_EVENT DRV_I2C_TransferStatusGet( const DRV_I2C_TRANSFER_HANDLE 
     // slaveAddress is address of I2C slave device 
     // to which data is to be written
 
-    if (DRV_I2C_WriteTransfer(myI2CHandle, slaveAddress, myTransfer, MY_BUFFER_SIZE) == false)
+    if (DRV_I2C_WriteTransfer(myI2CHandle, slaveAddress, myTxBuffer, MY_TX_BUFFER_SIZE) == false)
     {
         // Error handling here
     }
@@ -1067,7 +1067,7 @@ bool DRV_I2C_WriteTransfer( const DRV_HANDLE handle, uint16_t address, void * bu
 
 // *****************************************************************************
 /* Function:
-    void DRV_I2C_TransferRead
+    bool DRV_I2C_TransferRead
     (
         const DRV_HANDLE handle,
         uint16_t address,
@@ -1084,6 +1084,7 @@ bool DRV_I2C_WriteTransfer( const DRV_HANDLE handle, uint16_t address, void * bu
     return false to report failure. The failure will occur for the following 
     reasons:
     - Invalid input parameters
+    - Hardware error
 
     Precondition:
     DRV_I2C_Open must have been called to obtain a valid opened device handle.
@@ -1096,17 +1097,17 @@ bool DRV_I2C_WriteTransfer( const DRV_HANDLE handle, uint16_t address, void * bu
 
     buffer - Destination buffer where read data is stored.
 
-    size - size in bytes of data to be read.
+    size - Size in bytes of data to be read.
 
   Returns:
-    true - write is successful
+    true - read is successful
     false - error has occurred
 
   Example:
     <code>
 
     MY_APP_OBJ myAppObj;
-    uint8_t myTransfer[MY_BUFFER_SIZE];
+    uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
 
     // myI2CHandle is the handle returned
     // by the DRV_I2C_Open function.
@@ -1114,7 +1115,7 @@ bool DRV_I2C_WriteTransfer( const DRV_HANDLE handle, uint16_t address, void * bu
     // slaveAddress is address of I2C slave device 
     // to which data is to be written
 
-    if (DRV_I2C_ReadTransfer(myI2CHandle, slaveAddress, myTransfer, MY_BUFFER_SIZE) == false)
+    if (DRV_I2C_ReadTransfer(myI2CHandle, slaveAddress, myRxBuffer, MY_RX_BUFFER_SIZE) == false)
     {
         // Error handling here
     }
@@ -1145,10 +1146,11 @@ bool DRV_I2C_ReadTransfer( const DRV_HANDLE handle, uint16_t address, void * buf
 
   Description:
     This function does a blocking write and read operation. The function blocks till
-    the write and read is complete or error has occurred during write. Function will
+    the write and read is complete or error has occurred during data transfer. Function will
     return false to report failure. The failure will occur for the following 
     reasons:
     - Invalid input parameters
+    - Hardware error
 
   Precondition:
     DRV_I2C_Open must have been called to obtain a valid opened device handle.
@@ -1168,14 +1170,15 @@ bool DRV_I2C_ReadTransfer( const DRV_HANDLE handle, uint16_t address, void * buf
     readSize - size in bytes of data to be read.
 
   Returns:
-    true - write is successful
+    true - transfer is successful
     false - error has occurred
 
   Example:
     <code>
 
     MY_APP_OBJ myAppObj;
-    uint8_t myTransfer[MY_BUFFER_SIZE];
+    uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
+    uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
 
     // myI2CHandle is the handle returned
     // by the DRV_I2C_Open function.
@@ -1183,7 +1186,7 @@ bool DRV_I2C_ReadTransfer( const DRV_HANDLE handle, uint16_t address, void * buf
     // slaveAddress is address of I2C slave device 
     // to which data is to be written
 
-    if (DRV_I2C_WriteTransfer(myI2CHandle, slaveAddress, myTransfer, MY_BUFFER_SIZE) == false)
+    if (DRV_I2C_WriteReadTransfer(myI2CHandle, slaveAddress, myTxBuffer, MY_TX_BUFFER_SIZE, myRxBuffer, MY_RX_BUFFER_SIZE) == false)
     {
         // Error handling here
     }
