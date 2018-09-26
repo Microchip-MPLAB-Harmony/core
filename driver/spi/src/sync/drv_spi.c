@@ -330,6 +330,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
 {
     DRV_SPI_OBJ* dObj     = (DRV_SPI_OBJ *)NULL;
     DRV_SPI_INIT* spiInit = (DRV_SPI_INIT *)init;
+    size_t  txDummyDataIdx;
 
     /* Validate the request */
     if(drvIndex >= DRV_SPI_INSTANCES_NUMBER)
