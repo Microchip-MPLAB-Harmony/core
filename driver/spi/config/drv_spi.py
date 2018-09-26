@@ -185,13 +185,12 @@ def onDependencyConnected(info):
     dmaRxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Receive"
 
     localComponent = info["localComponent"]
-
     if info["dependencyID"] == "drv_spi_SPI_dependency" :
         localComponent.setSymbolValue("DRV_SPI_PLIB_CONNECTION", True, 2)
         plibUsed = localComponent.getSymbolByID("DRV_SPI_PLIB")
         plibUsed.clearValue()
         plibUsed.setValue(info["remoteComponent"].getID().upper(), 1)
-        Database.setSymbolValue(info["remoteComponent"].getID().upper(), "SPI_DRIVER_CONTROLLED", True, 1)
+        Database.setSymbolValue(info["remoteComponent"].getID(), "SPI_DRIVER_CONTROLLED", True, 1)
 
         if localComponent.getSymbolValue("DRV_SPI_TX_RX_DMA") == True:
             Database.setSymbolValue("core", dmaRxRequestID, True, 2)
@@ -213,7 +212,7 @@ def onDependencyDisconnected(info):
 
     if info["dependencyID"] == "drv_spi_SPI_dependency" :
         localComponent.setSymbolValue("DRV_SPI_PLIB_CONNECTION", False, 2)
-        Database.setSymbolValue(info["remoteComponent"].getID().upper(), "SPI_DRIVER_CONTROLLED", False, 1)
+        Database.setSymbolValue(info["remoteComponent"].getID(), "SPI_DRIVER_CONTROLLED", False, 1)
 
         if localComponent.getSymbolValue("DRV_SPI_TX_RX_DMA") == True:
             Database.setSymbolValue("core", dmaRxRequestID, False, 2)
