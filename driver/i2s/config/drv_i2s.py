@@ -11,6 +11,7 @@ def customUpdate(linkedList, event):
 
 def requestDMAChannel(Sym, event):
     global i2sPlibId
+    global dmaChannelRequests
 
     # Control visibility
     if event["id"] == "DRV_I2S_TX_RX_DMA":
@@ -32,6 +33,7 @@ def requestDMAChannel(Sym, event):
         if dmaRequestID!="":
             Database.clearSymbolValue("core", dmaRequestID)
             Database.setSymbolValue("core", dmaRequestID, event["value"], 2)
+            dmaChannelRequests.append(dmaRequestID)
 
     # Response from DMA Manager
     else:
@@ -51,9 +53,11 @@ def instantiateComponent(i2sComponent, index):
     global i2sPlibId
     global customVisible 
     global i2sLinkedListComment
+    global dmaChannelRequests
 
     customVisible = False
     customVisible2 = False
+    dmaChannelRequests = []
 
     i2sSymIndex = i2sComponent.createIntegerSymbol("INDEX", None)
     i2sSymIndex.setVisible(False)
@@ -236,4 +240,8 @@ def onDependencyConnected(info):
             i2sTXRXDMA = info["localComponent"].getSymbolByID("DRV_I2S_TX_RX_DMA")
             i2sTXRXDMA.setValue(True, 1)
 
-
+# this callback occurs when user disconnects SSC0 or I2SCx block from I2S driver block in Project Graph (or I2S driver is destroyed)    
+def onDependencyDisconnected(info):
+    global dmaChannelRequests
+    for dmaChannelRequest in dmaChannelRequests:
+        Database.setSymbolValue("core", dmaChannelRequest , False, 2)
