@@ -243,7 +243,7 @@ def requestAndAssignDMAChannel(Sym, event):
     if event["value"] == False:
         Database.setSymbolValue("core", dmaRequestID, False, 2)
     else:
-        if (spiSymPLIBConnection.getValue() == True) and (Database.getSymbolValue("core", dmaChannelID) == -1):
+        if (spiSymPLIBConnection.getValue() == True):
             Database.setSymbolValue("core", dmaRequestID, True, 2)
 
     # Get the allocated channel and assign it
