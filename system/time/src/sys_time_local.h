@@ -100,7 +100,8 @@ typedef struct _SYS_TIME_TIMER_OBJ{
   uint32_t relativeTimePending;    /* time to wait, relative incase of timers in the list */
   SYS_TIME_CALLBACK callback;    /* set to TRUE at timeout */
   uintptr_t context; /* context */
-  bool tmrElapsed;   /* Useful only for single shot timer */
+  bool tmrElapsedFlag;   /* Set on every timer expiry. Cleared after user reads the status. */
+  bool tmrElapsed;    /* Set on every timer expiry. Cleared after timer is added back to the list */
   struct _SYS_TIME_TIMER_OBJ* tmrNext; /* Next timer */
   SYS_TIME_HANDLE tmrHandle; /* Unique handle for object */
 } SYS_TIME_TIMER_OBJ;

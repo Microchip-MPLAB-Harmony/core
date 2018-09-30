@@ -468,14 +468,25 @@ static void SYS_TIME_ClientNotify(void)
     {
         if(tmrActive->relativeTimePending == 0)
         {
+            tmrActive->tmrElapsedFlag = true;
             tmrActive->tmrElapsed = true;
+            /* Remove the timer from the linked list. Removing does not clear the
+             * active flag.
+             */
+            SYS_TIME_RemoveFromList(tmrActive);
+            if (tmrActive->type == SYS_TIME_SINGLE)
+            {
+                /* Only single shot timers become inactive, periodic timers are
+                 * still running and active. This means, only single shot timers
+                 * can be started from callback and only periodic timers can be
+                 * stopped from callback */
+                tmrActive->active = false;
+            }
             if(tmrActive->callback != NULL)
             {
                 tmrActive->callback(tmrActive->context);
             }
-            SYS_TIME_RemoveFromList(tmrActive);
-            /* Reload the relative pending time with the requested time */
-            tmrActive->relativeTimePending = tmrActive->requestedTime;
+
             tmrActive = counterObj->tmrActive;
         }
         else
@@ -494,16 +505,24 @@ static void SYS_TIME_UpdateTime(uint32_t elapsedCounts)
     /* Add the removed timers back into the linked list if the timer type is periodic. */
     for (uint8_t i = 0; i < SYS_TIME_MAX_TIMERS; i++)
     {
-        if ((timers[i].tmrElapsed == true) && (timers[i].active == true))
+        /* tmrElapsed is cleared anytime a timer is stopped, started, reloaded
+         * or destroyed.
+         * If timer is stopped from CB, there is no need to add it back to list
+         * If timer is started from CB, it is already added to list by start routine
+         * If timer is reloaded from CB, it is already added to list by reload routine
+         * If timer is destroyed from CB, there is no need to add it back to list
+         * Note: tmrElapsedFlag is cleared when the application reads the status
+         * by calling the SYS_TIME_TimerPeriodHasExpired API.
+         */
+        if (timers[i].tmrElapsed == true)
         {
+            timers[i].tmrElapsed = false;
+
             if (timers[i].type == SYS_TIME_PERIODIC)
             {
-                timers[i].tmrElapsed = false;
+                /* Reload the relative pending time with the requested time */
+                timers[i].relativeTimePending = timers[i].requestedTime;
                 SYS_TIME_AddToList(&timers[i]);
-            }
-            else
-            {
-                timers[i].active = false;
             }
         }
     }
@@ -735,6 +754,7 @@ SYS_TIME_HANDLE SYS_TIME_TimerCreate(
             {
                 tmr->inUse = true;
                 tmr->active = false;
+                tmr->tmrElapsedFlag = false;
                 tmr->tmrElapsed = false;
                 tmr->type = type;
                 tmr->requestedTime = period;
@@ -783,6 +803,7 @@ SYS_TIME_RESULT SYS_TIME_TimerReload(
     {
         /* Temporarily remove the timer from the list. Update and then add it back */
         SYS_TIME_RemoveFromList(tmr);
+        tmr->tmrElapsedFlag = false;
         tmr->tmrElapsed = false;
         tmr->type = type;
         tmr->requestedTime = period;
@@ -824,6 +845,7 @@ SYS_TIME_RESULT SYS_TIME_TimerDestroy(SYS_TIME_HANDLE handle)
             SYS_TIME_RemoveFromList(tmr);
             tmr->active = false;
         }
+        tmr->tmrElapsedFlag = false;
         tmr->tmrElapsed = false;
         tmr->inUse = false;
         result = SYS_TIME_SUCCESS;
@@ -849,6 +871,14 @@ SYS_TIME_RESULT SYS_TIME_TimerStart(SYS_TIME_HANDLE handle)
     {
         if (tmr->active == false)
         {
+            /* Single shot timers can be started back from the single shot timer's
+             * callback where relativeTimePending is 0. For this reason, if the
+             * relativeTimePending is 0, it is reloaded with the requested time.
+             */
+            if (tmr->relativeTimePending == 0)
+            {
+                tmr->relativeTimePending = tmr->requestedTime;
+            }
             if (gSystemCounterObj.interruptNestingCount == 0)
             {
                 SYS_TIME_TimerAdd(tmr);
@@ -857,6 +887,8 @@ SYS_TIME_RESULT SYS_TIME_TimerStart(SYS_TIME_HANDLE handle)
             {
                 SYS_TIME_AddToList(tmr);
             }
+            tmr->tmrElapsedFlag = false;
+            tmr->tmrElapsed = false;
             tmr->active = true;
         }
         result = SYS_TIME_SUCCESS;
@@ -883,6 +915,8 @@ SYS_TIME_RESULT SYS_TIME_TimerStop(SYS_TIME_HANDLE handle)
         if (tmr->active == true)
         {
             SYS_TIME_RemoveFromList(tmr);
+            tmr->tmrElapsedFlag = false;
+            tmr->tmrElapsed = false;
             tmr->active = false;
             /* Make sure the timer is started fresh, when next time the timer start API is called */
             tmr->relativeTimePending = tmr->requestedTime;
@@ -934,7 +968,9 @@ bool SYS_TIME_TimerPeriodHasExpired(SYS_TIME_HANDLE handle)
 
     if(tmr != NULL)
     {
-        status = tmr->tmrElapsed;
+        status = tmr->tmrElapsedFlag;
+        /* After the application reads the status, clear it. */
+        tmr->tmrElapsedFlag = false;
     }
 
     SYS_TIME_ResourceUnlock();
