@@ -275,7 +275,6 @@ typedef void ( *DRV_I2C_TRANSFER_EVENT_HANDLER )( DRV_I2C_TRANSFER_EVENT event, 
     DRV_I2C_TRANSFER_OBJ drvI2C0TransferObjPool[DRV_I2C_QUEUE_SIZE_IDX0] = {0};
     
     DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
-        .transferSetup = (DRV_I2C_TRANSFER_SETUP_CALLBACK)TWIHS0_TransferSetup,
         .read = (DRV_I2C_READ_CALLBACK)TWIHS0_Read,
         .write = (DRV_I2C_WRITE_CALLBACK)TWIHS0_Write,
         .writeRead = (DRV_I2C_WRITE_READ_CALLBACK)TWIHS0_WriteRead,
@@ -467,49 +466,6 @@ DRV_HANDLE DRV_I2C_Open( const SYS_MODULE_INDEX index, const DRV_IO_INTENT ioInt
 */
 
 void DRV_I2C_Close( const DRV_HANDLE handle);
-
-// *****************************************************************************
-/*
-  Function:
-    bool DRV_I2C_TransferSetup ( DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP * setup )
-
-  Summary:
-    Sets the dynamic transfer setup of the driver.
-
-  Description:
-    This function should be used to update any of the DRV_I2C_TRANSFER_SETUP
-    parameters for the selected client of the driver dynamically. It is mainly
-    helpful for multi client scenario where different clients need different
-    setup like clock speed.
-
-  Preconditions:
-    DRV_I2C_Open must have been called to obtain a valid opened device handle.
-    In case of asynchronous driver, all transfer requests from the queue must 
-    have been processed.
-
-  Parameters:
-    handle      - A valid open-instance handle, returned from the driver's
-                   open routine
-    setup       - Pointer to the structure containing the new configuration settings
-
-  Returns:
-    None.
-
-  Example:
-    <code>
-        // myI2CHandle is the handle returned by the DRV_I2C_Open function.
-        DRV_I2C_TRANSFER_SETUP setup;
-
-        setup.clockSpeed = 400000;
-        
-        DRV_I2C_TransferSetup ( myI2CHandle, &setup );
-    </code>
-
-  Remarks:
-    None.
-*/
-
-bool DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP * setup);
 
 // *****************************************************************************
 /* Function:

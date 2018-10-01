@@ -11,8 +11,8 @@
     I2C Driver Definitions Header File
 
   Description:
-    This file provides implementation-specific definitions for the I2C 
-	driver's system interface. 
+    This file provides implementation-specific definitions for the I2C
+	driver's system interface.
 *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -93,31 +93,8 @@ typedef enum
 
 } DRV_I2C_ERROR;
 
-// *****************************************************************************
-/* I2C Driver Transfer Setup Data
-
-  Summary:
-    Defines the data required to setup the I2C transfer
-
-  Description:
-    This data type defines the data required to setup the I2C transfer. The
-    data is passed to the DRV_I2C_TransferSetup API to setup the I2C peripheral
-    settings dynamically.
-
-  Remarks:
-    None.
-*/
-
-typedef struct
-{   
-    /* clock speed */
-    uint32_t clockSpeed;
-    
-} DRV_I2C_TRANSFER_SETUP;
 
 typedef void (* DRV_I2C_PLIB_CALLBACK)( uintptr_t );
-
-typedef void (* DRV_I2C_TRANSFER_SETUP_CALLBACK)( DRV_I2C_TRANSFER_SETUP *, uint32_t );
 
 typedef bool (* DRV_I2C_READ_CALLBACK)( uint16_t, uint8_t *, uint8_t );
 
@@ -144,27 +121,24 @@ typedef void (* DRV_I2C_CALLBACK_REGISTER_CALLBACK)(DRV_I2C_PLIB_CALLBACK, uintp
   Remarks:
     None.
 */
-  
+
 typedef struct
 {
-    /* I2C PLib transfer setup API */
-    DRV_I2C_TRANSFER_SETUP_CALLBACK transferSetup;
-    
     /* I2C PLib read API */
     DRV_I2C_READ_CALLBACK read;
-    
+
     /* I2C PLib write API */
     DRV_I2C_WRITE_CALLBACK write;
-    
+
     /* I2C PLib writeRead API */
     DRV_I2C_WRITE_READ_CALLBACK writeRead;
-    
+
     /* I2C PLib transfer */
     DRV_I2C_ERROR_GET_CALLBACK errorGet;
-    
+
     /* I2C PLib callback register API */
     DRV_I2C_CALLBACK_REGISTER_CALLBACK callbackRegister;
-    
+
 } DRV_I2C_PLIB_INTERFACE;
 
 // *****************************************************************************
@@ -175,7 +149,7 @@ typedef struct
 
   Description:
     This data type defines the data required to initialize or the I2C driver.
-    If the driver is built statically, the members of this data structure are 
+    If the driver is built statically, the members of this data structure are
     statically over-ridden by static override definitions in the
     configuration.h file.
 
@@ -185,7 +159,7 @@ typedef struct
 
 typedef struct
 {
-    /* Identifies the PLIB API set to be used by the driver to access the 
+    /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
     DRV_I2C_PLIB_INTERFACE *i2cPlib;
 
@@ -198,7 +172,7 @@ typedef struct
 
     /* Interrupt source ID for the I2C interrupt. */
     INT_SOURCE interruptI2C;
-    
+
     /* Driver Queue Size */
     size_t queueSize;
 
@@ -208,7 +182,7 @@ typedef struct
 
     /* peripheral clock speed */
     uint32_t clockSpeed;
-    
+
 } DRV_I2C_INIT;
 
 //DOM-IGNORE-BEGIN

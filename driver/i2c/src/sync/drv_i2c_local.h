@@ -137,11 +137,6 @@ typedef struct
     /* PLIB API list that will be used by the driver to access the hardware */
     DRV_I2C_PLIB_INTERFACE* i2cPlib;
 
-    /* current transfer setup will be used to
-     * verify change in the transfer setup by client
-     */
-    DRV_I2C_TRANSFER_SETUP curTransferSetup;
-
     /* Memory pool for Client Objects */
     uintptr_t clientObjPool;
 
@@ -198,9 +193,6 @@ typedef struct
 
     /* Client handle assigned to this client object when it was opened */
     DRV_HANDLE clientHandle;
-
-    /* Client specific transfer setup */
-    DRV_I2C_TRANSFER_SETUP drvTransferSetup;
 
 } DRV_I2C_CLIENT_OBJ;
 

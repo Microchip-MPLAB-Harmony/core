@@ -189,7 +189,6 @@ SYS_MODULE_OBJ DRV_I2C_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->i2cPlib                     = i2cInit->i2cPlib;
     dObj->clientObjPool               = i2cInit->clientObjPool;
     dObj->nClientsMax                 = i2cInit->numClients;
-    dObj->curTransferSetup.clockSpeed = i2cInit->clockSpeed;
     dObj->nClients                    = 0;
     dObj->activeClient                = (uintptr_t)NULL;
     dObj->i2cTokenCount               = 1;
@@ -349,9 +348,6 @@ DRV_HANDLE DRV_I2C_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             clientObj->ioIntent     = ioIntent;
 
             clientObj->errors       = DRV_I2C_ERROR_NONE;
-            
-            clientObj->drvTransferSetup.clockSpeed = 
-                                            dObj->curTransferSetup.clockSpeed;
 
             if(ioIntent & DRV_IO_INTENT_EXCLUSIVE)
             {
@@ -431,45 +427,8 @@ void DRV_I2C_Close( DRV_HANDLE handle )
 }
 
 // *****************************************************************************
-/* Function:
-    void DRV_I2C_TransferEventHandlerSet
-    (
-        const DRV_HANDLE handle,
-        DRV_I2C_TRANSFER_SETUP * setup
-    )
-
-  Summary:
-    Registers transfer callback function.
-
-  Description:
-    This function is used to register the callback function to be invoked
-    upon transmission of a buffer.
-
-  Remarks:
-    See drv_i2c.h for usage information.
-*/
-bool DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP* setup )
-{
-    DRV_I2C_CLIENT_OBJ* clientObj = NULL;
-    bool isSuccess = false;
-
-    /* Validate the handle */
-    clientObj = _DRV_I2C_DriverHandleValidate(handle);
-
-    if((clientObj != NULL) && (setup != NULL))
-    {
-        /* client specific PLib transfer setup */
-        clientObj->drvTransferSetup.clockSpeed = setup->clockSpeed;
-
-        isSuccess = true;
-    }
-
-    return isSuccess;
-}
-
 // *****************************************************************************
-// *****************************************************************************
-// Section: I2C Driver Transfer Queue Interface Implementation
+// Section: I2C Driver Transfer Interface Implementation
 // *****************************************************************************
 // *****************************************************************************
 // *****************************************************************************
@@ -502,7 +461,6 @@ bool DRV_I2C_ReadTransfer(
 {
     DRV_I2C_CLIENT_OBJ* clientObj = (DRV_I2C_CLIENT_OBJ*)NULL;
     DRV_I2C_OBJ* hDriver = (DRV_I2C_OBJ*)NULL;
-    DRV_I2C_TRANSFER_SETUP* drvTransferSetup = (DRV_I2C_TRANSFER_SETUP*) NULL;
     bool isSuccess = false;
 
     /* Validate the driver handle */
@@ -515,16 +473,6 @@ bool DRV_I2C_ReadTransfer(
         /* Block other threads from accessing the PLIB */
         if (OSAL_MUTEX_Lock(&hDriver->transferMutex, OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
         {
-            /* Update the PLib Transfer Setup if it is
-             * different from the current Transfer setup
-             */
-            drvTransferSetup = &clientObj->drvTransferSetup;
-            if( drvTransferSetup->clockSpeed != hDriver->curTransferSetup.clockSpeed )
-            {
-                hDriver->i2cPlib->transferSetup(drvTransferSetup, 0);
-                hDriver->curTransferSetup.clockSpeed = drvTransferSetup->clockSpeed;
-            }
-
             /* Error is cleared for every new transfer */
             clientObj->errors = DRV_I2C_ERROR_NONE;
 
@@ -580,7 +528,6 @@ bool DRV_I2C_WriteTransfer(
 {
     DRV_I2C_CLIENT_OBJ* clientObj = (DRV_I2C_CLIENT_OBJ *)NULL;
     DRV_I2C_OBJ* hDriver = (DRV_I2C_OBJ *)NULL;
-    DRV_I2C_TRANSFER_SETUP* drvTransferSetup = (DRV_I2C_TRANSFER_SETUP *)NULL;
     bool isSuccess = false;
 
     /* Validate the driver handle */
@@ -593,16 +540,6 @@ bool DRV_I2C_WriteTransfer(
         /* Block other threads from accessing the PLIB */
         if (OSAL_MUTEX_Lock( &hDriver->transferMutex, OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
         {
-            /* Update the PLib Transfer Setup if it is
-             * different from the current Transfer setup
-             */
-            drvTransferSetup = &clientObj->drvTransferSetup;
-            if( drvTransferSetup->clockSpeed != hDriver->curTransferSetup.clockSpeed )
-            {
-                hDriver->i2cPlib->transferSetup(drvTransferSetup, 0);
-                hDriver->curTransferSetup.clockSpeed = drvTransferSetup->clockSpeed;
-            }
-
             /* Error is cleared for every new transfer */
             clientObj->errors = DRV_I2C_ERROR_NONE;
 
@@ -661,7 +598,6 @@ bool DRV_I2C_WriteReadTransfer (
 {
     DRV_I2C_CLIENT_OBJ* clientObj = (DRV_I2C_CLIENT_OBJ *)NULL;
     DRV_I2C_OBJ* hDriver = (DRV_I2C_OBJ*)NULL;
-    DRV_I2C_TRANSFER_SETUP* drvTransferSetup = (DRV_I2C_TRANSFER_SETUP *)NULL;
     bool isSuccess = false;
 
     /* Validate the driver handle */
@@ -675,15 +611,6 @@ bool DRV_I2C_WriteReadTransfer (
         /* Block other threads from accessing the PLIB */
         if (OSAL_MUTEX_Lock(&hDriver->transferMutex, OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
         {
-            /* Update the PLib Transfer Setup if it is
-             * different from the current Transfer setup
-             */
-            drvTransferSetup = &clientObj->drvTransferSetup;
-            if( drvTransferSetup->clockSpeed != hDriver->curTransferSetup.clockSpeed )
-            {
-                hDriver->i2cPlib->transferSetup(drvTransferSetup, 0);
-                hDriver->curTransferSetup.clockSpeed = drvTransferSetup->clockSpeed;
-            }
 
             /* Error is cleared for every new transfer */
             clientObj->errors = DRV_I2C_ERROR_NONE;
