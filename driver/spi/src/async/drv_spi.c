@@ -538,6 +538,9 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->rxDMAChannel          = spiInit->dmaChannelReceive;
     dObj->txAddress             = spiInit->spiTransmitAddress;
     dObj->rxAddress             = spiInit->spiReceiveAddress;
+    dObj->remapDataBits         = spiInit->remapDataBits;
+    dObj->remapClockPolarity    = spiInit->remapClockPolarity;
+    dObj->remapClockPhase       = spiInit->remapClockPhase;
 
     for (txDummyDataIdx = 0; txDummyDataIdx < sizeof(txDummyData); txDummyDataIdx++)
     {
@@ -838,6 +841,8 @@ void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRA
 bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * setup )
 {
     DRV_SPI_CLIENT_OBJ * clientObj = NULL;
+    DRV_SPI_OBJ* hDriver = (DRV_SPI_OBJ *)NULL;
+    DRV_SPI_TRANSFER_SETUP setupRemap;
 
     /* Validate the driver handle */
     clientObj = _DRV_SPI_DriverHandleValidate(handle);
@@ -853,14 +858,28 @@ bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * se
         return false;
     }
 
-    /* Save the required setup in client object which can be used while
-    processing queue requests. */
-    clientObj->setup = *setup;
+    hDriver = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
 
-    /* Update the flag denoting that setup has been changed dynamically */
-    clientObj->setupChanged = true;
+    setupRemap = *setup;
 
-    return true;
+    setupRemap.clockPolarity = hDriver->remapClockPolarity[setup->clockPolarity];
+    setupRemap.clockPhase = hDriver->remapClockPhase[setup->clockPhase];
+    setupRemap.dataBits = hDriver->remapDataBits[setup->dataBits];
+
+    if ((setupRemap.clockPhase != 0xFFFFFFFF) && (setupRemap.clockPolarity != 0xFFFFFFFF) \
+            && (setupRemap.dataBits != 0xFFFFFFFF))
+    {
+        /* Save the required setup in client object which can be used while
+        processing queue requests. */
+        clientObj->setup = setupRemap;
+
+        /* Update the flag denoting that setup has been changed dynamically */
+        clientObj->setupChanged = true;
+
+        return true;
+    }
+
+    return false;
 }
 
 // *****************************************************************************

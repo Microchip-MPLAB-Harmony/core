@@ -269,7 +269,9 @@ typedef struct
 
     /* Mutex to protect access to the transfer objects */
     OSAL_MUTEX_DECLARE(mutexTransferObjects);
-
+    uint32_t *remapDataBits;
+    uint32_t *remapClockPolarity;
+    uint32_t *remapClockPhase;
 } DRV_SPI_OBJ;
 
 // *****************************************************************************

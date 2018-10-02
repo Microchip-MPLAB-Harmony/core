@@ -365,6 +365,9 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->clockPhase            = spiInit->clockPhase;
     dObj->clockPolarity         = spiInit->clockPolarity;
     dObj->dataBits              = spiInit->dataBits;
+    dObj->remapDataBits         = spiInit->remapDataBits;
+    dObj->remapClockPolarity    = spiInit->remapClockPolarity;
+    dObj->remapClockPhase       = spiInit->remapClockPhase;
 
     for (txDummyDataIdx = 0; txDummyDataIdx < sizeof(txDummyData); txDummyDataIdx++)
     {
@@ -613,6 +616,8 @@ void DRV_SPI_Close( DRV_HANDLE handle )
 bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP* setup )
 {
     DRV_SPI_CLIENT_OBJ* clientObj = NULL;
+    DRV_SPI_OBJ* hDriver = (DRV_SPI_OBJ *)NULL;
+    DRV_SPI_TRANSFER_SETUP setupRemap;
     bool isSuccess = false;
 
     /* Validate the handle */
@@ -620,12 +625,24 @@ bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP* set
 
     if((clientObj != NULL) && (setup != NULL))
     {
-        /* Save the required setup in client object which can be used while
-         * processing queue requests.
-        */
-        clientObj->setup = *setup;
-        clientObj->setupChanged = true;
-        isSuccess = true;
+        hDriver = clientObj->hDriver;
+        
+        setupRemap = *setup;
+
+        setupRemap.clockPolarity = hDriver->remapClockPolarity[setup->clockPolarity];
+        setupRemap.clockPhase = hDriver->remapClockPhase[setup->clockPhase];
+        setupRemap.dataBits = hDriver->remapDataBits[setup->dataBits];
+        
+        if ((setupRemap.clockPhase != 0xFFFFFFFF) && (setupRemap.clockPolarity != 0xFFFFFFFF) \
+            && (setupRemap.dataBits != 0xFFFFFFFF))
+        {
+            /* Save the required setup in client object which can be used while
+             * processing queue requests.
+            */
+            clientObj->setup = setupRemap;
+            clientObj->setupChanged = true;
+            isSuccess = true;
+        }
     }
     return isSuccess;
 }

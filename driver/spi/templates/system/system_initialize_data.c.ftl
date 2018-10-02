@@ -27,11 +27,94 @@ DRV_SPI_PLIB_INTERFACE drvSPI${INDEX?string}PlibAPI = {
     .callbackRegister = (DRV_CALLBACK_REGISTER)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_CallbackRegister,
 };
 
+
+
+<@compress single_line=true>
+uint32_t drvSPI${INDEX?string}remapDataBits[]=
+{
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_8_BIT_MASK?has_content>
+        ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_8_BIT_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_9_BIT_MASK?has_content>
+        ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_9_BIT_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_10_BIT_MASK?has_content>
+        ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_10_BIT_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_11_BIT_MASK?has_content>
+        ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_11_BIT_MASK},
+     <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_12_BIT_MASK?has_content>
+        ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_12_BIT_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_13_BIT_MASK?has_content>
+        ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_13_BIT_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_14_BIT_MASK?has_content>
+        ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_14_BIT_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_15_BIT_MASK?has_content>
+        ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_15_BIT_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_16_BIT_MASK?has_content>
+        ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_16_BIT_MASK}
+    <#else>
+        0xFFFFFFFF
+    </#if>
+};
+</@compress>
+
+<@compress single_line=true>
+uint32_t drvSPI${INDEX?string}remapClockPolarity[] =
+{
+    ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_POLARITY_LOW_MASK},
+    ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_POLARITY_HIGH_MASK}
+};
+</@compress>
+
+<@compress single_line=true>
+uint32_t drvSPI${INDEX?string}remapClockPhase[] =
+{
+    ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_PHASE_TRAILING_MASK},
+    ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_PHASE_LEADING_MASK}
+};
+</@compress>
+
+
 /* SPI Driver Initialization Data */
 DRV_SPI_INIT drvSPI${INDEX?string}InitData =
 {
     /* SPI PLIB API */
     .spiPlib = &drvSPI${INDEX?string}PlibAPI,
+
+    .remapDataBits = drvSPI${INDEX?string}remapDataBits,
+    .remapClockPolarity = drvSPI${INDEX?string}remapClockPolarity,
+    .remapClockPhase = drvSPI${INDEX?string}remapClockPhase,
+
 
     /* SPI Number of clients */
     .numClients = DRV_SPI_CLIENTS_NUMBER_IDX${INDEX?string},
@@ -74,9 +157,9 @@ DRV_SPI_INIT drvSPI${INDEX?string}InitData =
 <#if DRV_SPI_MODE == false>
     <#if DRV_SPI_TX_RX_DMA == true>
         <#lt>    /* Interrupt source is DMA */
-		<#lt> <#if core.DMA_ENABLE?has_content>
-		<#lt>	.interruptSource = ${core.DMA_INSTANCE_NAME}_IRQn,
-		<#lt> </#if>
+        <#lt> <#if core.DMA_ENABLE?has_content>
+        <#lt>   .interruptSource = ${core.DMA_INSTANCE_NAME}_IRQn,
+        <#lt> </#if>
     <#else>
         <#lt>    /* Interrupt source is SPI */
         <#lt>    .interruptSource    = DRV_SPI_INT_SRC_IDX${INDEX?string},

@@ -71,47 +71,38 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 typedef enum
 {
-    DRV_SPI_CLOCK_PHASE_VALID_TRAILING_EDGE = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_PHASE_TRAILING_MASK},
-    DRV_SPI_CLOCK_PHASE_VALID_LEADING_EDGE = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_PHASE_LEADING_MASK}
+    DRV_SPI_CLOCK_PHASE_VALID_TRAILING_EDGE = 0,
+    DRV_SPI_CLOCK_PHASE_VALID_LEADING_EDGE = 1,
+
+    /* Force the compiler to reserve 32-bit memory space for each enum */
+    DRV_SPI_CLOCK_PHASE_INVALID = 0xFFFFFFFF
 
 }DRV_SPI_CLOCK_PHASE;
 
 typedef enum
 {
-    DRV_SPI_CLOCK_POLARITY_IDLE_LOW = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_POLARITY_LOW_MASK},
-    DRV_SPI_CLOCK_POLARITY_IDLE_HIGH = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_POLARITY_HIGH_MASK}
+    DRV_SPI_CLOCK_POLARITY_IDLE_LOW = 0,
+    DRV_SPI_CLOCK_POLARITY_IDLE_HIGH = 1,
+
+    /* Force the compiler to reserve 32-bit memory space for each enum */
+    DRV_SPI_CLOCK_POLARITY_INVALID = 0xFFFFFFFF
 
 }DRV_SPI_CLOCK_POLARITY;
 
 typedef enum
 {
-    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_8_BIT_MASK?has_content>
-    DRV_SPI_DATA_BITS_8_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_8_BIT_MASK},
-    </#if>
-    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_9_BIT_MASK?has_content>
-    DRV_SPI_DATA_BITS_9_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_9_BIT_MASK},
-    </#if>
-    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_10_BIT_MASK?has_content>
-    DRV_SPI_DATA_BITS_10_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_10_BIT_MASK},
-    </#if>
-    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_11_BIT_MASK?has_content>
-    DRV_SPI_DATA_BITS_11_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_11_BIT_MASK},
-    </#if>
-    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_12_BIT_MASK?has_content>
-    DRV_SPI_DATA_BITS_12_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_12_BIT_MASK},
-    </#if>
-    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_13_BIT_MASK?has_content>
-    DRV_SPI_DATA_BITS_13_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_13_BIT_MASK},
-    </#if>
-    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_14_BIT_MASK?has_content>
-    DRV_SPI_DATA_BITS_14_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_14_BIT_MASK},
-    </#if>
-    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_15_BIT_MASK?has_content>
-    DRV_SPI_DATA_BITS_15_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_15_BIT_MASK},
-    </#if>
-    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_16_BIT_MASK?has_content>
-    DRV_SPI_DATA_BITS_16_BIT = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_16_BIT_MASK},
-    </#if>
+    DRV_SPI_DATA_BITS_8_BIT = 0,
+    DRV_SPI_DATA_BITS_9_BIT = 1,
+    DRV_SPI_DATA_BITS_10_BIT = 2,
+    DRV_SPI_DATA_BITS_11_BIT = 3,
+    DRV_SPI_DATA_BITS_12_BIT = 4,
+    DRV_SPI_DATA_BITS_13_BIT = 5,
+    DRV_SPI_DATA_BITS_14_BIT = 6,
+    DRV_SPI_DATA_BITS_15_BIT = 7,
+    DRV_SPI_DATA_BITS_16_BIT = 8,
+
+    /* Force the compiler to reserve 32-bit memory space for each enum */
+    DRV_SPI_DATA_BITS_INVALID = 0xFFFFFFFF
 
 }DRV_SPI_DATA_BITS;
 
@@ -256,6 +247,10 @@ typedef struct
     /* Number of clients */
     size_t                      numClients;
 
+    uint32_t *remapDataBits;
+    uint32_t *remapClockPolarity;
+    uint32_t *remapClockPhase;
+
 <#if DRV_SPI_MODE == false>
     /* Queue for Transfer Objects */
     uintptr_t                   transferObjPool;
@@ -280,3 +275,4 @@ typedef struct
 /*******************************************************************************
  End of File
 */
+
