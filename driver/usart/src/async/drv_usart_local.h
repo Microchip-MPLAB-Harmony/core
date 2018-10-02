@@ -264,7 +264,9 @@ typedef struct
 
     /* This is the DMA channel interrupt source. */
     INT_SOURCE interruptDMA;
-
+    uint32_t *remapDataWidth;
+    uint32_t *remapParity;
+    uint32_t *remapStopBits;
 } DRV_USART_OBJ;
 
 #endif //#ifndef DRV_USART_LOCAL_H

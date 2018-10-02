@@ -190,7 +190,9 @@ typedef struct
 
     /* Receive complete semaphore. This is released from ISR*/
     OSAL_SEM_DECLARE (rxTransferDone);
-
+    uint32_t *remapDataWidth;
+    uint32_t *remapParity;
+    uint32_t *remapStopBits;
 } DRV_USART_OBJ;
 
 typedef struct

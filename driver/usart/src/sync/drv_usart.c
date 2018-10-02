@@ -234,6 +234,9 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     dObj->rxDMAChannel          = usartInit->dmaChannelReceive;
     dObj->txAddress             = usartInit->usartTransmitAddress;
     dObj->rxAddress             = usartInit->usartReceiveAddress;
+    dObj->remapDataWidth        = usartInit->remapDataWidth;
+    dObj->remapParity           = usartInit->remapParity;
+    dObj->remapStopBits         = usartInit->remapStopBits;
 
     if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FALSE)
     {
@@ -458,6 +461,7 @@ bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* set
 {
     DRV_USART_OBJ* dObj;
     DRV_USART_CLIENT_OBJ* clientObj;
+    DRV_USART_SERIAL_SETUP setupRemap;
     bool isSuccess = false;
 
     /* Validate the request */
@@ -465,11 +469,20 @@ bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* set
     if ((clientObj != NULL) && (setup != NULL))
     {
         dObj = (DRV_USART_OBJ *)clientObj->hDriver;
-        isSuccess = dObj->usartPlib->serialSetup(setup, 0);
+
+        setupRemap.dataWidth=dObj->remapDataWidth[setup->dataWidth];
+        setupRemap.parity=dObj->remapParity[setup->parity];
+        setupRemap.stopBits=dObj->remapStopBits[setup->stopBits];
+        setupRemap.baudRate=setup->baudRate;
+
+        if( (setupRemap.dataWidth !=0xFFFFFFFF) && (setupRemap.parity != 0xFFFFFFFF) && (setupRemap.stopBits != 0xFFFFFFFF))
+        {
+            /* Clock source cannot be modified dynamically, so passing the '0' to pick
+             * the configured clock source value */
+            isSuccess = dObj->usartPlib->serialSetup(&setupRemap, 0);
+        }
     }
     return isSuccess;
-    /* Clock source cannot be modified dynamically, so passing the '0' to pick
-     * the configured clock source value */
 }
 
 // *****************************************************************************

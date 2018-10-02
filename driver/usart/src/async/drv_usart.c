@@ -459,6 +459,9 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     dObj->rxAddress             = usartInit->usartReceiveAddress;
     dObj->interruptDMA          = usartInit->interruptDMA;
     dObj->interruptNestingCount = 0;
+    dObj->remapDataWidth        = usartInit->remapDataWidth;
+    dObj->remapParity           = usartInit->remapParity;
+    dObj->remapStopBits         = usartInit->remapStopBits;
 
     /* Register a callback with either DMA or USART PLIB based on configuration.
      * dObj is used as a context parameter, that will be used to distinguish the
@@ -601,18 +604,34 @@ DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
 bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* setup )
 {
     DRV_USART_OBJ * dObj = NULL;
+    DRV_USART_SERIAL_SETUP setupRemap;
+    bool isSuccess = false;
 
     /* Validate the request */
     if(_DRV_USART_ValidateClientHandle(dObj, handle) == false)
     {
-        return DRV_USART_ERROR_NONE;
+        return isSuccess;
+    }
+
+    if (setup == NULL)
+    {
+        return isSuccess;
     }
 
     dObj = &gDrvUSARTObj[handle];
 
-    /* Clock source cannot be modified dynamically, so passing the '0' to pick
-     * the configured clock source value */
-    return dObj->usartPlib->serialSetup(setup, 0);
+    setupRemap.dataWidth=dObj->remapDataWidth[setup->dataWidth];
+    setupRemap.parity=dObj->remapParity[setup->parity];
+    setupRemap.stopBits=dObj->remapStopBits[setup->stopBits];
+    setupRemap.baudRate=setup->baudRate;
+
+    if( (setupRemap.dataWidth !=0xFFFFFFFF) && (setupRemap.parity != 0xFFFFFFFF) && (setupRemap.stopBits != 0xFFFFFFFF))
+    {
+        /* Clock source cannot be modified dynamically, so passing the '0' to pick
+         * the configured clock source value */
+         isSuccess = dObj->usartPlib->serialSetup(&setupRemap, 0);
+    }
+    return isSuccess;
 }
 
 // *****************************************************************************

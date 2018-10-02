@@ -17,9 +17,111 @@ USART_PLIB_API drvUsart${INDEX?string}PlibAPI = {
         .serialSetup = (USART_SerialSetup)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_SerialSetup
 };
 
+<@compress single_line=true>
+uint32_t drvUsart${INDEX?string}remapDataWidth[] = {
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_5_BIT_MASK?has_content>
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_5_BIT_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_6_BIT_MASK?has_content>
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_6_BIT_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_7_BIT_MASK?has_content>
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_7_BIT_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_8_BIT_MASK?has_content>
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_8_BIT_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_9_BIT_MASK?has_content>
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_9_BIT_MASK}
+    <#else>
+        0xFFFFFFFF
+    </#if>
+};
+</@compress>
+
+<@compress single_line=true>
+uint32_t drvUsart${INDEX?string}remapParity[] = {
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_NONE_MASK?has_content>
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_NONE_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_ODD_MASK?has_content>
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_ODD_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_EVEN_MASK?has_content>
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_EVEN_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_MARK_MASK?has_content>
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_MARK_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_SPACE_MASK?has_content>
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_SPACE_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_MULTIDROP_MASK?has_content>
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_MULTIDROP_MASK}
+    <#else>
+        0xFFFFFFFF
+    </#if>
+};
+</@compress>
+
+<@compress single_line=true>
+uint32_t drvUsart${INDEX?string}remapStopBits[] = {
+
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_BIT_MASK?has_content>
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_BIT_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_5_BIT_MASK?has_content>
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_5_BIT_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_2_BIT_MASK?has_content>
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_2_BIT_MASK}
+    <#else>
+        0xFFFFFFFF
+    </#if>
+};
+</@compress>
+
+
+
 DRV_USART_INIT drvUsart${INDEX?string}InitData =
 {
     .usartPlib = &drvUsart${INDEX?string}PlibAPI,
+    .remapDataWidth = drvUsart${INDEX?string}remapDataWidth,
+    .remapParity = drvUsart${INDEX?string}remapParity,
+    .remapStopBits = drvUsart${INDEX?string}remapStopBits,
 
 <#if DRV_USART_TX_DMA == true>
     .dmaChannelTransmit = DRV_USART_XMIT_DMA_CH_IDX${INDEX?string},

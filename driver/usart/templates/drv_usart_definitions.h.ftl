@@ -85,79 +85,49 @@ typedef enum _DRV_USART_ERROR
 
 typedef enum
 {
-    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_5_BIT_MASK?has_content>
-        <#lt>    DRV_USART_DATA_5_BIT = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_5_BIT_MASK},
+    DRV_USART_DATA_5_BIT = 0,
+    DRV_USART_DATA_6_BIT = 1,
+    DRV_USART_DATA_7_BIT = 2,
+    DRV_USART_DATA_8_BIT = 3,
+    DRV_USART_DATA_9_BIT = 4,
 
-    </#if>
-    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_6_BIT_MASK?has_content>
-        <#lt>    DRV_USART_DATA_6_BIT = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_6_BIT_MASK},
+    /* Force the compiler to reserve 32-bit memory space for each enum */
+    DRV_USART_DATA_BIT_INVALID = 0xFFFFFFFF
 
-    </#if>
-    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_7_BIT_MASK?has_content>
-        <#lt>    DRV_USART_DATA_7_BIT = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_7_BIT_MASK},
-
-    </#if>
-    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_8_BIT_MASK?has_content>
-        <#lt>    DRV_USART_DATA_8_BIT = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_8_BIT_MASK},
-
-    </#if>
-    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_9_BIT_MASK?has_content>
-        <#lt>    DRV_USART_DATA_9_BIT = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_9_BIT_MASK},
-
-    </#if>
 } DRV_USART_DATA_BIT;
 
 typedef enum
 {
-    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_NONE_MASK?has_content>
-        <#lt>    DRV_USART_PARITY_NONE = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_NONE_MASK},
+    DRV_USART_PARITY_NONE = 0,
+    DRV_USART_PARITY_EVEN = 1,
+    DRV_USART_PARITY_ODD = 2,
+    DRV_USART_PARITY_MARK = 3,
+    DRV_USART_PARITY_SPACE = 4,
+    DRV_USART_PARITY_MULTIDROP = 5,
 
-    </#if>
-    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_ODD_MASK?has_content>
-        <#lt>    DRV_USART_PARITY_ODD = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_ODD_MASK},
+    /* Force the compiler to reserve 32-bit memory space for each enum */
+    DRV_USART_PARITY_INVALID = 0xFFFFFFFF
 
-    </#if>
-    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_EVEN_MASK?has_content>
-        <#lt>    DRV_USART_PARITY_EVEN = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_EVEN_MASK},
-
-    </#if>
-    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_MARK_MASK?has_content>
-        <#lt>    DRV_USART_PARITY_MARK = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_MARK_MASK},
-
-    </#if>
-    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_SPACE_MASK?has_content>
-        <#lt>    DRV_USART_PARITY_SPACE = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_SPACE_MASK},
-
-    </#if>
-    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_MULTIDROP_MASK?has_content>
-        <#lt>    DRV_USART_PARITY_MULTIDROP = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_MULTIDROP_MASK},
-
-    </#if>
 } DRV_USART_PARITY;
 
 typedef enum
 {
-    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_BIT_MASK?has_content>
-        <#lt>    DRV_USART_STOP_1_BIT = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_BIT_MASK},
+    DRV_USART_STOP_1_BIT = 0,
+    DRV_USART_STOP_1_5_BIT = 1,
+    DRV_USART_STOP_2_BIT = 2,
 
-    </#if>
-    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_5_BIT_MASK?has_content>
-        <#lt>    DRV_USART_STOP_1_5_BIT = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_5_BIT_MASK},
+    /* Force the compiler to reserve 32-bit memory space for each enum */
+    DRV_USART_STOP_BIT_INVALID = 0xFFFFFFFF
 
-    </#if>
-    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_2_BIT_MASK?has_content>
-        <#lt>    DRV_USART_STOP_2_BIT = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_2_BIT_MASK},
-
-    </#if>
 } DRV_USART_STOP_BIT;
 
 typedef struct _DRV_USART_SERIAL_SETUP
 {
     uint32_t baudRate;
 
-    DRV_USART_DATA_BIT dataWidth;
-
     DRV_USART_PARITY parity;
+
+    DRV_USART_DATA_BIT dataWidth;
 
     DRV_USART_STOP_BIT stopBits;
 
@@ -217,6 +187,11 @@ struct _DRV_USART_INIT
 
     /* This is the USART receive register address. Used for DMA operation. */
     void * usartReceiveAddress;
+
+    uint32_t *remapDataWidth;
+    uint32_t *remapParity;
+    uint32_t *remapStopBits;
+
 <#if DRV_USART_MODE == false>
 
     /* This is the receive buffer queue size. This is the maximum
@@ -236,7 +211,6 @@ struct _DRV_USART_INIT
     INT_SOURCE interruptDMA;
 
 <#else>
-
     /* Memory Pool for Client Objects */
     uintptr_t clientObjPool;
 
@@ -247,6 +221,7 @@ struct _DRV_USART_INIT
 };
 
 
+
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
@@ -255,4 +230,3 @@ struct _DRV_USART_INIT
 
 
 #endif // #ifndef DRV_USART_DEFINITIONS_H
-
