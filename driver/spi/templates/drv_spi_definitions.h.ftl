@@ -144,15 +144,6 @@ typedef struct
 
 } DRV_SPI_TRANSFER_SETUP;
 
-typedef enum
-{
-    DRV_SPI_ERROR_NONE = 0,
-    <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_STATUS_OVERRUN_MASK?has_content>
-    DRV_SPI_ERROR_OVERRUN = ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_STATUS_OVERRUN_MASK},
-    </#if>
-
-}DRV_SPI_ERROR;
-
 typedef void (* DRV_SPI_PLIB_CALLBACK)( uintptr_t );
 
 typedef    bool (* DRV_SETUP) (DRV_SPI_TRANSFER_SETUP *, uint32_t);
@@ -160,8 +151,6 @@ typedef    bool (* DRV_SETUP) (DRV_SPI_TRANSFER_SETUP *, uint32_t);
 typedef    bool (* DRV_WRITEREAD)(void*, size_t, void *, size_t);
 
 typedef    bool (* DRV_IS_BUSY)(void);
-
-typedef    DRV_SPI_ERROR (* DRV_ERROR_GET)(void);
 
 typedef    void (* DRV_CALLBACK_REGISTER)(DRV_SPI_PLIB_CALLBACK, uintptr_t);
 
@@ -189,9 +178,6 @@ typedef struct
 
     /* SPI PLIB Transfer status API */
     DRV_IS_BUSY                 isBusy;
-
-    /* SPI PLIB Error get API */
-    DRV_ERROR_GET               errorGet;
 
     /* SPI PLIB callback register API */
     DRV_CALLBACK_REGISTER       callbackRegister;
@@ -228,18 +214,6 @@ typedef struct
 
     /* SPI receive register address used for DMA operation. */
     void                        *spiReceiveAddress;
-
-    /* Default baud rate */
-    uint32_t                    baudRateInHz;
-
-    /* Default clock phase */
-    DRV_SPI_CLOCK_PHASE         clockPhase;
-
-    /* Default clock polarity */
-    DRV_SPI_CLOCK_POLARITY      clockPolarity;
-
-    /* Default data bits */
-    DRV_SPI_DATA_BITS           dataBits;
 
     /* Memory Pool for Client Objects */
     uintptr_t                   clientObjPool;

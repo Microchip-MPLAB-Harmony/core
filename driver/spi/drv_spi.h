@@ -285,7 +285,6 @@ typedef void ( *DRV_SPI_TRANSFER_EVENT_HANDLER )( DRV_SPI_TRANSFER_EVENT event, 
             .setup = (DRV_SETUP)SPI0_TransferSetup,
             .writeRead = (DRV_WRITEREAD)SPI0_WriteRead,
             .isBusy = (DRV_IS_BUSY)SPI0_IsBusy,
-            .errorGet = (DRV_ERROR_GET)SPI0_ErrorGet,
             .callbackRegister = (DRV_CALLBACK_REGISTER)SPI0_CallbackRegister
         }
     };

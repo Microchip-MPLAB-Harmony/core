@@ -223,9 +223,6 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
 {
     DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ *)contextHandle;
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)NULL;
-    DRV_SPI_ERROR error;
-
-    error = dObj->spiPlib->errorGet();
 
     clientObj = (DRV_SPI_CLIENT_OBJ*)dObj->activeClient;
 
@@ -235,14 +232,7 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
         SYS_PORT_PinWrite(clientObj->setup.chipSelect, !((bool)(clientObj->setup.csPolarity)));
     }
 
-    if (error == DRV_SPI_ERROR_NONE)
-    {
-        dObj->transferStatus = DRV_SPI_TRANSFER_STATUS_COMPLETE;
-    }
-    else
-    {
-        dObj->transferStatus = DRV_SPI_TRANSFER_STATUS_ERROR;
-    }
+    dObj->transferStatus = DRV_SPI_TRANSFER_STATUS_COMPLETE;
 
     /* Unblock the application thread */
     OSAL_SEM_PostISR( &dObj->transferDone);
@@ -361,10 +351,6 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->txAddress             = spiInit->spiTransmitAddress;
     dObj->rxAddress             = spiInit->spiReceiveAddress;
 
-    dObj->baudRateInHz          = spiInit->baudRateInHz;
-    dObj->clockPhase            = spiInit->clockPhase;
-    dObj->clockPolarity         = spiInit->clockPolarity;
-    dObj->dataBits              = spiInit->dataBits;
     dObj->remapDataBits         = spiInit->remapDataBits;
     dObj->remapClockPolarity    = spiInit->remapClockPolarity;
     dObj->remapClockPhase       = spiInit->remapClockPhase;
@@ -521,12 +507,6 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             clientObj->hDriver = dObj;
 
             clientObj->ioIntent = ioIntent;
-            clientObj->setup.baudRateInHz   = dObj->baudRateInHz;
-            clientObj->setup.clockPhase     = dObj->clockPhase;
-            clientObj->setup.clockPolarity  = dObj->clockPolarity;
-            clientObj->setup.dataBits       = dObj->dataBits;
-            clientObj->setup.chipSelect     = SYS_PORT_PIN_NONE;
-            clientObj->setupChanged = true;
 
             if(ioIntent & DRV_IO_INTENT_EXCLUSIVE)
             {

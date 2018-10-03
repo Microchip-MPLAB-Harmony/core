@@ -327,7 +327,6 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
     DRV_SPI_OBJ             *dObj             = (DRV_SPI_OBJ *)contextHandle;
     DRV_SPI_CLIENT_OBJ      *clientObj        = (DRV_SPI_CLIENT_OBJ *)NULL;
     DRV_SPI_TRANSFER_OBJ    *transferObj      = (DRV_SPI_TRANSFER_OBJ *)NULL;
-    DRV_SPI_ERROR           errorStatus;
 
     if((!dObj->inUse) || (dObj->status != SYS_STATUS_READY))
     {
@@ -345,16 +344,7 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
         SYS_PORT_PinWrite(clientObj->setup.chipSelect, !((bool)(clientObj->setup.csPolarity)));
     }
 
-    errorStatus = dObj->spiPlib->errorGet();
-
-    if(errorStatus == DRV_SPI_ERROR_NONE)
-    {
-        transferObj->event = DRV_SPI_TRANSFER_EVENT_COMPLETE;
-    }
-    else
-    {
-        transferObj->event = DRV_SPI_TRANSFER_EVENT_ERROR;
-    }
+    transferObj->event = DRV_SPI_TRANSFER_EVENT_COMPLETE;
 
     _DRV_SPI_ReleaseBufferObject(transferObj);
 
@@ -528,11 +518,6 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->spiTokenCount         = 1;
     dObj->interruptNestingCount = 0;
 
-    dObj->baudRateInHz          = spiInit->baudRateInHz;
-    dObj->clockPhase            = spiInit->clockPhase;
-    dObj->clockPolarity         = spiInit->clockPolarity;
-    dObj->dataBits              = spiInit->dataBits;
-
     dObj->isExclusive           = false;
     dObj->txDMAChannel          = spiInit->dmaChannelTransmit;
     dObj->rxDMAChannel          = spiInit->dmaChannelReceive;
@@ -698,13 +683,6 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             /* Initialize other elements in Client Object */
             clientObj->eventHandler         = NULL;
             clientObj->context              = (uintptr_t)NULL;
-
-            clientObj->setup.baudRateInHz   = dObj->baudRateInHz;
-            clientObj->setup.clockPhase     = dObj->clockPhase;
-            clientObj->setup.clockPolarity  = dObj->clockPolarity;
-            clientObj->setup.dataBits       = dObj->dataBits;
-            clientObj->setup.chipSelect     = SYS_PORT_PIN_NONE;
-            clientObj->setupChanged         = true;
             clientObj->drvIndex             = drvIndex;
 
             return clientObj->clientHandle;

@@ -20,9 +20,6 @@ DRV_SPI_PLIB_INTERFACE drvSPI${INDEX?string}PlibAPI = {
     /* SPI PLIB Transfer Status function */
     .isBusy = (DRV_IS_BUSY)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_IsBusy,
 
-    /* SPI PLIB Error Status function */
-    .errorGet = (DRV_ERROR_GET)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_ErrorGet,
-
     /* SPI PLIB Callback Register */
     .callbackRegister = (DRV_CALLBACK_REGISTER)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_CallbackRegister,
 };
@@ -121,18 +118,6 @@ DRV_SPI_INIT drvSPI${INDEX?string}InitData =
 
     /* SPI Client Objects Pool */
     .clientObjPool = (uintptr_t)&drvSPI${INDEX?string}ClientObjPool[0],
-
-    /* SPI setup parameters */
-    .baudRateInHz = (uint32_t)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_BAUD_RATE},
-
-    /* SPI Clock Phase */
-    .clockPhase = DRV_SPI_CLOCK_PHASE_${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_PHASE},
-
-    /* SPI Clock Polarity */
-    .clockPolarity = DRV_SPI_CLOCK_POLARITY_${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_POLARITY},
-
-    /* SPI data length per transfer */
-    .dataBits = DRV_SPI_DATA_BITS${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS},
 
 <#if DRV_SPI_TX_RX_DMA == true>
     /* DMA Channel for Transmit */

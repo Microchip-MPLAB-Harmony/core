@@ -155,18 +155,6 @@ typedef struct
     /* PLIB API list that will be used by the driver to access the hardware */
     DRV_SPI_PLIB_INTERFACE* spiPlib;
 
-    /* Default baud rate */
-    uint32_t    baudRateInHz;
-
-    /* Default clock phase */
-    DRV_SPI_CLOCK_PHASE clockPhase;
-
-    /* Default clock polarity */
-    DRV_SPI_CLOCK_POLARITY  clockPolarity;
-
-    /* Default data bits */
-    DRV_SPI_DATA_BITS   dataBits;
-
     /* Transmit DMA Channel */
     SYS_DMA_CHANNEL txDMAChannel;
 
