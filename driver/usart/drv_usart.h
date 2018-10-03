@@ -131,6 +131,9 @@ typedef uintptr_t DRV_USART_BUFFER_HANDLE;
 
 typedef enum
 {
+    /* The buffer is pending to be serviced */
+    DRV_USART_BUFFER_EVENT_PENDING,
+
     /* All data from or to the buffer was transferred successfully. */
     DRV_USART_BUFFER_EVENT_COMPLETE,
 

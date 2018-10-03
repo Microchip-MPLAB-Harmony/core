@@ -723,6 +723,7 @@ void DRV_USART_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t si
     bufferObj->dObj         = dObj;
     bufferObj->next         = NULL;
     bufferObj->currentState = DRV_USART_BUFFER_IS_IN_QUEUE;
+    bufferObj->status       = DRV_USART_BUFFER_EVENT_PENDING;
 
     *bufferHandle = bufferObj->bufferHandle;
 
@@ -829,6 +830,7 @@ void DRV_USART_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t siz
     bufferObj->dObj            = dObj;
     bufferObj->next            = NULL;
     bufferObj->currentState    = DRV_USART_BUFFER_IS_IN_QUEUE;
+    bufferObj->status          = DRV_USART_BUFFER_EVENT_PENDING;
 
     *bufferHandle = bufferObj->bufferHandle;
 
