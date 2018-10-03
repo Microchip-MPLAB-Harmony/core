@@ -15,9 +15,6 @@ DRV_AT25_PLIB_INTERFACE drvAT25PlibAPI = {
     /* SPI PLIB Transfer Status function */
     .isBusy = (DRV_AT25_IS_BUSY)${.vars["${DRV_AT25_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_IsBusy,
 
-    /* SPI PLIB Error Status function */
-    .errorGet = (DRV_AT25_ERROR_GET)${.vars["${DRV_AT25_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_ErrorGet,
-
     /* SPI PLIB Callback Register */
     .callbackRegister = (DRV_AT25_CALLBACK_REGISTER)${.vars["${DRV_AT25_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_CallbackRegister,
 };

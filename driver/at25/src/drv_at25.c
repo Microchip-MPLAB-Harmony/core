@@ -330,16 +330,7 @@ static void _DRV_AT25_Handler( void )
 /* This function will be called by SPI PLIB when transfer is completed */
 static void _SPIEventHandler(uintptr_t context )
 {
-    if (gDrvAT25Obj.spiPlib->errorGet() == DRV_AT25_SPI_ERROR_NONE)
-    {
-        _DRV_AT25_Handler ();
-    }
-    else
-    {
-        /* De-assert the chip select */
-        SYS_PORT_PinSet(gDrvAT25Obj.chipSelectPin);
-        gDrvAT25Obj.transferStatus = DRV_AT25_TRANSFER_STATUS_ERROR;
-    }
+    _DRV_AT25_Handler ();
 
     /* If transfer is complete, notify the application */
     if (gDrvAT25Obj.transferStatus != DRV_AT25_TRANSFER_STATUS_BUSY)

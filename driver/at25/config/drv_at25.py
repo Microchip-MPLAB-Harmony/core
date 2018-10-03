@@ -130,7 +130,7 @@ def instantiateComponent(at25Component):
     at25HeaderFile.setOverwrite(True)
 
     at25SymHeaderDefFile = at25Component.createFileSymbol("DRV_AT25_DEF", None)
-    at25SymHeaderDefFile.setSourcePath("driver/at25/drv_at25_definitions.h.ftl")
+    at25SymHeaderDefFile.setSourcePath("driver/at25/templates/drv_at25_definitions.h.ftl")
     at25SymHeaderDefFile.setOutputName("drv_at25_definitions.h")
     at25SymHeaderDefFile.setDestPath("driver/at25")
     at25SymHeaderDefFile.setProjectPath("config/" + configName + "/driver/at25/")

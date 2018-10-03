@@ -120,9 +120,6 @@ typedef struct
     /* AT25 PLIB Transfer status API */
     DRV_AT25_IS_BUSY                 isBusy;
 
-    /* AT25 PLIB Error get API */
-    DRV_AT25_ERROR_GET               errorGet;
-
     /* AT25 PLIB callback register API */
     DRV_AT25_CALLBACK_REGISTER       callbackRegister;
 
