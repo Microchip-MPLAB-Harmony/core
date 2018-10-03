@@ -72,11 +72,11 @@ typedef enum _DRV_USART_ERROR
 {
     DRV_USART_ERROR_NONE = 0,
 
-    DRV_USART_ERROR_OVERRUN = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_OVERRUN_ERROR_VALUE},
+    DRV_USART_ERROR_OVERRUN = 1,
 
-    DRV_USART_ERROR_PARITY = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_ERROR_VALUE},
+    DRV_USART_ERROR_PARITY = 2,
 
-    DRV_USART_ERROR_FRAMING = ${.vars["${DRV_USART_PLIB?lower_case}"].USART_FRAMING_ERROR_VALUE}
+    DRV_USART_ERROR_FRAMING = 3
 
 }_DRV_USART_ERROR;
 
@@ -191,6 +191,7 @@ struct _DRV_USART_INIT
     uint32_t *remapDataWidth;
     uint32_t *remapParity;
     uint32_t *remapStopBits;
+    uint32_t *remapError;
 
 <#if DRV_USART_MODE == false>
 

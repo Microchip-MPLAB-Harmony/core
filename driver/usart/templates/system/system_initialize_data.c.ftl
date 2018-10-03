@@ -114,6 +114,13 @@ uint32_t drvUsart${INDEX?string}remapStopBits[] = {
 };
 </@compress>
 
+<@compress single_line=true>
+uint32_t drvUsart${INDEX?string}remapError[] = {
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_OVERRUN_ERROR_VALUE},
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_ERROR_VALUE},
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_FRAMING_ERROR_VALUE}
+};
+</@compress>
 
 
 DRV_USART_INIT drvUsart${INDEX?string}InitData =
@@ -122,6 +129,7 @@ DRV_USART_INIT drvUsart${INDEX?string}InitData =
     .remapDataWidth = drvUsart${INDEX?string}remapDataWidth,
     .remapParity = drvUsart${INDEX?string}remapParity,
     .remapStopBits = drvUsart${INDEX?string}remapStopBits,
+    .remapError = drvUsart${INDEX?string}remapError,
 
 <#if DRV_USART_TX_DMA == true>
     .dmaChannelTransmit = DRV_USART_XMIT_DMA_CH_IDX${INDEX?string},

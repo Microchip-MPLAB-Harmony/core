@@ -92,19 +92,37 @@ static void _DRV_USART_TX_PLIB_CallbackHandler( uintptr_t context )
     OSAL_SEM_PostISR(&dObj->txTransferDone);
 }
 
+static DRV_USART_ERROR _DRV_USART_GetErrorType(uint32_t* remapError, uint32_t errorMask)
+{
+    DRV_USART_ERROR error = DRV_USART_ERROR_NONE;
+
+    for (uint32_t i = 0; i < 3; i++)
+    {
+        if (remapError[i] == errorMask)
+        {
+            error = (DRV_USART_ERROR)(i+1);
+            break;
+        }
+    }
+    return error;
+}
+
 static void _DRV_USART_RX_PLIB_CallbackHandler( uintptr_t context )
 {
     DRV_USART_OBJ *dObj = (DRV_USART_OBJ *)context;
     DRV_USART_CLIENT_OBJ* clientObj = (DRV_USART_CLIENT_OBJ*)dObj->currentRxClient;
+    uint32_t errorMask;
 
-    clientObj->errors = dObj->usartPlib->errorGet();
+    errorMask = dObj->usartPlib->errorGet();
 
-    if(clientObj->errors == DRV_USART_ERROR_NONE)
+    if(errorMask == DRV_USART_ERROR_NONE)
     {
+        clientObj->errors = DRV_USART_ERROR_NONE;
         dObj->rxRequestStatus = DRV_USART_REQUEST_STATUS_COMPLETE;
     }
     else
     {
+        clientObj->errors = _DRV_USART_GetErrorType(dObj->remapError, errorMask);
         dObj->rxRequestStatus = DRV_USART_REQUEST_STATUS_ERROR;
     }
 
@@ -237,6 +255,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     dObj->remapDataWidth        = usartInit->remapDataWidth;
     dObj->remapParity           = usartInit->remapParity;
     dObj->remapStopBits         = usartInit->remapStopBits;
+    dObj->remapError            = usartInit->remapError;
 
     if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FALSE)
     {

@@ -360,18 +360,36 @@ static void _DRV_USART_TX_PLIB_CallbackHandler( uintptr_t context )
     return;
 }
 
+static DRV_USART_ERROR _DRV_USART_GetErrorType(uint32_t* remapError, uint32_t errorMask)
+{
+    DRV_USART_ERROR error = DRV_USART_ERROR_NONE;
+    
+    for (uint32_t i = 0; i < 3; i++)
+    {
+        if (remapError[i] == errorMask)
+        {
+            error = (DRV_USART_ERROR)(i+1);
+            break;
+        }
+    }
+    return error;
+}
+
 static void _DRV_USART_RX_PLIB_CallbackHandler( uintptr_t context )
 {
     DRV_USART_OBJ *dObj = (DRV_USART_OBJ *)context;
+    uint32_t errorMask;
 
-    dObj->errors = dObj->usartPlib->errorGet();
+    errorMask = dObj->usartPlib->errorGet();
 
-    if(dObj->errors == DRV_USART_ERROR_NONE)
+    if(errorMask == DRV_USART_ERROR_NONE)
     {
+        dObj->errors = DRV_USART_ERROR_NONE;
         _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_RX, DRV_USART_BUFFER_EVENT_COMPLETE);
     }
     else
     {
+        dObj->errors = _DRV_USART_GetErrorType(dObj->remapError, errorMask);
         _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_RX, DRV_USART_BUFFER_EVENT_ERROR);
     }
 
@@ -462,6 +480,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     dObj->remapDataWidth        = usartInit->remapDataWidth;
     dObj->remapParity           = usartInit->remapParity;
     dObj->remapStopBits         = usartInit->remapStopBits;
+    dObj->remapError            = usartInit->remapError;
 
     /* Register a callback with either DMA or USART PLIB based on configuration.
      * dObj is used as a context parameter, that will be used to distinguish the

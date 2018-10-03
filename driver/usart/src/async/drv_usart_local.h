@@ -267,6 +267,7 @@ typedef struct
     uint32_t *remapDataWidth;
     uint32_t *remapParity;
     uint32_t *remapStopBits;
+    uint32_t *remapError;
 } DRV_USART_OBJ;
 
 #endif //#ifndef DRV_USART_LOCAL_H
