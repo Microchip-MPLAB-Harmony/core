@@ -110,6 +110,14 @@ def instantiateComponent(sdhcComponent, index):
     sdhcDMA.setReadOnly(True)
     sdhcDMA.setDefaultValue(int(Database.getSymbolValue("core", "DMA_CH_FOR_HSMCI")))
 
+    sdhcDMAChannelComment = sdhcComponent.createCommentSymbol("DRV_SDHC_DMA_CH_COMMENT", None)
+    sdhcDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel. Check DMA Manager.")
+
+    if(int(Database.getSymbolValue("core", "DMA_CH_FOR_HSMCI")) == -2):
+        sdhcDMAChannelComment.setVisible(True)
+    else:
+        sdhcDMAChannelComment.setVisible(False)
+
     sdhcRTOSMenu = sdhcComponent.createMenuSymbol("SDHC_RTOS_MENU", None)
     sdhcRTOSMenu.setLabel("RTOS Configuration")
     sdhcRTOSMenu.setDescription("RTOS Configuration")
