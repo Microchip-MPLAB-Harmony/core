@@ -1,3 +1,4 @@
+//DOM-IGNORE-BEGIN
 /*******************************************************************************
 * © 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -19,7 +20,9 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
-*******************************************************************************\
+ *******************************************************************************/
+//DOM-IGNORE-END
+
 #ifndef _OSAL_THREADX_H
 #define _OSAL_THREADX_H
 
