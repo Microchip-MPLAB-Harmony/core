@@ -71,7 +71,7 @@ static uint16_t gDrvUSARTTokenCount = 0;
 // *****************************************************************************
 static bool _DRV_USART_ValidateClientHandle(DRV_USART_OBJ * object, DRV_HANDLE handle)
 {
-    if(handle == DRV_HANDLE_INVALID)
+    if((handle == DRV_HANDLE_INVALID) || (handle >= DRV_USART_INSTANCES_NUMBER))
     {
         return false;
     }
@@ -698,13 +698,13 @@ void DRV_USART_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t si
     {
         return;
     }
+    
+    *bufferHandle = DRV_USART_BUFFER_HANDLE_INVALID;
 
     if((size == 0) || (buffer == NULL))
     {
         return;
     }
-
-    *bufferHandle = DRV_USART_BUFFER_HANDLE_INVALID;
 
     if(_DRV_USART_ValidateClientHandle(dObj, handle) == false)
     {
@@ -806,12 +806,12 @@ void DRV_USART_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t siz
         return;
     }
 
+    *bufferHandle = DRV_USART_BUFFER_HANDLE_INVALID;
+
     if((size == 0) || (buffer == NULL))
     {
         return;
     }
-
-    *bufferHandle = DRV_USART_BUFFER_HANDLE_INVALID;
 
     if(_DRV_USART_ValidateClientHandle(dObj, handle) == false)
     {
