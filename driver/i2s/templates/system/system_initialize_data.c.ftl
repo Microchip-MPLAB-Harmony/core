@@ -2,7 +2,8 @@
 
 /* I2S PLIB Interface Initialization */
 DRV_I2S_PLIB_INTERFACE drvI2S${INDEX?string}PlibAPI =
-{  
+{
+    .I2S_LRCLK_Get = (DRV_I2S_LRCLK_GET)${DRV_I2S_PLIB}_LRCLK_Get,  
 };
 
 /* I2S Driver Initialization Data */

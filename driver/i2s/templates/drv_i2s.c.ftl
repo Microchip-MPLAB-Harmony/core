@@ -1013,6 +1013,67 @@ bool DRV_I2S_ReadQueuePurge( const DRV_HANDLE handle )
     return _DRV_I2S_ReadBufferQueuePurge(dObj);
 }
 
+// *****************************************************************************
+#define PS_PER_INSTR    (1000000/(SYS_TIME_CPU_CLOCK_FREQUENCY/1000000))  // nominal picoseconds per instruction
+#define CYCLES_PER_LOOP 36          // approx # of instructions cycles per while loop with cnt++ and test
+                                    // based on disassembly at opt level 1, and confirmed by experiment
+uint32_t max_cnt;                   // max expected value of cnt, time 10 -- loop runs fastest with this variable global
+
+// This routine sync up to the leading (or trailing) edge of the word select, or left/right clock
+// of the I2S peripheral (either SSC or I2SC)
+
+bool DRV_I2S_LRCLK_Sync (const DRV_HANDLE handle, const uint32_t sample_rate)
+{
+    // Since we can't actually know if the clock is working or not, it is necessary to computer a reasonable timeout
+    // value, which if exceeded, causes us to return to the caller without syncing up    
+    uint32_t ns_per_frame = (1000000/(sample_rate/1000)) / 2;     // ns per left/right frame (e.g. 10416 for 48K s/s)
+    // Compute total # of instruction cycles executed per left/right frame, divided by
+    // number of instruction cycles per loop, to get max loop count -- then times 10 for good measure
+    // Typical loop count is 86 for 48000 samples/second and 300 MHz clock, * 10 => max_cnt = 860
+    max_cnt = 10 * ((1000*ns_per_frame / PS_PER_INSTR) / CYCLES_PER_LOOP);
+    uint32_t cnt = 0;       // # of passes through loop -- max (typ. 86) at full frame time (10.4 us at 48K s/s)
+   
+    DRV_I2S_OBJ * dObj = NULL;
+
+    /* Validate the Request */
+    if( false == _DRV_I2S_ValidateClientHandle(dObj, handle))
+    {
+        return false;
+    }
+
+    dObj = &gDrvI2SObj[handle];
+    
+    while (1)
+    {
+        // on entry, maybe high or low
+        cnt = 0;
+        while (0==(*dObj->i2sPlib->I2S_LRCLK_Get)())     // if entered low, wait for pin to go high
+        {
+            cnt++;
+            if (cnt > max_cnt)
+            {
+                return false;               // timed out, clock must not be toggling
+            }           
+        }
+        cnt = 0;        
+        while (1==(*dObj->i2sPlib->I2S_LRCLK_Get)())     // if entered high, wait for pin to go low
+        {
+            cnt++;
+            if (cnt > max_cnt)
+            {
+                return false;               // timed out, clock must not be toggling
+            }        
+        }
+        // we now know pin is toggling, wait for next high interval without timeout test
+        while (0==(*dObj->i2sPlib->I2S_LRCLK_Get)());   // wait for low to high transition
+        if (1==(*dObj->i2sPlib->I2S_LRCLK_Get)())       // look once more (takes an additional 70 ns or so))
+        {
+            break;        
+        }
+    }
+    return true;
+}
+
 <#if DRV_I2S_DMA_LL_ENABLE == true>
 __attribute__((__aligned__(32))) static XDMAC_DESCRIPTOR_CONTROL _firstDescriptorControl =
 {

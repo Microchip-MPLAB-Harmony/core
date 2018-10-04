@@ -1321,6 +1321,42 @@ bool DRV_I2S_WriteBuffer( const DRV_HANDLE handle, void * buffer, const size_t s
 */
 bool DRV_I2S_ReadBuffer( const DRV_HANDLE handle, void * buffer, const size_t size);
 
+// *****************************************************************************
+/* Function:
+    uint32_t DRV_I2S_LRCLK_Sync (const DRV_HANDLE handle, const uint32_t sample_rate);
+    
+  Summary:
+    Synchronize to the start of the I2S LRCLK (left/right clock) signal
+    
+  Description:
+    This function waits until low-tohigh transition of the I2S LRCLK (left/right clock)
+    signal (high-low if Left-Jusitified format, this is determined by the PLIB).
+    In the case where this signal is generated from a codec or other external
+    source, this allows the caller to synchronize calls to the DMA with the LRCLK signal
+    so the left/right channel association is valid.
+  
+  Precondition:
+    None.
+  
+  Parameters:
+    None.
+  
+  Returns:
+    true if the function was successful, false if a timeout occurred (no transitions seen)
+    
+  Example:
+    <code>
+        // myI2SHandle is the handle returned
+        // by the DRV_I2S_Open function.
+
+        DRV_I2S_LRCLK_Sync(myI2SHandle, 48000);
+    </code>
+    
+  Remarks:
+    None.                                            
+*/
+bool DRV_I2S_LRCLK_Sync (const DRV_HANDLE handle, const uint32_t sample_rate);
+
 <#if DRV_I2S_DMA_LL_ENABLE == true>
 typedef void (*DRV_I2S_LL_CALLBACK)();
 void DRV_I2S_InitWriteLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW_1* pLinkedListDesc,

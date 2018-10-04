@@ -238,12 +238,12 @@ def instantiateComponent(i2sComponent, index):
     i2sSymSystemInitFile.setSourcePath("driver/i2s/templates/system/system_initialize.c.ftl")
     i2sSymSystemInitFile.setMarkup(True)
 
-# this callback occurs when user connects SSC0 or I2SCx block to I2S driver block in Project Graph    
+# this callback occurs when user connects SSC or I2SCx block to I2S driver block in Project Graph    
 def onDependencyConnected(info):
     global i2sPlibId
     if info["dependencyID"] == "drv_i2s_I2S_dependency":
         plibUsed = info["localComponent"].getSymbolByID("DRV_I2S_PLIB")
-        # info["remoteComponent"].getID() returns ssc0 or 12sc1 for example
+        # info["remoteComponent"].getID() returns ssc or 12sc1 for example
         i2sPlibId = info["remoteComponent"].getID().upper()
         plibUsed.setValue(i2sPlibId, 1)
         if i2sPlibId[:3] == "SSC":
@@ -264,7 +264,7 @@ def onDependencyConnected(info):
             i2sTXRXDMA = info["localComponent"].getSymbolByID("DRV_I2S_TX_RX_DMA")
             i2sTXRXDMA.setValue(True, 1)
 
-# this callback occurs when user disconnects SSC0 or I2SCx block from I2S driver block in Project Graph (or I2S driver is destroyed)    
+# this callback occurs when user disconnects SSC or I2SCx block from I2S driver block in Project Graph (or I2S driver is destroyed)    
 def onDependencyDisconnected(info):
     global dmaChannelRequests
     for dmaChannelRequest in dmaChannelRequests:
