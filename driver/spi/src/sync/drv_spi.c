@@ -724,13 +724,15 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
                 {
                     if (hDriver->transferStatus == DRV_SPI_TRANSFER_STATUS_COMPLETE)
                     {
-                        if ((DATA_CACHE_ENABLED == true) && (rxSize != 0))
+                        if((hDriver->txDMAChannel != SYS_DMA_CHANNEL_NONE) && ((hDriver->rxDMAChannel != SYS_DMA_CHANNEL_NONE)))
                         {
-                            /* Invalidate cache lines having received buffer before using it
-                             * to load the latest data in the actual memory to the cache */
-                            DCACHE_INVALIDATE_BY_ADDR((uint32_t *)pReceiveData, rxSize);
+                            if ((DATA_CACHE_ENABLED == true) && (rxSize != 0))
+                            {
+                                /* Invalidate cache lines having received buffer before using it
+                                 * to load the latest data in the actual memory to the cache */
+                                DCACHE_INVALIDATE_BY_ADDR((uint32_t *)pReceiveData, rxSize);
+                            }
                         }
-
                         isSuccess = true;
                     }
                 }
