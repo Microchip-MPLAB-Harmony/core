@@ -376,7 +376,7 @@ static uint32_t SYS_TIME_GetTotalElapsedCount(SYS_TIME_TIMER_OBJ* tmr)
     uint32_t elapsedCount = 0;
     uint32_t hwTimerCurrentValue;
 
-    /* Add time from all timers in front */
+    /* Add time from all timers in the front */
     while ((tmrActive != NULL) && (tmrActive != tmr))
     {
         pendingCount += tmrActive->relativeTimePending;
@@ -470,18 +470,24 @@ static void SYS_TIME_ClientNotify(void)
         {
             tmrActive->tmrElapsedFlag = true;
             tmrActive->tmrElapsed = true;
-            /* Remove the timer from the linked list. Removing does not clear the
-             * active flag.
-             */
-            SYS_TIME_RemoveFromList(tmrActive);
-            if (tmrActive->type == SYS_TIME_SINGLE)
+
+            if ((tmrActive->type == SYS_TIME_SINGLE) && (tmrActive->callback != NULL))
             {
-                /* Only single shot timers become inactive, periodic timers are
-                 * still running and active. This means, only single shot timers
-                 * can be started from callback and only periodic timers can be
-                 * stopped from callback */
-                tmrActive->active = false;
+                /* Destroy single shot timer for which the callback is registered */
+                SYS_TIME_TimerDestroy(tmrActive->tmrHandle);
             }
+            else
+            {
+                /* For periodic timers and delay timers, just remove from the list */
+                /* Removing from list does not clear active flag */
+                SYS_TIME_RemoveFromList(tmrActive);
+                if (tmrActive->type == SYS_TIME_SINGLE)
+                {
+                    /* Delay timers become inactive after expiry. */
+                    tmrActive->active = false;
+                }
+            }
+
             if(tmrActive->callback != NULL)
             {
                 tmrActive->callback(tmrActive->context);
@@ -552,6 +558,56 @@ static void SYS_TIME_PLIBCallback(uintptr_t context)
     interruptState = SYS_INT_Disable();
     SYS_TIME_HwTimerCompareUpdate();
     SYS_INT_Restore(interruptState);
+}
+
+static SYS_TIME_HANDLE SYS_TIME_TimerObjectCreate(
+    uint32_t count,
+    uint32_t period,
+    SYS_TIME_CALLBACK callBack,
+    uintptr_t context,
+    SYS_TIME_CALLBACK_TYPE type
+)
+{
+    SYS_TIME_HANDLE tmrHandle = SYS_TIME_HANDLE_INVALID;
+    SYS_TIME_TIMER_OBJ *tmr;
+    uint32_t tmrObjIndex = 0;
+
+    if (SYS_TIME_ResourceLock() == false)
+    {
+        return tmrHandle;
+    }
+    if((gSystemCounterObj.status == SYS_STATUS_READY) && (period > 0) && (period >= count))
+    {
+        for(tmr = timers; tmr < &timers[SYS_TIME_MAX_TIMERS]; tmr++)
+        {
+            if(tmr->inUse == false)
+            {
+                tmr->inUse = true;
+                tmr->active = false;
+                tmr->tmrElapsedFlag = false;
+                tmr->tmrElapsed = false;
+                tmr->type = type;
+                tmr->requestedTime = period;
+                tmr->callback = callBack;
+                tmr->context = context;
+                tmr->relativeTimePending = period - count;
+
+                /* Assign a handle to this request. The timer handle must be unique. */
+                tmr->tmrHandle = (SYS_TIME_HANDLE) SYS_TIME_MAKE_HANDLE(gSysTimeTokenCount, tmrObjIndex);
+                /* Update the token number. */
+                gSysTimeTokenCount = SYS_TIME_UPDATE_TOKEN(gSysTimeTokenCount);
+
+                tmrHandle = tmr->tmrHandle;
+
+                break;
+            }
+            tmrObjIndex++;
+        }
+    }
+
+    SYS_TIME_ResourceUnlock();
+
+    return tmrHandle;
 }
 
 static void SYS_TIME_CounterInit(SYS_MODULE_INIT* init)
@@ -738,46 +794,15 @@ SYS_TIME_HANDLE SYS_TIME_TimerCreate(
     SYS_TIME_CALLBACK_TYPE type
 )
 {
-    SYS_TIME_HANDLE tmrHandle = SYS_TIME_HANDLE_INVALID;
-    SYS_TIME_TIMER_OBJ *tmr;
-    uint32_t tmrObjIndex = 0;
-
-    if (SYS_TIME_ResourceLock() == false)
+    /* Single shot timers must register a callback. This check must be performed
+     * here itself as SYS_TIME_TimerObjectCreate are called by delay APIs as well
+     * which are single shot timers with callBack set to NULL. */
+    if ((type == SYS_TIME_SINGLE) && (callBack == NULL))
     {
-        return tmrHandle;
-    }
-    if((gSystemCounterObj.status == SYS_STATUS_READY) && (period > 0) && (period >= count))
-    {
-        for(tmr = timers; tmr < &timers[SYS_TIME_MAX_TIMERS]; tmr++)
-        {
-            if(tmr->inUse == false)
-            {
-                tmr->inUse = true;
-                tmr->active = false;
-                tmr->tmrElapsedFlag = false;
-                tmr->tmrElapsed = false;
-                tmr->type = type;
-                tmr->requestedTime = period;
-                tmr->callback = callBack;
-                tmr->context = context;
-                tmr->relativeTimePending = period - count;
-
-                /* Assign a handle to this request. The timer handle must be unique. */
-                tmr->tmrHandle = (SYS_TIME_HANDLE) SYS_TIME_MAKE_HANDLE(gSysTimeTokenCount, tmrObjIndex);
-                /* Update the token number. */
-                gSysTimeTokenCount = SYS_TIME_UPDATE_TOKEN(gSysTimeTokenCount);
-
-                tmrHandle = tmr->tmrHandle;
-
-                break;
-            }
-            tmrObjIndex++;
-        }
+        return SYS_TIME_HANDLE_INVALID;
     }
 
-    SYS_TIME_ResourceUnlock();
-
-    return tmrHandle;
+    return SYS_TIME_TimerObjectCreate(count, period, callBack, context, type);
 }
 
 SYS_TIME_RESULT SYS_TIME_TimerReload(
@@ -793,6 +818,12 @@ SYS_TIME_RESULT SYS_TIME_TimerReload(
     SYS_TIME_RESULT result = SYS_TIME_ERROR;
 
     if (SYS_TIME_ResourceLock() == false)
+    {
+        return result;
+    }
+
+    /* Single shot timers must register a callback. */
+    if ((type == SYS_TIME_SINGLE) && (callBack == NULL))
     {
         return result;
     }
@@ -930,7 +961,7 @@ SYS_TIME_RESULT SYS_TIME_TimerStop(SYS_TIME_HANDLE handle)
 
 SYS_TIME_RESULT SYS_TIME_TimerCounterGet(SYS_TIME_HANDLE handle, uint32_t* count)
 {
-    SYS_TIME_TIMER_OBJ *tmr = NULL;
+    SYS_TIME_TIMER_OBJ* tmr = NULL;
     SYS_TIME_RESULT result = SYS_TIME_ERROR;
     uint32_t elapsedCount;
 
@@ -956,7 +987,7 @@ SYS_TIME_RESULT SYS_TIME_TimerCounterGet(SYS_TIME_HANDLE handle, uint32_t* count
 
 bool SYS_TIME_TimerPeriodHasExpired(SYS_TIME_HANDLE handle)
 {
-    SYS_TIME_TIMER_OBJ *tmr = NULL;
+    SYS_TIME_TIMER_OBJ* tmr = NULL;
     bool status = false;
 
     if (SYS_TIME_ResourceLock() == false)
@@ -992,7 +1023,7 @@ SYS_TIME_RESULT SYS_TIME_DelayUS ( uint32_t us, SYS_TIME_HANDLE* handle )
         return result;
     }
 
-    *handle = SYS_TIME_TimerCreate(0, SYS_TIME_USToCount(us), NULL, 0, SYS_TIME_SINGLE);
+    *handle = SYS_TIME_TimerObjectCreate(0, SYS_TIME_USToCount(us), NULL, 0, SYS_TIME_SINGLE);
     if(*handle != SYS_TIME_HANDLE_INVALID)
     {
         SYS_TIME_TimerStart(*handle);
@@ -1011,11 +1042,11 @@ SYS_TIME_RESULT SYS_TIME_DelayMS ( uint32_t ms, SYS_TIME_HANDLE* handle )
         return result;
     }
 
-    *handle = SYS_TIME_TimerCreate(0, SYS_TIME_MSToCount(ms), NULL, 0, SYS_TIME_SINGLE);
+    *handle = SYS_TIME_TimerObjectCreate(0, SYS_TIME_MSToCount(ms), NULL, 0, SYS_TIME_SINGLE);
     if(*handle != SYS_TIME_HANDLE_INVALID)
     {
-        result = SYS_TIME_SUCCESS;
         SYS_TIME_TimerStart(*handle);
+        result = SYS_TIME_SUCCESS;
     }
 
     return result;
@@ -1044,9 +1075,15 @@ SYS_TIME_HANDLE SYS_TIME_CallbackRegisterUS ( SYS_TIME_CALLBACK callback, uintpt
 {
     SYS_TIME_HANDLE handle = SYS_TIME_HANDLE_INVALID;
 
+    /* Single shot timers must register a callback. */
+    if ((type == SYS_TIME_SINGLE) && (callback == NULL))
+    {
+        return handle;
+    }
+
     if (us != 0)
     {
-        handle = SYS_TIME_TimerCreate(0, SYS_TIME_USToCount(us), callback, context, type);
+        handle = SYS_TIME_TimerObjectCreate(0, SYS_TIME_USToCount(us), callback, context, type);
         if(handle != SYS_TIME_HANDLE_INVALID)
         {
             SYS_TIME_TimerStart(handle);
@@ -1060,9 +1097,15 @@ SYS_TIME_HANDLE SYS_TIME_CallbackRegisterMS ( SYS_TIME_CALLBACK callback, uintpt
 {
     SYS_TIME_HANDLE handle = SYS_TIME_HANDLE_INVALID;
 
+    /* Single shot timers must register a callback. */
+    if ((type == SYS_TIME_SINGLE) && (callback == NULL))
+    {
+        return handle;
+    }
+
     if (ms != 0)
     {
-        handle = SYS_TIME_TimerCreate(0, SYS_TIME_MSToCount(ms), callback, context, type);
+        handle = SYS_TIME_TimerObjectCreate(0, SYS_TIME_MSToCount(ms), callback, context, type);
         if(handle != SYS_TIME_HANDLE_INVALID)
         {
             SYS_TIME_TimerStart(handle);
