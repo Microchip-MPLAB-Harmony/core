@@ -1006,7 +1006,8 @@ size_t DRV_USART_BufferCompletedBytesGet( DRV_USART_BUFFER_HANDLE bufferHandle )
     bytes to be obtained.
 
   Returns:
-    The success or error event of the buffer.
+    Returns either pending, success or error event for the buffer. Pending means 
+    the buffer is queued but not serviced yet.
 
   Example:
   <code>
@@ -1035,7 +1036,9 @@ size_t DRV_USART_BufferCompletedBytesGet( DRV_USART_BUFFER_HANDLE bufferHandle )
 
     //Check the status of the buffer
     //This call can be used to wait until the buffer is processed.
-    event  = DRV_USART_BufferStatusGet(bufferHandle);
+    while ((event = DRV_USART_BufferStatusGet(bufferHandle)) == DRV_USART_BUFFER_EVENT_PENDING);
+    //Buffer is processed, check the event variable to determine if the buffer request
+    //is executed successfully or not.
   </code>
 
   Remarks:
