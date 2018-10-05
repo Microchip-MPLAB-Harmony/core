@@ -33,6 +33,9 @@ global genAppRtosTaskConfMenu
 global appHeaderFile
 global appSourceFile
 
+# Get the default selected OSAL
+global osalSelectRTOS
+
 genAppTaskMaxCount          = 10
 genAppRtosTaskConfMenu      = []
 genAppTaskConfMenu          = []
@@ -132,7 +135,7 @@ def genAppHeaderFile(symbol, event):
 
 ############################################################################
 
-enableRTOS = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
+enableRTOS = osalSelectRTOS.getValue()
 
 genAppTaskMenu = harmonyCoreComponent.createMenuSymbol("GEN_APP_TASK_MENU", harmonyAppFile)
 genAppTaskMenu.setLabel("Application Configuration")
