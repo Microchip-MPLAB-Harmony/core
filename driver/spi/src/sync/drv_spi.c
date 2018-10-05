@@ -606,15 +606,15 @@ bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP* set
     if((clientObj != NULL) && (setup != NULL))
     {
         hDriver = clientObj->hDriver;
-        
+
         setupRemap = *setup;
 
         setupRemap.clockPolarity = hDriver->remapClockPolarity[setup->clockPolarity];
         setupRemap.clockPhase = hDriver->remapClockPhase[setup->clockPhase];
         setupRemap.dataBits = hDriver->remapDataBits[setup->dataBits];
-        
-        if ((setupRemap.clockPhase != 0xFFFFFFFF) && (setupRemap.clockPolarity != 0xFFFFFFFF) \
-            && (setupRemap.dataBits != 0xFFFFFFFF))
+
+        if ((setupRemap.clockPhase != DRV_SPI_CLOCK_PHASE_INVALID) && (setupRemap.clockPolarity != DRV_SPI_CLOCK_POLARITY_INVALID) \
+            && (setupRemap.dataBits != DRV_SPI_DATA_BITS_INVALID))
         {
             /* Save the required setup in client object which can be used while
              * processing queue requests.

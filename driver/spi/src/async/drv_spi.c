@@ -821,43 +821,35 @@ bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * se
     DRV_SPI_CLIENT_OBJ * clientObj = NULL;
     DRV_SPI_OBJ* hDriver = (DRV_SPI_OBJ *)NULL;
     DRV_SPI_TRANSFER_SETUP setupRemap;
+    bool isSuccess = false;
 
     /* Validate the driver handle */
     clientObj = _DRV_SPI_DriverHandleValidate(handle);
-    if(clientObj == NULL)
+
+    if((clientObj != NULL) && (setup != NULL))
     {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Handle");
-        return false;
+        hDriver = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
+
+        setupRemap = *setup;
+
+        setupRemap.clockPolarity = hDriver->remapClockPolarity[setup->clockPolarity];
+        setupRemap.clockPhase = hDriver->remapClockPhase[setup->clockPhase];
+        setupRemap.dataBits = hDriver->remapDataBits[setup->dataBits];
+
+        if ((setupRemap.clockPhase != DRV_SPI_CLOCK_PHASE_INVALID) && (setupRemap.clockPolarity != DRV_SPI_CLOCK_POLARITY_INVALID) \
+                && (setupRemap.dataBits != DRV_SPI_DATA_BITS_INVALID))
+        {
+            /* Save the required setup in client object which can be used while
+            processing queue requests. */
+            clientObj->setup = setupRemap;
+
+            /* Update the flag denoting that setup has been changed dynamically */
+            clientObj->setupChanged = true;
+
+            isSuccess = true;
+        }
     }
-
-    if(setup == NULL)
-    {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Invalid input setup");
-        return false;
-    }
-
-    hDriver = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
-
-    setupRemap = *setup;
-
-    setupRemap.clockPolarity = hDriver->remapClockPolarity[setup->clockPolarity];
-    setupRemap.clockPhase = hDriver->remapClockPhase[setup->clockPhase];
-    setupRemap.dataBits = hDriver->remapDataBits[setup->dataBits];
-
-    if ((setupRemap.clockPhase != 0xFFFFFFFF) && (setupRemap.clockPolarity != 0xFFFFFFFF) \
-            && (setupRemap.dataBits != 0xFFFFFFFF))
-    {
-        /* Save the required setup in client object which can be used while
-        processing queue requests. */
-        clientObj->setup = setupRemap;
-
-        /* Update the flag denoting that setup has been changed dynamically */
-        clientObj->setupChanged = true;
-
-        return true;
-    }
-
-    return false;
+    return isSuccess;
 }
 
 // *****************************************************************************
