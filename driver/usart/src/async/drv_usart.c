@@ -363,7 +363,7 @@ static void _DRV_USART_TX_PLIB_CallbackHandler( uintptr_t context )
 static DRV_USART_ERROR _DRV_USART_GetErrorType(uint32_t* remapError, uint32_t errorMask)
 {
     DRV_USART_ERROR error = DRV_USART_ERROR_NONE;
-    
+
     for (uint32_t i = 0; i < 3; i++)
     {
         if (remapError[i] == errorMask)
@@ -644,7 +644,7 @@ bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* set
     setupRemap.stopBits=dObj->remapStopBits[setup->stopBits];
     setupRemap.baudRate=setup->baudRate;
 
-    if( (setupRemap.dataWidth !=0xFFFFFFFF) && (setupRemap.parity != 0xFFFFFFFF) && (setupRemap.stopBits != 0xFFFFFFFF))
+    if((setupRemap.dataWidth != DRV_USART_DATA_BIT_INVALID) && (setupRemap.parity != DRV_USART_PARITY_INVALID) && (setupRemap.stopBits != DRV_USART_STOP_BIT_INVALID))
     {
         /* Clock source cannot be modified dynamically, so passing the '0' to pick
          * the configured clock source value */
