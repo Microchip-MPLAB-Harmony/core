@@ -137,7 +137,7 @@ static bool _DRV_SPI_StartDMATransfer(
     hDriver->rxDummyDataSize = 0;
     hDriver->pNextTransmitData = (uintptr_t)NULL;
 
-    if(clientObj->setup.dataBits == DRV_SPI_DATA_BITS_8_BIT)
+    if(clientObj->setup.dataBits == DRV_SPI_DATA_BITS_8)
     {
         SYS_DMA_DataWidthSetup(hDriver->rxDMAChannel, DRV_SPI_DMA_WIDTH_8_BIT);
         SYS_DMA_DataWidthSetup(hDriver->txDMAChannel, DRV_SPI_DMA_WIDTH_8_BIT);

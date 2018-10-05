@@ -230,7 +230,7 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
     SYS_DMA_ChannelCallbackRegister(hDriver->txDMAChannel, _DRV_SPI_TX_DMA_CallbackHandler, (uintptr_t)transferObj);
     SYS_DMA_ChannelCallbackRegister(hDriver->rxDMAChannel, _DRV_SPI_RX_DMA_CallbackHandler, (uintptr_t)transferObj);
 
-    if(clientObj->setup.dataBits == DRV_SPI_DATA_BITS_8_BIT)
+    if(clientObj->setup.dataBits == DRV_SPI_DATA_BITS_8)
     {
         SYS_DMA_DataWidthSetup(hDriver->rxDMAChannel, DRV_SPI_DMA_WIDTH_8_BIT);
         SYS_DMA_DataWidthSetup(hDriver->txDMAChannel, DRV_SPI_DMA_WIDTH_8_BIT);
@@ -929,7 +929,7 @@ void DRV_SPI_WriteReadTransferAdd
         transferObj->pTransmitData  = pTransmitData;
         transferObj->event          = DRV_SPI_TRANSFER_EVENT_PENDING;
         transferObj->nextIndex      = NULL_INDEX;
-        if((hDriver->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (hDriver->rxDMAChannel != SYS_DMA_CHANNEL_NONE) && (clientObj->setup.dataBits != DRV_SPI_DATA_BITS_8_BIT))
+        if((hDriver->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (hDriver->rxDMAChannel != SYS_DMA_CHANNEL_NONE) && (clientObj->setup.dataBits != DRV_SPI_DATA_BITS_8))
         {
             /* If its DMA mode and SPI data bits is other than 8 bit, then divide transmit sizes by 2 */
             transferObj->txSize = txSize >> 1;

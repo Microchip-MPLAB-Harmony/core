@@ -91,15 +91,15 @@ typedef enum
 
 typedef enum
 {
-    DRV_SPI_DATA_BITS_8_BIT = 0,
-    DRV_SPI_DATA_BITS_9_BIT = 1,
-    DRV_SPI_DATA_BITS_10_BIT = 2,
-    DRV_SPI_DATA_BITS_11_BIT = 3,
-    DRV_SPI_DATA_BITS_12_BIT = 4,
-    DRV_SPI_DATA_BITS_13_BIT = 5,
-    DRV_SPI_DATA_BITS_14_BIT = 6,
-    DRV_SPI_DATA_BITS_15_BIT = 7,
-    DRV_SPI_DATA_BITS_16_BIT = 8,
+    DRV_SPI_DATA_BITS_8 = 0,
+    DRV_SPI_DATA_BITS_9 = 1,
+    DRV_SPI_DATA_BITS_10 = 2,
+    DRV_SPI_DATA_BITS_11 = 3,
+    DRV_SPI_DATA_BITS_12 = 4,
+    DRV_SPI_DATA_BITS_13 = 5,
+    DRV_SPI_DATA_BITS_14 = 6,
+    DRV_SPI_DATA_BITS_15 = 7,
+    DRV_SPI_DATA_BITS_16 = 8,
 
     /* Force the compiler to reserve 32-bit memory space for each enum */
     DRV_SPI_DATA_BITS_INVALID = 0xFFFFFFFF
