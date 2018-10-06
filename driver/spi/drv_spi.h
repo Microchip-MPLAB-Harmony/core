@@ -492,6 +492,9 @@ void DRV_SPI_Close( const DRV_HANDLE handle);
     client scenario where different clients need different setup like baud rate,
     clock settings, chip select etc, then also calling this API is mandatory.
 
+    Note that all the elements of setup structure must be filled appropriately
+    before using this API.
+
   Preconditions:
     DRV_SPI_Open must have been called to obtain a valid opened device handle.
 
@@ -570,6 +573,8 @@ bool DRV_SPI_TransferSetup ( DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * setup )
 
   Precondition:
     DRV_SPI_Open must have been called to obtain a valid opened device handle.
+    DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
+    chip select or any of the setup parameters has to be changed dynamically.
 
   Parameters:
     handle -    Handle of the communication channel as returned by the
@@ -674,6 +679,8 @@ void DRV_SPI_WriteReadTransferAdd(
 
   Precondition:
     DRV_SPI_Open must have been called to obtain a valid opened device handle.
+    DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
+    chip select or any of the setup parameters has to be changed dynamically.
 
   Parameters:
     handle -    Handle of the communication channel as returned by the
@@ -760,6 +767,8 @@ void DRV_SPI_WriteTransferAdd(
 
   Precondition:
     DRV_SPI_Open must have been called to obtain a valid opened device handle.
+    DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
+    chip select or any of the setup parameters has to be changed dynamically.
 
   Parameters:
     handle -    Handle of the communication channel as returned by the
@@ -996,6 +1005,8 @@ DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE t
 
   Precondition:
     DRV_SPI_Open must have been called to obtain a valid opened device handle.
+    DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
+    chip select or any of the setup parameters has to be changed dynamically.
 
   Parameters:
     handle -    Handle of the communication channel as returned by the
@@ -1056,6 +1067,8 @@ bool DRV_SPI_WriteTransfer(const DRV_HANDLE handle, void* pTransmitData,  size_t
 
   Precondition:
     DRV_SPI_Open must have been called to obtain a valid opened device handle.
+    DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
+    chip select or any of the setup parameters has to be changed dynamically.
 
   Parameters:
     handle -    Handle of the communication channel as returned by the
@@ -1118,6 +1131,8 @@ bool DRV_SPI_ReadTransfer(const DRV_HANDLE handle, void* pReceiveData,  size_t r
 
   Precondition:
     DRV_SPI_Open must have been called to obtain a valid opened device handle.
+    DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
+    chip select or any of the setup parameters has to be changed dynamically.
 
   Parameters:
     handle -    Handle of the communication channel as returned by the

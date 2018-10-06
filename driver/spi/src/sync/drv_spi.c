@@ -507,6 +507,8 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             clientObj->hDriver = dObj;
 
             clientObj->ioIntent = ioIntent;
+            clientObj->setup.chipSelect = SYS_PORT_PIN_NONE;
+            clientObj->setupChanged = false;
 
             if(ioIntent & DRV_IO_INTENT_EXCLUSIVE)
             {
