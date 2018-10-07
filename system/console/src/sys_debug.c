@@ -343,15 +343,15 @@ void SYS_DEBUG_Print(const char *format, ...)
 
     va_start( args, format );
 
-    len = vsnprintf(tmpBuf, gblErrLvl, format, args);
+    len = vsnprintf(tmpBuf, SYS_DEBUG_PRINT_BUFFER_SIZE, format, args);
 
     va_end( args );
 
-    if (len > 0 && len < gblErrLvl)
+    if (len > 0 && len < SYS_DEBUG_PRINT_BUFFER_SIZE)
     {
         tmpBuf[len] = '\0';
 
-        if (len + sysDebugInstance.prtBufPtr >= gblErrLvl)
+        if (len + sysDebugInstance.prtBufPtr >= SYS_DEBUG_PRINT_BUFFER_SIZE)
         {
             sysDebugInstance.prtBufPtr = 0;
         }
