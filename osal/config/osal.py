@@ -71,7 +71,7 @@ def genOsalFiles(symbol, event):
 ############################################################################
 #### Code Generation ####
 ############################################################################
-osal = harmonyCoreComponent.createBooleanSymbol("ENABLE_OSAL", coreMenu)
+osal = harmonyCoreComponent.createBooleanSymbol("ENABLE_OSAL", None)
 osal.setLabel("Enable OSAL")
 osal.setDefaultValue(False)
 osal.setDependencies(enableOSAL, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON"])

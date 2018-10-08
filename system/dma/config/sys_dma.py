@@ -45,11 +45,11 @@ def enableDependencySymbols(symbol, event):
 #### Code Generation ####
 ############################################################################
 
-genSysDMACommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_DMA", coreMenu)
+genSysDMACommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_DMA", None)
 genSysDMACommonFiles.setLabel("Enable System DMA")
 genSysDMACommonFiles.setDefaultValue(False)
 
-enableDependency = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_DMA_DEPENDENCY", coreMenu)
+enableDependency = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_DMA_DEPENDENCY", None)
 enableDependency.setLabel("Enable System DMA Dependencies")
 enableDependency.setVisible(False)
 enableDependency.setDependencies(enableDependencySymbols, ["ENABLE_SYS_DMA"])

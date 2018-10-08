@@ -35,11 +35,12 @@ def genSystemFiles(symbol, event):
 #### Code Generation ####
 ############################################################################
 
-genSystemCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_COMMON", coreMenu)
+genSystemCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_COMMON", None)
 genSystemCommonFiles.setLabel("Generate Harmony System Service Common Files")
+genSystemCommonFiles.setVisible(False)
 genSystemCommonFiles.setDefaultValue(False)
 
-genSystemMediaFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_MEDIA", coreMenu)
+genSystemMediaFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_MEDIA", None)
 genSystemMediaFiles.setLabel("Generate Harmony System Media Files")
 genSystemMediaFiles.setDefaultValue(False)
 genSystemMediaFiles.setVisible(False)

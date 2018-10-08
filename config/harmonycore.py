@@ -63,10 +63,7 @@ def instantiateComponent(harmonyCoreComponent):
     autoComponentIDTable = ["FreeRTOS"]
     res = Database.activateComponents(autoComponentIDTable)
 
-    coreMenu = harmonyCoreComponent.createMenuSymbol("HARMONY_CORE_MENU", None)
-    coreMenu.setLabel("Harmony Core Configuration")
-
-    harmonyAppFile = harmonyCoreComponent.createBooleanSymbol("ENABLE_APP_FILE", coreMenu)
+    harmonyAppFile = harmonyCoreComponent.createBooleanSymbol("ENABLE_APP_FILE", None)
     harmonyAppFile.setLabel("Generate Harmony Application Files")
     harmonyAppFile.setDefaultValue(False)
     harmonyAppFile.setDependencies(enableAppFile, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON"])

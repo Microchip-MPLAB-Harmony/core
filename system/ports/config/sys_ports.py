@@ -39,7 +39,7 @@ def genPortsSystemDefFile(symbol, event):
 ############################################################################
 #### Code Generation ####
 ############################################################################
-genSysPortsCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_PORTS", coreMenu)
+genSysPortsCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_PORTS", None)
 genSysPortsCommonFiles.setLabel("Enable System Ports")
 genSysPortsCommonFiles.setDefaultValue(False)
 

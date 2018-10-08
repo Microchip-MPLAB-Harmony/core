@@ -45,7 +45,7 @@ def genSysIntFiles(symbol, event):
 ############################################################################
 #### Code Generation ####
 ############################################################################
-sysInt = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_INT", coreMenu)
+sysInt = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_INT", None)
 sysInt.setLabel("Enable System Interrupt")
 sysInt.setDefaultValue(False)
 sysInt.setDependencies(enableSysInt, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON"])
