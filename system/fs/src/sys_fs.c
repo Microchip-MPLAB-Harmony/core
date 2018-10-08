@@ -2092,7 +2092,7 @@ SYS_FS_RESULT SYS_FS_FilePrintf
     int fileStatus = SYS_FS_ERROR_NOT_READY;
     SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
     int res = 0;
-    va_list ap;
+    va_list ap = (va_list){0};
     const char *ptr;
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
 
