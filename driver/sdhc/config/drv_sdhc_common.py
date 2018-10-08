@@ -48,6 +48,8 @@ def instantiateComponent(sdhcCommonComponent):
     
     res = Database.activateComponents(["HarmonyCore"])
 
+    res = Database.activateComponents(["sys_time"])
+
     sdhcInstances = sdhcCommonComponent.createIntegerSymbol("DRV_SDHC_INSTANCES_NUMBER", None)
     sdhcInstances.setLabel("Number of SDHC Instances")
     sdhcInstances.setDefaultValue(1)
