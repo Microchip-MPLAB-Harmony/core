@@ -52,7 +52,6 @@
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/mpu/plib_mpu.h"
-#include "peripheral/systick/plib_systick.h"
 #include "bsp/bsp.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"

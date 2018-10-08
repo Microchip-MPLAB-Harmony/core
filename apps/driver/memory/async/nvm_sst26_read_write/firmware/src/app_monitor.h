@@ -57,7 +57,6 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
-#include "peripheral/systick/plib_systick.h"
 #include "bsp/bsp.h"
 
 // DOM-IGNORE-BEGIN

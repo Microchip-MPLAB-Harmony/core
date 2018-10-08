@@ -115,7 +115,7 @@ APP_MONITOR_DATA app_monitorData;
 
 void APP_MONITOR_Initialize ( void )
 {
-    SYSTICK_TimerStart();
+    
 }
 
 
@@ -131,9 +131,7 @@ void APP_MONITOR_Tasks ( void )
 {
     if (appSST26Data.state == APP_SST26_STATE_SUCCESS && appNvmData.state == APP_NVM_STATE_SUCCESS)
     {
-        SYSTICK_DelayMs(1000);
-
-        LED1_Toggle();
+        LED1_On();
     }
 }
 
