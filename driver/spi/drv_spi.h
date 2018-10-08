@@ -126,12 +126,13 @@ typedef uintptr_t DRV_SPI_TRANSFER_HANDLE;
     DRV_SPI_WriteReadTransferAdd functions.
 
    Remarks:
-    One of these values is passed in the "event" parameter of the event
-    handling callback function that the client registered with the driver by
-    calling the DRV_SPI_TransferEventHandlerSet function when a
-    transfer request is completed.
+    Either DRV_SPI_TRANSFER_EVENT_COMPLETE or DRV_SPI_TRANSFER_EVENT_ERROR
+    is passed in the "event" parameter of the event handling callback
+    function that the client registered with the driver by calling the
+    DRV_SPI_TransferEventHandlerSet function when a transfer request is
+    completed.
 
-    When status polling is used, one of these events is returned by
+    When status polling is used, any one of these events is returned by
     DRV_SPI_TransferStatusGet function.
 */
 
@@ -143,11 +144,17 @@ typedef enum
     /* All data were transfered successfully. */
     DRV_SPI_TRANSFER_EVENT_COMPLETE = 1,
 
+    /* Transfer Handle given is expired. It means transfer
+    is completed but with or without error is not known.
+    In case of Non-DMA transfer, since there is no possibility
+    of error, it can be assumed same as DRV_SPI_TRANSFER_EVENT_COMPLETE  */
+    DRV_SPI_TRANSFER_EVENT_HANDLE_EXPIRED = 2,
+
     /* There was an error while processing transfer request. */
     DRV_SPI_TRANSFER_EVENT_ERROR = -1,
 
-    /* Transfer Handle given is invalid or expired */
-    DRV_SPI_TRANSFER_HANDLE_INVALID_OR_EXPIRED = -2
+    /* Transfer Handle given is invalid */
+    DRV_SPI_TRANSFER_EVENT_HANDLE_INVALID = -2
 
 } DRV_SPI_TRANSFER_EVENT;
 

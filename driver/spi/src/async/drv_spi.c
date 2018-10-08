@@ -1077,7 +1077,7 @@ DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE t
     if(drvInstance >= DRV_SPI_INSTANCES_NUMBER)
     {
         SYS_DEBUG(SYS_ERROR_ERROR, "Transfer Handle Invalid");
-        return DRV_SPI_TRANSFER_HANDLE_INVALID_OR_EXPIRED;
+        return DRV_SPI_TRANSFER_EVENT_HANDLE_INVALID;
     }
 
     dObj = (DRV_SPI_OBJ*)&gDrvSPIObj[drvInstance];
@@ -1089,12 +1089,12 @@ DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE t
     if(transferIndex >= dObj->transferQueueSize)
     {
         SYS_DEBUG(SYS_ERROR_ERROR, "Transfer Handle Invalid");
-        return DRV_SPI_TRANSFER_HANDLE_INVALID_OR_EXPIRED;
+        return DRV_SPI_TRANSFER_EVENT_HANDLE_INVALID;
     }
     else if(transferHandle != dObj->transferArray[transferIndex].transferHandle)
     {
         SYS_DEBUG(SYS_ERROR_ERROR, "Transfer Handle Expired");
-        return DRV_SPI_TRANSFER_HANDLE_INVALID_OR_EXPIRED;
+        return DRV_SPI_TRANSFER_EVENT_HANDLE_EXPIRED;
     }
     else
     {
