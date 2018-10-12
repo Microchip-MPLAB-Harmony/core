@@ -28,7 +28,6 @@
             </logicalFolder>
             <logicalFolder name="f2" displayName="pio" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult_freertos/peripheral/pio/plib_pio.h</itemPath>
-              <itemPath>../src/config/sam_e70_xult_freertos/peripheral/pio/plib_pio_pin.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="twihs" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult_freertos/peripheral/twihs/plib_twihs_master.h</itemPath>
@@ -263,7 +262,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME70_DFP" vendor="Atmel" version="2.4.123"/>
+        <pack name="SAME70_DFP" vendor="Atmel" version="2.4.129"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>

@@ -263,7 +263,7 @@ void APP_Initialize ( void )
     appData.hReadTransfer  = DRV_I2C_TRANSFER_HANDLE_INVALID;
     
     /* Initialize the success LED */
-    LED1_Off();
+    LED_OFF();
 }
 
 /******************************************************************************
@@ -452,7 +452,7 @@ void APP_Tasks ( void )
         case APP_STATE_SUCCESS:
         {
             /* On success make LED 0 on*/
-            LED1_On();
+            LED_ON();
             appData.state = APP_STATE_DONE;
             break;
         }
