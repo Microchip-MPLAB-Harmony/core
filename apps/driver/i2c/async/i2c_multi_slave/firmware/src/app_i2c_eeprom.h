@@ -57,7 +57,6 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
-#include "bsp/bsp.h"
 #include "driver/i2c/drv_i2c.h"
 #include "driver/i2c/drv_i2c.h"
 #include "peripheral/twihs/plib_twihs0.h"
