@@ -293,7 +293,7 @@ void APP_Tasks ( void )
             /* The application comes here when the demo has completed
              * successfully. Glow LED. */
             SYS_FS_FileClose(appData.fileHandle_2);
-            LED1_On();
+            LED_ON();
             break;
         }
 
