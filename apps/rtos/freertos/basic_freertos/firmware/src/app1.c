@@ -150,7 +150,7 @@ void APP1_Tasks ( void )
      */
     if( ulReceivedValue == 1000UL )
     {
-        LED1_Toggle();
+        LED_TOGGLE();
         vTaskDelay((TickType_t)ulReceivedValue);
     }
 

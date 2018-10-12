@@ -1,24 +1,16 @@
 /*******************************************************************************
-  MPLAB Harmony Application Source File
-
-  Company:
-    Microchip Technology Inc.
+  System Initialization File
 
   File Name:
-    app2.c
+    initialization.c
 
   Summary:
-    This file contains the source code for the MPLAB Harmony application.
+    This file contains source code necessary to initialize the system.
 
   Description:
-    This file contains the source code for the MPLAB Harmony application.  It
-    implements the logic of the application's state machine and it may call
-    API routines of other MPLAB Harmony modules in the system, such as drivers,
-    system services, and middleware.  However, it does not call any of the
-    system interfaces (such as the "Initialize" and "Tasks" functions) of any of
-    the modules in the system or make any assumptions about when those functions
-    are called.  That is the responsibility of the configuration-specific system
-    files.
+    This file contains source code necessary to initialize the system.  It
+    implements the "SYS_Initialize" function, defines the configuration bits,
+    and allocates any necessary global system resources,
  *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -46,117 +38,84 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
-#include "app2.h"
-#include "queue.h"
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Global Data Definitions
-// *****************************************************************************
-// *****************************************************************************
-
-// *****************************************************************************
-/* Application Data
-
-  Summary:
-    Holds application data
-
-  Description:
-    This structure holds the application's data.
-
-  Remarks:
-    This structure should be initialized by the APP2_Initialize function.
-
-    Application strings and buffers are be defined outside this structure.
-*/
-
-APP2_DATA app2Data;
-/* The queue used by both tasks. */
-extern QueueHandle_t xQueue;
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Application Callback Functions
-// *****************************************************************************
-// *****************************************************************************
-
-/* TODO:  Add any necessary callback functions.
-*/
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Application Local Functions
-// *****************************************************************************
-// *****************************************************************************
+#include "configuration.h"
+#include "definitions.h"
 
 
-/* TODO:  Add any necessary local functions.
-*/
+// ****************************************************************************
+// ****************************************************************************
+// Section: Configuration Bits
+// ****************************************************************************
+// ****************************************************************************
 
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Application Initialization and State Machine Functions
+// Section: Driver Initialization Data
 // *****************************************************************************
 // *****************************************************************************
+
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: System Data
+// *****************************************************************************
+// *****************************************************************************
+/* Structure to hold the object handles for the modules in the system. */
+SYSTEM_OBJECTS sysObj;
+// *****************************************************************************
+// *****************************************************************************
+// Section: Library/Stack Initialization Data
+// *****************************************************************************
+// *****************************************************************************
+
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: System Initialization
+// *****************************************************************************
+// *****************************************************************************
+
 
 /*******************************************************************************
   Function:
-    void APP2_Initialize ( void )
+    void SYS_Initialize ( void *data )
+
+  Summary:
+    Initializes the board, services, drivers, application and other modules.
 
   Remarks:
-    See prototype in app2.h.
  */
 
-void APP2_Initialize ( void )
+void SYS_Initialize ( void* data )
 {
-    /* Place the App state machine in its initial state. */
-    app2Data.state = APP2_STATE_INIT;
+    CLK_Initialize();
+	PIO_Initialize();
+
+    NVIC_Initialize();
+	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
+
+	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
+
+	BSP_Initialize();
 
 
 
-    /* TODO: Initialize your application's state machine and other
-     * parameters.
-     */
-}
+
+    APP_Initialize();
+    APP1_Initialize();
+    APP2_Initialize();
 
 
-/******************************************************************************
-  Function:
-    void APP2_Tasks ( void )
-
-  Remarks:
-    See prototype in app2.h.
- */
-
-void APP2_Tasks ( void )
-{
-    unsigned long ulReceivedValue = 0;
-
-    /* Wait until something arrives in the queue - this task will block
-     * indefinitely provided INCLUDE_vTaskSuspend is set to 1 in
-     * FreeRTOSConfig.h.
-     */
-    xQueueReceive( xQueue, &ulReceivedValue, portMAX_DELAY );
-
-    /* To get here something must have been received from the queue, but
-     * is it the expected value?  If it is, toggle the LED.
-     */
-    if( ulReceivedValue == 100UL )
-    {
-        LED_TOGGLE();
-        vTaskDelay((TickType_t)ulReceivedValue);
-    }
 }
 
 
 /*******************************************************************************
  End of File
- */
+*/
+

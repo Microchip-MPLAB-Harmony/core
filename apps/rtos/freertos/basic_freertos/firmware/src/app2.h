@@ -57,7 +57,6 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
-#include "bsp/bsp.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
