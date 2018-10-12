@@ -58,7 +58,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "configuration.h"
-#include "bsp/bsp.h"
 #include "system/fs/sys_fs.h"
 
 // DOM-IGNORE-BEGIN

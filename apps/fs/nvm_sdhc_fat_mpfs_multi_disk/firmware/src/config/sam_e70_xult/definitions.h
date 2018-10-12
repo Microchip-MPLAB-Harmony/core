@@ -67,7 +67,7 @@
 #include "system/fs/fat_fs/src/hardware_access/diskio.h"
 #include "system/fs/mpfs/mpfs.h"
 #include "system/time/sys_time.h"
-#include "peripheral/tc/plib_TC0.h"
+#include "peripheral/tc/plib_tc0.h"
 #include "app.h"
 
 

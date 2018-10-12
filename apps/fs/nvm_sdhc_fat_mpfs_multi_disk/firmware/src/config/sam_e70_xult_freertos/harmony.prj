@@ -499,8 +499,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5AB38A095D10CA7C70548B03F095E53D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5AB38A095D10CA7C70548B03F095E53D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3B1F9E9EF5FBD91D06AEAD873E6EFB0D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3B1F9E9EF5FBD91D06AEAD873E6EFB0D</UserChecksum>
         </File>
         <File dnOrder="62">
           <Type dnOrder="0">HEADER</Type>
@@ -1219,8 +1219,8 @@
           <Name dnOrder="1">user.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4B3C3EF8A318908A22B78500515C3288</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4B3C3EF8A318908A22B78500515C3288</UserChecksum>
+          <GeneratedChecksum dnOrder="4"/>
+          <UserChecksum dnOrder="5"/>
         </File>
         <File dnOrder="152">
           <Type dnOrder="0">HEADER</Type>
