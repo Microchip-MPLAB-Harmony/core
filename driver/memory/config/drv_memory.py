@@ -208,7 +208,7 @@ def instantiateComponent(memoryComponent, index):
             enable_rtos_settings = True
 
     # RTOS Settings 
-    memoryRTOSMenu = memoryComponent.createMenuSymbol(None, None)
+    memoryRTOSMenu = memoryComponent.createMenuSymbol("DRV_MEMORY_RTOS_MENU", None)
     memoryRTOSMenu.setLabel("RTOS settings")
     memoryRTOSMenu.setDescription("RTOS settings")
     memoryRTOSMenu.setVisible(enable_rtos_settings)

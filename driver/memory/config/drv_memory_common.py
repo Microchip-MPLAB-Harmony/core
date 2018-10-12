@@ -59,6 +59,11 @@ def instantiateComponent(memoryCommonComponent):
 
     res = Database.activateComponents(["HarmonyCore"])
 
+    memory_default_mode = 1
+
+    if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
+        memory_default_mode = 0
+
     memoryCommonMode = memoryCommonComponent.createKeyValueSetSymbol("DRV_MEMORY_COMMON_MODE", None)
     memoryCommonMode.setLabel("Driver Mode")
     memoryCommonMode.addKey("ASYNC", "0", "Asynchronous")
@@ -66,7 +71,7 @@ def instantiateComponent(memoryCommonComponent):
     memoryCommonMode.setDisplayMode("Description")
     memoryCommonMode.setOutputMode("Key")
     memoryCommonMode.setVisible(True)
-    memoryCommonMode.setDefaultValue((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"))
+    memoryCommonMode.setDefaultValue(memory_default_mode)
 
     memorySysTimeEnable = memoryCommonComponent.createBooleanSymbol("DRV_MEMORY_COMMON_SYS_TIME_ENABLE", None)
     memorySysTimeEnable.setLabel("Enable Timer System Service")
