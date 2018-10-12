@@ -57,7 +57,6 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
-#include "bsp/bsp.h"
 #include "system/fs/sys_fs.h"
 #include "nvm_disk_images.h"
 

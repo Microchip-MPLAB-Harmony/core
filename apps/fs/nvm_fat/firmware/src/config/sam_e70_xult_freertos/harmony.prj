@@ -467,8 +467,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3B442739700D6DE5BC64B1A65F36C9EA</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3B442739700D6DE5BC64B1A65F36C9EA</UserChecksum>
+          <GeneratedChecksum dnOrder="4">7E2E949FBB13A7BF62FBD6E06229DAC2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7E2E949FBB13A7BF62FBD6E06229DAC2</UserChecksum>
         </File>
         <File dnOrder="58">
           <Type dnOrder="0">HEADER</Type>
