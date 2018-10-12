@@ -63,7 +63,7 @@
 #include "peripheral/efc/plib_efc.h"
 #include "peripheral/qspi/plib_qspi.h"
 #include "system/time/sys_time.h"
-#include "peripheral/tc/plib_TC0.h"
+#include "peripheral/tc/plib_tc0.h"
 #include "app_sst26.h"
 #include "app_nvm.h"
 #include "app_monitor.h"
