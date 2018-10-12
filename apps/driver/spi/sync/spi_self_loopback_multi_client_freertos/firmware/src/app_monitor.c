@@ -130,7 +130,7 @@ void APP_MONITOR_Tasks ( void )
     if ((APP_CLIENT1_GetStatus() == APP_SUCCESS) && \
             (APP_CLIENT2_GetStatus() == APP_SUCCESS))
     {
-        LED1_Toggle();
+        LED_Toggle();
     }
 }
 

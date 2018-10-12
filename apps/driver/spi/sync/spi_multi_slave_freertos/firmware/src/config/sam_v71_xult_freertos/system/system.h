@@ -1,20 +1,27 @@
 /*******************************************************************************
-  User Configuration Header
+  Driver Layer Interface Header
+
+  Company:
+    Microchip Technology Inc.
 
   File Name:
-    user.h
+    driver.h
 
   Summary:
-    Build-time configuration header for the user defined by this project.
+    Driver layer data types and definitions.
 
   Description:
-    An MPLAB Project may have multiple configurations.  This file defines the
-    build-time options for a single configuration.
+    This file defines the common macros and definitions for the driver layer
+    modules.
 
   Remarks:
-    It only provides macro definitions for build-time configuration options
+    The parent directory to the "system" directory should be added to the
+    compiler's search path for header files such that the following include
+    statement will successfully include this file.
 
-*******************************************************************************/
+    #include "system/system.h"
+ *******************************************************************************/
+
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
@@ -37,36 +44,25 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
-*******************************************************************************/
+ *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef USER_H
-#define USER_H
+#ifndef SYSTEM_H
+#define SYSTEM_H
 
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-extern "C" {
-
-#endif
-// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: User Configuration macros
+// Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-#define LED_On()                    LED1_On()
-#define LED_Off()                   LED1_Off()
-#define LED_Toggle()                LED1_Toggle()
 
-//DOM-IGNORE-BEGIN
-#ifdef __cplusplus
-}
-#endif
-//DOM-IGNORE-END
+#include "system/system_common.h"
+#include "system/system_module.h"
 
-#endif // USER_H
+
+#endif // SYSTEM_H
 /*******************************************************************************
  End of File
 */
+

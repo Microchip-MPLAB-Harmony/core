@@ -1,25 +1,23 @@
 /*******************************************************************************
-  MPLAB Harmony Application Source File
-
-  Company:
-    Microchip Technology Inc.
+  System Configuration Header
 
   File Name:
-    app_monitor.c
+    configuration.h
 
   Summary:
-    This file contains the source code for the MPLAB Harmony application.
+    Build-time configuration header for the system defined by this project.
 
   Description:
-    This file contains the source code for the MPLAB Harmony application.  It
-    implements the logic of the application's state machine and it may call
-    API routines of other MPLAB Harmony modules in the system, such as drivers,
-    system services, and middleware.  However, it does not call any of the
-    system interfaces (such as the "Initialize" and "Tasks" functions) of any of
-    the modules in the system or make any assumptions about when those functions
-    are called.  That is the responsibility of the configuration-specific system
-    files.
- *******************************************************************************/
+    An MPLAB Project may have multiple configurations.  This file defines the
+    build-time options for a single configuration.
+
+  Remarks:
+    This configuration header must not define any prototypes or data
+    definitions (or include any files that do).  It only provides macro
+    definitions for build-time configuration options
+
+*******************************************************************************/
+
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
@@ -45,96 +43,84 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
+#ifndef CONFIGURATION_H
+#define CONFIGURATION_H
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
-#include "app_monitor.h"
-#include "app_eeprom1.h"
-#include "app_eeprom2.h"
-#include "bsp/bsp.h"
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Global Data Definitions
-// *****************************************************************************
-// *****************************************************************************
-
-// *****************************************************************************
-/* Application Data
-
-  Summary:
-    Holds application data
-
-  Description:
-    This structure holds the application's data.
-
-  Remarks:
-    This structure should be initialized by the APP_MONITOR_Initialize function.
-
-    Application strings and buffers are be defined outside this structure.
+/*  This section Includes other configuration headers necessary to completely
+    define this configuration.
 */
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Application Callback Functions
-// *****************************************************************************
-// *****************************************************************************
+#include "user.h"
 
-/* TODO:  Add any necessary callback functions.
-*/
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Application Local Functions
-// *****************************************************************************
-// *****************************************************************************
+extern "C" {
 
-
-/* TODO:  Add any necessary local functions.
-*/
-
+#endif
+// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Application Initialization and State Machine Functions
+// Section: System Configuration
+// *****************************************************************************
+// *****************************************************************************
+#define DCACHE_CLEAN_BY_ADDR(data, size)       SCB_CleanDCache_by_Addr((uint32_t *)data, size)
+#define DCACHE_INVALIDATE_BY_ADDR(data, size)  SCB_InvalidateDCache_by_Addr((uint32_t *)data, size)
+
+#define DATA_CACHE_ENABLED                     true
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: System Service Configuration
 // *****************************************************************************
 // *****************************************************************************
 
-/*******************************************************************************
-  Function:
-    void APP_MONITOR_Initialize ( void )
 
-  Remarks:
-    See prototype in app_monitor.h.
- */
+// *****************************************************************************
+// *****************************************************************************
+// Section: Driver Configuration
+// *****************************************************************************
+// *****************************************************************************
+/* SPI Driver Common Configuration Options */
+#define DRV_SPI_INSTANCES_NUMBER              1
 
-void APP_MONITOR_Initialize ( void )
-{
+/* SPI Driver Instance 0 Configuration Options */
+#define DRV_SPI_INDEX_0                       0
+#define DRV_SPI_CLIENTS_NUMBER_IDX0           2
+
+#define DRV_SPI_DMA_MODE
+#define DRV_SPI_XMIT_DMA_CH_IDX0              SYS_DMA_CHANNEL_0
+#define DRV_SPI_RCV_DMA_CH_IDX0               SYS_DMA_CHANNEL_1
+
+
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Middleware & Other Library Configuration
+// *****************************************************************************
+// *****************************************************************************
+
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Application Configuration
+// *****************************************************************************
+// *****************************************************************************
+
+
+//DOM-IGNORE-BEGIN
+#ifdef __cplusplus
 }
+#endif
+//DOM-IGNORE-END
 
-
-/******************************************************************************
-  Function:
-    void APP_MONITOR_Tasks ( void )
-
-  Remarks:
-    See prototype in app_monitor.h.
- */
-
-void APP_MONITOR_Tasks ( void )
-{
-    /* Monitor the status of APP_EEPROM1_Task and APP_EEPROM2_Task and blink LED if success */
-    if ((APP_EEPROM1_Task_GetStatus() == APP_SUCCESS) && \
-            (APP_EEPROM2_Task_GetStatus() == APP_SUCCESS))
-    {
-        LED_Toggle();
-    }
-}
-
-
+#endif // CONFIGURATION_H
 /*******************************************************************************
  End of File
- */
+*/

@@ -1,22 +1,23 @@
 /*******************************************************************************
-  User Configuration Header
+  DMA System Service Mapping File
+
+  Company:
+    Microchip Technology Inc.
 
   File Name:
-    user.h
+    sys_dma_mapping.h
 
   Summary:
-    Build-time configuration header for the user defined by this project.
+    DMA System Service mapping file.
 
   Description:
-    An MPLAB Project may have multiple configurations.  This file defines the
-    build-time options for a single configuration.
-
-  Remarks:
-    It only provides macro definitions for build-time configuration options
-
+    This header file contains the mapping of the APIs defined in the API header
+    to either the function implementations or macro implementation or the
+    specific variant implementation.
 *******************************************************************************/
+
 //DOM-IGNORE-BEGIN
-/*******************************************************************************
+/******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
@@ -40,33 +41,24 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef USER_H
-#define USER_H
+#ifndef SYS_DMA_MAPPING_H
+#define SYS_DMA_MAPPING_H
 
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-extern "C" {
-
-#endif
-// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: User Configuration macros
+// Section: DMA System Service Mapping
 // *****************************************************************************
 // *****************************************************************************
-#define LED_On()                    LED1_On()
-#define LED_Off()                   LED1_Off()
-#define LED_Toggle()                LED1_Toggle()
 
-//DOM-IGNORE-BEGIN
-#ifdef __cplusplus
-}
-#endif
-//DOM-IGNORE-END
+#include "peripheral/xdmac/plib_xdmac.h"
 
-#endif // USER_H
-/*******************************************************************************
- End of File
-*/
+#define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)  XDMAC_ChannelCallbackRegister((XDMAC_CHANNEL)channel, (XDMAC_CHANNEL_CALLBACK)eventHandler, context)
+
+#define SYS_DMA_ChannelTransfer(channel, srcAddr, destAddr, blockSize)  XDMAC_ChannelTransfer((XDMAC_CHANNEL)channel, srcAddr, destAddr, blockSize)
+
+#define SYS_DMA_ChannelIsBusy(channel)  XDMAC_ChannelIsBusy((XDMAC_CHANNEL)channel)
+
+#define SYS_DMA_ChannelDisable(channel)  XDMAC_ChannelDisable((XDMAC_CHANNEL)channel)
+
+#endif // SYS_DMA_MAPPING_H

@@ -15,7 +15,7 @@
     It only provides macro definitions for build-time configuration options
 
 *******************************************************************************/
-//DOM-IGNORE-BEGIN
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -38,8 +38,7 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-//DOM-IGNORE-END
-
+// DOM-IGNORE-END
 #ifndef USER_H
 #define USER_H
 
@@ -56,9 +55,9 @@ extern "C" {
 // Section: User Configuration macros
 // *****************************************************************************
 // *****************************************************************************
-#define LED_On()                    LED1_On()
-#define LED_Off()                   LED1_Off()
-#define LED_Toggle()                LED1_Toggle()
+#define LED_On()                    LED0_On()   
+#define LED_Off()                   LED0_Off()
+#define LED_Toggle()                LED0_Toggle()
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

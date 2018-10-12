@@ -1,21 +1,20 @@
 /*******************************************************************************
-  User Configuration Header
+  XDMAC PLIB
+
+  Company:
+    Microchip Technology Inc.
 
   File Name:
-    user.h
+    plib_xdmac.h
 
   Summary:
-    Build-time configuration header for the user defined by this project.
+    XDMAC PLIB Header File
 
   Description:
-    An MPLAB Project may have multiple configurations.  This file defines the
-    build-time options for a single configuration.
-
-  Remarks:
-    It only provides macro definitions for build-time configuration options
+    None
 
 *******************************************************************************/
-//DOM-IGNORE-BEGIN
+
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -38,35 +37,59 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-//DOM-IGNORE-END
 
-#ifndef USER_H
-#define USER_H
+#ifndef PLIB_XDMAC_H
+#define PLIB_XDMAC_H
+
+#include <stddef.h>
+#include <stdbool.h>
+#include "plib_xdmac_common.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 
-extern "C" {
+    extern "C" {
 
 #endif
 // DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: User Configuration macros
+// Section: Interface
 // *****************************************************************************
 // *****************************************************************************
-#define LED_On()                    LED1_On()
-#define LED_Off()                   LED1_Off()
-#define LED_Toggle()                LED1_Toggle()
 
-//DOM-IGNORE-BEGIN
-#ifdef __cplusplus
-}
+/****************************** XDMAC Data Types ******************************/
+/* XDMAC Channels */
+typedef enum {
+    XDMAC_CHANNEL_0,
+    XDMAC_CHANNEL_1,
+} XDMAC_CHANNEL;
+
+
+/****************************** XDMAC API *********************************/
+
+void XDMAC_Initialize( void );
+
+void XDMAC_ChannelCallbackRegister( XDMAC_CHANNEL channel, const XDMAC_CHANNEL_CALLBACK eventHandler, const uintptr_t contextHandle );
+
+bool XDMAC_ChannelTransfer( XDMAC_CHANNEL channel, const void *srcAddr, const void *destAddr, size_t blockSize );
+
+bool XDMAC_ChannelIsBusy (XDMAC_CHANNEL channel);
+
+void XDMAC_ChannelDisable (XDMAC_CHANNEL channel);
+
+XDMAC_CHANNEL_CONFIG XDMAC_ChannelSettingsGet (XDMAC_CHANNEL channel);
+
+bool XDMAC_ChannelSettingsSet (XDMAC_CHANNEL channel, XDMAC_CHANNEL_CONFIG setting);
+
+void XDMAC_ChannelBlockLengthSet (XDMAC_CHANNEL channel, uint16_t length);
+
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+    }
+
 #endif
-//DOM-IGNORE-END
-
-#endif // USER_H
-/*******************************************************************************
- End of File
-*/
+// DOM-IGNORE-END
+#endif // PLIB_XDMAC_H

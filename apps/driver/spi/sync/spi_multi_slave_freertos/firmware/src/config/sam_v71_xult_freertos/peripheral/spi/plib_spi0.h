@@ -1,21 +1,21 @@
 /*******************************************************************************
-  User Configuration Header
+  SPI PLIB
+
+  Company:
+    Microchip Technology Inc.
 
   File Name:
-    user.h
+    plib_spi0.h
 
   Summary:
-    Build-time configuration header for the user defined by this project.
+    SPI0 PLIB Header File
 
   Description:
-    An MPLAB Project may have multiple configurations.  This file defines the
-    build-time options for a single configuration.
-
-  Remarks:
-    It only provides macro definitions for build-time configuration options
+    This file has prototype of all the interfaces provided for particular
+    SPI peripheral.
 
 *******************************************************************************/
-//DOM-IGNORE-BEGIN
+
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -38,35 +38,52 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-//DOM-IGNORE-END
 
-#ifndef USER_H
-#define USER_H
+#ifndef PLIB_SPI0_H
+#define PLIB_SPI0_H
 
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
+#include "device.h"
+#include "plib_spi_common.h"
 
-extern "C" {
-
-#endif
-// DOM-IGNORE-END
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: User Configuration macros
-// *****************************************************************************
-// *****************************************************************************
-#define LED_On()                    LED1_On()
-#define LED_Off()                   LED1_Off()
-#define LED_Toggle()                LED1_Toggle()
-
-//DOM-IGNORE-BEGIN
+/* Provide C++ Compatibility */
 #ifdef __cplusplus
-}
-#endif
-//DOM-IGNORE-END
 
-#endif // USER_H
+    extern "C" {
+
+#endif
+
+/****************************** SPI0 Interface *********************************/
+
+void SPI0_Initialize ( void );
+
+bool SPI0_WriteRead (void* pTransmitData, size_t txSize, void* pReceiveData, size_t rxSize);
+
+static inline bool SPI0_Write(void* pTransmitData, size_t txSize)
+{
+    return(SPI0_WriteRead(pTransmitData, txSize, NULL, 0));
+}
+
+static inline bool SPI0_Read(void* pReceiveData, size_t rxSize)
+{
+    return(SPI0_WriteRead(NULL, 0, pReceiveData, rxSize));
+}
+
+bool SPI0_TransferSetup (SPI_TRANSFER_SETUP *setup, uint32_t spiSourceClock);
+
+bool SPI0_IsBusy(void);
+
+void SPI0_CallbackRegister(const SPI_CALLBACK callback, uintptr_t context);
+
+
+/* Provide C++ Compatibility */
+#ifdef __cplusplus
+
+    }
+
+#endif
+
+#endif // PLIB_SPI0_H
+
 /*******************************************************************************
  End of File
 */
