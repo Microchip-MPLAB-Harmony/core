@@ -271,7 +271,7 @@ void APP_Tasks ( void )
         case APP_STATE_SUCCESS:
         {
             DRV_SDHC_Close(appData.sdhcHandle);
-            LED1_On();
+            LED_ON();
             break;
         }
         case APP_STATE_ERROR:

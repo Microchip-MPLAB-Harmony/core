@@ -106,8 +106,6 @@ uint16_t TC0_CH0_TimerCounterGet (void);
 
 void TC0_CH0_TimerCallbackRegister(TC_TIMER_CALLBACK callback, uintptr_t context);
 
-void TC0_CH0_InterruptHandler(void);
-
 
 
  

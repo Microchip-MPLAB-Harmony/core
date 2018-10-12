@@ -58,7 +58,6 @@
 #include <stdlib.h>
 #include "configuration.h"
 #include "driver/sdhc/drv_sdhc.h"
-#include "bsp/bsp.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
