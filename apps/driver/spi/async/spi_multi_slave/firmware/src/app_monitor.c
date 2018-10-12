@@ -112,7 +112,7 @@ APP_MONITOR_DATA app_monitorData;
 
 void APP_MONITOR_Initialize ( void )
 {
-    LED2_Off();
+    LED_Off();
 }
 
 
@@ -128,11 +128,11 @@ void APP_MONITOR_Tasks ( void )
 {
     if((EEPROM1TransferSuccessStatus() == true) && (EEPROM2TransferSuccessStatus() == true))
     {
-        LED2_On();
+        LED_On();
     }
     else
     {
-        LED2_Off();
+        LED_Off();
     }
 }
 

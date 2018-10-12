@@ -113,7 +113,7 @@ APP_MONITOR_DATA app_monitorData;
 
 void APP_MONITOR_Initialize ( void )
 {
-    LED1_Off();
+    LED_Off();
 }
 
 
@@ -129,11 +129,11 @@ void APP_MONITOR_Tasks ( void )
 {
     if((Client1TransferSuccessStatus() == true) && (Client2TransferSuccessStatus() == true))
     {
-        LED1_On();
+        LED_On();
     }
     else
     {
-        LED1_Off();
+        LED_Off();
     }
 
 }
