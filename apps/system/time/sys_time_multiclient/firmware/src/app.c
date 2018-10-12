@@ -173,7 +173,7 @@ void APP_Tasks ( void )
             {
                 /* Toggle LED periodically */
                 appData.tmr1Expired = false;
-                LED1_Toggle();
+                LED_Toggle();
             }
             if(appData.tmr2Expired == true)
             {
