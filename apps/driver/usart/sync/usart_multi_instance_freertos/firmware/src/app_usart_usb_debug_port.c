@@ -182,7 +182,7 @@ void APP_USART_USB_DEBUG_PORT_Tasks ( void )
             if (DRV_USART_WriteBuffer( appUsartDebugPortData.usartHandle, appUsartDebugPortData.transmitBuffer, APP_LOOPBACK_DATA_SIZE) == true)
             {
                 /* Toggle LED to indicate success */
-                LED1_Toggle();
+                LED_Toggle();
             }
             else
             {

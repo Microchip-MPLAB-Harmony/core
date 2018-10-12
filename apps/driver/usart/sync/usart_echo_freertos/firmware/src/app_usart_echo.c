@@ -177,7 +177,7 @@ void APP_USART_ECHO_Tasks ( void )
             /* Echo the received character back and wait till write completes */
             if (DRV_USART_WriteBuffer( app_usart_echoData.usartHandle, app_usart_echoData.receiveBuffer, APP_USART_ECHO_LOOPBACK_DATA_SIZE) == true)
             {
-                LED1_Toggle();
+                LED_Toggle();
                 app_usart_echoData.state = APP_USART_ECHO_STATE_RECEIVE_BUFFER;
             }
             else
