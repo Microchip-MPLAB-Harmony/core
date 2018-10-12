@@ -58,20 +58,13 @@
 #include <stdlib.h>
 #include "configuration.h"
 #include "peripheral/clk/plib_clk.h"
-
 #include "peripheral/nvic/plib_nvic.h"
-
 #include "peripheral/pio/plib_pio.h"
-
-#include "bsp/bsp.h"
-
 #include "driver/usart/drv_usart_definitions.h"
 #include "driver/usart/drv_usart.h"
-
 #include "system/int/sys_int.h"
 #include "system/dma/sys_dma.h"
 #include "osal/osal.h"
-
 #include "peripheral/usart/plib_usart1.h"
 
 

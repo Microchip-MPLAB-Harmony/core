@@ -209,7 +209,7 @@ void APP_Tasks ( void )
 
                 if(appData.prevState == APP_STATE_SEND_MESSGE || appData.prevState == APP_STATE_SEND_BUFFER)
                 {
-                    LED1_Toggle();
+                    LED_TOGGLE();
                     appData.state = APP_STATE_RECEIVE_BUFFER;
                 }
                 else if(appData.prevState == APP_STATE_RECEIVE_BUFFER)
