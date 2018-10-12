@@ -1,22 +1,20 @@
 /*******************************************************************************
-  User Configuration Header
+  NVIC PLIB Implementation
+
+  Company:
+    Microchip Technology Inc.
 
   File Name:
-    user.h
+    plib_nvic.c
 
   Summary:
-    Build-time configuration header for the user defined by this project.
+    NVIC PLIB Source File
 
   Description:
-    An MPLAB Project may have multiple configurations.  This file defines the
-    build-time options for a single configuration.
-
-  Remarks:
-    It only provides macro definitions for build-time configuration options
+    None
 
 *******************************************************************************/
 
-// DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -39,37 +37,31 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-// DOM-IGNORE-END
 
-#ifndef USER_H
-#define USER_H
+#include "device.h"
+#include "plib_nvic.h"
 
-#include "bsp/bsp.h"
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-extern "C" {
-
-#endif
-// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: User Configuration macros
+// Section: NVIC Implementation
 // *****************************************************************************
 // *****************************************************************************
-#define LED_ON()        LED1_On()
-#define LED_OFF()       LED1_Off()
-#define LED_TOGGLE()    LED1_Toggle()
 
-//DOM-IGNORE-BEGIN
-#ifdef __cplusplus
+void NVIC_Initialize( void )
+{
+    /* Priority 0 to 7 and no sub-priority. 0 is the highest priority */
+    NVIC_SetPriorityGrouping( 0x04 );
+
+    /* Enable NVIC Controller */
+    __DMB();
+    __enable_irq();
+
+    /* Enable the interrupt sources and configure the priorities as configured
+     * from within the "Interrupt Manager" of MCC. */
+    NVIC_SetPriority(SysTick_IRQn, 7);
+
+
+
+    return;
 }
-#endif
-//DOM-IGNORE-END
-
-#endif // USER_H
-/*******************************************************************************
- End of File
-*/

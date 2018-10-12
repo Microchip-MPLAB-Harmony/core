@@ -1,18 +1,20 @@
 /*******************************************************************************
-  User Configuration Header
+  Interrupt System Service Library Interface Implementation File
 
-  File Name:
-    user.h
+  Company
+    Microchip Technology Inc.
 
-  Summary:
-    Build-time configuration header for the user defined by this project.
+  File Name
+    sys_int.c
 
-  Description:
-    An MPLAB Project may have multiple configurations.  This file defines the
-    build-time options for a single configuration.
+  Summary
+    Interrupt system service library implementation.
+
+  Description
+    This file implements the interface to the interrupt system service library.
 
   Remarks:
-    It only provides macro definitions for build-time configuration options
+    None.
 
 *******************************************************************************/
 
@@ -41,35 +43,75 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef USER_H
-#define USER_H
-
-#include "bsp/bsp.h"
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-extern "C" {
-
-#endif
-// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: User Configuration macros
+// Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-#define LED_ON()        LED1_On()
-#define LED_OFF()       LED1_Off()
-#define LED_TOGGLE()    LED1_Toggle()
+#include "system/int/sys_int.h"
 
-//DOM-IGNORE-BEGIN
-#ifdef __cplusplus
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Interface Implementation
+// *****************************************************************************
+// *****************************************************************************
+
+// *****************************************************************************
+void SYS_INT_Enable( void )
+{
+    __DMB();
+    __enable_irq();
+
+    return;
 }
-#endif
-//DOM-IGNORE-END
 
-#endif // USER_H
-/*******************************************************************************
- End of File
-*/
+
+// *****************************************************************************
+bool SYS_INT_Disable( void )
+{
+    bool processorStatus;
+
+    processorStatus = (bool) (__get_PRIMASK() == 0);
+
+    __disable_irq();
+    __DMB();
+
+    return processorStatus;
+}
+
+
+// *****************************************************************************
+void SYS_INT_Restore( bool state )
+{
+    if( state == true )
+    {
+        __DMB();
+        __enable_irq();
+    }
+    else
+    {
+		__disable_irq();
+		__DMB();
+    }
+
+    return;
+}
+
+bool SYS_INT_SourceDisable( INT_SOURCE source )
+{
+    bool processorStatus;
+    bool intSrcStatus;
+
+    processorStatus = SYS_INT_Disable();
+
+    intSrcStatus = NVIC_GetEnableIRQ(source);
+
+    NVIC_DisableIRQ( source );
+
+    SYS_INT_Restore( processorStatus );
+
+    /* return the source status */
+    return intSrcStatus;
+}
