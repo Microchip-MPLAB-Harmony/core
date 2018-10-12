@@ -61,10 +61,7 @@
 #define APP_I2C_TEMP_STATUS_SUCCESS                                 0
 #define APP_I2C_TEMP_STATUS_ERROR                                   1
 
-/* For demonstration purpose, set the temperature sensor I2C clock speed to 
- * 100KHz and EEPROM clock speed to 400KHz
- */
-#define APP_TEMP_I2C_CLOCK_SPEED                    100000
+#define APP_TEMP_AT30TSE75X_SLAVE_ADDR              0x004B
 #define APP_TEMP_TEMPERATURE_REG_ADDR               0x00
 
 #define APP_TEMP_READ_RATE_MS                       1000

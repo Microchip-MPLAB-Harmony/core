@@ -111,8 +111,6 @@ extern "C" {
 // Section: Application Configuration
 // *****************************************************************************
 // *****************************************************************************
-/* Do not delete! */
-#define APP_EEPROM_AT24MAC402_SLAVE_ADDR           0x0057
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

@@ -65,12 +65,11 @@
 // Section: Global Data Definitions
 // *****************************************************************************
 // *****************************************************************************
-#define APP_EEPROM_I2C_CLOCK_SPEED                 400000
 #define APP_EEPROM_MEMORY_ADDR                     0x00
 /* Size of the test string must be less than or equal to EEPROM page size (16 bytes)*/
 #define APP_EEPROM_TEST_STRING                     "ATSAM TWIHS DEMO"
 #define APP_EEPROM_TEST_STRING_SIZE                strlen(APP_EEPROM_TEST_STRING)
-
+#define APP_EEPROM_AT24MAC402_SLAVE_ADDR           0x0057
 // *****************************************************************************
 /* Application Data
 
@@ -221,7 +220,7 @@ void APP_I2C_EEPROM_Tasks ( void )
         case APP_I2C_EEPROM_STATE_IDLE:
             if (isSuccess == true)
             {
-                LED1_On();
+                LED_On();
             }
             vTaskSuspend(NULL);
             break;

@@ -91,6 +91,8 @@ void PIO_Initialize ( void )
     ((pio_registers_t*)PIO_PORT_C)->PIO_PPDDR = 0xFFFFFFFF;
     /* PORTC Output Write Enable */
     ((pio_registers_t*)PIO_PORT_C)->PIO_OWER = PIO_OWER_Msk;
+    /* PORTC Output Direction Enable */
+    ((pio_registers_t*)PIO_PORT_C)->PIO_OER = 0x800;
 
     /************************ PIO D Initialization ************************/
     /* PORTD Pull Up Enable/Disable as per MHC selection */
@@ -248,6 +250,7 @@ void PIO_PortOutputEnable(PIO_PORT port, uint32_t mask)
 {
     ((pio_registers_t*)port)->PIO_OER = mask;
 }
+
 
 
 
