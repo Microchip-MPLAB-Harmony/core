@@ -235,7 +235,7 @@ void APP_Tasks ( void )
             
         case APP_STATE_IDLE:
             /* Turn on the LED to indicate success */
-            LED1_On();
+            LED_On();
             break;
             
         case APP_STATE_ERROR:
