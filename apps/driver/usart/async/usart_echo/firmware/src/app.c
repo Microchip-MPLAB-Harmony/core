@@ -140,7 +140,7 @@ void APP_BufferEventHandler(DRV_USART_BUFFER_EVENT bufferEvent, DRV_USART_BUFFER
 void APP_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
-    LED1_Off();
+    LED_OFF();
     appData.state = APP_STATE_INIT;
     appData.prevState = APP_STATE_INIT;
     appData.usartHandle = DRV_HANDLE_INVALID;
