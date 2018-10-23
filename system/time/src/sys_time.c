@@ -973,7 +973,7 @@ SYS_TIME_RESULT SYS_TIME_TimerCounterGet(SYS_TIME_HANDLE handle, uint32_t* count
     if (count != NULL)
     {
         tmr = SYS_TIME_GetTimerObject(handle);
-        if((tmr != NULL) && (tmr->active == true))
+        if(tmr != NULL)
         {
             elapsedCount = SYS_TIME_GetTotalElapsedCount(tmr);
             *count = elapsedCount;
