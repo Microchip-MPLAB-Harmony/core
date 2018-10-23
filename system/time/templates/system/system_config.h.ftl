@@ -5,3 +5,9 @@
 #define SYS_TIME_HW_COUNTER_PERIOD           ${.vars["${SYS_TIME_PLIB?lower_case}"].TIMER_PERIOD_MAX}
 #define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
 #define SYS_TIME_CPU_CLOCK_FREQUENCY         ${core.CPU_CLOCK_FREQUENCY}
+<#if core.CoreArchitecture == "CORTEX-M7">
+    <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
+</#if>
+<#if core.CoreArchitecture == "CORTEX-M0+">
+    <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (200)
+</#if>

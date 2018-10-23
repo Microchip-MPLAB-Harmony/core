@@ -57,9 +57,6 @@
 // *****************************************************************************
 // *****************************************************************************
 
-/* Number of CPU clock measured with cache disabled */
-#define COMPARE_UPDATE_EXECUTION_CYCLES          (900)
-
 static SYS_TIME_COUNTER_OBJ gSystemCounterObj;
 
 static SYS_TIME_TIMER_OBJ timers[SYS_TIME_MAX_TIMERS];
@@ -543,7 +540,7 @@ static void SYS_TIME_PLIBCallback(uintptr_t context)
 
     counterObj->hwTimerCurrentValue = counterObj->timePlib->timerCounterGet();
 
-    elapsedCount = SYS_TIME_GetElapsedCount(counterObj->hwTimerCurrentValue)                  ;
+    elapsedCount = SYS_TIME_GetElapsedCount(counterObj->hwTimerCurrentValue);
 
     if (tmrActive != NULL)
     {
@@ -620,7 +617,7 @@ static void SYS_TIME_CounterInit(SYS_MODULE_INIT* init)
     counterObj->hwTimerFrequency = counterObj->timePlib->timerFrequencyGet();
 
     cpuCyclesPerTimerClock=(SYS_TIME_CPU_CLOCK_FREQUENCY/counterObj->hwTimerFrequency);
-    counterObj->hwTimerCompareMargin=(COMPARE_UPDATE_EXECUTION_CYCLES/cpuCyclesPerTimerClock) +2;
+    counterObj->hwTimerCompareMargin=(SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES/cpuCyclesPerTimerClock) +2;
 
     counterObj->hwTimerIntNum = initData->hwTimerIntNum;
     counterObj->hwTimerPreviousValue = 0;
