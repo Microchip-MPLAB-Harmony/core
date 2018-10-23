@@ -152,7 +152,7 @@ void APP_USART_ECHO_Tasks ( void )
         case APP_USART_ECHO_STATE_SEND_MESSGE:
             if (DRV_USART_WriteBuffer( app_usart_echoData.usartHandle, startMessage, sizeof(startMessage)) == true)
             {
-                LED1_Toggle();
+                LED_TOGGLE();
                 app_usart_echoData.state = APP_USART_ECHO_STATE_RECEIVE_BUFFER;
             }
             else
