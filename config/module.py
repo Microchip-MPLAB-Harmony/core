@@ -36,7 +36,8 @@ def loadModule():
                     {"name":"spi", "label": "SPI", "type":"driver", "instance":"multi", "capability":["DRV_SPI"], "dependency":["SPI"], "condition":"True"},
                     {"name":"i2s", "label": "I2S", "type":"driver", "instance":"multi", "capability":["DRV_I2S"], "dependency":["I2S"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "SAMD21"])'},
                     {"name":"at24", "label": "AT24", "type":"driver", "instance":"single", "capability":["MEMORY"], "dependency":["I2C"], "condition":"True"},
-                    {"name":"at25", "label": "AT25", "type":"driver", "instance":"single", "capability":["MEMORY"], "dependency":["SPI"], "condition":"True"}
+                    {"name":"at25", "label": "AT25", "type":"driver", "instance":"single", "capability":["MEMORY"], "dependency":["SPI"], "condition":"True"},
+                    {"name":"sdspi", "label": "SD Card (SPI)", "type":"driver", "instance":"multi", "capability":["DRV_MEDIA"], "dependency":["SPI"], "condition":"True"}
                     ]
     #load drivers and system services defined above
     execfile(Module.getPath() + "/config/core.py")
