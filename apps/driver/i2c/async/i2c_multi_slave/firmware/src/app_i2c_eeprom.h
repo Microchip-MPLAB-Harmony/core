@@ -59,8 +59,6 @@
 #include "configuration.h"
 #include "driver/i2c/drv_i2c.h"
 #include "driver/i2c/drv_i2c.h"
-#include "peripheral/twihs/plib_twihs0.h"
-#include "peripheral/usart/plib_usart1.h"
 #include "osal/osal.h"
 
 // DOM-IGNORE-BEGIN
