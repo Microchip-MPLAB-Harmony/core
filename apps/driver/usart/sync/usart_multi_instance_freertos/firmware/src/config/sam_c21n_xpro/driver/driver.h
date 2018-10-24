@@ -1,21 +1,28 @@
 /*******************************************************************************
-  User Configuration Header
+  Driver Layer Interface Header
+
+  Company:
+    Microchip Technology Inc.
 
   File Name:
-    user.h
+    driver.h
 
   Summary:
-    Build-time configuration header for the user defined by this project.
+    Driver layer data types and definitions.
 
   Description:
-    An MPLAB Project may have multiple configurations.  This file defines the
-    build-time options for a single configuration.
+    This file defines the common macros and definitions for the driver layer
+    modules.
 
   Remarks:
-    It only provides macro definitions for build-time configuration options
+    The parent directory to the "driver" directory should be added to the
+    compiler's search path for header files such that the following include
+    statement will successfully include this file.
 
-*******************************************************************************/
-// DOM-IGNORE-BEGIN
+    #include "driver/driver.h"
+  *************************************************************************/
+
+//DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -37,38 +44,24 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
-*******************************************************************************/
-// DOM-IGNORE-END
-
-#ifndef USER_H
-#define USER_H
-
-#include "bsp/bsp.h"
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-extern "C" {
-
-#endif
-// DOM-IGNORE-END
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: User Configuration macros
-// *****************************************************************************
-// *****************************************************************************
-#define LED_ON()                    LED1_On()
-#define LED_OFF()                   LED1_Off()
-#define LED_TOGGLE()                LED1_Toggle()
-
-//DOM-IGNORE-BEGIN
-#ifdef __cplusplus
-}
-#endif
+ *******************************************************************************/
 //DOM-IGNORE-END
 
-#endif // USER_H
+#ifndef DRIVER_H
+#define DRIVER_H
+
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Included Files
+// *****************************************************************************
+// *****************************************************************************
+
+#include "driver/driver_common.h"
+
+
+#endif // DRIVER_H
 /*******************************************************************************
  End of File
 */
+

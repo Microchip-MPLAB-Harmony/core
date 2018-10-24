@@ -184,7 +184,7 @@ void APP_USART_USB_CLICK_BOARD_Tasks ( void )
             if (DRV_USART_WriteBuffer( appUsartClickBoardData.usartHandle, appUsartClickBoardData.transmitBuffer, APP_LOOPBACK_DATA_SIZE) == true)
             {
                 /* Toggle LED to indicate success */
-                LED_Toggle();
+                LED_TOGGLE();
             }
             else
             {
