@@ -67,13 +67,13 @@
 // *****************************************************************************
 // *****************************************************************************
 
-/* DRV_SST26 Transfer Status
+/*
  Summary:
-    Defines the data type for the sst26 peripheral transfer status.
+    SST26 Driver Transfer Status
 
  Description:
-    This will be used to indicate the current transfer status of the
-    sst26 peripheral.
+    This data type will be used to indicate the current transfer status for SST26
+    driver.
 
  Remarks:
     None.
@@ -89,13 +89,13 @@ typedef enum
     DRV_SST26_TRANSFER_ERROR_UNKNOWN,
 } DRV_SST26_TRANSFER_STATUS;
 
-/* DRV_SST26 Geometry data
+/* 
  Summary:
-    Defines the data type for the SST26 Geometry details.
+    SST26 Device Geometry data.
 
  Description:
-    This will be used to get the geometry details of the
-    attached SST26 flash device.
+    This data type will be used to get the geometry details of the
+    SST26 flash device.
 
  Remarks:
     None.
@@ -136,7 +136,7 @@ typedef struct
     Initializes the SST26 Driver
 
   Description:
-    This routine initializes the SST26 driver making it ready for clients to use.
+    This routine initializes the SST26 driver making it ready for client to use.
     - Resets the Flash Device
     - Puts it on QUAD IO Mode
     - Unlocks the flash
@@ -146,6 +146,7 @@ typedef struct
 
   Parameters:
     drvIndex -  Identifier for the instance to be initialized
+
     init     -  Pointer to a data structure containing any data necessary to
                 initialize the driver.
 
@@ -156,16 +157,16 @@ typedef struct
   Example:
     <code>
     // This code snippet shows an example of initializing the SST26 Driver
-    // with SST26 serial flash device attached.
+    // with SST26 QSPI flash device attached.
 
     SYS_MODULE_OBJ  objectHandle;
 
     const SST26_PLIB_API drvSST26PlibAPI = {
-        .CommandWrite  = QSPI0_CommandWrite,
-        .RegisterRead  = QSPI0_RegisterRead,
-        .RegisterWrite = QSPI0_RegisterWrite,
-        .MemoryRead    = QSPI0_MemoryRead,
-        .MemoryWrite   = QSPI0_MemoryWrite
+        .CommandWrite  = QSPI_CommandWrite,
+        .RegisterRead  = QSPI_RegisterRead,
+        .RegisterWrite = QSPI_RegisterWrite,
+        .MemoryRead    = QSPI_MemoryRead,
+        .MemoryWrite   = QSPI_MemoryWrite
     };
 
     const DRV_SST26_INIT drvSST26InitData =
@@ -187,7 +188,6 @@ typedef struct
     This routine should only be called once during system initialization.
 
     This routine will block for hardware access.
-
 */
 
 SYS_MODULE_OBJ DRV_SST26_Initialize
@@ -205,6 +205,7 @@ SYS_MODULE_OBJ DRV_SST26_Initialize
 
   Description:
     This routine opens the specified SST26 driver instance and provides a handle.
+
     This handle must be provided to all other client-level operations to identify
     the caller and the instance of the driver.
 
@@ -217,6 +218,7 @@ SYS_MODULE_OBJ DRV_SST26_Initialize
 
   Parameters:
     drvIndex   -  Identifier for the instance to be opened
+
     ioIntent   -  Zero or more of the values from the enumeration
                   DRV_IO_INTENT "ORed" together to indicate the intended use
                   of the driver
@@ -242,8 +244,8 @@ SYS_MODULE_OBJ DRV_SST26_Initialize
 
   Remarks:
     The handle returned is valid until the DRV_SST26_Close routine is called.
-    This routine will NEVER block waiting for hardware. If the driver has
-    has already been opened, it cannot be opened again.
+
+    If the driver has already been opened, it should not be opened again.
 */
 
 DRV_HANDLE DRV_SST26_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent );
@@ -279,9 +281,10 @@ DRV_HANDLE DRV_SST26_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
   Remarks:
     After calling this routine, the handle passed in "handle" must not be used
     with any of the remaining driver routines. A new handle must be obtained by
-    calling DRV_SST26_Open before the caller may use the driver again. Usually
-    there is no need for the driver client to verify that the Close operation
-    has completed.
+    calling DRV_SST26_Open before the caller may use the driver again.
+
+    Usually there is no need for the driver client to verify that the Close
+    operation has completed.
 */
 
 void DRV_SST26_Close( const DRV_HANDLE handle );
@@ -319,7 +322,7 @@ void DRV_SST26_Close( const DRV_HANDLE handle );
     </code>
 
   Remarks:
-    This routine will NEVER block waiting for hardware.
+    This routine will NEVER block wait for hardware.
 */
 
 SYS_STATUS DRV_SST26_Status( const SYS_MODULE_INDEX drvIndex );
@@ -349,7 +352,6 @@ SYS_STATUS DRV_SST26_Status( const SYS_MODULE_INDEX drvIndex );
     false
     - if Write enable fails before sending unlock command to flash
     - if Unlock flash command itself fails
-    - if the driver is busy handling another transfer request
 
     true
     - if the unlock is successfully completed
@@ -395,7 +397,6 @@ bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle );
   Returns:
     false
     - if read jedec-id command fails
-    - if the driver is busy handling another transfer request
 
     true
     - if the read is successfully completed
@@ -442,13 +443,13 @@ bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id );
   Parameters:
     handle        - A valid open-instance handle, returned from the driver's
                    open routine
+
     address       - block start address from where a sector needs to be erased.
 
   Returns:
     false
     - if Write enable fails before sending sector erase command to flash
     - if sector erase command itself fails
-    - if the driver is busy handling another transfer request
 
     true
     - if the erase request is successfully sent to the flash
@@ -471,6 +472,7 @@ bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id );
 
   Remarks:
     This routine will block wait until erase request is submitted successfully.
+
     Client should wait until erase is complete to send next transfer request.
 */
 
@@ -499,13 +501,13 @@ bool DRV_SST26_SectorErase( const DRV_HANDLE handle, uint32_t address );
   Parameters:
     handle        - A valid open-instance handle, returned from the driver's
                    open routine
+
     address       - block start address to be erased.
 
   Returns:
     false
     - if Write enable fails before sending sector erase command to flash
     - if block erase command itself fails
-    - if the driver is busy handling another transfer request
 
     true
     - if the erase request is successfully sent to the flash
@@ -528,6 +530,7 @@ bool DRV_SST26_SectorErase( const DRV_HANDLE handle, uint32_t address );
 
   Remarks:
     This routine will block wait until erase request is submitted successfully.
+
     Client should wait until erase is complete to send next transfer request.
 */
 
@@ -560,7 +563,6 @@ bool DRV_SST26_BulkErase( const DRV_HANDLE handle, uint32_t address );
     false
     - if Write enable fails before sending sector erase command to flash
     - if chip erase command itself fails
-    - if the driver is busy handling another transfer request
 
     true
     - if the erase request is successfully sent to the flash
@@ -582,6 +584,7 @@ bool DRV_SST26_BulkErase( const DRV_HANDLE handle, uint32_t address );
 
   Remarks:
     This routine will block wait until erase request is submitted successfully.
+
     Client should wait until erase is complete to send next transfer request.
 */
 
@@ -607,6 +610,7 @@ bool DRV_SST26_ChipErase( const DRV_HANDLE handle );
   Parameters:
     handle          - A valid open-instance handle, returned from the driver's
                       open routine
+
     *rx_data        - Buffer pointer into which the data read from the SST26
                       Flash memory will be placed.
 
@@ -618,7 +622,6 @@ bool DRV_SST26_ChipErase( const DRV_HANDLE handle );
   Returns:
     false
     - if read command itself fails
-    - if the driver is busy handling another transfer request
 
     true
     - if number of bytes requested are read from flash memory
@@ -653,7 +656,7 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     Writes one page of data starting at the specified address.
 
   Description:
-    This function schedules a non-blocking write operation for writing one page
+    This function schedules a non-blocking write operation for writing maximum one page
     of data into flash memory.
 
     The requesting client should call DRV_SST26_TransferStatusGet() API to know
@@ -673,6 +676,7 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
   Parameters:
     handle          - A valid open-instance handle, returned from the driver's
                       open routine
+
     *tx_data        - The source buffer containing data to be programmed into SST26
                       Flash
 
@@ -686,7 +690,6 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     false
     - if Write enable fails before sending sector erase command to flash
     - if write command itself fails
-    - if the driver is busy handling another transfer request
 
     true
     - if the write request is successfully sent to the flash
@@ -702,7 +705,7 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     uint8_t writeBuffer[BUFFER_SIZE];
     bool status = false;
 
-    if(false == DRV_SST26_ChipErase(handle))
+    if(false == DRV_SST26_SectorErase(handle))
     {
         // Error handling here
     }
@@ -731,7 +734,8 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     </code>
 
   Remarks:
-    This routine will block wait until erase request is submitted successfully.
+    This routine will block wait until write request is submitted successfully.
+
     Client should wait until write is complete to send next transfer request.
 */
 
@@ -794,6 +798,7 @@ DRV_SST26_TRANSFER_STATUS DRV_SST26_TransferStatusGet( const DRV_HANDLE handle )
   Description:
     This API gives the following geometrical details of the SST26 Flash:
     - Number of Read/Write/Erase Blocks and their size in each region of the device
+    - Flash block start address.
 
   Precondition:
     The DRV_SST26_Open() routine must have been called for the
@@ -802,12 +807,12 @@ DRV_SST26_TRANSFER_STATUS DRV_SST26_TransferStatusGet( const DRV_HANDLE handle )
   Parameters:
     handle            - A valid open-instance handle, returned from the driver's
                         open routine
+
     *geometry_table   - pointer to flash device geometry table instance
 
   Returns:
     false
     - if read device id fails
-    - if the driver is busy handling another transfer request
 
     true
     - if able to get the geometry details of the flash
@@ -834,7 +839,8 @@ DRV_SST26_TRANSFER_STATUS DRV_SST26_TransferStatusGet( const DRV_HANDLE handle )
     </code>
 
   Remarks:
-    None.
+    This API is more useful when used to interface with block driver
+    like memory driver.
 */
 
 bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometry );
