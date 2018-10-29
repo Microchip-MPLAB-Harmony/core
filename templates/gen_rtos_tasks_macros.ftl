@@ -9,7 +9,7 @@
     <#lt>                ${.vars[GEN_APP_RTOS_TASK_SIZE]},
     <#lt>                NULL,
     <#lt>                ${.vars[GEN_APP_RTOS_TASK_PRIO]},
-    <#lt>                NULL);
+    <#lt>                &x${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks);
 
     </#if>
 </#list>

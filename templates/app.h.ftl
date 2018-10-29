@@ -34,6 +34,10 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
+<#if SELECT_RTOS == "FreeRTOS">
+#include "FreeRTOS.h"
+#include "task.h"
+</#if>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -92,6 +96,10 @@ typedef struct
 
 } ${APP_TASK_NAME?upper_case}_DATA;
 
+<#if SELECT_RTOS == "FreeRTOS">
+/* Handle for the ${APP_TASK_NAME?upper_case}_Tasks. */
+TaskHandle_t x${APP_TASK_NAME?upper_case}_Tasks;
+</#if>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -117,7 +125,7 @@ typedef struct
   Description:
     This function initializes the Harmony application.  It places the
     application in its initial state and prepares it to run so that its
-    APP_Tasks function can be called.
+    ${APP_TASK_NAME?upper_case}_Tasks function can be called.
 
   Precondition:
     All other system initialization routines should be called before calling
