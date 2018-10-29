@@ -90,7 +90,7 @@ typedef enum
     /* Transfer is successfully completed*/
     DRV_AT25_TRANSFER_STATUS_COMPLETED,
 
-    /* Transfer had error or first transfer request is not made */
+    /* Transfer had error */
     DRV_AT25_TRANSFER_STATUS_ERROR
 
 } DRV_AT25_TRANSFER_STATUS;
@@ -150,9 +150,9 @@ typedef struct
     a partial example implementation is provided.
 
   Parameters:
-    event - Identifies the type of event   
+    event - Identifies the type of event
 
-    context - Value identifying the context of the application that 
+    context - Value identifying the context of the application that
     registered the event handling function.
 
   Returns:
@@ -160,10 +160,9 @@ typedef struct
 
   Example:
     <code>
-    void APP_MyTransferEventHandler( DRV_AT25_TRANSFER_STATUS event,
-                                   uintptr_t context )
+    void APP_MyTransferEventHandler( DRV_AT25_TRANSFER_STATUS event, uintptr_t context )
     {
-        MY_APP_DATA_STRUCT pAppData = (MY_APP_DATA_STRUCT) context;
+        MY_APP_DATA_STRUCT* pAppData = (MY_APP_DATA_STRUCT*) context;
 
         switch(event)
         {
@@ -186,9 +185,9 @@ typedef struct
     transferred successfully.
 
     If the event is DRV_AT25_TRANSFER_STATUS_ERROR, it means that the data was not
-    transferred successfully.   
+    transferred successfully.
 
-    The context parameter contains the a handle to the client context,
+    The context parameter contains the handle to the client context,
     provided at the time the event handling function was registered using the
     DRV_AT25_EventHandlerSet function.  This context handle value is
     passed back to the client as the "context" parameter.  It can be any value
@@ -196,17 +195,20 @@ typedef struct
     the client's data) instance of the client that made the buffer add request.
 
     The event handler function executes in the driver's interrupt
-    context. It is recommended of the application to not perform process 
+    context. It is recommended of the application to not perform process
     intensive or blocking operations with in this function.
 
-    The DRV_AT25_Read, DRV_AT25_Write and DRV_AT25_PageWrite functions can be 
-    called in the event handler to submit a request to the driver. 
+    The DRV_AT25_Read, DRV_AT25_Write and DRV_AT25_PageWrite functions can be
+    called in the event handler to submit a request to the driver.
 */
 
 typedef void ( *DRV_AT25_EVENT_HANDLER )( DRV_AT25_TRANSFER_STATUS event, uintptr_t context );
 // *****************************************************************************
 /* Function:
-    void DRV_AT25_Initialize( void );
+    SYS_MODULE_OBJ DRV_AT25_Initialize(
+        const SYS_MODULE_INDEX drvIndex,
+        const SYS_MODULE_INIT * const init
+    )
 
   Summary:
     Initializes the AT25 EEPROM device
@@ -221,7 +223,7 @@ typedef void ( *DRV_AT25_EVENT_HANDLER )( DRV_AT25_TRANSFER_STATUS event, uintpt
     None.
 
   Parameters:
-    index - Identifier for the instance to be initialized
+    drvIndex - Identifier for the instance to be initialized.
 
     init  - Pointer to the init data structure containing any data necessary to
             initialize the driver.
@@ -232,43 +234,41 @@ typedef void ( *DRV_AT25_EVENT_HANDLER )( DRV_AT25_TRANSFER_STATUS event, uintpt
 
   Example:
     <code>
-    SYS_MODULE_OBJ   sysObjDrvAT250;
+    SYS_MODULE_OBJ   sysObjDrvAT25;
 
-    DRV_AT25_PLIB_INTERFACE drvAT250PlibAPI = {
-        .writeRead = (DRV_AT25_WRITEREAD)SPI0_WriteRead,
-        .write = (DRV_AT25_WRITE)SPI0_Write,
-        .read = (DRV_AT25_READ)SPI0_Read,
-        .isBusy = (DRV_AT25_IS_BUSY)SPI0_IsBusy,
-        .callbackRegister = (DRV_AT25_CALLBACK_REGISTER)SPI0_CallbackRegister,
+    DRV_AT25_PLIB_INTERFACE drvAT25PlibAPI = {
+    .writeRead = (DRV_AT25_WRITEREAD)SPI0_WriteRead,
+    .write = (DRV_AT25_WRITE)SPI0_Write,
+    .read = (DRV_AT25_READ)SPI0_Read,
+    .isBusy = (DRV_AT25_IS_BUSY)SPI0_IsBusy,
+    .callbackRegister = (DRV_AT25_CALLBACK_REGISTER)SPI0_CallbackRegister,
     };
 
-    DRV_AT25_INIT drvAT250InitData =
-    {
-        .spiPlib = &drvAT250PlibAPI,
+    DRV_AT25_INIT drvAT25InitData = {
+        .spiPlib = &drvAT25PlibAPI,
         .numClients = DRV_AT25_CLIENTS_NUMBER_IDX,
         .pageSize = DRV_AT25_EEPROM_PAGE_SIZE,
         .flashSize = DRV_AT25_EEPROM_FLASH_SIZE,
-        .blockStartAddress =    0x0,
-        .chipSelectPin = SYS_PORT_PIN_PA5,
-        .holdPin = SYS_PORT_PIN_PA0,
-        .writeProtectPin = SYS_PORT_PIN_PD11,
+        .blockStartAddress = 0x0,
+        .chipSelectPin  = DRV_AT25_CHIP_SELECT_PIN_IDX,
+        .holdPin  = DRV_AT25_HOLD_PIN_IDX,
+        .writeProtectPin    = DRV_AT25_WP_PIN_IDX,
     };
 
-    sysObjDrvAT250 = DRV_AT25_Initialize(DRV_AT25_INDEX_0, (SYS_MODULE_INIT *)&drvAT250InitData);
+    sysObjDrvAT25 = DRV_AT25_Initialize(DRV_AT25_INDEX, (SYS_MODULE_INIT *)&drvAT25InitData);
 
     </code>
 
   Remarks:
     This routine must be called before any other DRV_AT25 routine is called.
     This routine should only be called once during system initialization.
-    This routine will block for hardware access.
 */
 
 SYS_MODULE_OBJ DRV_AT25_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT * const init);
 
 // *************************************************************************
 /* Function:
-    SYS_STATUS DRV_AT25_Status( const SYS_MODULE_INDEX drvIndex );
+    SYS_STATUS DRV_AT25_Status( const SYS_MODULE_INDEX drvIndex )
 
   Summary:
     Gets the current status of the AT25 driver module.
@@ -291,13 +291,13 @@ SYS_MODULE_OBJ DRV_AT25_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_M
 
   Example:
     <code>
-    SYS_STATUS          Status;
+    SYS_STATUS status;
 
-    Status = DRV_AT25_Status(DRV_AT25_INDEX);
+    status = DRV_AT25_Status(DRV_AT25_INDEX);
     </code>
 
   Remarks:
-    This routine will NEVER block waiting for hardware.
+    None.
 */
 
 SYS_STATUS DRV_AT25_Status( const SYS_MODULE_INDEX drvIndex );
@@ -329,8 +329,9 @@ SYS_STATUS DRV_AT25_Status( const SYS_MODULE_INDEX drvIndex );
   Parameters:
     drvIndex  - Identifier for the object instance to be opened
 
-    intent -    Zero or more of the values from the enumeration DRV_IO_INTENT
+    ioIntent -  Zero or more of the values from the enumeration DRV_IO_INTENT
                 "ORed" together to indicate the intended use of the driver.
+                Note: This driver ignores the ioIntent argument.
 
   Returns:
     If successful, the routine returns a valid open-instance handle (a number
@@ -338,14 +339,13 @@ SYS_STATUS DRV_AT25_Status( const SYS_MODULE_INDEX drvIndex );
 
     If an error occurs, the return value is DRV_HANDLE_INVALID. Error can occur
     - if the  driver has been already opened once and in use.
-    - if the driver peripheral instance being opened is not initialized or is
-      invalid.
+    - if the driver instance being opened is not initialized or is invalid.
 
   Example:
     <code>
     DRV_HANDLE handle;
 
-    handle = DRV_AT25_Open(DRV_AT25_INDEX_0, DRV_IO_INTENT_READWRITE);
+    handle = DRV_AT25_Open(DRV_AT25_INDEX, DRV_IO_INTENT_READWRITE);
     if (handle == DRV_HANDLE_INVALID)
     {
         // Unable to open the driver
@@ -355,16 +355,15 @@ SYS_STATUS DRV_AT25_Status( const SYS_MODULE_INDEX drvIndex );
 
   Remarks:
     The handle returned is valid until the DRV_AT25_Close routine is called.
-    This routine will NEVER block waiting for hardware.
 */
 DRV_HANDLE DRV_AT25_Open(const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent);
 
 // *****************************************************************************
 /* Function:
-    void DRV_AT25_Close( DRV_Handle handle )
+    void DRV_AT25_Close( const DRV_Handle handle )
 
   Summary:
-    Closes opened-instance of the AT25 driver.
+    Closes the opened-instance of the AT25 driver.
 
   Description:
     This routine closes opened-instance of the AT25 driver, invalidating the
@@ -392,21 +391,22 @@ DRV_HANDLE DRV_AT25_Open(const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
   Remarks:
     None.
 */
-void DRV_AT25_Close(const DRV_HANDLE handle);
+void DRV_AT25_Close( const DRV_HANDLE handle );
 
 // *****************************************************************************
 /* Function:
-    bool DRV_AT25_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength, uint32_t address );
+    bool DRV_AT25_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength, uint32_t address )
 
   Summary:
     Reads 'n' bytes of data from the specified start address of EEPROM.
 
   Description:
-    This function schedules a non-blocking read operation for requested number
-    of data bytes from given address of EEPROM.
+    This function schedules a non-blocking read operation for the requested number
+    of data bytes from the given address of the EEPROM.
 
-    The requesting client should call DRV_AT25_TransferStatusGet() API to know
-    the current status of the request.
+    The requesting client should call DRV_AT25_TransferStatusGet API to know
+    the current status of the request OR the requesting client can register a 
+    callback function with the driver to get notified of the status.
 
   Precondition:
     DRV_AT25_Open must have been called to obtain a valid opened device handle.
@@ -414,13 +414,12 @@ void DRV_AT25_Close(const DRV_HANDLE handle);
   Parameters:
     handle         - A valid open-instance handle, returned from the driver's
                       open routine
-    *rxData        - Buffer pointer into which the data read from the DRV_AT25
-                      Flash memory will be placed.
+    rxData         - Buffer pointer into which the data read from the DRV_AT25
+                     Flash memory will be placed.
 
     rxDataLength   - Total number of bytes to be read.
 
-    address        - Read memory start address from where the data should be
-                      read.
+    address        - Memory start address from where the data should be read.
 
   Returns:
     false
@@ -435,14 +434,22 @@ void DRV_AT25_Close(const DRV_HANDLE handle);
     <code>
 
     #define BUFFER_SIZE  1024
-    #define MEM_ADDRESS  0x0
+    #define MEM_ADDRESS  0x00
 
     uint8_t readBuffer[BUFFER_SIZE];
 
     // myHandle is the handle returned from DRV_AT25_Open API.
-    if (true != DRV_AT25_Read(myHandle, readBuffer, BUFFER_SIZE, MEM_ADDRESS))
+    // In the below example, the transfer status is polled. However, application can
+    // register a callback and get notified when the transfer is complete.
+
+    if (DRV_AT25_Read(myHandle, readBuffer, BUFFER_SIZE, MEM_ADDRESS) != true)
     {
         // Error handling here
+    }
+    else
+    {
+        // Wait for read to be completed
+        while(DRV_AT25_TransferStatusGet(myHandle) == DRV_AT25_TRANSFER_STATUS_BUSY);
     }
 
     </code>
@@ -455,7 +462,7 @@ bool DRV_AT25_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength,
 
 // *****************************************************************************
 /* Function:
-    bool DRV_AT25_Write(const DRV_HANDLE handle, uint32_t *txData, uint32_t txDataLength, uint32_t address);
+    bool DRV_AT25_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength, uint32_t address)
 
   Summary:
     Writes 'n' bytes of data starting at the specified address.
@@ -464,8 +471,9 @@ bool DRV_AT25_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength,
     This function schedules a non-blocking write operation for writing
     txDataLength bytes of data starting from given address of EEPROM.
 
-    The requesting client should call DRV_AT25_TransferStatusGet() API to know
-    the current status of the request.
+    The requesting client should call DRV_AT25_TransferStatusGet API to know
+    the current status of the request OR the requesting client can register a 
+    callback function with the driver to get notified of the status.
 
   Preconditions:
     DRV_AT25_Open must have been called to obtain a valid opened device handle.
@@ -473,13 +481,12 @@ bool DRV_AT25_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength,
   Parameters:
     handle         - A valid open-instance handle, returned from the driver's
                       open routine
-    *txData        - The source buffer containing data to be programmed into AT25
+    txData         - The source buffer containing data to be programmed into AT25
                       EEPROM
 
     txDataLength   - Total number of bytes to be written.
 
-    address        - Write memory start address from where the data should be
-                      written
+    address        - Memory start address from where the data should be written
 
   Returns:
     false
@@ -488,27 +495,29 @@ bool DRV_AT25_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength,
     - if the driver is busy handling another transfer request
 
     true
-    - if the write request is successfully accepted.
+    - if the write request is accepted.
 
   Example:
     <code>
 
     #define PAGE_SIZE    256
     #define BUFFER_SIZE  1024
-    #define MEM_ADDRESS  0x0
+    #define MEM_ADDRESS  0x00
 
     uint8_t writeBuffer[BUFFER_SIZE];
 
     // myHandle is the handle returned from DRV_AT25_Open API.
+    // In the below example, the transfer status is polled. However, application can
+    // register a callback and get notified when the transfer is complete.
 
-    if (true != DRV_AT25_Write(myHandle, writeBuffer, BUFFER_SIZE, MEM_ADDRESS))
+    if (DRV_AT25_Write(myHandle, writeBuffer, BUFFER_SIZE, MEM_ADDRESS) != true)
     {
         // Error handling here
     }
     else
     {
         // Wait for write to be completed
-        while(DRV_AT25_TRANSFER_STATUS_BUSY == DRV_AT25_TransferStatusGet(myHandle));
+        while(DRV_AT25_TransferStatusGet(myHandle) == DRV_AT25_TRANSFER_STATUS_BUSY);
     }
     </code>
 
@@ -520,17 +529,18 @@ bool DRV_AT25_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength
 
 // *****************************************************************************
 /* Function:
-    bool DRV_AT25_PageWrite(const DRV_HANDLE handle, uint32_t *txData, uint32_t address);
+    bool DRV_AT25_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t address)
 
   Summary:
     Writes one page of data starting at the specified address.
 
   Description:
     This function schedules a non-blocking write operation for writing
-    one page of data starting from given address of EEPROM.
+    one page of data starting from the given address of the EEPROM.
 
-    The requesting client should call DRV_AT25_TransferStatusGet() API to know
-    the current status of the request.
+    The requesting client should call DRV_AT25_TransferStatusGet API to know
+    the current status of the request OR the requesting client can register a 
+    callback function with the driver to get notified of the status.
 
   Preconditions:
     DRV_AT25_Open must have been called to obtain a valid opened device handle.
@@ -541,7 +551,7 @@ bool DRV_AT25_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength
   Parameters:
     handle         - A valid open-instance handle, returned from the driver's
                       open routine
-    *txData        - The source buffer containing data to be written to the AT25
+    txData         - The source buffer containing data to be written to the AT25
                       EEPROM
     address        - Write memory start address from where the data should be
                       written.
@@ -555,7 +565,7 @@ bool DRV_AT25_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength
     - if the driver is busy handling another transfer request
 
     true
-    - if the write request is successfully accepted.
+    - if the write request is accepted.
 
   Example:
     <code>
@@ -566,15 +576,17 @@ bool DRV_AT25_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength
     uint8_t writeBuffer[PAGE_SIZE];
 
     // myHandle is the handle returned from DRV_AT25_Open API.
+    // In the below example, the transfer status is polled. However, application can
+    // register a callback and get notified when the transfer is complete.
 
-    if (true != DRV_AT25_PageWrite(myHandle, writeBuffer, MEM_ADDRESS))
+    if (DRV_AT25_PageWrite(myHandle, writeBuffer, MEM_ADDRESS) != true)
     {
         // Error handling here
     }
     else
     {
         // Wait for write to be completed
-        while(DRV_AT25_TRANSFER_STATUS_BUSY == DRV_AT25_TransferStatusGet(myHandle));
+        while(DRV_AT25_TransferStatusGet(myHandle) == DRV_AT25_TRANSFER_STATUS_BUSY);
     }
     </code>
 
@@ -586,7 +598,7 @@ bool DRV_AT25_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t address 
 
 // *****************************************************************************
 /* Function:
-    DRV_AT25_TRANSFER_STATUS DRV_AT25_TransferStatusGet(const DRV_HANDLE handle);
+    DRV_AT25_TRANSFER_STATUS DRV_AT25_TransferStatusGet(const DRV_HANDLE handle)
 
   Summary:
     Gets the current status of the transfer request.
@@ -595,7 +607,7 @@ bool DRV_AT25_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t address 
     This routine gets the current status of the transfer request.
 
   Preconditions:
-    DRV_AT25_PageWrite or DRV_AT25_Read must have been called to obtain the
+    DRV_AT25_PageWrite, DRV_AT25_Write or DRV_AT25_Read must have been called to obtain the
     status of transfer.
 
   Parameters:
@@ -609,7 +621,7 @@ bool DRV_AT25_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t address 
     <code>
     // myHandle is the handle returned from DRV_AT25_Open API.
 
-    if (DRV_AT25_TRANSFER_STATUS_COMPLETED == DRV_AT25_TransferStatusGet(myHandle))
+    if (DRV_AT25_TransferStatusGet(myHandle) == DRV_AT25_TRANSFER_STATUS_COMPLETED)
     {
         // Operation Done
     }
@@ -623,7 +635,7 @@ DRV_AT25_TRANSFER_STATUS DRV_AT25_TransferStatusGet(const DRV_HANDLE handle);
 
 // *****************************************************************************
 /* Function:
-    bool DRV_AT25_GeometryGet(const DRV_HANDLE handle, DRV_AT25_GEOMETRY *geometry);
+    bool DRV_AT25_GeometryGet(const DRV_HANDLE handle, DRV_AT25_GEOMETRY *geometry)
 
   Summary:
     Returns the geometry of the device.
@@ -638,7 +650,7 @@ DRV_AT25_TRANSFER_STATUS DRV_AT25_TransferStatusGet(const DRV_HANDLE handle);
   Parameters:
     handle      - A valid open-instance handle, returned from the driver's
                    open routine
-    *geometry   - pointer to flash device geometry table instance
+    geometry    - Pointer to flash device geometry table instance
 
   Returns:
     false
@@ -677,10 +689,10 @@ bool DRV_AT25_GeometryGet(const DRV_HANDLE handle, DRV_AT25_GEOMETRY *geometry);
 
 // *****************************************************************************
 /* Function:
-    void DRV_AT25_EventHandlerSet( 
-        const DRV_HANDLE handle, 
-        const DRV_AT25_EVENT_HANDLER eventHandler, 
-        const uintptr_t context 
+    void DRV_AT25_EventHandlerSet(
+        const DRV_HANDLE handle,
+        const DRV_AT25_EVENT_HANDLER eventHandler,
+        const uintptr_t context
     )
 
   Summary:
@@ -689,7 +701,7 @@ bool DRV_AT25_GeometryGet(const DRV_HANDLE handle, DRV_AT25_GEOMETRY *geometry);
 
   Description:
     This function allows a client to register a transfer event handling function
-    with the driver to call back when the requested transfer has finished.    
+    with the driver to call back when the requested transfer has finished.
 
     The event handler should be set before the client submits any transfer
     requests that could generate events. The event handler once set, persists
@@ -700,50 +712,48 @@ bool DRV_AT25_GeometryGet(const DRV_HANDLE handle, DRV_AT25_GEOMETRY *geometry);
     DRV_AT25_Open must have been called to obtain a valid opened device handle.
 
   Parameters:
-    handle - A valid open-instance handle, returned from the driver's open 
-	routine.
+    handle - A valid open-instance handle, returned from the driver's open routine.
 
     eventHandler - Pointer to the event handler function.
 
     context - The value of parameter will be passed back to the client
-    unchanged, when the eventHandler function is called.  It can be used to 
-	identify any client specific data object that identifies the instance of the 
-	client module (for example, it may be a pointer to the client module's state 
-	structure).
+    unchanged, when the eventHandler function is called.  It can be used to
+    identify any client specific data object that identifies the instance of the
+    client module (for example, it may be a pointer to the client module's state
+    structure).
 
   Returns:
     None.
 
   Example:
     <code>
-    
+
     #define BUFFER_SIZE  256
-    #define MEM_ADDRESS  0x0
-    
+    #define MEM_ADDRESS  0x00
+
     // myAppObj is an application specific state data object.
     MY_APP_OBJ myAppObj;
 
-    uint8_t myBuffer[BUFFER_SIZE];    
+    uint8_t myBuffer[BUFFER_SIZE];
 
     // myHandle is the handle returned from DRV_AT25_Open API.
 
     // Client registers an event handler with driver. This is done once
 
-    DRV_AT25_EventHandlerSet( myHandle, APP_AT25TransferEventHandler,
-                                     (uintptr_t)&myAppObj );
+    DRV_AT25_EventHandlerSet( myHandle, APP_AT25TransferEventHandler, (uintptr_t)&myAppObj );
 
-    if (DRV_AT25_Read(myHandle, myBuffer, BUFFER_SIZE, MEM_ADDRESS) == false)   
+    if (DRV_AT25_Read(myHandle, myBuffer, BUFFER_SIZE, MEM_ADDRESS) == false)
     {
         // Error handling here
     }
 
-    // Event is received when the buffer is processed.
+    // The registered event handler is called when the request is complete.
 
     void APP_AT25TransferEventHandler(DRV_AT25_TRANSFER_STATUS event, uintptr_t context)
     {
         // The context handle was set to an application specific
         // object. It is now retrievable easily in the event handler.
-        MY_APP_OBJ myAppObj = (MY_APP_OBJ *) context;
+        MY_APP_OBJ* pMyAppObj = (MY_APP_OBJ *) context;
 
         switch(event)
         {
@@ -763,14 +773,13 @@ bool DRV_AT25_GeometryGet(const DRV_HANDLE handle, DRV_AT25_GEOMETRY *geometry);
 
   Remarks:
     If the client does not want to be notified when the queued buffer transfer
-    has completed, it does not need to register a callback. This function is
-    thread safe when called in a RTOS application.
+    has completed, it does not need to register a callback.
 */
 
-void DRV_AT25_EventHandlerSet( 
-    const DRV_HANDLE handle, 
-    const DRV_AT25_EVENT_HANDLER eventHandler, 
-    const uintptr_t context 
+void DRV_AT25_EventHandlerSet(
+    const DRV_HANDLE handle,
+    const DRV_AT25_EVENT_HANDLER eventHandler,
+    const uintptr_t context
 );
 
 #ifdef __cplusplus
