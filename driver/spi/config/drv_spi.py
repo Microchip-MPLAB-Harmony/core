@@ -68,6 +68,7 @@ def instantiateComponent(spiComponent, index):
     spiSymQueueSize.setLabel("Transfer Queue Size")
     spiSymQueueSize.setMin(1)
     spiSymQueueSize.setMax(250)
+    spiSymQueueSize.setVisible((Database.getSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE") == 0))
     spiSymQueueSize.setDefaultValue(4)
     spiSymQueueSize.setDependencies(asyncModeOptions, ["DRV_SPI_MODE"])
 
