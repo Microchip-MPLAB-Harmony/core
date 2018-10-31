@@ -40,6 +40,7 @@ def instantiateComponent(i2cComponent, index):
     i2cSymQueueSize = i2cComponent.createIntegerSymbol("DRV_I2C_QUEUE_SIZE", None)
     i2cSymQueueSize.setLabel("Transfer Queue Size")
     i2cSymQueueSize.setMax(64)
+    i2cSymQueueSize.setVisible((Database.getSymbolValue("drv_i2c", "DRV_I2C_MODE") == 0))
     i2cSymQueueSize.setDefaultValue(2)
     i2cSymQueueSize.setDependencies(asyncModeOptions, ["drv_i2c.DRV_I2C_MODE"])
 
