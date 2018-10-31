@@ -64,7 +64,7 @@ def instantiateComponent(usartComponent, index):
     usartNumClients = usartComponent.createIntegerSymbol("DRV_USART_CLIENTS_NUM", None)
     usartNumClients.setLabel("Number of Clients")
     usartNumClients.setMax(50)
-    usartNumClients.setVisible(False)
+    usartNumClients.setVisible((Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE") == 1))
     usartNumClients.setDefaultValue(1)
     usartNumClients.setDependencies(syncModeOptions, ["DRV_USART_MODE"])
 
@@ -72,6 +72,7 @@ def instantiateComponent(usartComponent, index):
     usartTXQueueSize.setLabel("Transmit Queue Size")
     usartTXQueueSize.setMax(50)
     usartTXQueueSize.setDefaultValue(5)
+    usartTXQueueSize.setVisible((Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE") == 0))
     usartTXQueueSize.setDependencies(asyncModeOptions, ["DRV_USART_MODE"])
     currentTxBufSize = usartTXQueueSize.getValue()
 
@@ -79,6 +80,7 @@ def instantiateComponent(usartComponent, index):
     usartRXQueueSize.setLabel("Receive Queue Size")
     usartRXQueueSize.setMax(50)
     usartRXQueueSize.setDefaultValue(5)
+    usartRXQueueSize.setVisible((Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE") == 0))
     usartRXQueueSize.setDependencies(asyncModeOptions, ["DRV_USART_MODE"])
     currentRxBufSize = usartRXQueueSize.getValue()
 
