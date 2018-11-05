@@ -123,7 +123,7 @@ void SYS_DEBUG_Print(const char *format, ...)
 {
     size_t len = 0;
     size_t padding = 0;
-    va_list args;
+    va_list args = {};
 
     va_start( args, format );
 
