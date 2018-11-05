@@ -52,6 +52,31 @@ def enableSysDebugConfigOptions(symbol, event):
 def enableCommandProcessorOptions(symbol, event):
     symbol.setVisible(event["value"])
 
+
+def setVisible(symbol, event):
+    if (event["value"] == True):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
+
+def showRTOSMenu(symbol, event):
+    show_rtos_menu = False
+
+    if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
+        if (Database.getSymbolValue("sys_console", "SYS_COMMAND_ENABLE") == True):
+            show_rtos_menu = True
+
+    symbol.setVisible(show_rtos_menu)
+    
+def genRtosTask(symbol, event):
+    gen_rtos_task = False
+
+    if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
+        if (Database.getSymbolValue("sys_console", "SYS_COMMAND_ENABLE") == True):
+            gen_rtos_task = True
+
+    symbol.setEnabled(gen_rtos_task)
+
 ################################################################################
 #### Component ####
 ################################################################################
@@ -136,6 +161,40 @@ def instantiateComponent(consoleComponent):
     commandDebugEnable.setLabel("Re-route Debug Message/Print through Command Service?")
     commandDebugEnable.setDefaultValue(True)
     commandDebugEnable.setDependencies(enableCommandProcessorOptions, ["SYS_COMMAND_ENABLE"])
+    
+    enable_rtos_settings = False
+
+    if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
+        if (commandEnable.getValue() == True):
+            enable_rtos_settings = True
+
+    # RTOS Settings 
+    commandRTOSMenu = consoleComponent.createMenuSymbol("SYS_COMMAND_RTOS_MENU", commandEnable)
+    commandRTOSMenu.setLabel("RTOS settings")
+    commandRTOSMenu.setDescription("RTOS settings")
+    commandRTOSMenu.setVisible(enable_rtos_settings)
+    commandRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS", "SYS_COMMAND_ENABLE"])
+
+    commandRTOSStackSize = consoleComponent.createIntegerSymbol("SYS_COMMAND_RTOS_STACK_SIZE", commandRTOSMenu)
+    commandRTOSStackSize.setLabel("Stack Size")
+    commandRTOSStackSize.setDefaultValue(256)
+    #commandRTOSStackSize.setReadOnly(True)
+
+    commandRTOSTaskPriority = consoleComponent.createIntegerSymbol("SYS_COMMAND_RTOS_TASK_PRIORITY", commandRTOSMenu)
+    commandRTOSTaskPriority.setLabel("Task Priority")
+    commandRTOSTaskPriority.setDefaultValue(1)
+
+    commandRTOSTaskDelay = consoleComponent.createBooleanSymbol("SYS_COMMAND_RTOS_USE_DELAY", commandRTOSMenu)
+    commandRTOSTaskDelay.setLabel("Use Task Delay?")
+    commandRTOSTaskDelay.setDefaultValue(True)
+
+    commandRTOSTaskDelayVal = consoleComponent.createIntegerSymbol("SYS_COMMAND_RTOS_DELAY", commandRTOSMenu)
+    commandRTOSTaskDelayVal.setLabel("Task Delay")
+    commandRTOSTaskDelayVal.setDefaultValue(10) 
+    commandRTOSTaskDelayVal.setVisible((commandRTOSTaskDelay.getValue() == True))
+    commandRTOSTaskDelayVal.setDependencies(setVisible, ["SYS_COMMAND_RTOS_USE_DELAY"])
+
+    
 
     ############################################################################
     #### Dependency ####
@@ -178,14 +237,21 @@ def instantiateComponent(consoleComponent):
     consoleUARTHeaderFile.setProjectPath("config/" + configName + "/system/console/")
     consoleUARTHeaderFile.setType("SOURCE")
     consoleUARTHeaderFile.setOverwrite(True)
+    
+    consoleUARTDefinitionsHeaderFile = consoleComponent.createFileSymbol("SYS_CONSOLE_UART_DEFINITIONS_HEADER", None)
+    consoleUARTDefinitionsHeaderFile.setSourcePath("system/console/src/sys_console_uart_definitions.h")
+    consoleUARTDefinitionsHeaderFile.setOutputName("sys_console_uart_definitions.h")
+    consoleUARTDefinitionsHeaderFile.setDestPath("system/console/src")
+    consoleUARTDefinitionsHeaderFile.setProjectPath("config/" + configName + "/system/console/")
+    consoleUARTDefinitionsHeaderFile.setType("SOURCE")
+    consoleUARTDefinitionsHeaderFile.setOverwrite(True)
 
     consoleUARTSourceFile = consoleComponent.createFileSymbol("SYS_CONSOLE_UART_SOURCE", None)
-    consoleUARTSourceFile.setSourcePath("system/console/templates/sys_console_uart.c.ftl")
+    consoleUARTSourceFile.setSourcePath("system/console/src/sys_console_uart.c")
     consoleUARTSourceFile.setOutputName("sys_console_uart.c")
     consoleUARTSourceFile.setDestPath("system/console/src")
     consoleUARTSourceFile.setProjectPath("config/" + configName + "/system/console/")
     consoleUARTSourceFile.setType("SOURCE")
-    consoleUARTSourceFile.setMarkup(True)
     consoleUARTSourceFile.setOverwrite(True)
 
     debugHeaderFile = consoleComponent.createFileSymbol("SYS_DEBUG_HEADER", None)
@@ -273,6 +339,14 @@ def instantiateComponent(consoleComponent):
     consoleSystemTasksFile.setOutputName("core.LIST_SYSTEM_TASKS_C_CALL_SYSTEM_TASKS")
     consoleSystemTasksFile.setSourcePath("system/console/templates/system/system_tasks.c.ftl")
     consoleSystemTasksFile.setMarkup(True)
+    
+    commandSystemRtosTasksFile = consoleComponent.createFileSymbol("SYS_COMMAND_SYS_RTOS_TASK", None)
+    commandSystemRtosTasksFile.setType("STRING")
+    commandSystemRtosTasksFile.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
+    commandSystemRtosTasksFile.setSourcePath("system/console/templates/system/system_cmd_rtos_tasks.c.ftl")
+    commandSystemRtosTasksFile.setMarkup(True)
+    commandSystemRtosTasksFile.setEnabled(enable_rtos_settings)
+    commandSystemRtosTasksFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS"])
 
 ############################################################################
 #### Dependency ####
