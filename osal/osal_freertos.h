@@ -57,7 +57,7 @@ extern "C" {
 #include "queue.h"
 #include "semphr.h"
 #include "task.h"
-
+#include "device.h"
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Types
@@ -133,7 +133,7 @@ void OSAL_Free(void* pData);
 OSAL_RESULT OSAL_Initialize();
 
 // Added gnu_inline attribute for compatibility with C89 and C99 for unused method in OSAL
-__inline__ __attribute__ ((gnu_inline)) __attribute__((always_inline)) inline const char* OSAL_Name (void);
+__INLINE __attribute__((always_inline)) const char* OSAL_Name (void);
 
 
 // *****************************************************************************

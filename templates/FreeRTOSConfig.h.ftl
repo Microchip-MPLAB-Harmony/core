@@ -132,4 +132,14 @@ standard names. */
 #define xPortPendSVHandler PendSV_Handler
 #define vPortSVCHandler SVCall_Handler
 
+<#if FREERTOS_SETUP_TICK_INTERRUPT??>
+#define configSETUP_TICK_INTERRUPT ${FREERTOS_SETUP_TICK_INTERRUPT}
+</#if>
+<#if FREERTOS_EOI_ADDRESS??>
+#define configEOI_ADDRESS ${FREERTOS_EOI_ADDRESS}
+</#if>
+<#if FREERTOS_CONFIG_TICK_INTERRUPT??>
+#define configCLEAR_TICK_INTERRUPT ${FREERTOS_CONFIG_TICK_INTERRUPT}
+</#if>
+
 #endif /* FREERTOS_H */

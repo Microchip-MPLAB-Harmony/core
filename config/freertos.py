@@ -527,6 +527,9 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_xTaskGetHandle.setDescription("FreeRTOS - Include xTaskGetHandle")
     freeRtosSym_xTaskGetHandle.setDefaultValue(False)
 
+    freeRtosSym_tickConfig = thirdPartyFreeRTOS.createStringSymbol("FREERTOS_SETUP_TICK_INTERRUPT", None)
+    freeRtosSym_tickConfig.setVisible(False)
+
 ############################################################################
 #### Code Generation ####
 ############################################################################
@@ -574,7 +577,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
 
     freeRtosTask = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_TASKS_C", None)
     freeRtosTask.setSourcePath("../CMSIS-FreeRTOS/Source/tasks.c")
-    freeRtosTask.setOutputName("tasks.c")
+    freeRtosTask.setOutputName("FreeRTOS_tasks.c")
     freeRtosTask.setDestPath("../../third_party/rtos/FreeRTOS/Source")
     freeRtosTask.setProjectPath("FreeRTOS/Source")
     freeRtosTask.setType("SOURCE")

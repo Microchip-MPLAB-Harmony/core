@@ -760,7 +760,7 @@ OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID)
   Remarks:
 
  */
-__inline__ __attribute__ ((gnu_inline)) __attribute__((always_inline)) inline const char* OSAL_Name (void)
+__INLINE  __attribute__((always_inline)) const char* OSAL_Name (void)
 {
     return "FreeRTOS";
 }
