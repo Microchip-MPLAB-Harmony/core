@@ -50,6 +50,10 @@ sysInt.setLabel("Enable System Interrupt")
 sysInt.setDefaultValue(False)
 sysInt.setDependencies(enableSysInt, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON"])
 
+processor = Variables.get("__PROCESSOR")
+sysIntCFileStem = "sys_int_nvic"
+if "SAMA5" in processor:
+    sysIntCFileStem = "sys_int_aic"
 
 intHeaderFile = harmonyCoreComponent.createFileSymbol("INT_HEADER", None)
 intHeaderFile.setSourcePath("system/int/sys_int.h")
@@ -62,21 +66,23 @@ intHeaderFile.setEnabled(False)
 intHeaderFile.setDependencies(genSysIntFiles, ["ENABLE_SYS_INT"])
 
 intHeaderMappingFile = harmonyCoreComponent.createFileSymbol("INT_MAPPING", None)
-intHeaderMappingFile.setSourcePath("system/int/sys_int_mapping.h")
+intHeaderMappingFile.setSourcePath("system/int/templates/sys_int_mapping.h.ftl")
 intHeaderMappingFile.setOutputName("sys_int_mapping.h")
 intHeaderMappingFile.setDestPath("system/int/")
 intHeaderMappingFile.setProjectPath("config/" + configName + "/system/int/")
 intHeaderMappingFile.setType("HEADER")
+intHeaderMappingFile.setMarkup(True)
 intHeaderMappingFile.setOverwrite(True)
 intHeaderMappingFile.setEnabled(False)
 intHeaderMappingFile.setDependencies(genSysIntFiles, ["ENABLE_SYS_INT"])
 
 intSourceFile = harmonyCoreComponent.createFileSymbol("INT_SOURCE", None)
-intSourceFile.setSourcePath("system/int/src/sys_int.c")
+intSourceFile.setSourcePath("system/int/src/" + sysIntCFileStem + ".c")
 intSourceFile.setOutputName("sys_int.c")
 intSourceFile.setDestPath("system/int/src/")
 intSourceFile.setProjectPath("config/" + configName + "/system/int/")
 intSourceFile.setType("SOURCE")
+intSourceFile.setMarkup(False)
 intSourceFile.setOverwrite(True)
 intSourceFile.setEnabled(False)
 intSourceFile.setDependencies(genSysIntFiles, ["ENABLE_SYS_INT"])
