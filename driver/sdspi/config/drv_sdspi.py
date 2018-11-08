@@ -135,10 +135,10 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiSymChipSelectPin = sdspiComponent.createKeyValueSetSymbol("DRV_SDSPI_CHIP_SELECT_PIN", None)
     sdspiSymChipSelectPin.setLabel("Chip Select Pin")
-    sdspiSymChipSelectPin.setDefaultValue(5) #PA5
+    sdspiSymChipSelectPin.setDefaultValue(0)
     sdspiSymChipSelectPin.setOutputMode("Key")
     sdspiSymChipSelectPin.setDisplayMode("Description")
-    #sdspiSymChipSelectPin.setDependencies(updatePinPosition, ["core.COMPONENT_PACKAGE"])
+    sdspiSymChipSelectPin.setDependencies(updatePinPosition, ["core.COMPONENT_PACKAGE"])
 
     sdspiChipSelectPinComment = sdspiComponent.createCommentSymbol("DRV_SDSPI_CHIP_SELECT_PIN_COMMENT", None)
     sdspiChipSelectPinComment.setLabel("Configure the Chip Select pin as GPIO output under Pin Settings.")
@@ -151,14 +151,14 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiSymWriteProtectPin = sdspiComponent.createKeyValueSetSymbol("DRV_SDSPI_WRITE_PROTECT_PIN", sdspiSymWriteProtect)
     sdspiSymWriteProtectPin.setLabel("Write Protect Pin (Active High)")
-    sdspiSymWriteProtectPin.setDefaultValue(5) #PA5
+    sdspiSymWriteProtectPin.setDefaultValue(0)
     sdspiSymWriteProtectPin.setOutputMode("Key")
     sdspiSymWriteProtectPin.setDisplayMode("Description")
     sdspiSymWriteProtectPin.setVisible(sdspiSymWriteProtect.getValue())
-    #sdspiSymWriteProtectPin.setDependencies(updatePinPosition, ["core.COMPONENT_PACKAGE", "DRV_SDSPI_ENABLE_WRITE_PROTECT_CHECKING"])
+    sdspiSymWriteProtectPin.setDependencies(updatePinPosition, ["core.COMPONENT_PACKAGE", "DRV_SDSPI_ENABLE_WRITE_PROTECT_CHECKING"])
 
     sdspiWriteProtectPinComment = sdspiComponent.createCommentSymbol("DRV_SDSPI_WRITE_PROTECT_PIN_COMMENT", sdspiSymWriteProtect)
-    sdspiWriteProtectPinComment.setLabel("Configure the Write Protect pin as GPIO output under Pin Settings.")
+    sdspiWriteProtectPinComment.setLabel("Configure the Write Protect pin as GPIO input under Pin Settings.")
     sdspiWriteProtectPinComment.setVisible(sdspiSymWriteProtect.getValue())
     sdspiWriteProtectPinComment.setDependencies(showWriteProtectComment, ["DRV_SDSPI_ENABLE_WRITE_PROTECT_CHECKING"])
 
