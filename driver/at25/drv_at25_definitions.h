@@ -68,15 +68,6 @@
 // *****************************************************************************
 // *****************************************************************************
 
-typedef enum
-{
-    DRV_AT25_SPI_ERROR_NONE = 0,
-    <#if .vars["${DRV_AT25_PLIB?lower_case}"].SPI_STATUS_OVERRUN_MASK?has_content>
-    <#lt>    DRV_AT25_SPI_ERROR_OVERRUN = ${.vars["${DRV_AT25_PLIB?lower_case}"].SPI_STATUS_OVERRUN_MASK},
-    </#if>
-
-}DRV_AT25_SPI_ERROR;
-
 typedef void (* DRV_AT25_PLIB_CALLBACK)( uintptr_t );
 
 typedef    bool (* DRV_AT25_WRITEREAD)(void*, size_t, void *, size_t);
@@ -86,8 +77,6 @@ typedef    bool (* DRV_AT25_WRITE)(void*, size_t);
 typedef    bool (* DRV_AT25_READ)(void*, size_t);
 
 typedef    bool (* DRV_AT25_IS_BUSY)(void);
-
-typedef    DRV_AT25_SPI_ERROR (* DRV_AT25_ERROR_GET)(void);
 
 typedef    void (* DRV_AT25_CALLBACK_REGISTER)(DRV_AT25_PLIB_CALLBACK, uintptr_t);
 
