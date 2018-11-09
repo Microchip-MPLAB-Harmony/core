@@ -64,7 +64,7 @@ def genRtosTask(symbol, event):
     gen_rtos_task = False
 
     if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
-        if (Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == 0):
+        if (Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == "Asynchronous"):
             gen_rtos_task = True
 
     symbol.setEnabled(gen_rtos_task)
@@ -73,7 +73,7 @@ def showRTOSMenu(symbol, event):
     show_rtos_menu = False
 
     if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
-        if (Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == 0):
+        if (Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == "Asynchronous"):
             show_rtos_menu = True
 
     symbol.setVisible(show_rtos_menu)
@@ -83,22 +83,23 @@ def setMemoryDeviceValue(symbol, event):
     symbol.setValue(event["value"], 1)
 
 def syncFileGen(symbol, event):
-    if(event["value"] == 1):
+    if(event["value"] == "Synchronous"):
        symbol.setEnabled(True)
-    elif(event["value"] == 0):
+    else:
        symbol.setEnabled(False)
 
 def aSyncFileGen(symbol, event):
-    if(event["value"] == 0):
+    if(event["value"] == "Asynchronous"):
        symbol.setEnabled(True)
-    elif(event["value"] == 1):
+    else:
        symbol.setEnabled(False)
 
 def setMemoryBuffer(symbol, event):
+    print("Called")
     if (event["id"] == "DRV_MEMORY_COMMON_MODE"):
-        if (event["value"] == 0):
+        if (event["value"] == "Asynchronous"):
             symbol.setVisible(True)
-        elif(event["value"] == 1):
+        elif(event["value"] == "Synchronous"):
             symbol.setVisible(False)
     else:
         if (event["value"] == True):
@@ -150,7 +151,7 @@ def instantiateComponent(memoryComponent, index):
     memorySymBufPool.setLabel("Buffer Queue Size")
     memorySymBufPool.setMin(1)
     memorySymBufPool.setDefaultValue(1)
-    memorySymBufPool.setVisible((Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == 0))
+    memorySymBufPool.setVisible((Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == "Asynchronous"))
     memorySymBufPool.setReadOnly((memoryFsEnable.getValue() == True))
     memorySymBufPool.setDependencies(setMemoryBuffer, ["DRV_MEMORY_FS_ENABLE", "drv_memory.DRV_MEMORY_COMMON_MODE"])
 
@@ -204,7 +205,7 @@ def instantiateComponent(memoryComponent, index):
     enable_rtos_settings = False
 
     if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
-        if (Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == 0):
+        if (Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == "Asynchronous"):
             enable_rtos_settings = True
 
     # RTOS Settings 
@@ -294,6 +295,7 @@ def instantiateComponent(memoryComponent, index):
     memoryAsyncSourceFile.setProjectPath("config/" + configName + "/driver/memory/")
     memoryAsyncSourceFile.setType("SOURCE")
     memoryAsyncSourceFile.setOverwrite(True)
+    memoryAsyncSourceFile.setEnabled((Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == "Asynchronous"))
     memoryAsyncSourceFile.setDependencies(aSyncFileGen, ["drv_memory.DRV_MEMORY_COMMON_MODE"])
 
     memoryAsyncHeaderLocalFile = memoryComponent.createFileSymbol("DRV_MEMORY_ASYNC_HEADER_LOCAL", None)
@@ -303,6 +305,7 @@ def instantiateComponent(memoryComponent, index):
     memoryAsyncHeaderLocalFile.setProjectPath("config/" + configName + "/driver/memory/")
     memoryAsyncHeaderLocalFile.setType("HEADER")
     memoryAsyncHeaderLocalFile.setOverwrite(True)
+    memoryAsyncHeaderLocalFile.setEnabled((Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == "Asynchronous"))
     memoryAsyncHeaderLocalFile.setDependencies(aSyncFileGen, ["drv_memory.DRV_MEMORY_COMMON_MODE"])
 
     # Sync Source Files
@@ -313,6 +316,7 @@ def instantiateComponent(memoryComponent, index):
     memorySyncSourceFile.setProjectPath("config/" + configName + "/driver/memory/")
     memorySyncSourceFile.setType("SOURCE")
     memorySyncSourceFile.setOverwrite(True)
+    memorySyncSourceFile.setEnabled((Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == "Synchronous"))
     memorySyncSourceFile.setDependencies(syncFileGen, ["drv_memory.DRV_MEMORY_COMMON_MODE"])
 
     memorySyncHeaderLocalFile = memoryComponent.createFileSymbol("DRV_MEMORY_SYNC_HEADER_LOCAL", None)
@@ -322,6 +326,7 @@ def instantiateComponent(memoryComponent, index):
     memorySyncHeaderLocalFile.setProjectPath("config/" + configName + "/driver/memory/")
     memorySyncHeaderLocalFile.setType("HEADER")
     memorySyncHeaderLocalFile.setOverwrite(True)
+    memorySyncHeaderLocalFile.setEnabled((Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == "Synchronous"))
     memorySyncHeaderLocalFile.setDependencies(syncFileGen, ["drv_memory.DRV_MEMORY_COMMON_MODE"])
 
     # System Template Files

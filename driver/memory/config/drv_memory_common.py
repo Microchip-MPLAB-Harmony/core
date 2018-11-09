@@ -48,7 +48,7 @@ def setFileSystem(symbol, event):
         symbol.setValue(False, 1)
 
 def setSysTimeEnable(symbol, event):
-    if (event["value"] == 1):
+    if (event["value"] == "Synchronous"):
         symbol.setValue(True, 1)
         res = Database.activateComponents(["sys_time"])
     else:
@@ -59,24 +59,19 @@ def instantiateComponent(memoryCommonComponent):
 
     res = Database.activateComponents(["HarmonyCore"])
 
-    memory_default_mode = 1
+    memory_default_mode = "Synchronous"
 
-    if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
-        memory_default_mode = 0
+    if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") == "BareMetal"):
+        memory_default_mode = "Asynchronous"
 
-    memoryCommonMode = memoryCommonComponent.createKeyValueSetSymbol("DRV_MEMORY_COMMON_MODE", None)
+    memoryCommonMode = memoryCommonComponent.createComboSymbol("DRV_MEMORY_COMMON_MODE", None, ["Asynchronous", "Synchronous"])
     memoryCommonMode.setLabel("Driver Mode")
-    memoryCommonMode.addKey("ASYNC", "0", "Asynchronous")
-    memoryCommonMode.addKey("SYNC", "1", "Synchronous")
-    memoryCommonMode.setDisplayMode("Description")
-    memoryCommonMode.setOutputMode("Key")
-    memoryCommonMode.setVisible(True)
     memoryCommonMode.setDefaultValue(memory_default_mode)
 
     memorySysTimeEnable = memoryCommonComponent.createBooleanSymbol("DRV_MEMORY_COMMON_SYS_TIME_ENABLE", None)
     memorySysTimeEnable.setLabel("Enable Timer System Service")
     memorySysTimeEnable.setVisible(False)
-    memorySysTimeEnable.setDefaultValue((memoryCommonMode.getValue() == 1))
+    memorySysTimeEnable.setDefaultValue((memoryCommonMode.getValue() == "Synchronous"))
     memorySysTimeEnable.setDependencies(setSysTimeEnable, ["DRV_MEMORY_COMMON_MODE"])
 
     if (memorySysTimeEnable.getValue() == True):
