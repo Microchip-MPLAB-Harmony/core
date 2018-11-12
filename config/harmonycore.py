@@ -32,8 +32,10 @@ global osalSourceFreeRtosFile
 global osalSelectRTOS
 
 def enableAppFile(symbol, event):
-    drv_common = Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-    sys_common = Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
+    component = symbol.getComponent()
+
+    drv_common = component.getSymbolValue("ENABLE_DRV_COMMON")
+    sys_common = component.getSymbolValue("ENABLE_SYS_COMMON")
 
     if ((drv_common == True) or (sys_common == True)):
         symbol.setValue(True,1)
@@ -42,9 +44,11 @@ def enableAppFile(symbol, event):
 
 
 def genHarmonyFiles(symbol, event):
-    drv_common = Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-    sys_common = Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-    appfile = Database.getSymbolValue("HarmonyCore", "ENABLE_APP_FILE")
+    component = symbol.getComponent()
+
+    drv_common = component.getSymbolValue("ENABLE_DRV_COMMON")
+    sys_common = component.getSymbolValue("ENABLE_SYS_COMMON")
+    appfile = component.getSymbolValue("ENABLE_APP_FILE")
 
     if ((drv_common == True) or (sys_common == True) or (appfile == True)):
         symbol.setEnabled(True)
@@ -130,17 +134,28 @@ def instantiateComponent(harmonyCoreComponent):
     taskSourceFile.setEnabled(False)
     taskSourceFile.setDependencies(genHarmonyFiles, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON", "ENABLE_APP_FILE"])
 
-def onGenericDependencySatisfied(dependencyID, satisfierID):
-    print("satisfied: " + dependencyID + ", " + satisfierID)
+def onAttachmentConnected(connectionInfo):
+    localComponent = connectionInfo["localComponent"]
+    remoteComponent = connectionInfo["remoteComponent"]
+    remoteID = remoteComponent.getID()
+    connectID = connectionInfo["id"]
+    targetID = connectionInfo["targetID"]
 
-    if satisfierID == "FreeRTOS":
-        Database.clearSymbolValue("HarmonyCore", "SELECT_RTOS")
-        Database.setSymbolValue("HarmonyCore", "SELECT_RTOS", "FreeRTOS", 2)
+    print("satisfied: " + connectID + ", " + targetID)
 
-def onGenericDependencyUnsatisfied(dependencyID, satisfierID):
-    print("unsatisfied: " + dependencyID + ", " + satisfierID)
+    if targetID == "FreeRTOS":
+        localComponent.clearSymbolValue("SELECT_RTOS")
+        localComponent.setSymbolValue("SELECT_RTOS", "FreeRTOS", 1)
 
-    if satisfierID == "FreeRTOS":
-        Database.clearSymbolValue("HarmonyCore", "SELECT_RTOS")
-        Database.setSymbolValue("HarmonyCore", "SELECT_RTOS", "BareMetal", 2)
+def onAttachmentDisconnected(connectionInfo):
+    localComponent = connectionInfo["localComponent"]
+    remoteComponent = connectionInfo["remoteComponent"]
+    remoteID = remoteComponent.getID()
+    connectID = connectionInfo["id"]
+    targetID = connectionInfo["targetID"]
 
+    print("unsatisfied: " + connectID + ", " + targetID)
+
+    if targetID == "FreeRTOS":
+        localComponent.clearSymbolValue("SELECT_RTOS")
+        localComponent.setSymbolValue("SELECT_RTOS", "BareMetal", 1)

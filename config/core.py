@@ -25,7 +25,7 @@
 
 print("Load Module: Harmony Drivers & System Services")
 
-thirdPartyFreeRTOS = Module.CreateComponent("FreeRTOS", "FreeRTOS", "//Third Party Libraries/RTOS/", "config/freertos.py")
+thirdPartyFreeRTOS = Module.CreateComponent("FreeRTOS", "FreeRTOS", "/Third Party Libraries/RTOS/", "config/freertos.py")
 thirdPartyFreeRTOS.setDisplayType("Third Party Library")
 thirdPartyFreeRTOS.addCapability("FreeRTOS", "RTOS", True)
 
@@ -45,24 +45,34 @@ for coreComponent in coreComponents:
         #create system component
         if coreComponent['type'] == "system":
             print("create component: " + Name.upper() + " System Service")
+
             Component = Module.CreateSharedComponent("sys_" + Name, Label, "/Harmony/System Services", "system/" + Name + "/config/sys_" + Name + ".py")
 
             if "capability" in coreComponent:
                 for capability in coreComponent['capability']:
-                    Component.addCapability(capability.lower(), capability)
+                    if "capability_type" in coreComponent:
+                        if coreComponent['capability_type'] == "multi":
+                            Component.addMultiCapability(capability.lower(), capability, capability)
+                        else:
+                            Component.addCapability(capability.lower(), capability)
+                    else:
+                        Component.addCapability(capability.lower(), capability)
 
             if "dependency" in coreComponent:
                 for dep in coreComponent['dependency']:
-                    if Name == "fs":
-                        for media_idx in range(1, 4):
-                            if (media_idx == 1):
-                                Component.addDependency("sys_" + Name + "_" + dep + str(media_idx) + "_dependency", dep, False, True)
-                            else:
-                                Component.addDependency("sys_" + Name + "_" + dep + str(media_idx) + "_dependency", dep, False, False)
+                    if "dependency_type" in coreComponent:
+                        if coreComponent['dependency_type'] == "multi":
+                            Component.addMultiDependency("sys_" + Name +  "_" + dep + "_dependency", dep, dep, True)
+                        else:
+                            Component.addDependency("sys_" + Name + "_" + dep + "_dependency", dep, False, True)
                     else:
                         Component.addDependency("sys_" + Name + "_" + dep + "_dependency", dep, False, True)
 
             Component.setDisplayType("System Service")
+
+            # Add Generic Dependency on Core Service
+            Component.addDependency("sys_" + Name + "_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
+
         #create driver component
         else:
             print("create component: " + Name.upper() + " Driver")
@@ -74,11 +84,25 @@ for coreComponent in coreComponents:
 
             if "capability" in coreComponent:
                 for capability in coreComponent['capability']:
-                    Component.addCapability(capability.lower(), capability)
+                    if "capability_type" in coreComponent:
+                        if coreComponent['capability_type'] == "multi":
+                            Component.addMultiCapability(capability.lower(), capability, capability)
+                        else:
+                            Component.addCapability(capability.lower(), capability)
+                    else:
+                        Component.addCapability(capability.lower(), capability)
 
-            Component.setDisplayType("Driver")
             if "dependency" in coreComponent:
                 for dep in coreComponent['dependency']:
-                    Component.addDependency("drv_" + Name + "_" + dep + "_dependency", dep, False, True)
+                    if "dependency_type" in coreComponent:
+                        if coreComponent['dependency_type'] == "multi":
+                            Component.addMultiDependency("drv_" + Name + "_" + dep + "_dependency", dep, dep, True)
+                        else:
+                            Component.addDependency("drv_" + Name + "_" + dep + "_dependency", dep, False, True)
+                    else:
+                        Component.addDependency("drv_" + Name + "_" + dep + "_dependency", dep, False, True)
 
-        Component.addDependency("drv_" + Name + "_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
+            Component.setDisplayType("Driver")
+
+            # Add Generic Dependency on Core Service
+            Component.addDependency("drv_" + Name + "_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
