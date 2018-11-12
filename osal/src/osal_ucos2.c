@@ -39,7 +39,6 @@
 const  CPU_CHAR  *osal_micrium__c = "$Id: $";
 #endif
 
-
 #include "osal/osal_ucos2.h"
 
 /*
@@ -86,21 +85,20 @@ const  CPU_CHAR  *osal_micrium__c = "$Id: $";
 */
 OSAL_CRITSECT_DATA_TYPE __inline__ __attribute__((nomips16)) __attribute__((nomicromips)) __attribute__((always_inline)) OSAL_CRIT_Enter (OSAL_CRIT_TYPE  severity)
 {
+  OS_CPU_SR  cpu_sr;
 
-    OS_CPU_SR  cpu_sr;
+  switch (severity)
+  {
+    case OSAL_CRIT_TYPE_LOW:
+      OSSchedLock();
+    break;
 
-    switch (severity) {
-        case OSAL_CRIT_TYPE_LOW:
-             OSSchedLock();
-             break;
-
-        case OSAL_CRIT_TYPE_HIGH:
-             OS_ENTER_CRITICAL();
-             break;
-    }
-    return (cpu_sr);
+    case OSAL_CRIT_TYPE_HIGH:
+      OS_ENTER_CRITICAL();
+    break;
+  }
+  return (cpu_sr);
 }
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -148,20 +146,19 @@ OSAL_CRITSECT_DATA_TYPE __inline__ __attribute__((nomips16)) __attribute__((nomi
 */
 void __inline__ __attribute__((nomips16)) __attribute__((nomicromips)) __attribute__((always_inline)) OSAL_CRIT_Leave (OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
 {
+  OS_CPU_SR  cpu_sr;
 
-    OS_CPU_SR  cpu_sr;
+  switch (severity)
+  {
+    case OSAL_CRIT_TYPE_LOW:
+      OSSchedUnlock();
+    break;
 
-
-    switch (severity) {
-        case OSAL_CRIT_TYPE_LOW:
-             OSSchedUnlock();
-             break;
-
-        case OSAL_CRIT_TYPE_HIGH:
-             cpu_sr = status;
-             OS_EXIT_CRITICAL();
-             break;
-    }
+    case OSAL_CRIT_TYPE_HIGH:
+      cpu_sr = status;
+      OS_EXIT_CRITICAL();
+    break;
+  }
 }
 
 /*
@@ -172,7 +169,7 @@ void __inline__ __attribute__((nomips16)) __attribute__((nomicromips)) __attribu
   Function: OSAL_RESULT  OSAL_Initialize (void)
 
   Summary:
-    Initialize internal objects needed by the OSAL 
+    Initialize internal objects needed by the OSAL
 
   Description:
     Initialize the mutex used to protect the heap.
@@ -196,9 +193,8 @@ void __inline__ __attribute__((nomips16)) __attribute__((nomicromips)) __attribu
 */
 OSAL_RESULT  OSAL_Initialize (void)
 {
-   return (OSAL_RESULT_TRUE);
+  return (OSAL_RESULT_TRUE);
 }
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -236,9 +232,8 @@ OSAL_RESULT  OSAL_Initialize (void)
 
 const  char __inline__ __attribute__((always_inline)) *OSAL_Name (void)
 {
-    return ("Micrium uC/OS-II");
+  return ("Micrium uC/OS-II");
 }
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -266,7 +261,6 @@ const  char __inline__ __attribute__((always_inline)) *OSAL_Name (void)
     <code>
     void *p_mem;
 
-
     p_mem = OSAL_Malloc(100);
     </code>
 
@@ -276,17 +270,15 @@ const  char __inline__ __attribute__((always_inline)) *OSAL_Name (void)
 
 void* OSAL_Malloc (size_t  size)
 {
-    void                    *p_data;
-    OSAL_CRITSECT_DATA_TYPE  IntState;
+  void  *p_data;
+  OSAL_CRITSECT_DATA_TYPE  IntState;
 
+  IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
+  p_data   = malloc(size);
+  OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, IntState);
 
-    IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
-    p_data   = malloc(size);
-    OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, IntState);
-
-    return (p_data);
+  return (p_data);
 }
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -320,14 +312,12 @@ void* OSAL_Malloc (size_t  size)
 */
 void  OSAL_Free (void *p_data)
 {
-    OSAL_CRITSECT_DATA_TYPE IntState;
+  OSAL_CRITSECT_DATA_TYPE IntState;
 
-
-    IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
-    free(p_data);
-    OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, IntState);    
+  IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
+  free(p_data);
+  OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, IntState);
 }
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -343,8 +333,8 @@ void  OSAL_Free (void *p_data)
 
   Description:
     Create an OSAL binary or counting semaphore. If OSAL_SEM_TYPE_BINARY is specified then
-    the maxcount and initialCount values are ignored otherwise these must contain valid
-    values.
+    the initialCount must contain valid value and maxcount value is ignored otherwise this
+    must contain valid value.
 
   Precondition:
     Semaphore must have been declared.
@@ -358,7 +348,11 @@ void  OSAL_Free (void *p_data)
 
     maxCount     - Maximum value for a counting semaphore. Ignored for a BINARY semaphore.
 
-    initialCount - Starting count value for the semaphore. Ignored for a BINARY semaphore
+    initialCount - Starting count value for the semaphore.
+                   For a BINARY semaphore if initialCount = 0 then Binary Semaphore is
+                   created in a state such semaphore must call 'OSAL_SEM_Post' before it
+                   can call 'OSAL_SEM_Pend' whereas if the initialCount = 1 then the first
+                   call to 'OSAL_SEM_Pend' would pass.
 
   Returns:
     OSAL_RESULT_TRUE    - Semaphore created
@@ -375,23 +369,38 @@ void  OSAL_Free (void *p_data)
 
 OSAL_RESULT  OSAL_SEM_Create (OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uint8_t maxCount, uint8_t initialCount)
 {
-    (void)maxCount;
-    switch (type) {
-        case OSAL_SEM_TYPE_BINARY:
-             semID = OSSemCreate(1);
-             break;
+  (void)maxCount;
 
-        case OSAL_SEM_TYPE_COUNTING:
-             semID = OSSemCreate(initialCount);
-             break;
+  switch (type)
+  {
+    case OSAL_SEM_TYPE_BINARY:
+      if ( initialCount <= 1)
+      {
+        if (initialCount == 1)
+        {
+          semID = OSSemCreate(1);
+        }
+        else // initialCount = 0
+        {
+          semID = OSSemCreate(0);
+        }
+      }
+      else // Binary Semaphore initialCount must be either "0" or "1"
+      {
+        return OSAL_RESULT_FALSE;
+      }
+    break;
 
-        default:
-             return (OSAL_RESULT_NOT_IMPLEMENTED);
-    }
+    case OSAL_SEM_TYPE_COUNTING:
+      semID = OSSemCreate(initialCount);
+    break;
 
-    return (OSAL_RESULT_TRUE);
+    default:
+      return (OSAL_RESULT_NOT_IMPLEMENTED);
+  }
+
+  return (OSAL_RESULT_TRUE);
 }
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -426,20 +435,18 @@ OSAL_RESULT  OSAL_SEM_Create (OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, u
 */
 OSAL_RESULT  OSAL_SEM_Delete (OSAL_SEM_HANDLE_TYPE* semID)
 {
+INT8U  err;
 
-    INT8U     err;
-
-
-    OSSemDel(semID,
-            OS_DEL_ALWAYS,
-            &err);
-    if (err == OS_ERR_NONE) {
-        return (OSAL_RESULT_TRUE);
-    } else {
-        return (OSAL_RESULT_FALSE);
-    }
+  OSSemDel(semID, OS_DEL_ALWAYS, &err);
+  if (err == OS_ERR_NONE)
+  {
+    return (OSAL_RESULT_TRUE);
+  }
+  else
+  {
+    return (OSAL_RESULT_FALSE);
+  }
 }
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -491,31 +498,34 @@ OSAL_RESULT  OSAL_SEM_Delete (OSAL_SEM_HANDLE_TYPE* semID)
 */
 OSAL_RESULT  OSAL_SEM_Pend (OSAL_SEM_HANDLE_TYPE*  semID, uint16_t waitMS)
 {
-    INT8U    err;
-    INT32U   wait;
+  INT8U    err;
+  INT32U   wait;
 
+  if (waitMS == 0)                  /* See if user selects NO WAIT */
+  {
+    return (OSAL_RESULT_FALSE);     /* ... yes, return immediately */
+  }
 
-    if (waitMS == 0) {                                      /* See if user selects NO WAIT                  */
-        return (OSAL_RESULT_FALSE);                         /* ... yes, return immediately                  */
-    }
+  if (waitMS == OSAL_WAIT_FOREVER)  /* See if user selects 'wait for ever' */
+  {
+    wait = 0;                       /* ... yes, for uC/OS-II, need to specify 0 */
+  }
+  else
+  {
+    wait = (INT32U)waitMS * (INT32U)1000 / (INT32U)OS_TICKS_PER_SEC;
+  }
 
-    if (waitMS == OSAL_WAIT_FOREVER) {                      /* See if user selects 'wait for ever'          */
-        wait = 0;                                           /* ... yes, for uC/OS-II, need to specify 0    */
-    } else {
-        wait = (INT32U)waitMS * (INT32U)1000 / (INT32U)OS_TICKS_PER_SEC;
-    }
+  OSSemPend(semID, wait, &err);
 
-    OSSemPend(semID,
-              wait,
-              &err);
-
-    if (err == OS_ERR_NONE) {
-        return (OSAL_RESULT_TRUE);
-    } else {
-        return (OSAL_RESULT_FALSE);
-    }
+  if (err == OS_ERR_NONE)
+  {
+    return (OSAL_RESULT_TRUE);
+  }
+  else
+  {
+    return (OSAL_RESULT_FALSE);
+  }
 }
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -551,16 +561,18 @@ OSAL_RESULT  OSAL_SEM_Pend (OSAL_SEM_HANDLE_TYPE*  semID, uint16_t waitMS)
 */
 OSAL_RESULT  OSAL_SEM_Post (OSAL_SEM_HANDLE_TYPE* semID)
 {
-    INT8U  err;
+  INT8U  err;
 
+  err = OSSemPost(semID);
 
-    err = OSSemPost(semID);
-
-    if (err == OS_ERR_NONE) {
-        return (OSAL_RESULT_TRUE);
-    } else {
-        return (OSAL_RESULT_FALSE);
-    }
+  if (err == OS_ERR_NONE)
+  {
+    return (OSAL_RESULT_TRUE);
+  }
+  else
+  {
+    return (OSAL_RESULT_FALSE);
+  }
 }
 
 /*
@@ -612,16 +624,17 @@ OSAL_RESULT  OSAL_SEM_Post (OSAL_SEM_HANDLE_TYPE* semID)
 */
 OSAL_RESULT  OSAL_SEM_PostISR (OSAL_SEM_HANDLE_TYPE* semID)
 {
-    INT8U  err;
+  INT8U  err;
 
+  err = OSSemPost(semID);
 
-    err = OSSemPost(semID);
-
-    if (err == OS_ERR_NONE) {
-        return (OSAL_RESULT_TRUE);
-    } else {
-        return (OSAL_RESULT_FALSE);
-    }
+  if (err == OS_ERR_NONE)
+  {
+    return (OSAL_RESULT_TRUE);
+  } else
+  {
+    return (OSAL_RESULT_FALSE);
+  }
 }
 
 /*
@@ -679,14 +692,13 @@ OSAL_RESULT  OSAL_SEM_PostISR (OSAL_SEM_HANDLE_TYPE* semID)
 */
 uint8_t  OSAL_SEM_GetCount (OSAL_SEM_HANDLE_TYPE*  semID)
 {
-    INT16U                   ctr;
-    OSAL_CRITSECT_DATA_TYPE  IntState;
+  INT16U  ctr;
+  OSAL_CRITSECT_DATA_TYPE  IntState;
 
-
-    IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
-    ctr      = semID->OSEventCnt;
-    OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, IntState);
-    return ((uint8_t)ctr);
+  IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
+  ctr      = semID->OSEventCnt;
+  OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, IntState);
+  return ((uint8_t)ctr);
 }
 
 /*
@@ -731,11 +743,10 @@ uint8_t  OSAL_SEM_GetCount (OSAL_SEM_HANDLE_TYPE*  semID)
 */
 OSAL_RESULT  OSAL_MUTEX_Create (OSAL_MUTEX_HANDLE_TYPE*  mutexID)
 {
-    mutexID = OSSemCreate(1);
+  mutexID = OSSemCreate(1);
 
-    return (OSAL_RESULT_TRUE);
+  return (OSAL_RESULT_TRUE);
 }
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -772,19 +783,18 @@ OSAL_RESULT  OSAL_MUTEX_Delete (OSAL_MUTEX_HANDLE_TYPE*  mutexID)
 {
     INT8U     err;
 
+  OSSemDel(mutexID, OS_DEL_ALWAYS, &err);
+  (void)err;
 
-    OSSemDel(mutexID,
-            OS_DEL_ALWAYS,
-            &err);
-    (void)err;
-    if (err == OS_ERR_NONE) {
-        return (OSAL_RESULT_TRUE);
-    } else {
-        return (OSAL_RESULT_FALSE);
-    }
+  if (err == OS_ERR_NONE)
+  {
+    return (OSAL_RESULT_TRUE);
+  }
+  else
+  {
+    return (OSAL_RESULT_FALSE);
+  }
 }
-
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -837,29 +847,33 @@ OSAL_RESULT  OSAL_MUTEX_Delete (OSAL_MUTEX_HANDLE_TYPE*  mutexID)
 */
 OSAL_RESULT  OSAL_MUTEX_Lock (OSAL_MUTEX_HANDLE_TYPE*  mutexID, uint16_t  waitMS)
 {
-    INT8U   err;
-    INT32U   wait;
+  INT8U   err;
+  INT32U   wait;
 
+  if (waitMS == 0)                  /* See if user selects NO WAIT */
+  {
+    return (OSAL_RESULT_FALSE);     /* ... yes, return immediately */
+  }
 
-    if (waitMS == 0) {                                      /* See if user selects NO WAIT                  */
-        return (OSAL_RESULT_FALSE);                         /* ... yes, return immediately                  */
-    }
+  if (waitMS == OSAL_WAIT_FOREVER)  /* See if user selects 'wait for ever' */
+  {
+    wait = 0;                       /* ... yes, for uC/OS-II, need to specify 0 */
+  }
+  else
+  {
+    wait = (INT32U)waitMS * (INT32U)1000 / (INT32U)OS_TICKS_PER_SEC;
+  }
 
-    if (waitMS == OSAL_WAIT_FOREVER) {                      /* See if user selects 'wait for ever'          */
-        wait = 0;                                           /* ... yes, for uC/OS-II, need to specify 0    */
-    } else {
-        wait = (INT32U)waitMS * (INT32U)1000 / (INT32U)OS_TICKS_PER_SEC;
-    }
+  OSSemPend(mutexID, wait, &err);
 
-    OSSemPend(mutexID,
-              wait,
-              &err);
-
-    if (err == OS_ERR_NONE) {
-        return (OSAL_RESULT_TRUE);
-    } else {
-        return (OSAL_RESULT_FALSE);
-    }
+  if (err == OS_ERR_NONE)
+  {
+    return (OSAL_RESULT_TRUE);
+  }
+  else
+  {
+    return (OSAL_RESULT_FALSE);
+  }
 }
 
 /*
@@ -906,17 +920,16 @@ OSAL_RESULT  OSAL_MUTEX_Lock (OSAL_MUTEX_HANDLE_TYPE*  mutexID, uint16_t  waitMS
 */
 OSAL_RESULT OSAL_MUTEX_Unlock (OSAL_MUTEX_HANDLE_TYPE*  mutexID)
 {
-    INT8U  err;
+  INT8U  err;
 
+  err = OSSemPost(mutexID);
 
-    err = OSSemPost(mutexID);
-
-    if (err == OS_ERR_NONE) {
-        return (OSAL_RESULT_TRUE);
-    } else {
-        return (OSAL_RESULT_FALSE);
-    }
+  if (err == OS_ERR_NONE)
+  {
+    return (OSAL_RESULT_TRUE);
+  }
+  else
+  {
+    return (OSAL_RESULT_FALSE);
+  }
 }
-
-
-

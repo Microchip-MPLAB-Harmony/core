@@ -3,7 +3,7 @@
 
   Company:
     SEGGER Microcontroller GmbH & Co. KG
-  
+
   File Name:
     osal_embOS.c
 
@@ -40,7 +40,6 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
-
 /*********************************************************************
 *
 *       Include files
@@ -71,7 +70,11 @@ static OS_UINT CSema_maxCount;
 *                - OSAL_SEM_TYPE_COUNTING, create a counting semaphore with the specified
 *                  count values.
 *   maxCount     - Maximum value for a counting semaphore. Ignored for a BINARY semaphore.
-*   initialCount - Starting count value for the semaphore. Ignored for a BINARY semaphore
+*   initialCount - Starting count value for the semaphore.
+*                  For a BINARY semaphore if initialCount = 0 then Binary Semaphore is
+*                  created in a state such semaphore must call 'OSAL_SEM_Post' before it
+*                  can call 'OSAL_SEM_Pend' whereas if the initialCount = 1 then the first
+*                  call to 'OSAL_SEM_Pend' would pass.
 *
 * Return value
 *   OSAL_RESULT_TRUE    - Semaphore created
@@ -83,16 +86,38 @@ static OS_UINT CSema_maxCount;
 * Example
 *   OSAL_SEM_Create(&mySemID, OSAL_SEM_TYPE_COUNTING, 10, 5);
 */
-OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uint8_t maxCount, uint8_t initialCount) {
-  switch (type) {
-    case OSAL_SEM_TYPE_BINARY: 
-      OS_CreateCSema(semID, 1);
+OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uint8_t maxCount, uint8_t initialCount)
+{
+  switch (type)
+  {
+    case OSAL_SEM_TYPE_BINARY:
+      if ( initialCount <= 1)
+      {
+        if (initialCount == 1)
+        {
+          OS_CreateCSema(semID, 1);
+        }
+        else // initialCount = 0
+        {
+          /* Macro that creates a semaphore with an initial count value of zero. */
+          OS_SEMAPHORE_CREATE(semID);
+        }
+      }
+      else // Binary Semaphore initialCount must be either "0" or "1"
+      {
+        return OSAL_RESULT_FALSE;
+      }
+
       CSema_maxCount = 1;
+
       return OSAL_RESULT_TRUE;
+
     case OSAL_SEM_TYPE_COUNTING:
       OS_CreateCSema(semID, (OS_UINT)initialCount);
       CSema_maxCount = maxCount;
+
       return OSAL_RESULT_TRUE;
+
     default:
       return OSAL_RESULT_NOT_IMPLEMENTED;
   }
@@ -119,10 +144,14 @@ OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uin
 *   OSAL_SEM_Delete(&mySemID);
 *
 */
-OSAL_RESULT OSAL_SEM_Delete(OSAL_SEM_HANDLE_TYPE* semID) {
-  if (semID == NULL) {
+OSAL_RESULT OSAL_SEM_Delete(OSAL_SEM_HANDLE_TYPE* semID)
+{
+  if (semID == NULL)
+  {
     return OSAL_RESULT_FALSE;
-  } else {
+  }
+  else
+  {
     OS_DeleteCSema(semID);
     return OSAL_RESULT_TRUE;
   }
@@ -154,14 +183,21 @@ OSAL_RESULT OSAL_SEM_Delete(OSAL_SEM_HANDLE_TYPE* semID) {
 *   OSAL_SEM_Pend(&mySemID, 50);
 *
 */
-OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS) {
-  if (waitMS == OSAL_WAIT_FOREVER) {
+OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS)
+{
+  if (waitMS == OSAL_WAIT_FOREVER)
+  {
     OS_WaitCSema(semID);
     return OSAL_RESULT_TRUE;
-  } else {
-    if (OS_WaitCSemaTimed(semID, waitMS) == 1) {
+  }
+  else
+  {
+    if (OS_WaitCSemaTimed(semID, waitMS) == 1)
+    {
       return OSAL_RESULT_TRUE;
-    } else {
+    }
+    else
+    {
       return OSAL_RESULT_FALSE;
     }
   }
@@ -188,7 +224,8 @@ OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS) {
 *   OSAL_SEM_Post(&mySemID);
 *
 */
-OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID) {
+OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID)
+{
   OS_SignalCSemaMax(semID, CSema_maxCount);
   return OSAL_RESULT_TRUE;
 }
@@ -214,7 +251,8 @@ OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID) {
 *   OSAL_SEM_PostISR(&mySemID);
 *
 */
-OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID) {
+OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
+{
   OS_SignalCSemaMax(semID, CSema_maxCount);
   return OSAL_RESULT_TRUE;
 }
@@ -239,7 +277,8 @@ OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID) {
 *   OSAL_SEM_GetCount(&mySemID);
 *
 */
-uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID) {
+uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
+{
   return OS_GetCSemaValue(semID);
 }
 
@@ -266,17 +305,20 @@ uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID) {
 *   OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
 *
 */
-OSAL_CRITSECT_DATA_TYPE OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity) {
-  switch (severity) {
+OSAL_CRITSECT_DATA_TYPE OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity)
+{
+  switch (severity)
+  {
     case OSAL_CRIT_TYPE_LOW:
       /* LOW priority critical sections just disable the scheduler */
       OS_EnterRegion();
-      break;    
+    break;
+
     case OSAL_CRIT_TYPE_HIGH:
       /* HIGH priority critical sections disable interrupts */
       OS_IncDI();
       OS_EnterRegion();
-      break;
+    break;
   }
   return(0);//not used with embOS
 }
@@ -298,17 +340,20 @@ OSAL_CRITSECT_DATA_TYPE OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity) {
 *   OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH);
 *
 */
-void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status) {
-  switch (severity) {
+void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
+{
+  switch (severity)
+  {
     case OSAL_CRIT_TYPE_LOW:
       // LOW priority resumes scheduler
       OS_LeaveRegion();
-      break;
+    break;
+
     case OSAL_CRIT_TYPE_HIGH:
       // HIGH priority renables interrupts
       OS_LeaveRegion();
       OS_DecRI();
-      break;
+    break;
   }
 }
 
@@ -338,7 +383,8 @@ void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status) {
 *   OSAL_MUTEX_Create(&mutexID)
 *
 */
-OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID) {
+OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID)
+{
   OS_CREATERSEMA(mutexID);
   return OSAL_RESULT_TRUE;
 }
@@ -364,10 +410,14 @@ OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID) {
 *   OSAL_MUTEX_Delete(&mutexID)
 *
 */
-OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID) {
-  if(OS_GetSemaValue(mutexID) != 0) {
+OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID)
+{
+  if(OS_GetSemaValue(mutexID) != 0)
+  {
     return OSAL_RESULT_FALSE;
-  } else {
+  }
+  else
+  {
     OS_DeleteRSema(mutexID);
     return OSAL_RESULT_TRUE;
   }
@@ -406,17 +456,27 @@ OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID) {
 *    }
 *
 */
-OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS) {
-  if (waitMS != OSAL_WAIT_FOREVER) {
-    if (OS_UseTimed(mutexID, (OS_TIME)waitMS)) {
+OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
+{
+  if (waitMS != OSAL_WAIT_FOREVER)
+  {
+    if (OS_UseTimed(mutexID, (OS_TIME)waitMS))
+    {
       return OSAL_RESULT_TRUE;
-    } else {
+    }
+    else
+    {
       return OSAL_RESULT_FALSE;
     }
-  } else {
-    if (OS_Use(mutexID)) {
+  }
+  else
+  {
+    if (OS_Use(mutexID))
+    {
       return OSAL_RESULT_TRUE;
-    } else {
+    }
+    else
+    {
       return OSAL_RESULT_FALSE;
     }
   }
@@ -452,11 +512,15 @@ OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS) {
 *    }
 *
 */
-OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID) {
-  if (mutexID->UseCnt) {
+OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID)
+{
+  if (mutexID->UseCnt)
+  {
     OS_Unuse(mutexID);
     return OSAL_RESULT_TRUE;
-  } else {
+  }
+  else
+  {
     return OSAL_RESULT_FALSE;
   }
 }
@@ -484,7 +548,8 @@ OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID) {
 *   ...
 *
 */
-const char* OSAL_Name() {
+const char* OSAL_Name()
+{
   return "embOS";
 }
 
@@ -505,7 +570,8 @@ const char* OSAL_Name() {
 *   }
 *
 */
-OSAL_RESULT OSAL_Initialize() {
+OSAL_RESULT OSAL_Initialize()
+{
   return OSAL_RESULT_TRUE;
 }
 

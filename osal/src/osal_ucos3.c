@@ -39,7 +39,6 @@
 const  CPU_CHAR  *osal_micrium__c = "$Id: $";
 #endif
 
-
 #include "osal/osal_ucos3.h"
 
 /*
@@ -94,23 +93,21 @@ const  CPU_CHAR  *osal_micrium__c = "$Id: $";
 */
 OSAL_CRITSECT_DATA_TYPE __inline__  __attribute__((nomips16)) __attribute__((nomicromips)) __attribute__((always_inline)) OSAL_CRIT_Enter (OSAL_CRIT_TYPE  severity)
 {
-    OS_ERR  err;
-    CPU_SR_ALLOC();
+  OS_ERR  err;
+  CPU_SR_ALLOC();
 
+  switch (severity) {
+    case OSAL_CRIT_TYPE_LOW:
+      OSSchedLock(&err);
+      (void)err;
+    break;
 
-    switch (severity) {
-        case OSAL_CRIT_TYPE_LOW:
-             OSSchedLock(&err);
-             (void)err;
-             break;
-
-        case OSAL_CRIT_TYPE_HIGH:
-             CPU_CRITICAL_ENTER();
-             break;
-    }
-    return (cpu_sr);
+    case OSAL_CRIT_TYPE_HIGH:
+      CPU_CRITICAL_ENTER();
+    break;
+  }
+  return (cpu_sr);
 }
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -158,21 +155,20 @@ OSAL_CRITSECT_DATA_TYPE __inline__  __attribute__((nomips16)) __attribute__((nom
 */
 void __inline__ __attribute__((nomips16)) __attribute__((nomicromips)) __attribute__((always_inline)) OSAL_CRIT_Leave (OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
 {
-    OS_ERR  err;
-    CPU_SR_ALLOC();
+  OS_ERR  err;
+  CPU_SR_ALLOC();
 
+  switch (severity) {
+    case OSAL_CRIT_TYPE_LOW:
+      OSSchedUnlock(&err);
+      (void)err;
+    break;
 
-    switch (severity) {
-        case OSAL_CRIT_TYPE_LOW:
-             OSSchedUnlock(&err);
-             (void)err;
-             break;
-
-        case OSAL_CRIT_TYPE_HIGH:
-             cpu_sr = status;
-             CPU_CRITICAL_EXIT();
-             break;
-    }
+    case OSAL_CRIT_TYPE_HIGH:
+      cpu_sr = status;
+      CPU_CRITICAL_EXIT();
+    break;
+  }
 }
 
 /*
@@ -183,7 +179,7 @@ void __inline__ __attribute__((nomips16)) __attribute__((nomicromips)) __attribu
   Function: OSAL_RESULT  OSAL_Initialize (void)
 
   Summary:
-    Initialize internal objects needed by the OSAL 
+    Initialize internal objects needed by the OSAL
 
   Description:
     Initialize the mutex used to protect the heap.
@@ -207,9 +203,8 @@ void __inline__ __attribute__((nomips16)) __attribute__((nomicromips)) __attribu
 */
 OSAL_RESULT  OSAL_Initialize (void)
 {
-   return (OSAL_RESULT_TRUE);
+  return (OSAL_RESULT_TRUE);
 }
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -247,9 +242,8 @@ OSAL_RESULT  OSAL_Initialize (void)
 
 const char __inline__ __attribute__((always_inline)) *OSAL_Name (void)
 {
-    return ("Micrium uC/OS-III");
+  return ("Micrium uC/OS-III");
 }
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -277,7 +271,6 @@ const char __inline__ __attribute__((always_inline)) *OSAL_Name (void)
     <code>
     void *p_mem;
 
-
     p_mem = OSAL_Malloc(100);
     </code>
 
@@ -287,18 +280,15 @@ const char __inline__ __attribute__((always_inline)) *OSAL_Name (void)
 
 void* OSAL_Malloc (size_t  size)
 {
-    void   *p_data;
-    OSAL_CRITSECT_DATA_TYPE IntState;
+  void  *p_data;
+  OSAL_CRITSECT_DATA_TYPE  IntState;
 
-    IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
+  IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
+  p_data   = malloc(size);
+  OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, IntState);
 
-    p_data = malloc(size);
-
-    OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, IntState);
-
-    return (p_data);
+  return (p_data);
 }
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -332,15 +322,12 @@ void* OSAL_Malloc (size_t  size)
 */
 void  OSAL_Free (void *p_data)
 {
-    OSAL_CRITSECT_DATA_TYPE IntState;
+  OSAL_CRITSECT_DATA_TYPE IntState;
 
-    IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
-    
-    free(p_data);
-
-    OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, IntState);    
+  IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
+  free(p_data);
+  OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, IntState);
 }
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -356,8 +343,8 @@ void  OSAL_Free (void *p_data)
 
   Description:
     Create an OSAL binary or counting semaphore. If OSAL_SEM_TYPE_BINARY is specified then
-    the maxcount and initialCount values are ignored otherwise these must contain valid
-    values.
+    the initialCount must contain valid value and maxcount value is ignored otherwise this
+    must contain valid value.
 
   Precondition:
     Semaphore must have been declared.
@@ -371,7 +358,11 @@ void  OSAL_Free (void *p_data)
 
     maxCount     - Maximum value for a counting semaphore. Ignored for a BINARY semaphore.
 
-    initialCount - Starting count value for the semaphore. Ignored for a BINARY semaphore
+    initialCount - Starting count value for the semaphore.
+                   For a BINARY semaphore if initialCount = 0 then Binary Semaphore is
+                   created in a state such semaphore must call 'OSAL_SEM_Post' before it
+                   can call 'OSAL_SEM_Pend' whereas if the initialCount = 1 then the first
+                   call to 'OSAL_SEM_Pend' would pass.
 
   Returns:
     OSAL_RESULT_TRUE    - Semaphore created
@@ -385,38 +376,52 @@ void  OSAL_Free (void *p_data)
   Remarks:
 ------------------------------------------------------------------------------------------------------------------------
 */
-
 OSAL_RESULT  OSAL_SEM_Create (OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uint8_t maxCount, uint8_t initialCount)
 {
-    OS_ERR  err;
+  OS_ERR  err;
 
-
-    switch (type) {
-        case OSAL_SEM_TYPE_BINARY:
-             OSSemCreate((OS_SEM   *)semID,
-                         (CPU_CHAR *)"Sem-Binary",
-                         (OS_SEM_CTR)1,
-                         (OS_ERR   *)&err);
-             break;
-
-        case OSAL_SEM_TYPE_COUNTING:
-             OSSemCreate((OS_SEM   *)semID,
-                         (CPU_CHAR *)"Sem-Counting",
-                         (OS_SEM_CTR)initialCount,
-                         (OS_ERR   *)&err);
-             break;
-
-        default:
-             return (OSAL_RESULT_NOT_IMPLEMENTED);
-    }
-
-    if (err == OS_ERR_NONE) {
-        return (OSAL_RESULT_TRUE);
-    } else {
+  switch (type) {
+    case OSAL_SEM_TYPE_BINARY:
+      if ( initialCount <= 1)
+      {
+        if (initialCount == 1)
+        {
+          OSSemCreate((OS_SEM   *)semID,
+                      (CPU_CHAR *)"Sem-Binary",
+                      (OS_SEM_CTR)1,
+                      (OS_ERR   *)&err);
+        }
+        else // initialCount = 0
+        {
+          OSSemCreate((OS_SEM   *)semID,
+                      (CPU_CHAR *)"Sem-Binary",
+                      (OS_SEM_CTR)0,
+                      (OS_ERR   *)&err);
+        }
+      }
+      else // Binary Semaphore initialCount must be either "0" or "1"
+      {
         return (OSAL_RESULT_FALSE);
-    }
-}
+      }
+    break;
 
+    case OSAL_SEM_TYPE_COUNTING:
+      OSSemCreate((OS_SEM   *)semID,
+                  (CPU_CHAR *)"Sem-Counting",
+                  (OS_SEM_CTR)initialCount,
+                  (OS_ERR   *)&err);
+    break;
+
+    default:
+      return (OSAL_RESULT_NOT_IMPLEMENTED);
+  }
+
+  if (err == OS_ERR_NONE) {
+    return (OSAL_RESULT_TRUE);
+  } else {
+    return (OSAL_RESULT_FALSE);
+  }
+}
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -451,20 +456,21 @@ OSAL_RESULT  OSAL_SEM_Create (OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, u
 */
 OSAL_RESULT  OSAL_SEM_Delete (OSAL_SEM_HANDLE_TYPE* semID)
 {
-    OS_ERR  err;
+  OS_ERR  err;
 
+  OSSemDel((OS_SEM *)semID,
+          (OS_OPT  )OS_OPT_DEL_ALWAYS,
+          (OS_ERR *)&err);
 
-    OSSemDel((OS_SEM *)semID,
-             (OS_OPT  )OS_OPT_DEL_ALWAYS,
-             (OS_ERR *)&err);
-
-    if (err == OS_ERR_NONE) {
-        return (OSAL_RESULT_TRUE);
-    } else {
-        return (OSAL_RESULT_FALSE);
-    }
+  if (err == OS_ERR_NONE)
+  {
+    return (OSAL_RESULT_TRUE);
+  }
+  else
+  {
+    return (OSAL_RESULT_FALSE);
+  }
 }
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -545,7 +551,6 @@ OSAL_RESULT  OSAL_SEM_Pend (OSAL_SEM_HANDLE_TYPE*  semID, uint16_t waitMS)
     }
 }
 
-
 /*
 ------------------------------------------------------------------------------------------------------------------------
                                                  OSAL_SEM_Post()
@@ -580,18 +585,20 @@ OSAL_RESULT  OSAL_SEM_Pend (OSAL_SEM_HANDLE_TYPE*  semID, uint16_t waitMS)
 */
 OSAL_RESULT  OSAL_SEM_Post (OSAL_SEM_HANDLE_TYPE* semID)
 {
-    OS_ERR  err;
+  OS_ERR  err;
 
+  OSSemPost((OS_SEM *)semID,
+            (OS_OPT  )OS_OPT_POST_1,
+            (OS_ERR *)&err);
 
-    OSSemPost((OS_SEM *)semID,
-              (OS_OPT  )OS_OPT_POST_1,
-              (OS_ERR *)&err);
-
-    if (err == OS_ERR_NONE) {
-        return (OSAL_RESULT_TRUE);
-    } else {
-        return (OSAL_RESULT_FALSE);
-    }
+  if (err == OS_ERR_NONE)
+  {
+    return (OSAL_RESULT_TRUE);
+  }
+  else
+  {
+    return (OSAL_RESULT_FALSE);
+  }
 }
 
 /*
@@ -643,18 +650,20 @@ OSAL_RESULT  OSAL_SEM_Post (OSAL_SEM_HANDLE_TYPE* semID)
 */
 OSAL_RESULT  OSAL_SEM_PostISR (OSAL_SEM_HANDLE_TYPE* semID)
 {
-    OS_ERR  err;
+  OS_ERR  err;
 
+  OSSemPost((OS_SEM *)semID,
+            (OS_OPT  )OS_OPT_POST_1,
+            (OS_ERR *)&err);
 
-    OSSemPost((OS_SEM *)semID,
-              (OS_OPT  )OS_OPT_POST_1,
-              (OS_ERR *)&err);
-
-    if (err == OS_ERR_NONE) {
-        return (OSAL_RESULT_TRUE);
-    } else {
-        return (OSAL_RESULT_FALSE);
-    }
+  if (err == OS_ERR_NONE)
+  {
+    return (OSAL_RESULT_TRUE);
+  }
+  else
+  {
+    return (OSAL_RESULT_FALSE);
+  }
 }
 
 /*
@@ -712,14 +721,13 @@ OSAL_RESULT  OSAL_SEM_PostISR (OSAL_SEM_HANDLE_TYPE* semID)
 */
 uint8_t  OSAL_SEM_GetCount (OSAL_SEM_HANDLE_TYPE*  semID)
 {
-    OS_SEM_CTR  ctr;
-    CPU_SR_ALLOC();
+  OS_SEM_CTR  ctr;
+  CPU_SR_ALLOC();
 
-
-    CPU_CRITICAL_ENTER();
-    ctr = semID->Ctr;
-    CPU_CRITICAL_EXIT();
-    return ((uint8_t)ctr);
+  CPU_CRITICAL_ENTER();
+  ctr = semID->Ctr;
+  CPU_CRITICAL_EXIT();
+  return ((uint8_t)ctr);
 }
 
 /*
@@ -764,20 +772,21 @@ uint8_t  OSAL_SEM_GetCount (OSAL_SEM_HANDLE_TYPE*  semID)
 */
 OSAL_RESULT  OSAL_MUTEX_Create (OSAL_MUTEX_HANDLE_TYPE*  mutexID)
 {
-    OS_ERR  err;
+  OS_ERR  err;
 
+  OSMutexCreate((OS_MUTEX *)mutexID,
+                (CPU_CHAR *)"Mutex",
+                (OS_ERR   *)&err);
 
-    OSMutexCreate((OS_MUTEX *)mutexID,
-                  (CPU_CHAR *)"Mutex",
-                  (OS_ERR   *)&err);
-
-    if (err == OS_ERR_NONE) {
-        return (OSAL_RESULT_TRUE);
-    } else {
-        return (OSAL_RESULT_FALSE);
-    }
+  if (err == OS_ERR_NONE)
+  {
+    return (OSAL_RESULT_TRUE);
+  }
+  else
+  {
+    return (OSAL_RESULT_FALSE);
+  }
 }
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -812,21 +821,21 @@ OSAL_RESULT  OSAL_MUTEX_Create (OSAL_MUTEX_HANDLE_TYPE*  mutexID)
 */
 OSAL_RESULT  OSAL_MUTEX_Delete (OSAL_MUTEX_HANDLE_TYPE*  mutexID)
 {
-    OS_ERR  err;
+  OS_ERR  err;
 
+  OSMutexDel((OS_MUTEX *)mutexID,
+             (OS_OPT    )OS_OPT_DEL_ALWAYS,
+             (OS_ERR   *)&err);
 
-    OSMutexDel((OS_MUTEX *)mutexID,
-               (OS_OPT    )OS_OPT_DEL_ALWAYS,
-               (OS_ERR   *)&err);
-
-    if (err == OS_ERR_NONE) {
-        return (OSAL_RESULT_TRUE);
-    } else {
-        return (OSAL_RESULT_FALSE);
-    }
+  if (err == OS_ERR_NONE)
+  {
+    return (OSAL_RESULT_TRUE);
+  }
+  else
+  {
+    return (OSAL_RESULT_FALSE);
+  }
 }
-
-
 
 /*
 ------------------------------------------------------------------------------------------------------------------------
@@ -879,33 +888,39 @@ OSAL_RESULT  OSAL_MUTEX_Delete (OSAL_MUTEX_HANDLE_TYPE*  mutexID)
 */
 OSAL_RESULT  OSAL_MUTEX_Lock (OSAL_MUTEX_HANDLE_TYPE*  mutexID, uint16_t  waitMS)
 {
-    OS_ERR   err;
-    OS_TICK  wait;
-    OS_OPT   pend_opt;
+  OS_ERR   err;
+  OS_TICK  wait;
+  OS_OPT   pend_opt;
 
-    if (waitMS == 0) {                                      /* See if user selects NO WAIT                  */
-        pend_opt = OS_OPT_PEND_NON_BLOCKING;                /* Indicate no block option                     */
-    }else {
-        pend_opt = OS_OPT_PEND_BLOCKING;                    /* Indicate user wants to block on resource     */
-    }
+  if (waitMS == 0)                        /* See if user selects NO WAIT */
+  {
+    pend_opt = OS_OPT_PEND_NON_BLOCKING;  /* Indicate no block option */
+  }
+  else
+  {
+    pend_opt = OS_OPT_PEND_BLOCKING;      /* Indicate user wants to block on resource */
+  }
 
-    if (waitMS == OSAL_WAIT_FOREVER) {                      /* See if user selects 'wait for ever'          */
-        wait = 0;                                           /* ... yes, for uC/OS-III, need to specify 0    */
-    } else {
-        wait = (OS_TICK)waitMS * (OS_TICK)1000 / (OS_TICK)OS_CFG_TICK_RATE_HZ;
-    }
+  if (waitMS == OSAL_WAIT_FOREVER)        /* See if user selects 'wait for ever' */
+  {
+    wait = 0;                             /* ... yes, for uC/OS-III, need to specify 0 */
+  }
+  else
+  {
+    wait = (OS_TICK)waitMS * (OS_TICK)1000 / (OS_TICK)OS_CFG_TICK_RATE_HZ;
+  }
 
-    OSMutexPend((OS_MUTEX *)mutexID,
-                (OS_TICK   )wait,
-                (OS_OPT    )pend_opt,
-                (CPU_TS   *)0,
-                (OS_ERR   *)&err);
+  OSMutexPend((OS_MUTEX *)mutexID,
+              (OS_TICK   )wait,
+              (OS_OPT  )pend_opt,
+              (CPU_TS   *)0,
+              (OS_ERR   *)&err);
 
-    if (err == OS_ERR_NONE) {
-        return (OSAL_RESULT_TRUE);
-    } else {
-        return (OSAL_RESULT_FALSE);
-    }
+  if (err == OS_ERR_NONE) {
+    return (OSAL_RESULT_TRUE);
+  } else {
+    return (OSAL_RESULT_FALSE);
+  }
 }
 
 /*
@@ -952,19 +967,18 @@ OSAL_RESULT  OSAL_MUTEX_Lock (OSAL_MUTEX_HANDLE_TYPE*  mutexID, uint16_t  waitMS
 */
 OSAL_RESULT OSAL_MUTEX_Unlock (OSAL_MUTEX_HANDLE_TYPE*  mutexID)
 {
-    OS_ERR  err;
+  OS_ERR  err;
 
+  OSMutexPost((OS_MUTEX *)mutexID,
+              (OS_OPT  )OS_OPT_POST_1,
+              (OS_ERR   *)&err);
 
-    OSMutexPost((OS_MUTEX *)mutexID,
-                (OS_OPT    )OS_OPT_POST_1,
-                (OS_ERR   *)&err);
-
-    if (err == OS_ERR_NONE) {
-        return (OSAL_RESULT_TRUE);
-    } else {
-        return (OSAL_RESULT_FALSE);
-    }
+  if (err == OS_ERR_NONE)
+  {
+    return (OSAL_RESULT_TRUE);
+  }
+  else
+  {
+    return (OSAL_RESULT_FALSE);
+  }
 }
-
-
-

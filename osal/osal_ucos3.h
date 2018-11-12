@@ -6,7 +6,7 @@
 *                                     (c) Copyright 2012; Micrium, Inc.; Weston, FL
 *                           All rights reserved.  Protected by international copyright laws.
 *
-*                                                   Microchip OSAL 
+*                                                   Microchip OSAL
 *
 * File    : OSAL_uCOS3.H
 * By      : JJL
@@ -14,11 +14,11 @@
 *
 * LICENSING TERMS:
 * ---------------
-*           uC/OS-III is provided in source form for FREE short-term evaluation, for educational use or 
+*           uC/OS-III is provided in source form for FREE short-term evaluation, for educational use or
 *           for peaceful research.  If you plan or intend to use uC/OS-III in a commercial application/
-*           product then, you need to contact Micrium to properly license uC/OS-III for its use in your 
-*           application/product.   We provide ALL the source code for your convenience and to help you 
-*           experience uC/OS-III.  The fact that the source is provided does NOT mean that you can use 
+*           product then, you need to contact Micrium to properly license uC/OS-III for its use in your
+*           application/product.   We provide ALL the source code for your convenience and to help you
+*           experience uC/OS-III.  The fact that the source is provided does NOT mean that you can use
 *           it commercially without paying a licensing fee.
 *
 *           Knowledge of the source code may NOT be used to develop a similar product.
@@ -81,21 +81,21 @@ typedef OS_MUTEX                        OSAL_MUTEX_HANDLE_TYPE;
 
 typedef enum OSAL_SEM_TYPE
 {
-    OSAL_SEM_TYPE_BINARY,
-    OSAL_SEM_TYPE_COUNTING
+  OSAL_SEM_TYPE_BINARY,
+  OSAL_SEM_TYPE_COUNTING
 } OSAL_SEM_TYPE;
 
 typedef enum OSAL_CRIT_TYPE
 {
-    OSAL_CRIT_TYPE_LOW,
-    OSAL_CRIT_TYPE_HIGH
+  OSAL_CRIT_TYPE_LOW,
+  OSAL_CRIT_TYPE_HIGH
 } OSAL_CRIT_TYPE;
 
 typedef enum OSAL_RESULT
 {
-    OSAL_RESULT_NOT_IMPLEMENTED = -1,
-    OSAL_RESULT_FALSE = 0,
-    OSAL_RESULT_TRUE = 1
+  OSAL_RESULT_NOT_IMPLEMENTED = -1,
+  OSAL_RESULT_FALSE = 0,
+  OSAL_RESULT_TRUE = 1
 } OSAL_RESULT;
 
 // *****************************************************************************
