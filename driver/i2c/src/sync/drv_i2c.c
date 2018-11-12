@@ -79,7 +79,6 @@ static inline uint16_t _DRV_I2C_UPDATE_TOKEN(uint16_t token)
     return token;
 }
 
-
 static DRV_I2C_CLIENT_OBJ* _DRV_I2C_DriverHandleValidate(DRV_HANDLE handle)
 {
     uint32_t drvInstance = 0;
@@ -114,7 +113,6 @@ static DRV_I2C_CLIENT_OBJ* _DRV_I2C_DriverHandleValidate(DRV_HANDLE handle)
     return(client);
 }
 
-
 static void _DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
 {
     DRV_I2C_OBJ* dObj = (DRV_I2C_OBJ *)contextHandle;
@@ -137,31 +135,6 @@ static void _DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
     /* Unblock the application thread */
     OSAL_SEM_PostISR( &dObj->transferDone);
 }
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: I2C Driver Common Interface Implementation
-// *****************************************************************************
-// *****************************************************************************
-
-// *****************************************************************************
-/* Function:
-    SYS_MODULE_OBJ DRV_I2C_Initialize
-    (
-        const SYS_MODULE_INDEX drvIndex,
-        const SYS_MODULE_INIT * const init
-    )
-
-  Summary:
-    Dynamic implementation of DRV_I2C_Initialize system interface function.
-
-  Description:
-    This is the dynamic implementation of DRV_I2C_Initialize system interface
-    function.
-
-  Remarks:
-    See drv_i2c.h for usage information.
-*/
 
 SYS_MODULE_OBJ DRV_I2C_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT * const init )
 {
@@ -226,22 +199,7 @@ SYS_MODULE_OBJ DRV_I2C_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
 
-// *****************************************************************************
-/* Function:
-    SYS_STATUS DRV_I2C_Status( SYS_MODULE_OBJ object )
-
-  Summary:
-    Dynamic implementation of DRV_I2C_Status system interface function.
-
-  Description:
-    This is the dynamic implementation of DRV_I2C_Status system interface
-    function.
-
-  Remarks:
-    See drv_i2c.h for usage information.
-*/
-
-SYS_STATUS DRV_I2C_Status( SYS_MODULE_OBJ object)
+SYS_STATUS DRV_I2C_Status( const SYS_MODULE_OBJ object)
 {
     /* Validate the request */
     if((object == SYS_MODULE_OBJ_INVALID) || (object >= DRV_I2C_INSTANCES_NUMBER))
@@ -268,22 +226,6 @@ DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_HANDLE handle )
 
     return errors;
 }
-
-// *****************************************************************************
-/* Function:
-    DRV_HANDLE DRV_I2C_Open( const SYS_MODULE_INDEX index,
-                             const DRV_IO_INTENT    ioIntent )
-
-  Summary:
-    Dynamic implementation of DRV_I2C_Open client interface function.
-
-  Description:
-    This is the dynamic implementation of DRV_I2C_Open client interface
-    function.
-
-  Remarks:
-    See drv_i2c.h for usage information.
-*/
 
 DRV_HANDLE DRV_I2C_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
 {
@@ -374,22 +316,7 @@ DRV_HANDLE DRV_I2C_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
     return clientObj ? ((DRV_HANDLE)clientObj->clientHandle) : DRV_HANDLE_INVALID;
 }
 
-// *****************************************************************************
-/* Function:
-    void DRV_I2C_Close ( DRV_HANDLE handle)
-
-  Summary:
-    Dynamic implementation of DRV_I2C_Close client interface function.
-
-  Description:
-    This is the dynamic implementation of DRV_I2C_Close client interface
-    function.
-
-  Remarks:
-    See drv_i2c.h for usage information.
-*/
-
-void DRV_I2C_Close( DRV_HANDLE handle )
+void DRV_I2C_Close( const DRV_HANDLE handle )
 {
     /* This function closes the client, The client
        object is deallocated and returned to the
@@ -426,36 +353,10 @@ void DRV_I2C_Close( DRV_HANDLE handle )
     }
 }
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: I2C Driver Transfer Interface Implementation
-// *****************************************************************************
-// *****************************************************************************
-// *****************************************************************************
-
-// *****************************************************************************
-/* Function:
-    size_t DRV_I2C_ReadTransfer(
-        const DRV_HANDLE handle,
-        void * buffer,
-        const size_t size
-    )
-
-  Summary:
-    Dynamic implementation of DRV_I2C_ReadTransfer system interface function.
-
-  Description:
-    This is the dynamic implementation of DRV_I2C_ReadTransfer system interface
-    function.
-
-  Remarks:
-    See drv_i2c.h for usage information.
-*/
-
 bool DRV_I2C_ReadTransfer(
     const DRV_HANDLE handle,
     uint16_t address,
-    void* buffer,
+    void* const buffer,
     const size_t size
 )
 {
@@ -500,29 +401,10 @@ bool DRV_I2C_ReadTransfer(
     return isSuccess;
 }
 
-// *****************************************************************************
-/* Function:
-    size_t DRV_I2C_WriteTransfer(
-        const DRV_HANDLE handle,
-        void * buffer,
-        const size_t size
-    )
-
-  Summary:
-    Dynamic implementation of DRV_I2C_WriteTransfer system interface function.
-
-  Description:
-    This is the dynamic implementation of DRV_I2C_WriteTransfer system interface
-    function.
-
-  Remarks:
-    See drv_i2c.h for usage information.
-*/
-
 bool DRV_I2C_WriteTransfer(
     const DRV_HANDLE handle,
     uint16_t address,
-    void* buffer,
+    void* const buffer,
     const size_t size
 )
 {
@@ -566,34 +448,13 @@ bool DRV_I2C_WriteTransfer(
     return isSuccess;
 }
 
-// *****************************************************************************
-/* Function:
-    bool DRV_I2C_WriteReadTransfer (
-        const DRV_HANDLE handle,
-        void *writeBuffer,
-        size_t writeSize,
-        void *readBuffer,
-        size_t readSize
-    )
-
-  Summary:
-    Dynamic implementation of DRV_I2C_WriteReadTransfer system interface function.
-
-  Description:
-    This is the dynamic implementation of DRV_I2C_WriteReadTransfer system interface
-    function.
-
-  Remarks:
-    See drv_i2c.h for usage information.
-*/
-
 bool DRV_I2C_WriteReadTransfer (
     const DRV_HANDLE handle,
     uint16_t address,
-    void* writeBuffer,
-    size_t writeSize,
-    void* readBuffer,
-    size_t readSize
+    void* const writeBuffer,
+    const size_t writeSize,
+    void* const readBuffer,
+    const size_t readSize
 )
 {
     DRV_I2C_CLIENT_OBJ* clientObj = (DRV_I2C_CLIENT_OBJ *)NULL;
