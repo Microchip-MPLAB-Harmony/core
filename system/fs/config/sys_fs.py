@@ -42,12 +42,12 @@ def instantiateComponent(sysFSComponent):
     Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA")
     Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True, 2)
 
-    sysFSMenu = sysFSComponent.createMenuSymbol(None, None)
+    sysFSMenu = sysFSComponent.createMenuSymbol("SYS_FS_MENU", None)
     sysFSMenu.setLabel("File System settings")
     sysFSMenu.setDescription("File System settings")
     sysFSMenu.setVisible(True)
 
-    sysFSRTOSMenu = sysFSComponent.createMenuSymbol(None, None)
+    sysFSRTOSMenu = sysFSComponent.createMenuSymbol("SYS_FS_RTOS_MENU", None)
     sysFSRTOSMenu.setLabel("RTOS settings")
     sysFSRTOSMenu.setDescription("RTOS settings")
     sysFSRTOSMenu.setVisible((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"))
