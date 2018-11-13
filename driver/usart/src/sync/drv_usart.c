@@ -92,7 +92,7 @@ static void _DRV_USART_TX_PLIB_CallbackHandler( uintptr_t context )
     OSAL_SEM_PostISR(&dObj->txTransferDone);
 }
 
-static DRV_USART_ERROR _DRV_USART_GetErrorType(uint32_t* remapError, uint32_t errorMask)
+static DRV_USART_ERROR _DRV_USART_GetErrorType(const uint32_t* remapError, uint32_t errorMask)
 {
     DRV_USART_ERROR error = DRV_USART_ERROR_NONE;
 

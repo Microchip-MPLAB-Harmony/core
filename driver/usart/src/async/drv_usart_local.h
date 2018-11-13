@@ -221,7 +221,7 @@ typedef struct
     uintptr_t context;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    USART_PLIB_API *usartPlib;
+    const USART_PLIB_API *usartPlib;
 
     /* Errors associated with the USART hardware instance */
     DRV_USART_ERROR errors;
@@ -264,10 +264,10 @@ typedef struct
 
     /* This is the DMA channel interrupt source. */
     INT_SOURCE interruptDMA;
-    uint32_t *remapDataWidth;
-    uint32_t *remapParity;
-    uint32_t *remapStopBits;
-    uint32_t *remapError;
+    const uint32_t *remapDataWidth;
+    const uint32_t *remapParity;
+    const uint32_t *remapStopBits;
+    const uint32_t *remapError;
 } DRV_USART_OBJ;
 
 #endif //#ifndef DRV_USART_LOCAL_H

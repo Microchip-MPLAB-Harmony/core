@@ -142,7 +142,7 @@ typedef struct
     SYS_STATUS status;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    USART_PLIB_API *usartPlib;
+    const USART_PLIB_API *usartPlib;
 
     /* Memory pool for Client Objects */
     uintptr_t clientObjPool;
@@ -191,13 +191,13 @@ typedef struct
     /* Receive complete semaphore. This is released from ISR*/
     OSAL_SEM_DECLARE (rxTransferDone);
 
-    uint32_t* remapDataWidth;
+    const uint32_t* remapDataWidth;
 
-    uint32_t* remapParity;
+    const uint32_t* remapParity;
 
-    uint32_t* remapStopBits;
+    const uint32_t* remapStopBits;
 
-    uint32_t* remapError;
+    const uint32_t* remapError;
 
 } DRV_USART_OBJ;
 

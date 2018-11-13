@@ -4,7 +4,7 @@
 DRV_USART_CLIENT_OBJ drvUSART${INDEX?string}ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
 </#if>
 
-USART_PLIB_API drvUsart${INDEX?string}PlibAPI = {
+const USART_PLIB_API drvUsart${INDEX?string}PlibAPI = {
         .readCallbackRegister = (USART_ReadCallbackRegister)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ReadCallbackRegister,
         .read = (USART_Read)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_Read,
         .readIsBusy = (USART_ReadIsBusy)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ReadIsBusy,
@@ -18,7 +18,7 @@ USART_PLIB_API drvUsart${INDEX?string}PlibAPI = {
 };
 
 <@compress single_line=true>
-uint32_t drvUsart${INDEX?string}remapDataWidth[] = {
+const uint32_t drvUsart${INDEX?string}remapDataWidth[] = {
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_5_BIT_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_5_BIT_MASK},
     <#else>
@@ -52,7 +52,7 @@ uint32_t drvUsart${INDEX?string}remapDataWidth[] = {
 </@compress>
 
 <@compress single_line=true>
-uint32_t drvUsart${INDEX?string}remapParity[] = {
+const uint32_t drvUsart${INDEX?string}remapParity[] = {
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_NONE_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_NONE_MASK},
     <#else>
@@ -92,7 +92,7 @@ uint32_t drvUsart${INDEX?string}remapParity[] = {
 </@compress>
 
 <@compress single_line=true>
-uint32_t drvUsart${INDEX?string}remapStopBits[] = {
+const uint32_t drvUsart${INDEX?string}remapStopBits[] = {
 
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_BIT_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_BIT_MASK},
@@ -115,7 +115,7 @@ uint32_t drvUsart${INDEX?string}remapStopBits[] = {
 </@compress>
 
 <@compress single_line=true>
-uint32_t drvUsart${INDEX?string}remapError[] = {
+const uint32_t drvUsart${INDEX?string}remapError[] = {
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_OVERRUN_ERROR_VALUE},
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_ERROR_VALUE},
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_FRAMING_ERROR_VALUE}
@@ -123,7 +123,7 @@ uint32_t drvUsart${INDEX?string}remapError[] = {
 </@compress>
 
 
-DRV_USART_INIT drvUsart${INDEX?string}InitData =
+const DRV_USART_INIT drvUsart${INDEX?string}InitData =
 {
     .usartPlib = &drvUsart${INDEX?string}PlibAPI,
     .remapDataWidth = drvUsart${INDEX?string}remapDataWidth,

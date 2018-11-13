@@ -174,7 +174,7 @@ struct _DRV_USART_INIT
 {
     /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
-    USART_PLIB_API *usartPlib;
+    const USART_PLIB_API *usartPlib;
 
     /* This is the USART transmit DMA channel. */
     SYS_DMA_CHANNEL dmaChannelTransmit;
@@ -188,10 +188,10 @@ struct _DRV_USART_INIT
     /* This is the USART receive register address. Used for DMA operation. */
     void * usartReceiveAddress;
 
-    uint32_t *remapDataWidth;
-    uint32_t *remapParity;
-    uint32_t *remapStopBits;
-    uint32_t *remapError;
+    const uint32_t *remapDataWidth;
+    const uint32_t *remapParity;
+    const uint32_t *remapStopBits;
+    const uint32_t *remapError;
 
 <#if DRV_USART_MODE == false>
 
