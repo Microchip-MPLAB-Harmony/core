@@ -1046,13 +1046,13 @@ typedef struct
     uint8_t                             sdHcHost;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    DRV_SDSPI_PLIB_INTERFACE*           spiPlib;
+    const DRV_SDSPI_PLIB_INTERFACE*           spiPlib;
 
-    uint32_t*                           remapDataBits;
+    const uint32_t*                           remapDataBits;
 
-    uint32_t*                           remapClockPolarity;
+    const uint32_t*                           remapClockPolarity;
 
-    uint32_t*                           remapClockPhase;
+    const uint32_t*                           remapClockPhase;
 
     SYS_PORT_PIN                        chipSelectPin;
 

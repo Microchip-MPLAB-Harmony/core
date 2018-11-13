@@ -162,10 +162,10 @@ typedef    void (* DRV_SDSPI_CALLBACK_REGISTER)(DRV_SDSPI_PLIB_CALLBACK, uintptr
 /* SDSPI Driver PLIB Interface Data
 
   Summary:
-    Defines the data required to initialize the AT25M driver PLIB Interface.
+    Defines the data required to initialize the SDSPI driver PLIB Interface.
 
   Description:
-    This data type defines the data required to initialize the AT25M driver
+    This data type defines the data required to initialize the SDSPI driver
     PLIB Interface.
 
   Remarks:
@@ -198,10 +198,10 @@ typedef struct
 /* SDSPI Driver Initialization Data
 
   Summary:
-    Defines the data required to initialize the AT25M driver
+    Defines the data required to initialize the SDSPI driver
 
   Description:
-    This data type defines the data required to initialize or the AT25M driver.
+    This data type defines the data required to initialize or the SDSPI driver.
 
   Remarks:
     None.
@@ -211,13 +211,13 @@ typedef struct
 {
     /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
-    DRV_SDSPI_PLIB_INTERFACE*       spiPlib;
+    const DRV_SDSPI_PLIB_INTERFACE*       spiPlib;
 
-    uint32_t* remapDataBits;
+    const uint32_t* remapDataBits;
 
-    uint32_t* remapClockPolarity;
+    const uint32_t* remapClockPolarity;
 
-    uint32_t* remapClockPhase;
+    const uint32_t* remapClockPhase;
 
     /* Transmit DMA Channel */
     SYS_DMA_CHANNEL                 txDMAChannel;

@@ -4,7 +4,7 @@
 DRV_SDSPI_CLIENT_OBJ drvSDSPI${INDEX}ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
 
 /* SPI PLIB Interface Initialization for SDSPI Driver */
-DRV_SDSPI_PLIB_INTERFACE drvSDSPI${INDEX?string}PlibAPI = {
+const DRV_SDSPI_PLIB_INTERFACE drvSDSPI${INDEX?string}PlibAPI = {
 
     /* SPI PLIB WriteRead function */
     .writeRead = (DRV_SDSPI_WRITEREAD)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_WriteRead,
@@ -25,7 +25,7 @@ DRV_SDSPI_PLIB_INTERFACE drvSDSPI${INDEX?string}PlibAPI = {
 };
 
 <@compress single_line=true>
-uint32_t drvSDSPI${INDEX?string}remapDataBits[]=
+const uint32_t drvSDSPI${INDEX?string}remapDataBits[]=
 {
     <#if .vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_8_BIT_MASK?has_content>
         ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_8_BIT_MASK},
@@ -84,7 +84,7 @@ uint32_t drvSDSPI${INDEX?string}remapDataBits[]=
 </@compress>
 
 <@compress single_line=true>
-uint32_t drvSDSPI${INDEX?string}remapClockPolarity[] =
+const uint32_t drvSDSPI${INDEX?string}remapClockPolarity[] =
 {
     ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CLOCK_POLARITY_LOW_MASK},
     ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CLOCK_POLARITY_HIGH_MASK}
@@ -92,7 +92,7 @@ uint32_t drvSDSPI${INDEX?string}remapClockPolarity[] =
 </@compress>
 
 <@compress single_line=true>
-uint32_t drvSDSPI${INDEX?string}remapClockPhase[] =
+const uint32_t drvSDSPI${INDEX?string}remapClockPhase[] =
 {
     ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CLOCK_PHASE_TRAILING_MASK},
     ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CLOCK_PHASE_LEADING_MASK}
@@ -100,7 +100,7 @@ uint32_t drvSDSPI${INDEX?string}remapClockPhase[] =
 </@compress>
 
 /* SDSPI Driver Initialization Data */
-DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
+const DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
 {
     /* SD Card SPI PLIB API interface*/
     .spiPlib            = &drvSDSPI${INDEX?string}PlibAPI,
