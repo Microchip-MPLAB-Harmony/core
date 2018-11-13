@@ -2,7 +2,7 @@
 /* Memory Driver Instance ${INDEX?string} Configuration */
 #define DRV_MEMORY_INDEX_${INDEX?string}                   ${INDEX?string}
 #define DRV_MEMORY_CLIENTS_NUMBER_IDX${INDEX?string}       ${DRV_MEMORY_NUM_CLIENTS?string}
-<#if drv_memory.DRV_MEMORY_COMMON_MODE == "ASYNC" >
+<#if drv_memory.DRV_MEMORY_COMMON_MODE == "Asynchronous" >
     <#lt>#define DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX${INDEX?string}    ${DRV_MEMORY_BUFFER_QUEUE_SIZE?string}
 </#if>
 <#if DRV_MEMORY_PLIB?has_content >

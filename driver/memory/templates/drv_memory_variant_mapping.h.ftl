@@ -67,7 +67,7 @@
 
     <#lt>void DRV_MEMORY_RegisterWithSysFs( const SYS_MODULE_INDEX drvIndex, uint8_t mediaType);
 
-    <#if DRV_MEMORY_COMMON_MODE == "SYNC" >
+    <#if DRV_MEMORY_COMMON_MODE == "Synchronous" >
         <#lt>void DRV_MEMORY_FS_Erase
         <#lt>(
         <#lt>    const DRV_HANDLE handle,

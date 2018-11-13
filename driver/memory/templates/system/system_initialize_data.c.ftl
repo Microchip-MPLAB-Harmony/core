@@ -6,7 +6,7 @@
 
 DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX${INDEX?string}] = { 0 };
 
-<#if drv_memory.DRV_MEMORY_COMMON_MODE == "ASYNC" >
+<#if drv_memory.DRV_MEMORY_COMMON_MODE == "Asynchronous" >
     <#lt>DRV_MEMORY_BUFFER_OBJECT gDrvMemory${INDEX?string}BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX${INDEX?string}] = { 0 };
 </#if>
 
@@ -83,7 +83,7 @@ const DRV_MEMORY_INIT drvMemory${INDEX?string}InitData =
     .ewBuffer                   = NULL,
 </#if>
     .clientObjPool              = (uintptr_t)&gDrvMemory${INDEX?string}ClientObject[0],
-<#if drv_memory.DRV_MEMORY_COMMON_MODE == "ASYNC" >
+<#if drv_memory.DRV_MEMORY_COMMON_MODE == "Asynchronous" >
     .bufferObj                  = (uintptr_t)&gDrvMemory${INDEX?string}BufferObject[0],
     .queueSize                  = DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX${INDEX?string},
 </#if>

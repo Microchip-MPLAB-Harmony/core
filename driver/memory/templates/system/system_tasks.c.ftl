@@ -1,4 +1,4 @@
-<#if drv_memory.DRV_MEMORY_COMMON_MODE == "ASYNC" >
+<#if drv_memory.DRV_MEMORY_COMMON_MODE == "Asynchronous" >
     <#if HarmonyCore.SELECT_RTOS == "BareMetal">
         <#lt>DRV_MEMORY_Tasks(sysObj.drvMemory${INDEX?string});
     <#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">

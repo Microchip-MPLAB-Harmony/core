@@ -95,7 +95,6 @@ def aSyncFileGen(symbol, event):
        symbol.setEnabled(False)
 
 def setMemoryBuffer(symbol, event):
-    print("Called")
     if (event["id"] == "DRV_MEMORY_COMMON_MODE"):
         if (event["value"] == "Asynchronous"):
             symbol.setVisible(True)
@@ -368,7 +367,7 @@ def instantiateComponent(memoryComponent, index):
     memorySystemRtosTasksFile.setEnabled(enable_rtos_settings)
     memorySystemRtosTasksFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS", "drv_memory.DRV_MEMORY_COMMON_MODE"])
 
-def onDependencyConnected(connectionInfo):
+def onAttachmentConnected(connectionInfo):
     global memoryDeviceUsed
     global memoryDeviceComment
     global memoryDeviceInterruptEnable
@@ -377,13 +376,23 @@ def onDependencyConnected(connectionInfo):
     global memoryPlibHeaderFile
     global memoryPlibSystemDefFile
     global memoryPlibUsed
+    global memoryFsEnable
 
     localComponent = connectionInfo["localComponent"]
     remoteComponent = connectionInfo["remoteComponent"]
-    remoteId = connectionInfo["remoteComponent"].getID()
+    remoteID = remoteComponent.getID()
+    connectID = connectionInfo["id"]
+    targetID = connectionInfo["targetID"]
 
-    if (connectionInfo["dependencyID"] == "drv_memory_MEMORY_dependency"):
-        memoryDeviceUsed.setValue(remoteId.upper(), 1)
+    # For Capability Connected (drv_media)
+    if (connectID == "drv_media"):
+        if (remoteID == "sys_fs"):
+            memoryFsEnable.setValue(True, 1)
+            Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_COUNTER", True, 1)
+
+    # For Dependency Connected (memory)
+    if (connectID == "drv_memory_MEMORY_dependency"):
+        memoryDeviceUsed.setValue(remoteID.upper(), 1)
 
         memoryPlibUsed.clearValue()
 
@@ -397,15 +406,15 @@ def onDependencyConnected(connectionInfo):
         remoteComponent.setSymbolValue("DRV_MEMORY_CONNECTED", True, 1)
 
         # If a PLIB is directly connected create plib wrappers
-        if ("drv_" not in remoteId):
-            memoryPlibUsed.setValue("DRV_" + remoteId.upper(), 1)
-            memoryPlibSourceFile.setOutputName("drv_memory_" + remoteId +".c")
-            memoryPlibHeaderFile.setOutputName("drv_memory_" + remoteId +".h")
+        if ("drv_" not in remoteID):
+            memoryPlibUsed.setValue("DRV_" + remoteID.upper(), 1)
+            memoryPlibSourceFile.setOutputName("drv_memory_" + remoteID +".c")
+            memoryPlibHeaderFile.setOutputName("drv_memory_" + remoteID +".h")
             memoryPlibSourceFile.setEnabled(True)
             memoryPlibHeaderFile.setEnabled(True)
             memoryPlibSystemDefFile.setEnabled(True)
 
-def onDependencyDisconnected(connectionInfo):
+def onAttachmentDisconnected(connectionInfo):
     global memoryDeviceUsed
     global memoryDeviceComment
     global memoryDeviceInterruptEnable
@@ -414,12 +423,22 @@ def onDependencyDisconnected(connectionInfo):
     global memoryPlibHeaderFile
     global memoryPlibSystemDefFile
     global memoryPlibUsed
+    global memoryFsEnable
 
     localComponent = connectionInfo["localComponent"]
     remoteComponent = connectionInfo["remoteComponent"]
-    remoteId = connectionInfo["remoteComponent"].getID()
+    remoteID = remoteComponent.getID()
+    connectID = connectionInfo["id"]
+    targetID = connectionInfo["targetID"]
 
-    if (connectionInfo["dependencyID"] == "drv_memory_MEMORY_dependency"):
+    # For Capability Disconnected (drv_media)
+    if (connectID == "drv_media"):
+        if (remoteID == "sys_fs"):
+            memoryFsEnable.setValue(False, 1)
+            Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_COUNTER", False, 1)
+
+    # For Dependency Disconnected (memory)
+    if (connectID == "drv_memory_MEMORY_dependency"):
         memoryDeviceUsed.clearValue()
 
         memoryPlibUsed.clearValue()
@@ -433,29 +452,7 @@ def onDependencyDisconnected(connectionInfo):
         remoteComponent.setSymbolValue("DRV_MEMORY_CONNECTED", False, 1)
 
         # If PLIB was connected
-        if ("drv_" not in remoteId):
+        if ("drv_" not in remoteID):
             memoryPlibSourceFile.setEnabled(False)
             memoryPlibHeaderFile.setEnabled(False)
             memoryPlibSystemDefFile.setEnabled(False)
-
-def onCapabilityConnected(connectionInfo):
-    global memoryFsEnable
-
-    capability = connectionInfo["capabilityID"]
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
-
-    if (remoteComponent.getID() == "sys_fs"):
-        memoryFsEnable.setValue(True, 1)
-        Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_COUNTER", True, 1)
-
-def onCapabilityDisconnected(connectionInfo):
-    global memoryFsEnable
-
-    capability = connectionInfo["capabilityID"]
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
-
-    if (remoteComponent.getID() == "sys_fs"):
-        memoryFsEnable.setValue(False, 1)
-        Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_COUNTER", False, 1)

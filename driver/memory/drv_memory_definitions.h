@@ -48,7 +48,9 @@
 // *****************************************************************************
 // *****************************************************************************
 
+#include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
 #include "driver/driver_common.h"
 #include "system/system.h"
 #include "system/system_common.h"

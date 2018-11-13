@@ -58,7 +58,7 @@
 
 /* FS Function registration table. */
 
-<#if DRV_MEMORY_COMMON_MODE == "ASYNC" >
+<#if DRV_MEMORY_COMMON_MODE == "Asynchronous" >
     <#lt>const SYS_FS_MEDIA_FUNCTIONS memoryMediaFunctions =
     <#lt>{
     <#lt>    .mediaStatusGet     = DRV_MEMORY_IsAttached,
