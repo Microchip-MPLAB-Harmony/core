@@ -1,7 +1,7 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_AT24 Initialization Data">
 
 /* I2C PLIB Interface Initialization for AT24 Driver */
-DRV_AT24_PLIB_INTERFACE drvAT24PlibAPI = {
+const DRV_AT24_PLIB_INTERFACE drvAT24PlibAPI = {
 
     /* I2C PLIB WriteRead function */
     .writeRead = (DRV_AT24_WRITEREAD)${.vars["${DRV_AT24_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_WriteRead,
@@ -23,7 +23,7 @@ DRV_AT24_PLIB_INTERFACE drvAT24PlibAPI = {
 };
 
 /* AT24 Driver Initialization Data */
-DRV_AT24_INIT drvAT24InitData =
+const DRV_AT24_INIT drvAT24InitData =
 {
     /* I2C PLIB API  interface*/
     .i2cPlib = &drvAT24PlibAPI,

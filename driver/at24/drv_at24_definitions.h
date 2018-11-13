@@ -142,7 +142,7 @@ typedef struct
 {
     /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
-    DRV_AT24_PLIB_INTERFACE        *i2cPlib;
+    const DRV_AT24_PLIB_INTERFACE        *i2cPlib;
     
     /* Address of the I2C slave */
     uint16_t                        slaveAddress;

@@ -110,7 +110,7 @@ typedef struct
     SYS_STATUS                      status;
         
     /* PLIB API list that will be used by the driver to access the hardware */
-    DRV_AT24_PLIB_INTERFACE*       i2cPlib;
+    const DRV_AT24_PLIB_INTERFACE*       i2cPlib;
     
     /* EEPROM Slave Address*/
     uint16_t                        slaveAddress;        
