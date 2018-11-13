@@ -1,6 +1,6 @@
 // <editor-fold defaultstate="collapsed" desc="SYS_TIME Initialization Data">
 
-TIME_PLIB_API sysTimePlibAPI = {
+const TIME_PLIB_API sysTimePlibAPI = {
     .timerCallbackSet = (TIME_CallbackSet)${.vars["${SYS_TIME_PLIB?lower_case}"].CALLBACK_API_NAME},
     .timerCounterGet = (TIME_CounterGet)${.vars["${SYS_TIME_PLIB?lower_case}"].COUNTER_GET_API_NAME},
     <#if .vars["${SYS_TIME_PLIB?lower_case}"].PERIOD_SET_API_NAME?has_content>
@@ -12,7 +12,7 @@ TIME_PLIB_API sysTimePlibAPI = {
     .timerStop = (TIME_Stop)${.vars["${SYS_TIME_PLIB?lower_case}"].TIMER_STOP_API_NAME}
 };
 
-SYS_TIME_INIT sysTimeInitData =
+const SYS_TIME_INIT sysTimeInitData =
 {
     .timePlib = &sysTimePlibAPI,
     .hwTimerIntNum = ${.vars["${SYS_TIME_PLIB?lower_case}"].IRQ_ENUM_NAME},

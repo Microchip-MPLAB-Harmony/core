@@ -109,7 +109,7 @@ typedef struct _SYS_TIME_TIMER_OBJ{
 
 typedef struct{
     SYS_STATUS status;
-    TIME_PLIB_API *timePlib;
+    const TIME_PLIB_API *timePlib;
     INT_SOURCE hwTimerIntNum;
     uint32_t hwTimerFrequency;
     uint32_t hwTimerPreviousValue;

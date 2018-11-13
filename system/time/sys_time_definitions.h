@@ -97,7 +97,7 @@ struct _SYS_TIME_INIT
 {
     /* Identifies the PLIB API set to be used by the system service to access
      * the peripheral. */
-    TIME_PLIB_API *timePlib;
+    const TIME_PLIB_API *timePlib;
 
     /* Interrupt source ID for the TIMER interrupt. */
     INT_SOURCE hwTimerIntNum;
