@@ -161,7 +161,7 @@ typedef struct
 {
     /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
-    DRV_I2C_PLIB_INTERFACE *i2cPlib;
+    const DRV_I2C_PLIB_INTERFACE *i2cPlib;
 
     /* Memory Pool for Client Objects */
     uintptr_t clientObjPool;

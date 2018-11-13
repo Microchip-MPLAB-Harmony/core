@@ -9,7 +9,7 @@ DRV_I2C_TRANSFER_OBJ drvI2C${INDEX?string}TransferObj[DRV_I2C_QUEUE_SIZE_IDX${IN
 </#if>
 
 /* I2C PLib Interface Initialization */
-DRV_I2C_PLIB_INTERFACE drvI2C${INDEX?string}PLibAPI = {
+const DRV_I2C_PLIB_INTERFACE drvI2C${INDEX?string}PLibAPI = {
 
     /* I2C PLib Transfer Read Add function */
     .read = (DRV_I2C_READ_CALLBACK)${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_Read,
@@ -28,7 +28,7 @@ DRV_I2C_PLIB_INTERFACE drvI2C${INDEX?string}PLibAPI = {
 };
 
 /* I2C Driver Initialization Data */
-DRV_I2C_INIT drvI2C${INDEX?string}InitData =
+const DRV_I2C_INIT drvI2C${INDEX?string}InitData =
 {
     /* I2C PLib API */
     .i2cPlib = &drvI2C${INDEX?string}PLibAPI,

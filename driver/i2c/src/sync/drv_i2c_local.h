@@ -135,7 +135,7 @@ typedef struct
     SYS_STATUS status;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    DRV_I2C_PLIB_INTERFACE* i2cPlib;
+    const DRV_I2C_PLIB_INTERFACE* i2cPlib;
 
     /* Memory pool for Client Objects */
     uintptr_t clientObjPool;

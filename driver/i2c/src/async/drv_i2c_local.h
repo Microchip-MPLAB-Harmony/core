@@ -172,7 +172,7 @@ typedef struct
     SYS_STATUS status;
        
     /* PLIB API list that will be used by the driver to access the hardware */
-    DRV_I2C_PLIB_INTERFACE *i2cPlib;
+    const DRV_I2C_PLIB_INTERFACE *i2cPlib;
 
     /* Interrupt Source of I2C */
     IRQn_Type interruptI2C;
