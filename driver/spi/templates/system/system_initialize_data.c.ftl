@@ -9,7 +9,7 @@ DRV_SPI_TRANSFER_OBJ drvSPI${INDEX?string}TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX
 </#if>
 
 /* SPI PLIB Interface Initialization */
-DRV_SPI_PLIB_INTERFACE drvSPI${INDEX?string}PlibAPI = {
+const DRV_SPI_PLIB_INTERFACE drvSPI${INDEX?string}PlibAPI = {
 
     /* SPI PLIB Setup */
     .setup = (DRV_SETUP)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_TransferSetup,
@@ -27,7 +27,7 @@ DRV_SPI_PLIB_INTERFACE drvSPI${INDEX?string}PlibAPI = {
 
 
 <@compress single_line=true>
-uint32_t drvSPI${INDEX?string}remapDataBits[]=
+const uint32_t drvSPI${INDEX?string}remapDataBits[]=
 {
     <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_8_BIT_MASK?has_content>
         ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_8_BIT_MASK},
@@ -86,7 +86,7 @@ uint32_t drvSPI${INDEX?string}remapDataBits[]=
 </@compress>
 
 <@compress single_line=true>
-uint32_t drvSPI${INDEX?string}remapClockPolarity[] =
+const uint32_t drvSPI${INDEX?string}remapClockPolarity[] =
 {
     ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_POLARITY_LOW_MASK},
     ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_POLARITY_HIGH_MASK}
@@ -94,7 +94,7 @@ uint32_t drvSPI${INDEX?string}remapClockPolarity[] =
 </@compress>
 
 <@compress single_line=true>
-uint32_t drvSPI${INDEX?string}remapClockPhase[] =
+const uint32_t drvSPI${INDEX?string}remapClockPhase[] =
 {
     ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_PHASE_TRAILING_MASK},
     ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_PHASE_LEADING_MASK}
@@ -103,7 +103,7 @@ uint32_t drvSPI${INDEX?string}remapClockPhase[] =
 
 
 /* SPI Driver Initialization Data */
-DRV_SPI_INIT drvSPI${INDEX?string}InitData =
+const DRV_SPI_INIT drvSPI${INDEX?string}InitData =
 {
     /* SPI PLIB API */
     .spiPlib = &drvSPI${INDEX?string}PlibAPI,

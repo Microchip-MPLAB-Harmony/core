@@ -201,7 +201,7 @@ typedef struct
 {
     /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
-    DRV_SPI_PLIB_INTERFACE      *spiPlib;
+    const DRV_SPI_PLIB_INTERFACE      *spiPlib;
 
     /* SPI transmit DMA channel. */
     SYS_DMA_CHANNEL                 dmaChannelTransmit;
@@ -221,9 +221,9 @@ typedef struct
     /* Number of clients */
     size_t                      numClients;
 
-    uint32_t *remapDataBits;
-    uint32_t *remapClockPolarity;
-    uint32_t *remapClockPhase;
+    const uint32_t *remapDataBits;
+    const uint32_t *remapClockPolarity;
+    const uint32_t *remapClockPhase;
 
 <#if DRV_SPI_MODE == false>
     /* Queue for Transfer Objects */

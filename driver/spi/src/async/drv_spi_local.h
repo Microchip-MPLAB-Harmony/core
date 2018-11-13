@@ -204,7 +204,7 @@ typedef struct
     SYS_STATUS status;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    DRV_SPI_PLIB_INTERFACE *spiPlib;
+    const DRV_SPI_PLIB_INTERFACE *spiPlib;
 
     /* start of the memory pool for transfer objects */
     DRV_SPI_TRANSFER_OBJ *transferArray;
@@ -257,9 +257,9 @@ typedef struct
 
     /* Mutex to protect access to the transfer objects */
     OSAL_MUTEX_DECLARE(mutexTransferObjects);
-    uint32_t *remapDataBits;
-    uint32_t *remapClockPolarity;
-    uint32_t *remapClockPhase;
+    const uint32_t *remapDataBits;
+    const uint32_t *remapClockPolarity;
+    const uint32_t *remapClockPhase;
 } DRV_SPI_OBJ;
 
 // *****************************************************************************

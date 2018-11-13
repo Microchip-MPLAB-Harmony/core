@@ -153,7 +153,7 @@ typedef struct
     SYS_STATUS status;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    DRV_SPI_PLIB_INTERFACE* spiPlib;
+    const DRV_SPI_PLIB_INTERFACE* spiPlib;
 
     /* Transmit DMA Channel */
     SYS_DMA_CHANNEL txDMAChannel;
@@ -203,9 +203,9 @@ typedef struct
     *  This is released from ISR.
     */
     OSAL_SEM_DECLARE(transferDone);
-    uint32_t *remapDataBits;
-    uint32_t *remapClockPolarity;
-    uint32_t *remapClockPhase;
+    const uint32_t *remapDataBits;
+    const uint32_t *remapClockPolarity;
+    const uint32_t *remapClockPhase;
 } DRV_SPI_OBJ;
 
 // *****************************************************************************
