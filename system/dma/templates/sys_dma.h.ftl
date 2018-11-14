@@ -88,13 +88,15 @@
     None.
 */
 
-typedef enum {
+typedef enum
+{
 <#if core.DMA_CHANNEL_COUNT?has_content>
 <#list 0..(core.DMA_CHANNEL_COUNT-1) as i>
     SYS_DMA_CHANNEL_${i},
 </#list>
 </#if>
     SYS_DMA_CHANNEL_NONE = -1
+
 } SYS_DMA_CHANNEL;
 
 // *****************************************************************************
@@ -136,13 +138,19 @@ typedef enum
 */
 typedef enum
 {
+<#if core.DMA_SRC_FIXED_AM_VALUE?has_content>
     /* Source address is always fixed */
     SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED = ${core.DMA_SRC_FIXED_AM_VALUE},
 
+</#if>
+<#if core.DMA_SRC_FIXED_AM_VALUE?has_content>
     /* Source address is incremented after every transfer */
-    SYS_DMA_SOURCE_ADDRESSING_MODE_INCREMENTED = ${core.DMA_SRC_INCREMENTED_AM_VALUE}
+    SYS_DMA_SOURCE_ADDRESSING_MODE_INCREMENTED = ${core.DMA_SRC_INCREMENTED_AM_VALUE},
 
-}SYS_DMA_SOURCE_ADDRESSING_MODE;
+</#if>
+    SYS_DMA_SOURCE_ADDRESSING_MODE_NONE = -1
+
+} SYS_DMA_SOURCE_ADDRESSING_MODE;
 
 // *****************************************************************************
 /* DMA destination addressing modes
@@ -159,13 +167,19 @@ typedef enum
 */
 typedef enum
 {
+<#if core.DMA_SRC_FIXED_AM_VALUE?has_content>
     /* Destination address is always fixed */
     SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED = ${core.DMA_DST_FIXED_AM_VALUE},
 
+</#if>
+<#if core.DMA_SRC_FIXED_AM_VALUE?has_content>
     /* Destination address is incremented after every transfer */
-    SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED = ${core.DMA_DST_INCREMENTED_AM_VALUE}
+    SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED = ${core.DMA_DST_INCREMENTED_AM_VALUE},
 
-}SYS_DMA_DESTINATION_ADDRESSING_MODE;
+</#if>
+    SYS_DMA_DESTINATION_ADDRESSING_MODE_NONE = -1
+
+} SYS_DMA_DESTINATION_ADDRESSING_MODE;
 
 // *****************************************************************************
 /* DMA data width
@@ -181,16 +195,24 @@ typedef enum
 */
 typedef enum
 {
+<#if core.DMA_SRC_FIXED_AM_VALUE?has_content>
     /* DMA data width 8 bit */
     SYS_DMA_WIDTH_8_BIT = ${core.DMA_DATA_WIDTH_BYTE_VALUE},
 
+</#if>
+<#if core.DMA_SRC_FIXED_AM_VALUE?has_content>
     /* DMA data width 16 bit */
     SYS_DMA_WIDTH_16_BIT = ${core.DMA_DATA_WIDTH_HALFWORD_VALUE},
 
+</#if>
+<#if core.DMA_SRC_FIXED_AM_VALUE?has_content>
     /* DMA data width 32 bit */
     SYS_DMA_WIDTH_32_BIT =  ${core.DMA_DATA_WIDTH_WORD_VALUE},
 
-}SYS_DMA_WIDTH;
+</#if>
+    SYS_DMA_WIDTH_NONE = -1
+
+} SYS_DMA_WIDTH;
 
 // *****************************************************************************
 /* DMA Transfer Event Handler Function
