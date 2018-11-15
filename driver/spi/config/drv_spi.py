@@ -177,11 +177,6 @@ def instantiateComponent(spiComponent, index):
     spiSyncSymHeaderLocalFile.setDependencies(syncFileGen, ["DRV_SPI_MODE"])
 
     # System Template Files
-    spiSymSystemDefIncFile = spiComponent.createFileSymbol("DRV_SPI_SYSTEM_DEF", None)
-    spiSymSystemDefIncFile.setType("STRING")
-    spiSymSystemDefIncFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-    spiSymSystemDefIncFile.setSourcePath("driver/spi/templates/system/system_definitions.h.ftl")
-    spiSymSystemDefIncFile.setMarkup(True)
 
     spiSymSystemDefObjFile = spiComponent.createFileSymbol("DRV_SPI_SYSTEM_DEF_OBJECT", None)
     spiSymSystemDefObjFile.setType("STRING")
