@@ -360,11 +360,6 @@ def instantiateComponent(sdspiComponent, index):
     sdspiSyncSymPlibInterfaceHeaderFile.setDependencies(syncFileGen, ["DRV_SDSPI_MODE"])
 
     # System Template Files
-    sdspiSymSystemDefIncFile = sdspiComponent.createFileSymbol("DRV_SDSPI_SYSTEM_DEF", None)
-    sdspiSymSystemDefIncFile.setType("STRING")
-    sdspiSymSystemDefIncFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-    sdspiSymSystemDefIncFile.setSourcePath("driver/sdspi/templates/system/system_definitions.h.ftl")
-    sdspiSymSystemDefIncFile.setMarkup(True)
 
     sdspiSymSystemDefObjFile = sdspiComponent.createFileSymbol("DRV_SDSPI_SYSTEM_DEF_OBJECT", None)
     sdspiSymSystemDefObjFile.setType("STRING")
