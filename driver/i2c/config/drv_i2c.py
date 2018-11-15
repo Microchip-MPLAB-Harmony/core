@@ -47,11 +47,6 @@ def instantiateComponent(i2cComponent, index):
     configName = Variables.get("__CONFIGURATION_NAME")
 
     # System Template Files
-    i2cSymSystemDefIncFile = i2cComponent.createFileSymbol("DRV_I2C_FILE_SYS_DEF", None)
-    i2cSymSystemDefIncFile.setType("STRING")
-    i2cSymSystemDefIncFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-    i2cSymSystemDefIncFile.setSourcePath("driver/i2c/templates/system/system_definitions.h.ftl")
-    i2cSymSystemDefIncFile.setMarkup(True)
 
     i2cSymSystemDefObjFile = i2cComponent.createFileSymbol("DRV_I2C_FILE_SYS_DEF_OBJ", None)
     i2cSymSystemDefObjFile.setType("STRING")
