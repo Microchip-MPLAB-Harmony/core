@@ -96,11 +96,6 @@ typedef struct
 
 } ${APP_TASK_NAME?upper_case}_DATA;
 
-<#if SELECT_RTOS == "FreeRTOS">
-/* Handle for the ${APP_TASK_NAME?upper_case}_Tasks. */
-TaskHandle_t x${APP_TASK_NAME?upper_case}_Tasks;
-</#if>
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Routines
