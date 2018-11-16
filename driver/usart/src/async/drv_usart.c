@@ -639,10 +639,10 @@ bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* set
 
     dObj = &gDrvUSARTObj[handle];
 
-    setupRemap.dataWidth=dObj->remapDataWidth[setup->dataWidth];
-    setupRemap.parity=dObj->remapParity[setup->parity];
-    setupRemap.stopBits=dObj->remapStopBits[setup->stopBits];
-    setupRemap.baudRate=setup->baudRate;
+    setupRemap.dataWidth = (DRV_USART_DATA_BIT)dObj->remapDataWidth[setup->dataWidth];
+    setupRemap.parity = (DRV_USART_PARITY)dObj->remapParity[setup->parity];
+    setupRemap.stopBits = (DRV_USART_STOP_BIT)dObj->remapStopBits[setup->stopBits];
+    setupRemap.baudRate = setup->baudRate;
 
     if((setupRemap.dataWidth != DRV_USART_DATA_BIT_INVALID) && (setupRemap.parity != DRV_USART_PARITY_INVALID) && (setupRemap.stopBits != DRV_USART_STOP_BIT_INVALID))
     {
@@ -698,7 +698,7 @@ void DRV_USART_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t si
     {
         return;
     }
-    
+
     *bufferHandle = DRV_USART_BUFFER_HANDLE_INVALID;
 
     if((size == 0) || (buffer == NULL))

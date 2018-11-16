@@ -221,7 +221,7 @@ typedef struct
     uintptr_t context;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    const USART_PLIB_API *usartPlib;
+    const DRV_USART_PLIB_INTERFACE* usartPlib;
 
     /* Errors associated with the USART hardware instance */
     DRV_USART_ERROR errors;

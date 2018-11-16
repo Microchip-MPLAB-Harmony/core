@@ -142,7 +142,7 @@ typedef struct
     SYS_STATUS status;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    const USART_PLIB_API *usartPlib;
+    const DRV_USART_PLIB_INTERFACE *usartPlib;
 
     /* Memory pool for Client Objects */
     uintptr_t clientObjPool;
