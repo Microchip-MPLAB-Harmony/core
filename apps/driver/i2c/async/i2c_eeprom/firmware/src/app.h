@@ -143,6 +143,26 @@ extern "C" {
  */
 
 #define APP_READ_DATA_LENGTH             16
+    
+/* Transfer status enum
+
+  Summary:
+    Enumerator to define transfer status.
+
+  Description:
+    This enumerator defines all the possible transfer states.
+
+  Remarks:
+    None.
+*/
+typedef enum
+{
+    APP_TRANSFER_STATUS_IN_PROGRESS,
+    APP_TRANSFER_STATUS_SUCCESS,
+    APP_TRANSFER_STATUS_ERROR,
+    APP_TRANSFER_STATUS_IDLE,
+
+} APP_TRANSFER_STATUS;    
 
 // *****************************************************************************
 /* Application states
@@ -158,49 +178,39 @@ extern "C" {
 typedef enum
 {
 	/* Application's state machine's initial state. */
-	APP_STATE_INIT=0,
+	APP_STATE_INIT = 0,
 
-    /* Application EEPROM ready state */
+    /* Is EEPROM ready */
     APP_STATE_IS_EEPROM_READY,
             
-    /* Application transmit bytes state */
+    /* EEPROM write state */
 	APP_STATE_DATA_WRITE,
+    
+    /* Wait for EEPROM write to complete */
+    APP_STATE_WAIT_WRITE_COMPLETE,
+            
+    /* Check if EEPROM's internal write cycle has completed */
+    APP_STATE_EEPROM_CHECK_INTERNAL_WRITE_STATUS,
 
-    /* Application acknowledge state */
-    APP_STATE_ACK_CYCLE,
-            
-    /* Application data receive state */
+    /* Read data from EEPROM */
     APP_STATE_DATA_READ,
+            
+    /* Wait for the read to complete */
+    APP_STATE_WAIT_READ_COMPLETE,
 	
-    /* Application data verify state */
+    /* Verify the read data with the written data */
     APP_STATE_DATA_VERIFY,
-            
-    /* Application state update state */
-    APP_STATE_UPDATE,
-            
+                            
     /* Application success state */
     APP_STATE_SUCCESS,
             
     /* Application error state */
     APP_STATE_ERROR,
             
-    /* Application done state */
-    APP_STATE_DONE,
+    /* Application idle state */
+    APP_STATE_IDLE,
 
 } APP_STATES;
-
-typedef enum
-{
-    /* Application EERPOM Write Cycle Init State */
-    APP_EEPROM_WRITE_CYCLE_INIT=0,
-    
-    /* Application EEPROM Write Cycle In Progress State */
-    APP_EEPROM_WRITE_CYCLE_IN_PROGRESS,
-            
-    /* Application EEPROM write Cycle Complete State */
-    APP_EEPROM_WRITE_CYCLE_COMPLETE,
-            
-} APP_EEPROM_WRITE_CYCLE;
 
 // *****************************************************************************
 /* Application Data
@@ -224,16 +234,10 @@ typedef struct
     DRV_HANDLE drvI2CHandle;
     
     /* Ready transfer handle */
-    DRV_I2C_TRANSFER_HANDLE hReadyTransfer;
+    DRV_I2C_TRANSFER_HANDLE transferHandle;        
     
-    /* Write transfer handle */
-    DRV_I2C_TRANSFER_HANDLE hWriteTransfer;
-    
-    /* Acknowledge transfer handle */
-    DRV_I2C_TRANSFER_HANDLE hAckTransfer;
-
-    /* Read transfer handle */
-    DRV_I2C_TRANSFER_HANDLE hReadTransfer;
+    /* Transfer status */
+    volatile APP_TRANSFER_STATUS transferStatus;
     
 } APP_DATA;
 
