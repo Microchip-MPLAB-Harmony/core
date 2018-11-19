@@ -1,17 +1,17 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance ${INDEX?string} Initialization Data">
 
 <#if DRV_MEMORY_ERASE_ENABLE >
-    <#lt>uint8_t gDrvMemory${INDEX?string}EraseBuffer[${DRV_MEMORY_DEVICE}_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
+    <#lt>static uint8_t gDrvMemory${INDEX?string}EraseBuffer[${DRV_MEMORY_DEVICE}_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
 </#if>
 
-DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX${INDEX?string}] = { 0 };
+static DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX${INDEX?string}] = { 0 };
 
 <#if drv_memory.DRV_MEMORY_COMMON_MODE == "Asynchronous" >
-    <#lt>DRV_MEMORY_BUFFER_OBJECT gDrvMemory${INDEX?string}BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX${INDEX?string}] = { 0 };
+    <#lt>static DRV_MEMORY_BUFFER_OBJECT gDrvMemory${INDEX?string}BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX${INDEX?string}] = { 0 };
 </#if>
 
 <#if DRV_MEMORY_PLIB?has_content >
-    <#lt>const MEMORY_DEVICE_API drvMemory${INDEX?string}DeviceAPI = {
+    <#lt>const DRV_MEMORY_DEVICE_INTERFACE drvMemory${INDEX?string}DeviceAPI = {
     <#lt>    .Open               = ${DRV_MEMORY_PLIB}_Open,
     <#lt>    .Close              = ${DRV_MEMORY_PLIB}_Close,
     <#lt>    .Status             = ${DRV_MEMORY_PLIB}_Status,
@@ -23,15 +23,15 @@ DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY_CLIENT
     <#lt>    .Read               = ${DRV_MEMORY_PLIB}_Read,
     <#lt>    .PageWrite          = ${DRV_MEMORY_PLIB}_PageWrite,
     <#lt><#if DRV_MEMORY_INTERRUPT_ENABLE >
-    <#lt>    .EventHandlerSet    = (EVENT_HANDLER_SET)${DRV_MEMORY_PLIB}_EventHandlerSet,
+    <#lt>    .EventHandlerSet    = (DRV_MEMORY_DEVICE_EVENT_HANDLER_SET)${DRV_MEMORY_PLIB}_EventHandlerSet,
     <#lt><#else>
     <#lt>    .EventHandlerSet    = NULL,
     <#lt></#if>
-    <#lt>    .GeometryGet        = (GEOMETRY_GET)${DRV_MEMORY_PLIB}_GeometryGet,
-    <#lt>    .TransferStatusGet  = (TRANSFER_STATUS_GET)${DRV_MEMORY_PLIB}_TransferStatusGet
+    <#lt>    .GeometryGet        = (DRV_MEMORY_DEVICE_GEOMETRY_GET)${DRV_MEMORY_PLIB}_GeometryGet,
+    <#lt>    .TransferStatusGet  = (DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET)${DRV_MEMORY_PLIB}_TransferStatusGet
     <#lt>};
 <#else>
-    <#lt>const MEMORY_DEVICE_API drvMemory${INDEX?string}DeviceAPI = {
+    <#lt>const DRV_MEMORY_DEVICE_INTERFACE drvMemory${INDEX?string}DeviceAPI = {
     <#lt>    .Open               = ${DRV_MEMORY_DEVICE}_Open,
     <#lt>    .Close              = ${DRV_MEMORY_DEVICE}_Close,
     <#lt>    .Status             = ${DRV_MEMORY_DEVICE}_Status,
@@ -43,12 +43,12 @@ DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY_CLIENT
     <#lt>    .Read               = ${DRV_MEMORY_DEVICE}_Read,
     <#lt>    .PageWrite          = ${DRV_MEMORY_DEVICE}_PageWrite,
     <#lt><#if DRV_MEMORY_INTERRUPT_ENABLE >
-    <#lt>    .EventHandlerSet    = (EVENT_HANDLER_SET)${DRV_MEMORY_DEVICE}_EventHandlerSet,
+    <#lt>    .EventHandlerSet    = (DRV_MEMORY_DEVICE_EVENT_HANDLER_SET)${DRV_MEMORY_DEVICE}_EventHandlerSet,
     <#lt><#else>
     <#lt>    .EventHandlerSet    = NULL,
     <#lt></#if>
-    <#lt>    .GeometryGet        = (GEOMETRY_GET)${DRV_MEMORY_DEVICE}_GeometryGet,
-    <#lt>    .TransferStatusGet  = (TRANSFER_STATUS_GET)${DRV_MEMORY_DEVICE}_TransferStatusGet
+    <#lt>    .GeometryGet        = (DRV_MEMORY_DEVICE_GEOMETRY_GET)${DRV_MEMORY_DEVICE}_GeometryGet,
+    <#lt>    .TransferStatusGet  = (DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET)${DRV_MEMORY_DEVICE}_TransferStatusGet
     <#lt>};
 </#if>
 

@@ -404,7 +404,7 @@ typedef struct
     uint32_t memDevStatusPollUs;
 
     /* Attached Memory Device functions */
-    const MEMORY_DEVICE_API *memoryDevice;
+    const DRV_MEMORY_DEVICE_INTERFACE *memoryDevice;
 
     /* Pointer to the current buffer object */
     DRV_MEMORY_BUFFER_OBJECT currentBufObj;

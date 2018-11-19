@@ -62,7 +62,7 @@
  * Hardware instance objects
  *************************************************/
 
-DRV_MEMORY_OBJECT gDrvMemoryObj[DRV_MEMORY_INSTANCES_NUMBER];
+static DRV_MEMORY_OBJECT gDrvMemoryObj[DRV_MEMORY_INSTANCES_NUMBER];
 
 
 /************************************************

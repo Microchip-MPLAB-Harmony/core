@@ -280,21 +280,21 @@ typedef SYS_MEDIA_EVENT_HANDLER   DRV_MEMORY_TRANSFER_HANDLER;
 
     SYS_MODULE_OBJ  objectHandle;
 
-    uint8_t gDrvMemory0EraseBuffer[DRV_MEMORY_ERASE_BUFFER_SIZE_IDX0] __attribute__((aligned(32)));
+    static uint8_t gDrvMemory0EraseBuffer[DRV_MEMORY_ERASE_BUFFER_SIZE_IDX0] __attribute__((aligned(32)));
 
-    DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
+    static DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
 
-    DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0] = { 0 };
+    static DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0] = { 0 };
 
-    const MEMORY_DEVICE_API drvMemory0DeviceAPI = {
+    const DRV_MEMORY_DEVICE_INTERFACE drvMemory0DeviceAPI = {
         .Open               = DRV_SST26_Open,
         .Close              = DRV_SST26_Close,
         .Status             = DRV_SST26_Status,
         .SectorErase        = DRV_SST26_SectorErase,
         .Read               = DRV_SST26_Read,
         .PageWrite          = DRV_SST26_PageWrite,
-        .GeometryGet        = (GEOMETRY_GET)DRV_SST26_GeometryGet,
-        .TransferStatusGet  = (TRANSFER_STATUS_GET)DRV_SST26_TransferStatusGet
+        .GeometryGet        = (DRV_MEMORY_DEVICE_GEOMETRY_GET)DRV_SST26_GeometryGet,
+        .TransferStatusGet  = (DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET)DRV_SST26_TransferStatusGet
     };
 
     const DRV_MEMORY_INIT drvMemory0InitData =

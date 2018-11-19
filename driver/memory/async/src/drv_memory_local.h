@@ -429,7 +429,7 @@ typedef struct
     volatile bool isTransferDone;
 
     /* Attached Memory Device functions */
-    const MEMORY_DEVICE_API *memoryDevice;
+    const DRV_MEMORY_DEVICE_INTERFACE *memoryDevice;
 
     /* Pointer to Buffer Objects array */
     DRV_MEMORY_BUFFER_OBJECT *buffObjArr;
