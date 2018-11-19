@@ -286,32 +286,62 @@ typedef void ( *DRV_SPI_TRANSFER_EVENT_HANDLER )( DRV_SPI_TRANSFER_EVENT event, 
 
     SYS_MODULE_OBJ   objectHandle;
 
-    PLIB_SPI_API plibSpiApi[1] = {
-        {
-            .setup = (DRV_SETUP)SPI0_TransferSetup,
-            .writeRead = (DRV_WRITEREAD)SPI0_WriteRead,
-            .isBusy = (DRV_IS_BUSY)SPI0_IsBusy,
-            .callbackRegister = (DRV_CALLBACK_REGISTER)SPI0_CallbackRegister
-        }
+    const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
+
+        // SPI PLIB Setup
+        .setup = (DRV_SPI_PLIB_SETUP)SPI0_TransferSetup,
+
+        // SPI PLIB WriteRead function
+        .writeRead = (DRV_SPI_PLIB_WRITE_READ)SPI0_WriteRead,
+
+        // SPI PLIB Transfer Status function
+        .isBusy = (DRV_SPI_PLIB_IS_BUSY)SPI0_IsBusy,
+
+        // SPI PLIB Callback Register
+        .callbackRegister = (DRV_SPI_PLIB_CALLBACK_REGISTER)SPI0_CallbackRegister,
     };
 
-    DRV_SPI_INIT drvSpi0InitData =
-    {
+    const DRV_SPI_INIT drvSPI0InitData = {
+
+        // SPI PLIB API
         .spiPlib = &drvSPI0PlibAPI,
-        .interruptSPI = DRV_SPI_INT_SRC_IDX0,
 
-        .queueSize = DRV_SPI_QUEUE_SIZE_IDX0,
-        .transferObjPool = (uintptr_t)&drvSPI0TransferObjPool[0],
+        .remapDataBits = drvSPI0remapDataBits,
+        .remapClockPolarity = drvSPI0remapClockPolarity,
+        .remapClockPhase = drvSPI0remapClockPhase,
 
+
+        /// SPI Number of clients
         .numClients = DRV_SPI_CLIENTS_NUMBER_IDX0,
+
+        // SPI Client Objects Pool
         .clientObjPool = (uintptr_t)&drvSPI0ClientObjPool[0],
 
-        .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
-        .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
-        .interruptDMA = XDMAC_IRQn
+        // DMA Channel for Transmit
+        .dmaChannelTransmit = DRV_SPI_XMIT_DMA_CH_IDX0,
+
+        // DMA Channel for Receive
+        .dmaChannelReceive  = DRV_SPI_RCV_DMA_CH_IDX0,
+
+        // SPI Transmit Register
+        .spiTransmitAddress =  (void *)&(SPI0_REGS->SPI_TDR),
+
+        // SPI Receive Register
+        .spiReceiveAddress  = (void *)&(SPI0_REGS->SPI_RDR),
+
+        // Interrupt source is DMA
+
+       .interruptSource = XDMAC_IRQn,
+
+
+        // SPI Queue Size
+        .queueSize = DRV_SPI_QUEUE_SIZE_IDX0,
+
+        // SPI Transfer Objects Pool
+        .transferObjPool = (uintptr_t)&drvSPI0TransferObjPool[0],
     };
 
-    objectHandle = DRV_SPI_Initialize(DRV_SPI_INDEX_0,(SYS_MODULE_INIT*)&drvSpi0InitData);
+    objectHandle = DRV_SPI_Initialize(DRV_SPI_INDEX_0,(SYS_MODULE_INIT*)&drvSPI0InitData);
     if (objectHandle == SYS_MODULE_OBJ_INVALID)
     {
         // Handle error

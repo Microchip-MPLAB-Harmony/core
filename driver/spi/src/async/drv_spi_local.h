@@ -143,10 +143,10 @@ typedef enum
 typedef struct _DRV_SPI_TRANSFER_OBJ
 {
     /* Pointer to the receive data */
-    void                    *pReceiveData;
+    void*                   pReceiveData;
 
     /* Pointer to the transmit data */
-    void                    *pTransmitData;
+    void*                   pTransmitData;
 
     /* Number of bytes to be written */
     size_t                  txSize;
@@ -158,7 +158,7 @@ typedef struct _DRV_SPI_TRANSFER_OBJ
     DRV_SPI_TRANSFER_EVENT  event;
 
     /* The hardware instance object that owns this buffer */
-    void                    *hClient;
+    void*                   hClient;
 
     /* Buffer Handle object that was assigned to this buffer
     when it was added to the queue. */
@@ -204,10 +204,10 @@ typedef struct
     SYS_STATUS status;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    const DRV_SPI_PLIB_INTERFACE *spiPlib;
+    const DRV_SPI_PLIB_INTERFACE* spiPlib;
 
     /* start of the memory pool for transfer objects */
-    DRV_SPI_TRANSFER_OBJ *transferArray;
+    DRV_SPI_TRANSFER_OBJ* transferArray;
 
     /* size/depth of the queue */
     uint8_t transferQueueSize;
@@ -257,9 +257,13 @@ typedef struct
 
     /* Mutex to protect access to the transfer objects */
     OSAL_MUTEX_DECLARE(mutexTransferObjects);
-    const uint32_t *remapDataBits;
-    const uint32_t *remapClockPolarity;
-    const uint32_t *remapClockPhase;
+
+    const uint32_t*     remapDataBits;
+
+    const uint32_t*     remapClockPolarity;
+
+    const uint32_t*     remapClockPhase;
+
 } DRV_SPI_OBJ;
 
 // *****************************************************************************

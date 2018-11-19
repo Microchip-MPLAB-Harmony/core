@@ -203,9 +203,13 @@ typedef struct
     *  This is released from ISR.
     */
     OSAL_SEM_DECLARE(transferDone);
-    const uint32_t *remapDataBits;
-    const uint32_t *remapClockPolarity;
-    const uint32_t *remapClockPhase;
+
+    const uint32_t*   remapDataBits;
+
+    const uint32_t*   remapClockPolarity;
+
+    const uint32_t*   remapClockPhase;
+
 } DRV_SPI_OBJ;
 
 // *****************************************************************************

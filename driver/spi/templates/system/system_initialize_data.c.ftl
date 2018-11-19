@@ -1,27 +1,27 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance ${INDEX?string} Initialization Data">
 
 /* SPI Client Objects Pool */
-DRV_SPI_CLIENT_OBJ drvSPI${INDEX}ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
+static DRV_SPI_CLIENT_OBJ drvSPI${INDEX}ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
 <#if DRV_SPI_MODE == false>
 
 /* SPI Transfer Objects Pool */
-DRV_SPI_TRANSFER_OBJ drvSPI${INDEX?string}TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX${INDEX?string}] = {0};
+static DRV_SPI_TRANSFER_OBJ drvSPI${INDEX?string}TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX${INDEX?string}] = {0};
 </#if>
 
 /* SPI PLIB Interface Initialization */
 const DRV_SPI_PLIB_INTERFACE drvSPI${INDEX?string}PlibAPI = {
 
     /* SPI PLIB Setup */
-    .setup = (DRV_SETUP)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_TransferSetup,
+    .setup = (DRV_SPI_PLIB_SETUP)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_TransferSetup,
 
     /* SPI PLIB WriteRead function */
-    .writeRead = (DRV_WRITEREAD)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_WriteRead,
+    .writeRead = (DRV_SPI_PLIB_WRITE_READ)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_WriteRead,
 
     /* SPI PLIB Transfer Status function */
-    .isBusy = (DRV_IS_BUSY)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_IsBusy,
+    .isBusy = (DRV_SPI_PLIB_IS_BUSY)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_IsBusy,
 
     /* SPI PLIB Callback Register */
-    .callbackRegister = (DRV_CALLBACK_REGISTER)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_CallbackRegister,
+    .callbackRegister = (DRV_SPI_PLIB_CALLBACK_REGISTER)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_CallbackRegister,
 };
 
 

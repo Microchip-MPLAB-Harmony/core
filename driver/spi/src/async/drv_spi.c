@@ -54,10 +54,10 @@
 // *****************************************************************************
 
 /* This is the driver instance object array. */
-DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER];
+static DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER];
 
 /* Dummy data being transmitted by TX DMA */
-uint8_t __attribute__((aligned(32))) txDummyData[32];
+static uint8_t __attribute__((aligned(32))) txDummyData[32];
 
 // *****************************************************************************
 // *****************************************************************************
@@ -834,9 +834,9 @@ bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * se
 
         setupRemap = *setup;
 
-        setupRemap.clockPolarity = hDriver->remapClockPolarity[setup->clockPolarity];
-        setupRemap.clockPhase = hDriver->remapClockPhase[setup->clockPhase];
-        setupRemap.dataBits = hDriver->remapDataBits[setup->dataBits];
+        setupRemap.clockPolarity = (DRV_SPI_CLOCK_POLARITY)hDriver->remapClockPolarity[setup->clockPolarity];
+        setupRemap.clockPhase = (DRV_SPI_CLOCK_PHASE)hDriver->remapClockPhase[setup->clockPhase];
+        setupRemap.dataBits = (DRV_SPI_DATA_BITS)hDriver->remapDataBits[setup->dataBits];
 
         if ((setupRemap.clockPhase != DRV_SPI_CLOCK_PHASE_INVALID) && (setupRemap.clockPolarity != DRV_SPI_CLOCK_POLARITY_INVALID) \
                 && (setupRemap.dataBits != DRV_SPI_DATA_BITS_INVALID))
