@@ -70,16 +70,16 @@
 */
 
 typedef enum
-{       
+{
     /* Write command*/
     DRV_AT24_CMD_WRITE,
-    
+
     /* Wait for EEPROM internal write complete command */
     DRV_AT24_CMD_WAIT_WRITE_COMPLETE,
-    
+
     /* Read command */
     DRV_AT24_CMD_READ,
-            
+
 } DRV_AT24_CMD;
 
 // *****************************************************************************
@@ -96,7 +96,7 @@ typedef enum
 */
 
 typedef struct
-{    
+{
     /* Flag to indicate this object is in use  */
     bool                            inUse;
 
@@ -108,45 +108,45 @@ typedef struct
 
     /* The status of the driver */
     SYS_STATUS                      status;
-        
+
     /* PLIB API list that will be used by the driver to access the hardware */
-    const DRV_AT24_PLIB_INTERFACE*       i2cPlib;
-    
+    const DRV_AT24_PLIB_INTERFACE*  i2cPlib;
+
     /* EEPROM Slave Address*/
-    uint16_t                        slaveAddress;        
-    
+    uint16_t                        slaveAddress;
+
     /* Points to the next EEPROM memory address to write to */
     uint32_t                        nextMemoryAddr;
-    
+
     /* Pointer to the write buffer to write data from */
     uint8_t*                        nextBufferAddr;
-    
+
     /* Pointer to the write buffer to write data from */
     uint32_t                        nPendingBytes;
-        
+
     /* Page size information */
     uint32_t                        pageSize;
-    
+
     /* Total flash size */
     uint32_t                        flashSize;
-    
+
     /* Starting memory address of EEPROM */
     uint32_t                        blockStartAddress;
-    
+
     /* Write buffer - must also hold the EEPROM memory address */
     uint8_t                         writeBuffer[DRV_AT24_WRITE_BUFFER_SIZE];
-    
+
     /* The command currently being executed */
-    DRV_AT24_CMD                   command;                            
-    
+    DRV_AT24_CMD                    command;
+
     /* Application event handler */
-    DRV_AT24_EVENT_HANDLER         eventHandler;
-    
+    DRV_AT24_EVENT_HANDLER          eventHandler;
+
     /* Application context */
     uintptr_t                       context;
-    
+
     /* Status of the transfer */
-    volatile DRV_AT24_TRANSFER_STATUS       transferStatus;   
+    volatile DRV_AT24_TRANSFER_STATUS       transferStatus;
 
 } DRV_AT24_OBJ;
 

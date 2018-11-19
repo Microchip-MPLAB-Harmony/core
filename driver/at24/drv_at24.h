@@ -235,12 +235,12 @@ typedef void ( *DRV_AT24_EVENT_HANDLER )( DRV_AT24_TRANSFER_STATUS event, uintpt
     SYS_MODULE_OBJ   sysObjDrvAT24;
 
     DRV_AT24_PLIB_INTERFACE drvAT24PlibAPI = {
-    .writeRead = (DRV_AT24_WRITEREAD)TWIHS0_WriteRead,
-    .write = (DRV_AT24_WRITE)TWIHS0_Write,
-    .read = (DRV_AT24_READ)TWIHS0_Read,
-    .isBusy = (DRV_AT24_IS_BUSY)TWIHS0_IsBusy,
-    .errorGet = (DRV_AT24_ERROR_GET)TWIHS0_ErrorGet,
-    .callbackRegister = (DRV_AT24_CALLBACK_REGISTER)TWIHS0_CallbackRegister,
+    .writeRead = (DRV_AT24_PLIB_WRITE_READ)TWIHS0_WriteRead,
+    .write = (DRV_AT24_PLIB_WRITE)TWIHS0_Write,
+    .read = (DRV_AT24_PLIB_READ)TWIHS0_Read,
+    .isBusy = (DRV_AT24_PLIB_IS_BUSY)TWIHS0_IsBusy,
+    .errorGet = (DRV_AT24_PLIB_ERROR_GET)TWIHS0_ErrorGet,
+    .callbackRegister = (DRV_AT24_PLIB_CALLBACK_REGISTER)TWIHS0_CallbackRegister,
 };
 
     DRV_AT24_INIT drvAT24InitData = {
