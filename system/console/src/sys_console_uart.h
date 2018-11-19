@@ -98,7 +98,7 @@ typedef enum
 typedef struct
 {
     /* Pointer to USART APIs used by the console system service*/
-    const SYS_CONSOLE_UART_PLIB_API* uartPLIB;
+    const SYS_CONSOLE_UART_PLIB_INTERFACE* uartPLIB;
 
     /* Current state of UART Read */
     CONSOLE_UART_READ_STATE rdState;

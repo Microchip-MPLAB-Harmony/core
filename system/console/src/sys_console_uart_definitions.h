@@ -77,24 +77,25 @@ typedef struct
     uint32_t outIndex;
 }Queue;
 
-typedef bool(*SYS_CONSOLE_UART_REGISTER_CALLBACK_READ)(void* callback, uintptr_t context);
-typedef bool(*SYS_CONSOLE_UART_REGISTER_CALLBACK_WRITE)(void* callback, uintptr_t context);
-typedef size_t(*SYS_CONSOLE_UART_READ)(void* buffer, const size_t size);
-typedef size_t(*SYS_CONSOLE_UART_WRITE)(void* buffer, const size_t size);
-typedef uint32_t(*SYS_CONSOLE_UART_ERROR_GET)(void);
+typedef void (*SYS_CONSOLE_UART_PLIB_CALLBACK)( uintptr_t context );
+typedef bool (*SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_READ)(SYS_CONSOLE_UART_PLIB_CALLBACK callback, uintptr_t context);
+typedef bool (*SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_WRITE)(SYS_CONSOLE_UART_PLIB_CALLBACK callback, uintptr_t context);
+typedef size_t (*SYS_CONSOLE_UART_PLIB_READ)(void* buffer, const size_t size);
+typedef size_t (*SYS_CONSOLE_UART_PLIB_WRITE)(void* buffer, const size_t size);
+typedef uint32_t (*SYS_CONSOLE_UART_PLIB_ERROR_GET)(void);
 
 typedef struct
 {
-    SYS_CONSOLE_UART_READ read;
-    SYS_CONSOLE_UART_WRITE write;
-    SYS_CONSOLE_UART_REGISTER_CALLBACK_READ readCallbackRegister;
-    SYS_CONSOLE_UART_REGISTER_CALLBACK_WRITE writeCallbackRegister;
-    SYS_CONSOLE_UART_ERROR_GET errorGet;
-} SYS_CONSOLE_UART_PLIB_API;
+    SYS_CONSOLE_UART_PLIB_READ read;
+    SYS_CONSOLE_UART_PLIB_WRITE write;
+    SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_READ readCallbackRegister;
+    SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_WRITE writeCallbackRegister;
+    SYS_CONSOLE_UART_PLIB_ERROR_GET errorGet;
+} SYS_CONSOLE_UART_PLIB_INTERFACE;
 
 typedef struct
 {
-    const SYS_CONSOLE_UART_PLIB_API* uartPLIB;
+    const SYS_CONSOLE_UART_PLIB_INTERFACE* uartPLIB;
 
     QElement* readQueueElementsArr;
 

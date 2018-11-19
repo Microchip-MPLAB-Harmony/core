@@ -104,7 +104,7 @@
     #define SYS_CONSOLE_PRINT(fmt, ...)
 #endif
 
-typedef void (*SYS_CONSOLE_CALLBACK) (void* pBuffer); 
+typedef void (*SYS_CONSOLE_CALLBACK) (void* pBuffer);
 
 typedef enum
 {
@@ -313,7 +313,7 @@ typedef struct
     SYS_MODULE_OBJ  objectHandle;
 
     // Populate the console initialization structure
-    SYS_CONSOLE_INIT sysConsole0Init =
+    const SYS_CONSOLE_INIT sysConsole0Init =
     {
         .deviceInitData = (void*)&sysConsole0UARTInitData,
         .consDevDesc = &sysConsoleUARTDevDesc,

@@ -1,21 +1,21 @@
 // <editor-fold defaultstate="collapsed" desc="SYS_CONSOLE Instance ${INDEX?string} Initialization Data">
 
-QElement sysConsole${INDEX?string}UARTRdQueueElements[SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX${INDEX?string}];
-QElement sysConsole${INDEX?string}UARTWrQueueElements[SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX${INDEX?string}];
+static QElement sysConsole${INDEX?string}UARTRdQueueElements[SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX${INDEX?string}];
+static QElement sysConsole${INDEX?string}UARTWrQueueElements[SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX${INDEX?string}];
 
 /* Declared in console device implementation (sys_console_uart.c) */
 extern const SYS_CONSOLE_DEV_DESC sysConsoleUARTDevDesc;
 
-const SYS_CONSOLE_UART_PLIB_API sysConsole${INDEX?string}UARTPlibAPI = 
+const SYS_CONSOLE_UART_PLIB_INTERFACE sysConsole${INDEX?string}UARTPlibAPI =
 {
-    .read = (SYS_CONSOLE_UART_READ)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_Read,
-    .write = (SYS_CONSOLE_UART_WRITE)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_Write,        
-    .readCallbackRegister = (SYS_CONSOLE_UART_REGISTER_CALLBACK_READ)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_ReadCallbackRegister,        
-    .writeCallbackRegister = (SYS_CONSOLE_UART_REGISTER_CALLBACK_WRITE)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_WriteCallbackRegister,        
-    .errorGet = (SYS_CONSOLE_UART_ERROR_GET)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_ErrorGet,
+    .read = (SYS_CONSOLE_UART_PLIB_READ)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_Read,
+    .write = (SYS_CONSOLE_UART_PLIB_WRITE)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_Write,
+    .readCallbackRegister = (SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_READ)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_ReadCallbackRegister,
+    .writeCallbackRegister = (SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_WRITE)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_WriteCallbackRegister,
+    .errorGet = (SYS_CONSOLE_UART_PLIB_ERROR_GET)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_ErrorGet,
 };
 
-const SYS_CONSOLE_UART_INIT_DATA sysConsole${INDEX?string}UARTInitData = 
+const SYS_CONSOLE_UART_INIT_DATA sysConsole${INDEX?string}UARTInitData =
 {
     .uartPLIB = &sysConsole${INDEX?string}UARTPlibAPI,
     .readQueueElementsArr = sysConsole${INDEX?string}UARTRdQueueElements,
@@ -27,7 +27,7 @@ const SYS_CONSOLE_UART_INIT_DATA sysConsole${INDEX?string}UARTInitData =
 
 const SYS_CONSOLE_INIT sysConsole${INDEX?string}Init =
 {
-    .deviceInitData = (const void*)&sysConsole${INDEX?string}UARTInitData,      
+    .deviceInitData = (const void*)&sysConsole${INDEX?string}UARTInitData,
     .consDevDesc = &sysConsoleUARTDevDesc,
     .deviceIndex = 0,
 };
