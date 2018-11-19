@@ -276,11 +276,11 @@ typedef void ( *DRV_I2C_TRANSFER_EVENT_HANDLER )( DRV_I2C_TRANSFER_EVENT event, 
     DRV_I2C_TRANSFER_OBJ drvI2C0TransferObjPool[DRV_I2C_QUEUE_SIZE_IDX0] = {0};
 
     DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
-        .read = (DRV_I2C_READ_CALLBACK)TWIHS0_Read,
-        .write = (DRV_I2C_WRITE_CALLBACK)TWIHS0_Write,
-        .writeRead = (DRV_I2C_WRITE_READ_CALLBACK)TWIHS0_WriteRead,
-        .errorGet = (DRV_I2C_ERROR_GET_CALLBACK)TWIHS0_ErrorGet,
-        .callbackRegister = (DRV_I2C_CALLBACK_REGISTER_CALLBACK)TWIHS0_CallbackRegister,
+        .read = (DRV_I2C_PLIB_READ)TWIHS0_Read,
+        .write = (DRV_I2C_PLIB_WRITE)TWIHS0_Write,
+        .writeRead = (DRV_I2C_PLIB_WRITE_READ)TWIHS0_WriteRead,
+        .errorGet = (DRV_I2C_PLIB_ERROR_GET)TWIHS0_ErrorGet,
+        .callbackRegister = (DRV_I2C_PLIB_CALLBACK_REGISTER)TWIHS0_CallbackRegister,
     };
 
     DRV_I2C_INIT drvI2C0InitData = {
