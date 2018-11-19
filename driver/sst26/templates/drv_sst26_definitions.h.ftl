@@ -79,24 +79,39 @@
     None.
 */
 
+/* Pointer to write command to QSPI slave device. */
+typedef bool (*DRV_SST26_PLIB_CMD_WRITE)( qspi_command_xfer_t *qspi_command_xfer, uint32_t address );
+
+/* Pointer to read particular register of QSPI slave device. */
+typedef bool (*DRV_SST26_PLIB_REG_READ)( qspi_register_xfer_t *qspi_register_xfer, uint32_t *rx_data, uint8_t rx_data_length );
+
+/* Pointer to write to particular register of QSPI slave device. */
+typedef bool (*DRV_SST26_PLIB_REG_WRITE)( qspi_register_xfer_t *qspi_register_xfer, uint32_t *tx_data, uint8_t tx_data_length );
+
+/* Pointer to read from the specified address of the flash device. */
+typedef bool (*DRV_SST26_PLIB_MEM_READ)( qspi_memory_xfer_t *qspi_memory_xfer, uint32_t *rx_data, uint32_t rx_data_length, uint32_t address );
+
+/* Pointer to write to the specified address of the flash device. */
+typedef bool (*DRV_SST26_PLIB_MEM_WRITE)( qspi_memory_xfer_t *qspi_memory_xfer, uint32_t *tx_data, uint32_t tx_data_length, uint32_t address );
+
 typedef struct
 {
     /* Pointer to write command to QSPI slave device. */
-    bool (*CommandWrite)( qspi_command_xfer_t *qspi_command_xfer, uint32_t address );
+    DRV_SST26_PLIB_CMD_WRITE CommandWrite;
 
     /* Pointer to read particular register of QSPI slave device. */
-    bool (*RegisterRead)( qspi_register_xfer_t *qspi_register_xfer, uint32_t *rx_data, uint8_t rx_data_length );
+    DRV_SST26_PLIB_REG_READ RegisterRead;
 
     /* Pointer to write to particular register of QSPI slave device. */
-    bool (*RegisterWrite)( qspi_register_xfer_t *qspi_register_xfer, uint32_t *tx_data, uint8_t tx_data_length );
+    DRV_SST26_PLIB_REG_WRITE RegisterWrite;
 
     /* Pointer to read from the specified address of the flash device. */
-    bool (*MemoryRead)( qspi_memory_xfer_t *qspi_memory_xfer, uint32_t *rx_data, uint32_t rx_data_length, uint32_t address );
+    DRV_SST26_PLIB_MEM_READ MemoryRead;
 
     /* Pointer to write to the specified address of the flash device. */
-    bool (*MemoryWrite)( qspi_memory_xfer_t *qspi_memory_xfer, uint32_t *tx_data, uint32_t tx_data_length, uint32_t address );
+    DRV_SST26_PLIB_MEM_WRITE MemoryWrite;
 
-} SST26_PLIB_API;
+} DRV_SST26_PLIB_INTERFACE;
 
 /* SST26 Driver Initialization Data Declaration */
 
@@ -104,7 +119,7 @@ typedef struct
 {
     /* Identifies the PLIB API set to be used by the driver to access the 
      * peripheral. */
-    const SST26_PLIB_API *sst26Plib;
+    const DRV_SST26_PLIB_INTERFACE *sst26Plib;
 } DRV_SST26_INIT;
 
 

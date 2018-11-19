@@ -161,7 +161,7 @@ typedef struct
 
     SYS_MODULE_OBJ  objectHandle;
 
-    const SST26_PLIB_API drvSST26PlibAPI = {
+    const DRV_SST26_PLIB_INTERFACE drvSST26PlibAPI = {
         .CommandWrite  = QSPI_CommandWrite,
         .RegisterRead  = QSPI_RegisterRead,
         .RegisterWrite = QSPI_RegisterWrite,
