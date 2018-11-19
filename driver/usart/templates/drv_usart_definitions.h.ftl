@@ -185,10 +185,10 @@ struct _DRV_USART_INIT
     SYS_DMA_CHANNEL dmaChannelReceive;
 
     /* This is the USART transmit register address. Used for DMA operation. */
-    void * usartTransmitAddress;
+    void* usartTransmitAddress;
 
     /* This is the USART receive register address. Used for DMA operation. */
-    void * usartReceiveAddress;
+    void* usartReceiveAddress;
 
     const uint32_t *remapDataWidth;
     const uint32_t *remapParity;

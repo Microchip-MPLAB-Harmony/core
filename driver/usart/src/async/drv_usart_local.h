@@ -158,13 +158,13 @@ typedef enum
 typedef struct _DRV_USART_BUFFER_OBJ
 {
     /* The hardware instance object that owns this buffer */
-    void * dObj;
+    void* dObj;
 
     /* This flag tracks whether this object is in use */
     volatile bool inUse;
 
     /* Pointer to the application read or write buffer */
-    void * buffer;
+    void* buffer;
 
     /* Number of bytes to be transferred */
     size_t size;
@@ -173,7 +173,7 @@ typedef struct _DRV_USART_BUFFER_OBJ
     size_t nCount;
 
     /* Next buffer pointer */
-    struct _DRV_USART_BUFFER_OBJ * next;
+    struct _DRV_USART_BUFFER_OBJ* next;
 
     /* Current state of the buffer */
     DRV_USART_BUFFER_STATE currentState;
@@ -233,10 +233,10 @@ typedef struct
     OSAL_MUTEX_DECLARE(mutexDriverInstance);
 
     /* The buffer queue for the write operations */
-    DRV_USART_BUFFER_OBJ  *queueWrite;
+    DRV_USART_BUFFER_OBJ* queueWrite;
 
     /* The buffer queue for the read operations */
-    DRV_USART_BUFFER_OBJ  *queueRead;
+    DRV_USART_BUFFER_OBJ* queueRead;
 
     /* Read queue size */
     size_t queueSizeRead;
@@ -257,17 +257,20 @@ typedef struct
     SYS_DMA_CHANNEL rxDMAChannel;
 
     /* This is the USART transmit register address. Used for DMA operation. */
-    void * txAddress;
+    void* txAddress;
 
     /* This is the USART receive register address. Used for DMA operation. */
-    void * rxAddress;
+    void* rxAddress;
 
     /* This is the DMA channel interrupt source. */
     INT_SOURCE interruptDMA;
-    const uint32_t *remapDataWidth;
-    const uint32_t *remapParity;
-    const uint32_t *remapStopBits;
-    const uint32_t *remapError;
+    const uint32_t* remapDataWidth;
+
+    const uint32_t* remapParity;
+
+    const uint32_t* remapStopBits;
+
+    const uint32_t* remapError;
 } DRV_USART_OBJ;
 
 #endif //#ifndef DRV_USART_LOCAL_H

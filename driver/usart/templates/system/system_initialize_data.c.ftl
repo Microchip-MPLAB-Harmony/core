@@ -1,7 +1,7 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_USART Instance ${INDEX?string} Initialization Data">
 <#if DRV_USART_MODE == true>
 
-DRV_USART_CLIENT_OBJ drvUSART${INDEX?string}ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
+static DRV_USART_CLIENT_OBJ drvUSART${INDEX?string}ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
 </#if>
 
 const DRV_USART_PLIB_INTERFACE drvUsart${INDEX?string}PlibAPI = {

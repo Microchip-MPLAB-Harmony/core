@@ -59,7 +59,7 @@
 // *****************************************************************************
 
 /* This is the driver instance object array. */
-DRV_USART_OBJ gDrvUSARTObj[DRV_USART_INSTANCES_NUMBER] ;
+static DRV_USART_OBJ gDrvUSARTObj[DRV_USART_INSTANCES_NUMBER] ;
 
 // *****************************************************************************
 // *****************************************************************************

@@ -56,10 +56,10 @@
 // *****************************************************************************
 
 /* This is the driver instance object array. */
-DRV_USART_OBJ gDrvUSARTObj[DRV_USART_INSTANCES_NUMBER] ;
+static DRV_USART_OBJ gDrvUSARTObj[DRV_USART_INSTANCES_NUMBER] ;
 
 /* This is the array of USART Driver Buffet object. */
-DRV_USART_BUFFER_OBJ gDrvUSARTBufferObj[DRV_USART_QUEUE_DEPTH_COMBINED];
+static DRV_USART_BUFFER_OBJ gDrvUSARTBufferObj[DRV_USART_QUEUE_DEPTH_COMBINED];
 
 /* This a global token counter used to generate unique buffer handles */
 static uint16_t gDrvUSARTTokenCount = 0;
