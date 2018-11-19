@@ -237,11 +237,11 @@ typedef void ( *DRV_AT25_EVENT_HANDLER )( DRV_AT25_TRANSFER_STATUS event, uintpt
     SYS_MODULE_OBJ   sysObjDrvAT25;
 
     DRV_AT25_PLIB_INTERFACE drvAT25PlibAPI = {
-    .writeRead = (DRV_AT25_WRITEREAD)SPI0_WriteRead,
-    .write = (DRV_AT25_WRITE)SPI0_Write,
-    .read = (DRV_AT25_READ)SPI0_Read,
-    .isBusy = (DRV_AT25_IS_BUSY)SPI0_IsBusy,
-    .callbackRegister = (DRV_AT25_CALLBACK_REGISTER)SPI0_CallbackRegister,
+    .writeRead = (DRV_AT25_PLIB_WRITE_READ)SPI0_WriteRead,
+    .write = (DRV_AT25_PLIB_WRITE)SPI0_Write,
+    .read = (DRV_AT25_PLIB_READ)SPI0_Read,
+    .isBusy = (DRV_AT25_PLIB_IS_BUSY)SPI0_IsBusy,
+    .callbackRegister = (DRV_AT25_PLIB_CALLBACK_REGISTER)SPI0_CallbackRegister,
     };
 
     DRV_AT25_INIT drvAT25InitData = {
@@ -405,7 +405,7 @@ void DRV_AT25_Close( const DRV_HANDLE handle );
     of data bytes from the given address of the EEPROM.
 
     The requesting client should call DRV_AT25_TransferStatusGet API to know
-    the current status of the request OR the requesting client can register a 
+    the current status of the request OR the requesting client can register a
     callback function with the driver to get notified of the status.
 
   Precondition:
@@ -472,7 +472,7 @@ bool DRV_AT25_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength,
     txDataLength bytes of data starting from given address of EEPROM.
 
     The requesting client should call DRV_AT25_TransferStatusGet API to know
-    the current status of the request OR the requesting client can register a 
+    the current status of the request OR the requesting client can register a
     callback function with the driver to get notified of the status.
 
   Preconditions:
@@ -539,7 +539,7 @@ bool DRV_AT25_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength
     one page of data starting from the given address of the EEPROM.
 
     The requesting client should call DRV_AT25_TransferStatusGet API to know
-    the current status of the request OR the requesting client can register a 
+    the current status of the request OR the requesting client can register a
     callback function with the driver to get notified of the status.
 
   Preconditions:
