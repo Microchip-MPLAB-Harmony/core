@@ -252,17 +252,17 @@ typedef void ( * SYS_TIME_CALLBACK ) ( uintptr_t context );
    Example:
         <code>
 
-        TIME_PLIB_API sysTimePlibAPI = {
-            .timerCallbackSet = (TIME_CallbackSet)TC0_CH0_TimerCallbackRegister,
-            .timerCounterGet = (TIME_CounterGet)TC0_CH0_TimerCounterGet,
-             .timerPeriodSet = (TIME_PeriodSet)TC0_CH0_TimerPeriodSet,
-            .timerFrequencyGet = (TIME_FrequencyGet)TC0_CH0_TimerFrequencyGet,
-            .timerCompareSet = (TIME_CompareSet)TC0_CH0_TimerCompareSet,
-            .timerStart = (TIME_Start)TC0_CH0_TimerStart,
-            .timerStop = (TIME_Stop)TC0_CH0_TimerStop 
+        const SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
+            .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)TC0_CH0_TimerCallbackRegister,
+            .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC0_CH0_TimerCounterGet,
+            .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC0_CH0_TimerPeriodSet,
+            .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC0_CH0_TimerFrequencyGet,
+            .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC0_CH0_TimerCompareSet,
+            .timerStart = (SYS_TIME_PLIB_START)TC0_CH0_TimerStart,
+            .timerStop = (SYS_TIME_PLIB_STOP)TC0_CH0_TimerStop
         };
 
-        SYS_TIME_INIT sysTimeInitData =
+        const SYS_TIME_INIT sysTimeInitData =
         {
             .timePlib = &sysTimePlibAPI,
             .hwTimerIntNum = TC0_CH0_IRQn,
@@ -404,9 +404,9 @@ SYS_STATUS SYS_TIME_Status ( SYS_MODULE_OBJ object );
 
    Example:
        <code>
-       
+
        SYS_TIME_HANDLE timer = SYS_TIME_HANDLE_INVALID;
-       
+
        if (SYS_TIME_DelayUS(50, &timer) != SYS_TIME_SUCCESS)
        {
            // Handle error
@@ -568,10 +568,10 @@ Parameters:
 
     us          - Time period in microseconds.
 
-    type        - Type of callback requested. If type is SYS_TIME_SINGLE, the 
+    type        - Type of callback requested. If type is SYS_TIME_SINGLE, the
                   Callback function will be called once when the time period expires.
-                  If type is SYS_TIME_PERIODIC Callback function will be called 
-                  repeatedly, every time the time period expires until the timer 
+                  If type is SYS_TIME_PERIODIC Callback function will be called
+                  repeatedly, every time the time period expires until the timer
                   object is stopped or deleted.
 
 
@@ -632,10 +632,10 @@ Parameters:
 
     ms          - Time period in milliseconds.
 
-    type        - Type of callback requested. If type is SYS_TIME_SINGLE, the 
+    type        - Type of callback requested. If type is SYS_TIME_SINGLE, the
                   Callback function will be called once when the time period expires.
-                  If type is SYS_TIME_PERIODIC Callback function will be called 
-                  repeatedly, every time the time period expires until the timer 
+                  If type is SYS_TIME_PERIODIC Callback function will be called
+                  repeatedly, every time the time period expires until the timer
                   object is stopped or deleted.
 
 
@@ -992,10 +992,10 @@ uint32_t SYS_TIME_MSToCount ( uint32_t ms );
 
 // *****************************************************************************
 /* Function:
-    SYS_TIME_HANDLE SYS_TIME_TimerCreate ( 
-        uint32_t count, 
+    SYS_TIME_HANDLE SYS_TIME_TimerCreate (
+        uint32_t count,
         uint32_t period,
-        SYS_TIME_CALLBACK callback, 
+        SYS_TIME_CALLBACK callback,
         uintptr_t context,
         SYS_TIME_CALLBACK_TYPE type )
 
@@ -1037,10 +1037,10 @@ uint32_t SYS_TIME_MSToCount ( uint32_t ms );
                  used to identify the client's context or passed with any
                  value.
 
-    type        - Type of callback requested. If type is SYS_TIME_SINGLE, the 
+    type        - Type of callback requested. If type is SYS_TIME_SINGLE, the
                   Callback function will be called once when the time period expires.
-                  If type is SYS_TIME_PERIODIC Callback function will be called 
-                  repeatedly, every time the time period expires until the timer 
+                  If type is SYS_TIME_PERIODIC Callback function will be called
+                  repeatedly, every time the time period expires until the timer
                   object is stopped or deleted.
 
    Returns:
@@ -1068,24 +1068,24 @@ uint32_t SYS_TIME_MSToCount ( uint32_t ms );
     None.
 */
 
-SYS_TIME_HANDLE SYS_TIME_TimerCreate ( 
-    uint32_t count, 
+SYS_TIME_HANDLE SYS_TIME_TimerCreate (
+    uint32_t count,
     uint32_t period,
-    SYS_TIME_CALLBACK callback, 
-    uintptr_t context, 
-    SYS_TIME_CALLBACK_TYPE type 
+    SYS_TIME_CALLBACK callback,
+    uintptr_t context,
+    SYS_TIME_CALLBACK_TYPE type
 );
 
 
 // *****************************************************************************
 /* Function:
-    SYS_TIME_RESULT SYS_TIME_TimerReload ( 
+    SYS_TIME_RESULT SYS_TIME_TimerReload (
         SYS_TIME_HANDLE handle,
-        uint32_t count, 
+        uint32_t count,
         uint32_t period,
-        SYS_TIME_CALLBACK callback, 
+        SYS_TIME_CALLBACK callback,
         uintptr_t context,
-        SYS_TIME_CALLBACK_TYPE type 
+        SYS_TIME_CALLBACK_TYPE type
     )
 
    Summary:
@@ -1116,10 +1116,10 @@ SYS_TIME_HANDLE SYS_TIME_TimerCreate (
     context    - The new caller-defined value that's passed (unmodified) back to
                  the client as a parameter of callback function.
 
-    type        - Type of callback requested. If type is SYS_TIME_SINGLE, the 
+    type        - Type of callback requested. If type is SYS_TIME_SINGLE, the
                   Callback function will be called once when the time period expires.
-                  If type is SYS_TIME_PERIODIC Callback function will be called 
-                  repeatedly, every time the time period expires until the timer 
+                  If type is SYS_TIME_PERIODIC Callback function will be called
+                  repeatedly, every time the time period expires until the timer
                   object is stopped or deleted.
 
    Returns:
@@ -1145,13 +1145,13 @@ SYS_TIME_HANDLE SYS_TIME_TimerCreate (
     This function facilitates changing multiple timer parameters quickly and
     atomically.
 */
-SYS_TIME_RESULT SYS_TIME_TimerReload ( 
-    SYS_TIME_HANDLE handle, 
-    uint32_t count, 
+SYS_TIME_RESULT SYS_TIME_TimerReload (
+    SYS_TIME_HANDLE handle,
+    uint32_t count,
     uint32_t period,
-    SYS_TIME_CALLBACK callback, 
-    uintptr_t context, 
-    SYS_TIME_CALLBACK_TYPE type 
+    SYS_TIME_CALLBACK callback,
+    uintptr_t context,
+    SYS_TIME_CALLBACK_TYPE type
 );
 
 
@@ -1198,9 +1198,9 @@ SYS_TIME_RESULT SYS_TIME_TimerDestroy ( SYS_TIME_HANDLE handle );
 
 // *****************************************************************************
 /* Function:
-        SYS_TIME_RESULT  SYS_TIME_TimerCounterGet (  
+        SYS_TIME_RESULT  SYS_TIME_TimerCounterGet (
             SYS_TIME_HANDLE handle,
-            uint32_t *count 
+            uint32_t *count
         )
 
    Summary:
@@ -1245,9 +1245,9 @@ SYS_TIME_RESULT SYS_TIME_TimerDestroy ( SYS_TIME_HANDLE handle );
         depending upon timer frequency and system performance.
 */
 
-SYS_TIME_RESULT SYS_TIME_TimerCounterGet ( 
-    SYS_TIME_HANDLE handle, 
-    uint32_t *count 
+SYS_TIME_RESULT SYS_TIME_TimerCounterGet (
+    SYS_TIME_HANDLE handle,
+    uint32_t *count
 );
 
 
