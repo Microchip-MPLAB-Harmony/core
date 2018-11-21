@@ -774,4 +774,4 @@ def instantiateComponent(thirdPartyFreeRTOS):
     armArch     = Database.getSymbolValue("core", "CoreArchitecture")
 
     # load family specific configuration
-    execfile(Module.getPath() + "config/arch/arm/devices_" + armArch.replace("-", "_").replace("+", "") + "/freertos_config.py")
+    execfile(Module.getPath() + "config/arch/arm/devices_" + armArch.replace("-", "_").replace("PLUS", "") + "/freertos_config.py")

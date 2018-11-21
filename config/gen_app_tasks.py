@@ -137,7 +137,7 @@ def genAppHeaderFile(symbol, event):
 
 ############################################################################
 enableRTOS  = osalSelectRTOS.getValue()
-deviceArch  = Database.getSymbolValue("core", "DEVICE_ARCH");
+coreArch  = Database.getSymbolValue("core", "CoreArchitecture");
 
 genAppTaskMenu = harmonyCoreComponent.createMenuSymbol("GEN_APP_TASK_MENU", harmonyAppFile)
 genAppTaskMenu.setLabel("Application Configuration")
@@ -231,7 +231,7 @@ for count in range(0, genAppTaskMaxCount):
     genAppRtosTaskSize[count] = harmonyCoreComponent.createIntegerSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_SIZE", genAppRtosTaskConfMenu[count])
     genAppRtosTaskSize[count].setLabel("Stack Size")
     genAppRtosTaskSize[count].setDescription("Stack Size")
-    if (deviceArch == "CORTEX-M0PLUS" or deviceArch == "CORTEX-M23"):
+    if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23"):
         genAppRtosTaskSize[count].setDefaultValue(128)
     else:
         genAppRtosTaskSize[count].setDefaultValue(1024)
