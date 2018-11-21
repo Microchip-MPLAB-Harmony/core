@@ -115,7 +115,7 @@ static void _DRV_USART_RX_PLIB_CallbackHandler( uintptr_t context )
 
     errorMask = dObj->usartPlib->errorGet();
 
-    if(errorMask == DRV_USART_ERROR_NONE)
+    if(errorMask == (uint32_t) DRV_USART_ERROR_NONE)
     {
         clientObj->errors = DRV_USART_ERROR_NONE;
         dObj->rxRequestStatus = DRV_USART_REQUEST_STATUS_COMPLETE;

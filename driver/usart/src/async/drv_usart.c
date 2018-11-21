@@ -382,7 +382,7 @@ static void _DRV_USART_RX_PLIB_CallbackHandler( uintptr_t context )
 
     errorMask = dObj->usartPlib->errorGet();
 
-    if(errorMask == DRV_USART_ERROR_NONE)
+    if(errorMask == (uint32_t) DRV_USART_ERROR_NONE)
     {
         dObj->errors = DRV_USART_ERROR_NONE;
         _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_RX, DRV_USART_BUFFER_EVENT_COMPLETE);

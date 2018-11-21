@@ -138,12 +138,12 @@ typedef struct _DRV_USART_SERIAL_SETUP
 
 typedef void (* DRV_USART_PLIB_CALLBACK)( uintptr_t context);
 
-typedef bool(*DRV_USART_PLIB_READ_CALLBACK_REG)(DRV_USART_PLIB_CALLBACK callback, uintptr_t context);
+typedef void(*DRV_USART_PLIB_READ_CALLBACK_REG)(DRV_USART_PLIB_CALLBACK callback, uintptr_t context);
 typedef bool(*DRV_USART_PLIB_READ)(void *buffer, const size_t size);
 typedef bool(*DRV_USART_PLIB_READ_IS_BUSY)(void);
 typedef size_t(*DRV_USART_PLIB_READ_COUNT_GET)(void);
 
-typedef bool(*DRV_USART_PLIB_WRITE_CALLBACK_REG)(DRV_USART_PLIB_CALLBACK callback, uintptr_t context);
+typedef void(*DRV_USART_PLIB_WRITE_CALLBACK_REG)(DRV_USART_PLIB_CALLBACK callback, uintptr_t context);
 typedef bool(*DRV_USART_PLIB_WRITE)(void *buffer, const size_t size);
 typedef bool(*DRV_USART_PLIB_WRITE_IS_BUSY)(void);
 typedef size_t(*DRV_USART_PLIB_WRITE_COUNT_GET)(void);
