@@ -8,6 +8,6 @@
 <#if core.CoreArchitecture == "CORTEX-M7">
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
 </#if>
-<#if core.CoreArchitecture == "CORTEX-M0+">
+<#if core.CoreArchitecture == "CORTEX-M0PLUS">
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (200)
 </#if>
