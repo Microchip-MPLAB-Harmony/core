@@ -56,7 +56,7 @@
 // *****************************************************************************
 
 <#if core.DMA_ENABLE?has_content && core.DMA_ENABLE == true>
-#include "peripheral/${core.DMA_INSTANCE_NAME?lower_case}/plib_${core.DMA_INSTANCE_NAME?lower_case}.h"
+#include "peripheral/${DMA_NAME?lower_case}/plib_${core.DMA_INSTANCE_NAME?lower_case}.h"
 
 #define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)  ${DMA_INSTANCE_NAME}_ChannelCallbackRegister((${DMA_NAME}_CHANNEL)channel, (${DMA_NAME}_CHANNEL_CALLBACK)eventHandler, context)
 
