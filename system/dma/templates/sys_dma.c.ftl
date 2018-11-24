@@ -65,12 +65,12 @@ void SYS_DMA_AddressingModeSetup(SYS_DMA_CHANNEL channel, SYS_DMA_SOURCE_ADDRESS
 <#if (core.DMA_ENABLE?has_content) && (core.DMA_ENABLE = true)>
     uint32_t config;
 
-    config = ${core.DMA_INSTANCE_NAME}_ChannelSettingsGet(channel);
+    config = (uint32_t)${core.DMA_INSTANCE_NAME}_ChannelSettingsGet(channel);
     config &= ~(${core.DMA_SRC_AM_MASK} | ${core.DMA_DST_AM_MASK});
 
-    config |= sourceAddrMode | destAddrMode;
+    config |= (uint32_t)sourceAddrMode | (uint32_t)destAddrMode;
 
-    ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet(channel, config);
+    ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet(channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
 </#if>
 }
 
@@ -89,11 +89,11 @@ void SYS_DMA_DataWidthSetup(SYS_DMA_CHANNEL channel, SYS_DMA_WIDTH dataWidth)
 <#if (core.DMA_ENABLE?has_content) && (core.DMA_ENABLE = true)>
     uint32_t config;
 
-    config = ${core.DMA_INSTANCE_NAME}_ChannelSettingsGet(channel);
+    config = (uint32_t)${core.DMA_INSTANCE_NAME}_ChannelSettingsGet(channel);
 
     config &= ~(${core.DMA_DATA_WIDTH_MASK});
-    config |= dataWidth;
+    config |= (uint32_t)dataWidth;
 
-    ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet(channel, config);
+    ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet(channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
 </#if>
 }
