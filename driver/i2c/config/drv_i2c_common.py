@@ -22,6 +22,27 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
+def syncFileGen(symbol, event):
+    if event["value"] == "Synchronous":
+       symbol.setEnabled(True)
+    else:
+       symbol.setEnabled(False)
+
+def asyncFileGen(symbol, event):
+    if event["value"] == "Asynchronous":
+       symbol.setEnabled(True)
+    else:
+       symbol.setEnabled(False)
+
+def setCommonMode(symbol, event):
+    rtos_mode = event["value"]
+
+    if rtos_mode != None:
+        if rtos_mode == "BareMetal":
+            symbol.setValue("Asynchronous", 1)
+        else:
+            symbol.setValue("Synchronous", 1)
+
 def instantiateComponent(i2cComponentCommon):
     res = Database.activateComponents(["HarmonyCore"])
 
@@ -31,19 +52,19 @@ def instantiateComponent(i2cComponentCommon):
     # Enable "Generate Harmony System Service Common Files" option in MHC
     Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
 
-    # Enable "Enable System Ports" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True, 1)
+    rtos_mode = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
 
-    i2cMode = i2cComponentCommon.createKeyValueSetSymbol("DRV_I2C_MODE", None)
+    i2c_default_mode = "Asynchronous"
+
+    if ((rtos_mode != "BareMetal") and (rtos_mode != None)):
+        i2c_default_mode = "Synchronous"
+
+    i2cMode = i2cComponentCommon.createComboSymbol("DRV_I2C_MODE", None, ["Asynchronous", "Synchronous"])
     i2cMode.setLabel("Driver Mode")
-    i2cMode.addKey("ASYNC", "0", "Asynchronous")
-    i2cMode.addKey("SYNC", "1", "Synchronous")
-    i2cMode.setDisplayMode("Description")
-    i2cMode.setOutputMode("Key")
-    i2cMode.setVisible(True)
-    i2cMode.setDefaultValue(0)
+    i2cMode.setDefaultValue(i2c_default_mode)
+    i2cMode.setDependencies(setCommonMode, ["HarmonyCore.SELECT_RTOS"])
 
-    i2cSymCommonSysCfgFile = i2cComponentCommon.createFileSymbol(None, None)
+    i2cSymCommonSysCfgFile = i2cComponentCommon.createFileSymbol("DRV_I2C_SYS_CFG_COMMON", None)
     i2cSymCommonSysCfgFile.setType("STRING")
     i2cSymCommonSysCfgFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_DRIVER_CONFIGURATION")
     i2cSymCommonSysCfgFile.setSourcePath("driver/i2c/templates/system/system_config_common.h.ftl")
@@ -83,6 +104,7 @@ def instantiateComponent(i2cComponentCommon):
     i2cAsyncSymSourceFile.setProjectPath("config/" + configName + "/driver/i2c/")
     i2cAsyncSymSourceFile.setType("SOURCE")
     i2cAsyncSymSourceFile.setOverwrite(True)
+    i2cAsyncSymSourceFile.setEnabled((i2cMode.getValue() == "Asynchronous"))
     i2cAsyncSymSourceFile.setDependencies(asyncFileGen, ["DRV_I2C_MODE"])
 
     i2cAsyncSymHeaderLocalFile = i2cComponentCommon.createFileSymbol("DRV_I2C_ASYNC_HEADER", None)
@@ -92,6 +114,7 @@ def instantiateComponent(i2cComponentCommon):
     i2cAsyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/i2c/")
     i2cAsyncSymHeaderLocalFile.setType("SOURCE")
     i2cAsyncSymHeaderLocalFile.setOverwrite(True)
+    i2cAsyncSymHeaderLocalFile.setEnabled((i2cMode.getValue() == "Asynchronous"))
     i2cAsyncSymHeaderLocalFile.setDependencies(asyncFileGen, ["DRV_I2C_MODE"])
 
     # Sync Source Files
@@ -102,6 +125,7 @@ def instantiateComponent(i2cComponentCommon):
     i2cSyncSymSourceFile.setProjectPath("config/" + configName + "/driver/i2c/")
     i2cSyncSymSourceFile.setType("SOURCE")
     i2cSyncSymSourceFile.setOverwrite(True)
+    i2cSyncSymSourceFile.setEnabled((i2cMode.getValue() == "Synchronous"))
     i2cSyncSymSourceFile.setDependencies(syncFileGen, ["DRV_I2C_MODE"])
 
     i2cSyncSymHeaderLocalFile = i2cComponentCommon.createFileSymbol("DRV_I2C_SYNC_HEADER", None)
@@ -111,16 +135,5 @@ def instantiateComponent(i2cComponentCommon):
     i2cSyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/i2c/")
     i2cSyncSymHeaderLocalFile.setType("SOURCE")
     i2cSyncSymHeaderLocalFile.setOverwrite(True)
+    i2cSyncSymHeaderLocalFile.setEnabled((i2cMode.getValue() == "Synchronous"))
     i2cSyncSymHeaderLocalFile.setDependencies(syncFileGen, ["DRV_I2C_MODE"])
-
-def syncFileGen(symbol, event):
-    if(event["value"] == 1):
-       symbol.setEnabled(True)
-    else:
-       symbol.setEnabled(False)
-
-def asyncFileGen(symbol, event):
-    if(event["value"] == 0):
-       symbol.setEnabled(True)
-    else:
-       symbol.setEnabled(False)

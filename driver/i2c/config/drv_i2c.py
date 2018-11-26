@@ -30,7 +30,7 @@ def instantiateComponent(i2cComponent, index):
     i2cSymPLIB = i2cComponent.createStringSymbol("DRV_I2C_PLIB", None)
     i2cSymPLIB.setLabel("PLIB Used")
     i2cSymPLIB.setReadOnly(True)
-    i2cSymPLIB.setDefaultValue("TWIHS0")
+    i2cSymPLIB.setDefaultValue("")
 
     i2cSymNumClients = i2cComponent.createIntegerSymbol("DRV_I2C_NUM_CLIENTS", None)
     i2cSymNumClients.setLabel("Number of clients")
@@ -40,14 +40,13 @@ def instantiateComponent(i2cComponent, index):
     i2cSymQueueSize = i2cComponent.createIntegerSymbol("DRV_I2C_QUEUE_SIZE", None)
     i2cSymQueueSize.setLabel("Transfer Queue Size")
     i2cSymQueueSize.setMax(64)
-    i2cSymQueueSize.setVisible((Database.getSymbolValue("drv_i2c", "DRV_I2C_MODE") == 0))
+    i2cSymQueueSize.setVisible((Database.getSymbolValue("drv_i2c", "DRV_I2C_MODE") == "Asynchronous"))
     i2cSymQueueSize.setDefaultValue(2)
     i2cSymQueueSize.setDependencies(asyncModeOptions, ["drv_i2c.DRV_I2C_MODE"])
 
     configName = Variables.get("__CONFIGURATION_NAME")
 
     # System Template Files
-
     i2cSymSystemDefObjFile = i2cComponent.createFileSymbol("DRV_I2C_FILE_SYS_DEF_OBJ", None)
     i2cSymSystemDefObjFile.setType("STRING")
     i2cSymSystemDefObjFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_OBJECTS")
@@ -73,16 +72,26 @@ def instantiateComponent(i2cComponent, index):
     i2cSymSystemInitFile.setMarkup(True)
 
 def asyncModeOptions(symbol, event):
-    if(event["value"] == False):
-       symbol.setVisible(True)
-    elif(event["value"] == True):
-       symbol.setVisible(False)
+    if (event["value"] == "Asynchronous"):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
 
-def onDependencyConnected(info):
-    if info["dependencyID"] == "drv_i2c_I2C_dependency" :
-        plibUsed = info["localComponent"].getSymbolByID("DRV_I2C_PLIB")
+def onAttachmentConnected(connectionInfo):
+    localComponent = connectionInfo["localComponent"]
+    remoteComponent = connectionInfo["remoteComponent"]
+    connectID = connectionInfo["id"]
+
+    if connectID == "drv_i2c_I2C_dependency" :
+        plibUsed = localComponent.getSymbolByID("DRV_I2C_PLIB")
         plibUsed.clearValue()
-        i2cPlibId = info["remoteComponent"].getID().upper()
-        plibUsed.setValue(i2cPlibId, 2)
+        plibUsed.setValue(remoteComponent.getID().upper(), 1)
 
+def onAttachmentDisconnected(connectionInfo):
+    localComponent = connectionInfo["localComponent"]
+    remoteComponent = connectionInfo["remoteComponent"]
+    connectID = connectionInfo["id"]
 
+    if connectID == "drv_i2c_I2C_dependency" :
+        plibUsed = localComponent.getSymbolByID("DRV_I2C_PLIB")
+        plibUsed.clearValue()

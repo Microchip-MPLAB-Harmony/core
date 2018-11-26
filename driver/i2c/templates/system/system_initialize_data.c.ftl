@@ -2,7 +2,7 @@
 
 /* I2C Client Objects Pool */
 static DRV_I2C_CLIENT_OBJ drvI2C${INDEX}ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
-<#if drv_i2c.DRV_I2C_MODE == "ASYNC">
+<#if drv_i2c.DRV_I2C_MODE == "Asynchronous">
 
 /* I2C Transfer Objects Pool */
 static DRV_I2C_TRANSFER_OBJ drvI2C${INDEX?string}TransferObj[DRV_I2C_QUEUE_SIZE_IDX${INDEX?string}] = {0};
@@ -38,7 +38,7 @@ const DRV_I2C_INIT drvI2C${INDEX?string}InitData =
 
     /* I2C Client Objects Pool */
     .clientObjPool = (uintptr_t)&drvI2C${INDEX?string}ClientObjPool[0],
-<#if drv_i2c.DRV_I2C_MODE == "ASYNC">
+<#if drv_i2c.DRV_I2C_MODE == "Asynchronous">
 
     /* I2C IRQ */
     .interruptI2C = DRV_I2C_INT_SRC_IDX${INDEX?string},

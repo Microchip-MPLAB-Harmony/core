@@ -168,7 +168,7 @@ typedef struct
 
     /* Number of clients */
     uint32_t numClients;
-<#if DRV_I2C_MODE == "ASYNC">
+<#if DRV_I2C_MODE == "Asynchronous">
 
     /* Interrupt source ID for the I2C interrupt. */
     INT_SOURCE interruptI2C;
