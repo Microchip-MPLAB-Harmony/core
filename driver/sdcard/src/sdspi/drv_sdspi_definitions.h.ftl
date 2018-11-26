@@ -45,14 +45,15 @@
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: File includes
+// Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
 
 #include <device.h>
 #include "system/ports/sys_ports.h"
+<#if core.DMA_ENABLE?has_content>
 #include "system/dma/sys_dma.h"
-
+</#if>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -61,7 +62,6 @@
 
 #endif
 // DOM-IGNORE-END
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -77,7 +77,7 @@ typedef enum
     /* Force the compiler to reserve 32-bit memory space for each enum */
     DRV_SDSPI_CLOCK_PHASE_INVALID = 0xFFFFFFFF
 
-}DRV_SDSPI_CLOCK_PHASE;
+} DRV_SDSPI_CLOCK_PHASE;
 
 typedef enum
 {
@@ -87,7 +87,7 @@ typedef enum
     /* Force the compiler to reserve 32-bit memory space for each enum */
     DRV_SDSPI_CLOCK_POLARITY_INVALID = 0xFFFFFFFF
 
-}DRV_SDSPI_CLOCK_POLARITY;
+} DRV_SDSPI_CLOCK_POLARITY;
 
 typedef enum
 {
@@ -104,14 +104,14 @@ typedef enum
     /* Force the compiler to reserve 32-bit memory space for each enum */
     DRV_SDSPI_DATA_BITS_INVALID = 0xFFFFFFFF
 
-}DRV_SDSPI_DATA_BITS;
+} DRV_SDSPI_DATA_BITS;
 
 typedef enum
 {
     DRV_SDSPI_CS_POLARITY_ACTIVE_LOW = 0,
     DRV_SDSPI_CS_POLARITY_ACTIVE_HIGH = 1
 
-}DRV_SDSPI_CS_POLARITY;
+} DRV_SDSPI_CS_POLARITY;
 
 // *****************************************************************************
 /* SDSPI Driver Setup Data
@@ -162,10 +162,10 @@ typedef    void (* DRV_SDSPI_PLIB_CALLBACK_REGISTER)(DRV_SDSPI_PLIB_CALLBACK, ui
 /* SDSPI Driver PLIB Interface Data
 
   Summary:
-    Defines the data required to initialize the AT25M driver PLIB Interface.
+    Defines the data required to initialize the SDSPI driver PLIB Interface.
 
   Description:
-    This data type defines the data required to initialize the AT25M driver
+    This data type defines the data required to initialize the SDSPI driver
     PLIB Interface.
 
   Remarks:
@@ -174,7 +174,6 @@ typedef    void (* DRV_SDSPI_PLIB_CALLBACK_REGISTER)(DRV_SDSPI_PLIB_CALLBACK, ui
 
 typedef struct
 {
-
     /* SDSPI PLIB writeRead API */
     DRV_SDSPI_PLIB_WRITEREAD               writeRead;
 
@@ -198,10 +197,10 @@ typedef struct
 /* SDSPI Driver Initialization Data
 
   Summary:
-    Defines the data required to initialize the AT25M driver
+    Defines the data required to initialize the SDSPI driver
 
   Description:
-    This data type defines the data required to initialize or the AT25M driver.
+    This data type defines the data required to initialize or the SDSPI driver.
 
   Remarks:
     None.
@@ -219,6 +218,7 @@ typedef struct
 
     const uint32_t*                 remapClockPhase;
 
+<#if core.DMA_ENABLE?has_content>
     /* Transmit DMA Channel */
     SYS_DMA_CHANNEL                 txDMAChannel;
 
@@ -231,6 +231,7 @@ typedef struct
     /* This is the SPI receive register address. Used for DMA operation. */
     void*                           rxAddress;
 
+</#if>
     /* Number of clients */
     size_t                          numClients;
 
@@ -251,7 +252,9 @@ typedef struct
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
-}
+
+	}
+
 #endif
 //DOM-IGNORE-END
 

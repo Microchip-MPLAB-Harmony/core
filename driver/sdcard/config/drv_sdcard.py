@@ -283,13 +283,14 @@ def instantiateComponent(sdcardComponent):
 def destroyComponent(sdcardComponent):
     global drvSdspiInstanceSpace
 
-    spiPeripheral = Database.getSymbolValue(drvSdspiInstanceSpace, "DRV_SPI_PLIB")
+    if Database.getSymbolValue("core", "DMA_ENABLE") != None:
+        spiPeripheral = Database.getSymbolValue(drvSdspiInstanceSpace, "DRV_SPI_PLIB")
 
-    dmaTxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
-    dmaRxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
+        dmaTxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
+        dmaRxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
 
-    Database.setSymbolValue("core", dmaTxID, False, 2)
-    Database.setSymbolValue("core", dmaRxID, False, 2)
+        Database.setSymbolValue("core", dmaTxID, False, 2)
+        Database.setSymbolValue("core", dmaRxID, False, 2)
 
     # If device selected is anyone of "SAMV70", "SAMV71", "SAME70", "SAMS70"
     if eval(coreArchitecture['condition']):
@@ -312,26 +313,16 @@ def onAttachmentConnected(connectionInfo):
 
     # For Dependency Connected (SPI)
     if (connectID == "drv_sdcard_SPI_dependency"):
-        dmaRxRequestID = "DMA_CH_NEEDED_FOR_" + remoteID.upper() + "_Receive"
-        dmaTxRequestID = "DMA_CH_NEEDED_FOR_" + remoteID.upper() + "_Transmit"
-        dmaTxChannelID = "DMA_CH_FOR_" + remoteID.upper() + "_Transmit"
-        dmaRxChannelID = "DMA_CH_FOR_" + remoteID.upper() + "_Receive"
-
-        localComponent.setSymbolValue("DRV_SDSPI_PLIB_CONNECTION", True, 2)
         plibUsed = localComponent.getSymbolByID("DRV_SDSPI_PLIB")
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper(), 2)
+
         Database.setSymbolValue(remoteID.upper(), "SPI_DRIVER_CONTROLLED", True, 1)
 
-        if localComponent.getSymbolValue("DRV_SDSPI_TX_RX_DMA") == True:
-            Database.setSymbolValue("core", dmaRxRequestID, True, 2)
-            Database.setSymbolValue("core", dmaTxRequestID, True, 2)
+        localComponent.getSymbolByID("DRV_SDSPI_TX_RX_DMA").setReadOnly(False)
 
-            # Get the allocated channel and assign it
-            txChannel = Database.getSymbolValue("core", dmaTxChannelID)
-            localComponent.setSymbolValue("DRV_SDSPI_TX_DMA_CHANNEL", txChannel, 2)
-            rxChannel = Database.getSymbolValue("core", dmaRxChannelID)
-            localComponent.setSymbolValue("DRV_SDSPI_RX_DMA_CHANNEL", rxChannel, 2)
+        localComponent.getSymbolByID("DRV_SDSPI_DEPENDENCY_DMA_COMMENT").setVisible(False)
+
 
 def onAttachmentDisconnected(connectionInfo):
     global sdcardFsEnable
@@ -350,22 +341,11 @@ def onAttachmentDisconnected(connectionInfo):
 
     # For Dependency Disonnected (SPI)
     if (connectID == "drv_sdcard_SPI_dependency"):
-        dmaRxRequestID = "DMA_CH_NEEDED_FOR_" + remoteID.upper() + "_Receive"
-        dmaTxRequestID = "DMA_CH_NEEDED_FOR_" + remoteID.upper() + "_Transmit"
-        dmaTxChannelID = "DMA_CH_FOR_" + remoteID.upper() + "_Transmit"
-        dmaRxChannelID = "DMA_CH_FOR_" + remoteID.upper() + "_Receive"
+        localComponent.getSymbolByID("DRV_SDSPI_TX_RX_DMA").clearValue()
+        localComponent.getSymbolByID("DRV_SDSPI_TX_RX_DMA").setReadOnly(True)
 
-        localComponent.setSymbolValue("DRV_SDSPI_PLIB_CONNECTION", False, 2)
         plibUsed = localComponent.getSymbolByID("DRV_SDSPI_PLIB")
         plibUsed.clearValue()
         Database.setSymbolValue(remoteID.upper(), "SPI_DRIVER_CONTROLLED", False, 1)
 
-        if localComponent.getSymbolValue("DRV_SDSPI_TX_RX_DMA") == True:
-            Database.setSymbolValue("core", dmaRxRequestID, False, 2)
-            Database.setSymbolValue("core", dmaTxRequestID, False, 2)
-
-            # Get the allocated channel and assign it
-            txChannel = Database.getSymbolValue("core", dmaTxChannelID)
-            localComponent.setSymbolValue("DRV_SDSPI_TX_DMA_CHANNEL", txChannel, 2)
-            rxChannel = Database.getSymbolValue("core", dmaRxChannelID)
-            localComponent.setSymbolValue("DRV_SDSPI_RX_DMA_CHANNEL", rxChannel, 2)
+        localComponent.getSymbolByID("DRV_SDSPI_DEPENDENCY_DMA_COMMENT").setVisible(True)

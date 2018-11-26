@@ -125,12 +125,15 @@ sdhcCLK.setDependencies(setMasterClockValue, ["core.MASTER_CLOCK_FREQUENCY"])
 
 sdhcClients = sdcardComponent.createIntegerSymbol("DRV_SDHC_CLIENTS_NUMBER", sdhcDrvMenu)
 sdhcClients.setLabel("Number of SDHC Driver Clients")
+sdhcClients.setMin(1)
+sdhcClients.setMax(10)
 sdhcClients.setDefaultValue(1)
 
 sdhcBufferObjects = sdcardComponent.createIntegerSymbol("DRV_SDHC_BUFFER_OBJECT_NUMBER", sdhcDrvMenu)
 sdhcBufferObjects.setLabel("Number of SDHC Buffer Objects")
+sdhcBufferObjects.setMin(1)
+sdhcBufferObjects.setMax(64)
 sdhcBufferObjects.setDefaultValue(1)
-sdhcBufferObjects.setMax(10)
 sdhcBufferObjects.setReadOnly((sdcardFsEnable.getValue() == True))
 sdhcBufferObjects.setDependencies(setBufferSize, ["DRV_SDCARD_FS_ENABLE"])
 
