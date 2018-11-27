@@ -168,26 +168,30 @@ def instantiateComponent(spiComponent, index):
 def spiDriverMode(symbol, event):
     symbol.setValue(event["value"], 1)
 
-def onAttachmentConnected(connectionInfo):
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
-    connectID = connectionInfo["id"]
+def onAttachmentConnected(source, target):
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
 
     if connectID == "drv_spi_SPI_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_SPI_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(remoteComponent.getID().upper(), 1)
+        plibUsed.setValue(remoteID.upper(), 1)
 
-        Database.setSymbolValue(remoteComponent.getID(), "SPI_DRIVER_CONTROLLED", True, 1)
+        Database.setSymbolValue(remoteID, "SPI_DRIVER_CONTROLLED", True, 1)
 
         localComponent.getSymbolByID("DRV_SPI_DEPENDENCY_DMA_COMMENT").setVisible(False)
 
         localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").setReadOnly(False)
 
-def onAttachmentDisconnected(connectionInfo):
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
-    connectID = connectionInfo["id"]
+def onAttachmentDisconnected(source, target):
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
 
     if connectID == "drv_spi_SPI_dependency" :
         localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").clearValue()
@@ -195,7 +199,7 @@ def onAttachmentDisconnected(connectionInfo):
 
         plibUsed = localComponent.getSymbolByID("DRV_SPI_PLIB")
         plibUsed.clearValue()
-        Database.setSymbolValue(remoteComponent.getID(), "SPI_DRIVER_CONTROLLED", False, 1)
+        Database.setSymbolValue(remoteID, "SPI_DRIVER_CONTROLLED", False, 1)
 
         localComponent.getSymbolByID("DRV_SPI_DEPENDENCY_DMA_COMMENT").setVisible(True)
 
@@ -267,4 +271,3 @@ def asyncModeOptions(symbol, event):
         symbol.setVisible(True)
     else:
         symbol.setVisible(False)
-
