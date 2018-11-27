@@ -192,25 +192,29 @@ def instantiateComponent(usartComponent, index):
 def usartDriverMode(symbol, event):
     symbol.setValue(event["value"], 1)
 
-def onAttachmentConnected(connectionInfo):
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
-    connectID = connectionInfo["id"]
+def onAttachmentConnected(source, target):
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
 
     if connectID == "drv_usart_UART_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_USART_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(remoteComponent.getID().upper(), 1)
+        plibUsed.setValue(remoteID.upper(), 1)
 
         localComponent.getSymbolByID("DRV_USART_DEPENDENCY_DMA_COMMENT").setVisible(False)
 
         localComponent.getSymbolByID("DRV_USART_TX_DMA").setReadOnly(False)
         localComponent.getSymbolByID("DRV_USART_RX_DMA").setReadOnly(False)
 
-def onAttachmentDisconnected(connectionInfo):
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
-    connectID = connectionInfo["id"]
+def onAttachmentDisconnected(source, target):
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
 
     if connectID == "drv_usart_UART_dependency" :
         localComponent.getSymbolByID("DRV_USART_TX_DMA").clearValue()
