@@ -45,10 +45,10 @@ def genDebugFiles(symbol, event):
 
 def genCommandFiles(symbol, event):
     symbol.setEnabled(event["value"])
-    
+
 def enableSysDebugConfigOptions(symbol, event):
     symbol.setVisible(event["value"])
-    
+
 def enableCommandProcessorOptions(symbol, event):
     symbol.setVisible(event["value"])
 
@@ -67,7 +67,7 @@ def showRTOSMenu(symbol, event):
             show_rtos_menu = True
 
     symbol.setVisible(show_rtos_menu)
-    
+
 def genRtosTask(symbol, event):
     gen_rtos_task = False
 
@@ -99,14 +99,14 @@ def instantiateComponent(consoleComponent):
     consoleDevice = consoleComponent.createStringSymbol("SYS_CONSOLE_DEVICE", None)
     consoleDevice.setLabel("Device Used")
     consoleDevice.setReadOnly(True)
-    consoleDevice.setDefaultValue("USART1")
+    consoleDevice.setDefaultValue("")
     # Used onDependencyComponentAdd\Remove callbacks to get connected PLIB
 
     consoleDeviceSet = consoleComponent.createStringSymbol("SYS_CONSOLE_DEVICE_SET", None)
     consoleDeviceSet.setLabel("Device Set")
     consoleDeviceSet.setVisible(False)
     consoleDeviceSet.setDependencies(selectDeviceSet, ["SYS_CONSOLE_DEVICE"])
-    consoleDeviceSet.setDefaultValue("UART")
+    consoleDeviceSet.setDefaultValue("")
 
     consoleSymTXQueueSize = consoleComponent.createIntegerSymbol("SYS_CONSOLE_TX_QUEUE_SIZE", None)
     consoleSymTXQueueSize.setLabel("Transmit Buffer Queue Size (1-128)")
@@ -161,14 +161,14 @@ def instantiateComponent(consoleComponent):
     commandDebugEnable.setLabel("Re-route Debug Message/Print through Command Service?")
     commandDebugEnable.setDefaultValue(True)
     commandDebugEnable.setDependencies(enableCommandProcessorOptions, ["SYS_COMMAND_ENABLE"])
-    
+
     enable_rtos_settings = False
 
     if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
         if (commandEnable.getValue() == True):
             enable_rtos_settings = True
 
-    # RTOS Settings 
+    # RTOS Settings
     commandRTOSMenu = consoleComponent.createMenuSymbol("SYS_COMMAND_RTOS_MENU", commandEnable)
     commandRTOSMenu.setLabel("RTOS settings")
     commandRTOSMenu.setDescription("RTOS settings")
@@ -190,11 +190,11 @@ def instantiateComponent(consoleComponent):
 
     commandRTOSTaskDelayVal = consoleComponent.createIntegerSymbol("SYS_COMMAND_RTOS_DELAY", commandRTOSMenu)
     commandRTOSTaskDelayVal.setLabel("Task Delay")
-    commandRTOSTaskDelayVal.setDefaultValue(10) 
+    commandRTOSTaskDelayVal.setDefaultValue(10)
     commandRTOSTaskDelayVal.setVisible((commandRTOSTaskDelay.getValue() == True))
     commandRTOSTaskDelayVal.setDependencies(setVisible, ["SYS_COMMAND_RTOS_USE_DELAY"])
 
-    
+
 
     ############################################################################
     #### Dependency ####
@@ -237,7 +237,7 @@ def instantiateComponent(consoleComponent):
     consoleUARTHeaderFile.setProjectPath("config/" + configName + "/system/console/")
     consoleUARTHeaderFile.setType("SOURCE")
     consoleUARTHeaderFile.setOverwrite(True)
-    
+
     consoleUARTDefinitionsHeaderFile = consoleComponent.createFileSymbol("SYS_CONSOLE_UART_DEFINITIONS_HEADER", None)
     consoleUARTDefinitionsHeaderFile.setSourcePath("system/console/src/sys_console_uart_definitions.h")
     consoleUARTDefinitionsHeaderFile.setOutputName("sys_console_uart_definitions.h")
@@ -339,7 +339,7 @@ def instantiateComponent(consoleComponent):
     consoleSystemTasksFile.setOutputName("core.LIST_SYSTEM_TASKS_C_CALL_SYSTEM_TASKS")
     consoleSystemTasksFile.setSourcePath("system/console/templates/system/system_tasks.c.ftl")
     consoleSystemTasksFile.setMarkup(True)
-    
+
     commandSystemRtosTasksFile = consoleComponent.createFileSymbol("SYS_COMMAND_SYS_RTOS_TASK", None)
     commandSystemRtosTasksFile.setType("STRING")
     commandSystemRtosTasksFile.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
@@ -351,8 +351,25 @@ def instantiateComponent(consoleComponent):
 ############################################################################
 #### Dependency ####
 ############################################################################
-def onDependencyConnected(info):
-    if info["dependencyID"] == "sys_console_UART_dependency" :
-        deviceUsed = info["localComponent"].getSymbolByID("SYS_CONSOLE_DEVICE")
+def onAttachmentConnected(source, target):
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
+
+    if connectID == "sys_console_UART_dependency" :
+        deviceUsed = localComponent.getSymbolByID("SYS_CONSOLE_DEVICE")
         deviceUsed.clearValue()
-        deviceUsed.setValue(info["remoteComponent"].getID().upper(), 2)
+        deviceUsed.setValue(remoteID.upper(), 2)
+
+def onAttachmentDisconnected(source, target):
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
+
+    if connectID == "sys_console_UART_dependency" :
+        deviceUsed = localComponent.getSymbolByID("SYS_CONSOLE_DEVICE")
+        deviceUsed.clearValue()
