@@ -122,7 +122,7 @@ def instantiateComponent(memoryComponent, index):
     # Enable dependent Harmony core components
     Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
     Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
-    
+
     Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
     Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
 
@@ -149,6 +149,7 @@ def instantiateComponent(memoryComponent, index):
     memorySymBufPool = memoryComponent.createIntegerSymbol("DRV_MEMORY_BUFFER_QUEUE_SIZE", None)
     memorySymBufPool.setLabel("Buffer Queue Size")
     memorySymBufPool.setMin(1)
+    memorySymBufPool.setMax(64)
     memorySymBufPool.setDefaultValue(1)
     memorySymBufPool.setVisible((Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == "Asynchronous"))
     memorySymBufPool.setReadOnly((memoryFsEnable.getValue() == True))
@@ -207,7 +208,7 @@ def instantiateComponent(memoryComponent, index):
         if (Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == "Asynchronous"):
             enable_rtos_settings = True
 
-    # RTOS Settings 
+    # RTOS Settings
     memoryRTOSMenu = memoryComponent.createMenuSymbol("DRV_MEMORY_RTOS_MENU", None)
     memoryRTOSMenu.setLabel("RTOS settings")
     memoryRTOSMenu.setDescription("RTOS settings")
@@ -234,7 +235,7 @@ def instantiateComponent(memoryComponent, index):
 
     memoryRTOSTaskDelayVal = memoryComponent.createIntegerSymbol("DRV_MEMORY_RTOS_DELAY", memoryRTOSMenu)
     memoryRTOSTaskDelayVal.setLabel("Task Delay")
-    memoryRTOSTaskDelayVal.setDefaultValue(10) 
+    memoryRTOSTaskDelayVal.setDefaultValue(10)
     memoryRTOSTaskDelayVal.setVisible((memoryRTOSTaskDelay.getValue() == True))
     memoryRTOSTaskDelayVal.setDependencies(setVisible, ["DRV_MEMORY_RTOS_USE_DELAY"])
 
@@ -367,7 +368,7 @@ def instantiateComponent(memoryComponent, index):
     memorySystemRtosTasksFile.setEnabled(enable_rtos_settings)
     memorySystemRtosTasksFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS", "drv_memory.DRV_MEMORY_COMMON_MODE"])
 
-def onAttachmentConnected(connectionInfo):
+def onAttachmentConnected(source, target):
     global memoryDeviceUsed
     global memoryDeviceComment
     global memoryDeviceInterruptEnable
@@ -378,11 +379,11 @@ def onAttachmentConnected(connectionInfo):
     global memoryPlibUsed
     global memoryFsEnable
 
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
+    localComponent = source["component"]
+    remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
-    connectID = connectionInfo["id"]
-    targetID = connectionInfo["targetID"]
+    connectID = source["id"]
+    targetID = target["id"]
 
     # For Capability Connected (drv_media)
     if (connectID == "drv_media"):
@@ -414,7 +415,7 @@ def onAttachmentConnected(connectionInfo):
             memoryPlibHeaderFile.setEnabled(True)
             memoryPlibSystemDefFile.setEnabled(True)
 
-def onAttachmentDisconnected(connectionInfo):
+def onAttachmentDisconnected(source, target):
     global memoryDeviceUsed
     global memoryDeviceComment
     global memoryDeviceInterruptEnable
@@ -425,11 +426,11 @@ def onAttachmentDisconnected(connectionInfo):
     global memoryPlibUsed
     global memoryFsEnable
 
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
+    localComponent = source["component"]
+    remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
-    connectID = connectionInfo["id"]
-    targetID = connectionInfo["targetID"]
+    connectID = source["id"]
+    targetID = target["id"]
 
     # For Capability Disconnected (drv_media)
     if (connectID == "drv_media"):
