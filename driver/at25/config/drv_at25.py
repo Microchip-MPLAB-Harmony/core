@@ -72,48 +72,29 @@ def instantiateComponent(at25Component):
     at25SymNumClients.setLabel("Number of Clients")
     at25SymNumClients.setReadOnly(True)
     at25SymNumClients.setDefaultValue(1)
-    
+
     at25EEPROMPageSize = at25Component.createIntegerSymbol("EEPROM_PAGE_SIZE", None)
     at25EEPROMPageSize.setLabel("EEPROM Page Size")
     at25EEPROMPageSize.setVisible(True)
     at25EEPROMPageSize.setDefaultValue(256)
-    
+
     at25EEPROMFlashSize = at25Component.createIntegerSymbol("EEPROM_FLASH_SIZE", None)
     at25EEPROMFlashSize.setLabel("EEPROM Flash Size")
     at25EEPROMFlashSize.setVisible(True)
     at25EEPROMFlashSize.setDefaultValue(262144)
 
-    at25MemoryDriver = at25Component.createBooleanSymbol("DRV_MEMORY_CONNECTED", None)
-    at25MemoryDriver.setLabel("Memory Driver Connected")
-    at25MemoryDriver.setVisible(False)
-    at25MemoryDriver.setDefaultValue(False)
-
-    at25MemoryInterruptEnable = at25Component.createBooleanSymbol("INTERRUPT_ENABLE", None)
-    at25MemoryInterruptEnable.setLabel("at25 Interrupt Enable")
-    at25MemoryInterruptEnable.setVisible(False)
-    at25MemoryInterruptEnable.setDefaultValue(False)
-    at25MemoryInterruptEnable.setReadOnly(True)
-
-    at25MemoryEraseEnable = at25Component.createBooleanSymbol("ERASE_ENABLE", None)
-    at25MemoryEraseEnable.setLabel("at25 Erase Enable")
-    at25MemoryEraseEnable.setVisible(False)
-    at25MemoryEraseEnable.setDefaultValue(False)
-
     at25SymChipSelectPin = at25Component.createKeyValueSetSymbol("DRV_AT25_CHIP_SELECT_PIN", None)
     at25SymChipSelectPin.setLabel("Chip Select Pin")
-    at25SymChipSelectPin.setDefaultValue(5) #PA5
     at25SymChipSelectPin.setOutputMode("Key")
     at25SymChipSelectPin.setDisplayMode("Description")
 
     at25SymHoldPin = at25Component.createKeyValueSetSymbol("DRV_AT25_HOLD_PIN", None)
     at25SymHoldPin.setLabel("Hold Pin")
-    at25SymHoldPin.setDefaultValue(0) #PA0
     at25SymHoldPin.setOutputMode("Key")
     at25SymHoldPin.setDisplayMode("Description")
 
     at25SymWriteProtectPin = at25Component.createKeyValueSetSymbol("DRV_AT25_WRITE_PROTECT_PIN", None)
     at25SymWriteProtectPin.setLabel("Write Protect Pin")
-    at25SymWriteProtectPin.setDefaultValue(1) #PA1
     at25SymWriteProtectPin.setOutputMode("Key")
     at25SymWriteProtectPin.setDisplayMode("Description")
 
@@ -133,6 +114,24 @@ def instantiateComponent(at25Component):
     at25SymPinConfigComment = at25Component.createCommentSymbol("DRV_AT25_PINS_CONFIG_COMMENT", None)
     at25SymPinConfigComment.setVisible(True)
     at25SymPinConfigComment.setLabel("***Above selected pins must be configured as GPIO Output in Pin Manager***")
+
+    ##### Do not modify below symbol names as they are used by Memory Driver #####
+
+    at25MemoryDriver = at25Component.createBooleanSymbol("DRV_MEMORY_CONNECTED", None)
+    at25MemoryDriver.setLabel("Memory Driver Connected")
+    at25MemoryDriver.setVisible(False)
+    at25MemoryDriver.setDefaultValue(False)
+
+    at25MemoryInterruptEnable = at25Component.createBooleanSymbol("INTERRUPT_ENABLE", None)
+    at25MemoryInterruptEnable.setLabel("at25 Interrupt Enable")
+    at25MemoryInterruptEnable.setVisible(False)
+    at25MemoryInterruptEnable.setDefaultValue(False)
+    at25MemoryInterruptEnable.setReadOnly(True)
+
+    at25MemoryEraseEnable = at25Component.createBooleanSymbol("ERASE_ENABLE", None)
+    at25MemoryEraseEnable.setLabel("at25 Erase Enable")
+    at25MemoryEraseEnable.setVisible(False)
+    at25MemoryEraseEnable.setDefaultValue(False)
 
     at25MemoryStartAddr = at25Component.createHexSymbol("START_ADDRESS", None)
     at25MemoryStartAddr.setLabel("AT25 EEPROM Start Address")
@@ -177,7 +176,6 @@ def instantiateComponent(at25Component):
     at25AsyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/at25/")
     at25AsyncSymHeaderLocalFile.setType("SOURCE")
     at25AsyncSymHeaderLocalFile.setOverwrite(True)
-    at25AsyncSymHeaderLocalFile.setEnabled(True)
 
 
     at25SystemDefFile = at25Component.createFileSymbol("AT25_DEF", None)
@@ -210,23 +208,37 @@ def instantiateComponent(at25Component):
     at25SystemInitFile.setSourcePath("driver/at25/templates/system/initialize.c.ftl")
     at25SystemInitFile.setMarkup(True)
 
-def onDependencyConnected(info):
+def onAttachmentConnected(source, target):
     global at25MemoryInterruptEnable
 
-    if info["dependencyID"] == "drv_at25_SPI_dependency" :
-        plibUsed = info["localComponent"].getSymbolByID("DRV_AT25_PLIB")
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
+
+    if connectID == "drv_at25_SPI_dependency" :
+        plibUsed = localComponent.getSymbolByID("DRV_AT25_PLIB")
         plibUsed.clearValue()
-        at25PlibId = info["remoteComponent"].getID().upper()
+        at25PlibId = remoteID.upper()
         plibUsed.setValue(at25PlibId.upper(), 1)
         Database.setSymbolValue(at25PlibId, "SPI_DRIVER_CONTROLLED", True, 1)
 
         at25MemoryInterruptEnable.setValue(Database.getSymbolValue("core", at25PlibId + "_INTERRUPT_ENABLE"), 1)
 
-def onDependencyDisconnected(info):
+def onAttachmentDisconnected(source, target):
     global at25MemoryInterruptEnable
 
-    if info["dependencyID"] == "drv_at25_SPI_dependency":
-        at25PlibId = info["remoteComponent"].getID().upper()
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
+
+    if connectID == "drv_at25_SPI_dependency":
+        plibUsed = localComponent.getSymbolByID("DRV_AT25_PLIB")
+        plibUsed.clearValue()
+        at25PlibId = remoteID.upper()
         Database.setSymbolValue(at25PlibId, "SPI_DRIVER_CONTROLLED", False, 1)
 
         at25MemoryInterruptEnable.setValue(False, 1)
