@@ -40,6 +40,7 @@ def instantiateComponent(sst26Component):
     sst26PLIB.setLabel("PLIB Used")
     sst26PLIB.setReadOnly(True)
 
+    ##### Do not modify below symbol names as they are used by Memory Driver #####
     sst26MemoryDriver = sst26Component.createBooleanSymbol("DRV_MEMORY_CONNECTED", None)
     sst26MemoryDriver.setLabel("Memory Driver Connected")
     sst26MemoryDriver.setVisible(False)
@@ -143,13 +144,25 @@ def instantiateComponent(sst26Component):
     sst26SystemInitFile.setSourcePath("driver/sst26/templates/system/system_initialize.c.ftl")
     sst26SystemInitFile.setMarkup(True)
 
-def onDependencyConnected(info):
-    if info["dependencyID"] == "drv_sst26_QSPI_dependency" :
-        plibUsed = info["localComponent"].getSymbolByID("DRV_SST26_PLIB")
-        plibUsed.clearValue()
-        plibUsed.setValue(info["remoteComponent"].getID().upper(), 2)
+def onAttachmentConnected(source, target):
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
 
-def onDependencyDisconnected(info):
-    if info["dependencyID"] == "drv_sst26_QSPI_dependency" :
-        plibUsed = info["localComponent"].getSymbolByID("DRV_SST26_PLIB")
+    if connectID == "drv_sst26_QSPI_dependency" :
+        plibUsed = localComponent.getSymbolByID("DRV_SST26_PLIB")
+        plibUsed.clearValue()
+        plibUsed.setValue(remoteID.upper(), 2)
+
+def onAttachmentDisconnected(source, target):
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
+
+    if connectID == "drv_sst26_QSPI_dependency" :
+        plibUsed = localComponent.getSymbolByID("DRV_SST26_PLIB")
         plibUsed.clearValue()
