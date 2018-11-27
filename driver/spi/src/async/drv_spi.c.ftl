@@ -44,6 +44,7 @@
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
+
 #include "configuration.h"
 #include "driver/spi/drv_spi.h"
 
@@ -64,8 +65,11 @@ static uint8_t __attribute__((aligned(32))) txDummyData[32];
 // Section: File scope functions
 // *****************************************************************************
 // *****************************************************************************
+
+<#if core.DMA_ENABLE?has_content>
 void _DRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context);
 void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context);
+</#if>
 
 static inline uint32_t  _DRV_SPI_MAKE_HANDLE(uint16_t token, uint8_t drvIndex, uint8_t index)
 {
@@ -75,6 +79,7 @@ static inline uint32_t  _DRV_SPI_MAKE_HANDLE(uint16_t token, uint8_t drvIndex, u
 static inline uint16_t _DRV_SPI_UPDATE_TOKEN(uint16_t token)
 {
     token++;
+
     if (token >= DRV_SPI_TOKEN_MAX)
     {
         token = 1;
@@ -170,10 +175,11 @@ static void _DRV_SPI_TransferQueuePurge( DRV_SPI_CLIENT_OBJ * clientObj )
 
     dObj->queueTailIndex = NULL_INDEX;
     currentIndex = dObj->queueHeadIndex;
+
     while(currentIndex != NULL_INDEX)
     {
-
         savedNextIndex = dObj->transferArray[currentIndex].nextIndex;
+
         if(clientObj == (DRV_SPI_CLIENT_OBJ *)dObj->transferArray[currentIndex].hClient)
         {
             /* That means this transfer object is owned
@@ -199,10 +205,12 @@ static void _DRV_SPI_TransferQueuePurge( DRV_SPI_CLIENT_OBJ * clientObj )
             dObj->queueTailIndex = currentIndex;
             previousIndex = currentIndex;
         }
+
         currentIndex = savedNextIndex;
     }
 }
 
+<#if core.DMA_ENABLE?has_content>
 static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
 {
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)transferObj->hClient;
@@ -291,6 +299,7 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
     }
 }
 
+</#if>
 static void _DRV_SPI_ReleaseBufferObject(DRV_SPI_TRANSFER_OBJ    *transferObj)
 {
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)transferObj->hClient;
@@ -374,6 +383,7 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
     }
 }
 
+<#if core.DMA_ENABLE?has_content>
 void _DRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
 {
     DRV_SPI_TRANSFER_OBJ    *transferObj      = (DRV_SPI_TRANSFER_OBJ *)context;
@@ -462,6 +472,7 @@ void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
     }
 }
 
+</#if>
 // *****************************************************************************
 // *****************************************************************************
 // Section: SPI Driver Common Interface Implementation
@@ -517,12 +528,13 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->nClients              = 0;
     dObj->spiTokenCount         = 1;
     dObj->interruptNestingCount = 0;
-
     dObj->isExclusive           = false;
+<#if core.DMA_ENABLE?has_content>
     dObj->txDMAChannel          = spiInit->dmaChannelTransmit;
     dObj->rxDMAChannel          = spiInit->dmaChannelReceive;
     dObj->txAddress             = spiInit->spiTransmitAddress;
     dObj->rxAddress             = spiInit->spiReceiveAddress;
+</#if>
     dObj->remapDataBits         = spiInit->remapDataBits;
     dObj->remapClockPolarity    = spiInit->remapClockPolarity;
     dObj->remapClockPhase       = spiInit->remapClockPhase;
@@ -532,6 +544,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
         txDummyData[txDummyDataIdx] = 0xFF;
     }
 
+<#if core.DMA_ENABLE?has_content>
     if ((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (DATA_CACHE_ENABLED == true))
     {
         /* Clean cache lines having source buffer before submitting a transfer
@@ -540,18 +553,21 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
         DCACHE_CLEAN_BY_ADDR((uint32_t *)txDummyData, sizeof(txDummyData));
     }
 
+</#if>
     /* initialize buffer free pool*/
-    for(freePoolIndex=0; freePoolIndex < spiInit->queueSize-1; freePoolIndex++)
+    for(freePoolIndex = 0; freePoolIndex < spiInit->queueSize - 1; freePoolIndex++)
     {
         dObj->transferArray[freePoolIndex].nextIndex = freePoolIndex + 1;
     }
+
     dObj->transferArray[freePoolIndex].nextIndex = NULL_INDEX;
 
+<#if core.DMA_ENABLE?has_content>
     if((dObj->txDMAChannel == SYS_DMA_CHANNEL_NONE) || (dObj->rxDMAChannel == SYS_DMA_CHANNEL_NONE))
     {
         /* Register a callback with SPI PLIB.
-        * dObj as a context parameter will be used to distinguish the events
-        * from different instances. */
+         * dObj as a context parameter will be used to distinguish the events
+         * from different instances. */
         dObj->spiPlib->callbackRegister(&_DRV_SPI_PlibCallbackHandler, (uintptr_t)dObj);
     }
     else
@@ -560,11 +576,18 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
         DMA Callbacks will be set for every transfer later. */
     }
 
+<#else>
+    /* Register a callback with SPI PLIB.
+     * dObj as a context parameter will be used to distinguish the events
+     * from different instances. */
+    dObj->spiPlib->callbackRegister(&_DRV_SPI_PlibCallbackHandler, (uintptr_t)dObj);
+</#if>
     /* Create mutexes */
     if(OSAL_MUTEX_Create(&(dObj->mutexClientObjects)) != OSAL_RESULT_TRUE)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
+
     if(OSAL_MUTEX_Create(&(dObj->mutexTransferObjects)) != OSAL_RESULT_TRUE)
     {
         return SYS_MODULE_OBJ_INVALID;
@@ -642,6 +665,7 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
         OSAL_MUTEX_Unlock( &dObj->mutexClientObjects);
         return DRV_HANDLE_INVALID;
     }
+
     if((dObj->nClients > 0) && (ioIntent & DRV_IO_INTENT_EXCLUSIVE))
     {
         /* This means the driver was already opened and another driver was
@@ -722,6 +746,7 @@ void DRV_SPI_Close( DRV_HANDLE handle )
 
     /* Validate the driver handle */
     clientObj = _DRV_SPI_DriverHandleValidate(handle);
+
     if(clientObj == NULL)
     {
         SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Handle");
@@ -780,6 +805,7 @@ void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRA
 
     /* Validate the driver handle */
     clientObj = _DRV_SPI_DriverHandleValidate(handle);
+
     if(clientObj == NULL)
     {
         SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Handle");
@@ -900,10 +926,11 @@ void DRV_SPI_WriteReadTransferAdd
 
     /* Validate the driver handle */
     clientObj = _DRV_SPI_DriverHandleValidate(handle);
+
     if((clientObj != NULL) && (transferHandle != NULL) && (((txSize > 0) && (pTransmitData != NULL)) || ((rxSize > 0) && (pReceiveData != NULL))))
     {
-
         hDriver = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
+
         if(hDriver->freePoolHeadIndex == NULL_INDEX)
         {
             /* This means we could not find a buffer. This
@@ -931,6 +958,8 @@ void DRV_SPI_WriteReadTransferAdd
         transferObj->pTransmitData  = pTransmitData;
         transferObj->event          = DRV_SPI_TRANSFER_EVENT_PENDING;
         transferObj->nextIndex      = NULL_INDEX;
+
+<#if core.DMA_ENABLE?has_content>
         if((hDriver->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (hDriver->rxDMAChannel != SYS_DMA_CHANNEL_NONE) && (clientObj->setup.dataBits != DRV_SPI_DATA_BITS_8))
         {
             /* If its DMA mode and SPI data bits is other than 8 bit, then divide transmit sizes by 2 */
@@ -942,7 +971,11 @@ void DRV_SPI_WriteReadTransferAdd
             transferObj->txSize = txSize;
             transferObj->rxSize = rxSize;
         }
+<#else>
+        transferObj->txSize = txSize;
+        transferObj->rxSize = rxSize;
 
+</#if>
         /* Update transferHandle object with unique ID.
         ID is combination of an incrementing token, driver instance number and allocated location from the free pool */
         transferObj->transferHandle = (DRV_HANDLE)_DRV_SPI_MAKE_HANDLE(hDriver->spiTokenCount, (uint8_t)clientObj->drvIndex, hDriver->freePoolHeadIndex);
@@ -972,6 +1005,7 @@ void DRV_SPI_WriteReadTransferAdd
 
             /* Because this is the first request in the queue, we need to trigger the transfer either
             with DMA or PLIB based on MHC configuration */
+<#if core.DMA_ENABLE?has_content>
             if((hDriver->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (hDriver->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
             {
                 _DRV_SPI_StartDMATransfer(transferObj);
@@ -980,6 +1014,9 @@ void DRV_SPI_WriteReadTransferAdd
             {
                 hDriver->spiPlib->writeRead(transferObj->pTransmitData, transferObj->txSize, transferObj->pReceiveData, transferObj->rxSize);
             }
+<#else>
+            hDriver->spiPlib->writeRead(transferObj->pTransmitData, transferObj->txSize, transferObj->pReceiveData, transferObj->rxSize);
+</#if>
         }
         else
         {
@@ -1017,6 +1054,7 @@ void DRV_SPI_WriteReadTransferAdd
   Remarks:
     See drv_spi.h for usage information.
 */
+
 void DRV_SPI_WriteTransferAdd
 (
     const   DRV_HANDLE  handle,
@@ -1044,6 +1082,7 @@ void DRV_SPI_WriteTransferAdd
   Remarks:
     See drv_spi.h for usage information.
 */
+
 void DRV_SPI_ReadTransferAdd
 (
     const   DRV_HANDLE  handle,
@@ -1074,6 +1113,7 @@ DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE t
 
     /* Extract drvInstance value from the transfer handle */
     drvInstance = ((transferHandle & DRV_SPI_INSTANCE_MASK) >> 8);
+
     if(drvInstance >= DRV_SPI_INSTANCES_NUMBER)
     {
         SYS_DEBUG(SYS_ERROR_ERROR, "Transfer Handle Invalid");

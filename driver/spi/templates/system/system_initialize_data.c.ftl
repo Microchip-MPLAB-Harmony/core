@@ -2,7 +2,7 @@
 
 /* SPI Client Objects Pool */
 static DRV_SPI_CLIENT_OBJ drvSPI${INDEX}ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
-<#if DRV_SPI_MODE == false>
+<#if DRV_SPI_MODE == "Asynchronous">
 
 /* SPI Transfer Objects Pool */
 static DRV_SPI_TRANSFER_OBJ drvSPI${INDEX?string}TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX${INDEX?string}] = {0};
@@ -23,8 +23,6 @@ const DRV_SPI_PLIB_INTERFACE drvSPI${INDEX?string}PlibAPI = {
     /* SPI PLIB Callback Register */
     .callbackRegister = (DRV_SPI_PLIB_CALLBACK_REGISTER)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_CallbackRegister,
 };
-
-
 
 <@compress single_line=true>
 const uint32_t drvSPI${INDEX?string}remapDataBits[]=
@@ -101,7 +99,6 @@ const uint32_t drvSPI${INDEX?string}remapClockPhase[] =
 };
 </@compress>
 
-
 /* SPI Driver Initialization Data */
 const DRV_SPI_INIT drvSPI${INDEX?string}InitData =
 {
@@ -109,9 +106,10 @@ const DRV_SPI_INIT drvSPI${INDEX?string}InitData =
     .spiPlib = &drvSPI${INDEX?string}PlibAPI,
 
     .remapDataBits = drvSPI${INDEX?string}remapDataBits,
-    .remapClockPolarity = drvSPI${INDEX?string}remapClockPolarity,
-    .remapClockPhase = drvSPI${INDEX?string}remapClockPhase,
 
+    .remapClockPolarity = drvSPI${INDEX?string}remapClockPolarity,
+
+    .remapClockPhase = drvSPI${INDEX?string}remapClockPhase,
 
     /* SPI Number of clients */
     .numClients = DRV_SPI_CLIENTS_NUMBER_IDX${INDEX?string},
@@ -119,6 +117,7 @@ const DRV_SPI_INIT drvSPI${INDEX?string}InitData =
     /* SPI Client Objects Pool */
     .clientObjPool = (uintptr_t)&drvSPI${INDEX?string}ClientObjPool[0],
 
+<#if core.DMA_ENABLE?has_content>
 <#if DRV_SPI_TX_RX_DMA == true>
     /* DMA Channel for Transmit */
     .dmaChannelTransmit = DRV_SPI_XMIT_DMA_CH_IDX${INDEX?string},
@@ -137,9 +136,10 @@ const DRV_SPI_INIT drvSPI${INDEX?string}InitData =
 
     /* DMA Channel for Receive */
     .dmaChannelReceive  = SYS_DMA_CHANNEL_NONE,
-</#if>
 
-<#if DRV_SPI_MODE == false>
+</#if>
+</#if>
+<#if DRV_SPI_MODE == "Asynchronous">
     <#if DRV_SPI_TX_RX_DMA == true>
         <#lt>    /* Interrupt source is DMA */
         <#lt> <#if core.DMA_ENABLE?has_content>

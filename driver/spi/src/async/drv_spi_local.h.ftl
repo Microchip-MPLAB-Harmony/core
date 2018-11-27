@@ -42,14 +42,13 @@
 #ifndef _DRV_SPI_LOCAL_H
 #define _DRV_SPI_LOCAL_H
 
-#include "osal/osal.h"
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
 
+#include "osal/osal.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -57,38 +56,49 @@
 // *****************************************************************************
 // *****************************************************************************
 
+/* SPI Driver Handle Macros*/
+#define DRV_SPI_INDEX_MASK                      (0x000000FF)
+
+#define DRV_SPI_INSTANCE_MASK                   (0x0000FF00)
+
+#define DRV_SPI_TOKEN_MAX                       (0xFFFF)
+
+
+#define _USE_FREQ_CONFIGURED_IN_CLOCK_MANAGER       0
+#define NULL_INDEX                                  0xFF
+
 // *****************************************************************************
-/* SPI Driver client Handle Macros
+/* SPI Client-Specific Driver Status
 
   Summary:
-    SPI driver client Handle Macros
+    Defines the client-specific status of the SPI driver.
 
   Description:
-    client handle related utility macros. SPI client client handle is a combination
-    of client index (8-bit), instance index (8-bit) and token (16-bit). The token
-    is incremented for every new driver open request.
+    This enumeration defines the client-specific status codes of the SPI
+    driver.
 
   Remarks:
-    None
+    Returned by the DRV_SPI_ClientStatus function.
 */
-
-#define DRV_SPI_CLIENT_INDEX_MASK               (0x000000FF)
-#define DRV_SPI_INSTANCE_INDEX_MASK             (0x0000FF00)
-#define DRV_SPI_TOKEN_MASK                      (0xFFFF0000)
-#define DRV_SPI_TOKEN_MAX                       (0x0000FFFF)
-
-#define _USE_FREQ_CONFIGURED_IN_CLOCK_MANAGER   0
 
 typedef enum
 {
-    /* All data was transferred successfully. */
-    DRV_SPI_TRANSFER_STATUS_COMPLETE,
+    /* An error has occurred.*/
+    DRV_SPI_CLIENT_STATUS_ERROR    = DRV_CLIENT_STATUS_ERROR,
 
-    /* There was an error while processing transfer request. */
-    DRV_SPI_TRANSFER_STATUS_ERROR,
+    /* The driver is closed, no operations for this client are ongoing,
+    and/or the given handle is invalid. */
+    DRV_SPI_CLIENT_STATUS_CLOSED   = DRV_CLIENT_STATUS_CLOSED,
 
-} DRV_SPI_TRANSFER_STATUS;
+    /* The driver is currently busy and cannot start additional operations. */
+    DRV_SPI_CLIENT_STATUS_BUSY     = DRV_CLIENT_STATUS_BUSY,
 
+    /* The module is running and ready for additional operations */
+    DRV_SPI_CLIENT_STATUS_READY    = DRV_CLIENT_STATUS_READY
+
+} DRV_SPI_CLIENT_STATUS;
+
+<#if core.DMA_ENABLE?has_content>
 typedef enum
 {
     /* Configure DMA to transmit dummy data from a fixed memory location */
@@ -103,7 +113,7 @@ typedef enum
     /* Configure DMA to receive data to a memory buffer */
     DRV_SPI_CONFIG_DMA_RX_BUFFER_DATA_XFER,
 
-}DRV_SPI_CONFIG_DMA;
+} DRV_SPI_CONFIG_DMA;
 
 typedef enum
 {
@@ -116,7 +126,51 @@ typedef enum
     /* DMA data width 32 bit */
     DRV_SPI_DMA_WIDTH_32_BIT,
 
-}DRV_SPI_DMA_WIDTH;
+} DRV_SPI_DMA_WIDTH;
+
+</#if>
+// *****************************************************************************
+/* SPI Driver Transfer Object
+
+  Summary:
+    Object used to keep track of a client's buffer.
+
+  Description:
+    None.
+
+  Remarks:
+    None.
+*/
+
+typedef struct _DRV_SPI_TRANSFER_OBJ
+{
+    /* Pointer to the receive data */
+    void*                    pReceiveData;
+
+    /* Pointer to the transmit data */
+    void*                    pTransmitData;
+
+    /* Number of bytes to be written */
+    size_t                  txSize;
+
+    /* Number of bytes to be written */
+    size_t                  rxSize;
+
+    /* Current status of the buffer */
+    DRV_SPI_TRANSFER_EVENT  event;
+
+    /* The hardware instance object that owns this buffer */
+    void*                    hClient;
+
+    /* Buffer Handle object that was assigned to this buffer
+     * when it was added to the queue.
+     */
+    DRV_SPI_TRANSFER_HANDLE transferHandle;
+
+    /* next index to manage the linked list of transfer objects */
+    uint8_t                 nextIndex;
+
+} DRV_SPI_TRANSFER_OBJ;
 
 // *****************************************************************************
 /* SPI Driver Instance Object
@@ -140,7 +194,8 @@ typedef struct
     bool isExclusive;
 
     /* Keep track of the number of clients
-      that have opened this driver */
+     * that have opened this driver
+     */
     size_t nClients;
 
     /* Maximum number of clients */
@@ -155,6 +210,29 @@ typedef struct
     /* PLIB API list that will be used by the driver to access the hardware */
     const DRV_SPI_PLIB_INTERFACE* spiPlib;
 
+    /* start of the memory pool for transfer objects */
+    DRV_SPI_TRANSFER_OBJ* transferArray;
+
+    /* size/depth of the queue */
+    uint8_t transferQueueSize;
+
+    /* objects will be allocated from this end one by one */
+    uint8_t freePoolHeadIndex;
+
+    /* objects will be processed from this end one by one */
+    uint8_t queueHeadIndex;
+
+    /* new objects will be added at this end */
+    uint8_t queueTailIndex;
+
+    /* Instance specific token counter used to generate unique client/transfer handles */
+    uint16_t spiTokenCount;
+
+    /* to identify if we are running from interrupt context or not */
+    uint8_t interruptNestingCount;
+
+<#if core.DMA_ENABLE?has_content>
+    /* DMA related elements */
     /* Transmit DMA Channel */
     SYS_DMA_CHANNEL txDMAChannel;
 
@@ -170,45 +248,27 @@ typedef struct
     /* Dummy data is read into this variable by RX DMA */
     uint32_t rxDummyData;
 
+</#if>
     /* This holds the number of dummy data to be transmitted */
-    uint32_t txDummyDataSize;
+    size_t txDummyDataSize;
 
     /* This holds the number of dummy data to be received */
-    uint32_t rxDummyDataSize;
+    size_t rxDummyDataSize;
 
-    /* This contains the address of the application transmit buffer from which
-     * the transmission should continue. This is used for the case where the
-     * transmission is split into two, when rxSize is less than txSize.
-     */
-    uintptr_t pNextTransmitData;
+    /* Interrupt source ID for SPI or DMA interrupt. */
+    INT_SOURCE interruptSource;
 
-    /* The active client for this driver instance */
-    uintptr_t activeClient;
+    /* Mutex to protect access to the client objects */
+    OSAL_MUTEX_DECLARE(mutexClientObjects);
 
-    /* This is an instance specific token counter used to generate unique client
-     * handles
-     */
-    uint16_t spiTokenCount;
+    /* Mutex to protect access to the transfer objects */
+    OSAL_MUTEX_DECLARE(mutexTransferObjects);
 
-    /* Status of the last data transfer on this driver instance */
-    DRV_SPI_TRANSFER_STATUS transferStatus;
+    const uint32_t*     remapDataBits;
 
-    /* Mutex to protect access to PLIB */
-    OSAL_MUTEX_DECLARE(transferMutex);
+    const uint32_t*     remapClockPolarity;
 
-    /* Mutex to protect access to the client object pool */
-    OSAL_MUTEX_DECLARE(clientMutex);
-
-    /* Semaphore to wait for data exchange to complete.
-    *  This is released from ISR.
-    */
-    OSAL_SEM_DECLARE(transferDone);
-
-    const uint32_t*   remapDataBits;
-
-    const uint32_t*   remapClockPolarity;
-
-    const uint32_t*   remapClockPhase;
+    const uint32_t*     remapClockPhase;
 
 } DRV_SPI_OBJ;
 
@@ -219,7 +279,7 @@ typedef struct
     Object used to track a single client.
 
   Description:
-    This object is used to keep the data necesssary to keep track of a single
+    This object is used to keep the data necessary to keep track of a single
     client.
 
   Remarks:
@@ -228,24 +288,32 @@ typedef struct
 
 typedef struct _DRV_SPI_CLIENT_OBJ
 {
-    /* The hardware instance object associated with the client */
-    DRV_SPI_OBJ*                   hDriver;
+    /* The hardware instance index associated with the client */
+    SYS_MODULE_INDEX                drvIndex;
 
     /* The IO intent with which the client was opened */
-    DRV_IO_INTENT                  ioIntent;
+    DRV_IO_INTENT                   ioIntent;
 
     /* This flags indicates if the object is in use or is
-     * available */
-    bool                           inUse;
+     * available
+     */
+    bool                            inUse;
+
+    /* Event handler for this function */
+    DRV_SPI_TRANSFER_EVENT_HANDLER  eventHandler;
+
+    /* Application Context associated with this client */
+    uintptr_t                       context;
 
     /* Client specific setup */
-    DRV_SPI_TRANSFER_SETUP         setup;
+    DRV_SPI_TRANSFER_SETUP          setup;
 
-    /* Indicates whether the client has changed the SPI setup */
-    bool                           setupChanged;
+    /* Flag to save setup changed status */
+    bool                            setupChanged;
 
     /* Client handle assigned to this client object when it was opened */
-    DRV_HANDLE                     clientHandle;
+    DRV_HANDLE                      clientHandle;
+
 } DRV_SPI_CLIENT_OBJ;
 
 #endif //#ifndef _DRV_SPI_LOCAL_H

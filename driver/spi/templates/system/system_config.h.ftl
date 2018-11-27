@@ -7,7 +7,7 @@
 #define DRV_SPI_XMIT_DMA_CH_IDX${INDEX?string}              SYS_DMA_CHANNEL_${DRV_SPI_TX_DMA_CHANNEL}
 #define DRV_SPI_RCV_DMA_CH_IDX${INDEX?string}               SYS_DMA_CHANNEL_${DRV_SPI_RX_DMA_CHANNEL}
 </#if>
-<#if DRV_SPI_MODE == false>
+<#if DRV_SPI_MODE == "Asynchronous">
 #define DRV_SPI_INT_SRC_IDX${INDEX?string}                  ${DRV_SPI_PLIB?string}_IRQn
 #define DRV_SPI_QUEUE_SIZE_IDX${INDEX?string}               ${DRV_SPI_QUEUE_SIZE?string}
 </#if>

@@ -24,6 +24,8 @@
 
 def instantiateComponent(spiComponent, index):
     global drvSpiInstanceSpace
+    global isDMAPresent
+
     drvSpiInstanceSpace = "drv_spi_" + str(index)
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
@@ -35,8 +37,13 @@ def instantiateComponent(spiComponent, index):
     # Enable "Enable System Ports" option in MHC
     Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True, 1)
 
-	# Enable "Enable System DMA" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
+    if Database.getSymbolValue("core", "DMA_ENABLE") == None:
+        isDMAPresent = False
+    else:
+        isDMAPresent = True
+
+        # Enable "Enable System DMA" option in MHC
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
 
     spiSymIndex = spiComponent.createIntegerSymbol("INDEX", None)
     spiSymIndex.setVisible(False)
@@ -45,14 +52,9 @@ def instantiateComponent(spiComponent, index):
     spiSymPLIB = spiComponent.createStringSymbol("DRV_SPI_PLIB", None)
     spiSymPLIB.setLabel("PLIB Used")
     spiSymPLIB.setReadOnly(True)
-    spiSymPLIB.setDefaultValue("SPI0")
+    spiSymPLIB.setDefaultValue("")
 
-    global spiSymPLIBConnection
-    spiSymPLIBConnection = spiComponent.createBooleanSymbol("DRV_SPI_PLIB_CONNECTION", None)
-    spiSymPLIBConnection.setDefaultValue(False)
-    spiSymPLIBConnection.setVisible(False)
-
-    spiGlobalMode = spiComponent.createBooleanSymbol("DRV_SPI_MODE", None)
+    spiGlobalMode = spiComponent.createStringSymbol("DRV_SPI_MODE", None)
     spiGlobalMode.setLabel("**** Driver Mode Update ****")
     spiGlobalMode.setValue(Database.getSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE"), 1)
     spiGlobalMode.setVisible(False)
@@ -67,15 +69,16 @@ def instantiateComponent(spiComponent, index):
     spiSymQueueSize = spiComponent.createIntegerSymbol("DRV_SPI_QUEUE_SIZE", None)
     spiSymQueueSize.setLabel("Transfer Queue Size")
     spiSymQueueSize.setMin(1)
-    spiSymQueueSize.setMax(250)
-    spiSymQueueSize.setVisible((Database.getSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE") == 0))
+    spiSymQueueSize.setMax(64)
+    spiSymQueueSize.setVisible((Database.getSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE") == "Asynchronous"))
     spiSymQueueSize.setDefaultValue(4)
-    spiSymQueueSize.setDependencies(asyncModeOptions, ["DRV_SPI_MODE"])
+    spiSymQueueSize.setDependencies(asyncModeOptions, ["drv_spi.DRV_SPI_COMMON_MODE"])
 
     global spiTXRXDMA
     spiTXRXDMA = spiComponent.createBooleanSymbol("DRV_SPI_TX_RX_DMA", None)
     spiTXRXDMA.setLabel("Use DMA for Transmit and Receive?")
-    spiTXRXDMA.setDefaultValue(False)
+    spiTXRXDMA.setVisible(isDMAPresent)
+    spiTXRXDMA.setReadOnly(True)
 
     global spiTXDMAChannel
     spiTXDMAChannel = spiComponent.createIntegerSymbol("DRV_SPI_TX_DMA_CHANNEL", None)
@@ -87,7 +90,7 @@ def instantiateComponent(spiComponent, index):
 
     global spiTXDMAChannelComment
     spiTXDMAChannelComment = spiComponent.createCommentSymbol("DRV_SPI_TX_DMA_CH_COMMENT", None)
-    spiTXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Transmit. Check DMA Manager.")
+    spiTXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Transmit. Check DMA Manager. !!!")
     spiTXDMAChannelComment.setVisible(False)
     spiTXDMAChannelComment.setDependencies(requestDMAComment, ["DRV_SPI_TX_DMA_CHANNEL"])
 
@@ -101,18 +104,17 @@ def instantiateComponent(spiComponent, index):
 
     global spiRXDMAChannelComment
     spiRXDMAChannelComment = spiComponent.createCommentSymbol("DRV_SPI_RX_DMA_CH_COMMENT", None)
-    spiRXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Receive. Check DMA Manager.")
+    spiRXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Receive. Check DMA Manager. !!!")
     spiRXDMAChannelComment.setVisible(False)
     spiRXDMAChannelComment.setDependencies(requestDMAComment, ["DRV_SPI_RX_DMA_CHANNEL"])
 
-    global spiDependencyDMAComment
     spiDependencyDMAComment = spiComponent.createCommentSymbol("DRV_SPI_DEPENDENCY_DMA_COMMENT", None)
-    spiDependencyDMAComment.setLabel("Satisfy PLIB Dependency to Allocate DMA Channel")
-    spiDependencyDMAComment.setVisible(False)
+    spiDependencyDMAComment.setLabel("!!! Satisfy PLIB Dependency to Allocate DMA Channel !!!")
+    spiDependencyDMAComment.setVisible(True)
 
-############################################################################
-#### Code Generation ####
-############################################################################
+    ############################################################################
+    #### Code Generation ####
+    ############################################################################
 
     configName = Variables.get("__CONFIGURATION_NAME")
 
@@ -134,50 +136,7 @@ def instantiateComponent(spiComponent, index):
     spiSymHeaderDefFile.setMarkup(True)
     spiSymHeaderDefFile.setOverwrite(True)
 
-    # Async Source Files
-    spiAsyncSymSourceFile = spiComponent.createFileSymbol("DRV_SPI_ASYNC_SOURCE", None)
-    spiAsyncSymSourceFile.setSourcePath("driver/spi/src/async/drv_spi.c")
-    spiAsyncSymSourceFile.setOutputName("drv_spi.c")
-    spiAsyncSymSourceFile.setDestPath("driver/spi/src")
-    spiAsyncSymSourceFile.setProjectPath("config/" + configName + "/driver/spi/")
-    spiAsyncSymSourceFile.setType("SOURCE")
-    spiAsyncSymSourceFile.setOverwrite(True)
-    spiAsyncSymSourceFile.setEnabled(True)
-    spiAsyncSymSourceFile.setDependencies(asyncFileGen, ["DRV_SPI_MODE"])
-
-    spiAsyncSymHeaderLocalFile = spiComponent.createFileSymbol("DRV_SPI_ASYNC_HEADER_LOCAL", None)
-    spiAsyncSymHeaderLocalFile.setSourcePath("driver/spi/src/async/drv_spi_local.h")
-    spiAsyncSymHeaderLocalFile.setOutputName("drv_spi_local.h")
-    spiAsyncSymHeaderLocalFile.setDestPath("driver/spi/src")
-    spiAsyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/spi/")
-    spiAsyncSymHeaderLocalFile.setType("HEADER")
-    spiAsyncSymHeaderLocalFile.setOverwrite(True)
-    spiAsyncSymHeaderLocalFile.setEnabled(True)
-    spiAsyncSymHeaderLocalFile.setDependencies(asyncFileGen, ["DRV_SPI_MODE"])
-
-    # Sync Source Files
-    spiSyncSymSourceFile = spiComponent.createFileSymbol("DRV_SPI_SYNC_SOURCE", None)
-    spiSyncSymSourceFile.setSourcePath("driver/spi/src/sync/drv_spi.c")
-    spiSyncSymSourceFile.setOutputName("drv_spi.c")
-    spiSyncSymSourceFile.setDestPath("driver/spi/src")
-    spiSyncSymSourceFile.setProjectPath("config/" + configName + "/driver/spi/")
-    spiSyncSymSourceFile.setType("SOURCE")
-    spiSyncSymSourceFile.setOverwrite(True)
-    spiSyncSymSourceFile.setEnabled(False)
-    spiSyncSymSourceFile.setDependencies(syncFileGen, ["DRV_SPI_MODE"])
-
-    spiSyncSymHeaderLocalFile = spiComponent.createFileSymbol("DRV_SPI_SYNC_HEADER_LOCAL", None)
-    spiSyncSymHeaderLocalFile.setSourcePath("driver/spi/src/sync/drv_spi_local.h")
-    spiSyncSymHeaderLocalFile.setOutputName("drv_spi_local.h")
-    spiSyncSymHeaderLocalFile.setDestPath("driver/spi/src")
-    spiSyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/spi/")
-    spiSyncSymHeaderLocalFile.setType("SOURCE")
-    spiSyncSymHeaderLocalFile.setOverwrite(True)
-    spiSyncSymHeaderLocalFile.setEnabled(False)
-    spiSyncSymHeaderLocalFile.setDependencies(syncFileGen, ["DRV_SPI_MODE"])
-
     # System Template Files
-
     spiSymSystemDefObjFile = spiComponent.createFileSymbol("DRV_SPI_SYSTEM_DEF_OBJECT", None)
     spiSymSystemDefObjFile.setType("STRING")
     spiSymSystemDefObjFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_OBJECTS")
@@ -205,73 +164,44 @@ def instantiateComponent(spiComponent, index):
 ################################################################################
 #### Business Logic ####
 ################################################################################
-def spiDriverMode (sym, event):
-    sym.setValue(Database.getSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE"), 1)
 
-def onDependencyConnected(info):
-    global spiDependencyDMAComment
-    global spiRXDMAChannel
-    global spiTXDMAChannel
+def spiDriverMode(symbol, event):
+    symbol.setValue(event["value"], 1)
 
-    dmaRxRequestID = "DMA_CH_NEEDED_FOR_" + info["remoteComponent"].getID().upper() + "_Receive"
-    dmaTxRequestID = "DMA_CH_NEEDED_FOR_" + info["remoteComponent"].getID().upper() + "_Transmit"
-    dmaTxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Transmit"
-    dmaRxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Receive"
+def onAttachmentConnected(connectionInfo):
+    localComponent = connectionInfo["localComponent"]
+    remoteComponent = connectionInfo["remoteComponent"]
+    connectID = connectionInfo["id"]
 
-    localComponent = info["localComponent"]
-    if info["dependencyID"] == "drv_spi_SPI_dependency" :
-        localComponent.setSymbolValue("DRV_SPI_PLIB_CONNECTION", True, 2)
+    if connectID == "drv_spi_SPI_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_SPI_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(info["remoteComponent"].getID().upper(), 1)
-        Database.setSymbolValue(info["remoteComponent"].getID(), "SPI_DRIVER_CONTROLLED", True, 1)
+        plibUsed.setValue(remoteComponent.getID().upper(), 1)
 
-        if localComponent.getSymbolValue("DRV_SPI_TX_RX_DMA") == True:
-            spiDependencyDMAComment.setVisible(False)
-            spiRXDMAChannel.setVisible(True)
-            spiTXDMAChannel.setVisible(True)
+        Database.setSymbolValue(remoteComponent.getID(), "SPI_DRIVER_CONTROLLED", True, 1)
 
-            Database.setSymbolValue("core", dmaRxRequestID, True, 2)
-            Database.setSymbolValue("core", dmaTxRequestID, True, 2)
+        localComponent.getSymbolByID("DRV_SPI_DEPENDENCY_DMA_COMMENT").setVisible(False)
 
-            # Get the allocated channel and assign it
-            txChannel = Database.getSymbolValue("core", dmaTxChannelID)
-            localComponent.setSymbolValue("DRV_SPI_TX_DMA_CHANNEL", txChannel, 2)
-            rxChannel = Database.getSymbolValue("core", dmaRxChannelID)
-            localComponent.setSymbolValue("DRV_SPI_RX_DMA_CHANNEL", rxChannel, 2)
+        localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").setReadOnly(False)
 
-def onDependencyDisconnected(info):
-    global spiDependencyDMAComment
-    global spiRXDMAChannel
-    global spiTXDMAChannel
-    global spiTXDMAChannelComment
-    global spiRXDMAChannelComment
+def onAttachmentDisconnected(connectionInfo):
+    localComponent = connectionInfo["localComponent"]
+    remoteComponent = connectionInfo["remoteComponent"]
+    connectID = connectionInfo["id"]
 
-    dmaRxRequestID = "DMA_CH_NEEDED_FOR_" + info["remoteComponent"].getID().upper() + "_Receive"
-    dmaTxRequestID = "DMA_CH_NEEDED_FOR_" + info["remoteComponent"].getID().upper() + "_Transmit"
-    dmaTxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Transmit"
-    dmaRxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Receive"
+    if connectID == "drv_spi_SPI_dependency" :
+        localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").clearValue()
+        localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").setReadOnly(True)
 
-    localComponent = info["localComponent"]
+        plibUsed = localComponent.getSymbolByID("DRV_SPI_PLIB")
+        plibUsed.clearValue()
+        Database.setSymbolValue(remoteComponent.getID(), "SPI_DRIVER_CONTROLLED", False, 1)
 
-    if info["dependencyID"] == "drv_spi_SPI_dependency" :
-        localComponent.setSymbolValue("DRV_SPI_PLIB_CONNECTION", False, 2)
-        Database.setSymbolValue(info["remoteComponent"].getID(), "SPI_DRIVER_CONTROLLED", False, 1)
+        localComponent.getSymbolByID("DRV_SPI_DEPENDENCY_DMA_COMMENT").setVisible(True)
 
-        if localComponent.getSymbolValue("DRV_SPI_TX_RX_DMA") == True:
-            spiDependencyDMAComment.setVisible(True)
-            spiTXDMAChannelComment.setVisible(False)
-            spiRXDMAChannelComment.setVisible(False)
-            spiRXDMAChannel.setVisible(False)
-            spiTXDMAChannel.setVisible(False)
-            Database.setSymbolValue("core", dmaRxRequestID, False, 2)
-            Database.setSymbolValue("core", dmaTxRequestID, False, 2)
-
-def requestAndAssignTxDMAChannel(sym, event):
+def requestAndAssignTxDMAChannel(symbol, event):
     global drvSpiInstanceSpace
-    global spiSymPLIBConnection
     global spiTXDMAChannelComment
-    global spiDependencyDMAComment
 
     spiPeripheral = Database.getSymbolValue(drvSpiInstanceSpace, "DRV_SPI_PLIB")
 
@@ -281,27 +211,18 @@ def requestAndAssignTxDMAChannel(sym, event):
     if event["value"] == False:
         Database.setSymbolValue("core", dmaRequestID, False, 2)
         spiTXDMAChannelComment.setVisible(False)
-        sym.setVisible(False)
-        spiDependencyDMAComment.setVisible(False)
+        symbol.setVisible(False)
     else:
-        if (spiSymPLIBConnection.getValue() == True):
-            spiDependencyDMAComment.setVisible(False)
-            sym.setVisible(True)
-            Database.setSymbolValue("core", dmaRequestID, True, 2)
-        else:
-            spiTXDMAChannelComment.setVisible(False)
-            spiDependencyDMAComment.setVisible(True)
-            sym.setVisible(False)
+        symbol.setVisible(True)
+        Database.setSymbolValue("core", dmaRequestID, True, 2)
 
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
-    sym.setValue(channel, 2)
+    symbol.setValue(channel, 2)
 
-def requestAndAssignRxDMAChannel(sym, event):
+def requestAndAssignRxDMAChannel(symbol, event):
     global drvSpiInstanceSpace
-    global spiSymPLIBConnection
     global spiRXDMAChannelComment
-    global spiDependencyDMAComment
 
     spiPeripheral = Database.getSymbolValue(drvSpiInstanceSpace, "DRV_SPI_PLIB")
 
@@ -311,52 +232,39 @@ def requestAndAssignRxDMAChannel(sym, event):
     if event["value"] == False:
         Database.setSymbolValue("core", dmaRequestID, False, 2)
         spiRXDMAChannelComment.setVisible(False)
-        sym.setVisible(False)
-        spiDependencyDMAComment.setVisible(False)
+        symbol.setVisible(False)
     else:
-        if (spiSymPLIBConnection.getValue() == True):
-            spiDependencyDMAComment.setVisible(False)
-            sym.setVisible(True)
-            Database.setSymbolValue("core", dmaRequestID, True, 2)
-        else:
-            spiRXDMAChannelComment.setVisible(False)
-            spiDependencyDMAComment.setVisible(True)
-            sym.setVisible(False)
+        symbol.setVisible(True)
+        Database.setSymbolValue("core", dmaRequestID, True, 2)
 
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
-    sym.setValue(channel, 2)
+    symbol.setValue(channel, 2)
 
-def requestDMAComment(sym, event):
+def requestDMAComment(symbol, event):
     global spiTXRXDMA
-    global spiSymPLIBConnection
-    if(event["value"] == -2) and (spiTXRXDMA.getValue()== True) and (spiSymPLIBConnection.getValue() == True):
-        sym.setVisible(True)
+
+    if(event["value"] == -2) and (spiTXRXDMA.getValue() == True):
+        symbol.setVisible(True)
         event["symbol"].setVisible(False)
     else:
-        sym.setVisible(False)
+        symbol.setVisible(False)
 
 def destroyComponent(spiComponent):
     global drvSpiInstanceSpace
-    spiPeripheral = Database.getSymbolValue(drvSpiInstanceSpace, "DRV_SPI_PLIB")
 
-    dmaTxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
-    dmaRxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
+    if isDMAPresent:
+        spiPeripheral = Database.getSymbolValue(drvSpiInstanceSpace, "DRV_SPI_PLIB")
 
-    Database.setSymbolValue("core", dmaTxID, False, 2)
-    Database.setSymbolValue("core", dmaRxID, False, 2)
+        dmaTxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
+        dmaRxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
 
-def asyncModeOptions(sym, event):
-    if(event["value"] == False):
-        sym.setVisible(True)
+        Database.setSymbolValue("core", dmaTxID, False, 2)
+        Database.setSymbolValue("core", dmaRxID, False, 2)
+
+def asyncModeOptions(symbol, event):
+    if (event["value"] == "Asynchronous"):
+        symbol.setVisible(True)
     else:
-        sym.setVisible(False)
+        symbol.setVisible(False)
 
-def syncFileGen(sym, event):
-    sym.setEnabled(event["value"])
-
-def asyncFileGen(sym, event):
-    if(event["value"] == False):
-        sym.setEnabled(True)
-    else:
-        sym.setEnabled(False)

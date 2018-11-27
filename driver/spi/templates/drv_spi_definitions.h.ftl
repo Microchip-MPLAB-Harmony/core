@@ -51,8 +51,10 @@
 
 #include <device.h>
 #include "system/int/sys_int.h"
-#include "system/dma/sys_dma.h"
 #include "system/ports/sys_ports.h"
+<#if core.DMA_ENABLE?has_content>
+#include "system/dma/sys_dma.h"
+</#if>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -63,6 +65,7 @@
 // DOM-IGNORE-END
 
 #define SYS_DEBUG(x, y)
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Types
@@ -77,7 +80,7 @@ typedef enum
     /* Force the compiler to reserve 32-bit memory space for each enum */
     DRV_SPI_CLOCK_PHASE_INVALID = 0xFFFFFFFF
 
-}DRV_SPI_CLOCK_PHASE;
+} DRV_SPI_CLOCK_PHASE;
 
 typedef enum
 {
@@ -87,7 +90,7 @@ typedef enum
     /* Force the compiler to reserve 32-bit memory space for each enum */
     DRV_SPI_CLOCK_POLARITY_INVALID = 0xFFFFFFFF
 
-}DRV_SPI_CLOCK_POLARITY;
+} DRV_SPI_CLOCK_POLARITY;
 
 typedef enum
 {
@@ -104,14 +107,14 @@ typedef enum
     /* Force the compiler to reserve 32-bit memory space for each enum */
     DRV_SPI_DATA_BITS_INVALID = 0xFFFFFFFF
 
-}DRV_SPI_DATA_BITS;
+} DRV_SPI_DATA_BITS;
 
 typedef enum
 {
     DRV_SPI_CS_POLARITY_ACTIVE_LOW = 0,
     DRV_SPI_CS_POLARITY_ACTIVE_HIGH = 1
 
-}DRV_SPI_CS_POLARITY;
+} DRV_SPI_CS_POLARITY;
 
 // *****************************************************************************
 /* SPI Driver Setup Data
@@ -203,11 +206,12 @@ typedef struct
      * peripheral. */
     const DRV_SPI_PLIB_INTERFACE*   spiPlib;
 
+<#if core.DMA_ENABLE?has_content>
     /* SPI transmit DMA channel. */
-    SYS_DMA_CHANNEL                 dmaChannelTransmit;
+    SYS_DMA_CHANNEL             dmaChannelTransmit;
 
     /* SPI receive DMA channel. */
-    SYS_DMA_CHANNEL                 dmaChannelReceive;
+    SYS_DMA_CHANNEL             dmaChannelReceive;
 
     /* SPI transmit register address used for DMA operation. */
     void*                           spiTransmitAddress;
@@ -215,6 +219,7 @@ typedef struct
     /* SPI receive register address used for DMA operation. */
     void*                           spiReceiveAddress;
 
+</#if>
     /* Memory Pool for Client Objects */
     uintptr_t                       clientObjPool;
 
@@ -227,7 +232,7 @@ typedef struct
 
     const uint32_t*                 remapClockPhase;
 
-<#if DRV_SPI_MODE == false>
+<#if DRV_SPI_MODE == "Asynchronous">
     /* Queue for Transfer Objects */
     uintptr_t                       transferObjPool;
 
@@ -242,7 +247,9 @@ typedef struct
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
-}
+
+    }
+
 #endif
 //DOM-IGNORE-END
 
