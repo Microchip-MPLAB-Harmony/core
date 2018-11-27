@@ -48,8 +48,11 @@
 // Section: File includes
 // *****************************************************************************
 // *****************************************************************************
+
 #include "system/int/sys_int.h"
+<#if core.DMA_ENABLE?has_content>
 #include "system/dma/sys_dma.h"
+</#if>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -78,7 +81,7 @@ typedef enum _DRV_USART_ERROR
 
     DRV_USART_ERROR_FRAMING = 3
 
-}_DRV_USART_ERROR;
+} _DRV_USART_ERROR;
 
 // *****************************************************************************
 /* USART Serial Setup */
@@ -168,7 +171,6 @@ typedef struct
 
 } DRV_USART_PLIB_INTERFACE;
 
-
 // *****************************************************************************
 /* USART Driver Initialization Data Declaration */
 
@@ -178,6 +180,7 @@ struct _DRV_USART_INIT
      * peripheral. */
     const DRV_USART_PLIB_INTERFACE* usartPlib;
 
+<#if core.DMA_ENABLE?has_content>
     /* This is the USART transmit DMA channel. */
     SYS_DMA_CHANNEL dmaChannelTransmit;
 
@@ -190,13 +193,16 @@ struct _DRV_USART_INIT
     /* This is the USART receive register address. Used for DMA operation. */
     void* usartReceiveAddress;
 
-    const uint32_t *remapDataWidth;
-    const uint32_t *remapParity;
-    const uint32_t *remapStopBits;
-    const uint32_t *remapError;
+</#if>
+    const uint32_t* remapDataWidth;
 
-<#if DRV_USART_MODE == false>
+    const uint32_t* remapParity;
 
+    const uint32_t* remapStopBits;
+
+    const uint32_t* remapError;
+
+<#if DRV_USART_MODE == "Asynchronous">
     /* This is the receive buffer queue size. This is the maximum
      * number of read requests that driver will queue. This can be updated
      * through DRV_USART_RCV_QUEUE_SIZE_IDXn macro in configuration.h */
@@ -210,26 +216,25 @@ struct _DRV_USART_INIT
     /* Interrupt source ID for the USART interrupt. */
     INT_SOURCE interruptUSART;
 
+<#if core.DMA_ENABLE?has_content>
     /* This is the DMA channel interrupt source. */
     INT_SOURCE interruptDMA;
-
+</#if>
 <#else>
     /* Memory Pool for Client Objects */
     uintptr_t clientObjPool;
 
     /* Number of clients */
     uint32_t numClients;
-
 </#if>
 };
 
-
-
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
-}
+
+    }
+
 #endif
 //DOM-IGNORE-END
-
 
 #endif // #ifndef DRV_USART_DEFINITIONS_H

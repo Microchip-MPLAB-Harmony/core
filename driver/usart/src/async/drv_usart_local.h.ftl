@@ -42,12 +42,12 @@
 #ifndef DRV_USART_LOCAL_H
 #define DRV_USART_LOCAL_H
 
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
+
 #include "driver/usart/drv_usart_definitions.h"
 #include "driver/usart/drv_usart.h"
 #include "osal/osal.h"
@@ -89,24 +89,24 @@
 // *****************************************************************************
 /* USART Driver Buffer States
 
-   Summary
+  Summary
     Identifies the possible state of the buffer that can result from a
     buffer request add or queue purge request.
 
-   Description
+  Description
     This enumeration identifies the possible state of the buffer that can
     result from a buffer request add or queue purge request by the client.
 
-   Remarks:
+  Remarks:
     DRV_USART_BUFFER_IS_FREE is the state of the buffer which is in the
     free buffer pool.
-
 */
 
 typedef enum
 {
     /* Buffer is not added to either write or read queue. In other words,
-     * the buffer is in the free pool. */
+     * the buffer is in the free pool.
+	 */
     DRV_USART_BUFFER_IS_FREE,
 
     /* Buffer is in the queue. */
@@ -121,15 +121,14 @@ typedef enum
 // *****************************************************************************
 /* USART Driver Transfer Direction
 
-   Summary
+  Summary
     Identifies the direction of transfer.
 
-   Description
+  Description
     This enumeration identifies the direction of transfer.
 
-   Remarks:
+  Remarks:
     None.
-
 */
 
 typedef enum
@@ -182,7 +181,8 @@ typedef struct _DRV_USART_BUFFER_OBJ
     DRV_USART_BUFFER_EVENT status;
 
     /* Buffer Handle that was assigned to this buffer when it was added to the
-     * queue. */
+     * queue.
+	 */
     DRV_USART_BUFFER_HANDLE bufferHandle;
 
 } DRV_USART_BUFFER_OBJ;
@@ -250,6 +250,7 @@ typedef struct
     /* Current read queue size */
     size_t queueSizeCurrentWrite;
 
+<#if core.DMA_ENABLE?has_content>
     /* TX DMA Channel */
     SYS_DMA_CHANNEL txDMAChannel;
 
@@ -264,6 +265,8 @@ typedef struct
 
     /* This is the DMA channel interrupt source. */
     INT_SOURCE interruptDMA;
+
+</#if>
     const uint32_t* remapDataWidth;
 
     const uint32_t* remapParity;
@@ -271,7 +274,7 @@ typedef struct
     const uint32_t* remapStopBits;
 
     const uint32_t* remapError;
+
 } DRV_USART_OBJ;
 
 #endif //#ifndef DRV_USART_LOCAL_H
-

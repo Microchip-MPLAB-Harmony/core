@@ -1,5 +1,5 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_USART Instance ${INDEX?string} Initialization Data">
-<#if DRV_USART_MODE == true>
+<#if DRV_USART_MODE == "Synchronous">
 
 static DRV_USART_CLIENT_OBJ drvUSART${INDEX?string}ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
 </#if>
@@ -122,15 +122,19 @@ const uint32_t drvUsart${INDEX?string}remapError[] = {
 };
 </@compress>
 
-
 const DRV_USART_INIT drvUsart${INDEX?string}InitData =
 {
     .usartPlib = &drvUsart${INDEX?string}PlibAPI,
+
     .remapDataWidth = drvUsart${INDEX?string}remapDataWidth,
+
     .remapParity = drvUsart${INDEX?string}remapParity,
+
     .remapStopBits = drvUsart${INDEX?string}remapStopBits,
+
     .remapError = drvUsart${INDEX?string}remapError,
 
+<#if core.DMA_ENABLE?has_content>
 <#if DRV_USART_TX_DMA == true>
     .dmaChannelTransmit = DRV_USART_XMIT_DMA_CH_IDX${INDEX?string},
 
@@ -146,7 +150,9 @@ const DRV_USART_INIT drvUsart${INDEX?string}InitData =
 <#else>
     .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
 </#if>
-<#if DRV_USART_MODE == false>
+
+</#if>
+<#if DRV_USART_MODE == "Asynchronous">
 
     .queueSizeTransmit = DRV_USART_XMIT_QUEUE_SIZE_IDX${INDEX?string},
 
@@ -156,9 +162,9 @@ const DRV_USART_INIT drvUsart${INDEX?string}InitData =
 
 <#if core.DMA_ENABLE?has_content>
     .interruptDMA = ${core.DMA_INSTANCE_NAME}_IRQn,
+
 </#if>
 <#else>
-
     .numClients = DRV_USART_CLIENTS_NUMBER_IDX0,
 
     .clientObjPool = (uintptr_t)&drvUSART${INDEX?string}ClientObjPool[0],

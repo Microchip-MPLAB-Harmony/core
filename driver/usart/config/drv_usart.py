@@ -30,14 +30,18 @@ def instantiateComponent(usartComponent, index):
     global currentTxBufSize
     global currentRxBufSize
     global drvUsartInstanceSpace
+    global isDMAPresent
+
     drvUsartInstanceSpace = "drv_usart_" + str(index)
 
     # Enable dependent Harmony core components
-    Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
     Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
 
-    Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_DMA")
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 2)
+    if Database.getSymbolValue("core", "DMA_ENABLE") == None:
+        isDMAPresent = False
+    else:
+        isDMAPresent = True
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 2)
 
     # Menu
     usartIndex = usartComponent.createIntegerSymbol("INDEX", None)
@@ -47,15 +51,9 @@ def instantiateComponent(usartComponent, index):
     usartPLIB = usartComponent.createStringSymbol("DRV_USART_PLIB", None)
     usartPLIB.setLabel("PLIB Used")
     usartPLIB.setReadOnly(True)
-    usartPLIB.setDefaultValue("USART1")
-    # Used onDependencyComponentAdd\Remove callbacks to get connected PLIB
+    usartPLIB.setDefaultValue("")
 
-    global usartSymPLIBConnection
-    usartSymPLIBConnection = usartComponent.createBooleanSymbol("DRV_USART_PLIB_CONNECTION", None)
-    usartSymPLIBConnection.setDefaultValue(False)
-    usartSymPLIBConnection.setVisible(False)
-
-    usartGlobalMode = usartComponent.createBooleanSymbol("DRV_USART_MODE", None)
+    usartGlobalMode = usartComponent.createStringSymbol("DRV_USART_MODE", None)
     usartGlobalMode.setLabel("**** Driver Mode Update ****")
     usartGlobalMode.setValue(Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE"), 1)
     usartGlobalMode.setVisible(False)
@@ -63,24 +61,24 @@ def instantiateComponent(usartComponent, index):
 
     usartNumClients = usartComponent.createIntegerSymbol("DRV_USART_CLIENTS_NUM", None)
     usartNumClients.setLabel("Number of Clients")
-    usartNumClients.setMax(50)
-    usartNumClients.setVisible((Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE") == 1))
+    usartNumClients.setMax(10)
+    usartNumClients.setVisible((Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE") == "Synchronous"))
     usartNumClients.setDefaultValue(1)
     usartNumClients.setDependencies(syncModeOptions, ["DRV_USART_MODE"])
 
     usartTXQueueSize = usartComponent.createIntegerSymbol("DRV_USART_TX_QUEUE_SIZE", None)
     usartTXQueueSize.setLabel("Transmit Queue Size")
-    usartTXQueueSize.setMax(50)
+    usartTXQueueSize.setMax(64)
     usartTXQueueSize.setDefaultValue(5)
-    usartTXQueueSize.setVisible((Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE") == 0))
+    usartTXQueueSize.setVisible((Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE") == "Asynchronous"))
     usartTXQueueSize.setDependencies(asyncModeOptions, ["DRV_USART_MODE"])
     currentTxBufSize = usartTXQueueSize.getValue()
 
     usartRXQueueSize = usartComponent.createIntegerSymbol("DRV_USART_RX_QUEUE_SIZE", None)
     usartRXQueueSize.setLabel("Receive Queue Size")
-    usartRXQueueSize.setMax(50)
+    usartRXQueueSize.setMax(64)
     usartRXQueueSize.setDefaultValue(5)
-    usartRXQueueSize.setVisible((Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE") == 0))
+    usartRXQueueSize.setVisible((Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE") == "Asynchronous"))
     usartRXQueueSize.setDependencies(asyncModeOptions, ["DRV_USART_MODE"])
     currentRxBufSize = usartRXQueueSize.getValue()
 
@@ -91,46 +89,48 @@ def instantiateComponent(usartComponent, index):
 
     global usartTXDMA
     usartTXDMA = usartComponent.createBooleanSymbol("DRV_USART_TX_DMA", None)
-    usartTXDMA.setLabel("Use DMA for Transmit?")
-    usartTXDMA.setDefaultValue(False)
+    usartTXDMA.setLabel("Use DMA for Transmit ?")
+    usartTXDMA.setVisible(isDMAPresent)
+    usartTXDMA.setReadOnly(True)
+
 
     global usartTXDMAChannel
     usartTXDMAChannel = usartComponent.createIntegerSymbol("DRV_USART_TX_DMA_CHANNEL", None)
     usartTXDMAChannel.setLabel("DMA Channel For Transmit")
-    usartTXDMAChannel.setDependencies(requestAndAssignTxDMAChannel, ["DRV_USART_TX_DMA"])
     usartTXDMAChannel.setDefaultValue(0)
     usartTXDMAChannel.setVisible(False)
     usartTXDMAChannel.setReadOnly(True)
+    usartTXDMAChannel.setDependencies(requestAndAssignTxDMAChannel, ["DRV_USART_TX_DMA"])
 
     global usartTXDMAChannelComment
     usartTXDMAChannelComment = usartComponent.createCommentSymbol("DRV_USART_TX_DMA_CH_COMMENT", None)
-    usartTXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Transmit. Check DMA Manager.")
+    usartTXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Transmit. Check DMA Manager. !!!")
     usartTXDMAChannelComment.setVisible(False)
     usartTXDMAChannelComment.setDependencies(requestTxDMAComment, ["DRV_USART_TX_DMA_CHANNEL"])
 
     global usartRXDMA
     usartRXDMA = usartComponent.createBooleanSymbol("DRV_USART_RX_DMA", None)
-    usartRXDMA.setLabel("Use DMA for Receive?")
-    usartRXDMA.setDefaultValue(False)
+    usartRXDMA.setLabel("Use DMA for Receive ?")
+    usartRXDMA.setVisible(isDMAPresent)
+    usartRXDMA.setReadOnly(True)
 
     global usartRXDMAChannel
     usartRXDMAChannel = usartComponent.createIntegerSymbol("DRV_USART_RX_DMA_CHANNEL", None)
     usartRXDMAChannel.setLabel("DMA Channel For Receive")
-    usartRXDMAChannel.setDependencies(requestAndAssignRxDMAChannel, ["DRV_USART_RX_DMA"])
     usartRXDMAChannel.setDefaultValue(1)
     usartRXDMAChannel.setVisible(False)
     usartRXDMAChannel.setReadOnly(True)
+    usartRXDMAChannel.setDependencies(requestAndAssignRxDMAChannel, ["DRV_USART_RX_DMA"])
 
     global usartRXDMAChannelComment
     usartRXDMAChannelComment = usartComponent.createCommentSymbol("DRV_USART_RX_DMA_CH_COMMENT", None)
-    usartRXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Receive. Check DMA Manager.")
+    usartRXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Receive. Check DMA Manager. !!!")
     usartRXDMAChannelComment.setVisible(False)
     usartRXDMAChannelComment.setDependencies(requestRxDMAComment, ["DRV_USART_RX_DMA_CHANNEL"])
 
-    global usartDependencyDMAComment
     usartDependencyDMAComment = usartComponent.createCommentSymbol("DRV_USART_DEPENDENCY_DMA_COMMENT", None)
-    usartDependencyDMAComment.setLabel("Satisfy PLIB Dependency to Allocate DMA Channel")
-    usartDependencyDMAComment.setVisible(False)
+    usartDependencyDMAComment.setLabel("!!! Satisfy PLIB Dependency to Allocate DMA Channel !!!")
+    usartDependencyDMAComment.setVisible(True)
 
     # DRV_USART Common Dependency
     bufPoolSize = Database.getSymbolValue("drv_usart", "DRV_USART_BUFFER_POOL_SIZE")
@@ -159,48 +159,6 @@ def instantiateComponent(usartComponent, index):
     usartSymHeaderDefFile.setType("HEADER")
     usartSymHeaderDefFile.setMarkup(True)
     usartSymHeaderDefFile.setOverwrite(True)
-
-    # Async Source Files
-    usartAsyncSourceFile = usartComponent.createFileSymbol("USART_ASYNC_SOURCE", None)
-    usartAsyncSourceFile.setSourcePath("driver/usart/src/async/drv_usart.c")
-    usartAsyncSourceFile.setOutputName("drv_usart.c")
-    usartAsyncSourceFile.setDestPath("driver/usart/src")
-    usartAsyncSourceFile.setProjectPath("config/" + configName + "/driver/usart/")
-    usartAsyncSourceFile.setType("SOURCE")
-    usartAsyncSourceFile.setOverwrite(True)
-    usartAsyncSourceFile.setEnabled(True)
-    usartAsyncSourceFile.setDependencies(asyncFileGen, ["DRV_USART_MODE"])
-
-    usartAsyncHeaderLocalFile = usartComponent.createFileSymbol("USART_ASYNC_LOCAL", None)
-    usartAsyncHeaderLocalFile.setSourcePath("driver/usart/src/async/drv_usart_local.h")
-    usartAsyncHeaderLocalFile.setOutputName("drv_usart_local.h")
-    usartAsyncHeaderLocalFile.setDestPath("driver/usart/src")
-    usartAsyncHeaderLocalFile.setProjectPath("config/" + configName + "/driver/usart/")
-    usartAsyncHeaderLocalFile.setType("SOURCE")
-    usartAsyncHeaderLocalFile.setOverwrite(True)
-    usartAsyncHeaderLocalFile.setEnabled(True)
-    usartAsyncHeaderLocalFile.setDependencies(asyncFileGen, ["DRV_USART_MODE"])
-
-    # Sync Source Files
-    usartSyncSourceFile = usartComponent.createFileSymbol("USART_SYNC_SOURCE", None)
-    usartSyncSourceFile.setSourcePath("driver/usart/src/sync/drv_usart.c")
-    usartSyncSourceFile.setOutputName("drv_usart.c")
-    usartSyncSourceFile.setDestPath("driver/usart/src")
-    usartSyncSourceFile.setProjectPath("config/" + configName + "/driver/usart/")
-    usartSyncSourceFile.setType("SOURCE")
-    usartSyncSourceFile.setOverwrite(True)
-    usartSyncSourceFile.setEnabled(False)
-    usartSyncSourceFile.setDependencies(syncFileGen, ["DRV_USART_MODE"])
-
-    usartSyncHeaderLocalFile = usartComponent.createFileSymbol("USART_SYNC_LOCAL", None)
-    usartSyncHeaderLocalFile.setSourcePath("driver/usart/src/sync/drv_usart_local.h")
-    usartSyncHeaderLocalFile.setOutputName("drv_usart_local.h")
-    usartSyncHeaderLocalFile.setDestPath("driver/usart/src")
-    usartSyncHeaderLocalFile.setProjectPath("config/" + configName + "/driver/usart/")
-    usartSyncHeaderLocalFile.setType("SOURCE")
-    usartSyncHeaderLocalFile.setOverwrite(True)
-    usartSyncHeaderLocalFile.setEnabled(False)
-    usartSyncHeaderLocalFile.setDependencies(syncFileGen, ["DRV_USART_MODE"])
 
     # System Template Files
     usartSystemDefObjFile = usartComponent.createFileSymbol("USART_DEF_OBJ", None)
@@ -231,76 +189,43 @@ def instantiateComponent(usartComponent, index):
 #### Business Logic ####
 ################################################################################
 
-def usartDriverMode(sym, event):
-    sym.setValue(Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE"), 1)
+def usartDriverMode(symbol, event):
+    symbol.setValue(event["value"], 1)
 
-def onDependencyConnected(info):
-    global usartDependencyDMAComment
-    global usartRXDMAChannel
-    global usartTXDMAChannel
+def onAttachmentConnected(connectionInfo):
+    localComponent = connectionInfo["localComponent"]
+    remoteComponent = connectionInfo["remoteComponent"]
+    connectID = connectionInfo["id"]
 
-    dmaRxRequestID = "DMA_CH_NEEDED_FOR_" + info["remoteComponent"].getID().upper() + "_Receive"
-    dmaTxRequestID = "DMA_CH_NEEDED_FOR_" + info["remoteComponent"].getID().upper() + "_Transmit"
-    dmaTxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Transmit"
-    dmaRxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Receive"
-
-    localComponent = info["localComponent"]
-    if info["dependencyID"] == "drv_usart_UART_dependency" :
-        localComponent.setSymbolValue("DRV_USART_PLIB_CONNECTION", True, 2)
+    if connectID == "drv_usart_UART_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_USART_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(info["remoteComponent"].getID().upper(), 1)
-        usartDependencyDMAComment.setVisible(False)
-        if localComponent.getSymbolValue("DRV_USART_TX_DMA") == True:
-            usartTXDMAChannel.setVisible(True)
-            Database.setSymbolValue("core", dmaTxRequestID, True, 2)
-            # Get the allocated channel and assign it
-            txChannel = Database.getSymbolValue("core", dmaTxChannelID)
-            localComponent.setSymbolValue("DRV_USART_TX_DMA_CHANNEL", txChannel, 2)
+        plibUsed.setValue(remoteComponent.getID().upper(), 1)
 
-        if localComponent.getSymbolValue("DRV_USART_RX_DMA") == True:
-            usartRXDMAChannel.setVisible(True)
-            Database.setSymbolValue("core", dmaRxRequestID, True, 2)
-            # Get the allocated channel and assign it
-            rxChannel = Database.getSymbolValue("core", dmaRxChannelID)
-            localComponent.setSymbolValue("DRV_USART_RX_DMA_CHANNEL", rxChannel, 2)
+        localComponent.getSymbolByID("DRV_USART_DEPENDENCY_DMA_COMMENT").setVisible(False)
 
+        localComponent.getSymbolByID("DRV_USART_TX_DMA").setReadOnly(False)
+        localComponent.getSymbolByID("DRV_USART_RX_DMA").setReadOnly(False)
 
-def onDependencyDisconnected(info):
-    global usartDependencyDMAComment
-    global usartRXDMAChannel
-    global usartTXDMAChannel
-    global usartTXDMAChannelComment
-    global usartRXDMAChannelComment
+def onAttachmentDisconnected(connectionInfo):
+    localComponent = connectionInfo["localComponent"]
+    remoteComponent = connectionInfo["remoteComponent"]
+    connectID = connectionInfo["id"]
 
-    dmaRxRequestID = "DMA_CH_NEEDED_FOR_" + info["remoteComponent"].getID().upper() + "_Receive"
-    dmaTxRequestID = "DMA_CH_NEEDED_FOR_" + info["remoteComponent"].getID().upper() + "_Transmit"
-    dmaTxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Transmit"
-    dmaRxChannelID = "DMA_CH_FOR_" + info["remoteComponent"].getID().upper() + "_Receive"
+    if connectID == "drv_usart_UART_dependency" :
+        localComponent.getSymbolByID("DRV_USART_TX_DMA").clearValue()
+        localComponent.getSymbolByID("DRV_USART_TX_DMA").setReadOnly(True)
+        localComponent.getSymbolByID("DRV_USART_RX_DMA").clearValue()
+        localComponent.getSymbolByID("DRV_USART_RX_DMA").setReadOnly(True)
 
-    localComponent = info["localComponent"]
+        plibUsed = localComponent.getSymbolByID("DRV_USART_PLIB")
+        plibUsed.clearValue()
 
-    if info["dependencyID"] == "drv_usart_UART_dependency" :
-        localComponent.setSymbolValue("DRV_USART_PLIB_CONNECTION", False, 2)
+        localComponent.getSymbolByID("DRV_USART_DEPENDENCY_DMA_COMMENT").setVisible(True)
 
-        if localComponent.getSymbolValue("DRV_USART_TX_DMA") == True:
-            usartDependencyDMAComment.setVisible(True)
-            usartTXDMAChannel.setVisible(False)
-            usartTXDMAChannelComment.setVisible(False)
-            Database.setSymbolValue("core", dmaTxRequestID, False, 2)
-
-        if localComponent.getSymbolValue("DRV_USART_RX_DMA") == True:
-            usartDependencyDMAComment.setVisible(True)
-            usartRXDMAChannel.setVisible(False)
-            usartRXDMAChannelComment.setVisible(False)
-            Database.setSymbolValue("core", dmaRxRequestID, False, 2)
-
-def requestAndAssignTxDMAChannel(sym, event):
+def requestAndAssignTxDMAChannel(symbol, event):
     global drvUsartInstanceSpace
-    global usartSymPLIBConnection
     global usartTXDMAChannelComment
-    global usartDependencyDMAComment
-    global usartRXDMA
 
     usartPeripheral = Database.getSymbolValue(drvUsartInstanceSpace, "DRV_USART_PLIB")
 
@@ -310,30 +235,18 @@ def requestAndAssignTxDMAChannel(sym, event):
     if event["value"] == False:
         Database.setSymbolValue("core", dmaRequestID, False, 2)
         usartTXDMAChannelComment.setVisible(False)
-        sym.setVisible(False)
-        if usartRXDMA.getValue()==False:
-            usartDependencyDMAComment.setVisible(False)
-
+        symbol.setVisible(False)
     else:
-        if (usartSymPLIBConnection.getValue() == True):
-            usartDependencyDMAComment.setVisible(False)
-            sym.setVisible(True)
-            Database.setSymbolValue("core", dmaRequestID, True, 2)
-        else:
-            usartTXDMAChannelComment.setVisible(False)
-            usartDependencyDMAComment.setVisible(True)
-            sym.setVisible(False)
+        symbol.setVisible(True)
+        Database.setSymbolValue("core", dmaRequestID, True, 2)
 
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
-    sym.setValue(channel, 2)
+    symbol.setValue(channel, 2)
 
-def requestAndAssignRxDMAChannel(sym, event):
+def requestAndAssignRxDMAChannel(symbol, event):
     global drvUsartInstanceSpace
-    global usartSymPLIBConnection
     global usartRXDMAChannelComment
-    global usartDependencyDMAComment
-    global usartTXDMA
 
     usartPeripheral = Database.getSymbolValue(drvUsartInstanceSpace, "DRV_USART_PLIB")
 
@@ -343,79 +256,67 @@ def requestAndAssignRxDMAChannel(sym, event):
     if event["value"] == False:
         Database.setSymbolValue("core", dmaRequestID, False, 2)
         usartRXDMAChannelComment.setVisible(False)
-        sym.setVisible(False)
-        if usartTXDMA.getValue()==False:
-            usartDependencyDMAComment.setVisible(False)
+        symbol.setVisible(False)
     else:
-        if (usartSymPLIBConnection.getValue() == True):
-            usartDependencyDMAComment.setVisible(False)
-            sym.setVisible(True)
-            Database.setSymbolValue("core", dmaRequestID, True, 2)
-        else:
-            usartRXDMAChannelComment.setVisible(False)
-            usartDependencyDMAComment.setVisible(True)
-            sym.setVisible(False)
+        symbol.setVisible(True)
+        Database.setSymbolValue("core", dmaRequestID, True, 2)
 
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
-    sym.setValue(channel, 2)
+    symbol.setValue(channel, 2)
 
-def requestTxDMAComment(sym, event):
-    global usartSymPLIBConnection
+def requestTxDMAComment(symbol, event):
     global usartTXDMA
-    if(event["value"] == -2) and (usartTXDMA.getValue()== True) and (usartSymPLIBConnection.getValue() == True):
-        sym.setVisible(True)
-        event["symbol"].setVisible(False)
-    else:
-        sym.setVisible(False)
 
-def requestRxDMAComment(sym, event):
-    global usartSymPLIBConnection
-    global usartRXDMA
-    if(event["value"] == -2) and (usartRXDMA.getValue()== True) and (usartSymPLIBConnection.getValue() == True):
-        sym.setVisible(True)
+    if(event["value"] == -2) and (usartTXDMA.getValue() == True):
+        symbol.setVisible(True)
         event["symbol"].setVisible(False)
     else:
-        sym.setVisible(False)
+        symbol.setVisible(False)
+
+def requestRxDMAComment(symbol, event):
+    global usartRXDMA
+
+    if(event["value"] == -2) and (usartRXDMA.getValue() == True):
+        symbol.setVisible(True)
+        event["symbol"].setVisible(False)
+    else:
+        symbol.setVisible(False)
 
 def destroyComponent(usartComponent):
     global drvUsartInstanceSpace
-    usartPeripheral = Database.getSymbolValue(drvUsartInstanceSpace, "DRV_USART_PLIB")
 
-    dmaTxID = "DMA_CH_NEEDED_FOR_" + str(usartPeripheral) + "_Transmit"
-    dmaRxID = "DMA_CH_NEEDED_FOR_" + str(usartPeripheral) + "_Receive"
+    if isDMAPresent:
+        usartPeripheral = Database.getSymbolValue(drvUsartInstanceSpace, "DRV_USART_PLIB")
 
-    Database.setSymbolValue("core", dmaTxID, False, 2)
-    Database.setSymbolValue("core", dmaRxID, False, 2)
+        dmaTxID = "DMA_CH_NEEDED_FOR_" + str(usartPeripheral) + "_Transmit"
+        dmaRxID = "DMA_CH_NEEDED_FOR_" + str(usartPeripheral) + "_Receive"
 
-def syncModeOptions(sym, event):
-    sym.setVisible(event["value"])
+        Database.setSymbolValue("core", dmaTxID, False, 2)
+        Database.setSymbolValue("core", dmaRxID, False, 2)
 
-def asyncModeOptions(sym, event):
-    if(event["value"] == False):
-        sym.setVisible(True)
+def syncModeOptions(symbol, event):
+    if event["value"] == "Synchronous":
+       symbol.setVisible(True)
     else:
-        sym.setVisible(False)
+       symbol.setVisible(False)
 
-def syncFileGen(sym, event):
-    sym.setEnabled(event["value"])
-
-def asyncFileGen(sym, event):
-    if(event["value"] == False):
-        sym.setEnabled(True)
+def asyncModeOptions(symbol, event):
+    if event["value"] == "Asynchronous":
+       symbol.setVisible(True)
     else:
-        sym.setEnabled(False)
+       symbol.setVisible(False)
 
-def bufferPoolSize(sym, event):
+def bufferPoolSize(symbol, event):
     global currentTxBufSize
     global currentRxBufSize
 
     bufPoolSize = Database.getSymbolValue("drv_usart", "DRV_USART_BUFFER_POOL_SIZE")
 
-    if (event["id"] == "DRV_USART_TX_QUEUE_SIZE"):
+    if event["id"] == "DRV_USART_TX_QUEUE_SIZE":
         bufPoolSize = bufPoolSize - currentTxBufSize + event["value"]
         currentTxBufSize = event["value"]
-    if (event["id"] == "DRV_USART_RX_QUEUE_SIZE"):
+    if event["id"] == "DRV_USART_RX_QUEUE_SIZE":
         bufPoolSize = bufPoolSize - currentRxBufSize + event["value"]
         currentRxBufSize = event["value"]
 

@@ -6,7 +6,7 @@
 <#if DRV_USART_RX_DMA == true>
 #define DRV_USART_RCV_DMA_CH_IDX${INDEX?string}          SYS_DMA_CHANNEL_${DRV_USART_RX_DMA_CHANNEL}
 </#if>
-<#if DRV_USART_MODE == false>
+<#if DRV_USART_MODE == "Asynchronous">
 #define DRV_USART_XMIT_QUEUE_SIZE_IDX${INDEX?string}     ${DRV_USART_TX_QUEUE_SIZE}
 #define DRV_USART_RCV_QUEUE_SIZE_IDX${INDEX?string}      ${DRV_USART_RX_QUEUE_SIZE}
 <#else>

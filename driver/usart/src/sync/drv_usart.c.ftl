@@ -45,6 +45,7 @@
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
+
 #include "configuration.h"
 #include "driver/usart/drv_usart.h"
 #include "drv_usart_local.h"
@@ -75,6 +76,7 @@ static inline uint32_t  _DRV_USART_MAKE_HANDLE(uint16_t token, uint8_t drvIndex,
 static inline uint16_t _DRV_USART_UPDATE_TOKEN(uint16_t token)
 {
     token++;
+
     if (token >= DRV_USART_TOKEN_MAX)
     {
         token = 1;
@@ -129,6 +131,7 @@ static void _DRV_USART_RX_PLIB_CallbackHandler( uintptr_t context )
     OSAL_SEM_PostISR(&dObj->rxTransferDone);
 }
 
+<#if core.DMA_ENABLE?has_content>
 static void _DRV_USART_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
 {
     DRV_USART_OBJ *dObj = (DRV_USART_OBJ *)context;
@@ -161,6 +164,7 @@ static void _DRV_USART_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uint
     OSAL_SEM_PostISR(&dObj->rxTransferDone);
 }
 
+</#if>
 static DRV_USART_CLIENT_OBJ* _DRV_USART_DriverHandleValidate(DRV_HANDLE handle)
 {
     /* This function returns the pointer to the client object that is
@@ -219,6 +223,7 @@ static DRV_USART_CLIENT_OBJ* _DRV_USART_DriverHandleValidate(DRV_HANDLE handle)
   Remarks:
     See drv_usart.h for usage information.
 */
+
 SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT * const init )
 {
     DRV_USART_OBJ *dObj = NULL;
@@ -248,10 +253,12 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     dObj->currentTxClient       = (uintptr_t)NULL;
     dObj->isExclusive           = false;
     dObj->usartTokenCount       = 1;
+<#if core.DMA_ENABLE?has_content>
     dObj->txDMAChannel          = usartInit->dmaChannelTransmit;
     dObj->rxDMAChannel          = usartInit->dmaChannelReceive;
     dObj->txAddress             = usartInit->usartTransmitAddress;
     dObj->rxAddress             = usartInit->usartReceiveAddress;
+</#if>
     dObj->remapDataWidth        = usartInit->remapDataWidth;
     dObj->remapParity           = usartInit->remapParity;
     dObj->remapStopBits         = usartInit->remapStopBits;
@@ -295,6 +302,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     /* Register a callback with either DMA or USART PLIB based on configuration.
      * dObj is used as a context parameter, that will be used to distinguish the
      * events for different driver instances. */
+<#if core.DMA_ENABLE?has_content>
     if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
         SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, _DRV_USART_TX_DMA_CallbackHandler, (uintptr_t)dObj);
@@ -304,7 +312,11 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
         dObj->usartPlib->writeCallbackRegister(_DRV_USART_TX_PLIB_CallbackHandler, (uintptr_t)dObj);
         (void)_DRV_USART_TX_DMA_CallbackHandler;
     }
+<#else>
+    dObj->usartPlib->writeCallbackRegister(_DRV_USART_TX_PLIB_CallbackHandler, (uintptr_t)dObj);
+</#if>
 
+<#if core.DMA_ENABLE?has_content>
     if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
         SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, _DRV_USART_RX_DMA_CallbackHandler, (uintptr_t)dObj);
@@ -314,6 +326,9 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
         dObj->usartPlib->readCallbackRegister(_DRV_USART_RX_PLIB_CallbackHandler, (uintptr_t)dObj);
         (void)_DRV_USART_RX_DMA_CallbackHandler;
     }
+<#else>
+    dObj->usartPlib->readCallbackRegister(_DRV_USART_RX_PLIB_CallbackHandler, (uintptr_t)dObj);
+</#if>
 
     /* Update the status */
     dObj->status = SYS_STATUS_READY;
@@ -338,6 +353,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
   Remarks:
     See drv_usart.h for usage information.
 */
+
 SYS_STATUS DRV_USART_Status( SYS_MODULE_OBJ object)
 {
     /* Validate the request */
@@ -349,6 +365,7 @@ SYS_STATUS DRV_USART_Status( SYS_MODULE_OBJ object)
 
     return (gDrvUSARTObj[object].status);
 }
+
 // *****************************************************************************
 /* Function:
     DRV_HANDLE DRV_USART_Open
@@ -369,6 +386,7 @@ SYS_STATUS DRV_USART_Status( SYS_MODULE_OBJ object)
   Remarks:
     See drv_usart.h for usage information.
 */
+
 DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
 {
     DRV_USART_OBJ *dObj = NULL;
@@ -416,7 +434,6 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
     }
 
     /* Enter here only if the lock was obtained */
-
     for(iClient = 0; iClient != dObj->nClientsMax; iClient++)
     {
         if(false == ((DRV_USART_CLIENT_OBJ *)dObj->clientObjPool)[iClient].inUse)
@@ -476,6 +493,7 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
   Remarks:
     See drv_usart.h for usage information.
 */
+
 bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* setup )
 {
     DRV_USART_OBJ* dObj;
@@ -490,11 +508,11 @@ bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* set
         dObj = (DRV_USART_OBJ *)clientObj->hDriver;
 
         setupRemap.dataWidth = (DRV_USART_DATA_BIT)dObj->remapDataWidth[setup->dataWidth];
-        setupRemap.parity = (DRV_USART_PARITY)dObj->remapParity[setup->parity];
-        setupRemap.stopBits = (DRV_USART_STOP_BIT)dObj->remapStopBits[setup->stopBits];
-        setupRemap.baudRate=setup->baudRate;
+        setupRemap.parity = (DRV_USART_DATA_BIT)dObj->remapParity[setup->parity];
+        setupRemap.stopBits = (DRV_USART_DATA_BIT)dObj->remapStopBits[setup->stopBits];
+        setupRemap.baudRate = setup->baudRate;
 
-        if( (setupRemap.dataWidth !=DRV_USART_DATA_BIT_INVALID) && (setupRemap.parity != DRV_USART_PARITY_INVALID) && (setupRemap.stopBits != DRV_USART_STOP_BIT_INVALID))
+        if( (setupRemap.dataWidth != DRV_USART_DATA_BIT_INVALID) && (setupRemap.parity != DRV_USART_PARITY_INVALID) && (setupRemap.stopBits != DRV_USART_STOP_BIT_INVALID))
         {
             /* Clock source cannot be modified dynamically, so passing the '0' to pick
              * the configured clock source value */
@@ -523,6 +541,7 @@ bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* set
   Remarks:
     See drv_usart.h for usage information.
 */
+
 void DRV_USART_Close( DRV_HANDLE handle )
 {
     DRV_USART_CLIENT_OBJ* clientObj;
@@ -572,6 +591,7 @@ void DRV_USART_Close( DRV_HANDLE handle )
   Remarks:
     See drv_usart.h for usage information.
 */
+
 DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
 {
     DRV_USART_CLIENT_OBJ* clientObj;
@@ -606,6 +626,7 @@ DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
   Remarks:
     See drv_usart.h for usage information.
 */
+
 bool DRV_USART_WriteBuffer
 (
     const DRV_HANDLE handle,
@@ -632,7 +653,8 @@ bool DRV_USART_WriteBuffer
 
             dObj->currentTxClient = (uintptr_t)clientObj;
 
-            if( dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
+<#if core.DMA_ENABLE?has_content>
+            if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
             {
                 if (DATA_CACHE_ENABLED == true)
                 {
@@ -648,6 +670,9 @@ bool DRV_USART_WriteBuffer
             {
                 dObj->usartPlib->write(buffer, numbytes);
             }
+<#else>
+            dObj->usartPlib->write(buffer, numbytes);
+</#if>
 
             /* Wait for transfer to complete */
             if (OSAL_SEM_Pend(&dObj->txTransferDone, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
@@ -683,6 +708,7 @@ bool DRV_USART_WriteBuffer
   Remarks:
     See drv_usart.h for usage information.
 */
+
 bool DRV_USART_ReadBuffer
 (
     const DRV_HANDLE handle,
@@ -709,6 +735,7 @@ bool DRV_USART_ReadBuffer
 
             dObj->currentRxClient = (uintptr_t)clientObj;
 
+<#if core.DMA_ENABLE?has_content>
             if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
             {
                 SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress, (const void *)buffer, numbytes);
@@ -717,20 +744,23 @@ bool DRV_USART_ReadBuffer
             {
                 dObj->usartPlib->read(buffer, numbytes);
             }
-
+<#else>
+            dObj->usartPlib->read(buffer, numbytes);
+</#if>
             /* Wait for transfer to complete */
             if (OSAL_SEM_Pend(&dObj->rxTransferDone, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
                 /* Check and return status */
                 if (dObj->rxRequestStatus == DRV_USART_REQUEST_STATUS_COMPLETE)
                 {
+<#if core.DMA_ENABLE?has_content>
                     if ((dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE) && (DATA_CACHE_ENABLED == true))
                     {
                         /* Invalidate cache lines having received buffer before using it
                          * to load the latest data in the actual memory to the cache */
                         DCACHE_INVALIDATE_BY_ADDR((uint32_t *)buffer, numbytes);
                     }
-
+</#if>
                     isSuccess = true;
                 }
             }
