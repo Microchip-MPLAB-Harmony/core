@@ -49,14 +49,14 @@ def instantiateComponent(sysTimeComponent):
     sysTimePLIB = sysTimeComponent.createStringSymbol("SYS_TIME_PLIB", None)
     sysTimePLIB.setLabel("PLIB Used")
     sysTimePLIB.setReadOnly(True)
-    sysTimePLIB.setDefaultValue("TC0_CH0")
+    sysTimePLIB.setDefaultValue("")
     # Used onDependencyComponentAdd\Remove callbacks to get connected PLIB
 
     sysTimeObjects = sysTimeComponent.createIntegerSymbol("SYS_TIME_MAX_TIMERS", None)
     sysTimeObjects.setLabel("Number of Clients")
     sysTimeObjects.setMax(50)
     sysTimeObjects.setMin(1)
-    sysTimeObjects.setDefaultValue(10)
+    sysTimeObjects.setDefaultValue(5)
 
     #sysTimeUnitResolutionComment = sysTimeComponent.createCommentSymbol("SYS_TIME_RESOLUTION_COMMENT", None)
     #sysTimeUnitResolutionComment.setLabel("**** Check The H/W Timer Connected For The Possible Timer Resolution ****")
@@ -132,12 +132,25 @@ def instantiateComponent(sysTimeComponent):
 #### Dependency ####
 ############################################################################
 
-def onDependencyConnected(connectionInfo):
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
-    remoteId = connectionInfo["remoteComponent"].getID()
+def onAttachmentConnected(source, target):
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
 
-    if (connectionInfo["dependencyID"] == "sys_time_TMR_dependency"):
+    if (connectID == "sys_time_TMR_dependency"):
         plibUsed = localComponent.getSymbolByID("SYS_TIME_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(remoteId.upper(), 2)
+        plibUsed.setValue(remoteID.upper(), 2)
+
+def onAttachmentDisconnected(source, target):
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
+
+    if (connectID == "sys_time_TMR_dependency"):
+        plibUsed = localComponent.getSymbolByID("SYS_TIME_PLIB")
+        plibUsed.clearValue()
