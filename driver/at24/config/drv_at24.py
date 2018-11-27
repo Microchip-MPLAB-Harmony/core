@@ -37,13 +37,13 @@ def updateEEPROMAddressLen(symbol, event):
         symbol.setValue(2, 2)
     else:
         symbol.setValue(1, 2)
-    
-    
+
+
 def at24SetMemoryDependency(symbol, event):
     if (event["value"] == True):
         symbol.setVisible(True)
     else:
-        symbol.setVisible(False)        
+        symbol.setVisible(False)
 
 #def updatePinPosition(symbol, event):
     # TBD: "value" of at24SymChipSelectPin and other pin symbols should be updated
@@ -85,6 +85,29 @@ def instantiateComponent(at24Component):
     at24SymNumClients.setReadOnly(True)
     at24SymNumClients.setDefaultValue(1)
 
+    at24EEPROMPageSize = at24Component.createIntegerSymbol("EEPROM_PAGE_SIZE", None)
+    at24EEPROMPageSize.setLabel("EEPROM Page Size")
+    at24EEPROMPageSize.setVisible(True)
+    at24EEPROMPageSize.setDefaultValue(16)
+
+    at24EEPROMFlashSize = at24Component.createIntegerSymbol("EEPROM_FLASH_SIZE", None)
+    at24EEPROMFlashSize.setLabel("EEPROM Flash Size")
+    at24EEPROMFlashSize.setVisible(True)
+    at24EEPROMFlashSize.setDefaultValue(256)
+
+    at24EEPROMAddressLen = at24Component.createIntegerSymbol("EEPROM_ADDR_LEN", None)
+    at24EEPROMAddressLen.setLabel("EEPROM Address Len")
+    at24EEPROMAddressLen.setVisible(False)
+    at24EEPROMAddressLen.setDefaultValue(2)
+    at24EEPROMAddressLen.setDependencies(updateEEPROMAddressLen, ["EEPROM_FLASH_SIZE"])
+
+    at24EEPROMAddress = at24Component.createHexSymbol("I2C_EEPROM_ADDDRESS", None)
+    at24EEPROMAddress.setLabel("EEPROM Address")
+    at24EEPROMAddress.setVisible(True)
+    at24EEPROMAddress.setDefaultValue(0x57)
+
+    ##### Do not modify below symbol names as they are used by Memory Driver #####
+
     at24MemoryDriver = at24Component.createBooleanSymbol("DRV_MEMORY_CONNECTED", None)
     at24MemoryDriver.setLabel("Memory Driver Connected")
     at24MemoryDriver.setVisible(False)
@@ -99,28 +122,7 @@ def instantiateComponent(at24Component):
     at24MemoryEraseEnable = at24Component.createBooleanSymbol("ERASE_ENABLE", None)
     at24MemoryEraseEnable.setLabel("at24 Erase Enable")
     at24MemoryEraseEnable.setVisible(False)
-    at24MemoryEraseEnable.setDefaultValue(False)   
-    
-    at24EEPROMPageSize = at24Component.createIntegerSymbol("EEPROM_PAGE_SIZE", None)
-    at24EEPROMPageSize.setLabel("EEPROM Page Size")
-    at24EEPROMPageSize.setVisible(True)
-    at24EEPROMPageSize.setDefaultValue(16)
-    
-    at24EEPROMFlashSize = at24Component.createIntegerSymbol("EEPROM_FLASH_SIZE", None)
-    at24EEPROMFlashSize.setLabel("EEPROM Flash Size")
-    at24EEPROMFlashSize.setVisible(True)
-    at24EEPROMFlashSize.setDefaultValue(256)
-    
-    at24EEPROMAddressLen = at24Component.createIntegerSymbol("EEPROM_ADDR_LEN", None)
-    at24EEPROMAddressLen.setLabel("EEPROM Address Len")
-    at24EEPROMAddressLen.setVisible(False)
-    at24EEPROMAddressLen.setDefaultValue(2)
-    at24EEPROMAddressLen.setDependencies(updateEEPROMAddressLen, ["EEPROM_FLASH_SIZE"])
-    
-    at24EEPROMAddress = at24Component.createHexSymbol("I2C_EEPROM_ADDDRESS", None)
-    at24EEPROMAddress.setLabel("EEPROM Address")
-    at24EEPROMAddress.setVisible(True)
-    at24EEPROMAddress.setDefaultValue(0x57)
+    at24MemoryEraseEnable.setDefaultValue(False)
 
     at24MemoryStartAddr = at24Component.createHexSymbol("START_ADDRESS", None)
     at24MemoryStartAddr.setLabel("AT24 EEPROM Start Address")
@@ -167,10 +169,10 @@ def instantiateComponent(at24Component):
     at24AsyncSymHeaderLocalFile.setType("SOURCE")
     at24AsyncSymHeaderLocalFile.setOverwrite(True)
     at24AsyncSymHeaderLocalFile.setEnabled(True)
-    
+
     # at24AsyncSymHeaderLocalFile = at24Component.createFileSymbol("DRV_AT24_HEADER_LOCAL", None)
     # at24AsyncSymHeaderLocalFile.setOutputName("drv_at24_local.h")
-    # at24AsyncSymHeaderLocalFile.setSourcePath("driver/at24/templates/system/drv_at24_local.h.ftl")    
+    # at24AsyncSymHeaderLocalFile.setSourcePath("driver/at24/templates/system/drv_at24_local.h.ftl")
     # at24AsyncSymHeaderLocalFile.setDestPath("driver/at24/src")
     # at24AsyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/at24/")
     # at24AsyncSymHeaderLocalFile.setType("HEADER")
@@ -209,23 +211,37 @@ def instantiateComponent(at24Component):
     at24SystemInitFile.setSourcePath("driver/at24/templates/system/initialize.c.ftl")
     at24SystemInitFile.setMarkup(True)
 
-def onDependencyConnected(info):
+def onAttachmentConnected(source, target):
     global at24MemoryInterruptEnable
 
-    if info["dependencyID"] == "drv_at24_I2C_dependency" :
-        plibUsed = info["localComponent"].getSymbolByID("DRV_AT24_PLIB")
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
+
+    if connectID == "drv_at24_I2C_dependency":
+        plibUsed = localComponent.getSymbolByID("DRV_AT24_PLIB")
         plibUsed.clearValue()
-        at24PlibId = info["remoteComponent"].getID().upper()
+        at24PlibId = remoteID.upper()
         plibUsed.setValue(at24PlibId, 1)
         Database.setSymbolValue(at24PlibId, "I2C_DRIVER_CONTROLLED", True, 1)
 
         at24MemoryInterruptEnable.setValue(Database.getSymbolValue("core", at24PlibId + "_INTERRUPT_ENABLE"), 1)
 
-def onDependencyDisconnected(info):
+def onAttachmentDisconnected(source, target):
     global at24MemoryInterruptEnable
 
-    if info["dependencyID"] == "drv_at24_I2C_dependency":
-        at24PlibId = info["remoteComponent"].getID().upper()
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
+
+    if connectID == "drv_at24_I2C_dependency":
+        plibUsed = localComponent.getSymbolByID("DRV_AT24_PLIB")
+        plibUsed.clearValue()
+        at24PlibId = remoteID.upper()
         Database.setSymbolValue(at24PlibId, "I2C_DRIVER_CONTROLLED", False, 1)
 
         at24MemoryInterruptEnable.setValue(False, 1)
