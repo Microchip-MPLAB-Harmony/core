@@ -77,20 +77,24 @@ def asyncModeOptions(symbol, event):
     else:
         symbol.setVisible(False)
 
-def onAttachmentConnected(connectionInfo):
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
-    connectID = connectionInfo["id"]
+def onAttachmentConnected(source, target):
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
 
     if connectID == "drv_i2c_I2C_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_I2C_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(remoteComponent.getID().upper(), 1)
+        plibUsed.setValue(remoteID.upper(), 1)
 
-def onAttachmentDisconnected(connectionInfo):
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
-    connectID = connectionInfo["id"]
+def onAttachmentDisconnected(source, target):
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
 
     if connectID == "drv_i2c_I2C_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_I2C_PLIB")
