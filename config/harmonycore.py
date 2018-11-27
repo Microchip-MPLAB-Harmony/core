@@ -134,12 +134,12 @@ def instantiateComponent(harmonyCoreComponent):
     taskSourceFile.setEnabled(False)
     taskSourceFile.setDependencies(genHarmonyFiles, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON", "ENABLE_APP_FILE"])
 
-def onAttachmentConnected(connectionInfo):
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
+def onAttachmentConnected(source, target):
+    localComponent = source["component"]
+    remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
-    connectID = connectionInfo["id"]
-    targetID = connectionInfo["targetID"]
+    connectID = source["id"]
+    targetID = target["id"]
 
     print("satisfied: " + connectID + ", " + targetID)
 
@@ -147,12 +147,12 @@ def onAttachmentConnected(connectionInfo):
         localComponent.clearSymbolValue("SELECT_RTOS")
         localComponent.setSymbolValue("SELECT_RTOS", "FreeRTOS", 1)
 
-def onAttachmentDisconnected(connectionInfo):
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
+def onAttachmentDisconnected(source, target):
+    localComponent = source["component"]
+    remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
-    connectID = connectionInfo["id"]
-    targetID = connectionInfo["targetID"]
+    connectID = source["id"]
+    targetID = target["id"]
 
     print("unsatisfied: " + connectID + ", " + targetID)
 
