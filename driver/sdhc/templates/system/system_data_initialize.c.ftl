@@ -24,33 +24,21 @@
  -->
 
 /*** SDHC Driver Initialization Data ***/
-const DRV_SDHC_INIT drvSDHCInit =
+const DRV_SDHC_INIT drvSDHCInitData =
 {
-<#if DRV_SDHC_SDCDEN == true>
-    <#lt>    .sdCardDetectEnable = true,
-<#else>
-    <#lt>    .sdCardDetectEnable = false,
-</#if>
-<#if DRV_SDHC_SDWPEN == true>
-    <#lt>    .sdWriteProtectEnable = true,
-<#else>
-    <#lt>    .sdWriteProtectEnable = false,
-</#if>
+    .sdCardDetectEnable     = ${DRV_SDHC_SDCDEN?c},
+    .sdWriteProtectEnable   = ${DRV_SDHC_SDWPEN?c},
 <#if DRV_SDHC_SDHC_BUS_SPEED == "HIGH_SPEED">
-    <#lt>    .speedMode = DRV_SDHC_SPEED_MODE_HIGH,
+    <#lt>    .speedMode              = DRV_SDHC_SPEED_MODE_HIGH,
 <#else>
-    <#lt>    .speedMode = DRV_SDHC_SPEED_MODE_DEFAULT,
+    <#lt>    .speedMode              = DRV_SDHC_SPEED_MODE_DEFAULT,
 </#if>
 <#if DRV_SDHC_TRANSFER_BUS_WIDTH == "1-bit">
-    <#lt>    .busWidth = DRV_SDHC_BUS_WIDTH_1_BIT,
+    <#lt>    .busWidth               = DRV_SDHC_BUS_WIDTH_1_BIT,
 <#else>
-    <#lt>    .busWidth = DRV_SDHC_BUS_WIDTH_4_BIT,
+    <#lt>    .busWidth               = DRV_SDHC_BUS_WIDTH_4_BIT,
 </#if>
-<#if DRV_SDHC_FS_ENABLE == true>
-    <#lt>    .isFsEnabled = true,
-<#else>
-    <#lt>    .isFsEnabled = false,
-</#if>
+    .isFsEnabled            = ${DRV_SDHC_FS_ENABLE?c},
 };
 
 // </editor-fold>

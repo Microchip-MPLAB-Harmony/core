@@ -40,7 +40,7 @@
 *******************************************************************************/
  -->
 
-sysObj.drvSDHC = DRV_SDHC_Initialize(DRV_SDHC_INDEX_0,(SYS_MODULE_INIT *)&drvSDHCInit);
+sysObj.drvSDHC = DRV_SDHC_Initialize(DRV_SDHC_INDEX_0,(SYS_MODULE_INIT *)&drvSDHCInitData);
 
 <#--
 /*******************************************************************************

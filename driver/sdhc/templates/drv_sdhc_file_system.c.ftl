@@ -48,7 +48,8 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include "driver/sdhc/src/drv_sdhc_local.h"
+#include "driver/sdhc/drv_sdhc.h"
+#include "system/fs/sys_fs_media_manager.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -58,18 +59,39 @@
 
 /* FS Function registration table. */
 
-const SYS_FS_MEDIA_FUNCTIONS sdhcMediaFunctions =
-{
-    .mediaStatusGet     = DRV_SDHC_IsAttached,
-    .mediaGeometryGet   = DRV_SDHC_GeometryGet,
-    .sectorRead         = DRV_SDHC_Read,
-    .sectorWrite        = DRV_SDHC_Write,
-    .eventHandlerset    = DRV_SDHC_EventHandlerSet,
-    .commandStatusGet   = (void *)DRV_SDHC_CommandStatus,
-    .open               = DRV_SDHC_Open,
-    .close              = DRV_SDHC_Close,
-    .tasks              = DRV_SDHC_Tasks
-};
+<#if DRV_SDHC_COMMON_MODE == "Asynchronous" >
+    <#lt>const SYS_FS_MEDIA_FUNCTIONS sdhcMediaFunctions =
+    <#lt>{
+    <#lt>    .mediaStatusGet     = DRV_SDHC_IsAttached,
+    <#lt>    .mediaGeometryGet   = DRV_SDHC_GeometryGet,
+    <#lt>    .sectorRead         = DRV_SDHC_AsyncRead,
+    <#lt>    .sectorWrite        = DRV_SDHC_AsyncWrite,
+    <#lt>    .eventHandlerset    = DRV_SDHC_EventHandlerSet,
+    <#lt>    .commandStatusGet   = (void *)DRV_SDHC_CommandStatusGet,
+    <#lt>    .Read               = DRV_SDHC_AsyncRead,
+    <#lt>    .erase              = NULL,
+    <#lt>    .addressGet         = NULL,
+    <#lt>    .open               = DRV_SDHC_Open,
+    <#lt>    .close              = DRV_SDHC_Close,
+    <#lt>    .tasks              = DRV_SDHC_Tasks,
+    <#lt>};
+<#else>
+    <#lt>const SYS_FS_MEDIA_FUNCTIONS sdhcMediaFunctions =
+    <#lt>{
+    <#lt>    .mediaStatusGet     = DRV_SDHC_IsAttached,
+    <#lt>    .mediaGeometryGet   = DRV_SDHC_GeometryGet,
+    <#lt>    .sectorRead         = DRV_SDHC_Read,
+    <#lt>    .sectorWrite        = DRV_SDHC_Write,
+    <#lt>    .eventHandlerset    = DRV_SDHC_EventHandlerSet,
+    <#lt>    .commandStatusGet   = (void *)DRV_SDHC_CommandStatusGet,
+    <#lt>    .Read               = DRV_SDHC_Read,
+    <#lt>    .erase              = NULL,
+    <#lt>    .addressGet         = NULL,
+    <#lt>    .open               = DRV_SDHC_Open,
+    <#lt>    .close              = DRV_SDHC_Close,
+    <#lt>    .tasks              = NULL,
+    <#lt>};
+</#if>
 
 // *****************************************************************************
 // *****************************************************************************

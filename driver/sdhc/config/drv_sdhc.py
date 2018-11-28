@@ -41,12 +41,18 @@ def setValue(symbol, event):
     symbol.setValue(int(event["value"]), 2)
 
 def setBufferSize(symbol, event):
-    if (event["value"] == True):
-        symbol.clearValue()
-        symbol.setValue(1, 1)
-        symbol.setReadOnly(True)
+    if (event["id"] == "DRV_SDHC_COMMON_MODE"):
+        if (event["value"] == "Asynchronous"):
+            symbol.setVisible(True)
+        elif(event["value"] == "Synchronous"):
+            symbol.setVisible(False)
     else:
-        symbol.setReadOnly(False)
+        if (event["value"] == True):
+            symbol.clearValue()
+            symbol.setValue(1, 1)
+            symbol.setReadOnly(True)
+        else:
+            symbol.setReadOnly(False)
 
 def instantiateComponent(sdhcComponent, index):
     global sdhcFsEnable
@@ -88,20 +94,23 @@ def instantiateComponent(sdhcComponent, index):
 
     sdhcClients = sdhcComponent.createIntegerSymbol("DRV_SDHC_CLIENTS_NUMBER", None)
     sdhcClients.setLabel("Number of SDHC Driver Clients")
+    sdhcClients.setMin(1)
+    sdhcClients.setMax(10)
     sdhcClients.setDefaultValue(1)
 
     sdhcFsEnable = sdhcComponent.createBooleanSymbol("DRV_SDHC_FS_ENABLE", None)
-    sdhcFsEnable.setLabel("Enable File system for SDHC Driver")
+    sdhcFsEnable.setLabel("File system for SDHC Driver Enabled")
     sdhcFsEnable.setDefaultValue(False)
-    sdhcFsEnable.setVisible(False)
     sdhcFsEnable.setReadOnly(True)
 
-    sdhcBufferObjects = sdhcComponent.createIntegerSymbol("DRV_SDHC_BUFFER_OBJECT_NUMBER", None)
-    sdhcBufferObjects.setLabel("Number of SDHC Buffer Objects")
+    sdhcBufferObjects = sdhcComponent.createIntegerSymbol("DRV_SDHC_BUFFER_QUEUE_SIZE", None)
+    sdhcBufferObjects.setLabel("Buffer Queue Size")
+    sdhcBufferObjects.setMin(1)
+    sdhcBufferObjects.setMax(64)
     sdhcBufferObjects.setDefaultValue(1)
-    sdhcBufferObjects.setMax(10)
+    sdhcBufferObjects.setVisible((Database.getSymbolValue("drv_sdhc", "DRV_SDHC_COMMON_MODE") == "Asynchronous"))
     sdhcBufferObjects.setReadOnly((sdhcFsEnable.getValue() == True))
-    sdhcBufferObjects.setDependencies(setBufferSize, ["DRV_SDHC_FS_ENABLE"])
+    sdhcBufferObjects.setDependencies(setBufferSize, ["DRV_SDHC_FS_ENABLE", "drv_sdhc.DRV_SDHC_COMMON_MODE"])
 
     sdhcBusWidth= sdhcComponent.createComboSymbol("DRV_SDHC_TRANSFER_BUS_WIDTH", None,["1-bit", "4-bit"])
     sdhcBusWidth.setLabel("Data Transfer Bus Width")
@@ -129,7 +138,7 @@ def instantiateComponent(sdhcComponent, index):
     sdhcCDComment.setVisible(sdhcCD.getValue())
     sdhcCDComment.setDependencies(setVisible, ["DRV_SDHC_SDCDEN"])
 
-    sdhcDMA = sdhcComponent.createIntegerSymbol("SDHC_DMA", None)
+    sdhcDMA = sdhcComponent.createIntegerSymbol("DRV_SDHC_DMA", None)
     sdhcDMA.setLabel("DMA Channel For Transmit and Receive")
     sdhcDMA.setReadOnly(True)
     sdhcDMA.setDefaultValue(int(Database.getSymbolValue("core", "DMA_CH_FOR_HSMCI")))
@@ -155,7 +164,7 @@ def instantiateComponent(sdhcComponent, index):
 
     sdhcRTOSTaskSize = sdhcComponent.createIntegerSymbol("DRV_SDHC_RTOS_STACK_SIZE", sdhcRTOSMenu)
     sdhcRTOSTaskSize.setLabel("Stack Size")
-    sdhcRTOSTaskSize.setDefaultValue(1024)
+    sdhcRTOSTaskSize.setDefaultValue(512)
 
     sdhcRTOSTaskPriority = sdhcComponent.createIntegerSymbol("DRV_SDHC_RTOS_TASK_PRIORITY", sdhcRTOSMenu)
     sdhcRTOSTaskPriority.setLabel("Task Priority")
@@ -173,37 +182,15 @@ def instantiateComponent(sdhcComponent, index):
 
     configName = Variables.get("__CONFIGURATION_NAME")
 
-    sdhcHeaderFile = sdhcComponent.createFileSymbol("DRV_SDHC_H", None)
-    sdhcHeaderFile.setSourcePath("driver/sdhc/drv_sdhc.h")
-    sdhcHeaderFile.setOutputName("drv_sdhc.h")
-    sdhcHeaderFile.setDestPath("/driver/sdhc/")
-    sdhcHeaderFile.setProjectPath("config/" + configName + "/driver/sdhc/")
-    sdhcHeaderFile.setType("HEADER")
-
-    sdhcSource1File = sdhcComponent.createFileSymbol("DRV_SDHC_C", None)
-    sdhcSource1File.setSourcePath("driver/sdhc/src/drv_sdhc.c")
-    sdhcSource1File.setOutputName("drv_sdhc.c")
-    sdhcSource1File.setDestPath("/driver/sdhc/src/")
-    sdhcSource1File.setProjectPath("config/" + configName + "/driver/sdhc/")
-    sdhcSource1File.setType("SOURCE")
-
-
-    sdhcHeaderLocalFile = sdhcComponent.createFileSymbol("DRV_SDHC_LOCAL_H", None)
-    sdhcHeaderLocalFile.setSourcePath("driver/sdhc/src/drv_sdhc_local.h")
-    sdhcHeaderLocalFile.setOutputName("drv_sdhc_local.h")
-    sdhcHeaderLocalFile.setDestPath("/driver/sdhc/src/")
-    sdhcHeaderLocalFile.setProjectPath("config/" + configName + "/driver/sdhc/")
-    sdhcHeaderLocalFile.setType("HEADER")
-
     sdhcHeaderHostLocFile = sdhcComponent.createFileSymbol("DRV_SDHC_HOST_LOCAL_H", None)
-    sdhcHeaderHostLocFile.setSourcePath("driver/sdhc/src/drv_sdhc_host_local.h")
+    sdhcHeaderHostLocFile.setSourcePath("driver/sdhc/async/src/drv_sdhc_host_local.h")
     sdhcHeaderHostLocFile.setOutputName("drv_sdhc_host_local.h")
     sdhcHeaderHostLocFile.setDestPath("/driver/sdhc/src/")
     sdhcHeaderHostLocFile.setProjectPath("config/" + configName + "/driver/sdhc/")
     sdhcHeaderHostLocFile.setType("HEADER")
 
     sdhcHeaderHostFile = sdhcComponent.createFileSymbol("DRV_SDHC_HOST_H", None)
-    sdhcHeaderHostFile.setSourcePath("driver/sdhc/src/drv_sdhc_host.h")
+    sdhcHeaderHostFile.setSourcePath("driver/sdhc/async/src/drv_sdhc_host.h")
     sdhcHeaderHostFile.setOutputName("drv_sdhc_host.h")
     sdhcHeaderHostFile.setDestPath("/driver/sdhc/src/")
     sdhcHeaderHostFile.setProjectPath("config/" + configName + "/driver/sdhc/")
@@ -258,24 +245,32 @@ def instantiateComponent(sdhcComponent, index):
 def destroyComponent(sdhcComponent):
     Database.setSymbolValue("core","DMA_CH_NEEDED_FOR_HSMCI", False, 2)
 
-def onCapabilityConnected(connectionInfo):
+def onAttachmentConnected(source, target):
     global sdhcFsEnable
 
-    capability = connectionInfo["capabilityID"]
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
 
-    if (remoteComponent.getID() == "sys_fs"):
-        sdhcFsEnable.setValue(True, 1)
-        Database.setSymbolValue("drv_sdhc", "DRV_SDHC_COMMON_FS_COUNTER", True, 1)
+    # For Capability Connected (drv_sdcard)
+    if (connectID == "drv_media"):
+        if (remoteID == "sys_fs"):
+            sdhcFsEnable.setValue(True, 1)
+            Database.setSymbolValue("drv_sdhc", "DRV_SDHC_COMMON_FS_COUNTER", True, 1)
 
-def onCapabilityDisconnected(connectionInfo):
+def onAttachmentDisconnected(source, target):
     global sdhcFsEnable
 
-    capability = connectionInfo["capabilityID"]
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
+    localComponent = source["component"]
+    remoteComponent = target["component"]
+    remoteID = remoteComponent.getID()
+    connectID = source["id"]
+    targetID = target["id"]
 
-    if (remoteComponent.getID() == "sys_fs"):
-        sdhcFsEnable.setValue(False, 1)
-        Database.setSymbolValue("drv_sdhc", "DRV_SDHC_COMMON_FS_COUNTER", False, 1)
+    # For Capability Disconnected (drv_sdcard)
+    if (connectID == "drv_media"):
+        if (remoteID == "sys_fs"):
+            sdhcFsEnable.setValue(False, 1)
+            Database.setSymbolValue("drv_sdhc", "DRV_SDHC_COMMON_FS_COUNTER", False, 1)
