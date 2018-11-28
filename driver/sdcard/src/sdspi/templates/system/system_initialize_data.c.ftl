@@ -127,7 +127,6 @@ const DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
     .writeProtectPin    = SYS_PORT_PIN_NONE,
 </#if>
 
-<#if core.DMA_ENABLE?has_content>
 <#if DRV_SDSPI_TX_RX_DMA == true>
     /* DMA Channel for Transmit */
     .txDMAChannel = DRV_SDSPI_XMIT_DMA_CH_IDX${INDEX?string},
@@ -146,7 +145,6 @@ const DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
 
     /* DMA Channel for Receive */
     .rxDMAChannel  = SYS_DMA_CHANNEL_NONE,
-</#if>
 </#if>
 };
 

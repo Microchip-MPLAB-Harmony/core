@@ -42,26 +42,22 @@
 #ifndef _DRV_SDSPI_LOCAL_H
 #define _DRV_SDSPI_LOCAL_H
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
 #include "configuration.h"
 #include "system/time/sys_time.h"
-<#if core.DMA_ENABLE?has_content>
 #include "system/dma/sys_dma.h"
-</#if>
 #include "driver/sdcard/sdspi/drv_sdspi.h"
 #include "osal/osal.h"
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Type Definitions
 // *****************************************************************************
 // *****************************************************************************
-
 #define _DRV_SDSPI_CLIENT_INDEX_MASK               (0x000000FF)
 #define _DRV_SDSPI_INSTANCE_INDEX_MASK             (0x0000FF00)
 #define _DRV_SDSPI_TOKEN_MASK                      (0xFFFF0000)
@@ -340,15 +336,14 @@ typedef enum
 
     DRV_SDSPI_OPERATION_TYPE_WRITE,
 
-} DRV_SDSPI_OPERATION_TYPE;
+}DRV_SDSPI_OPERATION_TYPE;
 
 typedef enum
 {
     DRV_SDSPI_SPI_TRANSFER_TYPE_BYTE = 0,
-
     DRV_SDSPI_SPI_TRANSFER_TYPE_BLOCK,
 
-} DRV_SDSPI_SPI_TRANSFER_TYPE;
+}DRV_SDSPI_SPI_TRANSFER_TYPE;
 
 typedef enum
 {
@@ -362,6 +357,7 @@ typedef enum
     DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR,
 
 } DRV_SDSPI_SPI_TRANSFER_STATUS;
+
 
 // *****************************************************************************
 /* SD Card Driver read task Status
@@ -411,7 +407,7 @@ typedef enum
     /* SD Card is attached to the system */
     DRV_SDSPI_IS_ATTACHED
 
-} DRV_SDSPI_ATTACH;
+}DRV_SDSPI_ATTACH;
 
 // *****************************************************************************
 /* SD Card commands
@@ -492,7 +488,7 @@ typedef enum
     /* Command code to disable CRC checking */
     CMD_VALUE_CRC_ON_OFF          = 59,
 
-} DRV_SDSPI_COMMAND_VALUE;
+}DRV_SDSPI_COMMAND_VALUE;
 
 // *****************************************************************************
 /* SD Card Responses
@@ -524,7 +520,7 @@ typedef enum
     /* R7 type response */
     RESPONSE_R7
 
-} DRV_SDSPI_RESPONSES;
+}DRV_SDSPI_RESPONSES;
 
 // *****************************************************************************
 /* SD Card command indices
@@ -602,7 +598,7 @@ typedef enum
     /* Index of in the CMD_SET_WR_BLK_ERASE_COUNT command 'Command array' */
     DRV_SDSPI_SET_WR_BLK_ERASE_COUNT
 
-} DRV_SDSPI_COMMANDS;
+}DRV_SDSPI_COMMANDS;
 
 // *****************************************************************************
 /* SD Card type
@@ -625,7 +621,7 @@ typedef enum
     /* SDHC type Card */
     DRV_SDSPI_MODE_HC
 
-} DRV_SDSPI_TYPE;
+}DRV_SDSPI_TYPE;
 
 // *****************************************************************************
 /* SD Card initialization states
@@ -680,7 +676,6 @@ typedef enum
 
     /* Send OCR to expand the ACMD41 */
     DRV_SDSPI_INIT_READ_OCR_REGISTER,
-
     /* Send APP CMD */
     DRV_SDSPI_INIT_SEND_APP_CMD,
 
@@ -967,7 +962,7 @@ typedef union
     /* SD Card response 7 */
     DRV_SDSPI_RESPONSE_7  response7;
 
-} DRV_SDSPI_RESPONSE_PACKETS;
+}DRV_SDSPI_RESPONSE_PACKETS;
 
 // *****************************************************************************
 /* SDSPI Driver Instance Object
@@ -1094,7 +1089,6 @@ typedef struct
     /* SDSPI driver media geometry table. */
     SYS_MEDIA_REGION_GEOMETRY           mediaGeometryTable[3];
 
-<#if core.DMA_ENABLE?has_content>
     /* Transmit DMA Channel */
     SYS_DMA_CHANNEL                     txDMAChannel;
 
@@ -1107,7 +1101,6 @@ typedef struct
     /* This is the SPI receive register address. Used for DMA operation. */
     void*                               rxAddress;
 
-</#if>
     /* Pointer to the common transmit dummy data array */
     uint8_t*                            txDummyData;
 

@@ -26,8 +26,10 @@
 #### Component ####
 ################################################################################
 
+#myVariableValue = Database.getSymbolValue("core", "COMPONENT_PACKAGE")
+#pioPinout = ATDF.getNode('/avr-tools-device-file/pinouts/pinout@[name= "' + str(myVariableValue) + '"]')
 global drvSdspiInstanceSpace
-global sdspiTXRXDMA
+global sdspiSymPLIBConnection
 
 def sdspiSyncFileGen(symbol, event):
     component = symbol.getComponent()
@@ -61,25 +63,22 @@ def updatePinPosition(symbol, event):
         # "value" of at25mSymChipSelectPin and other pin symbols should be updated
         # here based on the package selected in Pin manager.
         pioPinout = ATDF.getNode('/avr-tools-device-file/pinouts/pinout@[name= "' + event["value"] + '"]')
-        if pioPinout != None:
-            count = len(pioPinout.getChildren())
-            for id in range(0, count):
-                if (pioPinout.getChildren()[id].getAttribute("pad")[0] == "P") and (pioPinout.getChildren()[id].getAttribute("pad")[-1].isdigit()):
-                    key = "SYS_PORT_PIN_" + pioPinout.getChildren()[id].getAttribute("pad")
-                    value = pioPinout.getChildren()[id].getAttribute("position")
-                    symbol.setKeyValue(key, value)
+        count = Database.getSymbolValue("core", "PIO_PIN_TOTAL")
+        for id in range(0,count):
+            if (pioPinout.getChildren()[id].getAttribute("pad")[0] == "P") and (pioPinout.getChildren()[id].getAttribute("pad")[-1].isdigit()):
+                key = "SYS_PORT_PIN_" + pioPinout.getChildren()[id].getAttribute("pad")
+                value = pioPinout.getChildren()[id].getAttribute("position")
+                symbol.setKeyValue(key, value)
 
 def requestDMAComment(symbol, event):
-    global sdspiTXRXDMA
-
-    if ((event["value"] == -2) and (sdspiTXRXDMA.getValue() == True)):
+    if event["value"] == -2:
         symbol.setVisible(True)
-        event["symbol"].setVisible(False)
     else:
         symbol.setVisible(False)
 
 def requestAndAssignDMAChannel(symbol, event):
     global drvSdspiInstanceSpace
+    global sdspiSymPLIBConnection
 
     spiPeripheral = Database.getSymbolValue(drvSdspiInstanceSpace, "DRV_SDSPI_PLIB")
 
@@ -96,10 +95,13 @@ def requestAndAssignDMAChannel(symbol, event):
     if event["value"] == False:
         Database.setSymbolValue("core", dmaRequestID, False, 2)
     else:
-        Database.setSymbolValue("core", dmaRequestID, True, 2)
+        if (sdspiSymPLIBConnection.getValue() == True) and (Database.getSymbolValue("core", dmaChannelID) == -1):
+            Database.setSymbolValue("core", dmaRequestID, True, 2)
 
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
+    # print("Value of dmaChannelID ", dmaChannelID)
+    # print("Value of channel ", channel)
     symbol.setValue(channel, 2)
 
 drvSdspiInstanceSpace = "drv_sdcard"
@@ -110,13 +112,8 @@ Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True, 1)
 # Enable "Enable System Ports" option in MHC
 Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True, 1)
 
-if Database.getSymbolValue("core", "DMA_ENABLE") == None:
-    isDMAPresent = False
-else:
-    isDMAPresent = True
-
-    # Enable "Enable System DMA" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
+# Enable "Enable System DMA" option in MHC
+Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
 
 # SDSPI Symbols
 sdspiDrvMenu = sdcardComponent.createMenuSymbol("DRV_SDCARD_SDSPI_MENU", None)
@@ -132,6 +129,10 @@ sdspiSymPLIB = sdcardComponent.createStringSymbol("DRV_SDSPI_PLIB", sdspiDrvMenu
 sdspiSymPLIB.setLabel("PLIB Used")
 sdspiSymPLIB.setReadOnly(True)
 sdspiSymPLIB.setDefaultValue("")
+
+sdspiSymPLIBConnection = sdcardComponent.createBooleanSymbol("DRV_SDSPI_PLIB_CONNECTION", sdspiDrvMenu)
+sdspiSymPLIBConnection.setDefaultValue(False)
+sdspiSymPLIBConnection.setVisible(False)
 
 sdspiSymNumClients = sdcardComponent.createIntegerSymbol("DRV_SDSPI_NUM_CLIENTS", sdspiDrvMenu)
 sdspiSymNumClients.setLabel("Number of Clients")
@@ -154,9 +155,12 @@ sdspiSymChipSelectPin.setDependencies(updatePinPosition, ["core.COMPONENT_PACKAG
 
 sdspiChipSelectPinComment = sdcardComponent.createCommentSymbol("DRV_SDSPI_CHIP_SELECT_PIN_COMMENT", sdspiDrvMenu)
 sdspiChipSelectPinComment.setLabel("Configure the Chip Select pin as GPIO output under Pin Settings.")
+sdspiChipSelectPinComment.setVisible(True)
 
 sdspiSymWriteProtect = sdcardComponent.createBooleanSymbol("DRV_SDSPI_ENABLE_WRITE_PROTECT_CHECKING", sdspiDrvMenu)
 sdspiSymWriteProtect.setLabel("Use Write Protect Pin (Active High)?")
+sdspiSymWriteProtect.setDefaultValue(False)
+sdspiSymWriteProtect.setVisible(True)
 
 sdspiSymWriteProtectPin = sdcardComponent.createKeyValueSetSymbol("DRV_SDSPI_WRITE_PROTECT_PIN", sdspiSymWriteProtect)
 sdspiSymWriteProtectPin.setLabel("Write Protect Pin (Active High)")
@@ -172,9 +176,8 @@ sdspiWriteProtectPinComment.setVisible(sdspiSymWriteProtect.getValue())
 sdspiWriteProtectPinComment.setDependencies(showWriteProtectComment, ["DRV_SDSPI_ENABLE_WRITE_PROTECT_CHECKING"])
 
 sdspiTXRXDMA = sdcardComponent.createBooleanSymbol("DRV_SDSPI_TX_RX_DMA", sdspiDrvMenu)
-sdspiTXRXDMA.setLabel("Use DMA for Transmit and Receive ?")
-sdspiTXRXDMA.setVisible(isDMAPresent)
-sdspiTXRXDMA.setReadOnly(True)
+sdspiTXRXDMA.setLabel("Use DMA for Transmit and Receive?")
+sdspiTXRXDMA.setDefaultValue(False)
 
 sdspiTXDMAChannel = sdcardComponent.createIntegerSymbol("DRV_SDSPI_TX_DMA_CHANNEL", sdspiDrvMenu)
 sdspiTXDMAChannel.setLabel("DMA Channel For Transmit")
@@ -184,7 +187,7 @@ sdspiTXDMAChannel.setReadOnly(True)
 sdspiTXDMAChannel.setDependencies(requestAndAssignDMAChannel, ["DRV_SDSPI_TX_RX_DMA"])
 
 sdspiTXDMAChannelComment = sdcardComponent.createCommentSymbol("DRV_SDSPI_TX_DMA_CH_COMMENT", sdspiDrvMenu)
-sdspiTXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Transmit. Check DMA manager. !!!")
+sdspiTXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Transmit. Check DMA manager.")
 sdspiTXDMAChannelComment.setVisible(False)
 sdspiTXDMAChannelComment.setDependencies(requestDMAComment, ["DRV_SDSPI_TX_DMA_CHANNEL"])
 
@@ -196,13 +199,9 @@ sdspiRXDMAChannel.setReadOnly(True)
 sdspiRXDMAChannel.setDependencies(requestAndAssignDMAChannel, ["DRV_SDSPI_TX_RX_DMA"])
 
 sdspiRXDMAChannelComment = sdcardComponent.createCommentSymbol("DRV_SDSPI_RX_DMA_CH_COMMENT", sdspiDrvMenu)
-sdspiRXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Receive. Check DMA manager. !!!")
+sdspiRXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Receive. Check DMA manager.")
 sdspiRXDMAChannelComment.setVisible(False)
 sdspiRXDMAChannelComment.setDependencies(requestDMAComment, ["DRV_SDSPI_RX_DMA_CHANNEL"])
-
-sdspiDependencyDMAComment = sdcardComponent.createCommentSymbol("DRV_SDSPI_DEPENDENCY_DMA_COMMENT", sdspiDrvMenu)
-sdspiDependencyDMAComment.setLabel("!!! Satisfy PLIB Dependency to Allocate DMA Channel !!!")
-sdspiDependencyDMAComment.setVisible(True)
 
 pinOutNode = ATDF.getNode("/avr-tools-device-file/pinouts/pinout")
 pinOut = pinOutNode.getChildren()
@@ -233,12 +232,11 @@ sdspiSymHeaderFile.setOverwrite(True)
 sdspiSymHeaderFile.setDependencies(sdspiCommonFileGen, ["DRV_SDCARD_SELECT_PROTOCOL"])
 
 sdspiSymHeaderDefFile = sdcardComponent.createFileSymbol("DRV_SDSPI_DEF", None)
-sdspiSymHeaderDefFile.setSourcePath("driver/sdcard/src/sdspi/drv_sdspi_definitions.h.ftl")
+sdspiSymHeaderDefFile.setSourcePath("driver/sdcard/src/sdspi/drv_sdspi_definitions.h")
 sdspiSymHeaderDefFile.setOutputName("drv_sdspi_definitions.h")
 sdspiSymHeaderDefFile.setDestPath("driver/sdcard/sdspi")
 sdspiSymHeaderDefFile.setProjectPath("config/" + configName + "/driver/sdcard/sdspi/")
 sdspiSymHeaderDefFile.setType("HEADER")
-sdspiSymHeaderDefFile.setMarkup(True)
 sdspiSymHeaderDefFile.setOverwrite(True)
 sdspiSymHeaderDefFile.setDependencies(sdspiCommonFileGen, ["DRV_SDCARD_SELECT_PROTOCOL"])
 
@@ -286,47 +284,43 @@ sdspiAsyncSymInterfaceHeaderFile.setEnabled(False)
 sdspiAsyncSymInterfaceHeaderFile.setDependencies(asyncFileGen, ["DRV_SDCARD_COMMON_MODE", "DRV_SDCARD_SELECT_PROTOCOL"])
 """
 
-# Sync Source Files -> Common Configuration
+# Sync Source Files
 sdspiSyncSymSourceFile = sdcardComponent.createFileSymbol("DRV_SDSPI_SYNC_SOURCE", None)
-sdspiSyncSymSourceFile.setSourcePath("driver/sdcard/src/sdspi/sync/drv_sdspi.c.ftl")
+sdspiSyncSymSourceFile.setSourcePath("driver/sdcard/src/sdspi/sync/drv_sdspi.c")
 sdspiSyncSymSourceFile.setOutputName("drv_sdspi.c")
 sdspiSyncSymSourceFile.setDestPath("driver/sdcard/sdspi/src")
 sdspiSyncSymSourceFile.setProjectPath("config/" + configName + "/driver/sdcard/sdspi/")
 sdspiSyncSymSourceFile.setType("SOURCE")
-sdspiSyncSymSourceFile.setMarkup(True)
 sdspiSyncSymSourceFile.setOverwrite(True)
 sdspiSyncSymSourceFile.setEnabled(True)
 sdspiSyncSymSourceFile.setDependencies(sdspiSyncFileGen, ["DRV_SDCARD_COMMON_MODE", "DRV_SDCARD_SELECT_PROTOCOL"])
 
 sdspiSyncSymHeaderLocalFile = sdcardComponent.createFileSymbol("DRV_SDSPI_SYNC_HEADER_LOCAL", None)
-sdspiSyncSymHeaderLocalFile.setSourcePath("driver/sdcard/src/sdspi/sync/drv_sdspi_local.h.ftl")
+sdspiSyncSymHeaderLocalFile.setSourcePath("driver/sdcard/src/sdspi/sync/drv_sdspi_local.h")
 sdspiSyncSymHeaderLocalFile.setOutputName("drv_sdspi_local.h")
 sdspiSyncSymHeaderLocalFile.setDestPath("driver/sdcard/sdspi/src")
 sdspiSyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/sdcard/sdspi/")
 sdspiSyncSymHeaderLocalFile.setType("HEADER")
-sdspiSyncSymHeaderLocalFile.setMarkup(True)
 sdspiSyncSymHeaderLocalFile.setOverwrite(True)
 sdspiSyncSymHeaderLocalFile.setEnabled(True)
 sdspiSyncSymHeaderLocalFile.setDependencies(sdspiSyncFileGen, ["DRV_SDCARD_COMMON_MODE", "DRV_SDCARD_SELECT_PROTOCOL"])
 
 sdspiSyncSymPlibInterfaceSourceFile = sdcardComponent.createFileSymbol("DRV_SDSPI_SYNC_PLIB_INTERFACE_SOURCE", None)
-sdspiSyncSymPlibInterfaceSourceFile.setSourcePath("driver/sdcard/src/sdspi/sync/drv_sdspi_plib_interface.c.ftl")
+sdspiSyncSymPlibInterfaceSourceFile.setSourcePath("driver/sdcard/src/sdspi/sync/drv_sdspi_plib_interface.c")
 sdspiSyncSymPlibInterfaceSourceFile.setOutputName("drv_sdspi_plib_interface.c")
 sdspiSyncSymPlibInterfaceSourceFile.setDestPath("driver/sdcard/sdspi/src")
 sdspiSyncSymPlibInterfaceSourceFile.setProjectPath("config/" + configName + "/driver/sdcard/sdspi/")
 sdspiSyncSymPlibInterfaceSourceFile.setType("SOURCE")
-sdspiSyncSymPlibInterfaceSourceFile.setMarkup(True)
 sdspiSyncSymPlibInterfaceSourceFile.setOverwrite(True)
 sdspiSyncSymPlibInterfaceSourceFile.setEnabled(True)
 sdspiSyncSymPlibInterfaceSourceFile.setDependencies(sdspiSyncFileGen, ["DRV_SDCARD_COMMON_MODE", "DRV_SDCARD_SELECT_PROTOCOL"])
 
 sdspiSyncSymPlibInterfaceHeaderFile = sdcardComponent.createFileSymbol("DRV_SDSPI_SYNC_PLIB_INTERFACE_HEADER", None)
-sdspiSyncSymPlibInterfaceHeaderFile.setSourcePath("driver/sdcard/src/sdspi/sync/drv_sdspi_plib_interface.h.ftl")
+sdspiSyncSymPlibInterfaceHeaderFile.setSourcePath("driver/sdcard/src/sdspi/sync/drv_sdspi_plib_interface.h")
 sdspiSyncSymPlibInterfaceHeaderFile.setOutputName("drv_sdspi_plib_interface.h")
 sdspiSyncSymPlibInterfaceHeaderFile.setDestPath("driver/sdcard/sdspi/src")
 sdspiSyncSymPlibInterfaceHeaderFile.setProjectPath("config/" + configName + "/driver/sdcard/sdspi/")
 sdspiSyncSymPlibInterfaceHeaderFile.setType("HEADER")
-sdspiSyncSymPlibInterfaceHeaderFile.setMarkup(True)
 sdspiSyncSymPlibInterfaceHeaderFile.setOverwrite(True)
 sdspiSyncSymPlibInterfaceHeaderFile.setEnabled(True)
 sdspiSyncSymPlibInterfaceHeaderFile.setDependencies(sdspiSyncFileGen, ["DRV_SDCARD_COMMON_MODE", "DRV_SDCARD_SELECT_PROTOCOL"])

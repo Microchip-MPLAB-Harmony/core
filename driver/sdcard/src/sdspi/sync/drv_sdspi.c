@@ -45,7 +45,6 @@
 // Section: Include Files
 // *****************************************************************************
 // *****************************************************************************
-
 #include "configuration.h"
 #include "driver/sdcard/sdspi/drv_sdspi.h"
 #include "drv_sdspi_plib_interface.h"
@@ -1233,7 +1232,6 @@ void DRV_SDSPI_Tasks ( SYS_MODULE_OBJ object )
 // Section: Driver Interface Function Definitions
 // *****************************************************************************
 // *****************************************************************************
-
 SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     const SYS_MODULE_INDEX drvIndex,
     const SYS_MODULE_INIT * const init
@@ -1285,12 +1283,10 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     dObj->remapClockPhase       = sdSPIInit->remapClockPhase;
     dObj->remapClockPolarity    = sdSPIInit->remapClockPolarity;
     dObj->remapDataBits         = sdSPIInit->remapDataBits;
-<#if core.DMA_ENABLE?has_content>
     dObj->rxDMAChannel          = sdSPIInit->rxDMAChannel;
     dObj->txDMAChannel          = sdSPIInit->txDMAChannel;
     dObj->txAddress             = sdSPIInit->txAddress;
     dObj->rxAddress             = sdSPIInit->rxAddress;
-</#if>
     dObj->chipSelectPin         = sdSPIInit->chipSelectPin;
     dObj->sdcardSpeedHz         = sdSPIInit->sdcardSpeedHz;
     dObj->blockStartAddress     = sdSPIInit->blockStartAddress;
@@ -1318,7 +1314,6 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     /* De-assert Chip Select pin to begin with */
     SYS_PORT_PinSet(dObj->chipSelectPin);
 
-<#if core.DMA_ENABLE?has_content>
     /* Register call-backs with the DMA System Service */
     if (dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE && dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
@@ -1330,18 +1325,13 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
 
         SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, _DRV_SDSPI_TX_DMA_CallbackHandler, (uintptr_t)dObj);
         SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, _DRV_SDSPI_RX_DMA_CallbackHandler, (uintptr_t)dObj);
-    }
+	}
     else
     {
         /* Register call-back with the SPI PLIB */
         dObj->spiPlib->callbackRegister(_DRV_SDSPI_SPIPlibCallbackHandler, (uintptr_t)dObj);
     }
 
-<#else>
-    /* Register call-back with the SPI PLIB */
-    dObj->spiPlib->callbackRegister(_DRV_SDSPI_SPIPlibCallbackHandler, (uintptr_t)dObj);
-
-</#if>
     /* Update the status */
     dObj->status = SYS_STATUS_READY;
 

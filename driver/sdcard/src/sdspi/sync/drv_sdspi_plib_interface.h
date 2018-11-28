@@ -43,17 +43,11 @@
 #ifndef _DRV_SDSPI_PLIB_INTERFACE_H
 #define _DRV_SDSPI_PLIB_INTERFACE_H
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Included Files
-// *****************************************************************************
-// *****************************************************************************
-
 #include "drv_sdspi_local.h"
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Data Type Definitions
+// Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
 
@@ -69,11 +63,9 @@
   Remarks:
     Block transfers always block on a semaphore in an RTOS environment. This
     semaphore is released from this callback when DMA is not used.
+
 */
-
 void _DRV_SDSPI_SPIPlibCallbackHandler( uintptr_t context );
-
-<#if core.DMA_ENABLE?has_content>
 // *****************************************************************************
 /* SDSPI RX DMA Event Handler
 
@@ -88,13 +80,12 @@ void _DRV_SDSPI_SPIPlibCallbackHandler( uintptr_t context );
   Remarks:
     Block transfers always block on a semaphore in an RTOS environment. This
     semaphore is released from this callback when DMA is used.
-*/
 
+*/
 void _DRV_SDSPI_RX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
 );
-
 // *****************************************************************************
 /* SDSPI TX DMA Event Handler
 
@@ -105,14 +96,13 @@ void _DRV_SDSPI_RX_DMA_CallbackHandler(
   Description:
 
   Remarks:
-*/
 
+*/
 void _DRV_SDSPI_TX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
 );
 
-</#if>
 // *****************************************************************************
 /* SDSPI Write Block
 
@@ -127,7 +117,6 @@ void _DRV_SDSPI_TX_DMA_CallbackHandler(
     handler (either DMA handler or the SPI PLIB handler) once the transfer is
     complete.
 */
-
 bool _DRV_SDSPI_SPIBlockWrite(
     DRV_SDSPI_OBJ* dObj,
     void* pWriteBuffer
@@ -144,7 +133,6 @@ bool _DRV_SDSPI_SPIBlockWrite(
   Remarks:
     This is a blocking implementation. This function does not block on a semaphore.
 */
-
 bool _DRV_SDSPI_SPIWrite(
     DRV_SDSPI_OBJ* dObj,
     void* pWriteBuffer,
@@ -162,13 +150,11 @@ bool _DRV_SDSPI_SPIWrite(
   Remarks:
     This is a blocking implementation. This function does not block on a semaphore.
 */
-
 bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
     DRV_SDSPI_OBJ* dObj,
     void* pWriteBuffer,
     uint32_t nBytes
 );
-
 // *****************************************************************************
 /* SDSPI Read Block
 
@@ -183,7 +169,6 @@ bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
     handler (either DMA handler or the SPI PLIB handler) once the transfer is
     complete.
 */
-
 bool _DRV_SDSPI_SPIBlockRead(
     DRV_SDSPI_OBJ* dObj,
     void* pReadBuffer
@@ -200,7 +185,6 @@ bool _DRV_SDSPI_SPIBlockRead(
   Remarks:
     This is a blocking implementation. This function does not block on a semaphore.
 */
-
 bool _DRV_SDSPI_SPIRead(
     DRV_SDSPI_OBJ* dObj,
     void* pReadBuffer,
@@ -220,7 +204,6 @@ bool _DRV_SDSPI_SPIRead(
   Remarks:
 
 */
-
 bool _DRV_SDSPI_CmdResponseTimerStart(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t period
@@ -237,9 +220,7 @@ bool _DRV_SDSPI_CmdResponseTimerStart(
   Remarks:
 
 */
-
 bool _DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj );
-
 // *****************************************************************************
 /* SD Card Timer Start
 
@@ -252,7 +233,6 @@ bool _DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj );
   Remarks:
 
 */
-
 bool _DRV_SDSPI_TimerStart(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t period
@@ -270,7 +250,6 @@ bool _DRV_SDSPI_TimerStart(
   Remarks:
 
 */
-
 bool _DRV_SDSPI_TimerStop( DRV_SDSPI_OBJ* const dObj );
 
 // *****************************************************************************
