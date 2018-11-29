@@ -50,7 +50,6 @@
 
 #include "driver/sdspi/drv_sdspi.h"
 #include "system/fs/sys_fs_media_manager.h"
-#include "drv_sdspi_variant_mapping.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -60,18 +59,39 @@
 
 /* FS Function registration table. */
 
-const SYS_FS_MEDIA_FUNCTIONS sdspiMediaFunctions =
-{
-    .mediaStatusGet     = DRV_SDSPI_IsAttached,
-    .mediaGeometryGet   = DRV_SDSPI_GeometryGet,
-    .sectorRead         = DRV_SDSPI_FS_Read,
-    .sectorWrite        = DRV_SDSPI_FS_Write,
-    .eventHandlerset    = DRV_SDSPI_EventHandlerSet,
-    .commandStatusGet   = (void *)DRV_SDSPI_CommandStatus,
-    .open               = DRV_SDSPI_Open,
-    .close              = DRV_SDSPI_Close,
-    .tasks              = DRV_SDSPI_Tasks
-};
+<#if DRV_SDSPI_COMMON_MODE == "Asynchronous" >
+    <#lt>const SYS_FS_MEDIA_FUNCTIONS sdspiMediaFunctions =
+    <#lt>{
+    <#lt>    .mediaStatusGet     = DRV_SDSPI_IsAttached,
+    <#lt>    .mediaGeometryGet   = DRV_SDSPI_GeometryGet,
+    <#lt>    .sectorRead         = DRV_SDSPI_AsyncRead,
+    <#lt>    .sectorWrite        = DRV_SDSPI_AsyncWrite,
+    <#lt>    .eventHandlerset    = DRV_SDSPI_EventHandlerSet,
+    <#lt>    .commandStatusGet   = (void *)DRV_SDSPI_CommandStatusGet,
+    <#lt>    .Read               = DRV_SDSPI_AsyncRead,
+    <#lt>    .erase              = NULL,
+    <#lt>    .addressGet         = NULL,
+    <#lt>    .open               = DRV_SDSPI_Open,
+    <#lt>    .close              = DRV_SDSPI_Close,
+    <#lt>    .tasks              = DRV_SDSPI_Tasks,
+    <#lt>};
+<#else>
+    <#lt>const SYS_FS_MEDIA_FUNCTIONS sdspiMediaFunctions =
+    <#lt>{
+    <#lt>    .mediaStatusGet     = DRV_SDSPI_IsAttached,
+    <#lt>    .mediaGeometryGet   = DRV_SDSPI_GeometryGet,
+    <#lt>    .sectorRead         = DRV_SDSPI_Read,
+    <#lt>    .sectorWrite        = DRV_SDSPI_Write,
+    <#lt>    .eventHandlerset    = DRV_SDSPI_EventHandlerSet,
+    <#lt>    .commandStatusGet   = (void *)DRV_SDSPI_CommandStatusGet,
+    <#lt>    .Read               = DRV_SDSPI_Read,
+    <#lt>    .erase              = NULL,
+    <#lt>    .addressGet         = NULL,
+    <#lt>    .open               = DRV_SDSPI_Open,
+    <#lt>    .close              = DRV_SDSPI_Close,
+    <#lt>    .tasks              = NULL,
+    <#lt>};
+</#if>
 
 // *****************************************************************************
 // *****************************************************************************

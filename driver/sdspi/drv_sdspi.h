@@ -49,12 +49,15 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include <stdio.h>
+#include <stdint.h>
 #include <stdbool.h>
-#include "driver/driver.h"
-#include "system/system.h"
-#include "drv_sdspi_definitions.h"
+#include <stddef.h>
+#include "driver/driver_common.h"
+#include "system/int/sys_int.h"
 #include "system/system_media.h"
+#include "system/time/sys_time.h"
+
+#include "drv_sdspi_definitions.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -90,7 +93,7 @@ typedef enum
     /* Operation has been completed successfully. */
     DRV_SDSPI_EVENT_COMMAND_COMPLETE = SYS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE,
 
-    /* There was an error during the operation. */
+    /* There was an error during the operation */
     DRV_SDSPI_EVENT_COMMAND_ERROR = SYS_MEDIA_EVENT_BLOCK_COMMAND_ERROR
 
 } DRV_SDSPI_EVENT;
@@ -106,7 +109,7 @@ typedef enum
     /*Currently being in transfer */
     DRV_SDSPI_COMMAND_IN_PROGRESS        = SYS_MEDIA_COMMAND_IN_PROGRESS,
 
-    /*Error */
+    /*Unknown Command */
     DRV_SDSPI_COMMAND_ERROR_UNKNOWN      = SYS_MEDIA_COMMAND_UNKNOWN,
 
 } DRV_SDSPI_COMMAND_STATUS;
@@ -186,7 +189,7 @@ typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE  DRV_SDSPI_COMMAND_HANDLE;
 
   Remarks:
     If the event is DRV_SDSPI_EVENT_COMMAND_COMPLETE, it means that the
-    scheduled operation was completed successfully.
+    write or a erase operation was completed successfully.
 
     If the event is DRV_SDSPI_EVENT_COMMAND_ERROR, it means that the scheduled
     operation was not completed successfully.
@@ -266,9 +269,9 @@ typedef SYS_MEDIA_EVENT_HANDLER     DRV_SDSPI_EVENT_HANDLER;
         // SDSPI Client Objects Pool
         .clientObjPool      = (uintptr_t)&drvSDSPI0ClientObjPool[0],
         .chipSelectPin      = DRV_SDSPI_CHIP_SELECT_PIN_IDX0,
-        .sdcardSpeedHz      = DRV_SDSPI_SPEED_HZ_IDX0,
+        .SDSPISpeedHz      = DRV_SDSPI_SPEED_HZ_IDX0,
         .writeProtectPin    = SYS_PORT_PIN_NONE,
-        .isRegisterWithFS   = DRV_SDSPI_REGISTER_WITH_FS_IDX0,
+        .isFsEnabled   = DRV_SDSPI_REGISTER_WITH_FS_IDX0,
         // DMA Channel for Transmit
         .txDMAChannel = DRV_SDSPI_XMIT_DMA_CH_IDX0,
         // DMA Channel for Receive
@@ -331,7 +334,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
 
   Example:
     <code>
-    // "object" - Returned from DRV_SDSPI_Initialize
+    SYS_MODULE_OBJ      object;     // Returned from DRV_SDSPI_Initialize
     SYS_STATUS          status;
 
     status = DRV_SDSPI_Status(object);
@@ -345,7 +348,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
   Remarks:
     This operation can be used to determine if the driver is initialized or not.
 */
-SYS_STATUS DRV_SDSPI_Status( SYS_MODULE_OBJ object );
+SYS_STATUS DRV_SDSPI_Status( const SYS_MODULE_OBJ object );
 
 // *****************************************************************************
 /* Function:
@@ -428,7 +431,7 @@ DRV_HANDLE DRV_SDSPI_Open(const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT i
 
   Example:
     <code>
-    // "handle" is the driver handle returned by the DRV_SDSPI_Open function
+    DRV_HANDLE handle;  // Returned from DRV_SDSPI_Open
 
     DRV_SDSPI_Close (handle);
     </code>
@@ -480,8 +483,7 @@ void DRV_SDSPI_Close(const DRV_HANDLE handle);
     {
         DRV_SDSPI_Tasks(sysObj.drvSDSPI0);
 
-        // Yield and allow other threads to run. Also determines the rate at which
-        // the SD Card attach/detach status is checked by the driver.
+        // Yield and allow other threads to run
         vTaskDelay(100 / portTICK_PERIOD_MS);
     }
     </code>
@@ -495,7 +497,7 @@ void DRV_SDSPI_Tasks ( SYS_MODULE_OBJ object );
 
 // *****************************************************************************
 /* Function:
-    bool DRV_SDSPI_Sync_Read (
+    bool DRV_SDSPI_SyncRead (
         const DRV_HANDLE handle,
         void* targetBuffer,
         uint32_t blockStart,
@@ -548,7 +550,7 @@ void DRV_SDSPI_Tasks ( SYS_MODULE_OBJ object );
 
     // mySDSPIHandle is the handle returned by the DRV_SDSPI_Open function.
 
-    if (DRV_SDSPI_Sync_Read(mySDSPIHandle, myBuffer, blockStart, nBlock) == true)
+    if (DRV_SDSPI_SyncRead(mySDSPIHandle, myBuffer, blockStart, nBlock) == true)
     {
         // Read successful
     }
@@ -563,7 +565,7 @@ void DRV_SDSPI_Tasks ( SYS_MODULE_OBJ object );
     None.
 */
 
-bool DRV_SDSPI_Sync_Read (
+bool DRV_SDSPI_SyncRead (
     const DRV_HANDLE handle,
     void* targetBuffer,
     uint32_t blockStart,
@@ -572,7 +574,7 @@ bool DRV_SDSPI_Sync_Read (
 
 // *****************************************************************************
 /* Function:
-    bool DRV_SDSPI_Sync_Write(
+    bool DRV_SDSPI_SyncWrite(
         const DRV_HANDLE handle,
         void* sourceBuffer,
         uint32_t blockStart,
@@ -627,7 +629,7 @@ bool DRV_SDSPI_Sync_Read (
 
     // mySDSPIHandle is the handle returned by the DRV_SDSPI_Open function.
 
-    if (DRV_SDSPI_Sync_Write(mySDSPIHandle, myBuffer, blockStart, nBlock) == true)
+    if (DRV_SDSPI_SyncWrite(mySDSPIHandle, myBuffer, blockStart, nBlock) == true)
     {
         // Write is successful
     }
@@ -640,7 +642,7 @@ bool DRV_SDSPI_Sync_Read (
   Remarks:
     None.
 */
-bool DRV_SDSPI_Sync_Write(
+bool DRV_SDSPI_SyncWrite(
     const DRV_HANDLE handle,
     void* sourceBuffer,
     uint32_t blockStart,
@@ -820,8 +822,7 @@ SYS_MEDIA_GEOMETRY * DRV_SDSPI_GeometryGet ( const DRV_HANDLE handle );
   Summary:
     Allows a client to identify an event handling function for the driver to
     call back when queued operation has completed. For the synchronous SDSPI
-    driver, the event handler is only used by the file system. Application using
-    the synchronous SDSPI driver must not use this API.
+    driver, the event handler is only used by the file system.
 
   Description:
     This function allows a client to identify an event handling function for
@@ -859,13 +860,12 @@ SYS_MEDIA_GEOMETRY * DRV_SDSPI_GeometryGet ( const DRV_HANDLE handle );
     None.
 
   Example:
-    None. For synchronous mode, this API is internally used only by the file
-    system service.
+    None.
 
   Remarks:
     If the client does not want to be notified when the queued operation
-    has completed, it does not need to register a callback. Application using
-    the synchronous mode of the SDSPI driver must not use this API.
+    has completed, it does not need to register a callback.
+	This API may not be used in applications using the SDSPI Driver in synchronous mode.
 */
 void DRV_SDSPI_EventHandlerSet
 (
@@ -876,7 +876,7 @@ void DRV_SDSPI_EventHandlerSet
 
 // *****************************************************************************
 /* Function:
-    DRV_SDSPI_COMMAND_STATUS DRV_SDSPI_CommandStatus
+    DRV_SDSPI_COMMAND_STATUS DRV_SDSPI_CommandStatusGet
     (
         const DRV_HANDLE handle,
         const DRV_SDSPI_COMMAND_HANDLE commandHandle
@@ -884,8 +884,7 @@ void DRV_SDSPI_EventHandlerSet
 
   Summary:
     Gets the current status of the command. For synchronous mode, the command status
-    is only used by the file system. The application must not use this API with the
-    SDSPI driver in the synchronous mode.
+    is only used by the file system.
 
   Description:
     This routine gets the current status of the command. The application must use
@@ -916,23 +915,133 @@ void DRV_SDSPI_EventHandlerSet
     handle is not valid.
 
   Example:
-    None. For synchronous mode, this API is internally used only by the file
-    system service.
+    None.
 
   Remarks:
-    Application using the synchronous SDSPI driver must not use this API.
+    This API may not be used in applications using the SDSPI Driver in synchronous mode.
 */
 
-DRV_SDSPI_COMMAND_STATUS DRV_SDSPI_CommandStatus(
+DRV_SDSPI_COMMAND_STATUS DRV_SDSPI_CommandStatusGet(
     const DRV_HANDLE handle,
     const DRV_SDSPI_COMMAND_HANDLE commandHandle
 );
 
+// *****************************************************************************
+/* Function:
+    void DRV_SDSPI_Read
+    (
+        const DRV_HANDLE handle,
+        DRV_SDSPI_COMMAND_HANDLE* commandHandle,
+        void* targetBuffer,
+        uint32_t blockStart,
+        uint32_t nBlock
+    )
+
+  Summary:
+    This routine provides interface to the file system to perform a media
+    read operation in synchronous mode of the SDSPI driver.
+
+  Description:
+    This function is internally used by the file system.
+
+  Preconditions:
+    The DRV_SDSPI_Initialize routine must have been called.
+
+    The DRV_SDSPI_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    commandHandle - Pointer to an argument that will contain the return buffer
+                    handle
+
+    targetBuffer  - Buffer into which the data read from the SD Card will be placed
+
+    blockStart    - Start block address of the SD Card from where the read should begin.
+
+    nBlock        - Total number of blocks to be read.
+
+  Returns:
+    The buffer handle is returned in the commandHandle argument. It will be
+    DRV_SDSPI_COMMAND_HANDLE_INVALID if the request was not successful.
+
+  Example:
+    None.
+
+  Remarks:
+    This function is internally used by the file system.
+*/
+
+void DRV_SDSPI_Read(
+    const DRV_HANDLE handle,
+    DRV_SDSPI_COMMAND_HANDLE* commandHandle,
+    void* targetBuffer,
+    uint32_t blockStart,
+    uint32_t nBlock
+);
+
+// *****************************************************************************
+/* Function:
+    void DRV_SDSPI_Write
+    (
+        const DRV_HANDLE handle,
+        DRV_SDSPI_COMMAND_HANDLE* commandHandle,
+        void* sourceBuffer,
+        uint32_t blockStart,
+        uint32_t nBlock
+    )
+
+  Summary:
+    This routine provides interface to the file system to perform a media
+    write operation in synchronous mode of the SDSPI driver.
+
+  Description:
+    This function is internally used by the file system.
+
+  Preconditions:
+    The DRV_SDSPI_Initialize routine must have been called.
+
+    The DRV_SDSPI_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    commandHandle - Pointer to an argument that will contain the return buffer
+                    handle
+
+    sourceBuffer  - The source buffer containing data to be programmed to the SD Card.
+
+    blockStart    - Start block address of SD Card where the writes should begin.
+
+    nBlock        - Total number of blocks to be written.
+
+  Returns:
+    The buffer handle is returned in the commandHandle argument. It will be
+    DRV_SDSPI_COMMAND_HANDLE_INVALID if the request was not successful.
+
+  Example:
+    None.
+
+  Remarks:
+    This function is internally used by the file system.
+*/
+
+void DRV_SDSPI_Write(
+    const DRV_HANDLE handle,
+    DRV_SDSPI_COMMAND_HANDLE* commandHandle,
+    void* sourceBuffer,
+    uint32_t blockStart,
+    uint32_t nBlock
+);
+
+
+#include "driver/sdspi/src/drv_sdspi_local.h"
+
 #ifdef __cplusplus
 }
 #endif
-
-#include "driver/sdspi/src/drv_sdspi_local.h"
 
 #endif // #ifndef _DRV_SDSPI_H
 /*******************************************************************************

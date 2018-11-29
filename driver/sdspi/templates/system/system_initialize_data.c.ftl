@@ -1,27 +1,27 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SDSPI Instance ${INDEX?string} Initialization Data">
 
 /* SD Card Client Objects Pool */
-DRV_SDSPI_CLIENT_OBJ drvSDSPI${INDEX}ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
+static DRV_SDSPI_CLIENT_OBJ drvSDSPI${INDEX}ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
 
 /* SPI PLIB Interface Initialization for SDSPI Driver */
 const DRV_SDSPI_PLIB_INTERFACE drvSDSPI${INDEX?string}PlibAPI = {
 
     /* SPI PLIB WriteRead function */
-    .writeRead = (DRV_SDSPI_WRITEREAD)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_WriteRead,
+    .writeRead = (DRV_SDSPI_PLIB_WRITEREAD)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_WriteRead,
 
     /* SPI PLIB Write function */
-    .write = (DRV_SDSPI_WRITE)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Write,
+    .write = (DRV_SDSPI_PLIB_WRITE)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Write,
 
     /* SPI PLIB Read function */
-    .read = (DRV_SDSPI_READ)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Read,
+    .read = (DRV_SDSPI_PLIB_READ)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Read,
 
     /* SPI PLIB Transfer Status function */
-    .isBusy = (DRV_SDSPI_IS_BUSY)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_IsBusy,
+    .isBusy = (DRV_SDSPI_PLIB_IS_BUSY)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_IsBusy,
 
-    .transferSetup = (DRV_SDSPI_SETUP)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_TransferSetup,
+    .transferSetup = (DRV_SDSPI_PLIB_SETUP)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_TransferSetup,
 
     /* SPI PLIB Callback Register */
-    .callbackRegister = (DRV_SDSPI_CALLBACK_REGISTER)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_CallbackRegister,
+    .callbackRegister = (DRV_SDSPI_PLIB_CALLBACK_REGISTER)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_CallbackRegister,
 };
 
 <@compress single_line=true>
@@ -127,26 +127,27 @@ const DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
     .writeProtectPin    = SYS_PORT_PIN_NONE,
 </#if>
 
-    .isRegisterWithFS   = DRV_SDSPI_REGISTER_WITH_FS_IDX${INDEX?string},
-
-<#if DRV_SDSPI_TX_RX_DMA == true>
-    /* DMA Channel for Transmit */
-    .txDMAChannel = DRV_SDSPI_XMIT_DMA_CH_IDX${INDEX?string},
-
-    /* DMA Channel for Receive */
-    .rxDMAChannel  = DRV_SDSPI_RCV_DMA_CH_IDX${INDEX?string},
-
-    /* SPI Transmit Register */
-    .txAddress = (void *)${.vars["${DRV_SDSPI_PLIB?lower_case}"].TRANSMIT_DATA_REGISTER},
-
-    /* SPI Receive Register */
-    .rxAddress  = (void *)${.vars["${DRV_SDSPI_PLIB?lower_case}"].RECEIVE_DATA_REGISTER},
-<#else>
-    /* DMA Channel for Transmit */
-    .txDMAChannel = SYS_DMA_CHANNEL_NONE,
-
-    /* DMA Channel for Receive */
-    .rxDMAChannel  = SYS_DMA_CHANNEL_NONE,
+    .isFsEnabled        = ${DRV_SDSPI_FS_ENABLE?c},
+<#if core.DMA_ENABLE?has_content>
+    <#if DRV_SDSPI_TX_RX_DMA == true>
+        <#lt>    /* DMA Channel for Transmit */
+        <#lt>    .txDMAChannel = DRV_SDSPI_XMIT_DMA_CH_IDX${INDEX?string},
+        <#lt>
+        <#lt>    /* DMA Channel for Receive */
+        <#lt>    .rxDMAChannel  = DRV_SDSPI_RCV_DMA_CH_IDX${INDEX?string},
+        <#lt>
+        <#lt>    /* SPI Transmit Register */
+        <#lt>    .txAddress = (void *)${.vars["${DRV_SDSPI_PLIB?lower_case}"].TRANSMIT_DATA_REGISTER},
+        <#lt>
+        <#lt>    /* SPI Receive Register */
+        <#lt>    .rxAddress  = (void *)${.vars["${DRV_SDSPI_PLIB?lower_case}"].RECEIVE_DATA_REGISTER},
+    <#else>
+        <#lt>    /* DMA Channel for Transmit */
+        <#lt>    .txDMAChannel = SYS_DMA_CHANNEL_NONE,
+        <#lt>
+        <#lt>    /* DMA Channel for Receive */
+        <#lt>    .rxDMAChannel  = SYS_DMA_CHANNEL_NONE,
+    </#if>
 </#if>
 };
 

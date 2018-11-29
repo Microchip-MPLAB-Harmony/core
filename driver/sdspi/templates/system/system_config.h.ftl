@@ -3,7 +3,6 @@
 #define DRV_SDSPI_CLIENTS_NUMBER_IDX${INDEX?string}           ${DRV_SDSPI_NUM_CLIENTS?string}
 #define DRV_SDSPI_CHIP_SELECT_PIN_IDX${INDEX?string}          ${DRV_SDSPI_CHIP_SELECT_PIN?string}
 #define DRV_SDSPI_SPEED_HZ_IDX${INDEX?string}                 ${DRV_SDSPI_SPEED_HZ?string}
-#define DRV_SDSPI_REGISTER_WITH_FS_IDX${INDEX?string}         ${DRV_SDSPI_REGISTER_WITH_FS?string}
 
 <#if DRV_SDSPI_TX_RX_DMA == true>
 #define DRV_SDSPI_DMA_MODE
