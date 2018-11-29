@@ -107,10 +107,10 @@ typedef struct
     CONSOLE_UART_WRITE_STATE wrState;
 
     /* Status of reads */
-    CONSOLE_UART_READ_STATUS readStatus;
+    volatile CONSOLE_UART_READ_STATUS readStatus;
 
     /* Status of writes */
-    CONSOLE_UART_WRITE_STATUS writeStatus;
+    volatile CONSOLE_UART_WRITE_STATUS writeStatus;
 
     SYS_CONSOLE_STATUS status;
 

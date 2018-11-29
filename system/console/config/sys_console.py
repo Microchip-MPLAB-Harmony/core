@@ -52,6 +52,16 @@ def enableSysDebugConfigOptions(symbol, event):
 def enableCommandProcessorOptions(symbol, event):
     symbol.setVisible(event["value"])
 
+def enableDebugProcessorOptions(symbol, event):
+    component = symbol.getComponent()
+    commandEnable = component.getSymbolValue("SYS_COMMAND_ENABLE")
+    debugEnable = component.getSymbolValue("SYS_DEBUG_ENABLE")
+    if ((commandEnable == True) and (debugEnable == True)):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
+        symbol.setValue(False, 1)
+
 
 def setVisible(symbol, event):
     if (event["value"] == True):
@@ -160,7 +170,7 @@ def instantiateComponent(consoleComponent):
     commandDebugEnable = consoleComponent.createBooleanSymbol("SYS_COMMAND_DEBUG_ENABLE", commandEnable)
     commandDebugEnable.setLabel("Re-route Debug Message/Print through Command Service?")
     commandDebugEnable.setDefaultValue(True)
-    commandDebugEnable.setDependencies(enableCommandProcessorOptions, ["SYS_COMMAND_ENABLE"])
+    commandDebugEnable.setDependencies(enableDebugProcessorOptions, ["SYS_COMMAND_ENABLE", "SYS_DEBUG_ENABLE"])
 
     enable_rtos_settings = False
 
