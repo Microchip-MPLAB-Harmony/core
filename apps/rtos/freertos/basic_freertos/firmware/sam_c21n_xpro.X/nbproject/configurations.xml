@@ -4,21 +4,26 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <logicalFolder name="f3" displayName="arm" projectFiles="true">
+        <itemPath>../src/arm/toolchain_specifics.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_c21n_xpro" projectFiles="true">
           <logicalFolder name="f2" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_c21n_xpro/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f2" displayName="clock" projectFiles="true">
+            <logicalFolder name="f3" displayName="clock" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/peripheral/clock/plib_clock.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f1" displayName="evsys" projectFiles="true">
+              <itemPath>../src/config/sam_c21n_xpro/peripheral/evsys/plib_evsys.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="port" projectFiles="true">
+            <logicalFolder name="f2" displayName="port" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/peripheral/port/plib_port.h</itemPath>
-              <itemPath>../src/config/sam_c21n_xpro/peripheral/port/plib_port_pin.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <itemPath>../src/config/sam_c21n_xpro/definitions.h</itemPath>
@@ -27,7 +32,7 @@
           <itemPath>../src/config/sam_c21n_xpro/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f2" displayName="FreeRTOS" projectFiles="true">
+      <logicalFolder name="f4" displayName="FreeRTOS" projectFiles="true">
         <logicalFolder name="f1" displayName="Source" projectFiles="true">
           <logicalFolder name="f1" displayName="Include" projectFiles="true">
             <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/croutine.h</itemPath>
@@ -56,13 +61,13 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="osal" projectFiles="true">
+      <logicalFolder name="f5" displayName="osal" projectFiles="true">
         <itemPath>../src/config/sam_c21n_xpro/osal/osal.h</itemPath>
         <itemPath>../src/config/sam_c21n_xpro/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/sam_c21n_xpro/osal/osal_freertos.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f4" displayName="packs" projectFiles="true">
-        <logicalFolder name="f2" displayName="ATSAMC21N18A_DFP" projectFiles="true">
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
+        <logicalFolder name="f1" displayName="ATSAMC21N18A_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAMC21N18A_DFP/component/ac.h</itemPath>
             <itemPath>../src/packs/ATSAMC21N18A_DFP/component/adc.h</itemPath>
@@ -102,7 +107,7 @@
           <itemPath>../src/packs/ATSAMC21N18A_DFP/device.h</itemPath>
           <itemPath>../src/packs/ATSAMC21N18A_DFP/atsamc21n18a.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
+        <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
@@ -140,18 +145,21 @@
           <logicalFolder name="f3" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_c21n_xpro/bsp/bsp.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f2" displayName="clock" projectFiles="true">
+          <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f3" displayName="clock" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/peripheral/clock/plib_clock.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f1" displayName="evsys" projectFiles="true">
+              <itemPath>../src/config/sam_c21n_xpro/peripheral/evsys/plib_evsys.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/peripheral/nvic/plib_nvic.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="port" projectFiles="true">
+            <logicalFolder name="f2" displayName="port" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f1" displayName="stdio" projectFiles="true">
+          <logicalFolder name="f2" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/sam_c21n_xpro/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <itemPath>../src/config/sam_c21n_xpro/initialization.c</itemPath>
@@ -209,7 +217,7 @@
         <targetDevice>ATSAMC21N18A</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>EdbgTool</platformTool>
+        <platformTool>ICD4Tool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.15</languageToolchainVersion>
         <platform>3</platform>
@@ -275,7 +283,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/sam_c21n_xpro;../src/packs/ATSAMC21N18A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM0;../src/third_party/rtos/FreeRTOS/Source/Include;"/>
+                  value="../src;../src/config/sam_c21n_xpro;../src/packs/ATSAMC21N18A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM0;../src/third_party/rtos/FreeRTOS/Source/Include;../src/arm"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -421,6 +429,49 @@
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.preserveuserid" value="false"/>
       </EdbgTool>
+      <ICD4Tool>
+        <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareOption.UpdateOptions"
+                  value="ToolFirmwareOption.UseLatest"/>
+        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="hwtoolclock.frcindebug" value="false"/>
+        <property key="memories.aux" value="false"/>
+        <property key="memories.bootflash" value="true"/>
+        <property key="memories.configurationmemory" value="true"/>
+        <property key="memories.configurationmemory2" value="true"/>
+        <property key="memories.dataflash" value="true"/>
+        <property key="memories.eeprom" value="true"/>
+        <property key="memories.exclude.configurationmemory" value="true"/>
+        <property key="memories.flashdata" value="true"/>
+        <property key="memories.id" value="true"/>
+        <property key="memories.instruction.ram.ranges"
+                  value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.programmemory" value="true"/>
+        <property key="memories.programmemory.ranges" value="0-3ffff"/>
+        <property key="poweroptions.powerenable" value="false"/>
+        <property key="programoptions.donoteraseauxmem" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
+        <property key="programoptions.ledbrightness" value="5"/>
+        <property key="programoptions.pgcconfig" value="pull down"/>
+        <property key="programoptions.pgcresistor.value" value="4.7"/>
+        <property key="programoptions.pgdconfig" value="pull down"/>
+        <property key="programoptions.pgdresistor.value" value="4.7"/>
+        <property key="programoptions.pgmentry.voltage" value="low"/>
+        <property key="programoptions.pgmspeed" value="Med"/>
+        <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preserveeeprom" value="false"/>
+        <property key="programoptions.preserveeeprom.ranges" value=""/>
+        <property key="programoptions.preserveprogram.ranges" value=""/>
+        <property key="programoptions.preserveprogramrange" value="false"/>
+        <property key="programoptions.preserveuserid" value="false"/>
+        <property key="programoptions.programcalmem" value="false"/>
+        <property key="programoptions.programuserotp" value="false"/>
+        <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
+        <property key="voltagevalue" value="5.0"/>
+      </ICD4Tool>
       <PICkit3PlatformTool>
         <property key="ADC 1" value="true"/>
         <property key="AutoSelectMemRanges" value="auto"/>
