@@ -307,21 +307,6 @@ void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
 // *****************************************************************************
 // *****************************************************************************
 
-// *****************************************************************************
-/* Function:
-    SYS_MODULE_OBJ DRV_SPI_Initialize
-    (
-        const SYS_MODULE_INDEX drvIndex,
-        const SYS_MODULE_INIT * const init
-    )
-
-  Summary:
-    Dynamic implementation of DRV_SPI_Initialize system interface function.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
-
 SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT * const init )
 {
     DRV_SPI_OBJ* dObj     = (DRV_SPI_OBJ *)NULL;
@@ -429,17 +414,6 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
 
-// *****************************************************************************
-/* Function:
-    SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object )
-
-  Summary:
-    Dynamic implementation of DRV_SPI_Status system interface function.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
-
 SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object)
 {
     /* Validate the request */
@@ -451,18 +425,6 @@ SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object)
 
     return (gDrvSPIObj[object].status);
 }
-
-// *****************************************************************************
-/* Function:
-    DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX index,
-                             const DRV_IO_INTENT    ioIntent )
-
-  Summary:
-    Dynamic implementation of DRV_SPI_Open client interface function.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
 
 DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
 {
@@ -548,17 +510,6 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
     return clientObj ? ((DRV_HANDLE)clientObj->clientHandle) : DRV_HANDLE_INVALID;
 }
 
-// *****************************************************************************
-/* Function:
-    void DRV_SPI_Close ( DRV_HANDLE handle)
-
-  Summary:
-    Dynamic implementation of DRV_SPI_Close client interface function.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
-
 void DRV_SPI_Close( DRV_HANDLE handle )
 {
     /* This function closes the client, The client
@@ -592,21 +543,6 @@ void DRV_SPI_Close( DRV_HANDLE handle )
         }
     }
 }
-
-// *****************************************************************************
-/* Function:
-    bool DRV_SPI_TransferSetup
-    (
-        const DRV_HANDLE handle,
-        DRV_SPI_TRANSFER_SETUP * setup
-    )
-
-  Summary:
-    Setup the driver for a client.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
 
 bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP* setup )
 {
@@ -642,13 +578,6 @@ bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP* set
     return isSuccess;
 }
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: SPI Driver Transfer Interface Implementation
-// *****************************************************************************
-// *****************************************************************************
-// *****************************************************************************
-
 bool DRV_SPI_WriteTransfer(const DRV_HANDLE handle, void* pTransmitData,  size_t txSize )
 {
     return DRV_SPI_WriteReadTransfer(handle, pTransmitData, txSize, NULL, 0);
@@ -658,24 +587,6 @@ bool DRV_SPI_ReadTransfer(const DRV_HANDLE handle, void* pReceiveData,  size_t r
 {
     return DRV_SPI_WriteReadTransfer(handle, NULL, 0, pReceiveData, rxSize);
 }
-
-// *****************************************************************************
-/* Function:
-    bool DRV_SPI_WriteReadTransfer
-    (
-    const DRV_HANDLE handle,
-    void* pTransmitData,
-    size_t txSize,
-    void* pReceiveData,
-    size_t rxSize
-    )
-
-  Summary:
-    Dynamic implementation of DRV_SPI_WriteReadTransfer system interface function.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
 
 bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
     void* pTransmitData,

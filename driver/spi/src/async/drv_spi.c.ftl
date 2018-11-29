@@ -479,18 +479,6 @@ void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
 // *****************************************************************************
 // *****************************************************************************
 
-// *****************************************************************************
-/* Function:
-    SYS_MODULE_OBJ DRV_SPI_Initialize
-    (
-        const SYS_MODULE_INDEX drvIndex,
-        const SYS_MODULE_INIT * const init
-    )
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
-
 SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT * const init )
 {
     DRV_SPI_OBJ *dObj     = (DRV_SPI_OBJ *)NULL;
@@ -600,14 +588,6 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
 
-// *****************************************************************************
-/* Function:
-    SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object )
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
-
 SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object)
 {
     /* Validate the request */
@@ -619,15 +599,6 @@ SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object)
 
     return (gDrvSPIObj[object].status);
 }
-
-// *****************************************************************************
-/* Function:
-    DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex,
-                             const DRV_IO_INTENT    ioIntent )
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
 
 DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
 {
@@ -721,21 +692,6 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
     return DRV_HANDLE_INVALID;
 }
 
-// *****************************************************************************
-/* Function:
-    void DRV_SPI_Close ( DRV_HANDLE handle)
-
-  Summary:
-    Closes the driver.
-
-  Description:
-    This function closes the driver for the client which had "handle"
-    associated with it.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
-
 void DRV_SPI_Close( DRV_HANDLE handle )
 {
     /* This function closes the client, The client objects are
@@ -778,26 +734,6 @@ void DRV_SPI_Close( DRV_HANDLE handle )
     return;
 }
 
-// *****************************************************************************
-/* Function:
-    void DRV_SPI_TransferEventHandlerSet
-    (
-        const DRV_HANDLE handle,
-        const DRV_SPI_TRANSFER_EVENT_HANDLER eventHandler,
-        uintptr_t context
-    )
-
-  Summary:
-    Registers transfer callback function.
-
-  Description:
-    This function is used to register the callback function to be invoked
-    upon completion of a transfer request.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
-
 void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRANSFER_EVENT_HANDLER eventHandler, uintptr_t context )
 {
     DRV_SPI_CLIENT_OBJ * clientObj = NULL;
@@ -827,23 +763,6 @@ void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRA
     _DRV_SPI_ResourceUnlock(hDriver);
 }
 
-// *****************************************************************************
-/* Function:
-    bool DRV_SPI_TransferSetup
-    (
-        const DRV_HANDLE handle,
-        DRV_SPI_TRANSFER_SETUP * setup
-    )
-
-  Summary:
-    Setup the driver for a client.
-
-  Description:
-    This function setup the driver for a client.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
 bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * setup )
 {
     DRV_SPI_CLIENT_OBJ * clientObj = NULL;
@@ -879,32 +798,6 @@ bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * se
     }
     return isSuccess;
 }
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: SPI Driver Transfer Queue Interface Implementation
-// *****************************************************************************
-// *****************************************************************************
-// *****************************************************************************
-
-// *****************************************************************************
-/* Function:
-    void DRV_SPI_WriteReadTransferAdd
-    (
-        const DRV_HANDLE handle,
-        void*       pTransmitData,
-        size_t      txSize,
-        void*       pReceiveData,
-        size_t      rxSize,
-        DRV_SPI_TRANSFER_HANDLE * const transferHandle
-    )
-
-  Summary:
-    Function to add WriteRead transfer request.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
 
 void DRV_SPI_WriteReadTransferAdd
 (
@@ -1038,23 +931,6 @@ void DRV_SPI_WriteReadTransferAdd
     return;
 }
 
-// *****************************************************************************
-/* Function:
-    void DRV_SPI_WriteTransferAdd
-    (
-        const DRV_HANDLE handle,
-        void*       pTransmitData,
-        size_t      txSize,
-        DRV_SPI_TRANSFER_HANDLE * const transferHandle
-    );
-
-  Summary:
-    Queues a write operation.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
-
 void DRV_SPI_WriteTransferAdd
 (
     const   DRV_HANDLE  handle,
@@ -1066,23 +942,6 @@ void DRV_SPI_WriteTransferAdd
     DRV_SPI_WriteReadTransferAdd(handle, pTransmitData, txSize, NULL, 0, transferHandle);
 }
 
-// *****************************************************************************
-/* Function:
-    void DRV_SPI_ReadTransferAdd
-    (
-        const DRV_HANDLE handle,
-        void*       pReceiveData,
-        size_t      rxSize,
-        DRV_SPI_TRANSFER_HANDLE * const transferHandle
-    );
-
-  Summary:
-    Queues a read operation.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
-
 void DRV_SPI_ReadTransferAdd
 (
     const   DRV_HANDLE  handle,
@@ -1093,17 +952,6 @@ void DRV_SPI_ReadTransferAdd
 {
     DRV_SPI_WriteReadTransferAdd(handle, NULL, 0, pReceiveData, rxSize, transferHandle);
 }
-
-// *****************************************************************************
-/* Function:
-    DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE transferHandle)
-
-  Summary:
-    Function to poll transfer status.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
 
 DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE transferHandle)
 {

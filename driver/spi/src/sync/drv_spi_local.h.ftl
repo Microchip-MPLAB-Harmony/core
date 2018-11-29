@@ -195,7 +195,7 @@ typedef struct
     uint16_t spiTokenCount;
 
     /* Status of the last data transfer on this driver instance */
-    DRV_SPI_TRANSFER_STATUS transferStatus;
+    volatile DRV_SPI_TRANSFER_STATUS transferStatus;
 
     /* Mutex to protect access to PLIB */
     OSAL_MUTEX_DECLARE(transferMutex);
