@@ -169,7 +169,7 @@ typedef struct _DRV_USART_BUFFER_OBJ
     size_t size;
 
     /* Number of bytes completed */
-    size_t nCount;
+    volatile size_t nCount;
 
     /* Next buffer pointer */
     struct _DRV_USART_BUFFER_OBJ* next;
@@ -178,7 +178,7 @@ typedef struct _DRV_USART_BUFFER_OBJ
     DRV_USART_BUFFER_STATE currentState;
 
     /* Current status of the buffer */
-    DRV_USART_BUFFER_EVENT status;
+    volatile DRV_USART_BUFFER_EVENT status;
 
     /* Buffer Handle that was assigned to this buffer when it was added to the
      * queue.

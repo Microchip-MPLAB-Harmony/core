@@ -174,10 +174,10 @@ typedef struct
     uintptr_t currentTxClient;
 
     /* Indicates transmit requests status */
-    DRV_USART_REQUEST_STATUS txRequestStatus;
+    volatile DRV_USART_REQUEST_STATUS txRequestStatus;
 
     /* Indicates receive requests status */
-    DRV_USART_REQUEST_STATUS rxRequestStatus;
+    volatile DRV_USART_REQUEST_STATUS rxRequestStatus;
 
     /* Transmit mutex */
     OSAL_MUTEX_DECLARE(clientMutex);
