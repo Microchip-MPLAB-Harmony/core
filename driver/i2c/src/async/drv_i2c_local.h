@@ -232,7 +232,7 @@ typedef struct
     DRV_IO_INTENT                  ioIntent;
 
     /* Errors associated with the I2C transfer */
-    DRV_I2C_ERROR                  errors;
+    volatile DRV_I2C_ERROR         errors;
 
     /* This flags indicates if the object is in use or is
      * available */
