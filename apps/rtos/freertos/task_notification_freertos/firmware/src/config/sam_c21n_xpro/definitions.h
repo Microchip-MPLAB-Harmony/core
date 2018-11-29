@@ -48,15 +48,15 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "peripheral/evsys/plib_evsys.h"
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
-#include "bsp/bsp.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "system/ports/sys_ports.h"
 #include "osal/osal.h"
-#include "peripheral/evsys/plib_evsys.h"
+#include "bsp/bsp.h"
 #include "app.h"
 #include "app1.h"
 

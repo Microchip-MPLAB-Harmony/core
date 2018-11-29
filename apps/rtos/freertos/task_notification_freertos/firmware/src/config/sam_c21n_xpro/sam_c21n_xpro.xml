@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Configuration>
   <Components>
-    <UniqueComponent dnOrder="0" id="core">
+    <UniqueComponent bsp="true" dnOrder="0" id="BSP_SAM_C21N_Xplained_Pro"/>
+    <UniqueComponent dnOrder="1" id="cmsis"/>
+    <UniqueComponent dnOrder="2" id="core">
       <Symbols dnOrder="0">
         <Combo dnOrder="0" id="COMPONENT_PACKAGE">
           <Values dnOrder="0">
@@ -956,39 +958,145 @@
             </Dynamic>
           </Values>
         </Boolean>
-        <Boolean dnOrder="167" id="SysTick_INTERRUPT_ENABLE">
+        <Comment dnOrder="167" id="SYSTICK_COMMENT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Comment>
+        <Boolean dnOrder="168" id="SysTick_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="FreeRTOS" priority="2" value="true"/>
             </Dynamic>
           </Values>
         </Boolean>
-        <Boolean dnOrder="168" id="SysTick_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="169" id="SysTick_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="core" priority="2" value="false"/>
             </Dynamic>
           </Values>
         </Boolean>
-        <String dnOrder="169" id="SysTick_INTERRUPT_HANDLER">
+        <String dnOrder="170" id="SysTick_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="FreeRTOS" priority="2" value="xPortSysTickHandler"/>
             </Dynamic>
           </Values>
         </String>
-        <Boolean dnOrder="170" id="SysTick_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="171" id="SysTick_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="FreeRTOS" priority="2" value="true"/>
             </Dynamic>
           </Values>
         </Boolean>
+        <Boolean dnOrder="172" id="systickEnable">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent bsp="true" dnOrder="1" id="BSP_SAM_C21N_Xplained_Pro"/>
-    <UniqueComponent dnOrder="2" id="FreeRTOS"/>
-    <UniqueComponent dnOrder="3" id="HarmonyCore">
+    <UniqueComponent dnOrder="3" id="dfp"/>
+    <UniqueComponent dnOrder="4" id="evsys">
+      <Symbols dnOrder="0">
+        <Boolean dnOrder="0" id="EVSYS_CHANNEL_0_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="evsys" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="1" id="EVSYS_CHANNEL_10_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="evsys" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="2" id="EVSYS_CHANNEL_11_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="evsys" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="3" id="EVSYS_CHANNEL_1_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="evsys" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="4" id="EVSYS_CHANNEL_2_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="evsys" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="5" id="EVSYS_CHANNEL_3_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="evsys" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="6" id="EVSYS_CHANNEL_4_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="evsys" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="7" id="EVSYS_CHANNEL_5_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="evsys" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="8" id="EVSYS_CHANNEL_6_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="evsys" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="9" id="EVSYS_CHANNEL_7_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="evsys" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="10" id="EVSYS_CHANNEL_8_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="evsys" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="11" id="EVSYS_CHANNEL_9_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="evsys" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+      </Symbols>
+    </UniqueComponent>
+    <UniqueComponent dnOrder="5" id="FreeRTOS">
+      <Attachments dnOrder="0">
+        <GenericCapability dnOrder="0" id="FreeRTOS"/>
+      </Attachments>
+    </UniqueComponent>
+    <UniqueComponent dnOrder="6" id="HarmonyCore">
       <Symbols dnOrder="0">
         <File dnOrder="0" id="APP0_C">
           <Attributes dnOrder="0">
@@ -1027,7 +1135,10 @@
         </File>
         <Boolean dnOrder="5" id="ENABLE_APP_FILE">
           <Values dnOrder="0">
-            <User dnOrder="0" value="true"/>
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="HarmonyCore" priority="1" value="false"/>
+            </Dynamic>
+            <User dnOrder="1" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="6" id="ENABLE_OSAL">
@@ -1055,67 +1166,67 @@
             <User dnOrder="0" value="128"/>
           </Values>
         </Integer>
-        <Menu dnOrder="11" id="GEN_APP_RTOS_TASK_CONF_MENU1">
+        <Menu dnOrder="11" id="GEN_APP_RTOS_TASK_CONF_MENU0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <Menu dnOrder="12" id="GEN_APP_TASK_CONF_MENU1">
+        <Menu dnOrder="12" id="GEN_APP_RTOS_TASK_CONF_MENU1">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <Integer dnOrder="13" id="GEN_APP_TASK_COUNT">
+        <File dnOrder="13" id="GEN_APP_TASKS">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Menu dnOrder="14" id="GEN_APP_TASK_CONF_MENU1">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Menu>
+        <Integer dnOrder="15" id="GEN_APP_TASK_COUNT">
           <Values dnOrder="0">
             <User dnOrder="0" value="2"/>
           </Values>
         </Integer>
-        <Menu dnOrder="14" id="GEN_APP_TASK_MENU">
+        <Menu dnOrder="16" id="GEN_APP_TASK_MENU">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <String dnOrder="15" id="GEN_APP_TASK_NAME_0">
+        <String dnOrder="17" id="GEN_APP_TASK_NAME_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="app"/>
           </Values>
         </String>
-        <String dnOrder="16" id="GEN_APP_TASK_NAME_1">
+        <String dnOrder="18" id="GEN_APP_TASK_NAME_1">
           <Values dnOrder="0">
             <User dnOrder="0" value="app1"/>
           </Values>
         </String>
-        <File dnOrder="17" id="INT_DEF">
+        <File dnOrder="19" id="GEN_RTOS_APP_TASKS">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
+              <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="18" id="INT_HEADER">
+        <File dnOrder="20" id="GEN_RTOS_APP_TASKS_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="19" id="INT_MAPPING">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="20" id="INT_SOURCE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
+              <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
@@ -1197,22 +1308,23 @@
           </Attributes>
         </File>
       </Symbols>
+      <Attachments dnOrder="1">
+        <GenericCapability dnOrder="0" id="HarmonyCoreService"/>
+        <GenericDependency dnOrder="1" id="harmony_RTOS_dependency"/>
+      </Attachments>
     </UniqueComponent>
-    <UniqueComponent dnOrder="4" id="cmsis"/>
-    <UniqueComponent dnOrder="5" id="dfp"/>
-    <UniqueComponent dnOrder="6" id="evsys"/>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0" minimap="false"/>
-    <ComponentGraph dnOrder="1">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_SAM_C21N_Xplained_Pro" x="17" y="61"/>
+        <ElementPosition dnOrder="0" id="BSP_SAM_C21N_Xplained_Pro" x="23" y="59"/>
         <ElementPosition dnOrder="1" id="FreeRTOS" x="251" y="61"/>
-        <ElementPosition dnOrder="2" id="HarmonyCore" x="30" y="100"/>
+        <ElementPosition dnOrder="2" id="HarmonyCore" x="24" y="98"/>
         <ElementPosition dnOrder="3" id="cmsis" x="120" y="20"/>
         <ElementPosition dnOrder="4" id="core" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="dfp" x="260" y="20"/>
-        <ElementPosition dnOrder="6" id="evsys" x="480" y="20"/>
+        <ElementPosition dnOrder="5" id="dfp" x="238" y="20"/>
+        <ElementPosition dnOrder="6" id="evsys" x="252" y="147"/>
       </ElementPositions>
     </ComponentGraph>
   </UserData>
