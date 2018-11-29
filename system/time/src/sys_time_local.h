@@ -97,11 +97,11 @@ typedef struct _SYS_TIME_TIMER_OBJ{
       bool                          active;    /* TRUE if soft timer enabled */
       SYS_TIME_CALLBACK_TYPE        type;    /* periodic or not */
       uint32_t                      requestedTime;    /* time requested */
-      uint32_t                      relativeTimePending;    /* time to wait, relative incase of timers in the list */
+      volatile uint32_t             relativeTimePending;    /* time to wait, relative incase of timers in the list */
       SYS_TIME_CALLBACK             callback;    /* set to TRUE at timeout */
       uintptr_t                     context; /* context */
-      bool                          tmrElapsedFlag;   /* Set on every timer expiry. Cleared after user reads the status. */
-      bool                          tmrElapsed;    /* Set on every timer expiry. Cleared after timer is added back to the list */
+      volatile bool                 tmrElapsedFlag;   /* Set on every timer expiry. Cleared after user reads the status. */
+      volatile bool                 tmrElapsed;    /* Set on every timer expiry. Cleared after timer is added back to the list */
       struct _SYS_TIME_TIMER_OBJ*   tmrNext; /* Next timer */
       SYS_TIME_HANDLE               tmrHandle; /* Unique handle for object */
 } SYS_TIME_TIMER_OBJ;
@@ -112,10 +112,10 @@ typedef struct{
     const SYS_TIME_PLIB_INTERFACE*  timePlib;
     INT_SOURCE                      hwTimerIntNum;
     uint32_t                        hwTimerFrequency;
-    uint32_t                        hwTimerPreviousValue;
-    uint32_t                        hwTimerCurrentValue;
+    volatile uint32_t               hwTimerPreviousValue;
+    volatile uint32_t               hwTimerCurrentValue;
     uint32_t                        hwTimerPeriodValue;
-    uint32_t                        hwTimerCompareValue;
+    volatile uint32_t               hwTimerCompareValue;
     uint32_t                        hwTimerCompareMargin;
     volatile uint32_t               swCounter64Low;           /* Software counter */
     volatile uint32_t               swCounter64High;          /* Software 64-bit counter */
