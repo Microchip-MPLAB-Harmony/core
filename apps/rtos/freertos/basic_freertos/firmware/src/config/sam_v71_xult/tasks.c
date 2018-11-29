@@ -58,6 +58,9 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
+/* Handle for the APP_Tasks. */
+TaskHandle_t xAPP_Tasks;
+
 void _APP_Tasks(  void *pvParameters  )
 {
     while(1)
@@ -65,6 +68,9 @@ void _APP_Tasks(  void *pvParameters  )
         APP_Tasks();
     }
 }
+/* Handle for the APP1_Tasks. */
+TaskHandle_t xAPP1_Tasks;
+
 void _APP1_Tasks(  void *pvParameters  )
 {
     while(1)
@@ -72,6 +78,9 @@ void _APP1_Tasks(  void *pvParameters  )
         APP1_Tasks();
     }
 }
+/* Handle for the APP2_Tasks. */
+TaskHandle_t xAPP2_Tasks;
+
 void _APP2_Tasks(  void *pvParameters  )
 {
     while(1)
@@ -114,7 +123,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 1,
-                NULL);
+                &xAPP_Tasks);
 
     /* Create OS Thread for APP1_Tasks. */
     xTaskCreate((TaskFunction_t) _APP1_Tasks,
@@ -122,7 +131,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 2,
-                NULL);
+                &xAPP1_Tasks);
 
     /* Create OS Thread for APP2_Tasks. */
     xTaskCreate((TaskFunction_t) _APP2_Tasks,
@@ -130,7 +139,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 2,
-                NULL);
+                &xAPP2_Tasks);
 
 
 
