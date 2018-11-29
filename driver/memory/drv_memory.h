@@ -1767,6 +1767,218 @@ uintptr_t DRV_MEMORY_AddressGet
     const DRV_HANDLE handle
 );
 
+// *****************************************************************************
+/* Function:
+    void DRV_MEMORY_Erase
+    (
+        const DRV_HANDLE handle,
+        SYS_MEDIA_BLOCK_COMMAND_HANDLE* commandHandle,
+        void* sourceBuffer,
+        uint32_t blockStart,
+        uint32_t nBlock
+    )
+
+  Summary:
+    This routine provides interface to the file system to perform a media
+    erase operation in synchronous mode of the Memory driver.
+
+  Description:
+    This function is internally used by the file system.
+
+  Preconditions:
+    The DRV_MEMORY_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    commandHandle - Pointer to an argument that will contain the return buffer
+                    handle
+
+    blockStart    - Start block address of SD Card where the writes should begin.
+
+    nBlock        - Total number of blocks to be written.
+
+  Returns:
+    The buffer handle is returned in the commandHandle argument. It will be
+    DRV_MEMORY_COMMAND_HANDLE_INVALID if the request was not successful.
+
+  Example:
+    None.
+
+  Remarks:
+    This function is internally used by the file system.
+*/
+
+void DRV_MEMORY_Erase
+(
+    const DRV_HANDLE handle,
+    SYS_MEDIA_BLOCK_COMMAND_HANDLE *commandHandle,
+    uint32_t blockStart,
+    uint32_t nBlock
+);
+
+// *****************************************************************************
+/* Function:
+    void DRV_MEMORY_EraseWrite
+    (
+        const DRV_HANDLE handle,
+        SYS_MEDIA_BLOCK_COMMAND_HANDLE* commandHandle,
+        void* sourceBuffer,
+        uint32_t blockStart,
+        uint32_t nBlock
+    )
+
+  Summary:
+    This routine provides interface to the file system to perform a media
+    erase-write operation in synchronous mode of the Memory driver.
+
+  Description:
+    This function is internally used by the file system.
+
+  Preconditions:
+    The DRV_MEMORY_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    commandHandle - Pointer to an argument that will contain the return buffer
+                    handle
+
+    sourceBuffer  - The source buffer containing data to be programmed to the SD Card.
+
+    blockStart    - Start block address of SD Card where the writes should begin.
+
+    nBlock        - Total number of blocks to be written.
+
+  Returns:
+    The buffer handle is returned in the commandHandle argument. It will be
+    DRV_MEMORY_COMMAND_HANDLE_INVALID if the request was not successful.
+
+  Example:
+    None.
+
+  Remarks:
+    This function is internally used by the file system.
+*/
+
+void DRV_MEMORY_EraseWrite
+(
+    const DRV_HANDLE handle,
+    SYS_MEDIA_BLOCK_COMMAND_HANDLE *commandHandle,
+    void *sourceBuffer,
+    uint32_t blockStart,
+    uint32_t nBlock
+);
+
+// *****************************************************************************
+/* Function:
+    void DRV_MEMORY_Write
+    (
+        const DRV_HANDLE handle,
+        SYS_MEDIA_BLOCK_COMMAND_HANDLE* commandHandle,
+        void* sourceBuffer,
+        uint32_t blockStart,
+        uint32_t nBlock
+    )
+
+  Summary:
+    This routine provides interface to the file system to perform a media
+    write operation in synchronous mode of the Memory driver.
+
+  Description:
+    This function is internally used by the file system.
+
+  Preconditions:
+    The DRV_MEMORY_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    commandHandle - Pointer to an argument that will contain the return buffer
+                    handle
+
+    sourceBuffer  - The source buffer containing data to be programmed to the SD Card.
+
+    blockStart    - Start block address of SD Card where the writes should begin.
+
+    nBlock        - Total number of blocks to be written.
+
+  Returns:
+    The buffer handle is returned in the commandHandle argument. It will be
+    DRV_MEMORY_COMMAND_HANDLE_INVALID if the request was not successful.
+
+  Example:
+    None.
+
+  Remarks:
+    This function is internally used by the file system.
+*/
+
+void DRV_MEMORY_Write
+(
+    const DRV_HANDLE handle,
+    SYS_MEDIA_BLOCK_COMMAND_HANDLE *commandHandle,
+    void *sourceBuffer,
+    uint32_t blockStart,
+    uint32_t nBlock
+);
+
+// *****************************************************************************
+/* Function:
+    void DRV_MEMORY_Read
+    (
+        const DRV_HANDLE handle,
+        SYS_MEDIA_BLOCK_COMMAND_HANDLE* commandHandle,
+        void* sourceBuffer,
+        uint32_t blockStart,
+        uint32_t nBlock
+    )
+
+  Summary:
+    This routine provides interface to the file system to perform a media
+    read operation in synchronous mode of the Memory driver.
+
+  Description:
+    This function is internally used by the file system.
+
+  Preconditions:
+    The DRV_MEMORY_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    commandHandle - Pointer to an argument that will contain the return buffer
+                    handle
+
+    sourceBuffer  - The source buffer containing data to be programmed to the SD Card.
+
+    blockStart    - Start block address of SD Card where the writes should begin.
+
+    nBlock        - Total number of blocks to be written.
+
+  Returns:
+    The buffer handle is returned in the commandHandle argument. It will be
+    DRV_MEMORY_COMMAND_HANDLE_INVALID if the request was not successful.
+
+  Example:
+    None.
+
+  Remarks:
+    This function is internally used by the file system.
+*/
+void DRV_MEMORY_Read
+(
+    const DRV_HANDLE handle,
+    SYS_MEDIA_BLOCK_COMMAND_HANDLE *commandHandle,
+    void *targetBuffer,
+    uint32_t blockStart,
+    uint32_t nBlock
+);
+
 #ifdef __cplusplus
 }
 #endif
@@ -1777,4 +1989,3 @@ uintptr_t DRV_MEMORY_AddressGet
 /*******************************************************************************
  End of File
 */
-

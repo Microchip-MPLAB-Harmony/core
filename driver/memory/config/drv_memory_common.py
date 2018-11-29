@@ -118,15 +118,6 @@ def instantiateComponent(memoryCommonComponent):
     memoryCommonFsSourceFile.setEnabled((memoryCommonFsEnable.getValue() == True))
     memoryCommonFsSourceFile.setDependencies(enableFileSystemIntegration, ["DRV_MEMORY_COMMON_FS_ENABLE"])
 
-    memoryCommonHeaderVariantFile = memoryCommonComponent.createFileSymbol("DRV_MEMORY_HEADER_VARIANT", None)
-    memoryCommonHeaderVariantFile.setSourcePath("driver/memory/templates/drv_memory_variant_mapping.h.ftl")
-    memoryCommonHeaderVariantFile.setOutputName("drv_memory_variant_mapping.h")
-    memoryCommonHeaderVariantFile.setDestPath("driver/memory/src")
-    memoryCommonHeaderVariantFile.setProjectPath("config/" + configName + "/driver/memory/")
-    memoryCommonHeaderVariantFile.setType("HEADER")
-    memoryCommonHeaderVariantFile.setOverwrite(True)
-    memoryCommonHeaderVariantFile.setMarkup(True)
-
     memoryCommonSystemDefFile = memoryCommonComponent.createFileSymbol("DRV_MEMORY_SYS_DEF_COMMON", None)
     memoryCommonSystemDefFile.setType("STRING")
     memoryCommonSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
