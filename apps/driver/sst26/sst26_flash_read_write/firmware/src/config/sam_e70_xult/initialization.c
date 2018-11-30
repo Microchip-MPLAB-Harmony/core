@@ -61,7 +61,7 @@
 // *****************************************************************************
 // <editor-fold defaultstate="collapsed" desc="DRV_SST26 Initialization Data">
 
-const SST26_PLIB_API drvSST26PlibAPI = {
+const DRV_SST26_PLIB_INTERFACE drvSST26PlibAPI = {
     .CommandWrite  = QSPI_CommandWrite,
     .RegisterRead  = QSPI_RegisterRead,
     .RegisterWrite = QSPI_RegisterWrite,
@@ -113,14 +113,15 @@ void SYS_Initialize ( void* data )
     CLK_Initialize();
 	PIO_Initialize();
 
+
+	BSP_Initialize();
+    QSPI_Initialize();
+
     NVIC_Initialize();
 	SYSTICK_TimerInitialize();
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
-
-	BSP_Initialize();
-    QSPI_Initialize();
 
 
     sysObj.drvSST26 = DRV_SST26_Initialize((SYS_MODULE_INDEX)DRV_SST26_INDEX, (SYS_MODULE_INIT *)&drvSST26InitData);

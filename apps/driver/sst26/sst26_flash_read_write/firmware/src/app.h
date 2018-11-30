@@ -54,7 +54,6 @@
 
 #include <stdlib.h>
 #include "configuration.h"
-#include "bsp/bsp.h"
 #include "peripheral/systick/plib_systick.h"
 #include "driver/sst26/drv_sst26.h"
 

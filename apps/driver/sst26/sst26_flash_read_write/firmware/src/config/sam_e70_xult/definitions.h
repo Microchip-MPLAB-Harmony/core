@@ -48,16 +48,16 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "bsp/bsp.h"
+#include "peripheral/qspi/plib_qspi.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/mpu/plib_mpu.h"
 #include "peripheral/systick/plib_systick.h"
-#include "bsp/bsp.h"
+#include "driver/sst26/drv_sst26.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
-#include "driver/sst26/drv_sst26.h"
-#include "peripheral/qspi/plib_qspi.h"
 #include "app.h"
 
 

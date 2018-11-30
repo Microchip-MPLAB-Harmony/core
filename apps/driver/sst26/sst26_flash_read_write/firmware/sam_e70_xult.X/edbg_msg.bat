@@ -1,0 +1,2 @@
+echo off
+start cmd /C "echo.  && echo Note: && echo. && echo If you are using EDBG for debugging, please copy: && echo ^<harmony folder^>\dev_packs\Microchip\SAME70_DFP\2.4.147\scripts\dap_cortex-m7.py file into && echo ^<MPLAB X Installation Folder^>v5.10\packs\Atmel\SAME70_DFP\2.4.133\scripts folder. && echo. && echo To disable this pop-up, uncheck 'Execute this line after build' option in the Project Properties / Conf[] / Building && echo. && pause"

@@ -274,14 +274,14 @@ void APP_Tasks ( void )
         {
             SYSTICK_DelayMs(1000);
 
-            LED1_Toggle();
+            LED_TOGGLE();
 
             break;
         }
 
         case APP_STATE_ERROR:
         default:
-            LED1_On();
+            LED_ON();
     }
 }
 
