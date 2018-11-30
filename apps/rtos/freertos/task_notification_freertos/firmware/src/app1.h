@@ -118,7 +118,7 @@ typedef struct
 } APP1_DATA;
 
 /* Handle for the APP1_Tasks */
-TaskHandle_t xAPP1_Tasks;
+extern TaskHandle_t xAPP1_Tasks;
 
 // *****************************************************************************
 // *****************************************************************************

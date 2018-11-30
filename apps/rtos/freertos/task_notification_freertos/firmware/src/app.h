@@ -123,7 +123,7 @@ typedef struct
 } APP_DATA;
 
 /* Handle for the APP_Tasks. */
-TaskHandle_t xAPP_Tasks;
+extern TaskHandle_t xAPP_Tasks;
 
 // *****************************************************************************
 // *****************************************************************************
