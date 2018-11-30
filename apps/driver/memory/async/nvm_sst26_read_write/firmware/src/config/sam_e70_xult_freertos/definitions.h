@@ -52,18 +52,18 @@
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/mpu/plib_mpu.h"
+#include "driver/memory/drv_memory.h"
+#include "peripheral/efc/plib_efc.h"
+#include "peripheral/tc/plib_tc0.h"
+#include "driver/sst26/drv_sst26.h"
+#include "system/time/sys_time.h"
 #include "bsp/bsp.h"
+#include "driver/memory/drv_memory_efc.h"
+#include "peripheral/qspi/plib_qspi.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
-#include "driver/memory/drv_memory.h"
-#include "driver/memory/drv_memory_efc.h"
-#include "driver/sst26/drv_sst26.h"
-#include "peripheral/efc/plib_efc.h"
-#include "peripheral/qspi/plib_qspi.h"
-#include "system/time/sys_time.h"
-#include "peripheral/tc/plib_tc0.h"
 #include "app_sst26.h"
 #include "app_nvm.h"
 #include "app_monitor.h"
@@ -188,10 +188,10 @@ void SYS_Tasks ( void );
 
 typedef struct
 {
-    SYS_MODULE_OBJ  drvMemory0;
-    SYS_MODULE_OBJ  drvMemory1;
     SYS_MODULE_OBJ  drvSST26;
     SYS_MODULE_OBJ  sysTime;
+    SYS_MODULE_OBJ  drvMemory1;
+    SYS_MODULE_OBJ  drvMemory0;
 
 } SYSTEM_OBJECTS;
 

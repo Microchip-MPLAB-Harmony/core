@@ -58,27 +58,11 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
-void _APP_SST26_Tasks(  void *pvParameters  )
+void _DRV_MEMORY_1_Tasks(  void *pvParameters  )
 {
     while(1)
     {
-        APP_SST26_Tasks();
-        vTaskDelay(10 / portTICK_PERIOD_MS);
-    }
-}
-void _APP_NVM_Tasks(  void *pvParameters  )
-{
-    while(1)
-    {
-        APP_NVM_Tasks();
-        vTaskDelay(10 / portTICK_PERIOD_MS);
-    }
-}
-void _APP_MONITOR_Tasks(  void *pvParameters  )
-{
-    while(1)
-    {
-        APP_MONITOR_Tasks();
+        DRV_MEMORY_Tasks(sysObj.drvMemory1);
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
@@ -92,11 +76,36 @@ void _DRV_MEMORY_0_Tasks(  void *pvParameters  )
     }
 }
 
-void _DRV_MEMORY_1_Tasks(  void *pvParameters  )
+/* Handle for the APP_SST26_Tasks. */
+TaskHandle_t xAPP_SST26_Tasks;
+
+void _APP_SST26_Tasks(  void *pvParameters  )
 {
     while(1)
     {
-        DRV_MEMORY_Tasks(sysObj.drvMemory1);
+        APP_SST26_Tasks();
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
+/* Handle for the APP_NVM_Tasks. */
+TaskHandle_t xAPP_NVM_Tasks;
+
+void _APP_NVM_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+        APP_NVM_Tasks();
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
+/* Handle for the APP_MONITOR_Tasks. */
+TaskHandle_t xAPP_MONITOR_Tasks;
+
+void _APP_MONITOR_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+        APP_MONITOR_Tasks();
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
@@ -123,19 +132,19 @@ void SYS_Tasks ( void )
     
 
     /* Maintain Device Drivers */
-        xTaskCreate( _DRV_MEMORY_0_Tasks,
-        "DRV_MEM_0_TASKS",
-        DRV_MEMORY_STACK_SIZE_IDX0,
-        (void*)NULL,
-        DRV_MEMORY_PRIORITY_IDX0,
-        (TaskHandle_t*)NULL
-    );
-
-    xTaskCreate( _DRV_MEMORY_1_Tasks,
+        xTaskCreate( _DRV_MEMORY_1_Tasks,
         "DRV_MEM_1_TASKS",
         DRV_MEMORY_STACK_SIZE_IDX1,
         (void*)NULL,
         DRV_MEMORY_PRIORITY_IDX1,
+        (TaskHandle_t*)NULL
+    );
+
+    xTaskCreate( _DRV_MEMORY_0_Tasks,
+        "DRV_MEM_0_TASKS",
+        DRV_MEMORY_STACK_SIZE_IDX0,
+        (void*)NULL,
+        DRV_MEMORY_PRIORITY_IDX0,
         (TaskHandle_t*)NULL
     );
 
@@ -151,7 +160,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 2,
-                NULL);
+                &xAPP_SST26_Tasks);
 
     /* Create OS Thread for APP_NVM_Tasks. */
     xTaskCreate((TaskFunction_t) _APP_NVM_Tasks,
@@ -159,7 +168,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 2,
-                NULL);
+                &xAPP_NVM_Tasks);
 
     /* Create OS Thread for APP_MONITOR_Tasks. */
     xTaskCreate((TaskFunction_t) _APP_MONITOR_Tasks,
@@ -167,7 +176,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 1,
-                NULL);
+                &xAPP_MONITOR_Tasks);
 
 
 

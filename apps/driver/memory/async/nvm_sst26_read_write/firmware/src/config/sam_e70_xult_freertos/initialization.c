@@ -59,58 +59,40 @@
 // Section: Driver Initialization Data
 // *****************************************************************************
 // *****************************************************************************
-// <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance 0 Initialization Data">
+// <editor-fold defaultstate="collapsed" desc="DRV_SST26 Initialization Data">
 
-uint8_t gDrvMemory0EraseBuffer[DRV_SST26_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
-
-DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
-
-DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0] = { 0 };
-
-const MEMORY_DEVICE_API drvMemory0DeviceAPI = {
-    .Open               = DRV_SST26_Open,
-    .Close              = DRV_SST26_Close,
-    .Status             = DRV_SST26_Status,
-    .SectorErase        = DRV_SST26_SectorErase,
-    .Read               = DRV_SST26_Read,
-    .PageWrite          = DRV_SST26_PageWrite,
-    .EventHandlerSet    = NULL,
-    .GeometryGet        = (GEOMETRY_GET)DRV_SST26_GeometryGet,
-    .TransferStatusGet  = (TRANSFER_STATUS_GET)DRV_SST26_TransferStatusGet
+const DRV_SST26_PLIB_INTERFACE drvSST26PlibAPI = {
+    .CommandWrite  = QSPI_CommandWrite,
+    .RegisterRead  = QSPI_RegisterRead,
+    .RegisterWrite = QSPI_RegisterWrite,
+    .MemoryRead    = QSPI_MemoryRead,
+    .MemoryWrite   = QSPI_MemoryWrite
 };
 
-const DRV_MEMORY_INIT drvMemory0InitData =
+const DRV_SST26_INIT drvSST26InitData =
 {
-    .memDevIndex                = DRV_SST26_INDEX,
-    .memoryDevice               = &drvMemory0DeviceAPI,
-    .isMemDevInterruptEnabled   = false,
-    .isFsEnabled                = false,
-    .ewBuffer                   = &gDrvMemory0EraseBuffer[0],
-    .clientObjPool              = (uintptr_t)&gDrvMemory0ClientObject[0],
-    .bufferObj                  = (uintptr_t)&gDrvMemory0BufferObject[0],
-    .queueSize                  = DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0,
-    .nClientsMax                = DRV_MEMORY_CLIENTS_NUMBER_IDX0
+    .sst26Plib         = &drvSST26PlibAPI,
 };
 
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance 1 Initialization Data">
 
-uint8_t gDrvMemory1EraseBuffer[EFC_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
+static uint8_t gDrvMemory1EraseBuffer[EFC_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
 
-DRV_MEMORY_CLIENT_OBJECT gDrvMemory1ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX1] = { 0 };
+static DRV_MEMORY_CLIENT_OBJECT gDrvMemory1ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX1] = { 0 };
 
-DRV_MEMORY_BUFFER_OBJECT gDrvMemory1BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX1] = { 0 };
+static DRV_MEMORY_BUFFER_OBJECT gDrvMemory1BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX1] = { 0 };
 
-const MEMORY_DEVICE_API drvMemory1DeviceAPI = {
+const DRV_MEMORY_DEVICE_INTERFACE drvMemory1DeviceAPI = {
     .Open               = DRV_EFC_Open,
     .Close              = DRV_EFC_Close,
     .Status             = DRV_EFC_Status,
     .SectorErase        = DRV_EFC_SectorErase,
     .Read               = DRV_EFC_Read,
     .PageWrite          = DRV_EFC_PageWrite,
-    .EventHandlerSet    = (EVENT_HANDLER_SET)DRV_EFC_EventHandlerSet,
-    .GeometryGet        = (GEOMETRY_GET)DRV_EFC_GeometryGet,
-    .TransferStatusGet  = (TRANSFER_STATUS_GET)DRV_EFC_TransferStatusGet
+    .EventHandlerSet    = (DRV_MEMORY_DEVICE_EVENT_HANDLER_SET)DRV_EFC_EventHandlerSet,
+    .GeometryGet        = (DRV_MEMORY_DEVICE_GEOMETRY_GET)DRV_EFC_GeometryGet,
+    .TransferStatusGet  = (DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET)DRV_EFC_TransferStatusGet
 };
 
 const DRV_MEMORY_INIT drvMemory1InitData =
@@ -127,19 +109,37 @@ const DRV_MEMORY_INIT drvMemory1InitData =
 };
 
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="DRV_SST26 Initialization Data">
+// <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance 0 Initialization Data">
 
-const SST26_PLIB_API drvSST26PlibAPI = {
-    .CommandWrite  = QSPI_CommandWrite,
-    .RegisterRead  = QSPI_RegisterRead,
-    .RegisterWrite = QSPI_RegisterWrite,
-    .MemoryRead    = QSPI_MemoryRead,
-    .MemoryWrite   = QSPI_MemoryWrite
+static uint8_t gDrvMemory0EraseBuffer[DRV_SST26_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
+
+static DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
+
+static DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0] = { 0 };
+
+const DRV_MEMORY_DEVICE_INTERFACE drvMemory0DeviceAPI = {
+    .Open               = DRV_SST26_Open,
+    .Close              = DRV_SST26_Close,
+    .Status             = DRV_SST26_Status,
+    .SectorErase        = DRV_SST26_SectorErase,
+    .Read               = DRV_SST26_Read,
+    .PageWrite          = DRV_SST26_PageWrite,
+    .EventHandlerSet    = NULL,
+    .GeometryGet        = (DRV_MEMORY_DEVICE_GEOMETRY_GET)DRV_SST26_GeometryGet,
+    .TransferStatusGet  = (DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET)DRV_SST26_TransferStatusGet
 };
 
-const DRV_SST26_INIT drvSST26InitData =
+const DRV_MEMORY_INIT drvMemory0InitData =
 {
-    .sst26Plib         = &drvSST26PlibAPI,
+    .memDevIndex                = DRV_SST26_INDEX,
+    .memoryDevice               = &drvMemory0DeviceAPI,
+    .isMemDevInterruptEnabled   = false,
+    .isFsEnabled                = false,
+    .ewBuffer                   = &gDrvMemory0EraseBuffer[0],
+    .clientObjPool              = (uintptr_t)&gDrvMemory0ClientObject[0],
+    .bufferObj                  = (uintptr_t)&gDrvMemory0BufferObject[0],
+    .queueSize                  = DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0,
+    .nClientsMax                = DRV_MEMORY_CLIENTS_NUMBER_IDX0
 };
 
 // </editor-fold>
@@ -166,17 +166,17 @@ SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 // <editor-fold defaultstate="collapsed" desc="SYS_TIME Initialization Data">
 
-TIME_PLIB_API sysTimePlibAPI = {
-    .timerCallbackSet = (TIME_CallbackSet)TC0_CH0_TimerCallbackRegister,
-    .timerCounterGet = (TIME_CounterGet)TC0_CH0_TimerCounterGet,
-     .timerPeriodSet = (TIME_PeriodSet)TC0_CH0_TimerPeriodSet,
-    .timerFrequencyGet = (TIME_FrequencyGet)TC0_CH0_TimerFrequencyGet,
-    .timerCompareSet = (TIME_CompareSet)TC0_CH0_TimerCompareSet,
-    .timerStart = (TIME_Start)TC0_CH0_TimerStart,
-    .timerStop = (TIME_Stop)TC0_CH0_TimerStop 
+const SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
+    .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)TC0_CH0_TimerCallbackRegister,
+    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC0_CH0_TimerCounterGet,
+    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC0_CH0_TimerPeriodSet,
+    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC0_CH0_TimerFrequencyGet,
+    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC0_CH0_TimerCompareSet,
+    .timerStart = (SYS_TIME_PLIB_START)TC0_CH0_TimerStart,
+    .timerStop = (SYS_TIME_PLIB_STOP)TC0_CH0_TimerStop 
 };
 
-SYS_TIME_INIT sysTimeInitData =
+const SYS_TIME_INIT sysTimeInitData =
 {
     .timePlib = &sysTimePlibAPI,
     .hwTimerIntNum = TC0_CH0_IRQn,
@@ -200,24 +200,25 @@ void SYS_Initialize ( void* data )
     CLK_Initialize();
 	PIO_Initialize();
 
+
     NVIC_Initialize();
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
 
-	BSP_Initialize();
-    QSPI_Initialize();
-
  
     TC0_CH0_TimerInitialize(); 
      
     
+	BSP_Initialize();
+    QSPI_Initialize();
 
-    sysObj.drvMemory0 = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_0, (SYS_MODULE_INIT *)&drvMemory0InitData);
+
+    sysObj.drvSST26 = DRV_SST26_Initialize((SYS_MODULE_INDEX)DRV_SST26_INDEX, (SYS_MODULE_INIT *)&drvSST26InitData);
 
     sysObj.drvMemory1 = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_1, (SYS_MODULE_INIT *)&drvMemory1InitData);
 
-    sysObj.drvSST26 = DRV_SST26_Initialize((SYS_MODULE_INDEX)DRV_SST26_INDEX, (SYS_MODULE_INIT *)&drvSST26InitData);
+    sysObj.drvMemory0 = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_0, (SYS_MODULE_INIT *)&drvMemory0InitData);
 
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);

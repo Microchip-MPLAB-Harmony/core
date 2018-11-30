@@ -82,11 +82,13 @@ extern "C" {
 // *****************************************************************************
 /* TIME System Service Configuration Options */
 #define SYS_TIME_INDEX_0                     0
-#define SYS_TIME_MAX_TIMERS                  10
+#define SYS_TIME_MAX_TIMERS                  5
 #define SYS_TIME_HW_COUNTER_WIDTH            16
 #define SYS_TIME_HW_COUNTER_PERIOD           0xFFFF
 #define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
 #define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
+#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
+
 
 
 // *****************************************************************************
@@ -96,15 +98,10 @@ extern "C" {
 // *****************************************************************************
 /* Memory Driver Global Configuration Options */
 #define DRV_MEMORY_INSTANCES_NUMBER          2
-
-/* Memory Driver Instance 0 Configuration */
-#define DRV_MEMORY_INDEX_0                   0
-#define DRV_MEMORY_CLIENTS_NUMBER_IDX0       1
-#define DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0    5
-
-/* Memory Driver Instance 0 RTOS Configurations*/
-#define DRV_MEMORY_STACK_SIZE_IDX0           1024
-#define DRV_MEMORY_PRIORITY_IDX0             2
+/* SST26 Driver Instance Configuration */
+#define DRV_SST26_INDEX                       0
+#define DRV_SST26_START_ADDRESS               0x0
+#define DRV_SST26_ERASE_BUFFER_SIZE           4096
 
 
 /* Memory Driver Instance 1 Configuration */
@@ -118,12 +115,17 @@ extern "C" {
 
 /* Memory Driver Instance 1 RTOS Configurations*/
 #define DRV_MEMORY_STACK_SIZE_IDX1           1024
-#define DRV_MEMORY_PRIORITY_IDX1             2
+#define DRV_MEMORY_PRIORITY_IDX1             1
 
-/* SST26 Driver Instance Configuration */
-#define DRV_SST26_INDEX                       0
-#define DRV_SST26_START_ADDRESS               0x0
-#define DRV_SST26_ERASE_BUFFER_SIZE           4096
+
+/* Memory Driver Instance 0 Configuration */
+#define DRV_MEMORY_INDEX_0                   0
+#define DRV_MEMORY_CLIENTS_NUMBER_IDX0       1
+#define DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0    5
+
+/* Memory Driver Instance 0 RTOS Configurations*/
+#define DRV_MEMORY_STACK_SIZE_IDX0           1024
+#define DRV_MEMORY_PRIORITY_IDX0             1
 
 
 
