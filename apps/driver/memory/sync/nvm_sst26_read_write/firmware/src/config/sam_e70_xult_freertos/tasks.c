@@ -58,6 +58,9 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
+/* Handle for the APP_SST26_Tasks. */
+TaskHandle_t xAPP_SST26_Tasks;
+
 void _APP_SST26_Tasks(  void *pvParameters  )
 {
     while(1)
@@ -66,6 +69,9 @@ void _APP_SST26_Tasks(  void *pvParameters  )
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
+/* Handle for the APP_NVM_Tasks. */
+TaskHandle_t xAPP_NVM_Tasks;
+
 void _APP_NVM_Tasks(  void *pvParameters  )
 {
     while(1)
@@ -74,6 +80,9 @@ void _APP_NVM_Tasks(  void *pvParameters  )
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
+/* Handle for the APP_MONITOR_Tasks. */
+TaskHandle_t xAPP_MONITOR_Tasks;
+
 void _APP_MONITOR_Tasks(  void *pvParameters  )
 {
     while(1)
@@ -119,7 +128,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 2,
-                NULL);
+                &xAPP_SST26_Tasks);
 
     /* Create OS Thread for APP_NVM_Tasks. */
     xTaskCreate((TaskFunction_t) _APP_NVM_Tasks,
@@ -127,7 +136,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 2,
-                NULL);
+                &xAPP_NVM_Tasks);
 
     /* Create OS Thread for APP_MONITOR_Tasks. */
     xTaskCreate((TaskFunction_t) _APP_MONITOR_Tasks,
@@ -135,7 +144,7 @@ void SYS_Tasks ( void )
                 128,
                 NULL,
                 1,
-                NULL);
+                &xAPP_MONITOR_Tasks);
 
 
 

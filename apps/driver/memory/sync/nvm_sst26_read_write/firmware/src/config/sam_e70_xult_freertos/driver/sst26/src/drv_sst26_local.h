@@ -194,7 +194,7 @@ typedef struct
     DRV_SST26_OPERATION_TYPE curOpType;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    const SST26_PLIB_API *sst26Plib;
+    const DRV_SST26_PLIB_INTERFACE *sst26Plib;
 } DRV_SST26_OBJECT;
 
 #endif //#ifndef _DRV_SST26_LOCAL_H
