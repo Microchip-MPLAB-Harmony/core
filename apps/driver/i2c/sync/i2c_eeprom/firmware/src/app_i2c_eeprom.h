@@ -56,7 +56,6 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
-#include "bsp/bsp.h"
 #include "driver/i2c/drv_i2c.h"
 
 // DOM-IGNORE-BEGIN
@@ -98,8 +97,7 @@ typedef enum
 
     APP_I2C_EEPROM_STATE_ERROR,
 
-    APP_I2C_EEPROM_STATE_IDLE,
-    /* TODO: Define states used by the application state machine. */
+    APP_I2C_EEPROM_STATE_IDLE,    
 
 } APP_I2C_EEPROM_STATES;
 

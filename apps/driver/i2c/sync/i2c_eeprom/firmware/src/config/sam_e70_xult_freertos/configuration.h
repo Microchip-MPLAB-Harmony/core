@@ -87,15 +87,15 @@ extern "C" {
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
-/* I2C Driver Common Configuration Options */
-#define DRV_I2C_INSTANCES_NUMBER              1
-
-
 /* I2C Driver Instance 0 Configuration Options */
 #define DRV_I2C_INDEX_0                       0
 #define DRV_I2C_CLIENTS_NUMBER_IDX0           1
 #define DRV_I2C_INT_SRC_IDX0                  TWIHS0_IRQn
 #define DRV_I2C_CLOCK_SPEED_IDX0              400000
+
+/* I2C Driver Common Configuration Options */
+#define DRV_I2C_INSTANCES_NUMBER              1
+
 
 
 
@@ -111,6 +111,7 @@ extern "C" {
 // Section: Application Configuration
 // *****************************************************************************
 // *****************************************************************************
+
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

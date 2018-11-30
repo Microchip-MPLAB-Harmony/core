@@ -126,11 +126,8 @@ void APP_I2C_EEPROM_Initialize ( void )
     /* Place the App state machine in its initial state. */
     appData.state = APP_I2C_EEPROM_STATE_INIT;
 
-
-
-    /* TODO: Initialize your application's state machine and other
-     * parameters.
-     */
+    LED_OFF();
+    
 }
 
 
@@ -155,10 +152,7 @@ void APP_I2C_EEPROM_Tasks ( void )
             appData.drvI2CHandle = DRV_I2C_Open( DRV_I2C_INDEX_0, DRV_IO_INTENT_READWRITE);
 
             if(appData.drvI2CHandle != DRV_HANDLE_INVALID)
-            {
-                /* Optionally, if required, the application can change the
-                 * default clock speed using the DRV_I2C_TransferSetup() API
-                */
+            {                
                 appData.state = APP_I2C_EEPROM_STATE_WRITE;
             }
             else
@@ -220,8 +214,13 @@ void APP_I2C_EEPROM_Tasks ( void )
         case APP_I2C_EEPROM_STATE_IDLE:
             if (isSuccess == true)
             {
-                LED_On();
+                LED_ON();
             }
+            else
+            {
+                LED_OFF();
+            }
+            
             vTaskSuspend(NULL);
             break;
     }

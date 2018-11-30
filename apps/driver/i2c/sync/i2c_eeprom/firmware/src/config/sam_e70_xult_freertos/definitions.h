@@ -48,18 +48,17 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "bsp/bsp.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
-#include "bsp/bsp.h"
+#include "peripheral/twihs/plib_twihs0.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "driver/i2c/drv_i2c.h"
 #include "system/int/sys_int.h"
 #include "system/ports/sys_ports.h"
 #include "osal/osal.h"
-#include "driver/i2c/drv_i2c.h"
-#include "driver/i2c/drv_i2c.h"
-#include "peripheral/twihs/plib_twihs0.h"
 #include "app_i2c_eeprom.h"
 
 
