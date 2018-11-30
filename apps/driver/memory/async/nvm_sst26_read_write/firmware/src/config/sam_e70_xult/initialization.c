@@ -59,58 +59,24 @@
 // Section: Driver Initialization Data
 // *****************************************************************************
 // *****************************************************************************
-// <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance 0 Initialization Data">
-
-uint8_t gDrvMemory0EraseBuffer[DRV_SST26_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
-
-DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
-
-DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0] = { 0 };
-
-const MEMORY_DEVICE_API drvMemory0DeviceAPI = {
-    .Open               = DRV_SST26_Open,
-    .Close              = DRV_SST26_Close,
-    .Status             = DRV_SST26_Status,
-    .SectorErase        = DRV_SST26_SectorErase,
-    .Read               = DRV_SST26_Read,
-    .PageWrite          = DRV_SST26_PageWrite,
-    .EventHandlerSet    = NULL,
-    .GeometryGet        = (GEOMETRY_GET)DRV_SST26_GeometryGet,
-    .TransferStatusGet  = (TRANSFER_STATUS_GET)DRV_SST26_TransferStatusGet
-};
-
-const DRV_MEMORY_INIT drvMemory0InitData =
-{
-    .memDevIndex                = DRV_SST26_INDEX,
-    .memoryDevice               = &drvMemory0DeviceAPI,
-    .isMemDevInterruptEnabled   = false,
-    .isFsEnabled                = false,
-    .ewBuffer                   = &gDrvMemory0EraseBuffer[0],
-    .clientObjPool              = (uintptr_t)&gDrvMemory0ClientObject[0],
-    .bufferObj                  = (uintptr_t)&gDrvMemory0BufferObject[0],
-    .queueSize                  = DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0,
-    .nClientsMax                = DRV_MEMORY_CLIENTS_NUMBER_IDX0
-};
-
-// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance 1 Initialization Data">
 
-uint8_t gDrvMemory1EraseBuffer[EFC_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
+static uint8_t gDrvMemory1EraseBuffer[EFC_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
 
-DRV_MEMORY_CLIENT_OBJECT gDrvMemory1ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX1] = { 0 };
+static DRV_MEMORY_CLIENT_OBJECT gDrvMemory1ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX1] = { 0 };
 
-DRV_MEMORY_BUFFER_OBJECT gDrvMemory1BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX1] = { 0 };
+static DRV_MEMORY_BUFFER_OBJECT gDrvMemory1BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX1] = { 0 };
 
-const MEMORY_DEVICE_API drvMemory1DeviceAPI = {
+const DRV_MEMORY_DEVICE_INTERFACE drvMemory1DeviceAPI = {
     .Open               = DRV_EFC_Open,
     .Close              = DRV_EFC_Close,
     .Status             = DRV_EFC_Status,
     .SectorErase        = DRV_EFC_SectorErase,
     .Read               = DRV_EFC_Read,
     .PageWrite          = DRV_EFC_PageWrite,
-    .EventHandlerSet    = (EVENT_HANDLER_SET)DRV_EFC_EventHandlerSet,
-    .GeometryGet        = (GEOMETRY_GET)DRV_EFC_GeometryGet,
-    .TransferStatusGet  = (TRANSFER_STATUS_GET)DRV_EFC_TransferStatusGet
+    .EventHandlerSet    = (DRV_MEMORY_DEVICE_EVENT_HANDLER_SET)DRV_EFC_EventHandlerSet,
+    .GeometryGet        = (DRV_MEMORY_DEVICE_GEOMETRY_GET)DRV_EFC_GeometryGet,
+    .TransferStatusGet  = (DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET)DRV_EFC_TransferStatusGet
 };
 
 const DRV_MEMORY_INIT drvMemory1InitData =
@@ -127,9 +93,43 @@ const DRV_MEMORY_INIT drvMemory1InitData =
 };
 
 // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance 0 Initialization Data">
+
+static uint8_t gDrvMemory0EraseBuffer[DRV_SST26_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
+
+static DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
+
+static DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0] = { 0 };
+
+const DRV_MEMORY_DEVICE_INTERFACE drvMemory0DeviceAPI = {
+    .Open               = DRV_SST26_Open,
+    .Close              = DRV_SST26_Close,
+    .Status             = DRV_SST26_Status,
+    .SectorErase        = DRV_SST26_SectorErase,
+    .Read               = DRV_SST26_Read,
+    .PageWrite          = DRV_SST26_PageWrite,
+    .EventHandlerSet    = NULL,
+    .GeometryGet        = (DRV_MEMORY_DEVICE_GEOMETRY_GET)DRV_SST26_GeometryGet,
+    .TransferStatusGet  = (DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET)DRV_SST26_TransferStatusGet
+};
+
+const DRV_MEMORY_INIT drvMemory0InitData =
+{
+    .memDevIndex                = DRV_SST26_INDEX,
+    .memoryDevice               = &drvMemory0DeviceAPI,
+    .isMemDevInterruptEnabled   = false,
+    .isFsEnabled                = false,
+    .ewBuffer                   = &gDrvMemory0EraseBuffer[0],
+    .clientObjPool              = (uintptr_t)&gDrvMemory0ClientObject[0],
+    .bufferObj                  = (uintptr_t)&gDrvMemory0BufferObject[0],
+    .queueSize                  = DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0,
+    .nClientsMax                = DRV_MEMORY_CLIENTS_NUMBER_IDX0
+};
+
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DRV_SST26 Initialization Data">
 
-const SST26_PLIB_API drvSST26PlibAPI = {
+const DRV_SST26_PLIB_INTERFACE drvSST26PlibAPI = {
     .CommandWrite  = QSPI_CommandWrite,
     .RegisterRead  = QSPI_RegisterRead,
     .RegisterWrite = QSPI_RegisterWrite,
@@ -181,18 +181,19 @@ void SYS_Initialize ( void* data )
     CLK_Initialize();
 	PIO_Initialize();
 
+
+	BSP_Initialize();
+    QSPI_Initialize();
+
     NVIC_Initialize();
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
 
-	BSP_Initialize();
-    QSPI_Initialize();
-
-
-    sysObj.drvMemory0 = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_0, (SYS_MODULE_INIT *)&drvMemory0InitData);
 
     sysObj.drvMemory1 = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_1, (SYS_MODULE_INIT *)&drvMemory1InitData);
+
+    sysObj.drvMemory0 = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_0, (SYS_MODULE_INIT *)&drvMemory0InitData);
 
     sysObj.drvSST26 = DRV_SST26_Initialize((SYS_MODULE_INDEX)DRV_SST26_INDEX, (SYS_MODULE_INIT *)&drvSST26InitData);
 

@@ -48,18 +48,18 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "bsp/bsp.h"
+#include "driver/memory/drv_memory_efc.h"
+#include "peripheral/qspi/plib_qspi.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/mpu/plib_mpu.h"
-#include "bsp/bsp.h"
+#include "driver/memory/drv_memory.h"
+#include "peripheral/efc/plib_efc.h"
+#include "driver/sst26/drv_sst26.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
-#include "driver/memory/drv_memory.h"
-#include "driver/memory/drv_memory_efc.h"
-#include "driver/sst26/drv_sst26.h"
-#include "peripheral/efc/plib_efc.h"
-#include "peripheral/qspi/plib_qspi.h"
 #include "app_sst26.h"
 #include "app_nvm.h"
 #include "app_monitor.h"
@@ -184,8 +184,8 @@ void SYS_Tasks ( void );
 
 typedef struct
 {
-    SYS_MODULE_OBJ  drvMemory0;
     SYS_MODULE_OBJ  drvMemory1;
+    SYS_MODULE_OBJ  drvMemory0;
     SYS_MODULE_OBJ  drvSST26;
 
 } SYSTEM_OBJECTS;

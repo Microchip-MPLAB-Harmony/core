@@ -87,15 +87,6 @@ extern "C" {
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
-/* Memory Driver Global Configuration Options */
-#define DRV_MEMORY_INSTANCES_NUMBER          2
-
-/* Memory Driver Instance 0 Configuration */
-#define DRV_MEMORY_INDEX_0                   0
-#define DRV_MEMORY_CLIENTS_NUMBER_IDX0       1
-#define DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0    5
-
-
 
 /* Memory Driver Instance 1 Configuration */
 #define DRV_MEMORY_INDEX_1                   1
@@ -107,6 +98,15 @@ extern "C" {
 #define DRV_MEMORY_DEVICE_ERASE_SIZE         8192
 
 
+
+/* Memory Driver Instance 0 Configuration */
+#define DRV_MEMORY_INDEX_0                   0
+#define DRV_MEMORY_CLIENTS_NUMBER_IDX0       1
+#define DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0    5
+
+
+/* Memory Driver Global Configuration Options */
+#define DRV_MEMORY_INSTANCES_NUMBER          2
 /* SST26 Driver Instance Configuration */
 #define DRV_SST26_INDEX                       0
 #define DRV_SST26_START_ADDRESS               0x0

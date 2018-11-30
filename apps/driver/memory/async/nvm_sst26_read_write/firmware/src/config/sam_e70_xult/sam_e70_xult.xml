@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Configuration>
   <Components>
-    <UniqueComponent dnOrder="0" id="core">
+    <UniqueComponent bsp="true" dnOrder="0" id="BSP_SAM_E70_Xplained_Ultra"/>
+    <UniqueComponent dnOrder="1" id="cmsis"/>
+    <UniqueComponent dnOrder="2" id="core">
       <Symbols dnOrder="0">
         <Integer dnOrder="0" id="ACC_CLOCK_FREQUENCY">
           <Values dnOrder="0">
@@ -4659,8 +4661,299 @@
         </Integer>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent bsp="true" dnOrder="1" id="BSP_SAM_E70_Xplained_Ultra"/>
-    <UniqueComponent dnOrder="2" id="HarmonyCore">
+    <UniqueComponent dnOrder="3" id="dfp"/>
+    <GeneratorComponent dnOrder="4" id="drv_memory">
+      <Symbols dnOrder="0">
+        <Combo dnOrder="0" id="DRV_MEMORY_COMMON_MODE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="drv_memory" priority="1" value="Asynchronous"/>
+            </Dynamic>
+          </Values>
+        </Combo>
+        <Boolean dnOrder="1" id="DRV_MEMORY_COMMON_SYS_TIME_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="drv_memory" priority="1" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+      </Symbols>
+      <Instances dnOrder="1">
+        <InstanceComponent dnOrder="0" id="drv_memory" instance="0">
+          <Symbols dnOrder="0">
+            <Integer dnOrder="0" id="DRV_MEMORY_BUFFER_QUEUE_SIZE">
+              <Values dnOrder="0">
+                <User dnOrder="0" value="5"/>
+              </Values>
+            </Integer>
+            <String dnOrder="1" id="DRV_MEMORY_DEVICE">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0">
+                  <Value dnOrder="0" id="drv_memory_0" priority="1" value="DRV_SST26"/>
+                </Dynamic>
+              </Values>
+            </String>
+            <Comment dnOrder="2" id="DRV_MEMORY_DEVICE_COMMENT">
+              <Attributes dnOrder="0">
+                <String dnOrder="0" id="text">
+                  <Value dnOrder="0">***&amp;#160;Configure&amp;#160;Memory&amp;#160;Device&amp;#160;in&amp;#160;DRV_SST26&amp;#160;Configurations&amp;#160;***</Value>
+                </String>
+                <Boolean dnOrder="1" id="visible">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </Comment>
+            <Boolean dnOrder="3" id="DRV_MEMORY_ERASE_ENABLE">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0">
+                  <Value dnOrder="0" id="drv_memory_0" priority="1" value="true"/>
+                </Dynamic>
+              </Values>
+            </Boolean>
+            <Boolean dnOrder="4" id="DRV_MEMORY_INTERRUPT_ENABLE">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0">
+                  <Value dnOrder="0" id="drv_memory_0" priority="1" value="false"/>
+                </Dynamic>
+              </Values>
+            </Boolean>
+            <Menu dnOrder="5" id="DRV_MEMORY_RTOS_MENU">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </Menu>
+            <File dnOrder="6" id="DRV_MEMORY_SYS_RTOS_TASK">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+          </Symbols>
+          <Attachments dnOrder="1">
+            <DirectDependency dnOrder="0" id="drv_memory_MEMORY_dependency">
+              <Attributes dnOrder="0">
+                <String dnOrder="0" id="targetComponentID">
+                  <Value dnOrder="0">drv_sst26</Value>
+                </String>
+                <String dnOrder="1" id="targetAttachmentID">
+                  <Value dnOrder="0">memory</Value>
+                </String>
+              </Attributes>
+            </DirectDependency>
+          </Attachments>
+        </InstanceComponent>
+        <InstanceComponent dnOrder="1" id="drv_memory" instance="1">
+          <Symbols dnOrder="0">
+            <Integer dnOrder="0" id="DRV_MEMORY_BUFFER_QUEUE_SIZE">
+              <Values dnOrder="0">
+                <User dnOrder="0" value="5"/>
+              </Values>
+            </Integer>
+            <String dnOrder="1" id="DRV_MEMORY_DEVICE">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0">
+                  <Value dnOrder="0" id="drv_memory_1" priority="1" value="EFC"/>
+                </Dynamic>
+              </Values>
+            </String>
+            <Comment dnOrder="2" id="DRV_MEMORY_DEVICE_COMMENT">
+              <Attributes dnOrder="0">
+                <String dnOrder="0" id="text">
+                  <Value dnOrder="0">***&amp;#160;Configure&amp;#160;Memory&amp;#160;Device&amp;#160;in&amp;#160;EFC&amp;#160;Configurations&amp;#160;***</Value>
+                </String>
+                <Boolean dnOrder="1" id="visible">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </Comment>
+            <Boolean dnOrder="3" id="DRV_MEMORY_ERASE_ENABLE">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0">
+                  <Value dnOrder="0" id="drv_memory_1" priority="1" value="true"/>
+                </Dynamic>
+              </Values>
+            </Boolean>
+            <Boolean dnOrder="4" id="DRV_MEMORY_INTERRUPT_ENABLE">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0">
+                  <Value dnOrder="0" id="drv_memory_1" priority="1" value="true"/>
+                </Dynamic>
+              </Values>
+            </Boolean>
+            <String dnOrder="5" id="DRV_MEMORY_PLIB">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0">
+                  <Value dnOrder="0" id="drv_memory_1" priority="1" value="DRV_EFC"/>
+                </Dynamic>
+              </Values>
+            </String>
+            <File dnOrder="6" id="DRV_MEMORY_PLIB_HEADER">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+                <String dnOrder="1" id="name">
+                  <Value dnOrder="0">drv_memory_efc.h</Value>
+                </String>
+              </Attributes>
+            </File>
+            <File dnOrder="7" id="DRV_MEMORY_PLIB_SOURCE">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+                <String dnOrder="1" id="name">
+                  <Value dnOrder="0">drv_memory_efc.c</Value>
+                </String>
+              </Attributes>
+            </File>
+            <File dnOrder="8" id="DRV_MEMORY_PLIB_SYS_DEF">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+            <Menu dnOrder="9" id="DRV_MEMORY_RTOS_MENU">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </Menu>
+            <File dnOrder="10" id="DRV_MEMORY_SYS_RTOS_TASK">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+          </Symbols>
+          <Attachments dnOrder="1">
+            <DirectDependency dnOrder="0" id="drv_memory_MEMORY_dependency">
+              <Attributes dnOrder="0">
+                <String dnOrder="0" id="targetComponentID">
+                  <Value dnOrder="0">efc</Value>
+                </String>
+                <String dnOrder="1" id="targetAttachmentID">
+                  <Value dnOrder="0">EFC_MEMORY</Value>
+                </String>
+              </Attributes>
+            </DirectDependency>
+          </Attachments>
+        </InstanceComponent>
+      </Instances>
+    </GeneratorComponent>
+    <UniqueComponent dnOrder="5" id="drv_sst26">
+      <Symbols dnOrder="0">
+        <Boolean dnOrder="0" id="DRV_MEMORY_CONNECTED">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="drv_memory_0" priority="1" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <String dnOrder="1" id="DRV_SST26_PLIB">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="drv_sst26" priority="2" value="QSPI"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Integer dnOrder="2" id="ERASE_BUFFER_SIZE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Integer>
+        <Comment dnOrder="3" id="ERASE_COMMENT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Comment>
+      </Symbols>
+      <Attachments dnOrder="1">
+        <DirectDependency dnOrder="0" id="drv_sst26_QSPI_dependency">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="targetComponentID">
+              <Value dnOrder="0">qspi</Value>
+            </String>
+            <String dnOrder="1" id="targetAttachmentID">
+              <Value dnOrder="0">QSPI_QSPI</Value>
+            </String>
+          </Attributes>
+        </DirectDependency>
+        <DirectCapability dnOrder="1" id="memory">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="targetComponentID">
+              <Value dnOrder="0">drv_memory_0</Value>
+            </String>
+            <String dnOrder="1" id="targetAttachmentID">
+              <Value dnOrder="0">drv_memory_MEMORY_dependency</Value>
+            </String>
+          </Attributes>
+        </DirectCapability>
+      </Attachments>
+    </UniqueComponent>
+    <UniqueComponent dnOrder="6" id="efc">
+      <Symbols dnOrder="0">
+        <Boolean dnOrder="0" id="DRV_MEMORY_CONNECTED">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="drv_memory_1" priority="1" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="1" id="ERASE_BUFFER_SIZE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Integer>
+        <Comment dnOrder="2" id="ERASE_COMMENT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Comment>
+        <Integer dnOrder="3" id="MEMORY_MEDIA_SIZE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Integer>
+        <String dnOrder="4" id="START_ADDRESS">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </String>
+      </Symbols>
+      <Attachments dnOrder="1">
+        <DirectCapability dnOrder="0" id="EFC_MEMORY">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="targetComponentID">
+              <Value dnOrder="0">drv_memory_1</Value>
+            </String>
+            <String dnOrder="1" id="targetAttachmentID">
+              <Value dnOrder="0">drv_memory_MEMORY_dependency</Value>
+            </String>
+          </Attributes>
+        </DirectCapability>
+      </Attachments>
+    </UniqueComponent>
+    <UniqueComponent dnOrder="7" id="HarmonyCore">
       <Symbols dnOrder="0">
         <File dnOrder="0" id="APP0_C">
           <Attributes dnOrder="0">
@@ -4929,287 +5222,8 @@
         </File>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent dnOrder="3" id="cmsis"/>
-    <UniqueComponent dnOrder="4" id="dfp"/>
-    <GeneratorComponent dnOrder="5" id="drv_memory">
-      <Symbols dnOrder="0">
-        <KeyValueSet dnOrder="0" id="DRV_MEMORY_COMMON_MODE">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="0"/>
-          </Values>
-        </KeyValueSet>
-        <Boolean dnOrder="1" id="DRV_MEMORY_COMMON_SYS_TIME_ENABLE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="drv_memory" priority="1" value="false"/>
-            </Dynamic>
-          </Values>
-        </Boolean>
-      </Symbols>
-      <Instances dnOrder="1">
-        <InstanceComponent dnOrder="0" id="drv_memory" instance="0">
-          <Dependencies dnOrder="0">
-            <Dependency dnOrder="0" id="drv_memory_MEMORY_dependency" targetAttachmentID="memory" targetComponentID="drv_sst26"/>
-          </Dependencies>
-          <Symbols dnOrder="1">
-            <Integer dnOrder="0" id="DRV_MEMORY_BUFFER_QUEUE_SIZE">
-              <Values dnOrder="0">
-                <User dnOrder="0" value="5"/>
-              </Values>
-            </Integer>
-            <String dnOrder="1" id="DRV_MEMORY_DEVICE">
-              <Values dnOrder="0">
-                <Dynamic dnOrder="0">
-                  <Value dnOrder="0" id="drv_memory_0" priority="1" value="DRV_SST26"/>
-                </Dynamic>
-              </Values>
-            </String>
-            <Comment dnOrder="2" id="DRV_MEMORY_DEVICE_COMMENT">
-              <Attributes dnOrder="0">
-                <String dnOrder="0" id="text">
-                  <Value dnOrder="0">***&amp;#160;Configure&amp;#160;Memory&amp;#160;Device&amp;#160;in&amp;#160;DRV_SST26&amp;#160;Configurations&amp;#160;***</Value>
-                </String>
-                <Boolean dnOrder="1" id="visible">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-              </Attributes>
-            </Comment>
-            <Boolean dnOrder="3" id="DRV_MEMORY_ERASE_ENABLE">
-              <Values dnOrder="0">
-                <Dynamic dnOrder="0">
-                  <Value dnOrder="0" id="drv_memory_0" priority="1" value="true"/>
-                </Dynamic>
-              </Values>
-            </Boolean>
-            <Boolean dnOrder="4" id="DRV_MEMORY_INTERRUPT_ENABLE">
-              <Values dnOrder="0">
-                <Dynamic dnOrder="0">
-                  <Value dnOrder="0" id="drv_memory_0" priority="1" value="false"/>
-                </Dynamic>
-              </Values>
-            </Boolean>
-            <Menu dnOrder="5" id="DRV_MEMORY_RTOS_MENU">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="visible">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
-            </Menu>
-            <File dnOrder="6" id="DRV_MEMORY_SYNC_HEADER_LOCAL">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
-            </File>
-            <File dnOrder="7" id="DRV_MEMORY_SYNC_SOURCE">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
-            </File>
-            <File dnOrder="8" id="DRV_MEMORY_SYS_RTOS_TASK">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
-            </File>
-          </Symbols>
-        </InstanceComponent>
-        <InstanceComponent dnOrder="1" id="drv_memory" instance="1">
-          <Dependencies dnOrder="0">
-            <Dependency dnOrder="0" id="drv_memory_MEMORY_dependency" targetAttachmentID="EFC_MEMORY" targetComponentID="efc"/>
-          </Dependencies>
-          <Symbols dnOrder="1">
-            <Integer dnOrder="0" id="DRV_MEMORY_BUFFER_QUEUE_SIZE">
-              <Values dnOrder="0">
-                <User dnOrder="0" value="5"/>
-              </Values>
-            </Integer>
-            <String dnOrder="1" id="DRV_MEMORY_DEVICE">
-              <Values dnOrder="0">
-                <Dynamic dnOrder="0">
-                  <Value dnOrder="0" id="drv_memory_1" priority="1" value="EFC"/>
-                </Dynamic>
-              </Values>
-            </String>
-            <Comment dnOrder="2" id="DRV_MEMORY_DEVICE_COMMENT">
-              <Attributes dnOrder="0">
-                <String dnOrder="0" id="text">
-                  <Value dnOrder="0">***&amp;#160;Configure&amp;#160;Memory&amp;#160;Device&amp;#160;in&amp;#160;EFC&amp;#160;Configurations&amp;#160;***</Value>
-                </String>
-                <Boolean dnOrder="1" id="visible">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-              </Attributes>
-            </Comment>
-            <Boolean dnOrder="3" id="DRV_MEMORY_ERASE_ENABLE">
-              <Values dnOrder="0">
-                <Dynamic dnOrder="0">
-                  <Value dnOrder="0" id="drv_memory_1" priority="1" value="true"/>
-                </Dynamic>
-              </Values>
-            </Boolean>
-            <Boolean dnOrder="4" id="DRV_MEMORY_INTERRUPT_ENABLE">
-              <Values dnOrder="0">
-                <Dynamic dnOrder="0">
-                  <Value dnOrder="0" id="drv_memory_1" priority="1" value="true"/>
-                </Dynamic>
-              </Values>
-            </Boolean>
-            <String dnOrder="5" id="DRV_MEMORY_PLIB">
-              <Values dnOrder="0">
-                <Dynamic dnOrder="0">
-                  <Value dnOrder="0" id="drv_memory_1" priority="1" value="DRV_EFC"/>
-                </Dynamic>
-              </Values>
-            </String>
-            <File dnOrder="6" id="DRV_MEMORY_PLIB_HEADER">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-                <String dnOrder="1" id="name">
-                  <Value dnOrder="0">drv_memory_efc.h</Value>
-                </String>
-              </Attributes>
-            </File>
-            <File dnOrder="7" id="DRV_MEMORY_PLIB_SOURCE">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-                <String dnOrder="1" id="name">
-                  <Value dnOrder="0">drv_memory_efc.c</Value>
-                </String>
-              </Attributes>
-            </File>
-            <File dnOrder="8" id="DRV_MEMORY_PLIB_SYS_DEF">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-              </Attributes>
-            </File>
-            <Menu dnOrder="9" id="DRV_MEMORY_RTOS_MENU">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="visible">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
-            </Menu>
-            <File dnOrder="10" id="DRV_MEMORY_SYNC_HEADER_LOCAL">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
-            </File>
-            <File dnOrder="11" id="DRV_MEMORY_SYNC_SOURCE">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
-            </File>
-            <File dnOrder="12" id="DRV_MEMORY_SYS_RTOS_TASK">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
-            </File>
-          </Symbols>
-        </InstanceComponent>
-      </Instances>
-    </GeneratorComponent>
-    <UniqueComponent dnOrder="6" id="drv_sst26">
-      <Capabilities dnOrder="0">
-        <Capability dnOrder="0" id="memory" targetAttachmentID="drv_memory_MEMORY_dependency" targetComponentID="drv_memory_0"/>
-      </Capabilities>
-      <Dependencies dnOrder="1">
-        <Dependency dnOrder="0" id="drv_sst26_QSPI_dependency" targetAttachmentID="QSPI_QSPI" targetComponentID="qspi"/>
-      </Dependencies>
-      <Symbols dnOrder="2">
-        <Boolean dnOrder="0" id="DRV_MEMORY_CONNECTED">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="drv_memory_0" priority="1" value="true"/>
-            </Dynamic>
-          </Values>
-        </Boolean>
-        <String dnOrder="1" id="DRV_SST26_PLIB">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="drv_sst26" priority="2" value="QSPI"/>
-            </Dynamic>
-          </Values>
-        </String>
-        <Integer dnOrder="2" id="ERASE_BUFFER_SIZE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Integer>
-        <Comment dnOrder="3" id="ERASE_COMMENT">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Comment>
-      </Symbols>
-    </UniqueComponent>
-    <UniqueComponent dnOrder="7" id="efc">
-      <Capabilities dnOrder="0">
-        <Capability dnOrder="0" id="EFC_MEMORY" targetAttachmentID="drv_memory_MEMORY_dependency" targetComponentID="drv_memory_1"/>
-      </Capabilities>
-      <Symbols dnOrder="1">
-        <Boolean dnOrder="0" id="DRV_MEMORY_CONNECTED">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="drv_memory_1" priority="1" value="true"/>
-            </Dynamic>
-          </Values>
-        </Boolean>
-        <Integer dnOrder="1" id="ERASE_BUFFER_SIZE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Integer>
-        <Comment dnOrder="2" id="ERASE_COMMENT">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Comment>
-        <Integer dnOrder="3" id="MEMORY_MEDIA_SIZE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Integer>
-        <String dnOrder="4" id="START_ADDRESS">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </String>
-      </Symbols>
-    </UniqueComponent>
     <UniqueComponent dnOrder="8" id="qspi">
-      <Capabilities dnOrder="0">
-        <Capability dnOrder="0" id="QSPI_QSPI" targetAttachmentID="drv_sst26_QSPI_dependency" targetComponentID="drv_sst26"/>
-      </Capabilities>
-      <Symbols dnOrder="1">
+      <Symbols dnOrder="0">
         <Integer dnOrder="0" id="QSPI_CLK_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
@@ -5225,11 +5239,23 @@
           </Values>
         </KeyValueSet>
       </Symbols>
+      <Attachments dnOrder="1">
+        <DirectCapability dnOrder="0" id="QSPI_QSPI">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="targetComponentID">
+              <Value dnOrder="0">drv_sst26</Value>
+            </String>
+            <String dnOrder="1" id="targetAttachmentID">
+              <Value dnOrder="0">drv_sst26_QSPI_dependency</Value>
+            </String>
+          </Attributes>
+        </DirectCapability>
+      </Attachments>
     </UniqueComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0" minimap="false"/>
-    <ComponentGraph dnOrder="1">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_E70_Xplained_Ultra" x="30" y="60"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="480" y="20"/>
