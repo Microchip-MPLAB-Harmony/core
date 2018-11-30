@@ -71,18 +71,22 @@ def setVisible(symbol, event):
 
 def showRTOSMenu(symbol, event):
     show_rtos_menu = False
+    component = symbol.getComponent()
+    commandEnable = component.getSymbolValue("SYS_COMMAND_ENABLE")
 
     if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
-        if (Database.getSymbolValue("sys_console", "SYS_COMMAND_ENABLE") == True):
+        if (commandEnable == True):
             show_rtos_menu = True
 
     symbol.setVisible(show_rtos_menu)
 
 def genRtosTask(symbol, event):
     gen_rtos_task = False
+    component = symbol.getComponent()
+    commandEnable = component.getSymbolValue("SYS_COMMAND_ENABLE")
 
     if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
-        if (Database.getSymbolValue("sys_console", "SYS_COMMAND_ENABLE") == True):
+        if (commandEnable == True):
             gen_rtos_task = True
 
     symbol.setEnabled(gen_rtos_task)
@@ -110,7 +114,6 @@ def instantiateComponent(consoleComponent):
     consoleDevice.setLabel("Device Used")
     consoleDevice.setReadOnly(True)
     consoleDevice.setDefaultValue("")
-    # Used onDependencyComponentAdd\Remove callbacks to get connected PLIB
 
     consoleDeviceSet = consoleComponent.createStringSymbol("SYS_CONSOLE_DEVICE_SET", None)
     consoleDeviceSet.setLabel("Device Set")
@@ -132,11 +135,11 @@ def instantiateComponent(consoleComponent):
 
     debugEnable = consoleComponent.createBooleanSymbol("SYS_DEBUG_ENABLE", None)
     debugEnable.setLabel("Enable Debug?")
-    debugEnable.setDefaultValue(True)
 
     debugLevel = consoleComponent.createComboSymbol("SYS_DEBUG_LEVEL", debugEnable, ["SYS_ERROR_FATAL", "SYS_ERROR_ERROR", "SYS_ERROR_WARNING", "SYS_ERROR_INFO", "SYS_ERROR_DEBUG"])
-    debugLevel.setLabel("Enable Debug?")
+    debugLevel.setLabel("Debug Level")
     debugLevel.setDefaultValue("SYS_ERROR_DEBUG")
+    debugLevel.setVisible(debugEnable.getValue())
     debugLevel.setDependencies(enableSysDebugConfigOptions, ["SYS_DEBUG_ENABLE"])
 
     debugPrintBufferSize = consoleComponent.createIntegerSymbol("SYS_DEBUG_PRINT_BUFFER_SIZE", debugEnable)
@@ -144,32 +147,35 @@ def instantiateComponent(consoleComponent):
     debugPrintBufferSize.setMin(128)
     debugPrintBufferSize.setMax(8192)
     debugPrintBufferSize.setDefaultValue(200)
+    debugPrintBufferSize.setVisible(debugEnable.getValue())
     debugPrintBufferSize.setDependencies(enableSysDebugConfigOptions, ["SYS_DEBUG_ENABLE"])
 
     debugUseConsole = consoleComponent.createBooleanSymbol("SYS_DEBUG_USE_CONSOLE", debugEnable)
     debugUseConsole.setLabel("Use Console for Debug?")
     debugUseConsole.setDefaultValue(True)
+    debugUseConsole.setVisible(debugEnable.getValue())
     debugUseConsole.setDependencies(enableSysDebugConfigOptions, ["SYS_DEBUG_ENABLE"])
 
     commandEnable = consoleComponent.createBooleanSymbol("SYS_COMMAND_ENABLE", None)
     commandEnable.setLabel("Enable Command Processor?")
-    commandEnable.setDefaultValue(True)
 
     commandPrintBufferSize = consoleComponent.createIntegerSymbol("SYS_COMMAND_PRINT_BUFFER_SIZE", commandEnable)
     commandPrintBufferSize.setLabel("Command Print Buffer Size (512-8192)")
     commandPrintBufferSize.setMin(512)
     commandPrintBufferSize.setMax(8192)
     commandPrintBufferSize.setDefaultValue(1024)
+    commandPrintBufferSize.setVisible(commandEnable.getValue())
     commandPrintBufferSize.setDependencies(enableCommandProcessorOptions, ["SYS_COMMAND_ENABLE"])
 
     commandConsoleEnable = consoleComponent.createBooleanSymbol("SYS_COMMAND_CONSOLE_ENABLE", commandEnable)
     commandConsoleEnable.setLabel("Re-route Console Message/Print through Command Service?")
     commandConsoleEnable.setDefaultValue(True)
+    commandConsoleEnable.setVisible(commandEnable.getValue())
     commandConsoleEnable.setDependencies(enableCommandProcessorOptions, ["SYS_COMMAND_ENABLE"])
 
     commandDebugEnable = consoleComponent.createBooleanSymbol("SYS_COMMAND_DEBUG_ENABLE", commandEnable)
     commandDebugEnable.setLabel("Re-route Debug Message/Print through Command Service?")
-    commandDebugEnable.setDefaultValue(True)
+    commandDebugEnable.setVisible(commandEnable.getValue())
     commandDebugEnable.setDependencies(enableDebugProcessorOptions, ["SYS_COMMAND_ENABLE", "SYS_DEBUG_ENABLE"])
 
     enable_rtos_settings = False
@@ -301,7 +307,7 @@ def instantiateComponent(consoleComponent):
     commandHeaderFile.setProjectPath("config/" + configName + "/system/console/")
     commandHeaderFile.setType("HEADER")
     commandHeaderFile.setOverwrite(True)
-    commandHeaderFile.setEnabled(True)
+    commandHeaderFile.setEnabled(False)
     commandHeaderFile.setDependencies(genCommandFiles, ["SYS_COMMAND_ENABLE"])
 
     commandSourceFile = consoleComponent.createFileSymbol("SYS_COMMAND_SOURCE", None)
@@ -311,7 +317,7 @@ def instantiateComponent(consoleComponent):
     commandSourceFile.setProjectPath("config/" + configName + "/system/console/")
     commandSourceFile.setType("SOURCE")
     commandSourceFile.setOverwrite(True)
-    commandSourceFile.setEnabled(True)
+    commandSourceFile.setEnabled(False)
     commandSourceFile.setDependencies(genCommandFiles, ["SYS_COMMAND_ENABLE"])
 
     consoleSystemDefFile = consoleComponent.createFileSymbol("SYS_CONSOLE_SYS_DEF", None)
@@ -356,7 +362,7 @@ def instantiateComponent(consoleComponent):
     commandSystemRtosTasksFile.setSourcePath("system/console/templates/system/system_cmd_rtos_tasks.c.ftl")
     commandSystemRtosTasksFile.setMarkup(True)
     commandSystemRtosTasksFile.setEnabled(enable_rtos_settings)
-    commandSystemRtosTasksFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS"])
+    commandSystemRtosTasksFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS", "SYS_COMMAND_ENABLE"])
 
 ############################################################################
 #### Dependency ####

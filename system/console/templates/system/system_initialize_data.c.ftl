@@ -33,19 +33,19 @@ const SYS_CONSOLE_INIT sysConsole${INDEX?string}Init =
 };
 
 <#if SYS_DEBUG_ENABLE == true>
-const SYS_DEBUG_INIT debugInit =
-{
-    .moduleInit = {0},
-    .errorLevel = SYS_DEBUG_GLOBAL_ERROR_LEVEL,
-    .consoleIndex = 0,
-};
+    <#lt>const SYS_DEBUG_INIT debugInit =
+    <#lt>{
+    <#lt>    .moduleInit = {0},
+    <#lt>    .errorLevel = SYS_DEBUG_GLOBAL_ERROR_LEVEL,
+    <#lt>    .consoleIndex = 0,
+    <#lt>};
 </#if>
 
 <#if SYS_COMMAND_ENABLE == true>
-const SYS_CMD_INIT sysCmdInit =
-{
-    .moduleInit = {0},
-    .consoleCmdIOParam = SYS_CMD_SINGLE_CHARACTER_READ_CONSOLE_IO_PARAM,
-};
+    <#lt>const SYS_CMD_INIT sysCmdInit =
+    <#lt>{
+    <#lt>    .moduleInit = {0},
+    <#lt>    .consoleCmdIOParam = SYS_CMD_SINGLE_CHARACTER_READ_CONSOLE_IO_PARAM,
+    <#lt>};
 </#if>
 // </editor-fold>

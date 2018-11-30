@@ -1285,5 +1285,3 @@ static cmdNode* CmdRemoveTail(cmdDlList* pL)
     }
     return pN;
 }
-
-

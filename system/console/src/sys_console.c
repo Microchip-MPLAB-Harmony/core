@@ -212,4 +212,3 @@ void SYS_CONSOLE_Flush(const SYS_MODULE_INDEX index)
 /*******************************************************************************
  End of File
 */
-

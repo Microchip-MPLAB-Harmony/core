@@ -155,4 +155,3 @@ SYS_CONSOLE_STATUS Console_UART_Status (uint32_t index);
 /*******************************************************************************
  End of File
 */
-
