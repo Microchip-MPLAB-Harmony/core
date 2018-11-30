@@ -50,7 +50,6 @@
 // *****************************************************************************
 
 #include "drv_memory_definitions.h"
-#include "driver/memory/src/drv_memory_variant_mapping.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
