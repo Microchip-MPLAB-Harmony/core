@@ -63,7 +63,7 @@
 #define APP_C21N_EEPROM_MEMORY_ADDR1                    0x00
 #define APP_C21N_EEPROM_TEST_STRING                     "SERCOM I2C DEMO"
 #define APP_C21N_EEPROM_TEST_STRING_SIZE                strlen(APP_C21N_EEPROM_TEST_STRING)
-#define APP_C21N_EEPROM_EEPROM3_CLICK_SLAVE_ADDR           0x0054
+#define APP_C21N_EEPROM_EEPROM3_CLICK_SLAVE_ADDR        0x0054
 // *****************************************************************************
 /* Application Data
 
@@ -120,11 +120,7 @@ void APP_C21N_I2C_EEPROM_Initialize ( void )
     /* Place the App state machine in its initial state. */
     app_c21n_i2c_eepromData.state = APP_C21N_I2C_EEPROM_STATE_INIT;
 
-
-
-    /* TODO: Initialize your application's state machine and other
-     * parameters.
-     */
+    LED_OFF();
 }
 
 
@@ -215,7 +211,11 @@ void APP_C21N_I2C_EEPROM_Tasks ( void )
         case APP_C21N_I2C_EEPROM_STATE_IDLE:
             if (isSuccess == true)
             {
-                 LED_On();
+                LED_ON();
+            }
+            else
+            {
+                LED_OFF();
             }
             vTaskSuspend(NULL);
             break;
