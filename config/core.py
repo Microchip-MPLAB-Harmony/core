@@ -53,6 +53,8 @@ for coreComponent in coreComponents:
                     if "capability_type" in coreComponent:
                         if coreComponent['capability_type'] == "multi":
                             Component.addMultiCapability(capability.lower(), capability, capability)
+                        elif coreComponent['capability_type'] == "generic":
+                            Component.addCapability(capability.lower(), capability, True)
                         else:
                             Component.addCapability(capability.lower(), capability)
                     else:
@@ -94,13 +96,17 @@ for coreComponent in coreComponents:
 
             if "dependency" in coreComponent:
                 for dep in coreComponent['dependency']:
-                    if "dependency_type" in coreComponent:
-                        if coreComponent['dependency_type'] == "multi":
-                            Component.addMultiDependency("drv_" + Name + "_" + dep + "_dependency", dep, dep, True)
+                    if (dep == "SYS_TIME"):
+                        # Add generic dependency on Timer System Service
+                        Component.addDependency("drv_" + Name + "_" + dep + "_dependency", dep, True, True)
+                    else:
+                        if "dependency_type" in coreComponent:
+                            if coreComponent['dependency_type'] == "multi":
+                                Component.addMultiDependency("drv_" + Name + "_" + dep + "_dependency", dep, dep, True)
+                            else:
+                                Component.addDependency("drv_" + Name + "_" + dep + "_dependency", dep, False, True)
                         else:
                             Component.addDependency("drv_" + Name + "_" + dep + "_dependency", dep, False, True)
-                    else:
-                        Component.addDependency("drv_" + Name + "_" + dep + "_dependency", dep, False, True)
 
             Component.setDisplayType("Driver")
 
