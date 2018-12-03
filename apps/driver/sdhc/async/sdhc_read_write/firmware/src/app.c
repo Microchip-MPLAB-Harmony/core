@@ -212,7 +212,7 @@ void APP_Tasks ( void )
 
         case APP_STATE_WRITE_MEMORY:
         {
-            DRV_SDHC_Write(appData.sdhcHandle, &appData.writeHandle, (void *)&appData.writeBuffer, BLOCK_START, appData.numWriteBlocks);
+            DRV_SDHC_AsyncWrite(appData.sdhcHandle, &appData.writeHandle, (void *)&appData.writeBuffer, BLOCK_START, appData.numWriteBlocks);
 
             if (DRV_SDHC_COMMAND_HANDLE_INVALID == appData.writeHandle)
             {
@@ -229,7 +229,7 @@ void APP_Tasks ( void )
         {
             memset((void *)&appData.readBuffer, 0, SDHC_DATA_SIZE);
 
-            DRV_SDHC_Read(appData.sdhcHandle, &appData.readHandle, (void *)&appData.readBuffer, BLOCK_START, appData.numReadBlocks);
+            DRV_SDHC_AsyncRead(appData.sdhcHandle, &appData.readHandle, (void *)&appData.readBuffer, BLOCK_START, appData.numReadBlocks);
 
             if (DRV_SDHC_COMMAND_HANDLE_INVALID == appData.readHandle)
             {
