@@ -216,9 +216,7 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)transferObj->hClient;
     DRV_SPI_OBJ *hDriver = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
 
-    uint32_t size;
-    /* To avoid build error when DMA mode is not used */
-    (void)size;
+    uint32_t size = 0;
 
     hDriver->txDummyDataSize = 0;
     hDriver->rxDummyDataSize = 0;
@@ -240,13 +238,13 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
 
     if(clientObj->setup.dataBits == DRV_SPI_DATA_BITS_8)
     {
-        SYS_DMA_DataWidthSetup(hDriver->rxDMAChannel, DRV_SPI_DMA_WIDTH_8_BIT);
-        SYS_DMA_DataWidthSetup(hDriver->txDMAChannel, DRV_SPI_DMA_WIDTH_8_BIT);
+        SYS_DMA_DataWidthSetup(hDriver->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);
+        SYS_DMA_DataWidthSetup(hDriver->txDMAChannel, SYS_DMA_WIDTH_8_BIT);
     }
     else
     {
-        SYS_DMA_DataWidthSetup(hDriver->rxDMAChannel, DRV_SPI_DMA_WIDTH_16_BIT);
-        SYS_DMA_DataWidthSetup(hDriver->txDMAChannel, DRV_SPI_DMA_WIDTH_16_BIT);
+        SYS_DMA_DataWidthSetup(hDriver->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
+        SYS_DMA_DataWidthSetup(hDriver->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
     }
 
     if (transferObj->rxSize == 0)
@@ -673,7 +671,7 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
 
             /* This driver will always work in Non-Blocking mode */
-            clientObj->ioIntent             = (ioIntent | DRV_IO_INTENT_NONBLOCKING);
+            clientObj->ioIntent             = (DRV_IO_INTENT)(ioIntent | DRV_IO_INTENT_NONBLOCKING);
 
             /* Initialize other elements in Client Object */
             clientObj->eventHandler         = NULL;

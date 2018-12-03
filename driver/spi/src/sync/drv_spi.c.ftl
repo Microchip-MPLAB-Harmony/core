@@ -130,9 +130,7 @@ static bool _DRV_SPI_StartDMATransfer(
     size_t rxSize
 )
 {
-    uint32_t size;
-    /* To avoid build error when DMA mode is not used */
-    (void)size;
+    uint32_t size = 0;
 
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)hDriver->activeClient;
 
@@ -142,8 +140,8 @@ static bool _DRV_SPI_StartDMATransfer(
 
     if(clientObj->setup.dataBits == DRV_SPI_DATA_BITS_8)
     {
-        SYS_DMA_DataWidthSetup(hDriver->rxDMAChannel, DRV_SPI_DMA_WIDTH_8_BIT);
-        SYS_DMA_DataWidthSetup(hDriver->txDMAChannel, DRV_SPI_DMA_WIDTH_8_BIT);
+        SYS_DMA_DataWidthSetup(hDriver->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);
+        SYS_DMA_DataWidthSetup(hDriver->txDMAChannel, SYS_DMA_WIDTH_8_BIT);
     }
     else
     {
@@ -151,8 +149,8 @@ static bool _DRV_SPI_StartDMATransfer(
         rxSize = rxSize >> 1;
         txSize = txSize >> 1;
 
-        SYS_DMA_DataWidthSetup(hDriver->rxDMAChannel, DRV_SPI_DMA_WIDTH_16_BIT);
-        SYS_DMA_DataWidthSetup(hDriver->txDMAChannel, DRV_SPI_DMA_WIDTH_16_BIT);
+        SYS_DMA_DataWidthSetup(hDriver->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
+        SYS_DMA_DataWidthSetup(hDriver->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
     }
 
     if (rxSize >= txSize)
