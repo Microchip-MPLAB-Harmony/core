@@ -179,7 +179,7 @@ void APP_Tasks ( void )
 
         case APP_STATE_WRITE_MEMORY:
 
-            if (DRV_SDSPI_Sync_Write(appData.sdspiHandle, (void *)appData.writeBuffer, BLOCK_START, appData.numWriteBlocks) == true)
+            if (DRV_SDSPI_SyncWrite(appData.sdspiHandle, (void *)appData.writeBuffer, BLOCK_START, appData.numWriteBlocks) == true)
             {
                 appData.state = APP_STATE_READ_MEMORY;
             }
@@ -194,7 +194,7 @@ void APP_Tasks ( void )
 
             memset((void *)&appData.readBuffer, 0, SDSPI_DATA_SIZE);
 
-            if (DRV_SDSPI_Sync_Read(appData.sdspiHandle, (void *)appData.readBuffer, BLOCK_START, appData.numReadBlocks) == true)
+            if (DRV_SDSPI_SyncRead(appData.sdspiHandle, (void *)appData.readBuffer, BLOCK_START, appData.numReadBlocks) == true)
             {
                 appData.state = APP_STATE_VERIFY_DATA;
             }
