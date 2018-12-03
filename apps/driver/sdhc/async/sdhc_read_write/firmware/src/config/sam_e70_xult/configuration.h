@@ -56,6 +56,7 @@
 */
 
 #include "user.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -87,6 +88,8 @@ extern "C" {
 #define SYS_TIME_HW_COUNTER_PERIOD           0xFFFF
 #define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
 #define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
+#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
+
 
 
 // *****************************************************************************
@@ -100,7 +103,7 @@ extern "C" {
 
 /*** SDHC Driver Configuration ***/
 #define DRV_SDHC_CLIENTS_NUMBER 1
-#define DRV_SDHC_BUFFER_OBJ_NUMBER 5
+#define DRV_SDHC_BUFFER_QUEUE_SIZE 5
 #define DRV_SDHC_CARD_DETECT_ENABLE  false
 #define	DRV_SDHC_WRITE_PROTECT_ENABLE  false
 

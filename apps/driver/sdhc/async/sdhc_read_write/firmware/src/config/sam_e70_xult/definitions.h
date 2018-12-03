@@ -48,16 +48,16 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "bsp/bsp.h"
+#include "driver/sdhc/drv_sdhc.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/xdmac/plib_xdmac.h"
-#include "bsp/bsp.h"
+#include "peripheral/tc/plib_tc0.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
-#include "driver/sdhc/drv_sdhc.h"
 #include "system/time/sys_time.h"
-#include "peripheral/tc/plib_tc0.h"
 #include "app.h"
 
 
