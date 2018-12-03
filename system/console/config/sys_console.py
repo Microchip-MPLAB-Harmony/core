@@ -277,7 +277,7 @@ def instantiateComponent(consoleComponent):
     debugHeaderFile.setProjectPath("config/" + configName + "/system/console/")
     debugHeaderFile.setType("HEADER")
     debugHeaderFile.setOverwrite(True)
-    debugHeaderFile.setEnabled(True)
+    debugHeaderFile.setEnabled(debugEnable.getValue())
     debugHeaderFile.setDependencies(genDebugFiles, ["SYS_DEBUG_ENABLE"])
 
     debugHeaderLocalFile = consoleComponent.createFileSymbol("SYS_DEBUG_LOCAL", None)
@@ -287,7 +287,7 @@ def instantiateComponent(consoleComponent):
     debugHeaderLocalFile.setProjectPath("config/" + configName + "/system/console/")
     debugHeaderLocalFile.setType("SOURCE")
     debugHeaderLocalFile.setOverwrite(True)
-    debugHeaderLocalFile.setEnabled(True)
+    debugHeaderLocalFile.setEnabled(debugEnable.getValue())
     debugHeaderLocalFile.setDependencies(genDebugFiles, ["SYS_DEBUG_ENABLE"])
 
     debugSourceFile = consoleComponent.createFileSymbol("SYS_DEBUG_SOURCE", None)
@@ -297,7 +297,7 @@ def instantiateComponent(consoleComponent):
     debugSourceFile.setProjectPath("config/" + configName + "/system/console/")
     debugSourceFile.setType("SOURCE")
     debugSourceFile.setOverwrite(True)
-    debugSourceFile.setEnabled(True)
+    debugSourceFile.setEnabled(debugEnable.getValue())
     debugSourceFile.setDependencies(genDebugFiles, ["SYS_DEBUG_ENABLE"])
 
     commandHeaderFile = consoleComponent.createFileSymbol("SYS_COMMAND_HEADER", None)
@@ -307,7 +307,7 @@ def instantiateComponent(consoleComponent):
     commandHeaderFile.setProjectPath("config/" + configName + "/system/console/")
     commandHeaderFile.setType("HEADER")
     commandHeaderFile.setOverwrite(True)
-    commandHeaderFile.setEnabled(False)
+    commandHeaderFile.setEnabled(commandEnable.getValue())
     commandHeaderFile.setDependencies(genCommandFiles, ["SYS_COMMAND_ENABLE"])
 
     commandSourceFile = consoleComponent.createFileSymbol("SYS_COMMAND_SOURCE", None)
@@ -317,7 +317,7 @@ def instantiateComponent(consoleComponent):
     commandSourceFile.setProjectPath("config/" + configName + "/system/console/")
     commandSourceFile.setType("SOURCE")
     commandSourceFile.setOverwrite(True)
-    commandSourceFile.setEnabled(False)
+    commandSourceFile.setEnabled(commandEnable.getValue())
     commandSourceFile.setDependencies(genCommandFiles, ["SYS_COMMAND_ENABLE"])
 
     consoleSystemDefFile = consoleComponent.createFileSymbol("SYS_CONSOLE_SYS_DEF", None)
