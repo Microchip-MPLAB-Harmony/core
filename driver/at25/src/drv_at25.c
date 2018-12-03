@@ -152,7 +152,7 @@ static bool _DRV_AT25_WriteData(void* txData, uint32_t txDataLength, uint32_t ad
     nTransferBytes = txDataLength >= nTransferBytes? nTransferBytes: txDataLength;
 
     gDrvAT25Obj.memoryAddr = address + nTransferBytes;
-    gDrvAT25Obj.bufferAddr = txData + nTransferBytes;
+    gDrvAT25Obj.bufferAddr = (uint8_t *)((uint8_t*)txData + nTransferBytes);
     gDrvAT25Obj.nPendingBytes = txDataLength - nTransferBytes;
 
     /* Assert Chip Select */
@@ -242,7 +242,7 @@ static void _DRV_AT25_Handler( void )
             }
             else
             {
-                gDrvAT25Obj.state = DRV_AT25_TRANSFER_STATUS_ERROR;
+                gDrvAT25Obj.transferStatus = DRV_AT25_TRANSFER_STATUS_ERROR;
             }
             break;
         case DRV_AT25_STATE_WRITE_DATA:
@@ -254,7 +254,7 @@ static void _DRV_AT25_Handler( void )
             }
             else
             {
-                gDrvAT25Obj.state = DRV_AT25_TRANSFER_STATUS_ERROR;
+                gDrvAT25Obj.transferStatus = DRV_AT25_TRANSFER_STATUS_ERROR;
             }
             break;
         case DRV_AT25_STATE_CHECK_WRITE_STATUS:
@@ -267,7 +267,7 @@ static void _DRV_AT25_Handler( void )
             }
             else
             {
-                gDrvAT25Obj.state = DRV_AT25_TRANSFER_STATUS_ERROR;
+                gDrvAT25Obj.transferStatus = DRV_AT25_TRANSFER_STATUS_ERROR;
             }
             break;
         case DRV_AT25_STATE_WAIT_WRITE_COMPLETE:
@@ -312,7 +312,7 @@ static void _DRV_AT25_Handler( void )
             }
             else
             {
-                gDrvAT25Obj.state = DRV_AT25_TRANSFER_STATUS_ERROR;
+                gDrvAT25Obj.transferStatus = DRV_AT25_TRANSFER_STATUS_ERROR;
             }
             break;
 
