@@ -62,34 +62,34 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SDSPI Instance 0 Initialization Data">
 
 /* SD Card Client Objects Pool */
-DRV_SDSPI_CLIENT_OBJ drvSDSPI0ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_SDSPI_CLIENT_OBJ drvSDSPI0ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX0] = {0};
 
 /* SPI PLIB Interface Initialization for SDSPI Driver */
-DRV_SDSPI_PLIB_INTERFACE drvSDSPI0PlibAPI = {
+const DRV_SDSPI_PLIB_INTERFACE drvSDSPI0PlibAPI = {
 
     /* SPI PLIB WriteRead function */
-    .writeRead = (DRV_SDSPI_WRITEREAD)SERCOM1_SPI_WriteRead,
+    .writeRead = (DRV_SDSPI_PLIB_WRITEREAD)SERCOM1_SPI_WriteRead,
 
     /* SPI PLIB Write function */
-    .write = (DRV_SDSPI_WRITE)SERCOM1_SPI_Write,
+    .write = (DRV_SDSPI_PLIB_WRITE)SERCOM1_SPI_Write,
 
     /* SPI PLIB Read function */
-    .read = (DRV_SDSPI_READ)SERCOM1_SPI_Read,
+    .read = (DRV_SDSPI_PLIB_READ)SERCOM1_SPI_Read,
 
     /* SPI PLIB Transfer Status function */
-    .isBusy = (DRV_SDSPI_IS_BUSY)SERCOM1_SPI_IsBusy,
+    .isBusy = (DRV_SDSPI_PLIB_IS_BUSY)SERCOM1_SPI_IsBusy,
 
-    .transferSetup = (DRV_SDSPI_SETUP)SERCOM1_SPI_TransferSetup,
+    .transferSetup = (DRV_SDSPI_PLIB_SETUP)SERCOM1_SPI_TransferSetup,
 
     /* SPI PLIB Callback Register */
-    .callbackRegister = (DRV_SDSPI_CALLBACK_REGISTER)SERCOM1_SPI_CallbackRegister,
+    .callbackRegister = (DRV_SDSPI_PLIB_CALLBACK_REGISTER)SERCOM1_SPI_CallbackRegister,
 };
 
-uint32_t drvSDSPI0remapDataBits[]= { 0x0, 0x1, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
-uint32_t drvSDSPI0remapClockPolarity[] = { 0x0, 0x20000000 };
-uint32_t drvSDSPI0remapClockPhase[] = { 0x10000000, 0x0 };
+const uint32_t drvSDSPI0remapDataBits[]= { 0x0, 0x1, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
+const uint32_t drvSDSPI0remapClockPolarity[] = { 0x0, 0x20000000 };
+const uint32_t drvSDSPI0remapClockPhase[] = { 0x10000000, 0x0 };
 /* SDSPI Driver Initialization Data */
-DRV_SDSPI_INIT drvSDSPI0InitData =
+const DRV_SDSPI_INIT drvSDSPI0InitData =
 {
     /* SD Card SPI PLIB API interface*/
     .spiPlib            = &drvSDSPI0PlibAPI,
@@ -112,22 +112,19 @@ DRV_SDSPI_INIT drvSDSPI0InitData =
 
     .writeProtectPin    = SYS_PORT_PIN_NONE,
 
-    .isRegisterWithFS   = DRV_SDSPI_REGISTER_WITH_FS_IDX0,
-
+    .isFsEnabled        = false,
     /* DMA Channel for Transmit */
     .txDMAChannel = DRV_SDSPI_XMIT_DMA_CH_IDX0,
-
     /* DMA Channel for Receive */
     .rxDMAChannel  = DRV_SDSPI_RCV_DMA_CH_IDX0,
-
     /* SPI Transmit Register */
-    .txAddress = (void *)&(SERCOM1_REGS->SPI.DATA),
-
+    .txAddress = (void *)&(SERCOM1_REGS->SPIM.SERCOM_DATA),
     /* SPI Receive Register */
-    .rxAddress  = (void *)&(SERCOM1_REGS->SPI.DATA),
+    .rxAddress  = (void *)&(SERCOM1_REGS->SPIM.SERCOM_DATA),
 };
 
 // </editor-fold>
+
 
 
 // *****************************************************************************
@@ -151,17 +148,17 @@ SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 // <editor-fold defaultstate="collapsed" desc="SYS_TIME Initialization Data">
 
-TIME_PLIB_API sysTimePlibAPI = {
-    .timerCallbackSet = (TIME_CallbackSet)TC0_TimerCallbackRegister,
-    .timerCounterGet = (TIME_CounterGet)TC0_Timer16bitCounterGet,
-     .timerPeriodSet = (TIME_PeriodSet)TC0_Timer16bitPeriodSet,
-    .timerFrequencyGet = (TIME_FrequencyGet)TC0_TimerFrequencyGet,
-    .timerCompareSet = (TIME_CompareSet)TC0_Timer16bitCompareSet,
-    .timerStart = (TIME_Start)TC0_TimerStart,
-    .timerStop = (TIME_Stop)TC0_TimerStop
+const SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
+    .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)TC0_TimerCallbackRegister,
+    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC0_Timer16bitCounterGet,
+    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC0_Timer16bitPeriodSet,
+    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC0_TimerFrequencyGet,
+    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC0_Timer16bitCompareSet,
+    .timerStart = (SYS_TIME_PLIB_START)TC0_TimerStart,
+    .timerStop = (SYS_TIME_PLIB_STOP)TC0_TimerStop
 };
 
-SYS_TIME_INIT sysTimeInitData =
+const SYS_TIME_INIT sysTimeInitData =
 {
     .timePlib = &sysTimePlibAPI,
     .hwTimerIntNum = TC0_IRQn,
@@ -188,19 +185,20 @@ void SYS_Initialize ( void* data )
 
 
 
+    SERCOM1_SPI_Initialize();
+
+    EVSYS_Initialize();
+
     NVIC_Initialize();
     DMAC_Initialize();
 
-	BSP_Initialize();
-    EVSYS_Initialize();
-
-    SERCOM1_SPI_Initialize();
-
     TC0_TimerInitialize();
 
+	BSP_Initialize();
 
     /* Initialize SDSPI0 Driver Instance */
     sysObj.drvSDSPI0 = DRV_SDSPI_Initialize(DRV_SDSPI_INDEX_0, (SYS_MODULE_INIT *)&drvSDSPI0InitData);
+
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
 

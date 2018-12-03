@@ -88,7 +88,8 @@
     None.
 */
 
-typedef enum {
+typedef enum
+{
     SYS_DMA_CHANNEL_0,
     SYS_DMA_CHANNEL_1,
     SYS_DMA_CHANNEL_2,
@@ -102,6 +103,7 @@ typedef enum {
     SYS_DMA_CHANNEL_10,
     SYS_DMA_CHANNEL_11,
     SYS_DMA_CHANNEL_NONE = -1
+
 } SYS_DMA_CHANNEL;
 
 // *****************************************************************************
@@ -147,9 +149,11 @@ typedef enum
     SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED = 0x0,
 
     /* Source address is incremented after every transfer */
-    SYS_DMA_SOURCE_ADDRESSING_MODE_INCREMENTED = 0x400
+    SYS_DMA_SOURCE_ADDRESSING_MODE_INCREMENTED = 0x400,
 
-}SYS_DMA_SOURCE_ADDRESSING_MODE;
+    SYS_DMA_SOURCE_ADDRESSING_MODE_NONE = -1
+
+} SYS_DMA_SOURCE_ADDRESSING_MODE;
 
 // *****************************************************************************
 /* DMA destination addressing modes
@@ -170,9 +174,11 @@ typedef enum
     SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED = 0x0,
 
     /* Destination address is incremented after every transfer */
-    SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED = 0x800
+    SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED = 0x800,
 
-}SYS_DMA_DESTINATION_ADDRESSING_MODE;
+    SYS_DMA_DESTINATION_ADDRESSING_MODE_NONE = -1
+
+} SYS_DMA_DESTINATION_ADDRESSING_MODE;
 
 // *****************************************************************************
 /* DMA data width
@@ -197,7 +203,9 @@ typedef enum
     /* DMA data width 32 bit */
     SYS_DMA_WIDTH_32_BIT =  0x200,
 
-}SYS_DMA_WIDTH;
+    SYS_DMA_WIDTH_NONE = -1
+
+} SYS_DMA_WIDTH;
 
 // *****************************************************************************
 /* DMA Transfer Event Handler Function

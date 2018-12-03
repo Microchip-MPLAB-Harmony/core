@@ -531,7 +531,7 @@ static void SYS_TIME_UpdateTime(uint32_t elapsedCounts)
     }
 }
 
-static void SYS_TIME_PLIBCallback(uintptr_t context)
+static void SYS_TIME_PLIBCallback(uint32_t status, uintptr_t context)
 {
     SYS_TIME_COUNTER_OBJ* counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
     SYS_TIME_TIMER_OBJ* tmrActive = counterObj->tmrActive;
@@ -540,7 +540,7 @@ static void SYS_TIME_PLIBCallback(uintptr_t context)
 
     counterObj->hwTimerCurrentValue = counterObj->timePlib->timerCounterGet();
 
-    elapsedCount = SYS_TIME_GetElapsedCount(counterObj->hwTimerCurrentValue)                  ;
+    elapsedCount = SYS_TIME_GetElapsedCount(counterObj->hwTimerCurrentValue);
 
     if (tmrActive != NULL)
     {

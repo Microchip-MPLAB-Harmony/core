@@ -42,21 +42,23 @@
 #ifndef _DRV_SDSPI_LOCAL_H
 #define _DRV_SDSPI_LOCAL_H
 
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-#include "system/time/sys_time.h"
+
+#include "configuration.h"
 #include "system/dma/sys_dma.h"
 #include "driver/sdspi/drv_sdspi.h"
 #include "osal/osal.h"
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Type Definitions
 // *****************************************************************************
 // *****************************************************************************
+
 #define _DRV_SDSPI_CLIENT_INDEX_MASK               (0x000000FF)
 #define _DRV_SDSPI_INSTANCE_INDEX_MASK             (0x0000FF00)
 #define _DRV_SDSPI_TOKEN_MASK                      (0xFFFF0000)
@@ -73,254 +75,57 @@
 #define _DRV_SDSPI_APP_CMD_RESP_TIMEOUT_IN_MS      (1000)
 #define _DRV_SDSPI_CSD_TOKEN_TIMEOUT_IN_MS         (1000)
 
-// *****************************************************************************
-/* SDSPI Read/Write/Erase Region Index Numbers
+#if defined (DRV_SDSPI_ENABLE_WRITE_PROTECT_CHECK)
+    #define _DRV_SDSPI_EnableWriteProtectCheck() true
+#else
+    #define _DRV_SDSPI_EnableWriteProtectCheck() false
+#endif
 
-  Summary:
-    SDSPI Geometry Table Index definitions.
-
-  Description:
-    These constants provide SDSPI Geometry Table index definitions.
-
-  Remarks:
-    None
+/* This macro holds the value of the initial communication speed with SD card.
+ * SD card only work at <=400kHz SPI frequency during initialization.
 */
-#define GEOMETRY_TABLE_READ_ENTRY   (0)
-#define GEOMETRY_TABLE_WRITE_ENTRY  (1)
-#define GEOMETRY_TABLE_ERASE_ENTRY  (2)
-
-// *****************************************************************************
-/* SD Card initial speed
-
-  Summary:
-    Initial speed of the SPI communication.
-
-  Description:
-    This macro holds the value of the initial communication speed with SD card.
-    SD card only work at <=400kHz SPI frequency during initialization.
-
-  Remarks:
-    None.
-*/
-
 #define _DRV_SDSPI_SPI_INITIAL_SPEED                            (400000)
 
-// *****************************************************************************
-/* No of bytes to be read for SD card CSD.
-
-  Summary:
-    Number of bytes to be read to get the SD card CSD.
-
-  Description:
-    This macro holds number of bytes to be read to get the SD card CSD.
-
-
-  Remarks:
-    None.
-*/
-
+/* No of bytes to be read for SD card CSD. */
 #define _DRV_SDSPI_CSD_READ_SIZE                                (19)
 
-// *****************************************************************************
-/* SD card V2 device type.
-
-  Summary:
-    Holds the value to be checked against to state the device type is V2.
-
-  Description:
-    This macro holds value to be checked against to state the device type is V2.
-
-  Remarks:
-    None.
-*/
-
+/* SD card V2 device type Check. */
 #define _DRV_SDSPI_CHECK_V2_DEVICE                              (0xC0)
 
-// *****************************************************************************
-/* SD card sector size.
-
-  Summary:
-    Holds the SD card sector size.
-
-  Description:
-    This macro holds the SD card sector size.
-
-  Remarks:
-    None.
-*/
-
+/* SD card Block size */
 #define _DRV_SDSPI_MEDIA_BLOCK_SIZE                             (512)
 
-// *****************************************************************************
-/* SD card transmit bit.
-
-  Summary:
-    Holds the SD card transmit bit position.
-
-  Description:
-    This macro holds the SD card transmit bit position.
-
-  Remarks:
-    None.
-*/
-
+/* SD card transmit bit position. */
 #define DRV_SDSPI_TRANSMIT_SET                                  (0x40)
 
-// *****************************************************************************
-/* Write response token bit mask.
-
-  Summary:
-    Bit mask to AND with the write token response byte from the media,
-
-  Description:
-    This macro holds the bit mask to AND with the write token response byte from
-    the media to clear the don't care bits.
-
-  Remarks:
-    None.
-*/
-
+/* Write response token bit mask.*/
 #define DRV_SDSPI_WRITE_RESPONSE_TOKEN_MASK                     (0x1F)
 
-// *****************************************************************************
-/* SPI Bus floating
-
-  Summary:
-    This macro represents a floating SPI bus condition.
-
-  Description:
-    This macro represents a floating SPI bus condition.
-
-  Remarks:
-    None.
-*/
-
+/* SPI Bus floating */
 #define DRV_SDSPI_MMC_FLOATING_BUS                              (0xFF)
 
-// *****************************************************************************
-/* SD card start single block
-
-  Summary:
-    This macro represents an SD card start single data block token (used for
-    single block writes).
-
-  Description:
-    This macro represents an SD card start single data block token (used for
-    single block writes).
-
-  Remarks:
-    None.
-*/
-
+/* SD card start single data block token. */
 #define DRV_SDSPI_DATA_START_TOKEN                              (0xFE)
 
-// *****************************************************************************
-/* SD card start multiple blocks
-
-  Summary:
-    This macro represents an SD card start multi-block data token (used for
-    multi-block writes).
-
-  Description:
-    This macro represents an SD card start multi-block data token (used for
-    multi-block writes).
-
-  Remarks:
-    None.
-*/
-
+/* SD card start multiple blocks token. */
 #define DRV_SDSPI_DATA_START_MULTI_BLOCK_TOKEN                  (0xFC)
 
-// *****************************************************************************
-/* SD card stop transmission
-
-  Summary:
-    This macro represents an SD card stop transmission token.  This is used when
-    finishing a multi block write sequence.
-
-  Description:
-    This macro represents an SD card stop transmission token.  This is used when
-    finishing a multi block write sequence.
-
-  Remarks:
-    None.
-*/
-
+/* SD card stop transmission token. */
 #define DRV_SDSPI_DATA_STOP_TRAN_TOKEN                          (0xFD)
 
-// *****************************************************************************
-/* SD card data accepted token
-
-  Summary:
-    This macro represents an SD card data accepted token.
-
-  Description:
-    This macro represents an SD card data accepted token.
-
-  Remarks:
-    None.
-*/
-
+/* SD card data accepted token. */
 #define DRV_SDSPI_DATA_ACCEPTED                                 (0x05)
 
-// *****************************************************************************
-/* SD card R1 response end bit
-
-  Summary:
-    This macro holds a value to check R1 response end bit.
-
-  Description:
-    This macro holds a value to check R1 response end bit.
-
-  Remarks:
-    None.
-*/
-
+/* SD card R1 response end bit. */
 #define CMD_R1_END_BIT_SET                                      (0x01)
 
-// *****************************************************************************
-/* SD card initial packet size
-
-  Summary:
-    This macro holds SD card initial packet size.
-
-  Description:
-    This macro holds SD card initial packet size.
-
-  Remarks:
-    None.
-*/
-
+/* SD card initial packet size. */
 #define DRV_SDSPI_PACKET_SIZE                                   (6)
 
-// *****************************************************************************
-/* SD card Media initialization array size
-
-  Summary:
-    This macro holds SD card Media initialization array size.
-
-  Description:
-    This macro holds SD card Media initialization array size.
-
-  Remarks:
-    None.
-*/
-
+/* SD card Media initialization array size. */
 #define MEDIA_INIT_ARRAY_SIZE                                   (10)
 
-// *****************************************************************************
-/* SD card Media detect retry period
-
-  Summary:
-    This macro holds SD card Media retry period duration in milli-seconds.
-
-  Description:
-    This macro holds SD card Media retry period duration in milli-seconds.
-
-  Remarks:
-    None.
-*/
-
+/* SD card Media detect retry period in Milliseconds. */
 #define MEDIA_DETECT_RETRY_PERIOD_MS                            (5)
 
 typedef enum
@@ -329,30 +134,15 @@ typedef enum
 
     DRV_SDSPI_OPERATION_TYPE_WRITE,
 
-}DRV_SDSPI_OPERATION_TYPE;
+} DRV_SDSPI_OPERATION_TYPE;
 
 typedef enum
 {
     DRV_SDSPI_SPI_TRANSFER_TYPE_BYTE = 0,
+
     DRV_SDSPI_SPI_TRANSFER_TYPE_BLOCK,
 
-}DRV_SDSPI_SPI_TRANSFER_TYPE;
-
-typedef enum
-{
-    /* Configure DMA to transmit dummy data from a fixed memory location */
-    DRV_SPI_CONFIG_DMA_TX_DUMMY_DATA_XFER = 0,
-
-    /* Configure DMA to transmit data from a memory buffer */
-    DRV_SPI_CONFIG_DMA_TX_BUFFER_DATA_XFER,
-
-    /* Configure DMA to receive dummy data to a fixed memory location */
-    DRV_SPI_CONFIG_DMA_RX_DUMMY_DATA_XFER,
-
-    /* Configure DMA to receive data to a memory buffer */
-    DRV_SPI_CONFIG_DMA_RX_BUFFER_DATA_XFER,
-
-}DRV_SPI_CONFIG_DMA;
+} DRV_SDSPI_SPI_TRANSFER_TYPE;
 
 typedef enum
 {
@@ -368,20 +158,7 @@ typedef enum
 } DRV_SDSPI_SPI_TRANSFER_STATUS;
 
 
-// *****************************************************************************
-/* SD Card Driver read task Status
-
-  Summary:
-    Lists different states of the read task of the SD card driver
-
-  Description:
-    This enumeration lists different states of the read task of the SD card
-    driver
-
-  Remarks:
-    None.
-*/
-
+/* SD Card Driver read task Status. */
 typedef enum
 {
     /* Initial state of the task, check for SD card attach/detach */
@@ -395,19 +172,7 @@ typedef enum
 
 } DRV_SDSPI_TASK_STATES;
 
-// *****************************************************************************
-/* SD Card connection states
-
-  Summary:
-    Lists SD card physical connection states
-
-  Description:
-    This enumeration lists different SD card physical connection states.
-
-  Remarks:
-    None.
-*/
-
+/* SD Card connection states. */
 typedef enum
 {
     /* SD Card is attached from the system */
@@ -416,20 +181,9 @@ typedef enum
     /* SD Card is attached to the system */
     DRV_SDSPI_IS_ATTACHED
 
-}DRV_SDSPI_ATTACH;
+} DRV_SDSPI_ATTACH;
 
-// *****************************************************************************
-/* SD Card commands
-
-  Summary:
-    Lists different commands supported by the SD card.
-
-  Description:
-    This enumeration lists different commands supported by the SD card
-
-  Remarks:
-    None.
-*/
+/* SD Card commands. */
 typedef enum
 {
     /* Command code to reset the SD card */
@@ -497,21 +251,9 @@ typedef enum
     /* Command code to disable CRC checking */
     CMD_VALUE_CRC_ON_OFF          = 59,
 
-}DRV_SDSPI_COMMAND_VALUE;
+} DRV_SDSPI_COMMAND_VALUE;
 
-// *****************************************************************************
-/* SD Card Responses
-
-  Summary:
-    Lists different responses to commands by the SD card.
-
-  Description:
-    This enumeration lists different command responses by the SD card
-
-  Remarks:
-    None.
-*/
-
+/* SD Card Responses. */
 typedef enum
 {
     /* R1 type response */
@@ -529,22 +271,9 @@ typedef enum
     /* R7 type response */
     RESPONSE_R7
 
-}DRV_SDSPI_RESPONSES;
+} DRV_SDSPI_RESPONSES;
 
-// *****************************************************************************
-/* SD Card command indices
-
-  Summary:
-    Lists the indices of the commands in the command array.
-
-  Description:
-    This enumeration lists the indices of the commands in the command array.
-    This useful in retrieving commands from the command array.
-
-  Remarks:
-    None.
-*/
-
+/* SD Card command indices */
 typedef enum
 {
     /* Index of in the CMD_GO_IDLE_STATE command 'Command array' */
@@ -607,21 +336,9 @@ typedef enum
     /* Index of in the CMD_SET_WR_BLK_ERASE_COUNT command 'Command array' */
     DRV_SDSPI_SET_WR_BLK_ERASE_COUNT
 
-}DRV_SDSPI_COMMANDS;
+} DRV_SDSPI_COMMANDS;
 
-// *****************************************************************************
-/* SD Card type
-
-  Summary:
-    Lists different types of SD cards.
-
-  Description:
-    This enumeration lists different types of SD cards.
-
-  Remarks:
-    None.
-*/
-
+/* SD Card type. */
 typedef enum
 {
     /* Normal SD Card */
@@ -630,21 +347,9 @@ typedef enum
     /* SDHC type Card */
     DRV_SDSPI_MODE_HC
 
-}DRV_SDSPI_TYPE;
+} DRV_SDSPI_TYPE;
 
-// *****************************************************************************
-/* SD Card initialization states
-
-  Summary:
-    Lists various initialization stages of SD card.
-
-  Description:
-    This enumeration lists various initialization stages of SD card.
-
-  Remarks:
-    None.
-*/
-
+/* SD Card initialization states. */
 typedef enum
 {
     /* Initial state */
@@ -657,19 +362,7 @@ typedef enum
 
 } DRV_SDSPI_CMD_DETECT_STATES;
 
-// *****************************************************************************
-/* SD Card initialization stages
-
-  Summary:
-    Lists various stages while initializing the SD card.
-
-  Description:
-    This enumeration lists various stages while initializing the SD card.
-
-  Remarks:
-    None.
-*/
-
+/* SD Card initialization stages. */
 typedef enum
 {
     DRV_SDSPI_INIT_SPI,
@@ -685,6 +378,7 @@ typedef enum
 
     /* Send OCR to expand the ACMD41 */
     DRV_SDSPI_INIT_READ_OCR_REGISTER,
+
     /* Send APP CMD */
     DRV_SDSPI_INIT_SEND_APP_CMD,
 
@@ -730,19 +424,7 @@ typedef enum
 
 } DRV_SDSPI_INIT_STATE;
 
-// *****************************************************************************
-/* SD Card Command data structure
-
-  Summary:
-   Holds different commands are the expected response for those commands.
-
-  Description:
-    This enumeration the commands supported by the SD card, its CRC and response
-    corresponding to each command.
-
-  Remarks:
-    None.
-*/
+/* SD Card Command data structure. */
 typedef struct
 {
     /* Command code */
@@ -759,20 +441,7 @@ typedef struct
 
 } DRV_SDSPI_CMD_OBJ;
 
-// *****************************************************************************
-/* SD Card R1 type response format
-
-  Summary:
-    Different ways to access R1 type response packet.
-
-  Description:
-    This union represents different ways to access an SD card R1 type response
-    packet.
-
-  Remarks:
-    None.
-*/
-
+/* SD Card R1 type response format. */
 typedef union
 {
     /* Byte-wise access */
@@ -808,21 +477,7 @@ typedef union
 
 } DRV_SDSPI_RESPONSE_1;
 
-
-// *****************************************************************************
-/* SD Card R2 type response format
-
-  Summary:
-    Different ways to access R2 type response packet.
-
-  Description:
-    This union represents different ways to access an SD card R2 type response
-    packet.
-
-  Remarks:
-    None.
-*/
-
+/* SD Card R2 type response format. */
 typedef union
 {
     /* Get both the bytes */
@@ -947,18 +602,7 @@ typedef union
 
 } DRV_SDSPI_RESPONSE_7;
 
-// *****************************************************************************
-/* SD Card Responses
-
-  Summary:
-    Different SD card response packets.
-
-  Description:
-    This an union of SD card response packets.
-
-  Remarks:
-    None.
-*/
+/* SD Card Responses. */
 
 typedef union
 {
@@ -971,21 +615,9 @@ typedef union
     /* SD Card response 7 */
     DRV_SDSPI_RESPONSE_7  response7;
 
-}DRV_SDSPI_RESPONSE_PACKETS;
+} DRV_SDSPI_RESPONSE_PACKETS;
 
-// *****************************************************************************
-/* SDSPI Driver Instance Object
-
-  Summary:
-    Object used to keep any data required for an instance of the SDSPI driver.
-
-  Description:
-    None.
-
-  Remarks:
-    None.
-*/
-
+/* SDSPI Driver Instance Object.*/
 typedef struct
 {
     /* Flag to indicate this object is in use  */
@@ -1046,13 +678,13 @@ typedef struct
     uint8_t                             sdHcHost;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    DRV_SDSPI_PLIB_INTERFACE*           spiPlib;
+    const DRV_SDSPI_PLIB_INTERFACE*     spiPlib;
 
-    uint32_t*                           remapDataBits;
+    const uint32_t*                     remapDataBits;
 
-    uint32_t*                           remapClockPolarity;
+    const uint32_t*                     remapClockPolarity;
 
-    uint32_t*                           remapClockPhase;
+    const uint32_t*                     remapClockPhase;
 
     SYS_PORT_PIN                        chipSelectPin;
 
@@ -1110,7 +742,7 @@ typedef struct
     /* This is the SPI receive register address. Used for DMA operation. */
     void*                               rxAddress;
 
-    bool                                isRegisterWithFS;
+    bool                                isFsEnabled;
 
     /* Pointer to the common transmit dummy data array */
     uint8_t*                            txDummyData;
@@ -1131,20 +763,7 @@ typedef struct
 
 } DRV_SDSPI_OBJ;
 
-// *****************************************************************************
-/* SD Card Driver Client Object
-
-  Summary:
-    Defines the object required for the maintenance of the software clients
-
-  Description:
-    This defines the object required for the maintenance of the software
-    clients instance. This object exists once per client instance.
-
-  Remarks:
-    None
-*/
-
+/* SD Card Driver Client Object. */
 typedef struct _DRV_SDSPI_CLIENT_OBJ_STRUCT
 {
     /* The hardware instance index associate with the client */
