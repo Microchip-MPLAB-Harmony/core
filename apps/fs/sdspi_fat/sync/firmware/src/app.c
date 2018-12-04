@@ -274,7 +274,7 @@ void APP_Tasks ( void )
         case APP_IDLE:
             /* The application comes here when the demo has completed
              * successfully. Glow LED1. */
-            LED_On();
+            LED_ON();
             break;
 
         case APP_ERROR:
