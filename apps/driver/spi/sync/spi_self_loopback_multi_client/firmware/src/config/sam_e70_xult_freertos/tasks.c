@@ -58,6 +58,9 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
+/* Handle for the APP_CLIENT1_Tasks. */
+TaskHandle_t xAPP_CLIENT1_Tasks;
+
 void _APP_CLIENT1_Tasks(  void *pvParameters  )
 {
     while(1)
@@ -65,6 +68,9 @@ void _APP_CLIENT1_Tasks(  void *pvParameters  )
         APP_CLIENT1_Tasks();
     }
 }
+/* Handle for the APP_CLIENT2_Tasks. */
+TaskHandle_t xAPP_CLIENT2_Tasks;
+
 void _APP_CLIENT2_Tasks(  void *pvParameters  )
 {
     while(1)
@@ -72,6 +78,9 @@ void _APP_CLIENT2_Tasks(  void *pvParameters  )
         APP_CLIENT2_Tasks();
     }
 }
+/* Handle for the APP_MONITOR_Tasks. */
+TaskHandle_t xAPP_MONITOR_Tasks;
+
 void _APP_MONITOR_Tasks(  void *pvParameters  )
 {
     while(1)
@@ -115,7 +124,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 1,
-                NULL);
+                &xAPP_CLIENT1_Tasks);
 
     /* Create OS Thread for APP_CLIENT2_Tasks. */
     xTaskCreate((TaskFunction_t) _APP_CLIENT2_Tasks,
@@ -123,7 +132,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 1,
-                NULL);
+                &xAPP_CLIENT2_Tasks);
 
     /* Create OS Thread for APP_MONITOR_Tasks. */
     xTaskCreate((TaskFunction_t) _APP_MONITOR_Tasks,
@@ -131,7 +140,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 1,
-                NULL);
+                &xAPP_MONITOR_Tasks);
 
 
 

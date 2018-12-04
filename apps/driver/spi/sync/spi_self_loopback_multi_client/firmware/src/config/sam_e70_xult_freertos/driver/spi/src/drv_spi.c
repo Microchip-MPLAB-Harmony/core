@@ -45,6 +45,7 @@
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
+
 #include "configuration.h"
 //#include "system/debug/sys_debug.h"
 #include "driver/spi/drv_spi.h"
@@ -56,10 +57,10 @@
 // *****************************************************************************
 
 /* This is the driver instance object array. */
-DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER] ;
+static DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER] ;
 
 /* Dummy data being transmitted by TX DMA */
-uint8_t __attribute__((aligned(32))) txDummyData[32];
+static uint8_t __attribute__((aligned(32))) txDummyData[32];
 
 // *****************************************************************************
 // *****************************************************************************
@@ -75,6 +76,7 @@ static inline uint32_t  _DRV_SPI_MAKE_HANDLE(uint16_t token, uint8_t drvIndex, u
 static inline uint16_t _DRV_SPI_UPDATE_TOKEN(uint16_t token)
 {
     token++;
+
     if (token >= DRV_SPI_TOKEN_MAX)
     {
         token = 1;
@@ -127,9 +129,9 @@ static bool _DRV_SPI_StartDMATransfer(
     size_t rxSize
 )
 {
-    uint32_t size;
-    /* To avoid build error when DMA mode is not used */
-    (void)size;
+    uint32_t size = 0;
+    /* To avoid unused build error */
+    (void) size;
 
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)hDriver->activeClient;
 
@@ -139,8 +141,8 @@ static bool _DRV_SPI_StartDMATransfer(
 
     if(clientObj->setup.dataBits == DRV_SPI_DATA_BITS_8)
     {
-        SYS_DMA_DataWidthSetup(hDriver->rxDMAChannel, DRV_SPI_DMA_WIDTH_8_BIT);
-        SYS_DMA_DataWidthSetup(hDriver->txDMAChannel, DRV_SPI_DMA_WIDTH_8_BIT);
+        SYS_DMA_DataWidthSetup(hDriver->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);
+        SYS_DMA_DataWidthSetup(hDriver->txDMAChannel, SYS_DMA_WIDTH_8_BIT);
     }
     else
     {
@@ -148,8 +150,8 @@ static bool _DRV_SPI_StartDMATransfer(
         rxSize = rxSize >> 1;
         txSize = txSize >> 1;
 
-        SYS_DMA_DataWidthSetup(hDriver->rxDMAChannel, DRV_SPI_DMA_WIDTH_16_BIT);
-        SYS_DMA_DataWidthSetup(hDriver->txDMAChannel, DRV_SPI_DMA_WIDTH_16_BIT);
+        SYS_DMA_DataWidthSetup(hDriver->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
+        SYS_DMA_DataWidthSetup(hDriver->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
     }
 
     if (rxSize >= txSize)
@@ -301,21 +303,6 @@ void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
 // *****************************************************************************
 // *****************************************************************************
 
-// *****************************************************************************
-/* Function:
-    SYS_MODULE_OBJ DRV_SPI_Initialize
-    (
-        const SYS_MODULE_INDEX drvIndex,
-        const SYS_MODULE_INIT * const init
-    )
-
-  Summary:
-    Dynamic implementation of DRV_SPI_Initialize system interface function.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
-
 SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT * const init )
 {
     DRV_SPI_OBJ* dObj     = (DRV_SPI_OBJ *)NULL;
@@ -350,7 +337,6 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->rxDMAChannel          = spiInit->dmaChannelReceive;
     dObj->txAddress             = spiInit->spiTransmitAddress;
     dObj->rxAddress             = spiInit->spiReceiveAddress;
-
     dObj->remapDataBits         = spiInit->remapDataBits;
     dObj->remapClockPolarity    = spiInit->remapClockPolarity;
     dObj->remapClockPhase       = spiInit->remapClockPhase;
@@ -399,11 +385,10 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     else
     {
         /* Register a callback with PLIB.
-        * dObj as a context parameter will be used to distinguish the events
-        * from different instances. */
+         * dObj as a context parameter will be used to distinguish the events
+         * from different instances. */
         dObj->spiPlib->callbackRegister(&_DRV_SPI_PlibCallbackHandler, (uintptr_t)dObj);
     }
-
     dObj->inUse = true;
 
     /* Update the status */
@@ -412,17 +397,6 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     /* Return the object structure */
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
-
-// *****************************************************************************
-/* Function:
-    SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object )
-
-  Summary:
-    Dynamic implementation of DRV_SPI_Status system interface function.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
 
 SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object)
 {
@@ -435,18 +409,6 @@ SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object)
 
     return (gDrvSPIObj[object].status);
 }
-
-// *****************************************************************************
-/* Function:
-    DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX index,
-                             const DRV_IO_INTENT    ioIntent )
-
-  Summary:
-    Dynamic implementation of DRV_SPI_Open client interface function.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
 
 DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
 {
@@ -499,13 +461,9 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
         if(false == ((DRV_SPI_CLIENT_OBJ *)dObj->clientObjPool)[iClient].inUse)
         {
             /* This means we have a free client object to use */
-
             clientObj = &((DRV_SPI_CLIENT_OBJ *)dObj->clientObjPool)[iClient];
-
             clientObj->inUse = true;
-
             clientObj->hDriver = dObj;
-
             clientObj->ioIntent = ioIntent;
             clientObj->setup.chipSelect = SYS_PORT_PIN_NONE;
             clientObj->setupChanged = false;
@@ -535,17 +493,6 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
     /* Driver index is the handle */
     return clientObj ? ((DRV_HANDLE)clientObj->clientHandle) : DRV_HANDLE_INVALID;
 }
-
-// *****************************************************************************
-/* Function:
-    void DRV_SPI_Close ( DRV_HANDLE handle)
-
-  Summary:
-    Dynamic implementation of DRV_SPI_Close client interface function.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
 
 void DRV_SPI_Close( DRV_HANDLE handle )
 {
@@ -581,20 +528,6 @@ void DRV_SPI_Close( DRV_HANDLE handle )
     }
 }
 
-// *****************************************************************************
-/* Function:
-    bool DRV_SPI_TransferSetup
-    (
-        const DRV_HANDLE handle,
-        DRV_SPI_TRANSFER_SETUP * setup
-    )
-
-  Summary:
-    Setup the driver for a client.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
 bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP* setup )
 {
     DRV_SPI_CLIENT_OBJ* clientObj = NULL;
@@ -611,16 +544,16 @@ bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP* set
 
         setupRemap = *setup;
 
-        setupRemap.clockPolarity = hDriver->remapClockPolarity[setup->clockPolarity];
-        setupRemap.clockPhase = hDriver->remapClockPhase[setup->clockPhase];
-        setupRemap.dataBits = hDriver->remapDataBits[setup->dataBits];
+        setupRemap.clockPolarity = (DRV_SPI_CLOCK_POLARITY)hDriver->remapClockPolarity[setup->clockPolarity];
+        setupRemap.clockPhase = (DRV_SPI_CLOCK_PHASE)hDriver->remapClockPhase[setup->clockPhase];
+        setupRemap.dataBits = (DRV_SPI_DATA_BITS)hDriver->remapDataBits[setup->dataBits];
 
         if ((setupRemap.clockPhase != DRV_SPI_CLOCK_PHASE_INVALID) && (setupRemap.clockPolarity != DRV_SPI_CLOCK_POLARITY_INVALID) \
             && (setupRemap.dataBits != DRV_SPI_DATA_BITS_INVALID))
         {
             /* Save the required setup in client object which can be used while
              * processing queue requests.
-            */
+             */
             clientObj->setup = setupRemap;
             clientObj->setupChanged = true;
             isSuccess = true;
@@ -629,12 +562,6 @@ bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP* set
     return isSuccess;
 }
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: SPI Driver Transfer Interface Implementation
-// *****************************************************************************
-// *****************************************************************************
-// *****************************************************************************
 bool DRV_SPI_WriteTransfer(const DRV_HANDLE handle, void* pTransmitData,  size_t txSize )
 {
     return DRV_SPI_WriteReadTransfer(handle, pTransmitData, txSize, NULL, 0);
@@ -644,24 +571,6 @@ bool DRV_SPI_ReadTransfer(const DRV_HANDLE handle, void* pReceiveData,  size_t r
 {
     return DRV_SPI_WriteReadTransfer(handle, NULL, 0, pReceiveData, rxSize);
 }
-
-// *****************************************************************************
-/* Function:
-    bool DRV_SPI_WriteReadTransfer
-    (
-    const DRV_HANDLE handle,
-    void* pTransmitData,
-    size_t txSize,
-    void* pReceiveData,
-    size_t rxSize
-    )
-
-  Summary:
-    Dynamic implementation of DRV_SPI_WriteReadTransfer system interface function.
-
-  Remarks:
-    See drv_spi.h for usage information.
-*/
 
 bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
     void* pTransmitData,
@@ -735,10 +644,12 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
                                 DCACHE_INVALIDATE_BY_ADDR((uint32_t *)pReceiveData, rxSize);
                             }
                         }
+
                         isSuccess = true;
                     }
                 }
             }
+
             /* Release the mutex to allow other clients/threads to access the PLIB */
             OSAL_MUTEX_Unlock(&hDriver->transferMutex);
         }

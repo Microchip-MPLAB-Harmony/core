@@ -149,7 +149,7 @@ void APP_CLIENT1_Tasks ( void )
             app_client1Data.spi_setup.chipSelect = APP_CLIENT1_CS_PIN;
             app_client1Data.spi_setup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;   
 
-            app_client1Data.spi_handle = DRV_SPI_Open( DRV_SPI_INDEX_0, 0 );
+            app_client1Data.spi_handle = DRV_SPI_Open( DRV_SPI_INDEX_0, DRV_IO_INTENT_READWRITE );
 
             if (app_client1Data.spi_handle != DRV_HANDLE_INVALID)
             {            
@@ -163,9 +163,14 @@ void APP_CLIENT1_Tasks ( void )
             break;
 
         case APP_CLIENT1_STATE_SELF_LOOPBACK:
-            memcpy(app_client1Data.wrBuffer, APP_CLIENT1_STR, APP_CLIENT1_NUM_BYTES);            
+            
+            // Clear the read buffer
+            memset(app_client1Data.rdBuffer, 0, APP_CLIENT1_TX_RX_BUFFER_SIZE);
+            
+            // Copy the loop-back data into the write buffer
+            memcpy(app_client1Data.wrBuffer, APP_CLIENT1_STR, APP_CLIENT1_NUM_BYTES);                                    
 
-            if (false == DRV_SPI_WriteReadTransfer(app_client1Data.spi_handle, app_client1Data.wrBuffer, APP_CLIENT1_NUM_BYTES, app_client1Data.rdBuffer, APP_CLIENT1_NUM_BYTES))
+            if (DRV_SPI_WriteReadTransfer(app_client1Data.spi_handle, app_client1Data.wrBuffer, APP_CLIENT1_NUM_BYTES, app_client1Data.rdBuffer, APP_CLIENT1_NUM_BYTES) == false)
             {
                 app_client1Data.state = APP_CLIENT1_STATE_ERROR;                    
             }  
@@ -179,15 +184,14 @@ void APP_CLIENT1_Tasks ( void )
                 }
                 else
                 {
-                    app_client1Data.status = APP_SUCCESS;
-                    /* Allow other threads to run */
-                    vTaskDelay(100/portTICK_PERIOD_MS);
+                    app_client1Data.status = APP_SUCCESS;                                                                                
                 }
             }                
             break;
 
         case APP_CLIENT1_STATE_ERROR:
             DRV_SPI_Close(app_client1Data.spi_handle);
+            
             app_client1Data.status = APP_ERROR;                     
 
             /* Suspend the task and allow other threads to run */
