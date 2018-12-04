@@ -363,7 +363,7 @@ void APP_Tasks ( void )
         {
             /* The application comes here when the demo has completed
              * successfully. Glow LED. */
-            LED1_On();
+            LED_ON();
 
             break;
         }

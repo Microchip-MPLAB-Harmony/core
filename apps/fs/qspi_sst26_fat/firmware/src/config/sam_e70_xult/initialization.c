@@ -61,13 +61,13 @@
 // *****************************************************************************
 // <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance 0 Initialization Data">
 
-uint8_t gDrvMemory0EraseBuffer[DRV_SST26_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
+static uint8_t gDrvMemory0EraseBuffer[DRV_SST26_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
 
-DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
+static DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
 
-DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0] = { 0 };
+static DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0] = { 0 };
 
-const MEMORY_DEVICE_API drvMemory0DeviceAPI = {
+const DRV_MEMORY_DEVICE_INTERFACE drvMemory0DeviceAPI = {
     .Open               = DRV_SST26_Open,
     .Close              = DRV_SST26_Close,
     .Status             = DRV_SST26_Status,
@@ -75,8 +75,8 @@ const MEMORY_DEVICE_API drvMemory0DeviceAPI = {
     .Read               = DRV_SST26_Read,
     .PageWrite          = DRV_SST26_PageWrite,
     .EventHandlerSet    = NULL,
-    .GeometryGet        = (GEOMETRY_GET)DRV_SST26_GeometryGet,
-    .TransferStatusGet  = (TRANSFER_STATUS_GET)DRV_SST26_TransferStatusGet
+    .GeometryGet        = (DRV_MEMORY_DEVICE_GEOMETRY_GET)DRV_SST26_GeometryGet,
+    .TransferStatusGet  = (DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET)DRV_SST26_TransferStatusGet
 };
 
 const DRV_MEMORY_INIT drvMemory0InitData =
@@ -96,7 +96,7 @@ const DRV_MEMORY_INIT drvMemory0InitData =
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DRV_SST26 Initialization Data">
 
-const SST26_PLIB_API drvSST26PlibAPI = {
+const DRV_SST26_PLIB_INTERFACE drvSST26PlibAPI = {
     .CommandWrite  = QSPI_CommandWrite,
     .RegisterRead  = QSPI_RegisterRead,
     .RegisterWrite = QSPI_RegisterWrite,
@@ -168,13 +168,14 @@ void SYS_Initialize ( void* data )
     CLK_Initialize();
 	PIO_Initialize();
 
+
+	BSP_Initialize();
+    QSPI_Initialize();
+
     NVIC_Initialize();
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
-
-	BSP_Initialize();
-    QSPI_Initialize();
 
 
     sysObj.drvMemory0 = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_0, (SYS_MODULE_INIT *)&drvMemory0InitData);
