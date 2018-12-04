@@ -58,8 +58,10 @@ ${core.LIST_SYSTEM_CONFIG_H_GLOBAL_INCLUDES}
 #include "user.h"
 #include "toolchain_specifics.h"
 <#if __PROCESSOR?matches("ATSAMA5.*")>
+<#if core.L2CC_ENABLE == true >
 #include <stdint.h>
 #include "peripheral/l2cc/plib_l2cc.h"
+</#if>
 </#if>
 
 // DOM-IGNORE-BEGIN
@@ -77,15 +79,14 @@ extern "C" {
 // *****************************************************************************
 <#if core.DATA_CACHE_ENABLE?? >
 <#if __PROCESSOR?matches("ATSAMA5.*")>
-    <#lt>#define DCACHE_CLEAN_BY_ADDR(data, size)       PLIB_L2CC_CleanCacheByAddr((uint32_t*)data, size); \
-    <#lt>                                               L1C_CleanDCacheAll()
-    <#lt>#define DCACHE_INVALIDATE_BY_ADDR(data, size)  L1C_InvalidateDCacheAll(); \
-    <#lt>                                               PLIB_L2CC_InvalidateCacheByAddr((uint32_t*)data, size)
+    <#lt>#define DCACHE_CLEAN_BY_ADDR(data, size)       <#if core.L2CC_ENABLE == true >PLIB_L2CC_CleanCacheByAddr((uint32_t*)data, size);</#if><#if core.L2CC_ENABLE == true || core.DATA_CACHE_ENABLE == true> \
+    <#lt>                                               L1C_CleanDCacheAll()</#if>
+    <#lt>#define DCACHE_INVALIDATE_BY_ADDR(data, size)  <#if core.L2CC_ENABLE == true || core.DATA_CACHE_ENABLE == true >L1C_InvalidateDCacheAll()</#if><#if core.L2CC_ENABLE == true >; \
+    <#lt>                                               PLIB_L2CC_InvalidateCacheByAddr((uint32_t*)data, size)</#if>
 <#else>
     <#lt>#define DCACHE_CLEAN_BY_ADDR(data, size)       SCB_CleanDCache_by_Addr((uint32_t *)data, size)
     <#lt>#define DCACHE_INVALIDATE_BY_ADDR(data, size)  SCB_InvalidateDCache_by_Addr((uint32_t *)data, size)
 </#if>
-
     <#if core.DATA_CACHE_ENABLE == true >
         <#lt>#define DATA_CACHE_ENABLED                     true
     <#else>
