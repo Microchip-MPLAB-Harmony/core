@@ -730,9 +730,9 @@ bool _DRV_SDSPI_SPISpeedSetup(
 
     setupRemap = sdspiSetup;
 
-    setupRemap.clockPolarity = dObj->remapClockPolarity[sdspiSetup.clockPolarity];
-    setupRemap.clockPhase = dObj->remapClockPhase[sdspiSetup.clockPhase];
-    setupRemap.dataBits = dObj->remapDataBits[sdspiSetup.dataBits];
+    setupRemap.clockPolarity = (DRV_SDSPI_CLOCK_POLARITY)dObj->remapClockPolarity[sdspiSetup.clockPolarity];
+    setupRemap.clockPhase = (DRV_SDSPI_CLOCK_PHASE)dObj->remapClockPhase[sdspiSetup.clockPhase];
+    setupRemap.dataBits = (DRV_SDSPI_DATA_BITS)dObj->remapDataBits[sdspiSetup.dataBits];
 
     if ((setupRemap.clockPhase != DRV_SDSPI_CLOCK_PHASE_INVALID) && \
         (setupRemap.clockPolarity != DRV_SDSPI_CLOCK_POLARITY_INVALID) && \

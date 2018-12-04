@@ -440,9 +440,9 @@ static bool _DRV_SDSPI_ReadOCR(DRV_SDSPI_OBJ* const dObj)
            OCR[15:23] = VDD Voltage Window supported by the card.
         */
 
-        if (*ocrRegister & (0x01 << 31))
+        if (*ocrRegister & (0x01U << 31))
         {
-            if (*ocrRegister & (0x01 << 30))
+            if (*ocrRegister & (0x01U << 30))
             {
                 dObj->sdCardType = DRV_SDSPI_MODE_HC;
             }
@@ -710,7 +710,7 @@ static bool _DRV_SDSPI_Write(
             /* Write a single block of data */
             if (_DRV_SDSPI_WriteBlock(dObj, sourceBuffer, writeCommand) == true)
             {
-                sourceBuffer += _DRV_SDSPI_MEDIA_BLOCK_SIZE;
+                sourceBuffer = (void *)((uint8_t *)sourceBuffer + _DRV_SDSPI_MEDIA_BLOCK_SIZE);
             }
             else
             {
@@ -800,7 +800,7 @@ static bool _DRV_SDSPI_Read(
             /* Read a single block of data */
             if (_DRV_SDSPI_ReadBlock(dObj, targetBuffer) == true)
             {
-                targetBuffer += _DRV_SDSPI_MEDIA_BLOCK_SIZE;
+                targetBuffer = (void *)((uint8_t *)targetBuffer + _DRV_SDSPI_MEDIA_BLOCK_SIZE);
             }
             else
             {
@@ -879,7 +879,7 @@ static bool _DRV_SDSPI_SetupXfer (
 
     if (commandHandle)
     {
-        dObj->cmdStatus = SYS_MEDIA_COMMAND_IN_PROGRESS;
+        dObj->cmdStatus = DRV_SDSPI_COMMAND_IN_PROGRESS;
         /* Command accepted, assign a unique command handle */
         dObj->commandHandle = _DRV_SDSPI_MAKE_HANDLE(dObj->commandToken, clientObj->drvIndex, 0);
         *commandHandle = dObj->commandHandle;
@@ -906,13 +906,13 @@ static bool _DRV_SDSPI_SetupXfer (
 
     if (commandHandle)
     {
-        dObj->cmdStatus = SYS_MEDIA_COMMAND_COMPLETED;
+        dObj->cmdStatus = DRV_SDSPI_COMMAND_COMPLETED;
     }
 
     if(clientObj->eventHandler != NULL)
     {
         /* Call the event handler (needed for compatibility with the file system) */
-        clientObj->eventHandler(evtStatus, \
+        clientObj->eventHandler((SYS_MEDIA_BLOCK_EVENT)evtStatus, \
                 (DRV_SDSPI_COMMAND_HANDLE)commandHandle, clientObj->context);
     }
 
@@ -969,7 +969,7 @@ static void _DRV_SDSPI_UpdateGeometry( DRV_SDSPI_OBJ *dObj )
     }
 
     /* Update the Media Geometry Main Structure */
-    dObj->mediaGeometryObj.mediaProperty = (SYS_MEDIA_READ_IS_BLOCKING | SYS_MEDIA_WRITE_IS_BLOCKING),
+    dObj->mediaGeometryObj.mediaProperty = (SYS_MEDIA_PROPERTY)(SYS_MEDIA_READ_IS_BLOCKING | SYS_MEDIA_WRITE_IS_BLOCKING),
 
     /* Number of read, write and erase entries in the table */
     dObj->mediaGeometryObj.numReadRegions = 1,
@@ -1231,7 +1231,7 @@ void DRV_SDSPI_Tasks ( SYS_MODULE_OBJ object )
 // *****************************************************************************
 // *****************************************************************************
 
-void __attribute ((weak)) DRV_SDSPI_RegisterWithSysFs
+void __attribute__ ((weak)) DRV_SDSPI_RegisterWithSysFs
 (
     const SYS_MODULE_INDEX drvIndex
 )
@@ -1579,7 +1579,7 @@ void DRV_SDSPI_EventHandlerSet
     if (clientObj != NULL)
     {
         /* Set the event handler */
-        clientObj->eventHandler = eventHandler;
+        clientObj->eventHandler = (DRV_SDSPI_EVENT_HANDLER)eventHandler;
         clientObj->context = context;
     }
 }
