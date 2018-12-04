@@ -82,7 +82,7 @@ void EIC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handl
 void FREQM_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void TSENS_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void NVMCTRL_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void DMAC_InterruptHandler      ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void DMAC_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void EVSYS_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM0_6_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM1_SPI_InterruptHandler ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -138,7 +138,7 @@ const DeviceVectors exception_table=
     .pfnFREQM_Handler              = ( void * ) FREQM_Handler,
     .pfnTSENS_Handler              = ( void * ) TSENS_Handler,
     .pfnNVMCTRL_Handler            = ( void * ) NVMCTRL_Handler,
-    .pfnDMAC_Handler               = ( void * ) DMAC_InterruptHandler,
+    .pfnDMAC_Handler               = ( void * ) DMAC_Handler,
     .pfnEVSYS_Handler              = ( void * ) EVSYS_Handler,
     .pfnSERCOM0_6_Handler          = ( void * ) SERCOM0_6_Handler,
     .pfnSERCOM1_7_Handler          = ( void * ) SERCOM1_7_Handler,
@@ -165,6 +165,7 @@ const DeviceVectors exception_table=
 
 
 };
+
 
 /*******************************************************************************
  End of File

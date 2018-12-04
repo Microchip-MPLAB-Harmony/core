@@ -139,22 +139,22 @@ typedef uintptr_t DRV_SPI_TRANSFER_HANDLE;
 typedef enum
 {
     /* Transfer request is pending */
-    DRV_SPI_TRANSFER_EVENT_PENDING = 0,
+    DRV_SPI_TRANSFER_EVENT_PENDING /*DOM-IGNORE-BEGIN*/ = 0 /*DOM-IGNORE-END*/,
 
     /* All data were transfered successfully. */
-    DRV_SPI_TRANSFER_EVENT_COMPLETE = 1,
+    DRV_SPI_TRANSFER_EVENT_COMPLETE /*DOM-IGNORE-BEGIN*/ = 1 /*DOM-IGNORE-END*/,
 
     /* Transfer Handle given is expired. It means transfer
     is completed but with or without error is not known.
     In case of Non-DMA transfer, since there is no possibility
     of error, it can be assumed same as DRV_SPI_TRANSFER_EVENT_COMPLETE  */
-    DRV_SPI_TRANSFER_EVENT_HANDLE_EXPIRED = 2,
+    DRV_SPI_TRANSFER_EVENT_HANDLE_EXPIRED /*DOM-IGNORE-BEGIN*/ = 2 /*DOM-IGNORE-END*/,
 
     /* There was an error while processing transfer request. */
-    DRV_SPI_TRANSFER_EVENT_ERROR = -1,
+    DRV_SPI_TRANSFER_EVENT_ERROR /*DOM-IGNORE-BEGIN*/ = -1 /*DOM-IGNORE-END*/,
 
     /* Transfer Handle given is invalid */
-    DRV_SPI_TRANSFER_EVENT_HANDLE_INVALID = -2
+    DRV_SPI_TRANSFER_EVENT_HANDLE_INVALID /*DOM-IGNORE-BEGIN*/ = -2 /*DOM-IGNORE-END*/
 
 } DRV_SPI_TRANSFER_EVENT;
 
@@ -209,33 +209,33 @@ typedef enum
     </code>
 
   Remarks:
-    If the event is DRV_SPI_TRANSFER_EVENT_COMPLETE, it means that the data was
-    transferred successfully.
+    - If the event is DRV_SPI_TRANSFER_EVENT_COMPLETE, it means that the data was
+      transferred successfully.
 
-    If the event is DRV_SPI_TRANSFER_EVENT_ERROR, it means that the data was not
-    transferred successfully.
+    - If the event is DRV_SPI_TRANSFER_EVENT_ERROR, it means that the data was not
+      transferred successfully.
 
-    The transferHandle parameter contains the transfer handle of the transfer
-    request that is associated with the event.
+    - The transferHandle parameter contains the transfer handle of the transfer
+      request that is associated with the event.
 
-    The context parameter contains the a handle to the client context,
-    provided at the time the event handling function was registered using the
-    DRV_SPI_TransferEventHandlerSet function.  This context handle value is
-    passed back to the client as the "context" parameter.  It can be any value
-    necessary to identify the client context or instance (such as a pointer to
-    the client's data) of the client that made the transfer add request.
+    - The context parameter contains the a handle to the client context,
+      provided at the time the event handling function was registered using the
+      DRV_SPI_TransferEventHandlerSet function.  This context handle value is
+      passed back to the client as the "context" parameter.  It can be any value
+      necessary to identify the client context or instance (such as a pointer to
+      the client's data) of the client that made the transfer add request.
 
-    The event handler function executes in interrupt context of the peripheral.
-    Hence it is recommended of the application to not perform process
-    intensive or blocking operations with in this function.
+    - The event handler function executes in interrupt context of the peripheral.
+      Hence it is recommended of the application to not perform process
+      intensive or blocking operations with in this function.
 
-    The DRV_SPI_ReadTransferAdd, DRV_SPI_WriteTransferAdd and
-    DRV_SPI_WriteReadTransferAdd functions can be called in the event handler
-    to add a transfer request to the driver queue. These functions can only
-    be called to add transfers to the driver instance whose event handler is
-    running. For example, SPI2 driver transfer requests cannot be added in SPI1
-    driver event handler. Similarly, SPIx transfer requests should not be added
-    in event handler of any other peripheral.
+    - The DRV_SPI_ReadTransferAdd, DRV_SPI_WriteTransferAdd and
+      DRV_SPI_WriteReadTransferAdd functions can be called in the event handler
+      to add a transfer request to the driver queue. These functions can only
+      be called to add transfers to the driver instance whose event handler is
+      running. For example, SPI2 driver transfer requests cannot be added in SPI1
+      driver event handler. Similarly, SPIx transfer requests should not be added
+      in event handler of any other peripheral.
 */
 
 typedef void ( *DRV_SPI_TRANSFER_EVENT_HANDLER )( DRV_SPI_TRANSFER_EVENT event, DRV_SPI_TRANSFER_HANDLE transferHandle, uintptr_t context );
@@ -265,8 +265,7 @@ typedef void ( *DRV_SPI_TRANSFER_EVENT_HANDLER )( DRV_SPI_TRANSFER_EVENT event, 
     number of driver objects allocated are insufficient or if the specified
     driver instance is already initialized. The driver instance index is
     independent of the SPI module ID. For example, driver instance 0 can be
-    assigned to SPI2. Some of the initialization parameters are overridden by
-    configuration macros in configuration.h file.
+    assigned to SPI2.
 
   Precondition:
     None.
@@ -287,32 +286,62 @@ typedef void ( *DRV_SPI_TRANSFER_EVENT_HANDLER )( DRV_SPI_TRANSFER_EVENT event, 
 
     SYS_MODULE_OBJ   objectHandle;
 
-    PLIB_SPI_API plibSpiApi[1] = {
-        {
-            .setup = (DRV_SETUP)SPI0_TransferSetup,
-            .writeRead = (DRV_WRITEREAD)SPI0_WriteRead,
-            .isBusy = (DRV_IS_BUSY)SPI0_IsBusy,
-            .callbackRegister = (DRV_CALLBACK_REGISTER)SPI0_CallbackRegister
-        }
+    const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
+
+        // SPI PLIB Setup
+        .setup = (DRV_SPI_PLIB_SETUP)SPI0_TransferSetup,
+
+        // SPI PLIB WriteRead function
+        .writeRead = (DRV_SPI_PLIB_WRITE_READ)SPI0_WriteRead,
+
+        // SPI PLIB Transfer Status function
+        .isBusy = (DRV_SPI_PLIB_IS_BUSY)SPI0_IsBusy,
+
+        // SPI PLIB Callback Register
+        .callbackRegister = (DRV_SPI_PLIB_CALLBACK_REGISTER)SPI0_CallbackRegister,
     };
 
-    DRV_SPI_INIT drvSpi0InitData =
-    {
+    const DRV_SPI_INIT drvSPI0InitData = {
+
+        // SPI PLIB API
         .spiPlib = &drvSPI0PlibAPI,
-        .interruptSPI = DRV_SPI_INT_SRC_IDX0,
 
-        .queueSize = DRV_SPI_QUEUE_SIZE_IDX0,
-        .transferObjPool = (uintptr_t)&drvSPI0TransferObjPool[0],
+        .remapDataBits = drvSPI0remapDataBits,
+        .remapClockPolarity = drvSPI0remapClockPolarity,
+        .remapClockPhase = drvSPI0remapClockPhase,
 
+
+        /// SPI Number of clients
         .numClients = DRV_SPI_CLIENTS_NUMBER_IDX0,
+
+        // SPI Client Objects Pool
         .clientObjPool = (uintptr_t)&drvSPI0ClientObjPool[0],
 
-        .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
-        .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
-        .interruptDMA = XDMAC_IRQn
+        // DMA Channel for Transmit
+        .dmaChannelTransmit = DRV_SPI_XMIT_DMA_CH_IDX0,
+
+        // DMA Channel for Receive
+        .dmaChannelReceive  = DRV_SPI_RCV_DMA_CH_IDX0,
+
+        // SPI Transmit Register
+        .spiTransmitAddress =  (void *)&(SPI0_REGS->SPI_TDR),
+
+        // SPI Receive Register
+        .spiReceiveAddress  = (void *)&(SPI0_REGS->SPI_RDR),
+
+        // Interrupt source is DMA
+
+       .interruptSource = XDMAC_IRQn,
+
+
+        // SPI Queue Size
+        .queueSize = DRV_SPI_QUEUE_SIZE_IDX0,
+
+        // SPI Transfer Objects Pool
+        .transferObjPool = (uintptr_t)&drvSPI0TransferObjPool[0],
     };
 
-    objectHandle = DRV_SPI_Initialize(DRV_SPI_INDEX_0,(SYS_MODULE_INIT*)&drvSpi0InitData);
+    objectHandle = DRV_SPI_Initialize(DRV_SPI_INDEX_0,(SYS_MODULE_INIT*)&drvSPI0InitData);
     if (objectHandle == SYS_MODULE_OBJ_INVALID)
     {
         // Handle error
@@ -320,10 +349,9 @@ typedef void ( *DRV_SPI_TRANSFER_EVENT_HANDLER )( DRV_SPI_TRANSFER_EVENT event, 
     </code>
 
   Remarks:
-    This routine must be called before any other SPI routine is called.
-
-    This routine should only be called once during system initialization.
-    This routine will NEVER block for hardware access.
+    - This routine must be called before any other SPI routine is called.
+    - This routine must only be called once during system initialization.
+    - This routine will NEVER block for hardware access.
 */
 
 SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX index, const SYS_MODULE_INIT * const init );
@@ -346,11 +374,10 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX index, const SYS_MODUL
     object - Driver object handle, returned from the DRV_SPI_Initialize routine
 
   Returns:
-    SYS_STATUS_READY -  Initialization have succeeded and the SPI is
-                        ready for additional operations
-
-    SYS_STATUS_DEINITIALIZED -  Indicates that the driver has been
-                                deinitialized
+    - SYS_STATUS_READY -  Initialization have succeeded and the SPI is
+                          ready for additional operations
+    - SYS_STATUS_DEINITIALIZED -  Indicates that the driver has been
+                                  deinitialized
 
   Example:
     <code>
@@ -439,9 +466,8 @@ SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object);
     </code>
 
   Remarks:
-    The handle returned is valid until the DRV_SPI_Close routine is called.
-    This routine will NEVER block waiting for hardware. If the requested intent
-    flags are not supported, the routine will return DRV_HANDLE_INVALID.
+    - The handle returned is valid until the DRV_SPI_Close routine is called.
+    - This routine will NEVER block waiting for hardware.
 */
 
 DRV_HANDLE DRV_SPI_Open(const SYS_MODULE_INDEX index, const DRV_IO_INTENT ioIntent);
@@ -455,8 +481,8 @@ DRV_HANDLE DRV_SPI_Open(const SYS_MODULE_INDEX index, const DRV_IO_INTENT ioInte
 
   Description:
     This routine closes an opened-instance of the SPI driver, invalidating the
-    handle. Any transfer request in the driver queue that were submitted by this
-    client will be removed. A new handle must be obtained by calling DRV_SPI_Open
+    handle. User should make sure that there is no transfer request pending
+    before calling this API. A new handle must be obtained by calling DRV_SPI_Open
     before the caller may use the driver again.
 
   Precondition:
@@ -579,28 +605,28 @@ bool DRV_SPI_TransferSetup ( DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * setup )
     transfer was not processed successfully.
 
   Precondition:
-    DRV_SPI_Open must have been called to obtain a valid opened device handle.
-    DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
+    - DRV_SPI_Open must have been called to obtain a valid opened device handle.
+    - DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
     chip select or any of the setup parameters has to be changed dynamically.
 
   Parameters:
     handle -    Handle of the communication channel as returned by the
                 DRV_SPI_Open function.
 
-    *pTransmitData  Pointer to the data which has to be transmitted. if it is
+    *pTransmitData- Pointer to the data which has to be transmitted. if it is
                     NULL, that means only data receiving is expected. For 9
                     to 15bit mode, data should be right aligned in the 16 bit
                     memory location.
-    txSize          Number of bytes to be transmitted. Always, size should be
+    txSize-         Number of bytes to be transmitted. Always, size should be
                     given in terms of bytes. For example, if 10 15-bit data
                     are to be transmitted, the transmit size should be 20 bytes.
-    *pReceiveData   Pointer to the location where received data has to be stored.
+    *pReceiveData-  Pointer to the location where received data has to be stored.
                     It is user's responsibility to ensure pointed location has
                     sufficient memory to store the read data.
                     if it is NULL, that means only data transmission is expected.
                     For 9 to 15bit mode, received data will be right aligned in
                     the 16 bit memory location.
-    rxSize          Number of bytes to be received. Always, size should be
+    rxSize-         Number of bytes to be received. Always, size should be
                     given in terms of bytes. For example, if 10 15-bit data
                     are to be received, the receive size should be 20 bytes.
                     If "n" number of bytes has to be received AFTER transmitting
@@ -634,10 +660,11 @@ bool DRV_SPI_TransferSetup ( DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * setup )
     </code>
 
   Remarks:
-    This function can be called from within the SPI Driver Transfer Event
-    Handler that is registered by the client. It should not be called in the
-    event handler associated with another SPI driver instance or event handler
-    of any other peripheral. It should not be called directly in any ISR.
+    - This function can be called from within the SPI Driver Transfer Event
+      Handler that is registered by the client.
+    - It should not be called in the event handler associated with another SPI
+      driver instance or event handler of any other peripheral.
+    - It should not be called directly in any ISR.
 */
 
 void DRV_SPI_WriteReadTransferAdd(
@@ -685,18 +712,18 @@ void DRV_SPI_WriteReadTransferAdd(
     transfer was not processed successfully.
 
   Precondition:
-    DRV_SPI_Open must have been called to obtain a valid opened device handle.
-    DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
-    chip select or any of the setup parameters has to be changed dynamically.
+    - DRV_SPI_Open must have been called to obtain a valid opened device handle.
+    - DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
+      chip select or any of the setup parameters has to be changed dynamically.
 
   Parameters:
     handle -    Handle of the communication channel as returned by the
                 DRV_SPI_Open function.
 
-    *pTransmitData  Pointer to the data which has to be transmitted. For 9
+    *pTransmitData- Pointer to the data which has to be transmitted. For 9
                     to 15bit mode, data should be right aligned in the 16 bit
                     memory location.
-    txSize          Number of bytes to be transmitted. Always, size should be
+    txSize-         Number of bytes to be transmitted. Always, size should be
                     given in terms of bytes. For example, if 10 15-bit data
                     are to be transmitted, the transmit size should be 20 bytes.
     transferHandle - Handle which is returned by transfer add function.
@@ -724,10 +751,11 @@ void DRV_SPI_WriteReadTransferAdd(
     </code>
 
   Remarks:
-    This function can be called from within the SPI Driver Transfer Event
-    Handler that is registered by the client. It should NOT be called in the
-    event handler associated with another SPI driver instance or event handler
-    of any other peripheral. It should not be called directly in any ISR.
+    - This function can be called from within the SPI Driver Transfer Event
+      Handler that is registered by the client.
+    - It should NOT be called in the event handler associated with another SPI
+      driver instance or event handler of any other peripheral.
+    - It should not be called directly in any ISR.
 */
 
 void DRV_SPI_WriteTransferAdd(
@@ -773,19 +801,19 @@ void DRV_SPI_WriteTransferAdd(
     transfer was not processed successfully.
 
   Precondition:
-    DRV_SPI_Open must have been called to obtain a valid opened device handle.
-    DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
-    chip select or any of the setup parameters has to be changed dynamically.
+    - DRV_SPI_Open must have been called to obtain a valid opened device handle.
+    - DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
+      chip select or any of the setup parameters has to be changed dynamically.
 
   Parameters:
     handle -    Handle of the communication channel as returned by the
                 DRV_SPI_Open function.
-    *pReceiveData   Pointer to the location where received data has to be stored.
+    *pReceiveData-  Pointer to the location where received data has to be stored.
                     It is user's responsibility to ensure pointed location has
                     sufficient memory to store the read data.
                     For 9 to 15bit mode, received data will be right aligned in
                     the 16 bit memory location.
-    rxSize          Number of bytes to be received. Always, size should be
+    rxSize-         Number of bytes to be received. Always, size should be
                     given in terms of bytes. For example, if 10 15-bit data
                     are to be received, the receive size should be 20 bytes.
 
@@ -814,10 +842,11 @@ void DRV_SPI_WriteTransferAdd(
     </code>
 
   Remarks:
-    This function can be called from within the SPI Driver Transfer Event
-    Handler that is registered by the client. It should not be called in the
-    event handler associated with another SPI driver instance or event handler
-    of any other peripheral. It should not be called directly in any ISR.
+    - This function can be called from within the SPI Driver Transfer Event
+      Handler that is registered by the client.
+    - It should not be called in the event handler associated with another SPI
+      driver instance or event handler of any other peripheral.
+    - It should not be called directly in any ISR.
 */
 
 void DRV_SPI_ReadTransferAdd(
@@ -1011,25 +1040,25 @@ DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE t
     - if the transmit size is 0
 
   Precondition:
-    DRV_SPI_Open must have been called to obtain a valid opened device handle.
-    DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
-    chip select or any of the setup parameters has to be changed dynamically.
+    - DRV_SPI_Open must have been called to obtain a valid opened device handle.
+    - DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
+      chip select or any of the setup parameters has to be changed dynamically.
 
   Parameters:
     handle -    Handle of the communication channel as returned by the
                 DRV_SPI_Open function.
 
-    *pTransmitData  Pointer to the data which has to be transmitted. For 9
+    *pTransmitData- Pointer to the data which has to be transmitted. For 9
                     to 15bit mode, data should be right aligned in the 16 bit
                     memory location.
 
-    txSize          Number of bytes to be transmitted. Always, size should be
+    txSize-         Number of bytes to be transmitted. Always, size should be
                     given in terms of bytes. For example, if 10 15-bit data
                     are to be transmitted, the transmit size should be 20 bytes.
 
   Returns:
-    true - transfer is successful
-    false - error has occurred
+    - true - transfer is successful
+    - false - error has occurred
 
   Example:
     <code>
@@ -1046,8 +1075,8 @@ DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE t
     </code>
 
   Remarks:
-    This function is thread safe in a RTOS application.
-    This function should not be called from an interrupt context.
+    - This function is thread safe in a RTOS application.
+    - This function should not be called from an interrupt context.
 */
 bool DRV_SPI_WriteTransfer(const DRV_HANDLE handle, void* pTransmitData,  size_t txSize );
 
@@ -1073,25 +1102,25 @@ bool DRV_SPI_WriteTransfer(const DRV_HANDLE handle, void* pTransmitData,  size_t
     - if the receive size is 0
 
   Precondition:
-    DRV_SPI_Open must have been called to obtain a valid opened device handle.
-    DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
-    chip select or any of the setup parameters has to be changed dynamically.
+    - DRV_SPI_Open must have been called to obtain a valid opened device handle.
+    - DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
+      chip select or any of the setup parameters has to be changed dynamically.
 
   Parameters:
     handle -    Handle of the communication channel as returned by the
                 DRV_SPI_Open function.
 
-    *pReceiveData   Pointer to the buffer where the data is to be received. For
+    *pReceiveData-  Pointer to the buffer where the data is to be received. For
                     9 to 15bit mode, data should be right aligned in the 16 bit
                     memory location.
 
-    rxSize          Number of bytes to be received. Always, size should be
+    rxSize-         Number of bytes to be received. Always, size should be
                     given in terms of bytes. For example, if 10 15-bit data
                     are to be received, the receive size should be 20 bytes.
 
   Returns:
-    true - receive is successful
-    false - error has occurred
+    - true - receive is successful
+    - false - error has occurred
 
   Example:
     <code>
@@ -1108,8 +1137,8 @@ bool DRV_SPI_WriteTransfer(const DRV_HANDLE handle, void* pTransmitData,  size_t
     </code>
 
   Remarks:
-    This function is thread safe in a RTOS application.
-    This function should not be called from an interrupt context.
+    - This function is thread safe in a RTOS application.
+    - This function should not be called from an interrupt context.
 */
 bool DRV_SPI_ReadTransfer(const DRV_HANDLE handle, void* pReceiveData,  size_t rxSize );
 
@@ -1137,26 +1166,26 @@ bool DRV_SPI_ReadTransfer(const DRV_HANDLE handle, void* pReceiveData,  size_t r
     - if the receive size is non-zero and pointer to the receive buffer is NULL
 
   Precondition:
-    DRV_SPI_Open must have been called to obtain a valid opened device handle.
-    DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
-    chip select or any of the setup parameters has to be changed dynamically.
+    - DRV_SPI_Open must have been called to obtain a valid opened device handle.
+    - DRV_SPI_TransferSetup must have been called if GPIO pin has to be used for
+      chip select or any of the setup parameters has to be changed dynamically.
 
   Parameters:
     handle -    Handle of the communication channel as returned by the
                 DRV_SPI_Open function.
-    *pTransmitData  Pointer to the data which has to be transmitted. For 9
+    *pTransmitData- Pointer to the data which has to be transmitted. For 9
                     to 15bit mode, data should be right aligned in the 16 bit
                     memory location.
 
-    txSize          Number of bytes to be transmitted. Always, size should be
+    txSize-         Number of bytes to be transmitted. Always, size should be
                     given in terms of bytes. For example, if 10 15-bit data
                     are to be transmitted, the transmit size should be 20 bytes.
 
-    *pReceiveData   Pointer to the buffer where the data is to be received. For 9
+    *pReceiveData-  Pointer to the buffer where the data is to be received. For 9
                     to 15bit mode, data should be right aligned in the 16 bit
                     memory location.
 
-    rxSize          Number of bytes to be received. Always, size should be
+    rxSize-         Number of bytes to be received. Always, size should be
                     given in terms of bytes. For example, if 10 15-bit data
                     are to be received, the receive size should be 20 bytes.
                     If "n" number of bytes has to be received AFTER transmitting
@@ -1164,8 +1193,8 @@ bool DRV_SPI_ReadTransfer(const DRV_HANDLE handle, void* pReceiveData,  size_t r
                     "rxSize" should be set as "m+n".
 
   Returns:
-    true - write-read is successful
-    false - error has occurred
+    - true - write-read is successful
+    - false - error has occurred
 
   Example:
     <code>
@@ -1185,8 +1214,8 @@ bool DRV_SPI_ReadTransfer(const DRV_HANDLE handle, void* pReceiveData,  size_t r
     </code>
 
   Remarks:
-    This function is thread safe in a RTOS application.
-    This function should not be called from an interrupt context.
+    - This function is thread safe in a RTOS application.
+    - This function should not be called from an interrupt context.
 */
 bool DRV_SPI_WriteReadTransfer(
     const DRV_HANDLE handle,

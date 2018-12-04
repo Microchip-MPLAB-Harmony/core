@@ -132,11 +132,11 @@ void APP_MONITOR_Tasks ( void )
     if((Instance1TransferSuccessStatus() == true) && (Instance2TransferSuccessStatus() == true))
     {
         SYSTICK_DelayMs(500);
-        LED_Toggle();
+        LED_TOGGLE();
     }
     else
     {
-        LED_On();
+        LED_ON();
     }
 }
 

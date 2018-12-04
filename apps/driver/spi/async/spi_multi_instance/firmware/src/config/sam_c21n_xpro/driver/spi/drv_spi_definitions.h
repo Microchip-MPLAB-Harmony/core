@@ -51,8 +51,8 @@
 
 #include <device.h>
 #include "system/int/sys_int.h"
-#include "system/dma/sys_dma.h"
 #include "system/ports/sys_ports.h"
+#include "system/dma/sys_dma.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -62,7 +62,10 @@
 #endif
 // DOM-IGNORE-END
 
-#define SYS_DEBUG(x, y)
+#ifndef SYS_DEBUG
+    #define SYS_DEBUG(x, y)
+#endif
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Types
@@ -77,7 +80,7 @@ typedef enum
     /* Force the compiler to reserve 32-bit memory space for each enum */
     DRV_SPI_CLOCK_PHASE_INVALID = 0xFFFFFFFF
 
-}DRV_SPI_CLOCK_PHASE;
+} DRV_SPI_CLOCK_PHASE;
 
 typedef enum
 {
@@ -87,7 +90,7 @@ typedef enum
     /* Force the compiler to reserve 32-bit memory space for each enum */
     DRV_SPI_CLOCK_POLARITY_INVALID = 0xFFFFFFFF
 
-}DRV_SPI_CLOCK_POLARITY;
+} DRV_SPI_CLOCK_POLARITY;
 
 typedef enum
 {
@@ -104,14 +107,14 @@ typedef enum
     /* Force the compiler to reserve 32-bit memory space for each enum */
     DRV_SPI_DATA_BITS_INVALID = 0xFFFFFFFF
 
-}DRV_SPI_DATA_BITS;
+} DRV_SPI_DATA_BITS;
 
 typedef enum
 {
     DRV_SPI_CS_POLARITY_ACTIVE_LOW = 0,
     DRV_SPI_CS_POLARITY_ACTIVE_HIGH = 1
 
-}DRV_SPI_CS_POLARITY;
+} DRV_SPI_CS_POLARITY;
 
 // *****************************************************************************
 /* SPI Driver Setup Data
@@ -144,15 +147,15 @@ typedef struct
 
 } DRV_SPI_TRANSFER_SETUP;
 
-typedef void (* DRV_SPI_PLIB_CALLBACK)( uintptr_t );
+typedef void (*DRV_SPI_PLIB_CALLBACK)( uintptr_t );
 
-typedef    bool (* DRV_SETUP) (DRV_SPI_TRANSFER_SETUP *, uint32_t);
+typedef bool (*DRV_SPI_PLIB_SETUP) (DRV_SPI_TRANSFER_SETUP *, uint32_t);
 
-typedef    bool (* DRV_WRITEREAD)(void*, size_t, void *, size_t);
+typedef bool (*DRV_SPI_PLIB_WRITE_READ)(void*, size_t, void *, size_t);
 
-typedef    bool (* DRV_IS_BUSY)(void);
+typedef bool (*DRV_SPI_PLIB_IS_BUSY)(void);
 
-typedef    void (* DRV_CALLBACK_REGISTER)(DRV_SPI_PLIB_CALLBACK, uintptr_t);
+typedef void (* DRV_SPI_PLIB_CALLBACK_REGISTER)(DRV_SPI_PLIB_CALLBACK, uintptr_t);
 
 // *****************************************************************************
 /* SPI Driver PLIB Interface Data
@@ -171,16 +174,16 @@ typedef    void (* DRV_CALLBACK_REGISTER)(DRV_SPI_PLIB_CALLBACK, uintptr_t);
 typedef struct
 {
     /* SPI PLIB Setup API */
-    DRV_SETUP                   setup;
+    DRV_SPI_PLIB_SETUP                   setup;
 
     /* SPI PLIB writeRead API */
-    DRV_WRITEREAD               writeRead;
+    DRV_SPI_PLIB_WRITE_READ              writeRead;
 
     /* SPI PLIB Transfer status API */
-    DRV_IS_BUSY                 isBusy;
+    DRV_SPI_PLIB_IS_BUSY                 isBusy;
 
     /* SPI PLIB callback register API */
-    DRV_CALLBACK_REGISTER       callbackRegister;
+    DRV_SPI_PLIB_CALLBACK_REGISTER       callbackRegister;
 
 } DRV_SPI_PLIB_INTERFACE;
 
@@ -201,44 +204,48 @@ typedef struct
 {
     /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
-    DRV_SPI_PLIB_INTERFACE      *spiPlib;
+    const DRV_SPI_PLIB_INTERFACE*   spiPlib;
 
     /* SPI transmit DMA channel. */
-    SYS_DMA_CHANNEL                 dmaChannelTransmit;
+    SYS_DMA_CHANNEL             dmaChannelTransmit;
 
     /* SPI receive DMA channel. */
-    SYS_DMA_CHANNEL                 dmaChannelReceive;
+    SYS_DMA_CHANNEL             dmaChannelReceive;
 
     /* SPI transmit register address used for DMA operation. */
-    void                        *spiTransmitAddress;
+    void*                           spiTransmitAddress;
 
     /* SPI receive register address used for DMA operation. */
-    void                        *spiReceiveAddress;
+    void*                           spiReceiveAddress;
 
     /* Memory Pool for Client Objects */
-    uintptr_t                   clientObjPool;
+    uintptr_t                       clientObjPool;
 
     /* Number of clients */
-    size_t                      numClients;
+    size_t                          numClients;
 
-    uint32_t *remapDataBits;
-    uint32_t *remapClockPolarity;
-    uint32_t *remapClockPhase;
+    const uint32_t*                 remapDataBits;
+
+    const uint32_t*                 remapClockPolarity;
+
+    const uint32_t*                 remapClockPhase;
 
     /* Queue for Transfer Objects */
-    uintptr_t                   transferObjPool;
+    uintptr_t                       transferObjPool;
 
     /* Driver Queue Size */
-    size_t                      queueSize;
+    size_t                          queueSize;
 
     /* Interrupt source ID for SPI or DMA based on the mode used */
-    INT_SOURCE                  interruptSource;
+    INT_SOURCE                      interruptSource;
 } DRV_SPI_INIT;
 
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
-}
+
+    }
+
 #endif
 //DOM-IGNORE-END
 
