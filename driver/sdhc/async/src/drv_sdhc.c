@@ -1100,7 +1100,7 @@ static void DRV_SDHC_MediaInitialize
 // *****************************************************************************
 // *****************************************************************************
 
-void __attribute ((weak)) DRV_SDHC_RegisterWithSysFs(
+void __attribute__ ((weak)) DRV_SDHC_RegisterWithSysFs(
     const SYS_MODULE_INDEX drvIndex
 )
 {
