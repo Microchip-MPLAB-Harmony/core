@@ -62,15 +62,19 @@
 
 // DOM-IGNORE-END
 
-#define NVMCTRL_FLASH_START_ADDRESS   (0x00000000U)
-#define NVMCTRL_FLASH_SIZE            (0x40000U)
-#define NVMCTRL_FLASH_PAGESIZE        (64U)
-#define NVMCTRL_FLASH_ROWSIZE         (256U)
+#define NVMCTRL_FLASH_START_ADDRESS        (0x00000000U)
+#define NVMCTRL_FLASH_SIZE                 (0x40000U)
+#define NVMCTRL_FLASH_PAGESIZE             (64U)
+#define NVMCTRL_FLASH_ROWSIZE              (256U)
 
+#define NVMCTRL_RWWEEPROM_START_ADDRESS    (0x00400000U)
+#define NVMCTRL_RWWEEPROM_SIZE             (0x2000U)
+#define NVMCTRL_RWWEEPROM_PAGESIZE         (64U)
+#define NVMCTRL_RWWEEPROM_ROWSIZE          (256U)
 
-#define NVMCTRL_START_ADDRESS       0x20000
-#define NVMCTRL_MEDIA_SIZE          1024
-#define NVMCTRL_ERASE_BUFFER_SIZE   256
+#define NVMCTRL_START_ADDRESS              0x20000
+#define NVMCTRL_MEDIA_SIZE                 1024
+#define NVMCTRL_ERASE_BUFFER_SIZE          256
 
 typedef enum
 {
@@ -97,11 +101,19 @@ bool NVMCTRL_PageWrite( uint32_t* data, uint32_t address );
 
 bool NVMCTRL_RowErase( uint32_t address );
 
+bool NVMCTRL_RWWEEPROM_Read( uint32_t *data, uint32_t length, const uint32_t address );
+
+bool NVMCTRL_RWWEEPROM_PageWrite( uint32_t* data, uint32_t address );
+
+bool NVMCTRL_RWWEEPROM_RowErase ( uint32_t address );
+
 NVMCTRL_ERROR NVMCTRL_ErrorGet( void );
 
 bool NVMCTRL_IsBusy( void );
 
+void NVMCTRL_RegionLock (uint32_t address);
 
+void NVMCTRL_RegionUnlock (uint32_t address);
 
 
 void NVMCTRL_CacheInvalidate ( void );
