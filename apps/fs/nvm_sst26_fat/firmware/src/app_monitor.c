@@ -138,7 +138,7 @@ void APP_MONITOR_Tasks ( void )
 {
     if (appSST26Data.state == APP_SST26_IDLE && appNvmData.state == APP_NVM_IDLE)
     {
-        LED1_Toggle();
+        LED_TOGGLE();
     }
 }
 
