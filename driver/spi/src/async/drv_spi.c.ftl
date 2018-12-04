@@ -217,6 +217,8 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
     DRV_SPI_OBJ *hDriver = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
 
     uint32_t size = 0;
+    /* To avoid unused build error */
+    (void) size;
 
     hDriver->txDummyDataSize = 0;
     hDriver->rxDummyDataSize = 0;

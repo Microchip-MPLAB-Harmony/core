@@ -131,6 +131,8 @@ static bool _DRV_SPI_StartDMATransfer(
 )
 {
     uint32_t size = 0;
+    /* To avoid unused build error */
+    (void) size;
 
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)hDriver->activeClient;
 
