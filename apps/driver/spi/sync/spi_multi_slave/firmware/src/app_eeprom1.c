@@ -65,6 +65,7 @@
 #define EEPROM1_CMD_READ                        0x03
 #define EEPROM1_CMD_RDSR                        0x05
 #define EEPROM1_CMD_WREN                        0x06
+#define EEPROM1_STATUS_BUSY_BIT                 0x01
 
 #define APP_EEPROM1_SPI_CLK_SPEED               1000000
 
@@ -158,7 +159,7 @@ void APP_EEPROM1_Tasks ( void )
             app_eeprom1Data.spiSetup.chipSelect = APP_EEPROM1_CS_PIN;
             app_eeprom1Data.spiSetup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;       
 
-            app_eeprom1Data.spiHandle = DRV_SPI_Open( DRV_SPI_INDEX_0, 0 );
+            app_eeprom1Data.spiHandle = DRV_SPI_Open( DRV_SPI_INDEX_0, DRV_IO_INTENT_READWRITE );
 
             if (DRV_HANDLE_INVALID != app_eeprom1Data.spiHandle)
             {            
@@ -196,7 +197,7 @@ void APP_EEPROM1_Tasks ( void )
             do
             {
                 DRV_SPI_WriteReadTransfer(app_eeprom1Data.spiHandle, app_eeprom1Data.wrBuffer, 1, app_eeprom1Data.rdBuffer, (1+1));                
-            }while(app_eeprom1Data.rdBuffer[1] & 0x01);
+            }while(app_eeprom1Data.rdBuffer[1] & EEPROM1_STATUS_BUSY_BIT);
 
             /* Read data from EEPROM */
             app_eeprom1Data.wrBuffer[0] = EEPROM1_CMD_READ;
@@ -208,13 +209,8 @@ void APP_EEPROM1_Tasks ( void )
             {
                 /* Verify the read data */
                 if (memcmp(&app_eeprom1Data.rdBuffer[4], &app_eeprom1Data.wrBuffer[4], EEPROM1_NUM_BYTES_RD_WR) == 0)
-                {
-                    /* Increment the EEPROM address to the next address */
-                    app_eeprom1Data.eeprom_addr += EEPROM1_NUM_BYTES_RD_WR;     
-                    app_eeprom1Data.status = APP_SUCCESS;      
-
-                    /* Repeat after 1000 ms. Meanwhile, allow other threads to run */
-                    vTaskDelay(APP_EEPROM1_READ_WRITE_RATE_MS/portTICK_PERIOD_MS);
+                {                    
+                    app_eeprom1Data.state = APP_EEPROM1_STATE_SUCCESS;                         
                 }
                 else
                 {
@@ -226,12 +222,18 @@ void APP_EEPROM1_Tasks ( void )
                 app_eeprom1Data.state = APP_EEPROM1_STATE_ERROR;
             }                                                            
             break;
+            
+        case APP_EEPROM1_STATE_SUCCESS:
+            DRV_SPI_Close(app_eeprom1Data.spiHandle);            
+            app_eeprom1Data.status = APP_SUCCESS;       
+            /* Task complete, suspend the thread */
+            vTaskSuspend(NULL);
+            break;
+            
         case APP_EEPROM1_STATE_ERROR:
-            DRV_SPI_Close(app_eeprom1Data.spiHandle);
-            /* Set the status to indicate error */
-            app_eeprom1Data.status = APP_ERROR;                
-
-            /* Suspend the task and allow other threads to run */
+            DRV_SPI_Close(app_eeprom1Data.spiHandle);            
+            app_eeprom1Data.status = APP_ERROR;   
+            /* Task complete, suspend the thread */
             vTaskSuspend(NULL);
             break;
     }

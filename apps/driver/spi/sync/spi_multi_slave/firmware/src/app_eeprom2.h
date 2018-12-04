@@ -90,7 +90,8 @@ typedef enum
 {
     /* Application's state machine's initial state. */
     APP_EEPROM2_STATE_INIT=0,
-    APP_EEPROM2_STATE_READ_WRITE,         
+    APP_EEPROM2_STATE_READ_WRITE,   
+    APP_EEPROM2_STATE_SUCCESS,
     APP_EEPROM2_STATE_ERROR
 
 } APP_EEPROM2_STATES;
@@ -225,4 +226,3 @@ bool APP_EEPROM2_Task_GetStatus(void);
 /*******************************************************************************
  End of File
  */
-

@@ -130,7 +130,7 @@ void APP_MONITOR_Tasks ( void )
     if ((APP_EEPROM1_Task_GetStatus() == APP_SUCCESS) && \
             (APP_EEPROM2_Task_GetStatus() == APP_SUCCESS))
     {
-        LED_Toggle();
+        LED_ON();
     }
 }
 
