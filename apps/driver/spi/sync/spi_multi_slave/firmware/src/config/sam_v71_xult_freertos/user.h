@@ -50,14 +50,15 @@ extern "C" {
 #endif
 // DOM-IGNORE-END
 
+#include "bsp/bsp.h"    
 // *****************************************************************************
 // *****************************************************************************
 // Section: User Configuration macros
 // *****************************************************************************
 // *****************************************************************************
-#define LED_On()                    LED0_On()   
-#define LED_Off()                   LED0_Off()
-#define LED_Toggle()                LED0_Toggle()
+#define LED_ON()                    LED0_On()   
+#define LED_OFF()                   LED0_Off()
+#define LED_TOGGLE()                LED0_Toggle()
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

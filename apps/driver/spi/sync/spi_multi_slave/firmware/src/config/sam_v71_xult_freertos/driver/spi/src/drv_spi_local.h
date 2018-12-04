@@ -42,14 +42,13 @@
 #ifndef _DRV_SPI_LOCAL_H
 #define _DRV_SPI_LOCAL_H
 
-#include "osal/osal.h"
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
 
+#include "osal/osal.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -89,35 +88,6 @@ typedef enum
 
 } DRV_SPI_TRANSFER_STATUS;
 
-typedef enum
-{
-    /* Configure DMA to transmit dummy data from a fixed memory location */
-    DRV_SPI_CONFIG_DMA_TX_DUMMY_DATA_XFER = 0,
-
-    /* Configure DMA to transmit data from a memory buffer */
-    DRV_SPI_CONFIG_DMA_TX_BUFFER_DATA_XFER,
-
-    /* Configure DMA to receive dummy data to a fixed memory location */
-    DRV_SPI_CONFIG_DMA_RX_DUMMY_DATA_XFER,
-
-    /* Configure DMA to receive data to a memory buffer */
-    DRV_SPI_CONFIG_DMA_RX_BUFFER_DATA_XFER,
-
-}DRV_SPI_CONFIG_DMA;
-
-typedef enum
-{
-    /* DMA data width 8 bit */
-    DRV_SPI_DMA_WIDTH_8_BIT = 0,
-
-    /* DMA data width 16 bit */
-    DRV_SPI_DMA_WIDTH_16_BIT,
-
-    /* DMA data width 32 bit */
-    DRV_SPI_DMA_WIDTH_32_BIT,
-
-}DRV_SPI_DMA_WIDTH;
-
 // *****************************************************************************
 /* SPI Driver Instance Object
 
@@ -140,7 +110,8 @@ typedef struct
     bool isExclusive;
 
     /* Keep track of the number of clients
-      that have opened this driver */
+     * that have opened this driver 
+     */
     size_t nClients;
 
     /* Maximum number of clients */
@@ -153,7 +124,7 @@ typedef struct
     SYS_STATUS status;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    DRV_SPI_PLIB_INTERFACE* spiPlib;
+    const DRV_SPI_PLIB_INTERFACE* spiPlib;
 
     /* Transmit DMA Channel */
     SYS_DMA_CHANNEL txDMAChannel;
@@ -191,7 +162,7 @@ typedef struct
     uint16_t spiTokenCount;
 
     /* Status of the last data transfer on this driver instance */
-    DRV_SPI_TRANSFER_STATUS transferStatus;
+    volatile DRV_SPI_TRANSFER_STATUS transferStatus;
 
     /* Mutex to protect access to PLIB */
     OSAL_MUTEX_DECLARE(transferMutex);
@@ -200,12 +171,16 @@ typedef struct
     OSAL_MUTEX_DECLARE(clientMutex);
 
     /* Semaphore to wait for data exchange to complete.
-    *  This is released from ISR.
-    */
+     *  This is released from ISR.
+     */
     OSAL_SEM_DECLARE(transferDone);
-    uint32_t *remapDataBits;
-    uint32_t *remapClockPolarity;
-    uint32_t *remapClockPhase;
+
+    const uint32_t*   remapDataBits;
+
+    const uint32_t*   remapClockPolarity;
+
+    const uint32_t*   remapClockPhase;
+
 } DRV_SPI_OBJ;
 
 // *****************************************************************************
@@ -231,7 +206,8 @@ typedef struct _DRV_SPI_CLIENT_OBJ
     DRV_IO_INTENT                  ioIntent;
 
     /* This flags indicates if the object is in use or is
-     * available */
+     * available 
+     */
     bool                           inUse;
 
     /* Client specific setup */
@@ -242,6 +218,7 @@ typedef struct _DRV_SPI_CLIENT_OBJ
 
     /* Client handle assigned to this client object when it was opened */
     DRV_HANDLE                     clientHandle;
+
 } DRV_SPI_CLIENT_OBJ;
 
 #endif //#ifndef _DRV_SPI_LOCAL_H
