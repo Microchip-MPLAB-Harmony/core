@@ -33,6 +33,9 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
+#define LED_ON()            LED_On()
+#define LED_OFF()           LED_Off()
+#define LED_TOGGLE()        LED_Toggle()
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

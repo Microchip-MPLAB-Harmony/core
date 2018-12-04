@@ -62,43 +62,41 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance 0 Initialization Data">
 
 /* SPI Client Objects Pool */
-DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0] = {0};
 
 /* SPI Transfer Objects Pool */
-DRV_SPI_TRANSFER_OBJ drvSPI0TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX0] = {0};
+static DRV_SPI_TRANSFER_OBJ drvSPI0TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX0] = {0};
 
 /* SPI PLIB Interface Initialization */
-DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
+const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
 
     /* SPI PLIB Setup */
-    .setup = (DRV_SETUP)SERCOM5_SPI_TransferSetup,
+    .setup = (DRV_SPI_PLIB_SETUP)SERCOM5_SPI_TransferSetup,
 
     /* SPI PLIB WriteRead function */
-    .writeRead = (DRV_WRITEREAD)SERCOM5_SPI_WriteRead,
+    .writeRead = (DRV_SPI_PLIB_WRITE_READ)SERCOM5_SPI_WriteRead,
 
     /* SPI PLIB Transfer Status function */
-    .isBusy = (DRV_IS_BUSY)SERCOM5_SPI_IsBusy,
+    .isBusy = (DRV_SPI_PLIB_IS_BUSY)SERCOM5_SPI_IsBusy,
 
     /* SPI PLIB Callback Register */
-    .callbackRegister = (DRV_CALLBACK_REGISTER)SERCOM5_SPI_CallbackRegister,
+    .callbackRegister = (DRV_SPI_PLIB_CALLBACK_REGISTER)SERCOM5_SPI_CallbackRegister,
 };
 
-
-
-uint32_t drvSPI0remapDataBits[]= { 0x0, 0x1, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
-uint32_t drvSPI0remapClockPolarity[] = { 0x0, 0x20000000 };
-uint32_t drvSPI0remapClockPhase[] = { 0x10000000, 0x0 };
-
+const uint32_t drvSPI0remapDataBits[]= { 0x0, 0x1, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
+const uint32_t drvSPI0remapClockPolarity[] = { 0x0, 0x20000000 };
+const uint32_t drvSPI0remapClockPhase[] = { 0x10000000, 0x0 };
 /* SPI Driver Initialization Data */
-DRV_SPI_INIT drvSPI0InitData =
+const DRV_SPI_INIT drvSPI0InitData =
 {
     /* SPI PLIB API */
     .spiPlib = &drvSPI0PlibAPI,
 
     .remapDataBits = drvSPI0remapDataBits,
-    .remapClockPolarity = drvSPI0remapClockPolarity,
-    .remapClockPhase = drvSPI0remapClockPhase,
 
+    .remapClockPolarity = drvSPI0remapClockPolarity,
+
+    .remapClockPhase = drvSPI0remapClockPhase,
 
     /* SPI Number of clients */
     .numClients = DRV_SPI_CLIENTS_NUMBER_IDX0,
@@ -164,13 +162,13 @@ void SYS_Initialize ( void* data )
 
 
 
-    NVIC_Initialize();
-	SYSTICK_TimerInitialize();
-	BSP_Initialize();
     EVSYS_Initialize();
 
+    NVIC_Initialize();
+	SYSTICK_TimerInitialize();
     SERCOM5_SPI_Initialize();
 
+	BSP_Initialize();
 
     /* Initialize SPI0 Driver Instance */
     sysObj.drvSPI0 = DRV_SPI_Initialize(DRV_SPI_INDEX_0, (SYS_MODULE_INIT *)&drvSPI0InitData);
