@@ -49,6 +49,7 @@
 // *****************************************************************************
 
 #include "driver/memory/src/drv_memory_local.h"
+#include "system/fs/sys_fs_media_manager.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -62,12 +63,12 @@ const SYS_FS_MEDIA_FUNCTIONS memoryMediaFunctions =
 {
     .mediaStatusGet     = DRV_MEMORY_IsAttached,
     .mediaGeometryGet   = DRV_MEMORY_GeometryGet,
-    .sectorRead         = DRV_MEMORY_FS_Read,
-    .sectorWrite        = DRV_MEMORY_FS_EraseWrite,
+    .sectorRead         = DRV_MEMORY_Read,
+    .sectorWrite        = DRV_MEMORY_EraseWrite,
     .eventHandlerset    = DRV_MEMORY_TransferHandlerSet,
     .commandStatusGet   = (void *)DRV_MEMORY_CommandStatusGet,
-    .Read               = DRV_MEMORY_FS_Read,
-    .erase              = DRV_MEMORY_FS_Erase,
+    .Read               = DRV_MEMORY_Read,
+    .erase              = DRV_MEMORY_Erase,
     .addressGet         = DRV_MEMORY_AddressGet,
     .open               = DRV_MEMORY_Open,
     .close              = DRV_MEMORY_Close,
