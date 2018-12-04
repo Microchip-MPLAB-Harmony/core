@@ -53,7 +53,6 @@
 // *****************************************************************************
 
 #include "app.h"
-#include "bsp/bsp.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -324,7 +323,7 @@ void APP_Tasks ( void )
         case APP_IDLE:
             /* The application comes here when the demo has completed
              * successfully. Glow LED. */
-            LED_On();
+            LED_ON();
             break;
 
         case APP_ERROR:

@@ -45,10 +45,22 @@
 
 static void OSCCTRL_Initialize(void)
 {
+    uint32_t calibValue = (uint32_t)(((*(uint64_t*)0x806020) >> 19 ) & 0x3fffff);
+    OSCCTRL_REGS->OSCCTRL_CAL48M = calibValue;
 
 
-	
-	
+    /* Selection of the Division Value */
+    OSCCTRL_REGS->OSCCTRL_OSC48MDIV = OSCCTRL_OSC48MDIV_DIV(0);
+
+    while((OSCCTRL_REGS->OSCCTRL_OSC48MSYNCBUSY & OSCCTRL_OSC48MSYNCBUSY_OSC48MDIV_Msk) == OSCCTRL_OSC48MSYNCBUSY_OSC48MDIV_Msk)
+    {
+        /* Waiting for the synchronization */
+    }
+
+    while((OSCCTRL_REGS->OSCCTRL_STATUS & OSCCTRL_STATUS_OSC48MRDY_Msk) != OSCCTRL_STATUS_OSC48MRDY_Msk)
+    {
+        /* Waiting for the OSC48M Ready state */
+    }
 }
 
 static void OSC32KCTRL_Initialize(void)
@@ -69,22 +81,22 @@ static void GCLK0_Initialize(void)
         /* wait for the Generator 0 synchronization */
     }
 }
-	
+
 void CLOCK_Initialize (void)
 {
     /* NVM Wait States */
-    NVMCTRL_REGS->NVMCTRL_CTRLB |= NVMCTRL_CTRLB_RWS(NVMCTRL_CTRLB_RWS_SINGLE_Val);
+    NVMCTRL_REGS->NVMCTRL_CTRLB |= NVMCTRL_CTRLB_RWS(NVMCTRL_CTRLB_RWS_DUAL_Val);
 
     /* Function to Initialize the Oscillators */
     OSCCTRL_Initialize();
 
     /* Function to Initialize the 32KHz Oscillators */
     OSC32KCTRL_Initialize();
-	
+
    GCLK0_Initialize();
 
 
-	
+
 	/* Selection of the Generator and write Lock for SERCOM1_CORE */
     GCLK_REGS->GCLK_PCHCTRL[20] = GCLK_PCHCTRL_GEN(0x0)  | GCLK_PCHCTRL_CHEN_Msk;
 
@@ -102,7 +114,7 @@ void CLOCK_Initialize (void)
 
     /* Configure the APBC Bridge Clocks */
     MCLK_REGS->MCLK_APBCMASK = 0x1004;
-    
+
 }
 
 

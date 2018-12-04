@@ -58,21 +58,12 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
-void _APP_Tasks(  void *pvParameters  )
-{
-    while(1)
-    {
-        APP_Tasks();
-        vTaskDelay(10 / portTICK_PERIOD_MS);
-    }
-}
-
 void _DRV_SDSPI_0_Tasks(  void *pvParameters  )
 {
     while(1)
     {
         DRV_SDSPI_Tasks(sysObj.drvSDSPI0);
-        vTaskDelay(100 / portTICK_PERIOD_MS);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
 
@@ -86,6 +77,18 @@ void _SYS_FS_Tasks(  void *pvParameters  )
     }
 }
 
+
+/* Handle for the APP_Tasks. */
+TaskHandle_t xAPP_Tasks;
+
+void _APP_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+        APP_Tasks();
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
 
 
 
@@ -118,14 +121,14 @@ void SYS_Tasks ( void )
 
 
     /* Maintain Device Drivers */
-    
-    xTaskCreate( _DRV_SDSPI_0_Tasks,
+        xTaskCreate( _DRV_SDSPI_0_Tasks,
         "DRV_SD_0_TASKS",
         DRV_SDSPI_STACK_SIZE_IDX0,
         (void*)NULL,
         DRV_SDSPI_PRIORITY_IDX0,
         (TaskHandle_t*)NULL
     );
+
 
 
 
@@ -139,7 +142,7 @@ void SYS_Tasks ( void )
                 256,
                 NULL,
                 1,
-                NULL);
+                &xAPP_Tasks);
 
 
 

@@ -45,8 +45,8 @@
 // Section: Include Files
 // *****************************************************************************
 // *****************************************************************************
-#include "drv_sdspi_local.h"
-#include "drv_sdspi_variant_mapping.h"
+
+#include "drv_sdspi_plib_interface.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -74,6 +74,7 @@
   Remarks:
 
 */
+
 static void DRV_SDSPI_TimerCallback( uintptr_t context )
 {
     bool *flag = (bool *)context;
@@ -94,6 +95,7 @@ static void DRV_SDSPI_TimerCallback( uintptr_t context )
     semaphore is released from this callback when DMA is not used.
 
 */
+
 void _DRV_SDSPI_SPIPlibCallbackHandler( uintptr_t context )
 {
     DRV_SDSPI_OBJ* dObj = (DRV_SDSPI_OBJ *)context;
@@ -106,6 +108,7 @@ void _DRV_SDSPI_SPIPlibCallbackHandler( uintptr_t context )
         OSAL_SEM_PostISR( &dObj->transferDone);
     }
 }
+
 // *****************************************************************************
 /* SDSPI RX DMA Event Handler
 
@@ -122,6 +125,7 @@ void _DRV_SDSPI_SPIPlibCallbackHandler( uintptr_t context )
     semaphore is released from this callback when DMA is used.
 
 */
+
 void _DRV_SDSPI_RX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
@@ -144,6 +148,7 @@ void _DRV_SDSPI_RX_DMA_CallbackHandler(
         OSAL_SEM_PostISR( &dObj->transferDone);
     }
 }
+
 // *****************************************************************************
 /* SDSPI TX DMA Event Handler
 
@@ -156,6 +161,7 @@ void _DRV_SDSPI_RX_DMA_CallbackHandler(
   Remarks:
 
 */
+
 void _DRV_SDSPI_TX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
@@ -163,6 +169,7 @@ void _DRV_SDSPI_TX_DMA_CallbackHandler(
 {
     /* Do nothing */
 }
+
 
 // *****************************************************************************
 /* SDSPI DMA Write
@@ -176,6 +183,7 @@ void _DRV_SDSPI_TX_DMA_CallbackHandler(
   Remarks:
 
 */
+
 static bool _DRV_SDSPI_DMA_Write(
     DRV_SDSPI_OBJ* dObj,
     void* pWriteBuffer,
@@ -224,6 +232,7 @@ static bool _DRV_SDSPI_DMA_Write(
   Remarks:
 
 */
+
 static bool _DRV_SDSPI_DMA_Read(
     DRV_SDSPI_OBJ* dObj,
     void* pReadBuffer,
@@ -273,6 +282,7 @@ static bool _DRV_SDSPI_DMA_Read(
     handler (either DMA handler or the SPI PLIB handler) once the transfer is
     complete.
 */
+
 bool _DRV_SDSPI_SPIBlockWrite(
     DRV_SDSPI_OBJ* dObj,
     void* pWriteBuffer
@@ -324,6 +334,7 @@ bool _DRV_SDSPI_SPIBlockWrite(
   Remarks:
     This is a blocking implementation. This function does not block on a semaphore.
 */
+
 bool _DRV_SDSPI_SPIWrite(
     DRV_SDSPI_OBJ* dObj,
     void* pWriteBuffer,
@@ -352,6 +363,7 @@ bool _DRV_SDSPI_SPIWrite(
             return isSuccess;
         }
     }
+
     /* Busy wait for the transfer to complete */
     while (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_IN_PROGRESS);
 
@@ -378,6 +390,7 @@ bool _DRV_SDSPI_SPIWrite(
     handler (either DMA handler or the SPI PLIB handler) once the transfer is
     complete.
 */
+
 bool _DRV_SDSPI_SPIBlockRead(
     DRV_SDSPI_OBJ* dObj,
     void* pReadBuffer
@@ -405,6 +418,7 @@ bool _DRV_SDSPI_SPIBlockRead(
             return isSuccess;
         }
     }
+
     if (OSAL_SEM_Pend( &dObj->transferDone, OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
     {
         if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE)
@@ -434,6 +448,7 @@ bool _DRV_SDSPI_SPIBlockRead(
   Remarks:
     This is a blocking implementation. This function does not block on a semaphore.
 */
+
 bool _DRV_SDSPI_SPIRead(
     DRV_SDSPI_OBJ* dObj,
     void* pReadBuffer,
@@ -462,6 +477,7 @@ bool _DRV_SDSPI_SPIRead(
             return isSuccess;
         }
     }
+
     /* Busy wait for the transfer to complete */
     while (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_IN_PROGRESS);
 
@@ -508,6 +524,7 @@ bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
             return isSuccess;
         }
     }
+
     /* Busy wait for the transfer to complete */
     while (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_IN_PROGRESS);
 
@@ -562,6 +579,7 @@ bool _DRV_SDSPI_CmdResponseTimerStart(
   Remarks:
 
 */
+
 bool _DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj )
 {
     bool isSuccess = false;
@@ -587,6 +605,7 @@ bool _DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj )
   Remarks:
 
 */
+
 bool _DRV_SDSPI_TimerStart(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t period
@@ -618,6 +637,7 @@ bool _DRV_SDSPI_TimerStart(
   Remarks:
 
 */
+
 bool _DRV_SDSPI_TimerStop( DRV_SDSPI_OBJ* const dObj )
 {
     bool isSuccess = false;
@@ -644,6 +664,7 @@ bool _DRV_SDSPI_TimerStop( DRV_SDSPI_OBJ* const dObj )
   Remarks:
 
 */
+
 bool _DRV_SDSPI_SPISpeedSetup(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t clockFrequency
@@ -663,9 +684,9 @@ bool _DRV_SDSPI_SPISpeedSetup(
 
     setupRemap = sdspiSetup;
 
-    setupRemap.clockPolarity = dObj->remapClockPolarity[sdspiSetup.clockPolarity];
-    setupRemap.clockPhase = dObj->remapClockPhase[sdspiSetup.clockPhase];
-    setupRemap.dataBits = dObj->remapDataBits[sdspiSetup.dataBits];
+    setupRemap.clockPolarity = (DRV_SDSPI_CLOCK_POLARITY)dObj->remapClockPolarity[sdspiSetup.clockPolarity];
+    setupRemap.clockPhase = (DRV_SDSPI_CLOCK_PHASE)dObj->remapClockPhase[sdspiSetup.clockPhase];
+    setupRemap.dataBits = (DRV_SDSPI_DATA_BITS)dObj->remapDataBits[sdspiSetup.dataBits];
 
     if ((setupRemap.clockPhase != DRV_SDSPI_CLOCK_PHASE_INVALID) && \
         (setupRemap.clockPolarity != DRV_SDSPI_CLOCK_POLARITY_INVALID) && \
