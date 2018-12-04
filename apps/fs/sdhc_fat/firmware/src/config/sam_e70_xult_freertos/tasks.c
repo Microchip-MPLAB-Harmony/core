@@ -58,24 +58,6 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
-void _APP_Tasks(  void *pvParameters  )
-{
-    while(1)
-    {
-        APP_Tasks();
-        vTaskDelay(10 / portTICK_PERIOD_MS);
-    }
-}
-
-void _DRV_SDHC_Tasks(  void *pvParameters  )
-{
-    while(1)
-    {
-        DRV_SDHC_Tasks(sysObj.drvSDHC);
-        vTaskDelay(5 / portTICK_PERIOD_MS);
-    }
-}
-
 
 void _SYS_FS_Tasks(  void *pvParameters  )
 {
@@ -86,6 +68,27 @@ void _SYS_FS_Tasks(  void *pvParameters  )
     }
 }
 
+
+void _DRV_SDHC_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+        DRV_SDHC_Tasks(sysObj.drvSDHC);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
+
+/* Handle for the APP_Tasks. */
+TaskHandle_t xAPP_Tasks;
+
+void _APP_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+        APP_Tasks();
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
 
 
 
@@ -106,16 +109,7 @@ void _SYS_FS_Tasks(  void *pvParameters  )
 void SYS_Tasks ( void )
 {
     /* Maintain system services */
-        xTaskCreate( _DRV_SDHC_Tasks,
-        "DRV_SDHC_Tasks",
-        DRV_SDHC_STACK_SIZE,
-        (void*)NULL,
-        DRV_SDHC_PRIORITY,
-        (TaskHandle_t*)NULL
-    );
-
-
-
+    
     xTaskCreate( _SYS_FS_Tasks,
         "SYS_FS_TASKS",
         SYS_FS_STACK_SIZE,
@@ -123,6 +117,15 @@ void SYS_Tasks ( void )
         SYS_FS_PRIORITY,
         (TaskHandle_t*)NULL
     );
+
+    xTaskCreate( _DRV_SDHC_Tasks,
+        "DRV_SDHC_Tasks",
+        DRV_SDHC_STACK_SIZE,
+        (void*)NULL,
+        DRV_SDHC_PRIORITY,
+        (TaskHandle_t*)NULL
+    );
+
 
 
 
@@ -139,7 +142,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 1,
-                NULL);
+                &xAPP_Tasks);
 
 
 
