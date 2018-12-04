@@ -56,6 +56,7 @@
 */
 
 #include "user.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -80,6 +81,15 @@ extern "C" {
 // Section: System Service Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* TIME System Service Configuration Options */
+#define SYS_TIME_INDEX_0                     0
+#define SYS_TIME_MAX_TIMERS                  5
+#define SYS_TIME_HW_COUNTER_WIDTH            16
+#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFF
+#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
+#define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
+#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
+
 
 /* File System Service Configuration */
 
@@ -99,13 +109,6 @@ extern "C" {
 
 
 
-/* TIME System Service Configuration Options */
-#define SYS_TIME_INDEX_0                     0
-#define SYS_TIME_MAX_TIMERS                  10
-#define SYS_TIME_HW_COUNTER_WIDTH            16
-#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFF
-#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
-#define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
 
 
 // *****************************************************************************
@@ -113,8 +116,20 @@ extern "C" {
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* SDHC Driver Global Configuration Options */
+#define DRV_SDHC_INSTANCES_NUMBER 1
 /* Memory Driver Global Configuration Options */
 #define DRV_MEMORY_INSTANCES_NUMBER          1
+
+
+/*** SDHC Driver Configuration ***/
+#define DRV_SDHC_CLIENTS_NUMBER 1
+#define DRV_SDHC_BUFFER_QUEUE_SIZE 1
+#define DRV_SDHC_CARD_DETECT_ENABLE  false
+#define	DRV_SDHC_WRITE_PROTECT_ENABLE  false
+
+
+
 
 /* Memory Driver Instance 0 Configuration */
 #define DRV_MEMORY_INDEX_0                   0
@@ -124,18 +139,6 @@ extern "C" {
 #define DRV_MEMORY_DEVICE_MEDIA_SIZE         1024UL
 #define DRV_MEMORY_DEVICE_PROGRAM_SIZE       512
 #define DRV_MEMORY_DEVICE_ERASE_SIZE         8192
-
-
-/* SDHC Driver Global Configuration Options */
-#define DRV_SDHC_INSTANCES_NUMBER 1
-
-
-/*** SDHC Driver Configuration ***/
-#define DRV_SDHC_CLIENTS_NUMBER 1
-#define DRV_SDHC_BUFFER_OBJ_NUMBER 1
-#define DRV_SDHC_CARD_DETECT_ENABLE  false
-#define	DRV_SDHC_WRITE_PROTECT_ENABLE  false
-
 
 
 
