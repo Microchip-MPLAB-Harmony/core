@@ -48,27 +48,27 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "driver/sdhc/drv_sdhc.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/mpu/plib_mpu.h"
 #include "peripheral/xdmac/plib_xdmac.h"
-#include "bsp/bsp.h"
-#include "FreeRTOS.h"
-#include "task.h"
-#include "system/int/sys_int.h"
-#include "osal/osal.h"
 #include "driver/memory/drv_memory.h"
-#include "driver/memory/drv_memory_efc.h"
-#include "driver/sdhc/drv_sdhc.h"
 #include "peripheral/efc/plib_efc.h"
+#include "peripheral/tc/plib_tc0.h"
+#include "system/time/sys_time.h"
+#include "bsp/bsp.h"
+#include "driver/memory/drv_memory_efc.h"
 #include "system/fs/sys_fs.h"
 #include "system/fs/sys_fs_media_manager.h"
 #include "system/fs/fat_fs/src/file_system/ff.h"
 #include "system/fs/fat_fs/src/file_system/ffconf.h"
 #include "system/fs/fat_fs/src/hardware_access/diskio.h"
-#include "system/time/sys_time.h"
-#include "peripheral/tc/plib_tc0.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "system/int/sys_int.h"
+#include "osal/osal.h"
 #include "app.h"
 
 
@@ -191,11 +191,11 @@ void SYS_Tasks ( void );
 
 typedef struct
 {
-    SYS_MODULE_OBJ  drvMemory0;
     SYS_MODULE_OBJ  drvSDHC;
 
 
     SYS_MODULE_OBJ  sysTime;
+    SYS_MODULE_OBJ  drvMemory0;
 
 } SYSTEM_OBJECTS;
 

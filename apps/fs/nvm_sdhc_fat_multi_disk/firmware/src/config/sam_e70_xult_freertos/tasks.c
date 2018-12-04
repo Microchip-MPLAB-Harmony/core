@@ -58,15 +58,6 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
-void _APP_Tasks(  void *pvParameters  )
-{
-    while(1)
-    {
-        APP_Tasks();
-        vTaskDelay(10 / portTICK_PERIOD_MS);
-    }
-}
-
 void _DRV_SDHC_Tasks(  void *pvParameters  )
 {
     while(1)
@@ -86,6 +77,18 @@ void _SYS_FS_Tasks(  void *pvParameters  )
     }
 }
 
+
+/* Handle for the APP_Tasks. */
+TaskHandle_t xAPP_Tasks;
+
+void _APP_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+        APP_Tasks();
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
 
 
 
@@ -140,7 +143,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 1,
-                NULL);
+                &xAPP_Tasks);
 
 
 
