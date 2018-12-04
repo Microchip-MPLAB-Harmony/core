@@ -59,70 +59,37 @@
 // Section: Driver Initialization Data
 // *****************************************************************************
 // *****************************************************************************
-// <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance 0 Initialization Data">
-
-uint8_t gDrvMemory0EraseBuffer[EFC_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
-
-DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
-
-
-const MEMORY_DEVICE_API drvMemory0DeviceAPI = {
-    .Open               = DRV_EFC_Open,
-    .Close              = DRV_EFC_Close,
-    .Status             = DRV_EFC_Status,
-    .SectorErase        = DRV_EFC_SectorErase,
-    .Read               = DRV_EFC_Read,
-    .PageWrite          = DRV_EFC_PageWrite,
-    .EventHandlerSet    = (EVENT_HANDLER_SET)DRV_EFC_EventHandlerSet,
-    .GeometryGet        = (GEOMETRY_GET)DRV_EFC_GeometryGet,
-    .TransferStatusGet  = (TRANSFER_STATUS_GET)DRV_EFC_TransferStatusGet
-};
-
-const DRV_MEMORY_INIT drvMemory0InitData =
-{
-    .memDevIndex                = 0,
-    .memoryDevice               = &drvMemory0DeviceAPI,
-    .isMemDevInterruptEnabled   = true,
-    .memDevStatusPollUs         = 0,
-    .isFsEnabled                = true,
-    .deviceMediaType            = (uint8_t)SYS_FS_MEDIA_TYPE_NVM,
-    .ewBuffer                   = &gDrvMemory0EraseBuffer[0],
-    .clientObjPool              = (uintptr_t)&gDrvMemory0ClientObject[0],
-    .nClientsMax                = DRV_MEMORY_CLIENTS_NUMBER_IDX0
-};
-
-// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DRV_SDSPI Instance 0 Initialization Data">
 
 /* SD Card Client Objects Pool */
-DRV_SDSPI_CLIENT_OBJ drvSDSPI0ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_SDSPI_CLIENT_OBJ drvSDSPI0ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX0] = {0};
 
 /* SPI PLIB Interface Initialization for SDSPI Driver */
-DRV_SDSPI_PLIB_INTERFACE drvSDSPI0PlibAPI = {
+const DRV_SDSPI_PLIB_INTERFACE drvSDSPI0PlibAPI = {
 
     /* SPI PLIB WriteRead function */
-    .writeRead = (DRV_SDSPI_WRITEREAD)SPI0_WriteRead,
+    .writeRead = (DRV_SDSPI_PLIB_WRITEREAD)SPI0_WriteRead,
 
     /* SPI PLIB Write function */
-    .write = (DRV_SDSPI_WRITE)SPI0_Write,
+    .write = (DRV_SDSPI_PLIB_WRITE)SPI0_Write,
 
     /* SPI PLIB Read function */
-    .read = (DRV_SDSPI_READ)SPI0_Read,
+    .read = (DRV_SDSPI_PLIB_READ)SPI0_Read,
 
     /* SPI PLIB Transfer Status function */
-    .isBusy = (DRV_SDSPI_IS_BUSY)SPI0_IsBusy,
+    .isBusy = (DRV_SDSPI_PLIB_IS_BUSY)SPI0_IsBusy,
 
-    .transferSetup = (DRV_SDSPI_SETUP)SPI0_TransferSetup,
+    .transferSetup = (DRV_SDSPI_PLIB_SETUP)SPI0_TransferSetup,
 
     /* SPI PLIB Callback Register */
-    .callbackRegister = (DRV_SDSPI_CALLBACK_REGISTER)SPI0_CallbackRegister,
+    .callbackRegister = (DRV_SDSPI_PLIB_CALLBACK_REGISTER)SPI0_CallbackRegister,
 };
 
-uint32_t drvSDSPI0remapDataBits[]= { 0x0, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80 };
-uint32_t drvSDSPI0remapClockPolarity[] = { 0x0, 0x1 };
-uint32_t drvSDSPI0remapClockPhase[] = { 0x0, 0x2 };
+const uint32_t drvSDSPI0remapDataBits[]= { 0x0, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80 };
+const uint32_t drvSDSPI0remapClockPolarity[] = { 0x0, 0x1 };
+const uint32_t drvSDSPI0remapClockPhase[] = { 0x0, 0x2 };
 /* SDSPI Driver Initialization Data */
-DRV_SDSPI_INIT drvSDSPI0InitData =
+const DRV_SDSPI_INIT drvSDSPI0InitData =
 {
     /* SD Card SPI PLIB API interface*/
     .spiPlib            = &drvSDSPI0PlibAPI,
@@ -145,13 +112,45 @@ DRV_SDSPI_INIT drvSDSPI0InitData =
 
     .writeProtectPin    = SYS_PORT_PIN_NONE,
 
-    .isRegisterWithFS   = DRV_SDSPI_REGISTER_WITH_FS_IDX0,
-
+    .isFsEnabled        = true,
     /* DMA Channel for Transmit */
     .txDMAChannel = SYS_DMA_CHANNEL_NONE,
-
     /* DMA Channel for Receive */
     .rxDMAChannel  = SYS_DMA_CHANNEL_NONE,
+};
+
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance 0 Initialization Data">
+
+static uint8_t gDrvMemory0EraseBuffer[EFC_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
+
+static DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
+
+
+const DRV_MEMORY_DEVICE_INTERFACE drvMemory0DeviceAPI = {
+    .Open               = DRV_EFC_Open,
+    .Close              = DRV_EFC_Close,
+    .Status             = DRV_EFC_Status,
+    .SectorErase        = DRV_EFC_SectorErase,
+    .Read               = DRV_EFC_Read,
+    .PageWrite          = DRV_EFC_PageWrite,
+    .EventHandlerSet    = (DRV_MEMORY_DEVICE_EVENT_HANDLER_SET)DRV_EFC_EventHandlerSet,
+    .GeometryGet        = (DRV_MEMORY_DEVICE_GEOMETRY_GET)DRV_EFC_GeometryGet,
+    .TransferStatusGet  = (DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET)DRV_EFC_TransferStatusGet
+};
+
+const DRV_MEMORY_INIT drvMemory0InitData =
+{
+    .memDevIndex                = 0,
+    .memoryDevice               = &drvMemory0DeviceAPI,
+    .isMemDevInterruptEnabled   = true,
+    .memDevStatusPollUs         = 0,
+    .isFsEnabled                = true,
+    .deviceMediaType            = (uint8_t)SYS_FS_MEDIA_TYPE_NVM,
+    .ewBuffer                   = &gDrvMemory0EraseBuffer[0],
+    .clientObjPool              = (uintptr_t)&gDrvMemory0ClientObject[0],
+    .nClientsMax                = DRV_MEMORY_CLIENTS_NUMBER_IDX0
 };
 
 // </editor-fold>
@@ -198,17 +197,17 @@ const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
 // *****************************************************************************
 // <editor-fold defaultstate="collapsed" desc="SYS_TIME Initialization Data">
 
-TIME_PLIB_API sysTimePlibAPI = {
-    .timerCallbackSet = (TIME_CallbackSet)TC0_CH0_TimerCallbackRegister,
-    .timerCounterGet = (TIME_CounterGet)TC0_CH0_TimerCounterGet,
-     .timerPeriodSet = (TIME_PeriodSet)TC0_CH0_TimerPeriodSet,
-    .timerFrequencyGet = (TIME_FrequencyGet)TC0_CH0_TimerFrequencyGet,
-    .timerCompareSet = (TIME_CompareSet)TC0_CH0_TimerCompareSet,
-    .timerStart = (TIME_Start)TC0_CH0_TimerStart,
-    .timerStop = (TIME_Stop)TC0_CH0_TimerStop 
+const SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
+    .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)TC0_CH0_TimerCallbackRegister,
+    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC0_CH0_TimerCounterGet,
+    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC0_CH0_TimerPeriodSet,
+    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC0_CH0_TimerFrequencyGet,
+    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC0_CH0_TimerCompareSet,
+    .timerStart = (SYS_TIME_PLIB_START)TC0_CH0_TimerStart,
+    .timerStop = (SYS_TIME_PLIB_STOP)TC0_CH0_TimerStop 
 };
 
-SYS_TIME_INIT sysTimeInitData =
+const SYS_TIME_INIT sysTimeInitData =
 {
     .timePlib = &sysTimePlibAPI,
     .hwTimerIntNum = TC0_CH0_IRQn,
@@ -238,18 +237,19 @@ void SYS_Initialize ( void* data )
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
 
-	BSP_Initialize();
-	SPI0_Initialize();
-
  
     TC0_CH0_TimerInitialize(); 
      
     
+	BSP_Initialize();
+	SPI0_Initialize();
 
-    sysObj.drvMemory0 = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_0, (SYS_MODULE_INIT *)&drvMemory0InitData);
 
     /* Initialize SDSPI0 Driver Instance */
     sysObj.drvSDSPI0 = DRV_SDSPI_Initialize(DRV_SDSPI_INDEX_0, (SYS_MODULE_INIT *)&drvSDSPI0InitData);
+
+    sysObj.drvMemory0 = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_0, (SYS_MODULE_INIT *)&drvMemory0InitData);
+
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
 

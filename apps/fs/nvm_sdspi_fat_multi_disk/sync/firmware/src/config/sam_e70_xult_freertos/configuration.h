@@ -56,6 +56,7 @@
 */
 
 #include "user.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -80,6 +81,15 @@ extern "C" {
 // Section: System Service Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* TIME System Service Configuration Options */
+#define SYS_TIME_INDEX_0                     0
+#define SYS_TIME_MAX_TIMERS                  5
+#define SYS_TIME_HW_COUNTER_WIDTH            16
+#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFF
+#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
+#define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
+#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
+
 
 /* File System Service Configuration */
 
@@ -102,15 +112,6 @@ extern "C" {
 
 
 
-/* TIME System Service Configuration Options */
-#define SYS_TIME_INDEX_0                     0
-#define SYS_TIME_MAX_TIMERS                  10
-#define SYS_TIME_HW_COUNTER_WIDTH            16
-#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFF
-#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
-#define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
-#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
-
 
 
 // *****************************************************************************
@@ -118,8 +119,23 @@ extern "C" {
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* SDSPI Driver Instance 0 Configuration Options */
+#define DRV_SDSPI_INDEX_0                       0
+#define DRV_SDSPI_CLIENTS_NUMBER_IDX0           1
+#define DRV_SDSPI_CHIP_SELECT_PIN_IDX0          SYS_PORT_PIN_PD25
+#define DRV_SDSPI_SPEED_HZ_IDX0                 5000000
+
+
+
+/* SDSPI Driver Instance 0 RTOS Configurations*/
+#define DRV_SDSPI_STACK_SIZE_IDX0               128
+#define DRV_SDSPI_PRIORITY_IDX0                 1
+
 /* Memory Driver Global Configuration Options */
 #define DRV_MEMORY_INSTANCES_NUMBER          1
+/* SDSPI Driver Common Configuration Options */
+#define DRV_SDSPI_INSTANCES_NUMBER              1
+
 
 /* Memory Driver Instance 0 Configuration */
 #define DRV_MEMORY_INDEX_0                   0
@@ -132,22 +148,6 @@ extern "C" {
 /* Memory Driver Instance 0 RTOS Configurations*/
 #define DRV_MEMORY_STACK_SIZE_IDX0           1024
 #define DRV_MEMORY_PRIORITY_IDX0             1
-
-/* SDSPI Driver Common Configuration Options */
-#define DRV_SDSPI_INSTANCES_NUMBER              1
-
-/* SDSPI Driver Instance 0 Configuration Options */
-#define DRV_SDSPI_INDEX_0                       0
-#define DRV_SDSPI_CLIENTS_NUMBER_IDX0           1
-#define DRV_SDSPI_CHIP_SELECT_PIN_IDX0          SYS_PORT_PIN_PD25
-#define DRV_SDSPI_SPEED_HZ_IDX0                 5000000
-#define DRV_SDSPI_REGISTER_WITH_FS_IDX0         true
-
-
-
-/* SDSPI Driver Instance 0 RTOS Configurations*/
-#define DRV_SDSPI_STACK_SIZE_IDX0               128
-#define DRV_SDSPI_PRIORITY_IDX0                 1
 
 
 
