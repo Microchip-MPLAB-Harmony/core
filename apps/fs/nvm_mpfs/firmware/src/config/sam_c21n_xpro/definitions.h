@@ -48,18 +48,18 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "peripheral/clock/plib_clock.h"
-#include "peripheral/port/plib_port.h"
-#include "peripheral/nvic/plib_nvic.h"
-#include "bsp/bsp.h"
-#include "system/int/sys_int.h"
-#include "osal/osal.h"
-#include "driver/memory/drv_memory.h"
-#include "driver/memory/drv_memory_nvmctrl.h"
 #include "peripheral/nvmctrl/plib_nvmctrl.h"
+#include "driver/memory/drv_memory_nvmctrl.h"
 #include "system/fs/sys_fs.h"
 #include "system/fs/sys_fs_media_manager.h"
 #include "system/fs/mpfs/mpfs.h"
+#include "peripheral/port/plib_port.h"
+#include "peripheral/clock/plib_clock.h"
+#include "peripheral/nvic/plib_nvic.h"
+#include "driver/memory/drv_memory.h"
+#include "system/int/sys_int.h"
+#include "osal/osal.h"
+#include "bsp/bsp.h"
 #include "app.h"
 
 
