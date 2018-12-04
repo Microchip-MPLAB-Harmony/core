@@ -48,6 +48,7 @@
 // *****************************************************************************
 
 #include "driver/memory/src/drv_memory_local.h"
+#include "system/time/sys_time.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -62,7 +63,7 @@
  * Hardware instance objects
  *************************************************/
 
-DRV_MEMORY_OBJECT gDrvMemoryObj[DRV_MEMORY_INSTANCES_NUMBER];
+static DRV_MEMORY_OBJECT gDrvMemoryObj[DRV_MEMORY_INSTANCES_NUMBER];
 
 
 /************************************************
@@ -135,7 +136,7 @@ static inline uint16_t DRV_MEMORY_UPDATE_TOKEN(uint16_t token)
         token = 1;
     }
 
-    return token;    
+    return token;
 }
 
 
@@ -236,17 +237,17 @@ static bool DRV_MEMORY_UpdateGeometry( DRV_MEMORY_OBJECT *dObj )
     }
 
     /* Read block size and number of blocks */
-    dObj->mediaGeometryTable[DRV_MEMORY_GEOMETRY_TABLE_READ_ENTRY].blockSize = memoryDeviceGeometry.read_blockSize;
-    dObj->mediaGeometryTable[DRV_MEMORY_GEOMETRY_TABLE_READ_ENTRY].numBlocks = memoryDeviceGeometry.read_numBlocks;
+    dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_READ_ENTRY].blockSize = memoryDeviceGeometry.read_blockSize;
+    dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_READ_ENTRY].numBlocks = memoryDeviceGeometry.read_numBlocks;
 
     /* Write block size and number of blocks */
-    dObj->mediaGeometryTable[DRV_MEMORY_GEOMETRY_TABLE_WRITE_ENTRY].blockSize = memoryDeviceGeometry.write_blockSize;
-    dObj->mediaGeometryTable[DRV_MEMORY_GEOMETRY_TABLE_WRITE_ENTRY].numBlocks = memoryDeviceGeometry.write_numBlocks;
+    dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY].blockSize = memoryDeviceGeometry.write_blockSize;
+    dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY].numBlocks = memoryDeviceGeometry.write_numBlocks;
     dObj->writeBlockSize = memoryDeviceGeometry.write_blockSize;
 
     /* Erase block size and number of blocks */
-    dObj->mediaGeometryTable[DRV_MEMORY_GEOMETRY_TABLE_ERASE_ENTRY].blockSize = memoryDeviceGeometry.erase_blockSize;
-    dObj->mediaGeometryTable[DRV_MEMORY_GEOMETRY_TABLE_ERASE_ENTRY].numBlocks = memoryDeviceGeometry.erase_numBlocks;
+    dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_ERASE_ENTRY].blockSize = memoryDeviceGeometry.erase_blockSize;
+    dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_ERASE_ENTRY].numBlocks = memoryDeviceGeometry.erase_numBlocks;
     dObj->eraseBlockSize = memoryDeviceGeometry.erase_blockSize;
 
     /* Update the Media Geometry Main Structure */
@@ -571,7 +572,7 @@ static bool DRV_MEMORY_StartXfer( DRV_MEMORY_OBJECT *dObj )
     bufferObj->status = DRV_MEMORY_COMMAND_IN_PROGRESS;
 
     transferStatus = gMemoryXferFuncPtr[bufferObj->opType](dObj, &bufferObj->buffer[0], bufferObj->blockStart, bufferObj->nBlocks);
-        
+
     while (transferStatus == MEMORY_DEVICE_TRANSFER_BUSY)
     {
         if ((dObj->isMemDevInterruptEnabled == false) && (dObj->memDevStatusPollUs > 0))
@@ -658,14 +659,14 @@ static bool DRV_MEMORY_SetupXfer
 
     if (clientObj == NULL)
     {
-        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "Invalid driver handle.\n");
+        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "Invalid Memory driver handle.\n");
         return isSuccess;
     }
 
     /* Check if the driver was opened with read intent */
     if (!(clientObj->intent & io_intent))
     {
-        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "Opened with invalid intent.\n");
+        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "Memory Driver Opened with invalid intent.\n");
         return isSuccess;
     }
 
@@ -673,13 +674,13 @@ static bool DRV_MEMORY_SetupXfer
 
     if ((buffer == NULL) && (opType != DRV_MEMORY_OPERATION_TYPE_ERASE))
     {
-        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "Invalid Buffer.\n");
+        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "Memory Driver Invalid Buffer.\n");
         return isSuccess;
     }
 
     if ((nBlock == 0) || ((blockStart + nBlock) > dObj->mediaGeometryTable[geometry_type].numBlocks))
     {
-        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "Invalid Block parameters.\n");
+        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "Memory Driver Invalid Block parameters.\n");
         return isSuccess;
     }
 
@@ -697,7 +698,7 @@ static bool DRV_MEMORY_SetupXfer
             {
                 opType = DRV_MEMORY_OPERATION_TYPE_WRITE;
             }
-            
+
         }
 
         DRV_MEMORY_AllocateBufferObject (clientObj, commandHandle, buffer, blockStart, nBlock, opType);
@@ -949,7 +950,7 @@ DRV_HANDLE DRV_MEMORY_Open
                 }
             }
 
-            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "DRV_MEMORY_Open(): Open successful.\n");
+            SYS_DEBUG_PRINT(SYS_ERROR_DEBUG, "DRV_MEMORY_Open(): Open successful.\n");
 
             break;
         }
@@ -992,11 +993,11 @@ void DRV_MEMORY_Close
         /* Release the instance specific mutex */
         OSAL_MUTEX_Unlock( &dObj->clientMutex );
 
-        SYS_DEBUG_PRINT (SYS_ERROR_INFO, "DRV_MEMORY_Close(): Close successful.\n");
+        SYS_DEBUG_PRINT (SYS_ERROR_DEBUG, "DRV_MEMORY_Close(): Close successful.\n");
     }
 }
 
-void DRV_MEMORY_FS_Read
+void DRV_MEMORY_Read
 (
     const DRV_HANDLE handle,
     DRV_MEMORY_COMMAND_HANDLE *commandHandle,
@@ -1006,7 +1007,7 @@ void DRV_MEMORY_FS_Read
 )
 {
     DRV_MEMORY_SetupXfer(handle, commandHandle, targetBuffer, blockStart, nBlock,
-            DRV_MEMORY_GEOMETRY_TABLE_READ_ENTRY,
+            SYS_MEDIA_GEOMETRY_TABLE_READ_ENTRY,
             DRV_MEMORY_OPERATION_TYPE_READ,
             DRV_IO_INTENT_READ);
 }
@@ -1020,12 +1021,12 @@ bool DRV_MEMORY_SyncRead
 )
 {
     return DRV_MEMORY_SetupXfer(handle, NULL, targetBuffer, blockStart, nBlock,
-                DRV_MEMORY_GEOMETRY_TABLE_READ_ENTRY,
+                SYS_MEDIA_GEOMETRY_TABLE_READ_ENTRY,
                 DRV_MEMORY_OPERATION_TYPE_READ,
                 DRV_IO_INTENT_READ);
 }
 
-void DRV_MEMORY_FS_Write
+void DRV_MEMORY_Write
 (
     const DRV_HANDLE handle,
     DRV_MEMORY_COMMAND_HANDLE *commandHandle,
@@ -1035,7 +1036,7 @@ void DRV_MEMORY_FS_Write
 )
 {
     DRV_MEMORY_SetupXfer(handle, commandHandle, sourceBuffer, blockStart, nBlock,
-            DRV_MEMORY_GEOMETRY_TABLE_WRITE_ENTRY,
+            SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY,
             DRV_MEMORY_OPERATION_TYPE_WRITE,
             DRV_IO_INTENT_WRITE);
 }
@@ -1049,12 +1050,12 @@ bool DRV_MEMORY_SyncWrite
 )
 {
     return DRV_MEMORY_SetupXfer(handle, NULL, sourceBuffer, blockStart, nBlock,
-                DRV_MEMORY_GEOMETRY_TABLE_WRITE_ENTRY,
+                SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY,
                 DRV_MEMORY_OPERATION_TYPE_WRITE,
                 DRV_IO_INTENT_WRITE);
 }
 
-void DRV_MEMORY_FS_Erase
+void DRV_MEMORY_Erase
 (
     const DRV_HANDLE handle,
     DRV_MEMORY_COMMAND_HANDLE *commandHandle,
@@ -1063,7 +1064,7 @@ void DRV_MEMORY_FS_Erase
 )
 {
     DRV_MEMORY_SetupXfer(handle, commandHandle, NULL, blockStart, nBlock,
-            DRV_MEMORY_GEOMETRY_TABLE_ERASE_ENTRY,
+            SYS_MEDIA_GEOMETRY_TABLE_ERASE_ENTRY,
             DRV_MEMORY_OPERATION_TYPE_ERASE,
             DRV_IO_INTENT_WRITE);
 }
@@ -1076,12 +1077,12 @@ bool DRV_MEMORY_SyncErase
 )
 {
     return DRV_MEMORY_SetupXfer(handle, NULL, NULL, blockStart, nBlock,
-                DRV_MEMORY_GEOMETRY_TABLE_ERASE_ENTRY,
+                SYS_MEDIA_GEOMETRY_TABLE_ERASE_ENTRY,
                 DRV_MEMORY_OPERATION_TYPE_ERASE,
                 DRV_IO_INTENT_WRITE);
 }
 
-void DRV_MEMORY_FS_EraseWrite
+void DRV_MEMORY_EraseWrite
 (
     const DRV_HANDLE handle,
     DRV_MEMORY_COMMAND_HANDLE *commandHandle,
@@ -1091,7 +1092,7 @@ void DRV_MEMORY_FS_EraseWrite
 )
 {
     DRV_MEMORY_SetupXfer(handle, commandHandle, sourceBuffer, blockStart, nBlock,
-            DRV_MEMORY_GEOMETRY_TABLE_WRITE_ENTRY,
+            SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY,
             DRV_MEMORY_OPERATION_TYPE_ERASE_WRITE,
             DRV_IO_INTENT_WRITE);
 }
@@ -1105,7 +1106,7 @@ bool DRV_MEMORY_SyncEraseWrite
 )
 {
     return DRV_MEMORY_SetupXfer(handle, NULL, sourceBuffer, blockStart, nBlock,
-                DRV_MEMORY_GEOMETRY_TABLE_WRITE_ENTRY,
+                SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY,
                 DRV_MEMORY_OPERATION_TYPE_ERASE_WRITE,
                 DRV_IO_INTENT_WRITE);
 }
@@ -1126,7 +1127,7 @@ DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
     /* Check if the client object is valid */
     if (clientObj == NULL)
     {
-        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "DRV_MEMORY_CommandStatus(): Invalid driver handle.\n");
+        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "DRV_MEMORY_CommandStatusGet(): Invalid driver handle.\n");
         return status;
     }
 
@@ -1240,4 +1241,3 @@ uintptr_t DRV_MEMORY_AddressGet
 
     return dObj->blockStartAddress;
 }
-
