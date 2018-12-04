@@ -50,7 +50,6 @@
 
 #include "driver/sdspi/drv_sdspi.h"
 #include "system/fs/sys_fs_media_manager.h"
-#include "drv_sdspi_variant_mapping.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -64,13 +63,16 @@ const SYS_FS_MEDIA_FUNCTIONS sdspiMediaFunctions =
 {
     .mediaStatusGet     = DRV_SDSPI_IsAttached,
     .mediaGeometryGet   = DRV_SDSPI_GeometryGet,
-    .sectorRead         = DRV_SDSPI_FS_Read,
-    .sectorWrite        = DRV_SDSPI_FS_Write,
+    .sectorRead         = DRV_SDSPI_Read,
+    .sectorWrite        = DRV_SDSPI_Write,
     .eventHandlerset    = DRV_SDSPI_EventHandlerSet,
-    .commandStatusGet   = (void *)DRV_SDSPI_CommandStatus,
+    .commandStatusGet   = (void *)DRV_SDSPI_CommandStatusGet,
+    .Read               = DRV_SDSPI_Read,
+    .erase              = NULL,
+    .addressGet         = NULL,
     .open               = DRV_SDSPI_Open,
     .close              = DRV_SDSPI_Close,
-    .tasks              = DRV_SDSPI_Tasks
+    .tasks              = NULL,
 };
 
 // *****************************************************************************
