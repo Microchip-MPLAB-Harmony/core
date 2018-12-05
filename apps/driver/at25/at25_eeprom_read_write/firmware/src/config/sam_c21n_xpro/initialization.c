@@ -53,23 +53,6 @@
 // ****************************************************************************
 // ****************************************************************************
 
-#pragma config NVMCTRL_BOOTPROT = SIZE_0BYTES
-#pragma config NVMCTRL_EEPROM_SIZE = SIZE_0BYTES
-#pragma config BODVDDUSERLEVEL = 0x8 // Enter Hexadecimal value
-#pragma config BODVDD_DIS = DISABLED
-#pragma config BODVDD_ACTION = NONE
-
-#pragma config BODVDD_HYST = DISABLED
-#pragma config NVMCTRL_REGION_LOCKS = 0xffff // Enter Hexadecimal value
-
-#pragma config WDT_ENABLE = DISABLED
-#pragma config WDT_ALWAYSON = DISABLED
-#pragma config WDT_PER = CYC8
-
-#pragma config WDT_WINDOW = CYC8
-#pragma config WDT_EWOFFSET = CYC8
-#pragma config WDT_WEN = DISABLED
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -79,46 +62,46 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_AT25 Initialization Data">
 
 /* SPI PLIB Interface Initialization for AT25 Driver */
-DRV_AT25_PLIB_INTERFACE drvAT25PlibAPI = {
+const DRV_AT25_PLIB_INTERFACE drvAT25PlibAPI = {
 
     /* SPI PLIB WriteRead function */
-    .writeRead = (DRV_AT25_WRITEREAD)SERCOM5_SPI_WriteRead,
+    .writeRead = (DRV_AT25_PLIB_WRITE_READ)SERCOM5_SPI_WriteRead,
 
     /* SPI PLIB Write function */
-    .write = (DRV_AT25_WRITE)SERCOM5_SPI_Write,
+    .write = (DRV_AT25_PLIB_WRITE)SERCOM5_SPI_Write,
 
     /* SPI PLIB Read function */
-    .read = (DRV_AT25_READ)SERCOM5_SPI_Read,
+    .read = (DRV_AT25_PLIB_READ)SERCOM5_SPI_Read,
 
     /* SPI PLIB Transfer Status function */
-    .isBusy = (DRV_AT25_IS_BUSY)SERCOM5_SPI_IsBusy,
+    .isBusy = (DRV_AT25_PLIB_IS_BUSY)SERCOM5_SPI_IsBusy,
 
     /* SPI PLIB Callback Register */
-    .callbackRegister = (DRV_AT25_CALLBACK_REGISTER)SERCOM5_SPI_CallbackRegister,
+    .callbackRegister = (DRV_AT25_PLIB_CALLBACK_REGISTER)SERCOM5_SPI_CallbackRegister,
 };
 
 /* AT25 Driver Initialization Data */
-DRV_AT25_INIT drvAT25InitData =
+const DRV_AT25_INIT drvAT25InitData =
 {
     /* SPI PLIB API  interface*/
     .spiPlib = &drvAT25PlibAPI,
 
     /* AT25 Number of clients */
-    .numClients = DRV_AT25_CLIENTS_NUMBER_IDX,   
-    
+    .numClients = DRV_AT25_CLIENTS_NUMBER_IDX,
+
     /* EEPROM Page Size in bytes */
     .pageSize = DRV_AT25_EEPROM_PAGE_SIZE,
-    
+
     /* Total size of the EEPROM in bytes */
     .flashSize = DRV_AT25_EEPROM_FLASH_SIZE,
-    
+
     .blockStartAddress =    0x0,
-    
+
     .chipSelectPin    = DRV_AT25_CHIP_SELECT_PIN_IDX,
 
     .holdPin    = DRV_AT25_HOLD_PIN_IDX,
 
-    .writeProtectPin    = DRV_AT25_WP_PIN_IDX,    
+    .writeProtectPin    = DRV_AT25_WP_PIN_IDX,
 };
 
 // </editor-fold>
@@ -164,9 +147,9 @@ void SYS_Initialize ( void* data )
 
 
     NVIC_Initialize();
-	BSP_Initialize();
     SERCOM5_SPI_Initialize();
 
+	BSP_Initialize();
 
     sysObj.drvAT25 = DRV_AT25_Initialize(DRV_AT25_INDEX, (SYS_MODULE_INIT *)&drvAT25InitData);
 
