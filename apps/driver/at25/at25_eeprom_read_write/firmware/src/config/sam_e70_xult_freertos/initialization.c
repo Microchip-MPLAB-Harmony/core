@@ -62,46 +62,46 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_AT25 Initialization Data">
 
 /* SPI PLIB Interface Initialization for AT25 Driver */
-DRV_AT25_PLIB_INTERFACE drvAT25PlibAPI = {
+const DRV_AT25_PLIB_INTERFACE drvAT25PlibAPI = {
 
     /* SPI PLIB WriteRead function */
-    .writeRead = (DRV_AT25_WRITEREAD)SPI0_WriteRead,
+    .writeRead = (DRV_AT25_PLIB_WRITE_READ)SPI0_WriteRead,
 
     /* SPI PLIB Write function */
-    .write = (DRV_AT25_WRITE)SPI0_Write,
+    .write = (DRV_AT25_PLIB_WRITE)SPI0_Write,
 
     /* SPI PLIB Read function */
-    .read = (DRV_AT25_READ)SPI0_Read,
+    .read = (DRV_AT25_PLIB_READ)SPI0_Read,
 
     /* SPI PLIB Transfer Status function */
-    .isBusy = (DRV_AT25_IS_BUSY)SPI0_IsBusy,
+    .isBusy = (DRV_AT25_PLIB_IS_BUSY)SPI0_IsBusy,
 
     /* SPI PLIB Callback Register */
-    .callbackRegister = (DRV_AT25_CALLBACK_REGISTER)SPI0_CallbackRegister,
+    .callbackRegister = (DRV_AT25_PLIB_CALLBACK_REGISTER)SPI0_CallbackRegister,
 };
 
 /* AT25 Driver Initialization Data */
-DRV_AT25_INIT drvAT25InitData =
+const DRV_AT25_INIT drvAT25InitData =
 {
     /* SPI PLIB API  interface*/
     .spiPlib = &drvAT25PlibAPI,
 
     /* AT25 Number of clients */
-    .numClients = DRV_AT25_CLIENTS_NUMBER_IDX,   
-    
+    .numClients = DRV_AT25_CLIENTS_NUMBER_IDX,
+
     /* EEPROM Page Size in bytes */
     .pageSize = DRV_AT25_EEPROM_PAGE_SIZE,
-    
+
     /* Total size of the EEPROM in bytes */
     .flashSize = DRV_AT25_EEPROM_FLASH_SIZE,
-    
+
     .blockStartAddress =    0x0,
-    
+
     .chipSelectPin    = DRV_AT25_CHIP_SELECT_PIN_IDX,
 
     .holdPin    = DRV_AT25_HOLD_PIN_IDX,
 
-    .writeProtectPin    = DRV_AT25_WP_PIN_IDX,    
+    .writeProtectPin    = DRV_AT25_WP_PIN_IDX,
 };
 
 // </editor-fold>
@@ -143,12 +143,13 @@ void SYS_Initialize ( void* data )
     CLK_Initialize();
 	PIO_Initialize();
 
+
+	BSP_Initialize();
     NVIC_Initialize();
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
 
-	BSP_Initialize();
 	SPI0_Initialize();
 
 
