@@ -68,26 +68,17 @@
 // *****************************************************************************
 // *****************************************************************************
 
-typedef enum
-{
-    DRV_AT25_SPI_ERROR_NONE = 0,
-        DRV_AT25_SPI_ERROR_OVERRUN = 0x8,
-
-}DRV_AT25_SPI_ERROR;
-
 typedef void (* DRV_AT25_PLIB_CALLBACK)( uintptr_t );
 
-typedef    bool (* DRV_AT25_WRITEREAD)(void*, size_t, void *, size_t);
+typedef bool (* DRV_AT25_PLIB_WRITE_READ)(void*, size_t, void *, size_t);
 
-typedef    bool (* DRV_AT25_WRITE)(void*, size_t);
+typedef bool (* DRV_AT25_PLIB_WRITE)(void*, size_t);
 
-typedef    bool (* DRV_AT25_READ)(void*, size_t);
+typedef bool (* DRV_AT25_PLIB_READ)(void*, size_t);
 
-typedef    bool (* DRV_AT25_IS_BUSY)(void);
+typedef bool (* DRV_AT25_PLIB_IS_BUSY)(void);
 
-typedef    DRV_AT25_SPI_ERROR (* DRV_AT25_ERROR_GET)(void);
-
-typedef    void (* DRV_AT25_CALLBACK_REGISTER)(DRV_AT25_PLIB_CALLBACK, uintptr_t);
+typedef void (* DRV_AT25_PLIB_CALLBACK_REGISTER)(DRV_AT25_PLIB_CALLBACK, uintptr_t);
 
 // *****************************************************************************
 /* AT25 Driver PLIB Interface Data
@@ -107,19 +98,19 @@ typedef struct
 {
 
     /* AT25 PLIB writeRead API */
-    DRV_AT25_WRITEREAD               writeRead;
+    DRV_AT25_PLIB_WRITE_READ                writeRead;
 
     /* AT25 PLIB write API */
-    DRV_AT25_WRITE               write;
+    DRV_AT25_PLIB_WRITE                     write;
 
     /* AT25 PLIB read API */
-    DRV_AT25_READ               read;
+    DRV_AT25_PLIB_READ                      read;
 
     /* AT25 PLIB Transfer status API */
-    DRV_AT25_IS_BUSY                 isBusy;
+    DRV_AT25_PLIB_IS_BUSY                   isBusy;
 
     /* AT25 PLIB callback register API */
-    DRV_AT25_CALLBACK_REGISTER       callbackRegister;
+    DRV_AT25_PLIB_CALLBACK_REGISTER         callbackRegister;
 
 } DRV_AT25_PLIB_INTERFACE;
 
@@ -140,24 +131,24 @@ typedef struct
 {
     /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
-    DRV_AT25_PLIB_INTERFACE        *spiPlib;
+    const DRV_AT25_PLIB_INTERFACE*      spiPlib;
 
     /* Number of clients */
-    size_t                          numClients;
+    size_t                              numClients;
 
-    SYS_PORT_PIN                    chipSelectPin;
+    SYS_PORT_PIN                        chipSelectPin;
 
-    SYS_PORT_PIN                    holdPin;
+    SYS_PORT_PIN                        holdPin;
 
-    SYS_PORT_PIN                    writeProtectPin;
+    SYS_PORT_PIN                        writeProtectPin;
 
     /* Page size (in Bytes) of the EEPROM */
-    uint32_t                        pageSize;
+    uint32_t                            pageSize;
 
     /* Total size (in Bytes) of the EEPROM */
-    uint32_t                        flashSize;
+    uint32_t                            flashSize;
 
-    uint32_t                        blockStartAddress;
+    uint32_t                            blockStartAddress;
 
 } DRV_AT25_INIT;
 

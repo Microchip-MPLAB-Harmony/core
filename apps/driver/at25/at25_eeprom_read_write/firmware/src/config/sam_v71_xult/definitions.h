@@ -51,12 +51,12 @@
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
+#include "driver/at25/drv_at25.h"
+#include "peripheral/spi/plib_spi0.h"
 #include "bsp/bsp.h"
 #include "system/int/sys_int.h"
 #include "system/ports/sys_ports.h"
 #include "osal/osal.h"
-#include "driver/at25/drv_at25.h"
-#include "peripheral/spi/plib_spi0.h"
 #include "app.h"
 
 
