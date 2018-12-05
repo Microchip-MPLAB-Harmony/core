@@ -49,15 +49,15 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include "bsp/bsp.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
-#include "bsp/bsp.h"
+#include "peripheral/tc/plib_tc0.h"
+#include "peripheral/usart/plib_usart1.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
 #include "system/time/sys_time.h"
-#include "peripheral/tc/plib_TC0.h"
-#include "peripheral/usart/plib_usart1.h"
 #include "app.h"
 
 
