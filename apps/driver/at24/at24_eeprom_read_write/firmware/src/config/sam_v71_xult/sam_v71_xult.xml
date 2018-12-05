@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Configuration>
   <Components>
-    <UniqueComponent dnOrder="0" id="core">
+    <UniqueComponent bsp="true" dnOrder="0" id="BSP_SAM_V71_Xplained_Ultra"/>
+    <UniqueComponent dnOrder="1" id="cmsis"/>
+    <UniqueComponent dnOrder="2" id="core">
       <Symbols dnOrder="0">
         <Combo dnOrder="0" id="COMPONENT_PACKAGE">
           <Values dnOrder="0">
@@ -4138,214 +4140,9 @@
         </KeyValueSet>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent bsp="true" dnOrder="1" id="BSP_SAM_V71_Xplained_Ultra"/>
-    <UniqueComponent dnOrder="2" id="HarmonyCore">
+    <UniqueComponent dnOrder="3" id="dfp"/>
+    <UniqueComponent dnOrder="4" id="drv_at24">
       <Symbols dnOrder="0">
-        <File dnOrder="0" id="APP0_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="1" id="APP0_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="2" id="CONFIGURATION_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="3" id="DRIVER_COMMON">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="4" id="DRIVER_ROOT">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <Boolean dnOrder="5" id="ENABLE_APP_FILE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="HarmonyCore" priority="1" value="true"/>
-            </Dynamic>
-          </Values>
-        </Boolean>
-        <Boolean dnOrder="6" id="ENABLE_DRV_COMMON">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="drv_at24" priority="1" value="true"/>
-            </Dynamic>
-          </Values>
-        </Boolean>
-        <Boolean dnOrder="7" id="ENABLE_OSAL">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="HarmonyCore" priority="1" value="true"/>
-            </Dynamic>
-          </Values>
-        </Boolean>
-        <Boolean dnOrder="8" id="ENABLE_SYS_COMMON">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="drv_at24" priority="1" value="true"/>
-            </Dynamic>
-          </Values>
-        </Boolean>
-        <Boolean dnOrder="9" id="ENABLE_SYS_INT">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="HarmonyCore" priority="1" value="true"/>
-            </Dynamic>
-          </Values>
-        </Boolean>
-        <Boolean dnOrder="10" id="ENABLE_SYS_PORTS">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="drv_at24" priority="1" value="true"/>
-            </Dynamic>
-          </Values>
-        </Boolean>
-        <Menu dnOrder="11" id="GEN_APP_TASK_MENU">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Menu>
-        <File dnOrder="12" id="INT_DEF">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="13" id="INT_HEADER">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="14" id="INT_MAPPING">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="15" id="INT_SOURCE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="16" id="OSAL_DEFINITIONS_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="17" id="OSAL_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="18" id="OSAL_IMPL_BASIC_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="19" id="OSAL_SYSDEF_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="20" id="PORTS_DEF">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="21" id="PORTS_HEADER">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="22" id="PORTS_MAPPING">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="23" id="SYSTEM_COMMON">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="24" id="SYSTEM_MODULE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="25" id="SYSTEM_ROOT">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="26" id="TASKS_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="27" id="USER_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-      </Symbols>
-    </UniqueComponent>
-    <UniqueComponent dnOrder="3" id="cmsis"/>
-    <UniqueComponent dnOrder="4" id="dfp"/>
-    <UniqueComponent dnOrder="5" id="drv_at24">
-      <Dependencies dnOrder="0">
-        <Dependency dnOrder="0" id="drv_at24_I2C_dependency" targetAttachmentID="TWIHS0_I2C" targetComponentID="twihs0"/>
-      </Dependencies>
-      <Symbols dnOrder="1">
         <String dnOrder="0" id="DRV_AT24_PLIB">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
@@ -4361,12 +4158,67 @@
           </Values>
         </Boolean>
       </Symbols>
+      <Attachments dnOrder="1">
+        <DirectDependency dnOrder="0" id="drv_at24_I2C_dependency">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="targetComponentID">
+              <Value dnOrder="0">twihs0</Value>
+            </String>
+            <String dnOrder="1" id="targetAttachmentID">
+              <Value dnOrder="0">TWIHS0_I2C</Value>
+            </String>
+          </Attributes>
+        </DirectDependency>
+      </Attachments>
+    </UniqueComponent>
+    <UniqueComponent dnOrder="5" id="HarmonyCore">
+      <Symbols dnOrder="0">
+        <Boolean dnOrder="0" id="ENABLE_APP_FILE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="HarmonyCore" priority="1" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="1" id="ENABLE_DRV_COMMON">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="drv_at24" priority="1" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="2" id="ENABLE_OSAL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="HarmonyCore" priority="1" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="3" id="ENABLE_SYS_COMMON">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="drv_at24" priority="1" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="4" id="ENABLE_SYS_INT">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="HarmonyCore" priority="1" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="5" id="ENABLE_SYS_PORTS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="drv_at24" priority="1" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+      </Symbols>
     </UniqueComponent>
     <UniqueComponent dnOrder="6" id="twihs0">
-      <Capabilities dnOrder="0">
-        <Capability dnOrder="0" id="TWIHS0_I2C" targetAttachmentID="drv_at24_I2C_dependency" targetComponentID="drv_at24"/>
-      </Capabilities>
-      <Symbols dnOrder="1">
+      <Symbols dnOrder="0">
         <Integer dnOrder="0" id="TWIHS_CWGR_CHDIV">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
@@ -4389,19 +4241,31 @@
           </Values>
         </Integer>
       </Symbols>
+      <Attachments dnOrder="1">
+        <DirectCapability dnOrder="0" id="TWIHS0_I2C">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="targetComponentID">
+              <Value dnOrder="0">drv_at24</Value>
+            </String>
+            <String dnOrder="1" id="targetAttachmentID">
+              <Value dnOrder="0">drv_at24_I2C_dependency</Value>
+            </String>
+          </Attributes>
+        </DirectCapability>
+      </Attachments>
     </UniqueComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0" minimap="false"/>
-    <ComponentGraph dnOrder="1">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_V71_Xplained_Ultra" x="30" y="60"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="270" y="60"/>
         <ElementPosition dnOrder="2" id="cmsis" x="120" y="20"/>
         <ElementPosition dnOrder="3" id="core" x="20" y="20"/>
         <ElementPosition dnOrder="4" id="dfp" x="260" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_at24" x="134" y="95"/>
-        <ElementPosition dnOrder="6" id="twihs0" x="-3" y="95"/>
+        <ElementPosition dnOrder="5" id="drv_at24" x="142" y="95"/>
+        <ElementPosition dnOrder="6" id="twihs0" x="1" y="105"/>
       </ElementPositions>
     </ComponentGraph>
   </UserData>
