@@ -53,23 +53,6 @@
 // ****************************************************************************
 // ****************************************************************************
 
-#pragma config NVMCTRL_BOOTPROT = SIZE_0BYTES
-#pragma config NVMCTRL_EEPROM_SIZE = SIZE_0BYTES
-#pragma config BODVDDUSERLEVEL = 0x8 // Enter Hexadecimal value
-#pragma config BODVDD_DIS = DISABLED
-#pragma config BODVDD_ACTION = NONE
-
-#pragma config BODVDD_HYST = DISABLED
-#pragma config NVMCTRL_REGION_LOCKS = 0xffff // Enter Hexadecimal value
-
-#pragma config WDT_ENABLE = DISABLED
-#pragma config WDT_ALWAYSON = DISABLED
-#pragma config WDT_PER = CYC8
-
-#pragma config WDT_WINDOW = CYC8
-#pragma config WDT_EWOFFSET = CYC8
-#pragma config WDT_WEN = DISABLED
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -99,17 +82,17 @@ SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 // <editor-fold defaultstate="collapsed" desc="SYS_TIME Initialization Data">
 
-TIME_PLIB_API sysTimePlibAPI = {
-    .timerCallbackSet = (TIME_CallbackSet)TC0_TimerCallbackRegister,
-    .timerCounterGet = (TIME_CounterGet)TC0_Timer16bitCounterGet,
-     .timerPeriodSet = (TIME_PeriodSet)TC0_Timer16bitPeriodSet,
-    .timerFrequencyGet = (TIME_FrequencyGet)TC0_TimerFrequencyGet,
-    .timerCompareSet = (TIME_CompareSet)TC0_Timer16bitCompareSet,
-    .timerStart = (TIME_Start)TC0_TimerStart,
-    .timerStop = (TIME_Stop)TC0_TimerStop
+const SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
+    .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)TC0_TimerCallbackRegister,
+    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC0_Timer16bitCounterGet,
+    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC0_Timer16bitPeriodSet,
+    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC0_TimerFrequencyGet,
+    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC0_Timer16bitCompareSet,
+    .timerStart = (SYS_TIME_PLIB_START)TC0_TimerStart,
+    .timerStop = (SYS_TIME_PLIB_STOP)TC0_TimerStop
 };
 
-SYS_TIME_INIT sysTimeInitData =
+const SYS_TIME_INIT sysTimeInitData =
 {
     .timePlib = &sysTimePlibAPI,
     .hwTimerIntNum = TC0_IRQn,
@@ -137,11 +120,11 @@ void SYS_Initialize ( void* data )
 
 
     NVIC_Initialize();
-	BSP_Initialize();
     SERCOM4_USART_Initialize();
 
     TC0_TimerInitialize();
 
+	BSP_Initialize();
 
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);

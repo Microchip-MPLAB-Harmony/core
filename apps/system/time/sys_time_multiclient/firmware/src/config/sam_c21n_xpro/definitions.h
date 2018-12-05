@@ -52,12 +52,12 @@
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
-#include "bsp/bsp.h"
+#include "peripheral/sercom/usart/plib_sercom4_usart.h"
+#include "peripheral/tc/plib_tc0.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
-#include "peripheral/sercom/usart/plib_sercom4_usart.h"
 #include "system/time/sys_time.h"
-#include "peripheral/tc/plib_tc0.h"
+#include "bsp/bsp.h"
 #include "app.h"
 
 
