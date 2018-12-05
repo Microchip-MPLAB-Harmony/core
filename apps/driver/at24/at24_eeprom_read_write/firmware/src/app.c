@@ -151,7 +151,7 @@ void APP_Tasks ( void )
         /* Application's initial state. */
         case APP_STATE_INIT:
         
-            appData.drvHandle = DRV_AT24_Open(DRV_AT24_INDEX, 0);
+            appData.drvHandle = DRV_AT24_Open(DRV_AT24_INDEX, DRV_IO_INTENT_READWRITE);
             
             if (appData.drvHandle != DRV_HANDLE_INVALID)
             {                                
@@ -235,11 +235,12 @@ void APP_Tasks ( void )
             
         case APP_STATE_IDLE:
             /* Turn on the LED to indicate success */
-            LED_On();
+            LED_ON();
             break;
             
         case APP_STATE_ERROR:
         default:
+            LED_OFF();
             break;
     }
 }

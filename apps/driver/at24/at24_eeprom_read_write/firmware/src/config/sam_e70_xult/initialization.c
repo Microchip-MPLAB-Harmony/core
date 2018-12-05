@@ -52,6 +52,35 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
+// DOM-IGNORE-BEGIN
+/*******************************************************************************
+* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+*******************************************************************************/
+
+// DOM-IGNORE-END
+#pragma config TCM_CONFIGURATION = 0
+#pragma config SECURITY_BIT = CLEAR
+#pragma config BOOT_MODE = SET
+
 
 
 // *****************************************************************************
@@ -62,39 +91,39 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_AT24 Initialization Data">
 
 /* I2C PLIB Interface Initialization for AT24 Driver */
-DRV_AT24_PLIB_INTERFACE drvAT24PlibAPI = {
+const DRV_AT24_PLIB_INTERFACE drvAT24PlibAPI = {
 
     /* I2C PLIB WriteRead function */
-    .writeRead = (DRV_AT24_WRITEREAD)TWIHS0_WriteRead,
+    .writeRead = (DRV_AT24_PLIB_WRITE_READ)TWIHS0_WriteRead,
 
     /* I2C PLIB Write function */
-    .write = (DRV_AT24_WRITE)TWIHS0_Write,
+    .write = (DRV_AT24_PLIB_WRITE)TWIHS0_Write,
 
     /* I2C PLIB Read function */
-    .read = (DRV_AT24_READ)TWIHS0_Read,
+    .read = (DRV_AT24_PLIB_READ)TWIHS0_Read,
 
     /* I2C PLIB Transfer Status function */
-    .isBusy = (DRV_AT24_IS_BUSY)TWIHS0_IsBusy,
+    .isBusy = (DRV_AT24_PLIB_IS_BUSY)TWIHS0_IsBusy,
 
     /* I2C PLIB Error Status function */
-    .errorGet = (DRV_AT24_ERROR_GET)TWIHS0_ErrorGet,
+    .errorGet = (DRV_AT24_PLIB_ERROR_GET)TWIHS0_ErrorGet,
 
     /* I2C PLIB Callback Register */
-    .callbackRegister = (DRV_AT24_CALLBACK_REGISTER)TWIHS0_CallbackRegister,
+    .callbackRegister = (DRV_AT24_PLIB_CALLBACK_REGISTER)TWIHS0_CallbackRegister,
 };
 
 /* AT24 Driver Initialization Data */
-DRV_AT24_INIT drvAT24InitData =
+const DRV_AT24_INIT drvAT24InitData =
 {
     /* I2C PLIB API  interface*/
     .i2cPlib = &drvAT24PlibAPI,
-    
+
     /* 7-bit I2C Slave address */
     .slaveAddress = 0x57,
-    
+
     /* EEPROM Page Size in bytes */
     .pageSize = DRV_AT24_EEPROM_PAGE_SIZE,
-    
+
     /* Total size of the EEPROM in bytes */
     .flashSize = DRV_AT24_EEPROM_FLASH_SIZE,
 
@@ -143,12 +172,13 @@ void SYS_Initialize ( void* data )
     CLK_Initialize();
 	PIO_Initialize();
 
+
+	BSP_Initialize();
     NVIC_Initialize();
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
 
-	BSP_Initialize();
 	TWIHS0_Initialize();
 
 
