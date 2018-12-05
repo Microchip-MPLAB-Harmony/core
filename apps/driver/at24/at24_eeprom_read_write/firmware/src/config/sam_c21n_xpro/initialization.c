@@ -53,23 +53,6 @@
 // ****************************************************************************
 // ****************************************************************************
 
-#pragma config NVMCTRL_BOOTPROT = SIZE_0BYTES
-#pragma config NVMCTRL_EEPROM_SIZE = SIZE_0BYTES
-#pragma config BODVDDUSERLEVEL = 0x8 // Enter Hexadecimal value
-#pragma config BODVDD_DIS = DISABLED
-#pragma config BODVDD_ACTION = NONE
-
-#pragma config BODVDD_HYST = DISABLED
-#pragma config NVMCTRL_REGION_LOCKS = 0xffff // Enter Hexadecimal value
-
-#pragma config WDT_ENABLE = DISABLED
-#pragma config WDT_ALWAYSON = DISABLED
-#pragma config WDT_PER = CYC8
-
-#pragma config WDT_WINDOW = CYC8
-#pragma config WDT_EWOFFSET = CYC8
-#pragma config WDT_WEN = DISABLED
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -79,39 +62,39 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_AT24 Initialization Data">
 
 /* I2C PLIB Interface Initialization for AT24 Driver */
-DRV_AT24_PLIB_INTERFACE drvAT24PlibAPI = {
+const DRV_AT24_PLIB_INTERFACE drvAT24PlibAPI = {
 
     /* I2C PLIB WriteRead function */
-    .writeRead = (DRV_AT24_WRITEREAD)SERCOM1_I2C_WriteRead,
+    .writeRead = (DRV_AT24_PLIB_WRITE_READ)SERCOM1_I2C_WriteRead,
 
     /* I2C PLIB Write function */
-    .write = (DRV_AT24_WRITE)SERCOM1_I2C_Write,
+    .write = (DRV_AT24_PLIB_WRITE)SERCOM1_I2C_Write,
 
     /* I2C PLIB Read function */
-    .read = (DRV_AT24_READ)SERCOM1_I2C_Read,
+    .read = (DRV_AT24_PLIB_READ)SERCOM1_I2C_Read,
 
     /* I2C PLIB Transfer Status function */
-    .isBusy = (DRV_AT24_IS_BUSY)SERCOM1_I2C_IsBusy,
+    .isBusy = (DRV_AT24_PLIB_IS_BUSY)SERCOM1_I2C_IsBusy,
 
     /* I2C PLIB Error Status function */
-    .errorGet = (DRV_AT24_ERROR_GET)SERCOM1_I2C_ErrorGet,
+    .errorGet = (DRV_AT24_PLIB_ERROR_GET)SERCOM1_I2C_ErrorGet,
 
     /* I2C PLIB Callback Register */
-    .callbackRegister = (DRV_AT24_CALLBACK_REGISTER)SERCOM1_I2C_CallbackRegister,
+    .callbackRegister = (DRV_AT24_PLIB_CALLBACK_REGISTER)SERCOM1_I2C_CallbackRegister,
 };
 
 /* AT24 Driver Initialization Data */
-DRV_AT24_INIT drvAT24InitData =
+const DRV_AT24_INIT drvAT24InitData =
 {
     /* I2C PLIB API  interface*/
     .i2cPlib = &drvAT24PlibAPI,
-    
+
     /* 7-bit I2C Slave address */
     .slaveAddress = 0x54,
-    
+
     /* EEPROM Page Size in bytes */
     .pageSize = DRV_AT24_EEPROM_PAGE_SIZE,
-    
+
     /* Total size of the EEPROM in bytes */
     .flashSize = DRV_AT24_EEPROM_FLASH_SIZE,
 
@@ -163,12 +146,12 @@ void SYS_Initialize ( void* data )
 
 
 
-    NVIC_Initialize();
-	BSP_Initialize();
-    EVSYS_Initialize();
-
     SERCOM1_I2C_Initialize();
 
+    EVSYS_Initialize();
+
+    NVIC_Initialize();
+	BSP_Initialize();
 
     sysObj.drvAT24 = DRV_AT24_Initialize(DRV_AT24_INDEX, (SYS_MODULE_INIT *)&drvAT24InitData);
 
