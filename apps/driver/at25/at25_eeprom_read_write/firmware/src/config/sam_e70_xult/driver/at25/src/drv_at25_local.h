@@ -129,7 +129,7 @@ typedef struct
     SYS_STATUS                      status;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    DRV_AT25_PLIB_INTERFACE        *spiPlib;
+    const DRV_AT25_PLIB_INTERFACE*  spiPlib;
 
     uint8_t                         at25Command[4];
 
