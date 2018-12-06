@@ -58,10 +58,6 @@
 #include <stdlib.h>
 #include "configuration.h"
 #include "driver/i2c/drv_i2c.h"
-#include "driver/i2c/drv_i2c.h"
-#include "peripheral/twihs/plib_twihs0.h"
-
-
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -75,75 +71,7 @@ extern "C" {
 // *****************************************************************************
 // Section: Type Definitions
 // *****************************************************************************
-// *****************************************************************************
-
-// *****************************************************************************
-/* I2C Address for the on-board EEPROM AT24MAC402.
-
-  Summary:
-    Defines the on-board EEPROM AT24MAC402's I2C Address.
-
-  Description:
-    This #define defines the on-board EEPROM AT24MAC402's I2C Address. It is used 
-    by the I2C Driver API's to write and read data.
-*/
-
-#define APP_AT24MAC_DEVICE_ADDR             0x0057
-
-// *****************************************************************************
-/* EEPROM AT24MAC402 Word Address.
-
-  Summary:
-    Defines the on-board EEPROM AT24MAC402 Word Address.
-
-  Description:
-    This #define defines the on-board EEPROM AT24MAC402 Word Address. Data is 
-    read/write from/to the location starting from this address. 
- */
-    
-#define APP_AT24MAC_MEMORY_ADDR             0x00
-
-// *****************************************************************************
-/* Write data length.
-
-  Summary:
-    Defines the length of the data to be written to on-board EEPROM AT24MAC402.
-
-  Description:
-    This #define defines the length of the data to be written to the on-board 
-    EEPROM AT24MAC402. This define is used by the I2C Driver write API.
- */
-
-#define APP_WRITE_DATA_LENGTH            17
-
-// *****************************************************************************
-/* Acknowledge polling data length.
-
-  Summary:
-    Defines the length of the data to be written to on-board EEPROM AT24MAC402 
-    during Acknowledge polling.
-
-  Description:
-    This #define defines the length of the data to be written to the on-board 
-    EEPROM AT24MAC402 during Acknowledge polling. This define is used by the I2C
-    Driver Transmit API.
- */
-    
-#define APP_ACK_DATA_LENGTH                 1
-
-// *****************************************************************************
-/* Read data length.
-
-  Summary:
-    Defines the length of the data to be read from on-board EEPROM AT24MAC402.
-
-  Description:
-    This #define defines the length of the data to be read from the on-board 
-    EEPROM AT24MAC402. This define is used by the I2C Driver Read API.
- */
-
-#define APP_READ_DATA_LENGTH             16
-    
+// *****************************************************************************    
 /* Transfer status enum
 
   Summary:
@@ -334,4 +262,3 @@ void APP_Tasks( void );
 /*******************************************************************************
  End of File
  */
-

@@ -61,7 +61,11 @@
 // *****************************************************************************
 // *****************************************************************************
 // *****************************************************************************
-
+//Defines the on-board EEPROM AT24MAC402's I2C Address.
+#define APP_AT24MAC_DEVICE_ADDR             0x0057
+#define APP_AT24MAC_MEMORY_ADDR             0x00
+#define APP_WRITE_DATA_LENGTH               17
+#define APP_READ_DATA_LENGTH                16
 // *****************************************************************************
 /* Application Data
 
@@ -79,54 +83,13 @@
 
 APP_DATA appData;
 
-// *****************************************************************************
-/* Application Test Write Data array
-
-  Summary:
-    Holds the application test write data.
-
-  Description:
-    This array holds the application's test write data.
-
-  Remarks:
-    None.
-*/
-
 static const uint8_t testTxData[APP_WRITE_DATA_LENGTH] = 
 {
 	APP_AT24MAC_MEMORY_ADDR, 
     'A', 'T', 'S', 'A', 'M', ' ', 'T', 'W', 'I', 'H', 'S', ' ', 'D', 'e', 'm', 'o',
 };
 
-// *****************************************************************************
-/* Application Acknowledge polling Data byte.
-
-  Summary:
-    Holds the application acknowledge polling data byte.
-
-  Description:
-    This array holds the application's acknowledge polling data byte.
-
-  Remarks:
-    None.
-*/
-
-static uint8_t ackData = 0;
-
-// *****************************************************************************
-/* Application Test read Data array.
-
-  Summary:
-    Holds the application read test data.
-
-  Description:
-    This array holds the application's read test data.
-
-  Remarks:
-    None.
-*/
-
-static uint8_t  testRxData[APP_READ_DATA_LENGTH] = {0};
+static uint8_t testRxData[APP_READ_DATA_LENGTH] = {0};
 
 // *****************************************************************************
 // *****************************************************************************
@@ -194,6 +157,8 @@ void APP_Initialize ( void )
 
 void APP_Tasks ( void )
 {        
+    uint8_t dummyData = 0;
+    
     /* Check the application's current state. */
     switch ( appData.state )
     {
@@ -221,12 +186,12 @@ void APP_Tasks ( void )
         case APP_STATE_IS_EEPROM_READY:
         
             appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;
-            /* Add a Write Transfer request to verify whether EEPROM is ready */
+            /* Add a dummy write transfer request to verify whether EEPROM is ready */
             DRV_I2C_WriteTransferAdd( 
                 appData.drvI2CHandle,
                 APP_AT24MAC_DEVICE_ADDR,
-                (void *)&ackData,
-                APP_ACK_DATA_LENGTH,
+                (void *)&dummyData,
+                1,
                 &appData.transferHandle 
             );
             
@@ -275,12 +240,12 @@ void APP_Tasks ( void )
             {
                 appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;
                 
-                /* Add a request to check if EEPROM's internal write cycle is complete */
+                /* Add a dummy write request to check if EEPROM's internal write cycle is complete */
                 DRV_I2C_WriteTransferAdd( 
                     appData.drvI2CHandle,
                     APP_AT24MAC_DEVICE_ADDR,
-                    (void *)&ackData,
-                    APP_ACK_DATA_LENGTH,
+                    (void *)&dummyData,
+                    1,
                     &appData.transferHandle 
                 );
 
@@ -307,12 +272,13 @@ void APP_Tasks ( void )
             else if (appData.transferStatus == APP_TRANSFER_STATUS_ERROR)
             {
                 appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;
+                
                 /* Keep checking if EEPROM's internal write cycle is complete */
                 DRV_I2C_WriteTransferAdd( 
                     appData.drvI2CHandle,
                     APP_AT24MAC_DEVICE_ADDR,
-                    (void *)&ackData,
-                    APP_ACK_DATA_LENGTH,
+                    (void *)&dummyData,
+                    1,
                     &appData.transferHandle 
                 );
 
@@ -328,9 +294,11 @@ void APP_Tasks ( void )
             appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;
             
             /* Add a request to read data from EEPROM. */
-            DRV_I2C_ReadTransferAdd(  
+            DRV_I2C_WriteReadTransferAdd(  
                 appData.drvI2CHandle,
                 APP_AT24MAC_DEVICE_ADDR,
+                (void *)&testTxData[0],
+                1,
                 (void *)&testRxData[0],
                 APP_READ_DATA_LENGTH,
                 &appData.transferHandle
@@ -379,7 +347,8 @@ void APP_Tasks ( void )
             break;
                 
         case APP_STATE_ERROR:
-        
+            
+            LED_OFF();
             appData.state = APP_STATE_IDLE;
             break;
             
