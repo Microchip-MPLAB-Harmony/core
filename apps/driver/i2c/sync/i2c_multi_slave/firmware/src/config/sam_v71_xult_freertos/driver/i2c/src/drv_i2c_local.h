@@ -135,7 +135,7 @@ typedef struct
     SYS_STATUS status;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    DRV_I2C_PLIB_INTERFACE* i2cPlib;
+    const DRV_I2C_PLIB_INTERFACE* i2cPlib;
 
     /* Memory pool for Client Objects */
     uintptr_t clientObjPool;
@@ -149,7 +149,7 @@ typedef struct
     uintptr_t activeClient;
 
     /* Status of the active transfer */
-    DRV_I2C_TRANSFER_STATUS transferStatus;
+    volatile DRV_I2C_TRANSFER_STATUS transferStatus;
 
     /* Mutex to protect access to the peripheral */
     OSAL_MUTEX_DECLARE(transferMutex);
@@ -185,7 +185,7 @@ typedef struct
     DRV_IO_INTENT ioIntent;
 
     /* Errors associated with the I2C transfer */
-    DRV_I2C_ERROR errors;
+    volatile DRV_I2C_ERROR errors;
 
     /* This flags indicates if the object is in use or is
      * available */
