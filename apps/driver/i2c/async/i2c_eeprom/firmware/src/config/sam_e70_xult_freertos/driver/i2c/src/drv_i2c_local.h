@@ -81,12 +81,12 @@ typedef enum
     /* Indicates this buffer was submitted by a read function */
     DRV_I2C_TRANSFER_OBJ_FLAG_READ = 1 << 0,
 
-    /* Indicates this buffer was submitted by a write function */            
+    /* Indicates this buffer was submitted by a write function */
     DRV_I2C_TRANSFER_OBJ_FLAG_WRITE = 1 << 1,
-            
+
     /* Indicates this buffer was submitted by a write followed by read function */
     DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_READ = 1 << 2,
-            
+
 } DRV_I2C_TRANSFER_OBJ_FLAGS;
 
 // *****************************************************************************
@@ -106,37 +106,37 @@ typedef struct _DRV_I2C_TRANSFER_OBJ
 {
     /* Transfer Object array index */
     uint32_t index;
-    
+
     /* Slave address */
     uint16_t slaveAddress;
-    
+
     /* Pointer to the application read buffer */
-    void * readBuffer;
+    void* readBuffer;
 
     /* Number of bytes to be read */
     size_t readSize;
-    
+
     /* Pointer to the application write buffer */
-    void * writeBuffer;
-    
+    void* writeBuffer;
+
     /* Number of bytes to be written */
     size_t writeSize;
-    
+
     /* Transfer Object Flag */
     DRV_I2C_TRANSFER_OBJ_FLAGS flag;
-    
+
     /* Current status of the buffer */
     DRV_I2C_TRANSFER_EVENT event;
 
     /* The client object that owns this buffer */
-    void * hClient;
-    
+    void* hClient;
+
     /* Buffer Handle object that was assigned to this buffer when it was added to the
      * queue. */
     DRV_I2C_TRANSFER_HANDLE transferHandle;
-    
+
     /* Next buffer pointer */
-    struct _DRV_I2C_TRANSFER_OBJ * next;
+    struct _DRV_I2C_TRANSFER_OBJ* next;
 
 } DRV_I2C_TRANSFER_OBJ;
 
@@ -157,54 +157,54 @@ typedef struct
 {
     /* Flag to indicate this object is in use  */
     bool inUse;
-    
+
     /* Flag to indicate that driver has been opened Exclusively*/
     bool isExclusive;
-    
-    /* Keep track of the number of clients 
+
+    /* Keep track of the number of clients
       that have opened this driver */
     size_t nClients;
-    
+
     /* Maximum number of clients */
     size_t nClientsMax;
-    
+
     /* The status of the driver */
     SYS_STATUS status;
-       
+
     /* PLIB API list that will be used by the driver to access the hardware */
-    DRV_I2C_PLIB_INTERFACE *i2cPlib;
+    const DRV_I2C_PLIB_INTERFACE* i2cPlib;
 
     /* Interrupt Source of I2C */
     IRQn_Type interruptI2C;
-    
+
     /* Memory pool for Client Objects */
     uintptr_t clientObjPool;
-    
+
     /* Pointer to Transfer Objects array */
-    DRV_I2C_TRANSFER_OBJ * trObjArr;
-    
+    DRV_I2C_TRANSFER_OBJ* trObjArr;
+
     /* Pointer to free list of Transfer Objects */
-    DRV_I2C_TRANSFER_OBJ * trObjFree;
+    DRV_I2C_TRANSFER_OBJ* trObjFree;
 
     /* The transfer Q head pointer */
-    DRV_I2C_TRANSFER_OBJ * trQueueHead;
-    
+    DRV_I2C_TRANSFER_OBJ* trQueueHead;
+
     /* The transfer Q tail pointer */
-    DRV_I2C_TRANSFER_OBJ * trQueueTail;
-    
+    DRV_I2C_TRANSFER_OBJ* trQueueTail;
+
     /* Transfer Queue Size */
     size_t trQueueSize;
-    
+
     /* token for creating transfer handle */
     uint16_t tokenCount;
-    
+
     /* client array protection mutex */
     OSAL_MUTEX_DECLARE (mutexClientObjects);
-    
+
     /* transfer onject projection mutex */
     OSAL_MUTEX_DECLARE (mutexTransferObjects);
-    
-    /* Count to keep track of interrupt nesting */ 
+
+    /* Count to keep track of interrupt nesting */
     uint32_t interruptNestingCount;
 
 } DRV_I2C_OBJ;
@@ -216,7 +216,7 @@ typedef struct
     Object used to track a single client.
 
   Description:
-    This object is used to keep the data necesssary to keep track of a single 
+    This object is used to keep the data necesssary to keep track of a single
     client.
 
   Remarks:
@@ -230,9 +230,9 @@ typedef struct
 
     /* The IO intent with which the client was opened */
     DRV_IO_INTENT                  ioIntent;
-    
+
     /* Errors associated with the I2C transfer */
-    DRV_I2C_ERROR                  errors;
+    volatile DRV_I2C_ERROR         errors;
 
     /* This flags indicates if the object is in use or is
      * available */
@@ -243,7 +243,7 @@ typedef struct
 
     /* Application Context associated with this client */
     uintptr_t                      context;
-    
+
 
 
 } DRV_I2C_CLIENT_OBJ;
