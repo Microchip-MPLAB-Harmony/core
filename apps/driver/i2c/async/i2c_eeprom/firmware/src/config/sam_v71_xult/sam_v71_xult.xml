@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Configuration>
   <Components>
-    <UniqueComponent dnOrder="0" id="core">
+    <UniqueComponent bsp="true" dnOrder="0" id="BSP_SAM_V71_Xplained_Ultra"/>
+    <UniqueComponent dnOrder="1" id="cmsis"/>
+    <UniqueComponent dnOrder="2" id="core">
       <Symbols dnOrder="0">
         <Combo dnOrder="0" id="COMPONENT_PACKAGE">
           <Values dnOrder="0">
@@ -4128,8 +4130,44 @@
         </KeyValueSet>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent bsp="true" dnOrder="1" id="BSP_SAM_V71_Xplained_Ultra"/>
-    <UniqueComponent dnOrder="2" id="HarmonyCore">
+    <UniqueComponent dnOrder="3" id="dfp"/>
+    <GeneratorComponent dnOrder="4" id="drv_i2c">
+      <Symbols dnOrder="0">
+        <Combo dnOrder="0" id="DRV_I2C_MODE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="drv_i2c" priority="1" value="Asynchronous"/>
+            </Dynamic>
+          </Values>
+        </Combo>
+      </Symbols>
+      <Instances dnOrder="1">
+        <InstanceComponent dnOrder="0" id="drv_i2c" instance="0">
+          <Symbols dnOrder="0">
+            <String dnOrder="0" id="DRV_I2C_PLIB">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0">
+                  <Value dnOrder="0" id="drv_i2c_0" priority="2" value="TWIHS0"/>
+                </Dynamic>
+              </Values>
+            </String>
+          </Symbols>
+          <Attachments dnOrder="1">
+            <DirectDependency dnOrder="0" id="drv_i2c_I2C_dependency">
+              <Attributes dnOrder="0">
+                <String dnOrder="0" id="targetComponentID">
+                  <Value dnOrder="0">twihs0</Value>
+                </String>
+                <String dnOrder="1" id="targetAttachmentID">
+                  <Value dnOrder="0">TWIHS0_I2C</Value>
+                </String>
+              </Attributes>
+            </DirectDependency>
+          </Attachments>
+        </InstanceComponent>
+      </Instances>
+    </GeneratorComponent>
+    <UniqueComponent dnOrder="5" id="HarmonyCore">
       <Symbols dnOrder="0">
         <File dnOrder="0" id="APP0_C">
           <Attributes dnOrder="0">
@@ -4329,31 +4367,8 @@
         </File>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent dnOrder="3" id="cmsis"/>
-    <UniqueComponent dnOrder="4" id="dfp"/>
-    <GeneratorComponent dnOrder="5" id="drv_i2c">
-      <Instances dnOrder="0">
-        <InstanceComponent dnOrder="0" id="drv_i2c" instance="0">
-          <Dependencies dnOrder="0">
-            <Dependency dnOrder="0" id="drv_i2c_I2C_dependency" targetAttachmentID="TWIHS0_I2C" targetComponentID="twihs0"/>
-          </Dependencies>
-          <Symbols dnOrder="1">
-            <String dnOrder="0" id="DRV_I2C_PLIB">
-              <Values dnOrder="0">
-                <Dynamic dnOrder="0">
-                  <Value dnOrder="0" id="drv_i2c_0" priority="2" value="TWIHS0"/>
-                </Dynamic>
-              </Values>
-            </String>
-          </Symbols>
-        </InstanceComponent>
-      </Instances>
-    </GeneratorComponent>
     <UniqueComponent dnOrder="6" id="twihs0">
-      <Capabilities dnOrder="0">
-        <Capability dnOrder="0" id="TWIHS0_I2C" targetAttachmentID="drv_i2c_I2C_dependency" targetComponentID="drv_i2c_0"/>
-      </Capabilities>
-      <Symbols dnOrder="1">
+      <Symbols dnOrder="0">
         <Integer dnOrder="0" id="TWIHS_CWGR_CHDIV">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
@@ -4376,10 +4391,23 @@
           </Values>
         </Integer>
       </Symbols>
+      <Attachments dnOrder="1">
+        <DirectCapability dnOrder="0" id="TWIHS0_I2C">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="targetComponentID">
+              <Value dnOrder="0">drv_i2c_0</Value>
+            </String>
+            <String dnOrder="1" id="targetAttachmentID">
+              <Value dnOrder="0">drv_i2c_I2C_dependency</Value>
+            </String>
+          </Attributes>
+        </DirectCapability>
+      </Attachments>
     </UniqueComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_V71_Xplained_Ultra" x="480" y="20"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="30" y="60"/>
@@ -4390,6 +4418,5 @@
         <ElementPosition dnOrder="6" id="twihs0" x="30" y="161"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1" minimap="false"/>
   </UserData>
 </Configuration>
