@@ -62,32 +62,32 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_I2C Instance 0 Initialization Data">
 
 /* I2C Client Objects Pool */
-DRV_I2C_CLIENT_OBJ drvI2C0ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_I2C_CLIENT_OBJ drvI2C0ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX0] = {0};
 
 /* I2C Transfer Objects Pool */
-DRV_I2C_TRANSFER_OBJ drvI2C0TransferObj[DRV_I2C_QUEUE_SIZE_IDX0] = {0};
+static DRV_I2C_TRANSFER_OBJ drvI2C0TransferObj[DRV_I2C_QUEUE_SIZE_IDX0] = {0};
 
 /* I2C PLib Interface Initialization */
-DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
+const DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
 
     /* I2C PLib Transfer Read Add function */
-    .read = (DRV_I2C_READ_CALLBACK)SERCOM1_I2C_Read,
+    .read = (DRV_I2C_PLIB_READ)SERCOM1_I2C_Read,
 
     /* I2C PLib Transfer Write Add function */
-    .write = (DRV_I2C_WRITE_CALLBACK)SERCOM1_I2C_Write,
+    .write = (DRV_I2C_PLIB_WRITE)SERCOM1_I2C_Write,
 
     /* I2C PLib Transfer Write Read Add function */
-    .writeRead = (DRV_I2C_WRITE_READ_CALLBACK)SERCOM1_I2C_WriteRead,
+    .writeRead = (DRV_I2C_PLIB_WRITE_READ)SERCOM1_I2C_WriteRead,
 
     /* I2C PLib Transfer Status function */
-    .errorGet = (DRV_I2C_ERROR_GET_CALLBACK)SERCOM1_I2C_ErrorGet,
+    .errorGet = (DRV_I2C_PLIB_ERROR_GET)SERCOM1_I2C_ErrorGet,
 
     /* I2C PLib Callback Register */
-    .callbackRegister = (DRV_I2C_CALLBACK_REGISTER_CALLBACK)SERCOM1_I2C_CallbackRegister,
+    .callbackRegister = (DRV_I2C_PLIB_CALLBACK_REGISTER)SERCOM1_I2C_CallbackRegister,
 };
 
 /* I2C Driver Initialization Data */
-DRV_I2C_INIT drvI2C0InitData =
+const DRV_I2C_INIT drvI2C0InitData =
 {
     /* I2C PLib API */
     .i2cPlib = &drvI2C0PLibAPI,
@@ -154,10 +154,10 @@ void SYS_Initialize ( void* data )
 
 
 
-    NVIC_Initialize();
-	BSP_Initialize();
     SERCOM1_I2C_Initialize();
 
+    NVIC_Initialize();
+	BSP_Initialize();
 
     /* Initialize I2C0 Driver Instance */
     sysObj.drvI2C0 = DRV_I2C_Initialize(DRV_I2C_INDEX_0, (SYS_MODULE_INIT *)&drvI2C0InitData);

@@ -48,16 +48,14 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "peripheral/sercom/i2cm/plib_sercom1_i2c.h"
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
-#include "bsp/bsp.h"
 #include "system/int/sys_int.h"
-#include "system/ports/sys_ports.h"
 #include "osal/osal.h"
+#include "bsp/bsp.h"
 #include "driver/i2c/drv_i2c.h"
-#include "driver/i2c/drv_i2c.h"
-#include "peripheral/sercom/i2cm/plib_sercom1_i2c.h"
 #include "app_c21n.h"
 
 
