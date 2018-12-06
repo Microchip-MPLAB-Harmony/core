@@ -53,7 +53,7 @@
 // *****************************************************************************
 
 #include "app_i2c_temp_sensor.h"
-
+#include "system/time/sys_time.h"
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -62,7 +62,7 @@
 #define APP_TEMP_I2C_CLOCK_SPEED                    400000
 #define APP_TEMP_SLAVE_ADDR                         0x004B
 #define APP_TEMP_TEMPERATURE_REG_ADDR               0x00
-#define APP_TEMP_SAMPLING_TIME                      100
+#define APP_TEMP_SAMPLING_TIME                      1000
 
 // *****************************************************************************
 /* Application Data
@@ -160,13 +160,13 @@ void APP_I2C_TEMP_SENSOR_Initialize ( void )
 void APP_I2C_TEMP_SENSOR_Tasks ( void )
 {
     uint8_t registerAddr;
-    uint16_t temp;
+    int16_t temp;
     
     /* Check the application's current state. */
     switch ( appTempData.state )
     {
         case APP_TEMP_STATE_INIT:
-        {
+        
             /* Open I2C driver client */
             appTempData.i2cHandle = DRV_I2C_Open( DRV_I2C_INDEX_0, DRV_IO_INTENT_READWRITE );
             if (appTempData.i2cHandle != DRV_HANDLE_INVALID)
@@ -178,17 +178,19 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
                 SYS_TIME_CallbackRegisterMS(Timer1_Callback, 0, APP_TEMP_SAMPLING_TIME, SYS_TIME_PERIODIC);
                 appTempData.state = APP_TEMP_STATE_READ_TEMPERATURE;
             }
+            else
+            {
+                appTempData.state = APP_TEMP_STATE_ERROR;
+            }
             break;
-        }
-
+        
         case APP_TEMP_STATE_READ_TEMPERATURE:
-        {            
+                    
             if (appTempData.tmrExpired == true)
             {
                 appTempData.tmrExpired = false;                                
                 
-                /* Initiate a read transfer to read 
-                 * temperature value from temperature sensor */
+                /* Initiate a read transfer to read temperature value from temperature sensor */
                 registerAddr = APP_TEMP_TEMPERATURE_REG_ADDR;                                                                                
                 DRV_I2C_WriteReadTransferAdd(appTempData.i2cHandle, APP_TEMP_SLAVE_ADDR, (void*)&registerAddr, 1, (void *)appTempData.rxBuffer, 2, &appTempData.transferHandle );              
                                                     
@@ -202,33 +204,29 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
                 }
             }
             break;
-        }
-        
+                
         case APP_TEMP_STATE_WAIT_TRANSFER_COMPLETE:
-        {
+        
             if (appTempData.isTransferDone == true)            
             {                                
                 appTempData.isTransferDone = false;
                 
-                /* convert the temperature value read from 
-                 * temperature sensor to readable format(celcius) */
+                // Convert the temperature value read from sensor to readable format (Degree Celsius)
+                // For demonstration purpose, temperature value is assumed to be positive.
+                // The maximum positive temperature measured by sensor is +125 C
                 temp = (appTempData.rxBuffer[0] << 8) | appTempData.rxBuffer[1];
                 temp = (temp >> 7) * 0.5;
-                appTempData.temperature = temp;    
+                appTempData.temperature = (uint8_t)temp;    
                 
-                /* Notify EEPROM application that temperature 
-                   data read and is available */
+                /* Notify EEPROM application that temperature data is available */
                 APP_EEPROM_Notify(appTempData.temperature);
                                
                 appTempData.state = APP_TEMP_STATE_READ_TEMPERATURE;
             }            
             break;
-        }
-        
-        case APP_TEMP_STATE_ERROR:
-        {
-            break;
-        }
+                
+        case APP_TEMP_STATE_ERROR:        
+            break;        
         
         default:
             break;       

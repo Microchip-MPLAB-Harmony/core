@@ -356,34 +356,6 @@ bool TWIHS0_WriteRead(uint16_t address, uint8_t *wdata, size_t wlength, uint8_t 
 
 TWIHS_ERROR TWIHS0_ErrorGet(void);
 
-// *****************************************************************************
-/* Function:
-    void TWIHS0_InterruptHandler(void)
-
-   Summary:
-    TWIHS0 Peripheral Interrupt Handler.
-
-   Description:
-    This function is TWIHS0 Peripheral Interrupt Handler and will
-    called on every TWIHS0 interrupt.
-
-   Precondition:
-    None.
-
-   Parameters:
-    None.
-  
-   Returns:
-    None.
-
-   Remarks:
-    The function is called as peripheral instance's interrupt handler if the 
-	instance interrupt is enabled. If peripheral instance's interrupt is not
-	enabled user need to call it from the main while loop of the application.
-*/
-
-void TWIHS0_InterruptHandler(void);
-
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 

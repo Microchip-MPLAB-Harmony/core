@@ -58,8 +58,6 @@
 #include <stdlib.h>
 #include "configuration.h"
 #include "driver/i2c/drv_i2c.h"
-#include "driver/i2c/drv_i2c.h"
-#include "osal/osal.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -143,7 +141,7 @@ typedef struct
     uint8_t rxBuffer;
     
     /* buffer to temporarily hold temperature data */
-    uint16_t temperature;
+    uint8_t temperature;
     
     /* variable to hold transfer status of every transfer */
     volatile DRV_I2C_TRANSFER_EVENT transferStatus;

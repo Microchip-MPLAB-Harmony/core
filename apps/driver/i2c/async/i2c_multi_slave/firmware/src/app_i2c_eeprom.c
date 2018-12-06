@@ -86,7 +86,7 @@ APP_EEPROM_DATA appEEPROMData;
 // Section: Application Callback Functions
 // *****************************************************************************
 // *****************************************************************************
-void APP_EEPROM_Notify(uint16_t temperature)
+void APP_EEPROM_Notify(uint8_t temperature)
 {
     appEEPROMData.temperature = temperature;
     appEEPROMData.isTemperatureReady = true;
@@ -149,7 +149,7 @@ void APP_I2C_EEPROM_Tasks ( void )
     switch (appEEPROMData.state)
     {
         case APP_EEPROM_STATE_INIT:
-        {
+        
             /* Open I2C driver client */
             appEEPROMData.i2cHandle = DRV_I2C_Open( DRV_I2C_INDEX_0, DRV_IO_INTENT_READWRITE);
 
@@ -165,12 +165,12 @@ void APP_I2C_EEPROM_Tasks ( void )
                 appEEPROMData.state = APP_EEPROM_STATE_ERROR;
             }               
             break;
-        }
+        
         
         case APP_EEPROM_STATE_WRITE:
-        {
-            /* checks if temperature data is ready */
-            if (true == appEEPROMData.isTemperatureReady)
+        
+            /* Check if temperature data is ready */
+            if (appEEPROMData.isTemperatureReady == true)
             {
                 appEEPROMData.isTemperatureReady = false;
                 appEEPROMData.transferStatus = DRV_I2C_TRANSFER_EVENT_PENDING;
@@ -180,35 +180,51 @@ void APP_I2C_EEPROM_Tasks ( void )
 
                 /* Write temperature data to EEPROM */
                 DRV_I2C_WriteTransferAdd(appEEPROMData.i2cHandle, 
-                                         APP_EEPROM_SLAVE_ADDR, 
-                                         (void *)appEEPROMData.txBuffer, 
-                                         2, 
-                                         &appEEPROMData.transferHandle);
+                    APP_EEPROM_SLAVE_ADDR, 
+                    (void *)appEEPROMData.txBuffer, 
+                    2, 
+                    &appEEPROMData.transferHandle
+                );
                 
-                appEEPROMData.state = APP_EEPROM_STATE_WAIT_TRANSFER_COMPLETE;                
+                if (appEEPROMData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID)
+                {
+                    appEEPROMData.state = APP_EEPROM_STATE_ERROR;
+                }
+                else
+                {
+                    appEEPROMData.state = APP_EEPROM_STATE_WAIT_TRANSFER_COMPLETE;
+                }                                
             }
             break;
-        }
-        
+                
         case APP_EEPROM_STATE_WAIT_TRANSFER_COMPLETE:
-        {
+        
             if (appEEPROMData.transferStatus == DRV_I2C_TRANSFER_EVENT_COMPLETE)
             {
-                /* Add a dummy write to verify whether transfer is complete */
+                /* Add a dummy write to verify whether transfer is complete
+                 * If EEPROM is busy, it will NACK the I2C transfer */
                 appEEPROMData.transferStatus = DRV_I2C_TRANSFER_EVENT_PENDING;
+                
                 DRV_I2C_WriteTransferAdd(appEEPROMData.i2cHandle, 
-                                         APP_EEPROM_SLAVE_ADDR, 
-                                         (void *)&dummyData, 
-                                         1, 
-                                         &appEEPROMData.transferHandle );
-                                
-                appEEPROMData.state = APP_EEPROM_STATE_WAIT_WRITE_COMPLETE;                   
+                    APP_EEPROM_SLAVE_ADDR, 
+                    (void *)&dummyData, 
+                    1, 
+                    &appEEPROMData.transferHandle 
+                );
+                
+                if (appEEPROMData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID)
+                {
+                    appEEPROMData.state = APP_EEPROM_STATE_ERROR;
+                }
+                else
+                {
+                    appEEPROMData.state = APP_EEPROM_STATE_WAIT_WRITE_COMPLETE;
+                }                                                
             }            
             break;
-        }
-        
+                
         case APP_EEPROM_STATE_WAIT_WRITE_COMPLETE:
-        {
+        
             if (appEEPROMData.transferStatus == DRV_I2C_TRANSFER_EVENT_COMPLETE)
             {
                 appEEPROMData.state = APP_EEPROM_STATE_READ;                
@@ -217,50 +233,73 @@ void APP_I2C_EEPROM_Tasks ( void )
             {
                 /* Add a dummy write to verify whether write cycle is complete */
                 appEEPROMData.transferStatus = DRV_I2C_TRANSFER_EVENT_PENDING;
+                
                 DRV_I2C_WriteTransferAdd(appEEPROMData.i2cHandle, 
-                                         APP_EEPROM_SLAVE_ADDR, 
-                                         (void *)&dummyData, 
-                                         1, 
-                                         &appEEPROMData.transferHandle );                
+                    APP_EEPROM_SLAVE_ADDR, 
+                    (void *)&dummyData, 
+                    1, 
+                    &appEEPROMData.transferHandle 
+                );                
+                
+                if (appEEPROMData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID)
+                {
+                    appEEPROMData.state = APP_EEPROM_STATE_ERROR;
+                }
             }                
             break;
-        }
-        
+                
         case APP_EEPROM_STATE_READ:
-        {
-            /* Add read transfer to read data from EEPROM */
-            appEEPROMData.transferStatus = DRV_I2C_TRANSFER_EVENT_PENDING;
-            DRV_I2C_WriteReadTransferAdd(appEEPROMData.i2cHandle, 
-                                         APP_EEPROM_SLAVE_ADDR, 
-                                         (void *)&dummyData, 
-                                         1, 
-                                         (void *)&appEEPROMData.rxBuffer,
-                                         1,
-                                         &appEEPROMData.transferHandle );
-            
-            appEEPROMData.state = APP_EEPROM_STATE_WAIT_READ_COMPLETE;
-            break;
-        }
         
+            /* Add read transfer to read data from EEPROM */
+            appEEPROMData.txBuffer[0] = APP_EEPROM_START_MEMORY_ADDR;   
+            
+            appEEPROMData.transferStatus = DRV_I2C_TRANSFER_EVENT_PENDING;
+            
+            DRV_I2C_WriteReadTransferAdd(appEEPROMData.i2cHandle, 
+                APP_EEPROM_SLAVE_ADDR, 
+                (void *)&appEEPROMData.txBuffer[0], 
+                1, 
+                (void *)&appEEPROMData.rxBuffer,
+                1,
+                &appEEPROMData.transferHandle 
+            );
+            
+            if (appEEPROMData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID)
+            {
+                appEEPROMData.state = APP_EEPROM_STATE_ERROR;
+            }
+            else
+            {
+                appEEPROMData.state = APP_EEPROM_STATE_WAIT_READ_COMPLETE;
+            }                        
+            break;
+                
         case APP_EEPROM_STATE_WAIT_READ_COMPLETE:
-        {
+        
             /* Print the results */
             if (appEEPROMData.transferStatus == DRV_I2C_TRANSFER_EVENT_COMPLETE)
             {
-                printf("Temperature = %d C\r\n", appEEPROMData.rxBuffer);
-                appEEPROMData.state = APP_EEPROM_STATE_WRITE;
+                /* Verify the read data with the data written */
+                if (appEEPROMData.rxBuffer != appEEPROMData.txBuffer[1])
+                {
+                    appEEPROMData.state = APP_EEPROM_STATE_ERROR;
+                }
+                else
+                {
+                    /* Print the read temperature value from EEPROM to the terminal */
+                    printf("Temperature: %d C\r\n", appEEPROMData.rxBuffer);
+                    appEEPROMData.state = APP_EEPROM_STATE_WRITE;
+                }                
             }
             else if (appEEPROMData.transferStatus == DRV_I2C_TRANSFER_EVENT_ERROR)
-            {
-                printf("Error!!! while reading EEPROM \r\n");
+            {                
                 appEEPROMData.state = APP_EEPROM_STATE_ERROR;
             }
-        }
-        
-        case APP_EEPROM_STATE_ERROR:
-        {
             break;
-        }
+                
+        case APP_EEPROM_STATE_ERROR:
+            printf("EEPROM task error!!! \r\n");
+            break;        
     }
 }
 

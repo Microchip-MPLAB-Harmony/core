@@ -58,9 +58,6 @@
 #include <stdlib.h>
 #include "configuration.h"
 #include "driver/i2c/drv_i2c.h"
-#include "driver/i2c/drv_i2c.h"
-#include "system/time/sys_time.h"
-#include "osal/osal.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -135,7 +132,7 @@ typedef struct
     volatile bool isTransferDone;
      
     /* temperature value in degree celcius */
-    uint16_t temperature;
+    uint8_t temperature;
      
     /* flag to indicate timer expiry*/
     volatile bool tmrExpired;
@@ -190,37 +187,6 @@ void APP_I2C_TEMP_SENSOR_Initialize ( void );
 
 /*******************************************************************************
   Function:
-    void APP_EEPROM_Notify ( uint16_t )
-
-  Summary:
-     Function to get the temperature.
-
-  Description:
-    This function gets the temperature read from the temperature sensor.
-
-  Precondition:
-    DRV_I2C_WriteReadTransfer routines should be called before
-    calling this routine (in "APP_I2C_EEPROM_Tasks").
-
-  Parameters:
-    Read temperature value (i.e. of the type uint16_t).
-
-  Returns:
-    Returns read temperature value (i.e. of the type uint16_t).
-
-  Example:
-    <code>
-    APP_EEPROM_Notify(appTempData.temperature);
-    </code>
-
-  Remarks:
-    This routine must be called from the SYS_Initialize function.
-*/
-
-void APP_EEPROM_Notify(uint16_t temperature);
-
-/*******************************************************************************
-  Function:
     void APP_I2C_TEMP_SENSOR_Tasks ( void )
 
   Summary:
@@ -251,6 +217,8 @@ void APP_EEPROM_Notify(uint16_t temperature);
 
 void APP_I2C_TEMP_SENSOR_Tasks( void );
 
+void APP_EEPROM_Notify(uint8_t temperature);
+
 
 
 #endif /* _APP_I2C_TEMP_SENSOR_H */
@@ -264,4 +232,3 @@ void APP_I2C_TEMP_SENSOR_Tasks( void );
 /*******************************************************************************
  End of File
  */
-
