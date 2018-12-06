@@ -63,7 +63,9 @@
 #endif
 // DOM-IGNORE-END
 
-#define SYS_DEBUG(x, y)
+#ifndef SYS_DEBUG
+    #define SYS_DEBUG(x, y)
+#endif
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Types
@@ -96,15 +98,15 @@ typedef enum
 
 typedef void (* DRV_I2C_PLIB_CALLBACK)( uintptr_t );
 
-typedef bool (* DRV_I2C_READ_CALLBACK)( uint16_t, uint8_t *, uint8_t );
+typedef bool (* DRV_I2C_PLIB_READ)( uint16_t, uint8_t *, uint32_t );
 
-typedef bool (* DRV_I2C_WRITE_CALLBACK)( uint16_t, uint8_t *, uint8_t );
+typedef bool (* DRV_I2C_PLIB_WRITE)( uint16_t, uint8_t *, uint32_t );
 
-typedef bool (* DRV_I2C_WRITE_READ_CALLBACK)( uint16_t, uint8_t *, uint8_t, uint8_t *, uint8_t );
+typedef bool (* DRV_I2C_PLIB_WRITE_READ)( uint16_t, uint8_t *, uint32_t, uint8_t *, uint32_t );
 
-typedef DRV_I2C_ERROR (* DRV_I2C_ERROR_GET_CALLBACK)( void );
+typedef DRV_I2C_ERROR (* DRV_I2C_PLIB_ERROR_GET)( void );
 
-typedef void (* DRV_I2C_CALLBACK_REGISTER_CALLBACK)(DRV_I2C_PLIB_CALLBACK, uintptr_t);
+typedef void (* DRV_I2C_PLIB_CALLBACK_REGISTER)(DRV_I2C_PLIB_CALLBACK, uintptr_t);
 
 // *****************************************************************************
 /* I2C Driver PLib Interface Data
@@ -125,19 +127,19 @@ typedef void (* DRV_I2C_CALLBACK_REGISTER_CALLBACK)(DRV_I2C_PLIB_CALLBACK, uintp
 typedef struct
 {
     /* I2C PLib read API */
-    DRV_I2C_READ_CALLBACK read;
+    DRV_I2C_PLIB_READ read;
 
     /* I2C PLib write API */
-    DRV_I2C_WRITE_CALLBACK write;
+    DRV_I2C_PLIB_WRITE write;
 
     /* I2C PLib writeRead API */
-    DRV_I2C_WRITE_READ_CALLBACK writeRead;
+    DRV_I2C_PLIB_WRITE_READ writeRead;
 
     /* I2C PLib transfer */
-    DRV_I2C_ERROR_GET_CALLBACK errorGet;
+    DRV_I2C_PLIB_ERROR_GET errorGet;
 
     /* I2C PLib callback register API */
-    DRV_I2C_CALLBACK_REGISTER_CALLBACK callbackRegister;
+    DRV_I2C_PLIB_CALLBACK_REGISTER callbackRegister;
 
 } DRV_I2C_PLIB_INTERFACE;
 
@@ -161,7 +163,7 @@ typedef struct
 {
     /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
-    DRV_I2C_PLIB_INTERFACE *i2cPlib;
+    const DRV_I2C_PLIB_INTERFACE* i2cPlib;
 
     /* Memory Pool for Client Objects */
     uintptr_t clientObjPool;
