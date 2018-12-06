@@ -25,6 +25,7 @@
 global currentTxBufSize
 global currentRxBufSize
 global drvUsartInstanceSpace
+global isDMAPresent
 
 def instantiateComponent(usartComponent, index):
     global currentTxBufSize
@@ -34,14 +35,19 @@ def instantiateComponent(usartComponent, index):
 
     drvUsartInstanceSpace = "drv_usart_" + str(index)
 
-    # Enable dependent Harmony core components
-    Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
+    # Enable "Generate Harmony Driver Common Files" option in MHC
+    Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 1)
+
+    # Enable "Generate Harmony System Service Common Files" option in MHC
+    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
 
     if Database.getSymbolValue("core", "DMA_ENABLE") == None:
         isDMAPresent = False
     else:
         isDMAPresent = True
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 2)
+
+        # Enable "Enable System DMA" option in MHC
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
 
     # Menu
     usartIndex = usartComponent.createIntegerSymbol("INDEX", None)
@@ -93,7 +99,6 @@ def instantiateComponent(usartComponent, index):
     usartTXDMA.setVisible(isDMAPresent)
     usartTXDMA.setReadOnly(True)
 
-
     global usartTXDMAChannel
     usartTXDMAChannel = usartComponent.createIntegerSymbol("DRV_USART_TX_DMA_CHANNEL", None)
     usartTXDMAChannel.setLabel("DMA Channel For Transmit")
@@ -130,7 +135,7 @@ def instantiateComponent(usartComponent, index):
 
     usartDependencyDMAComment = usartComponent.createCommentSymbol("DRV_USART_DEPENDENCY_DMA_COMMENT", None)
     usartDependencyDMAComment.setLabel("!!! Satisfy PLIB Dependency to Allocate DMA Channel !!!")
-    usartDependencyDMAComment.setVisible(True)
+    usartDependencyDMAComment.setVisible(isDMAPresent)
 
     # DRV_USART Common Dependency
     bufPoolSize = Database.getSymbolValue("drv_usart", "DRV_USART_BUFFER_POOL_SIZE")
@@ -193,6 +198,8 @@ def usartDriverMode(symbol, event):
     symbol.setValue(event["value"], 1)
 
 def onAttachmentConnected(source, target):
+    global isDMAPresent
+
     localComponent = source["component"]
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
@@ -204,12 +211,16 @@ def onAttachmentConnected(source, target):
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper(), 1)
 
-        localComponent.getSymbolByID("DRV_USART_DEPENDENCY_DMA_COMMENT").setVisible(False)
-
-        localComponent.getSymbolByID("DRV_USART_TX_DMA").setReadOnly(False)
-        localComponent.getSymbolByID("DRV_USART_RX_DMA").setReadOnly(False)
+        # Do not change the order as DMA Channels needs to be allocated
+        # after setting the plibUsed symbol
+        if isDMAPresent == True:
+            localComponent.getSymbolByID("DRV_USART_DEPENDENCY_DMA_COMMENT").setVisible(False)
+            localComponent.getSymbolByID("DRV_USART_TX_DMA").setReadOnly(False)
+            localComponent.getSymbolByID("DRV_USART_RX_DMA").setReadOnly(False)
 
 def onAttachmentDisconnected(source, target):
+    global isDMAPresent
+
     localComponent = source["component"]
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
@@ -217,15 +228,17 @@ def onAttachmentDisconnected(source, target):
     targetID = target["id"]
 
     if connectID == "drv_usart_UART_dependency" :
-        localComponent.getSymbolByID("DRV_USART_TX_DMA").clearValue()
-        localComponent.getSymbolByID("DRV_USART_TX_DMA").setReadOnly(True)
-        localComponent.getSymbolByID("DRV_USART_RX_DMA").clearValue()
-        localComponent.getSymbolByID("DRV_USART_RX_DMA").setReadOnly(True)
+        # Do not change the order as DMA Channels needs to be cleared
+        # before clearing the plibUsed symbol
+        if isDMAPresent == True:
+            localComponent.getSymbolByID("DRV_USART_TX_DMA").clearValue()
+            localComponent.getSymbolByID("DRV_USART_TX_DMA").setReadOnly(True)
+            localComponent.getSymbolByID("DRV_USART_RX_DMA").clearValue()
+            localComponent.getSymbolByID("DRV_USART_RX_DMA").setReadOnly(True)
+            localComponent.getSymbolByID("DRV_USART_DEPENDENCY_DMA_COMMENT").setVisible(True)
 
         plibUsed = localComponent.getSymbolByID("DRV_USART_PLIB")
         plibUsed.clearValue()
-
-        localComponent.getSymbolByID("DRV_USART_DEPENDENCY_DMA_COMMENT").setVisible(True)
 
 def requestAndAssignTxDMAChannel(symbol, event):
     global drvUsartInstanceSpace
