@@ -49,20 +49,19 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include "peripheral/sercom/i2cm/plib_sercom1_i2c.h"
+#include "peripheral/evsys/plib_evsys.h"
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
-#include "bsp/bsp.h"
+#include "peripheral/sercom/usart/plib_sercom4_usart.h"
+#include "peripheral/tc/plib_tc0.h"
+#include "driver/i2c/drv_i2c.h"
+#include "system/time/sys_time.h"
 #include "system/int/sys_int.h"
 #include "system/ports/sys_ports.h"
 #include "osal/osal.h"
-#include "driver/i2c/drv_i2c.h"
-#include "driver/i2c/drv_i2c.h"
-#include "peripheral/evsys/plib_evsys.h"
-#include "peripheral/sercom/i2cm/plib_sercom1_i2c.h"
-#include "peripheral/sercom/usart/plib_sercom4_usart.h"
-#include "system/time/sys_time.h"
-#include "peripheral/tc/plib_tc0.h"
+#include "bsp/bsp.h"
 #include "app_i2c_eeprom.h"
 #include "app_i2c_temp_sensor.h"
 

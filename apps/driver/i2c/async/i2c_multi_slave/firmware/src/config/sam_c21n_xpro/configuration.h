@@ -56,6 +56,7 @@
 */
 
 #include "user.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -82,11 +83,13 @@ extern "C" {
 // *****************************************************************************
 /* TIME System Service Configuration Options */
 #define SYS_TIME_INDEX_0                     0
-#define SYS_TIME_MAX_TIMERS                  10
+#define SYS_TIME_MAX_TIMERS                  5
 #define SYS_TIME_HW_COUNTER_WIDTH            16
 #define SYS_TIME_HW_COUNTER_PERIOD           0xFFFF
 #define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
 #define SYS_TIME_CPU_CLOCK_FREQUENCY         48000000
+#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (200)
+
 
 
 // *****************************************************************************
@@ -94,16 +97,16 @@ extern "C" {
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
-/* I2C Driver Common Configuration Options */
-#define DRV_I2C_INSTANCES_NUMBER              1
-
-
 /* I2C Driver Instance 0 Configuration Options */
 #define DRV_I2C_INDEX_0                       0
 #define DRV_I2C_CLIENTS_NUMBER_IDX0           2
 #define DRV_I2C_INT_SRC_IDX0                  SERCOM1_IRQn
 #define DRV_I2C_QUEUE_SIZE_IDX0               2
-#define DRV_I2C_CLOCK_SPEED_IDX0              100
+#define DRV_I2C_CLOCK_SPEED_IDX0              400
+
+/* I2C Driver Common Configuration Options */
+#define DRV_I2C_INSTANCES_NUMBER              1
+
 
 
 

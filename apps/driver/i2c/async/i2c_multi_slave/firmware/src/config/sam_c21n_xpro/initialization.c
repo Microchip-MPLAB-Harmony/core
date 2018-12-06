@@ -62,32 +62,32 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_I2C Instance 0 Initialization Data">
 
 /* I2C Client Objects Pool */
-DRV_I2C_CLIENT_OBJ drvI2C0ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_I2C_CLIENT_OBJ drvI2C0ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX0] = {0};
 
 /* I2C Transfer Objects Pool */
-DRV_I2C_TRANSFER_OBJ drvI2C0TransferObj[DRV_I2C_QUEUE_SIZE_IDX0] = {0};
+static DRV_I2C_TRANSFER_OBJ drvI2C0TransferObj[DRV_I2C_QUEUE_SIZE_IDX0] = {0};
 
 /* I2C PLib Interface Initialization */
-DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
+const DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
 
     /* I2C PLib Transfer Read Add function */
-    .read = (DRV_I2C_READ_CALLBACK)SERCOM1_I2C_Read,
+    .read = (DRV_I2C_PLIB_READ)SERCOM1_I2C_Read,
 
     /* I2C PLib Transfer Write Add function */
-    .write = (DRV_I2C_WRITE_CALLBACK)SERCOM1_I2C_Write,
+    .write = (DRV_I2C_PLIB_WRITE)SERCOM1_I2C_Write,
 
     /* I2C PLib Transfer Write Read Add function */
-    .writeRead = (DRV_I2C_WRITE_READ_CALLBACK)SERCOM1_I2C_WriteRead,
+    .writeRead = (DRV_I2C_PLIB_WRITE_READ)SERCOM1_I2C_WriteRead,
 
     /* I2C PLib Transfer Status function */
-    .errorGet = (DRV_I2C_ERROR_GET_CALLBACK)SERCOM1_I2C_ErrorGet,
+    .errorGet = (DRV_I2C_PLIB_ERROR_GET)SERCOM1_I2C_ErrorGet,
 
     /* I2C PLib Callback Register */
-    .callbackRegister = (DRV_I2C_CALLBACK_REGISTER_CALLBACK)SERCOM1_I2C_CallbackRegister,
+    .callbackRegister = (DRV_I2C_PLIB_CALLBACK_REGISTER)SERCOM1_I2C_CallbackRegister,
 };
 
 /* I2C Driver Initialization Data */
-DRV_I2C_INIT drvI2C0InitData =
+const DRV_I2C_INIT drvI2C0InitData =
 {
     /* I2C PLib API */
     .i2cPlib = &drvI2C0PLibAPI,
@@ -136,17 +136,17 @@ SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 // <editor-fold defaultstate="collapsed" desc="SYS_TIME Initialization Data">
 
-TIME_PLIB_API sysTimePlibAPI = {
-    .timerCallbackSet = (TIME_CallbackSet)TC0_TimerCallbackRegister,
-    .timerCounterGet = (TIME_CounterGet)TC0_Timer16bitCounterGet,
-     .timerPeriodSet = (TIME_PeriodSet)TC0_Timer16bitPeriodSet,
-    .timerFrequencyGet = (TIME_FrequencyGet)TC0_TimerFrequencyGet,
-    .timerCompareSet = (TIME_CompareSet)TC0_Timer16bitCompareSet,
-    .timerStart = (TIME_Start)TC0_TimerStart,
-    .timerStop = (TIME_Stop)TC0_TimerStop
+const SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
+    .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)TC0_TimerCallbackRegister,
+    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC0_Timer16bitCounterGet,
+    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC0_Timer16bitPeriodSet,
+    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC0_TimerFrequencyGet,
+    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC0_Timer16bitCompareSet,
+    .timerStart = (SYS_TIME_PLIB_START)TC0_TimerStart,
+    .timerStop = (SYS_TIME_PLIB_STOP)TC0_TimerStop
 };
 
-SYS_TIME_INIT sysTimeInitData =
+const SYS_TIME_INIT sysTimeInitData =
 {
     .timePlib = &sysTimePlibAPI,
     .hwTimerIntNum = TC0_IRQn,
@@ -173,16 +173,16 @@ void SYS_Initialize ( void* data )
 
 
 
-    NVIC_Initialize();
-	BSP_Initialize();
-    EVSYS_Initialize();
-
     SERCOM1_I2C_Initialize();
 
+    EVSYS_Initialize();
+
+    NVIC_Initialize();
     SERCOM4_USART_Initialize();
 
     TC0_TimerInitialize();
 
+	BSP_Initialize();
 
     /* Initialize I2C0 Driver Instance */
     sysObj.drvI2C0 = DRV_I2C_Initialize(DRV_I2C_INDEX_0, (SYS_MODULE_INIT *)&drvI2C0InitData);
