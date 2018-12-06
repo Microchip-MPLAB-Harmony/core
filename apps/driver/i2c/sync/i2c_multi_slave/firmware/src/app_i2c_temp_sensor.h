@@ -56,9 +56,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
-#include "bsp/bsp.h"
 #include "driver/i2c/drv_i2c.h"
-#include "osal/osal.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -120,12 +118,10 @@ typedef struct
 
     uint8_t rxBuffer[2];
 
-    uint16_t temperature;
+    uint8_t temperature;
 
     volatile bool status;
 } APP_I2C_TEMP_SENSOR_DATA;
-
-OSAL_SEM_DECLARE(temperatureReady);
 
 // *****************************************************************************
 // *****************************************************************************
@@ -175,37 +171,6 @@ void APP_I2C_TEMP_SENSOR_Initialize ( void );
 
 /*******************************************************************************
   Function:
-    uint16_t APP_TEMPERATURE_SENSOR_GetTemperature ( void )
-
-  Summary:
-     Function to get the temperature.
-
-  Description:
-    This function gets the temperature read from the temperature sensor.
-
-  Precondition:
-    DRV_I2C_WriteReadTransfer routines should be called before
-    calling this routine (in "APP_I2C_EEPROM_Tasks").
-
-  Parameters:
-    None.
-
-  Returns:
-    Returns read temperature value (i.e. of the type uint16_t).
-
-  Example:
-    <code>
-    temp = APP_TEMPERATURE_SENSOR_GetTemperature();
-    </code>
-
-  Remarks:
-    This routine must be called from the SYS_Initialize function.
-*/
-
-uint16_t APP_TEMPERATURE_SENSOR_GetTemperature ( void );
-
-/*******************************************************************************
-  Function:
     void APP_I2C_TEMP_SENSOR_Tasks ( void )
 
   Summary:
@@ -236,6 +201,8 @@ uint16_t APP_TEMPERATURE_SENSOR_GetTemperature ( void );
 
 void APP_I2C_TEMP_SENSOR_Tasks( void );
 
+uint8_t APP_TEMPERATURE_SENSOR_GetTemperature ( void );
+
 
 
 #endif /* _APP_I2C_TEMP_SENSOR_H */
@@ -249,4 +216,3 @@ void APP_I2C_TEMP_SENSOR_Tasks( void );
 /*******************************************************************************
  End of File
  */
-

@@ -52,14 +52,15 @@
 // *****************************************************************************
 
 #include "app_i2c_temp_sensor.h"
+#include "osal/osal.h"
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
 // *****************************************************************************
 // *****************************************************************************
-#define APP_I2C_TEMP_STATUS_SUCCESS                                 0
-#define APP_I2C_TEMP_STATUS_ERROR                                   1
+#define APP_I2C_TEMP_STATUS_SUCCESS                 0
+#define APP_I2C_TEMP_STATUS_ERROR                   1
 
 #define APP_TEMP_AT30TSE75X_SLAVE_ADDR              0x004B
 #define APP_TEMP_TEMPERATURE_REG_ADDR               0x00
@@ -79,9 +80,12 @@
 
     Application strings and buffers are be defined outside this structure.
 */
-
 static APP_I2C_TEMP_SENSOR_DATA appTempSensorData;
-static uint8_t registerAddr;
+
+/* Define a temperature ready semaphore to signal the EEPROM thread to write new 
+ * temperature value
+*/
+OSAL_SEM_DECLARE(temperatureReady);
 
 // *****************************************************************************
 // *****************************************************************************
@@ -98,9 +102,10 @@ static uint8_t registerAddr;
 // *****************************************************************************
 // *****************************************************************************
 
-
-/* TODO:  Add any necessary local functions.
-*/
+uint8_t APP_TEMPERATURE_SENSOR_GetTemperature(void)
+{
+    return appTempSensorData.temperature;
+}
 
 // *****************************************************************************
 // *****************************************************************************
@@ -108,17 +113,6 @@ static uint8_t registerAddr;
 // *****************************************************************************
 // *****************************************************************************
 
-/*******************************************************************************
-  Function:
-    uint16_t APP_TEMPERATURE_SENSOR_GetTemperature ( void )
-
-  Remarks:
-    See prototype in app_i2c_temp_sensor.h.
- */
-uint16_t APP_TEMPERATURE_SENSOR_GetTemperature(void)
-{
-    return appTempSensorData.temperature;
-}
 /*******************************************************************************
   Function:
     void APP_I2C_TEMP_SENSOR_Initialize ( void )
@@ -131,10 +125,7 @@ void APP_I2C_TEMP_SENSOR_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
     appTempSensorData.state = APP_I2C_TEMP_SENSOR_STATE_INIT;
-
-    /* TODO: Initialize your application's state machine and other
-     * parameters.
-     */
+    
     if (OSAL_SEM_Create(&temperatureReady, OSAL_SEM_TYPE_BINARY, 0, 0) == OSAL_RESULT_FALSE)
     {
         /* Handle error condition. Not sufficient memory to create semaphore */
@@ -151,6 +142,8 @@ void APP_I2C_TEMP_SENSOR_Initialize ( void )
 
 void APP_I2C_TEMP_SENSOR_Tasks ( void )
 {
+    uint8_t registerAddr;
+
     /* Check the application's current state. */
     switch (appTempSensorData.state)
     {
@@ -178,7 +171,10 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
             /* Read temperature reading */
             if (DRV_I2C_WriteReadTransfer(appTempSensorData.drvI2CHandle, APP_TEMP_AT30TSE75X_SLAVE_ADDR, (void*)&registerAddr, 1, (void *)appTempSensorData.rxBuffer, 2 ) == true)
             {
-                uint16_t temp;
+                // Convert the temperature value read from sensor to readable format (Degree Celsius)
+                // For demonstration purpose, temperature value is assumed to be positive.
+                // The maximum positive temperature measured by sensor is +125 C
+                int16_t temp;
                 temp = (appTempSensorData.rxBuffer[0] << 8) | appTempSensorData.rxBuffer[1];
                 temp = (temp >> 7) * 0.5;
                 appTempSensorData.temperature = (uint8_t)temp;

@@ -53,14 +53,16 @@
 
 #include "app_i2c_eeprom.h"
 #include "app_i2c_temp_sensor.h"
+#include "osal/osal.h"
+#include <stdio.h>
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
 // *****************************************************************************
 // *****************************************************************************
-#define APP_I2C_EEPROM_SUCCESS                                 0
-#define APP_I2C_EEPROM_ERROR                                   1
+#define APP_I2C_EEPROM_SUCCESS                      0
+#define APP_I2C_EEPROM_ERROR                        1
 
 #define APP_EEPROM_AT30TSE75X_SLAVE_ADDR            0x0050
 #define APP_EEPROM_START_MEMORY_ADDR                0x00
@@ -81,7 +83,9 @@
 */
 
 static APP_I2C_EEPROM_DATA appEEPROMData;
-static uint8_t dummyData = 0;
+
+// Temperature Ready semaphore is defined in app_i2c_temp_sensor.c file
+extern OSAL_SEM_DECLARE(temperatureReady);
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
@@ -118,11 +122,7 @@ void APP_I2C_EEPROM_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
     appEEPROMData.state = APP_I2C_EEPROM_STATE_INIT;
-    appEEPROMData.status = APP_I2C_EEPROM_ERROR;
-
-    /* TODO: Initialize your application's state machine and other
-     * parameters.
-     */
+    appEEPROMData.status = APP_I2C_EEPROM_ERROR;    
 }
 
 /******************************************************************************
@@ -135,6 +135,8 @@ void APP_I2C_EEPROM_Initialize ( void )
 
 void APP_I2C_EEPROM_Tasks ( void )
 {
+    uint8_t dummyData = 0;
+    
     /* Check the application's current state. */
     switch (appEEPROMData.state)
     {
@@ -166,7 +168,7 @@ void APP_I2C_EEPROM_Tasks ( void )
                 break;
             }
 
-            /* Poll the EEPROM status - busy bit */
+            /* Poll the EEPROM status. Perform a dummy write. If EEPROM is busy, it will NACK the I2C transfer */
             while (DRV_I2C_WriteTransfer(appEEPROMData.drvI2CHandle, APP_EEPROM_AT30TSE75X_SLAVE_ADDR, (void *)&dummyData, 1 ) == false);
 
             appEEPROMData.txBuffer[0] = APP_EEPROM_START_MEMORY_ADDR;
@@ -185,14 +187,15 @@ void APP_I2C_EEPROM_Tasks ( void )
             }
             else
             {
-                /* Print the read value from EEPROM to the terminal */
-                printf("Temperature: %d\r\n", appEEPROMData.rxBuffer[0]);
+                /* Print the read temperature value from EEPROM to the terminal */
+                printf("Temperature: %d C\r\n", appEEPROMData.rxBuffer[0]);
                 appEEPROMData.status = APP_I2C_EEPROM_SUCCESS;
             }
             break;
 
         case APP_I2C_EEPROM_STATE_ERROR:
             appEEPROMData.status = APP_I2C_EEPROM_ERROR;
+            printf("EEPROM task error!!! \r\n");
             vTaskSuspend(NULL);
             break;
     }
