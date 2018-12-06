@@ -52,6 +52,35 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
+// DOM-IGNORE-BEGIN
+/*******************************************************************************
+* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+*******************************************************************************/
+
+// DOM-IGNORE-END
+#pragma config TCM_CONFIGURATION = 0
+#pragma config SECURITY_BIT = CLEAR
+#pragma config BOOT_MODE = SET
+
 
 
 // *****************************************************************************
@@ -62,32 +91,32 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_I2C Instance 0 Initialization Data">
 
 /* I2C Client Objects Pool */
-DRV_I2C_CLIENT_OBJ drvI2C0ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_I2C_CLIENT_OBJ drvI2C0ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX0] = {0};
 
 /* I2C Transfer Objects Pool */
-DRV_I2C_TRANSFER_OBJ drvI2C0TransferObj[DRV_I2C_QUEUE_SIZE_IDX0] = {0};
+static DRV_I2C_TRANSFER_OBJ drvI2C0TransferObj[DRV_I2C_QUEUE_SIZE_IDX0] = {0};
 
 /* I2C PLib Interface Initialization */
-DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
+const DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
 
     /* I2C PLib Transfer Read Add function */
-    .read = (DRV_I2C_READ_CALLBACK)TWIHS0_Read,
+    .read = (DRV_I2C_PLIB_READ)TWIHS0_Read,
 
     /* I2C PLib Transfer Write Add function */
-    .write = (DRV_I2C_WRITE_CALLBACK)TWIHS0_Write,
+    .write = (DRV_I2C_PLIB_WRITE)TWIHS0_Write,
 
     /* I2C PLib Transfer Write Read Add function */
-    .writeRead = (DRV_I2C_WRITE_READ_CALLBACK)TWIHS0_WriteRead,
+    .writeRead = (DRV_I2C_PLIB_WRITE_READ)TWIHS0_WriteRead,
 
     /* I2C PLib Transfer Status function */
-    .errorGet = (DRV_I2C_ERROR_GET_CALLBACK)TWIHS0_ErrorGet,
+    .errorGet = (DRV_I2C_PLIB_ERROR_GET)TWIHS0_ErrorGet,
 
     /* I2C PLib Callback Register */
-    .callbackRegister = (DRV_I2C_CALLBACK_REGISTER_CALLBACK)TWIHS0_CallbackRegister,
+    .callbackRegister = (DRV_I2C_PLIB_CALLBACK_REGISTER)TWIHS0_CallbackRegister,
 };
 
 /* I2C Driver Initialization Data */
-DRV_I2C_INIT drvI2C0InitData =
+const DRV_I2C_INIT drvI2C0InitData =
 {
     /* I2C PLib API */
     .i2cPlib = &drvI2C0PLibAPI,
@@ -136,17 +165,17 @@ SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 // <editor-fold defaultstate="collapsed" desc="SYS_TIME Initialization Data">
 
-TIME_PLIB_API sysTimePlibAPI = {
-    .timerCallbackSet = (TIME_CallbackSet)TC0_CH0_TimerCallbackRegister,
-    .timerCounterGet = (TIME_CounterGet)TC0_CH0_TimerCounterGet,
-     .timerPeriodSet = (TIME_PeriodSet)TC0_CH0_TimerPeriodSet,
-    .timerFrequencyGet = (TIME_FrequencyGet)TC0_CH0_TimerFrequencyGet,
-    .timerCompareSet = (TIME_CompareSet)TC0_CH0_TimerCompareSet,
-    .timerStart = (TIME_Start)TC0_CH0_TimerStart,
-    .timerStop = (TIME_Stop)TC0_CH0_TimerStop 
+const SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
+    .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)TC0_CH0_TimerCallbackRegister,
+    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC0_CH0_TimerCounterGet,
+    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC0_CH0_TimerPeriodSet,
+    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC0_CH0_TimerFrequencyGet,
+    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC0_CH0_TimerCompareSet,
+    .timerStart = (SYS_TIME_PLIB_START)TC0_CH0_TimerStart,
+    .timerStop = (SYS_TIME_PLIB_STOP)TC0_CH0_TimerStop 
 };
 
-SYS_TIME_INIT sysTimeInitData =
+const SYS_TIME_INIT sysTimeInitData =
 {
     .timePlib = &sysTimePlibAPI,
     .hwTimerIntNum = TC0_CH0_IRQn,
@@ -170,16 +199,17 @@ void SYS_Initialize ( void* data )
     CLK_Initialize();
 	PIO_Initialize();
 
+
     NVIC_Initialize();
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
 
-	BSP_Initialize();
  
     TC0_CH0_TimerInitialize(); 
      
     
+	BSP_Initialize();
 	TWIHS0_Initialize();
 
 	USART1_Initialize();
