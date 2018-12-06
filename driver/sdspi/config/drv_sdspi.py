@@ -28,6 +28,8 @@
 
 sdspiFsEnable              = None
 
+global isDMAPresent
+
 def setVisible(symbol, event):
     symbol.setVisible(event["value"])
 
@@ -96,6 +98,7 @@ def instantiateComponent(sdspiComponent, index):
     global drvSdspiInstanceSpace
     global sdspiFsEnable
     global sdspiTXRXDMA
+    global isDMAPresent
 
     drvSdspiInstanceSpace = "drv_sdspi_" + str(index)
 
@@ -117,10 +120,11 @@ def instantiateComponent(sdspiComponent, index):
     # Enable "ENABLE_SYS_MEDIA" option in MHC
     Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True, 1)
 
-    if (Database.getSymbolValue("core", "DMA_ENABLE") == None):
+    if Database.getSymbolValue("core", "DMA_ENABLE") == None:
         isDMAPresent = False
     else:
         isDMAPresent = True
+
         # Enable "Enable System DMA" option in MHC
         Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
 
@@ -207,7 +211,7 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiDependencyDMAComment = sdspiComponent.createCommentSymbol("DRV_SDSPI_DEPENDENCY_DMA_COMMENT", None)
     sdspiDependencyDMAComment.setLabel("!!! Satisfy PLIB Dependency to Allocate DMA Channel !!!")
-    sdspiDependencyDMAComment.setVisible(True)
+    sdspiDependencyDMAComment.setVisible(isDMAPresent)
 
     # RTOS Settings
     sdspiRTOSMenu = sdspiComponent.createMenuSymbol("DRV_SDSPI_RTOS_MENU", None)
@@ -262,7 +266,6 @@ def instantiateComponent(sdspiComponent, index):
     configName = Variables.get("__CONFIGURATION_NAME")
 
     # System Template Files
-
     sdspiSymSystemDefObjFile = sdspiComponent.createFileSymbol("DRV_SDSPI_SYSTEM_DEF_OBJECT", None)
     sdspiSymSystemDefObjFile.setType("STRING")
     sdspiSymSystemDefObjFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_OBJECTS")
@@ -314,6 +317,7 @@ def destroyComponent(sdspiComponent):
 
 def onAttachmentConnected(source, target):
     global sdcardFsEnable
+    global isDMAPresent
 
     localComponent = source["component"]
     remoteComponent = target["component"]
@@ -335,13 +339,15 @@ def onAttachmentConnected(source, target):
 
         Database.setSymbolValue(remoteID.upper(), "SPI_DRIVER_CONTROLLED", True, 1)
 
-        localComponent.getSymbolByID("DRV_SDSPI_TX_RX_DMA").setReadOnly(False)
-
-        localComponent.getSymbolByID("DRV_SDSPI_DEPENDENCY_DMA_COMMENT").setVisible(False)
-
+        # Do not change the order as DMA Channels needs to be allocated
+        # after setting the plibUsed symbol
+        if isDMAPresent == True:
+            localComponent.getSymbolByID("DRV_SDSPI_TX_RX_DMA").setReadOnly(False)
+            localComponent.getSymbolByID("DRV_SDSPI_DEPENDENCY_DMA_COMMENT").setVisible(False)
 
 def onAttachmentDisconnected(source, target):
     global sdcardFsEnable
+    global isDMAPresent
 
     localComponent = source["component"]
     remoteComponent = target["component"]
@@ -357,11 +363,13 @@ def onAttachmentDisconnected(source, target):
 
     # For Dependency Disonnected (SPI)
     if (connectID == "drv_sdspi_SPI_dependency"):
-        localComponent.getSymbolByID("DRV_SDSPI_TX_RX_DMA").clearValue()
-        localComponent.getSymbolByID("DRV_SDSPI_TX_RX_DMA").setReadOnly(True)
+        # Do not change the order as DMA Channels needs to be cleared
+        # before clearing the plibUsed symbol
+        if isDMAPresent == True:
+            localComponent.getSymbolByID("DRV_SDSPI_TX_RX_DMA").clearValue()
+            localComponent.getSymbolByID("DRV_SDSPI_TX_RX_DMA").setReadOnly(True)
+            localComponent.getSymbolByID("DRV_SDSPI_DEPENDENCY_DMA_COMMENT").setVisible(True)
 
         plibUsed = localComponent.getSymbolByID("DRV_SDSPI_PLIB")
         plibUsed.clearValue()
         Database.setSymbolValue(remoteID.upper(), "SPI_DRIVER_CONTROLLED", False, 1)
-
-        localComponent.getSymbolByID("DRV_SDSPI_DEPENDENCY_DMA_COMMENT").setVisible(True)
