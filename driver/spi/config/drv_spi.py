@@ -22,6 +22,8 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
+global isDMAPresent
+
 def instantiateComponent(spiComponent, index):
     global drvSpiInstanceSpace
     global isDMAPresent
@@ -110,7 +112,7 @@ def instantiateComponent(spiComponent, index):
 
     spiDependencyDMAComment = spiComponent.createCommentSymbol("DRV_SPI_DEPENDENCY_DMA_COMMENT", None)
     spiDependencyDMAComment.setLabel("!!! Satisfy PLIB Dependency to Allocate DMA Channel !!!")
-    spiDependencyDMAComment.setVisible(True)
+    spiDependencyDMAComment.setVisible(isDMAPresent)
 
     ############################################################################
     #### Code Generation ####
@@ -169,6 +171,8 @@ def spiDriverMode(symbol, event):
     symbol.setValue(event["value"], 1)
 
 def onAttachmentConnected(source, target):
+    global isDMAPresent
+
     localComponent = source["component"]
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
@@ -182,11 +186,15 @@ def onAttachmentConnected(source, target):
 
         Database.setSymbolValue(remoteID, "SPI_DRIVER_CONTROLLED", True, 1)
 
-        localComponent.getSymbolByID("DRV_SPI_DEPENDENCY_DMA_COMMENT").setVisible(False)
-
-        localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").setReadOnly(False)
+        # Do not change the order as DMA Channels needs to be allocated
+        # after setting the plibUsed symbol
+        if isDMAPresent == True:
+            localComponent.getSymbolByID("DRV_SPI_DEPENDENCY_DMA_COMMENT").setVisible(False)
+            localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").setReadOnly(False)
 
 def onAttachmentDisconnected(source, target):
+    global isDMAPresent
+
     localComponent = source["component"]
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
@@ -194,14 +202,16 @@ def onAttachmentDisconnected(source, target):
     targetID = target["id"]
 
     if connectID == "drv_spi_SPI_dependency" :
-        localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").clearValue()
-        localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").setReadOnly(True)
+        # Do not change the order as DMA Channels needs to be cleared
+        # before clearing the plibUsed symbol
+        if isDMAPresent == True:
+            localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").clearValue()
+            localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").setReadOnly(True)
+            localComponent.getSymbolByID("DRV_SPI_DEPENDENCY_DMA_COMMENT").setVisible(True)
 
         plibUsed = localComponent.getSymbolByID("DRV_SPI_PLIB")
         plibUsed.clearValue()
         Database.setSymbolValue(remoteID, "SPI_DRIVER_CONTROLLED", False, 1)
-
-        localComponent.getSymbolByID("DRV_SPI_DEPENDENCY_DMA_COMMENT").setVisible(True)
 
 def requestAndAssignTxDMAChannel(symbol, event):
     global drvSpiInstanceSpace
