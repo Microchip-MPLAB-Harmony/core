@@ -94,10 +94,10 @@ INT_IrqEnable( void )
 bool
 INT_IrqDisable( void )
 {
-    bool previous = INT_AreIrqsEnabled();
+    bool previousSetting = INT_AreIrqsEnabled();
     __disable_irq();
     __DMB();
-    return( previous );
+    return( previousSetting );
 }
 
 void
@@ -140,12 +140,13 @@ INT_InterruptEnable( IRQn_Type aSrcSelection )
 bool
 INT_InterruptDisable( IRQn_Type aSrcSelection )
 {
+    bool previousSetting = INT_IsInterruptEnabled( aSrcSelection );
     aic_registers_t * aicPtr = _aicInstanceGet( aSrcSelection );
     aicPtr->AIC_SSR = AIC_SSR_INTSEL( (uint32_t) aSrcSelection );
     aicPtr->AIC_IDCR = AIC_IDCR_Msk;
     __DSB();
     __ISB();
-    return( INT_IsInterruptEnabled( aSrcSelection ) );
+    return( previousSetting );
 }
 
 bool
