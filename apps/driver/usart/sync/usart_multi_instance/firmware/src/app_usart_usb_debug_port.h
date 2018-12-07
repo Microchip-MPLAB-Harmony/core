@@ -50,13 +50,12 @@
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
+#include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
-#include "bsp/bsp.h"
 #include "driver/usart/drv_usart_definitions.h"
 #include "driver/usart/drv_usart.h"
 
@@ -74,8 +73,8 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 /* The size of the DMA buffers must be a multiple of cache line size (32 bytes) */    
-#define APP_DMA_TX_RX_BUFFER_SIZE            32
-#define APP_LOOPBACK_DATA_SIZE               10
+#define APP_DEBUG_PORT_DMA_TX_RX_BUFFER_SIZE            32
+#define APP_DEBUG_PORT_LOOPBACK_DATA_SIZE               10
 
 // *****************************************************************************
 /* Application states
@@ -128,8 +127,9 @@ typedef struct
      * The DMA buffers must be aligned to 32 byte boundary and the size must be
      * a multiple of 32 bytes (cache line size)
      */
-     __attribute__ ((aligned (32))) uint8_t receiveBuffer[APP_DMA_TX_RX_BUFFER_SIZE];
-     __attribute__ ((aligned (32))) uint8_t transmitBuffer[APP_DMA_TX_RX_BUFFER_SIZE];
+     __attribute__ ((aligned (32))) uint8_t receiveBuffer[APP_DEBUG_PORT_DMA_TX_RX_BUFFER_SIZE];
+     __attribute__ ((aligned (32))) uint8_t transmitBuffer[APP_DEBUG_PORT_DMA_TX_RX_BUFFER_SIZE];
+     
 } APP_USART_USB_DEBUG_PORT_DATA;
 
 

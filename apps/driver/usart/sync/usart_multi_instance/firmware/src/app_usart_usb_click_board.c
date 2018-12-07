@@ -59,9 +59,10 @@
 // Section: Global Data Definitions
 // *****************************************************************************
 // *****************************************************************************
-static char usart0_StartMessage[192] = "**** USART Driver Multi-Instance Echo Demo "
-"Application ****\r\n**** Type 10 characters and observe it echo back using "
-"DMA***\r\n**** LED toggles each time the data is echoed ***\r\n";
+__attribute__ ((aligned (32))) static char usart0_StartMessage[192] = 
+"*** USART Driver Multi-Instance Echo Demo Application ***\r\n"
+"*** Type 10 characters and observe it echo back using DMA ***\r\n"
+"*** LED toggles each time the data is echoed ***\r\n";
 
 // *****************************************************************************
 /* Application Data
@@ -118,12 +119,6 @@ void APP_USART_USB_CLICK_BOARD_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
     appUsartClickBoardData.state = APP_USART_USB_CLICK_BOARD_STATE_INIT;
-
-
-
-    /* TODO: Initialize your application's state machine and other
-     * parameters.
-     */
 }
 
 
@@ -167,12 +162,10 @@ void APP_USART_USB_CLICK_BOARD_Tasks ( void )
 
         case APP_USART_USB_CLICK_BOARD_STATE_LOOPBACK:
             /* Submit a read request and block until read completes */
-            if (DRV_USART_ReadBuffer( appUsartClickBoardData.usartHandle, appUsartClickBoardData.receiveBuffer, APP_LOOPBACK_DATA_SIZE) == true)
+            if (DRV_USART_ReadBuffer( appUsartClickBoardData.usartHandle, appUsartClickBoardData.receiveBuffer, APP_USART_USB_CLICK_LOOPBACK_DATA_SIZE) == true)
             {
-
                 /* Copy receive buffer to transmit buffer */
-                memcpy(appUsartClickBoardData.transmitBuffer, appUsartClickBoardData.receiveBuffer, APP_LOOPBACK_DATA_SIZE);
-
+                memcpy(appUsartClickBoardData.transmitBuffer, appUsartClickBoardData.receiveBuffer, APP_USART_USB_CLICK_LOOPBACK_DATA_SIZE);
             }
             else
             {
@@ -180,8 +173,8 @@ void APP_USART_USB_CLICK_BOARD_Tasks ( void )
                 break;
             }
 
-            /* Write the received data back and block until write completes */
-            if (DRV_USART_WriteBuffer( appUsartClickBoardData.usartHandle, appUsartClickBoardData.transmitBuffer, APP_LOOPBACK_DATA_SIZE) == true)
+            /* Write the received data back */
+            if (DRV_USART_WriteBuffer( appUsartClickBoardData.usartHandle, appUsartClickBoardData.transmitBuffer, APP_USART_USB_CLICK_LOOPBACK_DATA_SIZE) == true)
             {
                 /* Toggle LED to indicate success */
                 LED_TOGGLE();
