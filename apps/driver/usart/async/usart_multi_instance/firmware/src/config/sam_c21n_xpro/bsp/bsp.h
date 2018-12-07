@@ -61,9 +61,9 @@
 // *****************************************************************************
 // *****************************************************************************
 /*** LED Macros for LED ***/
-#define LED_Toggle() (PORTC_REGS->PORT_OUTTGL = 1 << 5)
-#define LED_On() (PORTC_REGS->PORT_OUTCLR = 1 << 5)
-#define LED_Off() (PORTC_REGS->PORT_OUTSET = 1 << 5)
+#define LED_Toggle() (PORT_REGS->GROUP[2].PORT_OUTTGL = 1 << 5)
+#define LED_On() (PORT_REGS->GROUP[2].PORT_OUTCLR = 1 << 5)
+#define LED_Off() (PORT_REGS->GROUP[2].PORT_OUTSET = 1 << 5)
 
 
 

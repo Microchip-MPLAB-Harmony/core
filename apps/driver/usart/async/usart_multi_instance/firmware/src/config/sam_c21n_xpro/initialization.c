@@ -59,37 +59,89 @@
 // Section: Driver Initialization Data
 // *****************************************************************************
 // *****************************************************************************
-// <editor-fold defaultstate="collapsed" desc="DRV_USART Instance 0 Initialization Data">
+// <editor-fold defaultstate="collapsed" desc="DRV_USART Instance 1 Initialization Data">
 
-USART_PLIB_API drvUsart0PlibAPI = {
-        .readCallbackRegister = (USART_ReadCallbackRegister)SERCOM4_USART_ReadCallbackRegister,
-        .read = (USART_Read)SERCOM4_USART_Read,
-        .readIsBusy = (USART_ReadIsBusy)SERCOM4_USART_ReadIsBusy,
-        .readCountGet = (USART_ReadCountGet)SERCOM4_USART_ReadCountGet,
-        .writeCallbackRegister = (USART_WriteCallbackRegister)SERCOM4_USART_WriteCallbackRegister,
-        .write = (USART_Write)SERCOM4_USART_Write,
-        .writeIsBusy = (USART_WriteIsBusy)SERCOM4_USART_WriteIsBusy,
-        .writeCountGet = (USART_WriteCountGet)SERCOM4_USART_WriteCountGet,
-        .errorGet = (USART_ErrorGet)SERCOM4_USART_ErrorGet,
-        .serialSetup = (USART_SerialSetup)SERCOM4_USART_SerialSetup
+const DRV_USART_PLIB_INTERFACE drvUsart1PlibAPI = {
+        .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)SERCOM2_USART_ReadCallbackRegister,
+        .read = (DRV_USART_PLIB_READ)SERCOM2_USART_Read,
+        .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)SERCOM2_USART_ReadIsBusy,
+        .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)SERCOM2_USART_ReadCountGet,
+        .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)SERCOM2_USART_WriteCallbackRegister,
+        .write = (DRV_USART_PLIB_WRITE)SERCOM2_USART_Write,
+        .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)SERCOM2_USART_WriteIsBusy,
+        .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)SERCOM2_USART_WriteCountGet,
+        .errorGet = (DRV_USART_PLIB_ERROR_GET)SERCOM2_USART_ErrorGet,
+        .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)SERCOM2_USART_SerialSetup
 };
 
-uint32_t drvUsart0remapDataWidth[] = { 0x5, 0x6, 0x7, 0x0, 0x1 };
-uint32_t drvUsart0remapParity[] = { 0x2, 0x80000, 0x0, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
-uint32_t drvUsart0remapStopBits[] = { 0x0, 0xFFFFFFFF, 0x40 };
-uint32_t drvUsart0remapError[] = { 0x4, 0x0, 0x2 };
+const uint32_t drvUsart1remapDataWidth[] = { 0x5, 0x6, 0x7, 0x0, 0x1 };
+const uint32_t drvUsart1remapParity[] = { 0x2, 0x80000, 0x0, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
+const uint32_t drvUsart1remapStopBits[] = { 0x0, 0xFFFFFFFF, 0x40 };
+const uint32_t drvUsart1remapError[] = { 0x4, 0x0, 0x2 };
+const DRV_USART_INIT drvUsart1InitData =
+{
+    .usartPlib = &drvUsart1PlibAPI,
 
-DRV_USART_INIT drvUsart0InitData =
+    .remapDataWidth = drvUsart1remapDataWidth,
+
+    .remapParity = drvUsart1remapParity,
+
+    .remapStopBits = drvUsart1remapStopBits,
+
+    .remapError = drvUsart1remapError,
+
+    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
+
+    .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
+
+
+    .queueSizeTransmit = DRV_USART_XMIT_QUEUE_SIZE_IDX1,
+
+    .queueSizeReceive = DRV_USART_RCV_QUEUE_SIZE_IDX1,
+
+    .interruptUSART = SERCOM2_IRQn,
+
+    .interruptDMA = DMAC_IRQn,
+
+
+};
+
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="DRV_USART Instance 0 Initialization Data">
+
+const DRV_USART_PLIB_INTERFACE drvUsart0PlibAPI = {
+        .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)SERCOM4_USART_ReadCallbackRegister,
+        .read = (DRV_USART_PLIB_READ)SERCOM4_USART_Read,
+        .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)SERCOM4_USART_ReadIsBusy,
+        .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)SERCOM4_USART_ReadCountGet,
+        .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)SERCOM4_USART_WriteCallbackRegister,
+        .write = (DRV_USART_PLIB_WRITE)SERCOM4_USART_Write,
+        .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)SERCOM4_USART_WriteIsBusy,
+        .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)SERCOM4_USART_WriteCountGet,
+        .errorGet = (DRV_USART_PLIB_ERROR_GET)SERCOM4_USART_ErrorGet,
+        .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)SERCOM4_USART_SerialSetup
+};
+
+const uint32_t drvUsart0remapDataWidth[] = { 0x5, 0x6, 0x7, 0x0, 0x1 };
+const uint32_t drvUsart0remapParity[] = { 0x2, 0x80000, 0x0, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
+const uint32_t drvUsart0remapStopBits[] = { 0x0, 0xFFFFFFFF, 0x40 };
+const uint32_t drvUsart0remapError[] = { 0x4, 0x0, 0x2 };
+const DRV_USART_INIT drvUsart0InitData =
 {
     .usartPlib = &drvUsart0PlibAPI,
+
     .remapDataWidth = drvUsart0remapDataWidth,
+
     .remapParity = drvUsart0remapParity,
+
     .remapStopBits = drvUsart0remapStopBits,
+
     .remapError = drvUsart0remapError,
 
     .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
 
     .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
+
 
     .queueSizeTransmit = DRV_USART_XMIT_QUEUE_SIZE_IDX0,
 
@@ -99,48 +151,6 @@ DRV_USART_INIT drvUsart0InitData =
 
     .interruptDMA = DMAC_IRQn,
 
-};
-
-// </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="DRV_USART Instance 1 Initialization Data">
-
-USART_PLIB_API drvUsart1PlibAPI = {
-        .readCallbackRegister = (USART_ReadCallbackRegister)SERCOM2_USART_ReadCallbackRegister,
-        .read = (USART_Read)SERCOM2_USART_Read,
-        .readIsBusy = (USART_ReadIsBusy)SERCOM2_USART_ReadIsBusy,
-        .readCountGet = (USART_ReadCountGet)SERCOM2_USART_ReadCountGet,
-        .writeCallbackRegister = (USART_WriteCallbackRegister)SERCOM2_USART_WriteCallbackRegister,
-        .write = (USART_Write)SERCOM2_USART_Write,
-        .writeIsBusy = (USART_WriteIsBusy)SERCOM2_USART_WriteIsBusy,
-        .writeCountGet = (USART_WriteCountGet)SERCOM2_USART_WriteCountGet,
-        .errorGet = (USART_ErrorGet)SERCOM2_USART_ErrorGet,
-        .serialSetup = (USART_SerialSetup)SERCOM2_USART_SerialSetup
-};
-
-uint32_t drvUsart1remapDataWidth[] = { 0x5, 0x6, 0x7, 0x0, 0x1 };
-uint32_t drvUsart1remapParity[] = { 0x2, 0x80000, 0x0, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
-uint32_t drvUsart1remapStopBits[] = { 0x0, 0xFFFFFFFF, 0x40 };
-uint32_t drvUsart1remapError[] = { 0x4, 0x0, 0x2 };
-
-DRV_USART_INIT drvUsart1InitData =
-{
-    .usartPlib = &drvUsart1PlibAPI,
-    .remapDataWidth = drvUsart1remapDataWidth,
-    .remapParity = drvUsart1remapParity,
-    .remapStopBits = drvUsart1remapStopBits,
-    .remapError = drvUsart1remapError,
-
-    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
-
-    .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
-
-    .queueSizeTransmit = DRV_USART_XMIT_QUEUE_SIZE_IDX1,
-
-    .queueSizeReceive = DRV_USART_RCV_QUEUE_SIZE_IDX1,
-
-    .interruptUSART = SERCOM2_IRQn,
-
-    .interruptDMA = DMAC_IRQn,
 
 };
 
@@ -186,16 +196,16 @@ void SYS_Initialize ( void* data )
 
 
 
-    NVIC_Initialize();
-	BSP_Initialize();
     SERCOM2_USART_Initialize();
 
+    NVIC_Initialize();
     SERCOM4_USART_Initialize();
 
-
-    sysObj.drvUsart0 = DRV_USART_Initialize(DRV_USART_INDEX_0, (SYS_MODULE_INIT *)&drvUsart0InitData);
+	BSP_Initialize();
 
     sysObj.drvUsart1 = DRV_USART_Initialize(DRV_USART_INDEX_1, (SYS_MODULE_INIT *)&drvUsart1InitData);
+
+    sysObj.drvUsart0 = DRV_USART_Initialize(DRV_USART_INDEX_0, (SYS_MODULE_INIT *)&drvUsart0InitData);
 
 
 

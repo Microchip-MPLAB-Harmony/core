@@ -77,39 +77,36 @@
 
 APP1_DATA app1Data;
 
-#define APP_DATA_SIZE   1
-
-static char messageStart[] = "**** Console 1 ****\r\n\
-**** USART Driver Echo Demo Application ****\r\n\
-**** Type a character and observe it echo back ***\r\n\
-**** LED toggles on each time the character is echoed ***\r\n";
-static char readBuffer[APP_DATA_SIZE] = {};
+const static char message1Buffer[] = 
+"*** Console 1 ****\r\n"
+"*** USART Driver Echo Demo Application ****\r\n"
+"*** Type a character and observe it echo back ***\r\n"
+"*** LED toggles on each time the character is echoed ***\r\n";
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
 // *****************************************************************************
 // *****************************************************************************
 
-void APP1_BufferEventHandler(DRV_USART_BUFFER_EVENT bufferEvent, DRV_USART_BUFFER_HANDLE bufferHandle, uintptr_t context )
+void APP1_BufferEventHandler(
+    DRV_USART_BUFFER_EVENT bufferEvent, 
+    DRV_USART_BUFFER_HANDLE bufferHandle, 
+    uintptr_t context 
+)
 {
     switch(bufferEvent)
     {
-        case DRV_USART_BUFFER_EVENT_COMPLETE:
-        {
+        case DRV_USART_BUFFER_EVENT_COMPLETE:        
             app1Data.completeStatus = true;
             break;
-        }
-
-        case DRV_USART_BUFFER_EVENT_ERROR:
-        {
+        
+        case DRV_USART_BUFFER_EVENT_ERROR:        
             app1Data.errorStatus = true;
             break;
-        }
-
-        default:
-        {
+        
+        default:        
             break;
-        }
+        
     }
 }
 
@@ -144,9 +141,7 @@ void APP1_Initialize ( void )
     app1Data.state = APP1_STATE_INIT;
     app1Data.prevState = APP1_STATE_INIT;
     app1Data.usartHandle = DRV_HANDLE_INVALID;
-    app1Data.messageBufHandler = DRV_USART_BUFFER_HANDLE_INVALID;
-    app1Data.writeBufHandler = DRV_USART_BUFFER_HANDLE_INVALID;
-    app1Data.readBufHandler = DRV_USART_BUFFER_HANDLE_INVALID;
+    app1Data.bufferHandler = DRV_USART_BUFFER_HANDLE_INVALID;    
 }
 
 
@@ -160,13 +155,12 @@ void APP1_Initialize ( void )
 
 void APP1_Tasks ( void )
 {
-
     /* Check the application's current state. */
     switch ( app1Data.state )
     {
         /* Application's initial state. */
         case APP1_STATE_INIT:
-        {
+        
             app1Data.usartHandle = DRV_USART_Open(DRV_USART_INDEX_0, DRV_IO_INTENT_READWRITE);
 
             if (app1Data.usartHandle != DRV_HANDLE_INVALID)
@@ -174,35 +168,52 @@ void APP1_Tasks ( void )
                 DRV_USART_BufferEventHandlerSet(app1Data.usartHandle, APP1_BufferEventHandler, 0);
                 app1Data.state = APP1_STATE_SEND_MESSAGE;
             }
+            else
+            {
+                app1Data.state = APP1_STATE_ERROR;
+            }
             break;
-        }
-
-        case APP1_STATE_SEND_MESSAGE:
-        {
-            DRV_USART_WriteBufferAdd(app1Data.usartHandle, messageStart, sizeof(messageStart), &app1Data.messageBufHandler);
-            app1Data.prevState = APP1_STATE_SEND_MESSAGE;
-            app1Data.state = APP1_STATE_WAIT;
+        
+        case APP1_STATE_SEND_MESSAGE:        
+            DRV_USART_WriteBufferAdd(app1Data.usartHandle, (void*)message1Buffer, sizeof(message1Buffer), &app1Data.bufferHandler);
+            if (app1Data.bufferHandler != DRV_USART_BUFFER_HANDLE_INVALID)
+            {
+                app1Data.prevState = APP1_STATE_SEND_MESSAGE;
+                app1Data.state = APP1_STATE_WAIT;
+            }
+            else
+            {
+                app1Data.state = APP1_STATE_ERROR;
+            }            
             break;
-        }
-
-        case APP1_STATE_RECEIVE_BUFFER:
-        {
-            DRV_USART_ReadBufferAdd(app1Data.usartHandle, readBuffer, APP_DATA_SIZE, &app1Data.readBufHandler);
-            app1Data.prevState = APP1_STATE_RECEIVE_BUFFER;
-            app1Data.state = APP1_STATE_WAIT;
+        
+        case APP1_STATE_RECEIVE_BUFFER:        
+            DRV_USART_ReadBufferAdd(app1Data.usartHandle, app1Data.readBuffer, APP1_DATA_SIZE, &app1Data.bufferHandler);
+            if (app1Data.bufferHandler != DRV_USART_BUFFER_HANDLE_INVALID)
+            {
+                app1Data.prevState = APP1_STATE_RECEIVE_BUFFER;
+                app1Data.state = APP1_STATE_WAIT;
+            }
+            else
+            {
+                app1Data.state = APP1_STATE_ERROR;
+            }
             break;
-        }
-
-        case APP1_STATE_SEND_BUFFER:
-        {
-            DRV_USART_WriteBufferAdd(app1Data.usartHandle, readBuffer, APP_DATA_SIZE, &app1Data.writeBufHandler);
-            app1Data.prevState = APP1_STATE_SEND_BUFFER;
-            app1Data.state = APP1_STATE_WAIT;
+        
+        case APP1_STATE_SEND_BUFFER:        
+            DRV_USART_WriteBufferAdd(app1Data.usartHandle, app1Data.readBuffer, APP1_DATA_SIZE, &app1Data.bufferHandler);
+            if (app1Data.bufferHandler != DRV_USART_BUFFER_HANDLE_INVALID)
+            {
+                app1Data.prevState = APP1_STATE_SEND_BUFFER;
+                app1Data.state = APP1_STATE_WAIT;
+            }
+            else
+            {
+                app1Data.state = APP1_STATE_ERROR;
+            }
             break;
-        }
-
-        case APP1_STATE_WAIT:
-        {
+        
+        case APP1_STATE_WAIT:        
             if(app1Data.completeStatus == true)
             {
                 app1Data.completeStatus = false;
@@ -223,22 +234,16 @@ void APP1_Tasks ( void )
             {
                 app1Data.errorStatus = false;
                 app1Data.prevState = APP1_STATE_WAIT;
-                app1Data.state = APP1_STATE_IDLE;
+                app1Data.state = APP1_STATE_ERROR;
             }
-
             break;
-        }
-
-        case APP1_STATE_IDLE:
-        {
+        
+        case APP1_STATE_ERROR:              
             break;
-        }
-
+        
         /* The default state should never be executed. */
-        default:
-        {
-            break;
-        }
+        default:        
+            break;        
     }
 }
 

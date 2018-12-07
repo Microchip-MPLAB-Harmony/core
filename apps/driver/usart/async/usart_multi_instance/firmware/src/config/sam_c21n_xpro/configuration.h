@@ -56,6 +56,7 @@
 */
 
 #include "user.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -91,15 +92,15 @@ extern "C" {
 #define DRV_USART_INSTANCES_NUMBER         2
 #define DRV_USART_QUEUE_DEPTH_COMBINED     21
 
-/* USART Driver Instance 0 Configuration Options */
-#define DRV_USART_INDEX_0                  0
-#define DRV_USART_XMIT_QUEUE_SIZE_IDX0     5
-#define DRV_USART_RCV_QUEUE_SIZE_IDX0      5
-
 /* USART Driver Instance 1 Configuration Options */
 #define DRV_USART_INDEX_1                  1
 #define DRV_USART_XMIT_QUEUE_SIZE_IDX1     5
 #define DRV_USART_RCV_QUEUE_SIZE_IDX1      5
+
+/* USART Driver Instance 0 Configuration Options */
+#define DRV_USART_INDEX_0                  0
+#define DRV_USART_XMIT_QUEUE_SIZE_IDX0     5
+#define DRV_USART_RCV_QUEUE_SIZE_IDX0      5
 
 
 

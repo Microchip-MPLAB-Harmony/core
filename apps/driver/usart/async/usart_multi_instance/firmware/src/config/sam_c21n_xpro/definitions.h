@@ -48,17 +48,17 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "peripheral/sercom/usart/plib_sercom2_usart.h"
+#include "driver/usart/drv_usart_definitions.h"
+#include "driver/usart/drv_usart.h"
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
-#include "bsp/bsp.h"
+#include "peripheral/sercom/usart/plib_sercom4_usart.h"
 #include "system/int/sys_int.h"
 #include "system/dma/sys_dma.h"
 #include "osal/osal.h"
-#include "driver/usart/drv_usart_definitions.h"
-#include "driver/usart/drv_usart.h"
-#include "peripheral/sercom/usart/plib_sercom2_usart.h"
-#include "peripheral/sercom/usart/plib_sercom4_usart.h"
+#include "bsp/bsp.h"
 #include "app1.h"
 #include "app2.h"
 
@@ -182,8 +182,8 @@ void SYS_Tasks ( void );
 
 typedef struct
 {
-    SYS_MODULE_OBJ  drvUsart0;
     SYS_MODULE_OBJ  drvUsart1;
+    SYS_MODULE_OBJ  drvUsart0;
 
 } SYSTEM_OBJECTS;
 

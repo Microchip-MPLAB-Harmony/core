@@ -45,6 +45,7 @@
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
+
 #include "configuration.h"
 #include "driver/usart/drv_usart.h"
 #include "drv_usart_local.h"
@@ -56,10 +57,10 @@
 // *****************************************************************************
 
 /* This is the driver instance object array. */
-DRV_USART_OBJ gDrvUSARTObj[DRV_USART_INSTANCES_NUMBER] ;
+static DRV_USART_OBJ gDrvUSARTObj[DRV_USART_INSTANCES_NUMBER] ;
 
 /* This is the array of USART Driver Buffet object. */
-DRV_USART_BUFFER_OBJ gDrvUSARTBufferObj[DRV_USART_QUEUE_DEPTH_COMBINED];
+static DRV_USART_BUFFER_OBJ gDrvUSARTBufferObj[DRV_USART_QUEUE_DEPTH_COMBINED];
 
 /* This a global token counter used to generate unique buffer handles */
 static uint16_t gDrvUSARTTokenCount = 0;
@@ -69,6 +70,7 @@ static uint16_t gDrvUSARTTokenCount = 0;
 // Section: File scope functions
 // *****************************************************************************
 // *****************************************************************************
+
 static bool _DRV_USART_ValidateClientHandle(DRV_USART_OBJ * object, DRV_HANDLE handle)
 {
     if((handle == DRV_HANDLE_INVALID) || (handle >= DRV_USART_INSTANCES_NUMBER))
@@ -102,7 +104,7 @@ static bool _DRV_USART_ResourceLock(DRV_USART_OBJ * object)
         {
             /* We will disable interrupts so that the queue
                status does not get updated asynchronously */
-            if( (dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) || (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
+            if((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) || (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
             {
                 SYS_INT_SourceDisable(dObj->interruptDMA);
             }
@@ -251,7 +253,6 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
 
     if(currentObj != NULL)
     {
-
         currentObj->status = event;
 
         if(currentObj->status == DRV_USART_BUFFER_EVENT_ERROR)
@@ -302,6 +303,7 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
         {
             dObj->queueRead = newObj;
             dObj->queueSizeCurrentRead --;
+
             if (newObj != NULL)
             {
                 newObj->currentState = DRV_USART_BUFFER_IS_PROCESSING;
@@ -324,7 +326,7 @@ static void _DRV_USART_BufferQueueTask( DRV_USART_OBJ *object, DRV_USART_DIRECTI
             {
                 newObj->currentState = DRV_USART_BUFFER_IS_PROCESSING;
 
-                if( (dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE))
+                if((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE))
                 {
                     if (DATA_CACHE_ENABLED == true)
                     {
@@ -360,7 +362,7 @@ static void _DRV_USART_TX_PLIB_CallbackHandler( uintptr_t context )
     return;
 }
 
-static DRV_USART_ERROR _DRV_USART_GetErrorType(uint32_t* remapError, uint32_t errorMask)
+static DRV_USART_ERROR _DRV_USART_GetErrorType(const uint32_t* remapError, uint32_t errorMask)
 {
     DRV_USART_ERROR error = DRV_USART_ERROR_NONE;
 
@@ -382,7 +384,7 @@ static void _DRV_USART_RX_PLIB_CallbackHandler( uintptr_t context )
 
     errorMask = dObj->usartPlib->errorGet();
 
-    if(errorMask == DRV_USART_ERROR_NONE)
+    if(errorMask == (uint32_t) DRV_USART_ERROR_NONE)
     {
         dObj->errors = DRV_USART_ERROR_NONE;
         _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_RX, DRV_USART_BUFFER_EVENT_COMPLETE);
@@ -434,7 +436,6 @@ static void _DRV_USART_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uint
 // *****************************************************************************
 // *****************************************************************************
 
-// *****************************************************************************
 SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT * const init )
 {
     DRV_USART_OBJ *dObj = NULL;
@@ -512,7 +513,6 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
 
-// *****************************************************************************
 SYS_STATUS DRV_USART_Status( SYS_MODULE_OBJ object)
 {
     /* Validate the request */
@@ -524,7 +524,6 @@ SYS_STATUS DRV_USART_Status( SYS_MODULE_OBJ object)
     return (gDrvUSARTObj[object].status);
 }
 
-// *****************************************************************************
 DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
 {
     DRV_USART_OBJ *dObj = NULL;
@@ -558,7 +557,6 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
     return drvHandle;
 }
 
-// *****************************************************************************
 void DRV_USART_Close( DRV_HANDLE handle )
 {
     DRV_USART_OBJ * dObj = NULL;
@@ -639,10 +637,10 @@ bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* set
 
     dObj = &gDrvUSARTObj[handle];
 
-    setupRemap.dataWidth=dObj->remapDataWidth[setup->dataWidth];
-    setupRemap.parity=dObj->remapParity[setup->parity];
-    setupRemap.stopBits=dObj->remapStopBits[setup->stopBits];
-    setupRemap.baudRate=setup->baudRate;
+    setupRemap.dataWidth = (DRV_USART_DATA_BIT)dObj->remapDataWidth[setup->dataWidth];
+    setupRemap.parity = (DRV_USART_DATA_BIT)dObj->remapParity[setup->parity];
+    setupRemap.stopBits = (DRV_USART_DATA_BIT)dObj->remapStopBits[setup->stopBits];
+    setupRemap.baudRate = setup->baudRate;
 
     if((setupRemap.dataWidth != DRV_USART_DATA_BIT_INVALID) && (setupRemap.parity != DRV_USART_PARITY_INVALID) && (setupRemap.stopBits != DRV_USART_STOP_BIT_INVALID))
     {
@@ -658,9 +656,7 @@ bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* set
 // Section: USART Driver Buffer Queue Interface Implementation
 // *****************************************************************************
 // *****************************************************************************
-// *****************************************************************************
 
-// *****************************************************************************
 void DRV_USART_BufferEventHandlerSet( const DRV_HANDLE handle, const DRV_USART_BUFFER_EVENT_HANDLER eventHandler, const uintptr_t context )
 {
     DRV_USART_OBJ * dObj = NULL;
@@ -686,7 +682,6 @@ void DRV_USART_BufferEventHandlerSet( const DRV_HANDLE handle, const DRV_USART_B
     return;
 }
 
-// *****************************************************************************
 void DRV_USART_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size, DRV_USART_BUFFER_HANDLE * bufferHandle)
 {
     DRV_USART_OBJ * dObj = NULL;
@@ -698,7 +693,7 @@ void DRV_USART_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t si
     {
         return;
     }
-    
+
     *bufferHandle = DRV_USART_BUFFER_HANDLE_INVALID;
 
     if((size == 0) || (buffer == NULL))
@@ -793,7 +788,6 @@ void DRV_USART_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t si
     return;
 }
 
-// *****************************************************************************
 void DRV_USART_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size, DRV_USART_BUFFER_HANDLE * bufferHandle)
 {
     DRV_USART_OBJ * dObj = NULL;
@@ -891,7 +885,6 @@ void DRV_USART_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t siz
     return;
 }
 
-// *****************************************************************************
 size_t DRV_USART_BufferCompletedBytesGet( DRV_USART_BUFFER_HANDLE bufferHandle )
 {
     DRV_USART_OBJ *dObj = NULL;
@@ -916,7 +909,7 @@ size_t DRV_USART_BufferCompletedBytesGet( DRV_USART_BUFFER_HANDLE bufferHandle )
     }
 
     /* Check if the buffer is currently submitted to PLIB */
-    if( bufferObj->currentState == DRV_USART_BUFFER_IS_PROCESSING )
+    if(bufferObj->currentState == DRV_USART_BUFFER_IS_PROCESSING)
     {
         /* Get the number of bytes processed by PLIB. */
         if(dObj->queueWrite == bufferObj)
@@ -942,7 +935,6 @@ size_t DRV_USART_BufferCompletedBytesGet( DRV_USART_BUFFER_HANDLE bufferHandle )
     return processedBytes;
 }
 
-// *****************************************************************************
 DRV_USART_BUFFER_EVENT DRV_USART_BufferStatusGet( const DRV_USART_BUFFER_HANDLE bufferHandle )
 {
     DRV_USART_BUFFER_OBJ * bufferObj = NULL;
@@ -960,7 +952,6 @@ DRV_USART_BUFFER_EVENT DRV_USART_BufferStatusGet( const DRV_USART_BUFFER_HANDLE 
     return bufferObj->status;
 }
 
-// *****************************************************************************
 bool DRV_USART_WriteQueuePurge( const DRV_HANDLE handle )
 {
     DRV_USART_OBJ * dObj = NULL;
@@ -986,7 +977,6 @@ bool DRV_USART_WriteQueuePurge( const DRV_HANDLE handle )
     return status;
 }
 
-// *****************************************************************************
 bool DRV_USART_ReadQueuePurge( const DRV_HANDLE handle )
 {
     DRV_USART_OBJ * dObj = NULL;

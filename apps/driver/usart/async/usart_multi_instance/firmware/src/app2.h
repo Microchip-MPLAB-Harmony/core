@@ -51,7 +51,7 @@
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
+#include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -77,7 +77,7 @@ extern "C" {
 // Section: Type Definitions
 // *****************************************************************************
 // *****************************************************************************
-
+#define APP2_DATA_SIZE   1
 // *****************************************************************************
 /* Application states
 
@@ -101,7 +101,7 @@ typedef enum
 
     APP2_STATE_WAIT,
 
-    APP2_STATE_IDLE
+    APP2_STATE_ERROR
 
 } APP2_STATES;
 
@@ -122,21 +122,12 @@ typedef enum
 typedef struct
 {
     APP2_STATES  state;
-
     APP2_STATES  prevState;
-
     DRV_HANDLE usartHandle;
-
-    DRV_USART_BUFFER_HANDLE messageBufHandler;
-
-    DRV_USART_BUFFER_HANDLE writeBufHandler;
-
-    DRV_USART_BUFFER_HANDLE readBufHandler;
-
-    bool completeStatus;
-
-    bool errorStatus;
-
+    DRV_USART_BUFFER_HANDLE bufferHandler;   
+    char readBuffer[APP2_DATA_SIZE];
+    volatile bool completeStatus;
+    volatile bool errorStatus;
 } APP2_DATA;
 
 

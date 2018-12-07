@@ -51,17 +51,15 @@
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
+#include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
-#include "driver/usart/drv_usart_definitions.h"
 #include "driver/usart/drv_usart.h"
 #include "system/int/sys_int.h"
 #include "system/dma/sys_dma.h"
-#include "osal/osal.h"
 
 
 // DOM-IGNORE-BEGIN
@@ -77,7 +75,7 @@ extern "C" {
 // Section: Type Definitions
 // *****************************************************************************
 // *****************************************************************************
-
+#define APP1_DATA_SIZE   1
 // *****************************************************************************
 /* Application states
 
@@ -101,7 +99,7 @@ typedef enum
 
     APP1_STATE_WAIT,
 
-    APP1_STATE_IDLE
+    APP1_STATE_ERROR
 
 } APP1_STATES;
 
@@ -122,21 +120,12 @@ typedef enum
 typedef struct
 {
     APP1_STATES  state;
-
     APP1_STATES  prevState;
-
     DRV_HANDLE usartHandle;
-
-    DRV_USART_BUFFER_HANDLE messageBufHandler;
-
-    DRV_USART_BUFFER_HANDLE writeBufHandler;
-
-    DRV_USART_BUFFER_HANDLE readBufHandler;
-
-    bool completeStatus;
-
-    bool errorStatus;
-
+    DRV_USART_BUFFER_HANDLE bufferHandler;    
+    char readBuffer[APP1_DATA_SIZE];
+    volatile bool completeStatus;
+    volatile bool errorStatus;
 } APP1_DATA;
 
 
