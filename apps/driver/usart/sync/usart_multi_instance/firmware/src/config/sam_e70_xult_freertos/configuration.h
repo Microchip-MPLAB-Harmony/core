@@ -56,6 +56,7 @@
 */
 
 #include "user.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -72,7 +73,6 @@ extern "C" {
 // *****************************************************************************
 #define DCACHE_CLEAN_BY_ADDR(data, size)       SCB_CleanDCache_by_Addr((uint32_t *)data, size)
 #define DCACHE_INVALIDATE_BY_ADDR(data, size)  SCB_InvalidateDCache_by_Addr((uint32_t *)data, size)
-
 #define DATA_CACHE_ENABLED                     true
 
 // *****************************************************************************
@@ -90,17 +90,17 @@ extern "C" {
 /* USART Driver Global Configuration Options */
 #define DRV_USART_INSTANCES_NUMBER         2
 
-/* USART Driver Instance 0 Configuration Options */
-#define DRV_USART_INDEX_0                  0
-#define DRV_USART_XMIT_DMA_CH_IDX0         SYS_DMA_CHANNEL_0
-#define DRV_USART_RCV_DMA_CH_IDX0          SYS_DMA_CHANNEL_1
-#define DRV_USART_CLIENTS_NUMBER_IDX0      1
-
 /* USART Driver Instance 1 Configuration Options */
 #define DRV_USART_INDEX_1                  1
 #define DRV_USART_XMIT_DMA_CH_IDX1         SYS_DMA_CHANNEL_2
 #define DRV_USART_RCV_DMA_CH_IDX1          SYS_DMA_CHANNEL_3
 #define DRV_USART_CLIENTS_NUMBER_IDX1      1
+
+/* USART Driver Instance 0 Configuration Options */
+#define DRV_USART_INDEX_0                  0
+#define DRV_USART_XMIT_DMA_CH_IDX0         SYS_DMA_CHANNEL_0
+#define DRV_USART_RCV_DMA_CH_IDX0          SYS_DMA_CHANNEL_1
+#define DRV_USART_CLIENTS_NUMBER_IDX0      1
 
 
 

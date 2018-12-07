@@ -48,20 +48,20 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "bsp/bsp.h"
+#include "driver/usart/drv_usart_definitions.h"
+#include "driver/usart/drv_usart.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/xdmac/plib_xdmac.h"
-#include "bsp/bsp.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "peripheral/usart/plib_usart1.h"
+#include "peripheral/usart/plib_usart0.h"
 #include "system/int/sys_int.h"
 #include "system/dma/sys_dma.h"
 #include "osal/osal.h"
-#include "driver/usart/drv_usart_definitions.h"
-#include "driver/usart/drv_usart.h"
-#include "peripheral/usart/plib_usart0.h"
-#include "peripheral/usart/plib_usart1.h"
 #include "app_usart_usb_click_board.h"
 #include "app_usart_usb_debug_port.h"
 
@@ -185,8 +185,8 @@ void SYS_Tasks ( void );
 
 typedef struct
 {
-    SYS_MODULE_OBJ  drvUsart0;
     SYS_MODULE_OBJ  drvUsart1;
+    SYS_MODULE_OBJ  drvUsart0;
 
 } SYSTEM_OBJECTS;
 
