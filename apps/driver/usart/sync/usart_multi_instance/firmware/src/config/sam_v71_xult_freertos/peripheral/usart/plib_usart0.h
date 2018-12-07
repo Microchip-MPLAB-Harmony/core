@@ -78,9 +78,9 @@ size_t USART0_WriteCountGet( void );
 
 size_t USART0_ReadCountGet( void );
 
-bool USART0_WriteCallbackRegister( USART_CALLBACK callback, uintptr_t context );
+void USART0_WriteCallbackRegister( USART_CALLBACK callback, uintptr_t context );
 
-bool USART0_ReadCallbackRegister( USART_CALLBACK callback, uintptr_t context );
+void USART0_ReadCallbackRegister( USART_CALLBACK callback, uintptr_t context );
 
 
 // DOM-IGNORE-BEGIN
