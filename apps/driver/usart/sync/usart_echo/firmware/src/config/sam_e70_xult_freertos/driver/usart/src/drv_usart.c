@@ -45,6 +45,7 @@
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
+
 #include "configuration.h"
 #include "driver/usart/drv_usart.h"
 #include "drv_usart_local.h"
@@ -59,7 +60,7 @@
 // *****************************************************************************
 
 /* This is the driver instance object array. */
-DRV_USART_OBJ gDrvUSARTObj[DRV_USART_INSTANCES_NUMBER] ;
+static DRV_USART_OBJ gDrvUSARTObj[DRV_USART_INSTANCES_NUMBER] ;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -75,6 +76,7 @@ static inline uint32_t  _DRV_USART_MAKE_HANDLE(uint16_t token, uint8_t drvIndex,
 static inline uint16_t _DRV_USART_UPDATE_TOKEN(uint16_t token)
 {
     token++;
+
     if (token >= DRV_USART_TOKEN_MAX)
     {
         token = 1;
@@ -92,7 +94,7 @@ static void _DRV_USART_TX_PLIB_CallbackHandler( uintptr_t context )
     OSAL_SEM_PostISR(&dObj->txTransferDone);
 }
 
-static DRV_USART_ERROR _DRV_USART_GetErrorType(uint32_t* remapError, uint32_t errorMask)
+static DRV_USART_ERROR _DRV_USART_GetErrorType(const uint32_t* remapError, uint32_t errorMask)
 {
     DRV_USART_ERROR error = DRV_USART_ERROR_NONE;
 
@@ -115,7 +117,7 @@ static void _DRV_USART_RX_PLIB_CallbackHandler( uintptr_t context )
 
     errorMask = dObj->usartPlib->errorGet();
 
-    if(errorMask == DRV_USART_ERROR_NONE)
+    if(errorMask == (uint32_t) DRV_USART_ERROR_NONE)
     {
         clientObj->errors = DRV_USART_ERROR_NONE;
         dObj->rxRequestStatus = DRV_USART_REQUEST_STATUS_COMPLETE;
@@ -200,25 +202,6 @@ static DRV_USART_CLIENT_OBJ* _DRV_USART_DriverHandleValidate(DRV_HANDLE handle)
 // *****************************************************************************
 // *****************************************************************************
 
-// *****************************************************************************
-/* Function:
-    SYS_MODULE_OBJ DRV_USART_Initialize
-    (
-        const SYS_MODULE_INDEX drvIndex,
-        const SYS_MODULE_INIT * const init
-    )
-
-  Summary:
-    Initializes the USART instance for the specified driver index.
-
-  Description:
-    This routine initializes the USART driver instance for the specified driver
-    index, making it ready for clients to open and use it. The initialization
-    data is specified by the init parameter.
-
-  Remarks:
-    See drv_usart.h for usage information.
-*/
 SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT * const init )
 {
     DRV_USART_OBJ *dObj = NULL;
@@ -322,22 +305,6 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
 
-// *****************************************************************************
-/* Function:
-    SYS_STATUS DRV_USART_Status
-    (
-        SYS_MODULE_OBJ object
-    )
-
-  Summary:
-    Gets the current status of the USART driver module.
-
-  Description:
-    This routine provides the current status of the USART driver module.
-
-  Remarks:
-    See drv_usart.h for usage information.
-*/
 SYS_STATUS DRV_USART_Status( SYS_MODULE_OBJ object)
 {
     /* Validate the request */
@@ -349,26 +316,7 @@ SYS_STATUS DRV_USART_Status( SYS_MODULE_OBJ object)
 
     return (gDrvUSARTObj[object].status);
 }
-// *****************************************************************************
-/* Function:
-    DRV_HANDLE DRV_USART_Open
-    (
-        const SYS_MODULE_INDEX index,
-        const DRV_IO_INTENT ioIntent
-    )
 
-  Summary:
-    Opens the specified USART driver instance and returns a handle to it.
-
-  Description:
-    This routine opens the specified USART driver instance and provides a
-    handle that must be provided to all other client-level operations to
-    identify the caller and the instance of the driver. The ioIntent
-    parameter defines how the client interacts with this driver instance.
-
-  Remarks:
-    See drv_usart.h for usage information.
-*/
 DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
 {
     DRV_USART_OBJ *dObj = NULL;
@@ -416,7 +364,6 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
     }
 
     /* Enter here only if the lock was obtained */
-
     for(iClient = 0; iClient != dObj->nClientsMax; iClient++)
     {
         if(false == ((DRV_USART_CLIENT_OBJ *)dObj->clientObjPool)[iClient].inUse)
@@ -459,23 +406,6 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
     return clientObj ? ((DRV_HANDLE)clientObj->clientHandle) : DRV_HANDLE_INVALID;
 }
 
-// *****************************************************************************
-/* Function:
-    bool DRV_USART_SerialSetup
-    (
-        const DRV_HANDLE handle,
-        DRV_USART_SERIAL_SETUP * setup
-    )
-
-  Summary:
-    Sets the USART serial communication settings dynamically.
-
-  Description:
-    This function sets the USART serial communication settings dynamically.
-
-  Remarks:
-    See drv_usart.h for usage information.
-*/
 bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* setup )
 {
     DRV_USART_OBJ* dObj;
@@ -489,12 +419,12 @@ bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* set
     {
         dObj = (DRV_USART_OBJ *)clientObj->hDriver;
 
-        setupRemap.dataWidth=dObj->remapDataWidth[setup->dataWidth];
-        setupRemap.parity=dObj->remapParity[setup->parity];
-        setupRemap.stopBits=dObj->remapStopBits[setup->stopBits];
-        setupRemap.baudRate=setup->baudRate;
+        setupRemap.dataWidth = (DRV_USART_DATA_BIT)dObj->remapDataWidth[setup->dataWidth];
+        setupRemap.parity = (DRV_USART_DATA_BIT)dObj->remapParity[setup->parity];
+        setupRemap.stopBits = (DRV_USART_DATA_BIT)dObj->remapStopBits[setup->stopBits];
+        setupRemap.baudRate = setup->baudRate;
 
-        if( (setupRemap.dataWidth !=DRV_USART_DATA_BIT_INVALID) && (setupRemap.parity != DRV_USART_PARITY_INVALID) && (setupRemap.stopBits != DRV_USART_STOP_BIT_INVALID))
+        if( (setupRemap.dataWidth != DRV_USART_DATA_BIT_INVALID) && (setupRemap.parity != DRV_USART_PARITY_INVALID) && (setupRemap.stopBits != DRV_USART_STOP_BIT_INVALID))
         {
             /* Clock source cannot be modified dynamically, so passing the '0' to pick
              * the configured clock source value */
@@ -504,25 +434,6 @@ bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* set
     return isSuccess;
 }
 
-// *****************************************************************************
-/* Function:
-    void DRV_USART_Close
-    (
-        DRV_Handle handle
-    )
-
-  Summary:
-    Closes an opened-instance of the USART driver.
-
-  Description:
-    This routine closes an opened-instance of the USART driver, invalidating the
-    handle. Any buffers in the driver queue that were submitted by this client
-    will be removed. A new handle must be obtained by calling DRV_USART_Open
-    before the caller may use the driver again.
-
-  Remarks:
-    See drv_usart.h for usage information.
-*/
 void DRV_USART_Close( DRV_HANDLE handle )
 {
     DRV_USART_CLIENT_OBJ* clientObj;
@@ -555,23 +466,6 @@ void DRV_USART_Close( DRV_HANDLE handle )
     }
 }
 
-// *****************************************************************************
-/* Function:
-    DRV_USART_ERROR DRV_USART_ErrorGet
-    (
-        const DRV_HANDLE handle
-    )
-
-  Summary:
-    Gets the USART hardware errors associated with the client.
-
-  Description:
-    This function returns the errors associated with the given client.
-    The call to this function also clears all the associated error flags.
-
-  Remarks:
-    See drv_usart.h for usage information.
-*/
 DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
 {
     DRV_USART_CLIENT_OBJ* clientObj;
@@ -587,25 +481,7 @@ DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
 
     return errors;
 }
-// *****************************************************************************
-/* Function:
-    bool DRV_USART_WriteBuffer
-    (
-        const DRV_HANDLE handle,
-        void * buffer,
-        const size_t size
-    );
 
-  Summary:
-    This is a blocking function that writes data over USART.
-
-  Description:
-    This function does a blocking write operation. The function blocks till
-    the data write is complete.
-
-  Remarks:
-    See drv_usart.h for usage information.
-*/
 bool DRV_USART_WriteBuffer
 (
     const DRV_HANDLE handle,
@@ -632,7 +508,7 @@ bool DRV_USART_WriteBuffer
 
             dObj->currentTxClient = (uintptr_t)clientObj;
 
-            if( dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
+            if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
             {
                 if (DATA_CACHE_ENABLED == true)
                 {
@@ -664,25 +540,6 @@ bool DRV_USART_WriteBuffer
     return isSuccess;
 }
 
-// *****************************************************************************
-/* Function:
-    bool DRV_USART_ReadBuffer
-    (
-        const DRV_HANDLE handle,
-        void * buffer,
-        const size_t size
-    );
-
-  Summary:
-    This is a blocking function that reads data over USART.
-
-  Description:
-    This function does a blocking read operation. The function blocks till
-    the data read is complete or error has occurred during read.
-
-  Remarks:
-    See drv_usart.h for usage information.
-*/
 bool DRV_USART_ReadBuffer
 (
     const DRV_HANDLE handle,
@@ -717,7 +574,6 @@ bool DRV_USART_ReadBuffer
             {
                 dObj->usartPlib->read(buffer, numbytes);
             }
-
             /* Wait for transfer to complete */
             if (OSAL_SEM_Pend(&dObj->rxTransferDone, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
@@ -730,7 +586,6 @@ bool DRV_USART_ReadBuffer
                          * to load the latest data in the actual memory to the cache */
                         DCACHE_INVALIDATE_BY_ADDR((uint32_t *)buffer, numbytes);
                     }
-
                     isSuccess = true;
                 }
             }

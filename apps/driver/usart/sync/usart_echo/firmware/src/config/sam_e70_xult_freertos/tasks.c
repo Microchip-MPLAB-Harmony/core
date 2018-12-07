@@ -58,6 +58,9 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
+/* Handle for the APP_USART_ECHO_Tasks. */
+TaskHandle_t xAPP_USART_ECHO_Tasks;
+
 void _APP_USART_ECHO_Tasks(  void *pvParameters  )
 {
     while(1)
@@ -100,7 +103,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 1,
-                NULL);
+                &xAPP_USART_ECHO_Tasks);
 
 
 

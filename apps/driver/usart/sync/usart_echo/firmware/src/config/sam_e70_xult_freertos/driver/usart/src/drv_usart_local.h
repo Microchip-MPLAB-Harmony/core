@@ -42,12 +42,12 @@
 #ifndef DRV_USART_LOCAL_H
 #define DRV_USART_LOCAL_H
 
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
+
 #include "driver/usart/drv_usart_definitions.h"
 #include "driver/usart/drv_usart.h"
 #include "osal/osal.h"
@@ -85,20 +85,19 @@
 // *****************************************************************************
 /* USART Driver Buffer Events
 
-   Summary
+  Summary
     Identifies the possible events that can result from a buffer add request.
 
-   Description
+  Description
     This enumeration identifies the possible events that can result from a
     buffer add request caused by the client calling either the
     DRV_USART_ReadBufferAdd or DRV_USART_WriteBufferAdd functions.
 
-   Remarks:
+  Remarks:
     One of these values is passed in the "event" parameter of the event
     handling callback function that the client registered with the driver by
     calling the DRV_USART_BufferEventHandlerSet function when a buffer
     transfer request is completed.
-
 */
 
 typedef enum
@@ -110,6 +109,7 @@ typedef enum
     DRV_USART_REQUEST_STATUS_ERROR,
 
 } DRV_USART_REQUEST_STATUS;
+
 // *****************************************************************************
 /* USART Driver Instance Object
 
@@ -128,11 +128,12 @@ typedef struct
     /* Flag to indicate this object is in use  */
     bool inUse;
 
-     /* Flag to indicate that driver has been opened Exclusively*/
+    /* Flag to indicate that driver has been opened Exclusively */
     bool isExclusive;
 
     /* Keep track of the number of clients
-      that have opened this driver */
+     * that have opened this driver
+	 */
     size_t nClients;
 
     /* Maximum number of clients */
@@ -142,7 +143,7 @@ typedef struct
     SYS_STATUS status;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    USART_PLIB_API *usartPlib;
+    const DRV_USART_PLIB_INTERFACE* usartPlib;
 
     /* Memory pool for Client Objects */
     uintptr_t clientObjPool;
@@ -154,10 +155,10 @@ typedef struct
     SYS_DMA_CHANNEL rxDMAChannel;
 
     /* This is the USART transmit register address. Used for DMA operation. */
-    void * txAddress;
+    void* txAddress;
 
     /* This is the USART receive register address. Used for DMA operation. */
-    void * rxAddress;
+    void* rxAddress;
 
     /* This is an instance specific token counter used to generate unique
      * client handles
@@ -171,10 +172,10 @@ typedef struct
     uintptr_t currentTxClient;
 
     /* Indicates transmit requests status */
-    DRV_USART_REQUEST_STATUS txRequestStatus;
+    volatile DRV_USART_REQUEST_STATUS txRequestStatus;
 
     /* Indicates receive requests status */
-    DRV_USART_REQUEST_STATUS rxRequestStatus;
+    volatile DRV_USART_REQUEST_STATUS rxRequestStatus;
 
     /* Transmit mutex */
     OSAL_MUTEX_DECLARE(clientMutex);
@@ -191,13 +192,13 @@ typedef struct
     /* Receive complete semaphore. This is released from ISR*/
     OSAL_SEM_DECLARE (rxTransferDone);
 
-    uint32_t* remapDataWidth;
+    const uint32_t* remapDataWidth;
 
-    uint32_t* remapParity;
+    const uint32_t* remapParity;
 
-    uint32_t* remapStopBits;
+    const uint32_t* remapStopBits;
 
-    uint32_t* remapError;
+    const uint32_t* remapError;
 
 } DRV_USART_OBJ;
 
@@ -218,10 +219,10 @@ typedef struct
     DRV_HANDLE                      clientHandle;
 
     /* This flags indicates if the object is in use or is
-     * available */
+     * available
+     */
     bool                            inUse;
 
 } DRV_USART_CLIENT_OBJ;
 
 #endif //#ifndef DRV_USART_LOCAL_H
-
