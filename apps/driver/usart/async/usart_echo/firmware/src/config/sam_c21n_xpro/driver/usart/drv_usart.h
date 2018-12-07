@@ -326,31 +326,34 @@ typedef void ( *DRV_USART_BUFFER_EVENT_HANDLER )( DRV_USART_BUFFER_EVENT event, 
 
     SYS_MODULE_OBJ              objectHandle;
 
-    USART_PLIB_API drvUsart0PlibAPI = {
-        {
-            .readCallbackRegister = USART1_ReadCallbackRegister,
-            .read = USART1_Read,
-            .readIsBusy = USART1_ReadIsBusy,
-            .readCountGet = USART1_ReadCountGet,
-            .writeCallbackRegister = USART1_WriteCallbackRegister,
-            .write = USART1_Write,
-            .writeIsBusy = USART1_WriteIsBusy,
-            .writeCountGet = USART1_WriteCountGet,
-            .errorGet = USART1_ErrorGet
-        }
+    const DRV_USART_PLIB_INTERFACE drvUsart0PlibAPI = {
+        .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)USART1_ReadCallbackRegister,
+        .read = (DRV_USART_PLIB_READ)USART1_Read,
+        .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)USART1_ReadIsBusy,
+        .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)USART1_ReadCountGet,
+        .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)USART1_WriteCallbackRegister,
+        .write = (DRV_USART_PLIB_WRITE)USART1_Write,
+        .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)USART1_WriteIsBusy,
+        .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)USART1_WriteCountGet,
+        .errorGet = (DRV_USART_PLIB_ERROR_GET)USART1_ErrorGet,
+        .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)USART1_SerialSetup
     };
 
-    DRV_USART_INIT drvUsart0InitData =
-    {
+    const DRV_USART_INIT drvUsart0InitData = {
         .usartPlib = &drvUsart0PlibAPI,
-        .interruptUSART = USART1_IRQn,
-        .queueSizeTransmit = DRV_USART_XMIT_QUEUE_SIZE_IDX0,
-        .queueSizeReceive = DRV_USART_RCV_QUEUE_SIZE_IDX0,
+        .remapDataWidth = drvUsart0remapDataWidth,
+        .remapParity = drvUsart0remapParity,
+        .remapStopBits = drvUsart0remapStopBits,
+        .remapError = drvUsart0remapError,
+
         .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
+
         .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
-        .usartTransmitAddress = USART1_TRANSMIT_ADDRESS,
-        .usartReceiveAddress = USART1_RECEIVE_ADDRESS,
-        .interruptDMA = XDMAC_IRQn
+
+        .numClients = DRV_USART_CLIENTS_NUMBER_IDX0,
+
+        .clientObjPool = (uintptr_t)&drvUSART0ClientObjPool[0],
+
     };
 
     objectHandle = DRV_USART_Initialize(DRV_USART_INDEX_1,
@@ -1006,7 +1009,7 @@ size_t DRV_USART_BufferCompletedBytesGet( DRV_USART_BUFFER_HANDLE bufferHandle )
     bytes to be obtained.
 
   Returns:
-    Returns either pending, success or error event for the buffer. Pending means 
+    Returns either pending, success or error event for the buffer. Pending means
     the buffer is queued but not serviced yet.
 
   Example:
