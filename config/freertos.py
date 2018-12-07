@@ -159,6 +159,10 @@ def freeRtosMemMangEnableHeap5(freeRtosMemMangHeap5, event):
     else :
         freeRtosMemMangHeap5.setEnabled(False)
 
+def freeRtosCpuClockHz(symbol, event):
+    clock = int(event["value"])
+    symbol.setValue(clock, 1)
+
 # Instatntiate FreeRTOS Component
 def instantiateComponent(thirdPartyFreeRTOS):
     Log.writeInfoMessage("Running FreeRTOS")
@@ -232,6 +236,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_CpuClockHz.setLabel("CPU Clock Speed (Hz)")
     freeRtosSym_CpuClockHz.setVisible(False)
     freeRtosSym_CpuClockHz.setDefaultValue(cpuclk)
+    freeRtosSym_CpuClockHz.setDependencies(freeRtosCpuClockHz, ["core.CPU_CLOCK_FREQUENCY"])
 
     freeRtosSym_TickRate = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_TICK_RATE_HZ", freeRtosSymMenu)
     freeRtosSym_TickRate.setLabel("Tick Rate (Hz)")
