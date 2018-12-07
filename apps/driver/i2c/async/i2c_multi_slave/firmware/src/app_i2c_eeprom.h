@@ -56,6 +56,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "configuration.h"
 #include "driver/i2c/drv_i2c.h"
 
