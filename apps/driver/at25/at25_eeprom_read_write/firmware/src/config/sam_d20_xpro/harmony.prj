@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Configuration>
+  <Configurator>
+    <Name dnOrder="0" value="sam_d20_xpro"/>
+    <Processor dnOrder="1" value="ATSAMD20J18"/>
+    <Harmony dnOrder="2" path="../../../../.."/>
+    <Manifest dnOrder="3">
+      <Files dnOrder="0">
+        <File dnOrder="0">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">app.c</Name>
+          <LogicalPath dnOrder="2"/>
+          <PhysicalPath dnOrder="3">/../../</PhysicalPath>
+          <GeneratedChecksum dnOrder="4"/>
+          <UserChecksum dnOrder="5"/>
+        </File>
+        <File dnOrder="1">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">bsp.c</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/bsp/</LogicalPath>
+          <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">1A81761E8B71DEB8D8FBEA31DBFD4738</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1A81761E8B71DEB8D8FBEA31DBFD4738</UserChecksum>
+        </File>
+        <File dnOrder="2">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">drv_at25.c</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/driver/at25/</LogicalPath>
+          <PhysicalPath dnOrder="3">/driver/at25/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">A24D2A86DBAC821994077ED8CCE5639D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A24D2A86DBAC821994077ED8CCE5639D</UserChecksum>
+        </File>
+        <File dnOrder="3">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">drv_at25_local.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/driver/at25/</LogicalPath>
+          <PhysicalPath dnOrder="3">/driver/at25/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">4B26AEF266B3DF91CBCB4184F356112A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4B26AEF266B3DF91CBCB4184F356112A</UserChecksum>
+        </File>
+        <File dnOrder="4">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">exceptions.c</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">AC14D1B72037D83BEE60A78AC2103D64</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AC14D1B72037D83BEE60A78AC2103D64</UserChecksum>
+        </File>
+        <File dnOrder="5">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">initialization.c</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">DAA5D6F658B97971F361AE7E86036616</GeneratedChecksum>
+          <UserChecksum dnOrder="5">DAA5D6F658B97971F361AE7E86036616</UserChecksum>
+        </File>
+        <File dnOrder="6">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">interrupts.c</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">3FDCC651DCBEE78462B1F382B84143CB</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3FDCC651DCBEE78462B1F382B84143CB</UserChecksum>
+        </File>
+        <File dnOrder="7">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">libc_syscalls.c</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">0D061464696B9E5D276A90A352736879</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0D061464696B9E5D276A90A352736879</UserChecksum>
+        </File>
+        <File dnOrder="8">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">main.c</Name>
+          <LogicalPath dnOrder="2"/>
+          <PhysicalPath dnOrder="3">/../../</PhysicalPath>
+          <GeneratedChecksum dnOrder="4"/>
+          <UserChecksum dnOrder="5"/>
+        </File>
+        <File dnOrder="9">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_clock.c</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/peripheral/clock/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/clock/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">35A49428D2DAD371BCD8FFDC129B1E4F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">35A49428D2DAD371BCD8FFDC129B1E4F</UserChecksum>
+        </File>
+        <File dnOrder="10">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_evsys.c</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/peripheral/evsys</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/evsys/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">998FD1E8DEAAB7C9C4149CF3CC1988DB</GeneratedChecksum>
+          <UserChecksum dnOrder="5">998FD1E8DEAAB7C9C4149CF3CC1988DB</UserChecksum>
+        </File>
+        <File dnOrder="11">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_nvic.c</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/peripheral/nvic/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/nvic/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">AF0033EC1C893C5A9E39C6FF1C08A617</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AF0033EC1C893C5A9E39C6FF1C08A617</UserChecksum>
+        </File>
+        <File dnOrder="12">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_port.c</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/peripheral/port/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/port/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">030A34D444D2CA8E280BDDE3BA624CA7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">030A34D444D2CA8E280BDDE3BA624CA7</UserChecksum>
+        </File>
+        <File dnOrder="13">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_sercom1_spi.c</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/peripheral/sercom/spim/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/sercom/spim/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">845C19423CB2A29F882CB7D13359C008</GeneratedChecksum>
+          <UserChecksum dnOrder="5">845C19423CB2A29F882CB7D13359C008</UserChecksum>
+        </File>
+        <File dnOrder="14">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">startup.c</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">1D663AF01040F617CC298F9373DE9B57</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1D663AF01040F617CC298F9373DE9B57</UserChecksum>
+        </File>
+        <File dnOrder="15">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">sys_int.c</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/system/int/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/int/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">D459D638007F302DAE42AF54D781708A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D459D638007F302DAE42AF54D781708A</UserChecksum>
+        </File>
+        <File dnOrder="16">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">tasks.c</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">DE51BB8F6FDBC39FB049CB2A14E56B25</GeneratedChecksum>
+          <UserChecksum dnOrder="5">DE51BB8F6FDBC39FB049CB2A14E56B25</UserChecksum>
+        </File>
+        <File dnOrder="17">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">xc32_monitor.c</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/stdio/</LogicalPath>
+          <PhysicalPath dnOrder="3">/stdio/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">0CDCE9B6891797FCD2AEA243F841353F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0CDCE9B6891797FCD2AEA243F841353F</UserChecksum>
+        </File>
+        <File dnOrder="18">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">ac.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">95782D3AA58B185267E01C10D6ED4671</GeneratedChecksum>
+          <UserChecksum dnOrder="5">95782D3AA58B185267E01C10D6ED4671</UserChecksum>
+        </File>
+        <File dnOrder="19">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">adc.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">FC7027E52B72F7F868BF525DCB2B1CB3</GeneratedChecksum>
+          <UserChecksum dnOrder="5">FC7027E52B72F7F868BF525DCB2B1CB3</UserChecksum>
+        </File>
+        <File dnOrder="20">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">app.h</Name>
+          <LogicalPath dnOrder="2"/>
+          <PhysicalPath dnOrder="3">/../../</PhysicalPath>
+          <GeneratedChecksum dnOrder="4"/>
+          <UserChecksum dnOrder="5"/>
+        </File>
+        <File dnOrder="21">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">arm_common_tables.h</Name>
+          <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/DSP/Include/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/DSP/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">ECE7DC494F56CE01D96DE918E61B7C02</GeneratedChecksum>
+          <UserChecksum dnOrder="5">ECE7DC494F56CE01D96DE918E61B7C02</UserChecksum>
+        </File>
+        <File dnOrder="22">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">arm_const_structs.h</Name>
+          <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/DSP/Include/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/DSP/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">B99479A6A9F72E72C614DB59601DC762</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B99479A6A9F72E72C614DB59601DC762</UserChecksum>
+        </File>
+        <File dnOrder="23">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">arm_math.h</Name>
+          <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/DSP/Include/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/DSP/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">27F6D2D0CB97CA5159FE0788243E978E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">27F6D2D0CB97CA5159FE0788243E978E</UserChecksum>
+        </File>
+        <File dnOrder="24">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">atsamd20j18.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">F45526B7F7BFBEA3D4578323F1FC93D8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F45526B7F7BFBEA3D4578323F1FC93D8</UserChecksum>
+        </File>
+        <File dnOrder="25">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">bsp.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/bsp/</LogicalPath>
+          <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">475A5F7BABBC7E86389DF791453D9037</GeneratedChecksum>
+          <UserChecksum dnOrder="5">475A5F7BABBC7E86389DF791453D9037</UserChecksum>
+        </File>
+        <File dnOrder="26">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">cmsis_compiler.h</Name>
+          <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">400D1CC9BE24708CF7AF1C5B9FE76E50</GeneratedChecksum>
+          <UserChecksum dnOrder="5">400D1CC9BE24708CF7AF1C5B9FE76E50</UserChecksum>
+        </File>
+        <File dnOrder="27">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">cmsis_gcc.h</Name>
+          <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">EB0729CA546715BB4BAA41AE37179D2B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">EB0729CA546715BB4BAA41AE37179D2B</UserChecksum>
+        </File>
+        <File dnOrder="28">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">cmsis_version.h</Name>
+          <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">C0876654D46C4217FC4F3AE616901992</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C0876654D46C4217FC4F3AE616901992</UserChecksum>
+        </File>
+        <File dnOrder="29">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">configuration.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">F5C95AE5A93FDE7919E9ADAB3B0E7C8E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F5C95AE5A93FDE7919E9ADAB3B0E7C8E</UserChecksum>
+        </File>
+        <File dnOrder="30">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">core_cm0plus.h</Name>
+          <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">8A50F8EDEEDEFAC1FA14C36BB6E38539</GeneratedChecksum>
+          <UserChecksum dnOrder="5">8A50F8EDEEDEFAC1FA14C36BB6E38539</UserChecksum>
+        </File>
+        <File dnOrder="31">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">dac.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">C81F14011095B3C1365C99A847241565</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C81F14011095B3C1365C99A847241565</UserChecksum>
+        </File>
+        <File dnOrder="32">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">definitions.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">42876EB62F84827203DC37D82E7EF039</GeneratedChecksum>
+          <UserChecksum dnOrder="5">42876EB62F84827203DC37D82E7EF039</UserChecksum>
+        </File>
+        <File dnOrder="33">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">device.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">F5DE2A1CF604C901DDF83EBC42B7CD4F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F5DE2A1CF604C901DDF83EBC42B7CD4F</UserChecksum>
+        </File>
+        <File dnOrder="34">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">driver.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/driver/</LogicalPath>
+          <PhysicalPath dnOrder="3">/driver/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">1D2094DFA60F847FFD4E8153B6E78027</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1D2094DFA60F847FFD4E8153B6E78027</UserChecksum>
+        </File>
+        <File dnOrder="35">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">driver_common.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/driver/</LogicalPath>
+          <PhysicalPath dnOrder="3">/driver/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">CC7DFCC51CD25171A3E400E18969354F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">CC7DFCC51CD25171A3E400E18969354F</UserChecksum>
+        </File>
+        <File dnOrder="36">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">drv_at25.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/driver/at25/</LogicalPath>
+          <PhysicalPath dnOrder="3">/driver/at25/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">D88B31F2549366FA45428169AED5AA1B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D88B31F2549366FA45428169AED5AA1B</UserChecksum>
+        </File>
+        <File dnOrder="37">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">drv_at25_definitions.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/driver/at25/</LogicalPath>
+          <PhysicalPath dnOrder="3">/driver/at25/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">3A5673768ECF05CBFC6F33D688186538</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3A5673768ECF05CBFC6F33D688186538</UserChecksum>
+        </File>
+        <File dnOrder="38">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">dsu.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">081EEC42FF1EAC3420342C744EB7DF61</GeneratedChecksum>
+          <UserChecksum dnOrder="5">081EEC42FF1EAC3420342C744EB7DF61</UserChecksum>
+        </File>
+        <File dnOrder="39">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">eic.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">769CF429965909F91A997CB855981D00</GeneratedChecksum>
+          <UserChecksum dnOrder="5">769CF429965909F91A997CB855981D00</UserChecksum>
+        </File>
+        <File dnOrder="40">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">evsys.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">70E141B0CD7AF7888859AF3616FD2C11</GeneratedChecksum>
+          <UserChecksum dnOrder="5">70E141B0CD7AF7888859AF3616FD2C11</UserChecksum>
+        </File>
+        <File dnOrder="41">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">gclk.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">4A5F8C073D7C884D596594B012FA9164</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4A5F8C073D7C884D596594B012FA9164</UserChecksum>
+        </File>
+        <File dnOrder="42">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">mpu_armv7.h</Name>
+          <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">41F5CEC00B0EF0E4774921C5BD48BCC8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">41F5CEC00B0EF0E4774921C5BD48BCC8</UserChecksum>
+        </File>
+        <File dnOrder="43">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">nvmctrl.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">B780BB9D335D3AA816C6EA8CD48A7B42</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B780BB9D335D3AA816C6EA8CD48A7B42</UserChecksum>
+        </File>
+        <File dnOrder="44">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">osal.h</Name>
+          <LogicalPath dnOrder="2">/osal/</LogicalPath>
+          <PhysicalPath dnOrder="3">/osal/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">9E0BD0864C4D89F9A3BA6FFA57F9E065</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9E0BD0864C4D89F9A3BA6FFA57F9E065</UserChecksum>
+        </File>
+        <File dnOrder="45">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">osal_definitions.h</Name>
+          <LogicalPath dnOrder="2">/osal/</LogicalPath>
+          <PhysicalPath dnOrder="3">/osal/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">0C6AF7550A40F9EDF5A15DB9444D7D8E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0C6AF7550A40F9EDF5A15DB9444D7D8E</UserChecksum>
+        </File>
+        <File dnOrder="46">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">osal_impl_basic.h</Name>
+          <LogicalPath dnOrder="2">/osal/</LogicalPath>
+          <PhysicalPath dnOrder="3">/osal/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">2C51CA46697F404F66AE740CAA7C49C8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2C51CA46697F404F66AE740CAA7C49C8</UserChecksum>
+        </File>
+        <File dnOrder="47">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">pac.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">99545094B677B6E5AF0EB2D300895B4B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">99545094B677B6E5AF0EB2D300895B4B</UserChecksum>
+        </File>
+        <File dnOrder="48">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_clock.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/peripheral/clock/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/clock/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">C591D09F115E12D00921D14939E3900D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C591D09F115E12D00921D14939E3900D</UserChecksum>
+        </File>
+        <File dnOrder="49">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_evsys.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/peripheral/evsys</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/evsys/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">3E2AE46F7395956AB67F9E1A2C6066D5</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3E2AE46F7395956AB67F9E1A2C6066D5</UserChecksum>
+        </File>
+        <File dnOrder="50">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_nvic.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/peripheral/nvic/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/nvic/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">E95AB23B866AA0CE6F0ABF637E9E2C83</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E95AB23B866AA0CE6F0ABF637E9E2C83</UserChecksum>
+        </File>
+        <File dnOrder="51">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_port.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/peripheral/port/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/port/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">09CC3FB3156A031438EE80C74035A0EA</GeneratedChecksum>
+          <UserChecksum dnOrder="5">09CC3FB3156A031438EE80C74035A0EA</UserChecksum>
+        </File>
+        <File dnOrder="52">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_sercom1_spi.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/peripheral/sercom/spim/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/sercom/spim/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">7B448FFDC1B5B2F6745109348D96DC7A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7B448FFDC1B5B2F6745109348D96DC7A</UserChecksum>
+        </File>
+        <File dnOrder="53">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_sercom_spi_common.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/peripheral/sercom/spim/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/sercom/spim/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">F2967760A534CED6755D3DD2822673D9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F2967760A534CED6755D3DD2822673D9</UserChecksum>
+        </File>
+        <File dnOrder="54">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">pm.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">0FBF7D8026F982FB56460C601C66E22D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0FBF7D8026F982FB56460C601C66E22D</UserChecksum>
+        </File>
+        <File dnOrder="55">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">port.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">0B26FAAA8A279E403FD4D2F1C2407F8B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0B26FAAA8A279E403FD4D2F1C2407F8B</UserChecksum>
+        </File>
+        <File dnOrder="56">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">ptc.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">1AA965CD07DF817716B1329791AD659F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1AA965CD07DF817716B1329791AD659F</UserChecksum>
+        </File>
+        <File dnOrder="57">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">rtc.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">584DCFB629E1D1979967F85370F88EA4</GeneratedChecksum>
+          <UserChecksum dnOrder="5">584DCFB629E1D1979967F85370F88EA4</UserChecksum>
+        </File>
+        <File dnOrder="58">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">samd20j18.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/pio/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/pio/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">66F2970DDD0272F7FA68C4ACA533732E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">66F2970DDD0272F7FA68C4ACA533732E</UserChecksum>
+        </File>
+        <File dnOrder="59">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sercom.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">63DE6A77E029597F73BA9F55CC933EA9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">63DE6A77E029597F73BA9F55CC933EA9</UserChecksum>
+        </File>
+        <File dnOrder="60">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_int.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/system/int/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/int/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">7D9AB9A4C77982AE143EC7B21D104E7F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7D9AB9A4C77982AE143EC7B21D104E7F</UserChecksum>
+        </File>
+        <File dnOrder="61">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_int_mapping.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/system/int/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/int/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">2030B346DC992B43C8E0E195D488BCF1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2030B346DC992B43C8E0E195D488BCF1</UserChecksum>
+        </File>
+        <File dnOrder="62">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_ports.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/system/ports/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/ports/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">FE9F43E5EA9B28EE2A5C6899712E0B98</GeneratedChecksum>
+          <UserChecksum dnOrder="5">FE9F43E5EA9B28EE2A5C6899712E0B98</UserChecksum>
+        </File>
+        <File dnOrder="63">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_ports_mapping.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/system/ports/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/ports/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">0077CD2365E6F28D76DF1D212FF80059</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0077CD2365E6F28D76DF1D212FF80059</UserChecksum>
+        </File>
+        <File dnOrder="64">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sysctrl.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">781BB49EF2458143A46EB58666E87AC4</GeneratedChecksum>
+          <UserChecksum dnOrder="5">781BB49EF2458143A46EB58666E87AC4</UserChecksum>
+        </File>
+        <File dnOrder="65">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">system.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/system/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">BE95B4F134C5C929787B9DA6FDBF3501</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BE95B4F134C5C929787B9DA6FDBF3501</UserChecksum>
+        </File>
+        <File dnOrder="66">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">system_common.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/system/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">C3F5136D520DAC4416512EBFCCA023C3</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C3F5136D520DAC4416512EBFCCA023C3</UserChecksum>
+        </File>
+        <File dnOrder="67">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">system_module.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/system/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">1C75A8A6B60598A2FD0D533F57839B72</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1C75A8A6B60598A2FD0D533F57839B72</UserChecksum>
+        </File>
+        <File dnOrder="68">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">tc.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">023C41E4076CAA2B1E865A7E8D7137C8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">023C41E4076CAA2B1E865A7E8D7137C8</UserChecksum>
+        </File>
+        <File dnOrder="69">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">toolchain_specifics.h</Name>
+          <LogicalPath dnOrder="2">arm</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../arm/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">5FF83BB376D580DCFC2A5CC9C8582911</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5FF83BB376D580DCFC2A5CC9C8582911</UserChecksum>
+        </File>
+        <File dnOrder="70">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">tz_context.h</Name>
+          <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">8710F2682DA1C97558850902DABA38BA</GeneratedChecksum>
+          <UserChecksum dnOrder="5">8710F2682DA1C97558850902DABA38BA</UserChecksum>
+        </File>
+        <File dnOrder="71">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">user.h</Name>
+          <LogicalPath dnOrder="2">config/sam_d20_xpro/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4"/>
+          <UserChecksum dnOrder="5"/>
+        </File>
+        <File dnOrder="72">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">wdt.h</Name>
+          <LogicalPath dnOrder="2">packs/ATSAMD20J18_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/ATSAMD20J18_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">13F2BAC25424DB9391B1C53E5932DDC8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">13F2BAC25424DB9391B1C53E5932DDC8</UserChecksum>
+        </File>
+      </Files>
+      <Settings dnOrder="1">
+        <Setting append="true" category="C32" delimiter=";" dnOrder="0" key="extra-include-directories" value="../src;../src/config/sam_d20_xpro;../src/packs/ATSAMD20J18_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
+        <Setting category="C32-LD" dnOrder="1" key="heap-size" value="0"/>
+        <Setting category="C32-LD" dnOrder="2" key="no-device-startup-code" value="true"/>
+      </Settings>
+    </Manifest>
+    <Settings dnOrder="4">
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.4.0"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAMD20_DFP\1.3.132\samd20\atdf\ATSAMD20J18.atdf"/>
+      <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
+      <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
+    </Settings>
+  </Configurator>
+</Configuration>
