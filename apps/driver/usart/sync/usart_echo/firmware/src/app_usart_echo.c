@@ -52,6 +52,7 @@
 // *****************************************************************************
 
 #include "app_usart_echo.h"
+#include <string.h>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -59,7 +60,9 @@
 // *****************************************************************************
 // *****************************************************************************
 
-static char startMessage[] = "**** USART Driver Echo Demo Application ****\r\n**** Type a character and observe it echo back ***\r\n**** LED toggles on each time the character is echoed ***\r\n";
+static const char startMessage[] = "*** USART Driver Echo Demo Application ***\r\n"
+"*** Type a character and observe it echo back ***\r\n"
+"*** LED toggles on each time the character is echoed ***\r\n";
 // *****************************************************************************
 /* Application Data
 
@@ -115,12 +118,6 @@ void APP_USART_ECHO_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
     app_usart_echoData.state = APP_USART_ECHO_STATE_INIT;
-
-
-
-    /* TODO: Initialize your application's state machine and other
-     * parameters.
-     */
 }
 
 
@@ -150,7 +147,7 @@ void APP_USART_ECHO_Tasks ( void )
             break;
 
         case APP_USART_ECHO_STATE_SEND_MESSGE:
-            if (DRV_USART_WriteBuffer( app_usart_echoData.usartHandle, startMessage, sizeof(startMessage)) == true)
+            if (DRV_USART_WriteBuffer( app_usart_echoData.usartHandle, (void*)startMessage, strlen(startMessage)) == true)
             {
                 LED_TOGGLE();
                 app_usart_echoData.state = APP_USART_ECHO_STATE_RECEIVE_BUFFER;
@@ -174,10 +171,10 @@ void APP_USART_ECHO_Tasks ( void )
             break;
 
         case APP_USART_ECHO_STATE_SEND_BUFFER:
-            /* Echo the received character back and wait till write completes */
+            /* Echo the received character back */
             if (DRV_USART_WriteBuffer( app_usart_echoData.usartHandle, app_usart_echoData.receiveBuffer, APP_USART_ECHO_LOOPBACK_DATA_SIZE) == true)
             {
-                LED_Toggle();
+                LED_TOGGLE();
                 app_usart_echoData.state = APP_USART_ECHO_STATE_RECEIVE_BUFFER;
             }
             else
