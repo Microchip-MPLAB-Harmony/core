@@ -48,6 +48,7 @@
 // Section: File includes
 // *****************************************************************************
 // *****************************************************************************
+
 #include "system/int/sys_int.h"
 #include "system/dma/sys_dma.h"
 
@@ -78,7 +79,7 @@ typedef enum _DRV_USART_ERROR
 
     DRV_USART_ERROR_FRAMING = 3
 
-}_DRV_USART_ERROR;
+} _DRV_USART_ERROR;
 
 // *****************************************************************************
 /* USART Serial Setup */
@@ -136,36 +137,37 @@ typedef struct _DRV_USART_SERIAL_SETUP
 // *****************************************************************************
 /* USART PLIB API Set needed by the driver */
 
-typedef bool(*USART_ReadCallbackRegister)(void * callback, uintptr_t context);
-typedef size_t(*USART_Read)(void *buffer, const size_t size);
-typedef bool(*USART_ReadIsBusy)(void);
-typedef size_t(*USART_ReadCountGet)(void);
+typedef void (* DRV_USART_PLIB_CALLBACK)( uintptr_t context);
 
-typedef bool(*USART_WriteCallbackRegister)(void * callback, uintptr_t context);
-typedef size_t(*USART_Write)(void *buffer, const size_t size);
-typedef bool(*USART_WriteIsBusy)(void);
-typedef size_t(*USART_WriteCountGet)(void);
+typedef void(*DRV_USART_PLIB_READ_CALLBACK_REG)(DRV_USART_PLIB_CALLBACK callback, uintptr_t context);
+typedef bool(*DRV_USART_PLIB_READ)(void *buffer, const size_t size);
+typedef bool(*DRV_USART_PLIB_READ_IS_BUSY)(void);
+typedef size_t(*DRV_USART_PLIB_READ_COUNT_GET)(void);
 
-typedef _DRV_USART_ERROR(*USART_ErrorGet)(void);
-typedef bool(*USART_SerialSetup)(_DRV_USART_SERIAL_SETUP* setup, uint32_t clkSrc);
+typedef void(*DRV_USART_PLIB_WRITE_CALLBACK_REG)(DRV_USART_PLIB_CALLBACK callback, uintptr_t context);
+typedef bool(*DRV_USART_PLIB_WRITE)(void *buffer, const size_t size);
+typedef bool(*DRV_USART_PLIB_WRITE_IS_BUSY)(void);
+typedef size_t(*DRV_USART_PLIB_WRITE_COUNT_GET)(void);
+
+typedef uint32_t (*DRV_USART_PLIB_ERROR_GET)(void);
+typedef bool(*DRV_USART_PLIB_SERIAL_SETUP)(_DRV_USART_SERIAL_SETUP* setup, uint32_t clkSrc);
 
 typedef struct
 {
-    USART_ReadCallbackRegister readCallbackRegister;
-    USART_Read read;
-    USART_ReadIsBusy readIsBusy;
-    USART_ReadCountGet readCountGet;
+    DRV_USART_PLIB_READ_CALLBACK_REG readCallbackRegister;
+    DRV_USART_PLIB_READ read;
+    DRV_USART_PLIB_READ_IS_BUSY readIsBusy;
+    DRV_USART_PLIB_READ_COUNT_GET readCountGet;
 
-    USART_WriteCallbackRegister writeCallbackRegister;
-    USART_Write write;
-    USART_WriteIsBusy writeIsBusy;
-    USART_WriteCountGet writeCountGet;
+    DRV_USART_PLIB_WRITE_CALLBACK_REG writeCallbackRegister;
+    DRV_USART_PLIB_WRITE write;
+    DRV_USART_PLIB_WRITE_IS_BUSY writeIsBusy;
+    DRV_USART_PLIB_WRITE_COUNT_GET writeCountGet;
 
-    USART_ErrorGet errorGet;
-    USART_SerialSetup serialSetup;
+    DRV_USART_PLIB_ERROR_GET errorGet;
+    DRV_USART_PLIB_SERIAL_SETUP serialSetup;
 
-} USART_PLIB_API;
-
+} DRV_USART_PLIB_INTERFACE;
 
 // *****************************************************************************
 /* USART Driver Initialization Data Declaration */
@@ -174,7 +176,7 @@ struct _DRV_USART_INIT
 {
     /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
-    USART_PLIB_API *usartPlib;
+    const DRV_USART_PLIB_INTERFACE* usartPlib;
 
     /* This is the USART transmit DMA channel. */
     SYS_DMA_CHANNEL dmaChannelTransmit;
@@ -183,16 +185,18 @@ struct _DRV_USART_INIT
     SYS_DMA_CHANNEL dmaChannelReceive;
 
     /* This is the USART transmit register address. Used for DMA operation. */
-    void * usartTransmitAddress;
+    void* usartTransmitAddress;
 
     /* This is the USART receive register address. Used for DMA operation. */
-    void * usartReceiveAddress;
+    void* usartReceiveAddress;
 
-    uint32_t *remapDataWidth;
-    uint32_t *remapParity;
-    uint32_t *remapStopBits;
-    uint32_t *remapError;
+    const uint32_t* remapDataWidth;
 
+    const uint32_t* remapParity;
+
+    const uint32_t* remapStopBits;
+
+    const uint32_t* remapError;
 
     /* This is the receive buffer queue size. This is the maximum
      * number of read requests that driver will queue. This can be updated
@@ -209,16 +213,14 @@ struct _DRV_USART_INIT
 
     /* This is the DMA channel interrupt source. */
     INT_SOURCE interruptDMA;
-
 };
-
-
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
-}
+
+    }
+
 #endif
 //DOM-IGNORE-END
-
 
 #endif // #ifndef DRV_USART_DEFINITIONS_H
