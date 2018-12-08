@@ -275,8 +275,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_c21n_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">72F3EAED9AB755FDE82FEB248C947676</GeneratedChecksum>
-          <UserChecksum dnOrder="5">72F3EAED9AB755FDE82FEB248C947676</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B893AEDA8FECA1D1B1C0EA1863A79837</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B893AEDA8FECA1D1B1C0EA1863A79837</UserChecksum>
         </File>
         <File dnOrder="34">
           <Type dnOrder="0">HEADER</Type>

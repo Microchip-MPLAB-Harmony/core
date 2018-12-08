@@ -51,8 +51,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EA74E494286E34C48D71BF1E011B0096</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EA74E494286E34C48D71BF1E011B0096</UserChecksum>
+          <GeneratedChecksum dnOrder="4">08D8D8AF6E06528A37C53CCFEC139623</GeneratedChecksum>
+          <UserChecksum dnOrder="5">08D8D8AF6E06528A37C53CCFEC139623</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -115,8 +115,8 @@
           <Name dnOrder="1">startup.c</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">DEDE30EBAA0AAAF51F6EF4278D8D6DD5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">DEDE30EBAA0AAAF51F6EF4278D8D6DD5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3F2A8D0EF1BA71EB3E05BA6A30BBD639</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3F2A8D0EF1BA71EB3E05BA6A30BBD639</UserChecksum>
         </File>
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
