@@ -36,6 +36,13 @@ def instantiateComponent(sst26Component):
 
     res = Database.activateComponents(["HarmonyCore"])
 
+    # Enable dependent Harmony core components
+    Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
+    Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
+
+    Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
+    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
+
     sst26PLIB = sst26Component.createStringSymbol("DRV_SST26_PLIB", None)
     sst26PLIB.setLabel("PLIB Used")
     sst26PLIB.setReadOnly(True)
