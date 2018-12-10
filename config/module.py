@@ -31,6 +31,7 @@ def loadModule():
                     {"name":"usart", "label": "USART", "type":"driver", "instance":"multi", "capability":["DRV_USART"], "dependency":["UART"], "condition":"True"},
                     {"name":"memory", "label": "MEMORY", "type":"driver", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["MEMORY"], "condition":"True"},
                     {"name":"sst26", "label": "SST26", "type":"driver", "instance":"single", "capability":["MEMORY"], "dependency":["QSPI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAME70", "SAMS70"])'},
+                    {"name":"mx25lx", "label": "MX25LX", "type":"driver", "instance":"single", "capability":["MEMORY"], "dependency":["QSPI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"])'},
                     {"name":"i2c", "label": "I2C", "type":"driver", "instance":"multi", "capability":["DRV_I2C"], "dependency":["I2C"], "condition":"True"},
                     {"name":"spi", "label": "SPI", "type":"driver", "instance":"multi", "capability":["DRV_SPI"], "dependency":["SPI"], "condition":"True"},
                     {"name":"i2s", "label": "I2S", "type":"driver", "instance":"multi", "capability":["DRV_I2S"], "dependency":["I2S"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "SAMD21"])'},
