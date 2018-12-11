@@ -1,0 +1,449 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>Channel Setup and Management</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '01321.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00050.html" target="topic">Direct Memory Access (DMA) System Service Library</a> &gt; <a href="01332.html" target="topic">Using the Library</a> &gt; <a href="01326.html" target="topic">How the Library Works</a> &gt; <a href="01321.html" target="topic">Channel Setup and Management</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="01327.html" target="topic">Previous</a> | <a href="01326.html" target="topic">Up</a> | <a href="01325.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM DMA Channel Setup and Management Topic Title: Channel Setup and Management)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Channel Setup and Management</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<div class="Element15">
+Channel Allocation and Release Functions</div>
+<p class="Element10">
+Channel Allocate and Release functions allocate/release a particular channel from the available channels on the particular device.</p><div class="Element15">
+Channel Allocation Function</div>
+<p class="Element10">
+Channel Allocate function takes a parameter specifying the requested channel number. If the requested channel is available the function allocates the channel and returns a channel handle. If the user is not particular about any specific channel, the user can specify DMA_CHANNEL_ANY enumerator values. When DMA_CHANNEL_ANY values are specified an available channel is allocated and a channel handle is returned. The function returns an invalid channel handle SYS_DMA_CHANNEL_HANDLE_INVALID when the requested channel is not available for allocation.&nbsp;</p>
+<p class="Element10">
+The valid channel handle returned by this function must be used in all subsequent DMA channel function calls.&nbsp;</p>
+<p class="Element10">
+<i>Function Name:</i> SYS_DMA_ChannelAllocate&nbsp;</p>
+<p class="Element10">
+<strong>Example 1</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following examples requests for allocation of a channel handle with Channel number 2 */</span></i>
+SYS_DMA_CHANNEL_HANDLE  handle
+DMA_CHANNEL             channel;
+channel = DMA_CHANNEL_2;
+handle  = SYS_DMA_ChannelAllocate(channel);</pre></div></div>
+<p class="Element10">
+<strong>Example 2</strong> </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following example requests for allocation of a channel handle with no choice of channel number */</span></i>
+SYS_DMA_CHANNEL_HANDLE  handle
+DMA_CHANNEL             channel;
+channel = DMA_CHANNEL_ANY;
+handle  = SYS_DMA_ChannelAllocate(channel);</pre></div></div>
+<p class="Element10">
+<i>Precondition:</i> DMA should be initialized by calling SYS_DMA_Initialize.</p><div class="Element15">
+Channel Release Function</div>
+<p class="Element10">
+Channel Release function Deallocates and frees the DMA channel specified by the channel handle.&nbsp;</p>
+<p class="Element10">
+<i>Function Name:</i> SYS_DMA_ChannelRelease&nbsp;</p>
+<p class="Element10">
+<strong>Example</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following example requests for release of a channel handle with Channel number 2 */</span></i>
+DMA_CHANNEL             channel;
+SYS_DMA_CHANNEL_HANDLE  handle;
+channel = DMA_CHANNEL_2;
+handle  = SYS_DMA_ChannelAllocate(channel);
+SYS_DMA_ChannelRelease(handle);</pre></div></div>
+<p class="Element10">
+<i>Precondition:</i> DMA should be initialized by calling SYS_DMA_Initialize.</p><div class="Element15">
+Channel Setup Functions</div>
+<p class="Element10">
+The DMA subsystem supports the following modes of operations. The setting up of these modes of operation can be done by the following functions.</p>
+<ul class="Element630">
+<li class="Element600">Basic Transfer Mode</li>
+<li class="Element600">Pattern Match Abort Mode</li>
+<li class="Element600">Channel Chaining Mode</li>
+<li class="Element600">Channel Auto Enable Mode</li>
+<li class="Element600">CRC Mode</li>
+</ul><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="Note Icon.png" border="0" alt="" title=""> <strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+The operation modes are not mutually exclusive.&nbsp;</div></td></tr></table></div></div>
+<div class="Element15">
+General Channel Setup Function</div>
+<p class="Element10">
+This function sets up the channel for the supported operating modes. The function does the following:</p>
+<ul class="Element630">
+<li class="Element600">Sets up the channel priority</li>
+<li class="Element600">Enables the specified mode</li>
+<li class="Element600">Sets up the DMA asynchronous transfer mode</li>
+</ul><p class="Element10">
+If the DMA channel transfer is intended to be synchronous, the parameter 'eventSrc' (asynchronous trigger source) can be specified as ‘DMA_TRIGGER_SOURCE_NONE’. When the channel trigger source is specified as ‘DMA_TRIGGER_SOURCE_NONE’, The DMA channel transfer needs to be forcefully started by calling the respective function. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="Note Icon.png" border="0" alt="" title=""> <strong>Notes:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+</p>
+<ol class="Element630">
+<li value="1" class="Element600">Enabling of the available operation mode is not mutually exclusive. More than one operation mode can be enabled by bitwise ORing the operating mode enable parameter.</li>
+<li value="2" class="Element600">To setup the specific features of the supported operation modes the corresponding function needs to be called after calling this function.</li>
+</ol><p class="Element68">
+&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+<i>Function Name:</i> SYS_DMA_ChannelSetup&nbsp;</p>
+<p class="Element10">
+<strong>Example</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* Configure channel number, priority and enables basic and CRC mode */</span></i>
+SYS_DMA_CHANNEL_HANDLE  handle;
+DMA_CHANNEL             channel;
+SYS_DMA_CHANNEL_OP_MODE modeEnable;
+DMA_TRIGGER_SOURCE      eventSrc;
+channel     = DMA_CHANNEL_2;
+modeEnable  = (SYS_DMA_CHANNEL_OP_MODE_BASIC | SYS_DMA_CHANNEL_OP_MODE_CRC);
+eventSrc    = DMA_TRIGGER_USART_1_TRANSMIT;
+handle      = SYS_DMA_ChannelAllocate(channel);
+SYS_DMA_ChannelSetup(handle, modeEnable,eventSrc);</pre></div></div>
+<p class="Element10">
+<i>Precondition:</i> DMA should be initialized by calling SYS_DMA_Initialize.</p><div class="Element15">
+Pattern Match Abort Mode Function</div>
+<p class="Element10">
+This function sets up the termination of DMA operation when the specified pattern is matched. Additionally on supported devices, the function also sets up the ignoring of part of a pattern (8-bit) from match abort pattern (16-bit).&nbsp;</p>
+<p class="Element10">
+Before calling this function the pattern match termination mode must have been enabled by calling the general channel setup function&nbsp;</p>
+<p class="Element10">
+<i>Function Name:</i> SYS_DMA_ChannelSetupMatchAbortMode&nbsp;</p>
+<p class="Element10">
+<strong>Example 1</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code is for a device with 8-bit pattern value and no support for pattern match ignore feature */</span></i>
+SYS_DMA_CHANNEL_HANDLE       handle;
+DMA_CHANNEL                  channel;
+uint16_t                     pattern;
+DMA_PATTERN_LENGTH           length
+SYS_DMA_CHANNEL_IGNORE_MATCH ignore;
+uint8_t                      ignorePattern;
+channel            = DMA_CHANNEL_2;
+priority           = DMA_CHANNEL_PRIORITY_1;
+pattern            = 0x00; <i><span style="color: #008000">//Stop transfer on detection of a NULL character</span></i>
+length             = DMA_PATTERN_LENGTH_NONE;
+ignore             = SYS_DMA_CHANNEL_IGNORE_MATCH_DISABLE;
+ignorePattern      = 0;
+handle             = SYS_DMA_ChannelAllocate(channel);
+SYS_DMA_ChannelSetupMatchAbortMode(handle, pattern, length, ignoreEnable, ignorePattern);</pre></div></div>
+<p class="Element10">
+<strong>Example 2</strong> </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code is for a device with 16-bit pattern value and support for pattern match ignore feature */</span></i>
+SYS_DMA_CHANNEL_HANDLE       handle;
+DMA_CHANNEL                  channel;
+uint16_t                     pattern;
+DMA_PATTERN_LENGTH           length
+SYS_DMA_CHANNEL_IGNORE_MATCH ignore;
+uint8_t                      ignorePattern;
+priority           = DMA_CHANNEL_PRIORITY_1;
+channel            = DMA_CHANNEL_2;
+pattern            = 0x0D0A; <i><span style="color: #008000">//Stop transfer on detection of '\r\n'</span></i>
+length             = DMA_PATTERN_MATCH_LENGTH_2BYTES;
+ignore             = SYS_DMA_CHANNEL_IGNORE_MATCH_ENABLE;
+ignorePattern      = 0x00; \\ Any null character between the termination pattern '\r' and '\n' is ignored.
+handle             = SYS_DMA_ChannelAllocate(channel);
+SYS_DMA_ChannelSetupMatchAbortMode(handle, pattern, length, ignore, ignorePattern);</pre></div></div>
+<p class="Element10">
+<i>Preconditions:</i>&nbsp;</p>
+<p class="Element10">
+1. DMA should be initialized by calling SYS_DMA_Initialize.&nbsp;</p>
+<p class="Element10">
+2. Channel should be setup and pattern match mode enabled by calling SYS_DMA_ChannelSetup.</p><div class="Element15">
+CRC Operation Mode Setup Function</div>
+<p class="Element10">
+This function sets up the CRC computation features of the channel. Before calling this function the CRC mode must have been enabled by calling the general channel setup function&nbsp;</p>
+<p class="Element10">
+Function Name:<strong><i> </i></strong>SYS_DMA_ChannelSetupCRCMode&nbsp;</p>
+<p class="Element10">
+<strong>Example</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* DMA calculation using the CRC background mode */</span></i>
+SYS_DMA_CHANNEL_HANDLE             handle;
+DMA_CHANNEL                        channel;
+SYS_DMA_CHANNEL_OPERATION_MODE_CRC crc;
+channel        = DMA_CHANNEL_2;
+crc.type       = DMA_CRC_LFSR;
+crc.mode       = SYS_DMA_CHANNEL_CRC_MODE_BACKGROUND;
+crc.polyLength = 16;
+crc.bitOrder   = DMA_CRC_BIT_ORDER_LSB;
+crc.byteOrder  = DMA_CRC_BYTEORDER_NO_SWAPPING;
+crc.writeOrder = SYS_DMA_CRC_WRITE_ORDER_MAINTAIN;
+crc.data       = 0xFFFF;
+crc.xorBitMask = 0x1021;
+handle         = SYS_DMA_ChannelAllocate(channel);
+SYS_DMA_ChannelCRCSet(handle, crc);</pre></div></div>
+<p class="Element10">
+<i>Preconditions:</i>&nbsp;</p>
+<p class="Element10">
+1. DMA should be initialized by calling SYS_DMA_Initialize.&nbsp;</p>
+<p class="Element10">
+2. Channel should be setup and CRC mode enabled by calling SYS_DMA_ChannelSetup.</p><div class="Element15">
+Channel Enable/Disable Functions</div>
+<p class="Element10">
+The Enable/Disable functions allow to enable/disable a channel on the run. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="Note Icon.png" border="0" alt="" title=""> <strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+When a data transfer is added by calling SYS_DMA_ChannelTransferAdd, the channel is automatically enabled.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+<i>Function Name:</i> SYS_DMA_ChannelEnable&nbsp;</p>
+<p class="Element10">
+<strong>Example</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">SYS_DMA_CHANNEL_HANDLE handle;
+DMA_CHANNEL            channel;
+channel  = DMA_CHANNEL_2;
+handle   = SYS_DMA_ChannelAllocate(channel);
+SYS_DMA_ChannelEnable(handle);</pre></div></div>
+<p class="Element10">
+<i>Precondition:</i> DMA should be initialized by calling SYS_DMA_Initialize.&nbsp;</p>
+<p class="Element10">
+<i>Function Name:</i> SYS_DMA_ChannelDisable&nbsp;</p>
+<p class="Element10">
+<strong>Example</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">SYS_DMA_CHANNEL_HANDLE  handle;
+DMA_CHANNEL             channel;
+channel = DMA_CHANNEL_2;
+handle  = SYS_DMA_ChannelAllocate(channel);
+SYS_DMA_ChannelDisable(handle);</pre></div></div>
+<p class="Element10">
+<i>Precondition:</i> DMA should be initialized by calling SYS_DMA_Initialize.</p><div class="Element15">
+Channel Data Transfer Function</div>
+<p class="Element10">
+This function adds a data transfer to a DMA channel and Enables the channel to start data transfer. The source and the destination addresses, source and destination lengths, The number of bytes transferred per cell event are set and the channel is enabled to start the data transfer.&nbsp;</p>
+<p class="Element10">
+<i>Function Name:</i> SYS_DMA_ChannelTransferAdd&nbsp;</p>
+<p class="Element10">
+<strong>Example</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* Add 10 bytes of data transfer to UART */</span></i>
+SYS_DMA_CHANNEL_HANDLE  handle;
+uint8_t                 buf[10];
+<strong><span style="color: #000080">void</span></strong>                    *srcAddr;
+<strong><span style="color: #000080">void</span></strong>                    *destAddr;
+size_t                  srcSize;
+size_t                  destSize;
+size_t                  cellSize;
+DMA_CHANNEL             channel;
+channel  = DMA_CHANNEL_2;
+srcAddr  = (uint8_t *) buf;
+srcSize  = 10;
+destAddr = (uin8_t*) &amp;U2TXREG; <i><span style="color: #008000">//Uart 2 TX register is the DMA destination</span></i>
+destSize = 1;
+cellSize = 1;
+handle   = SYS_DMA_ChannelAllocate(channel);
+SYS_DMA_ChannelTransferAdd(handle,srcAddr,srcSize,destAddr,destSize,cellSize);</pre></div></div>
+<p class="Element10">
+<i>Preconditions:</i>&nbsp;</p>
+<p class="Element10">
+1. DMA should be initialized by calling SYS_DMA_Initialize.&nbsp;</p>
+<p class="Element10">
+2. Channel should be setup and enabled by calling SYS_DMA_ChannelSetup.</p><div class="Element15">
+Synchronous Data Transfer Start/Abort Functions</div>
+<p class="Element10">
+These functions allows to force start/abort data transfer on the selected channel. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="Note Icon.png" border="0" alt="" title=""> <strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+The DMA should have been set up, transfer added before calling these functions.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+<i>Function Name:</i> SYS_DMA_ChannelForceStart&nbsp;</p>
+<p class="Element10">
+<strong>Example</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">SYS_DMA_CHANNEL_HANDLE  handle;
+DMA_CHANNEL             channel;
+channel = DMA_CHANNEL_2;
+handle  = SYS_DMA_ChannelAllocate(channel);
+SYS_DMA_ChannelForceStart(handle);</pre></div></div>
+<p class="Element10">
+<i>Function Name:</i> SYS_DMA_ChannelForceAbort&nbsp;</p>
+<p class="Element10">
+<strong>Example</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">SYS_DMA_CHANNEL_HANDLE  handle;
+DMA_CHANNEL             channel;
+channel   = DMA_CHANNEL_2;
+handle    = SYS_DMA_ChannelAllocate(channel);
+SYS_DMA_ChannelForceAbort(handle);</pre></div></div>
+<div class="Element15">
+Asynchronous Data Transfer Abort Function</div>
+<p class="Element10">
+This function sets an event source and enables cell transfer abort event for the same for the selected channel. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="Note Icon.png" border="0" alt="" title=""> <strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+Asynchronous data transfer is started in general channel setup function. A channel is setup for asynchronous data transfer by default when the appropriate trigger source is specified in general channel setup function call.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+<i>Function Name:</i> SYS_DMA_ChannelAbortEventSet&nbsp;</p>
+<p class="Element10">
+<strong>Example</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">SYS_DMA_CHANNEL_HANDLE  handle;
+DMA_CHANNEL             channel;
+DMA_TRIGGER_SOURCE      eventSrc;
+channel  = DMA_CHANNEL_2;
+eventSrc = DMA_TRIGGER_CTMU;
+handle   = SYS_DMA_ChannelAllocate(channel);
+SYS_DMA_ChannelAbortEventSet(handle, eventSrc);</pre></div></div>
+<p class="Element10">
+<i>Preconditions:</i>&nbsp;</p>
+<p class="Element10">
+1. DMA should be initialized by calling SYS_DMA_Initialize.&nbsp;</p>
+<p class="Element10">
+2. Channel should be setup and enabled by calling SYS_DMA_ChannelSetup.</p><div class="Element15">
+Channel Busy Status Function</div>
+<p class="Element10">
+This function gets the busy status of the selected channel.&nbsp;</p>
+<p class="Element10">
+<i>Function Name:</i> SYS_DMA_ChannelIsBusy&nbsp;</p>
+<p class="Element10">
+<strong>Example</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">SYS_DMA_CHANNEL_HANDLE  handle;
+DMA_CHANNEL             channel;
+<strong><span style="color: #000080">bool</span></strong>                    busyStat;
+channel  = DMA_CHANNEL_2;
+handle   = SYS_DMA_ChannelAllocate(channel);
+busyStat = SYS_DMA_ChannelIsBusy(handle);</pre></div></div>
+<p class="Element10">
+<i>Precondition:</i> DMA should be initialized by calling SYS_DMA_Initialize.</p><div class="Element15">
+Channel Computed CRC Function</div>
+<p class="Element10">
+This function gets the computed CRC. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="Note Icon.png" border="0" alt="" title=""> <strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+The CRC generator must have been previously set up by calling the CRC mode setup function.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+To get the computed CRC value this function must be called after the block transfer completion event.&nbsp;</p>
+<p class="Element10">
+Function Name: SYS_DMA_ChannelGetCRC&nbsp;</p>
+<p class="Element10">
+<strong>Example</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">SYS_DMA_CHANNEL_HANDLE handle;
+DMA_CHANNEL            channel;
+uint32_t               computedCRC;
+channel     = DMA_CHANNEL_2;
+handle      = SYS_DMA_ChannelAllocate(channel);
+computedCRC = SYS_DMA_ChannelCRCSet();</pre></div></div>
+<p class="Element10">
+<i>Precondition:</i> DMA should be initialized by calling SYS_DMA_Initialize.</p><div class="Element15">
+Channel Transfer Event Handler Set Function</div>
+<p class="Element10">
+This function allows to set an event handler for the transfer complete, abort or error events&nbsp;</p>
+<p class="Element10">
+<i>Function Name:</i> SYS_DMA_ChannelTransferEventHandlerSet&nbsp;</p>
+<p class="Element10">
+<strong>Example</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">SYS_DMA_CHANNEL_HANDLE handle;
+DMA_CHANNEL channel;
+MY_APP_OBJ myAppObj;   <i><span style="color: #008000">//Application specific object</span></i>
+channel = DMA_CHANNEL_2;
+handle = SYS_DMA_ChannelAllocate(channel);
+SYS_DMA_ChannelTransferEventHandlerSet(handle, APP_DMASYSTransferEventHandler, (uintptr_t)&amp;myAppObj);
+
+<i><span style="color: #008000">// Event Processing Technique. Event is received when the transfer is processed.</span></i>
+
+    <strong><span style="color: #000080">void</span></strong> APP_DMASYSTransferEventHandler(SYS_DMA_TRANSFER_EVENT event, SYS_DMA_CHANNEL_HANDLE handle, uintptr_t contextHandle)
+    {
+        <strong><span style="color: #000080">switch</span></strong>(event)
+        {
+            <strong><span style="color: #000080">case</span></strong> SYS_DMA_TRANSFER_EVENT_COMPLETE:
+                <i><span style="color: #008000">// This means the data was transferred.</span></i>
+                <strong><span style="color: #000080">break</span></strong>;
+            <strong><span style="color: #000080">case</span></strong> SYS_DMA_TRANSFER_EVENT_ERROR:
+                <i><span style="color: #008000">// Error handling here.</span></i>
+                <strong><span style="color: #000080">break</span></strong>;
+            <strong><span style="color: #000080">default</span></strong>:
+                <strong><span style="color: #000080">break</span></strong>;
+        }
+    }</pre></div></div>
+<p class="Element10">
+<i>Precondition:</i> DMA should be initialized by calling SYS_DMA_Initialize.</p><div class="Element15">
+Channel Error Get Function</div>
+<p class="Element10">
+This function returns the error associated with the channel access.&nbsp;</p>
+<p class="Element10">
+<i>Function Name:</i> SYS_DMA_ChannelErrorGet&nbsp;</p>
+<p class="Element10">
+<strong>Example</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">SYS_DMA_CHANNEL_HANDLE handle;
+DMA_CHANNEL channel;
+channel = DMA_CHANNEL_2;
+handle = SYS_DMA_ChannelAllocate(channel);
+<i><span style="color: #008000">// Do Channel setup and Transfer Add.</span></i>
+<i><span style="color: #008000">// In the Even Handler Check if there was an Error</span></i>
+<strong><span style="color: #000080">if</span></strong>(SYS_DMA_ERROR_ADDRESS_ERROR == SYS_DMA_ChannelErrorGet(handle))
+ {
+        <i><span style="color: #008000">// There was an address error.</span></i>
+    <i><span style="color: #008000">// Do error handling here.</span></i>
+}</pre></div></div>
+<p class="Element10">
+<i>Precondition:</i> DMA should be initialized by calling SYS_DMA_Initialize.</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00050.html" target="topic">Direct Memory Access (DMA) System Service Library</a> &gt; <a href="01332.html" target="topic">Using the Library</a> &gt; <a href="01326.html" target="topic">How the Library Works</a> &gt; <a href="01321.html" target="topic">Channel Setup and Management</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="01327.html" target="topic">Previous</a> | <a href="01326.html" target="topic">Up</a> | <a href="01325.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM DMA Channel Setup and Management Topic Title: Channel Setup and Management)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

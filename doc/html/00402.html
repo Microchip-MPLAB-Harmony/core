@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>Configuring the Library</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00402.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00408.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00402.html" target="topic">Configuring the Library</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00406.html" target="topic">Previous</a> | <a href="00408.html" target="topic">Up</a> | <a href="00401.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_sdhc Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Configuring the Library</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+<span style="color: #000000">SDHC Driver library should be configured via MHC. Below are the Snapshot of the MHC configuration window for SDHC driver and brief description.</span>&nbsp;</p>
+<div class="Element15">
+User Configurations</div>
+
+<ol class="Element630">
+<li value="1" class="Element600"><span style="color: #000000"><strong>Number Of SDHC Instances</strong></span>
+<ol class="Element631">
+<li value="1" class="Element601"><span style="color: #000000">Specifies number of SDHC Driver instances used. Currently maximum 1 instance is supported</span></li>
+</ol></li>
+<li value="2" class="Element600"><span style="color: #000000"><strong>Number Of SDHC Driver Clients</strong></span>
+<ol class="Element631">
+<li value="1" class="Element601"><span style="color: #000000">Specifies number of clients to access the specific instance of the driver.</span></li>
+</ol></li>
+<li value="3" class="Element600"><span style="color: #000000"><strong>Number of SDHC Buffer Objects</strong></span>
+<ol class="Element631">
+<li value="1" class="Element601"><span style="color: #000000">Specifies maximum number of requests to be buffered in queue.</span></li>
+<li value="2" class="Element601"><span style="color: #000000">When Connected to File system this value is set to 1 and non modifiable</span></li>
+</ol></li>
+<li value="4" class="Element600"><span style="color: #000000"><strong>Data Transfer Bus Width</strong></span>
+<ol class="Element631">
+<li value="1" class="Element601"><span style="color: #000000">Specifies the Bus width to be used for data transfer (1-Bit, 4-Bit)</span></li>
+</ol></li>
+<li value="5" class="Element600"><span style="color: #000000"><strong>Maximum Bus Speed</strong></span>
+<ol class="Element631">
+<li value="1" class="Element601"> Specifies Bus Speed to be used for Communication with SD-card(DEFAULT_SPEED, HIGH_SPEED)</li>
+<li value="2" class="Element601">Standard SD-Cards only support Default Speed</li>
+<li value="3" class="Element601">SD-Cards with High Capacity support Both Default and High Speed</li>
+</ol></li>
+<li value="6" class="Element600"><strong>Use Write Protect (SDWP#) Pin</strong>
+<ol class="Element631">
+<li value="1" class="Element601">When Selected Write protect check is enabled.</li>
+<li value="2" class="Element601">A dedicated pin has to configured from Pin settings</li>
+</ol></li>
+<li value="7" class="Element600"><strong>Use Card Detect (SDCD#) Pin</strong>
+<ol class="Element631">
+<li value="1" class="Element601">When Selected Dedicated pin can be used to detect the Card.</li>
+<li value="2" class="Element601">A dedicated pin has to configured from Pin settings</li>
+</ol></li>
+<li value="8" class="Element600"><strong>DMA Channel for Transmit and Receive</strong>
+<ol class="Element631">
+<li value="1" class="Element601">Specifies the DMA Channel configured for Transmit and Receive</li>
+</ol></li>
+<li value="9" class="Element600"><strong>RTOS Settings</strong>
+<ol class="Element631">
+<li value="1" class="Element601">Stack Size
+<ol class="Element632">
+<li value="1" class="Element602">Maximum Stack size to be allocated for SDHC Driver.</li>
+</ol></li>
+<li value="2" class="Element601">Task Priority
+<ol class="Element632">
+<li value="1" class="Element602">Specifies Priority for the SDHC driver task thread</li>
+</ol></li>
+<li value="3" class="Element601">Task Delay
+<ol class="Element632">
+<li value="1" class="Element602">Specifies Delay to sleep for the SDHC task Thread after every call.</li>
+</ol></li>
+</ol></li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="Figure-2_MHC_Snapshot_With_FS.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<strong>Figure-2 SDHC Driver with File System</strong>&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="Figure-3_MHC_Snapshot_With_RTOS.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<strong>Figure-3 SDHC Driver without File System and With RTOS</strong></p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00408.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00402.html" target="topic">Configuring the Library</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00406.html" target="topic">Previous</a> | <a href="00408.html" target="topic">Up</a> | <a href="00401.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_sdhc Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

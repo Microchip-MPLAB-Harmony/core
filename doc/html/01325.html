@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>Global Control and Status</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '01325.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00050.html" target="topic">Direct Memory Access (DMA) System Service Library</a> &gt; <a href="01332.html" target="topic">Using the Library</a> &gt; <a href="01326.html" target="topic">How the Library Works</a> &gt; <a href="01325.html" target="topic">Global Control and Status</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="01321.html" target="topic">Previous</a> | <a href="01326.html" target="topic">Up</a> | <a href="01331.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM DMA Global Control and Status Topic Title: Global Control and Status)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Global Control and Status</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<div class="Element15">
+Global Control and Status Function Usage:</div>
+<p class="Element10">
+<u>Suspend/Resume Functions</u>&nbsp;</p>
+<p class="Element10">
+These functions allows an enabled DMA module to suspend DMA operations. Operation of the suspended module can also be resumed using these functions.&nbsp;</p>
+<p class="Element10">
+Function Name: SYS_DMA_Suspend&nbsp;</p>
+<p class="Element10">
+<strong>Example 1</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">SYS_DMA_Suspend();</pre></div></div>
+<p class="Element10">
+Precondition: DMA should be initialized by calling SYS_DMA_Initialize.&nbsp;</p>
+<p class="Element10">
+Function Name: SYS_DMA_Resume&nbsp;</p>
+<p class="Element10">
+<strong>Example 2</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">SYS_DMA_Resume();</pre></div></div>
+<p class="Element10">
+Precondition: DMA should be initialized by calling SYS_DMA_Initialize.&nbsp;</p>
+<p class="Element10">
+<u>Busy Status Function</u>&nbsp;</p>
+<p class="Element10">
+This function gets the busy status of DMA module.&nbsp;</p>
+<p class="Element10">
+Function Name: SYS_DMA_IsBusy&nbsp;</p>
+<p class="Element10">
+<strong>Example</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">bool</span></strong> busyStat;
+busyStat = SYS_DMA_IsBusy();</pre></div></div>
+<p class="Element10">
+Precondition: DMA should be initialized by calling SYS_DMA_Initialize.</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00050.html" target="topic">Direct Memory Access (DMA) System Service Library</a> &gt; <a href="01332.html" target="topic">Using the Library</a> &gt; <a href="01326.html" target="topic">How the Library Works</a> &gt; <a href="01325.html" target="topic">Global Control and Status</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="01321.html" target="topic">Previous</a> | <a href="01326.html" target="topic">Up</a> | <a href="01331.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM DMA Global Control and Status Topic Title: Global Control and Status)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>Memory to Memory Transfer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '01331.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00050.html" target="topic">Direct Memory Access (DMA) System Service Library</a> &gt; <a href="01332.html" target="topic">Using the Library</a> &gt; <a href="01326.html" target="topic">How the Library Works</a> &gt; <a href="01331.html" target="topic">Memory to Memory Transfer</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="01325.html" target="topic">Previous</a> | <a href="01326.html" target="topic">Up</a> | <a href="01322.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM DMA Memory to Memory Transfer Topic Title: Memory to Memory Transfer)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Memory to Memory Transfer</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The following code is a typical usage example of using the DMA System Service for a memory to memory data transfer. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* Destination Memory Address pointer */</span></i>
+uint8_t                     *pDmaSrc;
+<i><span style="color: #008000">/* Source Memory Address pointer */</span></i>
+uint8_t                     *pDmaDst;
+<i><span style="color: #008000">/* Transfer Size */</span></i>
+size_t                      txferSize;
+
+<i><span style="color: #008000">/* Maximum Transfer Size */</span></i>
+<strong><span style="color: #000080">#define</span></strong>     MAX_TRANSFER_SIZE           100
+<i><span style="color: #008000">/* The data pattern to be transferred*/</span></i>
+<strong><span style="color: #000080">#define</span></strong>     SOURCE_TRANSFER_PATTERN     'W'
+
+ <i><span style="color: #008000">/*******************************************************************
+  The below routine sets up a memory to memory data transfer. It also
+  registers an event handler which is called when the data transfer
+  completes */</span></i>
+<strong><span style="color: #000080">void</span></strong> SYS_DMA_TEST_Memory2Memory(<strong><span style="color: #000080">void</span></strong>)
+{
+    uint8_t                     *pSrcTemp;
+    uint32_t                    index;
+    SYS_DMA_INIT                dmaInit;
+    SYS_DMA_CHANNEL_HANDLE      channelHandle;
+
+    <i><span style="color: #008000">/* Initializing source and destination variables */</span></i>
+    pDmaSrc             =   (uint8_t *) NULL;
+    pDmaDst             =   (uint8_t *) NULL;
+    pSrcTemp            =   (uint8_t *) NULL;
+    txferSize           =   MAX_TRANSFER_SIZE;
+    pDmaSrc             =   (uint8_t*) malloc(txferSize);
+    pDmaDst             =   (uint8_t*) malloc(txferSize);
+    pSrcTemp            =   pDmaSrc;
+
+
+    <strong><span style="color: #000080">if</span></strong>(((uint8_t*) NULL != pDmaSrc) &amp;&amp; ((uint8_t*) NULL != pDmaDst))
+    {
+        <i><span style="color: #008000">/* Initialize the source memory block with the pattern */</span></i>
+        <strong><span style="color: #000080">for</span></strong>(index=0; index &lt; txferSize; index++)
+        {
+            *pSrcTemp++= SOURCE_TRANSFER_PATTERN;
+        }
+
+        <i><span style="color: #008000">/* Initialize the DMA system service */</span></i>
+        dmaInit.sidl = SYS_DMA_SIDL_DISABLE;
+        sysObj = SYS_DMA_Initialize((SYS_MODULE_INIT*)&amp;dmaInit);
+
+        <i><span style="color: #008000">/* Allocate a DMA channel */</span></i>
+        channelHandle = SYS_DMA_ChannelAllocate(DMA_CHANNEL_1);
+        <strong><span style="color: #000080">if</span></strong>(SYS_DMA_CHANNEL_HANDLE_INVALID != channelHandle)
+        {
+            <i><span style="color: #008000">/* Register an event handler for the channel */</span></i>
+            SYS_DMA_ChannelTransferEventHandlerSet(channelHandle,
+                    Sys_DMA_Mem2Mem_Event_Handler, (uintptr_t)&amp;sysContext);
+
+            <i><span style="color: #008000">/* Setup the channel */</span></i>
+            SYS_DMA_ChannelSetup(channelHandle,
+                                 SYS_DMA_CHANNEL_OP_MODE_BASIC,
+                                 DMA_TRIGGER_SOURCE_NONE);
+
+            <i><span style="color: #008000">/* Add the memory block transfer request */</span></i>
+            SYS_DMA_ChannelTransferAdd(channelHandle,pDmaSrc,txferSize,
+                                       pDmaDst,txferSize,txferSize);
+
+            <i><span style="color: #008000">/* Start the DMA transfer */</span></i>
+            SYS_DMA_ChannelForceStart(channelHandle);
+        }
+        <strong><span style="color: #000080">else</span></strong>
+        {
+            <i><span style="color: #008000">/* Channel Handle not available */</span></i>
+            ;
+        }
+
+    }
+}
+
+
+<i><span style="color: #008000">/* Below is an Event handler for the registered memory to memory DMA channel */</span></i>
+<strong><span style="color: #000080">static</span></strong> <strong><span style="color: #000080">void</span></strong> Sys_DMA_Mem2Mem_Event_Handler(SYS_DMA_TRANSFER_EVENT event,
+        SYS_DMA_CHANNEL_HANDLE handle, uintptr_t contextHandle)
+{
+    int32_t fail=0;
+    uint32_t index;
+
+    <i><span style="color: #008000">/* Success event */</span></i>
+    <strong><span style="color: #000080">if</span></strong>(SYS_DMA_TRANSFER_EVENT_COMPLETE == event)
+    {
+        <i><span style="color: #008000">/* Verify the contents of destination block matches the
+         * memory contents of the source block */</span></i>
+        <strong><span style="color: #000080">for</span></strong>(index=0; index &lt; txferSize; index++)
+        {
+            <strong><span style="color: #000080">if</span></strong>(*pDmaSrc++!=*pDmaDst++) <i><span style="color: #008000">// compare the buffers</span></i>
+            {
+                fail = -1;
+            }
+        }
+        <strong><span style="color: #000080">if</span></strong>(0==fail)
+        {
+            <i><span style="color: #008000">/* Transfer Success */</span></i>
+        }
+        <strong><span style="color: #000080">else</span></strong>
+        {
+            <i><span style="color: #008000">/* Transfer Failed */</span></i>
+        }
+    }
+    <i><span style="color: #008000">/* Failure Event */</span></i>
+    <strong><span style="color: #000080">else</span></strong> <strong><span style="color: #000080">if</span></strong>(SYS_DMA_TRANSFER_EVENT_ABORT == event)
+    {
+    }
+}</pre></div></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00050.html" target="topic">Direct Memory Access (DMA) System Service Library</a> &gt; <a href="01332.html" target="topic">Using the Library</a> &gt; <a href="01326.html" target="topic">How the Library Works</a> &gt; <a href="01331.html" target="topic">Memory to Memory Transfer</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="01325.html" target="topic">Previous</a> | <a href="01326.html" target="topic">Up</a> | <a href="01322.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM DMA Memory to Memory Transfer Topic Title: Memory to Memory Transfer)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>DRV_SDHC_Reinitialize Function</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00447.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00408.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00409.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00447.html" target="topic">DRV_SDHC_Reinitialize Function</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00443.html" target="topic">Previous</a> | <a href="00409.html" target="topic">Up</a> | <a href="00428.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_Reinitialize@SYS_MODULE_OBJ@SYS_MODULE_INIT * const Topic Title: DRV_SDHC_Reinitialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+DRV_SDHC_Reinitialize Function</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This routine reinitializes the driver and refreshes any associated hardware settings using the given initialization data, but it will not interrupt any ongoing operations.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_SDHC_Reinitialize</span></strong>(
+    <a href="01239.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">object</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="01234.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Function <a href="00443.html" target="topic">DRV_SDHC_Initialize</a> must have been called before calling this routine and a valid <a href="01239.html" target="topic">SYS_MODULE_OBJ</a> must have been returned.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+object&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Driver object handle, returned from the <a href="00443.html" target="topic">DRV_SDHC_Initialize</a> routine<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the initialization data structure&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function can be called multiple times to reinitialize the module.&nbsp;</p>
+<p class="Element10">
+This operation can be used to refresh any supported hardware registers as specified by the initialization data or to change the power state of the module.&nbsp;</p>
+<p class="Element10">
+This routine will NEVER block for hardware access. If the operation requires time to allow the hardware to reinitialize, it will be reported by the <a href="00451.html" target="topic">DRV_SDHC_Status</a> operation. The system must use <a href="00451.html" target="topic">DRV_SDHC_Status</a> to find out when the driver is in the ready state.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="00437.html" target="topic">DRV_SDHC_INIT</a>     init;
+<a href="01239.html" target="topic">SYS_MODULE_OBJ</a>      objectHandle;  <i><span style="color: #008000">//  Returned from DRV_SDHC_Initialize</span></i>
+
+<i><span style="color: #008000">// Update the required fields of the SD Card initialization structure</span></i>
+
+DRV_SDHC_Reinitialize (objectHandle, (<a href="01234.html" target="topic">SYS_MODULE_INIT</a>*)&amp;init);</pre></div></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00408.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00409.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00447.html" target="topic">DRV_SDHC_Reinitialize Function</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00443.html" target="topic">Previous</a> | <a href="00409.html" target="topic">Up</a> | <a href="00428.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_Reinitialize@SYS_MODULE_OBJ@SYS_MODULE_INIT * const Topic Title: DRV_SDHC_Reinitialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

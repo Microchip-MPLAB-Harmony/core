@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>system_exceptions.c</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00024.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00020.html" target="topic">Introduction</a> &gt; <a href="00032.html" target="topic">What is MPLAB Harmony?</a> &gt; <a href="00021.html" target="topic">System Configurations</a> &gt; <a href="00024.html" target="topic">system_exceptions.c</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00023.html" target="topic">Previous</a> | <a href="00021.html" target="topic">Up</a> | <a href="00029.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: ARCH system_exceptions.h Topic Title: system_exceptions.c)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+system_exceptions.c</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The <span class="Element146">system_exceptions.c</span> source file provides a skeletal implementation of the general exception handler function (shown below), overriding the weak function implementation provide by the MPLAB XC32 C/C++ Compiler that simply hangs in an endless loop. </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> _general_exception_handler ( <strong><span style="color: #000080">void</span></strong> )
+{
+   <i><span style="color: #008000">/* Mask off the ExcCode Field from the Cause Register.
+   Refer to the MIPs Software User's manual. */</span></i>
+   _excep_code = (_CP0_GET_CAUSE() &amp; 0x0000007C) &gt;&gt; 2;
+   _excep_addr = _CP0_GET_EPC();
+   _cause_str = cause[_excep_code];
+
+   SYS_DEBUG_PRINT(SYS_ERROR_ERROR,
+   &quot;\nGeneral Exception %s (cause=%d, addr=%x).\n&quot;,
+   _cause_str, _excep_code, _excep_addr);
+
+   <strong><span style="color: #000080">while</span></strong> (1)
+      {
+          SYS_DEBUG_BreakPoint();
+      }
+}</pre></div></div>
+<p class="Element10">
+If a general exception occurs, this implementation will capture the address of the instruction that caused the exception in the <span class="Element146">_excep_addr</span> variable, the cause code in the <span class="Element146">_excep_code</span> variable and use a look-up table indexed by the cause to provide a debug message describing the exception if debug message support is enabled. Then, the function will hit a hard-coded debug breakpoint (in Debug mode) and hang in a loop to prevent runaway execution.&nbsp;</p>
+<p class="Element10">
+This implementation is provided to assist with development and debugging. The user is encouraged to modify this implementation to suit the needs of their system.&nbsp;</p>
+<p class="Element10">
+The use of this exception handler, instead of the compiler's built-in handler, is enabled in MHC by selecting the Options tab, and then selecting <i>Application Configuration &gt; Exception Handling &gt; Use MPLAB Harmony Exception Handler Template</i>. Advanced exception handlers, which provide more information about the exception, are available from the Options tab, by selecting <i>Advanced Exception and Error Handling</i>.&nbsp;</p>
+<p class="Element10">
+A detailed exploration of these options is discussed in Volume 1: <span class="Element145">Getting Started With MPLAB harmony Libraries and Applications</span> &gt; <span class="Element145">Creating Your First Project</span>, Part II: <span class="Element145">Debugging With Your Project</span>, and Part III: <span class="Element145">Debugging While Running Stand-alone</span>.</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00020.html" target="topic">Introduction</a> &gt; <a href="00032.html" target="topic">What is MPLAB Harmony?</a> &gt; <a href="00021.html" target="topic">System Configurations</a> &gt; <a href="00024.html" target="topic">system_exceptions.c</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00023.html" target="topic">Previous</a> | <a href="00021.html" target="topic">Up</a> | <a href="00029.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: ARCH system_exceptions.h Topic Title: system_exceptions.c)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

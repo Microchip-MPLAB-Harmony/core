@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>Installation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00017.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00020.html" target="topic">Introduction</a> &gt; <a href="00016.html" target="topic">Guided Tour</a> &gt; <a href="00017.html" target="topic">Installation</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00018.html" target="topic">Previous</a> | <a href="00016.html" target="topic">Up</a> | <a href="00015.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: ARCH Installation Topic Title: Installation)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Installation</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<div class="Element15">
+Default MPLAB Harmony Installation folders</div>
+<p class="Element10">
+By default, MPLAB Harmony is installed into a version-specific folder.</p>
+<ul class="Element630">
+<li class="Element600">On Microsoft Windows Computers: <span class="Element146">C:\Microchip\harmony\&lt;version&gt;</span></li>
+<li class="Element600">On Linux and Mac OS X Computers: <span class="Element146">~/microchip/harmony/&lt;version&gt;</span></li>
+</ul><p class="Element10">
+Where <span class="Element146">&lt;version&gt;</span> is the version number of the installation. For example, <span class="Element146">v1_06</span>.</p><div class="Element15">
+Top-level Installation Folders</div>
+<p class="Element10">
+Within the main installation folder, the top-level folders organize the contents of the installation by type. It is best to become familiar with the organization of the installation because it is mirrored in the documentation, in the configuration tree, and elsewhere for consistency. </p><p class="Element10" style="text-align: center;">
+<img src="ARCH GT Top-level folders.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10">
+<strong>apps Folder</strong>&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">apps</span> folder contains application projects that demonstrate how to use various MPLAB Harmony libraries. Applications are grouped by type into sub-folders, as follows:</p>
+<ul class="Element630">
+<li class="Element600">Technology (bluetooth, bootloaders,tcpip, rtos, usb)</li>
+<li class="Element600">Market (audio, crypto, gfx)</li>
+<li class="Element600">MPLAB Harmony Layer (drivers, fs)</li>
+<li class="Element600">Board (examples, meb_ii, tests)</li>
+</ul><p class="Element10">
+You can use these projects to explore the capabilities of MPLAB Harmony and the supported demonstration and development boards. They also provide excellent examples of how to use the libraries for different purposes and you can use them as a starting point for your own projects.&nbsp;</p>
+<p class="Element10">
+<strong>bin Folder</strong>&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">bin</span> folder contains prebuilt binary (<span class="Element146">.a</span>) files for some of the MPLAB Harmony libraries. Most libraries are provided as source code or generated from templates, which are provided in source form. However, there are a few libraries for which source code must be specially licensed. Also, the MPLAB Harmony peripheral libraries (PLIBs), while provided in source form, are also provided prebuilt at a high-level of optimization (<span class="Element146">-03</span>) so that users of the free version of the MPLAB XC32 C/C++ Compiler can take advantage of them.&nbsp;</p>
+<p class="Element10">
+<strong>bsp Folder</strong>&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">bsp</span> folder contains Board Support Packages (BSP) for the supported Microchip demonstration and development boards. An MPLAB Harmony BSP provides board-specific initialization and support code, configuration settings, and definitions that can be utilized by applications to more easily utilize the components provided on the selected board. Use of a BSP is not strictly required, because MPLAB Harmony libraries and applications can be configured without them. However, they are provided as a convenience to save the developer time tracing schematics and selecting configuration settings.&nbsp;</p>
+<p class="Element10">
+<strong>build Folder</strong>&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">build</span> folder provides MPLAB X IDE projects for the prebuilt libraries (in the <span class="Element146">bin</span> folder) that are also provided in source form (like the PLIBs). This allows developers to modify settings such as optimization level or debug symbol support and rebuild the binary files, if desired.&nbsp;</p>
+<p class="Element10">
+<strong>config Folder</strong>&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">config</span> folder contains Hconfig configuration files for the MPLAB Harmony Configurator (MHC) graphical configuration utility used to simplify configuration of MPLAB Harmony projects. Hconfig files define the configuration options and menu choices for MPLAB Harmony libraries. They are linked together in a tree and you will find <span class="Element146">config</span> folders and Hconfig files throughout the installation.&nbsp;</p>
+<p class="Element10">
+<strong>doc Folder</strong>&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">doc</span> folder contains the MPLAB Harmony Help documentation. It is provided in three formats: PDF, CHM, and HTML. The PDF format is an easily portable format, useful when viewing the documentation on a variety of devices and operating systems. When using this format, be sure to open your viewer’s “Bookmarks” pane for easiest navigation. The CHM format is a popular Windows format that is useful when viewing the documentation on a Windows computer outside of the MPLAB X IDE. And, the MHC utilizes the HTML format (in the <span class="Element146">html</span> subdirectory) to provide context-specific help from within the configuration tree. Refer to <a href="00587.html" target="topic">Using the Help</a> for detailed information on each Help format.&nbsp;</p>
+<p class="Element10">
+<strong>framework Folder</strong>&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">framework</span> folder contains the MPLAB Harmony framework libraries, including all source code, interface header files, templates and configuration files. </p><p class="Element10" style="text-align: center;">
+<img src="ARCH GT Framework Folders.png" border="0" alt="" title=""></p><p class="Element10">
+Framework libraries are grouped in sub-folders by layer (drivers, system, peripheral, and osal) or by middleware library (bluetooth, crypto, decoder, gfx, math, tcpip, and usb) or by purpose (sample and test). Some of the groupings, particularly the layer groupings, are further broken down by peripheral or sub-system.&nbsp;</p>
+<p class="Element10">
+<strong>third_party Folder</strong>&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">third_party</span> folder groups all offerings provided by MPLAB Harmony third-party partners.&nbsp;</p>
+<p class="Element10">
+<strong>utilities Folder</strong>&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">utilities</span> folder contains development utilities, such as a the Microchip MIB Compiler (<span class="Element146">mib2bib</span>) and most notably, the MPLAB Harmony Configurator (MHC) plug-in for MPLAB X IDE.</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00020.html" target="topic">Introduction</a> &gt; <a href="00016.html" target="topic">Guided Tour</a> &gt; <a href="00017.html" target="topic">Installation</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00018.html" target="topic">Previous</a> | <a href="00016.html" target="topic">Up</a> | <a href="00015.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: ARCH Installation Topic Title: Installation)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

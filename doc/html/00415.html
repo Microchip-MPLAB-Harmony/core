@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>DRV_SDHC_AsyncWrite Function</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00415.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00408.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00409.html" target="topic">Library Interface</a> &gt; c) Block Operation Functions &gt; <a href="00415.html" target="topic">DRV_SDHC_AsyncWrite Function</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00414.html" target="topic">Previous</a> | <a href="00409.html" target="topic">Up</a> | <a href="00427.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_AsyncWrite@DRV_HANDLE@DRV_SDHC_COMMAND_HANDLE *@void *@uint32_t@uint32_t Topic Title: DRV_SDHC_AsyncWrite Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+DRV_SDHC_AsyncWrite Function</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function schedules a non-blocking write operation for writing blocks of data to the SD Card. The function returns with a valid buffer handle in the commandHandle argument if the write request was scheduled successfully. The function adds the request to the hardware instance queue and returns immediately. While the request is in the queue, the application buffer is owned by the driver and should not be modified. The function returns <a href="00421.html" target="topic">DRV_SDHC_COMMAND_HANDLE_INVALID</a> in the commandHandle argument under the following circumstances:</p>
+<ul class="Element630">
+<li class="Element600">if a buffer object could not be allocated to the request</li>
+<li class="Element600">if the source buffer pointer is NULL</li>
+<li class="Element600">if the client opened the driver for read only</li>
+<li class="Element600">if the number of blocks to be written is either zero or more than the number of blocks actually available</li>
+<li class="Element600">if the write queue size is full or queue depth is insufficient</li>
+<li class="Element600">if the driver handle is invalid</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+If the requesting client registered an event callback with the driver, the driver will issue a DRV_SDHC_EVENT_COMMAND_COMPLETE event if the buffer was processed successfully or DRV_SDHC_EVENT_COMMAND_ERROR event if the buffer was not processed successfully.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_SDHC_AsyncWrite</span></strong>(
+    <a href="00266.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <a href="00420.html" target="topic">DRV_SDHC_COMMAND_HANDLE</a> * <strong><span style="color: #000000">commandHandle</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">sourceBuffer</span></strong>, 
+    uint32_t <strong><span style="color: #000000">blockStart</span></strong>, 
+    uint32_t <strong><span style="color: #000000">nBlock</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+<a href="00446.html" target="topic">DRV_SDHC_Open</a>() routine must have been called to obtain a valid opened device handle. DRV_IO_INTENT_WRITE or DRV_IO_INTENT_READWRITE must have been specified as a parameter to this routine.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A valid open-instance handle, returned from the driver's open function<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+commandHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to an argument that will contain the return buffer handle<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+sourceBuffer&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+The source buffer containing data to be programmed to the SD Card.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+blockStart&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Start block address of SD Card where the writes should begin.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+nBlock&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Total number of blocks to be written.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The buffer handle is returned in the commandHandle argument. It will be <a href="00421.html" target="topic">DRV_SDHC_COMMAND_HANDLE_INVALID</a> if the request was not successful.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">
+uint8_t myBuffer[MY_BUFFER_SIZE];
+
+<i><span style="color: #008000">// address should be block aligned.</span></i>
+uint32_t blockStart = 0x00;
+uint32_t    nBlock = 2;
+<a href="00420.html" target="topic">DRV_SDHC_COMMAND_HANDLE</a> commandHandle;
+MY_APP_OBJ myAppObj;
+
+<i><span style="color: #008000">// mySDHCHandle is the handle returned</span></i>
+<i><span style="color: #008000">// by the DRV_SDHC_Open function.</span></i>
+
+<i><span style="color: #008000">// Client registers an event handler with driver</span></i>
+
+<a href="00433.html" target="topic">DRV_SDHC_EventHandlerSet</a>(mySDHCHandle, APP_SDHCEventHandler, (uintptr_t)&amp;myAppObj);
+
+DRV_SDHC_AyncWrite(mySDHCHandle, &amp;commandHandle, &amp;myBuffer, blockStart, nBlock);
+
+<strong><span style="color: #000080">if</span></strong>(<a href="00421.html" target="topic">DRV_SDHC_COMMAND_HANDLE_INVALID</a> == commandHandle)
+{
+    <i><span style="color: #008000">// Error handling here</span></i>
+}
+
+<i><span style="color: #008000">// Event is received when</span></i>
+<i><span style="color: #008000">// the buffer is processed.</span></i>
+
+<strong><span style="color: #000080">void</span></strong> APP_SDHCEventHandler(<a href="00429.html" target="topic">DRV_SDHC_EVENT</a> event,
+        <a href="00420.html" target="topic">DRV_SDHC_COMMAND_HANDLE</a> commandHandle, uintptr_t contextHandle)
+{
+    <i><span style="color: #008000">// contextHandle points to myAppObj.</span></i>
+
+    <strong><span style="color: #000080">switch</span></strong>(event)
+    {
+        <strong><span style="color: #000080">case</span></strong> DRV_SDHC_EVENT_COMMAND_COMPLETE:
+
+            <i><span style="color: #008000">// This means the data was transferred.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> DRV_SDHC_EVENT_COMMAND_ERROR:
+
+            <i><span style="color: #008000">// Error handling here.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">default</span></strong>:
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+}
+</pre></div></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00408.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00409.html" target="topic">Library Interface</a> &gt; c) Block Operation Functions &gt; <a href="00415.html" target="topic">DRV_SDHC_AsyncWrite Function</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00414.html" target="topic">Previous</a> | <a href="00409.html" target="topic">Up</a> | <a href="00427.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_AsyncWrite@DRV_HANDLE@DRV_SDHC_COMMAND_HANDLE *@void *@uint32_t@uint32_t Topic Title: DRV_SDHC_AsyncWrite Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

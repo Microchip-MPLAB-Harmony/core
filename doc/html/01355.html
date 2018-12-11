@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>Obtaining System Version Information</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '01355.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="01364.html" target="topic">System Services Libraries Overview</a> &gt; <a href="01355.html" target="topic">Obtaining System Version Information</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="01367.html" target="topic">Previous</a> | <a href="01364.html" target="topic">Up</a> | <a href="01352.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM Obtaining System Version Information Topic Title: Obtaining System Version Information)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Obtaining System Version Information</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+It is possible to programmatically obtain the version information for the release of MPLAB Harmony using the SYS_Version group of functions. For example, once the Debug System Service has been initialized and is running, the following code would retrieve the current version number and display it on the configured debug console if it were lower than a given value.&nbsp;</p>
+<p class="Element10">
+<strong>Example Version Function Usage</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">#define</span></strong> REQUIRED_VERSION 10700
+
+<strong><span style="color: #000080">if</span></strong> (SYS_VersionGet() &lt; REQUIRED_VERSION)
+{
+    SYS_DEBUG_MESSAGE( SYS_ERROR_WARNING, &quot;Version %s is too low&quot;,
+                       SYS_VersionStrGet() );
+}</pre></div></div>
+<p class="Element10">
+In the previous example, the <a href="01305.html" target="topic">SYS_VersionGet</a> function is used to get the numeric representation of the version number so that it can be easily compared to a known value and the <a href="01306.html" target="topic">SYS_VersionStrGet</a> is used to get a string representation of it for displaying on the debug console.</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="01364.html" target="topic">System Services Libraries Overview</a> &gt; <a href="01355.html" target="topic">Obtaining System Version Information</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="01367.html" target="topic">Previous</a> | <a href="01364.html" target="topic">Up</a> | <a href="01352.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM Obtaining System Version Information Topic Title: Obtaining System Version Information)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

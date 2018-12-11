@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>Using Asynchronous and Callback Functions</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00091.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00051.html" target="topic">Driver Library Overview</a> &gt; <a href="00091.html" target="topic">Using Asynchronous and Callback Functions</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00092.html" target="topic">Previous</a> | <a href="00051.html" target="topic">Up</a> | <a href="00086.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Using Asynchronous and Callback Functions Topic Title: Using Asynchronous and Callback Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Using Asynchronous and Callback Functions</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+When a client calls a function that is part of an asynchronous interface, the function starts the request and returns immediately, without finishing the request. The client can then either poll a status function to determine when the request has finished (as demonstrated in the Using Driver Interface Functions section) or it can utilize a callback function to receive a notification from the driver when the request has finished. So, the difference between an asynchronous interface and a synchronous interface is that a synchronous interface may finish all or part of the request before returning, whereas an asynchronous interface will always return immediately having only started the request. Determination of when the request has completed is handled separately.&nbsp;</p>
+<p class="Element10">
+The examples in this section reimplement some of the code from the example application described in the previous sections to demonstrate how to use asynchronous queuing and callback interfaces instead of the synchronous status-polling interface demonstrated in the Using Driver Interface Functions section. To use an asynchronous interface, we will first add a couple of new variables to our example application’s data structure, as shown by the following structure definition.&nbsp;</p>
+<p class="Element10">
+<strong>Example Driver Application Header (app.h)</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong>
+{
+    APP_STATES              state;
+    DRV_HANDLE              usart;
+    <strong><span style="color: #000080">char</span></strong> *                  message;
+    DRV_USART_BUFFER_HANDLE messageHandle;
+    <strong><span style="color: #000080">bool</span></strong>                    messageDone;
+
+} APP_DATA;</pre></div></div>
+<p class="Element10">
+The <span class="Element146">state</span>, <span class="Element146">usart</span>, and <span class="Element146">message</span> members of the APP_DATA structure are used in exactly the same way as they were in the previous examples. The <span class="Element146">messageHandle</span> variable will be explained later and the <span class="Element146">messageDone</span> variable is a Boolean flag used by the callback function to indicate to the application’s state machine that the message has been completely processed by the driver. Using these new mechanisms results in very minor changes to the application’s state machine, as shown in the following example <span class="Element146">APP_Initialize</span> and <span class="Element146">APP_Tasks</span> implementations.&nbsp;</p>
+<p class="Element10">
+<strong>Example Driver Application State Machine (app.c)</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> APP_Initialize ( <strong><span style="color: #000080">void</span></strong> )
+{
+    appData.state           = APP_STATE_SETUP;
+    appData.usart           = DRV_HANDLE_INVALID;
+    appData.message         = APP_MESSAGE;
+    appData.messageHandle   = DRV_USART_BUFFER_HANDLE_INVALID;
+}
+
+<strong><span style="color: #000080">void</span></strong> APP_Tasks ( <strong><span style="color: #000080">void</span></strong> )
+{
+    <strong><span style="color: #000080">switch</span></strong> ( appData.state )
+    {
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_SETUP:
+        {
+            <strong><span style="color: #000080">if</span></strong> (SetupApplication() == <strong><span style="color: #000080">true</span></strong>)
+            {
+                appData.state = APP_STATE_MESSAGE_SEND;
+            }
+            <strong><span style="color: #000080">break</span></strong>;
+        }
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_MESSAGE_SEND:
+        {
+            <strong><span style="color: #000080">if</span></strong> (MessageSend() == <strong><span style="color: #000080">true</span></strong>)
+            {
+                appData.state = APP_STATE_MESSAGE_WAIT;
+            }
+            <strong><span style="color: #000080">break</span></strong>;
+        }
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_MESSAGE_WAIT:
+        {
+            <strong><span style="color: #000080">if</span></strong> (appData.messageDone)
+            {
+                DRV_USART_Close(appData.usart);
+                appData.state = APP_STATE_DONE;
+            }
+            <strong><span style="color: #000080">break</span></strong>;
+        }
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_DONE:
+        <strong><span style="color: #000080">default</span></strong>:
+        {
+            <strong><span style="color: #000080">break</span></strong>;
+        }
+    }
+}</pre></div></div>
+<p class="Element10">
+As described previously, the <span class="Element146">SetupApplication</span> state transition function opens the USART driver and the <span class="Element146">MessageSend</span> function sends the message to it. However, there is no need for a <span class="Element146">MessageComplete</span> state transition function. Instead, the application must implement a callback function that will set the <span class="Element146">appData.messageDone</span> Boolean flag when the driver calls the application &quot;back&quot; to indicate that the message has been sent. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="Note Icon.png" border="0" alt="" title=""><strong> Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+The <span class="Element146">AppInitialize</span> function initializes the <span class="Element146">state</span>, <span class="Element146">usart</span>, and <span class="Element146">message</span> members of the <span class="Element146">appData</span> structure as previously described. And, it also initializes the <span class="Element146">messageHandle</span> member with an invalid value to indicate that the message has not yet been sent. However, it does not initialize the <span class="Element146">messageDone</span> flag because it is more appropriate to clear the flag elsewhere, immediately before calling the driver to send the message.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+To use a callback mechanism requires the client to implement and register a callback function. A client must register this function after opening the driver, but prior to calling the driver to initiate the operation. This is often done in the same state transition that opens the driver, as shown in the following <span class="Element146">SetupApplication</span> example.&nbsp;</p>
+<p class="Element10">
+<strong>Example Registering a Driver Callback Function</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">static</span></strong> <strong><span style="color: #000080">void</span></strong> BufferDone ( DRV_USART_BUFFER_EVENT  event,
+                         DRV_USART_BUFFER_HANDLE bufferHandle,
+                         uintptr_t context )
+{
+    APP_DATA *pAppData = (APP_DATA *)context;
+
+    <strong><span style="color: #000080">if</span></strong> (event == DRV_USART_BUFFER_EVENT_COMPLETE)
+    {
+        <strong><span style="color: #000080">if</span></strong> (bufferHandle == pAppData-&gt;messageHandle)
+        {
+            pAppData-&gt;messageDone = <strong><span style="color: #000080">true</span></strong>;
+            <strong><span style="color: #000080">return</span></strong>;
+        }
+    }
+
+    <i><span style="color: #008000">/* Error */</span></i>
+    <strong><span style="color: #000080">return</span></strong>;
+}
+
+
+<strong><span style="color: #000080">static</span></strong> <strong><span style="color: #000080">bool</span></strong> SetupApplication ( <strong><span style="color: #000080">void</span></strong> )
+{
+    <strong><span style="color: #000080">if</span></strong> (appData.usart == DRV_HANDLE_INVALID)
+    {
+        appData.usart = DRV_USART_Open(APP_USART_DRIVER_INDEX,
+                                       (DRV_IO_INTENT_READWRITE|DRV_IO_INTENT_NONBLOCKING));
+    }
+
+    <strong><span style="color: #000080">if</span></strong> (appData.usart == DRV_HANDLE_INVALID)
+    {
+        <strong><span style="color: #000080">return</span></strong> <strong><span style="color: #000080">false</span></strong>;
+    }
+
+    DRV_USART_BufferEventHandlerSet(appData.usart, BufferDone, (uintptr_t)&amp;appData);
+    <strong><span style="color: #000080">return</span></strong> <strong><span style="color: #000080">true</span></strong>;
+}</pre></div></div>
+<p class="Element10">
+This code block implements both the <span class="Element146">BufferDone</span> callback function and the application’s <span class="Element146">SetupApplication</span> state transition function. After successfully opening the driver, the <span class="Element146">SetupApplication</span> function calls the <a href="00514.html" target="topic">DRV_USART_BufferEventHandlerSet</a> function and passes it the driver handle (<span class="Element146">appData.usart</span>) once it is valid, along with the address of the <span class="Element146">BufferDone</span> callback function and a context value.&nbsp;</p>
+<p class="Element10">
+The context value can be anything that will fit in an integer large enough to hold a pointer (it is a <span class="Element146">uintptr_t</span> variable). However, this parameter is most commonly used to pass a pointer to the caller’s own data structure as demonstrated here (even though it is not strictly necessary). This is done primarily to support multi-instance clients. (Refer to <i>Volume IV: MPLAB Harmony Development &gt; <span class="Element145">Key Concepts</span></i> for information on multiple instances.) A multi-instance client is designed to manage multiple instances of itself by allocating multiple instances of its own data structure, but only one instance of its object code. Passing a pointer to the data structure in the context variable identifies the specific instance that was used when calling the driver.&nbsp;</p>
+<p class="Element10">
+Once the callback function has been registered with the driver, the application can transition to a state where it attempts to initiate an asynchronous operation. The following example demonstrates the use of a buffer-queuing write function to transmit a message over the USART.&nbsp;</p>
+<p class="Element10">
+<strong>Example Queuing a Buffer to a Driver</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">static</span></strong> <strong><span style="color: #000080">bool</span></strong> MessageSend ( <strong><span style="color: #000080">void</span></strong> )
+{
+    appData.messageDone = <strong><span style="color: #000080">false</span></strong>;
+    DRV_USART_BufferAddWrite(appData.usart, &amp;appData.messageHandle,
+                             appData.message, strlen(appData.message));
+
+    <strong><span style="color: #000080">if</span></strong> (appData.messageHandle == DRV_USART_BUFFER_HANDLE_INVALID)
+    {
+        <strong><span style="color: #000080">return</span></strong> <strong><span style="color: #000080">false</span></strong>;
+    }
+
+    <strong><span style="color: #000080">return</span></strong> <strong><span style="color: #000080">true</span></strong>;
+}</pre></div></div>
+<p class="Element10">
+Before attempting to send the message, this implementation of the <span class="Element146">MessageSend</span> state transition function clears the <span class="Element146">appData.messageDone</span> flag so it can detect when the message has completed. Then, it calls the DRV_USART_BufferAddWrite function to queue up the buffer containing the message to be transmitted by the USART driver. To that function, it passes the USART driver handle (<span class="Element146">appData.usart</span>), the address of the <span class="Element146">appData.messageHandle</span> variable, the pointer to the message buffer (<span class="Element146">appData.message</span>), and the size of the buffer in bytes as calculated by the <span class="Element146">strlen</span> function. The USART driver then adds this buffer to its internal queue of buffers to transmit and provides a handle to the caller that identifies that buffer’s place in the queue by storing it to the <span class="Element146">appData.messageHandle</span> variable.&nbsp;</p>
+<p class="Element10">
+If, for some reason, the driver is unable to successfully queue up the buffer (perhaps the queue is full), it will assign a value of <a href="00512.html" target="topic">DRV_USART_BUFFER_HANDLE_INVALID</a> to the <span class="Element146">appData.messageHandle</span> variable. If that happens, the <span class="Element146">MessageSend</span> function returns false and the application will stay in the same state and retry the operation again next time its tasks function is called. But, if the operation succeeds, the application advances to the next state.&nbsp;</p>
+<p class="Element10">
+Once the driver completes the operation, it will call the client’s callback function. As shown in the <span class="Element146">BufferDone</span> code example, the driver passes it an enumeration value that identifies which event has just occurred (the <span class="Element146">DRV_USART_BUFFER_EVENT_COMPLETE</span> value) in the event parameter. It also passes it the handle of the buffer that has just completed (<span class="Element146">bufferHandle</span>). The client can use the <span class="Element146">bufferHandle</span> value to verify that it matches the value stored in the <span class="Element146">appData.bufferHandle</span> variable to uniquely identify an individual buffer. This is very useful when a client queues up multiple buffers at the same, which is being shown in this example as a demonstration.&nbsp;</p>
+<p class="Element10">
+The context parameter to the <span class="Element146">BufferDone</span> function contains a pointer to the application’s global (<span class="Element146">appData</span>) data structure. (This is the same value that was passed in the context parameter to the <a href="00514.html" target="topic">DRV_USART_BufferEventHandlerSet</a> function.) While not strictly necessary in this example, it is very useful for multi-instance clients such as dynamic device drivers and middleware to identify which instance of the client requested the operation. The callback function simply casts the context value back into a pointer to the client’s own data structure’s data type (<span class="Element146">APP_DATA</span> in this example) and uses it to access the structure members. (Again, please refer to <i>Volume IV: MPLAB Harmony Development &gt; <span class="Element145">Key Concepts</span></i> for information on multiple instances.)&nbsp;</p>
+<p class="Element10">
+The callback function uses the <span class="Element146">event</span> parameter to identify why the callback occurred. If it was called to indicate that the buffer has been processed, the <span class="Element146">event</span> parameter will contain the value DRV_USART_BUFFER_EVENT_COMPLETE. If it contains any other value an error has occurred. The <span class="Element146">BufferDone</span> callback also checks to verify that the buffer that completed was the same buffer that it queued up by comparing the <span class="Element146">bufferHandle</span> value it was passed with the value assigned to the <span class="Element146">appData.messageHandle</span> variable when the application called DRV_USART_BufferAddWrite. It accesses the message handle value it saved using the <span class="Element146">pAppData</span> pointer given to it through the context parameter just. Once it has verified that the buffer it queued has completed, it sets the <span class="Element146">pAppData-&gt;messageDone</span> flag to notify the application’s state machine and execution returns to the driver. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="Note Icon.png" border="0" alt="" title=""><strong> Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+It is important to understand that the <span class="Element146">MessageDone</span> callback function executes in the context of the driver, not the application. Depending on how the system is configured, this means that it may be called from within the driver’s ISR context or from another thread context if using a RTOS.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+In this example, the <span class="Element146">APP_Tasks</span> application state machine function is essentially the same as the state machine for the synchronous example. The only difference is that when the application is in the <span class="Element146">APP_STATE_MESSAGE_WAIT</span> state, it checks the <span class="Element146">appData.messageDone</span> flag to determine when to close the driver and transition to the <span class="Element146">APP_STATE_DONE</span> state instead of calling a transition function. (It could still do this in a state transition function, but it was done differently in this example to emphasize the concept.)&nbsp;</p>
+<p class="Element10">
+The advantage of using an asynchronous interface over a synchronous one is that it allows the client’s state machine to continue on, potentially doing something else while the requested operation completes. Whereas a synchronous interface has the possibility of blocking the client’s state machine until the operation finishes (when used in a RTOS configuration). An asynchronous interface will always return immediately without blocking (whether a RTOS is used or not). Because of this, most asynchronous interfaces will also allow queuing of more than one operation at a time. This allows client applications to keep a driver continuously busy by keeping the driver’s queue full, maximizing data throughput or operation speed. By contrast, a synchronous interface requires one operation to complete before the synchronous function can be called again to cause the next one to begin.&nbsp;</p>
+<p class="Element10">
+The cost of this capability is that an asynchronous interface has the added complexity of a callback function (if the client cares when the operation finishes) and the fact that a callback function may be called from within the driver’s ISR context, depending on how the driver was designed and configured. This fact generally restricts what can be done within the callback function. For example, it is usually a bad idea to perform lengthy processing within a callback function as it will block all lower priority ISRs (as well as the main loop or other threads) while that processing occurs. Also, it is usually best to not call back into the driver’s own interface functions unless those functions are documented as being safe to call from within the driver’s callback context. Many interface functions (particularly data transfer and data queuing functions) must use semaphores or mutexes to protect their internal data structures in RTOS environments and those constructs cannot be used from within an ISR.&nbsp;</p>
+<p class="Element10">
+It is also important to not make non-atomic (read-modify-write) accesses to the client’s own state data from within the callback function, as the client cannot protect itself against an interrupt that is owned by the driver. That is why a separate Boolean flag variable is commonly used to indicate to the client that the callback has occurred. Most other processing should occur in the client’s state machine. It is usually best to simply capture the event and return as quickly as possible from the callback function and let the application’s state machine tasks function perform any lengthy processing or calling back into the driver.&nbsp;</p>
+<p class="Element10">
+Please refer to <i><span class="Element145">Volume IV: MPLAB Harmony Development</span></i> for additional information.</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00051.html" target="topic">Driver Library Overview</a> &gt; <a href="00091.html" target="topic">Using Asynchronous and Callback Functions</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00092.html" target="topic">Previous</a> | <a href="00051.html" target="topic">Up</a> | <a href="00086.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Using Asynchronous and Callback Functions Topic Title: Using Asynchronous and Callback Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

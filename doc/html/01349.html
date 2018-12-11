@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>Static Configuration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '01349.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00630.html" target="topic">Interrupt System Service Library</a> &gt; <a href="01336.html" target="topic">Configuring the Library</a> &gt; <a href="01349.html" target="topic">Static Configuration</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="01336.html" target="topic">Previous</a> | <a href="01336.html" target="topic">Up</a> | <a href="01339.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM INT Static Configuration Topic Title: Static Configuration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Static Configuration</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+A static configuration of the raw ISR support for MPLAB Harmony requires processor-family-specific knowledge. Or, more accurately, it requires compiler-specific knowledge. The following example shows how to implement a raw ISR for the PIC32 family of devices. Refer to the compiler manual for details of how to implement an ISR.&nbsp;</p>
+<p class="Element10">
+Raw ISR Responsibilities:</p>
+<ul class="Element630">
+<li class="Element600">Identify the interrupt source</li>
+<li class="Element600">Call the appropriate module's Tasks routine</li>
+</ul><p class="Element10">
+The first thing a raw ISR must do is identify the source of the interrupt. Each interrupt source has its own interrupt &quot;vector&quot;. This means that the only time a specific ISR is called is when a specific source has caused an interrupt. Therefore, the raw ISR can assume that every time it is called, its source has caused an interrupt. Once the raw ISR has identified the interrupt source, it must call the appropriate module's Tasks routine to service and clear the interrupt.</p><div class="Element15">
+Example: PIC32 Timer1 Raw ISR</div>
+<div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> __ISR ( _TIMER_1_VECTOR ) _InterruptHandler_TMR_1_stub( <strong><span style="color: #000080">void</span></strong> )
+{
+    <i><span style="color: #008000">/* Call the timer driver's &quot;Tasks&quot; routine */</span></i>
+    DRV_TMR_Tasks ( gTMRObject );
+}</pre></div></div>
+<p class="Element10">
+In the example, gTMRObject holds the return value from the DRV_TMR_Initialize function.&nbsp;</p>
+<p class="Element10">
+The <a href="01190.html" target="topic">SYS_INT_DynamicRegister</a> and SYS_INT_DynamicDeregister functions are macro switched to compile away to nothing if a static configuration is chosen.</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00630.html" target="topic">Interrupt System Service Library</a> &gt; <a href="01336.html" target="topic">Configuring the Library</a> &gt; <a href="01349.html" target="topic">Static Configuration</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="01336.html" target="topic">Previous</a> | <a href="01336.html" target="topic">Up</a> | <a href="01339.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM INT Static Configuration Topic Title: Static Configuration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>
