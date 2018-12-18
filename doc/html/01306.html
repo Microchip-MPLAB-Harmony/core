@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_VersionStrGet Macro</title>
+<title>SYS_TIME_PLIB_FREQUENCY_GET Type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="01364.html" target="topic">System Services Libraries Overview</a> &gt; <a href="01352.html" target="topic">Library Interface</a> &gt; Version Functions &gt; <a href="01306.html" target="topic">SYS_VersionStrGet Macro</a></div>
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00864.html" target="topic">Time System Service Library Help</a> &gt; <a href="00865.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="01306.html" target="topic">SYS_TIME_PLIB_FREQUENCY_GET Type</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01305.html" target="topic">Previous</a> | <a href="01352.html" target="topic">Up</a> | <a href="01216.html" target="topic">Next</a></div>
+<a href="01305.html" target="topic">Previous</a> | <a href="00865.html" target="topic">Up</a> | <a href="01307.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_VersionStrGet Topic Title: SYS_VersionStrGet Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_PLIB_FREQUENCY_GET Topic Title: SYS_TIME_PLIB_FREQUENCY_GET Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_VersionStrGet Macro</div>
+SYS_TIME_PLIB_FREQUENCY_GET Type</div>
 </div>
 </div>
 
@@ -49,33 +49,17 @@ SYS_VersionStrGet Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Macro: char * SYS_VersionStrGet ( void )&nbsp;</p>
-<p class="Element10">
-This routine gets the SYS_COMMON version in string format. The version is returned as major.minor.path[type], where type is optional. The numerical version can be obtained using <a href="01305.html" target="topic">SYS_VersionGet</a>()</p></div>
+This is type SYS_TIME_PLIB_FREQUENCY_GET.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">SYS_VersionStrGet</span></strong>( <strong><span style="color: #000080">void</span></strong> ) SYS_VERSION_STR</pre></div></div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-Current SYS_COMMON version in the string format.</p></div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
-</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> uint32_t (* <strong><span style="color: #000000">SYS_TIME_PLIB_FREQUENCY_GET</span></strong>)(<strong><span style="color: #000080">void</span></strong>);</pre></div></div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="01364.html" target="topic">System Services Libraries Overview</a> &gt; <a href="01352.html" target="topic">Library Interface</a> &gt; Version Functions &gt; <a href="01306.html" target="topic">SYS_VersionStrGet Macro</a></div>
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00864.html" target="topic">Time System Service Library Help</a> &gt; <a href="00865.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="01306.html" target="topic">SYS_TIME_PLIB_FREQUENCY_GET Type</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -86,10 +70,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01305.html" target="topic">Previous</a> | <a href="01352.html" target="topic">Up</a> | <a href="01216.html" target="topic">Next</a></div>
+<a href="01305.html" target="topic">Previous</a> | <a href="00865.html" target="topic">Up</a> | <a href="01307.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_VersionStrGet Topic Title: SYS_VersionStrGet Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_PLIB_FREQUENCY_GET Topic Title: SYS_TIME_PLIB_FREQUENCY_GET Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

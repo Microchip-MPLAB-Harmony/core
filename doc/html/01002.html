@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_FILE_DIR_ATTR Enumeration</title>
+<title>SYS_FS_DriveFormat Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00814.html" target="topic">File System Service Library Help</a> &gt; <a href="00815.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01002.html" target="topic">SYS_FS_FILE_DIR_ATTR Enumeration</a></div>
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00851.html" target="topic">File System Service Library Help</a> &gt; <a href="00852.html" target="topic">Library Interface</a> &gt; b) General Operation Functions &gt; <a href="01002.html" target="topic">SYS_FS_DriveFormat Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01095.html" target="topic">Previous</a> | <a href="00815.html" target="topic">Up</a> | <a href="01174.html" target="topic">Next</a></div>
+<a href="01004.html" target="topic">Previous</a> | <a href="00852.html" target="topic">Up</a> | <a href="01005.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FILE_DIR_ATTR Topic Title: SYS_FS_FILE_DIR_ATTR Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_DriveFormat@char*@SYS_FS_FORMAT@uint32_t Topic Title: SYS_FS_DriveFormat Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_FILE_DIR_ATTR Enumeration</div>
+SYS_FS_DriveFormat Function</div>
 </div>
 </div>
 
@@ -49,76 +49,60 @@ SYS_FS_FILE_DIR_ATTR Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-File or directory attribute&nbsp;</p>
+This function formats a logic drive (create a FAT file system on the logical drive), as per the format specified.&nbsp;</p>
 <p class="Element10">
-These enumerated values are the possible attributes for a file or directory.</p></div>
+If the logical drive that has to be formatted has been bound to any partition (1-4) by multiple partition feature, the FAT volume is created into the specified partition. In this case, the second argument fmt is ignored. The physical drive must have been partitioned prior to using this function.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">SYS_FS_ATTR_RDO</span></strong> = 0x01,
-  <strong><span style="color: #000000">SYS_FS_ATTR_HID</span></strong> = 0x02,
-  <strong><span style="color: #000000">SYS_FS_ATTR_SYS</span></strong> = 0x04,
-  <strong><span style="color: #000000">SYS_FS_ATTR_VOL</span></strong> = 0x08,
-  <strong><span style="color: #000000">SYS_FS_ATTR_LFN</span></strong> = 0x0F,
-  <strong><span style="color: #000000">SYS_FS_ATTR_DIR</span></strong> = 0x10,
-  <strong><span style="color: #000000">SYS_FS_ATTR_ARC</span></strong> = 0x20,
-  <strong><span style="color: #000000">SYS_FS_ATTR_MASK</span></strong> = 0x3F
-} SYS_FS_FILE_DIR_ATTR;</pre></div></div>
-<a name="4D656D62657273"></a><div class="Element14">
-Members</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01207.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_DriveFormat</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong>* <strong><span style="color: #000000">drive</span></strong>, 
+    <a href="01085.html" target="topic">SYS_FS_FORMAT</a> <strong><span style="color: #000000">fmt</span></strong>, 
+    uint32_t <strong><span style="color: #000000">clusterSize</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element272">
-<div class="TableDiv">
-<table cellspacing="0" class="Table4">
-<tr>
-<td class="Element260" valign="top" width="35%">
-<div class="Element261">
-Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
-<div class="Element265">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_FS_ATTR_RDO = 0x01&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Read only&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_FS_ATTR_HID = 0x02&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Hidden&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_FS_ATTR_SYS = 0x04&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-System&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_FS_ATTR_VOL = 0x08&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Volume label&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_FS_ATTR_LFN = 0x0F&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-LFN entry&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_FS_ATTR_DIR = 0x10&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Directory&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_FS_ATTR_ARC = 0x20&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Archive&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_FS_ATTR_MASK = 0x3F&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Mask of defined bits&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+At least one disk must be mounted. The physical drive must have already been partitioned.</p></div>
 </div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+drive&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to buffer which will hold the name of drive being for which the format is to be done. If this string is NULL, then then current drive will be formatted. It is important to end the drive name with a &quot;/&quot;.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+fmt&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Format type.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+clusterSize&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Cluster size. The value must be sector (size * n), where n is 1 to 128 and power of 2. When a zero is given, the cluster size depends on the volume size.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+SYS_FS_RES_SUCCESS - Drive format was successful. SYS_FS_RES_FAILURE - Drive format was unsucessful. The reason for the failure can be retrieved with <a href="01007.html" target="topic">SYS_FS_Error</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -127,12 +111,43 @@ Remarks</div>
 <p class="Element10">
 None.</p></div>
 </div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01207.html" target="topic">SYS_FS_RESULT</a> res;
+
+  <strong><span style="color: #000080">switch</span></strong>(appState)
+  {
+      <strong><span style="color: #000080">case</span></strong> TRY_MOUNT:
+          <strong><span style="color: #000080">if</span></strong>(<a href="01203.html" target="topic">SYS_FS_Mount</a>(&quot;/dev/mmcblka1&quot;, &quot;/mnt/myDrive&quot;, FAT, 0, NULL) != SYS_FS_RES_SUCCESS)
+          {
+              <i><span style="color: #008000">// Failure, try mounting again</span></i>
+          }
+          <strong><span style="color: #000080">else</span></strong>
+          {
+              <i><span style="color: #008000">// Mount was successful. Format now.</span></i>
+              appState = FORMAT_DRIVE;
+          }
+          <strong><span style="color: #000080">break</span></strong>;
+
+      <strong><span style="color: #000080">case</span></strong> FORMAT_DRIVE:
+          res = SYS_FS_DriveFormat(&quot;/mnt/myDrive&quot;, SYS_FS_FORMAT_SFD, 0);
+          <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
+          {
+              <i><span style="color: #008000">// Format of the drive failed.</span></i>
+          }
+          <i><span style="color: #008000">//...</span></i>
+          <strong><span style="color: #000080">break</span></strong>;
+  }</pre></div></div>
+</div>
+</div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00814.html" target="topic">File System Service Library Help</a> &gt; <a href="00815.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01002.html" target="topic">SYS_FS_FILE_DIR_ATTR Enumeration</a></div>
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00851.html" target="topic">File System Service Library Help</a> &gt; <a href="00852.html" target="topic">Library Interface</a> &gt; b) General Operation Functions &gt; <a href="01002.html" target="topic">SYS_FS_DriveFormat Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -143,10 +158,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01095.html" target="topic">Previous</a> | <a href="00815.html" target="topic">Up</a> | <a href="01174.html" target="topic">Next</a></div>
+<a href="01004.html" target="topic">Previous</a> | <a href="00852.html" target="topic">Up</a> | <a href="01005.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FILE_DIR_ATTR Topic Title: SYS_FS_FILE_DIR_ATTR Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_DriveFormat@char*@SYS_FS_FORMAT@uint32_t Topic Title: SYS_FS_DriveFormat Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

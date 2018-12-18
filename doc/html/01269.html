@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_TIME_DelayMS Function</title>
+<title>SYS_MODULE_STATUS_ROUTINE Type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00827.html" target="topic">Time System Service Library Help</a> &gt; <a href="00828.html" target="topic">Library Interface</a> &gt; c) Callback and Delay Functions &gt; <a href="01269.html" target="topic">SYS_TIME_DelayMS Function</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00178.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="01269.html" target="topic">SYS_MODULE_STATUS_ROUTINE Type</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01260.html" target="topic">Previous</a> | <a href="00828.html" target="topic">Up</a> | <a href="01270.html" target="topic">Next</a></div>
+<a href="01268.html" target="topic">Previous</a> | <a href="00178.html" target="topic">Up</a> | <a href="01270.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_DelayMS@uint32_t@SYS_TIME_HANDLE* Topic Title: SYS_TIME_DelayMS Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_MODULE_STATUS_ROUTINE Topic Title: SYS_MODULE_STATUS_ROUTINE Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_TIME_DelayMS Function</div>
+SYS_MODULE_STATUS_ROUTINE Type</div>
 </div>
 </div>
 
@@ -49,20 +49,19 @@ SYS_TIME_DelayMS Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The function will internally create a single shot timer which will be auto deleted when the application calls <a href="01268.html" target="topic">SYS_TIME_DelayIsComplete</a> routine and the delay has expired. The function will return immediately, requiring the caller to use <a href="01268.html" target="topic">SYS_TIME_DelayIsComplete</a> routine to check the delay timer's status.</p></div>
+System Module Status Routine Pointer&nbsp;</p>
+<p class="Element10">
+This data type is a pointer to a routine that gets the current status of a system module (driver, library, or system-maintained application).</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01293.html" target="topic">SYS_TIME_RESULT</a> <strong><span style="color: #000000">SYS_TIME_DelayMS</span></strong>(
-    uint32_t <strong><span style="color: #000000">ms</span></strong>, 
-    <a href="01272.html" target="topic">SYS_TIME_HANDLE</a>* <strong><span style="color: #000000">handle</span></strong>
-);</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <a href="01272.html" target="topic">SYS_STATUS</a> (* <strong><span style="color: #000000">SYS_MODULE_STATUS_ROUTINE</span></strong>)(<a href="01265.html" target="topic">SYS_MODULE_OBJ</a> object);</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="01275.html" target="topic">SYS_TIME_Initialize</a> function must have been called before calling this function.</p></div>
+The low-level board initialization must have (and will be) completed and the module's initialization routine will have been called before the system will call the status routine for any modules.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -79,14 +78,9 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-ms&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+object&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-The desired number of milliseconds to delay.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Address of the variable to receive the timer handle value.&nbsp;</div></td></tr></table></div></div>
+Handle to the module instance&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -94,44 +88,36 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS_TIME_SUCCESS - If the call succeeded.&nbsp;</p>
-<p class="Element10">
-SYS_TIME_ERROR - If the call failed.</p></div>
+One of the possible status codes from <a href="01272.html" target="topic">SYS_STATUS</a></p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Will delay the requested number of milliseconds or longer depending on system performance.&nbsp;</p>
+A module's status operation can be used to determine when any of the other module level operations has completed as well as to obtain general status of the module. The value returned by the status routine will be checked after calling any of the module operations to find out when they have completed.&nbsp;</p>
 <p class="Element10">
-Delay values of 0 will return SYS_TIME_ERROR.&nbsp;</p>
+If the status operation returns SYS_STATUS_BUSY, the previous operation has not yet completed. Once the status operation returns SYS_STATUS_READY, any previous operations have completed.&nbsp;</p>
 <p class="Element10">
-Will return SYS_TIME_ERROR if the timer handle pointer is NULL.</p></div>
+The value of SYS_STATUS_ERROR is negative (-1). A module may define module-specific error values of less or equal SYS_STATUS_ERROR_EXTENDED (-10).&nbsp;</p>
+<p class="Element10">
+The status function must NEVER block.&nbsp;</p>
+<p class="Element10">
+If the status operation returns an error value, the error may be cleared by calling the reinitialize operation. If that fails, the deinitialize operation will need to be called, followed by the initialize operation to return to normal operations.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01272.html" target="topic">SYS_TIME_HANDLE</a> timer = <a href="01273.html" target="topic">SYS_TIME_HANDLE_INVALID</a>;
-
-<strong><span style="color: #000080">if</span></strong> (SYS_TIME_DelayMS(100, &amp;timer) != SYS_TIME_SUCCESS)
-{
-    <i><span style="color: #008000">// Handle error</span></i>
-}
-<strong><span style="color: #000080">else</span></strong> <strong><span style="color: #000080">if</span></strong>(<a href="01268.html" target="topic">SYS_TIME_DelayIsComplete</a>(timer) != <strong><span style="color: #000080">true</span></strong>)
-{
-    <i><span style="color: #008000">// Wait till the delay has not expired</span></i>
-    <strong><span style="color: #000080">while</span></strong> (<a href="01268.html" target="topic">SYS_TIME_DelayIsComplete</a>(timer) == <strong><span style="color: #000080">false</span></strong>);
-}</pre></div></div>
-</div>
+<p class="Element10">
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00827.html" target="topic">Time System Service Library Help</a> &gt; <a href="00828.html" target="topic">Library Interface</a> &gt; c) Callback and Delay Functions &gt; <a href="01269.html" target="topic">SYS_TIME_DelayMS Function</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00178.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="01269.html" target="topic">SYS_MODULE_STATUS_ROUTINE Type</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -142,10 +128,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01260.html" target="topic">Previous</a> | <a href="00828.html" target="topic">Up</a> | <a href="01270.html" target="topic">Next</a></div>
+<a href="01268.html" target="topic">Previous</a> | <a href="00178.html" target="topic">Up</a> | <a href="01270.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_DelayMS@uint32_t@SYS_TIME_HANDLE* Topic Title: SYS_TIME_DelayMS Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_MODULE_STATUS_ROUTINE Topic Title: SYS_MODULE_STATUS_ROUTINE Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

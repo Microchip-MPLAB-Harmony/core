@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SDHC_EVENT Enumeration</title>
+<title>DRV_MEMORY_Write Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00408.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00409.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00429.html" target="topic">DRV_SDHC_EVENT Enumeration</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00135.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00136.html" target="topic">Library Interface</a> &gt; c) Block Operation Functions &gt; <a href="00429.html" target="topic">DRV_MEMORY_Write Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00422.html" target="topic">Previous</a> | <a href="00409.html" target="topic">Up</a> | <a href="00432.html" target="topic">Next</a></div>
+<a href="00424.html" target="topic">Previous</a> | <a href="00136.html" target="topic">Up</a> | <a href="00375.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_EVENT Topic Title: DRV_SDHC_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_Write@DRV_HANDLE@SYS_MEDIA_BLOCK_COMMAND_HANDLE *@void *@uint32_t@uint32_t Topic Title: DRV_MEMORY_Write Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SDHC_EVENT Enumeration</div>
+DRV_MEMORY_Write Function</div>
 </div>
 </div>
 
@@ -49,52 +49,91 @@ DRV_SDHC_EVENT Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This enumeration identifies the possible events that can result from a read or a write request issued by the client.</p></div>
+This function is internally used by the file system.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">DRV_SDHC_EVENT_COMMAND_COMPLETE</span></strong> = SYS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE,
-  <strong><span style="color: #000000">DRV_SDHC_EVENT_COMMAND_ERROR</span></strong> = SYS_MEDIA_EVENT_BLOCK_COMMAND_ERROR
-} DRV_SDHC_EVENT;</pre></div></div>
-<a name="4D656D62657273"></a><div class="Element14">
-Members</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_MEMORY_Write</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00297.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <a href="01225.html" target="topic">SYS_MEDIA_BLOCK_COMMAND_HANDLE</a> * <strong><span style="color: #000000">commandHandle</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">sourceBuffer</span></strong>, 
+    uint32_t <strong><span style="color: #000000">blockStart</span></strong>, 
+    uint32_t <strong><span style="color: #000000">nBlock</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element272">
-<div class="TableDiv">
-<table cellspacing="0" class="Table4">
-<tr>
-<td class="Element260" valign="top" width="35%">
-<div class="Element261">
-Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
-<div class="Element265">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-DRV_SDHC_EVENT_COMMAND_COMPLETE = SYS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Operation has been completed successfully.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-DRV_SDHC_EVENT_COMMAND_ERROR = SYS_MEDIA_EVENT_BLOCK_COMMAND_ERROR&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-There was an error during the operation&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+The <a href="00418.html" target="topic">DRV_MEMORY_Open</a> must have been called to obtain a valid opened device handle.</p></div>
 </div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A valid open-instance handle, returned from the driver's open function<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+commandHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to an argument that will contain the return buffer handle<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+sourceBuffer&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+The source buffer containing data to be programmed to the SD Card.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+blockStart&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Start block address of SD Card where the writes should begin.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+nBlock&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Total number of blocks to be written.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The buffer handle is returned in the commandHandle argument. It will be <a href="00369.html" target="topic">DRV_MEMORY_COMMAND_HANDLE_INVALID</a> if the request was not successful.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-One of these values is passed in the &quot;event&quot; parameter of the event handling callback function that client registered with the driver by calling the <a href="00433.html" target="topic">DRV_SDHC_EventHandlerSet</a> function when a request is completed.</p></div>
+This function is internally used by the file system.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00408.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00409.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00429.html" target="topic">DRV_SDHC_EVENT Enumeration</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00135.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00136.html" target="topic">Library Interface</a> &gt; c) Block Operation Functions &gt; <a href="00429.html" target="topic">DRV_MEMORY_Write Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -105,10 +144,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00422.html" target="topic">Previous</a> | <a href="00409.html" target="topic">Up</a> | <a href="00432.html" target="topic">Next</a></div>
+<a href="00424.html" target="topic">Previous</a> | <a href="00136.html" target="topic">Up</a> | <a href="00375.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_EVENT Topic Title: DRV_SDHC_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_Write@DRV_HANDLE@SYS_MEDIA_BLOCK_COMMAND_HANDLE *@void *@uint32_t@uint32_t Topic Title: DRV_MEMORY_Write Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

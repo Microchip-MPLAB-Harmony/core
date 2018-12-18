@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Using a Driver in an Application</title>
+<title>Using a Driver's Client Interface</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00051.html" target="topic">Driver Library Overview</a> &gt; <a href="00088.html" target="topic">Using a Driver in an Application</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00050.html" target="topic">Driver Library Overview</a> &gt; <a href="00088.html" target="topic">Using a Driver's Client Interface</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00089.html" target="topic">Previous</a> | <a href="00051.html" target="topic">Up</a> | <a href="00087.html" target="topic">Next</a></div>
+<a href="00089.html" target="topic">Previous</a> | <a href="00050.html" target="topic">Up</a> | <a href="00087.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Using a Driver in an Application Topic Title: Using a Driver in an Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Using a Driver%27s Client Interface Topic Title: Using a Driver%27s Client Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Using a Driver in an Application</div>
+Using a Driver's Client Interface</div>
 </div>
 </div>
 
@@ -49,103 +49,21 @@ Using a Driver in an Application</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-MPLAB Harmony generally treats all software modules, including applications, as state machines that have an “initialize” function and a “tasks” function. In fact, when not using a RTOS, it essentially treats the entire system as one large state machine that runs in a common super loop in the “main” function, as shown in the following code example.&nbsp;</p>
+Applications (or any other “client” of a MPLAB Harmony device driver) normally only interact with the driver’s client interface (often called its API). The client interface provides functions to “open” the driver (creating a link between the client and the driver) and interact with it, to transfer data or perform operations that are specific to a given type of device, and to “close” the driver (releasing the link). Once a driver has been configured and the configuration code has been generated, the application can assume that the driver will be initialized by the system-wide initialization function (SYS_Initialize) and that its tasks functions will be called as required from either the system-wide tasks function (SYS_Tasks) or from the appropriate ISR, depending upon how the driver was designed and configured.&nbsp;</p>
 <p class="Element10">
-<strong>Example Main Function</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">int</span></strong> main ( <strong><span style="color: #000080">void</span></strong> )
+To interact with the driver, a client must first call the driver’s open function. This is necessary because all other client interface functions require a “handle” to the device driver that is returned by the open function, as shown in the following example.&nbsp;</p>
+<p class="Element10">
+<strong>Example Call to a Driver’s Open Function</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">appData.handleTmr = DRV_TMR_Open(APP_TMR_DRV_INDEX, DRV_IO_INTENT_EXCLUSIVE);
+<strong><span style="color: #000080">if</span></strong>( DRV_HANDLE_INVALID != appData.handleTmr )
 {
-    SYS_Initialize(NULL);
-
-    <strong><span style="color: #000080">while</span></strong>(<strong><span style="color: #000080">true</span></strong>)
-    {
-        SYS_Tasks();
-    }
-
-    <strong><span style="color: #000080">return</span></strong> (EXIT_FAILURE);
+    <i><span style="color: #008000">// Advance to next application state.</span></i>
 }</pre></div></div>
 <p class="Element10">
-For the purpose of this discussion, it is important to understand that the application’s APP_Initialize function is called from the SYS_Initialize function, along with the initialization of functions of all drivers and other libraries before execution enters the endless <span class="Element146">while(true)</span> super loop that continuously calls the system-wide SYS_Tasks function. The application’s APP_Tasks function is then called from the SYS_Tasks function inside of the super loop, along with all other polled modules in the system. If you are not already familiar with the organization of an MPLAB Harmony project, please refer to <i>Volume I: Getting Started With MPLAB Harmony &gt; <a href="00032.html" target="topic">What is MPLAB Harmony?</a></i> for more information.&nbsp;</p>
+In this example, the first parameter to the DRV_TMR_Open function is the APP_TMR_DRV_INDEX macro, which is a constant defined to the value of the desired driver instance index number in the <span class="Element146">system_config.h</span> header file. This value must be the same as the index number used when the desired driver was initialized (as shown in the previous section). This is how the client becomes associated with a specific instance of a driver.&nbsp;</p>
 <p class="Element10">
-An application that uses a driver must define a <a href="00266.html" target="topic">DRV_HANDLE</a> variable, as shown in the following example application header file.&nbsp;</p>
+The second parameter identifies how the client intends to use the driver. Here, the client wants to have exclusive access to the driver. This means that no other client can currently have an active handle to this driver or this call will fail and return a value of <a href="00298.html" target="topic">DRV_HANDLE_INVALID</a>. Drivers can also be opened as shared, as blocking or non-blocking and for reading, writing, or both. Refer to the help for the <a href="00350.html" target="topic">DRV_IO_INTENT</a> data type for additional information about the IO intent parameter of driver open functions. This parameter is merely an advisory parameter. How it is used by the driver is implementation dependent and will be described in the driver’s help documentation.&nbsp;</p>
 <p class="Element10">
-<strong>Example Driver Application Header (app.h)</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">#include</span></strong> &quot;driver/usart/drv_usart.h&quot;
-
-<strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong>
-{
-    APP_STATE_SETUP=0,
-    APP_STATE_MESSAGE_SEND,
-    APP_STATE_MESSAGE_WAIT,
-    APP_STATE_DONE
-
-} APP_STATES;
-
-
-<strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong>
-{
-    APP_STATES  state;
-    DRV_HANDLE  usart;
-    <strong><span style="color: #000080">char</span></strong> *      message;
-
-} APP_DATA;</pre></div></div>
-<p class="Element10">
-In this previous example, the driver handle variable is named <span class="Element146">usart</span>. To keep the application well organized, it is common to keep all of the application’s state variables (including one called “state” that holds the current state of the application’s state machine) in a common structure (APP_DATA). This structure must be allocated in the application’s source file (usually named <span class="Element146">app.c</span>) and initialized by the application’s initialization function, as shown in the following example.&nbsp;</p>
-<p class="Element10">
-<strong>Example Driver Application Initialization</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">APP_DATA appData;
-
-<strong><span style="color: #000080">void</span></strong> APP_Initialize ( <strong><span style="color: #000080">void</span></strong> )
-{
-    <i><span style="color: #008000">/* Place the App in its initial state. */</span></i>
-    appData.state   = APP_STATE_SETUP;
-    appData.usart   = DRV_HANDLE_INVALID;
-    appData.message = “Hello World\n”;
-}</pre></div></div>
-<p class="Element10">
-The APP_Initialze function must initialize the state variable (appData.state) to put the application’s state machine in its initial state (the APP_STATE_SETUP value from the APP_STATES enumeration). It must also initialize the driver-handle variable (<span class="Element146">appData.usart</span>), so that the state machine knows it is not yet valid, and any other application variables (like the string pointer, <span class="Element146">appData.message</span>).&nbsp;</p>
-<p class="Element10">
-Once the application’s data structure has been initialized, it is safe for the system (the main and SYS_Tasks functions) to call the application’s APP_Tasks function from the super loop to keep it running. The APP_Tasks function then executes state transition code as it switches between states, as demonstrated by the following example.&nbsp;</p>
-<p class="Element10">
-<strong>Example Application State Machine Using a Driver</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> APP_Tasks ( <strong><span style="color: #000080">void</span></strong> )
-{
-    <strong><span style="color: #000080">switch</span></strong> ( appData.state )
-    {
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_SETUP:
-        {
-            <strong><span style="color: #000080">if</span></strong> (SetupApplication() == <strong><span style="color: #000080">true</span></strong>)
-            {
-                appData.state = APP_STATE_MESSAGE_SEND;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-        }
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_MESSAGE_SEND:
-        {
-            <strong><span style="color: #000080">if</span></strong> (MessageSend() == <strong><span style="color: #000080">true</span></strong>)
-            {
-                appData.state = APP_STATE_MESSAGE_WAIT;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-        }
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_MESSAGE_WAIT:
-        {
-            <strong><span style="color: #000080">if</span></strong> (MessageComplete() == <strong><span style="color: #000080">true</span></strong>)
-            {
-                appData.state = APP_STATE_DONE;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-        }
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_DONE:
-        <strong><span style="color: #000080">default</span></strong>:
-        {
-            <strong><span style="color: #000080">break</span></strong>;
-        }
-    }
-}</pre></div></div>
-<p class="Element10">
-There are numerous ways to implement a state machine. However, in this example, the application changes state when the APP_Tasks function assigns a new value from the APP_STATES enumeration to the <span class="Element146">appData.states</span> variable. This happens when one of the state transition function returns true. The end result is an overall application state machine execution that retries each state transition until it succeeds before moving on to the next state, as shown in the following diagram.&nbsp;</p>
-<p class="Element10">
-<strong>Application State Machine</strong> &nbsp;</p><p class="Element10" style="text-align: center;">
-&nbsp;</p><div class="Element63">
+Finally, if the open function was successful, the returned value will be a valid handle to the driver instance. This value is opaque and meaningless to the caller, but it must be passed back to the driver as the first parameter to every other client interface function provided by the driver. A valid handle identifies both the instance of the driver with which the caller interacts and it identifies the client performing the call. This means that, two different client applications or modules opening the same driver in the same system at the same time will receive different values for their “opened” handle. If, for any reason, the driver cannot support the “open” request (it is not finished initializing itself, it has already been opened for exclusive access, or cannot accept new open requests for any reason), it will return a value of <a href="00298.html" target="topic">DRV_HANDLE_INVALID</a>, indicating the client cannot use it at this time. The <a href="00298.html" target="topic">DRV_HANDLE_INVALID</a> value is the only non-opaque value that a client should consider meaningful. All other values are only meaningful to the driver that provided them. </p><div class="Element63">
 <div class="TableDiv">
 <table cellspacing="0" class="Table2">
 <tr>
@@ -153,18 +71,20 @@ There are numerous ways to implement a state machine. However, in this example, 
 <div class="Element68">
 <img src="Note Icon.png" border="0" alt="" title=""><strong> Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
 <div class="Element68">
-The APP_STATE_ prefix and all inter-word underscores were removed from the state names to simplify the diagram.&nbsp;</div></td></tr></table></div></div>
+The <span class="Element146">appData.handleTmr</span> variable in the previous example is a member of the application’s <span class="Element146">appData</span> structure. This structure is generated by the MHC as part of the initial application template and should be used to hold an applications state variables.&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
-After APP_Initialize places the state machine in its initial APP_STATE_SETUP state, the APP_Tasks function will call the SetupApplication function when it is called. When SetupApplication returns true indicating it has completed its task, the state machine advances to the next state. Otherwise, it stays in the same state and retries the tasks in the SetupApplication function. This pattern repeats for the APP_STATE_MESSAGE_SEND state and the <span class="Element146">MessageSend</span> function as well as the APP_STATE_MESSAGE_WAIT state and the <span class="Element146">MessageComplete</span> function. When all functions have returned true, the state machine to transitions to the APP_STATE_DONE state where it unconditionally stays having completed its tasks.&nbsp;</p>
+When the client is finished using a driver, it may close it, as shown in the following example.&nbsp;</p>
 <p class="Element10">
-The sum total of the tasks performed by each transition function completes the overall task of the application. For an application that uses a driver like this example, this includes opening the driver, sending the message, and closing the driver when the message has been sent. How each individual transition function in this example application accomplishes its portion of the overall task, is described in the examples in the following sections to demonstrate how drivers are commonly used.</p></div>
+<strong>Example Call to a Driver’s Close Function</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">DRV_TMR_Close(appData.handleTmr);</pre></div></div>
+<p class="Element10">
+This action releases the link to the driver, invalidating the handle and releasing any resources allocated by the driver to track requests from the client. Notice that the close function demonstrates the use of the driver handle, requiring it as a parameter. However, after the close function returns, the handle value cannot be used again. Therefore, the client should not call the driver’s close function until it is done using the driver or it will have to call open again and obtain a new handle to use the driver again. In fact, since many embedded applications are always running, they often do not bother to close drivers they use. But, applications that can go idle or that can be stopped and restarted or that need to share a driver with other clients, but want to conserve resources, or that want use the driver exclusively, can close a driver when they are finished with it for a time and reopen it later when needed. In fact, this is a good way to share a single-client driver, or a driver that supports exclusive access, allowing each client to open it and use it only when a valid handle is obtained.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00051.html" target="topic">Driver Library Overview</a> &gt; <a href="00088.html" target="topic">Using a Driver in an Application</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00050.html" target="topic">Driver Library Overview</a> &gt; <a href="00088.html" target="topic">Using a Driver's Client Interface</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -175,10 +95,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00089.html" target="topic">Previous</a> | <a href="00051.html" target="topic">Up</a> | <a href="00087.html" target="topic">Next</a></div>
+<a href="00089.html" target="topic">Previous</a> | <a href="00050.html" target="topic">Up</a> | <a href="00087.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Using a Driver in an Application Topic Title: Using a Driver in an Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Using a Driver%27s Client Interface Topic Title: Using a Driver%27s Client Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

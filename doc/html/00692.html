@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>OSAL_CRIT_TYPE Enumeration</title>
+<title>MEMORY_DEVICE_GEOMETRY Structure</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00668.html" target="topic">OSAL Library Help</a> &gt; <a href="00678.html" target="topic">Library Interface</a> &gt; f) Data Types and Constants &gt; <a href="00692.html" target="topic">OSAL_CRIT_TYPE Enumeration</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00135.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00136.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00692.html" target="topic">MEMORY_DEVICE_GEOMETRY Structure</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00703.html" target="topic">Previous</a> | <a href="00678.html" target="topic">Up</a> | <a href="00704.html" target="topic">Next</a></div>
+<a href="00426.html" target="topic">Previous</a> | <a href="00136.html" target="topic">Up</a> | <a href="00703.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_CRIT_TYPE Topic Title: OSAL_CRIT_TYPE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: MEMORY_DEVICE_GEOMETRY Topic Title: MEMORY_DEVICE_GEOMETRY Structure)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-OSAL_CRIT_TYPE Enumeration</div>
+MEMORY_DEVICE_GEOMETRY Structure</div>
 </div>
 </div>
 
@@ -49,31 +49,37 @@ OSAL_CRIT_TYPE Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-OSAL Critical Type&nbsp;</p>
+This Data Structure is used by Memory driver to get the media geometry details.&nbsp;</p>
 <p class="Element10">
-This enum represents possible critical section types.&nbsp;</p>
-<p class="Element10">
-OSAL_CRIT_TYPE_LOW - Low priority critical section, can be formed by locking the scheduler (if supported by RTOS) OSAL_CRIT_TYPE_HIGH - High priority critical section, will be formed by disabling all interrupts.</p></div>
+The Media attached to memory driver needs to fill in this data structure when GEOMETRY_GET is called.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">enum</span></strong> <strong><span style="color: #000000">OSAL_CRIT_TYPE</span></strong> {
-  <strong><span style="color: #000000">OSAL_CRIT_TYPE_LOW</span></strong>,
-  <strong><span style="color: #000000">OSAL_CRIT_TYPE_HIGH</span></strong>
-};</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong> {
+  uint32_t <strong><span style="color: #000000">read_blockSize</span></strong>;
+  uint32_t <strong><span style="color: #000000">read_numBlocks</span></strong>;
+  uint32_t <strong><span style="color: #000000">numReadRegions</span></strong>;
+  uint32_t <strong><span style="color: #000000">write_blockSize</span></strong>;
+  uint32_t <strong><span style="color: #000000">write_numBlocks</span></strong>;
+  uint32_t <strong><span style="color: #000000">numWriteRegions</span></strong>;
+  uint32_t <strong><span style="color: #000000">erase_blockSize</span></strong>;
+  uint32_t <strong><span style="color: #000000">erase_numBlocks</span></strong>;
+  uint32_t <strong><span style="color: #000000">numEraseRegions</span></strong>;
+  uint32_t <strong><span style="color: #000000">blockStartAddress</span></strong>;
+} MEMORY_DEVICE_GEOMETRY;</pre></div></div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Critical section types.</p></div>
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00668.html" target="topic">OSAL Library Help</a> &gt; <a href="00678.html" target="topic">Library Interface</a> &gt; f) Data Types and Constants &gt; <a href="00692.html" target="topic">OSAL_CRIT_TYPE Enumeration</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00135.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00136.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00692.html" target="topic">MEMORY_DEVICE_GEOMETRY Structure</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -84,10 +90,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00703.html" target="topic">Previous</a> | <a href="00678.html" target="topic">Up</a> | <a href="00704.html" target="topic">Next</a></div>
+<a href="00426.html" target="topic">Previous</a> | <a href="00136.html" target="topic">Up</a> | <a href="00703.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_CRIT_TYPE Topic Title: OSAL_CRIT_TYPE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: MEMORY_DEVICE_GEOMETRY Topic Title: MEMORY_DEVICE_GEOMETRY Structure)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

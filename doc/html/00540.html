@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Running the Application</title>
+<title>DRV_SST26_SectorErase Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00012.html" target="topic">RTOS Applications</a> &gt; <a href="00535.html" target="topic">FreeRTOS Applications</a> &gt; <a href="00536.html" target="topic">basic_freertos</a> &gt; <a href="00540.html" target="topic">Running the Application</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00192.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00193.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00540.html" target="topic">DRV_SST26_SectorErase Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00538.html" target="topic">Previous</a> | <a href="00536.html" target="topic">Up</a> | <a href="00541.html" target="topic">Next</a></div>
+<a href="00539.html" target="topic">Previous</a> | <a href="00193.html" target="topic">Up</a> | <a href="00520.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FreeRTOS basic_freertos Running the Application Topic Title: Running the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_SectorErase@DRV_HANDLE@uint32_t Topic Title: DRV_SST26_SectorErase Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Running the Application</div>
+DRV_SST26_SectorErase Function</div>
 </div>
 </div>
 
@@ -48,51 +48,93 @@ Running the Application</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-
-<ol class="Element630">
-<li value="1" class="Element600">Connect a micro USB to the DEBUG port.</li>
-<li value="2" class="Element600">Build and program the application using the MPLAB X IDE.</li>
-<li value="3" class="Element600">The LED indicates the success or failure.
-<ul class="Element631">
-<li class="Element601">The LED toggles on success i.e. each time when the Task1 or Task2 recieves a valid message</li>
-</ul></li>
-</ol><p class="Element10">
+<p class="Element10">
+This function schedules a non-blocking sector erase operation of flash memory. Each Sector is of 4 KByte.&nbsp;</p>
+<p class="Element10">
+The requesting client should call <a href="00546.html" target="topic">DRV_SST26_TransferStatusGet</a>() API to know the current status of the request.&nbsp;</p>
+<p class="Element10">
+The request is sent in QUAD_MODE to flash device.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_SST26_SectorErase</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00297.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    uint32_t <strong><span style="color: #000000">address</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The <a href="00536.html" target="topic">DRV_SST26_Open</a>() routine must have been called for the specified SST26 driver instance.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A valid open-instance handle, returned from the driver's open routine<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+address&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+block start address from where a sector needs to be erased.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+false</p>
+<ul class="Element630">
+<li class="Element600">if Write enable fails before sending sector erase command to flash</li>
+<li class="Element600">if sector erase command itself fails</li>
+</ul><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-The following table provides the LED name: </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="85%">
-<div class="Element66">
-Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="15%">
-<div class="Element66">
-LED Name&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="85%">
-<div class="Element68">
-SAM C21N Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
-<div class="Element68">
-LED 0&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="85%">
-<div class="Element68">
-SAM D20 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
-<div class="Element68">
-LED 0&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="85%">
-<div class="Element68">
-SAM D21 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
-<div class="Element68">
-LED 0&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="85%">
-<div class="Element68">
-SAM E70 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
-<div class="Element68">
-LED 1&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="85%">
-<div class="Element68">
-SAM V71 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
-<div class="Element68">
-LED 0&nbsp;</div></td></tr></table></div></div>
+true</p>
+<ul class="Element630">
+<li class="Element600">if the erase request is successfully sent to the flash</li>
+</ul></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This routine will block wait until erase request is submitted successfully.&nbsp;</p>
+<p class="Element10">
+Client should wait until erase is complete to send next transfer request.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">
+<a href="00297.html" target="topic">DRV_HANDLE</a> handle;  <i><span style="color: #008000">// Returned from DRV_SST26_Open</span></i>
+uint32_t sectorStart = 0;
+
+<strong><span style="color: #000080">if</span></strong>(<strong><span style="color: #000080">false</span></strong> == DRV_SST26_SectorErase(handle, sectorStart))
+{
+    <i><span style="color: #008000">// Error handling here</span></i>
+}
+
+<i><span style="color: #008000">// Wait for erase to be completed</span></i>
+<strong><span style="color: #000080">while</span></strong>(DRV_SST26_TRANSFER_BUSY == <a href="00546.html" target="topic">DRV_SST26_TransferStatusGet</a>(handle));
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -100,7 +142,7 @@ LED 0&nbsp;</div></td></tr></table></div></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00012.html" target="topic">RTOS Applications</a> &gt; <a href="00535.html" target="topic">FreeRTOS Applications</a> &gt; <a href="00536.html" target="topic">basic_freertos</a> &gt; <a href="00540.html" target="topic">Running the Application</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00192.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00193.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00540.html" target="topic">DRV_SST26_SectorErase Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -111,10 +153,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00538.html" target="topic">Previous</a> | <a href="00536.html" target="topic">Up</a> | <a href="00541.html" target="topic">Next</a></div>
+<a href="00539.html" target="topic">Previous</a> | <a href="00193.html" target="topic">Up</a> | <a href="00520.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FreeRTOS basic_freertos Running the Application Topic Title: Running the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_SectorErase@DRV_HANDLE@uint32_t Topic Title: DRV_SST26_SectorErase Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

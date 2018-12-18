@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SDHC_AsyncWrite Function</title>
+<title>DRV_MEMORY_Initialize Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00408.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00409.html" target="topic">Library Interface</a> &gt; c) Block Operation Functions &gt; <a href="00415.html" target="topic">DRV_SDHC_AsyncWrite Function</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00135.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00136.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00415.html" target="topic">DRV_MEMORY_Initialize Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00414.html" target="topic">Previous</a> | <a href="00409.html" target="topic">Up</a> | <a href="00427.html" target="topic">Next</a></div>
+<a href="00136.html" target="topic">Previous</a> | <a href="00136.html" target="topic">Up</a> | <a href="00420.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_AsyncWrite@DRV_HANDLE@DRV_SDHC_COMMAND_HANDLE *@void *@uint32_t@uint32_t Topic Title: DRV_SDHC_AsyncWrite Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: DRV_MEMORY_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SDHC_AsyncWrite Function</div>
+DRV_MEMORY_Initialize Function</div>
 </div>
 </div>
 
@@ -49,34 +49,20 @@ DRV_SDHC_AsyncWrite Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function schedules a non-blocking write operation for writing blocks of data to the SD Card. The function returns with a valid buffer handle in the commandHandle argument if the write request was scheduled successfully. The function adds the request to the hardware instance queue and returns immediately. While the request is in the queue, the application buffer is owned by the driver and should not be modified. The function returns <a href="00421.html" target="topic">DRV_SDHC_COMMAND_HANDLE_INVALID</a> in the commandHandle argument under the following circumstances:</p>
-<ul class="Element630">
-<li class="Element600">if a buffer object could not be allocated to the request</li>
-<li class="Element600">if the source buffer pointer is NULL</li>
-<li class="Element600">if the client opened the driver for read only</li>
-<li class="Element600">if the number of blocks to be written is either zero or more than the number of blocks actually available</li>
-<li class="Element600">if the write queue size is full or queue depth is insufficient</li>
-<li class="Element600">if the driver handle is invalid</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-If the requesting client registered an event callback with the driver, the driver will issue a DRV_SDHC_EVENT_COMMAND_COMPLETE event if the buffer was processed successfully or DRV_SDHC_EVENT_COMMAND_ERROR event if the buffer was not processed successfully.</p></div>
+This routine initializes the Memory driver instance for the specified driver index, making it ready for clients to open and use it.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_SDHC_AsyncWrite</span></strong>(
-    <a href="00266.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <a href="00420.html" target="topic">DRV_SDHC_COMMAND_HANDLE</a> * <strong><span style="color: #000000">commandHandle</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">sourceBuffer</span></strong>, 
-    uint32_t <strong><span style="color: #000000">blockStart</span></strong>, 
-    uint32_t <strong><span style="color: #000000">nBlock</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01265.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_MEMORY_Initialize</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01259.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="01260.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="00446.html" target="topic">DRV_SDHC_Open</a>() routine must have been called to obtain a valid opened device handle. DRV_IO_INTENT_WRITE or DRV_IO_INTENT_READWRITE must have been specified as a parameter to this routine.</p></div>
+None.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -93,29 +79,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+drvIndex&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open function<br>&nbsp;</div></td></tr><tr>
+Identifier for the instance to be initialized&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-commandHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to an argument that will contain the return buffer handle<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-sourceBuffer&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-The source buffer containing data to be programmed to the SD Card.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-blockStart&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Start block address of SD Card where the writes should begin.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-nBlock&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Total number of blocks to be written.&nbsp;</div></td></tr></table></div></div>
+Pointer to a data structure containing any data necessary to initialize the driver.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -123,67 +94,65 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The buffer handle is returned in the commandHandle argument. It will be <a href="00421.html" target="topic">DRV_SDHC_COMMAND_HANDLE_INVALID</a> if the request was not successful.</p></div>
+If successful, returns a valid handle to a driver instance object. Otherwise it returns <a href="01266.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+This routine must be called before any other Memory routine is called.&nbsp;</p>
+<p class="Element10">
+This routine should only be called once during system initialization.&nbsp;</p>
+<p class="Element10">
+This routine will NEVER block for hardware access. If the operation requires time to allow the hardware to initialize, it will be reported by the <a href="00420.html" target="topic">DRV_MEMORY_Status</a> operation. The system must use <a href="00420.html" target="topic">DRV_MEMORY_Status</a> to find out when the driver is in the ready state.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-uint8_t myBuffer[MY_BUFFER_SIZE];
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// This code snippet shows an example of initializing the Memory Driver</span></i>
+<i><span style="color: #008000">// with SST26 serial flash device attached and File system Enabled.</span></i>
 
-<i><span style="color: #008000">// address should be block aligned.</span></i>
-uint32_t blockStart = 0x00;
-uint32_t    nBlock = 2;
-<a href="00420.html" target="topic">DRV_SDHC_COMMAND_HANDLE</a> commandHandle;
-MY_APP_OBJ myAppObj;
+<a href="01265.html" target="topic">SYS_MODULE_OBJ</a>  objectHandle;
 
-<i><span style="color: #008000">// mySDHCHandle is the handle returned</span></i>
-<i><span style="color: #008000">// by the DRV_SDHC_Open function.</span></i>
+<strong><span style="color: #000080">static</span></strong> uint8_t gDrvMemory0EraseBuffer[DRV_MEMORY_ERASE_BUFFER_SIZE_IDX0] __attribute__((aligned(32)));
 
-<i><span style="color: #008000">// Client registers an event handler with driver</span></i>
+<strong><span style="color: #000080">static</span></strong> DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
 
-<a href="00433.html" target="topic">DRV_SDHC_EventHandlerSet</a>(mySDHCHandle, APP_SDHCEventHandler, (uintptr_t)&amp;myAppObj);
+<strong><span style="color: #000080">static</span></strong> DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0] = { 0 };
 
-DRV_SDHC_AyncWrite(mySDHCHandle, &amp;commandHandle, &amp;myBuffer, blockStart, nBlock);
+<strong><span style="color: #000080">const</span></strong> <a href="00380.html" target="topic">DRV_MEMORY_DEVICE_INTERFACE</a> drvMemory0DeviceAPI = {
+    .Open               = <a href="00536.html" target="topic">DRV_SST26_Open</a>,
+    .Close              = <a href="00522.html" target="topic">DRV_SST26_Close</a>,
+    .Status             = <a href="00541.html" target="topic">DRV_SST26_Status</a>,
+    .SectorErase        = <a href="00540.html" target="topic">DRV_SST26_SectorErase</a>,
+    .Read               = <a href="00538.html" target="topic">DRV_SST26_Read</a>,
+    .PageWrite          = <a href="00537.html" target="topic">DRV_SST26_PageWrite</a>,
+    .GeometryGet        = (<a href="00379.html" target="topic">DRV_MEMORY_DEVICE_GEOMETRY_GET</a>)<a href="00534.html" target="topic">DRV_SST26_GeometryGet</a>,
+    .TransferStatusGet  = (<a href="00395.html" target="topic">DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET</a>)<a href="00546.html" target="topic">DRV_SST26_TransferStatusGet</a>
+};
 
-<strong><span style="color: #000080">if</span></strong>(<a href="00421.html" target="topic">DRV_SDHC_COMMAND_HANDLE_INVALID</a> == commandHandle)
+<strong><span style="color: #000080">const</span></strong> <a href="00403.html" target="topic">DRV_MEMORY_INIT</a> drvMemory0InitData =
 {
-    <i><span style="color: #008000">// Error handling here</span></i>
-}
+    .memDevIndex          = DRV_SST26_INDEX,
+    .memoryDevice         = &amp;drvMemory0DeviceAPI,
+    .isFsEnabled          = <strong><span style="color: #000080">true</span></strong>,
+    .deviceMediaType      = (uint8_t)SYS_FS_MEDIA_TYPE_SPIFLASH,
+    .ewBuffer             = &amp;gDrvMemory0EraseBuffer[0],
+    .clientObjPool        = (uintptr_t)&amp;gDrvMemory0ClientObject[0],
+    .bufferObj            = (uintptr_t)&amp;gDrvMemory0BufferObject[0],
+    .queueSize            = DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0,
+    .nClientsMax          = DRV_MEMORY_CLIENTS_NUMBER_IDX0
+};
 
-<i><span style="color: #008000">// Event is received when</span></i>
-<i><span style="color: #008000">// the buffer is processed.</span></i>
+<i><span style="color: #008000">//usage of DRV_MEMORY_INDEX_0 indicates usage of Flash-related APIs</span></i>
+objectHandle = DRV_MEMORY_Initialize((<a href="01259.html" target="topic">SYS_MODULE_INDEX</a>)DRV_MEMORY_INDEX_0, (<a href="01260.html" target="topic">SYS_MODULE_INIT</a> *)&amp;drvMemory0InitData);
 
-<strong><span style="color: #000080">void</span></strong> APP_SDHCEventHandler(<a href="00429.html" target="topic">DRV_SDHC_EVENT</a> event,
-        <a href="00420.html" target="topic">DRV_SDHC_COMMAND_HANDLE</a> commandHandle, uintptr_t contextHandle)
+<strong><span style="color: #000080">if</span></strong> (<a href="01266.html" target="topic">SYS_MODULE_OBJ_INVALID</a> == objectHandle)
 {
-    <i><span style="color: #008000">// contextHandle points to myAppObj.</span></i>
-
-    <strong><span style="color: #000080">switch</span></strong>(event)
-    {
-        <strong><span style="color: #000080">case</span></strong> DRV_SDHC_EVENT_COMMAND_COMPLETE:
-
-            <i><span style="color: #008000">// This means the data was transferred.</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> DRV_SDHC_EVENT_COMMAND_ERROR:
-
-            <i><span style="color: #008000">// Error handling here.</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-}
-</pre></div></div>
+    <i><span style="color: #008000">// Handle error</span></i>
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -191,7 +160,7 @@ DRV_SDHC_AyncWrite(mySDHCHandle, &amp;commandHandle, &amp;myBuffer, blockStart, 
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00408.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00409.html" target="topic">Library Interface</a> &gt; c) Block Operation Functions &gt; <a href="00415.html" target="topic">DRV_SDHC_AsyncWrite Function</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00135.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00136.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00415.html" target="topic">DRV_MEMORY_Initialize Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -202,10 +171,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00414.html" target="topic">Previous</a> | <a href="00409.html" target="topic">Up</a> | <a href="00427.html" target="topic">Next</a></div>
+<a href="00136.html" target="topic">Previous</a> | <a href="00136.html" target="topic">Up</a> | <a href="00420.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_AsyncWrite@DRV_HANDLE@DRV_SDHC_COMMAND_HANDLE *@void *@uint32_t@uint32_t Topic Title: DRV_SDHC_AsyncWrite Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: DRV_MEMORY_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

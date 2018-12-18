@@ -1,0 +1,253 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>SYS_FS_ERROR Enumeration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '01008.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00851.html" target="topic">File System Service Library Help</a> &gt; <a href="00852.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01008.html" target="topic">SYS_FS_ERROR Enumeration</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="01165.html" target="topic">Previous</a> | <a href="00852.html" target="topic">Up</a> | <a href="01055.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_ERROR Topic Title: SYS_FS_ERROR Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+SYS_FS_ERROR Enumeration</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+File Error enumeration&nbsp;</p>
+<p class="Element10">
+This enumeration lists the various error cases. When the application calls for a file system function which has a return type of <a href="01207.html" target="topic">SYS_FS_RESULT</a> and if the return value is SYS_FS_RES_FAILURE, the application can know the specific reason for failure by calling the <a href="01070.html" target="topic">SYS_FS_FileError</a> function. The return value of <a href="01070.html" target="topic">SYS_FS_FileError</a> function will be one of the enumeration of type SYS_FS_ERROR.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000">SYS_FS_ERROR_OK</span></strong> = 0,
+  <strong><span style="color: #000000">SYS_FS_ERROR_DISK_ERR</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_INT_ERR</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_NOT_READY</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_NO_FILE</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_NO_PATH</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_INVALID_NAME</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_DENIED</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_EXIST</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_INVALID_OBJECT</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_WRITE_PROTECTED</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_INVALID_DRIVE</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_NOT_ENABLED</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_NO_FILESYSTEM</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_FORMAT_ABORTED</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_TIMEOUT</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_LOCKED</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_NOT_ENOUGH_CORE</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_TOO_MANY_OPEN_FILES</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_INVALID_PARAMETER</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_NOT_ENOUGH_FREE_VOLUME</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_FS_NOT_SUPPORTED</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_FS_NOT_MATCH_WITH_VOLUME</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS</span></strong>
+} SYS_FS_ERROR;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element272">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_OK = 0&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Success&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_DISK_ERR&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(1) A hard error occurred in the low level disk I/O layer&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_INT_ERR&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(2) Assertion failed&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_NOT_READY&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(3) The physical drive cannot work&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_NO_FILE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(4) Could not find the file&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_NO_PATH&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(5) Could not find the path&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_INVALID_NAME&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(6) The path name format is invalid&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_DENIED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(7) Access denied due to prohibited access or directory full&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_EXIST&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(8) Access denied due to prohibited access&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_INVALID_OBJECT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(9) The file/directory object is invalid&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_WRITE_PROTECTED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(10) The physical drive is write protected&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_INVALID_DRIVE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(11) The logical drive number is invalid&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_NOT_ENABLED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(12) The volume has no work area&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_NO_FILESYSTEM&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(13) There is no valid volume&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_FORMAT_ABORTED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(14) The Format() aborted due to any parameter error&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_TIMEOUT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(15) Could not get a grant to access the volume within defined period&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_LOCKED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(16) The operation is rejected according to the file sharing policy&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_NOT_ENOUGH_CORE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(17) LFN working buffer could not be allocated&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_TOO_MANY_OPEN_FILES&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(18) Number of open files&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_INVALID_PARAMETER&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(19) Given parameter is invalid&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_NOT_ENOUGH_FREE_VOLUME&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(20) Too many mounts requested. Not enough free volume available&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_FS_NOT_SUPPORTED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(21) Requested native file system is not supported&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_FS_NOT_MATCH_WITH_VOLUME&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(22) Requested native file system does not match the format of volume&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+(23) Function not supported in native file system layer&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00851.html" target="topic">File System Service Library Help</a> &gt; <a href="00852.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01008.html" target="topic">SYS_FS_ERROR Enumeration</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="01165.html" target="topic">Previous</a> | <a href="00852.html" target="topic">Up</a> | <a href="01055.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_ERROR Topic Title: SYS_FS_ERROR Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

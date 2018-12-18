@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_USART_BufferCompletedBytesGet Function</title>
+<title>DRV_SPI_TransferSetup Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="01392.html" target="topic">USART Driver Library Help</a> &gt; <a href="00176.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00513.html" target="topic">DRV_USART_BufferCompletedBytesGet Function</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00178.html" target="topic">Library Interface</a> &gt; b) Client Setup Functions &gt; <a href="00513.html" target="topic">DRV_SPI_TransferSetup Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00514.html" target="topic">Previous</a> | <a href="00176.html" target="topic">Up</a> | <a href="00515.html" target="topic">Next</a></div>
+<a href="00497.html" target="topic">Previous</a> | <a href="00178.html" target="topic">Up</a> | <a href="00512.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_BufferCompletedBytesGet@DRV_USART_BUFFER_HANDLE Topic Title: DRV_USART_BufferCompletedBytesGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_TransferSetup@DRV_HANDLE@DRV_SPI_TRANSFER_SETUP * Topic Title: DRV_SPI_TransferSetup Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_USART_BufferCompletedBytesGet Function</div>
+DRV_SPI_TransferSetup Function</div>
 </div>
 </div>
 
@@ -49,21 +49,22 @@ DRV_USART_BufferCompletedBytesGet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The client can use this function, in a case where the buffer is terminated due to an error, to obtain the number of bytes that have been processed. Or in any other use case. This function can be used for non-DMA buffer transfers only. It cannot be used when the USART driver is configured to use DMA.</p></div>
+This function is used to update any of the DRV_SPI_TRANSFER_SETUP parameters for the selected client of the driver dynamically. For single client scenario, if GPIO has to be used for chip select, then calling this API with appropriate GPIO pin information becomes mandatory. For multi client scenario where different clients need different setup like baud rate, clock settings, chip select etc, then also calling this API is mandatory.&nbsp;</p>
+<p class="Element10">
+Note that all the elements of setup structure must be filled appropriately before using this API.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100">size_t <strong><span style="color: #000000">DRV_USART_BufferCompletedBytesGet</span></strong>(
-    <a href="00511.html" target="topic">DRV_USART_BUFFER_HANDLE</a> <strong><span style="color: #000000">bufferHandle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_SPI_TransferSetup</span></strong>(
+    <a href="00297.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    DRV_SPI_TRANSFER_SETUP * <strong><span style="color: #000000">setup</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="00521.html" target="topic">DRV_USART_Open</a> must have been called to obtain a valid opened device handle.&nbsp;</p>
-<p class="Element10">
-Either the <a href="00523.html" target="topic">DRV_USART_ReadBufferAdd</a> or <a href="00529.html" target="topic">DRV_USART_WriteBufferAdd</a> function must have been called and a valid buffer handle returned.</p></div>
+<a href="00499.html" target="topic">DRV_SPI_Open</a> must have been called to obtain a valid opened device handle.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -80,9 +81,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-bufferhandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Handle for the buffer of which the processed number of bytes to be obtained.&nbsp;</div></td></tr></table></div></div>
+A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+*setup&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A structure containing the new configuration settings&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -90,71 +96,30 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Returns the number of bytes that have been processed for this buffer.&nbsp;</p>
-<p class="Element10">
-Returns <a href="00512.html" target="topic">DRV_USART_BUFFER_HANDLE_INVALID</a> for an invalid or an expired buffer handle.</p></div>
+None.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function is expected to work in non-DMA mode only. This function is thread safe when used in a RTOS application. If called from the callback, it must not call an OSAL mutex or critical section.</p></div>
+None.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// myAppObj is an application specific object.</span></i>
-MY_APP_OBJ myAppObj;
+<div class="Element13"><div class="Element12"><pre class="Element12">    <i><span style="color: #008000">// mySPIHandle is the handle returned by the DRV_SPI_Open function.</span></i>
+    DRV_SPI_TRANSFER_SETUP setup;
 
-uint8_t mybuffer[MY_BUFFER_SIZE];
-<a href="00511.html" target="topic">DRV_USART_BUFFER_HANDLE</a> bufferHandle;
+    setup.baudRateInHz = 10000000;
+    setup.clockPhase = DRV_SPI_CLOCK_PHASE_TRAILING_EDGE;
+    setup.clockPolarity = DRV_SPI_CLOCK_POLARITY_IDLE_LOW;
+    setup.dataBits = DRV_SPI_DATA_BITS_16;
+    setup.chipSelect = SYS_PORT_PIN_PC5;
+    setup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;
 
-<i><span style="color: #008000">// myUSARTHandle is the handle returned</span></i>
-<i><span style="color: #008000">// by the DRV_USART_Open function.</span></i>
-
-<i><span style="color: #008000">// Client registers an event handler with driver. This is done once</span></i>
-
-<a href="00514.html" target="topic">DRV_USART_BufferEventHandlerSet</a>( myUSARTHandle, APP_USARTBufferEventHandle,
-                                 (uintptr_t)&amp;myAppObj );
-
-<a href="00523.html" target="topic">DRV_USART_ReadBufferAdd</a>( myUSARThandle, myBuffer, MY_BUFFER_SIZE,
-    bufferHandle);
-
-<strong><span style="color: #000080">if</span></strong>(<a href="00512.html" target="topic">DRV_USART_BUFFER_HANDLE_INVALID</a> == bufferHandle)
-{
-    <i><span style="color: #008000">// Error handling here</span></i>
-}
-
-<i><span style="color: #008000">// Event Processing Technique. Event is received when</span></i>
-<i><span style="color: #008000">// the buffer is processed.</span></i>
-
-<strong><span style="color: #000080">void</span></strong> APP_USARTBufferEventHandler( <a href="00506.html" target="topic">DRV_USART_BUFFER_EVENT</a> event,
-        <a href="00511.html" target="topic">DRV_USART_BUFFER_HANDLE</a> bufferHandle, uintptr_t contextHandle )
-{
-    <i><span style="color: #008000">// The context handle was set to an application specific</span></i>
-    <i><span style="color: #008000">// object. It is now retrievable easily in the event handler.</span></i>
-    MY_APP_OBJ myAppObj = (MY_APP_OBJ *) contextHandle;
-    size_t processedBytes;
-
-    <strong><span style="color: #000080">switch</span></strong>(event)
-    {
-        <strong><span style="color: #000080">case</span></strong> DRV_USART_BUFFER_EVENT_COMPLETE:
-            <i><span style="color: #008000">// This means the data was transferred.</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> DRV_USART_BUFFER_EVENT_ERROR:
-            <i><span style="color: #008000">// Error handling here.</span></i>
-            <i><span style="color: #008000">// We can find out how many bytes have been processed in this</span></i>
-            <i><span style="color: #008000">// buffer request prior to the error.</span></i>
-            processedBytes= DRV_USART_BufferCompletedBytesGet(bufferHandle);
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-}</pre></div></div>
+    DRV_SPI_TransferSetup ( mySPIHandle, &amp;setup );</pre></div></div>
 </div>
 </div>
 </div>
@@ -162,7 +127,7 @@ uint8_t mybuffer[MY_BUFFER_SIZE];
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="01392.html" target="topic">USART Driver Library Help</a> &gt; <a href="00176.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00513.html" target="topic">DRV_USART_BufferCompletedBytesGet Function</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00178.html" target="topic">Library Interface</a> &gt; b) Client Setup Functions &gt; <a href="00513.html" target="topic">DRV_SPI_TransferSetup Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -173,10 +138,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00514.html" target="topic">Previous</a> | <a href="00176.html" target="topic">Up</a> | <a href="00515.html" target="topic">Next</a></div>
+<a href="00497.html" target="topic">Previous</a> | <a href="00178.html" target="topic">Up</a> | <a href="00512.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_BufferCompletedBytesGet@DRV_USART_BUFFER_HANDLE Topic Title: DRV_USART_BufferCompletedBytesGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_TransferSetup@DRV_HANDLE@DRV_SPI_TRANSFER_SETUP * Topic Title: DRV_SPI_TransferSetup Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

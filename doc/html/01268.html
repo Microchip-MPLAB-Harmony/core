@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_TIME_DelayIsComplete Function</title>
+<title>SYS_MODULE_REINITIALIZE_ROUTINE Type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00827.html" target="topic">Time System Service Library Help</a> &gt; <a href="00828.html" target="topic">Library Interface</a> &gt; c) Callback and Delay Functions &gt; <a href="01268.html" target="topic">SYS_TIME_DelayIsComplete Function</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00178.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="01268.html" target="topic">SYS_MODULE_REINITIALIZE_ROUTINE Type</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01270.html" target="topic">Previous</a> | <a href="00828.html" target="topic">Up</a> | <a href="01261.html" target="topic">Next</a></div>
+<a href="01264.html" target="topic">Previous</a> | <a href="00178.html" target="topic">Up</a> | <a href="01269.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_DelayIsComplete@SYS_TIME_HANDLE Topic Title: SYS_TIME_DelayIsComplete Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_MODULE_REINITIALIZE_ROUTINE Topic Title: SYS_MODULE_REINITIALIZE_ROUTINE Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_TIME_DelayIsComplete Function</div>
+SYS_MODULE_REINITIALIZE_ROUTINE Type</div>
 </div>
 </div>
 
@@ -49,19 +49,19 @@ SYS_TIME_DelayIsComplete Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function determines if the requested delay is completed or is still in progress.</p></div>
+System Module Reinitialization Routine Pointer&nbsp;</p>
+<p class="Element10">
+This data type is a pointer to a routine that reinitializes a system module (driver, library, or system-maintained application).</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">SYS_TIME_DelayIsComplete</span></strong>(
-    <a href="01272.html" target="topic">SYS_TIME_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
-);</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">SYS_MODULE_REINITIALIZE_ROUTINE</span></strong>)(<a href="01265.html" target="topic">SYS_MODULE_OBJ</a> object, <strong><span style="color: #000080">const</span></strong> <a href="01260.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> init);</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-A delay request must have been created using either the <a href="01269.html" target="topic">SYS_TIME_DelayMS</a> or <a href="01270.html" target="topic">SYS_TIME_DelayUS</a> functions.</p></div>
+The low-level board initialization must have (and will be) completed and the module's initialization routine will have been called before the system will call the reinitialization routine for any modules.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -78,9 +78,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+object&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A <a href="01272.html" target="topic">SYS_TIME_HANDLE</a> value provided by either <a href="01269.html" target="topic">SYS_TIME_DelayMS</a> or <a href="01270.html" target="topic">SYS_TIME_DelayUS</a> functions.&nbsp;</div></td></tr></table></div></div>
+Handle to the module instance<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the data structure containing any data necessary to initialize the module. This pointer may be null if no data is required and default initialization is to be used.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,36 +93,32 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-true - If the delay has completed.&nbsp;</p>
-<p class="Element10">
-false - If the delay has not completed.</p></div>
+None.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS_TIME_DelayIsComplete must be called to poll the status of the delay requested through <a href="01269.html" target="topic">SYS_TIME_DelayMS</a> or <a href="01270.html" target="topic">SYS_TIME_DelayUS</a>.&nbsp;</p>
+This operation uses the same initialization data structure as the Initialize operation.&nbsp;</p>
 <p class="Element10">
-SYS_TIME_DelayIsComplete must not be used to poll the status of a periodic timer. Status of a periodic timer may be polled using the <a href="01300.html" target="topic">SYS_TIME_TimerPeriodHasExpired</a> routine.</p></div>
+This operation can be used to refresh the hardware state as defined by the initialization data, thus it must guarantee that all hardware state has been refreshed.&nbsp;</p>
+<p class="Element10">
+This function can be called multiple times to reinitialize the module.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// Check if the delay has expired.</span></i>
-<strong><span style="color: #000080">if</span></strong> (SYS_TIME_DelayIsComplete(timer) != <strong><span style="color: #000080">true</span></strong>)
-{
-    <i><span style="color: #008000">// Delay has not expired</span></i>
-}</pre></div></div>
-</div>
+<p class="Element10">
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00827.html" target="topic">Time System Service Library Help</a> &gt; <a href="00828.html" target="topic">Library Interface</a> &gt; c) Callback and Delay Functions &gt; <a href="01268.html" target="topic">SYS_TIME_DelayIsComplete Function</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00178.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="01268.html" target="topic">SYS_MODULE_REINITIALIZE_ROUTINE Type</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -128,10 +129,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01270.html" target="topic">Previous</a> | <a href="00828.html" target="topic">Up</a> | <a href="01261.html" target="topic">Next</a></div>
+<a href="01264.html" target="topic">Previous</a> | <a href="00178.html" target="topic">Up</a> | <a href="01269.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_DelayIsComplete@SYS_TIME_HANDLE Topic Title: SYS_TIME_DelayIsComplete Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_MODULE_REINITIALIZE_ROUTINE Topic Title: SYS_MODULE_REINITIALIZE_ROUTINE Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

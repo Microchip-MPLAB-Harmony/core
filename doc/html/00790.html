@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>UART Console Device</title>
+<title>Hardware Setup</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00048.html" target="topic">Console System Service Library</a> &gt; <a href="00792.html" target="topic">Using the Library</a> &gt; <a href="00785.html" target="topic">How the Library Works</a> &gt; <a href="00790.html" target="topic">UART Console Device</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00776.html" target="topic">SPI Driver Applications</a> &gt; Async &gt; <a href="00788.html" target="topic">spi_self_loopback_multi_client</a> &gt; <a href="00790.html" target="topic">Hardware Setup</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00785.html" target="topic">Previous</a> | <a href="00785.html" target="topic">Up</a> | <a href="00782.html" target="topic">Next</a></div>
+<a href="00791.html" target="topic">Previous</a> | <a href="00788.html" target="topic">Up</a> | <a href="00792.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE UART Console Device Topic Title: UART Console Device)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SPI Driver Async spi_self_loopback_multi_client Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-UART Console Device</div>
+Hardware Setup</div>
 </div>
 </div>
 
@@ -48,37 +48,91 @@ UART Console Device</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-<strong>Read</strong>&nbsp;</p>
-<p class="Element10">
-While the user may request multiple bytes of data per read, a typical terminal emulator program sends only one byte per transaction. When multiple bytes are requested, the UART Console Device layer will queue individual byte reads until all bytes are read. The bytes are sent to the user-supplied read buffer as they are read, and the read callback is triggered when all bytes have been read. Only one read operation can be active at a time. The size of the read queue is a configuration option. The size of the read queue determines the number of read requests (not the number of bytes) that can be queued. Each read request in turn can request for multiple bytes to be read. A call to the console read API with the read queue full returns 0.&nbsp;</p>
-<p class="Element10">
-The read function accepts a pointer to a read buffer as one of the arguments. It is the responsibility of the application programmer to properly allocate the read buffer.&nbsp;</p>
-<p class="Element10">
-<strong>Write</strong>&nbsp;</p>
-<p class="Element10">
-The UART console device is capable of writing multiple data bytes per transaction, and queuing multiple write transactions. The size of the write queue is a configuration option. If the user tries to queue more write transactions than the write queue can accommodate, the write function will return 0.&nbsp;</p>
-<p class="Element10">
-The write function accepts a pointer to a write buffer as one of the arguments. It is the responsibility of the application programmer to properly allocate the write buffer.&nbsp;</p>
-<p class="Element10">
-<strong>State Machine</strong>&nbsp;</p>
-<p class="Element10">
-The read and write state machines are run from the interrupt context (from the callback called by the underlying UART PLIB). The underlying PLIB calls the UART console device event handler when the requested number of bytes are transmitted or received (or in case of an error condition). The read/write state machine dispatches application/middleware callback functions and initiates a data transfer if the read/write queue has any request to service.&nbsp;</p>
-<p class="Element10">
-<strong>Register Callback</strong>&nbsp;</p>
-<p class="Element10">
-The callback registration mechanism associates a user function with a read or write completion event. The callback function includes an argument containing a pointer to the read or write buffer associated with the transfer that initiated the callback. Separate callback functions must be registered for read and write events. If there is no callback function registered, the event will complete as normal, with no callback executed.&nbsp;</p>
-<p class="Element10">
-<strong>Flush</strong>&nbsp;</p>
-<p class="Element10">
-The flush routine in the UART implementation resets the read and write queues. A flush operation is typically triggered in response to an error condition.</p></div>
+
+<ol class="Element630">
+<li value="1" class="Element600"><strong>Project</strong> <strong>sam_c21n_xpro.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used:</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsamc21n-xpro');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM C21N Xplained Pro Evaluation Kit</a></li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup:</strong>
+<ul class="Element632">
+<li class="Element602">Use jumper wire to connect &quot;Pin 16 of EXT2 header&quot; to &quot;Pin 17 of EXT2 header&quot;
+<ul class="Element633">
+<li class="Element603">SERCOM5 PAD2 signal as MOSI signal and it is mapped to PB00 that is routed to &quot;Pin 16 of EXT2 header&quot;</li>
+<li class="Element603">SERCOM5 PAD0 signal as MISO signal and it is mapped to PB02 that is routed to &quot;Pin 17 of EXT2 header&quot;</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="2" class="Element600"><strong>Project</strong> <strong>sam_d20_xpro.X.</strong></li>
+<li value="3" class="Element600"><strong>Project sam_d21_xpro.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used:</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATSAMD20-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM D20 Xplained Pro Evaluation Kit</a> or <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsamd21-xpro');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM D21 Xplained Pro Evaluation Kit</a></li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup:</strong>
+<ul class="Element632">
+<li class="Element602">Use jumper wire to Connect &quot;Pin 16 of EXT2 header&quot; to &quot;Pin 17 of EXT2 header&quot;
+<ul class="Element633">
+<li class="Element603">SERCOM1 PAD2 signal as MOSI signal and it is mapped to PA18 that is routed to &quot;Pin 16 of EXT2 header&quot;</li>
+<li class="Element603">SERCOM1 PAD0 signal as MISO signal and it is mapped to PA16 that is routed to &quot;Pin 17 of EXT2 header&quot;</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="4" class="Element600"><strong>Project</strong> <strong>sam_e70_xult.X.</strong></li>
+<li value="5" class="Element600"> <strong> Project sam_e70_xult_freertos.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used:</strong>
+<ul class="Element632">
+<li class="Element602">SAM E70 Xplained Ultra Evaluation Kit</li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup:</strong>
+<ul class="Element632">
+<li class="Element602">Use jumper wire to Connect &quot;Pin 16 of EXT1 header&quot; to &quot;Pin 17 of EXT1 header&quot;
+<ul class="Element633">
+<li class="Element603">SPI0 MOSI signal is mapped to PD21 that is routed to &quot;Pin 16 of EXT1 header&quot;</li>
+<li class="Element603">SPI0 MISO signal is mapped to PD20 that is routed to &quot;Pin 17 of EXT1 header&quot;</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="6" class="Element600"><strong>Project</strong> <strong>sam_v71_xult.X.</strong></li>
+<li value="7" class="Element600"> <strong> Project sam_v71_xult_freertos.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used:</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsamv71-xult');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM V71 Xplained Ultra Evaluation Kit</a></li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup:</strong>
+<ul class="Element632">
+<li class="Element602">Use jumper wire to Connect &quot;Pin 16 of EXT1 header&quot; to &quot;Pin 17 of EXT1 header&quot;
+<ul class="Element633">
+<li class="Element603">SPI0 MOSI signal is mapped to PD21 that is routed to &quot;Pin 16 of EXT1 header&quot;</li>
+<li class="Element603">SPI0 MISO signal is mapped to PD20 that is routed to &quot;Pin 17 of EXT1 header&quot;</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ol></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00048.html" target="topic">Console System Service Library</a> &gt; <a href="00792.html" target="topic">Using the Library</a> &gt; <a href="00785.html" target="topic">How the Library Works</a> &gt; <a href="00790.html" target="topic">UART Console Device</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00776.html" target="topic">SPI Driver Applications</a> &gt; Async &gt; <a href="00788.html" target="topic">spi_self_loopback_multi_client</a> &gt; <a href="00790.html" target="topic">Hardware Setup</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -89,10 +143,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00785.html" target="topic">Previous</a> | <a href="00785.html" target="topic">Up</a> | <a href="00782.html" target="topic">Next</a></div>
+<a href="00791.html" target="topic">Previous</a> | <a href="00788.html" target="topic">Up</a> | <a href="00792.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE UART Console Device Topic Title: UART Console Device)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SPI Driver Async spi_self_loopback_multi_client Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

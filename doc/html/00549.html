@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>nvm_sdhc_fat_multi_disk</title>
+<title>DRV_USART_BUFFER_EVENT Enumeration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00546.html" target="topic">File System Applications</a> &gt; <a href="00549.html" target="topic">nvm_sdhc_fat_multi_disk</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00206.html" target="topic">USART Driver Library Help</a> &gt; <a href="00207.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="00549.html" target="topic">DRV_USART_BUFFER_EVENT Enumeration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00566.html" target="topic">Previous</a> | <a href="00546.html" target="topic">Up</a> | <a href="00567.html" target="topic">Next</a></div>
+<a href="00554.html" target="topic">Previous</a> | <a href="00207.html" target="topic">Up</a> | <a href="00553.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications nvm_sdhc_fat_multi_disk Topic Title: nvm_sdhc_fat_multi_disk)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_BUFFER_EVENT Topic Title: DRV_USART_BUFFER_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-nvm_sdhc_fat_multi_disk</div>
+DRV_USART_BUFFER_EVENT Enumeration</div>
 </div>
 </div>
 
@@ -48,65 +48,61 @@ nvm_sdhc_fat_multi_disk</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element15">
-File System Operations on NVM and SD-Card:</div>
-
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000">The application contains a FAT disk image consisting of a Master Boot Record (MBR) sector, Logical Boot Sector, File Allocation Table, and Root Directory Area, placed in the internal Flash memory (NVM)</span></li>
-<li class="Element600"><span style="color: #000000">A SD card is used as another disk, which might have FAT16 or FAT32 implemented on it (dependent on the formatting of SD card)</span></li>
-<li class="Element600"><span style="color: #000000">The application searches the NVM media for a file named <strong>FILE.TXT</strong>, opens and reads the contents of the file in NVM and copies the contents to the file, <strong>FILE.TXT</strong>, in the SD card</span></li>
-<li class="Element600"><span style="color: #000000">Once the copy is successful, an addition string <strong>&quot;Test is successful&quot;</strong> is added to the file. If the write operation is successful, LED indication is provided</span></li>
-</ul><p class="Element10">
-&nbsp;</p>
-<div class="Element15">
-File system layer uses:</div>
-
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000">Memory driver to communicate with underlying NVM media.</span></li>
-<li class="Element600"><span style="color: #000000">SDHC Driver to communicate to SD-Card</span></li>
-</ul></div>
+<p class="Element10">
+USART Driver Buffer Events&nbsp;</p>
+<p class="Element10">
+This enumeration identifies the possible events that can result from a buffer add request caused by the client calling either the <a href="00566.html" target="topic">DRV_USART_ReadBufferAdd</a> or <a href="00572.html" target="topic">DRV_USART_WriteBufferAdd</a> functions.</p></div>
 </div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000">DRV_USART_BUFFER_EVENT_PENDING</span></strong>,
+  <strong><span style="color: #000000">DRV_USART_BUFFER_EVENT_COMPLETE</span></strong>,
+  <strong><span style="color: #000000">DRV_USART_BUFFER_EVENT_ERROR</span></strong>
+} DRV_USART_BUFFER_EVENT;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
+<div class="Element272">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table4">
 <tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00567.html" target="topic">Building The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to build an application using the MPLAB X IDE.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00569.html" target="topic">MPLAB Harmony Configuration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This topic provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00568.html" target="topic">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00570.html" target="topic">Running The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to run an application using the MPLAB X IDE.&nbsp;</div></td></tr></table></div></div>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_USART_BUFFER_EVENT_PENDING&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+The buffer is pending to be serviced&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_USART_BUFFER_EVENT_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+All data from or to the buffer was transferred successfully.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_USART_BUFFER_EVENT_ERROR&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+There was an error while processing the buffer transfer request.&nbsp;</div></td></tr></table></div></div>
 </div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+One of these values is passed in the &quot;event&quot; parameter of the event handling callback function that the client registered with the driver by calling the <a href="00557.html" target="topic">DRV_USART_BufferEventHandlerSet</a> function when a buffer transfer request is completed.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00546.html" target="topic">File System Applications</a> &gt; <a href="00549.html" target="topic">nvm_sdhc_fat_multi_disk</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00206.html" target="topic">USART Driver Library Help</a> &gt; <a href="00207.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="00549.html" target="topic">DRV_USART_BUFFER_EVENT Enumeration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -117,10 +113,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00566.html" target="topic">Previous</a> | <a href="00546.html" target="topic">Up</a> | <a href="00567.html" target="topic">Next</a></div>
+<a href="00554.html" target="topic">Previous</a> | <a href="00207.html" target="topic">Up</a> | <a href="00553.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications nvm_sdhc_fat_multi_disk Topic Title: nvm_sdhc_fat_multi_disk)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_BUFFER_EVENT Topic Title: DRV_USART_BUFFER_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

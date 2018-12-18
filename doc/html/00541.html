@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>task_notification_freertos</title>
+<title>DRV_SST26_Status Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00012.html" target="topic">RTOS Applications</a> &gt; <a href="00535.html" target="topic">FreeRTOS Applications</a> &gt; <a href="00541.html" target="topic">task_notification_freertos</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00192.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00193.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00541.html" target="topic">DRV_SST26_Status Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00540.html" target="topic">Previous</a> | <a href="00535.html" target="topic">Up</a> | <a href="00542.html" target="topic">Next</a></div>
+<a href="00538.html" target="topic">Previous</a> | <a href="00193.html" target="topic">Up</a> | <a href="00546.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FreeRTOS task_notification_freertos Topic Title: task_notification_freertos)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_Status@SYS_MODULE_INDEX Topic Title: DRV_SST26_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-task_notification_freertos</div>
+DRV_SST26_Status Function</div>
 </div>
 </div>
 
@@ -49,48 +49,65 @@ task_notification_freertos</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This demonstration creates two tasks that send notifications back and forth to each other.</p>
-<ul class="Element630">
-<li class="Element600">Task2 blocks to wait for Task1 to notify and will be blocked for 500ms</li>
-<li class="Element600">Task1 sends a notification to Tasks2, bringing it out of the blocked state, toggles an LED</li>
-<li class="Element600">Task1 blocks to wait for Task2 to notify</li>
-<li class="Element600">Task2 sends notification to Task1, bringing it out of the blocked state</li>
-</ul><p class="Element10">
-Above steps will be repeated. i.e. an LED toggles for every 500ms</p></div>
+This routine provides the current status of the SST26 driver module.</p></div>
 </div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01272.html" target="topic">SYS_STATUS</a> <strong><span style="color: #000000">DRV_SST26_Status</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01259.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
+<p class="Element10">
+Function <a href="00535.html" target="topic">DRV_SST26_Initialize</a> should have been called before calling this function.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table3">
 <tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00542.html" target="topic">Building the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to build an application using MPLAB X IDE.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00544.html" target="topic">MPLAB Harmony Configurations</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00543.html" target="topic">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00545.html" target="topic">Running the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to run an application using the MPLAB X IDE.&nbsp;</div></td></tr></table></div></div>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+drvIndex&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Identifier for the instance used to initialize driver&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+SYS_STATUS_READY - Indicates that the driver is ready and accept requests for new operations.&nbsp;</p>
+<p class="Element10">
+SYS_STATUS_UNINITIALIZED - Indicates the driver is not initialized.&nbsp;</p>
+<p class="Element10">
+SYS_STATUS_BUSY - Indicates the driver is in busy state.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This routine will NEVER block wait for hardware.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01272.html" target="topic">SYS_STATUS</a>          Status;
+
+Status = DRV_SST26_Status(DRV_SST26_INDEX);</pre></div></div>
 </div>
 </div>
 </div>
@@ -98,7 +115,7 @@ This section provides information on how to run an application using the MPLAB X
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00012.html" target="topic">RTOS Applications</a> &gt; <a href="00535.html" target="topic">FreeRTOS Applications</a> &gt; <a href="00541.html" target="topic">task_notification_freertos</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00192.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00193.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00541.html" target="topic">DRV_SST26_Status Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -109,10 +126,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00540.html" target="topic">Previous</a> | <a href="00535.html" target="topic">Up</a> | <a href="00542.html" target="topic">Next</a></div>
+<a href="00538.html" target="topic">Previous</a> | <a href="00193.html" target="topic">Up</a> | <a href="00546.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FreeRTOS task_notification_freertos Topic Title: task_notification_freertos)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_Status@SYS_MODULE_INDEX Topic Title: DRV_SST26_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

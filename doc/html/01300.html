@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_TIME_TimerPeriodHasExpired Function</title>
+<title>SYS_TIME_Initialize Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00827.html" target="topic">Time System Service Library Help</a> &gt; <a href="00828.html" target="topic">Library Interface</a> &gt; b) Timer Functions &gt; <a href="01300.html" target="topic">SYS_TIME_TimerPeriodHasExpired Function</a></div>
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00864.html" target="topic">Time System Service Library Help</a> &gt; <a href="00865.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="01300.html" target="topic">SYS_TIME_Initialize Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01297.html" target="topic">Previous</a> | <a href="00828.html" target="topic">Up</a> | <a href="01301.html" target="topic">Next</a></div>
+<a href="00865.html" target="topic">Previous</a> | <a href="00865.html" target="topic">Up</a> | <a href="01321.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_TimerPeriodHasExpired@SYS_TIME_HANDLE Topic Title: SYS_TIME_TimerPeriodHasExpired Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: SYS_TIME_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_TIME_TimerPeriodHasExpired Function</div>
+SYS_TIME_Initialize Function</div>
 </div>
 </div>
 
@@ -49,20 +49,14 @@ SYS_TIME_TimerPeriodHasExpired Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function reports whether or not the current period of the given software timer has expired and clears the internal flag tracking period expiration so that each period expiration will only be reported once.</p></div>
+This function initializes the instance of the System Time module.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">SYS_TIME_TimerPeriodHasExpired</span></strong>(
-    <a href="01272.html" target="topic">SYS_TIME_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01265.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">SYS_TIME_Initialize</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01259.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="01260.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
 );</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-The <a href="01275.html" target="topic">SYS_TIME_Initialize</a> and <a href="01298.html" target="topic">SYS_TIME_TimerCreate</a> or <a href="01259.html" target="topic">SYS_TIME_CallbackRegisterMS</a>/ <a href="01260.html" target="topic">SYS_TIME_CallbackRegisterUS</a> functions (with callback type set to SYS_TIME_PERIODIC) must have been called before calling this function.</p></div>
-</div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
 <div class="Element11">
@@ -78,9 +72,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Handle to a software timer instance&nbsp;</div></td></tr></table></div></div>
+Index for the instance to be initialized<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to a data structure containing data necessary to initialize the module.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,41 +87,42 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-true - If the period has expired.&nbsp;</p>
-<p class="Element10">
-false - If the period is not expired.</p></div>
+If successful, returns a valid handle to an object. Otherwise, it returns <a href="01266.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
-
-<ol class="Element630">
-<li value="1" class="Element600">For a periodic timer, a call to SYS_TIME_TimerPeriodHasExpired returns true after the first time period has expired. After calling this function, the expiry flag is internally cleared and is set again once the ongoing period of the periodic timer expires.</li>
-</ol><p class="Element10">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="2" class="Element600">Unlike the <a href="01268.html" target="topic">SYS_TIME_DelayIsComplete</a> routine the SYS_TIME_TimerPeriodHasExpired does not delete the timer, it just returns the status of the timer.</li>
-</ol><p class="Element10">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="3" class="Element600">To poll the status of the delay timers, <a href="01268.html" target="topic">SYS_TIME_DelayIsComplete</a> must be used instead of the SYS_TIME_TimerPeriodHasExpired routine, as <a href="01268.html" target="topic">SYS_TIME_DelayIsComplete</a> additionally deletes the delay timer object once the delay has expired.</li>
-</ol><p class="Element10">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="4" class="Element600">Since single shot timers does not support polling (registration of a callback is mandatory for single shot timers), the <a href="01259.html" target="topic">SYS_TIME_CallbackRegisterMS</a> routine must not be used to poll the status of the single shot timers.</li>
-</ol></div>
+<p class="Element10">
+This routine should normally only be called once during system initialization.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">if</span></strong> (SYS_TIME_TimerPeriodHasExpired(timer) == <strong><span style="color: #000080">true</span></strong>)
+<div class="Element13"><div class="Element12"><pre class="Element12">
+<strong><span style="color: #000080">const</span></strong> <a href="01307.html" target="topic">SYS_TIME_PLIB_INTERFACE</a> sysTimePlibAPI = {
+    .timerCallbackSet = (<a href="01303.html" target="topic">SYS_TIME_PLIB_CALLBACK_REGISTER</a>)TC0_CH0_TimerCallbackRegister,
+    .timerCounterGet = (<a href="01305.html" target="topic">SYS_TIME_PLIB_COUNTER_GET</a>)TC0_CH0_TimerCounterGet,
+    .timerPeriodSet = (<a href="01315.html" target="topic">SYS_TIME_PLIB_PERIOD_SET</a>)TC0_CH0_TimerPeriodSet,
+    .timerFrequencyGet = (<a href="01306.html" target="topic">SYS_TIME_PLIB_FREQUENCY_GET</a>)TC0_CH0_TimerFrequencyGet,
+    .timerCompareSet = (<a href="01304.html" target="topic">SYS_TIME_PLIB_COMPARE_SET</a>)TC0_CH0_TimerCompareSet,
+    .timerStart = (<a href="01316.html" target="topic">SYS_TIME_PLIB_START</a>)TC0_CH0_TimerStart,
+    .timerStop = (<a href="01317.html" target="topic">SYS_TIME_PLIB_STOP</a>)TC0_CH0_TimerStop
+};
+
+<strong><span style="color: #000080">const</span></strong> <a href="01299.html" target="topic">SYS_TIME_INIT</a> sysTimeInitData =
 {
-    <i><span style="color: #008000">// Timer has expired. Take desired action.</span></i>
+    .timePlib = &amp;sysTimePlibAPI,
+    .hwTimerIntNum = TC0_CH0_IRQn,
+};
+
+<a href="01265.html" target="topic">SYS_MODULE_OBJ</a>  objSysTime;
+
+objSysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (<a href="01260.html" target="topic">SYS_MODULE_INIT</a> *)&amp;sysTimeInitData);
+<strong><span style="color: #000080">if</span></strong> (objSysTime == <a href="01266.html" target="topic">SYS_MODULE_OBJ_INVALID</a>)
+{
+    <i><span style="color: #008000">// Handle error</span></i>
 }</pre></div></div>
 </div>
 </div>
@@ -131,7 +131,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00827.html" target="topic">Time System Service Library Help</a> &gt; <a href="00828.html" target="topic">Library Interface</a> &gt; b) Timer Functions &gt; <a href="01300.html" target="topic">SYS_TIME_TimerPeriodHasExpired Function</a></div>
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00864.html" target="topic">Time System Service Library Help</a> &gt; <a href="00865.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="01300.html" target="topic">SYS_TIME_Initialize Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -142,10 +142,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01297.html" target="topic">Previous</a> | <a href="00828.html" target="topic">Up</a> | <a href="01301.html" target="topic">Next</a></div>
+<a href="00865.html" target="topic">Previous</a> | <a href="00865.html" target="topic">Up</a> | <a href="01321.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_TimerPeriodHasExpired@SYS_TIME_HANDLE Topic Title: SYS_TIME_TimerPeriodHasExpired Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: SYS_TIME_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

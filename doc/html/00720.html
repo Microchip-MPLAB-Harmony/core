@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SDHC Driver Applications</title>
+<title>Memory Operation</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00720.html" target="topic">SDHC Driver Applications</a></div>
+<a href="00707.html" target="topic">OSAL Library Help</a> &gt; <a href="00727.html" target="topic">Using the Library</a> &gt; <a href="00715.html" target="topic">How the Library Works</a> &gt; <a href="00720.html" target="topic">Memory Operation</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00652.html" target="topic">Previous</a> | <a href="00010.html" target="topic">Up</a> | <a href="00721.html" target="topic">Next</a></div>
+<a href="00712.html" target="topic">Previous</a> | <a href="00715.html" target="topic">Up</a> | <a href="00724.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SDHC Driver Applications Help Topic Title: SDHC Driver Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Memory Operation Topic Title: Memory Operation)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SDHC Driver Applications</div>
+Memory Operation</div>
 </div>
 </div>
 
@@ -48,27 +48,20 @@ SDHC Driver Applications</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-<span style="color: #000000">This Section provides help for the SDHC Driver Applications.</span></p></div>
-</div>
-<a name="4173796E63"></a><div class="Element14">
-Async</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00721.html" target="topic">sdhc_read_write</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This example uses SDHC driver to perform Block Erase/Write/Read operations on SD-Card attached to the device.</span>&nbsp;</div></td></tr></table></div></div>
+<p class="Element10" style="text-align: justify;">
+The OSAL Library provides an interface to a memory allocation mechanism. The memory required for dynamic instantiation of variables is normally provided by allocating it from the heap. However the standard C library implementation of malloc and free are not considered thread safe and so OSAL specific functions must be used if MPLAB Harmony or the application requires dynamic memory during operation.&nbsp;</p>
+<p class="Element10" style="text-align: justify;">
+When operating without an underlying RTOS the OSAL memory allocators default to using standard malloc and free functions. However, when operating with an RTOS the calls will defer to the specific scheme used by the RTOS. This may involve multiple memory pools or it may simply involve adding a critical section around calls to malloc and free. It is left to the implementation to define the most appropriate scheme.</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* allocate a large buffer */</span></i>
+uint8_t* buffer;
+
+buffer = OSAL_Malloc(8000);
+<strong><span style="color: #000080">if</span></strong> (buffer != NULL)
+{
+    ... manipulate the buffer
+    <i><span style="color: #008000">/* free the buffer */</span></i>
+    OSAL_Free(buffer);
+    buffer = NULL;
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -76,7 +69,7 @@ Description&nbsp;</div></td></tr><tr>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00720.html" target="topic">SDHC Driver Applications</a></div>
+<a href="00707.html" target="topic">OSAL Library Help</a> &gt; <a href="00727.html" target="topic">Using the Library</a> &gt; <a href="00715.html" target="topic">How the Library Works</a> &gt; <a href="00720.html" target="topic">Memory Operation</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -87,10 +80,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00652.html" target="topic">Previous</a> | <a href="00010.html" target="topic">Up</a> | <a href="00721.html" target="topic">Next</a></div>
+<a href="00712.html" target="topic">Previous</a> | <a href="00715.html" target="topic">Up</a> | <a href="00724.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SDHC Driver Applications Help Topic Title: SDHC Driver Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Memory Operation Topic Title: Memory Operation)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_DriveSectorGet Function</title>
+<title>sys_debug.h</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00814.html" target="topic">File System Service Library Help</a> &gt; <a href="00815.html" target="topic">Library Interface</a> &gt; b) General Operation Functions &gt; <a href="00969.html" target="topic">SYS_FS_DriveSectorGet Function</a></div>
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00049.html" target="topic">Debug System Service Library</a> &gt; <a href="00835.html" target="topic">Files</a> &gt; <a href="00969.html" target="topic">sys_debug.h</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00968.html" target="topic">Previous</a> | <a href="00815.html" target="topic">Up</a> | <a href="01001.html" target="topic">Next</a></div>
+<a href="00835.html" target="topic">Previous</a> | <a href="00835.html" target="topic">Up</a> | <a href="00851.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_DriveSectorGet@char *@uint32_t *@uint32_t * Topic Title: SYS_FS_DriveSectorGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: sys_debug.h Topic Title: sys_debug.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_DriveSectorGet Function</div>
+sys_debug.h</div>
 </div>
 </div>
 
@@ -46,95 +46,188 @@ SYS_FS_DriveSectorGet Function</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
+<a name="436F6D70616E79"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Function to obtain the total number of sectors and number of free sectors in a drive (media).</p></div>
+Microchip Technology Inc.</p></div>
 </div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01170.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_DriveSectorGet</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong> * <strong><span style="color: #000000">path</span></strong>, 
-    uint32_t * <strong><span style="color: #000000">totalSectors</span></strong>, 
-    uint32_t * <strong><span style="color: #000000">freeSectors</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
+<a name="46696C65204E616D65"></a><div class="Element14">
+File Name</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The drive for which the information is to be retrieved should be mounted.</p></div>
+sys_debug.h</p></div>
 </div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element312">
+<p class="Element10">
+Debug System Services Library Header&nbsp;</p>
+<p class="Element10">
+This header file defines the common debug definitions and interface macros (summary below) and prototypes used by MPLAB Harmony libraries to report errors and debug information to the user.</p></div>
+</div>
+<a name="456E756D65726174696F6E73"></a><div class="Element14">
+Enumerations</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
 <div class="TableDiv">
-<table cellspacing="0" class="Table3">
+<table cellspacing="0" class="Table0">
 <tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-path&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Path to the volume with the volume name. The string of volume name must be preceded by &quot;/mnt/&quot;. Also, the volume name and directory name must be separated by a slash &quot;/&quot;.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-totalSectors&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to a variable passed to the function, which will contain the total number of sectors available in the drive (media).<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-freeSectors&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to a variable passed to the function, which will contain the free number of sectors available in the drive (media).&nbsp;</div></td></tr></table></div></div>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00983.html" target="topic">SYS_ERROR_LEVEL</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+System error message priority levels.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
+<a name="46756E6374696F6E73"></a><div class="Element14">
+Functions</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-SYS_FS_RES_SUCCESS - Sector information get operation was successful. SYS_FS_RES_FAILURE - Sector information get operation was unsucessful. The reason for the failure can be retrieved with <a href="00970.html" target="topic">SYS_FS_Error</a>.</p></div>
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00971.html" target="topic">SYS_DEBUG_ErrorLevelGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Returns the global system Error reporting level.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00972.html" target="topic">SYS_DEBUG_ErrorLevelSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Sets the global system error reporting level.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00974.html" target="topic">SYS_DEBUG_Initialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Initializes the global error level and specific module instance.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00976.html" target="topic">SYS_DEBUG_Message</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Prints a message to the console regardless of the system error level.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00978.html" target="topic">SYS_DEBUG_Print</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Formats and prints a message with a variable number of arguments to the console regardless of the system error level.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00979.html" target="topic">SYS_DEBUG_Status</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Returns status of the specific instance of the debug service module.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00980.html" target="topic">SYS_DEBUG_Tasks</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Maintains the debug module's state machine.&nbsp;</div></td></tr></table></div></div>
 </div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
+</div>
+<a name="4D6163726F73"></a><div class="Element14">
+Macros</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-None.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  uint32_t totalSectors, freeSectors;
-  <a href="01170.html" target="topic">SYS_FS_RESULT</a> res;
-
-  <strong><span style="color: #000080">if</span></strong>(<a href="01166.html" target="topic">SYS_FS_Mount</a>(&quot;/dev/mmcblka1&quot;, &quot;/mnt/myDrive&quot;, FAT, 0, NULL) != SYS_FS_RES_SUCCESS)
-  {
-      <i><span style="color: #008000">// Failure, try mounting again</span></i>
-  }
-  <strong><span style="color: #000080">else</span></strong>
-  {
-      <i><span style="color: #008000">// Mount was successful.</span></i>
-      <i><span style="color: #008000">// Do other FS stuffs.</span></i>
-  }
-  <i><span style="color: #008000">// Perform usual FS tasks.</span></i>
-  <i><span style="color: #008000">//....</span></i>
-  <i><span style="color: #008000">//....</span></i>
-
-  <i><span style="color: #008000">// Now, determine the total sectors and free sectors</span></i>
-  res = SYS_FS_DriveSectorGet(&quot;/mnt/myDrive&quot;, &amp;totalSectors, &amp;freeSectors);
-  <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
-  {
-      <i><span style="color: #008000">//Sector information get operation failed.</span></i>
-  }</pre></div></div>
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00002.html" target="topic">_SYS_DEBUG_MESSAGE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Prints a debug message if the specified level is at or below the global system error level.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00003.html" target="topic">_SYS_DEBUG_PRINT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Formats and prints a debug message if the specified level is at or below the global system error level.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00970.html" target="topic">SYS_DEBUG_BreakPoint</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Inserts a software breakpoint instruction when building in Debug mode.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00973.html" target="topic">SYS_DEBUG_INDEX_0</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Debug System Service index.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00975.html" target="topic">SYS_DEBUG_MESSAGE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Prints a debug message if the system error level is defined at or lower than the level specified.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00977.html" target="topic">SYS_DEBUG_PRINT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Formats and prints an error message if the system error level is defined at or lower than the level specified.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01257.html" target="topic">SYS_MESSAGE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Prints a message to the console regardless of the system error level.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01271.html" target="topic">SYS_PRINT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Formats and prints an error message with a variable number of arguments regardless of the system error level.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -142,7 +235,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00814.html" target="topic">File System Service Library Help</a> &gt; <a href="00815.html" target="topic">Library Interface</a> &gt; b) General Operation Functions &gt; <a href="00969.html" target="topic">SYS_FS_DriveSectorGet Function</a></div>
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00049.html" target="topic">Debug System Service Library</a> &gt; <a href="00835.html" target="topic">Files</a> &gt; <a href="00969.html" target="topic">sys_debug.h</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -153,10 +246,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00968.html" target="topic">Previous</a> | <a href="00815.html" target="topic">Up</a> | <a href="01001.html" target="topic">Next</a></div>
+<a href="00835.html" target="topic">Previous</a> | <a href="00835.html" target="topic">Up</a> | <a href="00851.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_DriveSectorGet@char *@uint32_t *@uint32_t * Topic Title: SYS_FS_DriveSectorGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: sys_debug.h Topic Title: sys_debug.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

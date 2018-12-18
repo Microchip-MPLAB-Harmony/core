@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>MPLAB Harmony Configuration</title>
+<title>DRV_USART_WriteQueuePurge Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00546.html" target="topic">File System Applications</a> &gt; <a href="00555.html" target="topic">nvm_sst26_fat</a> &gt; <a href="00573.html" target="topic">MPLAB Harmony Configuration</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00206.html" target="topic">USART Driver Library Help</a> &gt; <a href="00207.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00573.html" target="topic">DRV_USART_WriteQueuePurge Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00571.html" target="topic">Previous</a> | <a href="00555.html" target="topic">Up</a> | <a href="00572.html" target="topic">Next</a></div>
+<a href="00572.html" target="topic">Previous</a> | <a href="00207.html" target="topic">Up</a> | <a href="00561.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS nvm_sst26_fat MPLAB Harmony Configuration Topic Title: MPLAB Harmony Configuration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_WriteQueuePurge@DRV_HANDLE Topic Title: DRV_USART_WriteQueuePurge Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-MPLAB Harmony Configuration</div>
+DRV_USART_WriteQueuePurge Function</div>
 </div>
 </div>
 
@@ -49,49 +49,81 @@ MPLAB Harmony Configuration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Refer to the MHC project graph for the configurations of the various components used.&nbsp;</p>
+This function removes all the buffer requests from the write queue. The client can use this function to purge the queue on timeout or to remove unwanted stalled buffer requests or in any other use case.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_USART_WriteQueuePurge</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00297.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
 <p class="Element10">
-&nbsp;</p><div class="Element15">
-Components used:</div>
+<a href="00564.html" target="topic">DRV_USART_Open</a> must have been called to obtain a valid opened device handle.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Handle of the communication channel as returned by the <a href="00564.html" target="topic">DRV_USART_Open</a> function.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
 <p class="Element10">
-The components used may vary based on the project configuration selected:</p>
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000">File System:</span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">FAT Format for SST26 Flash</span></li>
-<li class="Element601"><span style="color: #000000">FAT Format for NVM</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000">Memory Driver 2 Instances in synchronous Mode</span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">Instance 0 connected to SST26 Driver</span></li>
-<li class="Element601"><span style="color: #000000">Instance 1 connected to EFC PLIB</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000">SST26 Driver</span></li>
-<li class="Element600"><span style="color: #000000">QSPI peripheral library</span></li>
-</ul><p class="Element10">
-&nbsp;</p>
+True - Write queue purge is successful. False - Write queue purge has failed.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
 <p class="Element10">
-The following components used may vary based on the project configuration selected:</p>
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000">EFC or NVMCTRL peripheral library</span></li>
-<li class="Element600">Board Support Package (<span style="color: #000000">BSP)</span></li>
-<li class="Element600"><span style="color: #000000">FreeRTOS</span></li>
-</ul><p class="Element10">
-&nbsp;</p>
-<div class="Element15">
-Other MHC Configurations:</div>
+This function is thread safe when used in an RTOS environment. Avoid this function call from within the callback.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// myUSARTHandle is the handle returned by the DRV_USART_Open function.</span></i>
+<i><span style="color: #008000">// Use DRV_USART_WriteBufferAdd to queue write requests</span></i>
 
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000">Enable MPU for reserving Internal Flash region for NVM media operations</span></li>
-<li class="Element600"><span style="color: #000000">Enable MPU for QSPI Flash region for SST26 media operations</span></li>
-</ul></div>
+<i><span style="color: #008000">// Application timeout function, where remove queued buffers.</span></i>
+<strong><span style="color: #000080">void</span></strong> APP_TimeOut(<strong><span style="color: #000080">void</span></strong>)
+{
+    <strong><span style="color: #000080">if</span></strong>(<strong><span style="color: #000080">false</span></strong> == DRV_USART_WriteQueuePurge(myUSARThandle))
+    {
+        <i><span style="color: #008000">//Couldn't purge the write queue, try again.</span></i>
+    }
+    <strong><span style="color: #000080">else</span></strong>
+    {
+        <i><span style="color: #008000">//Queue purge successful.</span></i>
+    }
+}</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00546.html" target="topic">File System Applications</a> &gt; <a href="00555.html" target="topic">nvm_sst26_fat</a> &gt; <a href="00573.html" target="topic">MPLAB Harmony Configuration</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00206.html" target="topic">USART Driver Library Help</a> &gt; <a href="00207.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00573.html" target="topic">DRV_USART_WriteQueuePurge Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -102,10 +134,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00571.html" target="topic">Previous</a> | <a href="00555.html" target="topic">Up</a> | <a href="00572.html" target="topic">Next</a></div>
+<a href="00572.html" target="topic">Previous</a> | <a href="00207.html" target="topic">Up</a> | <a href="00561.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS nvm_sst26_fat MPLAB Harmony Configuration Topic Title: MPLAB Harmony Configuration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_WriteQueuePurge@DRV_HANDLE Topic Title: DRV_USART_WriteQueuePurge Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

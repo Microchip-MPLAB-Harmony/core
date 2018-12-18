@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>File System Applications</title>
+<title>DRV_SST26_TransferStatusGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00546.html" target="topic">File System Applications</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00192.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00193.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00546.html" target="topic">DRV_SST26_TransferStatusGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01402.html" target="topic">Previous</a> | <a href="00011.html" target="topic">Up</a> | <a href="00547.html" target="topic">Next</a></div>
+<a href="00541.html" target="topic">Previous</a> | <a href="00193.html" target="topic">Up</a> | <a href="00534.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications Help Topic Title: File System Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_TransferStatusGet@DRV_HANDLE Topic Title: DRV_SST26_TransferStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-File System Applications</div>
+DRV_SST26_TransferStatusGet Function</div>
 </div>
 </div>
 
@@ -49,61 +49,80 @@ File System Applications</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<span style="color: #000000">This section provides help for the File System applications.</span></p></div>
+This routine gets the current status of the transfer request. The application must use this routine where the status of a scheduled request needs to be polled on.</p></div>
 </div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00542.html" target="topic">DRV_SST26_TRANSFER_STATUS</a> <strong><span style="color: #000000">DRV_SST26_TransferStatusGet</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00297.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
+<p class="Element10">
+The <a href="00536.html" target="topic">DRV_SST26_Open</a>() routine must have been called for the specified SST26 driver instance.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table3">
 <tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00547.html" target="topic">nvm_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of implementing a FAT disk in the device internal Flash memory.</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00548.html" target="topic">nvm_mpfs</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of implementing a MPFS disk in device Internal Flash memory.</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00549.html" target="topic">nvm_sdhc_fat_multi_disk</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access files across multiple media (NVM, SDHC).</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00550.html" target="topic">nvm_sdspi_fat_multi_disk</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access files across multiple media (NVM, SDSPI).</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00555.html" target="topic">nvm_sst26_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access multiple files across multiple media (NVM, SST26 FLASH).</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00556.html" target="topic">qspi_sst26_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access SST26 media.</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00557.html" target="topic">sdhc_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access and modify the contents of a SD card using the SDHC driver.</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00558.html" target="topic">sdspi_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access and modify the contents of a SD card using the SDSPI driver.</span>&nbsp;</div></td></tr></table></div></div>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+DRV_SST26_TRANSFER_ERROR_UNKNOWN</p>
+<ul class="Element630">
+<li class="Element600">If the flash status register read request fails</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+DRV_SST26_TRANSFER_BUSY</p>
+<ul class="Element630">
+<li class="Element600">If the current transfer request is still being processed</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+DRV_SST26_TRANSFER_COMPLETED</p>
+<ul class="Element630">
+<li class="Element600">If the transfer request is completed</li>
+</ul></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This routine will block for hardware access.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">
+<a href="00297.html" target="topic">DRV_HANDLE</a> handle;  <i><span style="color: #008000">// Returned from DRV_SST26_Open</span></i>
+
+<strong><span style="color: #000080">if</span></strong> (DRV_SST26_TRANSFER_COMPLETED == DRV_SST26_TransferStatusGet(handle))
+{
+    <i><span style="color: #008000">// Operation Done</span></i>
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -111,7 +130,7 @@ Description&nbsp;</div></td></tr><tr>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00546.html" target="topic">File System Applications</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00192.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00193.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00546.html" target="topic">DRV_SST26_TransferStatusGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -122,10 +141,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01402.html" target="topic">Previous</a> | <a href="00011.html" target="topic">Up</a> | <a href="00547.html" target="topic">Next</a></div>
+<a href="00541.html" target="topic">Previous</a> | <a href="00193.html" target="topic">Up</a> | <a href="00534.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications Help Topic Title: File System Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_TransferStatusGet@DRV_HANDLE Topic Title: DRV_SST26_TransferStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Configuring the Library</title>
+<title>Running the Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00814.html" target="topic">File System Service Library Help</a> &gt; <a href="00807.html" target="topic">Configuring the Library</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00776.html" target="topic">SPI Driver Applications</a> &gt; Sync &gt; <a href="00803.html" target="topic">spi_self_loopback_multi_client</a> &gt; <a href="00807.html" target="topic">Running the Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00817.html" target="topic">Previous</a> | <a href="00814.html" target="topic">Up</a> | <a href="00806.html" target="topic">Next</a></div>
+<a href="00805.html" target="topic">Previous</a> | <a href="00803.html" target="topic">Up</a> | <a href="00808.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS FS Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SPI Driver Sync spi_self_loopback_multi_client_freertos Running the Application Topic Title: Running the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Configuring the Library</div>
+Running the Application</div>
 </div>
 </div>
 
@@ -48,85 +48,44 @@ Configuring the Library</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-File System Service Library <span style="color: #000000">should be configured via MHC. Below are the Snapshot of the MHC configuration window for Memory driver and brief description.</span>&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="FS_figure_4_NoAutoMount_Config.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<strong>File System Configuration with Auto Mount Disabled</strong>&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="FS_figure_5_AutoMount_Config.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<strong>File System Configuration with Auto Mount Enabled</strong></p><p class="Element10">
-&nbsp;</p>
-<div class="Element15">
-Configuration Options:</div>
 
 <ol class="Element630">
-<li value="1" class="Element600"><strong>Maximum Simultaneous File Access</strong>
-<ol class="Element631">
-<li value="1" class="Element601">Maximum Number of files which can be accesses by application</li>
-</ol></li>
-<li value="2" class="Element600"><strong>Size Of Block</strong>
-<ol class="Element631">
-<li value="1" class="Element601">Block Size used by File System layer to chunk the application data and to send to attached media</li>
-</ol></li>
-<li value="3" class="Element600"><strong>Size Of Media Manager Buffer</strong>
-<ol class="Element631">
-<li value="1" class="Element601">Media Manager Buffer size to store Block Data</li>
-</ol></li>
-<li value="4" class="Element600"><strong>Use File System Auto Mount Feature</strong>
-<ol class="Element631">
-<li value="1" class="Element601">Enables auto mount feature for all the media's</li>
-</ol></li>
-<li value="5" class="Element600"><strong>Total Number Of Media</strong>
-<ol class="Element631">
-<li value="1" class="Element601">Number of media to be attached to file system</li>
-</ol></li>
-<li value="6" class="Element600"><strong>Total Number Of Volumes</strong>
-<ol class="Element631">
-<li value="1" class="Element601">Number of volumes to be created for each media</li>
-</ol></li>
-<li value="7" class="Element600"><strong>MediaX</strong>
-<ol class="Element631">
-<li value="1" class="Element601">Media details to be configured when Auto mount feature is enabled.</li>
-</ol></li>
-<li value="8" class="Element600"><strong>File System Types</strong>
-<ol class="Element631">
-<li value="1" class="Element601"> Number of file systems used</li>
-</ol></li>
-<li value="9" class="Element600"><strong>FAT File System</strong>
-<ol class="Element631">
-<li value="1" class="Element601">When Selected Specifies FAT File system will be used</li>
-</ol></li>
-<li value="10" class="Element600"><strong>Microchip File System</strong>
-<ol class="Element631">
-<li value="1" class="Element601">When Selected Specifies MPFS File system will be used</li>
-</ol></li>
-<li value="11" class="Element600"><strong>File Name Length</strong>
-<ol class="Element631">
-<li value="1" class="Element601">Max file name length to be supported</li>
-</ol></li>
-<li value="12" class="Element600"><strong>Current Working Directory Scratch buffer length in Bytes</strong>
-<ol class="Element631">
-<li value="1" class="Element601">Buffer size to store the current directory path</li>
-</ol></li>
-<li value="13" class="Element600"><strong>Use MBR</strong>
-<ol class="Element631">
-<li value="1" class="Element601">Use Master Boot Record.</li>
-</ol></li>
-</ol></div>
+<li value="1" class="Element600">Connect a micro USB cable to the DEBUG port.</li>
+<li value="2" class="Element600">Build and Program the application using the MPLAB X IDE.</li>
+<li value="3" class="Element600">The LED indicates the success or failure.
+<ul class="Element631">
+<li class="Element601">The LED blinks on Success</li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+The following table provides the LED name: </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="82%">
+<div class="Element66">
+Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="18%">
+<div class="Element66">
+LED Name&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="82%">
+<div class="Element68">
+SAM C21N Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="18%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="82%">
+<div class="Element68">
+SAM E70 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="18%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00814.html" target="topic">File System Service Library Help</a> &gt; <a href="00807.html" target="topic">Configuring the Library</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00776.html" target="topic">SPI Driver Applications</a> &gt; Sync &gt; <a href="00803.html" target="topic">spi_self_loopback_multi_client</a> &gt; <a href="00807.html" target="topic">Running the Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -137,10 +96,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00817.html" target="topic">Previous</a> | <a href="00814.html" target="topic">Up</a> | <a href="00806.html" target="topic">Next</a></div>
+<a href="00805.html" target="topic">Previous</a> | <a href="00803.html" target="topic">Up</a> | <a href="00808.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS FS Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SPI Driver Sync spi_self_loopback_multi_client_freertos Running the Application Topic Title: Running the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

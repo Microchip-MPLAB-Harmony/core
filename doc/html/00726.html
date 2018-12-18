@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SDHC_DETECTION_LOGIC Enumeration</title>
+<title>Semaphores</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00408.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00409.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00726.html" target="topic">SDHC_DETECTION_LOGIC Enumeration</a></div>
+<a href="00707.html" target="topic">OSAL Library Help</a> &gt; <a href="00727.html" target="topic">Using the Library</a> &gt; <a href="00715.html" target="topic">How the Library Works</a> &gt; <a href="00726.html" target="topic">Semaphores</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00448.html" target="topic">Previous</a> | <a href="00409.html" target="topic">Up</a> | <a href="00421.html" target="topic">Next</a></div>
+<a href="00715.html" target="topic">Previous</a> | <a href="00715.html" target="topic">Up</a> | <a href="00722.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SDHC_DETECTION_LOGIC Topic Title: SDHC_DETECTION_LOGIC Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Semaphores Topic Title: Semaphores)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SDHC_DETECTION_LOGIC Enumeration</div>
+Semaphores</div>
 </div>
 </div>
 
@@ -48,53 +48,56 @@ SDHC_DETECTION_LOGIC Enumeration</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-This enum defines Card detection logic levels.</p></div>
+<p class="Element10" style="text-align: justify;">
+A semaphore can be used to lock a shared resource, although it is more normal to use a mutex for such an activity. Once obtained a semaphore should be posted back to enable it to be retaken at a later time or in another thread.</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* mainline code prior to OS start */</span></i>
+    <i><span style="color: #008000">/* declare a variable of type semaphore handle */</span></i>
+    OSAL_SEM_DECLARE(semSync);
+    <i><span style="color: #008000">/* create the semaphore */</span></i>
+    OSAL_SEM_Create(&amp;semSync, OSAL_SEM_TYPE_BINARY, 0, 0);
+
+
+<i><span style="color: #008000">/* thread one */</span></i>
+    ...
+    <i><span style="color: #008000">/* take the semaphore without waiting */</span></i>
+    OSAL_SEM_Pend(semSync, 0);
+    ... perform some actions
+    <i><span style="color: #008000">/* return the semaphore */</span></i>
+    OSAL_SEM_Post(semSync);
+    ...
+
+<i><span style="color: #008000">/* thread two must not execute until thread one has finished its operations*/</span></i>
+    ...
+    <i><span style="color: #008000">/* block on the semaphore */</span></i>
+    OSAL_SEM_Pend(semSync, OSAL_WAIT_FOREVER);
+    ... perform some more actions
+    <i><span style="color: #008000">/* return the semaphore */</span></i>
+    OSAL_SEM_Post(semSync);</pre></div></div>
+<p class="Element10" style="text-align: justify;">
+&nbsp;</p>
+<p class="Element10" style="text-align: justify;">
+A semaphore can be signalled multiple times and so provides a method for an ISR to release a thread waiting on it. Even though the blocked thread never returns the semaphore, because the asynchronous ISR repeatedly posts it the next time the thread wants to pend on the semaphore it will be available. By moving the majority of interrupt service processing from the ISR to a high priority thread the system response time is improved and the eventual processing can take advantage of OSAL features such as mutexes and queues which would normally be harder to implement inside the ISR. This technique is known as deferred interrupt processing.&nbsp;</p>
+<p class="Element10" style="text-align: justify;">
+&nbsp;</p>
+<p class="Element10" style="text-align: justify;">
+&nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* an example interrupt handler called from an ISR that performs task synchronization using a semaphore */</span></i>
+<strong><span style="color: #000080">void</span></strong> _ISRTasksRX(<strong><span style="color: #000080">void</span></strong>) <i><span style="color: #008000">/* N.B. pseudo-code ISR */</span></i>
+{
+    ...
+
+    _DRV_USART_InterruptSourceStatusClear(_DRV_USART_GET_INT_SRC_RX(_DRV_USART_OBJ(dObj, rxInterruptSource)));
+
+    <i><span style="color: #008000">/* Release the receive semaphore unblocking any tasks */</span></i>
+    OSAL_SEM_PostISR(_DRV_USART_OBJ(dObj, rxSemID));
+
+} <i><span style="color: #008000">/* DRV_USART_TasksRX */</span></i></pre></div></div>
 </div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">SDHC_DETECTION_LOGIC_ACTIVE_LOW</span></strong>,
-  <strong><span style="color: #000000">SDHC_DETECTION_LOGIC_ACTIVE_HIGH</span></strong>
-} SDHC_DETECTION_LOGIC;</pre></div></div>
-<a name="4D656D62657273"></a><div class="Element14">
-Members</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element272">
-<div class="TableDiv">
-<table cellspacing="0" class="Table4">
-<tr>
-<td class="Element260" valign="top" width="35%">
-<div class="Element261">
-Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
-<div class="Element265">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SDHC_DETECTION_LOGIC_ACTIVE_LOW&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-The media event is SD Card attach&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SDHC_DETECTION_LOGIC_ACTIVE_HIGH&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-The media event is SD Card detach&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00408.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00409.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00726.html" target="topic">SDHC_DETECTION_LOGIC Enumeration</a></div>
+<a href="00707.html" target="topic">OSAL Library Help</a> &gt; <a href="00727.html" target="topic">Using the Library</a> &gt; <a href="00715.html" target="topic">How the Library Works</a> &gt; <a href="00726.html" target="topic">Semaphores</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -105,10 +108,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00448.html" target="topic">Previous</a> | <a href="00409.html" target="topic">Up</a> | <a href="00421.html" target="topic">Next</a></div>
+<a href="00715.html" target="topic">Previous</a> | <a href="00715.html" target="topic">Up</a> | <a href="00722.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SDHC_DETECTION_LOGIC Topic Title: SDHC_DETECTION_LOGIC Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Semaphores Topic Title: Semaphores)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

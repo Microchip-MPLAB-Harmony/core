@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Using a Driver's System Interface</title>
+<title>Using Asynchronous and Callback Functions</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00051.html" target="topic">Driver Library Overview</a> &gt; <a href="00090.html" target="topic">Using a Driver's System Interface</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00050.html" target="topic">Driver Library Overview</a> &gt; <a href="00090.html" target="topic">Using Asynchronous and Callback Functions</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00085.html" target="topic">Previous</a> | <a href="00051.html" target="topic">Up</a> | <a href="00089.html" target="topic">Next</a></div>
+<a href="00091.html" target="topic">Previous</a> | <a href="00050.html" target="topic">Up</a> | <a href="00085.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Using a Driver%27s System Interface Topic Title: Using a Driver%27s System Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Using Asynchronous and Callback Functions Topic Title: Using Asynchronous and Callback Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Using a Driver's System Interface</div>
+Using Asynchronous and Callback Functions</div>
 </div>
 </div>
 
@@ -49,67 +49,71 @@ Using a Driver's System Interface</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-An MPLAB Harmony driver's system interface provides functions to initialize, deinitialize, and reinitialize an instance of a driver, as well as functions to maintain its state machine (and/or implement its Interrupt Service Routine) and check its current &quot;running&quot; status. Normally, as an MPLAB Harmony application developer or a developer of a &quot;client&quot; module that uses the driver, you will not call the system interface functions directly. The MHC generates calls to the system interface functions of any driver that is used in a project when it generates the system configuration files. Exactly which functions are called and exactly how they’re called depends on the configuration options selected in the project’s active configuration.&nbsp;</p>
+When a client calls a function that is part of an asynchronous interface, the function starts the request and returns immediately, without finishing the request. The client can then either poll a status function to determine when the request has finished (as demonstrated in the Using Driver Interface Functions section) or it can utilize a callback function to receive a notification from the driver when the request has finished. So, the difference between an asynchronous interface and a synchronous interface is that a synchronous interface may finish all or part of the request before returning, whereas an asynchronous interface will always return immediately having only started the request. Determination of when the request has completed is handled separately.&nbsp;</p>
 <p class="Element10">
-For example, when the box next to “Use Timer Driver?” is selected in the MHC Options tree (within <i>MPLAB Harmony &amp; Application Configuration &gt; Harmony Framework Configuration &gt; Drivers &gt; Timer</i>), as shown in the following figure, the MHC will generate all necessary definitions and function calls for the Timer Driver’s system interface.&nbsp;</p>
+The examples in this section reimplement some of the code from the example application described in the previous sections to demonstrate how to use asynchronous queuing and callback interfaces instead of the synchronous status-polling interface demonstrated in the Using Driver Interface Functions section. To use an asynchronous interface, we will first add a couple of new variables to our example application’s data structure, as shown by the following structure definition.&nbsp;</p>
 <p class="Element10">
-<strong>Example Timer Driver MHC Options</strong> &nbsp;</p><p class="Element10" style="text-align: center;">
-&nbsp;</p><p class="Element10">
-These configuration selections, which are set by default once &quot;Use Timer Driver&quot; is selected, will cause the MHC to generate the following definitions in the <span class="Element146">system_config.h</span> header file for the main project’s current configuration when <strong>Generate Code</strong> is clicked.&nbsp;</p>
-<p class="Element10">
-<strong>Example Driver Options in system_config.h</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/*** Timer Driver Configuration ***/</span></i>
-<strong><span style="color: #000080">#define</span></strong> DRV_TMR_INTERRUPT_MODE             <strong><span style="color: #000080">true</span></strong>
-<strong><span style="color: #000080">#define</span></strong> DRV_TMR_INSTANCES_NUMBER           1
-<strong><span style="color: #000080">#define</span></strong> DRV_TMR_CLIENTS_NUMBER             1
+<strong>Example Driver Application Header (app.h)</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong>
+{
+    APP_STATES              state;
+    DRV_HANDLE              usart;
+    <strong><span style="color: #000080">char</span></strong> *                  message;
+    DRV_USART_BUFFER_HANDLE messageHandle;
+    <strong><span style="color: #000080">bool</span></strong>                    messageDone;
 
-<i><span style="color: #008000">/*** Timer Driver 0 Configuration ***/</span></i>
-<strong><span style="color: #000080">#define</span></strong> DRV_TMR_PERIPHERAL_ID_IDX0          TMR_ID_1
-<strong><span style="color: #000080">#define</span></strong> DRV_TMR_INTERRUPT_SOURCE_IDX0       INT_SOURCE_TIMER_1
-<strong><span style="color: #000080">#define</span></strong> DRV_TMR_CLOCK_SOURCE_IDX0           DRV_TMR_CLKSOURCE_INTERNAL
-<strong><span style="color: #000080">#define</span></strong> DRV_TMR_PRESCALE_IDX0               TMR_PRESCALE_VALUE_256
-<strong><span style="color: #000080">#define</span></strong> DRV_TMR_OPERATION_MODE_IDX0         DRV_TMR_OPERATION_MODE_16_BIT
-<strong><span style="color: #000080">#define</span></strong> DRV_TMR_ASYNC_WRITE_ENABLE_IDX0     <strong><span style="color: #000080">false</span></strong>
-<strong><span style="color: #000080">#define</span></strong> DRV_TMR_POWER_STATE_IDX0            SYS_MODULE_POWER_RUN_FULL</pre></div></div>
+} APP_DATA;</pre></div></div>
 <p class="Element10">
-It is important to notice that the Driver Implementation selection in the MHC graphical interface does not correlate to a <span class="Element146">#define</span> statement in the <span class="Element146">system_config.h</span> file. Instead, it determines which implementation of the driver this configuration will use. Drivers may have more than one implementation. For example, most drivers have both static and dynamic implementations. A static implementation is usually the smaller of the two, but it is only capable of controlling one instance of a peripheral. An equivalent dynamic implementation will be larger, but it is capable of managing multiple instances of the same type of peripheral using a single instance of the source code (and thus, one instance of the object code). Some drivers may have additional implementations, each one optimized for a different usage. The Driver Implementation pull-down control in the MHC graphical interface allows you to select which implementation the current configuration will use. Normally, you can use only a single implementation of a driver in a given configuration. If you change driver implementations, it changes which implementation is used for all all instances of a peripheral.&nbsp;</p>
+The <span class="Element146">state</span>, <span class="Element146">usart</span>, and <span class="Element146">message</span> members of the APP_DATA structure are used in exactly the same way as they were in the previous examples. The <span class="Element146">messageHandle</span> variable will be explained later and the <span class="Element146">messageDone</span> variable is a Boolean flag used by the callback function to indicate to the application’s state machine that the message has been completely processed by the driver. Using these new mechanisms results in very minor changes to the application’s state machine, as shown in the following example <span class="Element146">APP_Initialize</span> and <span class="Element146">APP_Tasks</span> implementations.&nbsp;</p>
 <p class="Element10">
-The number of instances option, for example, Number of Timer Driver Instances, which correlates to the DRV_TMR_INSTANCES_NUMBER definition, determines how many instances of a static driver implementation will be generated or how many instances of a peripheral a dynamic driver implementation will manage. Drivers may also be designed to allow multiple different clients (applications or other modules) to share the same instance of a peripheral or resource. Therefore, a driver will have an option to determine a maximum number of simultaneous clients that it can support. For example, Number of Clients (DRV_TMR_CLIENTS_NUMBER) in the Timer Driver, which is fixed at one (1) and cannot be changed, which indicates that the Timer Driver is a single-client driver). The last implementation-specific configuration option in this example is the &quot;Interrupt Mode&quot; (DRV_TMR_INTERRUPT_MODE) setting. This option determines if the implementation is configured to run polled or interrupt driven (discussed further, in a following section). MPLAB Harmony drivers are generally designed to run most effectively in an interrupt-driven configuration, but they can also be run in a polled configuration to simplify debugging or to support task prioritization in an RTOS configuration.&nbsp;</p>
-<p class="Element10">
-The remaining configuration options are all instance-specific initialization options. For a dynamic implementation of a driver, these options are passed into the driver’s Initialize function through an &quot;init&quot; data structure, as shown in the following example.&nbsp;</p>
-<p class="Element10">
-<strong>Example Driver Init Structure in system_init.c</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">const</span></strong> DRV_TMR_INIT drvTmr0InitData =
+<strong>Example Driver Application State Machine (app.c)</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> APP_Initialize ( <strong><span style="color: #000080">void</span></strong> )
 {
-    .moduleInit.sys.powerState = DRV_TMR_POWER_STATE_IDX0,
-    .tmrId = DRV_TMR_PERIPHERAL_ID_IDX0,
-    .clockSource = DRV_TMR_CLOCK_SOURCE_IDX0,
-    .prescale = DRV_TMR_PRESCALE_IDX0,
-    .mode = DRV_TMR_OPERATION_MODE_16_BIT,
-    .interruptSource = DRV_TMR_INTERRUPT_SOURCE_IDX0,
-    .asyncWriteEnable = <strong><span style="color: #000080">false</span></strong>,
-};</pre></div></div>
-<p class="Element10">
-The exact meaning and usage of these options are described in the <strong>Configuring the Library</strong> section in the Help documentation for each library. The live MHC Help windowpane displays the associated help section whenever you select one of these options in the options tree.&nbsp;</p>
-<p class="Element10">
-There is one instance-specific initialization option of which you should take special notice: the peripheral ID option (.tmrId, in the Timer Driver example shown). This initialization option associates the driver instance (a zero-based index number) with the peripheral-hardware instance number, as defined by the data sheet for the processor in use. For a dynamic driver, this association is actually made when the driver’s initialize function is called and passes a pointer to the init data structure, as shown in the following code example.&nbsp;</p>
-<p class="Element10">
-<strong>Example Driver Initialize Call in system_init.c</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* Initialize Drivers */</span></i>
-sysObj.drvTmr0 = DRV_TMR_Initialize(DRV_TMR_INDEX_0, (SYS_MODULE_INIT *)&amp;drvTmr0InitData);</pre></div></div>
-<p class="Element10">
-In this example, the driver index (DRV_TMR_INDEX_0) is defined as a numeric constant with a value of zero (0). This line of code associates driver instance 0 with hardware timer instance 1 by calling the DRV_TMR_Initialize function from the system initialization code and passing a pointer to the <span class="Element146">drvTmr0InitData</span> structure. As shown earlier, the Timer Driver’s init structure contains the value TMR_ID_1 (defined by the timer peripheral library), in its <span class="Element146">.tmrId</span> data member.&nbsp;</p>
-<p class="Element10">
-In a static implementation, the driver peripheral ID macro (DRV_TMR_PERIPHERAL_ID_IDX0) defined in <span class="Element146">system_config.h</span> is hard-coded into the driver’s instance-specific initialization function when it is generated by the MHC, instead of defining an &quot;init&quot; structure, as shown in the following example; however, the effect is the same.&nbsp;</p>
-<p class="Element10">
-<strong>Example Static Driver Initialize Function</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> DRV_TMR0_Initialize(<strong><span style="color: #000080">void</span></strong>)
+    appData.state           = APP_STATE_SETUP;
+    appData.usart           = DRV_HANDLE_INVALID;
+    appData.message         = APP_MESSAGE;
+    appData.messageHandle   = DRV_USART_BUFFER_HANDLE_INVALID;
+}
+
+<strong><span style="color: #000080">void</span></strong> APP_Tasks ( <strong><span style="color: #000080">void</span></strong> )
 {
-    PLIB_TMR_Stop(DRV_TMR_PERIPHERAL_ID_IDX0);
-    PLIB_TMR_ClockSourceSelect(DRV_TMR_PERIPHERAL_ID_IDX0, DRV_TMR_CLOCK_SOURCE_IDX0);
-    PLIB_TMR_PrescaleSelect(DRV_TMR_PERIPHERAL_ID_IDX0, DRV_TMR_PRESCALE_IDX0);
-    PLIB_TMR_Mode16BitEnable(DRV_TMR_PERIPHERAL_ID_IDX0);
-    PLIB_TMR_Counter16BitClear(DRV_TMR_PERIPHERAL_ID_IDX0);
-    PLIB_TMR_Period16BitSet(DRV_TMR_PERIPHERAL_ID_IDX0, 0);
+    <strong><span style="color: #000080">switch</span></strong> ( appData.state )
+    {
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_SETUP:
+        {
+            <strong><span style="color: #000080">if</span></strong> (SetupApplication() == <strong><span style="color: #000080">true</span></strong>)
+            {
+                appData.state = APP_STATE_MESSAGE_SEND;
+            }
+            <strong><span style="color: #000080">break</span></strong>;
+        }
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_MESSAGE_SEND:
+        {
+            <strong><span style="color: #000080">if</span></strong> (MessageSend() == <strong><span style="color: #000080">true</span></strong>)
+            {
+                appData.state = APP_STATE_MESSAGE_WAIT;
+            }
+            <strong><span style="color: #000080">break</span></strong>;
+        }
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_MESSAGE_WAIT:
+        {
+            <strong><span style="color: #000080">if</span></strong> (appData.messageDone)
+            {
+                DRV_USART_Close(appData.usart);
+                appData.state = APP_STATE_DONE;
+            }
+            <strong><span style="color: #000080">break</span></strong>;
+        }
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_DONE:
+        <strong><span style="color: #000080">default</span></strong>:
+        {
+            <strong><span style="color: #000080">break</span></strong>;
+        }
+    }
 }</pre></div></div>
 <p class="Element10">
-The DRV_TMR0_Initialize function (with an instance number ‘0’ in the name) in the previous example, is a static version of the DRV_TMR_Initialize system interface function. The call to this function is created by the MHC when it generates the system code. Therefore, that call is always generated with the correct name and with the correct instance number in the name. However, when calling client interface functions (open, close, read, write, etc.) from your own applications, you <i>should not</i> use an instance number in the function name. Dynamic drivers implement the client interface functions without any index numbers in their names. Instead, they use an index or handle parameter to identify the instance of the driver with which to interact. Also, when using static implementations of the drivers, the dynamic API functions are mapped (using the index or handle parameter) to the appropriate static function with the index number in its name. Therefore, calling the dynamic API function makes your application always portable, using whichever driver instance is configured to the index value with which you open the driver. </p><div class="Element63">
+As described previously, the <span class="Element146">SetupApplication</span> state transition function opens the USART driver and the <span class="Element146">MessageSend</span> function sends the message to it. However, there is no need for a <span class="Element146">MessageComplete</span> state transition function. Instead, the application must implement a callback function that will set the <span class="Element146">appData.messageDone</span> Boolean flag when the driver calls the application &quot;back&quot; to indicate that the message has been sent. </p><div class="Element63">
 <div class="TableDiv">
 <table cellspacing="0" class="Table2">
 <tr>
@@ -117,65 +121,101 @@ The DRV_TMR0_Initialize function (with an instance number ‘0’ in the name) i
 <div class="Element68">
 <img src="Note Icon.png" border="0" alt="" title=""><strong> Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
 <div class="Element68">
-Calling the static versions of the interface function (with the index numbers in their names) is not prohibited. However, it will limit the portability of your application.&nbsp;</div></td></tr></table></div></div>
+The <span class="Element146">AppInitialize</span> function initializes the <span class="Element146">state</span>, <span class="Element146">usart</span>, and <span class="Element146">message</span> members of the <span class="Element146">appData</span> structure as previously described. And, it also initializes the <span class="Element146">messageHandle</span> member with an invalid value to indicate that the message has not yet been sent. However, it does not initialize the <span class="Element146">messageDone</span> flag because it is more appropriate to clear the flag elsewhere, immediately before calling the driver to send the message.&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
-Understanding this mechanism is critical to understanding how to access the desired peripheral hardware instance. Therefore, it is worth looking at a few demonstration applications to see how it is used. Also, refer to <i>Volume IV: MPLAB Harmony Development &gt; Key Concepts &gt; <span class="Element145">Key One-to-Many Relationships</span></i> for additional information on the concepts of having multiple implementations, instances, and clients.&nbsp;</p>
+To use a callback mechanism requires the client to implement and register a callback function. A client must register this function after opening the driver, but prior to calling the driver to initiate the operation. This is often done in the same state transition that opens the driver, as shown in the following <span class="Element146">SetupApplication</span> example.&nbsp;</p>
 <p class="Element10">
-Something else worth noting about the previous example call to the Timer Driver’s initialize functions is that when using a dynamic implementation, it returns a value called an “object handle”. In the previous example, that object handle was stored in a system configuration object data member (<span class="Element146">sysObj.drvTmr0</span>). Object handles returned by module initialization functions are stored in a system configuration structure normally named <span class="Element146">sysObj</span>. The definition of this structure is generated in the <span class="Element146">system_definitions.h</span> header file the MHC, as shown in the following example.&nbsp;</p>
-<p class="Element10">
-<strong>Example System Object Data Structure Definition in system_definitions.h</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong>
+<strong>Example Registering a Driver Callback Function</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">static</span></strong> <strong><span style="color: #000080">void</span></strong> BufferDone ( DRV_USART_BUFFER_EVENT  event,
+                         DRV_USART_BUFFER_HANDLE bufferHandle,
+                         uintptr_t context )
 {
-    SYS_MODULE_OBJ  sysDevcon;
-    SYS_MODULE_OBJ  drvTmr0;
+    APP_DATA *pAppData = (APP_DATA *)context;
 
-} SYSTEM_OBJECTS;
+    <strong><span style="color: #000080">if</span></strong> (event == DRV_USART_BUFFER_EVENT_COMPLETE)
+    {
+        <strong><span style="color: #000080">if</span></strong> (bufferHandle == pAppData-&gt;messageHandle)
+        {
+            pAppData-&gt;messageDone = <strong><span style="color: #000080">true</span></strong>;
+            <strong><span style="color: #000080">return</span></strong>;
+        }
+    }
 
-<strong><span style="color: #000080">extern</span></strong> SYSTEM_OBJECTS sysObj;</pre></div></div>
-<p class="Element10">
-As shown in the previous example, this structure is “extern’d” for use by the other system files. It should not be used by application or library files, only by the system files for a single configuration. The <span class="Element146">sysObj</span> structure is defined (and allocated in memory) by the <span class="Element146">system_init.c</span> file, as shown in the following example.&nbsp;</p>
-<p class="Element10">
-<strong>Example System sysObj Definition in system_init.c</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* Structure to hold the object handles for the modules in the system. */</span></i>
-SYSTEM_OBJECTS sysObj;</pre></div></div>
-<p class="Element10">
-For this discussion, you can ignore the <span class="Element146">sysDevcon</span> member of the SYSTEM_OBJECTS structure as it will contain the handle for a different library. The important thing to note is that the <span class="Element146">drvTmr0</span> member must be passed into the Timer Driver’s other system interface functions so that the driver has access to the data it needs manage that specific instance of itself (and the associated peripheral hardware), as shown by the following timer ISR example.&nbsp;</p>
-<p class="Element10">
-<strong>Example Timer ISR in system_interrupt.c</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> __ISR(_TIMER_1_VECTOR, ipl1AUTO) IntHandlerDrvTmrInstance0(<strong><span style="color: #000080">void</span></strong>)
+    <i><span style="color: #008000">/* Error */</span></i>
+    <strong><span style="color: #000080">return</span></strong>;
+}
+
+
+<strong><span style="color: #000080">static</span></strong> <strong><span style="color: #000080">bool</span></strong> SetupApplication ( <strong><span style="color: #000080">void</span></strong> )
 {
-    DRV_TMR_Tasks(sysObj.drvTmr0);
+    <strong><span style="color: #000080">if</span></strong> (appData.usart == DRV_HANDLE_INVALID)
+    {
+        appData.usart = DRV_USART_Open(APP_USART_DRIVER_INDEX,
+                                       (DRV_IO_INTENT_READWRITE|DRV_IO_INTENT_NONBLOCKING));
+    }
+
+    <strong><span style="color: #000080">if</span></strong> (appData.usart == DRV_HANDLE_INVALID)
+    {
+        <strong><span style="color: #000080">return</span></strong> <strong><span style="color: #000080">false</span></strong>;
+    }
+
+    DRV_USART_BufferEventHandlerSet(appData.usart, BufferDone, (uintptr_t)&amp;appData);
+    <strong><span style="color: #000080">return</span></strong> <strong><span style="color: #000080">true</span></strong>;
 }</pre></div></div>
 <p class="Element10">
-In this ISR example, there are three important things to notice.&nbsp;</p>
+This code block implements both the <span class="Element146">BufferDone</span> callback function and the application’s <span class="Element146">SetupApplication</span> state transition function. After successfully opening the driver, the <span class="Element146">SetupApplication</span> function calls the <a href="00557.html" target="topic">DRV_USART_BufferEventHandlerSet</a> function and passes it the driver handle (<span class="Element146">appData.usart</span>) once it is valid, along with the address of the <span class="Element146">BufferDone</span> callback function and a context value.&nbsp;</p>
 <p class="Element10">
-First, the ISR function itself is associated with a specific vector through the <span class="Element146">__ISR</span> macro. Different interrupt vectors are associated with different peripheral instances and interrupts on different processors. That is why MPLAB Harmony ISR vector functions are generated in the configuration-specific <span class="Element146">system_interrupt.c</span> file instead of being part of the driver library itself.&nbsp;</p>
+The context value can be anything that will fit in an integer large enough to hold a pointer (it is a <span class="Element146">uintptr_t</span> variable). However, this parameter is most commonly used to pass a pointer to the caller’s own data structure as demonstrated here (even though it is not strictly necessary). This is done primarily to support multi-instance clients. (Refer to <i>Volume IV: MPLAB Harmony Development &gt; <span class="Element145">Key Concepts</span></i> for information on multiple instances.) A multi-instance client is designed to manage multiple instances of itself by allocating multiple instances of its own data structure, but only one instance of its object code. Passing a pointer to the data structure in the context variable identifies the specific instance that was used when calling the driver.&nbsp;</p>
 <p class="Element10">
-Second, the DRV_TMR_Tasks function implements the actual ISR logic of the TMR driver. Most MPLAB Harmony drivers are designed to run interrupt driven and their tasks functions implement the software state machine logic necessary to keep the driver’s interrupt sequence moving from one interrupt to the next until the driver’s task is complete.&nbsp;</p>
+Once the callback function has been registered with the driver, the application can transition to a state where it attempts to initiate an asynchronous operation. The following example demonstrates the use of a buffer-queuing write function to transmit a message over the USART.&nbsp;</p>
 <p class="Element10">
-Third, the <span class="Element146">sysObj.drvTmr0</span> object handle’s value is passed into the driver’s tasks function so that it has access to the data it requires to control instance zero (0) of the Timer Driver and its associated hardware instance, which must match the ISR vector instance from which it is called.&nbsp;</p>
-<p class="Element10">
-By default, the Timer Driver is configured to run interrupt-driven, as shown previously. This is not necessarily true for all drivers. However, most drivers (including the Timer Driver) can run in a Polled mode by simply changing the configuration settings. For example, by clearing the &quot;Interrupt Mode&quot; option in the MHC configuration tree and regenerating the configuration code, the previous example ISR will be removed from <span class="Element146">system_interrupt.c</span> and a call to the Timer Driver’s tasks function will be added to the polled system tasks function, as shown by the following <span class="Element146">system_tasks.c</span> example code.&nbsp;</p>
-<p class="Element10">
-<strong>Example Call to Timer Tasks from system_tasks.c</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> SYS_Tasks ( <strong><span style="color: #000080">void</span></strong> )
+<strong>Example Queuing a Buffer to a Driver</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">static</span></strong> <strong><span style="color: #000080">bool</span></strong> MessageSend ( <strong><span style="color: #000080">void</span></strong> )
 {
-    <i><span style="color: #008000">/* Maintain system services */</span></i>
-    SYS_DEVCON_Tasks(sysObj.sysDevcon);
+    appData.messageDone = <strong><span style="color: #000080">false</span></strong>;
+    DRV_USART_BufferAddWrite(appData.usart, &amp;appData.messageHandle,
+                             appData.message, strlen(appData.message));
 
-    <i><span style="color: #008000">/* Maintain Device Drivers */</span></i>
-    DRV_TMR_Tasks(sysObj.drvTmr0);
+    <strong><span style="color: #000080">if</span></strong> (appData.messageHandle == DRV_USART_BUFFER_HANDLE_INVALID)
+    {
+        <strong><span style="color: #000080">return</span></strong> <strong><span style="color: #000080">false</span></strong>;
+    }
 
-    <i><span style="color: #008000">/* Maintain the application's state machine. */</span></i>
-    APP_Tasks();
+    <strong><span style="color: #000080">return</span></strong> <strong><span style="color: #000080">true</span></strong>;
 }</pre></div></div>
 <p class="Element10">
-In this example, the Timer Driver’s tasks function is called from the polled loop in main by the SYS_Tasks function. The driver’s tasks must still receive the <span class="Element146">sysObj.drvTmr0</span> object handle value and its logic operates in exactly the same way, with one exception. Because the driver is now polled, the DRV_TMR_INTERRUPT_MODE option is now defined as false. This causes the driver to be built so that it does not enable its own interrupt, allowing it to run in the polled loop and to not require an ISR.&nbsp;</p>
+Before attempting to send the message, this implementation of the <span class="Element146">MessageSend</span> state transition function clears the <span class="Element146">appData.messageDone</span> flag so it can detect when the message has completed. Then, it calls the DRV_USART_BufferAddWrite function to queue up the buffer containing the message to be transmitted by the USART driver. To that function, it passes the USART driver handle (<span class="Element146">appData.usart</span>), the address of the <span class="Element146">appData.messageHandle</span> variable, the pointer to the message buffer (<span class="Element146">appData.message</span>), and the size of the buffer in bytes as calculated by the <span class="Element146">strlen</span> function. The USART driver then adds this buffer to its internal queue of buffers to transmit and provides a handle to the caller that identifies that buffer’s place in the queue by storing it to the <span class="Element146">appData.messageHandle</span> variable.&nbsp;</p>
 <p class="Element10">
-For additional information on the device driver system interface, refer to <i>Volume IV: MPLAB Harmony Development &gt; MPLAB Harmony Driver Development Guide &gt; <span class="Element145">System Interface</span></i> and to the documentation for the individual system interface functions for the driver in question.</p></div>
+If, for some reason, the driver is unable to successfully queue up the buffer (perhaps the queue is full), it will assign a value of <a href="00555.html" target="topic">DRV_USART_BUFFER_HANDLE_INVALID</a> to the <span class="Element146">appData.messageHandle</span> variable. If that happens, the <span class="Element146">MessageSend</span> function returns false and the application will stay in the same state and retry the operation again next time its tasks function is called. But, if the operation succeeds, the application advances to the next state.&nbsp;</p>
+<p class="Element10">
+Once the driver completes the operation, it will call the client’s callback function. As shown in the <span class="Element146">BufferDone</span> code example, the driver passes it an enumeration value that identifies which event has just occurred (the <span class="Element146">DRV_USART_BUFFER_EVENT_COMPLETE</span> value) in the event parameter. It also passes it the handle of the buffer that has just completed (<span class="Element146">bufferHandle</span>). The client can use the <span class="Element146">bufferHandle</span> value to verify that it matches the value stored in the <span class="Element146">appData.bufferHandle</span> variable to uniquely identify an individual buffer. This is very useful when a client queues up multiple buffers at the same, which is being shown in this example as a demonstration.&nbsp;</p>
+<p class="Element10">
+The context parameter to the <span class="Element146">BufferDone</span> function contains a pointer to the application’s global (<span class="Element146">appData</span>) data structure. (This is the same value that was passed in the context parameter to the <a href="00557.html" target="topic">DRV_USART_BufferEventHandlerSet</a> function.) While not strictly necessary in this example, it is very useful for multi-instance clients such as dynamic device drivers and middleware to identify which instance of the client requested the operation. The callback function simply casts the context value back into a pointer to the client’s own data structure’s data type (<span class="Element146">APP_DATA</span> in this example) and uses it to access the structure members. (Again, please refer to <i>Volume IV: MPLAB Harmony Development &gt; <span class="Element145">Key Concepts</span></i> for information on multiple instances.)&nbsp;</p>
+<p class="Element10">
+The callback function uses the <span class="Element146">event</span> parameter to identify why the callback occurred. If it was called to indicate that the buffer has been processed, the <span class="Element146">event</span> parameter will contain the value DRV_USART_BUFFER_EVENT_COMPLETE. If it contains any other value an error has occurred. The <span class="Element146">BufferDone</span> callback also checks to verify that the buffer that completed was the same buffer that it queued up by comparing the <span class="Element146">bufferHandle</span> value it was passed with the value assigned to the <span class="Element146">appData.messageHandle</span> variable when the application called DRV_USART_BufferAddWrite. It accesses the message handle value it saved using the <span class="Element146">pAppData</span> pointer given to it through the context parameter just. Once it has verified that the buffer it queued has completed, it sets the <span class="Element146">pAppData-&gt;messageDone</span> flag to notify the application’s state machine and execution returns to the driver. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="Note Icon.png" border="0" alt="" title=""><strong> Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+It is important to understand that the <span class="Element146">MessageDone</span> callback function executes in the context of the driver, not the application. Depending on how the system is configured, this means that it may be called from within the driver’s ISR context or from another thread context if using a RTOS.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+In this example, the <span class="Element146">APP_Tasks</span> application state machine function is essentially the same as the state machine for the synchronous example. The only difference is that when the application is in the <span class="Element146">APP_STATE_MESSAGE_WAIT</span> state, it checks the <span class="Element146">appData.messageDone</span> flag to determine when to close the driver and transition to the <span class="Element146">APP_STATE_DONE</span> state instead of calling a transition function. (It could still do this in a state transition function, but it was done differently in this example to emphasize the concept.)&nbsp;</p>
+<p class="Element10">
+The advantage of using an asynchronous interface over a synchronous one is that it allows the client’s state machine to continue on, potentially doing something else while the requested operation completes. Whereas a synchronous interface has the possibility of blocking the client’s state machine until the operation finishes (when used in a RTOS configuration). An asynchronous interface will always return immediately without blocking (whether a RTOS is used or not). Because of this, most asynchronous interfaces will also allow queuing of more than one operation at a time. This allows client applications to keep a driver continuously busy by keeping the driver’s queue full, maximizing data throughput or operation speed. By contrast, a synchronous interface requires one operation to complete before the synchronous function can be called again to cause the next one to begin.&nbsp;</p>
+<p class="Element10">
+The cost of this capability is that an asynchronous interface has the added complexity of a callback function (if the client cares when the operation finishes) and the fact that a callback function may be called from within the driver’s ISR context, depending on how the driver was designed and configured. This fact generally restricts what can be done within the callback function. For example, it is usually a bad idea to perform lengthy processing within a callback function as it will block all lower priority ISRs (as well as the main loop or other threads) while that processing occurs. Also, it is usually best to not call back into the driver’s own interface functions unless those functions are documented as being safe to call from within the driver’s callback context. Many interface functions (particularly data transfer and data queuing functions) must use semaphores or mutexes to protect their internal data structures in RTOS environments and those constructs cannot be used from within an ISR.&nbsp;</p>
+<p class="Element10">
+It is also important to not make non-atomic (read-modify-write) accesses to the client’s own state data from within the callback function, as the client cannot protect itself against an interrupt that is owned by the driver. That is why a separate Boolean flag variable is commonly used to indicate to the client that the callback has occurred. Most other processing should occur in the client’s state machine. It is usually best to simply capture the event and return as quickly as possible from the callback function and let the application’s state machine tasks function perform any lengthy processing or calling back into the driver.&nbsp;</p>
+<p class="Element10">
+Please refer to <i><span class="Element145">Volume IV: MPLAB Harmony Development</span></i> for additional information.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00051.html" target="topic">Driver Library Overview</a> &gt; <a href="00090.html" target="topic">Using a Driver's System Interface</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00050.html" target="topic">Driver Library Overview</a> &gt; <a href="00090.html" target="topic">Using Asynchronous and Callback Functions</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -186,10 +226,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00085.html" target="topic">Previous</a> | <a href="00051.html" target="topic">Up</a> | <a href="00089.html" target="topic">Next</a></div>
+<a href="00091.html" target="topic">Previous</a> | <a href="00050.html" target="topic">Up</a> | <a href="00085.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Using a Driver%27s System Interface Topic Title: Using a Driver%27s System Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Using Asynchronous and Callback Functions Topic Title: Using Asynchronous and Callback Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

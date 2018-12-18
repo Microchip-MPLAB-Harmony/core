@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SDHC_IsWriteProtected Function</title>
+<title>DRV_SDHC_Deinitialize Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00408.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00409.html" target="topic">Library Interface</a> &gt; d) Media Interface Functions &gt; <a href="00445.html" target="topic">DRV_SDHC_IsWriteProtected Function</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00149.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00150.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00445.html" target="topic">DRV_SDHC_Deinitialize Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00444.html" target="topic">Previous</a> | <a href="00409.html" target="topic">Up</a> | <a href="00416.html" target="topic">Next</a></div>
+<a href="00464.html" target="topic">Previous</a> | <a href="00150.html" target="topic">Up</a> | <a href="00469.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_IsWriteProtected@DRV_HANDLE Topic Title: DRV_SDHC_IsWriteProtected Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_Deinitialize@SYS_MODULE_OBJ Topic Title: DRV_SDHC_Deinitialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SDHC_IsWriteProtected Function</div>
+DRV_SDHC_Deinitialize Function</div>
 </div>
 </div>
 
@@ -49,19 +49,19 @@ DRV_SDHC_IsWriteProtected Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function returns the physical attach status of the SDHC. This function returns true if the SD Card is write protected otherwise it returns false.</p></div>
+Deinitializes the specified instance of the SD Card driver module, disabling its operation (and any hardware). Invalidates all the internal data.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_SDHC_IsWriteProtected</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00266.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_SDHC_Deinitialize</span></strong>(
+    <a href="01265.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">object</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="00446.html" target="topic">DRV_SDHC_Open</a>() routine must have been called to obtain a valid opened device handle.</p></div>
+Function <a href="00460.html" target="topic">DRV_SDHC_Initialize</a> must have been called before calling this routine and a valid <a href="01265.html" target="topic">SYS_MODULE_OBJ</a> must have been returned.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -78,9 +78,9 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+object&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open function&nbsp;</div></td></tr></table></div></div>
+Driver object handle, returned from the <a href="00460.html" target="topic">DRV_SDHC_Initialize</a> routine.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,23 +88,32 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Returns true if the attached SD Card is write protected. Returns false if the handle is not valid, or if the SD Card is not write protected.</p></div>
+None.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+Once the Initialize operation has been called, the Deinitialize operation must be called before the Initialize operation can be called again.&nbsp;</p>
+<p class="Element10">
+This routine will NEVER block waiting for hardware. If the operation requires time to allow the hardware to complete, this will be reported by the <a href="00468.html" target="topic">DRV_SDHC_Status</a> operation. The system has to use <a href="00468.html" target="topic">DRV_SDHC_Status</a> to check if the de-initialization is complete.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-<strong><span style="color: #000080">bool</span></strong> isWriteProtected;
-isWriteProtected = DRV_SDHC_IsWriteProtected(drvSDHCHandle);
-</pre></div></div>
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01265.html" target="topic">SYS_MODULE_OBJ</a>      objectHandle;     <i><span style="color: #008000">//  Returned from DRV_SDHC_Initialize</span></i>
+<a href="01272.html" target="topic">SYS_STATUS</a>          status;
+
+DRV_SDHC_Deinitialize(objectHandle);
+
+status = <a href="00468.html" target="topic">DRV_SDHC_Status</a>(objectHandle);
+<strong><span style="color: #000080">if</span></strong> (SYS_MODULE_UNINITIALIZED == status)
+{
+    <i><span style="color: #008000">// Check again later if you need to know</span></i>
+    <i><span style="color: #008000">// when the driver is deinitialized.</span></i>
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -112,7 +121,7 @@ isWriteProtected = DRV_SDHC_IsWriteProtected(drvSDHCHandle);
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00408.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00409.html" target="topic">Library Interface</a> &gt; d) Media Interface Functions &gt; <a href="00445.html" target="topic">DRV_SDHC_IsWriteProtected Function</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00149.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00150.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00445.html" target="topic">DRV_SDHC_Deinitialize Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -123,10 +132,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00444.html" target="topic">Previous</a> | <a href="00409.html" target="topic">Up</a> | <a href="00416.html" target="topic">Next</a></div>
+<a href="00464.html" target="topic">Previous</a> | <a href="00150.html" target="topic">Up</a> | <a href="00469.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_IsWriteProtected@DRV_HANDLE Topic Title: DRV_SDHC_IsWriteProtected Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_Deinitialize@SYS_MODULE_OBJ Topic Title: DRV_SDHC_Deinitialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

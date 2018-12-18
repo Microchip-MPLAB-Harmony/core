@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Asynchronous Mode</title>
+<title>Abstraction Model</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00755.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00152.html" target="topic">Using the Library</a> &gt; <a href="00140.html" target="topic">Asynchronous Mode</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00149.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00153.html" target="topic">Using the Library</a> &gt; <a href="00140.html" target="topic">Abstraction Model</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00139.html" target="topic">Previous</a> | <a href="00152.html" target="topic">Up</a> | <a href="00150.html" target="topic">Next</a></div>
+<a href="00153.html" target="topic">Previous</a> | <a href="00153.html" target="topic">Up</a> | <a href="00147.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SPI Asynchronous mode Topic Title: Asynchronous Mode)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDHC Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Asynchronous Mode</div>
+Abstraction Model</div>
 </div>
 </div>
 
@@ -49,119 +49,26 @@ Asynchronous Mode</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Asynchronous mode of SPI driver allows user to use the library in non-blocking manner. This mode is supported in RTOS and baremetal both the environments. Transfer APIs of this mode return a valid handle. Application can check the data transfer completion status in two ways:</p>
-<ol class="Element630">
-<li value="1" class="Element600"><strong>Callback</strong>: Callback can be registered with the driver using <a href="00469.html" target="topic">DRV_SPI_TransferEventHandlerSet</a> API and it needs to be registered prior to calling the transfer API . Here is the example of SPI write using callback:</li>
-</ol><p class="Element10">
-&nbsp;</p>
-<div class="Element13"><div class="Element12"><pre class="Element12">    DRV_SPI_TRANSFER_HANDLE transferHandle1;
-    DRV_SPI_TRANSFER_SETUP  setup;
-    DRV_HANDLE              drvSPIHandle;
-    uint8_t                 writeData[] = &quot;SPI Driver Async Mode Callback&quot;;
-
-    <strong><span style="color: #000080">void</span></strong> SpiEventHandler (DRV_SPI_TRANSFER_EVENT event, DRV_SPI_TRANSFER_HANDLE transferHandle, uintptr_t context )
-    {
-        <strong><span style="color: #000080">if</span></strong> (event == DRV_SPI_TRANSFER_EVENT_COMPLETE)
-        {
-            <strong><span style="color: #000080">if</span></strong>(transferHandle == transferHandle1)
-            {
-                <i><span style="color: #008000">// transfer1 is completed</span></i>
-            }
-        }
-        <strong><span style="color: #000080">else</span></strong>
-        {
-            <i><span style="color: #008000">// transfer1 had error.</span></i>
-        }
-    }
-
-    <i><span style="color: #008000">// SPI Driver Initialization is done in MHC generated code</span></i>
-
-    <i><span style="color: #008000">/* Setup structure for SPI transfer */</span></i>
-    setup.baudRateInHz = 600000;
-    setup.clockPhase = DRV_SPI_CLOCK_PHASE_VALID_LEADING_EDGE;
-    setup.clockPolarity = DRV_SPI_CLOCK_POLARITY_IDLE_LOW;
-    setup.dataBits = DRV_SPI_DATA_BITS_8;
-    setup.chipSelect = SYS_PORT_PIN_PD16;
-    setup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;
-
-    <i><span style="color: #008000">/* Open the SPI Driver*/</span></i>
-    drvSPIHandle = DRV_SPI_Open( DRV_SPI_INDEX_0, DRV_IO_INTENT_READWRITE);
-
-    <strong><span style="color: #000080">if</span></strong>(drvSPIHandle != DRV_HANDLE_INVALID)
-    {
-        <strong><span style="color: #000080">if</span></strong>(DRV_SPI_TransferSetup(drvSPIHandle, &amp;setup) == <strong><span style="color: #000080">true</span></strong>)
-        {
-            <i><span style="color: #008000">// setup is successful</span></i>
-        }
-        DRV_SPI_TransferEventHandlerSet(drvSPIHandle, SpiEventHandler, (uintptr_t)NULL);
-    }
-
-    DRV_SPI_WriteTransferAdd(drvSPIHandle, &amp;writeData, <strong><span style="color: #000080">sizeof</span></strong>(writeData), &amp;transferHandle1 );
-    <strong><span style="color: #000080">if</span></strong>(transferHandle1 == DRV_SPI_TRANSFER_HANDLE_INVALID)
-    {
-        <i><span style="color: #008000">/* transfer request was not successful, try again */</span></i>
-    }
-    <strong><span style="color: #000080">else</span></strong>
-    {
-        <i><span style="color: #008000">/* transfer request was successful, callback function
-        &quot;SpiEventHandler&quot; will be called when transfer is completed. */</span></i>
-    }</pre></div></div>
+The SDHC driver provides abstraction to communicate with SD-Card through the HSMCI Interface.&nbsp;</p>
 <p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="drv_sdhc_abstraction_model.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<strong>SDHC Driver Block Diagram</strong>&nbsp;</p><p class="Element10">
 &nbsp;</p>
-
-<ol class="Element630">
-<li value="2" class="Element600"><strong>Polling</strong>: Data transfer status polling can be done using <a href="00471.html" target="topic">DRV_SPI_TransferStatusGet</a> API. Here is the example of SPI write using status polling:</li>
-</ol><p class="Element10">
-&nbsp;</p>
-<div class="Element13"><div class="Element12"><pre class="Element12">    DRV_SPI_TRANSFER_HANDLE transferHandle1;
-    DRV_SPI_TRANSFER_SETUP  setup;
-    DRV_HANDLE              drvSPIHandle;
-    uint8_t                 writeData[] = &quot;SPI Driver Async Mode Polling&quot;;
-
-    <i><span style="color: #008000">// SPI Driver Initialization is done in MHC generated code</span></i>
-
-    <i><span style="color: #008000">/* Setup structure for SPI transfer */</span></i>
-    setup.baudRateInHz = 600000;
-    setup.clockPhase = DRV_SPI_CLOCK_PHASE_VALID_LEADING_EDGE;
-    setup.clockPolarity = DRV_SPI_CLOCK_POLARITY_IDLE_LOW;
-    setup.dataBits = DRV_SPI_DATA_BITS_8;
-    setup.chipSelect = SYS_PORT_PIN_PD16;
-    setup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;
-
-    <i><span style="color: #008000">/* Open the SPI Driver*/</span></i>
-    drvSPIHandle = DRV_SPI_Open( DRV_SPI_INDEX_0, DRV_IO_INTENT_READWRITE);
-
-    <strong><span style="color: #000080">if</span></strong>(drvSPIHandle != DRV_HANDLE_INVALID)
-    {
-        <strong><span style="color: #000080">if</span></strong>(DRV_SPI_TransferSetup(drvSPIHandle, &amp;setup) == <strong><span style="color: #000080">true</span></strong>)
-        {
-            <i><span style="color: #008000">// setup is successful</span></i>
-        }
-    }
-
-    DRV_SPI_WriteTransferAdd(drvSPIHandle, &amp;writeData, <strong><span style="color: #000080">sizeof</span></strong>(writeData), &amp;transferHandle1 );
-    <strong><span style="color: #000080">if</span></strong>(transferHandle1 == DRV_SPI_TRANSFER_HANDLE_INVALID)
-    {
-        <i><span style="color: #008000">/* transfer request was not successful, try again */</span></i>
-    }
-    <strong><span style="color: #000080">else</span></strong>
-    {
-        <i><span style="color: #008000">/* transfer request was successful, transfer status can be
-        polled anytime using DRV_SPI_TransferStatusGet API */</span></i>
-    }
-
-    <strong><span style="color: #000080">if</span></strong> (DRV_SPI_TransferStatusGet(transferHandle1) == DRV_SPI_TRANSFER_EVENT_COMPLETE)
-    {
-        <i><span style="color: #008000">// transfer1 is completed successfully</span></i>
-    }</pre></div></div>
-</div>
+<p class="Element10">
+<strong>Note</strong>:</p>
+<ul class="Element630">
+<li class="Element600">Currently only asynchronous mode of operation is supported</li>
+<li class="Element600">Queue is not present in synchronous mode of the driver</li>
+</ul></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00755.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00152.html" target="topic">Using the Library</a> &gt; <a href="00140.html" target="topic">Asynchronous Mode</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00149.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00153.html" target="topic">Using the Library</a> &gt; <a href="00140.html" target="topic">Abstraction Model</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -172,10 +79,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00139.html" target="topic">Previous</a> | <a href="00152.html" target="topic">Up</a> | <a href="00150.html" target="topic">Next</a></div>
+<a href="00153.html" target="topic">Previous</a> | <a href="00153.html" target="topic">Up</a> | <a href="00147.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SPI Asynchronous mode Topic Title: Asynchronous Mode)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDHC Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_DriveFormat Function</title>
+<title>SYS_CONSOLE_Status Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00814.html" target="topic">File System Service Library Help</a> &gt; <a href="00815.html" target="topic">Library Interface</a> &gt; b) General Operation Functions &gt; <a href="00965.html" target="topic">SYS_FS_DriveFormat Function</a></div>
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00048.html" target="topic">Console System Service Library</a> &gt; <a href="00825.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00965.html" target="topic">SYS_CONSOLE_Status Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00967.html" target="topic">Previous</a> | <a href="00815.html" target="topic">Up</a> | <a href="00968.html" target="topic">Next</a></div>
+<a href="00960.html" target="topic">Previous</a> | <a href="00825.html" target="topic">Up</a> | <a href="00966.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_DriveFormat@char*@SYS_FS_FORMAT@uint32_t Topic Title: SYS_FS_DriveFormat Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_Status@SYS_MODULE_OBJ Topic Title: SYS_CONSOLE_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_DriveFormat Function</div>
+SYS_CONSOLE_Status Function</div>
 </div>
 </div>
 
@@ -49,23 +49,19 @@ SYS_FS_DriveFormat Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function formats a logic drive (create a FAT file system on the logical drive), as per the format specified.&nbsp;</p>
-<p class="Element10">
-If the logical drive that has to be formatted has been bound to any partition (1-4) by multiple partition feature, the FAT volume is created into the specified partition. In this case, the second argument fmt is ignored. The physical drive must have been partitioned prior to using this function.</p></div>
+This function returns the status of the specific module instance.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01170.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_DriveFormat</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong>* <strong><span style="color: #000000">drive</span></strong>, 
-    <a href="01048.html" target="topic">SYS_FS_FORMAT</a> <strong><span style="color: #000000">fmt</span></strong>, 
-    uint32_t <strong><span style="color: #000000">clusterSize</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01272.html" target="topic">SYS_STATUS</a> <strong><span style="color: #000000">SYS_CONSOLE_Status</span></strong>(
+    <a href="01265.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">object</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-At least one disk must be mounted. The physical drive must have already been partitioned.</p></div>
+The <a href="00960.html" target="topic">SYS_CONSOLE_Initialize</a> function should have been called before calling this function.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -82,27 +78,34 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-drive&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+object&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to buffer which will hold the name of drive being for which the format is to be done. If this string is NULL, then then current drive will be formatted. It is important to end the drive name with a &quot;/&quot;.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-fmt&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Format type.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-clusterSize&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Cluster size. The value must be sector (size * n), where n is 1 to 128 and power of 2. When a zero is given, the cluster size depends on the volume size.&nbsp;</div></td></tr></table></div></div>
+SYS CONSOLE object handle, returned from <a href="00960.html" target="topic">SYS_CONSOLE_Initialize</a>&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
 Returns</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-SYS_FS_RES_SUCCESS - Drive format was successful. SYS_FS_RES_FAILURE - Drive format was unsucessful. The reason for the failure can be retrieved with <a href="00970.html" target="topic">SYS_FS_Error</a>.</p></div>
+
+<ul class="Element630">
+<li class="Element600">SYS_STATUS_READY - Indicates that the driver is initialized and is ready to accept new requests from the clients.</li>
+</ul><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600">SYS_STATUS_BUSY - Indicates that the driver is busy with a previous requests from the clients. However, depending on the configured queue size for transmit and receive, it may be able to queue a new request.</li>
+</ul><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600">SYS_STATUS_ERROR - Indicates that the driver is in an error state. Any value less than SYS_STATUS_ERROR is also an error state.</li>
+</ul><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600">SYS_STATUS_UNINITIALIZED - Indicates that the driver is not initialized.</li>
+</ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -115,31 +118,15 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01170.html" target="topic">SYS_FS_RESULT</a> res;
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// Given &quot;object&quot; returned from SYS_CONSOLE_Initialize</span></i>
 
-  <strong><span style="color: #000080">switch</span></strong>(appState)
-  {
-      <strong><span style="color: #000080">case</span></strong> TRY_MOUNT:
-          <strong><span style="color: #000080">if</span></strong>(<a href="01166.html" target="topic">SYS_FS_Mount</a>(&quot;/dev/mmcblka1&quot;, &quot;/mnt/myDrive&quot;, FAT, 0, NULL) != SYS_FS_RES_SUCCESS)
-          {
-              <i><span style="color: #008000">// Failure, try mounting again</span></i>
-          }
-          <strong><span style="color: #000080">else</span></strong>
-          {
-              <i><span style="color: #008000">// Mount was successful. Format now.</span></i>
-              appState = FORMAT_DRIVE;
-          }
-          <strong><span style="color: #000080">break</span></strong>;
+<a href="01272.html" target="topic">SYS_STATUS</a>          consStatus;
 
-      <strong><span style="color: #000080">case</span></strong> FORMAT_DRIVE:
-          res = SYS_FS_DriveFormat(&quot;/mnt/myDrive&quot;, SYS_FS_FORMAT_SFD, 0);
-          <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
-          {
-              <i><span style="color: #008000">// Format of the drive failed.</span></i>
-          }
-          <i><span style="color: #008000">//...</span></i>
-          <strong><span style="color: #000080">break</span></strong>;
-  }</pre></div></div>
+consStatus = SYS_CONSOLE_Status (object);
+<strong><span style="color: #000080">if</span></strong> (consStatus == SYS_STATUS_READY)
+{
+    <i><span style="color: #008000">// Console is initialized and is ready to accept client requests.</span></i>
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -147,7 +134,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00814.html" target="topic">File System Service Library Help</a> &gt; <a href="00815.html" target="topic">Library Interface</a> &gt; b) General Operation Functions &gt; <a href="00965.html" target="topic">SYS_FS_DriveFormat Function</a></div>
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00048.html" target="topic">Console System Service Library</a> &gt; <a href="00825.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00965.html" target="topic">SYS_CONSOLE_Status Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -158,10 +145,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00967.html" target="topic">Previous</a> | <a href="00815.html" target="topic">Up</a> | <a href="00968.html" target="topic">Next</a></div>
+<a href="00960.html" target="topic">Previous</a> | <a href="00825.html" target="topic">Up</a> | <a href="00966.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_DriveFormat@char*@SYS_FS_FORMAT@uint32_t Topic Title: SYS_FS_DriveFormat Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_Status@SYS_MODULE_OBJ Topic Title: SYS_CONSOLE_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Hardware Setup</title>
+<title>OSAL_SEM_Create Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00738.html" target="topic">SPI Driver Applications</a> &gt; Async &gt; <a href="00745.html" target="topic">spi_multi_slave</a> &gt; <a href="00747.html" target="topic">Hardware Setup</a></div>
+<a href="00707.html" target="topic">OSAL Library Help</a> &gt; <a href="00717.html" target="topic">Library Interface</a> &gt; a) Semaphore Functions &gt; <a href="00747.html" target="topic">OSAL_SEM_Create Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00748.html" target="topic">Previous</a> | <a href="00745.html" target="topic">Up</a> | <a href="00749.html" target="topic">Next</a></div>
+<a href="00717.html" target="topic">Previous</a> | <a href="00717.html" target="topic">Up</a> | <a href="00749.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SPI Driver Async spi_multi_slave Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_SEM_Create@OSAL_SEM_HANDLE_TYPE*@OSAL_SEM_TYPE@uint8_t@uint8_t Topic Title: OSAL_SEM_Create Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Hardware Setup</div>
+OSAL_SEM_Create Function</div>
 </div>
 </div>
 
@@ -48,51 +48,90 @@ Hardware Setup</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
+<p class="Element10">
+This function creates an OSAL binary or counting semaphore. If OSAL_SEM_TYPE_BINARY is specified, the maxcount and initialCount values are ignored.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00743.html" target="topic">OSAL_RESULT</a> <strong><span style="color: #000000">OSAL_SEM_Create</span></strong>(
+    OSAL_SEM_HANDLE_TYPE* <strong><span style="color: #000000">semID</span></strong>, 
+    <a href="00754.html" target="topic">OSAL_SEM_TYPE</a> <strong><span style="color: #000000">type</span></strong>, 
+    uint8_t <strong><span style="color: #000000">maxCount</span></strong>, 
+    uint8_t <strong><span style="color: #000000">initialCount</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Semaphore must have been declared.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+semID&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the Semaphore ID<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+type&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+If OSAL_SEM_TYPE_BINARY, create a binary semaphore. If OSAL_SEM_TYPE_COUNTING, create a counting semaphore with the specified count values.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+maxCount&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Maximum value for a counting semaphore (ignored for a BINARY semaphore). This parameter is ignored for Express Logic ThreadX, SEGGER embOS, and Micrium/OS-III as these RTOS libraries do not support this parameter.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+initialCount&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Starting count value for the semaphore (ignored for a BINARY semaphore) This should be less than or equal to maxCount when used with a RTOS library that supports the maxCount parameter (i.e., FreeRTOS and OPENRTOS)&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
 
-<ol class="Element630">
-<li value="1" class="Element600"><strong>Project</strong> <strong>sam_e70_xult.X.</strong></li>
-<li value="2" class="Element600"><strong>Project sam_e70_xult_freertos.X.</strong>
-<ul class="Element631">
-<li class="Element601"><strong>Hardware Used:</strong>
-<ul class="Element632">
-<li class="Element602">SAM E70 Xplained Ultra Evaluation Kit</li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards</li>
-<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">microBUS Xplained Pro</a> board</li>
-</ul></li>
-<li class="Element601"><strong>Hardware Setup:</strong>
-<ul class="Element632">
-<li class="Element602">Install one <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> board on to the click slot provided on SAM E70 Xplained Ultra Evaluation Kit</li>
-<li class="Element602">Install another <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> board on to the <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">microBUS Xplained Pro</a> board</li>
-<li class="Element602">Connect <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">microBUS Xplained Pro</a> board to the EXT2 headers of the SAM E70 Xplained Ultra Evaluation Kit</li>
-</ul></li>
-</ul></li>
-</ol><p class="Element10">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="3" class="Element600"><strong>Project sam_v71_xult.X.</strong></li>
-<li value="4" class="Element600"><strong>Project sam_v71_xult_freertos.X.</strong>
-<ul class="Element631">
-<li class="Element601"><strong>Hardware Used:</strong>
-<ul class="Element632">
-<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsamv71-xult');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM V71 Xplained Ultra Evaluation Kit</a></li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards</li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">microBUS Xplained Pro</a> boards</li>
-</ul></li>
-<li class="Element601"><strong>Hardware Setup:</strong>
-<ul class="Element632">
-<li class="Element602">Install <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards on to the <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">microBUS Xplained Pro</a> boards</li>
-<li class="Element602">Connect <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">microBUS Xplained Pro</a> boards on to the &quot;EXT1&quot; and &quot;EXT2&quot; headers of the <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsamv71-xult');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM V71 Xplained Ultra Evaluation Kit</a></li>
-</ul></li>
-</ul></li>
-</ol></div>
+<ul class="Element630">
+<li class="Element600">OSAL_RESULT_TRUE - Semaphore created</li>
+<li class="Element600">OSAL_RESULT_FALSE - Semaphore creation failed</li>
+<li class="Element600">semID - Updated with valid semaphore handle if call was successful</li>
+</ul></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">OSAL_SEM_Create(&amp;mySemID, OSAL_SEM_TYPE_COUNTING, 10, 5);</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00738.html" target="topic">SPI Driver Applications</a> &gt; Async &gt; <a href="00745.html" target="topic">spi_multi_slave</a> &gt; <a href="00747.html" target="topic">Hardware Setup</a></div>
+<a href="00707.html" target="topic">OSAL Library Help</a> &gt; <a href="00717.html" target="topic">Library Interface</a> &gt; a) Semaphore Functions &gt; <a href="00747.html" target="topic">OSAL_SEM_Create Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -103,10 +142,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00748.html" target="topic">Previous</a> | <a href="00745.html" target="topic">Up</a> | <a href="00749.html" target="topic">Next</a></div>
+<a href="00717.html" target="topic">Previous</a> | <a href="00717.html" target="topic">Up</a> | <a href="00749.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SPI Driver Async spi_multi_slave Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_SEM_Create@OSAL_SEM_HANDLE_TYPE*@OSAL_SEM_TYPE@uint8_t@uint8_t Topic Title: OSAL_SEM_Create Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

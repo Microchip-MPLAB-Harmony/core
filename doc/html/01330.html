@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Library Overview</title>
+<title>SYS_VersionGet Macro</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00050.html" target="topic">Direct Memory Access (DMA) System Service Library</a> &gt; <a href="01332.html" target="topic">Using the Library</a> &gt; <a href="01330.html" target="topic">Library Overview</a></div>
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="01352.html" target="topic">System Services Libraries Overview</a> &gt; <a href="01347.html" target="topic">Library Interface</a> &gt; Version Functions &gt; <a href="01330.html" target="topic">SYS_VersionGet Macro</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01319.html" target="topic">Previous</a> | <a href="01332.html" target="topic">Up</a> | <a href="01326.html" target="topic">Next</a></div>
+<a href="01347.html" target="topic">Previous</a> | <a href="01347.html" target="topic">Up</a> | <a href="01331.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM DMA Library Overview Topic Title: Library Overview)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_VersionGet Topic Title: SYS_VersionGet Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Library Overview</div>
+SYS_VersionGet Macro</div>
 </div>
 </div>
 
@@ -49,52 +49,24 @@ Library Overview</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Please refer to the <a href="01351.html" target="topic">System Service Introduction</a> for a detailed description of MPLAB Harmony system services.&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">The library interface routines are divided into various sub-sections, which address one of the blocks or the overall operation of the DMA module.</span> &nbsp;</p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="20%">
-<div class="Element66">
-Library Interface Section&nbsp;</div></td><td class="Element65" valign="top" width="80%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Initialization and Task Functions&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-These functions initialize and enable the DMA subsystem and manage the task State machine.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Channel Setup and Management Functions&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-These DMA Channel and Setup Management functions enable:&nbsp;</p>
-<ul class="Element630">
-<li class="Element600">Channel Allocation and Release</li>
-<li class="Element600">Setting up of a channel for basic and advanced modes of operations</li>
-<li class="Element600">Channel Enable/Disable</li>
-<li class="Element600">Adding a data transfer</li>
-<li class="Element600">Synchronous data transfer start/abort</li>
-<li class="Element600">Asynchronous data transfer start/abort</li>
-<li class="Element600">Channel Busy status</li>
-<li class="Element600">Channel Computed CRC</li>
-<li class="Element600">Setting the transfer event trigger callback</li>
-</ul><p class="Element68">
-&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Global Control and Status Functions&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-These DMA functions enable global control and status.&nbsp;</div></td></tr></table></div></div>
+This routine gets the SYS_COMMON version. The version is encoded as major * 10000 + minor * 100 + patch. The string version can be obtained using <a href="01331.html" target="topic">SYS_VersionStrGet</a>()</p></div>
 </div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">SYS_VersionGet</span></strong>( <strong><span style="color: #000080">void</span></strong> ) SYS_VERSION</pre></div></div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Current driver version in numerical format.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00050.html" target="topic">Direct Memory Access (DMA) System Service Library</a> &gt; <a href="01332.html" target="topic">Using the Library</a> &gt; <a href="01330.html" target="topic">Library Overview</a></div>
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="01352.html" target="topic">System Services Libraries Overview</a> &gt; <a href="01347.html" target="topic">Library Interface</a> &gt; Version Functions &gt; <a href="01330.html" target="topic">SYS_VersionGet Macro</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -105,10 +77,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01319.html" target="topic">Previous</a> | <a href="01332.html" target="topic">Up</a> | <a href="01326.html" target="topic">Next</a></div>
+<a href="01347.html" target="topic">Previous</a> | <a href="01347.html" target="topic">Up</a> | <a href="01331.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM DMA Library Overview Topic Title: Library Overview)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_VersionGet Topic Title: SYS_VersionGet Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_USART_Open Function</title>
+<title>DRV_SST26_ChipErase Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="01392.html" target="topic">USART Driver Library Help</a> &gt; <a href="00176.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00521.html" target="topic">DRV_USART_Open Function</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00192.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00193.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00521.html" target="topic">DRV_SST26_ChipErase Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00526.html" target="topic">Previous</a> | <a href="00176.html" target="topic">Up</a> | <a href="00516.html" target="topic">Next</a></div>
+<a href="00520.html" target="topic">Previous</a> | <a href="00193.html" target="topic">Up</a> | <a href="00537.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_USART_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_ChipErase@DRV_HANDLE Topic Title: DRV_SST26_ChipErase Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_USART_Open Function</div>
+DRV_SST26_ChipErase Function</div>
 </div>
 </div>
 
@@ -49,22 +49,23 @@ DRV_USART_Open Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This routine opens the specified USART driver instance and provides a handle that must be provided to all other client-level operations to identify the caller and the instance of the driver. The ioIntent parameter defines how the client interacts with this driver instance.&nbsp;</p>
+This function schedules a non-blocking chip erase operation of flash memory.&nbsp;</p>
 <p class="Element10">
-Specifying a DRV_IO_INTENT_EXCLUSIVE will cause the driver to provide exclusive access to this client. The driver cannot be opened by any other client.</p></div>
+The requesting client should call <a href="00546.html" target="topic">DRV_SST26_TransferStatusGet</a>() API to know the current status of the request.&nbsp;</p>
+<p class="Element10">
+The request is sent in QUAD_MODE to flash device.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00266.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">DRV_USART_Open</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01233.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="00319.html" target="topic">DRV_IO_INTENT</a> <strong><span style="color: #000000">ioIntent</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_SST26_ChipErase</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00297.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Function <a href="00520.html" target="topic">DRV_USART_Initialize</a> must have been called before calling this function.</p></div>
+The <a href="00536.html" target="topic">DRV_SST26_Open</a>() routine must have been called for the specified SST26 driver instance.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -81,14 +82,9 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Identifier for the object instance to be opened<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-intent&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Zero or more of the values from the enumeration <a href="00319.html" target="topic">DRV_IO_INTENT</a> &quot;ORed&quot; together to indicate the intended useof the driver. See function description for details.&nbsp;</div></td></tr></table></div></div>
+A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -96,15 +92,16 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If successful, the routine returns a valid open-instance handle (a number identifying both the caller and the module instance).&nbsp;</p>
-<p class="Element10">
-If an error occurs, the return value is <a href="00267.html" target="topic">DRV_HANDLE_INVALID</a>. Error can occur</p>
+false</p>
 <ul class="Element630">
-<li class="Element600">if the number of client objects allocated via DRV_USART_CLIENTS_NUMBER is insufficient.</li>
-<li class="Element600">if the client is trying to open the driver but driver has been opened exclusively by another client.</li>
-<li class="Element600">if the driver peripheral instance being opened is not initialized or is invalid.</li>
-<li class="Element600">if the client is trying to open the driver exclusively, but has already been opened in a non exclusive mode by another client.</li>
-<li class="Element600">if the driver is not ready to be opened, typically when the initialize routine has not completed execution.</li>
+<li class="Element600">if Write enable fails before sending sector erase command to flash</li>
+<li class="Element600">if chip erase command itself fails</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+true</p>
+<ul class="Element630">
+<li class="Element600">if the erase request is successfully sent to the flash</li>
 </ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
@@ -112,21 +109,25 @@ Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The handle returned is valid until the <a href="00516.html" target="topic">DRV_USART_Close</a> routine is called. This routine will NEVER block waiting for hardware. If the requested intent flags are not supported, the routine will return <a href="00267.html" target="topic">DRV_HANDLE_INVALID</a>. This function is thread safe in a RTOS application.</p></div>
+This routine will block wait until erase request is submitted successfully.&nbsp;</p>
+<p class="Element10">
+Client should wait until erase is complete to send next transfer request.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><a href="00266.html" target="topic">DRV_HANDLE</a> handle;
+<div class="Element13"><div class="Element12"><pre class="Element12">
+<a href="00297.html" target="topic">DRV_HANDLE</a> handle;  <i><span style="color: #008000">// Returned from DRV_SST26_Open</span></i>
 
-handle = DRV_USART_Open(DRV_USART_INDEX_0, DRV_IO_INTENT_EXCLUSIVE);
-<strong><span style="color: #000080">if</span></strong> (<a href="00267.html" target="topic">DRV_HANDLE_INVALID</a> == handle)
+<strong><span style="color: #000080">if</span></strong>(<strong><span style="color: #000080">false</span></strong> == DRV_SST26_ChipErase(handle))
 {
-    <i><span style="color: #008000">// Unable to open the driver</span></i>
-    <i><span style="color: #008000">// May be the driver is not initialized or the initialization</span></i>
-    <i><span style="color: #008000">// is not complete.</span></i>
-}</pre></div></div>
+    <i><span style="color: #008000">// Error handling here</span></i>
+}
+
+<i><span style="color: #008000">// Wait for erase to be completed</span></i>
+<strong><span style="color: #000080">while</span></strong>(DRV_SST26_TRANSFER_BUSY == <a href="00546.html" target="topic">DRV_SST26_TransferStatusGet</a>(handle));
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -134,7 +135,7 @@ handle = DRV_USART_Open(DRV_USART_INDEX_0, DRV_IO_INTENT_EXCLUSIVE);
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="01392.html" target="topic">USART Driver Library Help</a> &gt; <a href="00176.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00521.html" target="topic">DRV_USART_Open Function</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00192.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00193.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00521.html" target="topic">DRV_SST26_ChipErase Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -145,10 +146,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00526.html" target="topic">Previous</a> | <a href="00176.html" target="topic">Up</a> | <a href="00516.html" target="topic">Next</a></div>
+<a href="00520.html" target="topic">Previous</a> | <a href="00193.html" target="topic">Up</a> | <a href="00537.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_USART_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_ChipErase@DRV_HANDLE Topic Title: DRV_SST26_ChipErase Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

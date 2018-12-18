@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SPI Driver Applications</title>
+<title>OSAL_MUTEX_DECLARE Macro</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00738.html" target="topic">SPI Driver Applications</a></div>
+<a href="00707.html" target="topic">OSAL Library Help</a> &gt; <a href="00717.html" target="topic">Library Interface</a> &gt; f) Data Types and Constants &gt; <a href="00738.html" target="topic">OSAL_MUTEX_DECLARE Macro</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00736.html" target="topic">Previous</a> | <a href="00010.html" target="topic">Up</a> | <a href="00740.html" target="topic">Next</a></div>
+<a href="00748.html" target="topic">Previous</a> | <a href="00717.html" target="topic">Up</a> | <a href="00000.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SPI Driver Applications Help Topic Title: SPI Driver Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_MUTEX_DECLARE Topic Title: OSAL_MUTEX_DECLARE Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SPI Driver Applications</div>
+OSAL_MUTEX_DECLARE Macro</div>
 </div>
 </div>
 
@@ -49,74 +49,30 @@ SPI Driver Applications</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This section provides help for the SPI driver applications.</p></div>
+OSAL_MUTEX_Declare(mutexID)&nbsp;</p>
+<p class="Element10">
+This function declares a data item of type OSAL_MUTEX_HANDLE_TYPE.</p></div>
 </div>
-<a name="4173796E63"></a><div class="Element14">
-Async</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">OSAL_MUTEX_DECLARE</span></strong>(mutexID) OSAL_MUTEX_HANDLE_TYPE mutexID</pre></div></div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00740.html" target="topic">spi_multi_instance</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This example demonstrates how to use multiple instances of the SPI driver in asynchronous mode to communicate with multiple EEPROMs.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00745.html" target="topic">spi_multi_slave</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This example demonstrates how to use single instance of the SPI driver in asynchronous mode to communicate with multiple EEPROMs.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00750.html" target="topic">spi_self_loopback_multi_client</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This example demonstrates how to use the SPI driver in asynchronous mode to achieve self-loop back between multiple clients.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="53796E63"></a><div class="Element14">
-Sync</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00756.html" target="topic">spi_multi_instance</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This example demonstrates how to use multiple instances of the SPI driver in synchronous mode to communicate with multiple EEPROMs in RTOS environment.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00761.html" target="topic">spi_multi_slave</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This example demonstrates how to use single instance of the SPI driver in synchronous mode to communicate with multiple EEPROMs in RTOS environment.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00766.html" target="topic">spi_self_loopback_multi_client</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This example demonstrates how to use the SPI driver in synchronous mode to achieve self-loop back between multiple clients in RTOS environment.&nbsp;</div></td></tr></table></div></div>
-</div>
+<p class="Element10">
+None.&nbsp;</p>
+<p class="Element10">
+// DOM-IGNORE-BEGIN&nbsp;</p>
+<p class="Element10">
+Place the definition of the OSAL_MUTEX_Declare macro inside each specific implementation file. Not all implementation files use the same definition. The type for each individual RTOS is different, and to handle this properly in the code, each implementation must define its own declaration. **REMOVE THIS NOTE AND THE DOM STATEMENTS IF USING THIS API IN A FILE THAT IS INCLUDED IN THE MPLAB HARMONY INSTALLATION** // DOM-IGNORE-END</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00738.html" target="topic">SPI Driver Applications</a></div>
+<a href="00707.html" target="topic">OSAL Library Help</a> &gt; <a href="00717.html" target="topic">Library Interface</a> &gt; f) Data Types and Constants &gt; <a href="00738.html" target="topic">OSAL_MUTEX_DECLARE Macro</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -127,10 +83,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00736.html" target="topic">Previous</a> | <a href="00010.html" target="topic">Up</a> | <a href="00740.html" target="topic">Next</a></div>
+<a href="00748.html" target="topic">Previous</a> | <a href="00717.html" target="topic">Up</a> | <a href="00000.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SPI Driver Applications Help Topic Title: SPI Driver Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_MUTEX_DECLARE Topic Title: OSAL_MUTEX_DECLARE Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

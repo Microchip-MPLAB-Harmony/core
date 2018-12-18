@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Interrupt System Setup</title>
+<title>Files</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00630.html" target="topic">Interrupt System Service Library</a> &gt; <a href="01350.html" target="topic">Using the Library</a> &gt; <a href="01342.html" target="topic">How the Library Works</a> &gt; <a href="01344.html" target="topic">Interrupt System Setup</a></div>
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="01352.html" target="topic">System Services Libraries Overview</a> &gt; <a href="01344.html" target="topic">Files</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01342.html" target="topic">Previous</a> | <a href="01342.html" target="topic">Up</a> | <a href="01337.html" target="topic">Next</a></div>
+<a href="01226.html" target="topic">Previous</a> | <a href="01352.html" target="topic">Up</a> | <a href="01358.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM INT Interrupt System Setup Topic Title: Interrupt System Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM Files Topic Title: Files)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Interrupt System Setup</div>
+Files</div>
 </div>
 </div>
 
@@ -49,11 +49,36 @@ Interrupt System Setup</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The Interrupt System Service library must be initialized by calling the SYS_INT_Initialize function. If the MPLAB Harmony dynamic initialization service is used, the SYS_INT_Initialize function will be called automatically when the SYS_Initialize function is called. In a statically initialized system, the system designer or integrator must implement the SYS_Initialize function and that function must call SYS_INT_Initialize before initializing any modules that might require use if the interrupt system service. Once the library has been initialized, call the function <a href="01191.html" target="topic">SYS_INT_Enable</a> to enable interrupts to the processor. However, before enabling the generation of interrupts to the processor, each individual module (driver, library, or application) must have a &quot;Tasks&quot; routine to in place (either registered with <a href="01190.html" target="topic">SYS_INT_DynamicRegister</a> or statically linked to the raw ISR) to handle the interrupt before it enables its own interrupt.&nbsp;</p>
-<p class="Element10">
-<strong>Example: Initializing the System Interrupt Library</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">SYS_INT_Initialize();
-<i><span style="color: #008000">// Initialize all interrupt-aware software modules</span></i>
-SYS_INT_Enable();</pre></div></div>
+This section lists the source and header files used by the library.</p></div>
+</div>
+<a name="46696C6573"></a><div class="Element14">
+Files</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="01358.html" target="topic">system_common.h</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Common System Services definitions and declarations.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="01359.html" target="topic">system_media.h</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+System Media declarations and types.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="01360.html" target="topic">system_module.h</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Defines definitions and declarations related to system modules.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -61,7 +86,7 @@ SYS_INT_Enable();</pre></div></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01363.html" target="topic">System Service Libraries Help</a> &gt; <a href="00630.html" target="topic">Interrupt System Service Library</a> &gt; <a href="01350.html" target="topic">Using the Library</a> &gt; <a href="01342.html" target="topic">How the Library Works</a> &gt; <a href="01344.html" target="topic">Interrupt System Setup</a></div>
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="01352.html" target="topic">System Services Libraries Overview</a> &gt; <a href="01344.html" target="topic">Files</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -72,10 +97,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01342.html" target="topic">Previous</a> | <a href="01342.html" target="topic">Up</a> | <a href="01337.html" target="topic">Next</a></div>
+<a href="01226.html" target="topic">Previous</a> | <a href="01352.html" target="topic">Up</a> | <a href="01358.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM INT Interrupt System Setup Topic Title: Interrupt System Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM Files Topic Title: Files)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

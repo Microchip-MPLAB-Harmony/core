@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Introduction</title>
+<title>How the Library Works</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00134.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00133.html" target="topic">Introduction</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00135.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00139.html" target="topic">Using the Library</a> &gt; <a href="00133.html" target="topic">How the Library Works</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00134.html" target="topic">Previous</a> | <a href="00134.html" target="topic">Up</a> | <a href="00138.html" target="topic">Next</a></div>
+<a href="00126.html" target="topic">Previous</a> | <a href="00139.html" target="topic">Up</a> | <a href="00129.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Memory Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Memory How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Introduction</div>
+How the Library Works</div>
 </div>
 </div>
 
@@ -49,27 +49,110 @@ Introduction</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<span style="color: #000000">Memory Driver is a multi-client multi-instance buffer model based block driver interface which can be used to communicate with various media devices.</span>&nbsp;</p>
+<span style="color: #000000">The memory driver library is a multi-client, multi-instance buffer queue model based block driver interface.</span>&nbsp;</p>
+<div class="Element15">
+Memory Driver Common Features:</div>
+
+<ul class="Element630">
+<li class="Element600"><span style="color: #000000">Each instance of the driver has its own buffer queue which allows the capability to not block other media operations</span></li>
+<li class="Element600">Each instance of the driver can either have File-system as client or an application as client</li>
+<li class="Element600">Every transfer request expects data in blocks. Block details (<strong>Size and number of blocks</strong>) can be retrieved by <a href="00402.html" target="topic">DRV_MEMORY_GeometryGet</a>()</li>
+<li class="Element600">Driver provides feature to register call back for transfer complete event, which can used by clients to get notified</li>
+<li class="Element600">When the Memory driver is connected to the File System, the buffer queue is disabled as it is a blocking interface</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+Overview on behavior of memory driver in below two modes:</div>
+<div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="50%">
+<div class="Element66">
+Asynchronous Mode&nbsp;</div></td><td class="Element65" valign="top" width="50%">
+<div class="Element66">
+Synchronous Mode&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="50%">
+<div class="Element68">
+Works in both Bare-Metal and RTOS environment&nbsp;</div></td><td class="Element67" valign="top" width="50%">
+<div class="Element68">
+Works only in RTOS Environment&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="50%">
+<div class="Element68">
+Provides Non-Blocking behavior.&nbsp;</div></td><td class="Element67" valign="top" width="50%">
+<div class="Element68">
+Provides Blocking behavior. Application thread gets blocked on a semaphore until transfer request is completed.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="50%">
+<div class="Element68">
+API's to be used DRV_MEMORY_AsyncXxx()&nbsp;</div></td><td class="Element67" valign="top" width="50%">
+<div class="Element68">
+API's to be used DRV_MEMORY_SyncXxx()&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="50%">
+<div class="Element68">
+API's return with a valid handle which can be used to check whether transfer request is accepted&nbsp;</div></td><td class="Element67" valign="top" width="50%">
+<div class="Element68">
+API's return true or false to indicate whether the whole transfer is completed.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="50%">
+<div class="Element68">
+<strong>Bare-Metal:</strong><br>A dedicated task routine <a href="00425.html" target="topic">DRV_MEMORY_Tasks</a>() is called from SYS_Tasks() to process the data from the instance queue.<br><strong>RTOS:</strong><br>A dedicated thread is created for task routine <a href="00425.html" target="topic">DRV_MEMORY_Tasks</a>() to process the data from the instance queue.&nbsp;</div></td><td class="Element67" valign="top" width="50%">
+<div class="Element68">
+As the Driver works in complete blocking behavior there is no task routine generated.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="50%">
+<div class="Element68">
+A Client specific handler will be called to indicate the status of transfer.&nbsp;</div></td><td class="Element67" valign="top" width="50%">
+<div class="Element68">
+A Client specific handler will be called to indicate the status of transfer before returning from API.<br>Although the return type of API also can be used to identify the status of transfer.&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
 &nbsp;</p>
+<div class="Element15">
+How to plugin Media's to Memory Driver</div>
 <p class="Element10">
-<span style="color: #000000"><strong>Key Features of Memory Driver:</strong></span></p>
-<ol class="Element630">
-<li value="1" class="Element600"><span style="color: #000000">It works in both Asynchronous and Synchronous modes of operation.</span></li>
-<li value="2" class="Element600"><span style="color: #000000">It works in both Bare Metal and RTOS environment.</span></li>
-<li value="3" class="Element600"><span style="color: #000000">It can be used to communicate with Different Media's via common Media Interface.</span>
-<ol class="Element631">
-<li value="1" class="Element601">Media <span style="color: #000000">which can be accessed directly by Peripheral Libraries (NVM_PLIB).</span></li>
-<li value="2" class="Element601">Media <span style="color: #000000">which can be accessed by protocol drivers which in-turn connect to respective peripheral Libraries (QSPI_FLASH_DRIVER-&gt;QSPI_PLIB)</span></li>
-</ol></li>
-</ol></div>
+The <a href="00403.html" target="topic">DRV_MEMORY_INIT</a> data structure allows a Media driver Or Media peripheral library to be plugged into the Memory block driver.&nbsp;</p>
+<p class="Element10">
+Any media that needs to be plugged into the Memory block driver needs to implement the interface (function pointer signatures) specified by the <a href="00380.html" target="topic">DRV_MEMORY_DEVICE_INTERFACE</a> type.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">static</span></strong> uint8_t gDrvMemory0EraseBuffer[DRV_SST26_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
+
+<strong><span style="color: #000080">static</span></strong> DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
+
+<strong><span style="color: #000080">static</span></strong> DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0] = { 0 };
+
+<strong><span style="color: #000080">const</span></strong> DRV_MEMORY_DEVICE_INTERFACE drvMemory0DeviceInterface = {
+    .Open               = DRV_SST26_Open,
+    .Close              = DRV_SST26_Close,
+    .Status             = DRV_SST26_Status,
+    .SectorErase        = DRV_SST26_SectorErase,
+    .Read               = DRV_SST26_Read,
+    .PageWrite          = DRV_SST26_PageWrite,
+    .EventHandlerSet    = NULL,
+    .GeometryGet        = (GEOMETRY_GET)DRV_SST26_GeometryGet,
+    .TransferStatusGet  = (TRANSFER_STATUS_GET)DRV_SST26_TransferStatusGet
+};
+
+<strong><span style="color: #000080">const</span></strong> DRV_MEMORY_INIT drvMemory0InitData =
+{
+    .memDevIndex                = DRV_SST26_INDEX,
+    .memoryDevice               = &amp;drvMemory0DeviceInterface,
+    .isMemDevInterruptEnabled   = <strong><span style="color: #000080">false</span></strong>,
+    .isFsEnabled                = <strong><span style="color: #000080">true</span></strong>,
+    .deviceMediaType            = (uint8_t)SYS_FS_MEDIA_TYPE_SPIFLASH,
+    .ewBuffer                   = &amp;gDrvMemory0EraseBuffer[0],
+    .clientObjPool              = (uintptr_t)&amp;gDrvMemory0ClientObject[0],
+    .bufferObj                  = (uintptr_t)&amp;gDrvMemory0BufferObject[0],
+    .queueSize                  = DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0,
+    .nClientsMax                = DRV_MEMORY_CLIENTS_NUMBER_IDX0
+};
+
+sysObj.drvMemory0 = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_0, (SYS_MODULE_INIT *)&amp;drvMemory0InitData);
+</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00134.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00133.html" target="topic">Introduction</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00135.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00139.html" target="topic">Using the Library</a> &gt; <a href="00133.html" target="topic">How the Library Works</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -80,10 +163,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00134.html" target="topic">Previous</a> | <a href="00134.html" target="topic">Up</a> | <a href="00138.html" target="topic">Next</a></div>
+<a href="00126.html" target="topic">Previous</a> | <a href="00139.html" target="topic">Up</a> | <a href="00129.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Memory Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Memory How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

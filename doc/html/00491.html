@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SST26_GeometryGet Function</title>
+<title>DRV_SDSPI_Status Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00162.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00163.html" target="topic">Library Interface</a> &gt; d) Block Interface Functions &gt; <a href="00491.html" target="topic">DRV_SST26_GeometryGet Function</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00163.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00164.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00491.html" target="topic">DRV_SDSPI_Status Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00503.html" target="topic">Previous</a> | <a href="00163.html" target="topic">Up</a> | <a href="00480.html" target="topic">Next</a></div>
+<a href="00486.html" target="topic">Previous</a> | <a href="00164.html" target="topic">Up</a> | <a href="00494.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_GeometryGet@DRV_HANDLE@DRV_SST26_GEOMETRY * Topic Title: DRV_SST26_GeometryGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDSPI_Status@SYS_MODULE_OBJ Topic Title: DRV_SDSPI_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SST26_GeometryGet Function</div>
+DRV_SDSPI_Status Function</div>
 </div>
 </div>
 
@@ -49,24 +49,19 @@ DRV_SST26_GeometryGet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This API gives the following geometrical details of the SST26 Flash:</p>
-<ul class="Element630">
-<li class="Element600">Number of Read/Write/Erase Blocks and their size in each region of the device</li>
-<li class="Element600">Flash block start address.</li>
-</ul></div>
+This routine provides the current status of the SDSPI driver module.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_SST26_GeometryGet</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00266.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <a href="00480.html" target="topic">DRV_SST26_GEOMETRY</a> * <strong><span style="color: #000000">geometry</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01272.html" target="topic">SYS_STATUS</a> <strong><span style="color: #000000">DRV_SDSPI_Status</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01265.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">object</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="00493.html" target="topic">DRV_SST26_Open</a>() routine must have been called for the specified SST26 driver instance.</p></div>
+Function <a href="00486.html" target="topic">DRV_SDSPI_Initialize</a> must have been called before calling this</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -83,14 +78,9 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+object&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open routine<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-*geometry_table&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-pointer to flash device geometry table instance&nbsp;</div></td></tr></table></div></div>
+Driver object handle, returned from the <a href="00486.html" target="topic">DRV_SDSPI_Initialize</a> routine&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -98,45 +88,30 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-false</p>
-<ul class="Element630">
-<li class="Element600">if read device id fails</li>
-</ul><p class="Element10">
-&nbsp;</p>
+SYS_STATUS_READY - Indicates that the driver has been initialized and is ready to accept requests from the client.&nbsp;</p>
 <p class="Element10">
-true</p>
-<ul class="Element630">
-<li class="Element600">if able to get the geometry details of the flash</li>
-</ul></div>
+SYS_STATUS_UNINITIALIZED - Indicates that the driver has not been initialized.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This API is more useful when used to interface with block driver like memory driver.</p></div>
+This operation can be used to determine if the driver is initialized or not.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-<a href="00266.html" target="topic">DRV_HANDLE</a> handle;  <i><span style="color: #008000">// Returned from DRV_SST26_Open</span></i>
-<a href="00480.html" target="topic">DRV_SST26_GEOMETRY</a> sst26FlashGeometry;
-uint32_t readBlockSize, writeBlockSize, eraseBlockSize;
-uint32_t nReadBlocks, nReadRegions, totalFlashSize;
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01265.html" target="topic">SYS_MODULE_OBJ</a>      object;     <i><span style="color: #008000">// Returned from DRV_SDSPI_Initialize</span></i>
+<a href="01272.html" target="topic">SYS_STATUS</a>          status;
 
-DRV_SST26_GeometryGet(handle, &amp;sst26FlashGeometry);
+status = DRV_SDSPI_Status(object);
 
-readBlockSize  = sst26FlashGeometry.read_blockSize;
-nReadBlocks = sst26FlashGeometry.read_numBlocks;
-nReadRegions = sst26FlashGeometry.numReadRegions;
-
-writeBlockSize  = sst26FlashGeometry.write_blockSize;
-eraseBlockSize  = sst26FlashGeometry.erase_blockSize;
-
-totalFlashSize = readBlockSize * nReadBlocks * nReadRegions;
-</pre></div></div>
+<strong><span style="color: #000080">if</span></strong> (status == SYS_STATUS_READY)
+{
+    <i><span style="color: #008000">// Driver is initialized and ready.</span></i>
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -144,7 +119,7 @@ totalFlashSize = readBlockSize * nReadBlocks * nReadRegions;
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00124.html" target="topic">Driver Libraries Help</a> &gt; <a href="00162.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00163.html" target="topic">Library Interface</a> &gt; d) Block Interface Functions &gt; <a href="00491.html" target="topic">DRV_SST26_GeometryGet Function</a></div>
+<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00163.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00164.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00491.html" target="topic">DRV_SDSPI_Status Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -155,10 +130,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00503.html" target="topic">Previous</a> | <a href="00163.html" target="topic">Up</a> | <a href="00480.html" target="topic">Next</a></div>
+<a href="00486.html" target="topic">Previous</a> | <a href="00164.html" target="topic">Up</a> | <a href="00494.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_GeometryGet@DRV_HANDLE@DRV_SST26_GEOMETRY * Topic Title: DRV_SST26_GeometryGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDSPI_Status@SYS_MODULE_OBJ Topic Title: DRV_SDSPI_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
