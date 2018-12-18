@@ -107,8 +107,8 @@
           <Name dnOrder="1">plib_pio.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/peripheral/pio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/pio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EB93539045D38C9BA59DC024032937B2</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EB93539045D38C9BA59DC024032937B2</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F7E271CAF60D74ED8FCEA16D1257EF3D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F7E271CAF60D74ED8FCEA16D1257EF3D</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
@@ -531,8 +531,8 @@
           <Name dnOrder="1">plib_twihs_master.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/peripheral/twihs/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/twihs/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9D16CA7383F9E97A39A9EEF7871653DF</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9D16CA7383F9E97A39A9EEF7871653DF</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6C35835C0E606C77662E3C611566519F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6C35835C0E606C77662E3C611566519F</UserChecksum>
         </File>
         <File dnOrder="66">
           <Type dnOrder="0">HEADER</Type>
