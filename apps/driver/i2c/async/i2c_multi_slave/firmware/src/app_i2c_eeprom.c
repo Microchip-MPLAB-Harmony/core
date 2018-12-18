@@ -157,7 +157,7 @@ void APP_I2C_EEPROM_Tasks ( void )
             {
                 /* Register the I2C Driver client event callback */
                 DRV_I2C_TransferEventHandlerSet(appEEPROMData.i2cHandle, appEEPROMEventHandler, 0);
-                appEEPROMData.isTemperatureReady = true;
+                appEEPROMData.isTemperatureReady = false;
                 appEEPROMData.state = APP_EEPROM_STATE_WRITE;
             }
             else

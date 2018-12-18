@@ -115,8 +115,8 @@
           <Name dnOrder="1">plib_port.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">258C5E7F527E813096FC94FF4AFD8674</GeneratedChecksum>
-          <UserChecksum dnOrder="5">258C5E7F527E813096FC94FF4AFD8674</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E08773F947DDD1E64ABDE93E1B74AC5B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E08773F947DDD1E64ABDE93E1B74AC5B</UserChecksum>
         </File>
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
@@ -523,8 +523,8 @@
           <Name dnOrder="1">plib_sercom_i2c_master.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/peripheral/sercom/i2cm/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/sercom/i2cm/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1E5C7398E24811992DE4369D037F182F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1E5C7398E24811992DE4369D037F182F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0ACEA70BFF5B6C304CA74F505499D3A0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0ACEA70BFF5B6C304CA74F505499D3A0</UserChecksum>
         </File>
         <File dnOrder="65">
           <Type dnOrder="0">HEADER</Type>
