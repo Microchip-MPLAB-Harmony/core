@@ -145,7 +145,7 @@ def instantiateComponent(at25Component):
     configName = Variables.get("__CONFIGURATION_NAME")
 
     at25HeaderFile = at25Component.createFileSymbol("AT25_HEADER", None)
-    at25HeaderFile.setSourcePath("driver/at25/drv_at25.h")
+    at25HeaderFile.setSourcePath("driver/spi_eeprom/at25/drv_at25.h")
     at25HeaderFile.setOutputName("drv_at25.h")
     at25HeaderFile.setDestPath("driver/at25/")
     at25HeaderFile.setProjectPath("config/" + configName + "/driver/at25/")
@@ -153,7 +153,7 @@ def instantiateComponent(at25Component):
     at25HeaderFile.setOverwrite(True)
 
     at25SymHeaderDefFile = at25Component.createFileSymbol("DRV_AT25_DEF", None)
-    at25SymHeaderDefFile.setSourcePath("driver/at25/drv_at25_definitions.h")
+    at25SymHeaderDefFile.setSourcePath("driver/spi_eeprom/at25/drv_at25_definitions.h")
     at25SymHeaderDefFile.setOutputName("drv_at25_definitions.h")
     at25SymHeaderDefFile.setDestPath("driver/at25")
     at25SymHeaderDefFile.setProjectPath("config/" + configName + "/driver/at25/")
@@ -161,7 +161,7 @@ def instantiateComponent(at25Component):
     at25SymHeaderDefFile.setOverwrite(True)
 
     at25SourceFile = at25Component.createFileSymbol("AT25_SOURCE", None)
-    at25SourceFile.setSourcePath("driver/at25/src/drv_at25.c")
+    at25SourceFile.setSourcePath("driver/spi_eeprom/at25/src/drv_at25.c")
     at25SourceFile.setOutputName("drv_at25.c")
     at25SourceFile.setDestPath("driver/at25/src")
     at25SourceFile.setProjectPath("config/" + configName + "/driver/at25/")
@@ -170,7 +170,7 @@ def instantiateComponent(at25Component):
     at25SourceFile.setMarkup(False)
 
     at25AsyncSymHeaderLocalFile = at25Component.createFileSymbol("DRV_AT25_HEADER_LOCAL", None)
-    at25AsyncSymHeaderLocalFile.setSourcePath("driver/at25/src/drv_at25_local.h")
+    at25AsyncSymHeaderLocalFile.setSourcePath("driver/spi_eeprom/at25/src/drv_at25_local.h")
     at25AsyncSymHeaderLocalFile.setOutputName("drv_at25_local.h")
     at25AsyncSymHeaderLocalFile.setDestPath("driver/at25/src")
     at25AsyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/at25/")
@@ -181,31 +181,31 @@ def instantiateComponent(at25Component):
     at25SystemDefFile = at25Component.createFileSymbol("AT25_DEF", None)
     at25SystemDefFile.setType("STRING")
     at25SystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-    at25SystemDefFile.setSourcePath("driver/at25/templates/system/definitions.h.ftl")
+    at25SystemDefFile.setSourcePath("driver/spi_eeprom/at25/templates/system/definitions.h.ftl")
     at25SystemDefFile.setMarkup(True)
 
     at25SymSystemDefObjFile = at25Component.createFileSymbol("DRV_AT25_SYSTEM_DEF_OBJECT", None)
     at25SymSystemDefObjFile.setType("STRING")
     at25SymSystemDefObjFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_OBJECTS")
-    at25SymSystemDefObjFile.setSourcePath("driver/at25/templates/system/definitions_objects.h.ftl")
+    at25SymSystemDefObjFile.setSourcePath("driver/spi_eeprom/at25/templates/system/definitions_objects.h.ftl")
     at25SymSystemDefObjFile.setMarkup(True)
 
     at25SymSystemConfigFile = at25Component.createFileSymbol("DRV_AT25_CONFIGIRUTION", None)
     at25SymSystemConfigFile.setType("STRING")
     at25SymSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_DRIVER_CONFIGURATION")
-    at25SymSystemConfigFile.setSourcePath("driver/at25/templates/system/configuration.h.ftl")
+    at25SymSystemConfigFile.setSourcePath("driver/spi_eeprom/at25/templates/system/configuration.h.ftl")
     at25SymSystemConfigFile.setMarkup(True)
 
     at25SymSystemInitDataFile = at25Component.createFileSymbol("DRV_AT25_INIT_DATA", None)
     at25SymSystemInitDataFile.setType("STRING")
     at25SymSystemInitDataFile.setOutputName("core.LIST_SYSTEM_INIT_C_DRIVER_INITIALIZATION_DATA")
-    at25SymSystemInitDataFile.setSourcePath("driver/at25/templates/system/initialize_data.c.ftl")
+    at25SymSystemInitDataFile.setSourcePath("driver/spi_eeprom/at25/templates/system/initialize_data.c.ftl")
     at25SymSystemInitDataFile.setMarkup(True)
 
     at25SystemInitFile = at25Component.createFileSymbol("AT25_INIT", None)
     at25SystemInitFile.setType("STRING")
     at25SystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_SYS_INITIALIZE_DRIVERS")
-    at25SystemInitFile.setSourcePath("driver/at25/templates/system/initialize.c.ftl")
+    at25SystemInitFile.setSourcePath("driver/spi_eeprom/at25/templates/system/initialize.c.ftl")
     at25SystemInitFile.setMarkup(True)
 
 def onAttachmentConnected(source, target):
