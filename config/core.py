@@ -34,19 +34,21 @@ harmonySystemService.setDisplayType("Harmony Core Service")
 harmonySystemService.addDependency("harmony_RTOS_dependency", "RTOS", True, False)
 harmonySystemService.addCapability("HarmonyCoreService", "Core Service", True)
 
-#load harmony drivers and system services from the list 
+#load harmony drivers and system services from the list
 for coreComponent in coreComponents:
 
     #check if component should be created
     if eval(coreComponent['condition']):
-        Name = coreComponent['name']
-        Label = coreComponent['label']
+        Name        = coreComponent['name']
+        Label       = coreComponent['label']
 
         #create system component
         if coreComponent['type'] == "system":
             print("create component: " + Name.upper() + " System Service")
+            actualPath  = "system/" + coreComponent['actual_path'] + "/"
+            displayPath = "/Harmony/System Services/" + coreComponent['display_path']
 
-            Component = Module.CreateSharedComponent("sys_" + Name, Label, "/Harmony/System Services", "system/" + Name + "/config/sys_" + Name + ".py")
+            Component = Module.CreateSharedComponent("sys_" + Name, Label, displayPath, actualPath + Name + "/config/sys_" + Name + ".py")
 
             if "capability" in coreComponent:
                 for capability in coreComponent['capability']:
@@ -79,10 +81,13 @@ for coreComponent in coreComponents:
         else:
             print("create component: " + Name.upper() + " Driver")
 
+            actualPath  = "driver/" + coreComponent['actual_path'] + "/"
+            displayPath = "/Harmony/Drivers/" + coreComponent['display_path']
+
             if coreComponent['instance'] == "multi":
-                Component = Module.CreateGeneratorComponent("drv_" + Name, Label, "/Harmony/Drivers/", "driver/" + Name + "/config/drv_" + Name + "_common.py", "driver/" + Name + "/config/drv_" + Name + ".py")
+                Component = Module.CreateGeneratorComponent("drv_" + Name, Label, displayPath, actualPath + Name + "/config/drv_" + Name + "_common.py", actualPath + Name + "/config/drv_" + Name + ".py")
             elif coreComponent['instance'] == "single":
-                Component = Module.CreateComponent("drv_" + Name, Label, "/Harmony/Drivers/", "driver/" + Name + "/config/drv_" + Name + ".py")
+                Component = Module.CreateComponent("drv_" + Name, Label, displayPath, actualPath + Name + "/config/drv_" + Name + ".py")
 
             if "capability" in coreComponent:
                 for capability in coreComponent['capability']:
