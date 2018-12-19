@@ -1,7 +1,10 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_USART Instance ${INDEX?string} Initialization Data">
-<#if DRV_USART_MODE == "Synchronous">
 
 static DRV_USART_CLIENT_OBJ drvUSART${INDEX?string}ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
+
+<#if drv_usart.DRV_USART_COMMON_MODE == "Asynchronous">
+/* USART transmit/receive transfer objects pool */
+static DRV_USART_BUFFER_OBJ drvUSART${INDEX?string}BufferObjPool[DRV_USART_QUEUE_SIZE_IDX${INDEX?string}] = {0};
 </#if>
 
 const DRV_USART_PLIB_INTERFACE drvUsart${INDEX?string}PlibAPI = {
@@ -122,9 +125,50 @@ const uint32_t drvUsart${INDEX?string}remapError[] = {
 };
 </@compress>
 
+
 const DRV_USART_INIT drvUsart${INDEX?string}InitData =
 {
     .usartPlib = &drvUsart${INDEX?string}PlibAPI,
+
+    /* USART Number of clients */
+    .numClients = DRV_USART_CLIENTS_NUMBER_IDX${INDEX?string},
+
+    /* USART Client Objects Pool */
+    .clientObjPool = (uintptr_t)&drvUSART${INDEX?string}ClientObjPool[0],
+
+<#if core.DMA_ENABLE?has_content>
+    <#if DRV_USART_TX_DMA == true>
+        <#lt>    .dmaChannelTransmit = DRV_USART_XMIT_DMA_CH_IDX${INDEX?string},
+
+        <#lt>    .usartTransmitAddress = (void *)${.vars["${DRV_USART_PLIB?lower_case}"].TRANSMIT_DATA_REGISTER},
+    <#else>
+        <#lt>    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
+    </#if>
+
+    <#if DRV_USART_RX_DMA == true>
+        <#lt>    .dmaChannelReceive = DRV_USART_RCV_DMA_CH_IDX${INDEX?string},
+
+        <#lt>    .usartReceiveAddress = (void *)${.vars["${DRV_USART_PLIB?lower_case}"].RECEIVE_DATA_REGISTER},
+    <#else>
+        <#lt>    .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
+    </#if>
+</#if>
+
+<#if drv_usart.DRV_USART_COMMON_MODE == "Asynchronous">
+
+    /* Combined size of transmit and receive buffer objects */
+    .bufferObjPoolSize = DRV_USART_QUEUE_SIZE_IDX${INDEX?string},
+
+    /* USART transmit and receive buffer buffer objects pool */
+    .bufferObjPool = (uintptr_t)&drvUSART${INDEX?string}BufferObjPool[0],
+
+    .interruptUSART = ${DRV_USART_PLIB}_IRQn,
+
+    <#if core.DMA_ENABLE?has_content>
+        <#lt>    .interruptDMA = ${core.DMA_INSTANCE_NAME}_IRQn,
+    </#if>
+
+</#if>
 
     .remapDataWidth = drvUsart${INDEX?string}remapDataWidth,
 
@@ -133,43 +177,6 @@ const DRV_USART_INIT drvUsart${INDEX?string}InitData =
     .remapStopBits = drvUsart${INDEX?string}remapStopBits,
 
     .remapError = drvUsart${INDEX?string}remapError,
-
-<#if core.DMA_ENABLE?has_content>
-<#if DRV_USART_TX_DMA == true>
-    .dmaChannelTransmit = DRV_USART_XMIT_DMA_CH_IDX${INDEX?string},
-
-    .usartTransmitAddress = (void *)${.vars["${DRV_USART_PLIB?lower_case}"].TRANSMIT_DATA_REGISTER},
-<#else>
-    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
-</#if>
-
-<#if DRV_USART_RX_DMA == true>
-    .dmaChannelReceive = DRV_USART_RCV_DMA_CH_IDX${INDEX?string},
-
-    .usartReceiveAddress = (void *)${.vars["${DRV_USART_PLIB?lower_case}"].RECEIVE_DATA_REGISTER},
-<#else>
-    .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
-</#if>
-
-</#if>
-<#if DRV_USART_MODE == "Asynchronous">
-
-    .queueSizeTransmit = DRV_USART_XMIT_QUEUE_SIZE_IDX${INDEX?string},
-
-    .queueSizeReceive = DRV_USART_RCV_QUEUE_SIZE_IDX${INDEX?string},
-
-    .interruptUSART = ${DRV_USART_PLIB}_IRQn,
-
-<#if core.DMA_ENABLE?has_content>
-    .interruptDMA = ${core.DMA_INSTANCE_NAME}_IRQn,
-
-</#if>
-<#else>
-    .numClients = DRV_USART_CLIENTS_NUMBER_IDX0,
-
-    .clientObjPool = (uintptr_t)&drvUSART${INDEX?string}ClientObjPool[0],
-</#if>
-
 };
 
 // </editor-fold>

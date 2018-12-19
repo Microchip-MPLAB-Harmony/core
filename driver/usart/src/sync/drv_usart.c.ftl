@@ -432,8 +432,8 @@ bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* set
         dObj = (DRV_USART_OBJ *)clientObj->hDriver;
 
         setupRemap.dataWidth = (DRV_USART_DATA_BIT)dObj->remapDataWidth[setup->dataWidth];
-        setupRemap.parity = (DRV_USART_DATA_BIT)dObj->remapParity[setup->parity];
-        setupRemap.stopBits = (DRV_USART_DATA_BIT)dObj->remapStopBits[setup->stopBits];
+        setupRemap.parity = (DRV_USART_PARITY)dObj->remapParity[setup->parity];
+        setupRemap.stopBits = (DRV_USART_STOP_BIT)dObj->remapStopBits[setup->stopBits];
         setupRemap.baudRate = setup->baudRate;
 
         if( (setupRemap.dataWidth != DRV_USART_DATA_BIT_INVALID) && (setupRemap.parity != DRV_USART_PARITY_INVALID) && (setupRemap.stopBits != DRV_USART_STOP_BIT_INVALID))

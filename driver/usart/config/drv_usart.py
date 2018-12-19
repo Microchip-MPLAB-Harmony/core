@@ -59,39 +59,18 @@ def instantiateComponent(usartComponent, index):
     usartPLIB.setReadOnly(True)
     usartPLIB.setDefaultValue("")
 
-    usartGlobalMode = usartComponent.createStringSymbol("DRV_USART_MODE", None)
-    usartGlobalMode.setLabel("**** Driver Mode Update ****")
-    usartGlobalMode.setValue(Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE"), 1)
-    usartGlobalMode.setVisible(False)
-    usartGlobalMode.setDependencies(usartDriverMode, ["drv_usart.DRV_USART_COMMON_MODE"])
-
     usartNumClients = usartComponent.createIntegerSymbol("DRV_USART_CLIENTS_NUM", None)
     usartNumClients.setLabel("Number of Clients")
     usartNumClients.setMax(10)
-    usartNumClients.setVisible((Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE") == "Synchronous"))
+    usartNumClients.setVisible(True)
     usartNumClients.setDefaultValue(1)
-    usartNumClients.setDependencies(syncModeOptions, ["DRV_USART_MODE"])
 
-    usartTXQueueSize = usartComponent.createIntegerSymbol("DRV_USART_TX_QUEUE_SIZE", None)
-    usartTXQueueSize.setLabel("Transmit Queue Size")
+    usartTXQueueSize = usartComponent.createIntegerSymbol("DRV_USART_QUEUE_SIZE", None)
+    usartTXQueueSize.setLabel("Transfer Queue Size")
     usartTXQueueSize.setMax(64)
     usartTXQueueSize.setDefaultValue(5)
     usartTXQueueSize.setVisible((Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE") == "Asynchronous"))
-    usartTXQueueSize.setDependencies(asyncModeOptions, ["DRV_USART_MODE"])
-    currentTxBufSize = usartTXQueueSize.getValue()
-
-    usartRXQueueSize = usartComponent.createIntegerSymbol("DRV_USART_RX_QUEUE_SIZE", None)
-    usartRXQueueSize.setLabel("Receive Queue Size")
-    usartRXQueueSize.setMax(64)
-    usartRXQueueSize.setDefaultValue(5)
-    usartRXQueueSize.setVisible((Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE") == "Asynchronous"))
-    usartRXQueueSize.setDependencies(asyncModeOptions, ["DRV_USART_MODE"])
-    currentRxBufSize = usartRXQueueSize.getValue()
-
-    usartBufPool = usartComponent.createBooleanSymbol("DRV_USART_BUFFER_POOL", None)
-    usartBufPool.setLabel("**** Buffer Pool Update ****")
-    usartBufPool.setDependencies(bufferPoolSize, ["DRV_USART_TX_QUEUE_SIZE","DRV_USART_RX_QUEUE_SIZE"])
-    usartBufPool.setVisible(False)
+    usartTXQueueSize.setDependencies(asyncModeOptions, ["drv_usart.DRV_USART_COMMON_MODE"])
 
     global usartTXDMA
     usartTXDMA = usartComponent.createBooleanSymbol("DRV_USART_TX_DMA", None)
@@ -136,10 +115,6 @@ def instantiateComponent(usartComponent, index):
     usartDependencyDMAComment = usartComponent.createCommentSymbol("DRV_USART_DEPENDENCY_DMA_COMMENT", None)
     usartDependencyDMAComment.setLabel("!!! Satisfy PLIB Dependency to Allocate DMA Channel !!!")
     usartDependencyDMAComment.setVisible(isDMAPresent)
-
-    # DRV_USART Common Dependency
-    bufPoolSize = Database.getSymbolValue("drv_usart", "DRV_USART_BUFFER_POOL_SIZE")
-    Database.setSymbolValue("drv_usart", "DRV_USART_BUFFER_POOL_SIZE", (bufPoolSize + currentTxBufSize + currentRxBufSize), 1)
 
 ############################################################################
 #### Code Generation ####
@@ -193,9 +168,6 @@ def instantiateComponent(usartComponent, index):
 ################################################################################
 #### Business Logic ####
 ################################################################################
-
-def usartDriverMode(symbol, event):
-    symbol.setValue(event["value"], 1)
 
 def onAttachmentConnected(source, target):
     global isDMAPresent
@@ -312,30 +284,8 @@ def destroyComponent(usartComponent):
         Database.setSymbolValue("core", dmaTxID, False, 2)
         Database.setSymbolValue("core", dmaRxID, False, 2)
 
-def syncModeOptions(symbol, event):
-    if event["value"] == "Synchronous":
-       symbol.setVisible(True)
-    else:
-       symbol.setVisible(False)
-
 def asyncModeOptions(symbol, event):
     if event["value"] == "Asynchronous":
        symbol.setVisible(True)
     else:
        symbol.setVisible(False)
-
-def bufferPoolSize(symbol, event):
-    global currentTxBufSize
-    global currentRxBufSize
-
-    bufPoolSize = Database.getSymbolValue("drv_usart", "DRV_USART_BUFFER_POOL_SIZE")
-
-    if event["id"] == "DRV_USART_TX_QUEUE_SIZE":
-        bufPoolSize = bufPoolSize - currentTxBufSize + event["value"]
-        currentTxBufSize = event["value"]
-    if event["id"] == "DRV_USART_RX_QUEUE_SIZE":
-        bufPoolSize = bufPoolSize - currentRxBufSize + event["value"]
-        currentRxBufSize = event["value"]
-
-    Database.clearSymbolValue("drv_usart", "DRV_USART_BUFFER_POOL_SIZE")
-    Database.setSymbolValue("drv_usart", "DRV_USART_BUFFER_POOL_SIZE", bufPoolSize, 2)

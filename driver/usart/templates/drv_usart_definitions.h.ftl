@@ -178,55 +178,50 @@ struct _DRV_USART_INIT
 {
     /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
-    const DRV_USART_PLIB_INTERFACE* usartPlib;
+    const DRV_USART_PLIB_INTERFACE*         usartPlib;
+
+    /* Number of clients */
+    uint32_t                                numClients;
+
+    /* Memory Pool for Client Objects */
+    uintptr_t                               clientObjPool;
 
 <#if core.DMA_ENABLE?has_content>
     /* This is the USART transmit DMA channel. */
-    SYS_DMA_CHANNEL dmaChannelTransmit;
+    SYS_DMA_CHANNEL                         dmaChannelTransmit;
 
     /* This is the USART receive DMA channel. */
-    SYS_DMA_CHANNEL dmaChannelReceive;
+    SYS_DMA_CHANNEL                         dmaChannelReceive;
 
     /* This is the USART transmit register address. Used for DMA operation. */
-    void* usartTransmitAddress;
+    void*                                   usartTransmitAddress;
 
     /* This is the USART receive register address. Used for DMA operation. */
-    void* usartReceiveAddress;
+    void*                                   usartReceiveAddress;
 
+    /* This is the DMA channel interrupt source. */
+    INT_SOURCE                              interruptDMA;
 </#if>
-    const uint32_t* remapDataWidth;
 
-    const uint32_t* remapParity;
+    const uint32_t*                         remapDataWidth;
 
-    const uint32_t* remapStopBits;
+    const uint32_t*                         remapParity;
 
-    const uint32_t* remapError;
+    const uint32_t*                         remapStopBits;
 
-<#if DRV_USART_MODE == "Asynchronous">
-    /* This is the receive buffer queue size. This is the maximum
-     * number of read requests that driver will queue. This can be updated
-     * through DRV_USART_RCV_QUEUE_SIZE_IDXn macro in configuration.h */
-    unsigned int queueSizeReceive;
+    const uint32_t*                         remapError;
 
-    /* This is the transmit buffer queue size. This is the maximum
-     * number of write requests that driver will queue. This can be updated
-     * through DRV_USART_XMIT_QUEUE_SIZE_IDXn macro in configuration.h */
-    unsigned int queueSizeTransmit;
+<#if drv_usart.DRV_USART_COMMON_MODE == "Asynchronous">
+    /* Size of transmit and receive buffer pool */
+    uint32_t                                bufferObjPoolSize;
+
+    /* Pointer to the transmit and receive buffer pool */
+    uintptr_t                               bufferObjPool;
 
     /* Interrupt source ID for the USART interrupt. */
-    INT_SOURCE interruptUSART;
-
-<#if core.DMA_ENABLE?has_content>
-    /* This is the DMA channel interrupt source. */
-    INT_SOURCE interruptDMA;
+    INT_SOURCE                              interruptUSART;
 </#if>
-<#else>
-    /* Memory Pool for Client Objects */
-    uintptr_t clientObjPool;
 
-    /* Number of clients */
-    uint32_t numClients;
-</#if>
 };
 
 //DOM-IGNORE-BEGIN
