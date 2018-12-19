@@ -55,7 +55,7 @@ configName  = Variables.get("__CONFIGURATION_NAME")
 freeRtosdefSym = thirdPartyFreeRTOS.createSettingSymbol("FREERTOS_XC32_INCLUDE_DIRS", None)
 freeRtosdefSym.setCategory("C32")
 freeRtosdefSym.setKey("extra-include-directories")
-freeRtosdefSym.setValue("../src/third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM0;../src/third_party/rtos/FreeRTOS/Source/Include;")
+freeRtosdefSym.setValue("../src/third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM0;../src/third_party/rtos/FreeRTOS/Source/include;")
 freeRtosdefSym.setAppend(True, ";")
 
 freeRtosPortSource = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SAM_PORT_C", None)
