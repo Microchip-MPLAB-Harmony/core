@@ -4664,26 +4664,57 @@
     <UniqueComponent dnOrder="3" id="dfp"/>
     <GeneratorComponent dnOrder="4" id="drv_memory">
       <Symbols dnOrder="0">
-        <Combo dnOrder="0" id="DRV_MEMORY_COMMON_MODE">
+        <File dnOrder="0" id="DRV_MEMORY_ASYNC_HEADER_LOCAL">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="1" id="DRV_MEMORY_ASYNC_SOURCE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Combo dnOrder="2" id="DRV_MEMORY_COMMON_MODE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="drv_memory" priority="1" value="Asynchronous"/>
-            </Dynamic>
+            <User dnOrder="0" value="Asynchronous"/>
           </Values>
         </Combo>
-        <Boolean dnOrder="1" id="DRV_MEMORY_COMMON_SYS_TIME_ENABLE">
+        <Boolean dnOrder="3" id="DRV_MEMORY_COMMON_SYS_TIME_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="drv_memory" priority="1" value="false"/>
             </Dynamic>
           </Values>
         </Boolean>
+        <File dnOrder="4" id="DRV_MEMORY_SYNC_HEADER_LOCAL">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="5" id="DRV_MEMORY_SYNC_SOURCE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </File>
       </Symbols>
       <Instances dnOrder="1">
         <InstanceComponent dnOrder="0" id="drv_memory" instance="0">
           <Symbols dnOrder="0">
             <Integer dnOrder="0" id="DRV_MEMORY_BUFFER_QUEUE_SIZE">
-              <Values dnOrder="0">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+              <Values dnOrder="1">
                 <User dnOrder="0" value="5"/>
               </Values>
             </Integer>
@@ -4704,14 +4735,21 @@
                 </Boolean>
               </Attributes>
             </Comment>
-            <Boolean dnOrder="3" id="DRV_MEMORY_ERASE_ENABLE">
+            <Integer dnOrder="3" id="DRV_MEMORY_DEVICE_POLL_US">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </Integer>
+            <Boolean dnOrder="4" id="DRV_MEMORY_ERASE_ENABLE">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0">
                   <Value dnOrder="0" id="drv_memory_0" priority="1" value="true"/>
                 </Dynamic>
               </Values>
             </Boolean>
-            <Boolean dnOrder="4" id="DRV_MEMORY_INTERRUPT_ENABLE">
+            <Boolean dnOrder="5" id="DRV_MEMORY_INTERRUPT_ENABLE">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0">
                   <Value dnOrder="0" id="drv_memory_0" priority="1" value="false"/>
@@ -4735,7 +4773,12 @@
         <InstanceComponent dnOrder="1" id="drv_memory" instance="1">
           <Symbols dnOrder="0">
             <Integer dnOrder="0" id="DRV_MEMORY_BUFFER_QUEUE_SIZE">
-              <Values dnOrder="0">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+              <Values dnOrder="1">
                 <User dnOrder="0" value="5"/>
               </Values>
             </Integer>
@@ -4751,6 +4794,9 @@
                 <String dnOrder="0" id="text">
                   <Value dnOrder="0">***&amp;#160;Configure&amp;#160;Memory&amp;#160;Device&amp;#160;in&amp;#160;EFC&amp;#160;Configurations&amp;#160;***</Value>
                 </String>
+                <Boolean dnOrder="1" id="visible">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
               </Attributes>
             </Comment>
             <Boolean dnOrder="3" id="DRV_MEMORY_ERASE_ENABLE">
@@ -4776,16 +4822,29 @@
             </String>
             <File dnOrder="6" id="DRV_MEMORY_PLIB_HEADER">
               <Attributes dnOrder="0">
-                <String dnOrder="0" id="name">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+                <String dnOrder="1" id="name">
                   <Value dnOrder="0">drv_memory_efc.h</Value>
                 </String>
               </Attributes>
             </File>
             <File dnOrder="7" id="DRV_MEMORY_PLIB_SOURCE">
               <Attributes dnOrder="0">
-                <String dnOrder="0" id="name">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+                <String dnOrder="1" id="name">
                   <Value dnOrder="0">drv_memory_efc.c</Value>
                 </String>
+              </Attributes>
+            </File>
+            <File dnOrder="8" id="DRV_MEMORY_PLIB_SYS_DEF">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
               </Attributes>
             </File>
           </Symbols>
@@ -4881,6 +4940,34 @@
             </Dynamic>
           </Values>
         </Boolean>
+        <Integer dnOrder="1" id="ERASE_BUFFER_SIZE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Integer>
+        <Comment dnOrder="2" id="ERASE_COMMENT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Comment>
+        <Integer dnOrder="3" id="MEMORY_MEDIA_SIZE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Integer>
+        <String dnOrder="4" id="START_ADDRESS">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </String>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectCapability dnOrder="0" id="EFC_MEMORY">
@@ -5206,7 +5293,7 @@
         <ElementPosition dnOrder="2" id="cmsis" x="120" y="20"/>
         <ElementPosition dnOrder="3" id="core" x="20" y="20"/>
         <ElementPosition dnOrder="4" id="dfp" x="260" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_memory" x="359" y="111"/>
+        <ElementPosition dnOrder="5" id="drv_memory" x="360" y="120"/>
         <ElementPosition dnOrder="6" id="drv_sst26" x="185" y="115"/>
         <ElementPosition dnOrder="7" id="efc" x="147" y="282"/>
         <ElementPosition dnOrder="8" id="qspi" x="23" y="150"/>
