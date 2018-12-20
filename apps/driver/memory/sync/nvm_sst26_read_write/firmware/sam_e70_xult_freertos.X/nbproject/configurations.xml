@@ -15,13 +15,13 @@
             <itemPath>../src/config/sam_e70_xult_freertos/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="driver" projectFiles="true">
-            <logicalFolder name="f2" displayName="memory" projectFiles="true">
+            <logicalFolder name="f1" displayName="memory" projectFiles="true">
+              <itemPath>../src/config/sam_e70_xult_freertos/driver/memory/src/drv_memory_local.h</itemPath>
               <itemPath>../src/config/sam_e70_xult_freertos/driver/memory/drv_memory.h</itemPath>
               <itemPath>../src/config/sam_e70_xult_freertos/driver/memory/drv_memory_definitions.h</itemPath>
               <itemPath>../src/config/sam_e70_xult_freertos/driver/memory/drv_memory_efc.h</itemPath>
-              <itemPath>../src/config/sam_e70_xult_freertos/driver/memory/src/drv_memory_local.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="sst26" projectFiles="true">
+            <logicalFolder name="f2" displayName="sst26" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult_freertos/driver/sst26/drv_sst26.h</itemPath>
               <itemPath>../src/config/sam_e70_xult_freertos/driver/sst26/src/drv_sst26_local.h</itemPath>
               <itemPath>../src/config/sam_e70_xult_freertos/driver/sst26/drv_sst26_definitions.h</itemPath>
@@ -198,11 +198,11 @@
             <itemPath>../src/config/sam_e70_xult_freertos/bsp/bsp.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="driver" projectFiles="true">
-            <logicalFolder name="f2" displayName="memory" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult_freertos/driver/memory/src/drv_memory_efc.c</itemPath>
+            <logicalFolder name="f1" displayName="memory" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult_freertos/driver/memory/src/drv_memory.c</itemPath>
+              <itemPath>../src/config/sam_e70_xult_freertos/driver/memory/src/drv_memory_efc.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="sst26" projectFiles="true">
+            <logicalFolder name="f2" displayName="sst26" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult_freertos/driver/sst26/src/drv_sst26.c</itemPath>
             </logicalFolder>
           </logicalFolder>
@@ -364,7 +364,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/sam_e70_xult_freertos;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/CM7;../src/third_party/rtos/FreeRTOS/Source/Include;../src/arm"/>
+                  value="../src;../src/config/sam_e70_xult_freertos;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/CM7;../src/third_party/rtos/FreeRTOS/Source/Include;../src/arm;../src/third_party/rtos/FreeRTOS/Source/include"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
