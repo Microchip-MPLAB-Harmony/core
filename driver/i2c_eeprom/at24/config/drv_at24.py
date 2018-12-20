@@ -28,9 +28,6 @@
 
 at24MemoryInterruptEnable = None
 
-myVariableValue = Database.getSymbolValue("core", "COMPONENT_PACKAGE")
-pioPinout = ATDF.getNode('/avr-tools-device-file/pinouts/pinout@[name= "' + str(myVariableValue) + '"]')
-
 def updateEEPROMAddressLen(symbol, event):
     symObj=event["symbol"]
     if (symObj.getValue() > 256):
@@ -44,12 +41,6 @@ def at24SetMemoryDependency(symbol, event):
         symbol.setVisible(True)
     else:
         symbol.setVisible(False)
-
-#def updatePinPosition(symbol, event):
-    # TBD: "value" of at24SymChipSelectPin and other pin symbols should be updated
-    # here based on the package selected in Pin manager.
-
-
 
 def instantiateComponent(at24Component):
     global at24MemoryInterruptEnable
@@ -136,7 +127,7 @@ def instantiateComponent(at24Component):
     configName = Variables.get("__CONFIGURATION_NAME")
 
     at24HeaderFile = at24Component.createFileSymbol("AT24_HEADER", None)
-    at24HeaderFile.setSourcePath("driver/at24/drv_at24.h")
+    at24HeaderFile.setSourcePath("driver/i2c_eeprom/at24/drv_at24.h")
     at24HeaderFile.setOutputName("drv_at24.h")
     at24HeaderFile.setDestPath("driver/at24/")
     at24HeaderFile.setProjectPath("config/" + configName + "/driver/at24/")
@@ -144,7 +135,7 @@ def instantiateComponent(at24Component):
     at24HeaderFile.setOverwrite(True)
 
     at24SymHeaderDefFile = at24Component.createFileSymbol("DRV_AT24_DEF", None)
-    at24SymHeaderDefFile.setSourcePath("driver/at24/drv_at24_definitions.h")
+    at24SymHeaderDefFile.setSourcePath("driver/i2c_eeprom/at24/drv_at24_definitions.h")
     at24SymHeaderDefFile.setOutputName("drv_at24_definitions.h")
     at24SymHeaderDefFile.setDestPath("driver/at24")
     at24SymHeaderDefFile.setProjectPath("config/" + configName + "/driver/at24/")
@@ -153,7 +144,7 @@ def instantiateComponent(at24Component):
     at24SymHeaderDefFile.setOverwrite(True)
 
     at24SourceFile = at24Component.createFileSymbol("AT24_SOURCE", None)
-    at24SourceFile.setSourcePath("driver/at24/src/drv_at24.c")
+    at24SourceFile.setSourcePath("driver/i2c_eeprom/at24/src/drv_at24.c")
     at24SourceFile.setOutputName("drv_at24.c")
     at24SourceFile.setDestPath("driver/at24/src")
     at24SourceFile.setProjectPath("config/" + configName + "/driver/at24/")
@@ -162,7 +153,7 @@ def instantiateComponent(at24Component):
     at24SourceFile.setMarkup(False)
 
     at24AsyncSymHeaderLocalFile = at24Component.createFileSymbol("DRV_AT24_HEADER_LOCAL", None)
-    at24AsyncSymHeaderLocalFile.setSourcePath("driver/at24/src/drv_at24_local.h")
+    at24AsyncSymHeaderLocalFile.setSourcePath("driver/i2c_eeprom/at24/src/drv_at24_local.h")
     at24AsyncSymHeaderLocalFile.setOutputName("drv_at24_local.h")
     at24AsyncSymHeaderLocalFile.setDestPath("driver/at24/src")
     at24AsyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/at24/")
@@ -172,7 +163,7 @@ def instantiateComponent(at24Component):
 
     # at24AsyncSymHeaderLocalFile = at24Component.createFileSymbol("DRV_AT24_HEADER_LOCAL", None)
     # at24AsyncSymHeaderLocalFile.setOutputName("drv_at24_local.h")
-    # at24AsyncSymHeaderLocalFile.setSourcePath("driver/at24/templates/system/drv_at24_local.h.ftl")
+    # at24AsyncSymHeaderLocalFile.setSourcePath("driver/i2c_eeprom/at24/templates/system/drv_at24_local.h.ftl")
     # at24AsyncSymHeaderLocalFile.setDestPath("driver/at24/src")
     # at24AsyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/at24/")
     # at24AsyncSymHeaderLocalFile.setType("HEADER")
@@ -184,31 +175,31 @@ def instantiateComponent(at24Component):
     at24SystemDefFile = at24Component.createFileSymbol("AT24_DEF", None)
     at24SystemDefFile.setType("STRING")
     at24SystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-    at24SystemDefFile.setSourcePath("driver/at24/templates/system/definitions.h.ftl")
+    at24SystemDefFile.setSourcePath("driver/i2c_eeprom/at24/templates/system/definitions.h.ftl")
     at24SystemDefFile.setMarkup(True)
 
     at24SymSystemDefObjFile = at24Component.createFileSymbol("DRV_AT24_SYSTEM_DEF_OBJECT", None)
     at24SymSystemDefObjFile.setType("STRING")
     at24SymSystemDefObjFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_OBJECTS")
-    at24SymSystemDefObjFile.setSourcePath("driver/at24/templates/system/definitions_objects.h.ftl")
+    at24SymSystemDefObjFile.setSourcePath("driver/i2c_eeprom/at24/templates/system/definitions_objects.h.ftl")
     at24SymSystemDefObjFile.setMarkup(True)
 
     at24SymSystemConfigFile = at24Component.createFileSymbol("DRV_AT24_CONFIGIRUTION", None)
     at24SymSystemConfigFile.setType("STRING")
     at24SymSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_DRIVER_CONFIGURATION")
-    at24SymSystemConfigFile.setSourcePath("driver/at24/templates/system/configuration.h.ftl")
+    at24SymSystemConfigFile.setSourcePath("driver/i2c_eeprom/at24/templates/system/configuration.h.ftl")
     at24SymSystemConfigFile.setMarkup(True)
 
     at24SymSystemInitDataFile = at24Component.createFileSymbol("DRV_AT24_INIT_DATA", None)
     at24SymSystemInitDataFile.setType("STRING")
     at24SymSystemInitDataFile.setOutputName("core.LIST_SYSTEM_INIT_C_DRIVER_INITIALIZATION_DATA")
-    at24SymSystemInitDataFile.setSourcePath("driver/at24/templates/system/initialize_data.c.ftl")
+    at24SymSystemInitDataFile.setSourcePath("driver/i2c_eeprom/at24/templates/system/initialize_data.c.ftl")
     at24SymSystemInitDataFile.setMarkup(True)
 
     at24SystemInitFile = at24Component.createFileSymbol("AT24_INIT", None)
     at24SystemInitFile.setType("STRING")
     at24SystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_SYS_INITIALIZE_DRIVERS")
-    at24SystemInitFile.setSourcePath("driver/at24/templates/system/initialize.c.ftl")
+    at24SystemInitFile.setSourcePath("driver/i2c_eeprom/at24/templates/system/initialize.c.ftl")
     at24SystemInitFile.setMarkup(True)
 
 def onAttachmentConnected(source, target):
