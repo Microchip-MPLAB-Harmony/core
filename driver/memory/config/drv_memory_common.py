@@ -63,6 +63,18 @@ def setCommonMode(symbol, event):
         else:
             symbol.setValue("Synchronous", 1)
 
+def syncFileGen(symbol, event):
+    if(event["value"] == "Synchronous"):
+       symbol.setEnabled(True)
+    else:
+       symbol.setEnabled(False)
+
+def aSyncFileGen(symbol, event):
+    if(event["value"] == "Asynchronous"):
+       symbol.setEnabled(True)
+    else:
+       symbol.setEnabled(False)
+
 def instantiateComponent(memoryCommonComponent):
     global memoryCommonFsEnable
 
@@ -106,6 +118,48 @@ def instantiateComponent(memoryCommonComponent):
     ############################################################################
 
     configName = Variables.get("__CONFIGURATION_NAME")
+
+    # Async Source Files
+    memoryAsyncSourceFile = memoryCommonComponent.createFileSymbol("DRV_MEMORY_ASYNC_SOURCE", None)
+    memoryAsyncSourceFile.setSourcePath("driver/memory/async/src/drv_memory.c")
+    memoryAsyncSourceFile.setOutputName("drv_memory.c")
+    memoryAsyncSourceFile.setDestPath("driver/memory/src")
+    memoryAsyncSourceFile.setProjectPath("config/" + configName + "/driver/memory/")
+    memoryAsyncSourceFile.setType("SOURCE")
+    memoryAsyncSourceFile.setOverwrite(True)
+    memoryAsyncSourceFile.setEnabled((memoryCommonMode.getValue() == "Asynchronous"))
+    memoryAsyncSourceFile.setDependencies(aSyncFileGen, ["DRV_MEMORY_COMMON_MODE"])
+
+    memoryAsyncHeaderLocalFile = memoryCommonComponent.createFileSymbol("DRV_MEMORY_ASYNC_HEADER_LOCAL", None)
+    memoryAsyncHeaderLocalFile.setSourcePath("driver/memory/async/src/drv_memory_local.h")
+    memoryAsyncHeaderLocalFile.setOutputName("drv_memory_local.h")
+    memoryAsyncHeaderLocalFile.setDestPath("driver/memory/src")
+    memoryAsyncHeaderLocalFile.setProjectPath("config/" + configName + "/driver/memory/")
+    memoryAsyncHeaderLocalFile.setType("HEADER")
+    memoryAsyncHeaderLocalFile.setOverwrite(True)
+    memoryAsyncHeaderLocalFile.setEnabled((memoryCommonMode.getValue() == "Asynchronous"))
+    memoryAsyncHeaderLocalFile.setDependencies(aSyncFileGen, ["DRV_MEMORY_COMMON_MODE"])
+
+    # Sync Source Files
+    memorySyncSourceFile = memoryCommonComponent.createFileSymbol("DRV_MEMORY_SYNC_SOURCE", None)
+    memorySyncSourceFile.setSourcePath("driver/memory/sync/src/drv_memory.c")
+    memorySyncSourceFile.setOutputName("drv_memory.c")
+    memorySyncSourceFile.setDestPath("driver/memory/src")
+    memorySyncSourceFile.setProjectPath("config/" + configName + "/driver/memory/")
+    memorySyncSourceFile.setType("SOURCE")
+    memorySyncSourceFile.setOverwrite(True)
+    memorySyncSourceFile.setEnabled((memoryCommonMode.getValue() == "Synchronous"))
+    memorySyncSourceFile.setDependencies(syncFileGen, ["DRV_MEMORY_COMMON_MODE"])
+
+    memorySyncHeaderLocalFile = memoryCommonComponent.createFileSymbol("DRV_MEMORY_SYNC_HEADER_LOCAL", None)
+    memorySyncHeaderLocalFile.setSourcePath("driver/memory/sync/src/drv_memory_local.h")
+    memorySyncHeaderLocalFile.setOutputName("drv_memory_local.h")
+    memorySyncHeaderLocalFile.setDestPath("driver/memory/src")
+    memorySyncHeaderLocalFile.setProjectPath("config/" + configName + "/driver/memory/")
+    memorySyncHeaderLocalFile.setType("HEADER")
+    memorySyncHeaderLocalFile.setOverwrite(True)
+    memorySyncHeaderLocalFile.setEnabled((memoryCommonMode.getValue() == "Synchronous"))
+    memorySyncHeaderLocalFile.setDependencies(syncFileGen, ["DRV_MEMORY_COMMON_MODE"])
 
     memoryCommonFsSourceFile = memoryCommonComponent.createFileSymbol("DRV_MEMORY_FS_SOURCE", None)
     memoryCommonFsSourceFile.setSourcePath("driver/memory/templates/drv_memory_file_system.c.ftl")
