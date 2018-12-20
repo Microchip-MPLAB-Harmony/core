@@ -50,6 +50,8 @@ def loadModule():
 
         {"name":"at25", "label": "AT25", "type":"driver", "display_path":"SPI EEPROM", "actual_path":"spi_eeprom", "instance":"single", "capability":["MEMORY"], "dependency":["SPI"], "condition":"True"},
 
+        {"name":"at25df", "label": "AT25DF", "type":"driver", "display_path":"SPI FLASH", "actual_path":"spi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SPI"], "condition":"True"},
+
         {"name":"sdhc", "label":"SDHC", "type":"driver", "display_path":"SDCARD", "actual_path":"", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["SYS_TIME"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"])'},
 
         {"name":"sdspi", "label": "SD Card (SPI)", "type":"driver", "display_path":"SDCARD", "actual_path":"", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["SPI", "SYS_TIME"], "condition":"True"}
