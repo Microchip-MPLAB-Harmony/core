@@ -78,22 +78,22 @@
       <logicalFolder name="f4" displayName="FreeRTOS" projectFiles="true">
         <logicalFolder name="f1" displayName="Source" projectFiles="true">
           <logicalFolder name="f1" displayName="include" projectFiles="true">
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/croutine.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/event_groups.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/FreeRTOS.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/list.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/mpu_wrappers.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/portable.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/projdefs.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/queue.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/semphr.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/stack_macros.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/deprecated_definitions.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/task.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/timers.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/mpu_prototypes.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/stream_buffer.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/message_buffer.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/croutine.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/event_groups.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/FreeRTOS.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/list.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/mpu_wrappers.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/portable.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/projdefs.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/queue.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/semphr.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/stack_macros.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/deprecated_definitions.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/task.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/timers.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/mpu_prototypes.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/stream_buffer.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/message_buffer.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="portable" projectFiles="true">
             <logicalFolder name="f1" displayName="GCC" projectFiles="true">
@@ -304,7 +304,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME70_DFP" vendor="Atmel" version="2.4.131"/>
+        <pack name="SAME70_DFP" vendor="Atmel" version="2.4.133"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>
