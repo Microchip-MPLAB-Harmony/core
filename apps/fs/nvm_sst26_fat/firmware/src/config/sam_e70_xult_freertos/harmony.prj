@@ -83,8 +83,8 @@
           <Name dnOrder="1">drv_sst26.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/driver/sst26/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sst26/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C6702ECC275F0F09E3A8B5C944D8A54C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C6702ECC275F0F09E3A8B5C944D8A54C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1EC4288C71297060CFF294080914CE27</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1EC4288C71297060CFF294080914CE27</UserChecksum>
         </File>
         <File dnOrder="10">
           <Type dnOrder="0">SOURCE</Type>
@@ -107,8 +107,8 @@
           <Name dnOrder="1">ff.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/system/fs/fat_fs/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/fs/fat_fs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BEFB70C8F601D3FDFD8F06B108087DCC</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BEFB70C8F601D3FDFD8F06B108087DCC</UserChecksum>
+          <GeneratedChecksum dnOrder="4">530F3D9EA6DADE98FD7784877A7EFC5A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">530F3D9EA6DADE98FD7784877A7EFC5A</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
@@ -131,8 +131,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">91BAD23A7CF3EB58322845A405BF25B0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">91BAD23A7CF3EB58322845A405BF25B0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">16F8A38F935D9254E7061AE946E26933</GeneratedChecksum>
+          <UserChecksum dnOrder="5">16F8A38F935D9254E7061AE946E26933</UserChecksum>
         </File>
         <File dnOrder="16">
           <Type dnOrder="0">SOURCE</Type>
@@ -259,8 +259,8 @@
           <Name dnOrder="1">startup.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">939640DD4A215273E935FBFC33620993</GeneratedChecksum>
-          <UserChecksum dnOrder="5">939640DD4A215273E935FBFC33620993</UserChecksum>
+          <GeneratedChecksum dnOrder="4">DEE4162D62C70A0347C6B20702BFBC06</GeneratedChecksum>
+          <UserChecksum dnOrder="5">DEE4162D62C70A0347C6B20702BFBC06</UserChecksum>
         </File>
         <File dnOrder="32">
           <Type dnOrder="0">SOURCE</Type>
@@ -299,8 +299,8 @@
           <Name dnOrder="1">sys_time.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/system/time/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/time/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A0C2B4FF0F2D1C9C04F6C6F0FC63788E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A0C2B4FF0F2D1C9C04F6C6F0FC63788E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B38BEA175BDC473F5914523A8E1F06E8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B38BEA175BDC473F5914523A8E1F06E8</UserChecksum>
         </File>
         <File dnOrder="37">
           <Type dnOrder="0">SOURCE</Type>
@@ -345,8 +345,8 @@
         <File dnOrder="42">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">FreeRTOS.h</Name>
-          <LogicalPath dnOrder="2">FreeRTOS/Source/Include</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/Include/</PhysicalPath>
+          <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">C7BB746648A6C4E1B795150EE9E13B23</GeneratedChecksum>
           <UserChecksum dnOrder="5">C7BB746648A6C4E1B795150EE9E13B23</UserChecksum>
         </File>
@@ -483,8 +483,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">14B83BBE689B4B8C99FCC646A095F342</GeneratedChecksum>
-          <UserChecksum dnOrder="5">14B83BBE689B4B8C99FCC646A095F342</UserChecksum>
+          <GeneratedChecksum dnOrder="4">23E5942324B5FB3E8DA9B224215DF560</GeneratedChecksum>
+          <UserChecksum dnOrder="5">23E5942324B5FB3E8DA9B224215DF560</UserChecksum>
         </File>
         <File dnOrder="60">
           <Type dnOrder="0">HEADER</Type>
@@ -497,8 +497,8 @@
         <File dnOrder="61">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">croutine.h</Name>
-          <LogicalPath dnOrder="2">FreeRTOS/Source/Include</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/Include/</PhysicalPath>
+          <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">0A32C42550C23D91E88EACF49CB1038D</GeneratedChecksum>
           <UserChecksum dnOrder="5">0A32C42550C23D91E88EACF49CB1038D</UserChecksum>
         </File>
@@ -521,8 +521,8 @@
         <File dnOrder="64">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">deprecated_definitions.h</Name>
-          <LogicalPath dnOrder="2">FreeRTOS/Source/Include</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/Include/</PhysicalPath>
+          <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">D8668D5366E30077151F27747B127FF9</GeneratedChecksum>
           <UserChecksum dnOrder="5">D8668D5366E30077151F27747B127FF9</UserChecksum>
         </File>
@@ -595,8 +595,8 @@
           <Name dnOrder="1">drv_sst26.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/driver/sst26/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sst26/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1922795636FDE929D1BF9BC09DCA339D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1922795636FDE929D1BF9BC09DCA339D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">ECC75F7999431B035BA9F997FB67D380</GeneratedChecksum>
+          <UserChecksum dnOrder="5">ECC75F7999431B035BA9F997FB67D380</UserChecksum>
         </File>
         <File dnOrder="74">
           <Type dnOrder="0">HEADER</Type>
@@ -611,8 +611,8 @@
           <Name dnOrder="1">drv_sst26_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/driver/sst26/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sst26/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1106CEE9F104999E39FB866EA827B21F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1106CEE9F104999E39FB866EA827B21F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">7CE983EE5BB1896DB1CDE7BB01F6C80B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7CE983EE5BB1896DB1CDE7BB01F6C80B</UserChecksum>
         </File>
         <File dnOrder="76">
           <Type dnOrder="0">HEADER</Type>
@@ -625,8 +625,8 @@
         <File dnOrder="77">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">event_groups.h</Name>
-          <LogicalPath dnOrder="2">FreeRTOS/Source/Include</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/Include/</PhysicalPath>
+          <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">9596B64893D5B8092B5FBC92D2355803</GeneratedChecksum>
           <UserChecksum dnOrder="5">9596B64893D5B8092B5FBC92D2355803</UserChecksum>
         </File>
@@ -697,8 +697,8 @@
         <File dnOrder="86">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">list.h</Name>
-          <LogicalPath dnOrder="2">FreeRTOS/Source/Include</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/Include/</PhysicalPath>
+          <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">32539EFF6BC28ED0F71660A40751ED6A</GeneratedChecksum>
           <UserChecksum dnOrder="5">32539EFF6BC28ED0F71660A40751ED6A</UserChecksum>
         </File>
@@ -721,8 +721,8 @@
         <File dnOrder="89">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">message_buffer.h</Name>
-          <LogicalPath dnOrder="2">FreeRTOS/Source/Include</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/Include/</PhysicalPath>
+          <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">16FB71596800CA7101A1D4A29AECD777</GeneratedChecksum>
           <UserChecksum dnOrder="5">16FB71596800CA7101A1D4A29AECD777</UserChecksum>
         </File>
@@ -753,16 +753,16 @@
         <File dnOrder="93">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mpu_prototypes.h</Name>
-          <LogicalPath dnOrder="2">FreeRTOS/Source/Include</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/Include/</PhysicalPath>
+          <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">754BB96D214BFE26758C4BD27B4FEDD6</GeneratedChecksum>
           <UserChecksum dnOrder="5">754BB96D214BFE26758C4BD27B4FEDD6</UserChecksum>
         </File>
         <File dnOrder="94">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mpu_wrappers.h</Name>
-          <LogicalPath dnOrder="2">FreeRTOS/Source/Include</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/Include/</PhysicalPath>
+          <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">52F9B7F7526A81F7294CFA451B5FEC65</GeneratedChecksum>
           <UserChecksum dnOrder="5">52F9B7F7526A81F7294CFA451B5FEC65</UserChecksum>
         </File>
@@ -889,8 +889,8 @@
         <File dnOrder="110">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">portable.h</Name>
-          <LogicalPath dnOrder="2">FreeRTOS/Source/Include</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/Include/</PhysicalPath>
+          <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">CA616A0CC0B2C957A76DE04F645C7F9D</GeneratedChecksum>
           <UserChecksum dnOrder="5">CA616A0CC0B2C957A76DE04F645C7F9D</UserChecksum>
         </File>
@@ -905,8 +905,8 @@
         <File dnOrder="112">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">projdefs.h</Name>
-          <LogicalPath dnOrder="2">FreeRTOS/Source/Include</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/Include/</PhysicalPath>
+          <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">BB447E338E44F78E9396BF4DDC118F39</GeneratedChecksum>
           <UserChecksum dnOrder="5">BB447E338E44F78E9396BF4DDC118F39</UserChecksum>
         </File>
@@ -929,8 +929,8 @@
         <File dnOrder="115">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">queue.h</Name>
-          <LogicalPath dnOrder="2">FreeRTOS/Source/Include</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/Include/</PhysicalPath>
+          <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">44EE934CAEDBAC9EB9EF5B42137FB9DE</GeneratedChecksum>
           <UserChecksum dnOrder="5">44EE934CAEDBAC9EB9EF5B42137FB9DE</UserChecksum>
         </File>
@@ -985,8 +985,8 @@
         <File dnOrder="122">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">semphr.h</Name>
-          <LogicalPath dnOrder="2">FreeRTOS/Source/Include</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/Include/</PhysicalPath>
+          <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">11C8C3BAB2C11F5A8EFAA8DD31EDD87A</GeneratedChecksum>
           <UserChecksum dnOrder="5">11C8C3BAB2C11F5A8EFAA8DD31EDD87A</UserChecksum>
         </File>
@@ -1017,16 +1017,16 @@
         <File dnOrder="126">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">stack_macros.h</Name>
-          <LogicalPath dnOrder="2">FreeRTOS/Source/Include</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/Include/</PhysicalPath>
+          <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">2C98A994E4B0CBAD54531653D3B1050A</GeneratedChecksum>
           <UserChecksum dnOrder="5">2C98A994E4B0CBAD54531653D3B1050A</UserChecksum>
         </File>
         <File dnOrder="127">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">stream_buffer.h</Name>
-          <LogicalPath dnOrder="2">FreeRTOS/Source/Include</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/Include/</PhysicalPath>
+          <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">2ECFF9675FFEBF50A8D8CE0F10A84BEE</GeneratedChecksum>
           <UserChecksum dnOrder="5">2ECFF9675FFEBF50A8D8CE0F10A84BEE</UserChecksum>
         </File>
@@ -1137,8 +1137,8 @@
         <File dnOrder="141">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">task.h</Name>
-          <LogicalPath dnOrder="2">FreeRTOS/Source/Include</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/Include/</PhysicalPath>
+          <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">A9958A1E7E989C452B1ED01177B1C059</GeneratedChecksum>
           <UserChecksum dnOrder="5">A9958A1E7E989C452B1ED01177B1C059</UserChecksum>
         </File>
@@ -1153,8 +1153,8 @@
         <File dnOrder="143">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">timers.h</Name>
-          <LogicalPath dnOrder="2">FreeRTOS/Source/Include</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/Include/</PhysicalPath>
+          <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">0FB97A98EDB13E4B7EE8E117AAE98EB6</GeneratedChecksum>
           <UserChecksum dnOrder="5">0FB97A98EDB13E4B7EE8E117AAE98EB6</UserChecksum>
         </File>

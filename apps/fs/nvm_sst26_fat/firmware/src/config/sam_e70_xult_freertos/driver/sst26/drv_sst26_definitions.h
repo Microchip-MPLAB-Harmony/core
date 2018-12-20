@@ -11,8 +11,8 @@
     SST26 Driver Definitions Header File
 
   Description:
-    This file provides implementation-specific definitions for the SST26 
-	driver's system interface. 
+    This file provides implementation-specific definitions for the SST26
+	driver's system interface.
 *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -71,7 +71,7 @@
   The set of PLIB APIs used by the SST26 driver.
 
   Description:
-  The API set holds the function names available at the PLIb level for the 
+  The API set holds the function names available at the PLIb level for the
   corresponding functionality. Driver may call these functions to make use of
   the features provided by the PLIB.
 
@@ -117,7 +117,7 @@ typedef struct
 
 typedef struct
 {
-    /* Identifies the PLIB API set to be used by the driver to access the 
+    /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
     const DRV_SST26_PLIB_INTERFACE *sst26Plib;
 } DRV_SST26_INIT;
@@ -131,4 +131,3 @@ typedef struct
 
 
 #endif // #ifndef DRV_SST26_DEFINITIONS_H
-

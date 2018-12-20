@@ -73,7 +73,6 @@ extern "C" {
 // *****************************************************************************
 #define DCACHE_CLEAN_BY_ADDR(data, size)       SCB_CleanDCache_by_Addr((uint32_t *)data, size)
 #define DCACHE_INVALIDATE_BY_ADDR(data, size)  SCB_InvalidateDCache_by_Addr((uint32_t *)data, size)
-
 #define DATA_CACHE_ENABLED                     true
 
 // *****************************************************************************
@@ -123,6 +122,7 @@ extern "C" {
 #define DRV_MEMORY_INSTANCES_NUMBER          2
 /* SST26 Driver Instance Configuration */
 #define DRV_SST26_INDEX                       0
+#define DRV_SST26_CLIENTS_NUMBER              1
 #define DRV_SST26_START_ADDRESS               0x0
 #define DRV_SST26_ERASE_BUFFER_SIZE           4096
 
