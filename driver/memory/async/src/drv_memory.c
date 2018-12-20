@@ -851,7 +851,7 @@ static SYS_STATUS DRV_MEMORY_IsReady(DRV_MEMORY_OBJECT *dObj)
 
     if (dObj->memoryDevice->Open != NULL)
     {
-        dObj->memDevHandle = dObj->memoryDevice->Open(dObj->memDevIndex, DRV_IO_INTENT_EXCLUSIVE);
+        dObj->memDevHandle = dObj->memoryDevice->Open(dObj->memDevIndex, DRV_IO_INTENT_READWRITE | DRV_IO_INTENT_EXCLUSIVE);
 
         if (dObj->memDevHandle == DRV_HANDLE_INVALID)
         {
