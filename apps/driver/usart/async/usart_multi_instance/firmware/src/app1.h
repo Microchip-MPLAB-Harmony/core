@@ -56,6 +56,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include "bsp/bsp.h"
 #include "configuration.h"
 #include "driver/usart/drv_usart.h"
 #include "system/int/sys_int.h"
