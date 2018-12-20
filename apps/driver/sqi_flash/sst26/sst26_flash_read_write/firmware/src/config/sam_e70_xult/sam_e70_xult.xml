@@ -4303,22 +4303,36 @@
     <UniqueComponent dnOrder="3" id="dfp"/>
     <UniqueComponent dnOrder="4" id="drv_sst26">
       <Symbols dnOrder="0">
-        <String dnOrder="0" id="DRV_SST26_PLIB">
+        <File dnOrder="0" id="DRV_SST26_HEADER_DEF">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="source">
+              <Value dnOrder="0">driver/sqi_flash/sst26/templates/drv_sst26_qspi_definitions.h.ftl</Value>
+            </String>
+          </Attributes>
+        </File>
+        <String dnOrder="1" id="DRV_SST26_PLIB">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="drv_sst26" priority="2" value="QSPI"/>
             </Dynamic>
           </Values>
         </String>
+        <File dnOrder="2" id="DRV_SST26_SOURCE">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="source">
+              <Value dnOrder="0">driver/sqi_flash/sst26/src/drv_sst26_qspi.c</Value>
+            </String>
+          </Attributes>
+        </File>
       </Symbols>
       <Attachments dnOrder="1">
-        <DirectDependency dnOrder="0" id="drv_sst26_QSPI_dependency">
+        <DirectDependency dnOrder="0" id="drv_sst26_SQI_dependency">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="targetComponentID">
               <Value dnOrder="0">qspi</Value>
             </String>
             <String dnOrder="1" id="targetAttachmentID">
-              <Value dnOrder="0">QSPI_QSPI</Value>
+              <Value dnOrder="0">QSPI_SQI</Value>
             </String>
           </Attributes>
         </DirectDependency>
@@ -4366,12 +4380,14 @@
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="HarmonyCore" priority="1" value="true"/>
             </Dynamic>
-            <User dnOrder="1" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="6" id="ENABLE_DRV_COMMON">
           <Values dnOrder="0">
-            <User dnOrder="0" value="true"/>
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="drv_sst26" priority="2" value="true"/>
+            </Dynamic>
+            <User dnOrder="1" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="7" id="ENABLE_OSAL">
@@ -4383,7 +4399,10 @@
         </Boolean>
         <Boolean dnOrder="8" id="ENABLE_SYS_COMMON">
           <Values dnOrder="0">
-            <User dnOrder="0" value="true"/>
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="drv_sst26" priority="2" value="true"/>
+            </Dynamic>
+            <User dnOrder="1" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="9" id="ENABLE_SYS_INT">
@@ -4504,13 +4523,13 @@
         </KeyValueSet>
       </Symbols>
       <Attachments dnOrder="1">
-        <DirectCapability dnOrder="0" id="QSPI_QSPI">
+        <DirectCapability dnOrder="0" id="QSPI_SQI">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="targetComponentID">
               <Value dnOrder="0">drv_sst26</Value>
             </String>
             <String dnOrder="1" id="targetAttachmentID">
-              <Value dnOrder="0">drv_sst26_QSPI_dependency</Value>
+              <Value dnOrder="0">drv_sst26_SQI_dependency</Value>
             </String>
           </Attributes>
         </DirectCapability>
@@ -4525,8 +4544,8 @@
         <ElementPosition dnOrder="2" id="cmsis" x="120" y="20"/>
         <ElementPosition dnOrder="3" id="core" x="20" y="20"/>
         <ElementPosition dnOrder="4" id="dfp" x="260" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_sst26" x="250" y="116"/>
-        <ElementPosition dnOrder="6" id="qspi" x="63" y="129"/>
+        <ElementPosition dnOrder="5" id="drv_sst26" x="273" y="113"/>
+        <ElementPosition dnOrder="6" id="qspi" x="39" y="135"/>
       </ElementPositions>
     </ComponentGraph>
     <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>

@@ -137,9 +137,6 @@ typedef struct
 
   Description:
     This routine initializes the SST26 driver making it ready for client to use.
-    - Resets the Flash Device
-    - Puts it on QUAD IO Mode
-    - Unlocks the flash
 
   Precondition:
     None.
@@ -151,7 +148,7 @@ typedef struct
                 initialize the driver.
 
   Returns:
-    If successful, returns a valid handle to a driver instance object.
+    If successful, returns a valid driver instance object.
     Otherwise it returns SYS_MODULE_OBJ_INVALID.
 
   Example:
@@ -186,8 +183,6 @@ typedef struct
     This routine must be called before any other SST26 driver routine is called.
 
     This routine should only be called once during system initialization.
-
-    This routine will block for hardware access.
 */
 
 SYS_MODULE_OBJ DRV_SST26_Initialize
@@ -205,6 +200,11 @@ SYS_MODULE_OBJ DRV_SST26_Initialize
 
   Description:
     This routine opens the specified SST26 driver instance and provides a handle.
+
+    It performs the following blocking operations:
+    - Resets the Flash Device
+    - Puts it on QUAD IO Mode
+    - Unlocks the flash if DRV_SST26_Open was called with write intent.
 
     This handle must be provided to all other client-level operations to identify
     the caller and the instance of the driver.
@@ -322,7 +322,7 @@ void DRV_SST26_Close( const DRV_HANDLE handle );
     </code>
 
   Remarks:
-    This routine will NEVER block wait for hardware.
+    None.
 */
 
 SYS_STATUS DRV_SST26_Status( const SYS_MODULE_INDEX drvIndex );
@@ -368,7 +368,7 @@ SYS_STATUS DRV_SST26_Status( const SYS_MODULE_INDEX drvIndex );
     </code>
 
   Remarks:
-    This routine will block wait for request to complete.
+    None.
 */
 
 bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle );
@@ -415,7 +415,7 @@ bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle );
     </code>
 
   Remarks:
-    This routine will block wait for transfer to complete.
+    None.
 */
 
 bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id );
@@ -471,9 +471,7 @@ bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id );
     </code>
 
   Remarks:
-    This routine will block wait until erase request is submitted successfully.
-
-    Client should wait until erase is complete to send next transfer request.
+    None.
 */
 
 bool DRV_SST26_SectorErase( const DRV_HANDLE handle, uint32_t address );
@@ -529,9 +527,7 @@ bool DRV_SST26_SectorErase( const DRV_HANDLE handle, uint32_t address );
     </code>
 
   Remarks:
-    This routine will block wait until erase request is submitted successfully.
-
-    Client should wait until erase is complete to send next transfer request.
+    None.
 */
 
 bool DRV_SST26_BulkErase( const DRV_HANDLE handle, uint32_t address );
@@ -583,9 +579,7 @@ bool DRV_SST26_BulkErase( const DRV_HANDLE handle, uint32_t address );
     </code>
 
   Remarks:
-    This routine will block wait until erase request is submitted successfully.
-
-    Client should wait until erase is complete to send next transfer request.
+    None.
 */
 
 bool DRV_SST26_ChipErase( const DRV_HANDLE handle );
@@ -643,7 +637,7 @@ bool DRV_SST26_ChipErase( const DRV_HANDLE handle );
     </code>
 
   Remarks:
-    This routine will block waiting until read request is completed successfully.
+    None.
 */
 
 bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_length, uint32_t address );
@@ -734,9 +728,7 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     </code>
 
   Remarks:
-    This routine will block wait until write request is submitted successfully.
-
-    Client should wait until write is complete to send next transfer request.
+    None.
 */
 
 bool DRV_SST26_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t address );
@@ -783,7 +775,7 @@ bool DRV_SST26_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
     </code>
 
   Remarks:
-    This routine will block for hardware access.
+    None.
 */
 
 DRV_SST26_TRANSFER_STATUS DRV_SST26_TransferStatusGet( const DRV_HANDLE handle );
@@ -839,8 +831,7 @@ DRV_SST26_TRANSFER_STATUS DRV_SST26_TransferStatusGet( const DRV_HANDLE handle )
     </code>
 
   Remarks:
-    This API is more useful when used to interface with block driver
-    like memory driver.
+    This API is more useful when used to interface with block driver.
 */
 
 bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometry );

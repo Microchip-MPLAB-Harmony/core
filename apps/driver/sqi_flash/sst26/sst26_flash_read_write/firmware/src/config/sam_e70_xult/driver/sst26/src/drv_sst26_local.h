@@ -53,42 +53,6 @@
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Version Numbers
-// *****************************************************************************
-// *****************************************************************************
-
-// *****************************************************************************
-/* SST26 Driver Version Macros
-
-  Summary:
-    SST26 driver version
-
-  Description:
-    These constants provide SST26 driver version information. The driver
-    version is
-    DRV_SST26_VERSION_MAJOR.DRV_SST26_VERSION_MINOR.DRV_SST26_VERSION_PATCH.
-    It is represented in DRV_SST26_VERSION as
-    MAJOR *10000 + MINOR * 100 + PATCH, so as to allow comparisons.
-    It is also represented in string format in DRV_SST26_VERSION_STR.
-    DRV_SST26_TYPE provides the type of the release when the release is alpha
-    or beta. The interfaces DRV_SST26_VersionGet() and
-    DRV_SST26_VersionStrGet() provide interfaces to the access the version
-    and the version string.
-
-  Remarks:
-    Modify the return value of DRV_SST26_VersionStrGet and the
-    DRV_SST26_VERSION_MAJOR, DRV_SST26_VERSION_MINOR,
-    DRV_SST26_VERSION_PATCH and DRV_SST26_VERSION_TYPE
-*/
-
-#define _DRV_SST26_VERSION_MAJOR         0
-#define _DRV_SST26_VERSION_MINOR         2
-#define _DRV_SST26_VERSION_PATCH         0
-#define _DRV_SST26_VERSION_TYPE          "Alpha"
-#define _DRV_SST26_VERSION_STR           "0.2.0 Alpha"
-
-// *****************************************************************************
-// *****************************************************************************
 // Section: Local Data Type Definitions
 // *****************************************************************************
 // *****************************************************************************
@@ -189,6 +153,12 @@ typedef struct
 
     /* The status of the driver */
     SYS_STATUS status;
+
+    /* Intent of opening the driver */
+    DRV_IO_INTENT ioIntent;
+
+    /* Indicates the number of clients that have opened this driver */
+    size_t nClients;
 
     /* Current Operation */
     DRV_SST26_OPERATION_TYPE curOpType;
