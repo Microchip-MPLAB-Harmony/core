@@ -4718,20 +4718,6 @@
                 </Dynamic>
               </Values>
             </Boolean>
-            <Menu dnOrder="5" id="DRV_MEMORY_RTOS_MENU">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="visible">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
-            </Menu>
-            <File dnOrder="6" id="DRV_MEMORY_SYS_RTOS_TASK">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
-            </File>
           </Symbols>
           <Attachments dnOrder="1">
             <DirectDependency dnOrder="0" id="drv_memory_MEMORY_dependency">
@@ -4765,9 +4751,6 @@
                 <String dnOrder="0" id="text">
                   <Value dnOrder="0">***&amp;#160;Configure&amp;#160;Memory&amp;#160;Device&amp;#160;in&amp;#160;EFC&amp;#160;Configurations&amp;#160;***</Value>
                 </String>
-                <Boolean dnOrder="1" id="visible">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
               </Attributes>
             </Comment>
             <Boolean dnOrder="3" id="DRV_MEMORY_ERASE_ENABLE">
@@ -4793,43 +4776,16 @@
             </String>
             <File dnOrder="6" id="DRV_MEMORY_PLIB_HEADER">
               <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-                <String dnOrder="1" id="name">
+                <String dnOrder="0" id="name">
                   <Value dnOrder="0">drv_memory_efc.h</Value>
                 </String>
               </Attributes>
             </File>
             <File dnOrder="7" id="DRV_MEMORY_PLIB_SOURCE">
               <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-                <String dnOrder="1" id="name">
+                <String dnOrder="0" id="name">
                   <Value dnOrder="0">drv_memory_efc.c</Value>
                 </String>
-              </Attributes>
-            </File>
-            <File dnOrder="8" id="DRV_MEMORY_PLIB_SYS_DEF">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-              </Attributes>
-            </File>
-            <Menu dnOrder="9" id="DRV_MEMORY_RTOS_MENU">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="visible">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
-            </Menu>
-            <File dnOrder="10" id="DRV_MEMORY_SYS_RTOS_TASK">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
               </Attributes>
             </File>
           </Symbols>
@@ -4857,21 +4813,35 @@
             </Dynamic>
           </Values>
         </Boolean>
-        <String dnOrder="1" id="DRV_SST26_PLIB">
+        <File dnOrder="1" id="DRV_SST26_HEADER_DEF">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="source">
+              <Value dnOrder="0">driver/sqi_flash/sst26/templates/drv_sst26_qspi_definitions.h.ftl</Value>
+            </String>
+          </Attributes>
+        </File>
+        <String dnOrder="2" id="DRV_SST26_PLIB">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="drv_sst26" priority="2" value="QSPI"/>
             </Dynamic>
           </Values>
         </String>
-        <Integer dnOrder="2" id="ERASE_BUFFER_SIZE">
+        <File dnOrder="3" id="DRV_SST26_SOURCE">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="source">
+              <Value dnOrder="0">driver/sqi_flash/sst26/src/drv_sst26_qspi.c</Value>
+            </String>
+          </Attributes>
+        </File>
+        <Integer dnOrder="4" id="ERASE_BUFFER_SIZE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Integer>
-        <Comment dnOrder="3" id="ERASE_COMMENT">
+        <Comment dnOrder="5" id="ERASE_COMMENT">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -4880,13 +4850,13 @@
         </Comment>
       </Symbols>
       <Attachments dnOrder="1">
-        <DirectDependency dnOrder="0" id="drv_sst26_QSPI_dependency">
+        <DirectDependency dnOrder="0" id="drv_sst26_SQI_dependency">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="targetComponentID">
               <Value dnOrder="0">qspi</Value>
             </String>
             <String dnOrder="1" id="targetAttachmentID">
-              <Value dnOrder="0">QSPI_QSPI</Value>
+              <Value dnOrder="0">QSPI_SQI</Value>
             </String>
           </Attributes>
         </DirectDependency>
@@ -4911,34 +4881,6 @@
             </Dynamic>
           </Values>
         </Boolean>
-        <Integer dnOrder="1" id="ERASE_BUFFER_SIZE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Integer>
-        <Comment dnOrder="2" id="ERASE_COMMENT">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Comment>
-        <Integer dnOrder="3" id="MEMORY_MEDIA_SIZE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Integer>
-        <String dnOrder="4" id="START_ADDRESS">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </String>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectCapability dnOrder="0" id="EFC_MEMORY">
@@ -5048,6 +4990,7 @@
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="drv_memory_0" priority="2" value="true"/>
               <Value dnOrder="1" id="drv_memory_1" priority="2" value="true"/>
+              <Value dnOrder="2" id="drv_sst26" priority="2" value="true"/>
             </Dynamic>
           </Values>
         </Boolean>
@@ -5063,6 +5006,7 @@
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="drv_memory_0" priority="2" value="true"/>
               <Value dnOrder="1" id="drv_memory_1" priority="2" value="true"/>
+              <Value dnOrder="2" id="drv_sst26" priority="2" value="true"/>
             </Dynamic>
           </Values>
         </Boolean>
@@ -5240,13 +5184,13 @@
         </KeyValueSet>
       </Symbols>
       <Attachments dnOrder="1">
-        <DirectCapability dnOrder="0" id="QSPI_QSPI">
+        <DirectCapability dnOrder="0" id="QSPI_SQI">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="targetComponentID">
               <Value dnOrder="0">drv_sst26</Value>
             </String>
             <String dnOrder="1" id="targetAttachmentID">
-              <Value dnOrder="0">drv_sst26_QSPI_dependency</Value>
+              <Value dnOrder="0">drv_sst26_SQI_dependency</Value>
             </String>
           </Attributes>
         </DirectCapability>
@@ -5263,7 +5207,7 @@
         <ElementPosition dnOrder="3" id="core" x="20" y="20"/>
         <ElementPosition dnOrder="4" id="dfp" x="260" y="20"/>
         <ElementPosition dnOrder="5" id="drv_memory" x="359" y="111"/>
-        <ElementPosition dnOrder="6" id="drv_sst26" x="189" y="132"/>
+        <ElementPosition dnOrder="6" id="drv_sst26" x="185" y="115"/>
         <ElementPosition dnOrder="7" id="efc" x="147" y="282"/>
         <ElementPosition dnOrder="8" id="qspi" x="23" y="150"/>
       </ElementPositions>

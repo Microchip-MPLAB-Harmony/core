@@ -157,6 +157,11 @@ bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle )
 {
     bool status = false;
 
+    if(handle == DRV_HANDLE_INVALID)
+    {
+        return status;
+    }
+
     if (DRV_SST26_WriteEnable() == false)
     {
         return status;
@@ -176,6 +181,11 @@ bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id)
 {
     bool status = false;
 
+    if(handle == DRV_HANDLE_INVALID)
+    {
+        return status;
+    }
+
     memset((void *)&qspi_register_xfer, 0, sizeof(qspi_register_xfer_t));
 
     qspi_register_xfer.instruction = SST26_CMD_QUAD_JEDEC_ID_READ;
@@ -190,6 +200,11 @@ bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id)
 bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_length )
 {
     bool status = false;
+
+    if(handle == DRV_HANDLE_INVALID)
+    {
+        return status;
+    }
 
     memset((void *)&qspi_register_xfer, 0, sizeof(qspi_register_xfer_t));
 
@@ -207,6 +222,11 @@ DRV_SST26_TRANSFER_STATUS DRV_SST26_TransferStatusGet( const DRV_HANDLE handle )
     DRV_SST26_TRANSFER_STATUS status = DRV_SST26_TRANSFER_ERROR_UNKNOWN;
 
     uint8_t reg_status = 0;
+
+    if(handle == DRV_HANDLE_INVALID)
+    {
+        return status;
+    }
 
     if (gDrvSST26Obj.curOpType == DRV_SST26_OPERATION_TYPE_READ )
     {
@@ -230,6 +250,11 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
 {
     bool status = false;
 
+    if(handle == DRV_HANDLE_INVALID)
+    {
+        return status;
+    }
+
     memset((void *)&qspi_memory_xfer, 0, sizeof(qspi_memory_xfer_t));
 
     qspi_memory_xfer.instruction = SST26_CMD_HIGH_SPEED_READ;
@@ -246,6 +271,11 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
 bool DRV_SST26_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t address )
 {
     bool status = false;
+
+    if(handle == DRV_HANDLE_INVALID)
+    {
+        return status;
+    }
 
     if (DRV_SST26_WriteEnable() == false)
     {
@@ -286,16 +316,31 @@ static bool DRV_SST26_Erase( uint8_t instruction, uint32_t address )
 
 bool DRV_SST26_SectorErase( const DRV_HANDLE handle, uint32_t address )
 {
+    if(handle == DRV_HANDLE_INVALID)
+    {
+        return false;
+    }
+
     return (DRV_SST26_Erase(SST26_CMD_SECTOR_ERASE, address));
 }
 
 bool DRV_SST26_BulkErase( const DRV_HANDLE handle, uint32_t address )
 {
+    if(handle == DRV_HANDLE_INVALID)
+    {
+        return false;
+    }
+
     return (DRV_SST26_Erase(SST26_CMD_BULK_ERASE_64K, address));
 }
 
 bool DRV_SST26_ChipErase( const DRV_HANDLE handle )
 {
+    if(handle == DRV_HANDLE_INVALID)
+    {
+        return false;
+    }
+
     return (DRV_SST26_Erase(SST26_CMD_CHIP_ERASE, 0));
 }
 
@@ -339,15 +384,46 @@ bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometr
 
 DRV_HANDLE DRV_SST26_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
 {
-    if (dObj->status != SYS_STATUS_READY)
+    if ((dObj->status != SYS_STATUS_READY) ||
+        (dObj->nClients >= DRV_SST26_CLIENTS_NUMBER))
+    {
         return DRV_HANDLE_INVALID;
+    }
+
+    dObj->nClients++;
+
+    /* Reset SST26 Flash device */
+    if (DRV_SST26_ResetFlash() == false)
+    {
+        return DRV_HANDLE_INVALID;
+    }
+
+    /* Put SST26 Flash device on QUAD IO Mode */
+    if (DRV_SST26_EnableQuadIO() == false)
+    {
+        return DRV_HANDLE_INVALID;
+    }
+
+    if ((ioIntent & DRV_IO_INTENT_WRITE) == (DRV_IO_INTENT_WRITE))
+    {
+        /* Unlock the Flash */
+        if (DRV_SST26_UnlockFlash((DRV_HANDLE)drvIndex) == false)
+        {
+            return DRV_HANDLE_INVALID;
+        }
+    }
+
+    dObj->ioIntent = ioIntent;
 
     return ((DRV_HANDLE)drvIndex);
 }
 
 void DRV_SST26_Close( const DRV_HANDLE handle )
 {
-
+    if(handle != DRV_HANDLE_INVALID)
+    {
+        dObj->nClients--;
+    }
 }
 
 SYS_MODULE_OBJ DRV_SST26_Initialize
@@ -359,44 +435,27 @@ SYS_MODULE_OBJ DRV_SST26_Initialize
     DRV_SST26_INIT *sst26Init = NULL;
 
     /* Check if the instance has already been initialized. */
-    if (dObj->inUse)
+    if (dObj->inUse == true)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    dObj->status = SYS_STATUS_UNINITIALIZED;
+    dObj->status    = SYS_STATUS_UNINITIALIZED;
 
     /* Indicate that this object is in use */
-    dObj->inUse = true;
+    dObj->inUse     = true;
+    dObj->nClients  = 0;
 
     /* Assign to the local pointer the init data passed */
-    sst26Init = (DRV_SST26_INIT *)init;
+    sst26Init       = (DRV_SST26_INIT *)init;
 
     /* Initialize the attached memory device functions */
     dObj->sst26Plib = sst26Init->sst26Plib;
 
-    /* Reset SST26 Flash device */
-    if (DRV_SST26_ResetFlash() == false)
-    {
-        return SYS_MODULE_OBJ_INVALID;
-    }
-
-    /* Put SST26 Flash device on QUAD IO Mode */
-    if (DRV_SST26_EnableQuadIO() == false)
-    {
-        return SYS_MODULE_OBJ_INVALID;
-    }
-
-    /* Unlock the Flash */
-    if (DRV_SST26_UnlockFlash(drvIndex) == false)
-    {
-        return SYS_MODULE_OBJ_INVALID;
-    }
-
-    dObj->status = SYS_STATUS_READY;
+    dObj->status    = SYS_STATUS_READY;
 
     /* Return the driver index */
-    return drvIndex;
+    return ( (SYS_MODULE_OBJ)drvIndex );
 }
 
 SYS_STATUS DRV_SST26_Status( const SYS_MODULE_INDEX drvIndex )
