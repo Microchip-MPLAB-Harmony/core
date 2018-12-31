@@ -38,7 +38,7 @@ def loadModule():
 
         {"name":"sst26", "label": "SST26", "type":"driver", "display_path":"SQI Flash", "actual_path":"sqi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SQI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAME70", "SAMS70"])'},
 
-        {"name":"mx25lx", "label": "MX25LX", "type":"driver", "display_path":"SQI Flash", "actual_path":"sqi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SQI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"])'},
+        {"name":"mx25l", "label": "MX25L", "type":"driver", "display_path":"SQI Flash", "actual_path":"sqi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SQI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"])'},
 
         {"name":"i2c", "label": "I2C", "type":"driver", "display_path":"", "actual_path":"", "instance":"multi", "capability":["DRV_I2C"], "dependency":["I2C"], "condition":"True"},
 

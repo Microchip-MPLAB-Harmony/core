@@ -5,13 +5,13 @@
     Microchip Technology Inc.
 
   File Name:
-    drv_mx25lx.c
+    drv_mx25l.c
 
   Summary:
     MX25L Driver Interface Definition
 
   Description:
-    The MX25L Driver provides a interface to access the MX25LX peripheral on the SAM
+    The MX25L Driver provides a interface to access the MX25L peripheral on the SAM
     Devices. This file should be included in the project if MX25L driver
     functionality is needed.
 *******************************************************************************/
@@ -47,7 +47,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include "driver/mx25lx/src/drv_mx25lx_local.h"
+#include "driver/mx25l/src/drv_mx25l_local.h"
 
 // *****************************************************************************
 // *****************************************************************************

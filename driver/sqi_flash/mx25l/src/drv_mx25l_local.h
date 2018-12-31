@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    drv_mx25lx_local.h
+    drv_mx25l_local.h
 
   Summary:
     MX25L driver local declarations and definitions
@@ -39,8 +39,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_MX25LX_LOCAL_H
-#define _DRV_MX25LX_LOCAL_H
+#ifndef _DRV_MX25L_LOCAL_H
+#define _DRV_MX25L_LOCAL_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -49,7 +49,7 @@
 // *****************************************************************************
 #include <string.h>
 #include "configuration.h"
-#include "driver/mx25lx/drv_mx25lx.h"
+#include "driver/mx25l/drv_mx25l.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -70,7 +70,7 @@
     Enumeration listing the MX25L commands.
 
   Description:
-    This enumeration defines the commands used to interact with the MX25LX
+    This enumeration defines the commands used to interact with the MX25L
     series of devices.
 
   Remarks:
@@ -167,7 +167,7 @@ typedef struct
     const DRV_MX25L_PLIB_INTERFACE *mx25lPlib;
 } DRV_MX25L_OBJECT;
 
-#endif //#ifndef _DRV_MX25LX_LOCAL_H
+#endif //#ifndef _DRV_MX25L_LOCAL_H
 
 /*******************************************************************************
  End of File

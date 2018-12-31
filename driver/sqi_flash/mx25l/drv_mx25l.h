@@ -5,13 +5,13 @@
     Microchip Technology Inc.
 
   File Name:
-    drv_mx25lx.h
+    drv_mx25l.h
 
   Summary:
     MX25L Driver Interface Definition
 
   Description:
-    The MX25L driver provides a simple interface to manage the MX25LX series
+    The MX25L driver provides a simple interface to manage the MX25L series
     of SQI Flash Memory connected to Microchip microcontrollers. This file
     defines the interface definition for the MX25L driver.
 *******************************************************************************/
@@ -41,8 +41,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_MX25LX_H
-#define _DRV_MX25LX_H
+#ifndef _DRV_MX25L_H
+#define _DRV_MX25L_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -52,7 +52,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-#include "drv_mx25lx_definitions.h"
+#include "drv_mx25l_definitions.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -891,7 +891,7 @@ bool DRV_MX25L_GeometryGet( const DRV_HANDLE handle, DRV_MX25L_GEOMETRY *geometr
 }
 #endif
 
-#endif // #ifndef _DRV_MX25LX_H
+#endif // #ifndef _DRV_MX25L_H
 /*******************************************************************************
  End of File
 */

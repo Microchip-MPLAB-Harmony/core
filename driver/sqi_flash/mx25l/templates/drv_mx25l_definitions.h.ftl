@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    drv_mx25lx_definitions.h
+    drv_mx25l_definitions.h
 
   Summary:
     MX25L Driver Definitions Header File
@@ -40,8 +40,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef DRV_MX25LX_DEFINITIONS_H
-#define DRV_MX25LX_DEFINITIONS_H
+#ifndef DRV_MX25L_DEFINITIONS_H
+#define DRV_MX25L_DEFINITIONS_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -130,5 +130,5 @@ typedef struct
 //DOM-IGNORE-END
 
 
-#endif // #ifndef DRV_MX25LX_DEFINITIONS_H
+#endif // #ifndef DRV_MX25L_DEFINITIONS_H
 

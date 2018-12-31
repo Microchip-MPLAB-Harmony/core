@@ -87,36 +87,36 @@ def instantiateComponent(mx25lComponent):
 
     configName = Variables.get("__CONFIGURATION_NAME")
 
-    mx25lHeaderFile = mx25lComponent.createFileSymbol("DRV_MX25LX_HEADER", None)
-    mx25lHeaderFile.setSourcePath("driver/sqi_flash/mx25lx/drv_mx25lx.h")
-    mx25lHeaderFile.setOutputName("drv_mx25lx.h")
-    mx25lHeaderFile.setDestPath("driver/mx25lx/")
-    mx25lHeaderFile.setProjectPath("config/" + configName + "/driver/mx25lx/")
+    mx25lHeaderFile = mx25lComponent.createFileSymbol("DRV_MX25L_HEADER", None)
+    mx25lHeaderFile.setSourcePath("driver/sqi_flash/mx25l/drv_mx25l.h")
+    mx25lHeaderFile.setOutputName("drv_mx25l.h")
+    mx25lHeaderFile.setDestPath("driver/mx25l/")
+    mx25lHeaderFile.setProjectPath("config/" + configName + "/driver/mx25l/")
     mx25lHeaderFile.setType("HEADER")
     mx25lHeaderFile.setOverwrite(True)
 
-    mx25lAsyncHeaderLocalFile = mx25lComponent.createFileSymbol("DRV_MX25LX_HEADER_LOCAL", None)
-    mx25lAsyncHeaderLocalFile.setSourcePath("driver/sqi_flash/mx25lx/src/drv_mx25lx_local.h")
-    mx25lAsyncHeaderLocalFile.setOutputName("drv_mx25lx_local.h")
-    mx25lAsyncHeaderLocalFile.setDestPath("driver/mx25lx/src")
-    mx25lAsyncHeaderLocalFile.setProjectPath("config/" + configName + "/driver/mx25lx/")
+    mx25lAsyncHeaderLocalFile = mx25lComponent.createFileSymbol("DRV_MX25L_HEADER_LOCAL", None)
+    mx25lAsyncHeaderLocalFile.setSourcePath("driver/sqi_flash/mx25l/src/drv_mx25l_local.h")
+    mx25lAsyncHeaderLocalFile.setOutputName("drv_mx25l_local.h")
+    mx25lAsyncHeaderLocalFile.setDestPath("driver/mx25l/src")
+    mx25lAsyncHeaderLocalFile.setProjectPath("config/" + configName + "/driver/mx25l/")
     mx25lAsyncHeaderLocalFile.setType("HEADER")
     mx25lAsyncHeaderLocalFile.setOverwrite(True)
 
-    mx25lHeaderDefFile = mx25lComponent.createFileSymbol("DRV_MX25LX_HEADER_DEF", None)
-    mx25lHeaderDefFile.setSourcePath("driver/sqi_flash/mx25lx/templates/drv_mx25lx_definitions.h.ftl")
-    mx25lHeaderDefFile.setOutputName("drv_mx25lx_definitions.h")
-    mx25lHeaderDefFile.setDestPath("driver/mx25lx/")
-    mx25lHeaderDefFile.setProjectPath("config/" + configName + "/driver/mx25lx/")
+    mx25lHeaderDefFile = mx25lComponent.createFileSymbol("DRV_MX25L_HEADER_DEF", None)
+    mx25lHeaderDefFile.setSourcePath("driver/sqi_flash/mx25l/templates/drv_mx25l_definitions.h.ftl")
+    mx25lHeaderDefFile.setOutputName("drv_mx25l_definitions.h")
+    mx25lHeaderDefFile.setDestPath("driver/mx25l/")
+    mx25lHeaderDefFile.setProjectPath("config/" + configName + "/driver/mx25l/")
     mx25lHeaderDefFile.setType("HEADER")
     mx25lHeaderDefFile.setOverwrite(True)
     mx25lHeaderDefFile.setMarkup(True)
 
-    mx25lSourceFile = mx25lComponent.createFileSymbol("DRV_MX25LX_SOURCE", None)
-    mx25lSourceFile.setSourcePath("driver/sqi_flash/mx25lx/src/drv_mx25lx.c")
-    mx25lSourceFile.setOutputName("drv_mx25lx.c")
-    mx25lSourceFile.setDestPath("driver/mx25lx/src/")
-    mx25lSourceFile.setProjectPath("config/" + configName + "/driver/mx25lx/")
+    mx25lSourceFile = mx25lComponent.createFileSymbol("DRV_MX25L_SOURCE", None)
+    mx25lSourceFile.setSourcePath("driver/sqi_flash/mx25l/src/drv_mx25l.c")
+    mx25lSourceFile.setOutputName("drv_mx25l.c")
+    mx25lSourceFile.setDestPath("driver/mx25l/src/")
+    mx25lSourceFile.setProjectPath("config/" + configName + "/driver/mx25l/")
     mx25lSourceFile.setType("SOURCE")
     mx25lSourceFile.setOverwrite(True)
 
@@ -124,31 +124,31 @@ def instantiateComponent(mx25lComponent):
     mx25lSystemDefFile = mx25lComponent.createFileSymbol("DRV_MX25L_SYS_DEF", None)
     mx25lSystemDefFile.setType("STRING")
     mx25lSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-    mx25lSystemDefFile.setSourcePath("driver/sqi_flash/mx25lx/templates/system/definitions.h.ftl")
+    mx25lSystemDefFile.setSourcePath("driver/sqi_flash/mx25l/templates/system/definitions.h.ftl")
     mx25lSystemDefFile.setMarkup(True)
 
     mx25lSystemDefObjFile = mx25lComponent.createFileSymbol("DRV_MX25L_SYS_DEF_OBJ", None)
     mx25lSystemDefObjFile.setType("STRING")
     mx25lSystemDefObjFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_OBJECTS")
-    mx25lSystemDefObjFile.setSourcePath("driver/sqi_flash/mx25lx/templates/system/definitions_objects.h.ftl")
+    mx25lSystemDefObjFile.setSourcePath("driver/sqi_flash/mx25l/templates/system/definitions_objects.h.ftl")
     mx25lSystemDefObjFile.setMarkup(True)
 
     mx25lSystemConfigFile = mx25lComponent.createFileSymbol("DRV_MX25L_SYS_CFG", None)
     mx25lSystemConfigFile.setType("STRING")
     mx25lSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_DRIVER_CONFIGURATION")
-    mx25lSystemConfigFile.setSourcePath("driver/sqi_flash/mx25lx/templates/system/configuration.h.ftl")
+    mx25lSystemConfigFile.setSourcePath("driver/sqi_flash/mx25l/templates/system/configuration.h.ftl")
     mx25lSystemConfigFile.setMarkup(True)
 
     mx25lSystemInitDataFile = mx25lComponent.createFileSymbol("DRV_MX25L_SYS_INIT_DATA", None)
     mx25lSystemInitDataFile.setType("STRING")
     mx25lSystemInitDataFile.setOutputName("core.LIST_SYSTEM_INIT_C_DRIVER_INITIALIZATION_DATA")
-    mx25lSystemInitDataFile.setSourcePath("driver/sqi_flash/mx25lx/templates/system/initialize_data.c.ftl")
+    mx25lSystemInitDataFile.setSourcePath("driver/sqi_flash/mx25l/templates/system/initialize_data.c.ftl")
     mx25lSystemInitDataFile.setMarkup(True)
 
     mx25lSystemInitFile = mx25lComponent.createFileSymbol("DRV_MX25L_SYS_INIT", None)
     mx25lSystemInitFile.setType("STRING")
     mx25lSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_SYS_INITIALIZE_DRIVERS")
-    mx25lSystemInitFile.setSourcePath("driver/sqi_flash/mx25lx/templates/system/initialize.c.ftl")
+    mx25lSystemInitFile.setSourcePath("driver/sqi_flash/mx25l/templates/system/initialize.c.ftl")
     mx25lSystemInitFile.setMarkup(True)
 
 def onAttachmentConnected(source, target):
@@ -158,7 +158,7 @@ def onAttachmentConnected(source, target):
     connectID = source["id"]
     targetID = target["id"]
 
-    if connectID == "drv_mx25lx_SQI_dependency" :
+    if connectID == "drv_mx25l_SQI_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_MX25L_PLIB")
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper(), 2)
@@ -170,6 +170,6 @@ def onAttachmentDisconnected(source, target):
     connectID = source["id"]
     targetID = target["id"]
 
-    if connectID == "drv_mx25lx_SQI_dependency" :
+    if connectID == "drv_mx25l_SQI_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_MX25L_PLIB")
         plibUsed.clearValue()
