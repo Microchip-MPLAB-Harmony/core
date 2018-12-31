@@ -251,7 +251,7 @@ static bool DRV_MEMORY_UpdateGeometry( DRV_MEMORY_OBJECT *dObj )
     dObj->eraseBlockSize = memoryDeviceGeometry.erase_blockSize;
 
     /* Update the Media Geometry Main Structure */
-    dObj->mediaGeometryObj.mediaProperty = (SYS_MEDIA_READ_IS_BLOCKING | SYS_MEDIA_WRITE_IS_BLOCKING);
+    dObj->mediaGeometryObj.mediaProperty = (SYS_MEDIA_PROPERTY)(SYS_MEDIA_READ_IS_BLOCKING | SYS_MEDIA_WRITE_IS_BLOCKING);
 
     /* Number of read, write and erase entries in the table */
     dObj->mediaGeometryObj.numReadRegions = memoryDeviceGeometry.numReadRegions;
@@ -627,7 +627,7 @@ static bool DRV_MEMORY_StartXfer( DRV_MEMORY_OBJECT *dObj )
     if(clientObj->transferHandler != NULL)
     {
         /* Call the event handler */
-        clientObj->transferHandler(event, bufferObj->commandHandle, clientObj->context);
+        clientObj->transferHandler((SYS_MEDIA_BLOCK_EVENT)event, (DRV_MEMORY_COMMAND_HANDLE)bufferObj->commandHandle, clientObj->context);
     }
 
     return isSuccess;
@@ -1169,7 +1169,7 @@ void DRV_MEMORY_TransferHandlerSet
     }
 
     /* Set the event handler */
-    clientObj->transferHandler = transferHandler;
+    clientObj->transferHandler = (DRV_MEMORY_TRANSFER_HANDLER)transferHandler;
     clientObj->context = context;
 }
 
