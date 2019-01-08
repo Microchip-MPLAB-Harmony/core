@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>UART Console Device</title>
+<title>How the Library Works</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00048.html" target="topic">Console System Service Library</a> &gt; <a href="00829.html" target="topic">Using the Library</a> &gt; <a href="00822.html" target="topic">How the Library Works</a> &gt; <a href="00827.html" target="topic">UART Console Device</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00829.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00832.html" target="topic">Using the Library</a> &gt; <a href="00827.html" target="topic">How the Library Works</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00822.html" target="topic">Previous</a> | <a href="00822.html" target="topic">Up</a> | <a href="00819.html" target="topic">Next</a></div>
+<a href="00821.html" target="topic">Previous</a> | <a href="00832.html" target="topic">Up</a> | <a href="00824.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE UART Console Device Topic Title: UART Console Device)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS DEBUG How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-UART Console Device</div>
+How the Library Works</div>
 </div>
 </div>
 
@@ -49,50 +49,45 @@ UART Console Device</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<strong>Read</strong>&nbsp;</p>
+ &nbsp;</p>
 <p class="Element10">
-While the user may request multiple bytes of data per read, a typical terminal emulator program sends only one byte per transaction. When multiple bytes are requested, the UART Console Device layer will queue individual byte reads until all bytes are read. The bytes are sent to the user-supplied read buffer as they are read, and the read callback is triggered when all bytes have been read. Only one read operation can be active at a time. The size of the read queue is a configuration option. The size of the read queue determines the number of read requests (not the number of bytes) that can be queued. Each read request in turn can request for multiple bytes to be read. A call to the console read API with the read queue full returns 0.&nbsp;</p>
+<strong>Debug Messages and Error Reporting</strong>&nbsp;</p>
 <p class="Element10">
-The read function accepts a pointer to a read buffer as one of the arguments. It is the responsibility of the application programmer to properly allocate the read buffer.&nbsp;</p>
+The following macros are available to output debug and error messages. The default implementation of these macros resolves to nothing by the preprocessor. This is to allow the developer to leave debug messaging in the released code without impacting code size or performance. Typically, the developer would define SYS_DEBUG_USE_CONSOLE macro through MHC configuration for debug builds, to map these macros to appropriate debug service implementation.</p>
+<ul class="Element630">
+<li class="Element600"><a href="01320.html" target="topic">SYS_MESSAGE</a>(message) prints a simple message string to the output device irrespective of the value of the global error level</li>
+<li class="Element600"><a href="00980.html" target="topic">SYS_DEBUG_MESSAGE</a>(level, message) prints a debug message to the console device if the global error level is equal to or lower than that specified by the &quot;level&quot; argument</li>
+<li class="Element600"><a href="01511.html" target="topic">SYS_PRINT</a>(fmt, ...) prints formatted messages to the console. The message formatting is the same as printf</li>
+<li class="Element600"><a href="00982.html" target="topic">SYS_DEBUG_PRINT</a>(level, fmt, ...) prints formatted messages to the console if the global error level is equal to or lower than that specified by the &quot;level&quot; argument. The message formatting is the same as printf</li>
+</ul><p class="Element10">
+<strong>Changing the System Error Level</strong>&nbsp;</p>
 <p class="Element10">
-<strong>Write</strong>&nbsp;</p>
-<p class="Element10">
-The UART console device is capable of writing multiple data bytes per transaction, and queuing multiple write transactions. The size of the write queue is a configuration option. If the user tries to queue more write transactions than the write queue can accommodate, the write function will return 0.&nbsp;</p>
-<p class="Element10">
-The write function accepts a pointer to a write buffer as one of the arguments. It is the responsibility of the application programmer to properly allocate the write buffer.&nbsp;</p>
-<p class="Element10">
-<strong>State Machine</strong>&nbsp;</p>
-<p class="Element10">
-The read and write state machines are run from the interrupt context (from the callback called by the underlying UART PLIB). The underlying PLIB calls the UART console device event handler when the requested number of bytes are transmitted or received (or in case of an error condition). The read/write state machine dispatches application/middleware callback functions and initiates a data transfer if the read/write queue has any request to service.&nbsp;</p>
-<p class="Element10">
-<strong>Register Callback</strong>&nbsp;</p>
-<p class="Element10">
-The callback registration mechanism associates a user function with a read or write completion event. The callback function includes an argument containing a pointer to the read or write buffer associated with the transfer that initiated the callback. Separate callback functions must be registered for read and write events. If there is no callback function registered, the event will complete as normal, with no callback executed.&nbsp;</p>
-<p class="Element10">
-<strong>Flush</strong>&nbsp;</p>
-<p class="Element10">
-The flush routine in the UART implementation resets the read and write queues. A flush operation is typically triggered in response to an error condition.</p></div>
+Two functions are provided to manipulate the global system error level at runtime. This may be useful when you want to increase the debug verbosity for a particular section of code, but not for the entire program</p>
+<ul class="Element630">
+<li class="Element600"><a href="00976.html" target="topic">SYS_DEBUG_ErrorLevelGet</a>() returns the current global system error level</li>
+<li class="Element600"><a href="00977.html" target="topic">SYS_DEBUG_ErrorLevelSet</a>(level) sets the current global system error level</li>
+</ul></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00048.html" target="topic">Console System Service Library</a> &gt; <a href="00829.html" target="topic">Using the Library</a> &gt; <a href="00822.html" target="topic">How the Library Works</a> &gt; <a href="00827.html" target="topic">UART Console Device</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00829.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00832.html" target="topic">Using the Library</a> &gt; <a href="00827.html" target="topic">How the Library Works</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00822.html" target="topic">Previous</a> | <a href="00822.html" target="topic">Up</a> | <a href="00819.html" target="topic">Next</a></div>
+<a href="00821.html" target="topic">Previous</a> | <a href="00832.html" target="topic">Up</a> | <a href="00824.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE UART Console Device Topic Title: UART Console Device)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS DEBUG How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

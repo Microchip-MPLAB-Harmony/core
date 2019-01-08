@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Trademarks</title>
+<title>i2c_multi_slave</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00642.html" target="topic">Support</a> &gt; <a href="00630.html" target="topic">Using the Help</a> &gt; <a href="00644.html" target="topic">Trademarks</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00627.html" target="topic">I2C Driver Applications</a> &gt; Sync &gt; <a href="00644.html" target="topic">i2c_multi_slave</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00630.html" target="topic">Previous</a> | <a href="00630.html" target="topic">Up</a> | <a href="00633.html" target="topic">Next</a></div>
+<a href="00641.html" target="topic">Previous</a> | <a href="00627.html" target="topic">Up</a> | <a href="00645.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: HARMONY Trademarks Topic Title: Trademarks)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: I2C Sync i2c_multi_slave Topic Title: i2c_multi_slave)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Trademarks</div>
+i2c_multi_slave</div>
 </div>
 </div>
 
@@ -48,47 +48,87 @@ Trademarks</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
+<p class="Element10">
+The application demonstrates the multi-client feature of the <span style="color: #000000">I<sup>2</sup>C</span> driver in synchronous mode. The application uses a <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATIO1-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">IO1 Xplained Pro Extension Kit</a> that has a temperature sensor and an EEPROM interfaced on the same <span style="color: #000000">I<sup>2</sup>C</span> bus.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+Two application threads are created which act as clients to the same instance of the <span style="color: #000000">I<sup>2</sup>C</span> driver:</p>
+<ol class="Element630">
+<li value="1" class="Element600">APP_I2C_TEMP_SENSOR_Tasks():
+<ul class="Element631">
+<li class="Element601">Remains in blocked state for 1 second</li>
+<li class="Element601">Once unblocked, reads the temperature from the temperature sensor and posts a semaphore thereby unblocking the second (EEPROM) thread</li>
+</ul></li>
+<li value="1" class="Element600">APP_I2C_EEPROM_Tasks():
+<ul class="Element631">
+<li class="Element601">Remains blocked on a semaphore until a new temperature data is available</li>
+<li class="Element601">Once unblocked, writes the temperature data to the EEPROM</li>
+<li class="Element601">Reads the temperature value from the EEPROM and compares with the value written</li>
+<li class="Element601">If the temperature value matches it displays the same on the console.</li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
 <div class="Element15">
-Trademarks</div>
+Note:</div>
 <p class="Element10">
-The Microchip name and logo, the Microchip logo, AnyRate, AVR, AVR logo, AVR Freaks, BeaconThings, BitCloud, CryptoMemory, CryptoRF, dsPIC, FlashFlex, flexPWR, Heldo, JukeBlox, KeeLoq, KeeLoq logo, Kleer, LANCheck, LINK MD, maXStylus, maXTouch, MediaLB, megaAVR, MOST, MOST logo, MPLAB, OptoLyzer, PIC, picoPower, PICSTART, PIC32 logo, Prochip Designer, QTouch, RightTouch, SAM-BA, SpyNIC, SST, SST Logo, SuperFlash, tinyAVR, UNI/O, and XMEGA are registered trademarks of Microchip Technology Incorporated in the U.S.A. and other countries.&nbsp;</p>
-<p class="Element10">
-ClockWorks, The Embedded Control Solutions Company, EtherSynch, Hyper Speed Control, HyperLight Load, IntelliMOS, mTouch, Precision Edge, and Quiet-Wire are registered trademarks of Microchip Technology Incorporated in the U.S.A.&nbsp;</p>
-<p class="Element10">
-Adjacent Key Suppression, AKS, Analog-for-the-Digital Age, Any Capacitor, AnyIn, AnyOut, BodyCom, chipKIT, chipKIT logo, CodeGuard, CryptoAuthentication, CryptoCompanion, CryptoController, dsPICDEM, dsPICDEM.net, Dynamic Average Matching, DAM, ECAN, EtherGREEN, In-Circuit Serial Programming, ICSP, Inter-Chip Connectivity, JitterBlocker, KleerNet, KleerNet logo, Mindi, MiWi, motorBench, MPASM, MPF, MPLAB Certified logo, MPLIB, MPLINK, MultiTRAK, NetDetach, Omniscient Code Generation, PICDEM, PICDEM.net, PICkit, PICtail, PureSilicon, QMatrix, RightTouch logo, REAL ICE, Ripple Blocker, SAM-ICE, Serial Quad I/O, SMART-I.S., SQI, SuperSwitcher, SuperSwitcher II, Total Endurance, TSHARC, USBCheck, VariSense, ViewSpan, WiperLock, Wireless DNA, and ZENA are trademarks of Microchip Technology Incorporated in the U.S.A. and other countries.&nbsp;</p>
-<p class="Element10">
-SQTP is a service mark of Microchip Technology Incorporated in the U.S.A.&nbsp;</p>
-<p class="Element10">
-Silicon Storage Technology is a registered trademark of Microchip Technology Inc. in other countries.&nbsp;</p>
-<p class="Element10">
-GestIC is a registered trademark of Microchip Technology Germany II GmbH &amp; Co. KG, a subsidiary of Microchip Technology Inc., in other countries.&nbsp;</p>
-<p class="Element10">
-ARM and Cortex are registered trademarks of ARM Limited (or its subsidiaries) in the EU and other countries.&nbsp;</p>
-<p class="Element10">
-All other trademarks mentioned herein are property of their respective companies.&nbsp;</p>
-<p class="Element10">
-© 2017, Microchip Technology Incorporated, All Rights Reserved.</p></div>
+Temperature data is written to the same EEPROM memory location.</p></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00645.html" target="topic">Building the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how to build an application using the MPLAB X IDE.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00647.html" target="topic">MPLAB Harmony Configuration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This topic provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00646.html" target="topic">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00648.html" target="topic">Running the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how to run the application using the MPLAB X IDE.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00642.html" target="topic">Support</a> &gt; <a href="00630.html" target="topic">Using the Help</a> &gt; <a href="00644.html" target="topic">Trademarks</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00627.html" target="topic">I2C Driver Applications</a> &gt; Sync &gt; <a href="00644.html" target="topic">i2c_multi_slave</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00630.html" target="topic">Previous</a> | <a href="00630.html" target="topic">Up</a> | <a href="00633.html" target="topic">Next</a></div>
+<a href="00641.html" target="topic">Previous</a> | <a href="00627.html" target="topic">Up</a> | <a href="00645.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: HARMONY Trademarks Topic Title: Trademarks)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: I2C Sync i2c_multi_slave Topic Title: i2c_multi_slave)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -18,18 +18,18 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00049.html" target="topic">Debug System Service Library</a> &gt; <a href="00838.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00003.html" target="topic">_SYS_DEBUG_PRINT Macro</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00829.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00830.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00003.html" target="topic">_SYS_DEBUG_PRINT Macro</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00002.html" target="topic">Previous</a> | <a href="00838.html" target="topic">Up</a> | <a href="00835.html" target="topic">Next</a></div>
+<a href="01034.html" target="topic">Previous</a> | <a href="00830.html" target="topic">Up</a> | <a href="01041.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
 <a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: _SYS_DEBUG_PRINT Topic Title: _SYS_DEBUG_PRINT Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
@@ -49,19 +49,19 @@ _SYS_DEBUG_PRINT Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Macro: _SYS_DEBUG_PRINT( <a href="00983.html" target="topic">SYS_ERROR_LEVEL</a> level, const char* format, ... )&nbsp;</p>
+Macro: _SYS_DEBUG_PRINT( <a href="01035.html" target="topic">SYS_ERROR_LEVEL</a> level, const char* format, ... )&nbsp;</p>
 <p class="Element10">
-This function formats and prints a debug message if the specified level is at or below the global system error level. It can be used to implement the <a href="00977.html" target="topic">SYS_DEBUG_PRINT</a> macro.</p></div>
+This function formats and prints a debug message if the specified level is at or below the global system error level. It can be used to implement the <a href="00982.html" target="topic">SYS_DEBUG_PRINT</a> macro.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">_SYS_DEBUG_PRINT</span></strong>(level, format, ...) <strong><span style="color: #000080">do</span></strong> { <strong><span style="color: #000080">if</span></strong>((level) &lt;= <a href="00971.html" target="topic">SYS_DEBUG_ErrorLevelGet</a>()) <a href="00978.html" target="topic">SYS_DEBUG_Print</a>(format, ##__VA_ARGS__); } <strong><span style="color: #000080">while</span></strong> (0)</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">_SYS_DEBUG_PRINT</span></strong>(level, format, ...) <strong><span style="color: #000080">do</span></strong> { <strong><span style="color: #000080">if</span></strong>((level) &lt;= <a href="00976.html" target="topic">SYS_DEBUG_ErrorLevelGet</a>()) <a href="00983.html" target="topic">SYS_DEBUG_Print</a>(format, ##__VA_ARGS__); } <strong><span style="color: #000080">while</span></strong> (0)</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="00974.html" target="topic">SYS_DEBUG_Initialize</a> must have returned a valid object handle.</p></div>
+<a href="00979.html" target="topic">SYS_DEBUG_Initialize</a> must have returned a valid object handle.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -105,9 +105,9 @@ Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Do not call this macro directly. Call the <a href="00977.html" target="topic">SYS_DEBUG_PRINT</a> macro instead.&nbsp;</p>
+Do not call this macro directly. Call the <a href="00982.html" target="topic">SYS_DEBUG_PRINT</a> macro instead.&nbsp;</p>
 <p class="Element10">
-The default <a href="00977.html" target="topic">SYS_DEBUG_PRINT</a> macro definition removes the message and function call from the source code. To access and utilize the message, define the SYS_DEBUG_USE_CONSOLE macro or override the definition of the <a href="00977.html" target="topic">SYS_DEBUG_PRINT</a> macro.</p></div>
+The default <a href="00982.html" target="topic">SYS_DEBUG_PRINT</a> macro definition removes the message and function call from the source code. To access and utilize the message, define the SYS_DEBUG_USE_CONSOLE macro or override the definition of the <a href="00982.html" target="topic">SYS_DEBUG_PRINT</a> macro.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
@@ -122,7 +122,7 @@ Example</div>
 result = SomeOperation();
 <strong><span style="color: #000080">if</span></strong> (result &gt; MAX_VALUE)
 {
-    <a href="00977.html" target="topic">SYS_DEBUG_PRINT</a>(SYS_ERROR_WARNING, &quot;Result of %d exceeds max valuern&quot;, result);
+    <a href="00982.html" target="topic">SYS_DEBUG_PRINT</a>(SYS_ERROR_WARNING, &quot;Result of %d exceeds max valuern&quot;, result);
     <i><span style="color: #008000">// Take appropriate action</span></i>
 }</pre></div></div>
 </div>
@@ -132,18 +132,18 @@ result = SomeOperation();
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00049.html" target="topic">Debug System Service Library</a> &gt; <a href="00838.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00003.html" target="topic">_SYS_DEBUG_PRINT Macro</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00829.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00830.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00003.html" target="topic">_SYS_DEBUG_PRINT Macro</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00002.html" target="topic">Previous</a> | <a href="00838.html" target="topic">Up</a> | <a href="00835.html" target="topic">Next</a></div>
+<a href="01034.html" target="topic">Previous</a> | <a href="00830.html" target="topic">Up</a> | <a href="01041.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
 <a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: _SYS_DEBUG_PRINT Topic Title: _SYS_DEBUG_PRINT Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>

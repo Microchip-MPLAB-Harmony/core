@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>MPLAB Harmony Configuration</title>
+<title>Abstraction Model</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00041.html" target="topic">AT25 Driver Applications</a> &gt; <a href="00040.html" target="topic">at25_eeprom_read_write</a> &gt; <a href="00044.html" target="topic">MPLAB Harmony Configuration</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00054.html" target="topic">AT25 Driver Library Help</a> &gt; <a href="00057.html" target="topic">Using the Library</a> &gt; <a href="00044.html" target="topic">Abstraction Model</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00042.html" target="topic">Previous</a> | <a href="00040.html" target="topic">Up</a> | <a href="00043.html" target="topic">Next</a></div>
+<a href="00057.html" target="topic">Previous</a> | <a href="00057.html" target="topic">Up</a> | <a href="00052.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: AT25 at25_eeprom_read_write MPLAB Harmony Configuration Topic Title: MPLAB Harmony Configuration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT25 Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-MPLAB Harmony Configuration</div>
+Abstraction Model</div>
 </div>
 </div>
 
@@ -48,48 +48,38 @@ MPLAB Harmony Configuration</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element15">
-Components used:</div>
-
-<ul class="Element630">
-<li class="Element600">AT25 Driver</li>
-</ul><p class="Element10">
-&nbsp;</p>
 <p class="Element10">
-The following components used may vary based on the project configuration selected:</p>
+The AT25 library interface provides read and write functions that abstract out the internal workings of the AT25 driver and the underlying SPI protocol. The AT25 library supports a single instance of the AT25 EEPROM and a single client.&nbsp;</p>
+<p class="Element10">
+The client can be:</p>
 <ul class="Element630">
-<li class="Element600">SPI or SERCOM peripheral library</li>
-<li class="Element600">Board Support Package (BSP)</li>
-<li class="Element600">FreeRTOS</li>
-</ul><p class="Element10">
+<li class="Element600">Application - Directly access the AT25 EEPROM using the APIs provided by the AT25 library</li>
+<li class="Element600">Memory Driver - Application can run a file system on the AT25 EEPROM by connecting it to the Memory Driver which can further be connected to the File System Service</li>
+</ul><p class="Element10" style="text-align: center;">
 &nbsp;</p>
-<div class="Element15">
-Other MHC Settings:</div>
-
-<ul class="Element630">
-<li class="Element600">Configure Pins for AT25 Chip Select, Hold Pin and Write Protect Pin in Pin Settings</li>
-</ul></div>
+<p class="Element10" style="text-align: center;">
+<img src="drv_at25_abstraction_model.png" border="0" alt="" title=""></p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00041.html" target="topic">AT25 Driver Applications</a> &gt; <a href="00040.html" target="topic">at25_eeprom_read_write</a> &gt; <a href="00044.html" target="topic">MPLAB Harmony Configuration</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00054.html" target="topic">AT25 Driver Library Help</a> &gt; <a href="00057.html" target="topic">Using the Library</a> &gt; <a href="00044.html" target="topic">Abstraction Model</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00042.html" target="topic">Previous</a> | <a href="00040.html" target="topic">Up</a> | <a href="00043.html" target="topic">Next</a></div>
+<a href="00057.html" target="topic">Previous</a> | <a href="00057.html" target="topic">Up</a> | <a href="00052.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: AT25 at25_eeprom_read_write MPLAB Harmony Configuration Topic Title: MPLAB Harmony Configuration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT25 Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

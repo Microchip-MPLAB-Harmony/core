@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_TIME_TimerStart Function</title>
+<title>SYS_MODULE_INITIALIZE_ROUTINE Type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00864.html" target="topic">Time System Service Library Help</a> &gt; <a href="00865.html" target="topic">Library Interface</a> &gt; b) Timer Functions &gt; <a href="01327.html" target="topic">SYS_TIME_TimerStart Function</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="01586.html" target="topic">System Services Libraries Overview</a> &gt; <a href="01582.html" target="topic">Library Interface</a> &gt; System State Machine &gt; <a href="01327.html" target="topic">SYS_MODULE_INITIALIZE_ROUTINE Type</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01324.html" target="topic">Previous</a> | <a href="00865.html" target="topic">Up</a> | <a href="01328.html" target="topic">Next</a></div>
+<a href="01323.html" target="topic">Previous</a> | <a href="01582.html" target="topic">Up</a> | <a href="01328.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_TimerStart@SYS_TIME_HANDLE Topic Title: SYS_TIME_TimerStart Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_MODULE_INITIALIZE_ROUTINE Topic Title: SYS_MODULE_INITIALIZE_ROUTINE Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_TIME_TimerStart Function</div>
+SYS_MODULE_INITIALIZE_ROUTINE Type</div>
 </div>
 </div>
 
@@ -49,19 +49,19 @@ SYS_TIME_TimerStart Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function starts a previously created software timer.</p></div>
+System Module Initialization Routine Pointer&nbsp;</p>
+<p class="Element10">
+This data type is a pointer to a routine that initializes a system module (driver, library, or system-maintained application).</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01318.html" target="topic">SYS_TIME_RESULT</a> <strong><span style="color: #000000">SYS_TIME_TimerStart</span></strong>(
-    <a href="01297.html" target="topic">SYS_TIME_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
-);</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <a href="01328.html" target="topic">SYS_MODULE_OBJ</a> (* <strong><span style="color: #000000">SYS_MODULE_INITIALIZE_ROUTINE</span></strong>)(<strong><span style="color: #000080">const</span></strong> <a href="01322.html" target="topic">SYS_MODULE_INDEX</a> index, <strong><span style="color: #000080">const</span></strong> <a href="01323.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> init);</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="01300.html" target="topic">SYS_TIME_Initialize</a> must have been called and a valid handle to the software timer to be started must be available.</p></div>
+The low-level board initialization must have (and will be) completed before the system will call the initialization routine for any modules.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -78,9 +78,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Handle to a software timer instance.&nbsp;</div></td></tr></table></div></div>
+Identifier for the module instance to be initialized<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the data structure containing any data necessary to initialize the module. This pointer may be null if no data is required and default initialization is to be used.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,45 +93,35 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS_TIME_SUCCESS if the operation succeeds.&nbsp;</p>
-<p class="Element10">
-SYS_TIME_ERROR if the operation fails (due, for example, to an to an invalid handle).</p></div>
+A handle to the instance of the system module that was initialized. This handle is a necessary parameter to all of the other system-module level routines for that module.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Calling SYS_TIME_TimerStart on an already running timer will have no affect and will return SYS_TIME_SUCCESS. Calling SYS_TIME_TimerStart on a timer that is stopped, will always restart the timer from it's initial configured timer/counter value and will not resume the timer from the counter value at which it was stopped.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-Given a &quot;timer&quot; handle, the following example will start the timer's counter running. </p><div class="Element13"><div class="Element12"><pre class="Element12">SYS_TIME_TimerStart(timer);</pre></div></div>
-</div>
+This function will only be called once during system initialization.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00864.html" target="topic">Time System Service Library Help</a> &gt; <a href="00865.html" target="topic">Library Interface</a> &gt; b) Timer Functions &gt; <a href="01327.html" target="topic">SYS_TIME_TimerStart Function</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="01586.html" target="topic">System Services Libraries Overview</a> &gt; <a href="01582.html" target="topic">Library Interface</a> &gt; System State Machine &gt; <a href="01327.html" target="topic">SYS_MODULE_INITIALIZE_ROUTINE Type</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01324.html" target="topic">Previous</a> | <a href="00865.html" target="topic">Up</a> | <a href="01328.html" target="topic">Next</a></div>
+<a href="01323.html" target="topic">Previous</a> | <a href="01582.html" target="topic">Up</a> | <a href="01328.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_TimerStart@SYS_TIME_HANDLE Topic Title: SYS_TIME_TimerStart Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_MODULE_INITIALIZE_ROUTINE Topic Title: SYS_MODULE_INITIALIZE_ROUTINE Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

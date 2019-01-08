@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>system_init.c</title>
+<title>Running the Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00020.html" target="topic">Introduction</a> &gt; <a href="00032.html" target="topic">What is MPLAB Harmony?</a> &gt; <a href="00021.html" target="topic">System Configurations</a> &gt; <a href="00025.html" target="topic">system_init.c</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00021.html" target="topic">AT25 Driver Applications</a> &gt; <a href="00020.html" target="topic">at25_eeprom_read_write</a> &gt; <a href="00025.html" target="topic">Running the Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00022.html" target="topic">Previous</a> | <a href="00021.html" target="topic">Up</a> | <a href="00027.html" target="topic">Next</a></div>
+<a href="00023.html" target="topic">Previous</a> | <a href="00020.html" target="topic">Up</a> | <a href="00627.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: ARCH system_init.c Topic Title: system_init.c)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: AT25 at25_eeprom_read_write Running the Application Topic Title: Running the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-system_init.c</div>
+Running the Application</div>
 </div>
 </div>
 
@@ -48,144 +48,78 @@ system_init.c</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
+
+<ol class="Element630">
+<li value="1" class="Element600">Connect a micro USB cable to the DEBUG port.</li>
+<li value="2" class="Element600">Build and program the application using the MPLAB X IDE.</li>
+<li value="3" class="Element600">The LED indicates the success or failure.
+<ul class="Element631">
+<li class="Element601">The LED is turned ON when the value read from EEPROM matches with the written data</li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
 <p class="Element10">
-In a MPLAB Harmony project, the SYS_Initialization function is called from the <span class="Element146">main</span> function in order to initialize all modules in the system. This function is implemented as part of a system configuration by the MHC in a file named <span class="Element146">system_init.c</span>. This file may also include other necessary global system items that must be implemented in order to initialize a system such as processor configuration bits and module initialization global data structures.&nbsp;</p>
+The following table provides the LED name: </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="85%">
+<div class="Element66">
+Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="15%">
+<div class="Element66">
+LED Name&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="85%">
+<div class="Element68">
+SAM C21N Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="85%">
+<div class="Element68">
+SAM D20 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="85%">
+<div class="Element68">
+SAM D21 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="85%">
+<div class="Element68">
+SAM E70 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
+<div class="Element68">
+LED 2&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="85%">
+<div class="Element68">
+SAM V71 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
-<strong>Example <span class="Element146">system_init.c</span> File</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// ****************************************************************************</span></i>
-<i><span style="color: #008000">// ****************************************************************************</span></i>
-<i><span style="color: #008000">// Section: Configuration Bits</span></i>
-<i><span style="color: #008000">// ****************************************************************************</span></i>
-<i><span style="color: #008000">// ****************************************************************************</span></i>
-
-<i><span style="color: #008000">/*** DEVCFG0 ***/</span></i>
-
-<strong><span style="color: #000080">#pragma</span></strong> config DEBUG =      OFF
-<strong><span style="color: #000080">#pragma</span></strong> config ICESEL =     ICS_PGx2
-<strong><span style="color: #000080">#pragma</span></strong> config PWP =        OFF
-<strong><span style="color: #000080">#pragma</span></strong> config BWP =        OFF
-<strong><span style="color: #000080">#pragma</span></strong> config CP =         OFF
-
-<i><span style="color: #008000">/*** DEVCFG1 ***/</span></i>
-
-<strong><span style="color: #000080">#pragma</span></strong> config FNOSC =      PRIPLL
-<strong><span style="color: #000080">#pragma</span></strong> config FSOSCEN =    OFF
-<strong><span style="color: #000080">#pragma</span></strong> config IESO =       ON
-<strong><span style="color: #000080">#pragma</span></strong> config POSCMOD =    XT
-<strong><span style="color: #000080">#pragma</span></strong> config OSCIOFNC =   OFF
-<strong><span style="color: #000080">#pragma</span></strong> config FPBDIV =     DIV_1
-<strong><span style="color: #000080">#pragma</span></strong> config FCKSM =      CSDCMD
-<strong><span style="color: #000080">#pragma</span></strong> config WDTPS =      PS1048576
-<strong><span style="color: #000080">#pragma</span></strong> config FWDTEN =     OFF
-
-<i><span style="color: #008000">/*** DEVCFG2 ***/</span></i>
-
-<strong><span style="color: #000080">#pragma</span></strong> config FPLLIDIV =   DIV_2
-<strong><span style="color: #000080">#pragma</span></strong> config FPLLMUL =    MUL_20
-<strong><span style="color: #000080">#pragma</span></strong> config FPLLODIV =   DIV_1
-<strong><span style="color: #000080">#pragma</span></strong> config UPLLIDIV =   DIV_12
-<strong><span style="color: #000080">#pragma</span></strong> config UPLLEN =     OFF
-
-<i><span style="color: #008000">/*** DEVCFG3 ***/</span></i>
-
-<strong><span style="color: #000080">#pragma</span></strong> config USERID =     0xffff
-<strong><span style="color: #000080">#pragma</span></strong> config FSRSSEL =    PRIORITY_7
-<strong><span style="color: #000080">#pragma</span></strong> config FMIIEN =     OFF
-<strong><span style="color: #000080">#pragma</span></strong> config FETHIO =     OFF
-<strong><span style="color: #000080">#pragma</span></strong> config FCANIO =     OFF
-<strong><span style="color: #000080">#pragma</span></strong> config FUSBIDIO =   OFF
-<strong><span style="color: #000080">#pragma</span></strong> config FVBUSONIO =  OFF
-
-
-<i><span style="color: #008000">// *****************************************************************************</span></i>
-<i><span style="color: #008000">// *****************************************************************************</span></i>
-<i><span style="color: #008000">// Section: Driver Initialization Data</span></i>
-<i><span style="color: #008000">// *****************************************************************************</span></i>
-<i><span style="color: #008000">// *****************************************************************************</span></i>
-
-<strong><span style="color: #000080">const</span></strong> DRV_USART_INIT drvUsart0InitData =
-{
-    .moduleInit.value = DRV_USART_POWER_STATE_IDX0,
-    .usartID = DRV_USART_PERIPHERAL_ID_IDX0,
-    .mode = DRV_USART_OPER_MODE_IDX0,
-    .modeData.AddressedModeInit.address = DRV_USART_OPER_MODE_DATA_IDX0,
-    .flags = DRV_USART_INIT_FLAGS_IDX0,
-    .brgClock = DRV_USART_BRG_CLOCK_IDX0,
-    .lineControl = DRV_USART_LINE_CNTRL_IDX0,
-    .baud = DRV_USART_BAUD_RATE_IDX0,
-    .handshake = DRV_USART_HANDSHAKE_MODE_IDX0,
-    .interruptTransmit = DRV_USART_XMIT_INT_SRC_IDX0,
-    .interruptReceive = DRV_USART_RCV_INT_SRC_IDX0,
-    .queueSizeTransmit = DRV_USART_XMIT_QUEUE_SIZE_IDX0,
-    .queueSizeReceive = DRV_USART_RCV_QUEUE_SIZE_IDX0,
-};
-
-<i><span style="color: #008000">// *****************************************************************************</span></i>
-<i><span style="color: #008000">// *****************************************************************************</span></i>
-<i><span style="color: #008000">// Section: Module Initialization Data</span></i>
-<i><span style="color: #008000">// *****************************************************************************</span></i>
-<i><span style="color: #008000">// *****************************************************************************</span></i>
-
-<strong><span style="color: #000080">const</span></strong> SYS_DEVCON_INIT sysDevconInit =
-{
-    .moduleInit = {0},
-};
-
-
-<i><span style="color: #008000">// *****************************************************************************</span></i>
-<i><span style="color: #008000">// *****************************************************************************</span></i>
-<i><span style="color: #008000">// Section: System Data</span></i>
-<i><span style="color: #008000">// *****************************************************************************</span></i>
-<i><span style="color: #008000">// *****************************************************************************</span></i>
-
-<i><span style="color: #008000">/* Structure to hold the object handles for the modules in the system. */</span></i>
-SYSTEM_OBJECTS sysObj;
-
-
-<i><span style="color: #008000">// ****************************************************************************</span></i>
-<i><span style="color: #008000">// ****************************************************************************</span></i>
-<i><span style="color: #008000">// Section: System Initialization</span></i>
-<i><span style="color: #008000">// ****************************************************************************</span></i>
-<i><span style="color: #008000">// ****************************************************************************</span></i>
-
-<strong><span style="color: #000080">void</span></strong> SYS_Initialize ( <strong><span style="color: #000080">void</span></strong>* data )
-{
-    <i><span style="color: #008000">/* Core Processor Initialization */</span></i>
-    SYS_CLK_Initialize( NULL );
-    sysObj.sysDevcon = SYS_DEVCON_Initialize(SYS_DEVCON_INDEX_0, (SYS_MODULE_INIT*)&amp;sysDevconInit);
-    SYS_DEVCON_PerformanceConfig(SYS_CLK_SystemFrequencyGet());
-    SYS_PORTS_Initialize();
-
-    <i><span style="color: #008000">/* Initialize Drivers */</span></i>
-    sysObj.drvUsart0 = DRV_USART_Initialize(DRV_USART_INDEX_0, (SYS_MODULE_INIT *)&amp;drvUsart0InitData);
-
-    <i><span style="color: #008000">/* Initialize the Application */</span></i>
-    APP_Initialize();
-}</pre></div></div>
+&nbsp;</p>
+<div class="Element15">
+Note:</div>
 <p class="Element10">
-In addition to the SYS_Initialize function implementation, the previous example, the <span class="Element146">system_init.c</span> file from the &quot;pic32mx_795_pim_e16&quot; configuration of the &quot;sample&quot; project, defines the processor configuration bits, data structures used to initialize the USART driver and device control service, and a global sysObj data structure used for the USART driver Device Control System Service returned by their initialization functions.&nbsp;</p>
-<p class="Element10">
-Note the SYSTEM_OBJECTS data type for the sysObj date structure is defined in the <a href="00023.html" target="topic">system_definitions.h</a> section.</p></div>
+Make sure a jumper is connected between <strong>LED2</strong> and PB08 on J204 header of SAM E70 Xplained Ultra Evaluation Kit.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00020.html" target="topic">Introduction</a> &gt; <a href="00032.html" target="topic">What is MPLAB Harmony?</a> &gt; <a href="00021.html" target="topic">System Configurations</a> &gt; <a href="00025.html" target="topic">system_init.c</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00021.html" target="topic">AT25 Driver Applications</a> &gt; <a href="00020.html" target="topic">at25_eeprom_read_write</a> &gt; <a href="00025.html" target="topic">Running the Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00022.html" target="topic">Previous</a> | <a href="00021.html" target="topic">Up</a> | <a href="00027.html" target="topic">Next</a></div>
+<a href="00023.html" target="topic">Previous</a> | <a href="00020.html" target="topic">Up</a> | <a href="00627.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: ARCH system_init.c Topic Title: system_init.c)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: AT25 at25_eeprom_read_write Running the Application Topic Title: Running the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

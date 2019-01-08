@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>OSAL_Free Function</title>
+<title>OSAL_SEM_PostISR Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00707.html" target="topic">OSAL Library Help</a> &gt; <a href="00717.html" target="topic">Library Interface</a> &gt; d) Memory Allocation Functions &gt; <a href="00734.html" target="topic">OSAL_Free Function</a></div>
+<a href="00688.html" target="topic">OSAL Library Help</a> &gt; <a href="00698.html" target="topic">Library Interface</a> &gt; a) Semaphore Functions &gt; <a href="00734.html" target="topic">OSAL_SEM_PostISR Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00736.html" target="topic">Previous</a> | <a href="00717.html" target="topic">Up</a> | <a href="00735.html" target="topic">Next</a></div>
+<a href="00733.html" target="topic">Previous</a> | <a href="00698.html" target="topic">Up</a> | <a href="00731.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_Free@void* Topic Title: OSAL_Free Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_SEM_PostISR@OSAL_SEM_HANDLE_TYPE* Topic Title: OSAL_SEM_PostISR Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-OSAL_Free Function</div>
+OSAL_SEM_PostISR Function</div>
 </div>
 </div>
 
@@ -49,19 +49,19 @@ OSAL_Free Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function deallocates memory and returns it to the default pool. In an RTOS-based application, the memory may have been allocated from multiple pools or simply from the heap. In non-RTOS applications, this function calls the C standard function free.</p></div>
+This function posts a binary semaphore or increments a counting semaphore. The highest priority task currently blocked on the semaphore will be released and made ready to run. This form of the post function should be used inside an ISR.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">OSAL_Free</span></strong>(
-    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">pData</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00724.html" target="topic">OSAL_RESULT</a> <strong><span style="color: #000000">OSAL_SEM_PostISR</span></strong>(
+    OSAL_SEM_HANDLE_TYPE* <strong><span style="color: #000000">semID</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+Semaphore must have been created.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -78,41 +78,43 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-pData&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+semID&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to the memory block to be set free&nbsp;</div></td></tr></table></div></div>
+Pointer to the Semaphore ID&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
 Returns</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-None.</p></div>
+
+<ul class="Element630">
+<li class="Element600">OSAL_RESULT_TRUE - Semaphore posted</li>
+<li class="Element600">OSAL_RESULT_FALSE - Semaphore not posted</li>
+</ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+This version of the <a href="00733.html" target="topic">OSAL_SEM_Post</a> function should be used if the program is, or may be, operating inside an ISR. The OSAL will take the necessary steps to ensure correct operation possibly disabling interrupts or entering a critical section. The exact requirements will depend upon the particular RTOS being used.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// create a working array</span></i>
-uint8_t* pData;
-
- pData = <a href="00736.html" target="topic">OSAL_Malloc</a>(32);
- <strong><span style="color: #000080">if</span></strong> (pData != NULL)
+<div class="Element13"><div class="Element12"><pre class="Element12"> <strong><span style="color: #000080">void</span></strong> __ISR(UART_2_VECTOR) _UART2RXHandler()
  {
-    ...
+    <strong><span style="color: #000080">char</span></strong> c;
 
-    <i><span style="color: #008000">// deallocate the memory</span></i>
-    OSAL_Free(pData);
-    <i><span style="color: #008000">// and prevent it accidentally being used again</span></i>
-    pData = NULL;
+    <i><span style="color: #008000">// read the character</span></i>
+    c = U2RXREG;
+    <i><span style="color: #008000">// clear the interrupt flag</span></i>
+    IFS1bits.U2IF = 0;
+    <i><span style="color: #008000">// post a semaphore indicating a character has been received</span></i>
+    OSAL_SEM_PostISR(&amp;semSignal);
+
  }</pre></div></div>
 </div>
 </div>
@@ -121,21 +123,21 @@ uint8_t* pData;
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00707.html" target="topic">OSAL Library Help</a> &gt; <a href="00717.html" target="topic">Library Interface</a> &gt; d) Memory Allocation Functions &gt; <a href="00734.html" target="topic">OSAL_Free Function</a></div>
+<a href="00688.html" target="topic">OSAL Library Help</a> &gt; <a href="00698.html" target="topic">Library Interface</a> &gt; a) Semaphore Functions &gt; <a href="00734.html" target="topic">OSAL_SEM_PostISR Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00736.html" target="topic">Previous</a> | <a href="00717.html" target="topic">Up</a> | <a href="00735.html" target="topic">Next</a></div>
+<a href="00733.html" target="topic">Previous</a> | <a href="00698.html" target="topic">Up</a> | <a href="00731.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_Free@void* Topic Title: OSAL_Free Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_SEM_PostISR@OSAL_SEM_HANDLE_TYPE* Topic Title: OSAL_SEM_PostISR Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

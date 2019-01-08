@@ -18,21 +18,21 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00117.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00124.html" target="topic">Using the Library</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00120.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00124.html" target="topic">Using the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00116.html" target="topic">Previous</a> | <a href="00117.html" target="topic">Up</a> | <a href="00105.html" target="topic">Next</a></div>
+<a href="00119.html" target="topic">Previous</a> | <a href="00120.html" target="topic">Up</a> | <a href="00111.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2S Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDHC Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 Using the Library</div>
 </div>
@@ -49,20 +49,22 @@ Using the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<strong>Interface Header File</strong>: <span class="Element146"><a href="00320.html" target="topic">drv_i2s.h</a></span>&nbsp;</p>
+The SDHC driver can be used to communicate with SD-Cards.&nbsp;</p>
 <p class="Element10">
-The interface to the I2S Driver Library is defined in the <span class="Element146"><a href="00320.html" target="topic">drv_i2s.h</a></span> header file. Any C language source (<span class="Element146">.c</span>) file that uses the I2S Driver Library should include <span class="Element146"><a href="00320.html" target="topic">drv_i2s.h</a></span>.&nbsp;</p>
+&nbsp;</p>
 <p class="Element10">
-Please refer to the What is MPLAB Harmony? section for how the driver interacts with the framework.&nbsp;</p>
+<strong>Modes supported:</strong>&nbsp;</p>
+<ol class="Element630">
+<li value="1" class="Element600">Asynchronous mode - Bare-metal and RTOS.</li>
+</ol><p class="Element10">
+&nbsp;</p>
 <p class="Element10">
-<strong>Example Applications:</strong>&nbsp;</p>
-<p class="Element10">
-This library is used by the following applications, among others:</p>
-<ul class="Element630">
-<li class="Element600"><span class="Element146">audio/apps/audio_tone</span></li>
-<li class="Element600"><span class="Element146">audio/apps/audio_tone_linkeddma</span></li>
-<li class="Element600"><span class="Element146">audio/apps/microphone_loopback</span></li>
-</ul></div>
+<strong>It can be used in multiple ways:</strong></p>
+<ol class="Element630">
+<li value="1" class="Element600">Application can directly use the SDHC driver API's to perform Read/Write operations.</li>
+<li value="2" class="Element600">Application can use File System service layer and perform file operations.</li>
+<li value="3" class="Element600">It can be interfaced with Middleware's like USB.</li>
+</ol></div>
 </div>
 <a name="546F70696373"></a><div class="Element14">
 Topics</div>
@@ -79,24 +81,14 @@ Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00105.html" target="topic">Abstraction Model</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00111.html" target="topic">Abstraction Model</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-<span style="color: #000000">The I2S Driver provides a high level abstraction of the lower level (SPI/I2SC/SSC) I2S modules with a convenient C language interface. This topic describes how that abstraction is modeled in the software and introduces the I2S Driver Library interface.</span>&nbsp;</div></td></tr><tr>
+This section describes how the abstraction is modeled in software and introduces the library's interface.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00119.html" target="topic">Library Overview</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00118.html" target="topic">How the Library Works</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Refer to the Driver Library Overwiew section for information on how the driver operates in a system.<br><span style="color: #000000">The </span>I2S driver library provides an API interface to transfer/receive digital audio data using supported Audio protocols. T<span style="color: #000000">he library interface routines are divided into various sub-sections, which address one of the blocks or the overall operation of the I2S Driver Library.</span> &nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00115.html" target="topic">How the Library Works</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-The library provides interfaces to support:&nbsp;</p>
-<ul class="Element630">
-<li class="Element600">System Functionality</li>
-<li class="Element600">Client Functionality</li>
-</ul><p class="Element207">
-&nbsp;</div></td></tr></table></div></div>
+This section describes the basic architecture of the SDHC driver Library.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -104,21 +96,21 @@ The library provides interfaces to support:&nbsp;</p>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00117.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00124.html" target="topic">Using the Library</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00120.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00124.html" target="topic">Using the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00116.html" target="topic">Previous</a> | <a href="00117.html" target="topic">Up</a> | <a href="00105.html" target="topic">Next</a></div>
+<a href="00119.html" target="topic">Previous</a> | <a href="00120.html" target="topic">Up</a> | <a href="00111.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2S Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDHC Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

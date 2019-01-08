@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>The Main File</title>
+<title>Abstraction Model</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00020.html" target="topic">Introduction</a> &gt; <a href="00032.html" target="topic">What is MPLAB Harmony?</a> &gt; <a href="00030.html" target="topic">The Main File</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00040.html" target="topic">AT24 Driver Library Help</a> &gt; <a href="00043.html" target="topic">Using the Library</a> &gt; <a href="00030.html" target="topic">Abstraction Model</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00032.html" target="topic">Previous</a> | <a href="00032.html" target="topic">Up</a> | <a href="00028.html" target="topic">Next</a></div>
+<a href="00043.html" target="topic">Previous</a> | <a href="00043.html" target="topic">Up</a> | <a href="00038.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: ARCH The Main File Topic Title: The Main File)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT24 Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-The Main File</div>
+Abstraction Model</div>
 </div>
 </div>
 
@@ -49,62 +49,37 @@ The Main File</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The C language entry point for a MPLAB Harmony embedded application is the main function. This function is defined in the <span class="Element146">main.c</span> file, generated in the project's <span class="Element146">app</span> folder (or <span class="Element146">src</span> directory on disk) by the MHC. The <span class="Element146">main</span> function (see the following example) implements a simple &quot;super loop&quot;, commonly used in embedded applications that do not make use of an operating system.&nbsp;</p>
+The AT24 library interface provides read and write functions that abstract out the internal workings of the AT24 driver and the underlying <span style="color: #000000">I<sup>2</sup>C</span> (or TWIHS) protocol. The AT24 library supports a single instance of the AT24 EEPROM and a single client.&nbsp;</p>
 <p class="Element10">
-<strong>Example main Function Logic</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">int</span></strong> main ( <strong><span style="color: #000080">void</span></strong> )
-{
-    <i><span style="color: #008000">/* Initialize all MPLAB Harmony modules, including application(s). */</span></i>
-    SYS_Initialize ( NULL );
-
-    <strong><span style="color: #000080">while</span></strong> ( <strong><span style="color: #000080">true</span></strong> )
-    {
-        <i><span style="color: #008000">/* Maintain state machines of all polled MPLAB Harmony modules. */</span></i>
-        SYS_Tasks ( );
-    }
-
-    <i><span style="color: #008000">/* Execution should not come here during normal operation */</span></i>
-    <strong><span style="color: #000080">return</span></strong> ( EXIT_FAILURE );
-}</pre></div></div>
-<div class="Element15">
-The SYS_Initialize Function</div>
-<p class="Element10">
-The first thing the main function does is to call a function named SYS_Initialize. The purpose of the SYS_Initialize function is to initialize every software module in the system. MPLAB Harmony is based upon a model of cooperating state machines. Therefore, this function must ensure that every module's state machine is placed in a valid initial state. The implementation of this function is one of the things generated by the MHC to configure a MPLAB Harmony system. This function's definition is generated in the <span class="Element146">system_init.c</span> file, described in the <a href="00025.html" target="topic">system_init.c</a> section. </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table2">
-<tr>
-<td class="Element67" valign="top" width="10%" style="border:none;">
-<div class="Element68">
-<img src="Note Icon.png" border="0" alt="" title=""><strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
-<div class="Element68">
-The SYS_Initialize function signature has a &quot;<span class="Element146">void *</span>&quot; input parameter. This is so that it may later be implemented in a library and an arbitrary initialization data structure may be passed into it. However, for a statically implemented SYS_Initialize function (which will normally be the case if you implement it yourself), this parameter is unnecessary and can be passed as &quot;NULL&quot;.&nbsp;</div></td></tr></table></div></div>
-<div class="Element15">
-The &quot;Super Loop&quot;</div>
-<p class="Element10">
-After all of the modules in the system have been initialized, the main function executes an infinite loop to keep the system running. This is commonly called a &quot;super loop&quot; as it is the outer-most loop, within which the entire system operates. This loop never exits. So, the code that exists after the end of that loop should never be executed and is only included there for safety, clarity, and syntactical completeness.</p><div class="Element15">
-The SYS_Tasks File and the SYS_Tasks Function</div>
-<p class="Element10">
-Inside of the &quot;super loop&quot;, the <span class="Element146">main</span> function calls the SYS_Tasks function. The purpose of the SYS_Tasks function is to poll every module in the system to ensure that it continues to operate. This is how the system maintains the state machines of all polled modules. (Note that some modules may be interrupt driven and thus, not called from the SYS_Tasks function.) The implementation of the SYS_Tasks function is generated by the MHC in the <span class="Element146">system_tasks.c</span> file, which is described in the <a href="00027.html" target="topic">system_tasks.c</a> section.</p></div>
+The client can be:</p>
+<ul class="Element630">
+<li class="Element600">Application - Directly access the AT24 EEPROM using the APIs provided by the AT24 library</li>
+<li class="Element600">Memory Driver - Application can run a file system on the AT24 EEPROM by connecting it to the Memory Driver which can further be connected to the File System Service</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="drv_at24_abstraction_model.png" border="0" alt="" title=""></p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00020.html" target="topic">Introduction</a> &gt; <a href="00032.html" target="topic">What is MPLAB Harmony?</a> &gt; <a href="00030.html" target="topic">The Main File</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00040.html" target="topic">AT24 Driver Library Help</a> &gt; <a href="00043.html" target="topic">Using the Library</a> &gt; <a href="00030.html" target="topic">Abstraction Model</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00032.html" target="topic">Previous</a> | <a href="00032.html" target="topic">Up</a> | <a href="00028.html" target="topic">Next</a></div>
+<a href="00043.html" target="topic">Previous</a> | <a href="00043.html" target="topic">Up</a> | <a href="00038.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: ARCH The Main File Topic Title: The Main File)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT24 Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

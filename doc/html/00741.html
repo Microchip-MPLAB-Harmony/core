@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>OSAL_MUTEX_Unlock Function</title>
+<title>Building The Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00707.html" target="topic">OSAL Library Help</a> &gt; <a href="00717.html" target="topic">Library Interface</a> &gt; b) Mutex Functions &gt; <a href="00741.html" target="topic">OSAL_MUTEX_Unlock Function</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00739.html" target="topic">SDHC Driver Applications</a> &gt; Async &gt; <a href="00740.html" target="topic">sdhc_read_write</a> &gt; <a href="00741.html" target="topic">Building The Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00740.html" target="topic">Previous</a> | <a href="00717.html" target="topic">Up</a> | <a href="00729.html" target="topic">Next</a></div>
+<a href="00740.html" target="topic">Previous</a> | <a href="00740.html" target="topic">Up</a> | <a href="00743.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_MUTEX_Unlock@OSAL_MUTEX_HANDLE_TYPE* Topic Title: OSAL_MUTEX_Unlock Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SDHC Driver Async sdhc_read_write Building The Application Topic Title: Building The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-OSAL_MUTEX_Unlock Function</div>
+Building The Application</div>
 </div>
 </div>
 
@@ -49,71 +49,47 @@ OSAL_MUTEX_Unlock Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function unlocks a previously obtained mutex.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00743.html" target="topic">OSAL_RESULT</a> <strong><span style="color: #000000">OSAL_MUTEX_Unlock</span></strong>(
-    OSAL_MUTEX_HANDLE_TYPE* <strong><span style="color: #000000">mutexID</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-Mutex must have been created.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
+The parent folder for all the MPLAB X projects for this application is given below: </p><div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table3">
+<table cellspacing="0" class="Table4">
 <tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-mutexID&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to the mutex handle&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-
-<ul class="Element630">
-<li class="Element600">OSAL_RESULT_TRUE - Mutex released</li>
-<li class="Element600">OSAL_RESULT_FALSE - Mutex failed to be released or error occurred</li>
-</ul></div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
+<td class="Element65" valign="top" width="24%">
+<div class="Element66">
+Application Path&nbsp;</div></td><td class="Element65" valign="top" width="76%">
+<div class="Element66">
+core/apps/driver/sdhc/async/sdhc_read_write/firmware&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
-None.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-...
-<strong><span style="color: #000080">if</span></strong> (<a href="00740.html" target="topic">OSAL_MUTEX_Lock</a>(&amp;mutexData, 1000) == OSAL_RESULT_TRUE)
-{
-    <i><span style="color: #008000">// manipulate the shared data</span></i>
-    ...
-
-    <i><span style="color: #008000">// unlock the mutex</span></i>
-    OSAL_MUTEX_Unlock(&amp;mutexData);
-}</pre></div></div>
+&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">To build the application, refer to the following table and open the appropriate project file in </span>the <span style="color: #000000">MPLAB X IDE.</span> </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="32%">
+<div class="Element66">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="68%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="32%">
+<div class="Element68">
+sam_e70_xult.X&nbsp;</div></td><td class="Element67" valign="top" width="68%">
+<div class="Element68">
+SAM E70 Xplained Ultra Evaluation Kit&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="32%">
+<div class="Element68">
+sam_e70_xult_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="68%">
+<div class="Element68">
+SAM E70 Xplained Ultra Evaluation Kit + FreeRTOS&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="32%">
+<div class="Element68">
+sam_V71_xult.X&nbsp;</div></td><td class="Element67" valign="top" width="68%">
+<div class="Element68">
+SAM V71 Xplained Ultra Evaluation Kit&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="32%">
+<div class="Element68">
+sam_V71_xult_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="68%">
+<div class="Element68">
+SAM V71 Xplained Ultra Evaluation Kit + FreeRTOS&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -121,21 +97,21 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00707.html" target="topic">OSAL Library Help</a> &gt; <a href="00717.html" target="topic">Library Interface</a> &gt; b) Mutex Functions &gt; <a href="00741.html" target="topic">OSAL_MUTEX_Unlock Function</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00739.html" target="topic">SDHC Driver Applications</a> &gt; Async &gt; <a href="00740.html" target="topic">sdhc_read_write</a> &gt; <a href="00741.html" target="topic">Building The Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00740.html" target="topic">Previous</a> | <a href="00717.html" target="topic">Up</a> | <a href="00729.html" target="topic">Next</a></div>
+<a href="00740.html" target="topic">Previous</a> | <a href="00740.html" target="topic">Up</a> | <a href="00743.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_MUTEX_Unlock@OSAL_MUTEX_HANDLE_TYPE* Topic Title: OSAL_MUTEX_Unlock Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SDHC Driver Async sdhc_read_write Building The Application Topic Title: Building The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

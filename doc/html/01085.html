@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_FORMAT Enumeration</title>
+<title>SYS_FS_EVENT Enumeration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00851.html" target="topic">File System Service Library Help</a> &gt; <a href="00852.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01085.html" target="topic">SYS_FS_FORMAT Enumeration</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00847.html" target="topic">File System Service Library Help</a> &gt; <a href="00848.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01085.html" target="topic">SYS_FS_EVENT Enumeration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01211.html" target="topic">Previous</a> | <a href="00852.html" target="topic">Up</a> | <a href="01033.html" target="topic">Next</a></div>
+<a href="01137.html" target="topic">Previous</a> | <a href="00848.html" target="topic">Up</a> | <a href="01089.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FORMAT Topic Title: SYS_FS_FORMAT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_EVENT Topic Title: SYS_FS_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_FORMAT Enumeration</div>
+SYS_FS_EVENT Enumeration</div>
 </div>
 </div>
 
@@ -49,25 +49,24 @@ SYS_FS_FORMAT Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-File formating partition rule&nbsp;</p>
+SYS FS Media Events&nbsp;</p>
 <p class="Element10">
-This type specifies the partitioning rule. When SYS_FS_FORMAT_FDISK format is specified, a primary partition occupying the entire disk space is created and then an FAT volume is created on the partition. When SYS_FS_FORMAT_SFD format is specified, the FAT volume starts from the first sector of the physical drive.&nbsp;</p>
-<p class="Element10">
-The SYS_FS_FORMAT_FDISK partitioning is usually used for hard disk, MMC, SDC, CFC and U Disk. It can divide a physical drive into one or more partitions with a partition table on the MBR. However Windows does not support multiple partition on the removable media. The SYS_FS_FORMAT_SFD is non-partitioned method. The FAT volume starts from the first sector on the physical drive without partition table. It is usually used for floppy disk, micro drive, optical disk, and super-floppy media.</p></div>
+This enumeration identifies the possible events that can result from a file system.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
 <div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">SYS_FS_FORMAT_FDISK</span></strong> = 0,
-  <strong><span style="color: #000000">SYS_FS_FORMAT_SFD</span></strong> = 1
-} SYS_FS_FORMAT;</pre></div></div>
+  <strong><span style="color: #000000">SYS_FS_EVENT_MOUNT</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_EVENT_UNMOUNT</span></strong>,
+  <strong><span style="color: #000000">SYS_FS_EVENT_ERROR</span></strong>
+} SYS_FS_EVENT;</pre></div></div>
 <a name="4D656D62657273"></a><div class="Element14">
 Members</div>
 <div class="Element11">
 <div class="Element10">
 <div class="Element272">
 <div class="TableDiv">
-<table cellspacing="0" class="Table4">
+<table cellspacing="0" class="Table1">
 <tr>
 <td class="Element260" valign="top" width="35%">
 <div class="Element261">
@@ -76,36 +75,48 @@ Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
 <div class="Element263">
-SYS_FS_FORMAT_FDISK = 0&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+SYS_FS_EVENT_MOUNT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
 <div class="Element267">
-Format disk with multiple partition&nbsp;</div></td></tr><tr>
+Media has been mounted successfully.&nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
 <div class="Element263">
-SYS_FS_FORMAT_SFD = 1&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+SYS_FS_EVENT_UNMOUNT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
 <div class="Element267">
-Format disk with single partition&nbsp;</div></td></tr></table></div></div>
+Media has been unmounted successfully.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_FS_EVENT_ERROR&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+There was an error during the operation&nbsp;</div></td></tr></table></div></div>
 </div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+One of these values is passed in the &quot;event&quot; parameter of the event handling callback function that client registered with the file system by setting the event handler when media mount or unmount is completed.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00851.html" target="topic">File System Service Library Help</a> &gt; <a href="00852.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01085.html" target="topic">SYS_FS_FORMAT Enumeration</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00847.html" target="topic">File System Service Library Help</a> &gt; <a href="00848.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01085.html" target="topic">SYS_FS_EVENT Enumeration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01211.html" target="topic">Previous</a> | <a href="00852.html" target="topic">Up</a> | <a href="01033.html" target="topic">Next</a></div>
+<a href="01137.html" target="topic">Previous</a> | <a href="00848.html" target="topic">Up</a> | <a href="01089.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FORMAT Topic Title: SYS_FS_FORMAT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_EVENT Topic Title: SYS_FS_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

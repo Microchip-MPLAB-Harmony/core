@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_I2C_TRANSFER_EVENT_HANDLER Type</title>
+<title>DRV_I2S_INIT Structure</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00101.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00102.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="00311.html" target="topic">DRV_I2C_TRANSFER_EVENT_HANDLER Type</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00088.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00089.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00311.html" target="topic">DRV_I2S_INIT Structure</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00307.html" target="topic">Previous</a> | <a href="00102.html" target="topic">Up</a> | <a href="00313.html" target="topic">Next</a></div>
+<a href="00297.html" target="topic">Previous</a> | <a href="00089.html" target="topic">Up</a> | <a href="00260.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2C_TRANSFER_EVENT_HANDLER Topic Title: DRV_I2C_TRANSFER_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_INIT Topic Title: DRV_I2S_INIT Structure)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_I2C_TRANSFER_EVENT_HANDLER Type</div>
+DRV_I2S_INIT Structure</div>
 </div>
 </div>
 
@@ -49,115 +49,132 @@ DRV_I2C_TRANSFER_EVENT_HANDLER Type</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-I2C Driver Transfer Event Handler Function Pointer&nbsp;</p>
+I2S Driver Initialization Data&nbsp;</p>
 <p class="Element10">
-This data type defines the required function signature for the I2C driver buffer event handling callback function. A client must register a pointer using the buffer event handling function whose function signature (parameter and return value types) match the types specified by this function pointer in order to receive buffer related event calls back from the driver.&nbsp;</p>
-<p class="Element10">
-The parameters and return values are described here and a partial example implementation is provided.</p></div>
+This data type defines the data required to initialize or the I2S driver.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">DRV_I2C_TRANSFER_EVENT_HANDLER</span></strong>)(<a href="00307.html" target="topic">DRV_I2C_TRANSFER_EVENT</a> event, <a href="00312.html" target="topic">DRV_I2C_TRANSFER_HANDLE</a> transferHandle, uintptr_t context);</pre></div></div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong> {
+  <a href="00327.html" target="topic">DRV_I2S_PLIB_INTERFACE</a> * <strong><span style="color: #000000">i2sPlib</span></strong>;
+  <a href="00650.html" target="topic">INT_SOURCE</a> <strong><span style="color: #000000">interruptI2S</span></strong>;
+  uintptr_t <strong><span style="color: #000000">clientObjPool</span></strong>;
+  size_t <strong><span style="color: #000000">numClients</span></strong>;
+  uintptr_t <strong><span style="color: #000000">transferObjPool</span></strong>;
+  size_t <strong><span style="color: #000000">queueSize</span></strong>;
+  <a href="00988.html" target="topic">SYS_DMA_CHANNEL</a> <strong><span style="color: #000000">dmaChannelTransmit</span></strong>;
+  <a href="00988.html" target="topic">SYS_DMA_CHANNEL</a> <strong><span style="color: #000000">dmaChannelReceive</span></strong>;
+  <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">i2sTransmitAddress</span></strong>;
+  <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">i2sReceiveAddress</span></strong>;
+  <a href="00650.html" target="topic">INT_SOURCE</a> <strong><span style="color: #000000">interruptDMA</span></strong>;
+  uint8_t <strong><span style="color: #000000">dmaDataLength</span></strong>;
+} DRV_I2S_INIT;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element312">
+<div class="Element272">
 <div class="TableDiv">
-<table cellspacing="0" class="Table3">
+<table cellspacing="0" class="Table1">
 <tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-event&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Identifies the type of event<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-transferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Handle identifying the buffer to which the vent relates<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Value identifying the context of the application that registered the event handling function.&nbsp;</div></td></tr></table></div></div>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_I2S_PLIB_INTERFACE * i2sPlib;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Identifies the PLIB API set to be used by the driver to access the</p>
+<ul class="Element630">
+<li class="Element600">peripheral.</li>
+</ul><p class="Element267">
+&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+INT_SOURCE interruptI2S;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Interrupt source ID for the I2S interrupt.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+uintptr_t clientObjPool;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Memory Pool for Client Objects&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+size_t numClients;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Number of clients&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+uintptr_t transferObjPool;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Queue for Transfer Objects&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+size_t queueSize;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Driver Queue Size&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_DMA_CHANNEL dmaChannelTransmit;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+I2S transmit DMA channel.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_DMA_CHANNEL dmaChannelReceive;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+I2S receive DMA channel.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+void * i2sTransmitAddress;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+I2S transmit register address used for DMA operation.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+void * i2sReceiveAddress;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+I2S receive register address used for DMA operation.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+INT_SOURCE interruptDMA;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Interrupt source ID for DMA interrupt.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+uint8_t dmaDataLength;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+DMA data length from I2S or SSC PLIB&nbsp;</div></td></tr></table></div></div>
 </div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If the event is DRV_I2C_TRANSFER_EVENT_COMPLETE, it means that the data was transferred successfully.&nbsp;</p>
-<p class="Element10">
-If the event is DRV_I2C_TRANSFER_EVENT_ERROR, it means that the data was not transferred successfully.&nbsp;</p>
-<p class="Element10">
-The transferHandle parameter contains the transfer handle of the transfer that associated with the event. And transferHandle will be valid while the transfer request is in the queue and during callback, unless an error occurred. After callback returns, the driver will retire the transfer handle.&nbsp;</p>
-<p class="Element10">
-The context parameter contains the a handle to the client context, provided at the time the event handling function was registered using the <a href="00314.html" target="topic">DRV_I2C_TransferEventHandlerSet</a> function. This context handle value is passed back to the client as the &quot;context&quot; parameter. It can be any value necessary to identify the client context or instance (such as a pointer to the client's data) instance of the client that made the buffer add request.&nbsp;</p>
-<p class="Element10">
-The event handler function executes in the peripheral's interrupt context. It is recommended of the application to not perform process intensive or blocking operations with in this function.&nbsp;</p>
-<p class="Element10">
-The <a href="00305.html" target="topic">DRV_I2C_ReadTransferAdd</a>, <a href="00319.html" target="topic">DRV_I2C_WriteTransferAdd</a> and <a href="00317.html" target="topic">DRV_I2C_WriteReadTransferAdd</a> functions can be called in the event handler to add a buffer to the driver queue. These functions can only be called to add buffers to the driver whose event handler is running. For example, I2C2 driver buffers cannot be added in I2C1 driver event handler.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> APP_MyTransferEventHandler( <a href="00307.html" target="topic">DRV_I2C_TRANSFER_EVENT</a> event,
-                               <a href="00312.html" target="topic">DRV_I2C_TRANSFER_HANDLE</a> transferHandle,
-                               uintptr_t context )
-{
-    MY_APP_DATA_STRUCT* pAppData = (MY_APP_DATA_STRUCT*) context;
-
-    <strong><span style="color: #000080">switch</span></strong>(event)
-    {
-        <strong><span style="color: #000080">case</span></strong> DRV_I2C_TRANSFER_EVENT_COMPLETE:
-
-            <i><span style="color: #008000">// Handle the completed buffer.</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> DRV_I2C_TRANSFER_EVENT_ERROR:
-        <strong><span style="color: #000080">default</span></strong>:
-
-            <i><span style="color: #008000">// Handle error.</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-}</pre></div></div>
-</div>
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00101.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00102.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="00311.html" target="topic">DRV_I2C_TRANSFER_EVENT_HANDLER Type</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00088.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00089.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00311.html" target="topic">DRV_I2S_INIT Structure</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00307.html" target="topic">Previous</a> | <a href="00102.html" target="topic">Up</a> | <a href="00313.html" target="topic">Next</a></div>
+<a href="00297.html" target="topic">Previous</a> | <a href="00089.html" target="topic">Up</a> | <a href="00260.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2C_TRANSFER_EVENT_HANDLER Topic Title: DRV_I2C_TRANSFER_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_INIT Topic Title: DRV_I2S_INIT Structure)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

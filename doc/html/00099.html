@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>How the Library Works</title>
+<title>Building the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00101.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00104.html" target="topic">Using the Library</a> &gt; <a href="00099.html" target="topic">How the Library Works</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00106.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00099.html" target="topic">Building the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00092.html" target="topic">Previous</a> | <a href="00104.html" target="topic">Up</a> | <a href="00094.html" target="topic">Next</a></div>
+<a href="00100.html" target="topic">Previous</a> | <a href="00106.html" target="topic">Up</a> | <a href="00107.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2C How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Memory Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-How the Library Works</div>
+Building the Library</div>
 </div>
 </div>
 
@@ -48,35 +48,37 @@ How the Library Works</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600">The I<sup>2</sup>C driver is built on top of the I2C peripheral library</li>
-<li class="Element600">The I<sup>2</sup>C driver registers a callback with the underlying I<sup>2</sup>C peripheral library to receive transfer related events from the peripheral library. The I<sup>2</sup>C driver callback is called by the peripheral library from the interrupt context</li>
-<li class="Element600">The I<sup>2</sup>C driver state machine runs from the interrupt context. Once the transfer is complete, the driver calls the callback registered by the application (from the interrupt context)</li>
-<li class="Element600">Each instance of the driver (in asynchronous/non-blocking mode) has a dedicated queue which can be configured using the MHC configuration options. The requests submitted by the clients are queued in the respective driver instance request queue</li>
-<li class="Element600">The I<sup>2</sup>C driver is capable of supporting multiple instances of the I<sup>2</sup>C peripheral</li>
-</ul></div>
+<div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="MHC_Logo_Medium.png" border="0" alt="" title="">&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+<span style="color: #008000"><strong><i>All of the required files are automatically added into the MPLAB X IDE project by the MHC when the library is selected for use.</i></strong></span>&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00101.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00104.html" target="topic">Using the Library</a> &gt; <a href="00099.html" target="topic">How the Library Works</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00106.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00099.html" target="topic">Building the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00092.html" target="topic">Previous</a> | <a href="00104.html" target="topic">Up</a> | <a href="00094.html" target="topic">Next</a></div>
+<a href="00100.html" target="topic">Previous</a> | <a href="00106.html" target="topic">Up</a> | <a href="00107.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2C How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Memory Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

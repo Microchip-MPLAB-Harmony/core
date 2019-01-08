@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>drv_i2c.h</title>
+<title>DRV_I2S_BufferCompletedBytesGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00101.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00098.html" target="topic">Files</a> &gt; <a href="00299.html" target="topic">drv_i2c.h</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00088.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00089.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00299.html" target="topic">DRV_I2S_BufferCompletedBytesGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00098.html" target="topic">Previous</a> | <a href="00098.html" target="topic">Up</a> | <a href="00117.html" target="topic">Next</a></div>
+<a href="00301.html" target="topic">Previous</a> | <a href="00089.html" target="topic">Up</a> | <a href="00310.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: drv_i2c.h Topic Title: drv_i2c.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_BufferCompletedBytesGet@DRV_I2S_BUFFER_HANDLE Topic Title: DRV_I2S_BufferCompletedBytesGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-drv_i2c.h</div>
+DRV_I2S_BufferCompletedBytesGet Function</div>
 </div>
 </div>
 
@@ -46,212 +46,115 @@ drv_i2c.h</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="436F6D70616E79"></a><div class="Element11">
+<a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Microchip Technology Inc.</p></div>
+The client can use this function, in a case where the buffer is terminated due to an error, to obtain the number of bytes that have been processed. Or in any other use case. This function can be used for non-DMA buffer transfers only. It cannot be used when the I2S driver is configured to use DMA.</p></div>
 </div>
-<a name="46696C65204E616D65"></a><div class="Element14">
-File Name</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-drv_i2c.h</p></div>
-</div>
-<a name="4465736372697074696F6E"></a><div class="Element14">
-Description</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100">size_t <strong><span style="color: #000000">DRV_I2S_BufferCompletedBytesGet</span></strong>(
+    <a href="00297.html" target="topic">DRV_I2S_BUFFER_HANDLE</a> <strong><span style="color: #000000">bufferHandle</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-I2C Driver Interface Header File&nbsp;</p>
+<a href="00326.html" target="topic">DRV_I2S_Open</a> must have been called to obtain a valid opened device handle.&nbsp;</p>
 <p class="Element10">
-The I2C device driver provides a simple interface to manage the I2C modules on Microchip PIC32 microcontrollers. This file provides the interface definition for the I2C driver.</p></div>
+Either the <a href="00331.html" target="topic">DRV_I2S_ReadBufferAdd</a> or <a href="00337.html" target="topic">DRV_I2S_WriteBufferAdd</a> function must have been called and a valid buffer handle returned.</p></div>
 </div>
-<a name="456E756D65726174696F6E73"></a><div class="Element14">
-Enumerations</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
+<div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table3">
 <tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00307.html" target="topic">DRV_I2C_TRANSFER_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies the possible events that can result from a buffer add request.&nbsp;</div></td></tr></table></div></div>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+bufferhandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Handle for the buffer of which the processed number of bytes to be obtained.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
-<a name="46756E6374696F6E73"></a><div class="Element14">
-Functions</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00300.html" target="topic">DRV_I2C_Close</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Closes an opened-instance of the I2C driver.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00301.html" target="topic">DRV_I2C_ErrorGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the I2C hardware errors associated with the client.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00302.html" target="topic">DRV_I2C_Initialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Initializes the I2C instance for the specified driver index.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00303.html" target="topic">DRV_I2C_Open</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Opens the specified I2C driver instance and returns a handle to it.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00304.html" target="topic">DRV_I2C_ReadTransfer</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is a blocking function that performs a I2C read operation.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00305.html" target="topic">DRV_I2C_ReadTransferAdd</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Queues a read operation.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00306.html" target="topic">DRV_I2C_Status</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the current status of the I2C driver module.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00314.html" target="topic">DRV_I2C_TransferEventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Allows a client to identify a transfer event handling function for the driver to call back when queued transfers have finished.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00315.html" target="topic">DRV_I2C_TransferStatusGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the status of the write/read/write-read transfer request.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00316.html" target="topic">DRV_I2C_WriteReadTransfer</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is a blocking function that performs a I2C write followed by a I2C read operation.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00317.html" target="topic">DRV_I2C_WriteReadTransferAdd</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Queues a write followed by read operation.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00318.html" target="topic">DRV_I2C_WriteTransfer</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is a blocking function that performs a I2C write operation.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00319.html" target="topic">DRV_I2C_WriteTransferAdd</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Queues a write operation.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+Returns the number of bytes that have been processed for this buffer.&nbsp;</p>
+<p class="Element10">
+Returns <a href="00298.html" target="topic">DRV_I2S_BUFFER_HANDLE_INVALID</a> for an invalid or an expired buffer handle.</p></div>
 </div>
-</div>
-<a name="4D6163726F73"></a><div class="Element14">
-Macros</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00313.html" target="topic">DRV_I2C_TRANSFER_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Definition of an invalid transfer handle.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+This function is expected to work in non-DMA mode only. This function is thread safe when used in a RTOS application. If called from the callback, it must not call an OSAL mutex or critical section.</p></div>
 </div>
-</div>
-<a name="5479706573"></a><div class="Element14">
-Types</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00311.html" target="topic">DRV_I2C_TRANSFER_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Pointer to a I2C Driver Transfer Event handler function&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00312.html" target="topic">DRV_I2C_TRANSFER_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Handle identifying a read, write or write followed by read transfer passed to the driver.&nbsp;</div></td></tr></table></div></div>
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// myAppObj is an application specific object.</span></i>
+MY_APP_OBJ myAppObj;
+
+uint8_t mybuffer[MY_BUFFER_SIZE];
+<a href="00297.html" target="topic">DRV_I2S_BUFFER_HANDLE</a> bufferHandle;
+
+<i><span style="color: #008000">// myI2SHandle is the handle returned</span></i>
+<i><span style="color: #008000">// by the DRV_I2S_Open function.</span></i>
+
+<i><span style="color: #008000">// Client registers an event handler with driver. This is done once</span></i>
+
+<a href="00300.html" target="topic">DRV_I2S_BufferEventHandlerSet</a>( myI2SHandle, APP_I2SBufferEventHandle,
+                                 (uintptr_t)&amp;myAppObj );
+
+<a href="00331.html" target="topic">DRV_I2S_ReadBufferAdd</a>( myI2Shandle, myBuffer, MY_BUFFER_SIZE,
+    bufferHandle);
+
+<strong><span style="color: #000080">if</span></strong>(<a href="00298.html" target="topic">DRV_I2S_BUFFER_HANDLE_INVALID</a> == bufferHandle)
+{
+    <i><span style="color: #008000">// Error handling here</span></i>
+}
+
+<i><span style="color: #008000">// Event Processing Technique. Event is received when</span></i>
+<i><span style="color: #008000">// the buffer is processed.</span></i>
+
+<strong><span style="color: #000080">void</span></strong> APP_I2SBufferEventHandler( <a href="00292.html" target="topic">DRV_I2S_BUFFER_EVENT</a> event,
+        <a href="00297.html" target="topic">DRV_I2S_BUFFER_HANDLE</a> bufferHandle, uintptr_t contextHandle )
+{
+    <i><span style="color: #008000">// The context handle was set to an application specific</span></i>
+    <i><span style="color: #008000">// object. It is now retrievable easily in the event handler.</span></i>
+    MY_APP_OBJ myAppObj = (MY_APP_OBJ *) contextHandle;
+    size_t processedBytes;
+
+    <strong><span style="color: #000080">switch</span></strong>(event)
+    {
+        <strong><span style="color: #000080">case</span></strong> DRV_I2S_BUFFER_EVENT_COMPLETE:
+            <i><span style="color: #008000">// This means the data was transferred.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> DRV_I2S_BUFFER_EVENT_ERROR:
+            <i><span style="color: #008000">// Error handling here.</span></i>
+            <i><span style="color: #008000">// We can find out how many bytes have been processed in this</span></i>
+            <i><span style="color: #008000">// buffer request prior to the error.</span></i>
+            processedBytes= DRV_I2S_BufferCompletedBytesGet(bufferHandle);
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">default</span></strong>:
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -259,21 +162,21 @@ Handle identifying a read, write or write followed by read transfer passed to th
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00101.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00098.html" target="topic">Files</a> &gt; <a href="00299.html" target="topic">drv_i2c.h</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00088.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00089.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00299.html" target="topic">DRV_I2S_BufferCompletedBytesGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00098.html" target="topic">Previous</a> | <a href="00098.html" target="topic">Up</a> | <a href="00117.html" target="topic">Next</a></div>
+<a href="00301.html" target="topic">Previous</a> | <a href="00089.html" target="topic">Up</a> | <a href="00310.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: drv_i2c.h Topic Title: drv_i2c.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_BufferCompletedBytesGet@DRV_I2S_BUFFER_HANDLE Topic Title: DRV_I2S_BufferCompletedBytesGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

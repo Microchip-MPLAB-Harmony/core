@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_MEMORY_IsAttached Function</title>
+<title>DRV_MEMORY_SyncErase Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00135.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00136.html" target="topic">Library Interface</a> &gt; d) Media Interface Functions &gt; <a href="00416.html" target="topic">DRV_MEMORY_IsAttached Function</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00106.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00107.html" target="topic">Library Interface</a> &gt; c) Block Operation Functions &gt; <a href="00416.html" target="topic">DRV_MEMORY_SyncErase Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00402.html" target="topic">Previous</a> | <a href="00136.html" target="topic">Up</a> | <a href="00417.html" target="topic">Next</a></div>
+<a href="00361.html" target="topic">Previous</a> | <a href="00107.html" target="topic">Up</a> | <a href="00391.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_IsAttached@DRV_HANDLE Topic Title: DRV_MEMORY_IsAttached Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_SyncErase@DRV_HANDLE@uint32_t@uint32_t Topic Title: DRV_MEMORY_SyncErase Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_MEMORY_IsAttached Function</div>
+DRV_MEMORY_SyncErase Function</div>
 </div>
 </div>
 
@@ -49,19 +49,21 @@ DRV_MEMORY_IsAttached Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function returns the physical attach status of the Media device.</p></div>
+This function schedules a blocking sector erase operation on attached memory device.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_MEMORY_IsAttached</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00297.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_MEMORY_SyncErase</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00268.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    uint32_t <strong><span style="color: #000000">blockStart</span></strong>, 
+    uint32_t <strong><span style="color: #000000">nBlock</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="00418.html" target="topic">DRV_MEMORY_Open</a>() routine must have been called to obtain a valid opened device handle.</p></div>
+The <a href="00413.html" target="topic">DRV_MEMORY_Open</a>() must have been called with DRV_IO_INTENT_WRITE or DRV_IO_INTENT_READWRITE as a parameter to obtain a valid opened device handle.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -80,7 +82,17 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open function&nbsp;</div></td></tr></table></div></div>
+A valid open-instance handle, returned from the driver's open function<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+blockStart&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+block start from where the blocks should be erased.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+nBlock&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Total number of blocks to be erased.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,7 +100,18 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Returns false if the handle is invalid otherwise returns true.</p></div>
+true:</p>
+<ul class="Element630">
+<li class="Element600">If the transfer request is successfully completed.</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+false:</p>
+<ul class="Element630">
+<li class="Element600">If the client opened the driver for read only</li>
+<li class="Element600">If the number of blocks to be erased is either zero or more than the number of blocks actually available</li>
+<li class="Element600">If the driver handle is invalid</li>
+</ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -102,8 +125,16 @@ Example</div>
 <div class="Element11">
 <div class="Element10">
 <div class="Element13"><div class="Element12"><pre class="Element12">
-<strong><span style="color: #000080">bool</span></strong> isMEMORYAttached;
-isMEMORYAttached = DRV_MEMORY_isAttached(drvMEMORYHandle);
+<i><span style="color: #008000">// Use DRV_MEMORY_GeometryGet () to find the erase region geometry.</span></i>
+uint32_t blockStart = 0;
+uint32_t nBlocks = 10;
+
+<i><span style="color: #008000">// memoryHandle is the handle returned by the DRV_MEMORY_Open function.</span></i>
+
+<strong><span style="color: #000080">if</span></strong>(DRV_MEMORY_SyncErase( memoryHandle, blockStart, nBlock ) == <strong><span style="color: #000080">false</span></strong>)
+{
+    <i><span style="color: #008000">// Error handling here</span></i>
+}
 </pre></div></div>
 </div>
 </div>
@@ -112,21 +143,21 @@ isMEMORYAttached = DRV_MEMORY_isAttached(drvMEMORYHandle);
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00135.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00136.html" target="topic">Library Interface</a> &gt; d) Media Interface Functions &gt; <a href="00416.html" target="topic">DRV_MEMORY_IsAttached Function</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00106.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00107.html" target="topic">Library Interface</a> &gt; c) Block Operation Functions &gt; <a href="00416.html" target="topic">DRV_MEMORY_SyncErase Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00402.html" target="topic">Previous</a> | <a href="00136.html" target="topic">Up</a> | <a href="00417.html" target="topic">Next</a></div>
+<a href="00361.html" target="topic">Previous</a> | <a href="00107.html" target="topic">Up</a> | <a href="00391.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_IsAttached@DRV_HANDLE Topic Title: DRV_MEMORY_IsAttached Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_SyncErase@DRV_HANDLE@uint32_t@uint32_t Topic Title: DRV_MEMORY_SyncErase Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

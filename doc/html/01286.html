@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_TIME_Counter64Get Function</title>
+<title>SYS_INT_SourceStatusGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00864.html" target="topic">Time System Service Library Help</a> &gt; <a href="00865.html" target="topic">Library Interface</a> &gt; d) Counter and Conversion Functions &gt; <a href="01286.html" target="topic">SYS_TIME_Counter64Get Function</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00854.html" target="topic">Interrupt System Service Library Help</a> &gt; <a href="00855.html" target="topic">Library Interface</a> &gt; b) Interrupt Source Management Functions &gt; <a href="01286.html" target="topic">SYS_INT_SourceStatusGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01293.html" target="topic">Previous</a> | <a href="00865.html" target="topic">Up</a> | <a href="01287.html" target="topic">Next</a></div>
+<a href="01284.html" target="topic">Previous</a> | <a href="00855.html" target="topic">Up</a> | <a href="01287.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_Counter64Get Topic Title: SYS_TIME_Counter64Get Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_INT_SourceStatusGet@INT_SOURCE Topic Title: SYS_INT_SourceStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_TIME_Counter64Get Function</div>
+SYS_INT_SourceStatusGet Function</div>
 </div>
 </div>
 
@@ -49,52 +49,62 @@ SYS_TIME_Counter64Get Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Returns the current &quot;live&quot; value of the common 64-bit system counter.</p></div>
+This function returns the pending status of the specified interrupt source at the interrupt controller level.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100">uint64_t <strong><span style="color: #000000">SYS_TIME_Counter64Get</span></strong>();</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">SYS_INT_SourceStatusGet</span></strong>(
+    <a href="00650.html" target="topic">INT_SOURCE</a> <strong><span style="color: #000000">source</span></strong>
+);</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="01300.html" target="topic">SYS_TIME_Initialize</a> function should have been called before calling this function.</p></div>
+None.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+source&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Interrupt source/line available at interrupt controller.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
 Returns</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The current &quot;live&quot; value of the common 64-bit system counter.</p></div>
+
+<ul class="Element630">
+<li class="Element600">true - Interrupt status is pending.</li>
+<li class="Element600">false - Interrupt status is not pending.</li>
+</ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The value returned may be stale as soon as it is provided, as the timer is live and running at full frequency resolution (as configured and as reported by the <a href="01296.html" target="topic">SYS_TIME_FrequencyGet</a> function). If additional accuracy is required, use a hardware timer instance.</p></div>
+Interrupt pending status may get cleared automatically once the corresponding interrupt vector executes on some devices.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">uint64_t timeStamp1;
-uint64_t timeStamp2;
-uint32_t timeDiffMs;
-
-<i><span style="color: #008000">// Take first time stamp</span></i>
-timeStamp1 = SYS_TIME_Counter64Get();
-
-<i><span style="color: #008000">//Perform some tasks....</span></i>
-
-<i><span style="color: #008000">// Take second time stamp</span></i>
-timeStamp2 = SYS_TIME_Counter64Get();
-
-<i><span style="color: #008000">//Calculate the time difference. Use the appropriate function -</span></i>
-<i><span style="color: #008000">//SYS_TIME_CountToMS or SYS_TIME_CountToUS to calculate the time difference.</span></i>
-
-timeDiffMs = <a href="01289.html" target="topic">SYS_TIME_CountToMS</a>((timeStamp2 - timeStamp1));</pre></div></div>
+<div class="Element13"><div class="Element12"><pre class="Element12">   <strong><span style="color: #000080">bool</span></strong> usart0IntStatus = SYS_INT_SourceStatusGet(USART0_IRQn);</pre></div></div>
 </div>
 </div>
 </div>
@@ -102,21 +112,21 @@ timeDiffMs = <a href="01289.html" target="topic">SYS_TIME_CountToMS</a>((timeSta
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00864.html" target="topic">Time System Service Library Help</a> &gt; <a href="00865.html" target="topic">Library Interface</a> &gt; d) Counter and Conversion Functions &gt; <a href="01286.html" target="topic">SYS_TIME_Counter64Get Function</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00854.html" target="topic">Interrupt System Service Library Help</a> &gt; <a href="00855.html" target="topic">Library Interface</a> &gt; b) Interrupt Source Management Functions &gt; <a href="01286.html" target="topic">SYS_INT_SourceStatusGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01293.html" target="topic">Previous</a> | <a href="00865.html" target="topic">Up</a> | <a href="01287.html" target="topic">Next</a></div>
+<a href="01284.html" target="topic">Previous</a> | <a href="00855.html" target="topic">Up</a> | <a href="01287.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_Counter64Get Topic Title: SYS_TIME_Counter64Get Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_INT_SourceStatusGet@INT_SOURCE Topic Title: SYS_INT_SourceStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

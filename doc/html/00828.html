@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>UART Console Device Configuration Options</title>
+<title>Introduction</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00048.html" target="topic">Console System Service Library</a> &gt; <a href="00819.html" target="topic">Configuring the Library</a> &gt; <a href="00828.html" target="topic">UART Console Device Configuration Options</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00829.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00828.html" target="topic">Introduction</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00819.html" target="topic">Previous</a> | <a href="00819.html" target="topic">Up</a> | <a href="00818.html" target="topic">Next</a></div>
+<a href="00829.html" target="topic">Previous</a> | <a href="00829.html" target="topic">Up</a> | <a href="00832.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE UART Console Device Configuration Options Topic Title: UART Console Device Configuration Options)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS DEBUG Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-UART Console Device Configuration Options</div>
+Introduction</div>
 </div>
 </div>
 
@@ -49,38 +49,30 @@ UART Console Device Configuration Options</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The UART Console System Service library should be configured through the MHC. The following figure shows the MHC configuration window for configuring the UART Console Device and a brief description of various configuration options. </p><p class="Element10" style="text-align: center;">
-<img src="console_configuration.png" border="0" alt="" title=""></p><div class="Element15">
-Configuration Options:</div>
-
-<ul class="Element630">
-<li class="Element600"><strong>Device Used - </strong>Indicates the hardware UART Peripheral Library instance used by the Console System Service</li>
-<li class="Element600"><strong>Transmit Buffer Queue Size (1-128) - </strong>Indicates the maximum number of data transmit requests that can be queued</li>
-<li class="Element600"><strong>Receive Buffer Queue Size (1-128) - </strong>Indicates the maximum number of data reception requests that can be queued</li>
-<li class="Element600"><strong>Enable Debug? - </strong>Enable Debug System Service. Refer the Debug System Service for more details on configuring the Debug service</li>
-<li class="Element600"><strong>Enable Command Processor? - </strong>Enable Command Processor System Service. Refer to the Command Processor System Service for more details on configuring the Command Processor System service</li>
-</ul></div>
+The Debug System Service provides a set of functions that allow the developer to output debug and/or error messages based on a global error level. The messages are sent to the System Console Service, where they are routed to a console device.&nbsp;</p>
+<p class="Element10">
+The Debug System Service maintains a global error level, which may be set during initialization and changed dynamically at run-time. Both formatted and unformatted messages can be output or not, depending on the current global error level.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00048.html" target="topic">Console System Service Library</a> &gt; <a href="00819.html" target="topic">Configuring the Library</a> &gt; <a href="00828.html" target="topic">UART Console Device Configuration Options</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00829.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00828.html" target="topic">Introduction</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00819.html" target="topic">Previous</a> | <a href="00819.html" target="topic">Up</a> | <a href="00818.html" target="topic">Next</a></div>
+<a href="00829.html" target="topic">Previous</a> | <a href="00829.html" target="topic">Up</a> | <a href="00832.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE UART Console Device Configuration Options Topic Title: UART Console Device Configuration Options)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS DEBUG Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_MEMORY_COMMAND_STATUS Enumeration</title>
+<title>DRV_MEMORY_CommandStatusGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00135.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00136.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00370.html" target="topic">DRV_MEMORY_COMMAND_STATUS Enumeration</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00106.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00107.html" target="topic">Library Interface</a> &gt; c) Block Operation Functions &gt; <a href="00370.html" target="topic">DRV_MEMORY_CommandStatusGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00369.html" target="topic">Previous</a> | <a href="00136.html" target="topic">Up</a> | <a href="00380.html" target="topic">Next</a></div>
+<a href="00424.html" target="topic">Previous</a> | <a href="00107.html" target="topic">Up</a> | <a href="00423.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_COMMAND_STATUS Topic Title: DRV_MEMORY_COMMAND_STATUS Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_CommandStatusGet@DRV_HANDLE@DRV_MEMORY_COMMAND_HANDLE Topic Title: DRV_MEMORY_CommandStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_MEMORY_COMMAND_STATUS Enumeration</div>
+DRV_MEMORY_CommandStatusGet Function</div>
 </div>
 </div>
 
@@ -49,78 +49,121 @@ DRV_MEMORY_COMMAND_STATUS Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Specifies the status of the command for the read, write, erase and erasewrite operations.</p></div>
+This routine gets the current status of the buffer. The application must use this routine where the status of a scheduled buffer needs to polled on.&nbsp;</p>
+<p class="Element10">
+The function may return <a href="00364.html" target="topic">DRV_MEMORY_COMMAND_HANDLE_INVALID</a> in a case where the buffer handle has expired. A buffer handle expires when the internal buffer object is re-assigned to another erase or write request. It is recommended that this function be called regularly in order to track the buffer status correctly.&nbsp;</p>
+<p class="Element10">
+The application can alternatively register an event handler to receive write or erase operation completion events.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">DRV_MEMORY_COMMAND_COMPLETED</span></strong> = SYS_MEDIA_COMMAND_COMPLETED,
-  <strong><span style="color: #000000">DRV_MEMORY_COMMAND_QUEUED</span></strong> = SYS_MEDIA_COMMAND_QUEUED,
-  <strong><span style="color: #000000">DRV_MEMORY_COMMAND_IN_PROGRESS</span></strong> = SYS_MEDIA_COMMAND_IN_PROGRESS,
-  <strong><span style="color: #000000">DRV_MEMORY_COMMAND_ERROR_UNKNOWN</span></strong> = SYS_MEDIA_COMMAND_UNKNOWN
-} DRV_MEMORY_COMMAND_STATUS;</pre></div></div>
-<a name="4D656D62657273"></a><div class="Element14">
-Members</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00365.html" target="topic">DRV_MEMORY_COMMAND_STATUS</a> <strong><span style="color: #000000">DRV_MEMORY_CommandStatusGet</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00268.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="00363.html" target="topic">DRV_MEMORY_COMMAND_HANDLE</a> <strong><span style="color: #000000">commandHandle</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element272">
-<div class="TableDiv">
-<table cellspacing="0" class="Table4">
-<tr>
-<td class="Element260" valign="top" width="35%">
-<div class="Element261">
-Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
-<div class="Element265">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-DRV_MEMORY_COMMAND_COMPLETED = SYS_MEDIA_COMMAND_COMPLETED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Done OK and ready&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-DRV_MEMORY_COMMAND_QUEUED = SYS_MEDIA_COMMAND_QUEUED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Scheduled but not started&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-DRV_MEMORY_COMMAND_IN_PROGRESS = SYS_MEDIA_COMMAND_IN_PROGRESS&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Currently being in transfer&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-DRV_MEMORY_COMMAND_ERROR_UNKNOWN = SYS_MEDIA_COMMAND_UNKNOWN&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Unknown Command&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+<a href="00413.html" target="topic">DRV_MEMORY_Open</a>() must have been called to obtain a valid opened device handle.</p></div>
 </div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A valid open-instance handle, returned from the driver's open function<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+commandHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to an argument that will contain the command handle&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+DRV_MEMORY_COMMAND_COMPLETED</p>
+<ul class="Element630">
+<li class="Element600">If the transfer request is completed</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+DRV_MEMORY_COMMAND_QUEUED</p>
+<ul class="Element630">
+<li class="Element600">If the command is Queued and waiting to be processed.</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+DRV_MEMORY_COMMAND_IN_PROGRESS</p>
+<ul class="Element630">
+<li class="Element600">If the current transfer request is still being processed</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+DRV_MEMORY_COMMAND_ERROR_UNKNOWN</p>
+<ul class="Element630">
+<li class="Element600">If the handle is invalid</li>
+<li class="Element600">If the status read request fails</li>
+</ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Refer sys_media.h for SYS_MEDIA_XXX definitions.</p></div>
+Used in Async mode of operation.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">
+ <i><span style="color: #008000">// memoryHandle is the handle returned by the DRV_MEMORY_Open function.</span></i>
+ <i><span style="color: #008000">// commandHandle is the handle returned by any read/write/erase block operation.</span></i>
+
+<strong><span style="color: #000080">if</span></strong> (DRV_MEMORY_COMMAND_COMPLETED == DRV_MEMORY_CommandStatusGet(memoryHandle, commandHandle))
+{
+    <i><span style="color: #008000">// Operation Done</span></i>
+}
+</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00135.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00136.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00370.html" target="topic">DRV_MEMORY_COMMAND_STATUS Enumeration</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00106.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00107.html" target="topic">Library Interface</a> &gt; c) Block Operation Functions &gt; <a href="00370.html" target="topic">DRV_MEMORY_CommandStatusGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00369.html" target="topic">Previous</a> | <a href="00136.html" target="topic">Up</a> | <a href="00380.html" target="topic">Next</a></div>
+<a href="00424.html" target="topic">Previous</a> | <a href="00107.html" target="topic">Up</a> | <a href="00423.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_COMMAND_STATUS Topic Title: DRV_MEMORY_COMMAND_STATUS Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_CommandStatusGet@DRV_HANDLE@DRV_MEMORY_COMMAND_HANDLE Topic Title: DRV_MEMORY_CommandStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

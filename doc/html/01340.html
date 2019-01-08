@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Library Interface</title>
+<title>SYS_PORT_PIN Enumeration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00046.html" target="topic">Command Processor System Service Library</a> &gt; <a href="01340.html" target="topic">Library Interface</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00859.html" target="topic">Ports System Service Library Help</a> &gt; <a href="00860.html" target="topic">Library Interface</a> &gt; b)Data Types and Constants &gt; <a href="01340.html" target="topic">SYS_PORT_PIN Enumeration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01333.html" target="topic">Previous</a> | <a href="00046.html" target="topic">Up</a> | <a href="00871.html" target="topic">Next</a></div>
+<a href="01334.html" target="topic">Previous</a> | <a href="00860.html" target="topic">Up</a> | <a href="00857.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM COMMAND Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_PORT_PIN Topic Title: SYS_PORT_PIN Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Library Interface</div>
+SYS_PORT_PIN Enumeration</div>
 </div>
 </div>
 
@@ -49,424 +49,1024 @@ Library Interface</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This section describes the APIs of the Command Processor System Service Library.&nbsp;</p>
+Sys Port Pins&nbsp;</p>
 <p class="Element10">
-Refer to each section for a detailed description.</p></div>
+This enumeration identifies the available port pins.</p></div>
 </div>
-<a name="61292053797374656D20496E746572616374696F6E2046756E6374696F6E73"></a><div class="Element14">
-a) System Interaction Functions</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA0</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA1</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA2</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA3</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA4</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA5</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA6</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA7</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA8</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA9</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA10</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA11</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA12</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA13</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA14</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA15</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA16</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA17</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA18</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA19</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA20</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA21</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA22</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA23</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA24</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA25</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA26</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA27</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA28</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA29</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA30</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PA31</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB0</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB1</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB2</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB3</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB4</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB5</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB6</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB7</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB8</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB9</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB10</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB11</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB12</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB13</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB14</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB15</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB16</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB17</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB18</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB19</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB20</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB21</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB22</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB23</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB24</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB25</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB26</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB27</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB28</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB29</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB30</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PB31</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC0</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC1</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC2</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC3</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC4</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC5</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC6</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC7</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC8</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC9</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC10</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC11</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC12</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC13</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC14</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC15</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC16</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC17</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC18</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC19</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC20</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC21</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC22</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC23</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC24</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC25</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC26</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC27</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC28</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC29</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC30</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PC31</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD0</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD1</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD2</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD3</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD4</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD5</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD6</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD7</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD8</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD9</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD10</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD11</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD12</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD13</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD14</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD15</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD16</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD17</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD18</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD19</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD20</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD21</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD22</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD23</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD24</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD25</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD26</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD27</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD28</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD29</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD30</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PD31</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE0</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE1</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE2</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE3</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE4</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE5</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE6</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE7</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE8</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE9</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE10</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE11</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE12</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE13</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE14</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE15</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE16</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE17</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE18</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE19</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE20</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE21</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE22</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE23</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE24</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE25</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE26</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE27</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE28</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE29</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE30</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_PE31</span></strong>,
+  <strong><span style="color: #000000">SYS_PORT_PIN_NONE</span></strong>
+} SYS_PORT_PIN;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
+<div class="Element272">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table1">
 <tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00871.html" target="topic">SYS_CMD_ADDGRP</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Allows clients to add command process to the Command Processor System Service.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00886.html" target="topic">SYS_CMD_DELETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Removes CMDIO parameters from the Command Processor System Service console.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00930.html" target="topic">SYS_CMD_MESSAGE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Outputs a message to the Command Processor System Service console.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00933.html" target="topic">SYS_CMD_PRINT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Outputs a printout to the Command Processor System Service console.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00938.html" target="topic">SYS_CMD_READY_TO_READ</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Allows upper layer application to confirm that the command module is ready to accept command input&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00939.html" target="topic">SYS_CMD_READY_TO_WRITE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Allows upper layer application to confirm that the command module is ready to write output to the Console System Service.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00946.html" target="topic">SYS_CMD_Tasks</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Maintains the Command Processor System Service's internal state machine.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00927.html" target="topic">SYS_CMD_Initialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Initializes data for the instance of the Command Processor module.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00940.html" target="topic">SYS_CMD_RegisterCallback</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Registers a callback function with the command service that will be executed when the lower layer read or write queue is empty.&nbsp;</div></td></tr></table></div></div>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA0&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA0 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA1&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA1 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA2&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA2 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA3&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA3 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA4&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA4 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA5&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA5 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA6&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA6 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA7&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA7 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA8&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA8 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA9&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA9 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA10&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA10 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA11&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA11 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA12&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA12 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA13&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA13 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA14&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA14 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA15&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA15 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA16&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA16 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA17&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA17 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA18&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA18 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA19&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA19 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA20&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA20 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA21&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA21 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA22&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA22 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA23&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA23 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA24&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA24 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA25&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA25 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA26&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA26 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA27&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA27 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA28&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA28 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA29&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA29 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA30&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA30 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PA31&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PA31 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB0&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB0 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB1&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB1 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB2&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB2 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB3&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB3 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB4&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB4 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB5&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB5 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB6&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB6 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB7&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB7 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB8&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB8 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB9&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB9 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB10&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB10 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB11&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB11 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB12&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB12 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB13&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB13 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB14&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB14 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB15&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB15 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB16&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB16 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB17&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB17 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB18&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB18 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB19&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB19 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB20&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB20 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB21&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB21 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB22&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB22 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB23&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB23 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB24&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB24 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB25&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB25 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB26&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB26 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB27&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB27 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB28&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB28 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB29&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB29 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB30&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB30 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PB31&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PB31 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC0&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC0 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC1&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC1 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC2&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC2 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC3&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC3 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC4&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC4 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC5&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC5 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC6&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC6 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC7&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC7 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC8&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC8 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC9&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC9 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC10&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC10 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC11&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC11 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC12&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC12 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC13&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC13 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC14&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC14 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC15&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC15 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC16&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC16 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC17&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC17 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC18&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC18 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC19&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC19 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC20&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC20 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC21&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC21 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC22&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC22 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC23&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC23 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC24&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC24 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC25&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC25 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC26&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC26 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC27&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC27 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC28&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC28 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC29&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC29 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC30&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC30 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PC31&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PC31 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD0&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD0 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD1&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD1 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD2&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD2 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD3&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD3 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD4&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD4 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD5&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD5 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD6&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD6 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD7&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD7 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD8&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD8 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD9&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD9 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD10&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD10 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD11&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD11 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD12&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD12 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD13&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD13 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD14&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD14 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD15&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD15 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD16&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD16 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD17&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD17 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD18&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD18 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD19&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD19 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD20&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD20 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD21&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD21 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD22&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD22 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD23&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD23 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD24&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD24 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD25&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD25 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD26&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD26 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD27&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD27 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD28&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD28 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD29&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD29 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD30&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD30 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PD31&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PD31 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE0&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE0 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE1&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE1 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE2&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE2 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE3&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE3 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE4&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE4 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE5&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE5 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE6&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE6 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE7&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE7 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE8&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE8 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE9&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE9 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE10&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE10 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE11&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE11 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE12&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE12 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE13&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE13 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE14&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE14 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE15&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE15 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE16&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE16 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE17&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE17 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE18&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE18 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE19&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE19 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE20&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE20 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE21&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE21 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE22&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE22 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE23&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE23 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE24&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE24 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE25&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE25 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE26&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE26 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE27&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE27 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE28&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE28 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE29&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE29 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE30&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE30 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_PE31&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+PE31 pin&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_PORT_PIN_NONE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This element should not be used in any of the PORTS APIs. It will be used by other modules or application to denote that none of the PORT Pin is used&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
-<a name="622920436F6D6D616E6420492F4F2046756E6374696F6E73"></a><div class="Element14">
-b) Command I/O Functions</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00948.html" target="topic">SYS_CMDIO_GET_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the CMDIO Handle base via index.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00947.html" target="topic">SYS_CMDIO_ADD</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Adds CMDIO parameters to the Command Processor System Service console.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="6329204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
-c) Data Types and Constants</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00001.html" target="topic">_promptStr</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-prompt string&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00047.html" target="topic">COMMAND_HISTORY_DEPTH</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Command Processor System Service Maximum Depth of Command History.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00574.html" target="topic">ESC_SEQ_SIZE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-standard VT100 escape sequences&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00670.html" target="topic">LINE_TERM</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-line terminator&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00676.html" target="topic">MAX_CMD_ARGS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Command Processor System Service Maximum Number of Argument definitions.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00677.html" target="topic">MAX_CMD_GROUP</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Command Processor System Service Maximum Number of Command Group definitions.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00928.html" target="topic">SYS_CMD_MAX_LENGTH</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Command Processor System Service Command Buffer Maximum Length definition.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00936.html" target="topic">SYS_CMD_READ_BUFFER_SIZE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Command Processor System Service Read Buffer Size definition.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00901.html" target="topic">SYS_CMD_DEVICE_NODE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the data structure to store each command instance.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00872.html" target="topic">SYS_CMD_API</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies the Command API structure.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00885.html" target="topic">SYS_CMD_DATA_RDY_FNC</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies a data available function API.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00887.html" target="topic">SYS_CMD_DESCRIPTOR</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-a simple command descriptor&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00891.html" target="topic">SYS_CMD_DESCRIPTOR_TABLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-table containing the supported commands&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00896.html" target="topic">SYS_CMD_DEVICE_LIST</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the list structure to store a list of command instances.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00913.html" target="topic">SYS_CMD_FNC</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies the command process function API.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00914.html" target="topic">SYS_CMD_GETC_FNC</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies a get single character function API.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00915.html" target="topic">SYS_CMD_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies a particular Command I/O instance.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00920.html" target="topic">SYS_CMD_INIT_DATA</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the data structure to store each command.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00931.html" target="topic">SYS_CMD_MSG_FNC</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies a message function API.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00934.html" target="topic">SYS_CMD_PRINT_FNC</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies a print function API.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00935.html" target="topic">SYS_CMD_PUTC_FNC</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies a single character print function API.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00937.html" target="topic">SYS_CMD_READC_FNC</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies a read single character function API.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00941.html" target="topic">SYS_CMD_STATE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the various states that can be achieved by a Command instance.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00879.html" target="topic">SYS_CMD_BUFFER_DMA_READY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Define this for MX #define SYS_CMD_BUFFER_DMA_READY __attribute__((coherent)) __attribute__((aligned(4))) //Define this for MZ&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00975.html" target="topic">SYS_DEBUG_MESSAGE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Prints a debug message if the system error level is defined at or lower than the level specified.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00977.html" target="topic">SYS_DEBUG_PRINT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Formats and prints an error message if the system error level is defined at or lower than the level specified.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00989.html" target="topic">SYS_ERROR_PRINT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro SYS_ERROR_PRINT.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01257.html" target="topic">SYS_MESSAGE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Prints a message to the console regardless of the system error level.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01271.html" target="topic">SYS_PRINT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Formats and prints an error message with a variable number of arguments regardless of the system error level.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00880.html" target="topic">SYS_CMD_CallbackFunction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Command Callback Function Handle.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00881.html" target="topic">SYS_CMD_CONSOLE_IO_PARAM</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines whether the command module is single character or full command read&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00910.html" target="topic">SYS_CMD_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies the Command Event Types&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00916.html" target="topic">SYS_CMD_INIT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies the system command initialize structure.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00900.html" target="topic">SYS_CMD_DEVICE_MAX_INSTANCES</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro SYS_CMD_DEVICE_MAX_INSTANCES.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00929.html" target="topic">SYS_CMD_MESSAGE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro SYS_CMD_MESSAGE.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00932.html" target="topic">SYS_CMD_PRINT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro SYS_CMD_PRINT.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00968.html" target="topic">SYS_DEBUG</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00982.html" target="topic">SYS_ERROR</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro SYS_ERROR.&nbsp;</div></td></tr></table></div></div>
-</div>
+<p class="Element10">
+The caller should not rely on the specific numbers assigned to any of these values as they may change from one processor to the next.&nbsp;</p>
+<p class="Element10">
+Not all pins are available on all devices. Refer to the specific device data sheet to determine which pins are supported.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00046.html" target="topic">Command Processor System Service Library</a> &gt; <a href="01340.html" target="topic">Library Interface</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00859.html" target="topic">Ports System Service Library Help</a> &gt; <a href="00860.html" target="topic">Library Interface</a> &gt; b)Data Types and Constants &gt; <a href="01340.html" target="topic">SYS_PORT_PIN Enumeration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01333.html" target="topic">Previous</a> | <a href="00046.html" target="topic">Up</a> | <a href="00871.html" target="topic">Next</a></div>
+<a href="01334.html" target="topic">Previous</a> | <a href="00860.html" target="topic">Up</a> | <a href="00857.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYSTEM COMMAND Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_PORT_PIN Topic Title: SYS_PORT_PIN Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

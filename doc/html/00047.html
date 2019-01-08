@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>COMMAND_HISTORY_DEPTH Macro</title>
+<title>Configuring the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00046.html" target="topic">Command Processor System Service Library</a> &gt; <a href="01340.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00047.html" target="topic">COMMAND_HISTORY_DEPTH Macro</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00054.html" target="topic">AT25 Driver Library Help</a> &gt; <a href="00047.html" target="topic">Configuring the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00001.html" target="topic">Previous</a> | <a href="01340.html" target="topic">Up</a> | <a href="00574.html" target="topic">Next</a></div>
+<a href="00052.html" target="topic">Previous</a> | <a href="00054.html" target="topic">Up</a> | <a href="00046.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: COMMAND_HISTORY_DEPTH Topic Title: COMMAND_HISTORY_DEPTH Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT25 Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-COMMAND_HISTORY_DEPTH Macro</div>
+Configuring the Library</div>
 </div>
 </div>
 
@@ -49,40 +49,70 @@ COMMAND_HISTORY_DEPTH Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS CMD Processor Command History Depth&nbsp;</p>
+<span style="color: #000000">AT25 Driver library should be configured via the MHC. Below is the snapshot of the MHC configuration window for configuring the</span>&nbsp;</p>
 <p class="Element10">
-This macro defines the maximum depth of the command history.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">COMMAND_HISTORY_DEPTH</span></strong> 3</pre></div></div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
+<span style="color: #000000">AT25 driver and a brief description of various configuration options.</span>&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="drv_at25_mhc_config.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+User Configurations:</div>
+
+<ul class="Element630">
+<li class="Element600"><span style="color: #000000"><strong>PLIB Used</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Indicates the SPI peripheral instance used by the AT25 driver</span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>Number of Clients</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Always set to 1 as it supports only a single client</span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>EEPROM Page Size</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Size of one page of EEPROM memory (in bytes)</span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>EEPROM Flash Size</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Total size of the EEPROM memory (in bytes). Depending on the specified EEPROM Flash Size, the driver will generate the appropriate number of address bits (8-bit, 16-bit or 24-bit), thereby allowing it to communicate with EEPROM of different sizes in the AT25 family</span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>Chip Select Pin</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">EEPROM chip select pin (active low). This pin must be configured as GPIO output in &quot;Pin Settings&quot; configuration</span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>Hold Pin</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">EEPROM hold pin (active low). This pin must be configured as GPIO output in &quot;Pin Settings&quot; configuration</span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>Write Protect Pin</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">EEPROM write protect pin (active low). This pin must be configured as GPIO output in &quot;Pin Settings&quot; configuration. The AT25 driver keeps the Write Protect pin in logic high state, which means writes are always allowed</span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>AT25 EEPROM Start Address</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">The EEPROM memory start address. This is applicable only when the AT25 driver is connected to the Memory Block Driver</span></li>
+</ul></li>
+</ul></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00046.html" target="topic">Command Processor System Service Library</a> &gt; <a href="01340.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00047.html" target="topic">COMMAND_HISTORY_DEPTH Macro</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00054.html" target="topic">AT25 Driver Library Help</a> &gt; <a href="00047.html" target="topic">Configuring the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00001.html" target="topic">Previous</a> | <a href="01340.html" target="topic">Up</a> | <a href="00574.html" target="topic">Next</a></div>
+<a href="00052.html" target="topic">Previous</a> | <a href="00054.html" target="topic">Up</a> | <a href="00046.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: COMMAND_HISTORY_DEPTH Topic Title: COMMAND_HISTORY_DEPTH Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT25 Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_TIME_TimerStop Function</title>
+<title>SYS_MODULE_OBJ Type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00864.html" target="topic">Time System Service Library Help</a> &gt; <a href="00865.html" target="topic">Library Interface</a> &gt; b) Timer Functions &gt; <a href="01328.html" target="topic">SYS_TIME_TimerStop Function</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="01586.html" target="topic">System Services Libraries Overview</a> &gt; <a href="01582.html" target="topic">Library Interface</a> &gt; System State Machine &gt; <a href="01328.html" target="topic">SYS_MODULE_OBJ Type</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01327.html" target="topic">Previous</a> | <a href="00865.html" target="topic">Up</a> | <a href="01322.html" target="topic">Next</a></div>
+<a href="01327.html" target="topic">Previous</a> | <a href="01582.html" target="topic">Up</a> | <a href="01331.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_TimerStop@SYS_TIME_HANDLE Topic Title: SYS_TIME_TimerStop Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_MODULE_OBJ Topic Title: SYS_MODULE_OBJ Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_TIME_TimerStop Function</div>
+SYS_MODULE_OBJ Type</div>
 </div>
 </div>
 
@@ -49,84 +49,40 @@ SYS_TIME_TimerStop Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function stops a previously created and running software timer (i.e. the given timer's counter will stop incrementing).</p></div>
+System Module Object&nbsp;</p>
+<p class="Element10">
+This data type is a handle to a specific instance of a system module (such as a device driver).</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01318.html" target="topic">SYS_TIME_RESULT</a> <strong><span style="color: #000000">SYS_TIME_TimerStop</span></strong>(
-    <a href="01297.html" target="topic">SYS_TIME_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-The <a href="01300.html" target="topic">SYS_TIME_Initialize</a> must have been called and a valid handle to the software timer to be stopped must be available.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
-<div class="TableDiv">
-<table cellspacing="0" class="Table3">
-<tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Handle to a software timer instance.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-SYS_TIME_SUCCESS if the operation succeeds.&nbsp;</p>
-<p class="Element10">
-SYS_TIME_ERROR if the operation fails (due, for example, to an to an invalid handle).</p></div>
-</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> uintptr_t <strong><span style="color: #000000">SYS_MODULE_OBJ</span></strong>;</pre></div></div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Calling SYS_TIME_TimerStop on a timer that is not running will have no affect and will return SYS_TIME_SUCCESS.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-Given a &quot;timer&quot; handle, the following example will stops the timer's counter running. </p><div class="Element13"><div class="Element12"><pre class="Element12">SYS_TIME_TimerStop(timer);</pre></div></div>
-</div>
+Code outside of a specific module should consider this as an opaque type (much like a void *). Do not make any assumptions about base type as it may change in the future or about the value stored in a variable of this type.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00864.html" target="topic">Time System Service Library Help</a> &gt; <a href="00865.html" target="topic">Library Interface</a> &gt; b) Timer Functions &gt; <a href="01328.html" target="topic">SYS_TIME_TimerStop Function</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="01586.html" target="topic">System Services Libraries Overview</a> &gt; <a href="01582.html" target="topic">Library Interface</a> &gt; System State Machine &gt; <a href="01328.html" target="topic">SYS_MODULE_OBJ Type</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01327.html" target="topic">Previous</a> | <a href="00865.html" target="topic">Up</a> | <a href="01322.html" target="topic">Next</a></div>
+<a href="01327.html" target="topic">Previous</a> | <a href="01582.html" target="topic">Up</a> | <a href="01331.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_TimerStop@SYS_TIME_HANDLE Topic Title: SYS_TIME_TimerStop Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_MODULE_OBJ Topic Title: SYS_MODULE_OBJ Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Using a Driver in an Application</title>
+<title>Introduction</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00050.html" target="topic">Driver Library Overview</a> &gt; <a href="00087.html" target="topic">Using a Driver in an Application</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00088.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00087.html" target="topic">Introduction</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00088.html" target="topic">Previous</a> | <a href="00050.html" target="topic">Up</a> | <a href="00086.html" target="topic">Next</a></div>
+<a href="00088.html" target="topic">Previous</a> | <a href="00088.html" target="topic">Up</a> | <a href="00095.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Using a Driver in an Application Topic Title: Using a Driver in an Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2S Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Using a Driver in an Application</div>
+Introduction</div>
 </div>
 </div>
 
@@ -49,136 +49,30 @@ Using a Driver in an Application</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-MPLAB Harmony generally treats all software modules, including applications, as state machines that have an “initialize” function and a “tasks” function. In fact, when not using a RTOS, it essentially treats the entire system as one large state machine that runs in a common super loop in the “main” function, as shown in the following code example.&nbsp;</p>
+The I2S Driver is connected to a hardware module that provides the actual I2S stream, on some MCUs this is a Serial Peripheral Interface (SPI), on others it may be an I2S Controller (I2SC), or Serial Synchronous Controller (SSC).&nbsp;</p>
 <p class="Element10">
-<strong>Example Main Function</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">int</span></strong> main ( <strong><span style="color: #000080">void</span></strong> )
-{
-    SYS_Initialize(NULL);
-
-    <strong><span style="color: #000080">while</span></strong>(<strong><span style="color: #000080">true</span></strong>)
-    {
-        SYS_Tasks();
-    }
-
-    <strong><span style="color: #000080">return</span></strong> (EXIT_FAILURE);
-}</pre></div></div>
-<p class="Element10">
-For the purpose of this discussion, it is important to understand that the application’s APP_Initialize function is called from the SYS_Initialize function, along with the initialization of functions of all drivers and other libraries before execution enters the endless <span class="Element146">while(true)</span> super loop that continuously calls the system-wide SYS_Tasks function. The application’s APP_Tasks function is then called from the SYS_Tasks function inside of the super loop, along with all other polled modules in the system. If you are not already familiar with the organization of an MPLAB Harmony project, please refer to <i>Volume I: Getting Started With MPLAB Harmony &gt; <a href="00032.html" target="topic">What is MPLAB Harmony?</a></i> for more information.&nbsp;</p>
-<p class="Element10">
-An application that uses a driver must define a <a href="00297.html" target="topic">DRV_HANDLE</a> variable, as shown in the following example application header file.&nbsp;</p>
-<p class="Element10">
-<strong>Example Driver Application Header (app.h)</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">#include</span></strong> &quot;driver/usart/drv_usart.h&quot;
-
-<strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong>
-{
-    APP_STATE_SETUP=0,
-    APP_STATE_MESSAGE_SEND,
-    APP_STATE_MESSAGE_WAIT,
-    APP_STATE_DONE
-
-} APP_STATES;
-
-
-<strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong>
-{
-    APP_STATES  state;
-    DRV_HANDLE  usart;
-    <strong><span style="color: #000080">char</span></strong> *      message;
-
-} APP_DATA;</pre></div></div>
-<p class="Element10">
-In this previous example, the driver handle variable is named <span class="Element146">usart</span>. To keep the application well organized, it is common to keep all of the application’s state variables (including one called “state” that holds the current state of the application’s state machine) in a common structure (APP_DATA). This structure must be allocated in the application’s source file (usually named <span class="Element146">app.c</span>) and initialized by the application’s initialization function, as shown in the following example.&nbsp;</p>
-<p class="Element10">
-<strong>Example Driver Application Initialization</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">APP_DATA appData;
-
-<strong><span style="color: #000080">void</span></strong> APP_Initialize ( <strong><span style="color: #000080">void</span></strong> )
-{
-    <i><span style="color: #008000">/* Place the App in its initial state. */</span></i>
-    appData.state   = APP_STATE_SETUP;
-    appData.usart   = DRV_HANDLE_INVALID;
-    appData.message = “Hello World\n”;
-}</pre></div></div>
-<p class="Element10">
-The APP_Initialze function must initialize the state variable (appData.state) to put the application’s state machine in its initial state (the APP_STATE_SETUP value from the APP_STATES enumeration). It must also initialize the driver-handle variable (<span class="Element146">appData.usart</span>), so that the state machine knows it is not yet valid, and any other application variables (like the string pointer, <span class="Element146">appData.message</span>).&nbsp;</p>
-<p class="Element10">
-Once the application’s data structure has been initialized, it is safe for the system (the main and SYS_Tasks functions) to call the application’s APP_Tasks function from the super loop to keep it running. The APP_Tasks function then executes state transition code as it switches between states, as demonstrated by the following example.&nbsp;</p>
-<p class="Element10">
-<strong>Example Application State Machine Using a Driver</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> APP_Tasks ( <strong><span style="color: #000080">void</span></strong> )
-{
-    <strong><span style="color: #000080">switch</span></strong> ( appData.state )
-    {
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_SETUP:
-        {
-            <strong><span style="color: #000080">if</span></strong> (SetupApplication() == <strong><span style="color: #000080">true</span></strong>)
-            {
-                appData.state = APP_STATE_MESSAGE_SEND;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-        }
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_MESSAGE_SEND:
-        {
-            <strong><span style="color: #000080">if</span></strong> (MessageSend() == <strong><span style="color: #000080">true</span></strong>)
-            {
-                appData.state = APP_STATE_MESSAGE_WAIT;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-        }
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_MESSAGE_WAIT:
-        {
-            <strong><span style="color: #000080">if</span></strong> (MessageComplete() == <strong><span style="color: #000080">true</span></strong>)
-            {
-                appData.state = APP_STATE_DONE;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-        }
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_DONE:
-        <strong><span style="color: #000080">default</span></strong>:
-        {
-            <strong><span style="color: #000080">break</span></strong>;
-        }
-    }
-}</pre></div></div>
-<p class="Element10">
-There are numerous ways to implement a state machine. However, in this example, the application changes state when the APP_Tasks function assigns a new value from the APP_STATES enumeration to the <span class="Element146">appData.states</span> variable. This happens when one of the state transition function returns true. The end result is an overall application state machine execution that retries each state transition until it succeeds before moving on to the next state, as shown in the following diagram.&nbsp;</p>
-<p class="Element10">
-<strong>Application State Machine</strong> &nbsp;</p><p class="Element10" style="text-align: center;">
-&nbsp;</p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table2">
-<tr>
-<td class="Element67" valign="top" width="10%" style="border:none;">
-<div class="Element68">
-<img src="Note Icon.png" border="0" alt="" title=""><strong> Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
-<div class="Element68">
-The APP_STATE_ prefix and all inter-word underscores were removed from the state names to simplify the diagram.&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-After APP_Initialize places the state machine in its initial APP_STATE_SETUP state, the APP_Tasks function will call the SetupApplication function when it is called. When SetupApplication returns true indicating it has completed its task, the state machine advances to the next state. Otherwise, it stays in the same state and retries the tasks in the SetupApplication function. This pattern repeats for the APP_STATE_MESSAGE_SEND state and the <span class="Element146">MessageSend</span> function as well as the APP_STATE_MESSAGE_WAIT state and the <span class="Element146">MessageComplete</span> function. When all functions have returned true, the state machine to transitions to the APP_STATE_DONE state where it unconditionally stays having completed its tasks.&nbsp;</p>
-<p class="Element10">
-The sum total of the tasks performed by each transition function completes the overall task of the application. For an application that uses a driver like this example, this includes opening the driver, sending the message, and closing the driver when the message has been sent. How each individual transition function in this example application accomplishes its portion of the overall task, is described in the examples in the following sections to demonstrate how drivers are commonly used.</p></div>
+The I2S hardware peripheral is then interfaced to various devices such as codecs and Bluetooth modules to provide microcontroller-based audio solutions.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00050.html" target="topic">Driver Library Overview</a> &gt; <a href="00087.html" target="topic">Using a Driver in an Application</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00088.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00087.html" target="topic">Introduction</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00088.html" target="topic">Previous</a> | <a href="00050.html" target="topic">Up</a> | <a href="00086.html" target="topic">Next</a></div>
+<a href="00088.html" target="topic">Previous</a> | <a href="00088.html" target="topic">Up</a> | <a href="00095.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Using a Driver in an Application Topic Title: Using a Driver in an Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2S Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

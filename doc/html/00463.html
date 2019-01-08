@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SDHC_Open Function</title>
+<title>DRV_SDHC_Status Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00149.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00150.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00463.html" target="topic">DRV_SDHC_Open Function</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00120.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00121.html" target="topic">Library Interface</a> &gt; c) Block Operation Functions &gt; <a href="00463.html" target="topic">DRV_SDHC_Status Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00469.html" target="topic">Previous</a> | <a href="00150.html" target="topic">Up</a> | <a href="00436.html" target="topic">Next</a></div>
+<a href="00445.html" target="topic">Previous</a> | <a href="00121.html" target="topic">Up</a> | <a href="00426.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_SDHC_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_Status@SYS_MODULE_OBJ Topic Title: DRV_SDHC_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SDHC_Open Function</div>
+DRV_SDHC_Status Function</div>
 </div>
 </div>
 
@@ -49,20 +49,19 @@ DRV_SDHC_Open Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This routine opens the specified SD Card driver instance and provides a handle that must be provided to all other client-level operations to identify the caller and the instance of the driver.</p></div>
+This routine provides the current status of the SD Card driver module.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00297.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">DRV_SDHC_Open</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01259.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="00350.html" target="topic">DRV_IO_INTENT</a> <strong><span style="color: #000000">intent</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01512.html" target="topic">SYS_STATUS</a> <strong><span style="color: #000000">DRV_SDHC_Status</span></strong>(
+    <a href="01328.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">object</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Function <a href="00460.html" target="topic">DRV_SDHC_Initialize</a> must have been called before calling this function.</p></div>
+Function <a href="00455.html" target="topic">DRV_SDHC_Initialize</a> must have been called before calling this</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -79,14 +78,9 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-drvIndex&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+object&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Identifier for the object instance to be opened<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-intent&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Zero or more of the values from the enumeration <a href="00350.html" target="topic">DRV_IO_INTENT</a> &quot;ORed&quot; together to indicate the intended use of the driver&nbsp;</div></td></tr></table></div></div>
+Driver object handle, returned from the <a href="00455.html" target="topic">DRV_SDHC_Initialize</a> routine&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -94,34 +88,52 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If successful, the routine returns a valid open-instance handle (a number identifying both the caller and the module instance).&nbsp;</p>
+SYS_STATUS_READY - Indicates that the driver is busy with a previous system level operation and cannot start another&nbsp;</p>
 <p class="Element10">
-If an error occurs, the return value is <a href="00298.html" target="topic">DRV_HANDLE_INVALID</a>.</p></div>
+Note Any value greater than SYS_STATUS_READY is also a normal running state in which the driver is ready to accept new operations.&nbsp;</p>
+<p class="Element10">
+SYS_STATUS_BUSY - Indicates that the driver is busy with a previous system level operation and cannot start another&nbsp;</p>
+<p class="Element10">
+SYS_STATUS_ERROR - Indicates that the driver is in an error state</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The handle returned is valid until the <a href="00436.html" target="topic">DRV_SDHC_Close</a> routine is called.&nbsp;</p>
+Any value less than SYS_STATUS_ERROR is also an error state.&nbsp;</p>
+<p class="Element10">
+SYS_MODULE_DEINITIALIZED - Indicates that the driver has been deinitialized&nbsp;</p>
+<p class="Element10">
+This value is less than SYS_STATUS_ERROR&nbsp;</p>
+<p class="Element10">
+This operation can be used to determine when any of the driver's module level operations has completed.&nbsp;</p>
+<p class="Element10">
+If the status operation returns SYS_STATUS_BUSY, then a previous operation has not yet completed. If the status operation returns SYS_STATUS_READY, then it indicates that all previous operations have completed.&nbsp;</p>
+<p class="Element10">
+The value of SYS_STATUS_ERROR is negative (-1). Any value less than that is also an error state.&nbsp;</p>
 <p class="Element10">
 This routine will NEVER block waiting for hardware.&nbsp;</p>
 <p class="Element10">
-If the DRV_IO_INTENT_BLOCKING is requested and the driver was built appropriately to support blocking behavior, then other client-level operations may block waiting on hardware until they are complete.&nbsp;</p>
-<p class="Element10">
-If the requested intent flags are not supported, the routine will return <a href="00298.html" target="topic">DRV_HANDLE_INVALID</a>.</p></div>
+If the Status operation returns an error value, the error may be cleared by calling the reinitialize operation. If that fails, the deinitialize operation will need to be called, followed by the initialize operation to return to normal operations.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><a href="00297.html" target="topic">DRV_HANDLE</a>  handle;
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01328.html" target="topic">SYS_MODULE_OBJ</a>      object;     <i><span style="color: #008000">// Returned from DRV_SDHC_Initialize</span></i>
+<a href="01512.html" target="topic">SYS_STATUS</a>          status;
 
-handle = DRV_SDHC_Open (<a href="00452.html" target="topic">DRV_SDHC_INDEX_0</a>, DRV_IO_INTENT_EXCLUSIVE);
+status = DRV_SDHC_Status(object);
 
-<strong><span style="color: #000080">if</span></strong> (<a href="00298.html" target="topic">DRV_HANDLE_INVALID</a> == handle)
+<strong><span style="color: #000080">if</span></strong> (SYS_MODULE_UNINITIALIZED == status)
 {
-    <i><span style="color: #008000">// Unable to open the driver</span></i>
+    <i><span style="color: #008000">// Check again later if you need to know</span></i>
+    <i><span style="color: #008000">// when the driver is deinitialized.</span></i>
+}
+<strong><span style="color: #000080">else</span></strong> <strong><span style="color: #000080">if</span></strong> (SYS_STATUS_ERROR &gt;= status)
+{
+    <i><span style="color: #008000">// Handle error</span></i>
 }</pre></div></div>
 </div>
 </div>
@@ -130,21 +142,21 @@ handle = DRV_SDHC_Open (<a href="00452.html" target="topic">DRV_SDHC_INDEX_0</a>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00149.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00150.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00463.html" target="topic">DRV_SDHC_Open Function</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00120.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00121.html" target="topic">Library Interface</a> &gt; c) Block Operation Functions &gt; <a href="00463.html" target="topic">DRV_SDHC_Status Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00469.html" target="topic">Previous</a> | <a href="00150.html" target="topic">Up</a> | <a href="00436.html" target="topic">Next</a></div>
+<a href="00445.html" target="topic">Previous</a> | <a href="00121.html" target="topic">Up</a> | <a href="00426.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_SDHC_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_Status@SYS_MODULE_OBJ Topic Title: DRV_SDHC_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

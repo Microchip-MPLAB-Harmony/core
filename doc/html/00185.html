@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Building the Library</title>
+<title>DRV_AT24_EventHandlerSet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00192.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00185.html" target="topic">Building the Library</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00040.html" target="topic">AT24 Driver Library Help</a> &gt; <a href="00041.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00185.html" target="topic">DRV_AT24_EventHandlerSet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00186.html" target="topic">Previous</a> | <a href="00192.html" target="topic">Up</a> | <a href="00193.html" target="topic">Next</a></div>
+<a href="00182.html" target="topic">Previous</a> | <a href="00041.html" target="topic">Up</a> | <a href="00232.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SST26 Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT24_EventHandlerSet@DRV_HANDLE@DRV_AT24_EVENT_HANDLER@uintptr_t Topic Title: DRV_AT24_EventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Building the Library</div>
+DRV_AT24_EventHandlerSet Function</div>
 </div>
 </div>
 
@@ -48,15 +48,115 @@ Building the Library</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element63">
+<p class="Element10">
+This function allows a client to register a transfer event handling function with the driver to call back when the requested transfer has finished.&nbsp;</p>
+<p class="Element10">
+The event handler should be set before the client submits any transfer requests that could generate events. The event handler once set, persists until the client closes the driver or sets another event handler (which could be a &quot;NULL&quot; pointer to indicate no callback).</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_AT24_EventHandlerSet</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00268.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="00184.html" target="topic">DRV_AT24_EVENT_HANDLER</a> <strong><span style="color: #000000">eventHandler</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> uintptr_t <strong><span style="color: #000000">context</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+<a href="00209.html" target="topic">DRV_AT24_Open</a> must have been called to obtain a valid opened device handle.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table2">
+<table cellspacing="0" class="Table3">
 <tr>
-<td class="Element67" valign="top" width="10%" style="border:none;">
-<div class="Element68">
-<img src="MHC_Logo_Medium.png" border="0" alt="" title="">&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
-<div class="Element68">
-<span style="color: #008000"><strong><i>All of the required files are automatically added into the MPLAB X IDE project by the MHC when the library is selected for use.</i></strong></span>&nbsp;</div></td></tr></table></div></div>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A valid open-instance handle, returned from the driver's open routine.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+eventHandler&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the event handler function.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+The value of parameter will be passed back to the client unchanged, when the eventHandler function is called. It can be used to identify any client specific data object that identifies the instance of the client module (for example, it may be a pointer to the client module's state structure).&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+If the client does not want to be notified when the queued buffer transfer has completed, it does not need to register a callback.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">
+<strong><span style="color: #000080">#define</span></strong> BUFFER_SIZE  256
+<strong><span style="color: #000080">#define</span></strong> MEM_ADDRESS  0x0
+
+<i><span style="color: #008000">// myAppObj is an application specific state data object.</span></i>
+MY_APP_OBJ myAppObj;
+
+uint8_t myBuffer[BUFFER_SIZE];
+
+<i><span style="color: #008000">// myHandle is the handle returned from DRV_AT24_Open API.</span></i>
+
+<i><span style="color: #008000">// Client registers an event handler with driver. This is done once</span></i>
+
+DRV_AT24_EventHandlerSet( myHandle, APP_AT24TransferEventHandler, (uintptr_t)&amp;myAppObj );
+
+<strong><span style="color: #000080">if</span></strong> (<a href="00225.html" target="topic">DRV_AT24_Read</a>(myHandle, myBuffer, BUFFER_SIZE, MEM_ADDRESS) == <strong><span style="color: #000080">false</span></strong>)
+{
+    <i><span style="color: #008000">// Error handling here</span></i>
+}
+
+<i><span style="color: #008000">// The registered event handler is called when the request is complete.</span></i>
+
+<strong><span style="color: #000080">void</span></strong> APP_AT24TransferEventHandler(<a href="00227.html" target="topic">DRV_AT24_TRANSFER_STATUS</a> event, uintptr_t context)
+{
+    <i><span style="color: #008000">// The context handle was set to an application specific</span></i>
+    <i><span style="color: #008000">// object. It is now retrievable easily in the event handler.</span></i>
+    MY_APP_OBJ* pMyAppObj = (MY_APP_OBJ *) context;
+
+    <strong><span style="color: #000080">switch</span></strong>(event)
+    {
+        <strong><span style="color: #000080">case</span></strong> DRV_AT24_TRANSFER_STATUS_COMPLETED:
+            <i><span style="color: #008000">// This means the data was transferred.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> DRV_AT24_TRANSFER_STATUS_ERROR:
+            <i><span style="color: #008000">// Error handling here.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">default</span></strong>:
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -64,21 +164,21 @@ Building the Library</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00192.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00185.html" target="topic">Building the Library</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00040.html" target="topic">AT24 Driver Library Help</a> &gt; <a href="00041.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00185.html" target="topic">DRV_AT24_EventHandlerSet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00186.html" target="topic">Previous</a> | <a href="00192.html" target="topic">Up</a> | <a href="00193.html" target="topic">Next</a></div>
+<a href="00182.html" target="topic">Previous</a> | <a href="00041.html" target="topic">Up</a> | <a href="00232.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SST26 Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT24_EventHandlerSet@DRV_HANDLE@DRV_AT24_EVENT_HANDLER@uintptr_t Topic Title: DRV_AT24_EventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

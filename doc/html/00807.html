@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Running the Application</title>
+<title>Abstraction Model</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00776.html" target="topic">SPI Driver Applications</a> &gt; Sync &gt; <a href="00803.html" target="topic">spi_self_loopback_multi_client</a> &gt; <a href="00807.html" target="topic">Running the Application</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00815.html" target="topic">Console System Service Library Help</a> &gt; <a href="00820.html" target="topic">Using the Library</a> &gt; <a href="00807.html" target="topic">Abstraction Model</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00805.html" target="topic">Previous</a> | <a href="00803.html" target="topic">Up</a> | <a href="00808.html" target="topic">Next</a></div>
+<a href="00820.html" target="topic">Previous</a> | <a href="00820.html" target="topic">Up</a> | <a href="00812.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SPI Driver Sync spi_self_loopback_multi_client_freertos Running the Application Topic Title: Running the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Running the Application</div>
+Abstraction Model</div>
 </div>
 </div>
 
@@ -48,58 +48,36 @@ Running the Application</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-
-<ol class="Element630">
-<li value="1" class="Element600">Connect a micro USB cable to the DEBUG port.</li>
-<li value="2" class="Element600">Build and Program the application using the MPLAB X IDE.</li>
-<li value="3" class="Element600">The LED indicates the success or failure.
-<ul class="Element631">
-<li class="Element601">The LED blinks on Success</li>
-</ul></li>
-</ol><p class="Element10">
+<p class="Element10" style="text-align: center;">
+<img src="sys_console_block_diagram.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<span style="color: #000000"><strong>Console Service Software Abstraction Block Diagram</strong></span></p><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-The following table provides the LED name: </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="82%">
-<div class="Element66">
-Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="18%">
-<div class="Element66">
-LED Name&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="82%">
-<div class="Element68">
-SAM C21N Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="18%">
-<div class="Element68">
-LED 0&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="82%">
-<div class="Element68">
-SAM E70 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="18%">
-<div class="Element68">
-LED 1&nbsp;</div></td></tr></table></div></div>
-</div>
+The Console System Service is a middleware library that is part of a layered software architecture. The purpose of this software layering is to allow each module to provide a consistent interface to its client, thus making it easy for the developer to add and remove modules as needed. The console core layer<span style="color: #FFFFFF">_</span>provides a POSIX-like read/write API to applications and middleware libraries to send and receive data to and from the console device. Data and message buffering, along with the details of the data transfer are contained within the console device and peripheral library (PLIB) layers.&nbsp;</p>
+<p class="Element10">
+Additional APIs are provided to handle system functions, register a callback function for non-blocking implementations, and flush (reset) the internal queues in the event of an error condition.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00776.html" target="topic">SPI Driver Applications</a> &gt; Sync &gt; <a href="00803.html" target="topic">spi_self_loopback_multi_client</a> &gt; <a href="00807.html" target="topic">Running the Application</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00815.html" target="topic">Console System Service Library Help</a> &gt; <a href="00820.html" target="topic">Using the Library</a> &gt; <a href="00807.html" target="topic">Abstraction Model</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00805.html" target="topic">Previous</a> | <a href="00803.html" target="topic">Up</a> | <a href="00808.html" target="topic">Next</a></div>
+<a href="00820.html" target="topic">Previous</a> | <a href="00820.html" target="topic">Up</a> | <a href="00812.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SPI Driver Sync spi_self_loopback_multi_client_freertos Running the Application Topic Title: Running the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Opening a Driver</title>
+<title>How the Library Works</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00050.html" target="topic">Driver Library Overview</a> &gt; <a href="00086.html" target="topic">Opening a Driver</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00088.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00095.html" target="topic">Using the Library</a> &gt; <a href="00086.html" target="topic">How the Library Works</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00087.html" target="topic">Previous</a> | <a href="00050.html" target="topic">Up</a> | <a href="00091.html" target="topic">Next</a></div>
+<a href="00090.html" target="topic">Previous</a> | <a href="00095.html" target="topic">Up</a> | <a href="00092.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Opening a Driver Topic Title: Opening a Driver)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2S How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Opening a Driver</div>
+How the Library Works</div>
 </div>
 </div>
 
@@ -49,50 +49,76 @@ Opening a Driver</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-To use a MPLAB Harmony driver, an application (or other client) must call the driver’s “open” function and obtain a valid handle to it, as shown by the following code example.&nbsp;</p>
-<p class="Element10">
-<strong>Example Opening a Driver</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">static</span></strong> <strong><span style="color: #000080">bool</span></strong> SetupApplication ( <strong><span style="color: #000080">void</span></strong> )
-{
-    <strong><span style="color: #000080">if</span></strong> (appData.usart == DRV_HANDLE_INVALID)
-    {
-        appData.usart = DRV_USART_Open(APP_USART_DRIVER_INDEX,
-                                      (DRV_IO_INTENT_READWRITE|DRV_IO_INTENT_NONBLOCKING));
-    }
-
-    <strong><span style="color: #000080">if</span></strong> (appData.usart == DRV_HANDLE_INVALID)
-    {
-        <strong><span style="color: #000080">return</span></strong> <strong><span style="color: #000080">false</span></strong>;
-    }
-
-    <strong><span style="color: #000080">return</span></strong> <strong><span style="color: #000080">true</span></strong>;
-}</pre></div></div>
-<p class="Element10">
-This example demonstrates the implementation of a state-transition function in a state machine-based application (as shown in the previous <a href="00087.html" target="topic">Using a Driver in an Application</a> section). The <span class="Element146">SetupApplication</span> function assumes that the <span class="Element146">appData.usart</span> variable has been initialized to a value of <a href="00298.html" target="topic">DRV_HANDLE_INVALID</a> when the application’s state machine was initialized. Therefore, it checks this variable every time it is called to see if it has already completed its task. If <span class="Element146">appData.usart</span> contains a value of <a href="00298.html" target="topic">DRV_HANDLE_INVALID</a>, this indicates that the driver has not yet been successfully opened, causing the function to attempt to open the driver by calling <a href="00564.html" target="topic">DRV_USART_Open</a>.&nbsp;</p>
-<p class="Element10">
-If the USART driver is ready and able to support a new client it will return a valid handle. If it is not ready or able to accept a new client, the driver will return <a href="00298.html" target="topic">DRV_HANDLE_INVALID</a> and the <span class="Element146">SetupApplication</span> function will return false and the application will stay in the same state and try to open the driver again the next time its state machine tasks function is called. When <a href="00564.html" target="topic">DRV_USART_Open</a> returns a valid handle (a handle that is not equal to <a href="00298.html" target="topic">DRV_HANDLE_INVALID</a>), the <span class="Element146">SetupApplication</span> function returns true, allowing the application’s state machine to advance.&nbsp;</p>
-<p class="Element10">
-This technique allows the application to try repeatedly to open the driver until it succeeds and guarantees that the application’s state machine will not advance until it has done so. A more sophisticated application might use a time-out mechanism or some other error handling logic to take alternative action if it cannot open the driver in an acceptable time period. However, this simple implementation demonstrates the basic concept of how an MPLAB Harmony application (or any other client module) can safely open a driver before attempting to use it.</p></div>
+The library provides interfaces to support:</p>
+<ul class="Element630">
+<li class="Element600">System Functionality</li>
+<li class="Element600">Client Functionality</li>
+</ul><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="Note Icon.png" border="0" alt="" title=""> <strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+Not all modes are available on all devices. Please refer to the specific device data sheet to determine the supported modes.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00092.html" target="topic">System Access</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on system access.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00078.html" target="topic">Client Access</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on general client operation.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00079.html" target="topic">Client Operations - Buffered</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on buffered client operations.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00080.html" target="topic">Client Operations - Non-buffered</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on non-buffered client operations.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00050.html" target="topic">Driver Library Overview</a> &gt; <a href="00086.html" target="topic">Opening a Driver</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00088.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00095.html" target="topic">Using the Library</a> &gt; <a href="00086.html" target="topic">How the Library Works</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00087.html" target="topic">Previous</a> | <a href="00050.html" target="topic">Up</a> | <a href="00091.html" target="topic">Next</a></div>
+<a href="00090.html" target="topic">Previous</a> | <a href="00095.html" target="topic">Up</a> | <a href="00092.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Opening a Driver Topic Title: Opening a Driver)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2S How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

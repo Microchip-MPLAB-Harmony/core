@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_MEMORY_TransferHandlerSet Function</title>
+<title>DRV_SDHC_AsyncWrite Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00135.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00136.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00427.html" target="topic">DRV_MEMORY_TransferHandlerSet Function</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00120.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00121.html" target="topic">Library Interface</a> &gt; c) Block Operation Functions &gt; <a href="00427.html" target="topic">DRV_SDHC_AsyncWrite Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00367.html" target="topic">Previous</a> | <a href="00136.html" target="topic">Up</a> | <a href="00363.html" target="topic">Next</a></div>
+<a href="00426.html" target="topic">Previous</a> | <a href="00121.html" target="topic">Up</a> | <a href="00439.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_TransferHandlerSet@DRV_HANDLE@void *@uintptr_t Topic Title: DRV_MEMORY_TransferHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_AsyncWrite@DRV_HANDLE@DRV_SDHC_COMMAND_HANDLE *@void *@uint32_t@uint32_t Topic Title: DRV_SDHC_AsyncWrite Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_MEMORY_TransferHandlerSet Function</div>
+DRV_SDHC_AsyncWrite Function</div>
 </div>
 </div>
 
@@ -49,25 +49,34 @@ DRV_MEMORY_TransferHandlerSet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function allows a client to set an event handling function for the driver to call back when queued operation has completed.&nbsp;</p>
+This function schedules a non-blocking write operation for writing blocks of data to the SD Card. The function returns with a valid buffer handle in the commandHandle argument if the write request was scheduled successfully. The function adds the request to the hardware instance queue and returns immediately. While the request is in the queue, the application buffer is owned by the driver and should not be modified. The function returns <a href="00433.html" target="topic">DRV_SDHC_COMMAND_HANDLE_INVALID</a> in the commandHandle argument under the following circumstances:</p>
+<ul class="Element630">
+<li class="Element600">if a buffer object could not be allocated to the request</li>
+<li class="Element600">if the source buffer pointer is NULL</li>
+<li class="Element600">if the client opened the driver for read only</li>
+<li class="Element600">if the number of blocks to be written is either zero or more than the number of blocks actually available</li>
+<li class="Element600">if the write queue size is full or queue depth is insufficient</li>
+<li class="Element600">if the driver handle is invalid</li>
+</ul><p class="Element10">
+&nbsp;</p>
 <p class="Element10">
-When a client calls a read, write, erase or a erasewrite function, it is provided with a handle identifying the command that was added to the driver's buffer queue. The driver will pass this handle back to the client by calling &quot;transferHandler&quot; function when the queued operation has completed.&nbsp;</p>
-<p class="Element10">
-The event handler should be set before the client performs any operations that could generate events. The event handler once set, persists until the client closes the driver or sets another event handler (which could be a &quot;NULL&quot; pointer to indicate no callback).</p></div>
+If the requesting client registered an event callback with the driver, the driver will issue a DRV_SDHC_EVENT_COMMAND_COMPLETE event if the buffer was processed successfully or DRV_SDHC_EVENT_COMMAND_ERROR event if the buffer was not processed successfully.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_MEMORY_TransferHandlerSet</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00297.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">transferHandler</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> uintptr_t <strong><span style="color: #000000">context</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_SDHC_AsyncWrite</span></strong>(
+    <a href="00268.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <a href="00432.html" target="topic">DRV_SDHC_COMMAND_HANDLE</a> * <strong><span style="color: #000000">commandHandle</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">sourceBuffer</span></strong>, 
+    uint32_t <strong><span style="color: #000000">blockStart</span></strong>, 
+    uint32_t <strong><span style="color: #000000">nBlock</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="00418.html" target="topic">DRV_MEMORY_Open</a>() routine must have been called to obtain a valid opened device handle.</p></div>
+<a href="00458.html" target="topic">DRV_SDHC_Open</a>() routine must have been called to obtain a valid opened device handle. DRV_IO_INTENT_WRITE or DRV_IO_INTENT_READWRITE must have been specified as a parameter to this routine.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -89,14 +98,24 @@ handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 A valid open-instance handle, returned from the driver's open function<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-transferHandler&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+commandHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to the event handler function implemented by the user<br>&nbsp;</div></td></tr><tr>
+Pointer to an argument that will contain the return buffer handle<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+sourceBuffer&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-The value of parameter will be passed back to the client unchanged, when the transferHandler function is called. It can be used to identify any client specific data object that identifies the instance of the client module (for example, it may be a pointer to the client module's state structure).&nbsp;</div></td></tr></table></div></div>
+The source buffer containing data to be programmed to the SD Card.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+blockStart&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Start block address of SD Card where the writes should begin.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+nBlock&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Total number of blocks to be written.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -104,48 +123,66 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+The buffer handle is returned in the commandHandle argument. It will be <a href="00433.html" target="topic">DRV_SDHC_COMMAND_HANDLE_INVALID</a> if the request was not successful.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If the client does not want to be notified when the queued operation has completed, it does not need to register a callback.&nbsp;</p>
-<p class="Element10">
-Used in Asynchronous Mode of operation.</p></div>
+None.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><a href="00368.html" target="topic">DRV_MEMORY_COMMAND_HANDLE</a> commandHandle;
+<div class="Element13"><div class="Element12"><pre class="Element12">
+uint8_t myBuffer[MY_BUFFER_SIZE];
 
-<i><span style="color: #008000">// memoryHandle is the handle returned by the DRV_MEMORY_Open function.</span></i>
+<i><span style="color: #008000">// address should be block aligned.</span></i>
+uint32_t blockStart = 0x00;
+uint32_t    nBlock = 2;
+<a href="00432.html" target="topic">DRV_SDHC_COMMAND_HANDLE</a> commandHandle;
+MY_APP_OBJ myAppObj;
+
+<i><span style="color: #008000">// mySDHCHandle is the handle returned</span></i>
+<i><span style="color: #008000">// by the DRV_SDHC_Open function.</span></i>
+
 <i><span style="color: #008000">// Client registers an event handler with driver</span></i>
 
-<i><span style="color: #008000">// Event is received when the erase request is completed.</span></i>
-<strong><span style="color: #000080">void</span></strong> appTransferHandler
-(
-    <a href="00398.html" target="topic">DRV_MEMORY_EVENT</a> event,
-    <a href="00368.html" target="topic">DRV_MEMORY_COMMAND_HANDLE</a> commandHandle,
-    uintptr_t context
-)
+<a href="00445.html" target="topic">DRV_SDHC_EventHandlerSet</a>(mySDHCHandle, APP_SDHCEventHandler, (uintptr_t)&amp;myAppObj);
+
+DRV_SDHC_AyncWrite(mySDHCHandle, &amp;commandHandle, &amp;myBuffer, blockStart, nBlock);
+
+<strong><span style="color: #000080">if</span></strong>(<a href="00433.html" target="topic">DRV_SDHC_COMMAND_HANDLE_INVALID</a> == commandHandle)
 {
+    <i><span style="color: #008000">// Error handling here</span></i>
+}
+
+<i><span style="color: #008000">// Event is received when</span></i>
+<i><span style="color: #008000">// the buffer is processed.</span></i>
+
+<strong><span style="color: #000080">void</span></strong> APP_SDHCEventHandler(<a href="00441.html" target="topic">DRV_SDHC_EVENT</a> event,
+        <a href="00432.html" target="topic">DRV_SDHC_COMMAND_HANDLE</a> commandHandle, uintptr_t contextHandle)
+{
+    <i><span style="color: #008000">// contextHandle points to myAppObj.</span></i>
+
     <strong><span style="color: #000080">switch</span></strong>(event)
     {
-        <strong><span style="color: #000080">case</span></strong> DRV_MEMORY_EVENT_COMMAND_COMPLETE:
-            xfer_done = <strong><span style="color: #000080">true</span></strong>;
+        <strong><span style="color: #000080">case</span></strong> DRV_SDHC_EVENT_COMMAND_COMPLETE:
+
+            <i><span style="color: #008000">// This means the data was transferred.</span></i>
             <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">case</span></strong> DRV_MEMORY_EVENT_COMMAND_ERROR:
-            <i><span style="color: #008000">// Handle Error</span></i>
+
+        <strong><span style="color: #000080">case</span></strong> DRV_SDHC_EVENT_COMMAND_ERROR:
+
+            <i><span style="color: #008000">// Error handling here.</span></i>
             <strong><span style="color: #000080">break</span></strong>;
+
         <strong><span style="color: #000080">default</span></strong>:
             <strong><span style="color: #000080">break</span></strong>;
     }
 }
-
-DRV_MEMORY_TransferHandlerSet(memoryHandle, appTransferHandler, (uintptr_t)NULL);
 </pre></div></div>
 </div>
 </div>
@@ -154,21 +191,21 @@ DRV_MEMORY_TransferHandlerSet(memoryHandle, appTransferHandler, (uintptr_t)NULL)
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00135.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00136.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00427.html" target="topic">DRV_MEMORY_TransferHandlerSet Function</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00120.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00121.html" target="topic">Library Interface</a> &gt; c) Block Operation Functions &gt; <a href="00427.html" target="topic">DRV_SDHC_AsyncWrite Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00367.html" target="topic">Previous</a> | <a href="00136.html" target="topic">Up</a> | <a href="00363.html" target="topic">Next</a></div>
+<a href="00426.html" target="topic">Previous</a> | <a href="00121.html" target="topic">Up</a> | <a href="00439.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_TransferHandlerSet@DRV_HANDLE@void *@uintptr_t Topic Title: DRV_MEMORY_TransferHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDHC_AsyncWrite@DRV_HANDLE@DRV_SDHC_COMMAND_HANDLE *@void *@uint32_t@uint32_t Topic Title: DRV_SDHC_AsyncWrite Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

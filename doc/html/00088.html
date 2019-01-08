@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Using a Driver's Client Interface</title>
+<title>I2S Driver Library Help</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00050.html" target="topic">Driver Library Overview</a> &gt; <a href="00088.html" target="topic">Using a Driver's Client Interface</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00088.html" target="topic">I2S Driver Library Help</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00089.html" target="topic">Previous</a> | <a href="00050.html" target="topic">Up</a> | <a href="00087.html" target="topic">Next</a></div>
+<a href="00270.html" target="topic">Previous</a> | <a href="00096.html" target="topic">Up</a> | <a href="00087.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Using a Driver%27s Client Interface Topic Title: Using a Driver%27s Client Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2S Library Topic Title: I2S Driver Library Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Using a Driver's Client Interface</div>
+I2S Driver Library Help</div>
 </div>
 </div>
 
@@ -46,59 +46,76 @@ Using a Driver's Client Interface</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
 <div class="Element10">
-<p class="Element10">
-Applications (or any other “client” of a MPLAB Harmony device driver) normally only interact with the driver’s client interface (often called its API). The client interface provides functions to “open” the driver (creating a link between the client and the driver) and interact with it, to transfer data or perform operations that are specific to a given type of device, and to “close” the driver (releasing the link). Once a driver has been configured and the configuration code has been generated, the application can assume that the driver will be initialized by the system-wide initialization function (SYS_Initialize) and that its tasks functions will be called as required from either the system-wide tasks function (SYS_Tasks) or from the appropriate ISR, depending upon how the driver was designed and configured.&nbsp;</p>
-<p class="Element10">
-To interact with the driver, a client must first call the driver’s open function. This is necessary because all other client interface functions require a “handle” to the device driver that is returned by the open function, as shown in the following example.&nbsp;</p>
-<p class="Element10">
-<strong>Example Call to a Driver’s Open Function</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">appData.handleTmr = DRV_TMR_Open(APP_TMR_DRV_INDEX, DRV_IO_INTENT_EXCLUSIVE);
-<strong><span style="color: #000080">if</span></strong>( DRV_HANDLE_INVALID != appData.handleTmr )
-{
-    <i><span style="color: #008000">// Advance to next application state.</span></i>
-}</pre></div></div>
-<p class="Element10">
-In this example, the first parameter to the DRV_TMR_Open function is the APP_TMR_DRV_INDEX macro, which is a constant defined to the value of the desired driver instance index number in the <span class="Element146">system_config.h</span> header file. This value must be the same as the index number used when the desired driver was initialized (as shown in the previous section). This is how the client becomes associated with a specific instance of a driver.&nbsp;</p>
-<p class="Element10">
-The second parameter identifies how the client intends to use the driver. Here, the client wants to have exclusive access to the driver. This means that no other client can currently have an active handle to this driver or this call will fail and return a value of <a href="00298.html" target="topic">DRV_HANDLE_INVALID</a>. Drivers can also be opened as shared, as blocking or non-blocking and for reading, writing, or both. Refer to the help for the <a href="00350.html" target="topic">DRV_IO_INTENT</a> data type for additional information about the IO intent parameter of driver open functions. This parameter is merely an advisory parameter. How it is used by the driver is implementation dependent and will be described in the driver’s help documentation.&nbsp;</p>
-<p class="Element10">
-Finally, if the open function was successful, the returned value will be a valid handle to the driver instance. This value is opaque and meaningless to the caller, but it must be passed back to the driver as the first parameter to every other client interface function provided by the driver. A valid handle identifies both the instance of the driver with which the caller interacts and it identifies the client performing the call. This means that, two different client applications or modules opening the same driver in the same system at the same time will receive different values for their “opened” handle. If, for any reason, the driver cannot support the “open” request (it is not finished initializing itself, it has already been opened for exclusive access, or cannot accept new open requests for any reason), it will return a value of <a href="00298.html" target="topic">DRV_HANDLE_INVALID</a>, indicating the client cannot use it at this time. The <a href="00298.html" target="topic">DRV_HANDLE_INVALID</a> value is the only non-opaque value that a client should consider meaningful. All other values are only meaningful to the driver that provided them. </p><div class="Element63">
+<div class="Element212">
 <div class="TableDiv">
-<table cellspacing="0" class="Table2">
+<table cellspacing="0" class="Table0">
 <tr>
-<td class="Element67" valign="top" width="10%" style="border:none;">
-<div class="Element68">
-<img src="Note Icon.png" border="0" alt="" title=""><strong> Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
-<div class="Element68">
-The <span class="Element146">appData.handleTmr</span> variable in the previous example is a member of the application’s <span class="Element146">appData</span> structure. This structure is generated by the MHC as part of the initial application template and should be used to hold an applications state variables.&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-When the client is finished using a driver, it may close it, as shown in the following example.&nbsp;</p>
-<p class="Element10">
-<strong>Example Call to a Driver’s Close Function</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">DRV_TMR_Close(appData.handleTmr);</pre></div></div>
-<p class="Element10">
-This action releases the link to the driver, invalidating the handle and releasing any resources allocated by the driver to track requests from the client. Notice that the close function demonstrates the use of the driver handle, requiring it as a parameter. However, after the close function returns, the handle value cannot be used again. Therefore, the client should not call the driver’s close function until it is done using the driver or it will have to call open again and obtain a new handle to use the driver again. In fact, since many embedded applications are always running, they often do not bother to close drivers they use. But, applications that can go idle or that can be stopped and restarted or that need to share a driver with other clients, but want to conserve resources, or that want use the driver exclusively, can close a driver when they are finished with it for a time and reopen it later when needed. In fact, this is a good way to share a single-client driver, or a driver that supports exclusive access, allowing each client to open it and use it only when a valid handle is obtained.</p></div>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00087.html" target="topic">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This library provides an interface to manage the I2S Audio Protocol Interface Modes.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00095.html" target="topic">Using the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This topic describes the basic architecture of the I2S Driver Library and provides information and examples on its use.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00082.html" target="topic">Configuring the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+The configuration of the I2S Driver Library is based on the file <span class="Element146">configurations.h</span>.<br>This header file contains the configuration selection for the I2S Driver Library. Based on the selections made, the I2S Driver Library may support the selected features. These configuration settings will apply to all instances of the I2S Driver Library.<br>This header can be placed anywhere; however, the path of this header needs to be present in the include search path for a successful build. Refer to the Applications Help section for more details.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00649.html" target="topic">Configuring MHC</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Provides examples on how to configure the MPLAB Harmony Configurator (MHC) for a specific driver.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00077.html" target="topic">Building the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section lists the files that are available in the I2S Driver Library.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00089.html" target="topic">Library Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the Application Programming Interface (API) functions of the I2S Driver Library.<br>Refer to each section for a detailed description.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00085.html" target="topic">Files</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+ &nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00050.html" target="topic">Driver Library Overview</a> &gt; <a href="00088.html" target="topic">Using a Driver's Client Interface</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00088.html" target="topic">I2S Driver Library Help</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00089.html" target="topic">Previous</a> | <a href="00050.html" target="topic">Up</a> | <a href="00087.html" target="topic">Next</a></div>
+<a href="00270.html" target="topic">Previous</a> | <a href="00096.html" target="topic">Up</a> | <a href="00087.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Using a Driver%27s Client Interface Topic Title: Using a Driver%27s Client Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2S Library Topic Title: I2S Driver Library Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

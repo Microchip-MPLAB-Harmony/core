@@ -18,21 +18,21 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00163.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00164.html" target="topic">Library Interface</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00163.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00164.html" target="topic">Library Interface</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00155.html" target="topic">Previous</a> | <a href="00163.html" target="topic">Up</a> | <a href="00486.html" target="topic">Next</a></div>
+<a href="00156.html" target="topic">Previous</a> | <a href="00163.html" target="topic">Up</a> | <a href="00530.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDSPI Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SST26 Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 Library Interface</div>
 </div>
@@ -49,9 +49,7 @@ Library Interface</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This section describes the API functions of the SDSPI Driver library.&nbsp;</p>
-<p class="Element10">
-Refer to each section for a detailed description.</p></div>
+This section describes the Application Programming Interface (API) functions of the SST26 driver<span style="color: #0000FF">.</span></p></div>
 </div>
 <a name="61292053797374656D2046756E6374696F6E73"></a><div class="Element14">
 a) System Functions</div>
@@ -72,23 +70,9 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00486.html" target="topic">DRV_SDSPI_Initialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00530.html" target="topic">DRV_SST26_Initialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Initializes the SD Card driver.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00491.html" target="topic">DRV_SDSPI_Status</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Provides the current status of the SDSPI driver module.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00494.html" target="topic">DRV_SDSPI_Tasks</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Maintains the driver's state machine.&nbsp;</div></td></tr></table></div></div>
+Initializes the SST26 Driver&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="622920436F726520436C69656E742046756E6374696F6E73"></a><div class="Element14">
@@ -110,27 +94,20 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00489.html" target="topic">DRV_SDSPI_Open</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00531.html" target="topic">DRV_SST26_Open</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Opens the specified SD Card driver instance and returns a handle to it.&nbsp;</div></td></tr><tr>
+Opens the specified SST26 driver instance and returns a handle to it&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00471.html" target="topic">DRV_SDSPI_Close</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00517.html" target="topic">DRV_SST26_Close</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Closes an opened-instance of the SD Card driver.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00484.html" target="topic">DRV_SDSPI_EventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Allows a client to identify an event handling function for the driver to call back when queued operation has completed. For the synchronous SDSPI driver, the event handler is only used by the file system.&nbsp;</div></td></tr></table></div></div>
+Closes an opened-instance of the SST26 driver&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
-<a name="63292044617461205472616E736665722046756E6374696F6E73"></a><div class="Element14">
-c) Data Transfer Functions</div>
+<a name="6329205472616E736665722046756E6374696F6E73"></a><div class="Element14">
+c) Transfer Functions</div>
 <div class="Element11">
 <div class="Element10">
 <div class="Element212">
@@ -148,41 +125,69 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00492.html" target="topic">DRV_SDSPI_SyncRead</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00542.html" target="topic">DRV_SST26_UnlockFlash</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Reads blocks of data from the specified block address of the SD Card.&nbsp;</div></td></tr><tr>
+Unlocks the flash device for Erase and Program operations.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00490.html" target="topic">DRV_SDSPI_Read</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00534.html" target="topic">DRV_SST26_ReadJedecId</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This routine provides interface to the file system to perform a media read operation in synchronous mode of the SDSPI driver.&nbsp;</div></td></tr><tr>
+Reads JEDEC-ID of the flash device.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00493.html" target="topic">DRV_SDSPI_SyncWrite</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00535.html" target="topic">DRV_SST26_SectorErase</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Writes blocks of data starting at the specified address of the SD Card.&nbsp;</div></td></tr><tr>
+Erase the sector from the specified block start address.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00495.html" target="topic">DRV_SDSPI_Write</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00515.html" target="topic">DRV_SST26_BulkErase</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This routine provides interface to the file system to perform a media write operation in synchronous mode of the SDSPI driver.&nbsp;</div></td></tr><tr>
+Erase a block from the specified block start address.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00479.html" target="topic">DRV_SDSPI_CommandStatusGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00516.html" target="topic">DRV_SST26_ChipErase</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Gets the current status of the command. For synchronous mode, the command status is only used by the file system.&nbsp;</div></td></tr></table></div></div>
+Erase entire flash memory.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00532.html" target="topic">DRV_SST26_PageWrite</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Writes one page of data starting at the specified address.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00533.html" target="topic">DRV_SST26_Read</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Reads n bytes of data from the specified start address of flash memory.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00536.html" target="topic">DRV_SST26_Status</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Gets the current status of the SST26 driver module.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00541.html" target="topic">DRV_SST26_TransferStatusGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Gets the current status of the transfer request.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
-<a name="6429205374617475732046756E6374696F6E73"></a><div class="Element14">
-d) Status Functions</div>
+<a name="642920426C6F636B20496E746572666163652046756E6374696F6E73"></a><div class="Element14">
+d) Block Interface Functions</div>
 <div class="Element11">
 <div class="Element10">
 <div class="Element212">
@@ -200,21 +205,7 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00487.html" target="topic">DRV_SDSPI_IsAttached</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the physical attach status of the SD Card.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00488.html" target="topic">DRV_SDSPI_IsWriteProtected</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the write protect status of the SD Card.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00485.html" target="topic">DRV_SDSPI_GeometryGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00529.html" target="topic">DRV_SST26_GeometryGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
 Returns the geometry of the device.&nbsp;</div></td></tr></table></div></div>
 </div>
@@ -238,37 +229,16 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00472.html" target="topic">DRV_SDSPI_COMMAND_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00518.html" target="topic">DRV_SST26_GEOMETRY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This is type DRV_SDSPI_COMMAND_HANDLE.&nbsp;</div></td></tr><tr>
+SST26 Device Geometry data.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00474.html" target="topic">DRV_SDSPI_COMMAND_STATUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00537.html" target="topic">DRV_SST26_TRANSFER_STATUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This is type DRV_SDSPI_COMMAND_STATUS.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00480.html" target="topic">DRV_SDSPI_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies the possible events that can result from a request.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00483.html" target="topic">DRV_SDSPI_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Pointer to a SDSPI Driver Event handler function&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00473.html" target="topic">DRV_SDSPI_COMMAND_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-SDSPI Driver's Invalid Command Handle.&nbsp;</div></td></tr></table></div></div>
+SST26 Driver Transfer Status&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -276,21 +246,21 @@ SDSPI Driver's Invalid Command Handle.&nbsp;</div></td></tr></table></div></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00163.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00164.html" target="topic">Library Interface</a></div>
+<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00163.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00164.html" target="topic">Library Interface</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00155.html" target="topic">Previous</a> | <a href="00163.html" target="topic">Up</a> | <a href="00486.html" target="topic">Next</a></div>
+<a href="00156.html" target="topic">Previous</a> | <a href="00163.html" target="topic">Up</a> | <a href="00530.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDSPI Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SST26 Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

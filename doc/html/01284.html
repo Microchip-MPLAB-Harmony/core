@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_TIME_CallbackRegisterMS Function</title>
+<title>SYS_INT_SourceIsEnabled Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00864.html" target="topic">Time System Service Library Help</a> &gt; <a href="00865.html" target="topic">Library Interface</a> &gt; c) Callback and Delay Functions &gt; <a href="01284.html" target="topic">SYS_TIME_CallbackRegisterMS Function</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00854.html" target="topic">Interrupt System Service Library Help</a> &gt; <a href="00855.html" target="topic">Library Interface</a> &gt; b) Interrupt Source Management Functions &gt; <a href="01284.html" target="topic">SYS_INT_SourceIsEnabled Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01326.html" target="topic">Previous</a> | <a href="00865.html" target="topic">Up</a> | <a href="01285.html" target="topic">Next</a></div>
+<a href="01283.html" target="topic">Previous</a> | <a href="00855.html" target="topic">Up</a> | <a href="01286.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_CallbackRegisterMS@SYS_TIME_CALLBACK@uintptr_t@uint32_t@SYS_TIME_CALLBACK_TYPE Topic Title: SYS_TIME_CallbackRegisterMS Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_INT_SourceIsEnabled@INT_SOURCE Topic Title: SYS_INT_SourceIsEnabled Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_TIME_CallbackRegisterMS Function</div>
+SYS_INT_SourceIsEnabled Function</div>
 </div>
 </div>
 
@@ -49,22 +49,19 @@ SYS_TIME_CallbackRegisterMS Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Creates a timer object and registers a function with it to be called back when the requested delay (specified in milliseconds) has completed. The caller must identify if the timer should call the function once or repeatedly every time the given delay period expires.</p></div>
+This function returns the enable/disable status of the specified interrupt source/line at the interrupt controller level.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01297.html" target="topic">SYS_TIME_HANDLE</a> <strong><span style="color: #000000">SYS_TIME_CallbackRegisterMS</span></strong>(
-    <a href="01280.html" target="topic">SYS_TIME_CALLBACK</a> <strong><span style="color: #000000">callback</span></strong>, 
-    uintptr_t <strong><span style="color: #000000">context</span></strong>, 
-    uint32_t <strong><span style="color: #000000">ms</span></strong>, 
-    <a href="01281.html" target="topic">SYS_TIME_CALLBACK_TYPE</a> <strong><span style="color: #000000">type</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">SYS_INT_SourceIsEnabled</span></strong>(
+    <a href="00650.html" target="topic">INT_SOURCE</a> <strong><span style="color: #000000">source</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="01300.html" target="topic">SYS_TIME_Initialize</a> function should have been called before calling this function.</p></div>
+None.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -81,48 +78,34 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-callback&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+source&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to the function to be called. For single shot timers, the callback cannot be NULL. For periodic timers, if the callback pointer is given as NULL, no callback will occur, but <a href="01325.html" target="topic">SYS_TIME_TimerPeriodHasExpired</a> can still be polled to determine if the period has expired for a periodic timer.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-A client-defined value that is passed to the callback function.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-ms&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Time period in milliseconds.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-type&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Type of callback requested. If type is SYS_TIME_SINGLE, the Callback function will be called once when the time period expires. If type is SYS_TIME_PERIODIC Callback function will be called repeatedly, every time the time period expires until the timer object is stopped or deleted.&nbsp;</div></td></tr></table></div></div>
+Interrupt source/line available at interrupt controller.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
 Returns</div>
 <div class="Element11">
 <div class="Element10">
+
+<ul class="Element630">
+<li class="Element600">true - Interrupt line is enabled.</li>
+<li class="Element600">false - Interrupt line is disabled.</li>
+</ul></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
 <p class="Element10">
-<a href="01297.html" target="topic">SYS_TIME_HANDLE</a> - A valid timer object handle if the call succeeds. <a href="01298.html" target="topic">SYS_TIME_HANDLE_INVALID</a> if it fails.</p></div>
+Unlike <a href="01278.html" target="topic">SYS_INT_Disable</a>, this function just returns the status and doesn't disable the interrupt line.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-Given a callback function implementation matching the following prototype: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> MyCallback ( uintptr_t context);</pre></div></div>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-The following example call will register it, requesting a 50 millisecond periodic callback. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">//Give a SYS_TIME_CALLBACK function &quot;MyCallback&quot;,</span></i>
-<a href="01297.html" target="topic">SYS_TIME_HANDLE</a> handle = SYS_TIME_CallbackRegisterMS(MyCallback, (uintptr_t)0, 50, SYS_TIME_PERIODIC);
-<strong><span style="color: #000080">if</span></strong> (handle != <a href="01298.html" target="topic">SYS_TIME_HANDLE_INVALID</a>)
-{
-      <i><span style="color: #008000">//timer is created successfully.</span></i>
-}</pre></div></div>
+<div class="Element13"><div class="Element12"><pre class="Element12">   <strong><span style="color: #000080">bool</span></strong> usart0Int = <strong><span style="color: #000080">false</span></strong>;
+   usart0Int = SYS_INT_SourceIsEnabled(USART0_IRQn);</pre></div></div>
 </div>
 </div>
 </div>
@@ -130,21 +113,21 @@ The following example call will register it, requesting a 50 millisecond periodi
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00864.html" target="topic">Time System Service Library Help</a> &gt; <a href="00865.html" target="topic">Library Interface</a> &gt; c) Callback and Delay Functions &gt; <a href="01284.html" target="topic">SYS_TIME_CallbackRegisterMS Function</a></div>
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00854.html" target="topic">Interrupt System Service Library Help</a> &gt; <a href="00855.html" target="topic">Library Interface</a> &gt; b) Interrupt Source Management Functions &gt; <a href="01284.html" target="topic">SYS_INT_SourceIsEnabled Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
+MPLAB Harmony 3 Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01326.html" target="topic">Previous</a> | <a href="00865.html" target="topic">Up</a> | <a href="01285.html" target="topic">Next</a></div>
+<a href="01283.html" target="topic">Previous</a> | <a href="00855.html" target="topic">Up</a> | <a href="01286.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_CallbackRegisterMS@SYS_TIME_CALLBACK@uintptr_t@uint32_t@SYS_TIME_CALLBACK_TYPE Topic Title: SYS_TIME_CallbackRegisterMS Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_INT_SourceIsEnabled@INT_SOURCE Topic Title: SYS_INT_SourceIsEnabled Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
