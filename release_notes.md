@@ -1,4 +1,9 @@
 # Microchip MPLAB Harmony 3 Release Notes
+## Core Release v3.1.1
+### NEW FEATURES
+- Moved HTML doc to specific folder for better Github integration (https://microchip-mplab-harmony.github.io/core)
+- Minor documentation update. 
+
 ## Core Release v3.1.0
 ### NEW FEATURES
 - **New part support** - This release introduces initial support for [SAM C20/C21](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-c-mcus), [SAM D20/D21](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-d-mcus), [SAM S70](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-s-mcus), [SAM E70](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-e-mcus), [SAM V70/V71](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-v-mcus) families of 32-bit microcontrollers.
