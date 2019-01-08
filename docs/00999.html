@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>SYS_FS_DirRead Function</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00999.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00851.html" target="topic">File System Service Library Help</a> &gt; <a href="00852.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="00999.html" target="topic">SYS_FS_DirRead Function</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00995.html" target="topic">Previous</a> | <a href="00852.html" target="topic">Up</a> | <a href="01000.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_DirRead@SYS_FS_HANDLE@SYS_FS_FSTAT * Topic Title: SYS_FS_DirRead Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+SYS_FS_DirRead Function</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function reads the files and directories specified in the open directory.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01207.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_DirRead</span></strong>(
+    <a href="01131.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <a href="01088.html" target="topic">SYS_FS_FSTAT</a> * <strong><span style="color: #000000">stat</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+A valid directory handle must be obtained before reading a directory.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Directory handle obtained during directory open.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+stat&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to <a href="01088.html" target="topic">SYS_FS_FSTAT</a>, where the properties of the open directory will be populated after the SYS_FS_DirRead function returns successfully. If LFN is used, then the &quot;lfname&quot; member of the <a href="01088.html" target="topic">SYS_FS_FSTAT</a> structure should be initialized with the address of a suitable buffer and the &quot;lfsize&quot; should be initialized with the size of the buffer. Once the function returns, the buffer whose address is held in &quot;lfname&quot; will have the file name(long file name)<br>The file system supports 8.3 file name(Short File Name) and also long file name. 8.3 filenames are limited to at most eight characters, followed optionally by a filename extension consisting of a period . and at most three further characters. If the file name fits within the 8.3 limits then generally there will be no valid LFN for it.<br>The stat structure's fname field will contain the SFN and if there is a valid LFN entry for the file then the long file name will be copied into lfname member of the structure.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+SYS_FS_RES_SUCCESS - Indicates that the directory read operation was successful. End of the directory condition is indicated by setting the fname and lfname(if lfname is used) fields of the <a href="01088.html" target="topic">SYS_FS_FSTAT</a> structure to '0'&nbsp;</p>
+<p class="Element10">
+SYS_FS_RES_FAILURE - Indicates that the directory read operation was unsuccessful. The reason for the failure can be retrieved with <a href="01007.html" target="topic">SYS_FS_Error</a> or <a href="01070.html" target="topic">SYS_FS_FileError</a>.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01131.html" target="topic">SYS_FS_HANDLE</a> dirHandle;
+  <a href="01088.html" target="topic">SYS_FS_FSTAT</a> stat;
+  <strong><span style="color: #000080">char</span></strong> longFileName[300];
+  uintptr_t  longFileSize;
+
+  dirHandle = <a href="00998.html" target="topic">SYS_FS_DirOpen</a>(&quot;/mnt/myDrive/Dir1&quot;);
+
+  <strong><span style="color: #000080">if</span></strong>(dirHandle != <a href="01132.html" target="topic">SYS_FS_HANDLE_INVALID</a>)
+  {
+      <i><span style="color: #008000">// Directory open is successful</span></i>
+  }
+
+  <i><span style="color: #008000">// If long file name is used, the following elements of the &quot;stat&quot;</span></i>
+  <i><span style="color: #008000">// structure needs to be initialized with address of proper buffer.</span></i>
+  stat.lfname = longFileName;
+  stat.lfsize = 300;
+
+  <strong><span style="color: #000080">if</span></strong>(SYS_FS_DirRead(dirHandle, &amp;stat) == SYS_FS_RES_FAILURE)
+  {
+      <i><span style="color: #008000">// Directory read failed.</span></i>
+  }
+  <strong><span style="color: #000080">else</span></strong>
+  {
+      <i><span style="color: #008000">// Directory read succeeded.</span></i>
+      <strong><span style="color: #000080">if</span></strong> ((stat.lfname[0] == '0') &amp;&amp; (stat.fname[0] == '0'))
+      {
+          <i><span style="color: #008000">// reached the end of the directory.</span></i>
+      }
+      <strong><span style="color: #000080">else</span></strong>
+      {
+          <i><span style="color: #008000">// continue reading the directory.</span></i>
+      }
+
+  }</pre></div></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00851.html" target="topic">File System Service Library Help</a> &gt; <a href="00852.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="00999.html" target="topic">SYS_FS_DirRead Function</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Help Template</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00995.html" target="topic">Previous</a> | <a href="00852.html" target="topic">Up</a> | <a href="01000.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_DirRead@SYS_FS_HANDLE@SYS_FS_FSTAT * Topic Title: SYS_FS_DirRead Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

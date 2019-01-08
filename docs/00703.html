@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>Mutex Operation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00703.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00688.html" target="topic">OSAL Library Help</a> &gt; <a href="00708.html" target="topic">Using the Library</a> &gt; <a href="00696.html" target="topic">How the Library Works</a> &gt; <a href="00703.html" target="topic">Mutex Operation</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony 3 Core Help</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00707.html" target="topic">Previous</a> | <a href="00696.html" target="topic">Up</a> | <a href="00693.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Mutex Operation Topic Title: Mutex Operation)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Mutex Operation</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10" style="text-align: justify;">
+The library must be written in such a way that before the shared resources is accessed the mutex has to be obtained. Once obtained the accesses should occur, and once complete the mutex should then be released. While no restrictions are enforced the sequence of operations between the lock and unlock should ideally take as few lines of code as possible to ensure good system performance.&nbsp;</p>
+<p class="Element10" style="text-align: justify;">
+The mutex may be implemented as a form of binary semaphore but an underlying RTOS will often add other features. It is normal to add the restriction that a mutex may only be unlocked from the thread that originally obtained the lock in the first place. The RTOS may also provide features to mitigate priority inversion problems (where a high priority thread blocks on a lower priority one holding a mutex) by providing priority inheritance allowing lower priority threads to be temporarily raised to complete and release a locked mutex.</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* perform operations on a shared data structure */</span></i>
+<strong><span style="color: #000080">struct</span></strong> myDataStructure {
+    uint16_t  x;
+    uint8_t y;
+} myDataStructure;
+
+...
+OSAL_MUTEX_DECLARE(mutexDS);
+OSAL_MUTEX_Create(&amp;mutexDS);
+
+...
+<i><span style="color: #008000">/* wait 2 seconds to obtain the mutex */</span></i>
+<strong><span style="color: #000080">if</span></strong> (OSAL_MUTEX_Lock(mutexDS, 2000) == OSAL_RESULT_TRUE)
+{
+    <i><span style="color: #008000">/* operate on the data structure */</span></i>
+    myDataStructure.x = 32;
+    OSAL_MUTEX_Unlock(mutexDS);
+}</pre></div></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00688.html" target="topic">OSAL Library Help</a> &gt; <a href="00708.html" target="topic">Using the Library</a> &gt; <a href="00696.html" target="topic">How the Library Works</a> &gt; <a href="00703.html" target="topic">Mutex Operation</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony 3 Core Help</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00707.html" target="topic">Previous</a> | <a href="00696.html" target="topic">Up</a> | <a href="00693.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Mutex Operation Topic Title: Mutex Operation)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>Abstraction Model</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00837.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00847.html" target="topic">File System Service Library Help</a> &gt; <a href="00851.html" target="topic">Using the Library</a> &gt; <a href="00837.html" target="topic">Abstraction Model</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony 3 Core Help</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00851.html" target="topic">Previous</a> | <a href="00851.html" target="topic">Up</a> | <a href="00845.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS FS Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Abstraction Model</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The FS framework features a modular and layered architecture, as shown in the following figure. </p><p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="FS_Architecture Diagram.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<strong>FS Framework Architecture</strong></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+As seen in the figure, the FS Framework consists of the following major blocks:</p>
+<ul class="Element630">
+<li class="Element600">The <strong>Driver</strong> for the physical media has to be included as a part of the FS Framework. This layer<span style="color: #FFFFFF">_</span>provides a low-level interface to access the physical media. This layer<span style="color: #FFFFFF">_</span>also enables multiple instances of media. Examples of drivers are:
+<ul class="Element631">
+<li class="Element601">Memory driver – To access files using Various Flash Memories (QSPI Flash, NVM Flash, EEPROM Flash)</li>
+<li class="Element601">SDCARD driver – To access files from SD card</li>
+</ul></li>
+<li class="Element600">The <strong>Media driver</strong> provides a mechanism to access the media as &quot;sectors&quot;. Sectors are the smallest storage element accessed by a file system and are contiguous memory locations. Typically, each sector has 512 bytes. Depending on the requirement, in some cases, the driver and media driver could be combined as one<span style="color: #FFFFFF">_</span>layer.</li>
+<li class="Element600">The <strong>Media manager</strong> implements a disk and sector based media access mechanism. It also performs disk allocated/deallocated on media attach/detach. Due to the implementation of this<span style="color: #FFFFFF">_</span>layer, the FS Framework can support multiple disks. The media manager detects and analyzes a media based on its Master Boot Record (MBR). Therefore, it is mandatory for the media to have a MBR for it to work with the FS.</li>
+<li class="Element600">The <strong>Native file system</strong> implements support for the media file system format. Examples of native file systems are: FAT12, FAT32, and MPFS, among other. At present, only the FAT and MPFS files systems are supported by the FS framework; however, more native file systems can be included.</li>
+<li class="Element600">The <strong>Virtual file system (or SYS_FS )</strong> layer<span style="color: #FFFFFF">_</span>provides a file system independent file system operation interface. This layer<span style="color: #FFFFFF">_</span>translates virtual file systems calls to native file system calls. Due to this<span style="color: #FFFFFF">_</span>layer, applications can now support multiple file systems. Interfaces provided by this<span style="color: #FFFFFF">_</span>layer, but not limited to, include:
+<ul class="Element631">
+<li class="Element601">SYS_FS_mount</li>
+<li class="Element601">SYS_FS_open</li>
+<li class="Element601">SYS_FS_read</li>
+<li class="Element601">SYS_FS_write</li>
+<li class="Element601">SYS_FS_close</li>
+</ul></li>
+</ul></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00847.html" target="topic">File System Service Library Help</a> &gt; <a href="00851.html" target="topic">Using the Library</a> &gt; <a href="00837.html" target="topic">Abstraction Model</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony 3 Core Help</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00851.html" target="topic">Previous</a> | <a href="00851.html" target="topic">Up</a> | <a href="00845.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS FS Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>
