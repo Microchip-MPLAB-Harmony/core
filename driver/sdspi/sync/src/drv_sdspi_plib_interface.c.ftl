@@ -47,6 +47,9 @@
 // *****************************************************************************
 
 #include "drv_sdspi_plib_interface.h"
+<#if core.DATA_CACHE_ENABLE??>
+#include "system/cache/sys_cache.h"
+</#if>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -191,8 +194,10 @@ static bool _DRV_SDSPI_DMA_Write(
     uint32_t nBytes
 )
 {
+<#if core.DATA_CACHE_ENABLE??>
     /* Clean cache to flush the data from the cache to the main memory */
-    DCACHE_CLEAN_BY_ADDR (pWriteBuffer, nBytes);
+    SYS_CACHE_CleanDCache_by_Addr (pWriteBuffer, nBytes);
+</#if>
 
     /* Setup DMA Receive channel to receive dummy data */
     SYS_DMA_AddressingModeSetup(dObj->rxDMAChannel, \
@@ -449,13 +454,14 @@ bool _DRV_SDSPI_SPIBlockRead(
     {
         if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE)
         {
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? >
             if ((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE ))
             {
                 /* Invalidate cache to force CPU to read from the main memory */
-                DCACHE_INVALIDATE_BY_ADDR(pReadBuffer, _DRV_SDSPI_MEDIA_BLOCK_SIZE);
+                SYS_CACHE_InvalidateDCache_by_Addr(pReadBuffer, _DRV_SDSPI_MEDIA_BLOCK_SIZE);
             }
 </#if>
+
             isSuccess = true;
         }
     }
@@ -519,13 +525,14 @@ bool _DRV_SDSPI_SPIRead(
 
     if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE)
     {
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? >
         if ((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE ))
         {
             /* Invalidate cache to force CPU to read from the main memory */
-            DCACHE_INVALIDATE_BY_ADDR(pReadBuffer, nBytes);
+            SYS_CACHE_InvalidateDCache_by_Addr(pReadBuffer, nBytes);
         }
 </#if>
+
         isSuccess = true;
     }
 

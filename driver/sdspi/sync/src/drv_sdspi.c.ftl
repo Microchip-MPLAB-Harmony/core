@@ -46,6 +46,9 @@
 // *****************************************************************************
 // *****************************************************************************
 #include "drv_sdspi_plib_interface.h"
+<#if core.DATA_CACHE_ENABLE??>
+#include "system/cache/sys_cache.h"
+</#if>
 #include <string.h>
 
 // *****************************************************************************
@@ -1333,7 +1336,9 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
          * This operation is needed only once as CPU is not going to modify
          * txCommonDummyData */
 
-        DCACHE_CLEAN_BY_ADDR ((uint32_t*)txCommonDummyData, 32);
+<#if core.DATA_CACHE_ENABLE??>
+        SYS_CACHE_CleanDCache_by_Addr ((uint32_t*)txCommonDummyData, 32);
+</#if>
 
         SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, _DRV_SDSPI_TX_DMA_CallbackHandler, (uintptr_t)dObj);
         SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, _DRV_SDSPI_RX_DMA_CallbackHandler, (uintptr_t)dObj);

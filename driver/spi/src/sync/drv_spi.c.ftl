@@ -49,6 +49,9 @@
 #include "configuration.h"
 //#include "system/debug/sys_debug.h"
 #include "driver/spi/drv_spi.h"
+<#if core.DATA_CACHE_ENABLE??>
+#include "system/cache/sys_cache.h"
+</#if>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -208,13 +211,12 @@ static bool _DRV_SPI_StartDMATransfer(
             size = txSize;
         }
 
-        if (DATA_CACHE_ENABLED == true)
-        {
-            /* Clean cache lines having source buffer before submitting a transfer
-             * request to DMA to load the latest data in the cache to the actual
-             * memory */
-            DCACHE_CLEAN_BY_ADDR((uint32_t *)pTransmitData, size);
-        }
+<#if core.DATA_CACHE_ENABLE?? >
+        /* Clean cache lines having source buffer before submitting a transfer
+         * request to DMA to load the latest data in the cache to the actual
+         * memory */
+        SYS_CACHE_CleanDCache_by_Addr((uint32_t *)pTransmitData, size);
+</#if>
 
         SYS_DMA_ChannelTransfer(hDriver->txDMAChannel, (const void *)pTransmitData, (const void*)hDriver->txAddress, size);
     }
@@ -352,16 +354,16 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
         txDummyData[txDummyDataIdx] = 0xFF;
     }
 
-<#if core.DMA_ENABLE?has_content>
-    if ((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (DATA_CACHE_ENABLED == true))
+<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? >
+    if (dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
         /* Clean cache lines having source buffer before submitting a transfer
          * request to DMA to load the latest data in the cache to the actual
          * memory */
-        DCACHE_CLEAN_BY_ADDR((uint32_t *)txDummyData, sizeof(txDummyData));
+        SYS_CACHE_CleanDCache_by_Addr((uint32_t *)txDummyData, sizeof(txDummyData));
     }
-
 </#if>
+
     if (OSAL_MUTEX_Create(&dObj->transferMutex) == OSAL_RESULT_FALSE)
     {
         /*  If the mutex was not created because the memory required to
@@ -659,18 +661,18 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
                 {
                     if (hDriver->transferStatus == DRV_SPI_TRANSFER_STATUS_COMPLETE)
                     {
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? >
                         if((hDriver->txDMAChannel != SYS_DMA_CHANNEL_NONE) && ((hDriver->rxDMAChannel != SYS_DMA_CHANNEL_NONE)))
                         {
-                            if ((DATA_CACHE_ENABLED == true) && (rxSize != 0))
+                            if (rxSize != 0)
                             {
                                 /* Invalidate cache lines having received buffer before using it
                                  * to load the latest data in the actual memory to the cache */
-                                DCACHE_INVALIDATE_BY_ADDR((uint32_t *)pReceiveData, rxSize);
+                                SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)pReceiveData, rxSize);
                             }
                         }
-
 </#if>
+
                         isSuccess = true;
                     }
                 }

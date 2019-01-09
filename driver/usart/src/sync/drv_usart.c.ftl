@@ -52,6 +52,9 @@
 
 //SYS_DEBUG is not available yet, hence commented for now.
 //#include "system/debug/sys_debug.h"
+<#if core.DATA_CACHE_ENABLE??>
+#include "system/cache/sys_cache.h"
+</#if>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -523,13 +526,12 @@ bool DRV_USART_WriteBuffer
 <#if core.DMA_ENABLE?has_content>
             if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
             {
-                if (DATA_CACHE_ENABLED == true)
-                {
-                    /* Clean cache lines having source buffer before submitting a transfer
-                     * request to DMA to load the latest data in the cache to the actual
-                     * memory */
-                    DCACHE_CLEAN_BY_ADDR((uint32_t *)buffer, numbytes);
-                }
+<#if core.DATA_CACHE_ENABLE?? >
+                /* Clean cache lines having source buffer before submitting a transfer
+                 * request to DMA to load the latest data in the cache to the actual
+                 * memory */
+                SYS_CACHE_CleanDCache_by_Addr((uint32_t *)buffer, numbytes);
+</#if>
 
                 SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)buffer, (const void *)dObj->txAddress, numbytes);
             }
@@ -600,14 +602,15 @@ bool DRV_USART_ReadBuffer
                 /* Check and return status */
                 if (dObj->rxRequestStatus == DRV_USART_REQUEST_STATUS_COMPLETE)
                 {
-<#if core.DMA_ENABLE?has_content>
-                    if ((dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE) && (DATA_CACHE_ENABLED == true))
+<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? >
+                    if (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
                     {
                         /* Invalidate cache lines having received buffer before using it
                          * to load the latest data in the actual memory to the cache */
-                        DCACHE_INVALIDATE_BY_ADDR((uint32_t *)buffer, numbytes);
+                        SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)buffer, numbytes);
                     }
 </#if>
+
                     isSuccess = true;
                 }
             }

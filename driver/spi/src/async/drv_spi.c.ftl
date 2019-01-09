@@ -47,6 +47,9 @@
 
 #include "configuration.h"
 #include "driver/spi/drv_spi.h"
+<#if core.DATA_CACHE_ENABLE??>
+#include "system/cache/sys_cache.h"
+</#if>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -287,13 +290,12 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ    *transferObj)
             size = transferObj->txSize;
         }
 
-        if (DATA_CACHE_ENABLED == true)
-        {
-            /* Clean cache lines having source buffer before submitting a transfer
-             * request to DMA to load the latest data in the cache to the actual
-             * memory */
-            DCACHE_CLEAN_BY_ADDR((uint32_t *)transferObj->pTransmitData, size);
-        }
+<#if core.DATA_CACHE_ENABLE?? >
+        /* Clean cache lines having source buffer before submitting a transfer
+         * request to DMA to load the latest data in the cache to the actual
+         * memory */
+        SYS_CACHE_CleanDCache_by_Addr((uint32_t *)transferObj->pTransmitData, size);
+</#if>
 
         SYS_DMA_ChannelTransfer(hDriver->txDMAChannel, (const void *)transferObj->pTransmitData, (const void*)hDriver->txAddress, size);
     }
@@ -440,12 +442,11 @@ void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
 
         _DRV_SPI_ReleaseBufferObject(transferObj);
 
-        if (DATA_CACHE_ENABLED == true)
-        {
-            /* Invalidate cache lines having received buffer before using it
-             * to load the latest data in the actual memory to the cache */
-            DCACHE_INVALIDATE_BY_ADDR((uint32_t *)transferObj->pReceiveData, transferObj->rxSize);
-        }
+<#if core.DATA_CACHE_ENABLE?? >
+        /* Invalidate cache lines having received buffer before using it
+         * to load the latest data in the actual memory to the cache */
+        SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)transferObj->pReceiveData, transferObj->rxSize);
+</#if>
 
         if(clientObj->eventHandler != NULL)
         {
@@ -532,16 +533,16 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
         txDummyData[txDummyDataIdx] = 0xFF;
     }
 
-<#if core.DMA_ENABLE?has_content>
-    if ((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (DATA_CACHE_ENABLED == true))
+<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? >
+    if (dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
         /* Clean cache lines having source buffer before submitting a transfer
          * request to DMA to load the latest data in the cache to the actual
          * memory */
-        DCACHE_CLEAN_BY_ADDR((uint32_t *)txDummyData, sizeof(txDummyData));
+        SYS_CACHE_CleanDCache_by_Addr((uint32_t *)txDummyData, sizeof(txDummyData));
     }
-
 </#if>
+
     /* initialize buffer free pool*/
     for(freePoolIndex = 0; freePoolIndex < spiInit->queueSize - 1; freePoolIndex++)
     {

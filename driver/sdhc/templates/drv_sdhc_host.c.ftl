@@ -51,6 +51,9 @@
 
 #include "configuration.h"
 #include "driver/sdhc/src/drv_sdhc_host.h"
+<#if core.DATA_CACHE_ENABLE??>
+#include "system/cache/sys_cache.h"
+</#if>
 
 /*NOTE:-Buffers need to be 32-byte address and size aligned
         for cache management operations.
@@ -200,10 +203,10 @@ void sdhostSetupDma ( uint8_t *buffer, uint16_t numBytes, DRV_SDHC_OPERATION_TYP
                             | XDMAC_CC_SAM_FIXED_AM
                             | XDMAC_CC_DAM_INCREMENTED_AM
                             | XDMAC_CC_PERID(CHANNEL);
-        if (DATA_CACHE_ENABLED == true)
-        {
-            DCACHE_INVALIDATE_BY_ADDR((uint32_t*)buffer, (int32_t)numBytes);
-        }
+<#if core.DATA_CACHE_ENABLE??>
+        SYS_CACHE_InvalidateDCache_by_Addr((uint32_t*)buffer, (int32_t)numBytes);
+</#if>
+
         XDMAC_REGS->XDMAC_GE = (XDMAC_GE_EN0_Msk << CHANNEL);
     }
     else
@@ -221,10 +224,9 @@ void sdhostSetupDma ( uint8_t *buffer, uint16_t numBytes, DRV_SDHC_OPERATION_TYP
                         | XDMAC_CC_SAM_INCREMENTED_AM
                         | XDMAC_CC_DAM_FIXED_AM
                         | XDMAC_CC_PERID(CHANNEL);
-        if (DATA_CACHE_ENABLED == true)
-        {
-            DCACHE_CLEAN_BY_ADDR((uint32_t*)buffer, (int32_t)numBytes);
-        }
+<#if core.DATA_CACHE_ENABLE??>
+        SYS_CACHE_CleanDCache_by_Addr((uint32_t*)buffer, (int32_t)numBytes);
+</#if>
 
         XDMAC_REGS->XDMAC_GE = (XDMAC_GE_EN0_Msk << CHANNEL);
    }
