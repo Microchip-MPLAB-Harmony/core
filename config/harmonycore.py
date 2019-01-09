@@ -81,13 +81,16 @@ def instantiateComponent(harmonyCoreComponent):
     # Harmony Core System Service Common files
     execfile(Module.getPath() + "/system/config/system.py")
 
-    # Harmony Core System Interrupt files
+    # Harmony Core System Service Interrupt files
     execfile(Module.getPath() + "/system/int/config/sys_int.py")
 
-    # Harmony Core System Ports files
+    # Harmony Core System Service Ports files
     execfile(Module.getPath() + "/system/ports/config/sys_ports.py")
 
-    # Harmony Core System DMA files
+    # Harmony Core System Service Cache files
+    execfile(Module.getPath() + "/system/cache/config/sys_cache.py")
+
+    # Harmony Core System Service DMA files
     execfile(Module.getPath() + "/system/dma/config/sys_dma.py")
 
     # Harmony Core Operating System Abstraction Layer (OSAL) files
