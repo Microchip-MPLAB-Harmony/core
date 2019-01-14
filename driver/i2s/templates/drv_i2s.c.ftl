@@ -99,7 +99,7 @@ static bool _DRV_I2S_ResourceLock(DRV_I2S_OBJ * object)
 
     /* We will disable I2S and/or DMA interrupt so that the driver resource
      * is not updated asynchronously. */
-    if( (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel) || (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
+    if ((SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel) || (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
     {
         SYS_INT_SourceDisable(dObj->interruptDMA);
     }
@@ -220,7 +220,18 @@ static bool _DRV_I2S_ReadBufferQueuePurge( DRV_I2S_OBJ * object )
     return true;
 }
 
-static void _DRV_I2S_BufferQueueTask( DRV_I2S_OBJ *object, DRV_I2S_DIRECTION direction,
+//******************************************************************************
+//  _DRV_I2S_BufferQueueTask()
+//
+//  Called from _DRV_I2S_TX_DMA_CallbackHandler() -- Called from DMA Complete
+//  event handler.
+//
+//  1. Signal buffer event complete to I2S API registered callback 
+//  2. Execute Read or Write (direction) queue transfer
+//  2. Update the queue
+//  
+//******************************************************************************
+static void _DRV_I2S_BufferQueueTask(DRV_I2S_OBJ *object, DRV_I2S_DIRECTION direction,
     DRV_I2S_BUFFER_EVENT event)
 {
     DRV_I2S_OBJ * dObj = object;
@@ -254,9 +265,12 @@ static void _DRV_I2S_BufferQueueTask( DRV_I2S_OBJ *object, DRV_I2S_DIRECTION dir
             currentObj->nCount = currentObj->size;
         }
 
+        //Return Event to App
         if((dObj->eventHandler != NULL))
         {
-            dObj->eventHandler(currentObj->status, currentObj->bufferHandle, dObj->context);
+            dObj->eventHandler(currentObj->status, 
+                               currentObj->bufferHandle, 
+                               dObj->context);
         }
 
         /* Get the next buffer object in the queue and deallocate the current
@@ -275,33 +289,40 @@ static void _DRV_I2S_BufferQueueTask( DRV_I2S_OBJ *object, DRV_I2S_DIRECTION dir
 
                 if( (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
                 {
-                    SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress,
-                        (const void *)newObj->rxbuffer, newObj->size);
+                    uint32_t bufferSizeDmaWords = newObj->size;
 
+                    // if this is half word transfer, need to divide size by 2
+                    // NOTE:  dmaDataLength of 8 not supported. 
+                    if (dObj->dmaDataLength == 16)
+                    {
+                        bufferSizeDmaWords /= 2;
+                    }
+                    // if this is full word transfer, need to divide size by 4
+                    else if (dObj->dmaDataLength == 32)
+                    {
+                        bufferSizeDmaWords /= 4;
+                    }
+
+                    SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, 
+                                            (const void *)dObj->rxAddress,
+                                                (const void *)newObj->rxbuffer, 
+                                                bufferSizeDmaWords);
+
+                    /************ code specific to SAM E70 ********************/
 #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-                        /************ code specific to SAM E70 ********************/
-                        // Check if the data cache is enabled
-                        if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
-                        {
-                            uint32_t bufferSize = newObj->size;
-                            // if this is half word transfer, need to multiply size by 2
-                            if (dObj->dmaDataLength == 16)
-                            {
-                                bufferSize *= 2;
-                            }
-                            // if this is full word transfer, need to multiply size by 4
-                            else if (dObj->dmaDataLength == 32)
-                            {
-                                bufferSize *= 4;
-                            }
-                            // Invalidate cache to force CPU to read from SRAM instead
-                            SCB_InvalidateDCache_by_Addr((uint32_t*)newObj->rxbuffer, bufferSize);
-                        }
-                        /************ end of E70 specific code ********************/
+                    // Check if the data cache is enabled
+                    if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
+                    {
+                        // Invalidate cache to force CPU to access 
+                        // read buffer from SRAM - not cache
+                        SCB_InvalidateDCache_by_Addr((uint32_t*)newObj->rxbuffer, bufferSizeDmaWords);
+                    }
 #endif
-                }
-            }
-        }
+                    /************ end of E70 specific code ********************/
+
+                } //Rx Xfer
+            } //End Check Queue not Empty
+        } //End Rx Xfer
         else if(DRV_I2S_DIRECTION_TX == direction)
         {
             dObj->queueWrite = newObj;
@@ -312,46 +333,61 @@ static void _DRV_I2S_BufferQueueTask( DRV_I2S_OBJ *object, DRV_I2S_DIRECTION dir
 
                 if( (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel))
                 {
-#if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+                    uint32_t bufferSizeDmaWords = newObj->size;
+                    // if this is half word transfer, need to divide size by 2
+                    if (dObj->dmaDataLength == 16)
+                    {
+                        bufferSizeDmaWords /= 2;
+                    }
+                    // if this is full word transfer, need to divide size by 4
+                    else if (dObj->dmaDataLength == 32)
+                    {
+                        bufferSizeDmaWords /= 4;
+                    }
                     /************ code specific to SAM E70 ********************/
+#if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
                     // Check if the data cache is enabled
                     if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
                     {
-                        uint32_t bufferSize = newObj->size;
-                        // if this is half word transfer, need to divide size by 2
-                        if (dObj->dmaDataLength == 16)
-                        {
-                            bufferSize *= 2;
-                        }
-                        // if this is full word transfer, need to divide size by 4
-                        else if (dObj->dmaDataLength == 32)
-                        {
-                            bufferSize *= 4;
-                        }
                         // Flush cache to SRAM so DMA reads correct data
-                        SCB_CleanDCache_by_Addr((uint32_t*)newObj->txbuffer, bufferSize);
+                        SCB_CleanDCache_by_Addr((uint32_t*)newObj->txbuffer, 
+                                                 newObj->size);
                     }
-                    /************ end of E70 specific code ********************/
 #endif
-                    SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)newObj->txbuffer,
-                        (const void *)dObj->txAddress, newObj->size);
-                }
-            }
-        }
-    }
+                    /************ end of E70 specific code ********************/
+
+                    //DEBUG - Queued Buffer Write
+                    SYS_DMA_ChannelTransfer(dObj->txDMAChannel, 
+                                            (const void *)newObj->txbuffer,
+                                            (const void *)dObj->txAddress, 
+                                            bufferSizeDmaWords);
+
+                } //End Check txDMA Channel Valid
+            } //End Check Queue Not Empty
+        } //End DMA TX
+    } //End Check queue valid
     else
     {
         /* Queue purge has been called. Do nothing. */
     }
-}
 
-static void _DRV_I2S_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
+} //End _DRV_I2S_BufferQueueTask()
+
+//******************************************************************************
+// _DRV_I2S_TX_DMA_CallbackHandler()
+//
+// DMA Complete Event callback registered as XDMAC service routine.
+//******************************************************************************
+static void _DRV_I2S_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, 
+                                            uintptr_t context)
 {
     DRV_I2S_OBJ *dObj = (DRV_I2S_OBJ *)context;
 
     if(SYS_DMA_TRANSFER_COMPLETE == event)
     {
-        _DRV_I2S_BufferQueueTask(dObj, DRV_I2S_DIRECTION_TX, DRV_I2S_BUFFER_EVENT_COMPLETE);
+        _DRV_I2S_BufferQueueTask(dObj, 
+                                 DRV_I2S_DIRECTION_TX, 
+                                 DRV_I2S_BUFFER_EVENT_COMPLETE);
     }
     else if(SYS_DMA_TRANSFER_ERROR == event)
     {
@@ -427,7 +463,9 @@ SYS_MODULE_OBJ DRV_I2S_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
      * events for different driver instances. */
     if(SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel)
     {
-        SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, _DRV_I2S_TX_DMA_CallbackHandler, (uintptr_t)dObj);
+        SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, 
+                                        _DRV_I2S_TX_DMA_CallbackHandler, 
+                                        (uintptr_t)dObj);
     }
 
     if(SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel)
@@ -589,6 +627,7 @@ void DRV_I2S_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size
         return;
     }
 
+    //MUTEX Start
     _DRV_I2S_ResourceLock(dObj);
 
     /* Search the buffer pool for a free buffer object */
@@ -602,7 +641,7 @@ void DRV_I2S_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size
     }
 
     /* Configure the buffer object */
-    bufferObj->size         = size;
+    bufferObj->size         = size;   //bytes, not words
     bufferObj->nCount       = 0;
     bufferObj->inUse        = true;
     bufferObj->txbuffer     = buffer;
@@ -623,8 +662,21 @@ void DRV_I2S_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size
          * buffer to the DMA to start processing. */
         bufferObj->currentState = DRV_I2S_BUFFER_IS_PROCESSING;
 
+        uint32_t bufferSizeDmaWords = bufferObj->size;
+        // NOTE:  dmaDataLength of 8 not supported. 
         if( (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel))
         {
+            // if this is half word transfer, need to divide size by 2
+            if (dObj->dmaDataLength == 16)
+            {
+                bufferSizeDmaWords /= 2;  //words
+            }
+            // if this is full word transfer, need to divide size by 4
+            else if (dObj->dmaDataLength == 32)
+            {
+                bufferSizeDmaWords /= 4;  //words
+            }
+
 #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
             /************ code specific to SAM E70 ********************/
             // Check if the data cache is enabled
@@ -635,18 +687,11 @@ void DRV_I2S_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size
             }
             /************ end of E70 specific code ********************/
 #endif
-            // if this is half word transfer, need to divide size by 2
-            if (dObj->dmaDataLength == 16)
-            {
-                bufferObj->size /= 2;
-            }
-            // if this is full word transfer, need to divide size by 4
-            else if (dObj->dmaDataLength == 32)
-            {
-                bufferObj->size /= 4;
-            }
-            SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)bufferObj->txbuffer,
-                (const void *)dObj->txAddress, bufferObj->size);
+            //--Immediate DMA Write
+            SYS_DMA_ChannelTransfer(dObj->txDMAChannel, 
+                                    (const void *)bufferObj->txbuffer,
+                                    (const void *)dObj->txAddress, 
+                                    bufferSizeDmaWords);
         }
     }
     else
@@ -654,7 +699,7 @@ void DRV_I2S_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size
         /* This means the write queue is not empty. We must add
          * the buffer object to the end of the queue */
         iterator = dObj->queueWrite;
-        while(iterator->next != NULL)
+        while(iterator->next != NULL) //Next buffer
         {
             /* Get the next buffer object */
             iterator = iterator->next;
@@ -663,19 +708,20 @@ void DRV_I2S_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size
         iterator->next = bufferObj;
     }
 
+    //MUTEX Stop
     _DRV_I2S_ResourceUnlock(dObj);
 }
 
 // *****************************************************************************
 /* Function:
-	void DRV_I2S_BufferAddWriteRead(const DRV_HANDLE handle,
-                                        DRV_I2S_BUFFER_HANDLE	*bufferHandle,
+    void DRV_I2S_BufferAddWriteRead(const DRV_HANDLE handle,
+                                        DRV_I2S_BUFFER_HANDLE *bufferHandle,
                                         void *transmitBuffer, void *receiveBuffer,
                                         size_t size)
 
   Summary:
     Schedule a non-blocking driver write-read operation.
-	<p><b>Implementation:</b> Dynamic</p>
+    <p><b>Implementation:</b> Dynamic</p>
 
   Description:
     This function schedules a non-blocking write-read operation. The function
@@ -706,7 +752,7 @@ void DRV_I2S_WriteBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size
 */
 void DRV_I2S_WriteReadBufferAdd(const DRV_HANDLE handle,
     void *transmitBuffer, void *receiveBuffer,
-    size_t size, DRV_I2S_BUFFER_HANDLE	*bufferHandle)
+    size_t size, DRV_I2S_BUFFER_HANDLE  *bufferHandle)
 {
     DRV_I2S_OBJ * dObj = NULL;
     DRV_I2S_BUFFER_OBJ * bufferObj = NULL;
@@ -774,19 +820,19 @@ void DRV_I2S_WriteReadBufferAdd(const DRV_HANDLE handle,
 
         if( (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel) && (SYS_DMA_CHANNEL_NONE != dObj->txDMAChannel))
         {
-            uint32_t bufferSize = bufferObj->size;
+            uint32_t bufferSizeDmaWords = bufferObj->size;
             // if this is half word transfer, need to divide size by 2
             if (dObj->dmaDataLength == 16)
             {
-                bufferSize /= 2;
+                bufferSizeDmaWords /= 2;
             }
             // if this is full word transfer, need to divide size by 4
             else if (dObj->dmaDataLength == 32)
             {
-                bufferSize /= 4;
+                bufferSizeDmaWords /= 4;
             }
             SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress,
-                (const void *)bufferObj->rxbuffer, bufferSize);
+                (const void *)bufferObj->rxbuffer, bufferSizeDmaWords);
 
 #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
             /************ code specific to SAM E70 ********************/
@@ -802,7 +848,7 @@ void DRV_I2S_WriteReadBufferAdd(const DRV_HANDLE handle,
             /************ end of E70 specific code ********************/
 #endif
             SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)bufferObj->txbuffer,
-                (const void *)dObj->txAddress, bufferSize);
+                (const void *)dObj->txAddress, bufferSizeDmaWords);
         }
     }
     else
@@ -822,6 +868,7 @@ void DRV_I2S_WriteReadBufferAdd(const DRV_HANDLE handle,
     _DRV_I2S_ResourceUnlock(dObj);
 }
 
+// *****************************************************************************
 // *****************************************************************************
 void DRV_I2S_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size,
     DRV_I2S_BUFFER_HANDLE * bufferHandle)
@@ -891,20 +938,22 @@ void DRV_I2S_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size,
 
         if( (SYS_DMA_CHANNEL_NONE != dObj->rxDMAChannel))
         {
-            uint32_t bufferSize = bufferObj->size;
+            uint32_t bufferSizeDmaWords = bufferObj->size;
             // if this is half word transfer, need to divide size by 2
             if (dObj->dmaDataLength == 16)
             {
-                bufferSize /= 2;
+                bufferSizeDmaWords /= 2;
             }
             // if this is full word transfer, need to divide size by 4
             else if (dObj->dmaDataLength == 32)
             {
-                bufferSize /= 4;
+                bufferSizeDmaWords /= 4;
             }
 
-            SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress,
-                (const void *)bufferObj->rxbuffer, bufferSize);
+            SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, 
+                                    (const void *)dObj->rxAddress,
+                                    (const void *)bufferObj->rxbuffer, 
+                                    bufferSizeDmaWords);
 
 #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
             /************ code specific to SAM E70 ********************/
@@ -912,7 +961,8 @@ void DRV_I2S_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size,
             if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
             {
                 // Invalidate cache to force CPU to read from SRAM instead
-                SCB_InvalidateDCache_by_Addr((uint32_t*)bufferObj->rxbuffer, bufferObj->size);
+                SCB_InvalidateDCache_by_Addr((uint32_t*)bufferObj->rxbuffer, 
+                                              bufferObj->size);
             }
             /************ end of E70 specific code ********************/
 #endif
@@ -932,8 +982,12 @@ void DRV_I2S_ReadBufferAdd( DRV_HANDLE handle, void * buffer, const size_t size,
     }
 
     _DRV_I2S_ResourceUnlock(dObj);
-}
 
+} //End DRV_I2S_ReadBufferAdd() 
+
+
+// *****************************************************************************
+// DRV_I2S_BufferCompletedBytesGet()
 // *****************************************************************************
 size_t DRV_I2S_BufferCompletedBytesGet( DRV_I2S_BUFFER_HANDLE bufferHandle )
 {
@@ -1013,19 +1067,29 @@ bool DRV_I2S_ReadQueuePurge( const DRV_HANDLE handle )
     return _DRV_I2S_ReadBufferQueuePurge(dObj);
 }
 
-// *****************************************************************************
-#define PS_PER_INSTR    (1000000/(SYS_TIME_CPU_CLOCK_FREQUENCY/1000000))  // nominal picoseconds per instruction
-#define CYCLES_PER_LOOP 36          // approx # of instructions cycles per while loop with cnt++ and test
-                                    // based on disassembly at opt level 1, and confirmed by experiment
-uint32_t max_cnt;                   // max expected value of cnt, time 10 -- loop runs fastest with this variable global
+//******************************************************************************
+// PS_PER_INSTR    - Nominal picoseconds per instruction
+// CYCLES_PER_LOOP - Approx # of instructions cycles per while loop with cnt++ 
+//                   and test based on disassembly at opt level 1, and confirmed 
+//                   by experiment
+// max_cnt           Max expected value of cnt, time 10 
+//                   (loop runs fastest with this variable global)
+#define PS_PER_INSTR    (1000000/(SYS_TIME_CPU_CLOCK_FREQUENCY/1000000)) 
+#define CYCLES_PER_LOOP 36          
+uint32_t max_cnt;                   
 
-// This routine sync up to the leading (or trailing) edge of the word select, or left/right clock
-// of the I2S peripheral (either SSC or I2SC)
-
+//******************************************************************************
+// DRV_I2S_LRCLK_Sync()
+//
+// This routine sync up to the leading (or trailing) edge of the word select, 
+// or left/right clock of the I2S peripheral (either SSC or I2SC)
+//******************************************************************************
 bool DRV_I2S_LRCLK_Sync (const DRV_HANDLE handle, const uint32_t sample_rate)
 {
-    // Since we can't actually know if the clock is working or not, it is necessary to computer a reasonable timeout
-    // value, which if exceeded, causes us to return to the caller without syncing up    
+    // Since we can't actually know if the clock is working or not, it is 
+    // necessary to computer a reasonable timeout
+    // value, which if exceeded, causes us to return to the caller without 
+    // syncing up    
     uint32_t ns_per_frame = (1000000/(sample_rate/1000)) / 2;     // ns per left/right frame (e.g. 10416 for 48K s/s)
     // Compute total # of instruction cycles executed per left/right frame, divided by
     // number of instruction cycles per loop, to get max loop count -- then times 10 for good measure
@@ -1106,17 +1170,20 @@ void DRV_I2S_InitWriteLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIE
     pLinkedListDesc[currDescrip].mbr_nda = (uint32_t)&pLinkedListDesc[nextDescrip];
     pLinkedListDesc[currDescrip].mbr_sa = (uint32_t)buffer;
     pLinkedListDesc[currDescrip].mbr_da = (uint32_t)dObj->txAddress;
+
+    uint32_t bufferSizeDmaWords = bufferSize;
+    // NOTE:  dmaDataLength of 8 not supported. 
     // if this is half word transfer, need to divide size by 2
     if (dObj->dmaDataLength == 16)
     {
-        bufferSize /= 2;
+        bufferSizeDmaWords /= 2;
     }
     // if this is full word transfer, need to divide size by 4
     else if (dObj->dmaDataLength == 32)
     {
-        bufferSize /= 4;
+        bufferSizeDmaWords /= 4;
     }
-    pLinkedListDesc[currDescrip].mbr_ubc.blockDataLength = bufferSize;
+    pLinkedListDesc[currDescrip].mbr_ubc.blockDataLength = bufferSizeDmaWords;
     pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.fetchEnable = 1;
     pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.sourceUpdate = 1;
     pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.destinationUpdate = 0;
@@ -1197,17 +1264,20 @@ void DRV_I2S_WriteNextLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIE
     /************ end of E70 specific code ********************/
 #endif
     pLinkedListDesc[nextDescrip].mbr_sa = (uint32_t)buffer;
+
+    uint32_t bufferSizeDmaWords = bufferSize;
+    // NOTE:  dmaDataLength of 8 not supported. 
     // if this is half word transfer, need to divide size by 2
     if (dObj->dmaDataLength == 16)
     {
-        bufferSize /= 2;
+        bufferSizeDmaWords /= 2;
     }
     // if this is full word transfer, need to divide size by 4
     else if (dObj->dmaDataLength == 32)
     {
-        bufferSize /= 4;
+        bufferSizeDmaWords /= 4;
     }
-    pLinkedListDesc[nextDescrip].mbr_ubc.blockDataLength = bufferSize;
+    pLinkedListDesc[nextDescrip].mbr_ubc.blockDataLength = bufferSizeDmaWords;
     // if nextDescrip same as nextNextDescrip, then will loop
     pLinkedListDesc[nextDescrip].mbr_nda = (uint32_t)&pLinkedListDesc[nextNextDescrip];
     // switch from currDescrip to nextDescrip next time
@@ -1228,17 +1298,20 @@ void DRV_I2S_InitReadLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW
     pLinkedListDesc[currDescrip].mbr_nda = (uint32_t)&pLinkedListDesc[nextDescrip];
     pLinkedListDesc[currDescrip].mbr_sa = (uint32_t)dObj->rxAddress;
     pLinkedListDesc[currDescrip].mbr_da = (uint32_t)buffer;
+
+    uint32_t bufferSizeDmaWords = bufferSize;
+    // NOTE:  dmaDataLength of 8 not supported. 
     // if this is half word transfer, need to divide size by 2
     if (dObj->dmaDataLength == 16)
     {
-        bufferSize /= 2;
+        bufferSizeDmaWords /= 2;
     }
     // if this is full word transfer, need to divide size by 4
     else if (dObj->dmaDataLength == 32)
     {
-        bufferSize /= 4;
+        bufferSizeDmaWords /= 4;
     }
-    pLinkedListDesc[currDescrip].mbr_ubc.blockDataLength = bufferSize;
+    pLinkedListDesc[currDescrip].mbr_ubc.blockDataLength = bufferSizeDmaWords;
     pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.fetchEnable = 1;
     pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.sourceUpdate = 0;
     pLinkedListDesc[currDescrip].mbr_ubc.nextDescriptorControl.destinationUpdate = 1;
@@ -1329,18 +1402,20 @@ void DRV_I2S_ReadNextLinkedListTransfer(DRV_HANDLE handle, XDMAC_DESCRIPTOR_VIEW
     /************ end of E70 specific code ********************/
 #endif
     pLinkedListDesc[nextDescrip].mbr_da = (uint32_t)buffer;
+
+    uint32_t bufferSizeDmaWords = bufferSize;
+    // NOTE:  dmaDataLength of 8 not supported.
     // if this is half word transfer, need to divide size by 2
-    uint32_t blockLength = bufferSize;
     if (dObj->dmaDataLength == 16)
     {
-        blockLength /= 2;
+        bufferSizeDmaWords /= 2;
     }
     // if this is full word transfer, need to divide size by 4
     else if (dObj->dmaDataLength == 32)
     {
-        blockLength /= 4;
+        bufferSizeDmaWords /= 4;
     }
-    pLinkedListDesc[nextDescrip].mbr_ubc.blockDataLength = blockLength;
+    pLinkedListDesc[nextDescrip].mbr_ubc.blockDataLength = bufferSizeDmaWords;
     // if nextDescrip same as nextNextDescrip, then will loop
     pLinkedListDesc[nextDescrip].mbr_nda = (uint32_t)&pLinkedListDesc[nextNextDescrip];
     // switch from currDescrip to nextDescrip next time
