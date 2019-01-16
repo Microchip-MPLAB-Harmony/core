@@ -1,20 +1,18 @@
 /******************************************************************************
-  SDHC Driver File System Interface Implementation
+  SDMMC Driver File System Interface Implementation
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    drv_sdhc_file_system.c
+    drv_sdmmc_file_system.c
 
   Summary:
-    SDHC Driver Interface Definition
+    SDMMC Driver File System Interface Implementation
 
   Description:
-    The SDHC Driver provides a interface to access the SDHC on the PIC32
-    microcontroller. This file implements the SDHC Driver file system interface.
-    This file should be included in the project if SDHC driver functionality with
-    File system is needed.
+    This file registers the SDMMC Driver capabilities with the file system
+    interface.
 *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -48,7 +46,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include "driver/sdhc/drv_sdhc.h"
+#include "driver/sdmmc/drv_sdmmc.h"
 #include "system/fs/sys_fs_media_manager.h"
 
 // *****************************************************************************
@@ -59,53 +57,32 @@
 
 /* FS Function registration table. */
 
-<#if DRV_SDHC_COMMON_MODE == "Asynchronous" >
-    <#lt>const SYS_FS_MEDIA_FUNCTIONS sdhcMediaFunctions =
-    <#lt>{
-    <#lt>    .mediaStatusGet     = DRV_SDHC_IsAttached,
-    <#lt>    .mediaGeometryGet   = DRV_SDHC_GeometryGet,
-    <#lt>    .sectorRead         = DRV_SDHC_AsyncRead,
-    <#lt>    .sectorWrite        = DRV_SDHC_AsyncWrite,
-    <#lt>    .eventHandlerset    = DRV_SDHC_EventHandlerSet,
-    <#lt>    .commandStatusGet   = (void *)DRV_SDHC_CommandStatusGet,
-    <#lt>    .Read               = DRV_SDHC_AsyncRead,
-    <#lt>    .erase              = NULL,
-    <#lt>    .addressGet         = NULL,
-    <#lt>    .open               = DRV_SDHC_Open,
-    <#lt>    .close              = DRV_SDHC_Close,
-    <#lt>    .tasks              = DRV_SDHC_Tasks,
-    <#lt>};
-<#else>
-    <#lt>const SYS_FS_MEDIA_FUNCTIONS sdhcMediaFunctions =
-    <#lt>{
-    <#lt>    .mediaStatusGet     = DRV_SDHC_IsAttached,
-    <#lt>    .mediaGeometryGet   = DRV_SDHC_GeometryGet,
-    <#lt>    .sectorRead         = DRV_SDHC_Read,
-    <#lt>    .sectorWrite        = DRV_SDHC_Write,
-    <#lt>    .eventHandlerset    = DRV_SDHC_EventHandlerSet,
-    <#lt>    .commandStatusGet   = (void *)DRV_SDHC_CommandStatusGet,
-    <#lt>    .Read               = DRV_SDHC_Read,
-    <#lt>    .erase              = NULL,
-    <#lt>    .addressGet         = NULL,
-    <#lt>    .open               = DRV_SDHC_Open,
-    <#lt>    .close              = DRV_SDHC_Close,
-    <#lt>    .tasks              = NULL,
-    <#lt>};
-</#if>
+const SYS_FS_MEDIA_FUNCTIONS sdmmcMediaFunctions =
+{
+    .mediaStatusGet     = DRV_SDMMC_IsAttached,
+    .mediaGeometryGet   = DRV_SDMMC_GeometryGet,
+    .sectorRead         = DRV_SDMMC_AsyncRead,
+    .sectorWrite        = DRV_SDMMC_AsyncWrite,
+    .eventHandlerset    = DRV_SDMMC_EventHandlerSet,
+    .commandStatusGet   = (void *)DRV_SDMMC_CommandStatus,
+    .open               = DRV_SDMMC_Open,
+    .close              = DRV_SDMMC_Close,
+    .tasks              = DRV_SDMMC_Tasks
+};
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: SDHC Driver File system interface Routines
+// Section: SDMMC Driver File system interface Routines
 // *****************************************************************************
 // *****************************************************************************
 
-void DRV_SDHC_RegisterWithSysFs( const SYS_MODULE_INDEX drvIndex)
+void DRV_SDMMC_RegisterWithSysFs( const SYS_MODULE_INDEX drvIndex)
 {
     SYS_FS_MEDIA_MANAGER_Register
     (
         (SYS_MODULE_OBJ)drvIndex,
         (SYS_MODULE_INDEX)drvIndex,
-        &sdhcMediaFunctions,
+        &sdmmcMediaFunctions,
         SYS_FS_MEDIA_TYPE_SD_CARD
     );
 }

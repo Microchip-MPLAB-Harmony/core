@@ -1,22 +1,5 @@
 <#--
 /*******************************************************************************
-  SD Host Controller Driver Initialization File
-
-  File Name:
-    drv_sdhc_init.c.ftl
-
-  Summary:
-    This file contains source code necessary to initialize the SDHC driver.
-
-  Description:
-    This file contains source code necessary to initialize the system.  It
-    implements the "SYS_Initialize" function, configuration bits, and allocates
-    any necessary global system resources, such as the systemObjects structure
-    that contains the object handles to all the MPLAB Harmony module objects in
-    the system.
- *******************************************************************************/
-
-/*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
@@ -38,12 +21,22 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
- -->
-
-sysObj.drvSDHC = DRV_SDHC_Initialize(DRV_SDHC_INDEX_0,(SYS_MODULE_INIT *)&drvSDHCInitData);
+-->
+<#if HarmonyCore.SELECT_RTOS == "BareMetal">
+    <#lt>DRV_SDMMC_Tasks(sysObj.drvSDMMC${INDEX?string});
+<#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
+    <#lt>    xTaskCreate( _DRV_SDMMC${INDEX?string}_Tasks,
+    <#lt>        "DRV_SDMMC${INDEX?string}_Tasks",
+    <#lt>        DRV_SDMMC_STACK_SIZE_IDX${INDEX?string},
+    <#lt>        (void*)NULL,
+    <#lt>        DRV_SDMMC_PRIORITY_IDX${INDEX?string},
+    <#lt>        (TaskHandle_t*)NULL
+    <#lt>    );
+</#if>
 
 <#--
 /*******************************************************************************
  End of File
 */
 -->
+

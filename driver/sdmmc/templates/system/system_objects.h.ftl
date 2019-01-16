@@ -22,7 +22,7 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 -->
-    SYS_MODULE_OBJ  drvSDHC;
+    SYS_MODULE_OBJ  drvSDMMC${INDEX?string};
 
 <#--
 /*******************************************************************************

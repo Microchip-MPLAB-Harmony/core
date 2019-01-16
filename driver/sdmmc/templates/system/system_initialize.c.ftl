@@ -1,5 +1,22 @@
 <#--
 /*******************************************************************************
+  SD Host Controller Driver Initialization File
+
+  File Name:
+    drv_sdmmc_init.c.ftl
+
+  Summary:
+    This file contains source code necessary to initialize the SDMMC driver.
+
+  Description:
+    This file contains source code necessary to initialize the system.  It
+    implements the "SYS_Initialize" function, configuration bits, and allocates
+    any necessary global system resources, such as the systemObjects structure
+    that contains the object handles to all the MPLAB Harmony module objects in
+    the system.
+ *******************************************************************************/
+
+/*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
@@ -21,22 +38,12 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
--->
-<#if HarmonyCore.SELECT_RTOS == "BareMetal">
-    <#lt>DRV_SDHC_Tasks(sysObj.drvSDHC);
-<#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
-    <#lt>    xTaskCreate( _DRV_SDHC_Tasks,
-    <#lt>        "DRV_SDHC_Tasks",
-    <#lt>        DRV_SDHC_STACK_SIZE,
-    <#lt>        (void*)NULL,
-    <#lt>        DRV_SDHC_PRIORITY,
-    <#lt>        (TaskHandle_t*)NULL
-    <#lt>    );
-</#if>
+ -->
+
+    sysObj.drvSDMMC${INDEX?string} = DRV_SDMMC_Initialize(DRV_SDMMC_INDEX_${INDEX?string},(SYS_MODULE_INIT *)&drvSDMMC${INDEX?string}InitData);
 
 <#--
 /*******************************************************************************
  End of File
 */
 -->
-

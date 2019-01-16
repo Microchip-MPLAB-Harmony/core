@@ -22,7 +22,7 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 -->
-#include "driver/sdhc/drv_sdhc.h"
+#include "driver/sdmmc/drv_sdmmc.h"
 
 <#--
 /*******************************************************************************

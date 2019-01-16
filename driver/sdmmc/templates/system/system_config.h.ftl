@@ -1,15 +1,15 @@
 <#--
 /*******************************************************************************
-  SDHC Driver Freemarker Template File
+  SDMMC Driver Freemarker Template File
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    drv_sdhc.h.ftl
+    drv_sdmmc.h.ftl
 
   Summary:
-    SDHC Driver Freemarker Template File
+    SDMMC Driver Freemarker Template File
 
   Description:
 
@@ -39,18 +39,28 @@
 *******************************************************************************/
 -->
 
-
-/*** SDHC Driver Configuration ***/
+/*** SDMMC Driver Instance ${INDEX?string} Configuration ***/
 <#-- Driver Instances -->
-#define DRV_SDHC_CLIENTS_NUMBER ${DRV_SDHC_CLIENTS_NUMBER}
-#define DRV_SDHC_BUFFER_QUEUE_SIZE ${DRV_SDHC_BUFFER_QUEUE_SIZE}
-#define DRV_SDHC_CARD_DETECT_ENABLE  ${DRV_SDHC_SDCDEN?c}
-#define	DRV_SDHC_WRITE_PROTECT_ENABLE  ${DRV_SDHC_SDWPEN?c}
+#define DRV_SDMMC_INDEX_${INDEX?string}                                ${INDEX?string}
+#define DRV_SDMMC_CLIENTS_NUMBER_IDX${INDEX?string}                    ${DRV_SDMMC_CLIENTS_NUMBER}
+#define DRV_SDMMC_QUEUE_SIZE_IDX${INDEX?string}                        ${DRV_SDMMC_BUFFER_OBJECT_NUMBER}
+<#if DRV_SDMMC_BUS_SPEED == "DEFAULT_SPEED">
+    <#lt>#define DRV_SDMMC_CONFIG_SPEED_MODE_IDX${INDEX?string}                 DRV_SDMMC_CONFIG_SPEED_MODE_DEFAULT
+<#else>
+    <#lt>#define DRV_SDMMC_CONFIG_SPEED_MODE_IDX${INDEX?string}                 DRV_SDMMC_CONFIG_SPEED_MODE_HIGH
+</#if>
+<#if DRV_SDMMC_TRANSFER_BUS_WIDTH == "1-bit">
+    <#lt>#define DRV_SDMMC_CONFIG_BUS_WIDTH_IDX${INDEX?string}                  DRV_SDMMC_CONFIG_BUS_WIDTH_1_BIT
+<#else>
+    <#lt>#define DRV_SDMMC_CONFIG_BUS_WIDTH_IDX${INDEX?string}                  DRV_SDMMC_CONFIG_BUS_WIDTH_4_BIT
+</#if>
+
 
 <#if HarmonyCore.SELECT_RTOS != "BareMetal">
-    <#lt>/* SDHC Driver Instance RTOS Configurations*/
-    <#lt>#define DRV_SDHC_STACK_SIZE           ${DRV_SDHC_RTOS_STACK_SIZE}
-    <#lt>#define DRV_SDHC_PRIORITY             ${DRV_SDHC_RTOS_TASK_PRIORITY}
+    <#lt>/* SDMMC Driver Instance ${INDEX?string} RTOS Configurations*/
+    <#lt>#define DRV_SDMMC_STACK_SIZE_IDX${INDEX?string}                         ${DRV_SDMMC_RTOS_STACK_SIZE}
+    <#lt>#define DRV_SDMMC_PRIORITY_IDX${INDEX?string}                           ${DRV_SDMMC_RTOS_TASK_PRIORITY}
+    <#lt>#define DRV_SDMMC_RTOS_DELAY_IDX${INDEX?string}                         ${DRV_SDMMC_RTOS_DELAY}
 </#if>
 
 <#--
