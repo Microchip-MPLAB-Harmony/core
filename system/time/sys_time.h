@@ -781,7 +781,7 @@ uint32_t SYS_TIME_CounterGet ( void );
     <code>
     uint64_t timeStamp1;
     uint64_t timeStamp2;
-    uint32_t timeDiffMs;
+    uint64_t timeDiffMs;
 
     // Take first time stamp
     timeStamp1 = SYS_TIME_Counter64Get();
@@ -791,10 +791,9 @@ uint32_t SYS_TIME_CounterGet ( void );
     // Take second time stamp
     timeStamp2 = SYS_TIME_Counter64Get();
 
-    //Calculate the time difference. Use the appropriate function -
-    //SYS_TIME_CountToMS or SYS_TIME_CountToUS to calculate the time difference.
-
-    timeDiffMs = SYS_TIME_CountToMS((timeStamp2 - timeStamp1));
+    //Calculate the time difference.
+    timeDiffMs = timeStamp2 - timeStamp1;
+    timeDiffMs = (uint64_t)(((double)timeDiffMs/SYS_TIME_FrequencyGet())*1000.0);
     </code>
 
   Remarks:
