@@ -14,3 +14,6 @@
 <#if core.CoreArchitecture == "CORTEX-A5">
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (2200)
 </#if>
+<#if core.CoreArchitecture == "CORTEX-M4">
+    <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (188)
+</#if>
