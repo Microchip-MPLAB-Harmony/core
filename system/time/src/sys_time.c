@@ -828,6 +828,7 @@ SYS_TIME_RESULT SYS_TIME_TimerReload(
     /* Single shot timers must register a callback. */
     if ((type == SYS_TIME_SINGLE) && (callBack == NULL))
     {
+        SYS_TIME_ResourceUnlock();
         return result;
     }
 
