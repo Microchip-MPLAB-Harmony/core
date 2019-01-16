@@ -570,6 +570,7 @@ Parameters:
 
     type        - Type of callback requested. If type is SYS_TIME_SINGLE, the
                   Callback function will be called once when the time period expires.
+                  After the time period expires, the timer object will be freed.
                   If type is SYS_TIME_PERIODIC Callback function will be called
                   repeatedly, every time the time period expires until the timer
                   object is stopped or deleted.
@@ -634,6 +635,7 @@ Parameters:
 
     type        - Type of callback requested. If type is SYS_TIME_SINGLE, the
                   Callback function will be called once when the time period expires.
+                  After the time period expires, the timer object will be freed.
                   If type is SYS_TIME_PERIODIC Callback function will be called
                   repeatedly, every time the time period expires until the timer
                   object is stopped or deleted.
