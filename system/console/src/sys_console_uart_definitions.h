@@ -80,8 +80,8 @@ typedef struct
 typedef void (*SYS_CONSOLE_UART_PLIB_CALLBACK)( uintptr_t context );
 typedef void (*SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_READ)(SYS_CONSOLE_UART_PLIB_CALLBACK callback, uintptr_t context);
 typedef void (*SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_WRITE)(SYS_CONSOLE_UART_PLIB_CALLBACK callback, uintptr_t context);
-typedef bool (*SYS_CONSOLE_UART_PLIB_READ)(void* buffer, const size_t size);
-typedef bool (*SYS_CONSOLE_UART_PLIB_WRITE)(void* buffer, const size_t size);
+typedef bool (*SYS_CONSOLE_UART_PLIB_READ)(void* buffer, size_t size);
+typedef bool (*SYS_CONSOLE_UART_PLIB_WRITE)(void* buffer, size_t size);
 typedef uint32_t (*SYS_CONSOLE_UART_PLIB_ERROR_GET)(void);
 
 typedef struct
