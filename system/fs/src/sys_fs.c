@@ -794,7 +794,7 @@ SYS_FS_HANDLE SYS_FS_FileOpen
     uint8_t mode = 0;
     SYS_FS_OBJ *fileObj = NULL;
     SYS_FS_MOUNT_POINT *disk = NULL;
-    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = {};
+    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
     uint8_t *ptr = NULL;
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
 
@@ -1574,7 +1574,7 @@ SYS_FS_RESULT SYS_FS_FileStat
 )
 {
     int fileStatus = -1;
-    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = {};
+    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
     SYS_FS_MOUNT_POINT *disk = (SYS_FS_MOUNT_POINT *) NULL;
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
 
@@ -2232,7 +2232,7 @@ SYS_FS_RESULT SYS_FS_DirectoryMake
 )
 {
     int fileStatus = -1;
-    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = {};
+    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
     SYS_FS_MOUNT_POINT *disk = NULL;
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
 
@@ -2298,7 +2298,7 @@ SYS_FS_RESULT SYS_FS_DirectoryChange
 )
 {
     int fileStatus = -1;
-    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = {};
+    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
     SYS_FS_MOUNT_POINT *disk = (SYS_FS_MOUNT_POINT *) NULL;
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
 
@@ -2363,7 +2363,7 @@ SYS_FS_RESULT SYS_FS_FileDirectoryRemove
 )
 {
     int fileStatus = -1;
-    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = {};
+    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
     SYS_FS_MOUNT_POINT *disk = (SYS_FS_MOUNT_POINT *) NULL;
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
 
@@ -2428,7 +2428,7 @@ SYS_FS_HANDLE SYS_FS_DirOpen
 )
 {
     int fileStatus = SYS_FS_ERROR_NOT_READY;
-    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = {};
+    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
     SYS_FS_MOUNT_POINT *disk = (SYS_FS_MOUNT_POINT *) NULL;
     uint32_t index = 0;
     SYS_FS_DIR_OBJ *fileObj = NULL;
@@ -2726,6 +2726,7 @@ SYS_FS_RESULT SYS_FS_DirSearch
     SYS_FS_FSTAT *stat
 )
 {
+    bool workToDo = true;           // avoid unreachable code warning
     int fileStatus = -1;
     SYS_FS_DIR_OBJ *fileObj = (SYS_FS_DIR_OBJ *)handle;
     char *fileName = NULL;
@@ -2749,7 +2750,7 @@ SYS_FS_RESULT SYS_FS_DirSearch
         return SYS_FS_RES_FAILURE;
     }
 
-    while (1)
+    while( workToDo )
     {
         errorValue = SYS_FS_ERROR_OK;
         osalResult = OSAL_MUTEX_Lock(&(fileObj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER);
@@ -2837,7 +2838,7 @@ SYS_FS_RESULT SYS_FS_CurrentWorkingDirectoryGet
 {
     SYS_FS_MOUNT_POINT *disk = NULL;
     int fileStatus = -1;
-    char cwd[SYS_FS_CWD_STRING_LEN] = {};
+    char cwd[SYS_FS_CWD_STRING_LEN] = { 0 };
     char *ptr = NULL;
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
 
@@ -2950,7 +2951,7 @@ SYS_FS_RESULT SYS_FS_FileDirectoryModeSet
 )
 {
     int fileStatus = -1;
-    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = {};
+    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
     SYS_FS_MOUNT_POINT *disk = (SYS_FS_MOUNT_POINT *) NULL;
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
 
@@ -3013,7 +3014,7 @@ SYS_FS_RESULT SYS_FS_FileDirectoryTimeSet
 )
 {
     int fileStatus = -1;
-    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = {};
+    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
     SYS_FS_MOUNT_POINT *disk = (SYS_FS_MOUNT_POINT *) NULL;
     SYS_FS_FSTAT stat;
@@ -3081,8 +3082,8 @@ SYS_FS_RESULT SYS_FS_FileDirectoryRenameMove
 )
 {
     int fileStatus = SYS_FS_ERROR_NOT_READY;
-    uint8_t oldPathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = {};
-    uint8_t newPathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = {};
+    uint8_t oldPathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
+    uint8_t newPathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
     SYS_FS_MOUNT_POINT *disk = (SYS_FS_MOUNT_POINT *) NULL;
 
@@ -3282,7 +3283,7 @@ SYS_FS_RESULT SYS_FS_DriveLabelGet
 {
     int fileStatus = -1;
     SYS_FS_MOUNT_POINT *disk = NULL;
-    uint8_t pathWithDiskNo[3] = {};
+    uint8_t pathWithDiskNo[3] = { 0 };
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
 
     if (drive != NULL)
@@ -3358,7 +3359,7 @@ SYS_FS_RESULT SYS_FS_DriveLabelSet
 {
     int fileStatus = SYS_FS_ERROR_NOT_READY;
     SYS_FS_MOUNT_POINT *disk = (SYS_FS_MOUNT_POINT *) NULL;
-    char pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = {};
+    char pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
 
     if (label == NULL)
@@ -3575,7 +3576,7 @@ SYS_FS_RESULT SYS_FS_DriveSectorGet
 {
     int fileStatus = -1;
     SYS_FS_MOUNT_POINT *disk = NULL;
-    uint8_t pathWithDiskNo[3] = {};
+    uint8_t pathWithDiskNo[3] = { 0 };
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
 
     if ((totalSectors == NULL) || (freeSectors == NULL))

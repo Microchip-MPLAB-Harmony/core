@@ -58,6 +58,7 @@
 // *****************************************************************************
 
 /* FS Function registration table. */
+typedef SYS_FS_MEDIA_COMMAND_STATUS (* CommandStatusGetType)( DRV_HANDLE, SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE );    
 
 <#if DRV_SDSPI_COMMON_MODE == "Asynchronous" >
     <#lt>const SYS_FS_MEDIA_FUNCTIONS sdspiMediaFunctions =
@@ -67,7 +68,7 @@
     <#lt>    .sectorRead         = DRV_SDSPI_AsyncRead,
     <#lt>    .sectorWrite        = DRV_SDSPI_AsyncWrite,
     <#lt>    .eventHandlerset    = DRV_SDSPI_EventHandlerSet,
-    <#lt>    .commandStatusGet   = (void *)DRV_SDSPI_CommandStatusGet,
+    <#lt>    .commandStatusGet   = (CommandStatusGetType) DRV_SDSPI_CommandStatusGet,
     <#lt>    .Read               = DRV_SDSPI_AsyncRead,
     <#lt>    .erase              = NULL,
     <#lt>    .addressGet         = NULL,
@@ -83,7 +84,7 @@
     <#lt>    .sectorRead         = DRV_SDSPI_Read,
     <#lt>    .sectorWrite        = DRV_SDSPI_Write,
     <#lt>    .eventHandlerset    = DRV_SDSPI_EventHandlerSet,
-    <#lt>    .commandStatusGet   = (void *)DRV_SDSPI_CommandStatusGet,
+    <#lt>    .commandStatusGet   = (CommandStatusGetType) DRV_SDSPI_CommandStatusGet,
     <#lt>    .Read               = DRV_SDSPI_Read,
     <#lt>    .erase              = NULL,
     <#lt>    .addressGet         = NULL,

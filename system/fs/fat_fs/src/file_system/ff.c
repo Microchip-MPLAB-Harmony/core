@@ -2552,7 +2552,7 @@ int f_open (
 )
 {
 	FRESULT res = FR_OK;
-	DIR dj = {};
+	DIR dj = { 0 };
 	uint8_t *dir = NULL;
 	DEFINE_NAMEBUF;
 #if !_FS_READONLY

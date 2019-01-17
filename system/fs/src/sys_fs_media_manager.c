@@ -1361,7 +1361,7 @@ void SYS_FS_MEDIA_MANAGER_RegisterTransferHandler
     const void *eventHandler
 )
 {
-    gSYSFSMediaManagerObj.eventHandler = eventHandler;
+    gSYSFSMediaManagerObj.eventHandler = (SYS_FS_EVENT_HANDLER) eventHandler;
 }
 
 //*****************************************************************************
@@ -1551,7 +1551,11 @@ void SYS_FS_MEDIA_MANAGER_Tasks
                 {
                     /* Media driver open successful. Register an event handler for
                      * the media driver events. */
-                    mediaObj->driverFunctions->eventHandlerset(mediaObj->driverHandle, SYS_FS_MEDIA_MANAGER_EventHandler, (uintptr_t)mediaObj);
+                    mediaObj->driverFunctions->eventHandlerset(
+                                                mediaObj->driverHandle,
+                                                (const void *) SYS_FS_MEDIA_MANAGER_EventHandler,
+                                                (uintptr_t) mediaObj
+                                                );
 
                     /* Transition to the next state. */
                     mediaObj->mediaState = SYS_FS_MEDIA_CHECK_ATTACH_STATUS;
