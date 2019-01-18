@@ -42,6 +42,13 @@ genAppTaskConfMenu          = []
 genAppTaskName              = []
 genAppTaskNameCodingGuide   = []
 genAppRtosTaskSize          = []
+genAppRtosMsgQSize          = []
+genAppRtosTaskTimeQuanta    = []
+genAppRtosTaskSpecificOpt   = []
+genAppRtosTaskStkChk        = []
+genAppRtosTaskStkClr        = []
+genAppRtosTaskSaveFp        = []
+genAppRtosTaskNoTls         = []
 genAppRtosTaskPrio          = []
 genAppRtosTaskUseDelay      = []
 genAppRtosTaskDelay         = []
@@ -54,7 +61,7 @@ appHeaderFile               = []
 def genAppTaskMenuVisible(symbol, event):
     symbol.setVisible(event["value"])
 
-def genAppRtosTaskDelayVisible(symbol, event):
+def genAppRtosTaskOptionsVisible(symbol, event):
     symbol.setVisible(event["value"])
 
 def genAppTaskConfMenuVisible(symbol, event):
@@ -85,7 +92,6 @@ def genAppRtosTaskConfMenuVisible(symbol, event):
         for count in range(0, appCount):
             genAppRtosTaskConfMenu[count].setVisible(True)
 
-
 def genBareMetalAppTask(symbol, event):
     if (event["value"] == "BareMetal"):
         symbol.setEnabled(True)
@@ -97,7 +103,6 @@ def genRtosAppTask(symbol, event):
         symbol.setEnabled(True)
     else:
         symbol.setEnabled(False)
-
 
 def genAppSourceFile(symbol, event):
     global appSourceFile
@@ -134,6 +139,12 @@ def genAppHeaderFile(symbol, event):
             appName = component.getSymbolValue("GEN_APP_TASK_NAME_" + str(count))
             appHeaderFile[count].setEnabled(True)
             appHeaderFile[count].setOutputName(appName.lower() + ".h")
+
+def genRtosMicriumOSIIIAppTaskVisible(symbol, event):
+    if (event["value"] == "MicriumOSIII"):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
 
 ############################################################################
 enableRTOS  = osalSelectRTOS.getValue()
@@ -236,6 +247,22 @@ for count in range(0, genAppTaskMaxCount):
     else:
         genAppRtosTaskSize[count].setDefaultValue(1024)
 
+    genAppRtosMsgQSize.append(count)
+    genAppRtosMsgQSize[count] = harmonyCoreComponent.createIntegerSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_MSG_QTY", genAppRtosTaskConfMenu[count])
+    genAppRtosMsgQSize[count].setLabel("Maximum Message Queue Size")
+    genAppRtosMsgQSize[count].setDescription("A µC/OS-III task contains an optional internal message queue (if OS_CFG_TASK_Q_EN is set to DEF_ENABLED in os_cfg.h). This argument specifies the maximum number of messages that the task can receive through this message queue. The user may specify that the task is unable to receive messages by setting this argument to 0")
+    genAppRtosMsgQSize[count].setDefaultValue(0)
+    genAppRtosMsgQSize[count].setVisible(False)
+    genAppRtosMsgQSize[count].setDependencies(genRtosMicriumOSIIIAppTaskVisible, ["SELECT_RTOS"])
+
+    genAppRtosTaskTimeQuanta.append(count)
+    genAppRtosTaskTimeQuanta[count] = harmonyCoreComponent.createIntegerSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_TIME_QUANTA", genAppRtosTaskConfMenu[count])
+    genAppRtosTaskTimeQuanta[count].setLabel("Task Time Quanta")
+    genAppRtosTaskTimeQuanta[count].setDescription("The amount of time (in clock ticks) for the time quanta when Round Robin is enabled. If you specify 0, then the default time quanta will be used which is the tick rate divided by 10.")
+    genAppRtosTaskTimeQuanta[count].setDefaultValue(0)
+    genAppRtosTaskTimeQuanta[count].setVisible(False)
+    genAppRtosTaskTimeQuanta[count].setDependencies(genRtosMicriumOSIIIAppTaskVisible, ["SELECT_RTOS"])
+
     genAppRtosTaskPrio.append(count)
     genAppRtosTaskPrio[count] = harmonyCoreComponent.createIntegerSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_PRIO", genAppRtosTaskConfMenu[count])
     genAppRtosTaskPrio[count].setLabel("Task Priority")
@@ -253,7 +280,43 @@ for count in range(0, genAppTaskMaxCount):
     genAppRtosTaskDelay[count].setDescription("Task Delay in ms")
     genAppRtosTaskDelay[count].setDefaultValue(50)
     genAppRtosTaskDelay[count].setVisible(False)
-    genAppRtosTaskDelay[count].setDependencies(genAppRtosTaskDelayVisible, ["GEN_APP_RTOS_TASK_" + str(count) + "_USE_DELAY"])
+    genAppRtosTaskDelay[count].setDependencies(genAppRtosTaskOptionsVisible, ["GEN_APP_RTOS_TASK_" + str(count) + "_USE_DELAY"])
+
+    genAppRtosTaskSpecificOpt.append(count)
+    genAppRtosTaskSpecificOpt[count] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_OPT_NONE", genAppRtosTaskConfMenu[count])
+    genAppRtosTaskSpecificOpt[count].setLabel("Task Specific Options")
+    genAppRtosTaskSpecificOpt[count].setDescription("Contains task-specific options. Each option consists of one bit. The option is selected when the bit is set. The current version of µC/OS-III supports the following options:")
+    genAppRtosTaskSpecificOpt[count].setDefaultValue(True)
+    genAppRtosTaskSpecificOpt[count].setVisible(False)
+    genAppRtosTaskSpecificOpt[count].setDependencies(genRtosMicriumOSIIIAppTaskVisible, ["SELECT_RTOS"])
+
+    genAppRtosTaskStkChk.append(count)
+    genAppRtosTaskStkChk[count] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_OPT_STK_CHK", genAppRtosTaskSpecificOpt[count])
+    genAppRtosTaskStkChk[count].setLabel("Stack checking is allowed for the task")
+    genAppRtosTaskStkChk[count].setDescription("Specifies whether stack checking is allowed for the task")
+    genAppRtosTaskStkChk[count].setDefaultValue(True)
+    genAppRtosTaskStkChk[count].setDependencies(genAppRtosTaskOptionsVisible, ["GEN_APP_RTOS_TASK_" + str(count) + "_OPT_NONE"])
+
+    genAppRtosTaskStkClr.append(count)
+    genAppRtosTaskStkClr[count] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_OPT_STK_CLR", genAppRtosTaskSpecificOpt[count])
+    genAppRtosTaskStkClr[count].setLabel("Stack needs to be cleared")
+    genAppRtosTaskStkClr[count].setDescription("Specifies whether the stack needs to be cleared")
+    genAppRtosTaskStkClr[count].setDefaultValue(True)
+    genAppRtosTaskStkClr[count].setDependencies(genAppRtosTaskOptionsVisible, ["GEN_APP_RTOS_TASK_" + str(count) + "_OPT_NONE"])
+
+    genAppRtosTaskSaveFp.append(count)
+    genAppRtosTaskSaveFp[count] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_OPT_SAVE_FP", genAppRtosTaskSpecificOpt[count])
+    genAppRtosTaskSaveFp[count].setLabel("Floating-point registers needs to be saved")
+    genAppRtosTaskSaveFp[count].setDescription("Specifies whether floating-point registers are saved. This option is only valid if the processor has floating-point hardware and the processor-specific code saves the floating-point registers")
+    genAppRtosTaskSaveFp[count].setDefaultValue(False)
+    genAppRtosTaskSaveFp[count].setDependencies(genAppRtosTaskOptionsVisible, ["GEN_APP_RTOS_TASK_" + str(count) + "_OPT_NONE"])
+
+    genAppRtosTaskNoTls.append(count)
+    genAppRtosTaskNoTls[count] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_OPT_NO_TLS", genAppRtosTaskSpecificOpt[count])
+    genAppRtosTaskNoTls[count].setLabel("TLS (Thread Local Storage) support needed for the task")
+    genAppRtosTaskNoTls[count].setDescription("If the caller doesn’t want or need TLS (Thread Local Storage) support for the task being created. If you do not include this option, TLS will be supported by default. TLS support was added in V3.03.00")
+    genAppRtosTaskNoTls[count].setDefaultValue(False)
+    genAppRtosTaskNoTls[count].setDependencies(genAppRtosTaskOptionsVisible, ["GEN_APP_RTOS_TASK_" + str(count) + "_OPT_NONE"])
 
 ############################################################################
 #### Code Generation ####

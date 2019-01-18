@@ -149,6 +149,9 @@ def onAttachmentConnected(source, target):
     if targetID == "FreeRTOS":
         localComponent.clearSymbolValue("SELECT_RTOS")
         localComponent.setSymbolValue("SELECT_RTOS", "FreeRTOS", 1)
+    elif targetID == "MicriumOSIII":
+        localComponent.clearSymbolValue("SELECT_RTOS")
+        localComponent.setSymbolValue("SELECT_RTOS", "MicriumOSIII", 2)
 
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]
@@ -159,6 +162,6 @@ def onAttachmentDisconnected(source, target):
 
     print("unsatisfied: " + connectID + ", " + targetID)
 
-    if targetID == "FreeRTOS":
+    if targetID == "FreeRTOS" or targetID == "MicriumOSIII":
         localComponent.clearSymbolValue("SELECT_RTOS")
         localComponent.setSymbolValue("SELECT_RTOS", "BareMetal", 1)

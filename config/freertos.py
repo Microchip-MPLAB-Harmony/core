@@ -163,9 +163,19 @@ def freeRtosCpuClockHz(symbol, event):
     clock = int(event["value"])
     symbol.setValue(clock, 1)
 
+def deactivateActiveRtos():
+    activeComponents = Database.getActiveComponentIDs()
+
+    for i in range(0, len(activeComponents)):
+        if (activeComponents[i] == "MicriumOSIII"):
+            res = Database.deactivateComponents(["MicriumOSIII"])
+
 # Instatntiate FreeRTOS Component
 def instantiateComponent(thirdPartyFreeRTOS):
     Log.writeInfoMessage("Running FreeRTOS")
+
+    # Deactivate the active RTOS if any.
+    deactivateActiveRtos()
 
     #FreeRTOS Interrupt Handlers configurations
     SysTickInterruptEnable      = "SysTick_INTERRUPT_ENABLE"

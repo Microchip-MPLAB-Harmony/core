@@ -80,6 +80,9 @@ ${core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS}
 
 void SYS_Tasks ( void )
 {
+<#if SELECT_RTOS == "MicriumOSIII">
+    OS_ERR os_err;
+</#if>
     /* Maintain system services */
     ${core.LIST_SYSTEM_TASKS_C_CALL_SYSTEM_TASKS}
 
