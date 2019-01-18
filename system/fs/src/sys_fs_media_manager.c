@@ -1336,7 +1336,7 @@ void SYS_FS_MEDIA_MANAGER_EventHandlerSet
     {
         return;
     }
-    gSYSFSEventHandler[gNumOfFSClients].eventHandler = eventHandler;
+    gSYSFSEventHandler[gNumOfFSClients].eventHandler = (SYS_FS_EVENT_HANDLER)eventHandler;
     gSYSFSEventHandler[gNumOfFSClients].context = context;
     gNumOfFSClients++;    
 }
@@ -1405,7 +1405,7 @@ void SYS_FS_MEDIA_MANAGER_EventHandler
 
     if ((gSYSFSMediaManagerObj.eventHandler != NULL) && (gSYSFSMediaManagerObj.muteEventNotification == false))
     {
-        gSYSFSMediaManagerObj.eventHandler (event, (void *)commandHandle, ((SYS_FS_MEDIA*)context)->mediaIndex);
+        gSYSFSMediaManagerObj.eventHandler ((SYS_FS_EVENT)event, (void *)commandHandle, ((SYS_FS_MEDIA*)context)->mediaIndex);
     }
 }
 

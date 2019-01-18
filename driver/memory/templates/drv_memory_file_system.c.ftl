@@ -58,6 +58,7 @@
 // *****************************************************************************
 
 /* FS Function registration table. */
+typedef SYS_FS_MEDIA_COMMAND_STATUS (* CommandStatusGetType)( DRV_HANDLE, SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE );
 
 <#if DRV_MEMORY_COMMON_MODE == "Asynchronous" >
     <#lt>const SYS_FS_MEDIA_FUNCTIONS memoryMediaFunctions =
@@ -67,7 +68,7 @@
     <#lt>    .sectorRead         = DRV_MEMORY_AsyncRead,
     <#lt>    .sectorWrite        = DRV_MEMORY_AsyncEraseWrite,
     <#lt>    .eventHandlerset    = DRV_MEMORY_TransferHandlerSet,
-    <#lt>    .commandStatusGet   = (void *)DRV_MEMORY_CommandStatusGet,
+    <#lt>    .commandStatusGet   = (CommandStatusGetType)DRV_MEMORY_CommandStatusGet,
     <#lt>    .Read               = DRV_MEMORY_AsyncRead,
     <#lt>    .erase              = DRV_MEMORY_AsyncErase,
     <#lt>    .addressGet         = DRV_MEMORY_AddressGet,
@@ -83,7 +84,7 @@
     <#lt>    .sectorRead         = DRV_MEMORY_Read,
     <#lt>    .sectorWrite        = DRV_MEMORY_EraseWrite,
     <#lt>    .eventHandlerset    = DRV_MEMORY_TransferHandlerSet,
-    <#lt>    .commandStatusGet   = (void *)DRV_MEMORY_CommandStatusGet,
+    <#lt>    .commandStatusGet   = (CommandStatusGetType)DRV_MEMORY_CommandStatusGet,
     <#lt>    .Read               = DRV_MEMORY_Read,
     <#lt>    .erase              = DRV_MEMORY_Erase,
     <#lt>    .addressGet         = DRV_MEMORY_AddressGet,
