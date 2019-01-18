@@ -61,6 +61,7 @@
 
 /* This is the driver instance object array. */
 static DRV_USART_OBJ gDrvUSARTObj[DRV_USART_INSTANCES_NUMBER] ;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: File scope functions
@@ -176,16 +177,94 @@ static DRV_USART_BUFFER_OBJ* _DRV_USART_GetBufferObj(
     }
 }
 
-static bool _DRV_USART_ResourceLock(
-    DRV_USART_OBJ* object, 
-    bool* wasUSARTInterruptEnabled, 
-    bool* wasDMAInterruptEnabled
-)
+static void _DRV_USART_DisableInterrupts(DRV_USART_OBJ* dObj)
 {
-    DRV_USART_OBJ* dObj = object;
+    bool interruptStatus;
+    const DRV_USART_INTERRUPT_SOURCES* intInfo = dObj->interruptSources;
 
-    /* We will allow buffers to be added in the interrupt context of the USART 
-       driver. But we must make sure that if we are inside interrupt, then we 
+    interruptStatus = SYS_INT_Disable();
+
+    if (intInfo->isSingleIntSrc == true)
+    {
+        /* Disable USART interrupt */
+        SYS_INT_SourceDisable(intInfo->intSources.usartInterrupt);
+
+        <#if core.DMA_ENABLE?has_content>
+            <#lt>       /* Disable DMA interrupt */
+            <#lt>       if((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) || (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
+            <#lt>       {
+            <#lt>           SYS_INT_SourceDisable(intInfo->intSources.dmaInterrupt);
+            <#lt>       }
+        </#if>
+    }
+    else
+    {
+        /* Disable USART interrupt sources */
+        SYS_INT_SourceDisable(intInfo->intSources.multi.usartTxReadyInt);
+        SYS_INT_SourceDisable(intInfo->intSources.multi.usartRxCompleteInt);
+        SYS_INT_SourceDisable(intInfo->intSources.multi.usartErrorInt);
+         <#if core.DMA_ENABLE?has_content>
+            <#lt>       /* Disable DMA interrupt sources */
+            <#lt>       if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
+            <#lt>       {
+            <#lt>           SYS_INT_SourceDisable(intInfo->intSources.multi.dmaTxChannelInt);
+            <#lt>       }
+            <#lt>       if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
+            <#lt>       {
+            <#lt>           SYS_INT_SourceDisable(intInfo->intSources.multi.dmaRxChannelInt);
+            <#lt>       }
+        </#if>
+    }
+
+    SYS_INT_Restore(interruptStatus);
+}
+
+static void _DRV_USART_EnableInterrupts(DRV_USART_OBJ* dObj)
+{
+    bool interruptStatus;
+    const DRV_USART_INTERRUPT_SOURCES* intInfo = dObj->interruptSources;
+
+    interruptStatus = SYS_INT_Disable();
+
+    if (intInfo->isSingleIntSrc == true)
+    {
+        /* Enable USART interrupt */
+        SYS_INT_SourceEnable(intInfo->intSources.usartInterrupt);
+
+        <#if core.DMA_ENABLE?has_content>
+            <#lt>       /* Enable DMA interrupt */
+            <#lt>       if((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) || (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
+            <#lt>       {
+            <#lt>           SYS_INT_SourceEnable(intInfo->intSources.dmaInterrupt);
+            <#lt>       }
+        </#if>
+    }
+    else
+    {
+        /* Enable USART interrupt sources */
+        SYS_INT_SourceEnable(intInfo->intSources.multi.usartTxReadyInt);
+        SYS_INT_SourceEnable(intInfo->intSources.multi.usartRxCompleteInt);
+        SYS_INT_SourceEnable(intInfo->intSources.multi.usartErrorInt);
+         <#if core.DMA_ENABLE?has_content>
+            <#lt>       /* Enable DMA interrupt sources */
+            <#lt>       if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
+            <#lt>       {
+            <#lt>           SYS_INT_SourceEnable(intInfo->intSources.multi.dmaTxChannelInt);
+            <#lt>       }
+            <#lt>       if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
+            <#lt>       {
+            <#lt>           SYS_INT_SourceEnable(intInfo->intSources.multi.dmaRxChannelInt);
+            <#lt>       }
+        </#if>
+    }
+
+    SYS_INT_Restore(interruptStatus);
+}
+
+static bool _DRV_USART_ResourceLock( DRV_USART_OBJ* dObj )
+{
+    /* We will allow buffers to be added in the interrupt context of the USART
+       driver. But we must make sure that if we are inside interrupt, then we
        should not modify mutex. */
     if(dObj->interruptNestingCount == 0)
     {
@@ -195,41 +274,15 @@ static bool _DRV_USART_ResourceLock(
             return false;
         }
     }
-<#if core.DMA_ENABLE?has_content>
-    /* We will disable interrupts so that the queue
-       status does not get updated asynchronously */
-    if((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) || (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
-    {
-         *wasDMAInterruptEnabled = SYS_INT_SourceDisable(dObj->interruptDMA);
-    }
-</#if>
-     *wasUSARTInterruptEnabled = SYS_INT_SourceDisable(dObj->interruptUSART);
+
+    _DRV_USART_DisableInterrupts(dObj);
 
     return true;
 }
 
-static void _DRV_USART_ResourceUnlock(
-    DRV_USART_OBJ* object,
-    bool wasUSARTInterruptEnabled,
-    bool wasDMAInterruptEnabled
-)
+static void _DRV_USART_ResourceUnlock( DRV_USART_OBJ* dObj )
 {
-    DRV_USART_OBJ* dObj = object;
-
-<#if core.DMA_ENABLE?has_content>
-    /* Restore the interrupt and release mutex. */
-    if( (dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) || (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
-    {
-        if (wasDMAInterruptEnabled == true)
-        {
-            SYS_INT_SourceEnable(dObj->interruptDMA);
-        }
-    }
-</#if>
-    if (wasUSARTInterruptEnabled == true)
-    {
-        SYS_INT_SourceEnable(dObj->interruptUSART);
-    }
+    _DRV_USART_EnableInterrupts(dObj);
 
     if(dObj->interruptNestingCount == 0)
     {
@@ -424,8 +477,6 @@ static bool _DRV_USART_QueuePurge (const DRV_HANDLE handle, DRV_USART_DIRECTION 
 {
     DRV_USART_OBJ* dObj = NULL;
     DRV_USART_CLIENT_OBJ* clientObj = NULL;
-    bool wasUSARTIntEnabled = false;
-    bool wasDMAInttEnabled = false;
 
     /* Validate the driver handle */
     clientObj = _DRV_USART_DriverHandleValidate(handle);
@@ -437,14 +488,14 @@ static bool _DRV_USART_QueuePurge (const DRV_HANDLE handle, DRV_USART_DIRECTION 
 
     dObj = (DRV_USART_OBJ* )&gDrvUSARTObj[clientObj->drvIndex];
 
-    if (_DRV_USART_ResourceLock(dObj, &wasUSARTIntEnabled, &wasDMAInttEnabled) == false)
+    if (_DRV_USART_ResourceLock(dObj) == false)
     {
         return false;
     }
 
     _DRV_USART_RemoveClientTransfersFromList(dObj, clientObj, dir);
 
-    _DRV_USART_ResourceUnlock(dObj, wasUSARTIntEnabled, wasDMAInttEnabled);
+    _DRV_USART_ResourceUnlock(dObj);
 
     return true;
 }
@@ -459,7 +510,7 @@ static void _DRV_USART_WriteSubmit( DRV_USART_OBJ* dObj )
         // List is empty
         return;
     }
-    
+
     if (bufferObj->currentState != DRV_USART_BUFFER_IS_IN_QUEUE)
     {
         return;
@@ -501,7 +552,7 @@ static void _DRV_USART_ReadSubmit( DRV_USART_OBJ* dObj )
         // List is empty.
         return;
     }
-    
+
     if (bufferObj->currentState != DRV_USART_BUFFER_IS_IN_QUEUE)
     {
         return;
@@ -529,12 +580,11 @@ static void _DRV_USART_ReadSubmit( DRV_USART_OBJ* dObj )
 }
 
 static void _DRV_USART_BufferQueueTask(
-    DRV_USART_OBJ* object,
+    DRV_USART_OBJ* dObj,
     DRV_USART_DIRECTION direction,
     DRV_USART_BUFFER_EVENT event
 )
 {
-    DRV_USART_OBJ* dObj = object;
     DRV_USART_CLIENT_OBJ* clientObj = NULL;
     DRV_USART_BUFFER_OBJ* currentObj = NULL;
     DRV_USART_BUFFER_HANDLE bufferHandle;
@@ -739,14 +789,13 @@ SYS_MODULE_OBJ DRV_USART_Initialize(
     dObj->bufferObjPool         = usartInit->bufferObjPool;
     dObj->transmitObjList       = (uintptr_t)NULL;
     dObj->receiveObjList        = (uintptr_t)NULL;
-    dObj->interruptUSART        = usartInit->interruptUSART;
     dObj->interruptNestingCount = 0;
+    dObj->interruptSources      = usartInit->interruptSources;
 <#if core.DMA_ENABLE?has_content>
     dObj->txDMAChannel          = usartInit->dmaChannelTransmit;
     dObj->rxDMAChannel          = usartInit->dmaChannelReceive;
     dObj->txAddress             = usartInit->usartTransmitAddress;
     dObj->rxAddress             = usartInit->usartReceiveAddress;
-    dObj->interruptDMA          = usartInit->interruptDMA;
 </#if>
     dObj->remapDataWidth        = usartInit->remapDataWidth;
     dObj->remapParity           = usartInit->remapParity;
@@ -896,8 +945,6 @@ void DRV_USART_Close( DRV_HANDLE handle )
 {
     DRV_USART_OBJ* dObj = NULL;
     DRV_USART_CLIENT_OBJ* clientObj = NULL;
-    bool wasUSARTIntEnabled = false;
-    bool wasDMAInttEnabled = false;
 
     /* Validate the driver handle */
     clientObj = _DRV_USART_DriverHandleValidate(handle);
@@ -917,8 +964,8 @@ void DRV_USART_Close( DRV_HANDLE handle )
 
     /* We will be removing the transfers queued by the client. Guard the linked list
      * against interrupts and/or other threads trying to modify the linked list.
-    */
-    if (_DRV_USART_ResourceLock(dObj, &wasUSARTIntEnabled, &wasDMAInttEnabled) == false)
+     */
+    if (_DRV_USART_ResourceLock(dObj) == false)
     {
         return;
     }
@@ -926,7 +973,7 @@ void DRV_USART_Close( DRV_HANDLE handle )
     _DRV_USART_RemoveClientTransfersFromList(dObj, clientObj, DRV_USART_DIRECTION_TX);
     _DRV_USART_RemoveClientTransfersFromList(dObj, clientObj, DRV_USART_DIRECTION_RX);
 
-    _DRV_USART_ResourceUnlock(dObj, wasUSARTIntEnabled, wasDMAInttEnabled);
+    _DRV_USART_ResourceUnlock(dObj);
 
     /* Reduce the number of clients */
     dObj->nClients--;
@@ -945,8 +992,6 @@ DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
     DRV_USART_OBJ* dObj = NULL;
     DRV_USART_CLIENT_OBJ* clientObj = NULL;
     DRV_USART_ERROR errors = DRV_USART_ERROR_NONE;
-    bool wasUSARTIntEnabled = false;
-    bool wasDMAInttEnabled = false;
 
     /* Validate the driver handle */
     clientObj = _DRV_USART_DriverHandleValidate(handle);
@@ -958,7 +1003,7 @@ DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
 
     dObj = (DRV_USART_OBJ* )&gDrvUSARTObj[clientObj->drvIndex];
 
-    if (_DRV_USART_ResourceLock(dObj, &wasUSARTIntEnabled, &wasDMAInttEnabled) == false)
+    if (_DRV_USART_ResourceLock(dObj) == false)
     {
         return errors;
     }
@@ -966,7 +1011,7 @@ DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
     errors = clientObj->errors;
     clientObj->errors = DRV_USART_ERROR_NONE;
 
-    _DRV_USART_ResourceUnlock(dObj, wasUSARTIntEnabled, wasDMAInttEnabled);
+    _DRV_USART_ResourceUnlock(dObj);
 
     return errors;
 }
@@ -995,13 +1040,13 @@ bool DRV_USART_SerialSetup(
     }
 
     dObj = (DRV_USART_OBJ* )&gDrvUSARTObj[clientObj->drvIndex];
-    
+
     /* Grab a mutex */
     if(OSAL_MUTEX_Lock(&(dObj->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
-    {                        
+    {
         return isSuccess;
     }
-    
+
     setupRemap.dataWidth = (DRV_USART_DATA_BIT)dObj->remapDataWidth[setup->dataWidth];
     setupRemap.parity = (DRV_USART_PARITY)dObj->remapParity[setup->parity];
     setupRemap.stopBits = (DRV_USART_STOP_BIT)dObj->remapStopBits[setup->stopBits];
@@ -1030,8 +1075,6 @@ void DRV_USART_BufferEventHandlerSet(
 {
     DRV_USART_OBJ* dObj = NULL;
     DRV_USART_CLIENT_OBJ* clientObj = NULL;
-    bool wasUSARTIntEnabled = false;
-    bool wasDMAInttEnabled = false;
 
     /* Validate the driver handle */
     clientObj = _DRV_USART_DriverHandleValidate(handle);
@@ -1043,7 +1086,7 @@ void DRV_USART_BufferEventHandlerSet(
 
     dObj = (DRV_USART_OBJ* )&gDrvUSARTObj[clientObj->drvIndex];
 
-    if (_DRV_USART_ResourceLock(dObj, &wasUSARTIntEnabled, &wasDMAInttEnabled) == false)
+    if (_DRV_USART_ResourceLock(dObj) == false)
     {
         return;
     }
@@ -1051,7 +1094,7 @@ void DRV_USART_BufferEventHandlerSet(
     clientObj->eventHandler = eventHandler;
     clientObj->context = context;
 
-    _DRV_USART_ResourceUnlock(dObj, wasUSARTIntEnabled, wasDMAInttEnabled);
+    _DRV_USART_ResourceUnlock(dObj);
 }
 
 static void _DRV_USART_BufferAdd(
@@ -1065,8 +1108,6 @@ static void _DRV_USART_BufferAdd(
     DRV_USART_OBJ* dObj = NULL;
     DRV_USART_CLIENT_OBJ* clientObj = NULL;
     DRV_USART_BUFFER_OBJ* bufferObj = NULL;
-    bool wasUSARTIntEnabled = false;
-    bool wasDMAInttEnabled = false;
 
     /* Validate the Request */
     if (bufferHandle == NULL)
@@ -1091,7 +1132,7 @@ static void _DRV_USART_BufferAdd(
 
     dObj = (DRV_USART_OBJ* )&gDrvUSARTObj[clientObj->drvIndex];
 
-    if (_DRV_USART_ResourceLock(dObj, &wasUSARTIntEnabled, &wasDMAInttEnabled) == false)
+    if (_DRV_USART_ResourceLock(dObj) == false)
     {
         return;
     }
@@ -1101,7 +1142,7 @@ static void _DRV_USART_BufferAdd(
 
     if(bufferObj == NULL)
     {
-        _DRV_USART_ResourceUnlock(dObj, wasUSARTIntEnabled, wasDMAInttEnabled);
+        _DRV_USART_ResourceUnlock(dObj);
         return;
     }
 
@@ -1129,7 +1170,7 @@ static void _DRV_USART_BufferAdd(
         }
     }
 
-    _DRV_USART_ResourceUnlock(dObj, wasUSARTIntEnabled, wasDMAInttEnabled);
+    _DRV_USART_ResourceUnlock(dObj);
 }
 
 void DRV_USART_WriteBufferAdd(
@@ -1157,8 +1198,6 @@ size_t DRV_USART_BufferCompletedBytesGet( DRV_USART_BUFFER_HANDLE bufferHandle )
     DRV_USART_OBJ* dObj = NULL;
     DRV_USART_BUFFER_OBJ* bufferObj = NULL;
     size_t processedBytes = DRV_USART_BUFFER_HANDLE_INVALID;
-    bool wasUSARTIntEnabled = false;
-    bool wasDMAInttEnabled = false;
 
     /* Get buffer object from bufferHandle */
     bufferObj = _DRV_USART_GetBufferObj(bufferHandle);
@@ -1171,7 +1210,7 @@ size_t DRV_USART_BufferCompletedBytesGet( DRV_USART_BUFFER_HANDLE bufferHandle )
     /* Get USART driver object from bufferHandle */
     dObj = _DRV_USART_GetDriverObj(bufferHandle);
 
-    if (_DRV_USART_ResourceLock(dObj, &wasUSARTIntEnabled, &wasDMAInttEnabled) == false)
+    if (_DRV_USART_ResourceLock(dObj) == false)
     {
         return processedBytes;
     }
@@ -1197,7 +1236,7 @@ size_t DRV_USART_BufferCompletedBytesGet( DRV_USART_BUFFER_HANDLE bufferHandle )
         processedBytes = bufferObj->nCount;
     }
 
-    _DRV_USART_ResourceUnlock(dObj, wasUSARTIntEnabled, wasDMAInttEnabled);
+    _DRV_USART_ResourceUnlock(dObj);
 
     return processedBytes;
 }

@@ -8,16 +8,16 @@ static DRV_USART_BUFFER_OBJ drvUSART${INDEX?string}BufferObjPool[DRV_USART_QUEUE
 </#if>
 
 const DRV_USART_PLIB_INTERFACE drvUsart${INDEX?string}PlibAPI = {
-        .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ReadCallbackRegister,
-        .read = (DRV_USART_PLIB_READ)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_Read,
-        .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ReadIsBusy,
-        .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ReadCountGet,
-        .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_WriteCallbackRegister,
-        .write = (DRV_USART_PLIB_WRITE)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_Write,
-        .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_WriteIsBusy,
-        .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_WriteCountGet,
-        .errorGet = (DRV_USART_PLIB_ERROR_GET)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ErrorGet,
-        .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_SerialSetup
+    .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ReadCallbackRegister,
+    .read = (DRV_USART_PLIB_READ)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_Read,
+    .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ReadIsBusy,
+    .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ReadCountGet,
+    .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_WriteCallbackRegister,
+    .write = (DRV_USART_PLIB_WRITE)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_Write,
+    .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_WriteIsBusy,
+    .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_WriteCountGet,
+    .errorGet = (DRV_USART_PLIB_ERROR_GET)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ErrorGet,
+    .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_SerialSetup
 };
 
 <@compress single_line=true>
@@ -125,6 +125,59 @@ const uint32_t drvUsart${INDEX?string}remapError[] = {
 };
 </@compress>
 
+<#if drv_usart.DRV_USART_COMMON_MODE == "Asynchronous">
+    <#if core.DMA_ENABLE?has_content>
+        <#assign DMA_PLIB = "core.DMA_INSTANCE_NAME">
+        <#assign DMA_PLIB_MULTI_IRQn = "core." + DMA_PLIB?eval + "_MULTI_IRQn">
+        <#if DMA_PLIB_MULTI_IRQn?eval??>
+            <#assign DMA_TX_CHANNEL = "DRV_USART_TX_DMA_CHANNEL">
+            <#assign DMA_TX_CHANNEL_INDEX = "core." + DMA_PLIB?eval + "_CHANNEL" + DMA_TX_CHANNEL?eval + "_INT_SRC">
+            <#assign DMA_RX_CHANNEL = "DRV_USART_RX_DMA_CHANNEL">
+            <#assign DMA_RX_CHANNEL_INDEX = "core." + DMA_PLIB?eval + "_CHANNEL" + DMA_RX_CHANNEL?eval + "_INT_SRC">
+        </#if>
+    </#if>
+    <#assign USART_PLIB = "DRV_USART_PLIB">
+    <#assign USART_PLIB_MULTI_IRQn = "core." + USART_PLIB?eval + "_MULTI_IRQn">
+    <#if USART_PLIB_MULTI_IRQn?eval??>
+        <#assign USART_PLIB_TX_READY_INDEX = "core." + USART_PLIB?eval + "_USART_TX_READY_INT_SRC">
+        <#assign USART_PLIB_RX_INDEX = "core." + USART_PLIB?eval + "_USART_RX_INT_SRC">
+        <#assign USART_PLIB_ERROR_INDEX = "core." + USART_PLIB?eval + "_USART_ERROR_INT_SRC">
+    </#if>
+
+const DRV_USART_INTERRUPT_SOURCES drvUSART${INDEX?string}InterruptSources =
+{
+    <#if USART_PLIB_MULTI_IRQn?eval??>
+        <#lt>    /* Peripheral has more than one interrupt vector */
+        <#lt>    .isSingleIntSrc                        = false,
+        <#lt>    /* Peripheral interrupt lines */
+        <#lt>    .intSources.multi.usartTxReadyInt      = ${USART_PLIB_TX_READY_INDEX?eval},
+        <#lt>    .intSources.multi.usartRxCompleteInt   = ${USART_PLIB_RX_INDEX?eval},
+        <#lt>    .intSources.multi.usartErrorInt        = ${USART_PLIB_ERROR_INDEX?eval},
+    <#else>
+        <#lt>    /* Peripheral has single interrupt vector */
+        <#lt>    .isSingleIntSrc                        = true,
+        <#lt>    /* Peripheral interrupt line */
+        <#lt>    .intSources.usartInterrupt             = ${DRV_USART_PLIB}_IRQn,
+    </#if>
+    <#if core.DMA_ENABLE?has_content>
+        <#if DMA_PLIB_MULTI_IRQn?eval??>
+            <#if DRV_USART_TX_DMA == true>
+				<#lt>    /* DMA Tx interrupt line */
+                <#lt>    .intSources.multi.dmaTxChannelInt      = ${DMA_TX_CHANNEL_INDEX?eval},
+            </#if>
+            <#if DRV_USART_RX_DMA == true>
+				<#lt>    /* DMA Rx interrupt line */
+                <#lt>    .intSources.multi.dmaRxChannelInt      = ${DMA_RX_CHANNEL_INDEX?eval},
+            </#if>
+        <#else>
+            <#if DRV_USART_TX_DMA == true || DRV_USART_RX_DMA == true>
+				<#lt>    /* DMA interrupt line */
+                <#lt>    .intSources.dmaInterrupt               = ${core.DMA_INSTANCE_NAME}_IRQn,
+            </#if>
+        </#if>
+    </#if>
+};
+</#if>
 
 const DRV_USART_INIT drvUsart${INDEX?string}InitData =
 {
@@ -141,33 +194,29 @@ const DRV_USART_INIT drvUsart${INDEX?string}InitData =
         <#lt>    .dmaChannelTransmit = DRV_USART_XMIT_DMA_CH_IDX${INDEX?string},
 
         <#lt>    .usartTransmitAddress = (void *)${.vars["${DRV_USART_PLIB?lower_case}"].TRANSMIT_DATA_REGISTER},
+
     <#else>
         <#lt>    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
-    </#if>
 
+    </#if>
     <#if DRV_USART_RX_DMA == true>
         <#lt>    .dmaChannelReceive = DRV_USART_RCV_DMA_CH_IDX${INDEX?string},
 
         <#lt>    .usartReceiveAddress = (void *)${.vars["${DRV_USART_PLIB?lower_case}"].RECEIVE_DATA_REGISTER},
+
     <#else>
         <#lt>    .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
+
     </#if>
 </#if>
-
 <#if drv_usart.DRV_USART_COMMON_MODE == "Asynchronous">
-
     /* Combined size of transmit and receive buffer objects */
     .bufferObjPoolSize = DRV_USART_QUEUE_SIZE_IDX${INDEX?string},
 
     /* USART transmit and receive buffer buffer objects pool */
     .bufferObjPool = (uintptr_t)&drvUSART${INDEX?string}BufferObjPool[0],
 
-    .interruptUSART = ${DRV_USART_PLIB}_IRQn,
-
-    <#if core.DMA_ENABLE?has_content>
-        <#lt>    .interruptDMA = ${core.DMA_INSTANCE_NAME}_IRQn,
-    </#if>
-
+    .interruptSources = &drvUSART${INDEX?string}InterruptSources,
 </#if>
 
     .remapDataWidth = drvUsart${INDEX?string}remapDataWidth,

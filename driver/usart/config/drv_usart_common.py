@@ -89,6 +89,15 @@ def instantiateComponent(usartComponent):
     usartSystemDefFile.setSourcePath("driver/usart/templates/system/system_definitions.h.ftl")
     usartSystemDefFile.setMarkup(True)
 
+    usartSymHeaderDefFile = usartComponent.createFileSymbol("DRV_USART_DEF", None)
+    usartSymHeaderDefFile.setSourcePath("driver/usart/templates/drv_usart_definitions.h.ftl")
+    usartSymHeaderDefFile.setOutputName("drv_usart_definitions.h")
+    usartSymHeaderDefFile.setDestPath("driver/usart")
+    usartSymHeaderDefFile.setProjectPath("config/" + configName + "/driver/usart/")
+    usartSymHeaderDefFile.setType("HEADER")
+    usartSymHeaderDefFile.setMarkup(True)
+    usartSymHeaderDefFile.setOverwrite(True)
+
     # Async Source Files
     usartAsyncSourceFile = usartComponent.createFileSymbol("USART_ASYNC_SOURCE", None)
     usartAsyncSourceFile.setSourcePath("driver/usart/src/async/drv_usart.c.ftl")

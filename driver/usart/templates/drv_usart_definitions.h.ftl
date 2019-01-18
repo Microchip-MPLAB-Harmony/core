@@ -171,6 +171,32 @@ typedef struct
 
 } DRV_USART_PLIB_INTERFACE;
 
+typedef struct
+{
+    int32_t         usartTxReadyInt;
+    int32_t         usartRxCompleteInt;
+    int32_t         usartErrorInt;
+<#if core.DMA_ENABLE?has_content>
+    int32_t         dmaTxChannelInt;
+    int32_t         dmaRxChannelInt;
+</#if>
+} DRV_USART_MULTI_INT_SRC;
+
+typedef union
+{
+    DRV_USART_MULTI_INT_SRC             multi;
+    int32_t                             usartInterrupt;
+<#if core.DMA_ENABLE?has_content>
+    int32_t                             dmaInterrupt;
+</#if>
+} DRV_USART_INT_SRC;
+
+typedef struct
+{
+    bool                        isSingleIntSrc;
+    DRV_USART_INT_SRC           intSources;
+} DRV_USART_INTERRUPT_SOURCES;
+
 // *****************************************************************************
 /* USART Driver Initialization Data Declaration */
 
@@ -199,8 +225,6 @@ struct _DRV_USART_INIT
     /* This is the USART receive register address. Used for DMA operation. */
     void*                                   usartReceiveAddress;
 
-    /* This is the DMA channel interrupt source. */
-    INT_SOURCE                              interruptDMA;
 </#if>
 
     const uint32_t*                         remapDataWidth;
@@ -211,17 +235,15 @@ struct _DRV_USART_INIT
 
     const uint32_t*                         remapError;
 
-<#if drv_usart.DRV_USART_COMMON_MODE == "Asynchronous">
+<#if DRV_USART_COMMON_MODE == "Asynchronous">
     /* Size of transmit and receive buffer pool */
     uint32_t                                bufferObjPoolSize;
 
     /* Pointer to the transmit and receive buffer pool */
     uintptr_t                               bufferObjPool;
 
-    /* Interrupt source ID for the USART interrupt. */
-    INT_SOURCE                              interruptUSART;
+    const DRV_USART_INTERRUPT_SOURCES*      interruptSources;
 </#if>
-
 };
 
 //DOM-IGNORE-BEGIN

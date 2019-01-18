@@ -230,9 +230,6 @@ typedef struct
     /* Linked list of receive buffer objects */
     uintptr_t                               receiveObjList;
 
-    /* Interrupt Source of USART */
-    INT_SOURCE                              interruptUSART;
-
     /* To identify if we are running from interrupt context or not */
     uint8_t                                 interruptNestingCount;
 
@@ -248,9 +245,6 @@ typedef struct
 
     /* This is the USART receive register address. Used for DMA operation. */
     void*                                   rxAddress;
-
-    /* This is the DMA channel interrupt source. */
-    INT_SOURCE                              interruptDMA;
 </#if>
 
     /* Mutex to protect access to the client objects */
@@ -266,6 +260,8 @@ typedef struct
     const uint32_t*                         remapStopBits;
 
     const uint32_t*                         remapError;
+
+    const DRV_USART_INTERRUPT_SOURCES*      interruptSources;
 
 } DRV_USART_OBJ;
 

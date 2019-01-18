@@ -131,15 +131,6 @@ def instantiateComponent(usartComponent, index):
     usartHeaderFile.setType("HEADER")
     usartHeaderFile.setOverwrite(True)
 
-    usartSymHeaderDefFile = usartComponent.createFileSymbol("DRV_USART_DEF", None)
-    usartSymHeaderDefFile.setSourcePath("driver/usart/templates/drv_usart_definitions.h.ftl")
-    usartSymHeaderDefFile.setOutputName("drv_usart_definitions.h")
-    usartSymHeaderDefFile.setDestPath("driver/usart")
-    usartSymHeaderDefFile.setProjectPath("config/" + configName + "/driver/usart/")
-    usartSymHeaderDefFile.setType("HEADER")
-    usartSymHeaderDefFile.setMarkup(True)
-    usartSymHeaderDefFile.setOverwrite(True)
-
     # System Template Files
     usartSystemDefObjFile = usartComponent.createFileSymbol("USART_DEF_OBJ", None)
     usartSystemDefObjFile.setType("STRING")
