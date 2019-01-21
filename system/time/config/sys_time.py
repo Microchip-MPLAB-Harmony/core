@@ -95,7 +95,7 @@ def instantiateComponent(sysTimeComponent):
     sysTimeHeaderLocalFile.setOutputName("sys_time_local.h")
     sysTimeHeaderLocalFile.setDestPath("system/time/src")
     sysTimeHeaderLocalFile.setProjectPath("config/" + configName + "/system/time/")
-    sysTimeHeaderLocalFile.setType("SOURCE")
+    sysTimeHeaderLocalFile.setType("HEADER")
     sysTimeHeaderLocalFile.setOverwrite(True)
 
     sysTimeSystemDefFile = sysTimeComponent.createFileSymbol("SYS_TIME_DEF", None)
