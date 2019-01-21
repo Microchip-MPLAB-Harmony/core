@@ -235,7 +235,7 @@ def instantiateComponent(consoleComponent):
     consoleHeaderLocalFile.setOutputName("sys_console_local.h")
     consoleHeaderLocalFile.setDestPath("system/console/src")
     consoleHeaderLocalFile.setProjectPath("config/" + configName + "/system/console/")
-    consoleHeaderLocalFile.setType("SOURCE")
+    consoleHeaderLocalFile.setType("HEADER")
     consoleHeaderLocalFile.setOverwrite(True)
 
     consoleSourceFile = consoleComponent.createFileSymbol("SYS_CONSOLE_SOURCE", None)
@@ -251,7 +251,7 @@ def instantiateComponent(consoleComponent):
     consoleUARTHeaderFile.setOutputName("sys_console_uart.h")
     consoleUARTHeaderFile.setDestPath("system/console/src")
     consoleUARTHeaderFile.setProjectPath("config/" + configName + "/system/console/")
-    consoleUARTHeaderFile.setType("SOURCE")
+    consoleUARTHeaderFile.setType("HEADER")
     consoleUARTHeaderFile.setOverwrite(True)
 
     consoleUARTDefinitionsHeaderFile = consoleComponent.createFileSymbol("SYS_CONSOLE_UART_DEFINITIONS_HEADER", None)
@@ -259,7 +259,7 @@ def instantiateComponent(consoleComponent):
     consoleUARTDefinitionsHeaderFile.setOutputName("sys_console_uart_definitions.h")
     consoleUARTDefinitionsHeaderFile.setDestPath("system/console/src")
     consoleUARTDefinitionsHeaderFile.setProjectPath("config/" + configName + "/system/console/")
-    consoleUARTDefinitionsHeaderFile.setType("SOURCE")
+    consoleUARTDefinitionsHeaderFile.setType("HEADER")
     consoleUARTDefinitionsHeaderFile.setOverwrite(True)
 
     consoleUARTSourceFile = consoleComponent.createFileSymbol("SYS_CONSOLE_UART_SOURCE", None)
@@ -285,7 +285,7 @@ def instantiateComponent(consoleComponent):
     debugHeaderLocalFile.setOutputName("sys_debug_local.h")
     debugHeaderLocalFile.setDestPath("system/console/src")
     debugHeaderLocalFile.setProjectPath("config/" + configName + "/system/console/")
-    debugHeaderLocalFile.setType("SOURCE")
+    debugHeaderLocalFile.setType("HEADER")
     debugHeaderLocalFile.setOverwrite(True)
     debugHeaderLocalFile.setEnabled(debugEnable.getValue())
     debugHeaderLocalFile.setDependencies(genDebugFiles, ["SYS_DEBUG_ENABLE"])
