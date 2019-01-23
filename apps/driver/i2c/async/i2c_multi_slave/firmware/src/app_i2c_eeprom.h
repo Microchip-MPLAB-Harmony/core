@@ -151,6 +151,8 @@ typedef struct
      * read from the temperature sensor */
     volatile bool isTemperatureReady;                    
 
+    uint8_t dummyData;   
+    
 } APP_EEPROM_DATA;
 
 

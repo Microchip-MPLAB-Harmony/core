@@ -144,8 +144,6 @@ void APP_I2C_EEPROM_Initialize ( void )
 
 void APP_I2C_EEPROM_Tasks ( void )
 {
-    uint8_t dummyData = 0;   
-    
     switch (appEEPROMData.state)
     {
         case APP_EEPROM_STATE_INIT:
@@ -207,7 +205,7 @@ void APP_I2C_EEPROM_Tasks ( void )
                 
                 DRV_I2C_WriteTransferAdd(appEEPROMData.i2cHandle, 
                     APP_EEPROM_SLAVE_ADDR, 
-                    (void *)&dummyData, 
+                    (void *)&appEEPROMData.dummyData, 
                     1, 
                     &appEEPROMData.transferHandle 
                 );
@@ -236,7 +234,7 @@ void APP_I2C_EEPROM_Tasks ( void )
                 
                 DRV_I2C_WriteTransferAdd(appEEPROMData.i2cHandle, 
                     APP_EEPROM_SLAVE_ADDR, 
-                    (void *)&dummyData, 
+                    (void *)&appEEPROMData.dummyData, 
                     1, 
                     &appEEPROMData.transferHandle 
                 );                

@@ -137,6 +137,7 @@ typedef struct
     /* flag to indicate timer expiry*/
     volatile bool tmrExpired;
 
+    uint8_t registerAddr;
 } APP_TEMP_DATA;
 
 // *****************************************************************************

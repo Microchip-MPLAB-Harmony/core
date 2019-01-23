@@ -159,7 +159,6 @@ void APP_I2C_TEMP_SENSOR_Initialize ( void )
 
 void APP_I2C_TEMP_SENSOR_Tasks ( void )
 {
-    uint8_t registerAddr;
     int16_t temp;
     
     /* Check the application's current state. */
@@ -191,8 +190,8 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
                 appTempData.tmrExpired = false;                                
                 
                 /* Initiate a read transfer to read temperature value from temperature sensor */
-                registerAddr = APP_TEMP_TEMPERATURE_REG_ADDR;                                                                                
-                DRV_I2C_WriteReadTransferAdd(appTempData.i2cHandle, APP_TEMP_SLAVE_ADDR, (void*)&registerAddr, 1, (void *)appTempData.rxBuffer, 2, &appTempData.transferHandle );              
+                appTempData.registerAddr = APP_TEMP_TEMPERATURE_REG_ADDR;                                                                                
+                DRV_I2C_WriteReadTransferAdd(appTempData.i2cHandle, APP_TEMP_SLAVE_ADDR, (void*)&appTempData.registerAddr, 1, (void *)appTempData.rxBuffer, 2, &appTempData.transferHandle );              
                                                     
                 if (appTempData.transferHandle != DRV_I2C_TRANSFER_HANDLE_INVALID)
                 {
