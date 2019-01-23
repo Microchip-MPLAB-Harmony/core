@@ -27,6 +27,33 @@ const DRV_I2C_PLIB_INTERFACE drvI2C${INDEX?string}PLibAPI = {
     .callbackRegister = (DRV_I2C_PLIB_CALLBACK_REGISTER)${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_CallbackRegister,
 };
 
+<#if drv_i2c.DRV_I2C_MODE == "Asynchronous">
+    <#assign I2C_PLIB = "DRV_I2C_PLIB">
+    <#assign I2C_PLIB_MULTI_IRQn = "core." + I2C_PLIB?eval + "_MULTI_IRQn">
+    <#if I2C_PLIB_MULTI_IRQn?eval??>
+        <#assign I2C_PLIB_TX_INDEX = "core." + I2C_PLIB?eval + "_I2CM_TX_INT_SRC">
+        <#assign I2C_PLIB_RX_INDEX = "core." + I2C_PLIB?eval + "_I2CM_RX_INT_SRC">
+        <#assign I2C_PLIB_ERROR_INDEX = "core." + I2C_PLIB?eval + "_I2CM_ERROR_INT_SRC">
+    </#if>
+
+const DRV_I2C_INTERRUPT_SOURCES drvI2C${INDEX?string}InterruptSources =
+{
+    <#if I2C_PLIB_MULTI_IRQn?eval??>
+        <#lt>    /* Peripheral has more than one interrupt vectors */
+        <#lt>    .isSingleIntSrc                        = false,
+        <#lt>    /* Peripheral interrupt lines */
+        <#lt>    .intSources.multi.i2cTxInt             = ${I2C_PLIB_TX_INDEX?eval},
+        <#lt>    .intSources.multi.i2cRxInt             = ${I2C_PLIB_RX_INDEX?eval},
+        <#lt>    .intSources.multi.i2cErrorInt          = ${I2C_PLIB_ERROR_INDEX?eval},
+    <#else>
+        <#lt>    /* Peripheral has single interrupt vector */
+        <#lt>    .isSingleIntSrc                        = true,
+        <#lt>    /* Peripheral interrupt line */
+        <#lt>    .intSources.i2cInterrupt               = ${DRV_I2C_PLIB}_IRQn,
+    </#if>
+};
+</#if>
+
 /* I2C Driver Initialization Data */
 const DRV_I2C_INIT drvI2C${INDEX?string}InitData =
 {
@@ -40,14 +67,14 @@ const DRV_I2C_INIT drvI2C${INDEX?string}InitData =
     .clientObjPool = (uintptr_t)&drvI2C${INDEX?string}ClientObjPool[0],
 <#if drv_i2c.DRV_I2C_MODE == "Asynchronous">
 
-    /* I2C IRQ */
-    .interruptI2C = DRV_I2C_INT_SRC_IDX${INDEX?string},
-
     /* I2C TWI Queue Size */
     .queueSize = DRV_I2C_QUEUE_SIZE_IDX${INDEX?string},
 
     /* I2C Transfer Objects */
     .transferObj = (uintptr_t)&drvI2C${INDEX?string}TransferObj[0],
+
+    /* I2C interrupt sources */
+    .interruptSources = &drvI2C${INDEX?string}InterruptSources,
 </#if>
 
     /* I2C Clock Speed */

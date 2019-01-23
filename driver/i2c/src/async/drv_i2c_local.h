@@ -48,6 +48,7 @@
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
+#include "driver/i2c/drv_i2c_definitions.h"
 #include "osal/osal.h"
 
 // *****************************************************************************
@@ -175,7 +176,7 @@ typedef struct
     const DRV_I2C_PLIB_INTERFACE* i2cPlib;
 
     /* Interrupt Source of I2C */
-    IRQn_Type interruptI2C;
+    const DRV_I2C_INTERRUPT_SOURCES* interruptSources;
 
     /* Memory pool for Client Objects */
     uintptr_t clientObjPool;

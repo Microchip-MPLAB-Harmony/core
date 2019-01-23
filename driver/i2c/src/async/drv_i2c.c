@@ -82,30 +82,35 @@ static inline uint16_t DRV_I2C_UPDATE_TOKEN(uint16_t token)
 
 static bool DRV_I2C_ResourceLock(DRV_I2C_OBJ * dObj)
 {
+    bool interruptStatus;
+    const DRV_I2C_INTERRUPT_SOURCES* intInfo = dObj->interruptSources;
+
     /* We will allow buffers to be added in the interrupt
        context of this I2C driver. But we must make
        sure that if we are in interrupt, then we should
        not modify mutexes. */
     if(dObj->interruptNestingCount == 0)
     {
-        /* Grab a mutex. This is okay because we are not in an
-           interrupt context */
-        if(OSAL_MUTEX_Lock(&(dObj->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+        /* Grab a mutex. This is okay because we are not in an interrupt context */
+        if(OSAL_MUTEX_Lock(&(dObj->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
         {
-            /* We will disable interrupts so that the queue
-               status does not get updated asynchronously.
-               This code will always execute. */
-            SYS_INT_SourceDisable(dObj->interruptI2C);
-
-            return true;
-        }
-        else
-        {
-            /* The mutex acquisition timed out. Return with an
-               invalid handle. This code will not execute
-               if there is no RTOS. */
             return false;
         }
+    }
+
+    if (intInfo->isSingleIntSrc == true)
+    {
+        /* Disable I2C interrupt */
+         SYS_INT_SourceDisable(intInfo->intSources.i2cInterrupt);
+    }
+    else
+    {
+        /* Disable I2C interrupt sources */
+        interruptStatus = SYS_INT_Disable();
+        SYS_INT_SourceDisable(intInfo->intSources.multi.i2cTxInt);
+        SYS_INT_SourceDisable(intInfo->intSources.multi.i2cRxInt);
+        SYS_INT_SourceDisable(intInfo->intSources.multi.i2cErrorInt);
+        SYS_INT_Restore(interruptStatus);
     }
 
     return true;
@@ -113,8 +118,24 @@ static bool DRV_I2C_ResourceLock(DRV_I2C_OBJ * dObj)
 
 static void DRV_I2C_ResourceUnlock(DRV_I2C_OBJ * dObj)
 {
-    /* Restore the interrupt if it was enabled */
-    SYS_INT_SourceEnable(dObj->interruptI2C);
+    bool interruptStatus;
+    const DRV_I2C_INTERRUPT_SOURCES* intInfo = dObj->interruptSources;
+
+    /* Restore the interrupts back */
+    if (intInfo->isSingleIntSrc == true)
+    {
+        /* Enable I2C interrupt */
+         SYS_INT_SourceEnable(intInfo->intSources.i2cInterrupt);
+    }
+    else
+    {
+        /* Enable I2C interrupt sources */
+        interruptStatus = SYS_INT_Disable();
+        SYS_INT_SourceEnable(intInfo->intSources.multi.i2cTxInt);
+        SYS_INT_SourceEnable(intInfo->intSources.multi.i2cRxInt);
+        SYS_INT_SourceEnable(intInfo->intSources.multi.i2cErrorInt);
+        SYS_INT_Restore(interruptStatus);
+    }
 
     if(dObj->interruptNestingCount == 0)
     {
@@ -172,10 +193,6 @@ static bool DRV_I2C_TransferQueueFlush( DRV_I2C_CLIENT_OBJ * clientObj )
     DRV_I2C_TRANSFER_OBJ * current = NULL;
     DRV_I2C_TRANSFER_OBJ * previous = NULL;
     DRV_I2C_TRANSFER_OBJ * dirty = NULL;
-    bool interruptWasEnabled = false;
-
-    /* Disable the transmit interrupt */
-    interruptWasEnabled = SYS_INT_SourceDisable(dObj->interruptI2C);
 
     current = dObj->trQueueHead;
     while(current != NULL)
@@ -218,12 +235,6 @@ static bool DRV_I2C_TransferQueueFlush( DRV_I2C_CLIENT_OBJ * clientObj )
     else
     {
         dObj->trQueueTail = previous;
-    }
-
-    /* Re-enable the interrupt if it was enabled */
-    if(interruptWasEnabled)
-    {
-        SYS_INT_SourceEnable(dObj->interruptI2C);
     }
 
     return true;
@@ -354,7 +365,7 @@ SYS_MODULE_OBJ DRV_I2C_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
 
     /* Update the driver parameters */
     dObj->i2cPlib                     = i2cInit->i2cPlib;
-    dObj->interruptI2C                = i2cInit->interruptI2C;
+    dObj->interruptSources            = i2cInit->interruptSources;
     dObj->clientObjPool               = i2cInit->clientObjPool;
     dObj->nClientsMax                 = i2cInit->numClients;
     dObj->trObjArr                    = (DRV_I2C_TRANSFER_OBJ *)i2cInit->transferObj;
@@ -373,9 +384,6 @@ SYS_MODULE_OBJ DRV_I2C_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
      * dObj as a context parameter will be used to distinguish the events
      * from different instances. */
     dObj->i2cPlib->callbackRegister(DRV_I2C_PLibCallbackHandler, (uintptr_t)dObj);
-
-    /* Enable the system interrupt flag */
-    SYS_INT_SourceEnable(dObj->interruptI2C);
 
     /* Update the status */
     dObj->status = SYS_STATUS_READY;
@@ -509,6 +517,8 @@ void DRV_I2C_Close( const DRV_HANDLE handle )
         return;
     }
 
+    DRV_I2C_ResourceLock(dObj);
+
     /* Remove all buffers that this client owns from the driver queue. This
        function will map to _DRV_I2C_ClientBufferQueueObjectsRemove() if the
        driver was built for buffer queue support. Else this condition always
@@ -524,6 +534,8 @@ void DRV_I2C_Close( const DRV_HANDLE handle )
 
         clientObj->inUse = false;
     }
+
+    DRV_I2C_ResourceUnlock(dObj);
 
     OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
 

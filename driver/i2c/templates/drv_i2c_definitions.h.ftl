@@ -12,7 +12,7 @@
 
   Description:
     This file provides implementation-specific definitions for the I2C
-	driver's system interface.
+    driver's system interface.
 *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -66,6 +66,7 @@
 #ifndef SYS_DEBUG
     #define SYS_DEBUG(x, y)
 #endif
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Types
@@ -89,8 +90,8 @@ typedef enum
 {
     /* Busy*/
     DRV_I2C_ERROR_NONE,
-	
-	/* Transfer Successful */
+    
+    /* Transfer Successful */
     DRV_I2C_ERROR_NACK,
 
 } DRV_I2C_ERROR;
@@ -107,6 +108,25 @@ typedef bool (* DRV_I2C_PLIB_WRITE_READ)( uint16_t, uint8_t *, uint32_t, uint8_t
 typedef DRV_I2C_ERROR (* DRV_I2C_PLIB_ERROR_GET)( void );
 
 typedef void (* DRV_I2C_PLIB_CALLBACK_REGISTER)(DRV_I2C_PLIB_CALLBACK, uintptr_t);
+
+typedef struct
+{
+    int32_t         i2cTxInt;
+    int32_t         i2cRxInt;
+    int32_t         i2cErrorInt;
+} DRV_I2C_MULTI_INT_SRC;
+
+typedef union
+{
+    DRV_I2C_MULTI_INT_SRC           multi;
+    int32_t                         i2cInterrupt;
+} DRV_I2C_INT_SRC;
+
+typedef struct
+{
+    bool                        isSingleIntSrc;
+    DRV_I2C_INT_SRC             intSources;
+} DRV_I2C_INTERRUPT_SOURCES;
 
 // *****************************************************************************
 /* I2C Driver PLib Interface Data
@@ -172,14 +192,13 @@ typedef struct
     uint32_t numClients;
 <#if DRV_I2C_MODE == "Asynchronous">
 
-    /* Interrupt source ID for the I2C interrupt. */
-    INT_SOURCE interruptI2C;
-
     /* Driver Queue Size */
     size_t queueSize;
 
     /* Memory Pool for Transfer Objects */
     uintptr_t transferObj;
+
+    const DRV_I2C_INTERRUPT_SOURCES*      interruptSources;
 </#if>
 
     /* peripheral clock speed */
