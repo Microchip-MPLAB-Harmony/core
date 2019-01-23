@@ -64,12 +64,7 @@
 // *****************************************************************************
 // Section: Global Data Definitions
 // *****************************************************************************
-// *****************************************************************************
-#define APP_EEPROM_MEMORY_ADDR                     0x00
-/* Size of the test string must be less than or equal to EEPROM page size (16 bytes)*/
-#define APP_EEPROM_TEST_STRING                     "ATSAM TWIHS DEMO"
-#define APP_EEPROM_TEST_STRING_SIZE                strlen(APP_EEPROM_TEST_STRING)
-#define APP_EEPROM_AT24MAC402_SLAVE_ADDR           0x0057
+
 // *****************************************************************************
 /* Application Data
 
@@ -141,7 +136,6 @@ void APP_I2C_EEPROM_Initialize ( void )
 
 void APP_I2C_EEPROM_Tasks ( void )
 {
-    uint8_t dummyData = 0;
     static bool isSuccess = false;
 
     /* Check the application's current state. */
@@ -171,7 +165,7 @@ void APP_I2C_EEPROM_Tasks ( void )
             if (DRV_I2C_WriteTransfer( appData.drvI2CHandle, APP_EEPROM_AT24MAC402_SLAVE_ADDR, (void *)appData.txBuffer, (1+APP_EEPROM_TEST_STRING_SIZE)) == true)
             {
                 /* Poll EEPROM busy status. EEPROM will NAK while write is in progress*/
-                while (DRV_I2C_WriteTransfer( appData.drvI2CHandle, APP_EEPROM_AT24MAC402_SLAVE_ADDR, (void *)&dummyData, 1 ) == false);
+                while (DRV_I2C_WriteTransfer( appData.drvI2CHandle, APP_EEPROM_AT24MAC402_SLAVE_ADDR, (void *)&appData.dummyData, 1 ) == false);
                 appData.state = APP_I2C_EEPROM_STATE_READ;
             }
             else

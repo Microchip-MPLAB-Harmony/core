@@ -126,6 +126,8 @@ typedef struct
      uint8_t txBuffer[1 + APP_EEPROM_PAGE_SIZE];
 
      uint8_t rxBuffer[APP_EEPROM_PAGE_SIZE];
+
+     uint8_t dummyData;
 } APP_I2C_EEPROM_DATA;
 
 
