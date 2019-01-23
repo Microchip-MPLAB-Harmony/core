@@ -167,6 +167,8 @@ typedef struct
     /* Transfer status */
     volatile APP_TRANSFER_STATUS transferStatus;
     
+    uint8_t dummyData;
+    
 } APP_DATA;
 
 // *****************************************************************************

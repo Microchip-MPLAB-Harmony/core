@@ -61,11 +61,7 @@
 // *****************************************************************************
 // *****************************************************************************
 // *****************************************************************************
-//Defines the on-board EEPROM AT24MAC402's I2C Address.
-#define APP_AT24MAC_DEVICE_ADDR             0x0057
-#define APP_AT24MAC_MEMORY_ADDR             0x00
-#define APP_WRITE_DATA_LENGTH               17
-#define APP_READ_DATA_LENGTH                16
+
 // *****************************************************************************
 /* Application Data
 
@@ -157,8 +153,6 @@ void APP_Initialize ( void )
 
 void APP_Tasks ( void )
 {        
-    uint8_t dummyData = 0;
-    
     /* Check the application's current state. */
     switch ( appData.state )
     {
@@ -190,7 +184,7 @@ void APP_Tasks ( void )
             DRV_I2C_WriteTransferAdd( 
                 appData.drvI2CHandle,
                 APP_AT24MAC_DEVICE_ADDR,
-                (void *)&dummyData,
+                (void *)&appData.dummyData,
                 1,
                 &appData.transferHandle 
             );
@@ -244,7 +238,7 @@ void APP_Tasks ( void )
                 DRV_I2C_WriteTransferAdd( 
                     appData.drvI2CHandle,
                     APP_AT24MAC_DEVICE_ADDR,
-                    (void *)&dummyData,
+                    (void *)&appData.dummyData,
                     1,
                     &appData.transferHandle 
                 );
@@ -277,7 +271,7 @@ void APP_Tasks ( void )
                 DRV_I2C_WriteTransferAdd( 
                     appData.drvI2CHandle,
                     APP_AT24MAC_DEVICE_ADDR,
-                    (void *)&dummyData,
+                    (void *)&appData.dummyData,
                     1,
                     &appData.transferHandle 
                 );
