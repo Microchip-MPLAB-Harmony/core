@@ -1,4 +1,23 @@
 /*******************************************************************************
+  DMA System Service Mapping File
+
+  Company:
+    Microchip Technology Inc.
+
+  File Name:
+    sys_dma_mapping.h
+
+  Summary:
+    DMA System Service mapping file.
+
+  Description:
+    This header file contains the mapping of the APIs defined in the API header
+    to either the function implementations or macro implementation or the
+    specific variant implementation.
+*******************************************************************************/
+
+//DOM-IGNORE-BEGIN
+/******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
@@ -20,14 +39,24 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
+//DOM-IGNORE-END
 
-#ifndef TOOLCHAIN_SPECIFICS_H
-#define TOOLCHAIN_SPECIFICS_H
-
-#include <sys/types.h>
-#define NO_INIT    __attribute__((section(".no_init")))
-#define SECTION(a) __attribute__((__section__(a)))
+#ifndef SYS_DMA_MAPPING_H
+#define SYS_DMA_MAPPING_H
 
 
-#endif // end of header
+// *****************************************************************************
+// *****************************************************************************
+// Section: DMA System Service Mapping
+// *****************************************************************************
+// *****************************************************************************
 
+
+#define SYS_DMA_ChannelCallbackRegister(channel, eventHandler, context)
+
+#define SYS_DMA_ChannelTransfer(channel, srcAddr, destAddr, blockSize)
+
+#define SYS_DMA_ChannelIsBusy(channel)
+
+#define SYS_DMA_ChannelDisable(channel)
+#endif // SYS_DMA_MAPPING_H
