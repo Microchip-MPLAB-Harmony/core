@@ -48,6 +48,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
+#include "driver/spi/drv_spi.h"
 #include "osal/osal.h"
 
 // *****************************************************************************
@@ -157,75 +158,72 @@ typedef struct _DRV_SPI_TRANSFER_OBJ
 typedef struct
 {
     /* Flag to indicate this object is in use  */
-    bool inUse;
+    bool                            inUse;
 
     /* Flag to indicate that driver has been opened Exclusively*/
-    bool isExclusive;
+    bool                            isExclusive;
 
     /* Keep track of the number of clients
      * that have opened this driver
      */
-    size_t nClients;
+    size_t                          nClients;
 
     /* Maximum number of clients */
-    size_t nClientsMax;
+    size_t                          nClientsMax;
 
     /* Memory pool for Client Objects */
-    uintptr_t clientObjPool;
+    uintptr_t                       clientObjPool;
 
     /* The status of the driver */
-    SYS_STATUS status;
+    SYS_STATUS                      status;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    const DRV_SPI_PLIB_INTERFACE* spiPlib;
+    const DRV_SPI_PLIB_INTERFACE*   spiPlib;
 
     /* start of the memory pool for transfer objects */
-    DRV_SPI_TRANSFER_OBJ* transferArray;
+    DRV_SPI_TRANSFER_OBJ*           transferArray;
 
     /* size/depth of the queue */
-    uint8_t transferQueueSize;
+    uint8_t                         transferQueueSize;
 
     /* objects will be allocated from this end one by one */
-    uint8_t freePoolHeadIndex;
+    uint8_t                         freePoolHeadIndex;
 
     /* objects will be processed from this end one by one */
-    uint8_t queueHeadIndex;
+    uint8_t                         queueHeadIndex;
 
     /* new objects will be added at this end */
-    uint8_t queueTailIndex;
+    uint8_t                         queueTailIndex;
 
     /* Instance specific token counter used to generate unique client/transfer handles */
-    uint16_t spiTokenCount;
+    uint16_t                        spiTokenCount;
 
     /* to identify if we are running from interrupt context or not */
-    uint8_t interruptNestingCount;
+    uint8_t                         interruptNestingCount;
 
 <#if core.DMA_ENABLE?has_content>
     /* DMA related elements */
     /* Transmit DMA Channel */
-    SYS_DMA_CHANNEL txDMAChannel;
+    SYS_DMA_CHANNEL                 txDMAChannel;
 
     /* Receive DMA Channel */
-    SYS_DMA_CHANNEL rxDMAChannel;
+    SYS_DMA_CHANNEL                 rxDMAChannel;
 
     /* This is the SPI transmit register address. Used for DMA operation. */
-    void* txAddress;
+    void*                           txAddress;
 
     /* This is the SPI receive register address. Used for DMA operation. */
-    void* rxAddress;
+    void*                           rxAddress;
 
     /* Dummy data is read into this variable by RX DMA */
-    uint32_t rxDummyData;
-
+    uint32_t                        rxDummyData;
 </#if>
+
     /* This holds the number of dummy data to be transmitted */
-    size_t txDummyDataSize;
+    size_t                          txDummyDataSize;
 
     /* This holds the number of dummy data to be received */
-    size_t rxDummyDataSize;
-
-    /* Interrupt source ID for SPI or DMA interrupt. */
-    INT_SOURCE interruptSource;
+    size_t                          rxDummyDataSize;
 
     /* Mutex to protect access to the client objects */
     OSAL_MUTEX_DECLARE(mutexClientObjects);
@@ -233,11 +231,13 @@ typedef struct
     /* Mutex to protect access to the transfer objects */
     OSAL_MUTEX_DECLARE(mutexTransferObjects);
 
-    const uint32_t*     remapDataBits;
+    const uint32_t*                 remapDataBits;
 
-    const uint32_t*     remapClockPolarity;
+    const uint32_t*                 remapClockPolarity;
 
-    const uint32_t*     remapClockPhase;
+    const uint32_t*                 remapClockPhase;
+
+    const DRV_SPI_INTERRUPT_SOURCES*      interruptSources;
 
 } DRV_SPI_OBJ;
 

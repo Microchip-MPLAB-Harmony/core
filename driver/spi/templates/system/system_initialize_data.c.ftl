@@ -99,6 +99,59 @@ const uint32_t drvSPI${INDEX?string}remapClockPhase[] =
 };
 </@compress>
 
+<#if DRV_SPI_MODE == "Asynchronous">
+    <#if core.DMA_ENABLE?has_content>
+        <#assign DMA_PLIB = "core.DMA_INSTANCE_NAME">
+        <#assign DMA_PLIB_MULTI_IRQn = "core." + DMA_PLIB?eval + "_MULTI_IRQn">
+        <#if DMA_PLIB_MULTI_IRQn?eval??>
+            <#assign DMA_TX_CHANNEL = "DRV_SPI_TX_DMA_CHANNEL">
+            <#assign DMA_TX_CHANNEL_INDEX = "core." + DMA_PLIB?eval + "_CHANNEL" + DMA_TX_CHANNEL?eval + "_INT_SRC">
+            <#assign DMA_RX_CHANNEL = "DRV_SPI_RX_DMA_CHANNEL">
+            <#assign DMA_RX_CHANNEL_INDEX = "core." + DMA_PLIB?eval + "_CHANNEL" + DMA_RX_CHANNEL?eval + "_INT_SRC">
+        </#if>
+    </#if>
+    <#assign SPI_PLIB = "DRV_SPI_PLIB">
+    <#assign SPI_PLIB_MULTI_IRQn = "core." + SPI_PLIB?eval + "_MULTI_IRQn">
+    <#if SPI_PLIB_MULTI_IRQn?eval??>
+        <#assign SPI_PLIB_TX_READY_INDEX = "core." + SPI_PLIB?eval + "_SPI_TX_READY_INT_SRC">
+        <#assign SPI_PLIB_TX_COMPLETE_INDEX = "core." + SPI_PLIB?eval + "_SPI_TX_COMPLETE_INT_SRC">
+        <#assign SPI_PLIB_RX_INDEX = "core." + SPI_PLIB?eval + "_SPI_RX_INT_SRC">
+        <#assign SPI_PLIB_ERROR_INDEX = "core." + SPI_PLIB?eval + "_SPI_ERROR_INT_SRC">
+    </#if>
+
+const DRV_SPI_INTERRUPT_SOURCES drvSPI${INDEX?string}InterruptSources =
+{
+    <#if SPI_PLIB_MULTI_IRQn?eval??>
+        <#lt>    /* Peripheral has more than one interrupt vectors */
+        <#lt>    .isSingleIntSrc                        = false,
+        <#lt>    /* Peripheral interrupt lines */
+        <#lt>    .intSources.multi.spiTxReadyInt        = ${SPI_PLIB_TX_READY_INDEX?eval},
+        <#lt>    .intSources.multi.spiTxCompleteInt     = ${SPI_PLIB_TX_COMPLETE_INDEX?eval},
+        <#lt>    .intSources.multi.spiRxInt             = ${SPI_PLIB_RX_INDEX?eval},
+    <#else>
+        <#lt>    /* Peripheral has single interrupt vector */
+        <#lt>    .isSingleIntSrc                        = true,
+        <#lt>    /* Peripheral interrupt line */
+        <#lt>    .intSources.spiInterrupt               = ${DRV_SPI_PLIB}_IRQn,
+    </#if>
+    <#if core.DMA_ENABLE?has_content>
+        <#if DMA_PLIB_MULTI_IRQn?eval??>
+            <#if DRV_SPI_TX_RX_DMA == true>
+                <#lt>    /* DMA Tx interrupt line */
+                <#lt>    .intSources.multi.dmaTxChannelInt      = ${DMA_TX_CHANNEL_INDEX?eval},
+                <#lt>    /* DMA Rx interrupt line */
+                <#lt>    .intSources.multi.dmaRxChannelInt      = ${DMA_RX_CHANNEL_INDEX?eval},
+            </#if>
+        <#else>
+            <#if DRV_SPI_TX_RX_DMA == true>
+                <#lt>    /* DMA interrupt line */
+                <#lt>    .intSources.dmaInterrupt               = ${core.DMA_INSTANCE_NAME}_IRQn,
+            </#if>
+        </#if>
+    </#if>
+};
+</#if>
+
 /* SPI Driver Initialization Data */
 const DRV_SPI_INIT drvSPI${INDEX?string}InitData =
 {
@@ -136,25 +189,18 @@ const DRV_SPI_INIT drvSPI${INDEX?string}InitData =
 
     /* DMA Channel for Receive */
     .dmaChannelReceive  = SYS_DMA_CHANNEL_NONE,
+</#if>
+</#if>
 
-</#if>
-</#if>
 <#if DRV_SPI_MODE == "Asynchronous">
-    <#if DRV_SPI_TX_RX_DMA == true>
-        <#lt>    /* Interrupt source is DMA */
-        <#lt> <#if core.DMA_ENABLE?has_content>
-        <#lt>   .interruptSource = ${core.DMA_INSTANCE_NAME}_IRQn,
-        <#lt> </#if>
-    <#else>
-        <#lt>    /* Interrupt source is SPI */
-        <#lt>    .interruptSource    = DRV_SPI_INT_SRC_IDX${INDEX?string},
-    </#if>
-
     /* SPI Queue Size */
     .queueSize = DRV_SPI_QUEUE_SIZE_IDX${INDEX?string},
 
     /* SPI Transfer Objects Pool */
     .transferObjPool = (uintptr_t)&drvSPI${INDEX?string}TransferObjPool[0],
+
+    /* SPI interrupt sources (SPI peripheral and DMA) */
+    .interruptSources = &drvSPI${INDEX?string}InterruptSources,
 </#if>
 };
 
