@@ -7,5 +7,7 @@
 <#if SELECT_RTOS == "FreeRTOS">
 #include "osal/osal_freertos.h"
 </#if>
-
+<#if SELECT_RTOS == "MicriumOSIII">
+#include "osal/osal_ucos3.h"
+</#if>
 #endif//__OSAL_DEFINITIONS_H

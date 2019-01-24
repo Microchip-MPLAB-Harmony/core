@@ -31,6 +31,8 @@ global osalHeaderDefFile
 global osalHeaderImpBasicFile
 global osalHeaderFreeRtosFile
 global osalSourceFreeRtosFile
+global osalHeaderMicriumOSIIIFile
+global osalSourceMicriumOSIIIFile
 global osalSystemDefFile
 
 def enableOSAL(symbol, event):
@@ -49,6 +51,8 @@ def genOsalFiles(symbol, event):
     global osalHeaderImpBasicFile
     global osalHeaderFreeRtosFile
     global osalSourceFreeRtosFile
+    global osalHeaderMicriumOSIIIFile
+    global osalSourceMicriumOSIIIFile
     global osalSystemDefFile
 
     genOsal = Database.getSymbolValue("HarmonyCore", "ENABLE_OSAL")
@@ -60,12 +64,16 @@ def genOsalFiles(symbol, event):
         osalHeaderImpBasicFile.setEnabled(osalSelectRTOS.getValue() == "BareMetal")
         osalHeaderFreeRtosFile.setEnabled(osalSelectRTOS.getValue() == "FreeRTOS")
         osalSourceFreeRtosFile.setEnabled(osalSelectRTOS.getValue() == "FreeRTOS")
+        osalHeaderMicriumOSIIIFile.setEnabled(osalSelectRTOS.getValue() == "MicriumOSIII")
+        osalSourceMicriumOSIIIFile.setEnabled(osalSelectRTOS.getValue() == "MicriumOSIII")
     else:
         osalHeaderFile.setEnabled(False)
         osalHeaderDefFile.setEnabled(False)
         osalHeaderImpBasicFile.setEnabled(False)
         osalHeaderFreeRtosFile.setEnabled(False)
         osalSourceFreeRtosFile.setEnabled(False)
+        osalHeaderMicriumOSIIIFile.setEnabled(False)
+        osalSourceMicriumOSIIIFile.setEnabled(False)
         osalSystemDefFile.setEnabled(False)
 
 ############################################################################
@@ -77,9 +85,10 @@ osal.setDefaultValue(False)
 osal.setDependencies(enableOSAL, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON"])
 
 
-osalSelectRTOS = harmonyCoreComponent.createComboSymbol("SELECT_RTOS", None, ["BareMetal", "FreeRTOS"])
+osalSelectRTOS = harmonyCoreComponent.createComboSymbol("SELECT_RTOS", None, ["BareMetal", "FreeRTOS", "MicriumOSIII"])
 osalSelectRTOS.setLabel("Select any RTOS or Bare-metal")
 osalSelectRTOS.setDefaultValue("BareMetal")
+osalSelectRTOS.setReadOnly(True)
 osalSelectRTOS.setVisible(False)
 
 # OSAL RTOS Configuration
@@ -129,6 +138,26 @@ osalSourceFreeRtosFile.setProjectPath("/osal/")
 osalSourceFreeRtosFile.setType("SOURCE")
 osalSourceFreeRtosFile.setOverwrite(True)
 osalSourceFreeRtosFile.setEnabled(False)
+
+osalHeaderMicriumOSIIIFile = harmonyCoreComponent.createFileSymbol("OSAL_MICRIUM_OS_III_H", None)
+osalHeaderMicriumOSIIIFile.setSourcePath("/osal/templates/osal_ucos3.h.ftl")
+osalHeaderMicriumOSIIIFile.setOutputName("osal_ucos3.h")
+osalHeaderMicriumOSIIIFile.setDestPath("/osal/")
+osalHeaderMicriumOSIIIFile.setProjectPath("/osal/")
+osalHeaderMicriumOSIIIFile.setType("HEADER")
+osalHeaderMicriumOSIIIFile.setOverwrite(True)
+osalHeaderMicriumOSIIIFile.setEnabled(False)
+osalHeaderMicriumOSIIIFile.setMarkup(True)
+
+osalSourceMicriumOSIIIFile = harmonyCoreComponent.createFileSymbol("OSAL_MICRIUM_OS_III_C", None)
+osalSourceMicriumOSIIIFile.setSourcePath("/osal/templates/osal_ucos3.c.ftl")
+osalSourceMicriumOSIIIFile.setOutputName("osal_ucos3.c")
+osalSourceMicriumOSIIIFile.setDestPath("/osal/")
+osalSourceMicriumOSIIIFile.setProjectPath("/osal/")
+osalSourceMicriumOSIIIFile.setType("SOURCE")
+osalSourceMicriumOSIIIFile.setOverwrite(True)
+osalSourceMicriumOSIIIFile.setEnabled(False)
+osalSourceMicriumOSIIIFile.setMarkup(True)
 
 osalSystemDefFile = harmonyCoreComponent.createFileSymbol("OSAL_SYSDEF_H", None)
 osalSystemDefFile.setType("STRING")

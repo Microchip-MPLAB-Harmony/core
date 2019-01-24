@@ -42,13 +42,13 @@ extern "C" {
 *                                                    INCLUDE FILES
 ------------------------------------------------------------------------------------------------------------------------
 */
-
-#include <xc.h>
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include "os.h"
+#include "device.h"
+
 /*
 ------------------------------------------------------------------------------------------------------------------------
 *                                                     DATA TYPES
@@ -110,8 +110,13 @@ OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID);
 OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID);
 uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID);
 
+<#if core.CoreArchitecture == "MIPS" >
 OSAL_CRITSECT_DATA_TYPE __attribute__((nomips16,nomicromips)) OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity);
 void __attribute__((nomips16,nomicromips)) OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status);
+<#else>
+OSAL_CRITSECT_DATA_TYPE OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity);
+void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status);
+</#if>
 
 OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID);
 OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID);
@@ -123,8 +128,41 @@ void OSAL_Free(void* pData);
 
 OSAL_RESULT OSAL_Initialize();
 
-__inline__ const char* OSAL_Name(void);
+// *****************************************************************************
+/* Function: const char* OSAL_Name()
 
+  Summary:
+    Obtain the name of the underlying RTOS.
+
+  Description:
+    This function returns a const char* to the textual name of the RTOS.
+    The name is a NULL terminated string.
+
+  Precondition:
+    None
+
+  Parameters:
+    None
+
+  Returns:
+    const char* -   Name of the underlying RTOS or NULL
+
+  Example:
+    <code>
+    // get the RTOS name
+    const char* sName;
+
+    sName = OSAL_Name();
+    sprintf(buff, "RTOS: %s", sName);
+    </code>
+
+  Remarks:
+
+ */
+__STATIC_INLINE __attribute__((always_inline)) const char* OSAL_Name(void)
+{
+    return ("Micrium uC/OS-III");
+}
 
 #ifdef __cplusplus
 }

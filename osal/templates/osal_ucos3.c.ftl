@@ -31,7 +31,6 @@
 */
 
 #define  MICRIUM_SOURCE
-#include <xc.h>
 #include <os_cfg_app.h>
 #include <os.h>                                 /* uC/OS-III header file                                              */
 
@@ -91,7 +90,11 @@ const  CPU_CHAR  *osal_micrium__c = "$Id: $";
     perform task locking or completely disable all interrupts.
 ------------------------------------------------------------------------------------------------------------------------
 */
-OSAL_CRITSECT_DATA_TYPE __inline__  __attribute__((nomips16)) __attribute__((nomicromips)) __attribute__((always_inline)) OSAL_CRIT_Enter (OSAL_CRIT_TYPE  severity)
+<#if core.CoreArchitecture == "MIPS" >
+OSAL_CRITSECT_DATA_TYPE __INLINE __attribute__((nomips16)) __attribute__((nomicromips)) __attribute__((always_inline)) OSAL_CRIT_Enter (OSAL_CRIT_TYPE  severity)
+<#else>
+OSAL_CRITSECT_DATA_TYPE __INLINE __attribute__((always_inline)) OSAL_CRIT_Enter (OSAL_CRIT_TYPE  severity)
+</#if>
 {
   OS_ERR  err;
   CPU_SR_ALLOC();
@@ -153,7 +156,11 @@ OSAL_CRITSECT_DATA_TYPE __inline__  __attribute__((nomips16)) __attribute__((nom
     perform task locking or completely disable all interrupts.
 ------------------------------------------------------------------------------------------------------------------------
 */
-void __inline__ __attribute__((nomips16)) __attribute__((nomicromips)) __attribute__((always_inline)) OSAL_CRIT_Leave (OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
+<#if core.CoreArchitecture == "MIPS" >
+void __INLINE __attribute__((nomips16)) __attribute__((nomicromips)) __attribute__((always_inline)) OSAL_CRIT_Leave (OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
+<#else>
+void __INLINE __attribute__((always_inline)) OSAL_CRIT_Leave (OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
+</#if>
 {
   OS_ERR  err;
   CPU_SR_ALLOC();
@@ -204,45 +211,6 @@ void __inline__ __attribute__((nomips16)) __attribute__((nomicromips)) __attribu
 OSAL_RESULT  OSAL_Initialize (void)
 {
   return (OSAL_RESULT_TRUE);
-}
-
-/*
-------------------------------------------------------------------------------------------------------------------------
-                                                       OSAL_Name()
-------------------------------------------------------------------------------------------------------------------------
-
-  Function: const  char *OSAL_Name (void)
-
-  Summary:
-    Get the name of the underlying kernel
-
-  Description:
-    This functions returns the name of the underlying RTOS kernel.
-
-  Precondition:
-    None
-
-  Parameters:
-    None
-
-  Returns:
-    None
-
-  Example:
-    <code>
-    const  char *sName;
-
-    sName = OSAL_Name();
-    sprintf(buff, "RTOS Kernel: %s", sName);
-    </code>
-
-  Remarks:
-------------------------------------------------------------------------------------------------------------------------
-*/
-
-const char __inline__ __attribute__((always_inline)) *OSAL_Name (void)
-{
-  return ("Micrium uC/OS-III");
 }
 
 /*
