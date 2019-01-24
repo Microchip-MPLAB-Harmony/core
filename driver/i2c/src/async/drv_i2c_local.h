@@ -65,13 +65,13 @@
 #define DRV_I2C_TOKEN_MAX                       (0xFFFF)
 
 // *****************************************************************************
-/* I2C Buffer Object Flags
+/* I2C Transfer Object Flags
 
   Summary:
-    Defines the I2C Buffer Object Flags.
+    Defines the I2C Transfer Object Flags.
 
   Description:
-    This enumeration defines the I2C Buffer Object flags.
+    This enumeration defines transfer type (read/write) of the I2C Buffer Object.
 
   Remarks:
     None.
@@ -91,6 +91,29 @@ typedef enum
 } DRV_I2C_TRANSFER_OBJ_FLAGS;
 
 // *****************************************************************************
+/* I2C Transfer Object State
+
+  Summary:
+    Defines the status of the I2C Transfer Object.
+
+  Description:
+    This enumeration defines the status of the I2C Transfer Object.
+
+  Remarks:
+    None.
+*/
+
+typedef enum
+{
+    DRV_I2C_TRANSFER_OBJ_IS_FREE,
+
+    DRV_I2C_TRANSFER_OBJ_IS_IN_QUEUE,
+
+    DRV_I2C_TRANSFER_OBJ_IS_PROCESSING,
+
+}DRV_I2C_TRANSFER_OBJ_STATE;
+
+// *****************************************************************************
 /* I2C Driver Transfer Object
 
   Summary:
@@ -105,39 +128,42 @@ typedef enum
 
 typedef struct _DRV_I2C_TRANSFER_OBJ
 {
-    /* Transfer Object array index */
-    uint32_t index;
+    /* True if object is allocated */
+    bool                            inUse;
 
     /* Slave address */
-    uint16_t slaveAddress;
+    uint16_t                        slaveAddress;
 
     /* Pointer to the application read buffer */
-    void* readBuffer;
+    void*                           readBuffer;
 
     /* Number of bytes to be read */
-    size_t readSize;
+    size_t                          readSize;
 
     /* Pointer to the application write buffer */
-    void* writeBuffer;
+    void*                           writeBuffer;
 
     /* Number of bytes to be written */
-    size_t writeSize;
+    size_t                          writeSize;
 
     /* Transfer Object Flag */
-    DRV_I2C_TRANSFER_OBJ_FLAGS flag;
+    DRV_I2C_TRANSFER_OBJ_FLAGS      flag;
 
     /* Current status of the buffer */
-    DRV_I2C_TRANSFER_EVENT event;
+    DRV_I2C_TRANSFER_EVENT          event;
 
-    /* The client object that owns this buffer */
-    void* hClient;
+    /* Handle to the client that owns this buffer object */
+    DRV_HANDLE                      clientHandle;
+
+    /* Current state of the buffer */
+    DRV_I2C_TRANSFER_OBJ_STATE      currentState;
 
     /* Buffer Handle object that was assigned to this buffer when it was added to the
      * queue. */
-    DRV_I2C_TRANSFER_HANDLE transferHandle;
+    DRV_I2C_TRANSFER_HANDLE         transferHandle;
 
     /* Next buffer pointer */
-    struct _DRV_I2C_TRANSFER_OBJ* next;
+    struct _DRV_I2C_TRANSFER_OBJ*   next;
 
 } DRV_I2C_TRANSFER_OBJ;
 
@@ -157,56 +183,49 @@ typedef struct _DRV_I2C_TRANSFER_OBJ
 typedef struct
 {
     /* Flag to indicate this object is in use  */
-    bool inUse;
-
-    /* Flag to indicate that driver has been opened Exclusively*/
-    bool isExclusive;
-
-    /* Keep track of the number of clients
-      that have opened this driver */
-    size_t nClients;
-
-    /* Maximum number of clients */
-    size_t nClientsMax;
+    bool                        inUse;
 
     /* The status of the driver */
-    SYS_STATUS status;
+    SYS_STATUS                  status;
+
+    /* Flag to indicate that driver has been opened Exclusively*/
+    bool                        isExclusive;
+
+    /* Keep track of the number of clients that have opened this driver */
+    size_t                      nClients;
+
+    /* Maximum number of clients */
+    size_t                      nClientsMax;
 
     /* PLIB API list that will be used by the driver to access the hardware */
     const DRV_I2C_PLIB_INTERFACE* i2cPlib;
 
-    /* Interrupt Source of I2C */
+    /* Interrupt Sources of I2C */
     const DRV_I2C_INTERRUPT_SOURCES* interruptSources;
 
     /* Memory pool for Client Objects */
-    uintptr_t clientObjPool;
+    uintptr_t                   clientObjPool;
 
-    /* Pointer to Transfer Objects array */
-    DRV_I2C_TRANSFER_OBJ* trObjArr;
+    /* Size of transfer objects queue */
+    uint32_t                    transferObjPoolSize;
 
-    /* Pointer to free list of Transfer Objects */
-    DRV_I2C_TRANSFER_OBJ* trObjFree;
+    /* Pointer to the transfer pool */
+    DRV_I2C_TRANSFER_OBJ*       transferObjPool;
 
-    /* The transfer Q head pointer */
-    DRV_I2C_TRANSFER_OBJ* trQueueHead;
+    /* Linked list of transfer objects */
+    DRV_I2C_TRANSFER_OBJ*       transferObjList;
 
-    /* The transfer Q tail pointer */
-    DRV_I2C_TRANSFER_OBJ* trQueueTail;
+    /* Instance specific token counter used to generate unique client/transfer handles */
+    uint16_t                    i2cTokenCount;
 
-    /* Transfer Queue Size */
-    size_t trQueueSize;
-
-    /* token for creating transfer handle */
-    uint16_t tokenCount;
+    /* Count to keep track of interrupt nesting */
+    uint32_t                    interruptNestingCount;
 
     /* client array protection mutex */
     OSAL_MUTEX_DECLARE (mutexClientObjects);
 
     /* transfer onject projection mutex */
     OSAL_MUTEX_DECLARE (mutexTransferObjects);
-
-    /* Count to keep track of interrupt nesting */
-    uint32_t interruptNestingCount;
 
 } DRV_I2C_OBJ;
 
@@ -227,25 +246,25 @@ typedef struct
 typedef struct
 {
     /* The hardware instance object associated with the client */
-    uint32_t                       drvIndex;
+    uint32_t                        drvIndex;
 
     /* The IO intent with which the client was opened */
-    DRV_IO_INTENT                  ioIntent;
+    DRV_IO_INTENT                   ioIntent;
 
     /* Errors associated with the I2C transfer */
-    volatile DRV_I2C_ERROR         errors;
+    volatile DRV_I2C_ERROR          errors;
 
-    /* This flags indicates if the object is in use or is
-     * available */
-    bool                           inUse;
+    /* This flags indicates if the object is in use or is available */
+    bool                            inUse;
 
     /* Event handler for this function */
-    DRV_I2C_TRANSFER_EVENT_HANDLER eventHandler;
+    DRV_I2C_TRANSFER_EVENT_HANDLER  eventHandler;
 
     /* Application Context associated with this client */
-    uintptr_t                      context;
+    uintptr_t                       context;
 
-
+    /* Client handle assigned to this client object when it was opened */
+    DRV_HANDLE                      clientHandle;
 
 } DRV_I2C_CLIENT_OBJ;
 
