@@ -1,4 +1,21 @@
 /*******************************************************************************
+ Debug Console Source file 
+
+  Company:
+    Microchip Technology Inc.
+
+  File Name:
+    debug_console.c
+
+  Summary:
+    RSTC Source File
+
+  Description:
+    None
+
+*******************************************************************************/
+
+/*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
@@ -21,13 +38,20 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-#ifndef TOOLCHAIN_SPECIFICS_H
-#define TOOLCHAIN_SPECIFICS_H
+#include "definitions.h"
 
-#include <sys/types.h>
-#define NO_INIT    __attribute__((section(".no_init")))
-#define SECTION(a) __attribute__((__section__(a)))
+int _mon_getc(int canblock)
+{
+   volatile int c = 0;
+   while(SERCOM2_USART_Read((void*)&c, 1) != true);
+   return c;
+}
 
-
-#endif // end of header
-
+void _mon_putc(char c)
+{
+   uint8_t size = 0;
+   do
+   {
+       size = SERCOM2_USART_Write((void*)&c, 1);
+   }while (size != 1);
+}
