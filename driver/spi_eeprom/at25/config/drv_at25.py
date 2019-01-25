@@ -209,7 +209,6 @@ def instantiateComponent(at25Component):
     at25SystemInitFile.setMarkup(True)
 
 def onAttachmentConnected(source, target):
-    global at25MemoryInterruptEnable
 
     localComponent = source["component"]
     remoteComponent = target["component"]
@@ -224,10 +223,8 @@ def onAttachmentConnected(source, target):
         plibUsed.setValue(at25PlibId.upper(), 1)
         Database.setSymbolValue(at25PlibId, "SPI_DRIVER_CONTROLLED", True, 1)
 
-        at25MemoryInterruptEnable.setValue(Database.getSymbolValue("core", at25PlibId + "_INTERRUPT_ENABLE"), 1)
 
 def onAttachmentDisconnected(source, target):
-    global at25MemoryInterruptEnable
 
     localComponent = source["component"]
     remoteComponent = target["component"]
@@ -241,4 +238,3 @@ def onAttachmentDisconnected(source, target):
         at25PlibId = remoteID.upper()
         Database.setSymbolValue(at25PlibId, "SPI_DRIVER_CONTROLLED", False, 1)
 
-        at25MemoryInterruptEnable.setValue(False, 1)
