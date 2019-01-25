@@ -203,7 +203,6 @@ def instantiateComponent(at24Component):
     at24SystemInitFile.setMarkup(True)
 
 def onAttachmentConnected(source, target):
-    global at24MemoryInterruptEnable
 
     localComponent = source["component"]
     remoteComponent = target["component"]
@@ -218,10 +217,8 @@ def onAttachmentConnected(source, target):
         plibUsed.setValue(at24PlibId, 1)
         Database.setSymbolValue(at24PlibId, "I2C_DRIVER_CONTROLLED", True, 1)
 
-        at24MemoryInterruptEnable.setValue(Database.getSymbolValue("core", at24PlibId + "_INTERRUPT_ENABLE"), 1)
 
 def onAttachmentDisconnected(source, target):
-    global at24MemoryInterruptEnable
 
     localComponent = source["component"]
     remoteComponent = target["component"]
@@ -235,4 +232,3 @@ def onAttachmentDisconnected(source, target):
         at24PlibId = remoteID.upper()
         Database.setSymbolValue(at24PlibId, "I2C_DRIVER_CONTROLLED", False, 1)
 
-        at24MemoryInterruptEnable.setValue(False, 1)
