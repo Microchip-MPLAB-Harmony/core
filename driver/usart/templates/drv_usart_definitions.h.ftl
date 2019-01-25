@@ -174,6 +174,7 @@ typedef struct
 typedef struct
 {
     int32_t         usartTxReadyInt;
+    int32_t         usartTxCompleteInt;
     int32_t         usartRxCompleteInt;
     int32_t         usartErrorInt;
 <#if core.DMA_ENABLE?has_content>
