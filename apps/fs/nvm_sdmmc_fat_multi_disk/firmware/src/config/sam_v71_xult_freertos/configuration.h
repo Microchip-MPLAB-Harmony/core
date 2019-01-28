@@ -71,10 +71,8 @@ extern "C" {
 // Section: System Configuration
 // *****************************************************************************
 // *****************************************************************************
-#define DCACHE_CLEAN_BY_ADDR(data, size)       SCB_CleanDCache_by_Addr((uint32_t *)data, size)
-#define DCACHE_INVALIDATE_BY_ADDR(data, size)  SCB_InvalidateDCache_by_Addr((uint32_t *)data, size)
 
-#define DATA_CACHE_ENABLED                     true
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -85,7 +83,7 @@ extern "C" {
 #define SYS_TIME_INDEX_0                     0
 #define SYS_TIME_MAX_TIMERS                  5
 #define SYS_TIME_HW_COUNTER_WIDTH            16
-#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFF
+#define SYS_TIME_HW_COUNTER_PERIOD           65535
 #define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
 #define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
 #define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
@@ -107,7 +105,7 @@ extern "C" {
 
 /* File System RTOS Configurations*/
 #define SYS_FS_STACK_SIZE                 1024
-#define SYS_FS_PRIORITY                   2
+#define SYS_FS_PRIORITY                   1
 
 
 
@@ -119,27 +117,19 @@ extern "C" {
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
-/* SDHC Driver Global Configuration Options */
-#define DRV_SDHC_INSTANCES_NUMBER 1
+/* SDMMC Driver Global Configuration Options */
+#define DRV_SDMMC_INSTANCES_NUMBER                       1
+#define DRV_SDMMC_CONFIG_SPEED_MODE_DEFAULT              0
+#define DRV_SDMMC_CONFIG_SPEED_MODE_HIGH                 1
+#define DRV_SDMMC_CONFIG_BUS_WIDTH_1_BIT                 0
+#define DRV_SDMMC_CONFIG_BUS_WIDTH_4_BIT                 1
 /* Memory Driver Global Configuration Options */
 #define DRV_MEMORY_INSTANCES_NUMBER          1
-
-
-/*** SDHC Driver Configuration ***/
-#define DRV_SDHC_CLIENTS_NUMBER 1
-#define DRV_SDHC_BUFFER_QUEUE_SIZE 1
-#define DRV_SDHC_CARD_DETECT_ENABLE  false
-#define	DRV_SDHC_WRITE_PROTECT_ENABLE  false
-
-/* SDHC Driver Instance RTOS Configurations*/
-#define DRV_SDHC_STACK_SIZE           512
-#define DRV_SDHC_PRIORITY             2
-
-
 
 /* Memory Driver Instance 0 Configuration */
 #define DRV_MEMORY_INDEX_0                   0
 #define DRV_MEMORY_CLIENTS_NUMBER_IDX0       1
+#define DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0    1
 #define DRV_MEMORY_DEVICE_START_ADDRESS      0x500000
 #define DRV_MEMORY_DEVICE_MEDIA_SIZE         1024UL
 #define DRV_MEMORY_DEVICE_PROGRAM_SIZE       512
@@ -148,6 +138,21 @@ extern "C" {
 /* Memory Driver Instance 0 RTOS Configurations*/
 #define DRV_MEMORY_STACK_SIZE_IDX0           1024
 #define DRV_MEMORY_PRIORITY_IDX0             1
+
+
+/*** SDMMC Driver Instance 0 Configuration ***/
+#define DRV_SDMMC_INDEX_0                                0
+#define DRV_SDMMC_CLIENTS_NUMBER_IDX0                    1
+#define DRV_SDMMC_QUEUE_SIZE_IDX0                        1
+#define DRV_SDMMC_CONFIG_SPEED_MODE_IDX0                 DRV_SDMMC_CONFIG_SPEED_MODE_DEFAULT
+#define DRV_SDMMC_CONFIG_BUS_WIDTH_IDX0                  DRV_SDMMC_CONFIG_BUS_WIDTH_4_BIT
+
+
+/* SDMMC Driver Instance 0 RTOS Configurations*/
+#define DRV_SDMMC_STACK_SIZE_IDX0                         1024
+#define DRV_SDMMC_PRIORITY_IDX0                           1
+#define DRV_SDMMC_RTOS_DELAY_IDX0                         10
+
 
 
 
