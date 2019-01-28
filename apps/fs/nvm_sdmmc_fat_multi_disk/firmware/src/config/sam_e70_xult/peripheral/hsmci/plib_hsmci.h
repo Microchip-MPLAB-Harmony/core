@@ -1,14 +1,14 @@
 /*******************************************************************************
-  MPU PLIB Implementation
+  HSMCI PLIB
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    plib_mpu.h
+    plib_hsmci.h
 
   Summary:
-    MPU PLIB Source File
+    HSMCI PLIB Header File
 
   Description:
     None
@@ -38,50 +38,69 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-#include "plib_mpu.h"
-#include "plib_mpu_local.h"
+#ifndef PLIB_HSMCI_H
+#define PLIB_HSMCI_H
 
+#include "plib_hsmci_common.h"
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: MPU Implementation
-// *****************************************************************************
-// *****************************************************************************
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
 
-void MPU_Initialize(void)
-{
-    /*** Disable MPU            ***/
-    MPU->CTRL = 0;
+    extern "C" {
 
-    /*** Configure MPU Regions  ***/
+#endif
+// DOM-IGNORE-END
 
-    /* Region 0 Name: FLASH, Base Address: 0x50000, Size: 1MB  */
-    MPU->RBAR = MPU_REGION(0, 0x50000);
-    MPU->RASR = MPU_REGION_SIZE(19) | MPU_RASR_AP(MPU_RASR_AP_READWRITE_Val) | MPU_ATTR_NORMAL_WT \
-                | MPU_ATTR_ENABLE  ;
+#include <stdint.h>
+#include <stdbool.h>
+#include <string.h>
 
+void HSMCI_SetBusWidth ( HSMCI_BUS_WIDTH busWidth );
 
+void HSMCI_SetSpeedMode ( HSMCI_SPEED_MODE speedMode );
 
+void HSMCI_SetBlockSize ( uint16_t blockSize );
 
+void HSMCI_SetBlockCount ( uint16_t numBlocks );
 
+bool HSMCI_IsCmdLineBusy (void);
 
+bool HSMCI_IsDatLineBusy (void);
 
+void HSMCI_SetClock ( uint32_t clock );
 
+uint16_t HSMCI_GetCommandError(void);
 
+uint16_t HSMCI_GetDataError(void);
 
+void HSMCI_ReadResponse ( HSMCI_READ_RESPONSE_REG respReg, uint32_t* response );
 
+void HSMCI_Initialize( void );
 
+void HSMCI_InitModule( void );
 
+void HSMCI_CallbackRegister(HSMCI_CALLBACK callback, uintptr_t contextHandle);
 
+void HSMCI_SendCommand ( 
+    uint8_t opCode, 
+    uint32_t argument,
+    uint8_t respType, 
+    HSMCI_DataTransferFlags transferFlags
+);
 
+void HSMCI_SetupDma
+(
+    uint8_t* buffer,
+    uint32_t numBytes,
+    HSMCI_DATA_TRANSFER_DIR direction
+);
 
-    /* Enable Memory Management Fault */
-    SCB->SHCSR |= (SCB_SHCSR_MEMFAULTENA_Msk);
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
 
-    /* Enable MPU */
-    MPU->CTRL = MPU_CTRL_ENABLE_Msk  | MPU_CTRL_PRIVDEFENA_Msk;
+    }
 
-    __DSB();
-    __ISB();
-}
+#endif
+// DOM-IGNORE-END
+#endif // PLIB_HSMCI_H
 

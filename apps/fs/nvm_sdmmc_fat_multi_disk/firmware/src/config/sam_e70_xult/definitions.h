@@ -48,7 +48,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "driver/sdhc/drv_sdhc.h"
+#include "driver/sdmmc/drv_sdmmc.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
@@ -65,7 +65,9 @@
 #include "system/fs/fat_fs/src/file_system/ff.h"
 #include "system/fs/fat_fs/src/file_system/ffconf.h"
 #include "system/fs/fat_fs/src/hardware_access/diskio.h"
+#include "peripheral/hsmci/plib_hsmci.h"
 #include "system/int/sys_int.h"
+#include "system/cache/sys_cache.h"
 #include "osal/osal.h"
 #include "app.h"
 
@@ -189,11 +191,11 @@ void SYS_Tasks ( void );
 
 typedef struct
 {
-    SYS_MODULE_OBJ  drvSDHC;
-
-
     SYS_MODULE_OBJ  sysTime;
     SYS_MODULE_OBJ  drvMemory0;
+    SYS_MODULE_OBJ  drvSDMMC0;
+
+
 
 } SYSTEM_OBJECTS;
 
