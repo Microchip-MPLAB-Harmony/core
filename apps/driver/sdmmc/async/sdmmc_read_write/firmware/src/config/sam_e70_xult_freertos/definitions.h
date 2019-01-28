@@ -49,7 +49,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "bsp/bsp.h"
-#include "driver/sdhc/drv_sdhc.h"
+#include "driver/sdmmc/drv_sdmmc.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
@@ -57,7 +57,9 @@
 #include "peripheral/tc/plib_tc0.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "peripheral/hsmci/plib_hsmci.h"
 #include "system/int/sys_int.h"
+#include "system/cache/sys_cache.h"
 #include "osal/osal.h"
 #include "system/time/sys_time.h"
 #include "app.h"
@@ -182,7 +184,7 @@ void SYS_Tasks ( void );
 
 typedef struct
 {
-    SYS_MODULE_OBJ  drvSDHC;
+    SYS_MODULE_OBJ  drvSDMMC0;
 
 
     SYS_MODULE_OBJ  sysTime;
