@@ -15,11 +15,9 @@
             <itemPath>../src/config/sam_v71_xult_freertos/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="driver" projectFiles="true">
-            <logicalFolder name="f1" displayName="sdhc" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult_freertos/driver/sdhc/drv_sdhc.h</itemPath>
-              <itemPath>../src/config/sam_v71_xult_freertos/driver/sdhc/src/drv_sdhc_local.h</itemPath>
-              <itemPath>../src/config/sam_v71_xult_freertos/driver/sdhc/src/drv_sdhc_host_local.h</itemPath>
-              <itemPath>../src/config/sam_v71_xult_freertos/driver/sdhc/src/drv_sdhc_host.h</itemPath>
+            <logicalFolder name="f1" displayName="sdmmc" projectFiles="true">
+              <itemPath>../src/config/sam_v71_xult_freertos/driver/sdmmc/drv_sdmmc.h</itemPath>
+              <itemPath>../src/config/sam_v71_xult_freertos/driver/sdmmc/drv_sdmmc_definitions.h</itemPath>
             </logicalFolder>
             <itemPath>../src/config/sam_v71_xult_freertos/driver/driver.h</itemPath>
             <itemPath>../src/config/sam_v71_xult_freertos/driver/driver_common.h</itemPath>
@@ -27,6 +25,10 @@
           <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
               <itemPath>../src/config/sam_v71_xult_freertos/peripheral/clk/plib_clk.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="hsmci" projectFiles="true">
+              <itemPath>../src/config/sam_v71_xult_freertos/peripheral/hsmci/plib_hsmci_common.h</itemPath>
+              <itemPath>../src/config/sam_v71_xult_freertos/peripheral/hsmci/plib_hsmci.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/sam_v71_xult_freertos/peripheral/nvic/plib_nvic.h</itemPath>
@@ -44,19 +46,24 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
+            <logicalFolder name="f2" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/sam_v71_xult_freertos/system/cache/sys_cache.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_v71_xult_freertos/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/sam_v71_xult_freertos/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="time" projectFiles="true">
+            <logicalFolder name="f3" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_v71_xult_freertos/system/time/sys_time.h</itemPath>
               <itemPath>../src/config/sam_v71_xult_freertos/system/time/sys_time_definitions.h</itemPath>
+              <itemPath>../src/config/sam_v71_xult_freertos/system/time/src/sys_time_local.h</itemPath>
             </logicalFolder>
             <itemPath>../src/config/sam_v71_xult_freertos/system/system.h</itemPath>
             <itemPath>../src/config/sam_v71_xult_freertos/system/system_common.h</itemPath>
             <itemPath>../src/config/sam_v71_xult_freertos/system/system_module.h</itemPath>
             <itemPath>../src/config/sam_v71_xult_freertos/system/system_media.h</itemPath>
           </logicalFolder>
+          <itemPath>../src/config/sam_v71_xult_freertos/device_cache.h</itemPath>
           <itemPath>../src/config/sam_v71_xult_freertos/definitions.h</itemPath>
           <itemPath>../src/config/sam_v71_xult_freertos/FreeRTOSConfig.h</itemPath>
           <itemPath>../src/config/sam_v71_xult_freertos/user.h</itemPath>
@@ -65,23 +72,23 @@
       </logicalFolder>
       <logicalFolder name="f4" displayName="FreeRTOS" projectFiles="true">
         <logicalFolder name="f1" displayName="Source" projectFiles="true">
-          <logicalFolder name="f1" displayName="Include" projectFiles="true">
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/croutine.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/event_groups.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/FreeRTOS.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/list.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/mpu_wrappers.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/portable.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/projdefs.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/queue.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/semphr.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/stack_macros.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/deprecated_definitions.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/task.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/timers.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/mpu_prototypes.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/stream_buffer.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/message_buffer.h</itemPath>
+          <logicalFolder name="f1" displayName="include" projectFiles="true">
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/croutine.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/event_groups.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/FreeRTOS.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/list.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/mpu_wrappers.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/portable.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/projdefs.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/queue.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/semphr.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/stack_macros.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/deprecated_definitions.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/task.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/timers.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/mpu_prototypes.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/stream_buffer.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/message_buffer.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="portable" projectFiles="true">
             <logicalFolder name="f1" displayName="GCC" projectFiles="true">
@@ -151,6 +158,7 @@
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm7.h</itemPath>
@@ -185,14 +193,17 @@
             <itemPath>../src/config/sam_v71_xult_freertos/bsp/bsp.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="driver" projectFiles="true">
-            <logicalFolder name="f1" displayName="sdhc" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult_freertos/driver/sdhc/src/drv_sdhc.c</itemPath>
-              <itemPath>../src/config/sam_v71_xult_freertos/driver/sdhc/src/drv_sdhc_host.c</itemPath>
+            <logicalFolder name="f1" displayName="sdmmc" projectFiles="true">
+              <itemPath>../src/config/sam_v71_xult_freertos/driver/sdmmc/src/drv_sdmmc.c</itemPath>
+              <itemPath>../src/config/sam_v71_xult_freertos/driver/sdmmc/src/drv_sdmmc_local.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f3" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
               <itemPath>../src/config/sam_v71_xult_freertos/peripheral/clk/plib_clk.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="hsmci" projectFiles="true">
+              <itemPath>../src/config/sam_v71_xult_freertos/peripheral/hsmci/plib_hsmci.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/sam_v71_xult_freertos/peripheral/nvic/plib_nvic.c</itemPath>
@@ -211,18 +222,20 @@
             <itemPath>../src/config/sam_v71_xult_freertos/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f5" displayName="system" projectFiles="true">
+            <logicalFolder name="f2" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/sam_v71_xult_freertos/system/cache/sys_cache.c</itemPath>
+            </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_v71_xult_freertos/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="time" projectFiles="true">
+            <logicalFolder name="f3" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_v71_xult_freertos/system/time/src/sys_time.c</itemPath>
-              <itemPath>../src/config/sam_v71_xult_freertos/system/time/src/sys_time_local.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <itemPath>../src/config/sam_v71_xult_freertos/initialization.c</itemPath>
           <itemPath>../src/config/sam_v71_xult_freertos/interrupts.c</itemPath>
           <itemPath>../src/config/sam_v71_xult_freertos/exceptions.c</itemPath>
-          <itemPath>../src/config/sam_v71_xult_freertos/startup.c</itemPath>
+          <itemPath>../src/config/sam_v71_xult_freertos/startup_xc32.c</itemPath>
           <itemPath>../src/config/sam_v71_xult_freertos/libc_syscalls.c</itemPath>
           <itemPath>../src/config/sam_v71_xult_freertos/freertos_hooks.c</itemPath>
           <itemPath>../src/config/sam_v71_xult_freertos/tasks.c</itemPath>
@@ -245,7 +258,7 @@
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/croutine.c</itemPath>
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/list.c</itemPath>
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/queue.c</itemPath>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/tasks.c</itemPath>
+          <itemPath>../src/third_party/rtos/FreeRTOS/Source/FreeRTOS_tasks.c</itemPath>
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/timers.c</itemPath>
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/event_groups.c</itemPath>
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/stream_buffer.c</itemPath>
@@ -280,7 +293,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAMV71_DFP" vendor="Atmel" version="2.4.161"/>
+        <pack name="SAMV71_DFP" vendor="Atmel" version="2.4.162"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>
@@ -340,7 +353,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/sam_v71_xult_freertos;../src/packs/ATSAMV71Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/CM7;../src/third_party/rtos/FreeRTOS/Source/Include;../src/arm"/>
+                  value="../src;../src/config/sam_v71_xult_freertos;../src/packs/ATSAMV71Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/CM7;../src/third_party/rtos/FreeRTOS/Source/Include;../src/arm;../src/third_party/rtos/FreeRTOS/Source/include"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
