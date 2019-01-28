@@ -56,7 +56,6 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
-#include "bsp/bsp.h"
 #include "configuration.h"
 #include "system/fs/sys_fs.h"
 
