@@ -69,12 +69,12 @@ void _SYS_FS_Tasks(  void *pvParameters  )
 }
 
 
-void _DRV_SDHC_Tasks(  void *pvParameters  )
+void _DRV_SDMMC0_Tasks(  void *pvParameters  )
 {
     while(1)
     {
-        DRV_SDHC_Tasks(sysObj.drvSDHC);
-        vTaskDelay(10 / portTICK_PERIOD_MS);
+        DRV_SDMMC_Tasks(sysObj.drvSDMMC0);
+        vTaskDelay(DRV_SDMMC_RTOS_DELAY_IDX0 / portTICK_PERIOD_MS);
     }
 }
 
@@ -118,11 +118,11 @@ void SYS_Tasks ( void )
         (TaskHandle_t*)NULL
     );
 
-    xTaskCreate( _DRV_SDHC_Tasks,
-        "DRV_SDHC_Tasks",
-        DRV_SDHC_STACK_SIZE,
+    xTaskCreate( _DRV_SDMMC0_Tasks,
+        "DRV_SDMMC0_Tasks",
+        DRV_SDMMC_STACK_SIZE_IDX0,
         (void*)NULL,
-        DRV_SDHC_PRIORITY,
+        DRV_SDMMC_PRIORITY_IDX0,
         (TaskHandle_t*)NULL
     );
 
