@@ -58,12 +58,12 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
-void _DRV_SDHC_Tasks(  void *pvParameters  )
+void _DRV_MEMORY_0_Tasks(  void *pvParameters  )
 {
     while(1)
     {
-        DRV_SDHC_Tasks(sysObj.drvSDHC);
-        vTaskDelay(5 / portTICK_PERIOD_MS);
+        DRV_MEMORY_Tasks(sysObj.drvMemory0);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
 
@@ -77,6 +77,15 @@ void _SYS_FS_Tasks(  void *pvParameters  )
     }
 }
 
+
+void _DRV_SDMMC0_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+        DRV_SDMMC_Tasks(sysObj.drvSDMMC0);
+        vTaskDelay(DRV_SDMMC_RTOS_DELAY_IDX0 / portTICK_PERIOD_MS);
+    }
+}
 
 /* Handle for the APP_Tasks. */
 TaskHandle_t xAPP_Tasks;
@@ -109,16 +118,7 @@ void _APP_Tasks(  void *pvParameters  )
 void SYS_Tasks ( void )
 {
     /* Maintain system services */
-        xTaskCreate( _DRV_SDHC_Tasks,
-        "DRV_SDHC_Tasks",
-        DRV_SDHC_STACK_SIZE,
-        (void*)NULL,
-        DRV_SDHC_PRIORITY,
-        (TaskHandle_t*)NULL
-    );
-
-
-
+    
     xTaskCreate( _SYS_FS_Tasks,
         "SYS_FS_TASKS",
         SYS_FS_STACK_SIZE,
@@ -127,10 +127,26 @@ void SYS_Tasks ( void )
         (TaskHandle_t*)NULL
     );
 
+    xTaskCreate( _DRV_SDMMC0_Tasks,
+        "DRV_SDMMC0_Tasks",
+        DRV_SDMMC_STACK_SIZE_IDX0,
+        (void*)NULL,
+        DRV_SDMMC_PRIORITY_IDX0,
+        (TaskHandle_t*)NULL
+    );
+
+
 
 
     /* Maintain Device Drivers */
-    
+        xTaskCreate( _DRV_MEMORY_0_Tasks,
+        "DRV_MEM_0_TASKS",
+        DRV_MEMORY_STACK_SIZE_IDX0,
+        (void*)NULL,
+        DRV_MEMORY_PRIORITY_IDX0,
+        (TaskHandle_t*)NULL
+    );
+
 
 
     /* Maintain Middleware & Other Libraries */

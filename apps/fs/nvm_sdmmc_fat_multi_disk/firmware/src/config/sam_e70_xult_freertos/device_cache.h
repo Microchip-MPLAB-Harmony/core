@@ -1,27 +1,26 @@
 /*******************************************************************************
-  Interrupt System Service Library Interface Implementation File
+  L1, L2 Cache Header
 
-  Company
-    Microchip Technology Inc.
+  File Name:
+    cache_cortex_a.h
 
-  File Name
-    sys_int_nvic.c
+  Summary:
+    Preprocessor definitions to provide L1 and L2 Cache control.
 
-  Summary
-    NVIC implementation of interrupt system service library.
-
-  Description
-    This file implements the interface to the interrupt system service library
-    not provided in CMSIS.
+  Description:
+    An MPLAB PLIB or Project can include this header to perform cache cleans,
+    invalidates etc. For the DCache and ICache.
 
   Remarks:
-    None.
+    This header should not define any prototypes or data definitions, or 
+    include any files that do.  The file only provides macro definitions for 
+    build-time.
 
 *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -44,83 +43,39 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
+#ifndef CACHE_CORTEX_M_H
+#define CACHE_CORTEX_M_H
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-#include "system/int/sys_int.h"
+/*  This section Includes other configuration headers necessary to completely
+    define this configuration.
+*/
 
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+extern "C" {
+
+#endif
+// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Interface Implementation
+// Section: L1, L2 Cache Configuration
 // *****************************************************************************
 // *****************************************************************************
+#define DCACHE_CLEAN_BY_ADDR(addr,sz)                  SCB_CleanDCache_by_Addr(addr,sz)
+#define DCACHE_INVALIDATE_BY_ADDR(addr,sz)             SCB_InvalidateDCache_by_Addr(addr,sz)
+#define DATA_CACHE_ENABLED                             true
 
-// *****************************************************************************
-void SYS_INT_Enable( void )
-{
-    __DMB();
-    __enable_irq();
-
-    return;
+//DOM-IGNORE-BEGIN
+#ifdef __cplusplus
 }
+#endif
+//DOM-IGNORE-END
 
-
-// *****************************************************************************
-bool SYS_INT_Disable( void )
-{
-    bool processorStatus;
-
-    processorStatus = (bool) (__get_PRIMASK() == 0);
-
-    __disable_irq();
-    __DMB();
-
-    return processorStatus;
-}
-
-
-// *****************************************************************************
-void SYS_INT_Restore( bool state )
-{
-    if( state == true )
-    {
-        __DMB();
-        __enable_irq();
-    }
-    else
-    {
-        __disable_irq();
-        __DMB();
-    }
-
-    return;
-}
-
-bool SYS_INT_SourceDisable( INT_SOURCE source )
-{
-    bool processorStatus;
-    bool intSrcStatus;
-
-    processorStatus = SYS_INT_Disable();
-
-    intSrcStatus = NVIC_GetEnableIRQ(source);
-
-    NVIC_DisableIRQ( source );
-
-    SYS_INT_Restore( processorStatus );
-
-    /* return the source status */
-    return intSrcStatus;
-}
-
-void SYS_INT_SourceRestore( INT_SOURCE source, bool status )
-{
-    if( status ) {
-        SYS_INT_SourceEnable( source );
-    }
-    return;
-}
+#endif // end of header
