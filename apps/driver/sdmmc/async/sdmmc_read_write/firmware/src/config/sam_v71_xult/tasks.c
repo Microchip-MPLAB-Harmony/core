@@ -71,7 +71,7 @@
 void SYS_Tasks ( void )
 {
     /* Maintain system services */
-    DRV_SDHC_Tasks(sysObj.drvSDHC);
+    DRV_SDMMC_Tasks(sysObj.drvSDMMC0);
 
 
 
