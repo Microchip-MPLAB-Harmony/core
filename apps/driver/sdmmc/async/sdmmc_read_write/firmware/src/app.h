@@ -57,7 +57,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
-#include "driver/sdhc/drv_sdhc.h"
+#include "driver/sdmmc/drv_sdmmc.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -74,8 +74,8 @@ extern "C" {
 // *****************************************************************************
 
 /* Write and Read 60KB of Data */
-#define SDHC_DATA_SIZE              (61440U)
-#define SDHC_BUFFER_SIZE            (SDHC_DATA_SIZE / sizeof(uint32_t))
+#define SDMMC_DATA_SIZE              (61440U)
+#define SDMMC_BUFFER_SIZE            (SDMMC_DATA_SIZE / sizeof(uint32_t))
 
 #define GEOMETRY_TABLE_READ_ENTRY   (0)
 #define GEOMETRY_TABLE_WRITE_ENTRY  (1)
@@ -147,15 +147,15 @@ typedef struct
     APP_STATES state;
 
     /* Driver Handle */
-    DRV_HANDLE sdhcHandle;
+    DRV_HANDLE sdmmcHandle;
 
     /* Application transfer status */
     volatile bool xfer_done;
 
     /* Erase/Write/Read Command Handles*/
-    DRV_SDHC_COMMAND_HANDLE eraseHandle;
-    DRV_SDHC_COMMAND_HANDLE writeHandle;
-    DRV_SDHC_COMMAND_HANDLE readHandle;
+    DRV_SDMMC_COMMAND_HANDLE eraseHandle;
+    DRV_SDMMC_COMMAND_HANDLE writeHandle;
+    DRV_SDMMC_COMMAND_HANDLE readHandle;
 
     /* Number of read blocks*/
     uint32_t numReadBlocks;
@@ -167,10 +167,10 @@ typedef struct
     uint32_t numEraseBlocks;
 
     /* Read Buffer */
-    uint32_t __attribute__((aligned(32))) readBuffer[SDHC_BUFFER_SIZE];
+    uint32_t __attribute__((aligned(32))) readBuffer[SDMMC_BUFFER_SIZE];
 
     /* Write Buffer*/
-    uint32_t __attribute__ ((aligned(32))) writeBuffer[SDHC_BUFFER_SIZE];
+    uint32_t __attribute__ ((aligned(32))) writeBuffer[SDMMC_BUFFER_SIZE];
 } APP_DATA;
 
 extern APP_DATA appData;

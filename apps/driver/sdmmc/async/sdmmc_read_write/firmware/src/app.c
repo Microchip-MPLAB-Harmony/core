@@ -88,8 +88,8 @@ APP_DATA appData;
 
 void appTransferHandler
 (
-    DRV_SDHC_EVENT event,
-    DRV_SDHC_COMMAND_HANDLE commandHandle,
+    DRV_SDMMC_EVENT event,
+    DRV_SDMMC_COMMAND_HANDLE commandHandle,
     uintptr_t context
 )
 {
@@ -97,14 +97,14 @@ void appTransferHandler
 
     switch(event)
     {
-        case DRV_SDHC_EVENT_COMMAND_COMPLETE:
+        case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
             if (commandHandle == app_data->readHandle)
             {
                 appData.xfer_done = true;
             }
             break;
 
-        case DRV_SDHC_EVENT_COMMAND_ERROR:
+        case DRV_SDMMC_EVENT_COMMAND_ERROR:
             appData.state = APP_STATE_ERROR;
             break;
 
@@ -145,7 +145,7 @@ void APP_Initialize ( void )
     /* Place the App state machine in its initial state. */
     appData.state = APP_STATE_OPEN_DRIVER;
 
-    for (i = 0; i < SDHC_BUFFER_SIZE; i++)
+    for (i = 0; i < SDMMC_BUFFER_SIZE; i++)
         appData.writeBuffer[i] = i;
 }
 
@@ -155,7 +155,7 @@ void APP_Initialize ( void )
     void APP_Tasks ( void )
 
  Description:
-    Demonstrates Erase, Write and Read operation of DRV_SDHC in Buffer Model.
+    Demonstrates Erase, Write and Read operation of DRV_SDMMC in Buffer Model.
     Each case is a fall through when the request is queued up successfully.
 
   Remarks:
@@ -170,11 +170,11 @@ void APP_Tasks ( void )
     {
         case APP_STATE_OPEN_DRIVER:
         {
-            appData.sdhcHandle = DRV_SDHC_Open(DRV_SDHC_INDEX_0, DRV_IO_INTENT_READWRITE);
+            appData.sdmmcHandle = DRV_SDMMC_Open(DRV_SDMMC_INDEX_0, DRV_IO_INTENT_READWRITE);
 
-            if (DRV_HANDLE_INVALID != appData.sdhcHandle)
+            if (DRV_HANDLE_INVALID != appData.sdmmcHandle)
             {
-                DRV_SDHC_EventHandlerSet(appData.sdhcHandle, appTransferHandler, (uintptr_t)&appData);
+                DRV_SDMMC_EventHandlerSet(appData.sdmmcHandle, (const void*)appTransferHandler, (uintptr_t)&appData);
                 appData.state = APP_STATE_SDCARD_ATTACHED;
             }
             else
@@ -185,7 +185,7 @@ void APP_Tasks ( void )
 
         case APP_STATE_SDCARD_ATTACHED:
         {
-            if (DRV_SDHC_IsAttached(appData.sdhcHandle) == true)
+            if (DRV_SDMMC_IsAttached(appData.sdmmcHandle) == true)
             {
                 appData.state = APP_STATE_GEOMETRY_GET;
             }
@@ -197,7 +197,7 @@ void APP_Tasks ( void )
 
         case APP_STATE_GEOMETRY_GET:
         {
-            geometry = DRV_SDHC_GeometryGet(appData.sdhcHandle);
+            geometry = DRV_SDMMC_GeometryGet(appData.sdmmcHandle);
 
             if (geometry == NULL)
             {
@@ -205,16 +205,16 @@ void APP_Tasks ( void )
                 break;
             }
 
-            appData.numReadBlocks  = (SDHC_DATA_SIZE / geometry->geometryTable[GEOMETRY_TABLE_READ_ENTRY].blockSize);
-            appData.numWriteBlocks = (SDHC_DATA_SIZE / geometry->geometryTable[GEOMETRY_TABLE_WRITE_ENTRY].blockSize);
-            appData.numEraseBlocks = (SDHC_DATA_SIZE / geometry->geometryTable[GEOMETRY_TABLE_ERASE_ENTRY].blockSize);
+            appData.numReadBlocks  = (SDMMC_DATA_SIZE / geometry->geometryTable[GEOMETRY_TABLE_READ_ENTRY].blockSize);
+            appData.numWriteBlocks = (SDMMC_DATA_SIZE / geometry->geometryTable[GEOMETRY_TABLE_WRITE_ENTRY].blockSize);
+            appData.numEraseBlocks = (SDMMC_DATA_SIZE / geometry->geometryTable[GEOMETRY_TABLE_ERASE_ENTRY].blockSize);
         }
 
         case APP_STATE_WRITE_MEMORY:
         {
-            DRV_SDHC_AsyncWrite(appData.sdhcHandle, &appData.writeHandle, (void *)&appData.writeBuffer, BLOCK_START, appData.numWriteBlocks);
+            DRV_SDMMC_AsyncWrite(appData.sdmmcHandle, &appData.writeHandle, (void *)&appData.writeBuffer, BLOCK_START, appData.numWriteBlocks);
 
-            if (DRV_SDHC_COMMAND_HANDLE_INVALID == appData.writeHandle)
+            if (DRV_SDMMC_COMMAND_HANDLE_INVALID == appData.writeHandle)
             {
                 appData.state = APP_STATE_ERROR;
                 break;
@@ -227,11 +227,11 @@ void APP_Tasks ( void )
 
         case APP_STATE_READ_MEMORY:
         {
-            memset((void *)&appData.readBuffer, 0, SDHC_DATA_SIZE);
+            memset((void *)&appData.readBuffer, 0, SDMMC_DATA_SIZE);
 
-            DRV_SDHC_AsyncRead(appData.sdhcHandle, &appData.readHandle, (void *)&appData.readBuffer, BLOCK_START, appData.numReadBlocks);
+            DRV_SDMMC_AsyncRead(appData.sdmmcHandle, &appData.readHandle, (void *)&appData.readBuffer, BLOCK_START, appData.numReadBlocks);
 
-            if (DRV_SDHC_COMMAND_HANDLE_INVALID == appData.readHandle)
+            if (DRV_SDMMC_COMMAND_HANDLE_INVALID == appData.readHandle)
             {
                 appData.state = APP_STATE_ERROR;
                 break;
@@ -256,7 +256,7 @@ void APP_Tasks ( void )
 
         case APP_STATE_VERIFY_DATA:
         {
-            if (!memcmp(appData.writeBuffer, appData.readBuffer, SDHC_DATA_SIZE))
+            if (!memcmp(appData.writeBuffer, appData.readBuffer, SDMMC_DATA_SIZE))
             {
                 appData.state = APP_STATE_SUCCESS;
             }
@@ -270,13 +270,13 @@ void APP_Tasks ( void )
 
         case APP_STATE_SUCCESS:
         {
-            DRV_SDHC_Close(appData.sdhcHandle);
+            DRV_SDMMC_Close(appData.sdmmcHandle);
             LED_ON();
             break;
         }
         case APP_STATE_ERROR:
         {
-            DRV_SDHC_Close(appData.sdhcHandle);
+            DRV_SDMMC_Close(appData.sdmmcHandle);
         }
         default:
         {
