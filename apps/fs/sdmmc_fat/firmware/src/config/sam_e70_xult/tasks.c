@@ -74,7 +74,7 @@ void SYS_Tasks ( void )
     
 SYS_FS_Tasks();
 
-DRV_SDHC_Tasks(sysObj.drvSDHC);
+DRV_SDMMC_Tasks(sysObj.drvSDMMC0);
 
 
 
