@@ -25,30 +25,25 @@
 ############### Cortex-M7 Architecture specific configuration ##############
 ############################################################################
 
+#CPU Clock Frequency
+cpuclk = Database.getSymbolValue("core", "CPU_CLOCK_FREQUENCY")
+cpuclk = int(cpuclk)
+
+freeRtosSym_CpuClockHz.setDependencies(freeRtosCpuClockHz, ["core.CPU_CLOCK_FREQUENCY"])
+freeRtosSym_CpuClockHz.setDefaultValue(cpuclk)
+
 #Default Heap size
 freeRtosSym_TotalHeapSize.setDefaultValue(40960)
 
-#Set SysTick Priority and Lock the Priority
-#SysTickInterruptIndex        = Interrupt.getInterruptIndex("SysTick")
-#SysTickInterruptPriority     = "NVIC_"+ str(SysTickInterruptIndex) +"_0_PRIORITY"
-#SysTickInterruptPriorityLock = "NVIC_" + str(SysTickInterruptIndex) +"_0_PRIORITY_LOCK"
+#Setup Kernel Priority
+freeRtosSym_KernelIntrPrio.setDefaultValue(7)
+freeRtosSym_KernelIntrPrio.setReadOnly(True)
 
-#Database.clearSymbolValue("core", SysTickInterruptPriority)
-#Database.setSymbolValue("core", SysTickInterruptPriority, "7", 2)
-#Database.clearSymbolValue("core", SysTickInterruptPriorityLock)
-#Database.setSymbolValue("core", SysTickInterruptPriorityLock, True, 2)
+#Setup Sys Call Priority
+freeRtosSym_MaxSysCalIntrPrio.setDefaultValue(1)
 
-#Set SVCall Priority and Lock the Priority
-#SVCallInterruptIndex        = Interrupt.getInterruptIndex("SVCall")
-#SVCallInterruptPriorityLock = "NVIC_" + str(SVCallInterruptIndex) +"_0_PRIORITY_LOCK"
-
-#Database.clearSymbolValue("core", SVCallInterruptPriorityLock)
-#Database.setSymbolValue("core", SVCallInterruptPriorityLock, True, 2)
-
-############################################################################
-#### Code Generation ####
-############################################################################
-
+freeRtosSym_tickConfig = thirdPartyFreeRTOS.createStringSymbol("FREERTOS_SETUP_TICK_INTERRUPT", None)
+freeRtosSym_tickConfig.setVisible(False)
 freeRtosSym_tickConfig.setDefaultValue("vConfigureTickInterrupt")
 
 clearTick = thirdPartyFreeRTOS.createStringSymbol("FREERTOS_CONFIG_TICK_INTERRUPT", None);
@@ -59,17 +54,21 @@ clearTick.setDefaultValue("vClear_Tick_Interrupt")
 eoiAddress = thirdPartyFreeRTOS.createStringSymbol("FREERTOS_EOI_ADDRESS", None)
 eoiAddress.setVisible(False)
 eoiAddress.setReadOnly(True)
-node = ATDF.getNode('/avr-tools-device-file/devices/device/peripherals/module@[name="AIC"]/instance@[name="AIC"]/register-group@[name="AIC"]')
-baseAddr = int(node.getAttribute("offset"),16);
-node = ATDF.getNode('/avr-tools-device-file/modules/module@[name="AIC"]/register-group@[name="AIC"]/register@[name="AIC_EOICR"]')
-offset = int(node.getAttribute("offset"),16)
-address = baseAddr + offset
+node        = ATDF.getNode('/avr-tools-device-file/devices/device/peripherals/module@[name="AIC"]/instance@[name="AIC"]/register-group@[name="AIC"]')
+baseAddr    = int(node.getAttribute("offset"),16);
+node        = ATDF.getNode('/avr-tools-device-file/modules/module@[name="AIC"]/register-group@[name="AIC"]/register@[name="AIC_EOICR"]')
+offset      = int(node.getAttribute("offset"),16)
+address     = baseAddr + offset
 eoiAddress.setDefaultValue(str(hex(address)))
 
 Database.activateComponents(["pit"]);
 Database.setSymbolValue("core", "PIT_INTERRUPT_HANDLER", "FreeRTOS_Tick_Handler", 1);
 Database.setSymbolValue("core", "USE_FREERTOS_VECTORS", True, 1)
 Database.setSymbolValue("pit", "ENABLE_COUNTER", False, 1)
+
+############################################################################
+#### Code Generation ####
+############################################################################
 
 configName  = Variables.get("__CONFIGURATION_NAME")
 
@@ -118,4 +117,3 @@ freeRtosPortTickSource.setDestPath("../../third_party/rtos/FreeRTOS/Source/porta
 freeRtosPortTickSource.setProjectPath("FreeRTOS/Source/portable/IAR/SAM/CA5")
 freeRtosPortTickSource.setType("SOURCE")
 freeRtosPortTickSource.setMarkup(False)
-

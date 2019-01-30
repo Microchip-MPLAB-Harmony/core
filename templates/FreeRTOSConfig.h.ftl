@@ -42,10 +42,10 @@
  * See http://www.freertos.org/a00110.html.
  *----------------------------------------------------------*/
 #define configUSE_PREEMPTION                    <#if FREERTOS_SCHEDULER == "Preemptive">1<#else>0</#if>
-#define configUSE_PORT_OPTIMISED_TASK_SELECTION <#if FREERTOS_TASK_SELECTION == "Port Optimized">1<#else>0</#if>
+#define configUSE_PORT_OPTIMISED_TASK_SELECTION <#if FREERTOS_TASK_SELECTION == "Port_Optimized">1<#else>0</#if>
 #define configUSE_TICKLESS_IDLE                 <#if FREERTOS_TICKLESS_IDLE_CHOICE == "Tickless Idle">1<#else>0</#if>
 <#if FREERTOS_TICKLESS_IDLE_CHOICE == "Tickless Idle">
-#define configEXPECTED_IDLE_TIME_BEFORE_SLEEP   ${FREERTOS_EXPECTED_IDLE_TIME_BEFORE_SLEEP}
+    <#lt>#define configEXPECTED_IDLE_TIME_BEFORE_SLEEP   ${FREERTOS_EXPECTED_IDLE_TIME_BEFORE_SLEEP}
 </#if>
 #define configCPU_CLOCK_HZ                      ( ${FREERTOS_CPU_CLOCK_HZ?number?c}UL )
 #define configTICK_RATE_HZ                      ( ( TickType_t ) ${FREERTOS_TICK_RATE_HZ} )
@@ -57,7 +57,7 @@
 #define configMAX_TASK_NAME_LEN                 ( ${FREERTOS_MAX_TASK_NAME_LEN} )
 #define configUSE_16_BIT_TICKS                  <#if FREERTOS_USE_16_BIT_TICKS == true>1<#else>0</#if>
 <#if FREERTOS_SCHEDULER == "Preemptive">
-#define configIDLE_SHOULD_YIELD                 <#if FREERTOS_IDLE_SHOULD_YIELD == true>1<#else>0</#if>
+    <#lt>#define configIDLE_SHOULD_YIELD                 <#if FREERTOS_IDLE_SHOULD_YIELD == true>1<#else>0</#if>
 </#if>
 #define configUSE_MUTEXES                       <#if FREERTOS_USE_MUTEXES == true>1<#else>0</#if>
 #define configUSE_RECURSIVE_MUTEXES             <#if FREERTOS_USE_RECURSIVE_MUTEXES == true>1<#else>0</#if>
@@ -67,11 +67,12 @@
 #define configUSE_QUEUE_SETS                    <#if FREERTOS_USE_QUEUE_SETS == true>1<#else>0</#if>
 #define configUSE_TIME_SLICING                  <#if FREERTOS_USE_TIME_SLICING == true>1<#else>0</#if>
 #define configUSE_NEWLIB_REENTRANT              <#if FREERTOS_USE_NEWLIB_REENTRANT == true>1<#else>0</#if>
+#define configUSE_TASK_FPU_SUPPORT              <#if FREERTOS_USE_TASK_FPU_SUPPORT == true>1<#else>0</#if>
 
 /* Hook function related definitions. */
 #define configUSE_IDLE_HOOK                     <#if FREERTOS_IDLE_HOOK == true>1<#else>0</#if>
 #define configUSE_TICK_HOOK                     <#if FREERTOS_TICK_HOOK == true>1<#else>0</#if>
-#define configCHECK_FOR_STACK_OVERFLOW          <#if FREERTOS_CHECK_FOR_STACK_OVERFLOW == "No Check">0<#else><#if FREERTOS_CHECK_FOR_STACK_OVERFLOW == "Method 1">1<#else>2</#if></#if>
+#define configCHECK_FOR_STACK_OVERFLOW          <#if FREERTOS_CHECK_FOR_STACK_OVERFLOW == "No_Check">0<#else><#if FREERTOS_CHECK_FOR_STACK_OVERFLOW == "Method_1">1<#else>2</#if></#if>
 #define configUSE_MALLOC_FAILED_HOOK            <#if FREERTOS_USE_MALLOC_FAILED_HOOK == true>1<#else>0</#if>
 
 /* Run time and task stats gathering related definitions. */
@@ -94,21 +95,31 @@
 #define configUSE_APPLICATION_TASK_TAG          <#if FREERTOS_USE_APPLICATION_TASK_TAG == true>1<#else>0</#if>
 
 <#if FREERTOS_USE_CONFIGASSERT == true>
-/* Prevent C specific syntax being included in assembly files. */
-#ifndef __LANGUAGE_ASSEMBLY
-    void vAssertCalled( const char *pcFileName, unsigned long ulLine );
-    #define configASSERT( x ) if( ( x ) == 0 ) vAssertCalled( __FILE__, __LINE__ )
-#endif
+    <#lt>/* Prevent C specific syntax being included in assembly files. */
+    <#lt>#ifndef __LANGUAGE_ASSEMBLY
+    <#lt>    void vAssertCalled( const char *pcFileName, unsigned long ulLine );
+    <#lt>    #define configASSERT( x ) if( ( x ) == 0 ) vAssertCalled( __FILE__, __LINE__ )
+    <#lt>#endif
 </#if>
 
 /* Interrupt nesting behaviour configuration. */
-
-/* The priority at which the tick interrupt runs.  This should probably be kept at lowest priority. */
-#define configKERNEL_INTERRUPT_PRIORITY         (${FREERTOS_KERNEL_INTERRUPT_PRIORITY}<<5)
-
-/* The maximum interrupt priority from which FreeRTOS.org API functions can be called.
-Only API functions that end in ...FromISR() can be used within interrupts. */
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY    (${FREERTOS_MAX_SYSCALL_INTERRUPT_PRIORITY}<<5)
+<#if core.CoreArchitecture != "MIPS" >
+    <#lt>/* The priority at which the tick interrupt runs.  This should probably be kept at lowest priority. */
+    <#lt>#define configKERNEL_INTERRUPT_PRIORITY         (${FREERTOS_KERNEL_INTERRUPT_PRIORITY}<<5)
+    <#lt>
+    <#lt>/* The maximum interrupt priority from which FreeRTOS.org API functions can be called.
+    <#lt> * Only API functions that end in ...FromISR() can be used within interrupts. */
+    <#lt>#define configMAX_SYSCALL_INTERRUPT_PRIORITY    (${FREERTOS_MAX_SYSCALL_INTERRUPT_PRIORITY}<<5)
+<#else>
+    <#lt>#define configPERIPHERAL_CLOCK_HZ               ( ${FREERTOS_PERIPHERAL_CLOCK_HZ?number?c}UL )
+    <#lt>#define configISR_STACK_SIZE                    ( ${FREERTOS_ISR_STACK_SIZE} )
+    <#lt>/* The priority at which the tick interrupt runs.  This should probably be kept at lowest priority. */
+    <#lt>#define configKERNEL_INTERRUPT_PRIORITY         (${FREERTOS_KERNEL_INTERRUPT_PRIORITY})
+    <#lt>
+    <#lt>/* The maximum interrupt priority from which FreeRTOS.org API functions can be called.
+    <#lt> *Only API functions that end in ...FromISR() can be used within interrupts. */
+    <#lt>#define configMAX_SYSCALL_INTERRUPT_PRIORITY    (${FREERTOS_MAX_SYSCALL_INTERRUPT_PRIORITY})
+</#if>
 
 /* Optional functions - most linkers will remove unused functions anyway. */
 #define INCLUDE_vTaskPrioritySet                <#if FREERTOS_INCLUDE_VTASKPRIORITYSET == true>1<#else>0</#if>
@@ -122,24 +133,27 @@ Only API functions that end in ...FromISR() can be used within interrupts. */
 #define INCLUDE_uxTaskGetStackHighWaterMark     <#if FREERTOS_INCLUDE_UXTASKGETSTACKHIGHWATERMARK == true>1<#else>0</#if>
 #define INCLUDE_xTaskGetIdleTaskHandle          <#if FREERTOS_INCLUDE_XTASKGETIDLETASKHANDLE == true>1<#else>0</#if>
 #define INCLUDE_eTaskGetState                   <#if FREERTOS_INCLUDE_ETASKGETSTATE == true>1<#else>0</#if>
+#define INCLUDE_xEventGroupSetBitFromISR        <#if FREERTOS_INCLUDE_XEVENTGROUPSETBITFROMISR == true>1<#else>0</#if>
 #define INCLUDE_xTimerPendFunctionCall          <#if FREERTOS_INCLUDE_XTIMERPENDFUNCTIONCALL == true>1<#else>0</#if>
 #define INCLUDE_xTaskAbortDelay                 <#if FREERTOS_INCLUDE_XTASKABORTDELAY == true>1<#else>0</#if>
 #define INCLUDE_xTaskGetHandle                  <#if FREERTOS_INCLUDE_XTASKGETHANDLE == true>1<#else>0</#if>
 
-/* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
-standard names. */
-
-#define xPortPendSVHandler PendSV_Handler
-#define vPortSVCHandler SVCall_Handler
+<#if core.CoreArchitecture != "MIPS" >
+    <#lt>/* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
+    <#lt> * standard names. */
+    <#lt>
+    <#lt>#define xPortPendSVHandler PendSV_Handler
+    <#lt>#define vPortSVCHandler SVCall_Handler
+</#if>
 
 <#if FREERTOS_SETUP_TICK_INTERRUPT??>
-#define configSETUP_TICK_INTERRUPT ${FREERTOS_SETUP_TICK_INTERRUPT}
+    <#lt>#define configSETUP_TICK_INTERRUPT ${FREERTOS_SETUP_TICK_INTERRUPT}
 </#if>
 <#if FREERTOS_EOI_ADDRESS??>
-#define configEOI_ADDRESS ${FREERTOS_EOI_ADDRESS}
+    <#lt>#define configEOI_ADDRESS ${FREERTOS_EOI_ADDRESS}
 </#if>
 <#if FREERTOS_CONFIG_TICK_INTERRUPT??>
-#define configCLEAR_TICK_INTERRUPT ${FREERTOS_CONFIG_TICK_INTERRUPT}
+    <#lt>#define configCLEAR_TICK_INTERRUPT ${FREERTOS_CONFIG_TICK_INTERRUPT}
 </#if>
 
 #endif /* FREERTOS_H */

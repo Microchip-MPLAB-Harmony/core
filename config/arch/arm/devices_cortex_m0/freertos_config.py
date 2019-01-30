@@ -26,8 +26,22 @@
 ############## Cortex-M0+ Architecture specific configuration ##############
 ############################################################################
 
+#CPU Clock Frequency
+cpuclk = Database.getSymbolValue("core", "CPU_CLOCK_FREQUENCY")
+cpuclk = int(cpuclk)
+
+freeRtosSym_CpuClockHz.setDependencies(freeRtosCpuClockHz, ["core.CPU_CLOCK_FREQUENCY"])
+freeRtosSym_CpuClockHz.setDefaultValue(cpuclk)
+
 #Default Heap size
 freeRtosSym_TotalHeapSize.setDefaultValue(4096)
+
+#Setup Kernel Priority
+freeRtosSym_KernelIntrPrio.setDefaultValue(7)
+freeRtosSym_KernelIntrPrio.setReadOnly(True)
+
+#Setup Sys Call Priority
+freeRtosSym_MaxSysCalIntrPrio.setDefaultValue(1)
 
 #Set SysTick Priority and Lock the Priority
 SysTickInterruptIndex        = Interrupt.getInterruptIndex("SysTick")

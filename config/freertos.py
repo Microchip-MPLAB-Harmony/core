@@ -31,6 +31,10 @@ ComboVal_Tick_Mode        = ["Tickless_Idle", "Tick_Interrupt"]
 ComboVal_Mem_Mgmt_Type    = ["Heap_1", "Heap_2", "Heap_3", "Heap_4", "Heap_5"]
 ComboVal_Stack_Overflow    = ["No_Check", "Method_1", "Method_2"]
 
+# Fetch Core Architecture and Family details
+coreArch     = Database.getSymbolValue("core", "CoreArchitecture")
+coreFamily   = ATDF.getNode( "/avr-tools-device-file/devices/device" ).getAttribute( "family" )
+
 def freeRtosExpIdleTimeVisibility(symbol, event):
     id = symbol.getID()[-1]
 
@@ -170,6 +174,84 @@ def deactivateActiveRtos():
         if (activeComponents[i] == "MicriumOSIII"):
             res = Database.deactivateComponents(["MicriumOSIII"])
 
+def freeRtosIntConfig():
+    if (coreArch == "MIPS"):
+        Timer1InterruptHandlerIndex     = Interrupt.getInterruptIndex("TIMER_1")
+
+        Timer1InterruptEnable               = "EVIC_"+ str(Timer1InterruptHandlerIndex) +"_ENABLE"
+        Timer1InterruptEnableLock           = "EVIC_"+ str(Timer1InterruptHandlerIndex) +"_ENABLE_LOCK"
+        Timer1InterruptGenerate             = "EVIC_"+ str(Timer1InterruptHandlerIndex) +"_ENABLE_GENERATE"
+        Timer1InterruptPriority             = "EVIC_"+ str(Timer1InterruptHandlerIndex) +"_PRIORITY"
+        Timer1InterruptPriorityLock         = "EVIC_"+ str(Timer1InterruptHandlerIndex) +"_PRIORITY_LOCK"
+        Timer1InterruptPriorityGenerate     = "EVIC_"+ str(Timer1InterruptHandlerIndex) +"_PRIORITY_GENERATE"
+        Timer1InterruptSubPriority          = "EVIC_"+ str(Timer1InterruptHandlerIndex) +"_SUBPRIORITY"
+        Timer1InterruptSubPriorityLock      = "EVIC_"+ str(Timer1InterruptHandlerIndex) +"_SUBPRIORITY_LOCK"
+        Timer1InterruptSubPriorityGenerate  = "EVIC_"+ str(Timer1InterruptHandlerIndex) +"_SUBPRIORITY_GENERATE"
+        Timer1InterruptHandlerLock          = "EVIC_"+ str(Timer1InterruptHandlerIndex) +"_HANDLER_LOCK"
+
+        Database.clearSymbolValue("core", Timer1InterruptEnable)
+        Database.setSymbolValue("core", Timer1InterruptEnable, True, 2)
+
+        Database.clearSymbolValue("core", Timer1InterruptEnableLock)
+        Database.setSymbolValue("core", Timer1InterruptEnableLock, True, 2)
+
+        Database.clearSymbolValue("core", Timer1InterruptGenerate)
+        Database.setSymbolValue("core", Timer1InterruptGenerate, False, 2)
+
+        Database.clearSymbolValue("core", Timer1InterruptPriority)
+        Database.setSymbolValue("core", Timer1InterruptPriority, "1", 2)
+
+        Database.clearSymbolValue("core", Timer1InterruptPriorityLock)
+        Database.setSymbolValue("core", Timer1InterruptPriorityLock, True, 2)
+
+        Database.clearSymbolValue("core", Timer1InterruptPriorityGenerate)
+        Database.setSymbolValue("core", Timer1InterruptPriorityGenerate, False, 2)
+
+        Database.clearSymbolValue("core", Timer1InterruptSubPriority)
+        Database.setSymbolValue("core", Timer1InterruptSubPriority, "0", 2)
+
+        Database.clearSymbolValue("core", Timer1InterruptSubPriorityLock)
+        Database.setSymbolValue("core", Timer1InterruptSubPriorityLock, True, 2)
+
+        Database.clearSymbolValue("core", Timer1InterruptSubPriorityGenerate)
+        Database.setSymbolValue("core", Timer1InterruptSubPriorityGenerate, False, 2)
+
+        Database.clearSymbolValue("core", Timer1InterruptHandlerLock)
+        Database.setSymbolValue("core", Timer1InterruptHandlerLock, True, 2)
+    else:
+        SysTickInterruptEnable      = "SysTick_INTERRUPT_ENABLE"
+        SysTickInterruptHandler     = "SysTick_INTERRUPT_HANDLER"
+        SysTickInterruptHandlerLock = "SysTick_INTERRUPT_HANDLER_LOCK"
+
+        Database.clearSymbolValue("core", SysTickInterruptEnable)
+        Database.setSymbolValue("core", SysTickInterruptEnable, True, 2)
+        Database.clearSymbolValue("core", SysTickInterruptHandler)
+        Database.setSymbolValue("core", SysTickInterruptHandler, "xPortSysTickHandler", 2)
+        Database.clearSymbolValue("core", SysTickInterruptHandlerLock)
+        Database.setSymbolValue("core", SysTickInterruptHandlerLock, True, 2)
+
+        PendSVInterruptEnable       = "PendSV_INTERRUPT_ENABLE"
+        PendSVInterruptHandler      = "PendSV_INTERRUPT_HANDLER"
+        PendSVInterruptHandlerLock  = "PendSV_INTERRUPT_HANDLER_LOCK"
+
+        Database.clearSymbolValue("core", PendSVInterruptEnable)
+        Database.setSymbolValue("core", PendSVInterruptEnable, True, 2)
+        Database.clearSymbolValue("core", PendSVInterruptHandler)
+        Database.setSymbolValue("core", PendSVInterruptHandler, "PendSV_Handler", 2)
+        Database.clearSymbolValue("core", PendSVInterruptHandlerLock)
+        Database.setSymbolValue("core", PendSVInterruptHandlerLock, True, 2)
+
+        SVCallInterruptEnable       = "SVCall_INTERRUPT_ENABLE"
+        SVCallInterruptHandler      = "SVCall_INTERRUPT_HANDLER"
+        SVCallInterruptHandlerLock  = "SVCall_INTERRUPT_HANDLER_LOCK"
+
+        Database.clearSymbolValue("core", SVCallInterruptEnable)
+        Database.setSymbolValue("core", SVCallInterruptEnable, True, 2)
+        Database.clearSymbolValue("core", SVCallInterruptHandler)
+        Database.setSymbolValue("core", SVCallInterruptHandler, "SVCall_Handler", 2)
+        Database.clearSymbolValue("core", SVCallInterruptHandlerLock)
+        Database.setSymbolValue("core", SVCallInterruptHandlerLock, True, 2)
+
 # Instatntiate FreeRTOS Component
 def instantiateComponent(thirdPartyFreeRTOS):
     Log.writeInfoMessage("Running FreeRTOS")
@@ -178,38 +260,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     deactivateActiveRtos()
 
     #FreeRTOS Interrupt Handlers configurations
-    SysTickInterruptEnable      = "SysTick_INTERRUPT_ENABLE"
-    SysTickInterruptHandler     = "SysTick_INTERRUPT_HANDLER"
-    SysTickInterruptHandlerLock = "SysTick_INTERRUPT_HANDLER_LOCK"
-
-    Database.clearSymbolValue("core", SysTickInterruptEnable)
-    Database.setSymbolValue("core", SysTickInterruptEnable, True, 2)
-    Database.clearSymbolValue("core", SysTickInterruptHandler)
-    Database.setSymbolValue("core", SysTickInterruptHandler, "xPortSysTickHandler", 2)
-    Database.clearSymbolValue("core", SysTickInterruptHandlerLock)
-    Database.setSymbolValue("core", SysTickInterruptHandlerLock, True, 2)
-
-    PendSVInterruptEnable       = "PendSV_INTERRUPT_ENABLE"
-    PendSVInterruptHandler      = "PendSV_INTERRUPT_HANDLER"
-    PendSVInterruptHandlerLock  = "PendSV_INTERRUPT_HANDLER_LOCK"
-
-    Database.clearSymbolValue("core", PendSVInterruptEnable)
-    Database.setSymbolValue("core", PendSVInterruptEnable, True, 2)
-    Database.clearSymbolValue("core", PendSVInterruptHandler)
-    Database.setSymbolValue("core", PendSVInterruptHandler, "PendSV_Handler", 2)
-    Database.clearSymbolValue("core", PendSVInterruptHandlerLock)
-    Database.setSymbolValue("core", PendSVInterruptHandlerLock, True, 2)
-
-    SVCallInterruptEnable       = "SVCall_INTERRUPT_ENABLE"
-    SVCallInterruptHandler      = "SVCall_INTERRUPT_HANDLER"
-    SVCallInterruptHandlerLock  = "SVCall_INTERRUPT_HANDLER_LOCK"
-
-    Database.clearSymbolValue("core", SVCallInterruptEnable)
-    Database.setSymbolValue("core", SVCallInterruptEnable, True, 2)
-    Database.clearSymbolValue("core", SVCallInterruptHandler)
-    Database.setSymbolValue("core", SVCallInterruptHandler, "SVCall_Handler", 2)
-    Database.clearSymbolValue("core", SVCallInterruptHandlerLock)
-    Database.setSymbolValue("core", SVCallInterruptHandlerLock, True, 2)
+    freeRtosIntConfig()
 
     #FreeRTOS Configuration Menu
     freeRtosSymMenu = thirdPartyFreeRTOS.createMenuSymbol("FREERTOS_MENU", None)
@@ -239,14 +290,15 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_ExpectedIdleTime.setVisible(False)
     freeRtosSym_ExpectedIdleTime.setDependencies(freeRtosExpIdleTimeVisibility, ["FREERTOS_TICKLESS_IDLE_CHOICE"])
 
-    cpuclk = Database.getSymbolValue("core", "CPU_CLOCK_FREQUENCY")
-    cpuclk = int(cpuclk)
-
     freeRtosSym_CpuClockHz = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_CPU_CLOCK_HZ", freeRtosSymMenu)
     freeRtosSym_CpuClockHz.setLabel("CPU Clock Speed (Hz)")
-    freeRtosSym_CpuClockHz.setVisible(False)
-    freeRtosSym_CpuClockHz.setDefaultValue(cpuclk)
-    freeRtosSym_CpuClockHz.setDependencies(freeRtosCpuClockHz, ["core.CPU_CLOCK_FREQUENCY"])
+    freeRtosSym_CpuClockHz.setDescription("This is the CPU clock speed obtained from the Clock System Service configuration.")
+    freeRtosSym_CpuClockHz.setReadOnly(True)
+
+    if (coreArch == "MIPS"):
+        freeRtosSym_PerClockHz = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_PERIPHERAL_CLOCK_HZ", freeRtosSymMenu)
+        freeRtosSym_PerClockHz.setLabel("Peripheral Clock Speed (Hz)")
+        freeRtosSym_PerClockHz.setDescription("This is the frequency in Hz at which the Timer peripherals are clocked (PBCLK), obtained from the Clock System Service configuration.")
 
     freeRtosSym_TickRate = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_TICK_RATE_HZ", freeRtosSymMenu)
     freeRtosSym_TickRate.setLabel("Tick Rate (Hz)")
@@ -264,8 +316,14 @@ def instantiateComponent(thirdPartyFreeRTOS):
 
     freeRtosSym_StackSize = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_MINIMAL_STACK_SIZE", freeRtosSymMenu)
     freeRtosSym_StackSize.setLabel("Minimal Stack Size")
-    freeRtosSym_StackSize.setDescription("FreeRTOS - Maximum number of priorities")
+    freeRtosSym_StackSize.setDescription("FreeRTOS - Minimal stack size. The size of the stack (in words) used by the idle task.")
     freeRtosSym_StackSize.setDefaultValue(128)
+
+    if (coreArch == "MIPS"):
+        freeRtosSym_IsrStackSize = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_ISR_STACK_SIZE", freeRtosSymMenu)
+        freeRtosSym_IsrStackSize.setLabel("ISR Stack Size")
+        freeRtosSym_IsrStackSize.setDescription("FreeRTOS - ISR stack size. The size of the stack (in words) used by interrupt service routines that cause a context switch.")
+        freeRtosSym_IsrStackSize.setDefaultValue(512)
 
     freeRtosSym_DynMemAloc = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_DYNAMIC_ALLOC", freeRtosSymMenu)
     freeRtosSym_DynMemAloc.setLabel("Enable Dynamic Memory Allocation")
@@ -453,15 +511,12 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_KernelIntrPrio.setDescription("FreeRTOS - Kernel interrupt priority")
     #freeRtosSym_KernelIntrPrio.setMin(1)
     #freeRtosSym_KernelIntrPrio.setMax(999999999)
-    freeRtosSym_KernelIntrPrio.setDefaultValue(7)
-    freeRtosSym_KernelIntrPrio.setReadOnly(True)
 
     freeRtosSym_MaxSysCalIntrPrio = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_MAX_SYSCALL_INTERRUPT_PRIORITY", freeRtosSymMenu)
     freeRtosSym_MaxSysCalIntrPrio.setLabel("Maximum system call interrupt priority")
     freeRtosSym_MaxSysCalIntrPrio.setDescription("FreeRTOS - Kernel interrupt priority")
     freeRtosSym_MaxSysCalIntrPrio.setMin(0)
     freeRtosSym_MaxSysCalIntrPrio.setMax(7)
-    freeRtosSym_MaxSysCalIntrPrio.setDefaultValue(1)
 
     freeRtosSymMenu_IncludeComponents = thirdPartyFreeRTOS.createMenuSymbol("FREERTOS_INCLUDE_COMPONENTS", freeRtosSymMenu)
     freeRtosSymMenu_IncludeComponents.setLabel("Include components")
@@ -522,6 +577,11 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_eTaskGetState.setDescription("FreeRTOS - Include eTaskGetState")
     freeRtosSym_eTaskGetState.setDefaultValue(False)
 
+    freeRtosSym_xEventGroupSetBitFromIsr = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_INCLUDE_XEVENTGROUPSETBITFROMISR", freeRtosSymMenu_IncludeComponents)
+    freeRtosSym_xEventGroupSetBitFromIsr.setLabel("Include xEventGroupSetBitFromISR")
+    freeRtosSym_xEventGroupSetBitFromIsr.setDescription("FreeRTOS - Include xEventGroupSetBitFromISR")
+    freeRtosSym_xEventGroupSetBitFromIsr.setDefaultValue(False)
+
     freeRtosSym_xTimerPendFunctionCall = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_INCLUDE_XTIMERPENDFUNCTIONCALL", freeRtosSymMenu_IncludeComponents)
     freeRtosSym_xTimerPendFunctionCall.setLabel("Include xTimerPendFunctionCall")
     freeRtosSym_xTimerPendFunctionCall.setDescription("FreeRTOS - Include xTimerPendFunctionCall")
@@ -536,9 +596,6 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_xTaskGetHandle.setLabel("Include xTaskGetHandle")
     freeRtosSym_xTaskGetHandle.setDescription("FreeRTOS - Include xTaskGetHandle")
     freeRtosSym_xTaskGetHandle.setDefaultValue(False)
-
-    freeRtosSym_tickConfig = thirdPartyFreeRTOS.createStringSymbol("FREERTOS_SETUP_TICK_INTERRUPT", None)
-    freeRtosSym_tickConfig.setVisible(False)
 
 ############################################################################
 #### Code Generation ####
@@ -789,7 +846,8 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSystemTasksFile.setSourcePath("templates/system/system_rtos_tasks.c.ftl")
     freeRtosSystemTasksFile.setMarkup(True) 
 
-    armArch     = Database.getSymbolValue("core", "CoreArchitecture")
-
     # load family specific configuration
-    execfile(Module.getPath() + "config/arch/arm/devices_" + armArch.replace("-", "_").replace("PLUS", "").lower() + "/freertos_config.py")
+    if (coreArch == "MIPS"):
+        execfile(Module.getPath() + "config/arch/mips/devices_" + coreFamily[:7].lower() + "/freertos_config.py")
+    else:
+        execfile(Module.getPath() + "config/arch/arm/devices_" + coreArch.replace("-", "_").replace("PLUS", "").lower() + "/freertos_config.py")
