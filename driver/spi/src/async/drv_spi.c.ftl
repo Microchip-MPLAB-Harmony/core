@@ -47,7 +47,7 @@
 
 #include "configuration.h"
 #include "driver/spi/drv_spi.h"
-<#if core.DATA_CACHE_ENABLE??>
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
 #include "system/cache/sys_cache.h"
 </#if>
 
@@ -543,7 +543,7 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ* transferObj)
             size = transferObj->txSize;
         }
 
-<#if core.DATA_CACHE_ENABLE?? >
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
         /* Clean cache lines having source buffer before submitting a transfer
          * request to DMA to load the latest data in the cache to the actual
          * memory */
@@ -743,7 +743,7 @@ void _DRV_SPI_RX_DMA_CallbackHandler(
             {
                 transferObj->event = DRV_SPI_TRANSFER_EVENT_ERROR;
             }
-<#if core.DATA_CACHE_ENABLE?? >
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
             /* Invalidate cache lines having received buffer before using it
              * to load the latest data in the actual memory to the cache */
             SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)transferObj->pReceiveData, transferObj->rxSize);
@@ -863,7 +863,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize (
     {
         txDummyData[txDummyDataIdx] = 0xFF;
     }
-<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? >
+<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     if (dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
         /* Clean cache lines having source buffer before submitting a transfer

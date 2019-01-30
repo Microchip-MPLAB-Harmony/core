@@ -49,7 +49,7 @@
 #include "configuration.h"
 //#include "system/debug/sys_debug.h"
 #include "driver/spi/drv_spi.h"
-<#if core.DATA_CACHE_ENABLE??>
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
 #include "system/cache/sys_cache.h"
 </#if>
 
@@ -211,7 +211,7 @@ static bool _DRV_SPI_StartDMATransfer(
             size = txSize;
         }
 
-<#if core.DATA_CACHE_ENABLE?? >
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
         /* Clean cache lines having source buffer before submitting a transfer
          * request to DMA to load the latest data in the cache to the actual
          * memory */
@@ -354,7 +354,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
         txDummyData[txDummyDataIdx] = 0xFF;
     }
 
-<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? >
+<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     if (dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
         /* Clean cache lines having source buffer before submitting a transfer
@@ -661,7 +661,7 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
                 {
                     if (hDriver->transferStatus == DRV_SPI_TRANSFER_STATUS_COMPLETE)
                     {
-<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? >
+<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
                         if((hDriver->txDMAChannel != SYS_DMA_CHANNEL_NONE) && ((hDriver->rxDMAChannel != SYS_DMA_CHANNEL_NONE)))
                         {
                             if (rxSize != 0)
