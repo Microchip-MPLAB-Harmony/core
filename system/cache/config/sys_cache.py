@@ -26,7 +26,8 @@ global isCachePresent
 
 isCachePresent = True
 
-if Database.getSymbolValue("core", "DATA_CACHE_ENABLE") == None:
+if ((Database.getSymbolValue("core", "DATA_CACHE_ENABLE") == None) or
+    (Database.getSymbolValue("core", "INSTRUCTION_CACHE_ENABLE") == None)):
     isCachePresent = False
 
 ################################################################################
@@ -37,15 +38,17 @@ def genSysCacheFiles(symbol, event):
     symbol.setEnabled(event["value"])
 
 def enableSysCache(symbol, event):
-    global isCachePresent
     component = symbol.getComponent()
 
-    sysCommon = component.getSymbolValue("ENABLE_SYS_COMMON")
+    isDataCacheEnabled          = Database.getSymbolValue("core", "DATA_CACHE_ENABLE")
+    isInstructionCacheEnabled   = Database.getSymbolValue("core", "INSTRUCTION_CACHE_ENABLE")
 
-    if (sysCommon == True and isCachePresent == True):
-        symbol.setValue(True, 1)
-    else:
+    if ((isDataCacheEnabled == False) and (isInstructionCacheEnabled == False)):
         symbol.setValue(False, 1)
+        symbol.setVisible(False)
+    else:
+        symbol.setValue(True, 1)
+        symbol.setVisible(True)
 
 ############################################################################
 #### Code Generation ####
@@ -57,7 +60,8 @@ genSysCacheCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_CA
 genSysCacheCommonFiles.setLabel("Enable System Cache")
 genSysCacheCommonFiles.setDefaultValue(isCachePresent)
 genSysCacheCommonFiles.setVisible(isCachePresent)
-genSysCacheCommonFiles.setDependencies(enableSysCache, ["ENABLE_SYS_COMMON"])
+genSysCacheCommonFiles.setReadOnly(True)
+genSysCacheCommonFiles.setDependencies(enableSysCache, ["ENABLE_SYS_COMMON", "core.DATA_CACHE_ENABLE", "core.INSTRUCTION_CACHE_ENABLE"])
 
 cacheHeaderFile = harmonyCoreComponent.createFileSymbol("SYS_CACHE_HEADER", None)
 cacheHeaderFile.setSourcePath("system/cache/sys_cache.h")
@@ -70,10 +74,12 @@ cacheHeaderFile.setEnabled(genSysCacheCommonFiles.getValue())
 cacheHeaderFile.setDependencies(genSysCacheFiles, ["ENABLE_SYS_CACHE"])
 
 cacheSourceFile = harmonyCoreComponent.createFileSymbol("SYS_CACHE_SOURCE", None)
-if (coreArch == "CORTEX-A5"):
-    cacheSourceFile.setSourcePath("system/cache/templates/sys_cache_core_cortex_a.c.ftl")
+if "CORTEX-A" in coreArch:
+    cacheSourceFile.setSourcePath("system/cache/templates/sys_cache_cortex_a.c.ftl")
+elif "CORTEX-M" in coreArch:
+    cacheSourceFile.setSourcePath("system/cache/templates/sys_cache_cortex_m.c.ftl")
 else:
-    cacheSourceFile.setSourcePath("system/cache/templates/sys_cache_core_cortex_m.c.ftl")
+    cacheSourceFile.setSourcePath("system/cache/templates/sys_cache_pic32mz.c.ftl")
 cacheSourceFile.setOutputName("sys_cache.c")
 cacheSourceFile.setDestPath("system/cache/")
 cacheSourceFile.setProjectPath("config/" + configName + "/system/cache/")

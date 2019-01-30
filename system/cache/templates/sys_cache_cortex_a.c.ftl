@@ -47,14 +47,18 @@
 // *****************************************************************************
 #include "device.h"
 #include "system/cache/sys_cache.h"
-<#if core.L2CC_ENABLE?? >
+<#if core.L2CC_ENABLE?? && core.L2CC_ENABLE == true >
 #include "peripheral/l2cc/plib_l2cc.h"
 </#if>
 
-#define DATA_CACHE_IS_ENABLED            (__get_SCTLR() & (uint32_t)SCTLR_C_Msk)
-#define INSTRUCTION_CACHE_IS_ENABLED     (__get_SCTLR() & (uint32_t)SCTLR_I_Msk)
-<#if core.L2CC_ENABLE?? >
-#define L2_DATA_CACHE_IS_ENABLED         (L2CC_REGS->L2CC_CR & L2CC_CR_L2CEN_Msk)
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+#define DATA_CACHE_IS_ENABLED()            (__get_SCTLR() & (uint32_t)SCTLR_C_Msk)
+</#if>
+<#if core.INSTRUCTION_CACHE_ENABLE?? && core.INSTRUCTION_CACHE_ENABLE == true >
+#define INSTRUCTION_CACHE_IS_ENABLED()     (__get_SCTLR() & (uint32_t)SCTLR_I_Msk)
+</#if>
+<#if core.L2CC_ENABLE?? && core.L2CC_ENABLE == true >
+#define L2_DATA_CACHE_IS_ENABLED()         (L2CC_REGS->L2CC_CR & L2CC_CR_L2CEN_Msk)
 </#if>
 
 // *****************************************************************************
@@ -63,7 +67,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-<#if core.INSTRUCTION_CACHE_ENABLE?? >
+<#if core.INSTRUCTION_CACHE_ENABLE?? && core.INSTRUCTION_CACHE_ENABLE == true >
 /*
  * Enable Instruction Cache by setting I bit in SCTLR register.
  */
@@ -83,7 +87,7 @@ static inline void L1C_DisableICache(void)
 }
 </#if>
 
-<#if core.DATA_CACHE_ENABLE?? >
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
 /*
  * Enable Data Cache by setting C bit in SCTLR register.
  */
@@ -115,10 +119,12 @@ static inline void L1C_DisableDCache(void)
 void SYS_CACHE_EnableCaches (void)
 {
 <#if core.DATA_CACHE_ENABLE?? && core.INSTRUCTION_CACHE_ENABLE?? >
-    <#lt>    if ((DATA_CACHE_IS_ENABLED == 0) && (INSTRUCTION_CACHE_IS_ENABLED == 0)) // If Data and Instruction Caches are disabled
-    <#lt>    {
-    <#lt>        L1C_EnableCaches();
-    <#lt>    }
+    <#if core.DATA_CACHE_ENABLE == true && core.INSTRUCTION_CACHE_ENABLE == true >
+        <#lt>    if ((DATA_CACHE_IS_ENABLED() == 0) && (INSTRUCTION_CACHE_IS_ENABLED() == 0)) // If Data and Instruction Caches are disabled
+        <#lt>    {
+        <#lt>        L1C_EnableCaches();
+        <#lt>    }
+    </#if>
 </#if>
 }
 
@@ -128,17 +134,19 @@ void SYS_CACHE_EnableCaches (void)
 void SYS_CACHE_DisableCaches (void)
 {
 <#if core.DATA_CACHE_ENABLE?? && core.INSTRUCTION_CACHE_ENABLE?? >
-    <#lt>    if (DATA_CACHE_IS_ENABLED && INSTRUCTION_CACHE_IS_ENABLED) // If Data and Instruction Caches are enabled
-    <#lt>    {
-    <#lt>        L1C_DisableCaches();
-    <#lt>    }
+    <#if core.DATA_CACHE_ENABLE == true && core.INSTRUCTION_CACHE_ENABLE == true >
+        <#lt>    if (DATA_CACHE_IS_ENABLED() && INSTRUCTION_CACHE_IS_ENABLED()) // If Data and Instruction Caches are enabled
+        <#lt>    {
+        <#lt>        L1C_DisableCaches();
+        <#lt>    }
+    </#if>
 </#if>
 }
 
 void SYS_CACHE_EnableICache (void)
 {
-<#if core.INSTRUCTION_CACHE_ENABLE?? >
-    <#lt>    if (INSTRUCTION_CACHE_IS_ENABLED == 0) // If Instruction Cache is disabled
+<#if core.INSTRUCTION_CACHE_ENABLE?? && core.INSTRUCTION_CACHE_ENABLE == true >
+    <#lt>    if (INSTRUCTION_CACHE_IS_ENABLED() == 0) // If Instruction Cache is disabled
     <#lt>    {
     <#lt>        L1C_EnableICache();
     <#lt>    }
@@ -147,8 +155,8 @@ void SYS_CACHE_EnableICache (void)
 
 void SYS_CACHE_DisableICache (void)
 {
-<#if core.INSTRUCTION_CACHE_ENABLE?? >
-    <#lt>    if (INSTRUCTION_CACHE_IS_ENABLED) // If Instruction Cache is enabled
+<#if core.INSTRUCTION_CACHE_ENABLE?? && core.INSTRUCTION_CACHE_ENABLE == true >
+    <#lt>    if (INSTRUCTION_CACHE_IS_ENABLED()) // If Instruction Cache is enabled
     <#lt>    {
     <#lt>        L1C_DisableICache();
     <#lt>    }
@@ -157,8 +165,8 @@ void SYS_CACHE_DisableICache (void)
 
 void SYS_CACHE_InvalidateICache (void)
 {
-<#if core.INSTRUCTION_CACHE_ENABLE?? >
-    <#lt>    if (INSTRUCTION_CACHE_IS_ENABLED) // If Instruction Cache is enabled
+<#if core.INSTRUCTION_CACHE_ENABLE?? && core.INSTRUCTION_CACHE_ENABLE == true >
+    <#lt>    if (INSTRUCTION_CACHE_IS_ENABLED()) // If Instruction Cache is enabled
     <#lt>    {
     <#lt>        L1C_InvalidateICacheAll();
     <#lt>    }
@@ -167,8 +175,8 @@ void SYS_CACHE_InvalidateICache (void)
 
 void SYS_CACHE_EnableDCache (void)
 {
-<#if core.DATA_CACHE_ENABLE?? >
-    <#lt>    if (DATA_CACHE_IS_ENABLED == 0) // If Data Cache is disabled
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+    <#lt>    if (DATA_CACHE_IS_ENABLED() == 0) // If Data Cache is disabled
     <#lt>    {
     <#lt>        L1C_EnableDCache();
     <#lt>    }
@@ -177,8 +185,8 @@ void SYS_CACHE_EnableDCache (void)
 
 void SYS_CACHE_DisableDCache (void)
 {
-<#if core.DATA_CACHE_ENABLE?? >
-    <#lt>    if (DATA_CACHE_IS_ENABLED) // If Data Cache is enabled
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+    <#lt>    if (DATA_CACHE_IS_ENABLED()) // If Data Cache is enabled
     <#lt>    {
     <#lt>        L1C_DisableDCache();
     <#lt>    }
@@ -187,66 +195,74 @@ void SYS_CACHE_DisableDCache (void)
 
 void SYS_CACHE_InvalidateDCache (void)
 {
-<#if core.DATA_CACHE_ENABLE?? >
-    <#lt>    if (DATA_CACHE_IS_ENABLED)
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+    <#lt>    if (DATA_CACHE_IS_ENABLED())
     <#lt>    {
     <#lt>        L1C_InvalidateDCacheAll();
     <#lt>    }
 </#if>
 
 <#if core.L2CC_ENABLE?? && core.DATA_CACHE_ENABLE?? >
-    <#lt>    if (L2_DATA_CACHE_IS_ENABLED && DATA_CACHE_IS_ENABLED)
-    <#lt>    {
-    <#lt>        PLIB_L2CC_InvalidateCache();
-    <#lt>    }
+    <#if core.L2CC_ENABLE == true && core.DATA_CACHE_ENABLE == true >
+        <#lt>    if (L2_DATA_CACHE_IS_ENABLED() && DATA_CACHE_IS_ENABLED())
+        <#lt>    {
+        <#lt>        PLIB_L2CC_InvalidateCache();
+        <#lt>    }
+    </#if>
 </#if>
 }
 
 void SYS_CACHE_CleanDCache (void)
 {
-<#if core.DATA_CACHE_ENABLE?? >
-    <#lt>    if (DATA_CACHE_IS_ENABLED)
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+    <#lt>    if (DATA_CACHE_IS_ENABLED())
     <#lt>    {
     <#lt>        L1C_CleanDCacheAll();
     <#lt>    }
 </#if>
 
 <#if core.L2CC_ENABLE?? && core.DATA_CACHE_ENABLE?? >
-    <#lt>    if (L2_DATA_CACHE_IS_ENABLED && DATA_CACHE_IS_ENABLED)
-    <#lt>    {
-    <#lt>        PLIB_L2CC_CleanCache();
-    <#lt>    }
+    <#if core.L2CC_ENABLE == true && core.DATA_CACHE_ENABLE == true >
+        <#lt>    if (L2_DATA_CACHE_IS_ENABLED() && DATA_CACHE_IS_ENABLED())
+        <#lt>    {
+        <#lt>        PLIB_L2CC_CleanCache();
+        <#lt>    }
+    </#if>
 </#if>
 }
 
 void SYS_CACHE_CleanInvalidateDCache (void)
 {
-<#if core.DATA_CACHE_ENABLE?? >
-    <#lt>    if (DATA_CACHE_IS_ENABLED)
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+    <#lt>    if (DATA_CACHE_IS_ENABLED())
     <#lt>    {
     <#lt>        L1C_CleanInvalidateDCacheAll();
     <#lt>    }
 </#if>
 
 <#if core.L2CC_ENABLE?? && core.DATA_CACHE_ENABLE?? >
-    <#lt>    if (L2_DATA_CACHE_IS_ENABLED && DATA_CACHE_IS_ENABLED)
-    <#lt>    {
-    <#lt>        PLIB_L2CC_CleanInvalidateCache();
-    <#lt>    }
+    <#if core.L2CC_ENABLE == true && core.DATA_CACHE_ENABLE == true >
+        <#lt>    if (L2_DATA_CACHE_IS_ENABLED() && DATA_CACHE_IS_ENABLED())
+        <#lt>    {
+        <#lt>        PLIB_L2CC_CleanInvalidateCache();
+        <#lt>    }
+    </#if>
 </#if>
 }
 
 void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 {
 <#if core.L2CC_ENABLE?? && core.DATA_CACHE_ENABLE?? >
-    <#lt>    if (L2_DATA_CACHE_IS_ENABLED && DATA_CACHE_IS_ENABLED)
-    <#lt>    {
-    <#lt>        PLIB_L2CC_InvalidateCacheByAddr(addr, size);
-    <#lt>    }
+    <#if core.L2CC_ENABLE == true && core.DATA_CACHE_ENABLE == true >
+        <#lt>    if (L2_DATA_CACHE_IS_ENABLED() && DATA_CACHE_IS_ENABLED())
+        <#lt>    {
+        <#lt>        PLIB_L2CC_InvalidateCacheByAddr(addr, size);
+        <#lt>    }
+    </#if>
 </#if>
 
-<#if core.DATA_CACHE_ENABLE?? >
-    <#lt>    if (DATA_CACHE_IS_ENABLED)
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+    <#lt>    if (DATA_CACHE_IS_ENABLED())
     <#lt>    {
     <#lt>        L1C_InvalidateDCacheAll();
     <#lt>    }
@@ -255,34 +271,38 @@ void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 
 void SYS_CACHE_CleanDCache_by_Addr (uint32_t *addr, int32_t size)
 {
-<#if core.DATA_CACHE_ENABLE?? >
-      <#lt>    if (DATA_CACHE_IS_ENABLED)
-      <#lt>    {
-      <#lt>        L1C_CleanDCacheAll();
-      <#lt>    }
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+    <#lt>    if (DATA_CACHE_IS_ENABLED())
+    <#lt>    {
+    <#lt>        L1C_CleanDCacheAll();
+    <#lt>    }
 </#if>
 
 <#if core.L2CC_ENABLE?? && core.DATA_CACHE_ENABLE?? >
-      <#lt>    if (L2_DATA_CACHE_IS_ENABLED && DATA_CACHE_IS_ENABLED)
-      <#lt>    {
-      <#lt>        PLIB_L2CC_CleanCacheByAddr(addr, size);
-      <#lt>    }
+    <#if core.L2CC_ENABLE == true && core.DATA_CACHE_ENABLE == true >
+        <#lt>    if (L2_DATA_CACHE_IS_ENABLED() && DATA_CACHE_IS_ENABLED())
+        <#lt>    {
+        <#lt>        PLIB_L2CC_CleanCacheByAddr(addr, size);
+        <#lt>    }
+    </#if>
 </#if>
 }
 
 void SYS_CACHE_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 {
-<#if core.DATA_CACHE_ENABLE?? >
-      <#lt>    if (L2_DATA_CACHE_IS_ENABLED || DATA_CACHE_IS_ENABLED)
-      <#lt>    {
-      <#lt>        L1C_CleanInvalidateDCacheAll();
-      <#lt>    }
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+    <#lt>    if (DATA_CACHE_IS_ENABLED())
+    <#lt>    {
+    <#lt>        L1C_CleanInvalidateDCacheAll();
+    <#lt>    }
 </#if>
 
 <#if core.L2CC_ENABLE?? && core.DATA_CACHE_ENABLE?? >
-      <#lt>    if (L2_DATA_CACHE_IS_ENABLED && DATA_CACHE_IS_ENABLED)
-      <#lt>    {
-      <#lt>        PLIB_L2CC_CleanInvalidateCacheByAddr(addr, size);
-      <#lt>    }
+    <#if core.L2CC_ENABLE == true && core.DATA_CACHE_ENABLE == true >
+        <#lt>    if (L2_DATA_CACHE_IS_ENABLED() && DATA_CACHE_IS_ENABLED())
+        <#lt>    {
+        <#lt>       PLIB_L2CC_CleanInvalidateCacheByAddr(addr, size);
+        <#lt>    }
+    </#if>
 </#if>
 }
