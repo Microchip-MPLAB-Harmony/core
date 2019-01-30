@@ -47,7 +47,7 @@
 // *****************************************************************************
 
 #include "drv_sdspi_plib_interface.h"
-<#if core.DATA_CACHE_ENABLE??>
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
 #include "system/cache/sys_cache.h"
 </#if>
 
@@ -194,7 +194,7 @@ static bool _DRV_SDSPI_DMA_Write(
     uint32_t nBytes
 )
 {
-<#if core.DATA_CACHE_ENABLE??>
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     /* Clean cache to flush the data from the cache to the main memory */
     SYS_CACHE_CleanDCache_by_Addr (pWriteBuffer, nBytes);
 </#if>
@@ -454,7 +454,7 @@ bool _DRV_SDSPI_SPIBlockRead(
     {
         if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE)
         {
-<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? >
+<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
             if ((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE ))
             {
                 /* Invalidate cache to force CPU to read from the main memory */
@@ -525,7 +525,7 @@ bool _DRV_SDSPI_SPIRead(
 
     if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE)
     {
-<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? >
+<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
         if ((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE ))
         {
             /* Invalidate cache to force CPU to read from the main memory */
