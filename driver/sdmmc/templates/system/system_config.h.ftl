@@ -63,8 +63,3 @@
     <#lt>#define DRV_SDMMC_RTOS_DELAY_IDX${INDEX?string}                         ${DRV_SDMMC_RTOS_DELAY}
 </#if>
 
-<#--
-/*******************************************************************************
- End of File
-*/
--->

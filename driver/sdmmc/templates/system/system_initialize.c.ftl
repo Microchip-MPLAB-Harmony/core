@@ -41,9 +41,3 @@
  -->
 
     sysObj.drvSDMMC${INDEX?string} = DRV_SDMMC_Initialize(DRV_SDMMC_INDEX_${INDEX?string},(SYS_MODULE_INIT *)&drvSDMMC${INDEX?string}InitData);
-
-<#--
-/*******************************************************************************
- End of File
-*/
--->
