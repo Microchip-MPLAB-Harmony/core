@@ -52,7 +52,7 @@
 
 //SYS_DEBUG is not available yet, hence commented for now.
 //#include "system/debug/sys_debug.h"
-<#if core.DATA_CACHE_ENABLE??>
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
 #include "system/cache/sys_cache.h"
 </#if>
 
@@ -526,7 +526,7 @@ bool DRV_USART_WriteBuffer
 <#if core.DMA_ENABLE?has_content>
             if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
             {
-<#if core.DATA_CACHE_ENABLE?? >
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
                 /* Clean cache lines having source buffer before submitting a transfer
                  * request to DMA to load the latest data in the cache to the actual
                  * memory */
@@ -602,7 +602,7 @@ bool DRV_USART_ReadBuffer
                 /* Check and return status */
                 if (dObj->rxRequestStatus == DRV_USART_REQUEST_STATUS_COMPLETE)
                 {
-<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? >
+<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
                     if (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
                     {
                         /* Invalidate cache lines having received buffer before using it

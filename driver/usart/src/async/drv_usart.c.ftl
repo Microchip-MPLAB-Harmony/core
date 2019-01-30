@@ -49,7 +49,7 @@
 #include "configuration.h"
 #include "driver/usart/drv_usart.h"
 #include "drv_usart_local.h"
-<#if core.DATA_CACHE_ENABLE??>
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
 #include "system/cache/sys_cache.h"
 </#if>
 
@@ -562,7 +562,7 @@ static void _DRV_USART_WriteSubmit( DRV_USART_OBJ* dObj )
 <#if core.DMA_ENABLE?has_content>
     if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
-<#if core.DATA_CACHE_ENABLE?? >
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
         // Clean cache to load new data from cache to main memory for DMA
         SYS_CACHE_CleanDCache_by_Addr((uint32_t *)bufferObj->buffer, bufferObj->size);
 </#if>
@@ -680,7 +680,7 @@ static void _DRV_USART_BufferQueueTask(
              * requested buffer size */
             bufferObj->nCount = bufferObj->size;
         }
-<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? >
+<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
         if((direction == DRV_USART_DIRECTION_RX) && (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
         {
             SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)bufferObj->buffer, bufferObj->size);
