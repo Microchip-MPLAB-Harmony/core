@@ -1,4 +1,21 @@
 /*******************************************************************************
+  MPU PLIB Header
+
+  Company:
+    Microchip Technology Inc.
+
+  File Name:
+    plib_mpu.h
+
+  Summary:
+    MPU PLIB Header File
+
+  Description:
+    None
+
+*******************************************************************************/
+
+/*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
@@ -21,13 +38,36 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-#ifndef TOOLCHAIN_SPECIFICS_H
-#define TOOLCHAIN_SPECIFICS_H
+#ifndef PLIB_MPU_H
+#define PLIB_MPU_H
 
-#include <sys/types.h>
-#define NO_INIT    __attribute__((section(".no_init")))
-#define SECTION(a) __attribute__((__section__(a)))
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+    extern "C" {
+
+#endif
+// DOM-IGNORE-END
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Interface
+// *****************************************************************************
+// *****************************************************************************
+
+/****************************** MPU API *********************************/
+
+void MPU_Initialize( void );
 
 
-#endif // end of header
+
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+    }
+
+#endif
+// DOM-IGNORE-END
+#endif // PLIB_MPU_H
+
 

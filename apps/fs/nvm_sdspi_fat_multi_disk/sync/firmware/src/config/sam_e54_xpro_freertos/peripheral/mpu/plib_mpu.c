@@ -1,4 +1,21 @@
 /*******************************************************************************
+  MPU PLIB Implementation
+
+  Company:
+    Microchip Technology Inc.
+
+  File Name:
+    plib_mpu.h
+
+  Summary:
+    MPU PLIB Source File
+
+  Description:
+    None
+
+*******************************************************************************/
+
+/*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
@@ -21,13 +38,50 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-#ifndef TOOLCHAIN_SPECIFICS_H
-#define TOOLCHAIN_SPECIFICS_H
-
-#include <sys/types.h>
-#define NO_INIT    __attribute__((section(".no_init")))
-#define SECTION(a) __attribute__((__section__(a)))
+#include "plib_mpu.h"
+#include "plib_mpu_local.h"
 
 
-#endif // end of header
+// *****************************************************************************
+// *****************************************************************************
+// Section: MPU Implementation
+// *****************************************************************************
+// *****************************************************************************
+
+void MPU_Initialize(void)
+{
+    /*** Disable MPU            ***/
+    MPU->CTRL = 0;
+
+    /*** Configure MPU Regions  ***/
+
+    /* Region 0 Name: FLASH, Base Address: 0x80000, Size: 512KB  */
+    MPU->RBAR = MPU_REGION(0, 0x80000);
+    MPU->RASR = MPU_REGION_SIZE(18) | MPU_RASR_AP(MPU_RASR_AP_READWRITE_Val) | MPU_ATTR_NORMAL_WT \
+                | MPU_ATTR_ENABLE  ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* Enable Memory Management Fault */
+    SCB->SHCSR |= (SCB_SHCSR_MEMFAULTENA_Msk);
+
+    /* Enable MPU */
+    MPU->CTRL = MPU_CTRL_ENABLE_Msk  | MPU_CTRL_PRIVDEFENA_Msk;
+
+    __DSB();
+    __ISB();
+}
 
