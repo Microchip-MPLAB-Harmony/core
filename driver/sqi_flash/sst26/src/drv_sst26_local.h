@@ -132,8 +132,11 @@ typedef enum
 
 typedef enum
 {
+    /* Request is a command operation */
+    DRV_SST26_OPERATION_TYPE_CMD = 0,
+
     /* Request is read operation. */
-    DRV_SST26_OPERATION_TYPE_READ = 0,
+    DRV_SST26_OPERATION_TYPE_READ,
 
     /* Request is write operation. */
     DRV_SST26_OPERATION_TYPE_WRITE,
@@ -150,6 +153,9 @@ typedef struct
 {
     /* Flag to indicate in use  */
     bool inUse;
+
+    /* Flag to indicate status of transfer */
+    volatile bool isTransferDone;
 
     /* The status of the driver */
     SYS_STATUS status;

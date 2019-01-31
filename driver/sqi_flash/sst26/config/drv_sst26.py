@@ -58,6 +58,12 @@ def sst26SourceFileGen(symbol, event):
 
         symbol.setEnabled(True)
 
+def setBuffDescriptor(symbol, event):
+    if ("SQI" in event["value"]):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
+
 def instantiateComponent(sst26Component):
 
     res = Database.activateComponents(["HarmonyCore"])
@@ -76,7 +82,17 @@ def instantiateComponent(sst26Component):
     sst26NumClients = sst26Component.createIntegerSymbol("DRV_SST26_NUM_CLIENTS", None)
     sst26NumClients.setLabel("Number of Clients")
     sst26NumClients.setReadOnly(True)
+    sst26NumClients.setMin(1)
+    sst26NumClients.setMax(64)
     sst26NumClients.setDefaultValue(1)
+
+    sst26NumBufDesc = sst26Component.createIntegerSymbol("DRV_SST26_NUM_BUFFER_DESC", None)
+    sst26NumBufDesc.setLabel("Number of Buffer Descriptors")
+    sst26NumBufDesc.setMin(1)
+    sst26NumBufDesc.setDefaultValue(10)
+    sst26NumBufDesc.setVisible(False)
+    sst26NumBufDesc.setDependencies(setBuffDescriptor, ["DRV_SST26_PLIB"])
+    
 
     ##### Do not modify below symbol names as they are used by Memory Driver #####
     sst26MemoryDriver = sst26Component.createBooleanSymbol("DRV_MEMORY_CONNECTED", None)
@@ -194,6 +210,9 @@ def onAttachmentConnected(source, target):
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper(), 2)
 
+        if ("sqi" in remoteID):
+            remoteComponent.getSymbolByID("SQI_FLASH_STATUS_CHECK").setReadOnly(True)
+
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]
     remoteComponent = target["component"]
@@ -202,5 +221,8 @@ def onAttachmentDisconnected(source, target):
     targetID = target["id"]
 
     if connectID == "drv_sst26_SQI_dependency" :
+        if ("sqi" in remoteID):
+            remoteComponent.getSymbolByID("SQI_FLASH_STATUS_CHECK").setReadOnly(False)
+
         plibUsed = localComponent.getSymbolByID("DRV_SST26_PLIB")
         plibUsed.clearValue()
