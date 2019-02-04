@@ -15,6 +15,56 @@ const SYS_CONSOLE_UART_PLIB_INTERFACE sysConsole${INDEX?string}UARTPlibAPI =
     .errorGet = (SYS_CONSOLE_UART_PLIB_ERROR_GET)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_ErrorGet,
 };
 
+<#assign USART_PLIB = "SYS_CONSOLE_DEVICE">
+<#assign USART_PLIB_MULTI_IRQn = "core." + USART_PLIB?eval + "_MULTI_IRQn">
+<#assign USART_PLIB_SINGLE_IRQn = "core." + USART_PLIB?eval + "_SINGLE_IRQn">
+<#if USART_PLIB_MULTI_IRQn?eval??>
+    <#assign USART_PLIB_TX_COMPLETE_INDEX = "core." + USART_PLIB?eval + "_USART_TX_COMPLETE_INT_SRC">
+    <#assign USART_PLIB_TX_READY_INDEX = "core." + USART_PLIB?eval + "_USART_TX_READY_INT_SRC">
+    <#assign USART_PLIB_RX_INDEX = "core." + USART_PLIB?eval + "_USART_RX_INT_SRC">
+    <#assign USART_PLIB_ERROR_INDEX = "core." + USART_PLIB?eval + "_USART_ERROR_INT_SRC">
+</#if>
+
+const SYS_CONSOLE_UART_INTERRUPT_SOURCES sysConsole${INDEX?string}UARTInterruptSources =
+{
+    <#if USART_PLIB_MULTI_IRQn?eval??>
+        <#lt>    /* Peripheral has more than one interrupt vector */
+        <#lt>    .isSingleIntSrc                        = false,
+
+        <#lt>    /* Peripheral interrupt lines */
+        <#if USART_PLIB_TX_COMPLETE_INDEX?eval??>
+            <#lt>    .intSources.multi.usartTxCompleteInt   = ${USART_PLIB_TX_COMPLETE_INDEX?eval},
+        <#else>
+            <#lt>    .intSources.multi.usartTxCompleteInt   = -1,
+        </#if>
+        <#if USART_PLIB_TX_READY_INDEX?eval??>
+            <#lt>    .intSources.multi.usartTxReadyInt      = ${USART_PLIB_TX_READY_INDEX?eval},
+        <#else>
+            <#lt>    .intSources.multi.usartTxReadyInt      = -1,
+        </#if>
+        <#if USART_PLIB_RX_INDEX?eval??>
+            <#lt>    .intSources.multi.usartRxCompleteInt   = ${USART_PLIB_RX_INDEX?eval},
+        <#else>
+            <#lt>    .intSources.multi.usartTxReadyInt      = -1,
+        </#if>
+        <#if USART_PLIB_ERROR_INDEX?eval??>
+            <#lt>    .intSources.multi.usartErrorInt        = ${USART_PLIB_ERROR_INDEX?eval},
+        <#else>
+            <#lt>    .intSources.multi.usartErrorInt        = -1,
+        </#if>
+    <#else>
+        <#lt>    /* Peripheral has single interrupt vector */
+        <#lt>    .isSingleIntSrc                        = true,
+
+        <#lt>    /* Peripheral interrupt line */
+        <#if USART_PLIB_SINGLE_IRQn?eval??>
+            <#lt>    .intSources.usartInterrupt             = ${USART_PLIB_SINGLE_IRQn?eval},
+        <#else>
+            <#lt>    .intSources.usartInterrupt             = ${SYS_CONSOLE_DEVICE}_IRQn,
+        </#if>
+    </#if>
+};
+
 const SYS_CONSOLE_UART_INIT_DATA sysConsole${INDEX?string}UARTInitData =
 {
     .uartPLIB = &sysConsole${INDEX?string}UARTPlibAPI,
@@ -22,7 +72,7 @@ const SYS_CONSOLE_UART_INIT_DATA sysConsole${INDEX?string}UARTInitData =
     .writeQueueElementsArr = sysConsole${INDEX?string}UARTWrQueueElements,
     .readQueueDepth = SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX${INDEX?string},
     .writeQueueDepth = SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX${INDEX?string},
-    .interruptSource = ${SYS_CONSOLE_DEVICE}_IRQn,
+    .interruptSources = &sysConsole${INDEX?string}UARTInterruptSources,
 };
 
 const SYS_CONSOLE_INIT sysConsole${INDEX?string}Init =
