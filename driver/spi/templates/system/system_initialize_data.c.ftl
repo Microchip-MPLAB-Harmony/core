@@ -112,6 +112,7 @@ const uint32_t drvSPI${INDEX?string}remapClockPhase[] =
     </#if>
     <#assign SPI_PLIB = "DRV_SPI_PLIB">
     <#assign SPI_PLIB_MULTI_IRQn = "core." + SPI_PLIB?eval + "_MULTI_IRQn">
+    <#assign SPI_PLIB_SINGLE_IRQn = "core." + SPI_PLIB?eval + "_SINGLE_IRQn">
     <#if SPI_PLIB_MULTI_IRQn?eval??>
         <#assign SPI_PLIB_TX_READY_INDEX = "core." + SPI_PLIB?eval + "_SPI_TX_READY_INT_SRC">
         <#assign SPI_PLIB_TX_COMPLETE_INDEX = "core." + SPI_PLIB?eval + "_SPI_TX_COMPLETE_INT_SRC">
@@ -124,15 +125,33 @@ const DRV_SPI_INTERRUPT_SOURCES drvSPI${INDEX?string}InterruptSources =
     <#if SPI_PLIB_MULTI_IRQn?eval??>
         <#lt>    /* Peripheral has more than one interrupt vectors */
         <#lt>    .isSingleIntSrc                        = false,
+
         <#lt>    /* Peripheral interrupt lines */
-        <#lt>    .intSources.multi.spiTxReadyInt        = ${SPI_PLIB_TX_READY_INDEX?eval},
-        <#lt>    .intSources.multi.spiTxCompleteInt     = ${SPI_PLIB_TX_COMPLETE_INDEX?eval},
-        <#lt>    .intSources.multi.spiRxInt             = ${SPI_PLIB_RX_INDEX?eval},
+        <#if SPI_PLIB_TX_READY_INDEX?eval??>
+            <#lt>    .intSources.multi.spiTxReadyInt      = ${SPI_PLIB_TX_READY_INDEX?eval},
+        <#else>
+            <#lt>    .intSources.multi.spiTxReadyInt      = -1,
+        </#if>
+        <#if SPI_PLIB_TX_COMPLETE_INDEX?eval??>
+            <#lt>    .intSources.multi.spiTxCompleteInt   = ${SPI_PLIB_TX_COMPLETE_INDEX?eval},
+        <#else>
+            <#lt>    .intSources.multi.spiTxCompleteInt   = -1,
+        </#if>
+        <#if SPI_PLIB_RX_INDEX?eval??>
+            <#lt>    .intSources.multi.spiRxInt           = ${SPI_PLIB_RX_INDEX?eval},
+        <#else>
+            <#lt>    .intSources.multi.spiRxInt           = -1,
+        </#if>
     <#else>
         <#lt>    /* Peripheral has single interrupt vector */
         <#lt>    .isSingleIntSrc                        = true,
+
         <#lt>    /* Peripheral interrupt line */
-        <#lt>    .intSources.spiInterrupt               = ${DRV_SPI_PLIB}_IRQn,
+        <#if SPI_PLIB_SINGLE_IRQn?eval??>
+            <#lt>    .intSources.spiInterrupt             = ${SPI_PLIB_SINGLE_IRQn?eval},
+        <#else>
+            <#lt>    .intSources.spiInterrupt             = ${DRV_SPI_PLIB}_IRQn,
+        </#if>
     </#if>
     <#if core.DMA_ENABLE?has_content>
         <#if DMA_PLIB_MULTI_IRQn?eval??>
@@ -194,7 +213,7 @@ const DRV_SPI_INIT drvSPI${INDEX?string}InitData =
 
 <#if DRV_SPI_MODE == "Asynchronous">
     /* SPI Queue Size */
-    .queueSize = DRV_SPI_QUEUE_SIZE_IDX${INDEX?string},
+    .transferObjPoolSize = DRV_SPI_QUEUE_SIZE_IDX${INDEX?string},
 
     /* SPI Transfer Objects Pool */
     .transferObjPool = (uintptr_t)&drvSPI${INDEX?string}TransferObjPool[0],
