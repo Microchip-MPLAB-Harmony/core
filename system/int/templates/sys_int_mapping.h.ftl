@@ -1,6 +1,3 @@
-#ifndef SYS_INT_MAPPING_H
-#define SYS_INT_MAPPING_H
-<#lt><#if false == __PROCESSOR?matches("ATSAMA5.*")>
 /*******************************************************************************
   Interrupt System Service Mapping File
 
@@ -44,20 +41,31 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
+#ifndef SYS_INT_MAPPING_H
+#define SYS_INT_MAPPING_H
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Interrupt System Service Mapping
 // *****************************************************************************
 // *****************************************************************************
-#define SYS_INT_IsEnabled()                 ( __get_PRIMASK() == 0 )
-#define SYS_INT_SourceEnable( source )      NVIC_EnableIRQ( source )
-#define SYS_INT_SourceIsEnabled( source )   NVIC_GetEnableIRQ( source )
-#define SYS_INT_SourceStatusGet( source )   NVIC_GetPendingIRQ( source )
-#define SYS_INT_SourceStatusSet( source )   NVIC_SetPendingIRQ( source )
-#define SYS_INT_SourceStatusClear( source ) NVIC_ClearPendingIRQ( source )
 
-/*******************************************************************************
- End of File
-*/
-<#lt></#if>
+<#if __PROCESSOR?matches("ATSAMA5.*") == false>
+    <#if __PROCESSOR?matches("PIC32M.*") == false>
+        <#lt>#define SYS_INT_IsEnabled()                 ( __get_PRIMASK() == 0 )
+        <#lt>#define SYS_INT_SourceEnable( source )      NVIC_EnableIRQ( source )
+        <#lt>#define SYS_INT_SourceIsEnabled( source )   NVIC_GetEnableIRQ( source )
+        <#lt>#define SYS_INT_SourceStatusGet( source )   NVIC_GetPendingIRQ( source )
+        <#lt>#define SYS_INT_SourceStatusSet( source )   NVIC_SetPendingIRQ( source )
+        <#lt>#define SYS_INT_SourceStatusClear( source ) NVIC_ClearPendingIRQ( source )
+    <#else>
+        <#lt>#define SYS_INT_IsEnabled()                 ((bool)(_CP0_GET_STATUS() & 0x01))
+        <#lt>#define SYS_INT_SourceEnable( source )      EVIC_SourceEnable( source )
+        <#lt>#define SYS_INT_SourceIsEnabled( source )   EVIC_SourceIsEnabled( source )
+        <#lt>#define SYS_INT_SourceStatusGet( source )   EVIC_SourceStatusGet( source )
+        <#lt>#define SYS_INT_SourceStatusSet( source )   EVIC_SourceStatusSet( source )
+        <#lt>#define SYS_INT_SourceStatusClear( source ) EVIC_SourceStatusClear( source )
+    </#if>
+</#if>
+
 #endif // SYS_INT_MAPPING_H

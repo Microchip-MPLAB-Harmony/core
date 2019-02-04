@@ -22,41 +22,46 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
-
 ################################################################################
 #### Business Logic ####
 ################################################################################
+
 def enableSysInt(symbol, event):
+
     drv_common = Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
     sys_common = Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
 
     if ((drv_common == True) or (sys_common == True)):
-        symbol.setValue(True,1)
+        symbol.setValue(True, 1)
     else:
-        symbol.setValue(False,1)
+        symbol.setValue(False, 1)
 
 def genSysIntFiles(symbol, event):
-    if (event["value"] == True):
-        symbol.setEnabled(True)
-    else:
-        symbol.setEnabled(False)
 
+    symbol.setEnabled(event["value"])
 
 ############################################################################
 #### Code Generation ####
 ############################################################################
+
 sysInt = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_INT", None)
 sysInt.setLabel("Enable System Interrupt")
 sysInt.setDefaultValue(False)
 sysInt.setDependencies(enableSysInt, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON"])
 
 processor = Variables.get("__PROCESSOR")
+
+sysIntHeaderFile = "sys_int"
 sysIntCFileStem = "sys_int_nvic"
+
 if "SAMA5" in processor:
     sysIntCFileStem = "sys_int_aic"
+elif "PIC32M" in processor:
+	sysIntCFileStem = "sys_int_pic32"
+	sysIntHeaderFile = "sys_int_pic32"
 
 intHeaderFile = harmonyCoreComponent.createFileSymbol("INT_HEADER", None)
-intHeaderFile.setSourcePath("system/int/sys_int.h")
+intHeaderFile.setSourcePath("system/int/" + sysIntHeaderFile + ".h")
 intHeaderFile.setOutputName("sys_int.h")
 intHeaderFile.setDestPath("system/int/")
 intHeaderFile.setProjectPath("config/" + configName + "/system/int/")
