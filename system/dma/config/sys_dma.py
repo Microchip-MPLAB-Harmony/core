@@ -26,37 +26,42 @@
 ################################################################################
 #### Business Logic ####
 ################################################################################
+
 def genDmaHeaderFile(symbol, event):
+
     symbol.setEnabled(event["value"])
 
 def genDmaHeaderMappingFile(symbol, event):
+
     symbol.setEnabled(event["value"])
 
 def genDmaSystemDefFile(symbol, event):
+
     symbol.setEnabled(event["value"])
 
 def enableDependencySymbols(symbol, event):
-    if(event["value"] == True):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
-    else:
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", False, 2)
+
+    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", event["value"], 1)
 
 ############################################################################
 #### Code Generation ####
 ############################################################################
 
+deviceFile = ""
+
+if("PIC32M" in Variables.get("__PROCESSOR")):
+    deviceFile = "_pic32m"
+
 genSysDMACommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_DMA", None)
 genSysDMACommonFiles.setLabel("Enable System DMA")
-genSysDMACommonFiles.setDefaultValue(False)
 
 enableDependency = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_DMA_DEPENDENCY", None)
 enableDependency.setLabel("Enable System DMA Dependencies")
 enableDependency.setVisible(False)
 enableDependency.setDependencies(enableDependencySymbols, ["ENABLE_SYS_DMA"])
-enableDependency.setDefaultValue(False)
 
 dmaHeaderFile = harmonyCoreComponent.createFileSymbol("DMA_HEADER", None)
-dmaHeaderFile.setSourcePath("system/dma/templates/sys_dma.h.ftl")
+dmaHeaderFile.setSourcePath("system/dma/templates/sys_dma" + deviceFile + ".h.ftl")
 dmaHeaderFile.setOutputName("sys_dma.h")
 dmaHeaderFile.setDestPath("system/dma/")
 dmaHeaderFile.setProjectPath("config/" + configName + "/system/dma/")
@@ -66,19 +71,19 @@ dmaHeaderFile.setOverwrite(True)
 dmaHeaderFile.setEnabled(False)
 dmaHeaderFile.setDependencies(genDmaHeaderFile, ["ENABLE_SYS_DMA"])
 
-dmaHeaderFile = harmonyCoreComponent.createFileSymbol("DMA_SOURCE", None)
-dmaHeaderFile.setSourcePath("system/dma/templates/sys_dma.c.ftl")
-dmaHeaderFile.setOutputName("sys_dma.c")
-dmaHeaderFile.setDestPath("system/dma/")
-dmaHeaderFile.setProjectPath("config/" + configName + "/system/dma/")
-dmaHeaderFile.setType("SOURCE")
-dmaHeaderFile.setMarkup(True)
-dmaHeaderFile.setOverwrite(True)
-dmaHeaderFile.setEnabled(False)
-dmaHeaderFile.setDependencies(genDmaHeaderFile, ["ENABLE_SYS_DMA"])
+dmaSourceFile = harmonyCoreComponent.createFileSymbol("DMA_SOURCE", None)
+dmaSourceFile.setSourcePath("system/dma/templates/sys_dma" + deviceFile + ".c.ftl")
+dmaSourceFile.setOutputName("sys_dma.c")
+dmaSourceFile.setDestPath("system/dma/")
+dmaSourceFile.setProjectPath("config/" + configName + "/system/dma/")
+dmaSourceFile.setType("SOURCE")
+dmaSourceFile.setMarkup(True)
+dmaSourceFile.setOverwrite(True)
+dmaSourceFile.setEnabled(False)
+dmaSourceFile.setDependencies(genDmaHeaderFile, ["ENABLE_SYS_DMA"])
 
 dmaHeaderMappingFile = harmonyCoreComponent.createFileSymbol("DMA_MAPPING", None)
-dmaHeaderMappingFile.setSourcePath("system/dma/templates/sys_dma_mapping.h.ftl")
+dmaHeaderMappingFile.setSourcePath("system/dma/templates/sys_dma_mapping" + deviceFile + ".h.ftl")
 dmaHeaderMappingFile.setOutputName("sys_dma_mapping.h")
 dmaHeaderMappingFile.setDestPath("system/dma/")
 dmaHeaderMappingFile.setProjectPath("config/" + configName + "/system/dma/")
