@@ -76,7 +76,7 @@
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_DATA appData;
+APP_DATA CACHE_ALIGN appData;
 
 static uint32_t write_index = 0;
 
@@ -123,8 +123,6 @@ void APP_Initialize ( void )
 
     for (i = 0; i < BUFFER_SIZE; i++)
         appData.writeBuffer[i] = i;
-
-    SYSTICK_TimerStart();
 }
 
 
@@ -135,7 +133,6 @@ void APP_Initialize ( void )
   Remarks:
     See prototype in app.h.
  */
-
 void APP_Tasks ( void )
 {
     DRV_SST26_TRANSFER_STATUS transferStatus = DRV_SST26_TRANSFER_ERROR_UNKNOWN;
@@ -250,7 +247,23 @@ void APP_Tasks ( void )
             }
             else
             {
+                appData.state = APP_STATE_READ_WAIT;
+            }
+
+            break;
+        }
+
+        case APP_STATE_READ_WAIT:
+        {
+            transferStatus = DRV_SST26_TransferStatusGet(appData.handle);
+
+            if(transferStatus == DRV_SST26_TRANSFER_COMPLETED)
+            {
                 appData.state = APP_STATE_VERIFY_DATA;
+            }
+            else if (transferStatus == DRV_SST26_TRANSFER_ERROR_UNKNOWN)
+            {
+                appData.state = APP_STATE_ERROR;
             }
 
             break;
@@ -272,21 +285,12 @@ void APP_Tasks ( void )
 
         case APP_STATE_SUCCESS:
         {
-            SYSTICK_DelayMs(1000);
-
-            LED_TOGGLE();
-
+            LED_ON();
             break;
         }
 
         case APP_STATE_ERROR:
         default:
-            LED_ON();
+            break;
     }
 }
-
-
-
-/*******************************************************************************
- End of File
- */

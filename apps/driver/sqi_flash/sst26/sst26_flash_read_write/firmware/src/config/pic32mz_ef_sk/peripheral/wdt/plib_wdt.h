@@ -1,17 +1,18 @@
 /*******************************************************************************
-  Interface definition of SYSTICK PLIB.
+  Interface definition of WDT PLIB.
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    plib_systick.h
+    plib_wdt.h
 
   Summary:
-    Interface definition of the System Timer Plib (SYSTICK).
+    Interface definition of the Watch Dog Timer Plib (WDT).
 
   Description:
-    This file defines the interface for the SYSTICK Plib.
+    This file defines the interface for the WDT Plib.
+    It allows user to setup timeout duration and restart watch dog timer.
 *******************************************************************************/
 
 /*******************************************************************************
@@ -37,17 +38,15 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-#ifndef PLIB_SYSTICK_H    // Guards against multiple inclusion
-#define PLIB_SYSTICK_H
+#ifndef WDT_H    // Guards against multiple inclusion
+#define WDT_H
 
 #include <stdint.h>
-#include <stdbool.h>
 #include <stddef.h>
 
 #ifdef __cplusplus // Provide C++ Compatibility
-	extern "C" {
+ extern "C" {
 #endif
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -55,31 +54,13 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#define SYSTICK_FREQ	300000000
+void WDT_Initialize( void );
+void WDT_Clear( void );
+void WDT_Enable( void );
+void WDT_Disable( void );
 
-#define SYSTICK_INTERRUPT_PERIOD_IN_US  (1000)
-	
-typedef void (*SYSTICK_CALLBACK)(uintptr_t context);
-
-typedef struct
-{
-	SYSTICK_CALLBACK          callback;
-	uintptr_t                 context;
-	volatile uint32_t         tickCounter;
-} SYSTICK_OBJECT ;
-/***************************** SYSTICK API *******************************/
-void SYSTICK_TimerInitialize ( void );
-void SYSTICK_TimerRestart ( void );
-void SYSTICK_TimerStart ( void );
-void SYSTICK_TimerStop ( void );
-void SYSTICK_TimerPeriodSet ( uint32_t period );
-uint32_t SYSTICK_TimerPeriodGet ( void );
-uint32_t SYSTICK_TimerCounterGet ( void );
-uint32_t SYSTICK_TimerFrequencyGet ( void );
-void SYSTICK_DelayMs ( uint32_t ms );
-void SYSTICK_TimerCallbackSet ( SYSTICK_CALLBACK callback, uintptr_t context );
 #ifdef __cplusplus // Provide C++ Compatibility
  }
 #endif
 
-#endif
+#endif 

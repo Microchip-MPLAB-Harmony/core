@@ -45,6 +45,8 @@
 // *****************************************************************************
 #include "configuration.h"
 #include "definitions.h"
+#include "device.h"
+
 
 
 // ****************************************************************************
@@ -83,6 +85,7 @@
 
 
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Driver Initialization Data
@@ -114,6 +117,7 @@ const DRV_SST26_INIT drvSST26InitData =
 // *****************************************************************************
 /* Structure to hold the object handles for the modules in the system. */
 SYSTEM_OBJECTS sysObj;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Library/Stack Initialization Data
@@ -128,6 +132,7 @@ SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 
 
+
 /*******************************************************************************
   Function:
     void SYS_Initialize ( void *data )
@@ -140,6 +145,7 @@ SYSTEM_OBJECTS sysObj;
 
 void SYS_Initialize ( void* data )
 {
+  
     CLK_Initialize();
 	PIO_Initialize();
 
@@ -147,13 +153,10 @@ void SYS_Initialize ( void* data )
 	BSP_Initialize();
     QSPI_Initialize();
 
-	SYSTICK_TimerInitialize();
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
 
-
-    NVIC_Initialize();
 
     sysObj.drvSST26 = DRV_SST26_Initialize((SYS_MODULE_INDEX)DRV_SST26_INDEX, (SYS_MODULE_INIT *)&drvSST26InitData);
 
@@ -162,6 +165,8 @@ void SYS_Initialize ( void* data )
 
     APP_Initialize();
 
+
+    NVIC_Initialize();
 
 }
 

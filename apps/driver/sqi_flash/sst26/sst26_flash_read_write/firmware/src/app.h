@@ -54,7 +54,6 @@
 
 #include <stdlib.h>
 #include "configuration.h"
-#include "peripheral/systick/plib_systick.h"
 #include "driver/sst26/drv_sst26.h"
 
 // DOM-IGNORE-BEGIN
@@ -71,9 +70,9 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
-#define PAGE_SIZE                  256
-#define BUFFER_SIZE                2048
-#define MEM_ADDRESS                0x0
+/* Erase-Write-Read One Sector of Data 4096 Bytes*/
+#define BUFFER_SIZE     4096
+#define MEM_ADDRESS     0x0
 
 // *****************************************************************************
 /* Application states
@@ -106,11 +105,14 @@ typedef enum
     /* Write to Memory */
     APP_STATE_WRITE_MEMORY,
 
-    /* Erase Wait */
+    /* Write Wait */
     APP_STATE_WRITE_WAIT,
 
     /* Read From Memory */
     APP_STATE_READ_MEMORY,
+
+    /* Read Wait */
+    APP_STATE_READ_WAIT,
 
     /* Verify Data Read */
     APP_STATE_VERIFY_DATA,
@@ -247,8 +249,3 @@ void APP_Tasks( void );
 }
 #endif
 //DOM-IGNORE-END
-
-/*******************************************************************************
- End of File
- */
-
