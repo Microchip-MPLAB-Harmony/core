@@ -52,6 +52,7 @@
 </#if>
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+#define L1_DATA_CACHE_BYTES                32U
 #define DATA_CACHE_IS_ENABLED()            (__get_SCTLR() & (uint32_t)SCTLR_C_Msk)
 </#if>
 <#if core.INSTRUCTION_CACHE_ENABLE?? && core.INSTRUCTION_CACHE_ENABLE == true >
@@ -252,8 +253,12 @@ void SYS_CACHE_CleanInvalidateDCache (void)
 
 void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 {
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+    <#lt>    uint32_t mva = (uint32_t)addr & ~(L1_DATA_CACHE_BYTES - 1);
+</#if>
 <#if core.L2CC_ENABLE?? && core.DATA_CACHE_ENABLE?? >
     <#if core.L2CC_ENABLE == true && core.DATA_CACHE_ENABLE == true >
+
         <#lt>    if (L2_DATA_CACHE_IS_ENABLED() && DATA_CACHE_IS_ENABLED())
         <#lt>    {
         <#lt>        PLIB_L2CC_InvalidateCacheByAddr(addr, size);
@@ -264,7 +269,10 @@ void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     <#lt>    if (DATA_CACHE_IS_ENABLED())
     <#lt>    {
-    <#lt>        L1C_InvalidateDCacheAll();
+    <#lt>        for ( ; mva < ((uint32_t)addr + (uint32_t)size); mva += L1_DATA_CACHE_BYTES)
+    <#lt>        {
+    <#lt>            L1C_InvalidateDCacheMVA((void*)mva);
+    <#lt>        }
     <#lt>    }
 </#if>
 }
@@ -272,9 +280,14 @@ void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 void SYS_CACHE_CleanDCache_by_Addr (uint32_t *addr, int32_t size)
 {
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+    <#lt>    uint32_t mva = (uint32_t)addr & ~(L1_DATA_CACHE_BYTES - 1);
+
     <#lt>    if (DATA_CACHE_IS_ENABLED())
     <#lt>    {
-    <#lt>        L1C_CleanDCacheAll();
+    <#lt>        for ( ; mva < ((uint32_t)addr + (uint32_t)size); mva += L1_DATA_CACHE_BYTES)
+    <#lt>        {
+    <#lt>            L1C_CleanDCacheMVA((void*)mva);
+    <#lt>        }
     <#lt>    }
 </#if>
 
@@ -291,9 +304,14 @@ void SYS_CACHE_CleanDCache_by_Addr (uint32_t *addr, int32_t size)
 void SYS_CACHE_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 {
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+    <#lt>    uint32_t mva = (uint32_t)addr & ~(L1_DATA_CACHE_BYTES - 1);
+
     <#lt>    if (DATA_CACHE_IS_ENABLED())
     <#lt>    {
-    <#lt>        L1C_CleanInvalidateDCacheAll();
+    <#lt>        for ( ; mva < ((uint32_t)addr + (uint32_t)size); mva += L1_DATA_CACHE_BYTES)
+    <#lt>        {
+    <#lt>            L1C_CleanInvalidateDCacheMVA((void*)mva);
+    <#lt>        }
     <#lt>    }
 </#if>
 
