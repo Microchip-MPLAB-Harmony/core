@@ -125,55 +125,56 @@ static void _DRV_USART_DisableInterrupts(DRV_USART_OBJ* dObj)
 {
     bool interruptStatus;
     const DRV_USART_INTERRUPT_SOURCES* intInfo = dObj->interruptSources;
+    const DRV_USART_MULTI_INT_SRC* multiVector = &dObj->interruptSources->intSources.multi;
 
     interruptStatus = SYS_INT_Disable();
 
     if (intInfo->isSingleIntSrc == true)
     {
         /* Disable USART interrupt */
-        SYS_INT_SourceDisable(intInfo->intSources.usartInterrupt);
+        dObj->usartInterruptStatus = SYS_INT_SourceDisable(intInfo->intSources.usartInterrupt);
 
         <#if core.DMA_ENABLE?has_content>
             <#lt>        /* Disable DMA interrupt */
             <#lt>        if((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) || (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
             <#lt>        {
-            <#lt>            SYS_INT_SourceDisable(intInfo->intSources.dmaInterrupt);
+            <#lt>            dObj->dmaInterruptStatus = SYS_INT_SourceDisable(intInfo->intSources.dmaInterrupt);
             <#lt>        }
         </#if>
     }
     else
     {
         /* Disable USART interrupt sources */
-        if(intInfo->intSources.multi.usartTxReadyInt != -1)
+        if(multiVector->usartTxReadyInt != -1)
         {
-            SYS_INT_SourceDisable(intInfo->intSources.multi.usartTxReadyInt);
+            dObj->usartTxReadyIntStatus = SYS_INT_SourceDisable(multiVector->usartTxReadyInt);
         }
 
-        if(intInfo->intSources.multi.usartTxCompleteInt != -1)
+        if(multiVector->usartTxCompleteInt != -1)
         {
-            SYS_INT_SourceDisable(intInfo->intSources.multi.usartTxCompleteInt);
+            dObj->usartTxCompleteIntStatus = SYS_INT_SourceDisable(multiVector->usartTxCompleteInt);
         }
 
-        if(intInfo->intSources.multi.usartRxCompleteInt != -1)
+        if(multiVector->usartRxCompleteInt != -1)
         {
-            SYS_INT_SourceDisable(intInfo->intSources.multi.usartRxCompleteInt);
+            dObj->usartRxCompleteIntStatus = SYS_INT_SourceDisable(multiVector->usartRxCompleteInt);
         }
 
-        if(intInfo->intSources.multi.usartErrorInt != -1)
+        if(multiVector->usartErrorInt != -1)
         {
-            SYS_INT_SourceDisable(intInfo->intSources.multi.usartErrorInt);
+            dObj->usartErrorIntStatus = SYS_INT_SourceDisable(multiVector->usartErrorInt);
         }
 
         <#if core.DMA_ENABLE?has_content>
             <#lt>        /* Disable DMA interrupt sources */
             <#lt>        if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
             <#lt>        {
-            <#lt>            SYS_INT_SourceDisable(intInfo->intSources.multi.dmaTxChannelInt);
+            <#lt>            dObj->dmaTxChannelIntStatus = SYS_INT_SourceDisable(multiVector->dmaTxChannelInt);
             <#lt>        }
 
             <#lt>        if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
             <#lt>        {
-            <#lt>            SYS_INT_SourceDisable(intInfo->intSources.multi.dmaRxChannelInt);
+            <#lt>            dObj->dmaRxChannelIntStatus = SYS_INT_SourceDisable(multiVector->dmaRxChannelInt);
             <#lt>        }
         </#if>
     }
@@ -185,55 +186,56 @@ static void _DRV_USART_EnableInterrupts(DRV_USART_OBJ* dObj)
 {
     bool interruptStatus;
     const DRV_USART_INTERRUPT_SOURCES* intInfo = dObj->interruptSources;
+    const DRV_USART_MULTI_INT_SRC* multiVector = &dObj->interruptSources->intSources.multi;
 
     interruptStatus = SYS_INT_Disable();
 
     if (intInfo->isSingleIntSrc == true)
     {
         /* Enable USART interrupt */
-        SYS_INT_SourceEnable(intInfo->intSources.usartInterrupt);
+        SYS_INT_SourceRestore(intInfo->intSources.usartInterrupt, dObj->usartInterruptStatus);
 
         <#if core.DMA_ENABLE?has_content>
             <#lt>        /* Enable DMA interrupt */
             <#lt>        if((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) || (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
             <#lt>        {
-            <#lt>            SYS_INT_SourceEnable(intInfo->intSources.dmaInterrupt);
+            <#lt>            SYS_INT_SourceRestore(intInfo->intSources.dmaInterrupt, dObj->dmaInterruptStatus);
             <#lt>        }
         </#if>
     }
     else
     {
         /* Enable USART interrupt sources */
-        if(intInfo->intSources.multi.usartTxReadyInt != -1)
+        if(multiVector->usartTxReadyInt != -1)
         {
-            SYS_INT_SourceEnable(intInfo->intSources.multi.usartTxReadyInt);
+            SYS_INT_SourceRestore(multiVector->usartTxReadyInt, dObj->usartTxReadyIntStatus);
         }
 
-        if(intInfo->intSources.multi.usartTxCompleteInt != -1)
+        if(multiVector->usartTxCompleteInt != -1)
         {
-            SYS_INT_SourceEnable(intInfo->intSources.multi.usartTxCompleteInt);
+            SYS_INT_SourceRestore(multiVector->usartTxCompleteInt, dObj->usartTxCompleteIntStatus);
         }
 
-        if(intInfo->intSources.multi.usartRxCompleteInt != -1)
+        if(multiVector->usartRxCompleteInt != -1)
         {
-            SYS_INT_SourceEnable(intInfo->intSources.multi.usartRxCompleteInt);
+            SYS_INT_SourceRestore(multiVector->usartRxCompleteInt, dObj->usartRxCompleteIntStatus);
         }
 
-        if(intInfo->intSources.multi.usartErrorInt != -1)
+        if(multiVector->usartErrorInt != -1)
         {
-            SYS_INT_SourceEnable(intInfo->intSources.multi.usartErrorInt);
+            SYS_INT_SourceRestore(multiVector->usartErrorInt, dObj->usartErrorIntStatus);
         }
 
         <#if core.DMA_ENABLE?has_content>
             <#lt>        /* Enable DMA interrupt sources */
             <#lt>        if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
             <#lt>        {
-            <#lt>            SYS_INT_SourceEnable(intInfo->intSources.multi.dmaTxChannelInt);
+            <#lt>            SYS_INT_SourceRestore(multiVector->dmaTxChannelInt, dObj->dmaTxChannelIntStatus);
             <#lt>        }
 
             <#lt>        if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
             <#lt>        {
-            <#lt>            SYS_INT_SourceEnable(intInfo->intSources.multi.dmaRxChannelInt);
+            <#lt>            SYS_INT_SourceRestore(multiVector->dmaRxChannelInt, dObj->dmaRxChannelIntStatus);
             <#lt>        }
         </#if>
     }
@@ -566,7 +568,13 @@ static void _DRV_USART_WriteSubmit( DRV_USART_OBJ* dObj )
         // Clean cache to load new data from cache to main memory for DMA
         SYS_CACHE_CleanDCache_by_Addr((uint32_t *)bufferObj->buffer, bufferObj->size);
 </#if>
+<#if __PROCESSOR?matches("PIC32M.*") == true>
 
+        SYS_DMA_AddressingModeSetup(dObj->txDMAChannel,SYS_DMA_SOURCE_ADDRESSING_MODE_INCREMENTED,SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
+
+        SYS_DMA_DataWidthSetup(dObj->txDMAChannel,SYS_DMA_WIDTH_8_BIT);
+
+</#if>
         SYS_DMA_ChannelTransfer(
             dObj->txDMAChannel,
             (const void *)bufferObj->buffer,
@@ -604,6 +612,13 @@ static void _DRV_USART_ReadSubmit( DRV_USART_OBJ* dObj )
 <#if core.DMA_ENABLE?has_content>
     if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
+<#if __PROCESSOR?matches("PIC32M.*") == true>
+
+        SYS_DMA_AddressingModeSetup(dObj->rxDMAChannel,SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED,SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED);
+
+        SYS_DMA_DataWidthSetup(dObj->rxDMAChannel,SYS_DMA_WIDTH_8_BIT);
+
+</#if>
         SYS_DMA_ChannelTransfer(
             dObj->rxDMAChannel,
             (const void *)dObj->rxAddress,

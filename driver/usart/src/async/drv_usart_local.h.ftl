@@ -263,6 +263,22 @@ typedef struct
 
     const DRV_USART_INTERRUPT_SOURCES*      interruptSources;
 
+    bool                                    usartTxReadyIntStatus;
+
+    bool                                    usartTxCompleteIntStatus;
+
+    bool                                    usartRxCompleteIntStatus;
+
+    bool                                    usartErrorIntStatus;
+
+    bool                                    dmaTxChannelIntStatus;
+
+    bool                                    dmaRxChannelIntStatus;
+
+    bool                                    usartInterruptStatus;
+
+    bool                                    dmaInterruptStatus;
+
 } DRV_USART_OBJ;
 
 typedef struct _DRV_USART_CLIENT_OBJ
