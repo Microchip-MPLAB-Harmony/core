@@ -62,14 +62,14 @@ const uint32_t drvUsart${INDEX?string}remapParity[] = {
         0xFFFFFFFF,
     </#if>
 
-    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_ODD_MASK?has_content>
-        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_ODD_MASK},
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_EVEN_MASK?has_content>
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_EVEN_MASK},
     <#else>
         0xFFFFFFFF,
     </#if>
 
-    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_EVEN_MASK?has_content>
-        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_EVEN_MASK},
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_ODD_MASK?has_content>
+        ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_ODD_MASK},
     <#else>
         0xFFFFFFFF,
     </#if>
