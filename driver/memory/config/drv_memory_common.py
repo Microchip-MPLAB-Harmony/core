@@ -175,11 +175,11 @@ def instantiateComponent(memoryCommonComponent):
     memoryCommonSystemDefFile = memoryCommonComponent.createFileSymbol("DRV_MEMORY_SYS_DEF_COMMON", None)
     memoryCommonSystemDefFile.setType("STRING")
     memoryCommonSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-    memoryCommonSystemDefFile.setSourcePath("driver/memory/templates/system/system_definitions_common.h.ftl")
+    memoryCommonSystemDefFile.setSourcePath("driver/memory/templates/system/definitions_common.h.ftl")
     memoryCommonSystemDefFile.setMarkup(True)
 
     memoryCommonSymCommonSysCfgFile = memoryCommonComponent.createFileSymbol("DRV_MEMORY_SYS_CFG_COMMON", None)
     memoryCommonSymCommonSysCfgFile.setType("STRING")
     memoryCommonSymCommonSysCfgFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_DRIVER_CONFIGURATION")
-    memoryCommonSymCommonSysCfgFile.setSourcePath("driver/memory/templates/system/system_config_common.h.ftl")
+    memoryCommonSymCommonSysCfgFile.setSourcePath("driver/memory/templates/system/configuration_common.h.ftl")
     memoryCommonSymCommonSysCfgFile.setMarkup(True)

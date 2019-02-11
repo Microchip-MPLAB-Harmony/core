@@ -1,13 +1,13 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance ${INDEX?string} Initialization Data">
 
 <#if DRV_MEMORY_ERASE_ENABLE >
-    <#lt>static uint8_t gDrvMemory${INDEX?string}EraseBuffer[${DRV_MEMORY_DEVICE}_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
+    <#lt>static uint8_t gDrvMemory${INDEX?string}EraseBuffer[${DRV_MEMORY_DEVICE}_ERASE_BUFFER_SIZE] CACHE_ALIGN;
 </#if>
 
-static DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX${INDEX?string}] = { 0 };
+static DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX${INDEX?string}];
 
 <#if drv_memory.DRV_MEMORY_COMMON_MODE == "Asynchronous" >
-    <#lt>static DRV_MEMORY_BUFFER_OBJECT gDrvMemory${INDEX?string}BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX${INDEX?string}] = { 0 };
+    <#lt>static DRV_MEMORY_BUFFER_OBJECT gDrvMemory${INDEX?string}BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX${INDEX?string}];
 </#if>
 
 <#if DRV_MEMORY_PLIB?has_content >
