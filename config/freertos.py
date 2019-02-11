@@ -237,7 +237,7 @@ def freeRtosIntConfig():
         Database.clearSymbolValue("core", PendSVInterruptEnable)
         Database.setSymbolValue("core", PendSVInterruptEnable, True, 2)
         Database.clearSymbolValue("core", PendSVInterruptHandler)
-        Database.setSymbolValue("core", PendSVInterruptHandler, "PendSV_Handler", 2)
+        Database.setSymbolValue("core", PendSVInterruptHandler, "xPortPendSVHandler", 2)
         Database.clearSymbolValue("core", PendSVInterruptHandlerLock)
         Database.setSymbolValue("core", PendSVInterruptHandlerLock, True, 2)
 
@@ -248,7 +248,7 @@ def freeRtosIntConfig():
         Database.clearSymbolValue("core", SVCallInterruptEnable)
         Database.setSymbolValue("core", SVCallInterruptEnable, True, 2)
         Database.clearSymbolValue("core", SVCallInterruptHandler)
-        Database.setSymbolValue("core", SVCallInterruptHandler, "SVCall_Handler", 2)
+        Database.setSymbolValue("core", SVCallInterruptHandler, "vPortSVCHandler", 2)
         Database.clearSymbolValue("core", SVCallInterruptHandlerLock)
         Database.setSymbolValue("core", SVCallInterruptHandlerLock, True, 2)
 

@@ -138,14 +138,6 @@
 #define INCLUDE_xTaskAbortDelay                 <#if FREERTOS_INCLUDE_XTASKABORTDELAY == true>1<#else>0</#if>
 #define INCLUDE_xTaskGetHandle                  <#if FREERTOS_INCLUDE_XTASKGETHANDLE == true>1<#else>0</#if>
 
-<#if core.CoreArchitecture != "MIPS" >
-    <#lt>/* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
-    <#lt> * standard names. */
-    <#lt>
-    <#lt>#define xPortPendSVHandler PendSV_Handler
-    <#lt>#define vPortSVCHandler SVCall_Handler
-</#if>
-
 <#if FREERTOS_SETUP_TICK_INTERRUPT??>
     <#lt>#define configSETUP_TICK_INTERRUPT ${FREERTOS_SETUP_TICK_INTERRUPT}
 </#if>
