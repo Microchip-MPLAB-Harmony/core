@@ -61,6 +61,7 @@
 #include "task.h"
 #include "driver/sst26/drv_sst26.h"
 #include "system/int/sys_int.h"
+#include "system/cache/sys_cache.h"
 #include "osal/osal.h"
 #include "app_sst26.h"
 #include "app_nvm.h"

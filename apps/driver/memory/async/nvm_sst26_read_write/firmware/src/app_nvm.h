@@ -73,8 +73,8 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
-/* Will Erase, Write and Read into 10 Sectors of 8KB each*/
-#define NVM_BUFFER_SIZE                 (81920U)
+/* Will Erase, Write and Read 16KB of Data */
+#define NVM_BUFFER_SIZE                 (16384U)
 
 #define NVM_GEOMETRY_TABLE_READ_ENTRY   (0)
 #define NVM_GEOMETRY_TABLE_WRITE_ENTRY  (1)
@@ -259,8 +259,3 @@ void APP_NVM_Tasks( void );
 }
 #endif
 //DOM-IGNORE-END
-
-/*******************************************************************************
- End of File
- */
-

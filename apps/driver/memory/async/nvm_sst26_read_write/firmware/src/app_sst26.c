@@ -77,7 +77,7 @@ SYS_MEDIA_GEOMETRY *geometry = NULL;
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_SST26_DATA appSST26Data;
+APP_SST26_DATA CACHE_ALIGN appSST26Data;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -229,9 +229,7 @@ void APP_SST26_Tasks ( void )
 
         case APP_SST26_STATE_READ_MEMORY:
         {
-            memset((void *)&appSST26Data.readBuffer, 0, SST26_BUFFER_SIZE);
-
-            DRV_MEMORY_AsyncRead(appSST26Data.memoryHandle, &appSST26Data.readHandle, (void *)&appSST26Data.readBuffer, BLOCK_START, appSST26Data.numReadBlocks);
+            DRV_MEMORY_AsyncRead(appSST26Data.memoryHandle, &appSST26Data.readHandle, (void *)appSST26Data.readBuffer, BLOCK_START, appSST26Data.numReadBlocks);
 
             if (DRV_MEMORY_COMMAND_HANDLE_INVALID == appSST26Data.readHandle)
             {
@@ -267,21 +265,16 @@ void APP_SST26_Tasks ( void )
                 appSST26Data.state = APP_SST26_STATE_ERROR;
             }
 
+            DRV_MEMORY_Close(appSST26Data.memoryHandle);
+
             break;
         }
 
         case APP_SST26_STATE_SUCCESS:
         case APP_SST26_STATE_ERROR:
-        {
-            DRV_MEMORY_Close(appSST26Data.memoryHandle);
-        }
         default:
         {
             break;
         }
     }
 }
-
-/*******************************************************************************
- End of File
- */

@@ -73,8 +73,8 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
-/* Will Erase, Write and Read into 20 Sectors of 4KB each*/
-#define SST26_BUFFER_SIZE           (81920U)
+/* Will Erase, Write and Read into 4 Sectors of 4KB each*/
+#define SST26_BUFFER_SIZE           (16384U)
 
 #define GEOMETRY_TABLE_READ_ENTRY   (0)
 #define GEOMETRY_TABLE_WRITE_ENTRY  (1)
@@ -259,8 +259,3 @@ void APP_SST26_Tasks( void );
 }
 #endif
 //DOM-IGNORE-END
-
-/*******************************************************************************
- End of File
- */
-

@@ -77,7 +77,7 @@ SYS_MEDIA_GEOMETRY *nvmGeometry = NULL;
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_NVM_DATA appNvmData;
+APP_NVM_DATA CACHE_ALIGN appNvmData;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -229,8 +229,6 @@ void APP_NVM_Tasks ( void )
 
         case APP_NVM_STATE_READ_MEMORY:
         {
-            memset((void *)&appNvmData.readBuffer, 0, NVM_BUFFER_SIZE);
-
             DRV_MEMORY_AsyncRead(appNvmData.memoryHandle, &appNvmData.readHandle, (void *)&appNvmData.readBuffer, BLOCK_START, appNvmData.numReadBlocks);
 
             if (DRV_MEMORY_COMMAND_HANDLE_INVALID == appNvmData.readHandle)
@@ -267,14 +265,13 @@ void APP_NVM_Tasks ( void )
                 appNvmData.state = APP_NVM_STATE_ERROR;
             }
 
+            DRV_MEMORY_Close(appNvmData.memoryHandle);
+
             break;
         }
 
         case APP_NVM_STATE_SUCCESS:
         case APP_NVM_STATE_ERROR:
-        {
-            DRV_MEMORY_Close(appNvmData.memoryHandle);
-        }
         default:
         {
             break;
@@ -282,7 +279,3 @@ void APP_NVM_Tasks ( void )
 
     }
 }
-
-/*******************************************************************************
- End of File
- */
