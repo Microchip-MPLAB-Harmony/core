@@ -77,7 +77,7 @@ SYS_MEDIA_GEOMETRY *geometry = NULL;
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_SST26_DATA appSST26Data;
+APP_SST26_DATA CACHE_ALIGN appSST26Data;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -228,14 +228,13 @@ void APP_SST26_Tasks ( void )
                 appSST26Data.state = APP_SST26_STATE_ERROR;
             }
 
+            DRV_MEMORY_Close(appSST26Data.memoryHandle);
+
             break;
         }
 
         case APP_SST26_STATE_SUCCESS:
         case APP_SST26_STATE_ERROR:
-        {
-            DRV_MEMORY_Close(appSST26Data.memoryHandle);
-        }
         default:
         {
             vTaskSuspend(NULL);
@@ -243,7 +242,3 @@ void APP_SST26_Tasks ( void )
         }
     }
 }
-
-/*******************************************************************************
- End of File
- */
