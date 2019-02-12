@@ -21,19 +21,22 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
-
-###############################################################################
-########################## FreeRTOS Configurations ############################ 
-###############################################################################
-ComboVal_Scheduler_Type = ["Preemptive", "Co_Operative"]
-ComboVal_Task_Selection = ["Port_Optimized", "Generic_Task_Selection"]
-ComboVal_Tick_Mode        = ["Tickless_Idle", "Tick_Interrupt"]
-ComboVal_Mem_Mgmt_Type    = ["Heap_1", "Heap_2", "Heap_3", "Heap_4", "Heap_5"]
-ComboVal_Stack_Overflow    = ["No_Check", "Method_1", "Method_2"]
-
 # Fetch Core Architecture and Family details
 coreArch     = Database.getSymbolValue("core", "CoreArchitecture")
 coreFamily   = ATDF.getNode( "/avr-tools-device-file/devices/device" ).getAttribute( "family" )
+
+###############################################################################
+########################## FreeRTOS Configurations ############################
+###############################################################################
+if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23"):
+    ComboVal_Task_Selection = ["Generic"]
+else:
+    ComboVal_Task_Selection = ["Port_Optimized", "Generic"]
+
+ComboVal_Scheduler_Type     = ["Preemptive", "Co_Operative"]
+ComboVal_Tick_Mode          = ["Tickless_Idle", "Tick_Interrupt"]
+ComboVal_Mem_Mgmt_Type      = ["Heap_1", "Heap_2", "Heap_3", "Heap_4", "Heap_5"]
+ComboVal_Stack_Overflow     = ["No_Check", "Method_1", "Method_2"]
 
 def freeRtosExpIdleTimeVisibility(symbol, event):
     id = symbol.getID()[-1]
@@ -64,7 +67,7 @@ def freeRtosTotalIdleTaskYieldVisibility(symbol, event):
         symbol.setVisible(True)
     else :
         symbol.setVisible(False)
-         
+
 def freeRtosStatsFormatFuncVisibility(symbol, event):
     id = symbol.getID()[-1]
 
@@ -275,7 +278,10 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_TaskSelection = thirdPartyFreeRTOS.createComboSymbol("FREERTOS_TASK_SELECTION", freeRtosSymMenu, ComboVal_Task_Selection)
     freeRtosSym_TaskSelection.setLabel("Task Selection")
     freeRtosSym_TaskSelection.setDescription("Select either the Port specific or the Generic method of selecting the next task to execute.")
-    freeRtosSym_TaskSelection.setDefaultValue("Port_Optimized")
+    if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23"):
+        freeRtosSym_TaskSelection.setDefaultValue("Generic_Task_Selection")
+    else:
+        freeRtosSym_TaskSelection.setDefaultValue("Port_Optimized")
 
     freeRtosSym_TickMode = thirdPartyFreeRTOS.createComboSymbol("FREERTOS_TICKLESS_IDLE_CHOICE", freeRtosSymMenu, ComboVal_Tick_Mode)
     freeRtosSym_TickMode.setLabel("Tick Mode")
@@ -551,7 +557,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_vTaskDelay.setLabel("Include vTaskDelay")
     freeRtosSym_vTaskDelay.setDescription("FreeRTOS - Include vTaskDelay")
     freeRtosSym_vTaskDelay.setDefaultValue(True)
-    
+
     freeRtosSym_uxTaskGetStackHighWaterMark = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_INCLUDE_UXTASKGETSTACKHIGHWATERMARK", freeRtosSymMenu_IncludeComponents)
     freeRtosSym_uxTaskGetStackHighWaterMark.setLabel("Include uxTaskGetStackHighWaterMark")
     freeRtosSym_uxTaskGetStackHighWaterMark.setDescription("FreeRTOS - Include uxTaskGetStackHighWaterMark")
@@ -640,7 +646,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosQueue.setDestPath("../../third_party/rtos/FreeRTOS/Source")
     freeRtosQueue.setProjectPath("FreeRTOS/Source")
     freeRtosQueue.setType("SOURCE")
-    freeRtosQueue.setMarkup(False)    
+    freeRtosQueue.setMarkup(False)
 
     freeRtosTask = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_TASKS_C", None)
     freeRtosTask.setSourcePath("../CMSIS-FreeRTOS/Source/tasks.c")
@@ -656,7 +662,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosTimers.setDestPath("../../third_party/rtos/FreeRTOS/Source")
     freeRtosTimers.setProjectPath("FreeRTOS/Source")
     freeRtosTimers.setType("SOURCE")
-    freeRtosTimers.setMarkup(False)    
+    freeRtosTimers.setMarkup(False)
 
     freeRtosEventGroups = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_EVENT_GROUPS_C", None)
     freeRtosEventGroups.setSourcePath("../CMSIS-FreeRTOS/Source/event_groups.c")
@@ -844,7 +850,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSystemTasksFile.setType("STRING")
     freeRtosSystemTasksFile.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_CALL_SCHEDULAR")
     freeRtosSystemTasksFile.setSourcePath("templates/system/system_rtos_tasks.c.ftl")
-    freeRtosSystemTasksFile.setMarkup(True) 
+    freeRtosSystemTasksFile.setMarkup(True)
 
     # load family specific configuration
     if (coreArch == "MIPS"):

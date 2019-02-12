@@ -43,8 +43,8 @@
  *----------------------------------------------------------*/
 #define configUSE_PREEMPTION                    <#if FREERTOS_SCHEDULER == "Preemptive">1<#else>0</#if>
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION <#if FREERTOS_TASK_SELECTION == "Port_Optimized">1<#else>0</#if>
-#define configUSE_TICKLESS_IDLE                 <#if FREERTOS_TICKLESS_IDLE_CHOICE == "Tickless Idle">1<#else>0</#if>
-<#if FREERTOS_TICKLESS_IDLE_CHOICE == "Tickless Idle">
+#define configUSE_TICKLESS_IDLE                 <#if FREERTOS_TICKLESS_IDLE_CHOICE == "Tickless_Idle">1<#else>0</#if>
+<#if FREERTOS_TICKLESS_IDLE_CHOICE == "Tickless_Idle">
     <#lt>#define configEXPECTED_IDLE_TIME_BEFORE_SLEEP   ${FREERTOS_EXPECTED_IDLE_TIME_BEFORE_SLEEP}
 </#if>
 #define configCPU_CLOCK_HZ                      ( ${FREERTOS_CPU_CLOCK_HZ?number?c}UL )
