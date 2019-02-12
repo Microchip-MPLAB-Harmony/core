@@ -242,7 +242,7 @@
         <String dnOrder="34" id="NVIC_-2_0_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="PendSV_Handler"/>
+              <Value dnOrder="0" id="core" priority="2" value="xPortPendSVHandler"/>
             </Dynamic>
           </Values>
         </String>
@@ -263,7 +263,7 @@
         <String dnOrder="37" id="NVIC_-5_0_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="SVCall_Handler"/>
+              <Value dnOrder="0" id="core" priority="2" value="vPortSVCHandler"/>
             </Dynamic>
           </Values>
         </String>
