@@ -114,7 +114,7 @@ const uint8_t originalData[ORIG_DATA_SIZE] = "Data";
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_NVM_DATA appNvmData;
+APP_NVM_DATA CACHE_ALIGN appNvmData;
 
 
 // *****************************************************************************
@@ -368,24 +368,16 @@ void APP_NVM_Tasks ( void )
             {
                 /* There was an error while reading the file.
                  * Close the file and error out. */
-
-                SYS_FS_FileClose(appNvmData.fileHandle);
                 appNvmData.state = APP_NVM_ERROR;
             }
             else
             {
                 if(strcmp((const char *)appNvmData.data, (const char *)writeData) != 0)
                 {
-                    /* The written and the read data don't match. */
-                    SYS_FS_FileClose(appNvmData.fileHandle);
-
                     appNvmData.state = APP_NVM_ERROR;
                 }
                 else
                 {
-                    /* The test was successful. */
-                    SYS_FS_FileClose(appNvmData.fileHandle);
-
                     if (SYS_FS_Unmount(APP_NVM_MOUNT_NAME) == 0)
                     {
                         appNvmData.state = APP_NVM_IDLE;
@@ -396,6 +388,9 @@ void APP_NVM_Tasks ( void )
                     }
                 }
             }
+
+            SYS_FS_FileClose(appNvmData.fileHandle);
+
             break;
         }
 
@@ -411,9 +406,3 @@ void APP_NVM_Tasks ( void )
     }
 
 } //End of APP_NVM_Tasks
-
-
-/*******************************************************************************
- End of File
- */
-

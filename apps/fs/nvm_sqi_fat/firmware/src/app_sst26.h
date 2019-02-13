@@ -158,15 +158,15 @@ typedef struct
     /* Application's current state */
     APP_SST26_STATES state;
 
+    SYS_FS_FSTAT fileStatus;
+
+    long fileSize;
+
     /* Read Buffer */
     uint8_t readBuffer[BUFFER_SIZE];
 
     /* Write Buffer*/
     uint8_t writeBuffer[BUFFER_SIZE];
-
-    SYS_FS_FSTAT fileStatus;
-
-    long fileSize;
 
 } APP_SST26_DATA;
 
@@ -260,8 +260,3 @@ void APP_SST26_Tasks( void );
 }
 #endif
 //DOM-IGNORE-END
-
-/*******************************************************************************
- End of File
- */
-

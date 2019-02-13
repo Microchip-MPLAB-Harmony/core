@@ -81,7 +81,7 @@
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_SST26_DATA appSST26Data;
+APP_SST26_DATA CACHE_ALIGN appSST26Data;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -318,7 +318,7 @@ void APP_SST26_Tasks ( void )
             {
                 if ((appSST26Data.fileSize != BUFFER_SIZE) || (memcmp(appSST26Data.readBuffer, appSST26Data.writeBuffer, BUFFER_SIZE) != 0))
                 {
-                    /* The written and the read data dont match. */
+                    /* The written and the read data don't match. */
                     appSST26Data.state = APP_SST26_ERROR;
                 }
                 else
@@ -370,9 +370,3 @@ void APP_SST26_Tasks ( void )
 
     }
 }
-
-
-
-/*******************************************************************************
- End of File
- */

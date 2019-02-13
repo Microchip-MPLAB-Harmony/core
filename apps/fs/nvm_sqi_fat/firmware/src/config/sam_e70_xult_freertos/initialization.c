@@ -45,6 +45,8 @@
 // *****************************************************************************
 #include "configuration.h"
 #include "definitions.h"
+#include "device.h"
+
 
 
 // ****************************************************************************
@@ -83,6 +85,7 @@
 
 
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Driver Initialization Data
@@ -107,9 +110,9 @@ const DRV_SST26_INIT drvSST26InitData =
 
 // <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance 1 Initialization Data">
 
-static uint8_t gDrvMemory1EraseBuffer[EFC_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
+static uint8_t gDrvMemory1EraseBuffer[EFC_ERASE_BUFFER_SIZE] CACHE_ALIGN;
 
-static DRV_MEMORY_CLIENT_OBJECT gDrvMemory1ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX1] = { 0 };
+static DRV_MEMORY_CLIENT_OBJECT gDrvMemory1ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX1];
 
 
 const DRV_MEMORY_DEVICE_INTERFACE drvMemory1DeviceAPI = {
@@ -140,9 +143,9 @@ const DRV_MEMORY_INIT drvMemory1InitData =
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance 0 Initialization Data">
 
-static uint8_t gDrvMemory0EraseBuffer[DRV_SST26_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
+static uint8_t gDrvMemory0EraseBuffer[DRV_SST26_ERASE_BUFFER_SIZE] CACHE_ALIGN;
 
-static DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
+static DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0];
 
 
 const DRV_MEMORY_DEVICE_INTERFACE drvMemory0DeviceAPI = {
@@ -180,6 +183,7 @@ const DRV_MEMORY_INIT drvMemory0InitData =
 // *****************************************************************************
 /* Structure to hold the object handles for the modules in the system. */
 SYSTEM_OBJECTS sysObj;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Library/Stack Initialization Data
@@ -233,6 +237,7 @@ const SYS_TIME_INIT sysTimeInitData =
 // </editor-fold>
 
 
+
 /*******************************************************************************
   Function:
     void SYS_Initialize ( void *data )
@@ -245,6 +250,7 @@ const SYS_TIME_INIT sysTimeInitData =
 
 void SYS_Initialize ( void* data )
 {
+  
     CLK_Initialize();
 	PIO_Initialize();
 
@@ -260,8 +266,6 @@ void SYS_Initialize ( void* data )
 	BSP_Initialize();
     QSPI_Initialize();
 
-
-    NVIC_Initialize();
 
     sysObj.drvSST26 = DRV_SST26_Initialize((SYS_MODULE_INDEX)DRV_SST26_INDEX, (SYS_MODULE_INIT *)&drvSST26InitData);
 
@@ -280,6 +284,8 @@ void SYS_Initialize ( void* data )
     APP_NVM_Initialize();
     APP_MONITOR_Initialize();
 
+
+    NVIC_Initialize();
 
 }
 
