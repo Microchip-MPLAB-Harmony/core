@@ -48,19 +48,6 @@ def showRTOSMenu(symbol, event):
 def showWriteProtectComment(symbol, event):
     symbol.setVisible(event["value"])
 
-def updatePinPosition(symbol, event):
-    if event["id"] == "DRV_SDSPI_ENABLE_WRITE_PROTECT_CHECKING":
-        symbol.setVisible(event["value"])
-    else:
-        pioPinout = ATDF.getNode('/avr-tools-device-file/pinouts/pinout@[name= "' + event["value"] + '"]')
-        if pioPinout != None:
-            count = len(pioPinout.getChildren())
-            for id in range(0, count):
-                if (pioPinout.getChildren()[id].getAttribute("pad")[0] == "P") and (pioPinout.getChildren()[id].getAttribute("pad")[-1].isdigit()):
-                    key = "SYS_PORT_PIN_" + pioPinout.getChildren()[id].getAttribute("pad")
-                    value = pioPinout.getChildren()[id].getAttribute("position")
-                    symbol.setKeyValue(key, value)
-
 def requestDMAComment(symbol, event):
     global sdspiTXRXDMA
 
@@ -151,7 +138,6 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiFsEnable = sdspiComponent.createBooleanSymbol("DRV_SDSPI_FS_ENABLE", None)
     sdspiFsEnable.setLabel("File system for SDSPI Driver Enabled")
-    sdspiFsEnable.setDefaultValue(False)
     sdspiFsEnable.setReadOnly(True)
 
     sdspiSymChipSelectPin = sdspiComponent.createKeyValueSetSymbol("DRV_SDSPI_CHIP_SELECT_PIN", None)
@@ -159,7 +145,6 @@ def instantiateComponent(sdspiComponent, index):
     sdspiSymChipSelectPin.setDefaultValue(0)
     sdspiSymChipSelectPin.setOutputMode("Key")
     sdspiSymChipSelectPin.setDisplayMode("Description")
-    sdspiSymChipSelectPin.setDependencies(updatePinPosition, ["core.COMPONENT_PACKAGE"])
 
     sdspiChipSelectPinComment = sdspiComponent.createCommentSymbol("DRV_SDSPI_CHIP_SELECT_PIN_COMMENT", None)
     sdspiChipSelectPinComment.setLabel("!!! Configure the Chip Select pin as GPIO output under Pin Settings.!!! ")
@@ -173,7 +158,7 @@ def instantiateComponent(sdspiComponent, index):
     sdspiSymWriteProtectPin.setOutputMode("Key")
     sdspiSymWriteProtectPin.setDisplayMode("Description")
     sdspiSymWriteProtectPin.setVisible(sdspiSymWriteProtect.getValue())
-    sdspiSymWriteProtectPin.setDependencies(updatePinPosition, ["core.COMPONENT_PACKAGE", "DRV_SDSPI_ENABLE_WRITE_PROTECT_CHECKING"])
+    sdspiSymWriteProtectPin.setDependencies(showWriteProtectComment, ["DRV_SDSPI_ENABLE_WRITE_PROTECT_CHECKING"])
 
     sdspiWriteProtectPinComment = sdspiComponent.createCommentSymbol("DRV_SDSPI_WRITE_PROTECT_PIN_COMMENT", sdspiSymWriteProtect)
     sdspiWriteProtectPinComment.setLabel("!!! Configure the Write Protect pin as GPIO input under Pin Settings. !!!")
@@ -247,17 +232,17 @@ def instantiateComponent(sdspiComponent, index):
     sdspiRTOSTaskDelayVal.setVisible((sdspiRTOSTaskDelay.getValue() == True))
     sdspiRTOSTaskDelayVal.setDependencies(setVisible, ["DRV_SDSPI_RTOS_USE_DELAY"])
 
-    pinOutNode = ATDF.getNode("/avr-tools-device-file/pinouts/pinout")
-    pinOut = pinOutNode.getChildren()
+    availablePinDictionary = {}
 
-    for pad in range(0, len(pinOut)):
-        pin = pinOut[pad].getAttribute("pad")
-        if (pin[0] == "P") and (pin[-1].isdigit()):
-            key = "SYS_PORT_PIN_" + pin
-            value = pinOut[pad].getAttribute("position")
-            description = pinOut[pad].getAttribute("pad")
-            sdspiSymChipSelectPin.addKey(key, value, description)
-            sdspiSymWriteProtectPin.addKey(key, value, description)
+    # Send message to core to get available pins
+    availablePinDictionary = Database.sendMessage("core", "PIN_LIST", availablePinDictionary)
+
+    for pin in availablePinDictionary:
+        key = "SYS_PORT_PIN_" + availablePinDictionary.get(pin)
+        value = pin
+        description = availablePinDictionary.get(pin)
+        sdspiSymChipSelectPin.addKey(key, value, description)
+        sdspiSymWriteProtectPin.addKey(key, value, description)
 
     ############################################################################
     #### Code Generation ####
