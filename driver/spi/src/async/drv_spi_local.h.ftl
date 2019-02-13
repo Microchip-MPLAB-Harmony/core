@@ -149,8 +149,19 @@ typedef struct _DRV_SPI_TRANSFER_OBJ
     /* Number of bytes to be written */
     size_t                          txSize;
 
-    /* Number of bytes to be written */
+    /* Number of bytes to be read */
     size_t                          rxSize;
+
+<#if __PROCESSOR?matches("PIC32M.*") == true>
+    /* Number of bytes pending to be written */
+    size_t                          txPending;
+
+    /* Number of bytes to pending to be read */
+    size_t                          rxPending;
+
+    /* Number of bytes transferred */
+    size_t                          nBytesTransferred;
+</#if>
 
     /* Current status of the buffer */
     DRV_SPI_TRANSFER_EVENT          event;
@@ -240,21 +251,34 @@ typedef struct
     /* This is the SPI receive register address. Used for DMA operation. */
     void*                           rxAddress;
 
+<#if __PROCESSOR?matches("PIC32M.*") == true>
+    /* Buffer for transmitting/receiving dummy data */
+    uint8_t __ALIGNED(4)            dummyDataBuffer[256];
+<#else>
     /* Dummy data is read into this variable by RX DMA */
     uint32_t                        rxDummyData;
-</#if>
 
     /* This holds the number of dummy data to be transmitted */
     size_t                          txDummyDataSize;
 
     /* This holds the number of dummy data to be received */
     size_t                          rxDummyDataSize;
+</#if>
+</#if>
 
     const uint32_t*                 remapDataBits;
 
     const uint32_t*                 remapClockPolarity;
 
     const uint32_t*                 remapClockPhase;
+
+    bool                            spiTxReadyIntStatus;
+    bool                            spiTxCompleteIntStatus;
+    bool                            spiRxIntStatus;
+    bool                            dmaRxChannelIntStatus;
+    bool                            dmaTxChannelIntStatus;
+    bool                            spiInterruptStatus;
+    bool                            dmaInterruptStatus;
 
     const DRV_SPI_INTERRUPT_SOURCES*      interruptSources;
 

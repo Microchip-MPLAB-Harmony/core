@@ -104,67 +104,90 @@ typedef enum
 typedef struct
 {
     /* Flag to indicate this object is in use  */
-    bool inUse;
+    bool                                inUse;
 
     /* Flag to indicate that driver has been opened Exclusively*/
-    bool isExclusive;
+    bool                                isExclusive;
 
-    /* Keep track of the number of clients
-     * that have opened this driver 
-     */
-    size_t nClients;
+    /* Keep track of the number of clients that have opened this driver */
+    size_t                              nClients;
 
     /* Maximum number of clients */
-    size_t nClientsMax;
+    size_t                              nClientsMax;
 
     /* Memory pool for Client Objects */
-    uintptr_t clientObjPool;
+    uintptr_t                           clientObjPool;
 
     /* The status of the driver */
-    SYS_STATUS status;
+    SYS_STATUS                          status;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    const DRV_SPI_PLIB_INTERFACE* spiPlib;
+    const DRV_SPI_PLIB_INTERFACE*       spiPlib;
 
 <#if core.DMA_ENABLE?has_content>
     /* Transmit DMA Channel */
-    SYS_DMA_CHANNEL txDMAChannel;
+    SYS_DMA_CHANNEL                     txDMAChannel;
 
     /* Receive DMA Channel */
-    SYS_DMA_CHANNEL rxDMAChannel;
+    SYS_DMA_CHANNEL                     rxDMAChannel;
 
     /* This is the SPI transmit register address. Used for DMA operation. */
-    void* txAddress;
+    void*                               txAddress;
 
     /* This is the SPI receive register address. Used for DMA operation. */
-    void* rxAddress;
+    void*                               rxAddress;
 
+<#if __PROCESSOR?matches("PIC32M.*") == true>
+    /* Pointer to the buffer where the received data needs to be copied */
+    void*                               pReceiveData;
+
+    /* Pointer to the buffer containing data to be transmitted */
+    void*                               pTransmitData;
+
+    /* Number of bytes pending to be written */
+    size_t                              txPending;
+
+    /* Number of bytes to pending to be read */
+    size_t                              rxPending;
+
+    /* Number of bytes transferred */
+    size_t                              nBytesTransferred;
+
+    /* Buffer for transmitting/receiving dummy data */
+    uint8_t __ALIGNED(4)                dummyDataBuffer[256];
+
+<#else>
     /* Dummy data is read into this variable by RX DMA */
-    uint32_t rxDummyData;
+    uint32_t                            rxDummyData;
 
-</#if>
     /* This holds the number of dummy data to be transmitted */
-    uint32_t txDummyDataSize;
+    uint32_t                            txDummyDataSize;
 
     /* This holds the number of dummy data to be received */
-    uint32_t rxDummyDataSize;
+    uint32_t                            rxDummyDataSize;
 
     /* This contains the address of the application transmit buffer from which
      * the transmission should continue. This is used for the case where the
      * transmission is split into two, when rxSize is less than txSize.
      */
-    uintptr_t pNextTransmitData;
+    uintptr_t                           pNextTransmitData;
+</#if>
+</#if>
 
     /* The active client for this driver instance */
-    uintptr_t activeClient;
+    uintptr_t                           activeClient;
 
-    /* This is an instance specific token counter used to generate unique client
-     * handles
-     */
-    uint16_t spiTokenCount;
+    /* This is an instance specific token counter used to generate unique handles */
+    uint16_t                            spiTokenCount;
 
     /* Status of the last data transfer on this driver instance */
-    volatile DRV_SPI_TRANSFER_STATUS transferStatus;
+    volatile DRV_SPI_TRANSFER_STATUS    transferStatus;
+
+    const uint32_t*                     remapDataBits;
+
+    const uint32_t*                     remapClockPolarity;
+
+    const uint32_t*                     remapClockPhase;
 
     /* Mutex to protect access to PLIB */
     OSAL_MUTEX_DECLARE(transferMutex);
@@ -172,16 +195,8 @@ typedef struct
     /* Mutex to protect access to the client object pool */
     OSAL_MUTEX_DECLARE(clientMutex);
 
-    /* Semaphore to wait for data exchange to complete.
-     *  This is released from ISR.
-     */
+    /* Semaphore to wait for data exchange to complete. This is released from ISR */
     OSAL_SEM_DECLARE(transferDone);
-
-    const uint32_t*   remapDataBits;
-
-    const uint32_t*   remapClockPolarity;
-
-    const uint32_t*   remapClockPhase;
 
 } DRV_SPI_OBJ;
 
@@ -202,13 +217,13 @@ typedef struct
 typedef struct _DRV_SPI_CLIENT_OBJ
 {
     /* The hardware instance object associated with the client */
-    DRV_SPI_OBJ*                   hDriver;
+    DRV_SPI_OBJ*                   dObj;
 
     /* The IO intent with which the client was opened */
     DRV_IO_INTENT                  ioIntent;
 
     /* This flags indicates if the object is in use or is
-     * available 
+     * available
      */
     bool                           inUse;
 
