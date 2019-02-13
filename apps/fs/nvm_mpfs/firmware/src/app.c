@@ -109,7 +109,7 @@ const uint8_t compareString[] = "1234567890";
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_DATA appData;
+APP_DATA CACHE_ALIGN appData;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -285,6 +285,9 @@ void APP_Tasks ( void )
                 /* We have completed all tests. Hence go to idle state */
                 appData.state = APP_IDLE;
             }
+
+            SYS_FS_FileClose(appData.fileHandle_2);
+
             break;
         }
 
@@ -292,7 +295,6 @@ void APP_Tasks ( void )
         {
             /* The application comes here when the demo has completed
              * successfully. Glow LED. */
-            SYS_FS_FileClose(appData.fileHandle_2);
             LED_ON();
             break;
         }
@@ -309,9 +311,3 @@ void APP_Tasks ( void )
     }
 
 } //End of APP_Tasks
-
-
-/*******************************************************************************
- End of File
- */
-

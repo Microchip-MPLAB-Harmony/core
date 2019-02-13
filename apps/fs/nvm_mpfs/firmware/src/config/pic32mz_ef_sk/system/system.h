@@ -1,19 +1,25 @@
 /*******************************************************************************
-  Main Source File
+  Driver Layer Interface Header
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    main.c
+    driver.h
 
   Summary:
-    This file contains the "main" function for a project.
+    Driver layer data types and definitions.
 
   Description:
-    This file contains the "main" function for a project.  The
-    "main" function calls the "SYS_Initialize" function to initialize the state
-    machines of all modules in the system
+    This file defines the common macros and definitions for the driver layer
+    modules.
+
+  Remarks:
+    The parent directory to the "system" directory should be added to the
+    compiler's search path for header files such that the following include
+    statement will successfully include this file.
+
+    #include "system/system.h"
  *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -38,8 +44,12 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
-*******************************************************************************/
+ *******************************************************************************/
 //DOM-IGNORE-END
+
+#ifndef SYSTEM_H
+#define SYSTEM_H
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -47,30 +57,12 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include <stddef.h>                     // Defines NULL
-#include <stdbool.h>                    // Defines true
-#include <stdlib.h>                     // Defines EXIT_FAILURE
-#include "definitions.h"                // SYS function prototypes
+#include "system/system_common.h"
+#include "system/system_module.h"
 
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Main Entry Point
-// *****************************************************************************
-// *****************************************************************************
+#endif // SYSTEM_H
+/*******************************************************************************
+ End of File
+*/
 
-int main ( void )
-{
-    /* Initialize all modules */
-    SYS_Initialize ( NULL );
-
-    while ( true )
-    {
-        /* Maintain state machines of all polled MPLAB Harmony modules. */
-        SYS_Tasks ( );
-    }
-
-    /* Execution should not come here during normal operation */
-
-    return ( EXIT_FAILURE );
-}

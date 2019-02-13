@@ -1,20 +1,19 @@
 /*******************************************************************************
-  Main Source File
+  Memory Driver NVM Interface Definition
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    main.c
+    drv_memory_nvm.h
 
   Summary:
-    This file contains the "main" function for a project.
+    Memory Driver NVM Interface Definition
 
   Description:
-    This file contains the "main" function for a project.  The
-    "main" function calls the "SYS_Initialize" function to initialize the state
-    machines of all modules in the system
- *******************************************************************************/
+    The Memory Driver provides a interface to access the NVM peripheral on the
+    microcontroller.
+*******************************************************************************/
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -41,36 +40,47 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Included Files
-// *****************************************************************************
-// *****************************************************************************
-
-#include <stddef.h>                     // Defines NULL
-#include <stdbool.h>                    // Defines true
-#include <stdlib.h>                     // Defines EXIT_FAILURE
-#include "definitions.h"                // SYS function prototypes
-
+#ifndef _DRV_MEMORY_NVM_H
+#define _DRV_MEMORY_NVM_H
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Main Entry Point
+// Section: File includes
 // *****************************************************************************
 // *****************************************************************************
 
-int main ( void )
-{
-    /* Initialize all modules */
-    SYS_Initialize ( NULL );
+#include "drv_memory_definitions.h"
 
-    while ( true )
-    {
-        /* Maintain state machines of all polled MPLAB Harmony modules. */
-        SYS_Tasks ( );
-    }
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+    extern "C" {
+#endif
 
-    /* Execution should not come here during normal operation */
+// DOM-IGNORE-END
 
-    return ( EXIT_FAILURE );
+DRV_HANDLE DRV_NVM_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent );
+
+void DRV_NVM_Close( const DRV_HANDLE handle );
+
+SYS_STATUS DRV_NVM_Status( const SYS_MODULE_INDEX drvIndex );
+
+bool DRV_NVM_SectorErase( const DRV_HANDLE handle, uint32_t address );
+
+bool DRV_NVM_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_length, uint32_t address );
+
+bool DRV_NVM_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t address );
+
+void DRV_NVM_EventHandlerSet( const DRV_HANDLE handle, const DRV_MEMORY_EVENT_HANDLER eventHandler, const uintptr_t context );
+
+MEMORY_DEVICE_TRANSFER_STATUS DRV_NVM_TransferStatusGet( const DRV_HANDLE handle );
+
+bool DRV_NVM_GeometryGet( const DRV_HANDLE handle, MEMORY_DEVICE_GEOMETRY *geometry );
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif // #ifndef _DRV_MEMORY_NVM_H
+/*******************************************************************************
+ End of File
+*/

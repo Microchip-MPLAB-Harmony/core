@@ -1,23 +1,23 @@
 /*******************************************************************************
-  Main Source File
+  Interrupt System Service Mapping File
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    main.c
+    sys_int_mapping.h
 
   Summary:
-    This file contains the "main" function for a project.
+    Interrupt System Service mapping file.
 
   Description:
-    This file contains the "main" function for a project.  The
-    "main" function calls the "SYS_Initialize" function to initialize the state
-    machines of all modules in the system
- *******************************************************************************/
+    This header file contains the mapping of the APIs defined in the API header
+    to either the function implementations or macro implementation or the
+    specific variant implementation.
+*******************************************************************************/
 
 //DOM-IGNORE-BEGIN
-/*******************************************************************************
+/******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
@@ -41,36 +41,20 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Included Files
-// *****************************************************************************
-// *****************************************************************************
-
-#include <stddef.h>                     // Defines NULL
-#include <stdbool.h>                    // Defines true
-#include <stdlib.h>                     // Defines EXIT_FAILURE
-#include "definitions.h"                // SYS function prototypes
-
+#ifndef SYS_INT_MAPPING_H
+#define SYS_INT_MAPPING_H
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Main Entry Point
+// Section: Interrupt System Service Mapping
 // *****************************************************************************
 // *****************************************************************************
 
-int main ( void )
-{
-    /* Initialize all modules */
-    SYS_Initialize ( NULL );
+#define SYS_INT_IsEnabled()                 ((bool)(_CP0_GET_STATUS() & 0x01))
+#define SYS_INT_SourceEnable( source )      EVIC_SourceEnable( source )
+#define SYS_INT_SourceIsEnabled( source )   EVIC_SourceIsEnabled( source )
+#define SYS_INT_SourceStatusGet( source )   EVIC_SourceStatusGet( source )
+#define SYS_INT_SourceStatusSet( source )   EVIC_SourceStatusSet( source )
+#define SYS_INT_SourceStatusClear( source ) EVIC_SourceStatusClear( source )
 
-    while ( true )
-    {
-        /* Maintain state machines of all polled MPLAB Harmony modules. */
-        SYS_Tasks ( );
-    }
-
-    /* Execution should not come here during normal operation */
-
-    return ( EXIT_FAILURE );
-}
+#endif // SYS_INT_MAPPING_H
