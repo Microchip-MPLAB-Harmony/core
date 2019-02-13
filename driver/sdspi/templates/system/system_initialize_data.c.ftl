@@ -1,7 +1,7 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SDSPI Instance ${INDEX?string} Initialization Data">
 
 /* SD Card Client Objects Pool */
-static DRV_SDSPI_CLIENT_OBJ drvSDSPI${INDEX}ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
+static DRV_SDSPI_CLIENT_OBJ drvSDSPI${INDEX}ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX${INDEX?string}];
 
 /* SPI PLIB Interface Initialization for SDSPI Driver */
 const DRV_SDSPI_PLIB_INTERFACE drvSDSPI${INDEX?string}PlibAPI = {
@@ -103,50 +103,51 @@ const uint32_t drvSDSPI${INDEX?string}remapClockPhase[] =
 const DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
 {
     /* SD Card SPI PLIB API interface*/
-    .spiPlib            = &drvSDSPI${INDEX?string}PlibAPI,
+    .spiPlib                = &drvSDSPI${INDEX?string}PlibAPI,
 
-    .remapDataBits = drvSDSPI${INDEX?string}remapDataBits,
+    .remapDataBits          = drvSDSPI${INDEX?string}remapDataBits,
 
-    .remapClockPolarity = drvSDSPI${INDEX?string}remapClockPolarity,
+    .remapClockPolarity     = drvSDSPI${INDEX?string}remapClockPolarity,
 
-    .remapClockPhase = drvSDSPI${INDEX?string}remapClockPhase,
+    .remapClockPhase        = drvSDSPI${INDEX?string}remapClockPhase,
 
     /* SDSPI Number of clients */
-    .numClients         = DRV_SDSPI_CLIENTS_NUMBER_IDX${INDEX?string},
+    .numClients             = DRV_SDSPI_CLIENTS_NUMBER_IDX${INDEX?string},
 
     /* SDSPI Client Objects Pool */
-    .clientObjPool      = (uintptr_t)&drvSDSPI${INDEX?string}ClientObjPool[0],
+    .clientObjPool          = (uintptr_t)&drvSDSPI${INDEX?string}ClientObjPool[0],
 
-    .chipSelectPin      = DRV_SDSPI_CHIP_SELECT_PIN_IDX${INDEX?string},
+    .chipSelectPin          = DRV_SDSPI_CHIP_SELECT_PIN_IDX${INDEX?string},
 
-    .sdcardSpeedHz      = DRV_SDSPI_SPEED_HZ_IDX${INDEX?string},
+    .sdcardSpeedHz          = DRV_SDSPI_SPEED_HZ_IDX${INDEX?string},
 
 <#if DRV_SDSPI_ENABLE_WRITE_PROTECT_CHECKING == true>
-    .writeProtectPin    = DRV_SDSPI_WRITE_PROTECT_PIN_IDX${INDEX?string},
+    .writeProtectPin        = DRV_SDSPI_WRITE_PROTECT_PIN_IDX${INDEX?string},
 <#else>
-    .writeProtectPin    = SYS_PORT_PIN_NONE,
+    .writeProtectPin        = SYS_PORT_PIN_NONE,
 </#if>
 
-    .isFsEnabled        = ${DRV_SDSPI_FS_ENABLE?c},
+    .isFsEnabled            = ${DRV_SDSPI_FS_ENABLE?c},
+
 <#if core.DMA_ENABLE?has_content>
     <#if DRV_SDSPI_TX_RX_DMA == true>
         <#lt>    /* DMA Channel for Transmit */
-        <#lt>    .txDMAChannel = DRV_SDSPI_XMIT_DMA_CH_IDX${INDEX?string},
-        <#lt>
+        <#lt>    .txDMAChannel           = DRV_SDSPI_XMIT_DMA_CH_IDX${INDEX?string},
+
         <#lt>    /* DMA Channel for Receive */
-        <#lt>    .rxDMAChannel  = DRV_SDSPI_RCV_DMA_CH_IDX${INDEX?string},
-        <#lt>
+        <#lt>    .rxDMAChannel           = DRV_SDSPI_RCV_DMA_CH_IDX${INDEX?string},
+
         <#lt>    /* SPI Transmit Register */
-        <#lt>    .txAddress = (void *)${.vars["${DRV_SDSPI_PLIB?lower_case}"].TRANSMIT_DATA_REGISTER},
-        <#lt>
+        <#lt>    .txAddress              = (void *)${.vars["${DRV_SDSPI_PLIB?lower_case}"].TRANSMIT_DATA_REGISTER},
+
         <#lt>    /* SPI Receive Register */
-        <#lt>    .rxAddress  = (void *)${.vars["${DRV_SDSPI_PLIB?lower_case}"].RECEIVE_DATA_REGISTER},
+        <#lt>    .rxAddress              = (void *)${.vars["${DRV_SDSPI_PLIB?lower_case}"].RECEIVE_DATA_REGISTER},
     <#else>
         <#lt>    /* DMA Channel for Transmit */
-        <#lt>    .txDMAChannel = SYS_DMA_CHANNEL_NONE,
-        <#lt>
+        <#lt>    .txDMAChannel           = SYS_DMA_CHANNEL_NONE,
+
         <#lt>    /* DMA Channel for Receive */
-        <#lt>    .rxDMAChannel  = SYS_DMA_CHANNEL_NONE,
+        <#lt>    .rxDMAChannel           = SYS_DMA_CHANNEL_NONE,
     </#if>
 </#if>
 };

@@ -115,6 +115,10 @@ def instantiateComponent(sdspiComponent, index):
         # Enable "Enable System DMA" option in MHC
         Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
 
+    availablePinDictionary = {}
+
+    availablePinDictionary = Database.sendMessage("core", "DRV_SDSPI", availablePinDictionary)
+
     sdspiSymIndex = sdspiComponent.createIntegerSymbol("INDEX", None)
     sdspiSymIndex.setVisible(False)
     sdspiSymIndex.setDefaultValue(index)
@@ -212,7 +216,7 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiRTOSStackSize = sdspiComponent.createIntegerSymbol("DRV_SDSPI_RTOS_STACK_SIZE", sdspiRTOSMenu)
     sdspiRTOSStackSize.setLabel("Stack Size")
-    sdspiRTOSStackSize.setDefaultValue(128)
+    sdspiRTOSStackSize.setDefaultValue(256)
 
     sdspiRTOSTaskPriority = sdspiComponent.createIntegerSymbol("DRV_SDSPI_RTOS_TASK_PRIORITY", sdspiRTOSMenu)
     sdspiRTOSTaskPriority.setLabel("Task Priority")

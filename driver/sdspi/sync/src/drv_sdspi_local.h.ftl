@@ -453,28 +453,28 @@ typedef union
     struct
     {
         /* Card is in idle state */
-        unsigned inIdleState:1;
+        uint8_t inIdleState:1;
 
         /* Erase reset flag */
-        unsigned eraseReset:1;
+        uint8_t eraseReset:1;
 
         /* Illegal command flag */
-        unsigned illegalCommand:1;
+        uint8_t illegalCommand:1;
 
         /* CRC error flag */
-        unsigned crcError:1;
+        uint8_t crcError:1;
 
         /* Erase sequence error flag */
-        unsigned eraseSequenceError:1;
+        uint8_t eraseSequenceError:1;
 
         /* Address error flag */
-        unsigned addressError:1;
+        uint8_t addressError:1;
 
         /* Parameter flag */
-        unsigned parameterError:1;
+        uint8_t parameterError:1;
 
         /* Unused bit 7 */
-        unsigned unusedB7:1;
+        uint8_t unusedB7:1;
     };
 
 } DRV_SDSPI_RESPONSE_1;
@@ -494,52 +494,52 @@ typedef union
     struct
     {
         /* Card is in idle state */
-        unsigned inIdleState:1;
+        uint16_t inIdleState:1;
 
         /* Erase reset flag */
-        unsigned eraseReset:1;
+        uint16_t eraseReset:1;
 
         /* Illegal command flag */
-        unsigned illegalCommand:1;
+        uint16_t illegalCommand:1;
 
         /* CRC error flag */
-        unsigned crcError:1;
+        uint16_t crcError:1;
 
         /* Erase sequence error flag */
-        unsigned eraseSequenceError:1;
+        uint16_t eraseSequenceError:1;
 
         /* Address error flag */
-        unsigned addressError:1;
+        uint16_t addressError:1;
 
         /* Parameter error flag */
-        unsigned parameterError:1;
+        uint16_t parameterError:1;
 
         /* Un-used bit */
-        unsigned unusedB7:1;
+        uint16_t unusedB7:1;
 
         /* Card is locked? */
-        unsigned cardIsLocked:1;
+        uint16_t cardIsLocked:1;
 
         /* WP erase skip| lock/unlock command failed */
-        unsigned wpEraseSkipLockFail:1;
+        uint16_t wpEraseSkipLockFail:1;
 
         /* Error */
-        unsigned error:1;
+        uint16_t error:1;
 
         /* CC error */
-        unsigned ccError:1;
+        uint16_t ccError:1;
 
         /* Card ECC fail */
-        unsigned cardEccFail:1;
+        uint16_t cardEccFail:1;
 
         /* WP violation */
-        unsigned wpViolation:1;
+        uint16_t wpViolation:1;
 
         /* Erase parameter */
-        unsigned eraseParam:1;
+        uint16_t eraseParam:1;
 
         /* out of range or CSD over write */
-        unsigned outrangeCsdOverWrite:1;
+        uint16_t outrangeCsdOverWrite:1;
     };
 
 } DRV_SDSPI_RESPONSE_2;
@@ -572,28 +572,28 @@ typedef union
         struct
         {
             /* Card is in idle state */
-            unsigned inIdleState:1;
+            uint8_t inIdleState:1;
 
             /* Erase reset flag */
-            unsigned eraseReset:1;
+            uint8_t eraseReset:1;
 
             /* Illegal command flag */
-            unsigned illegalCommand:1;
+            uint8_t illegalCommand:1;
 
             /* CRC error flag */
-            unsigned crcError:1;
+            uint8_t crcError:1;
 
             /* Erase sequence error flag */
-            unsigned eraseSequenceError:1;
+            uint8_t eraseSequenceError:1;
 
             /* Address error flag */
-            unsigned addressError:1;
+            uint8_t addressError:1;
 
             /* Parameter error flag */
-            unsigned parameterError:1;
+            uint8_t parameterError:1;
 
             /* un-used bit B7 */
-            unsigned unusedB7:1;
+            uint8_t unusedB7:1;
 
         }bits;
 
@@ -622,6 +622,15 @@ typedef union
 /* SDSPI Driver Instance Object.*/
 typedef struct
 {
+    /* Pointer to the buffer used during sending commands and receiving responses
+     * on the SPI bus. Buffer must be cache line aligned when using DMA with cache or
+     * the buffer must be in coherent memory region */
+<#if __PROCESSOR?matches("PIC32M.*") == true>
+    uint8_t                             cmdRespBuffer[32];
+<#else>
+    CACHE_ALIGN  uint8_t                cmdRespBuffer[32];
+</#if>
+
     /* Flag to indicate this object is in use  */
     bool                                inUse;
 
@@ -715,13 +724,6 @@ typedef struct
     /* SD card type, will be updated by initialization function */
     DRV_SDSPI_TYPE                      sdCardType;
 
-    /* Pointer to the buffer used during sending commands and receiving responses
-     * on the SPI bus. */
-
-    /* If using DMA with cache enabled, the buffer must be 32-byte
-     * aligned and a multiple of 32 bytes */
-    __attribute__ ((aligned (32))) uint8_t cmdRespBuffer[32];
-
     uint8_t                             csdData[_DRV_SDSPI_CSD_READ_SIZE];
 
     uint8_t                             cmdResponse[5];
@@ -745,14 +747,35 @@ typedef struct
     /* This is the SPI receive register address. Used for DMA operation. */
     void*                               rxAddress;
 
-</#if>
-    bool                                isFsEnabled;
+<#if __PROCESSOR?matches("PIC32M.*") == true>
+    /*Pointer to the buffer where the received data needs to be copied */
+    void*                               pReceiveData;
 
+    /*Pointer to the buffer containing data to be transmitted */
+    void*                               pTransmitData;
+
+    /* Number of bytes pending to be written */
+    size_t                              txPending;
+
+    /* Number of bytes to pending to be read */
+    size_t                              rxPending;
+
+    /* Number of bytes transferred */
+    size_t                              nBytesTransferred;
+
+    /* Buffer for transmitting/receiving dummy data */
+    uint8_t                             dummyDataBuffer[512];
+
+<#else>
     /* Pointer to the common transmit dummy data array */
     uint8_t*                            txDummyData;
 
     /* Dummy data is read into this variable by RX DMA */
     uint32_t                            rxDummyData;
+</#if>
+</#if>
+
+    bool                                isFsEnabled;
 
     volatile DRV_SDSPI_SPI_TRANSFER_STATUS   spiTransferStatus;
 
