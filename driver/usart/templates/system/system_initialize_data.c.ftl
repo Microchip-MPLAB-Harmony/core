@@ -1,10 +1,10 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_USART Instance ${INDEX?string} Initialization Data">
 
-static DRV_USART_CLIENT_OBJ drvUSART${INDEX?string}ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
+static DRV_USART_CLIENT_OBJ drvUSART${INDEX?string}ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX${INDEX?string}];
 
 <#if drv_usart.DRV_USART_COMMON_MODE == "Asynchronous">
 /* USART transmit/receive transfer objects pool */
-static DRV_USART_BUFFER_OBJ drvUSART${INDEX?string}BufferObjPool[DRV_USART_QUEUE_SIZE_IDX${INDEX?string}] = {0};
+static DRV_USART_BUFFER_OBJ drvUSART${INDEX?string}BufferObjPool[DRV_USART_QUEUE_SIZE_IDX${INDEX?string}];
 </#if>
 
 const DRV_USART_PLIB_INTERFACE drvUsart${INDEX?string}PlibAPI = {

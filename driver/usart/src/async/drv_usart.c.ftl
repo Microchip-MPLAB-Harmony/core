@@ -49,8 +49,10 @@
 #include "configuration.h"
 #include "driver/usart/drv_usart.h"
 #include "drv_usart_local.h"
+<#if __PROCESSOR?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
 #include "system/cache/sys_cache.h"
+</#if>
 </#if>
 
 // *****************************************************************************
@@ -60,7 +62,7 @@
 // *****************************************************************************
 
 /* This is the driver instance object array. */
-static DRV_USART_OBJ gDrvUSARTObj[DRV_USART_INSTANCES_NUMBER] ;
+static DRV_USART_OBJ gDrvUSARTObj[DRV_USART_INSTANCES_NUMBER];
 
 // *****************************************************************************
 // *****************************************************************************
@@ -564,17 +566,13 @@ static void _DRV_USART_WriteSubmit( DRV_USART_OBJ* dObj )
 <#if core.DMA_ENABLE?has_content>
     if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
+<#if __PROCESSOR?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
         // Clean cache to load new data from cache to main memory for DMA
         SYS_CACHE_CleanDCache_by_Addr((uint32_t *)bufferObj->buffer, bufferObj->size);
 </#if>
-<#if __PROCESSOR?matches("PIC32M.*") == true>
-
-        SYS_DMA_AddressingModeSetup(dObj->txDMAChannel,SYS_DMA_SOURCE_ADDRESSING_MODE_INCREMENTED,SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
-
-        SYS_DMA_DataWidthSetup(dObj->txDMAChannel,SYS_DMA_WIDTH_8_BIT);
-
 </#if>
+
         SYS_DMA_ChannelTransfer(
             dObj->txDMAChannel,
             (const void *)bufferObj->buffer,
@@ -612,13 +610,12 @@ static void _DRV_USART_ReadSubmit( DRV_USART_OBJ* dObj )
 <#if core.DMA_ENABLE?has_content>
     if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
-<#if __PROCESSOR?matches("PIC32M.*") == true>
-
-        SYS_DMA_AddressingModeSetup(dObj->rxDMAChannel,SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED,SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED);
-
-        SYS_DMA_DataWidthSetup(dObj->rxDMAChannel,SYS_DMA_WIDTH_8_BIT);
-
+<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
+        SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)bufferObj->buffer, bufferObj->size);
 </#if>
+</#if>
+
         SYS_DMA_ChannelTransfer(
             dObj->rxDMAChannel,
             (const void *)dObj->rxAddress,
@@ -695,12 +692,6 @@ static void _DRV_USART_BufferQueueTask(
              * requested buffer size */
             bufferObj->nCount = bufferObj->size;
         }
-<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
-        if((direction == DRV_USART_DIRECTION_RX) && (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
-        {
-            SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)bufferObj->buffer, bufferObj->size);
-        }
-</#if>
 
         /* Save the bufferHandle locally before freeing the buffer object */
         bufferHandle = bufferObj->bufferHandle;
@@ -865,12 +856,21 @@ SYS_MODULE_OBJ DRV_USART_Initialize(
     dObj->remapStopBits         = usartInit->remapStopBits;
     dObj->remapError            = usartInit->remapError;
 
-<#if core.DMA_ENABLE?has_content>
     /* Register a callback with either DMA or USART PLIB based on configuration.
      * dObj is used as a context parameter, that will be used to distinguish the
      * events for different driver instances. */
+<#if core.DMA_ENABLE?has_content>
     if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
+<#if __PROCESSOR?matches("PIC32M.*") == true>
+        SYS_DMA_AddressingModeSetup(
+            dObj->txDMAChannel,
+            SYS_DMA_SOURCE_ADDRESSING_MODE_INCREMENTED,
+            SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED
+        );
+
+        SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_8_BIT);
+</#if>
         SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, _DRV_USART_TX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
     else
@@ -885,6 +885,15 @@ SYS_MODULE_OBJ DRV_USART_Initialize(
 <#if core.DMA_ENABLE?has_content>
     if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
+<#if __PROCESSOR?matches("PIC32M.*") == true>
+        SYS_DMA_AddressingModeSetup(
+            dObj->rxDMAChannel,
+            SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED,
+            SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED
+        );
+
+        SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);
+</#if>
         SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, _DRV_USART_RX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
     else
