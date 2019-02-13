@@ -81,7 +81,7 @@
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_DATA appData;
+APP_DATA CACHE_ALIGN appData;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -381,8 +381,3 @@ void APP_Tasks ( void )
     }
 
 } //End of APP_Tasks
-
-/*******************************************************************************
- End of File
- */
-
