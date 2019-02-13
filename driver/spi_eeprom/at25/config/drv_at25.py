@@ -29,15 +29,8 @@
 at25MemoryInterruptEnable = None
 
 def at25SetMemoryDependency(symbol, event):
-    if (event["value"] == True):
-        symbol.setVisible(True)
-    else:
-        symbol.setVisible(False)
 
-#def updatePinPosition(symbol, event):
-    # TBD: "value" of at25SymChipSelectPin and other pin symbols should be updated
-    # here based on the package selected in Pin manager.
-
+    symbol.setVisible(event["value"])
 
 def instantiateComponent(at25Component):
     global at25MemoryInterruptEnable
@@ -75,12 +68,10 @@ def instantiateComponent(at25Component):
 
     at25EEPROMPageSize = at25Component.createIntegerSymbol("EEPROM_PAGE_SIZE", None)
     at25EEPROMPageSize.setLabel("EEPROM Page Size")
-    at25EEPROMPageSize.setVisible(True)
     at25EEPROMPageSize.setDefaultValue(256)
 
     at25EEPROMFlashSize = at25Component.createIntegerSymbol("EEPROM_FLASH_SIZE", None)
     at25EEPROMFlashSize.setLabel("EEPROM Flash Size")
-    at25EEPROMFlashSize.setVisible(True)
     at25EEPROMFlashSize.setDefaultValue(262144)
 
     at25SymChipSelectPin = at25Component.createKeyValueSetSymbol("DRV_AT25_CHIP_SELECT_PIN", None)
@@ -98,21 +89,20 @@ def instantiateComponent(at25Component):
     at25SymWriteProtectPin.setOutputMode("Key")
     at25SymWriteProtectPin.setDisplayMode("Description")
 
-    pinOutNode = ATDF.getNode("/avr-tools-device-file/pinouts/pinout")
-    pinOut = pinOutNode.getChildren()
+    availablePinDictionary = {}
 
-    for pad in range(0, len(pinOut)):
-        pin = pinOut[pad].getAttribute("pad")
-        if (pin[0] == "P") and (pin[-1].isdigit()):
-            key = "SYS_PORT_PIN_" + pin
-            value = pinOut[pad].getAttribute("position")
-            description = pinOut[pad].getAttribute("pad")
-            at25SymChipSelectPin.addKey(key, value, description)
-            at25SymHoldPin.addKey(key, value, description)
-            at25SymWriteProtectPin.addKey(key, value, description)
+    # Send message to core to get available pins
+    availablePinDictionary = Database.sendMessage("core", "PIN_LIST", availablePinDictionary)
+
+    for pin in availablePinDictionary:
+        key = "SYS_PORT_PIN_" + availablePinDictionary.get(pin)
+        value = pin
+        description = availablePinDictionary.get(pin)
+        at25SymChipSelectPin.addKey(key, value, description)
+        at25SymHoldPin.addKey(key, value, description)
+        at25SymWriteProtectPin.addKey(key, value, description)
 
     at25SymPinConfigComment = at25Component.createCommentSymbol("DRV_AT25_PINS_CONFIG_COMMENT", None)
-    at25SymPinConfigComment.setVisible(True)
     at25SymPinConfigComment.setLabel("***Above selected pins must be configured as GPIO Output in Pin Manager***")
 
     ##### Do not modify below symbol names as they are used by Memory Driver #####
@@ -120,22 +110,18 @@ def instantiateComponent(at25Component):
     at25MemoryDriver = at25Component.createBooleanSymbol("DRV_MEMORY_CONNECTED", None)
     at25MemoryDriver.setLabel("Memory Driver Connected")
     at25MemoryDriver.setVisible(False)
-    at25MemoryDriver.setDefaultValue(False)
 
     at25MemoryInterruptEnable = at25Component.createBooleanSymbol("INTERRUPT_ENABLE", None)
     at25MemoryInterruptEnable.setLabel("at25 Interrupt Enable")
     at25MemoryInterruptEnable.setVisible(False)
-    at25MemoryInterruptEnable.setDefaultValue(False)
     at25MemoryInterruptEnable.setReadOnly(True)
 
     at25MemoryEraseEnable = at25Component.createBooleanSymbol("ERASE_ENABLE", None)
     at25MemoryEraseEnable.setLabel("at25 Erase Enable")
     at25MemoryEraseEnable.setVisible(False)
-    at25MemoryEraseEnable.setDefaultValue(False)
 
     at25MemoryStartAddr = at25Component.createHexSymbol("START_ADDRESS", None)
     at25MemoryStartAddr.setLabel("AT25 EEPROM Start Address")
-    at25MemoryStartAddr.setVisible(True)
     at25MemoryStartAddr.setDefaultValue(0x0000000)
 
     ############################################################################
@@ -176,7 +162,6 @@ def instantiateComponent(at25Component):
     at25AsyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/at25/")
     at25AsyncSymHeaderLocalFile.setType("SOURCE")
     at25AsyncSymHeaderLocalFile.setOverwrite(True)
-
 
     at25SystemDefFile = at25Component.createFileSymbol("AT25_DEF", None)
     at25SystemDefFile.setType("STRING")
@@ -223,7 +208,6 @@ def onAttachmentConnected(source, target):
         plibUsed.setValue(at25PlibId.upper(), 1)
         Database.setSymbolValue(at25PlibId, "SPI_DRIVER_CONTROLLED", True, 1)
 
-
 def onAttachmentDisconnected(source, target):
 
     localComponent = source["component"]
@@ -237,4 +221,3 @@ def onAttachmentDisconnected(source, target):
         plibUsed.clearValue()
         at25PlibId = remoteID.upper()
         Database.setSymbolValue(at25PlibId, "SPI_DRIVER_CONTROLLED", False, 1)
-
