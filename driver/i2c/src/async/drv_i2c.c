@@ -120,6 +120,7 @@ static bool _DRV_I2C_ResourceLock(DRV_I2C_OBJ * dObj)
 {
     bool interruptStatus;
     const DRV_I2C_INTERRUPT_SOURCES* intInfo = dObj->interruptSources;
+    const DRV_I2C_MULTI_INT_SRC* multiVector = &dObj->interruptSources->intSources.multi;
 
     /* We will allow buffers to be added in the interrupt
        context of this I2C driver. But we must make
@@ -137,16 +138,32 @@ static bool _DRV_I2C_ResourceLock(DRV_I2C_OBJ * dObj)
     if (intInfo->isSingleIntSrc == true)
     {
         /* Disable I2C interrupt */
-         SYS_INT_SourceDisable(intInfo->intSources.i2cInterrupt);
+         dObj->i2cInterruptStatus = SYS_INT_SourceDisable(intInfo->intSources.i2cInterrupt);
     }
     else
     {
+         interruptStatus = SYS_INT_Disable();
+
         /* Disable I2C interrupt sources */
-        interruptStatus = SYS_INT_Disable();
-        SYS_INT_SourceDisable(intInfo->intSources.multi.i2cTxInt);
-        SYS_INT_SourceDisable(intInfo->intSources.multi.i2cRxInt);
-        SYS_INT_SourceDisable(intInfo->intSources.multi.i2cErrorInt);
-        SYS_INT_Restore(interruptStatus);
+         if(multiVector->i2cInt0 != -1)
+         {
+            dObj->i2cInt0Status = SYS_INT_SourceDisable(multiVector->i2cInt0);
+         }
+         if(multiVector->i2cInt1 != -1)
+         {
+            dObj->i2cInt1Status = SYS_INT_SourceDisable(multiVector->i2cInt1);
+         }
+         if(multiVector->i2cInt2 != -1)
+         {
+            dObj->i2cInt2Status = SYS_INT_SourceDisable(multiVector->i2cInt2);
+         }
+         if(multiVector->i2cInt3 != -1)
+         {
+            dObj->i2cInt3Status = SYS_INT_SourceDisable(multiVector->i2cInt3);
+         }
+
+         SYS_INT_Restore(interruptStatus);
+
     }
 
     return true;
@@ -156,20 +173,36 @@ static void _DRV_I2C_ResourceUnlock(DRV_I2C_OBJ * dObj)
 {
     bool interruptStatus;
     const DRV_I2C_INTERRUPT_SOURCES* intInfo = dObj->interruptSources;
+    const DRV_I2C_MULTI_INT_SRC* multiVector = &dObj->interruptSources->intSources.multi;
 
     /* Restore the interrupts back */
     if (intInfo->isSingleIntSrc == true)
     {
         /* Enable I2C interrupt */
-         SYS_INT_SourceEnable(intInfo->intSources.i2cInterrupt);
+         SYS_INT_SourceRestore(intInfo->intSources.i2cInterrupt, dObj->i2cInterruptStatus);
     }
     else
     {
-        /* Enable I2C interrupt sources */
         interruptStatus = SYS_INT_Disable();
-        SYS_INT_SourceEnable(intInfo->intSources.multi.i2cTxInt);
-        SYS_INT_SourceEnable(intInfo->intSources.multi.i2cRxInt);
-        SYS_INT_SourceEnable(intInfo->intSources.multi.i2cErrorInt);
+
+        /* Enable I2C interrupt sources */
+        if(multiVector->i2cInt0 != -1)
+        {
+            SYS_INT_SourceRestore(multiVector->i2cInt0,dObj->i2cInt0Status );
+        }
+        if(multiVector->i2cInt1 != -1)
+        {
+            SYS_INT_SourceRestore(multiVector->i2cInt1,dObj->i2cInt1Status );
+        }
+        if(multiVector->i2cInt2 != -1)
+        {
+            SYS_INT_SourceRestore(multiVector->i2cInt2,dObj->i2cInt2Status );
+        }
+        if(multiVector->i2cInt3 != -1)
+        {
+            SYS_INT_SourceRestore(multiVector->i2cInt3,dObj->i2cInt3Status );
+        }
+
         SYS_INT_Restore(interruptStatus);
     }
 
@@ -298,6 +331,7 @@ static void _DRV_I2C_RemoveClientTransfersFromList(
 
             // Reset the deleted node
             delTransferObj->currentState = DRV_I2C_TRANSFER_OBJ_IS_FREE;
+            delTransferObj->event = DRV_I2C_TRANSFER_EVENT_COMPLETE;
             delTransferObj->next = NULL;
             delTransferObj->inUse = false;
         }

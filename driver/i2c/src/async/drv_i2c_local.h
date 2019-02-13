@@ -227,6 +227,16 @@ typedef struct
     /* transfer onject projection mutex */
     OSAL_MUTEX_DECLARE (mutexTransferObjects);
 
+    bool                                    i2cInt0Status;
+
+    bool                                    i2cInt1Status;
+
+    bool                                    i2cInt2Status;
+
+    bool                                    i2cInt3Status;
+
+    bool                                    i2cInterruptStatus;
+
 } DRV_I2C_OBJ;
 
 // *****************************************************************************

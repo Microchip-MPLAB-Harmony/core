@@ -110,9 +110,10 @@ typedef void (* DRV_I2C_PLIB_CALLBACK_REGISTER)(DRV_I2C_PLIB_CALLBACK, uintptr_t
 
 typedef struct
 {
-    int32_t         i2cTxInt;
-    int32_t         i2cRxInt;
-    int32_t         i2cErrorInt;
+    int32_t         i2cInt0;
+    int32_t         i2cInt1;
+    int32_t         i2cInt2;
+    int32_t         i2cInt3;
 }DRV_I2C_MULTI_INT_SRC;
 
 typedef union

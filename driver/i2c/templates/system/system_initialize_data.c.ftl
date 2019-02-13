@@ -30,26 +30,51 @@ const DRV_I2C_PLIB_INTERFACE drvI2C${INDEX?string}PLibAPI = {
 <#if drv_i2c.DRV_I2C_MODE == "Asynchronous">
     <#assign I2C_PLIB = "DRV_I2C_PLIB">
     <#assign I2C_PLIB_MULTI_IRQn = "core." + I2C_PLIB?eval + "_MULTI_IRQn">
+    <#assign I2C_PLIB_SINGLE_IRQn = "core." + I2C_PLIB?eval + "_SINGLE_IRQn">
     <#if I2C_PLIB_MULTI_IRQn?eval??>
-        <#assign I2C_PLIB_TX_INDEX = "core." + I2C_PLIB?eval + "_I2CM_TX_INT_SRC">
-        <#assign I2C_PLIB_RX_INDEX = "core." + I2C_PLIB?eval + "_I2CM_RX_INT_SRC">
-        <#assign I2C_PLIB_ERROR_INDEX = "core." + I2C_PLIB?eval + "_I2CM_ERROR_INT_SRC">
+        <#assign I2C_PLIB_INT_INDEX0 = "core." + I2C_PLIB?eval + "_I2C_0_INT_SRC">
+        <#assign I2C_PLIB_INT_INDEX1 = "core." + I2C_PLIB?eval + "_I2C_1_INT_SRC">
+        <#assign I2C_PLIB_INT_INDEX2 = "core." + I2C_PLIB?eval + "_I2C_2_INT_SRC">
+        <#assign I2C_PLIB_INT_INDEX3 = "core." + I2C_PLIB?eval + "_I2C_3_INT_SRC">
     </#if>
 
 const DRV_I2C_INTERRUPT_SOURCES drvI2C${INDEX?string}InterruptSources =
 {
     <#if I2C_PLIB_MULTI_IRQn?eval??>
-        <#lt>    /* Peripheral has more than one interrupt vectors */
+        <#lt>    /* Peripheral has more than one interrupt vector */
         <#lt>    .isSingleIntSrc                        = false,
+
         <#lt>    /* Peripheral interrupt lines */
-        <#lt>    .intSources.multi.i2cTxInt             = ${I2C_PLIB_TX_INDEX?eval},
-        <#lt>    .intSources.multi.i2cRxInt             = ${I2C_PLIB_RX_INDEX?eval},
-        <#lt>    .intSources.multi.i2cErrorInt          = ${I2C_PLIB_ERROR_INDEX?eval},
+        <#if I2C_PLIB_INT_INDEX0?eval??>
+            <#lt>    .intSources.multi.i2cInt0          = ${I2C_PLIB_INT_INDEX0?eval},
+        <#else>
+            <#lt>    .intSources.multi.i2cInt0          = -1,
+        </#if>
+        <#if I2C_PLIB_INT_INDEX1?eval??>
+            <#lt>    .intSources.multi.i2cInt1          = ${I2C_PLIB_INT_INDEX1?eval},
+        <#else>
+            <#lt>    .intSources.multi.i2cInt1          = -1,
+        </#if>
+        <#if I2C_PLIB_INT_INDEX2?eval??>
+            <#lt>    .intSources.multi.i2cInt2          = ${I2C_PLIB_INT_INDEX2?eval},
+        <#else>
+            <#lt>    .intSources.multi.i2cInt2          = -1,
+        </#if>
+        <#if I2C_PLIB_INT_INDEX3?eval??>
+            <#lt>    .intSources.multi.i2cInt3          = ${I2C_PLIB_INT_INDEX3?eval},
+        <#else>
+            <#lt>    .intSources.multi.i2cInt3          = -1,
+        </#if>
     <#else>
         <#lt>    /* Peripheral has single interrupt vector */
         <#lt>    .isSingleIntSrc                        = true,
+
         <#lt>    /* Peripheral interrupt line */
-        <#lt>    .intSources.i2cInterrupt               = ${DRV_I2C_PLIB}_IRQn,
+        <#if I2C_PLIB_SINGLE_IRQn?eval??>
+            <#lt>    .intSources.i2cInterrupt             = ${I2C_PLIB_SINGLE_IRQn?eval},
+        <#else>
+            <#lt>    .intSources.i2cInterrupt             = ${DRV_I2C_PLIB}_IRQn,
+        </#if>
     </#if>
 };
 </#if>
