@@ -56,7 +56,9 @@
 
 #include "system/dma/sys_dma.h"
 
+<#if (core.DMA_ENABLE?has_content) && (core.DMA_ENABLE = true)>
 static SYS_DMA_CHANNEL_OBJECT  gSysDMAChannelObj[${core.DMA_CHANNEL_COUNT}];
+</#if>
 
 //******************************************************************************
 /* Function:
@@ -123,4 +125,5 @@ bool SYS_DMA_ChannelTransfer (SYS_DMA_CHANNEL channel, const void *srcAddr, cons
         ${DMA_INSTANCE_NAME}_ChannelTransfer((${DMA_NAME}_CHANNEL)channel, srcAddr, blockSize, destAddr, blockSize, blockSize);
     }
 </#if>
+    return true;
 }
