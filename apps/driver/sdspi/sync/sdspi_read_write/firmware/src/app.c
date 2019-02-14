@@ -64,6 +64,12 @@
 
 SYS_MEDIA_GEOMETRY* geometry = NULL;
 
+/* Read Buffer */
+CACHE_ALIGN uint32_t readBuffer[SDSPI_BUFFER_SIZE];
+
+/* Write Buffer*/
+CACHE_ALIGN uint32_t writeBuffer[SDSPI_BUFFER_SIZE];
+
 // *****************************************************************************
 /* Application Data
 
@@ -121,7 +127,7 @@ void APP_Initialize ( void )
 
     for (i = 0; i < SDSPI_BUFFER_SIZE; i++)
     {
-        appData.writeBuffer[i] = i;
+        writeBuffer[i] = i;
     }
 }
 
@@ -179,7 +185,7 @@ void APP_Tasks ( void )
 
         case APP_STATE_WRITE_MEMORY:
 
-            if (DRV_SDSPI_SyncWrite(appData.sdspiHandle, (void *)appData.writeBuffer, BLOCK_START, appData.numWriteBlocks) == true)
+            if (DRV_SDSPI_SyncWrite(appData.sdspiHandle, (void *)writeBuffer, BLOCK_START, appData.numWriteBlocks) == true)
             {
                 appData.state = APP_STATE_READ_MEMORY;
             }
@@ -192,9 +198,9 @@ void APP_Tasks ( void )
 
         case APP_STATE_READ_MEMORY:
 
-            memset((void *)&appData.readBuffer, 0, SDSPI_DATA_SIZE);
+            memset((void *)readBuffer, 0, SDSPI_DATA_SIZE);
 
-            if (DRV_SDSPI_SyncRead(appData.sdspiHandle, (void *)appData.readBuffer, BLOCK_START, appData.numReadBlocks) == true)
+            if (DRV_SDSPI_SyncRead(appData.sdspiHandle, (void *)readBuffer, BLOCK_START, appData.numReadBlocks) == true)
             {
                 appData.state = APP_STATE_VERIFY_DATA;
             }
@@ -207,7 +213,7 @@ void APP_Tasks ( void )
 
         case APP_STATE_VERIFY_DATA:
 
-            if (!memcmp(appData.writeBuffer, appData.readBuffer, SDSPI_DATA_SIZE))
+            if (!memcmp(writeBuffer, readBuffer, SDSPI_DATA_SIZE))
             {
                 appData.state = APP_STATE_SUCCESS;
             }

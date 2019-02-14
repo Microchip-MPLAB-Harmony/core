@@ -151,12 +151,6 @@ typedef struct
 
     /* Number of read blocks*/
     uint32_t numEraseBlocks;
-
-    /* Read Buffer */
-    uint32_t __attribute__((aligned(32))) readBuffer[SDSPI_BUFFER_SIZE];
-
-    /* Write Buffer*/
-    uint32_t __attribute__ ((aligned(32))) writeBuffer[SDSPI_BUFFER_SIZE];
 } APP_DATA;
 
 // *****************************************************************************
