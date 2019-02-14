@@ -29,10 +29,8 @@
 at25dfMemoryInterruptEnable = None
 
 def at25dfSetMemoryDependency(symbol, event):
-    if (event["value"] == True):
-        symbol.setVisible(True)
-    else:
-        symbol.setVisible(False)
+
+    symbol.setVisible(event["value"])
 
 def instantiateComponent(at25dfComponent):
     global at25dfMemoryInterruptEnable
@@ -64,12 +62,10 @@ def instantiateComponent(at25dfComponent):
 
     at25dfFLASHPageSize = at25dfComponent.createIntegerSymbol("PAGE_SIZE", None)
     at25dfFLASHPageSize.setLabel("Page Size")
-    at25dfFLASHPageSize.setVisible(True)
     at25dfFLASHPageSize.setDefaultValue(256)
 
     at25dfFLASHFlashSize = at25dfComponent.createIntegerSymbol("FLASH_SIZE", None)
     at25dfFLASHFlashSize.setLabel("Flash Size")
-    at25dfFLASHFlashSize.setVisible(True)
     at25dfFLASHFlashSize.setDefaultValue(4194304)
 
     at25dfSymChipSelectPin = at25dfComponent.createKeyValueSetSymbol("DRV_AT25DF_CHIP_SELECT_PIN", None)
@@ -77,19 +73,18 @@ def instantiateComponent(at25dfComponent):
     at25dfSymChipSelectPin.setOutputMode("Key")
     at25dfSymChipSelectPin.setDisplayMode("Description")
 
-    pinOutNode = ATDF.getNode("/avr-tools-device-file/pinouts/pinout@[name=\"" + Database.getSymbolValue("core", "COMPONENT_PACKAGE") + "\"]")
-    pinOut = pinOutNode.getChildren()
+    availablePinDictionary = {}
 
-    for pad in range(0, len(pinOut)):
-        pin = pinOut[pad].getAttribute("pad")
-        if (pin[0] == "P") and (pin[-1].isdigit()):
-            key = "SYS_PORT_PIN_" + pin
-            value = pinOut[pad].getAttribute("position")
-            description = pinOut[pad].getAttribute("pad")
-            at25dfSymChipSelectPin.addKey(key, value, description)
+    # Send message to core to get available pins
+    availablePinDictionary = Database.sendMessage("core", "PIN_LIST", availablePinDictionary)
+
+    for pin in availablePinDictionary:
+        key = "SYS_PORT_PIN_" + availablePinDictionary.get(pin)
+        value = pin
+        description = availablePinDictionary.get(pin)
+        at25dfSymChipSelectPin.addKey(key, value, description)
 
     at25dfSymPinConfigComment = at25dfComponent.createCommentSymbol("DRV_AT25DF_PINS_CONFIG_COMMENT", None)
-    at25dfSymPinConfigComment.setVisible(True)
     at25dfSymPinConfigComment.setLabel("***Above selected pin must be configured as GPIO Output in Pin Manager***")
 
     ##### Do not modify below symbol names as they are used by Memory Driver #####
@@ -97,12 +92,10 @@ def instantiateComponent(at25dfComponent):
     at25dfMemoryDriver = at25dfComponent.createBooleanSymbol("DRV_MEMORY_CONNECTED", None)
     at25dfMemoryDriver.setLabel("Memory Driver Connected")
     at25dfMemoryDriver.setVisible(False)
-    at25dfMemoryDriver.setDefaultValue(False)
 
     at25dfMemoryInterruptEnable = at25dfComponent.createBooleanSymbol("INTERRUPT_ENABLE", None)
     at25dfMemoryInterruptEnable.setLabel("Interrupt Enable")
     at25dfMemoryInterruptEnable.setVisible(False)
-    at25dfMemoryInterruptEnable.setDefaultValue(False)
     at25dfMemoryInterruptEnable.setReadOnly(True)
 
     at25dfMemoryEraseEnable = at25dfComponent.createBooleanSymbol("ERASE_ENABLE", None)
@@ -112,7 +105,6 @@ def instantiateComponent(at25dfComponent):
 
     at25dfMemoryStartAddr = at25dfComponent.createHexSymbol("START_ADDRESS", None)
     at25dfMemoryStartAddr.setLabel("FLASH Start Address")
-    at25dfMemoryStartAddr.setVisible(True)
     at25dfMemoryStartAddr.setDefaultValue(0x0000000)
 
     at25dfMemoryEraseBufferSize = at25dfComponent.createIntegerSymbol("ERASE_BUFFER_SIZE", None)
@@ -165,7 +157,6 @@ def instantiateComponent(at25dfComponent):
     at25dfAsyncSymHeaderLocalFile.setType("SOURCE")
     at25dfAsyncSymHeaderLocalFile.setOverwrite(True)
 
-
     at25dfSystemDefFile = at25dfComponent.createFileSymbol("AT25DF_DEF", None)
     at25dfSystemDefFile.setType("STRING")
     at25dfSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
@@ -197,7 +188,6 @@ def instantiateComponent(at25dfComponent):
     at25dfSystemInitFile.setMarkup(True)
 
 def onAttachmentConnected(source, target):
-    global at25dfMemoryInterruptEnable
 
     localComponent = source["component"]
     remoteComponent = target["component"]
@@ -211,10 +201,7 @@ def onAttachmentConnected(source, target):
         plibUsed.setValue(at25dfPlibId.upper(), 1)
         Database.setSymbolValue(at25dfPlibId, "SPI_DRIVER_CONTROLLED", True, 1)
 
-        at25dfMemoryInterruptEnable.setValue(Database.getSymbolValue("core", at25dfPlibId + "_INTERRUPT_ENABLE"), 1)
-
 def onAttachmentDisconnected(source, target):
-    global at25dfMemoryInterruptEnable
 
     localComponent = source["component"]
     remoteComponent = target["component"]
@@ -227,5 +214,3 @@ def onAttachmentDisconnected(source, target):
         plibUsed.clearValue()
         at25dfPlibId = remoteID.upper()
         Database.setSymbolValue(at25dfPlibId, "SPI_DRIVER_CONTROLLED", False, 1)
-
-        at25dfMemoryInterruptEnable.setValue(False, 1)
