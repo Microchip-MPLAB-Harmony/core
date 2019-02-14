@@ -45,10 +45,8 @@ def enableSysCache(symbol, event):
 
     if ((isDataCacheEnabled == False) and (isInstructionCacheEnabled == False)):
         symbol.setValue(False, 1)
-        symbol.setVisible(False)
     else:
         symbol.setValue(True, 1)
-        symbol.setVisible(True)
 
 ############################################################################
 #### Code Generation ####
@@ -58,9 +56,10 @@ coreArch  = Database.getSymbolValue("core", "CoreArchitecture");
 
 genSysCacheCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_CACHE", None)
 genSysCacheCommonFiles.setLabel("Enable System Cache")
-genSysCacheCommonFiles.setDefaultValue(isCachePresent)
-genSysCacheCommonFiles.setVisible(isCachePresent)
-genSysCacheCommonFiles.setReadOnly(True)
+if (("PIC32MZ" in Variables.get("__PROCESSOR")) or ("CORTEX-M4" in coreArch)):
+    genSysCacheCommonFiles.setDefaultValue(False)
+else:
+    genSysCacheCommonFiles.setDefaultValue(isCachePresent)
 genSysCacheCommonFiles.setDependencies(enableSysCache, ["ENABLE_SYS_COMMON", "core.DATA_CACHE_ENABLE", "core.INSTRUCTION_CACHE_ENABLE"])
 
 cacheHeaderFile = harmonyCoreComponent.createFileSymbol("SYS_CACHE_HEADER", None)
