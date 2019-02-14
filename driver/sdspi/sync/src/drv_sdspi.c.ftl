@@ -1256,7 +1256,7 @@ void DRV_SDSPI_Tasks ( SYS_MODULE_OBJ object )
 // *****************************************************************************
 // *****************************************************************************
 
-void __WEAK DRV_SDSPI_RegisterWithSysFs
+__WEAK void DRV_SDSPI_RegisterWithSysFs
 (
     const SYS_MODULE_INDEX drvIndex
 )
