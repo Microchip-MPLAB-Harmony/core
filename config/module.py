@@ -36,15 +36,15 @@ def loadModule():
 
         {"name":"memory", "label": "MEMORY", "type":"driver", "display_path":"", "actual_path":"", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["MEMORY"], "condition":"True"},
 
-        {"name":"sst26", "label": "SST26", "type":"driver", "display_path":"SQI Flash", "actual_path":"sqi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SQI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAME70", "SAMS70", "PIC32MZ"])'},
+        {"name":"sst26", "label": "SST26", "type":"driver", "display_path":"SQI Flash", "actual_path":"sqi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SQI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "SAMD5", "SAME5", "PIC32MZ", "SAMA5D2"])'},
 
-        {"name":"mx25l", "label": "MX25L", "type":"driver", "display_path":"SQI Flash", "actual_path":"sqi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SQI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"])'},
+        {"name":"mx25l", "label": "MX25L", "type":"driver", "display_path":"SQI Flash", "actual_path":"sqi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SQI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "SAMD5", "SAME5", "SAMA5D2"])'},
 
         {"name":"i2c", "label": "I2C", "type":"driver", "display_path":"", "actual_path":"", "instance":"multi", "capability":["DRV_I2C"], "dependency":["I2C"], "condition":"True"},
 
         {"name":"spi", "label": "SPI", "type":"driver", "display_path":"", "actual_path":"", "instance":"multi", "capability":["DRV_SPI"], "dependency":["SPI"], "condition":"True"},
 
-        {"name":"i2s", "label": "I2S", "type":"driver", "display_path":"", "actual_path":"", "instance":"multi", "capability":["DRV_I2S"], "dependency":["I2S"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54"])'},
+        {"name":"i2s", "label": "I2S", "type":"driver", "display_path":"", "actual_path":"", "instance":"multi", "capability":["DRV_I2S"], "dependency":["I2S"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"])'},
 
         {"name":"at24", "label": "AT24", "type":"driver", "display_path":"I2C EEPROM", "actual_path":"i2c_eeprom", "instance":"single", "capability":["MEMORY"], "dependency":["I2C"], "condition":"True"},
 
@@ -52,7 +52,7 @@ def loadModule():
 
         {"name":"at25df", "label": "AT25DF", "type":"driver", "display_path":"SPI FLASH", "actual_path":"spi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SPI"], "condition":"True"},
 
-        {"name":"sdmmc", "label":"SDMMC", "type":"driver", "display_path":"SDCARD", "actual_path":"", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["SDHC", "SYS_TIME"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "SAME54", "SAMA5D2"])'},
+        {"name":"sdmmc", "label":"SDMMC", "type":"driver", "display_path":"SDCARD", "actual_path":"", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["SDHC", "SYS_TIME"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "SAMD5", "SAME5", "SAMA5D2"])'},
 
         {"name":"sdspi", "label": "SD Card (SPI)", "type":"driver", "display_path":"SDCARD", "actual_path":"", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["SPI", "SYS_TIME"], "condition":"True"}
 
