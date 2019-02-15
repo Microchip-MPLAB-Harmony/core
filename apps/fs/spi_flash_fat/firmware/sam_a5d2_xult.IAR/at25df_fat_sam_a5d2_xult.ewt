@@ -2548,9 +2548,6 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\pio\plib_pio.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\pio\plib_pio_pin.h</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\spi\plib_spi0.h</name>
             </file>
             <file>
@@ -2614,6 +2611,9 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\ssc.h</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\cache\sys_cache.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\fs\sys_fs.h</name>
             </file>
             <file>
@@ -2656,7 +2656,7 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\tdes.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\arm\toolchain_specifics.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\toolchain_specifics.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\trng.h</name>
@@ -2750,6 +2750,9 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\spi\plib_spi0.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\cache\sys_cache.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\fs\src\sys_fs.c</name>

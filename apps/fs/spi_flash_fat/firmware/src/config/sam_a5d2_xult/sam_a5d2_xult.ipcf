@@ -30,6 +30,17 @@
             <path>\system\fs\fat_fs\src\hardware_access\diskio.h</path>
             <path>\system\fs\mpfs\mpfs.h</path>
             <path>\system\fs\mpfs\src\mpfs_local.h</path>
+            <path>\device_cache.h</path>
+            <path>\toolchain_specifics.h</path>
+            <path>\definitions.h</path>
+            <path>\peripheral\mmu\plib_mmu.h</path>
+            <path>\peripheral\matrix\plib_matrix.h</path>
+            <path>\peripheral\l2cc\plib_l2cc.h</path>
+            <path>\peripheral\clk\plib_clk.h</path>
+            <path>\peripheral\pio\plib_pio.h</path>
+            <path>\peripheral\aic\plib_aic.h</path>
+            <path>\driver\memory\src\drv_memory_local.h</path>
+            <path>\..\..\packs\ATSAMA5D27_DFP\device.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\acc.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\adc.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\aes.h</path>
@@ -79,20 +90,8 @@
             <path>\..\..\packs\ATSAMA5D27_DFP\component\uhphs.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\wdt.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\xdmac.h</path>
-            <path>\..\..\packs\ATSAMA5D27_DFP\device.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\atsama5d27.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\pio\sama5d27.h</path>
-            <path>\device_cache.h</path>
-            <path>\..\..\arm\toolchain_specifics.h</path>
-            <path>\definitions.h</path>
-            <path>\peripheral\mmu\plib_mmu.h</path>
-            <path>\peripheral\matrix\plib_matrix.h</path>
-            <path>\peripheral\l2cc\plib_l2cc.h</path>
-            <path>\peripheral\clk\plib_clk.h</path>
-            <path>\peripheral\pio\plib_pio.h</path>
-            <path>\peripheral\pio\plib_pio_pin.h</path>
-            <path>\peripheral\aic\plib_aic.h</path>
-            <path>\driver\memory\src\drv_memory_local.h</path>
             <path>\peripheral\spi\plib_spi_common.h</path>
             <path>\peripheral\spi\plib_spi0.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core_A\Include\cmsis_compiler.h</path>
@@ -115,6 +114,7 @@
             <path>\system\int\sys_int_mapping.h</path>
             <path>\system\ports\sys_ports.h</path>
             <path>\system\ports\sys_ports_mapping.h</path>
+            <path>\system\cache\sys_cache.h</path>
             <path>\osal\osal.h</path>
             <path>\osal\osal_definitions.h</path>
             <path>\osal\osal_impl_basic.h</path>
@@ -148,6 +148,7 @@
             <path>\driver\spi_flash\at25df\src\drv_at25df.c</path>
             <path>\driver\spi_flash\at25df\src\drv_at25df_local.h</path>
             <path>\system\int\src\sys_int.c</path>
+            <path>\system\cache\sys_cache.c</path>
             <path>\..\..\app.c</path>
             <path>\tasks.c</path>
         </group>

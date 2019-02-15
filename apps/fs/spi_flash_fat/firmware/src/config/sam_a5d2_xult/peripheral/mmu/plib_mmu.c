@@ -176,6 +176,18 @@ static void dcache_enable(void)
 	}
 }
 
+static inline uint32_t cp15_read_sctlr(void)
+{
+    uint32_t sctlr;
+    asm("mrc p15, 0, %0, c1, c0, 0" : "=r"(sctlr));
+    return sctlr;
+}
+
+static inline void cp15_write_sctlr(uint32_t value)
+{
+    asm("mcr p15, 0, %0, c1, c0, 0" :: "r"(value));
+}
+
 // *****************************************************************************
 /* Function:
     void MMU_Initialize(void);
@@ -427,6 +439,11 @@ void MMU_Initialize(void)
 	icache_enable();
 	mmu_enable();
 	dcache_enable();
+
+    // disable the processor alignment fault testing
+    uint32_t sctlrValue = cp15_read_sctlr();
+    sctlrValue &= ~0x00000002;
+    cp15_write_sctlr( sctlrValue );
 }
 
 /*******************************************************************************
