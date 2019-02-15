@@ -28,6 +28,14 @@
 
 at25MemoryInterruptEnable = None
 
+global sort_alphanumeric
+
+def sort_alphanumeric(l):
+    import re
+    convert = lambda text: int(text) if text.isdigit() else text.lower()
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
+    return sorted(l, key = alphanum_key)
+
 def at25SetMemoryDependency(symbol, event):
 
     symbol.setVisible(event["value"])
@@ -94,10 +102,10 @@ def instantiateComponent(at25Component):
     # Send message to core to get available pins
     availablePinDictionary = Database.sendMessage("core", "PIN_LIST", availablePinDictionary)
 
-    for pin in availablePinDictionary:
-        key = "SYS_PORT_PIN_" + availablePinDictionary.get(pin)
-        value = pin
-        description = availablePinDictionary.get(pin)
+    for pad in sort_alphanumeric(availablePinDictionary.values()):
+        key = "SYS_PORT_PIN_" + pad
+        value = list(availablePinDictionary.keys())[list(availablePinDictionary.values()).index(pad)]
+        description = pad
         at25SymChipSelectPin.addKey(key, value, description)
         at25SymHoldPin.addKey(key, value, description)
         at25SymWriteProtectPin.addKey(key, value, description)

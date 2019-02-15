@@ -28,6 +28,14 @@
 
 at25dfMemoryInterruptEnable = None
 
+global sort_alphanumeric
+
+def sort_alphanumeric(l):
+    import re
+    convert = lambda text: int(text) if text.isdigit() else text.lower()
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
+    return sorted(l, key = alphanum_key)
+
 def at25dfSetMemoryDependency(symbol, event):
 
     symbol.setVisible(event["value"])
@@ -78,10 +86,10 @@ def instantiateComponent(at25dfComponent):
     # Send message to core to get available pins
     availablePinDictionary = Database.sendMessage("core", "PIN_LIST", availablePinDictionary)
 
-    for pin in availablePinDictionary:
-        key = "SYS_PORT_PIN_" + availablePinDictionary.get(pin)
-        value = pin
-        description = availablePinDictionary.get(pin)
+    for pad in sort_alphanumeric(availablePinDictionary.values()):
+        key = "SYS_PORT_PIN_" + pad
+        value = list(availablePinDictionary.keys())[list(availablePinDictionary.values()).index(pad)]
+        description = pad
         at25dfSymChipSelectPin.addKey(key, value, description)
 
     at25dfSymPinConfigComment = at25dfComponent.createCommentSymbol("DRV_AT25DF_PINS_CONFIG_COMMENT", None)
