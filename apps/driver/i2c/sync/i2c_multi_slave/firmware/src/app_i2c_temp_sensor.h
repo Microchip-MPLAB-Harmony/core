@@ -114,13 +114,12 @@ typedef struct
     APP_I2C_TEMP_SENSOR_STATES state;
 
     /* TODO: Define any additional data used by the application. */
-    DRV_HANDLE drvI2CHandle;    
+    DRV_HANDLE drvI2CHandle;
 
     uint8_t rxBuffer[2];
 
     uint8_t temperature;
 
-    volatile bool status;
 } APP_I2C_TEMP_SENSOR_DATA;
 
 // *****************************************************************************

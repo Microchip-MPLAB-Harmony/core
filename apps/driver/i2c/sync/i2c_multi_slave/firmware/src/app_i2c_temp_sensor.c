@@ -52,6 +52,7 @@
 // *****************************************************************************
 
 #include "app_i2c_temp_sensor.h"
+#include "system/console/sys_debug.h"
 #include "osal/osal.h"
 
 // *****************************************************************************
@@ -59,9 +60,6 @@
 // Section: Global Data Definitions
 // *****************************************************************************
 // *****************************************************************************
-#define APP_I2C_TEMP_STATUS_SUCCESS                 0
-#define APP_I2C_TEMP_STATUS_ERROR                   1
-
 #define APP_TEMP_AT30TSE75X_SLAVE_ADDR              0x004B
 #define APP_TEMP_TEMPERATURE_REG_ADDR               0x00
 
@@ -82,7 +80,7 @@
 */
 static APP_I2C_TEMP_SENSOR_DATA appTempSensorData;
 
-/* Define a temperature ready semaphore to signal the EEPROM thread to write new 
+/* Define a temperature ready semaphore to signal the EEPROM thread to write new
  * temperature value
 */
 OSAL_SEM_DECLARE(temperatureReady);
@@ -125,7 +123,7 @@ void APP_I2C_TEMP_SENSOR_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
     appTempSensorData.state = APP_I2C_TEMP_SENSOR_STATE_INIT;
-    
+
     if (OSAL_SEM_Create(&temperatureReady, OSAL_SEM_TYPE_BINARY, 0, 0) == OSAL_RESULT_FALSE)
     {
         /* Handle error condition. Not sufficient memory to create semaphore */
@@ -143,6 +141,7 @@ void APP_I2C_TEMP_SENSOR_Initialize ( void )
 void APP_I2C_TEMP_SENSOR_Tasks ( void )
 {
     uint8_t registerAddr;
+    int16_t temp;
 
     /* Check the application's current state. */
     switch (appTempSensorData.state)
@@ -152,7 +151,7 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
             appTempSensorData.drvI2CHandle = DRV_I2C_Open( DRV_I2C_INDEX_0, DRV_IO_INTENT_READWRITE);
 
             if(appTempSensorData.drvI2CHandle != DRV_HANDLE_INVALID)
-            {                
+            {
                 appTempSensorData.state = APP_I2C_TEMP_SENSOR_STATE_READ_SENSOR;
             }
             else
@@ -166,6 +165,8 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
             /* Read temperature readings every 1000 ms */
             vTaskDelay(APP_TEMP_READ_RATE_MS/portTICK_PERIOD_MS);
 
+            SYS_PRINT("Reading temperature from sensor...");
+
             registerAddr = APP_TEMP_TEMPERATURE_REG_ADDR;
 
             /* Read temperature reading */
@@ -174,12 +175,13 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
                 // Convert the temperature value read from sensor to readable format (Degree Celsius)
                 // For demonstration purpose, temperature value is assumed to be positive.
                 // The maximum positive temperature measured by sensor is +125 C
-                int16_t temp;
                 temp = (appTempSensorData.rxBuffer[0] << 8) | appTempSensorData.rxBuffer[1];
                 temp = (temp >> 7) * 0.5;
                 appTempSensorData.temperature = (uint8_t)temp;
 
-                appTempSensorData.status = APP_I2C_TEMP_STATUS_SUCCESS;
+                SYS_PRINT("%d C\r\n", appTempSensorData.temperature);
+
+                /* Notify the EEPROM task to write the temperature value to EEPROM */
                 OSAL_SEM_Post(&temperatureReady);
             }
             else
@@ -189,7 +191,7 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
             break;
 
         case APP_I2C_TEMP_SENSOR_STATE_ERROR:
-            appTempSensorData.status = APP_I2C_TEMP_STATUS_ERROR;
+            SYS_PRINT("Temperature Sensor Task Error \r\n");
             /* Allow other threads to run */
             vTaskSuspend(NULL);
             break;

@@ -71,7 +71,7 @@ extern "C" {
 // Section: Type Definitions
 // *****************************************************************************
 // *****************************************************************************
-
+#define APP_EEPROM_NUM_TEMP_VALUES_TO_SAVE          5
 // *****************************************************************************
 /* Application states
 
@@ -88,8 +88,9 @@ typedef enum
     /* Application's state machine's initial state. */
     APP_I2C_EEPROM_STATE_INIT,
 
-    /* TODO: Define states used by the application state machine. */
-    APP_I2C_EEPROM_STATE_WRITE_READ,
+    APP_I2C_EEPROM_STATE_WRITE,
+
+    APP_I2C_EEPROM_STATE_READ,
 
     APP_I2C_EEPROM_STATE_ERROR,
 } APP_I2C_EEPROM_STATES;
@@ -113,14 +114,23 @@ typedef struct
     /* The application's current state */
     APP_I2C_EEPROM_STATES state;
 
-    /* TODO: Define any additional data used by the application. */
-    DRV_HANDLE drvI2CHandle;   
+    DRV_HANDLE drvI2CHandle;
 
+    /* Buffer to hold the data to be written to the EEPROM */
     uint8_t txBuffer[2];
 
-    uint8_t rxBuffer[1];
+    /* Points to the next EEPROM memory location where the temperature value will be written */
+    uint32_t currentWriteIndex;
 
-    volatile bool status;
+    /* Buffer to hold the data read from the EEPROM */
+    uint8_t rxBuffer[APP_EEPROM_NUM_TEMP_VALUES_TO_SAVE];
+
+    /* Variable to hold the data read from the console */
+    uint8_t consoleData;
+
+    /* Flag to indicate if user requested to read the temperature values from EEPROM */
+    volatile bool isTemperatureReadRequest;
+
 } APP_I2C_EEPROM_DATA;
 
 

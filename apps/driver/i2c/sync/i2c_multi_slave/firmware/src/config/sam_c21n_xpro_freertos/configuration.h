@@ -71,16 +71,33 @@ extern "C" {
 // Section: System Configuration
 // *****************************************************************************
 // *****************************************************************************
-#define DCACHE_CLEAN_BY_ADDR(data, size)
-#define DCACHE_INVALIDATE_BY_ADDR(data, size)
 
-#define DATA_CACHE_ENABLED                         false
+
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: System Service Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* Console System Service Configuration Options */
+#define SYS_CONSOLE_DEVICE_MAX_INSTANCES   1
+#define SYS_CONSOLE_INSTANCES_NUMBER       1
+#define SYS_CONSOLE_UART_MAX_INSTANCES     1
+
+/* RX queue size has one additional element for the empty spot needed in circular queue */
+#define SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX0    11
+
+/* TX queue size has one additional element for the empty spot needed in circular queue */
+#define SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX0    65
+#define SYS_CONSOLE_BUFFER_DMA_READY
+
+#define SYS_DEBUG_ENABLE
+#define SYS_DEBUG_GLOBAL_ERROR_LEVEL       SYS_ERROR_DEBUG
+#define SYS_DEBUG_PRINT_BUFFER_SIZE        200
+#define SYS_DEBUG_BUFFER_DMA_READY
+#define SYS_DEBUG_USE_CONSOLE
+
+
 
 
 // *****************************************************************************
@@ -91,7 +108,6 @@ extern "C" {
 /* I2C Driver Instance 0 Configuration Options */
 #define DRV_I2C_INDEX_0                       0
 #define DRV_I2C_CLIENTS_NUMBER_IDX0           2
-#define DRV_I2C_INT_SRC_IDX0                  SERCOM1_IRQn
 #define DRV_I2C_CLOCK_SPEED_IDX0              400
 
 /* I2C Driver Common Configuration Options */

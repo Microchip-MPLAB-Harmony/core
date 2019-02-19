@@ -47,6 +47,109 @@
 // *****************************************************************************
 // *****************************************************************************
 
+USART_OBJECT usart1Obj;
+
+void static USART1_ISR_RX_Handler( void )
+{
+    if(usart1Obj.rxBusyStatus == true)
+    {
+        while((US_CSR_RXRDY_Msk == (USART1_REGS->US_CSR& US_CSR_RXRDY_Msk)) && (usart1Obj.rxSize > usart1Obj.rxProcessedSize) )
+        {
+            usart1Obj.rxBuffer[usart1Obj.rxProcessedSize++] = (USART1_REGS->US_RHR& US_RHR_RXCHR_Msk);
+        }
+
+        /* Check if the buffer is done */
+        if(usart1Obj.rxProcessedSize >= usart1Obj.rxSize)
+        {
+
+            usart1Obj.rxBusyStatus = false;
+
+            /* Disable Read, Overrun, Parity and Framing error interrupts */
+            USART1_REGS->US_IDR = (US_IDR_RXRDY_Msk | US_IDR_USART_LIN_FRAME_Msk | US_IDR_USART_LIN_PARE_Msk | US_IDR_OVRE_Msk);
+
+            if(usart1Obj.rxCallback != NULL)
+            {
+                usart1Obj.rxCallback(usart1Obj.rxContext);
+            }
+        }
+    }
+    else
+    {
+        /* Nothing to process */
+        ;
+    }
+
+    return;
+}
+
+void static USART1_ISR_TX_Handler( void )
+{
+    if(usart1Obj.txBusyStatus == true)
+    {
+        while((US_CSR_TXEMPTY_Msk == (USART1_REGS->US_CSR& US_CSR_TXEMPTY_Msk)) && (usart1Obj.txSize > usart1Obj.txProcessedSize) )
+        {
+            USART1_REGS->US_THR|= usart1Obj.txBuffer[usart1Obj.txProcessedSize++];
+        }
+
+        /* Check if the buffer is done */
+        if(usart1Obj.txProcessedSize >= usart1Obj.txSize)
+        {
+            usart1Obj.txBusyStatus = false;
+            USART1_REGS->US_IDR = US_IDR_TXEMPTY_Msk;
+
+            if(usart1Obj.txCallback != NULL)
+            {
+                usart1Obj.txCallback(usart1Obj.txContext);
+            }
+        }
+    }
+    else
+    {
+        /* Nothing to process */
+        ;
+    }
+
+    return;
+}
+
+void USART1_InterruptHandler( void )
+{
+    /* Error status */
+    uint32_t errorStatus = (USART1_REGS->US_CSR & (US_CSR_OVRE_Msk | US_CSR_USART_LIN_FRAME_Msk | US_CSR_USART_LIN_PARE_Msk));
+
+    if(errorStatus != 0)
+    {
+        /* Client must call USARTx_ErrorGet() function to clear the errors */
+
+        /* Disable Read, Overrun, Parity and Framing error interrupts */
+        USART1_REGS->US_IDR = (US_IDR_RXRDY_Msk | US_IDR_USART_LIN_FRAME_Msk | US_IDR_USART_LIN_PARE_Msk | US_IDR_OVRE_Msk);
+
+        usart1Obj.rxBusyStatus = false;
+
+        /* USART errors are normally associated with the receiver, hence calling
+         * receiver callback */
+        if( usart1Obj.rxCallback != NULL )
+        {
+            usart1Obj.rxCallback(usart1Obj.rxContext);
+        }
+    }
+
+    /* Receiver status */
+    if(US_CSR_RXRDY_Msk == (USART1_REGS->US_CSR& US_CSR_RXRDY_Msk))
+    {
+        USART1_ISR_RX_Handler();
+    }
+
+    /* Transmitter status */
+    if(US_CSR_TXEMPTY_Msk == (USART1_REGS->US_CSR& US_CSR_TXEMPTY_Msk))
+    {
+        USART1_ISR_TX_Handler();
+    }
+
+    return;
+}
+
+
 void static USART1_ErrorClear( void )
 {
     uint8_t dummyData = 0u;
@@ -79,6 +182,18 @@ void USART1_Initialize( void )
     /* Configure USART1 Baud Rate */
     USART1_REGS->US_BRGR = US_BRGR_CD(81);
 
+    /* Initialize instance object */
+    usart1Obj.rxBuffer = NULL;
+    usart1Obj.rxSize = 0;
+    usart1Obj.rxProcessedSize = 0;
+    usart1Obj.rxBusyStatus = false;
+    usart1Obj.rxCallback = NULL;
+    usart1Obj.txBuffer = NULL;
+    usart1Obj.txSize = 0;
+    usart1Obj.txProcessedSize = 0;
+    usart1Obj.txBusyStatus = false;
+    usart1Obj.txCallback = NULL;
+
     return;
 }
 
@@ -105,6 +220,12 @@ bool USART1_SerialSetup( USART_SERIAL_SETUP *setup, uint32_t srcClkFreq )
     uint32_t overSampVal = 0;
     uint32_t usartMode;
     bool status = false;
+
+    if((usart1Obj.rxBusyStatus == true) || (usart1Obj.txBusyStatus == true))
+    {
+        /* Transaction is in progress, so return without updating settings */
+        return false;
+    }
 
     if (setup != NULL)
     {
@@ -141,8 +262,6 @@ bool USART1_SerialSetup( USART_SERIAL_SETUP *setup, uint32_t srcClkFreq )
 bool USART1_Read( void *buffer, const size_t size )
 {
     bool status = false;
-    uint32_t errorStatus = 0;
-    size_t processedSize = 0;
     uint8_t * lBuffer = (uint8_t *)buffer;
 
     if(NULL != lBuffer)
@@ -151,28 +270,18 @@ bool USART1_Read( void *buffer, const size_t size )
          * ErrorGet clears errors internally. */
         USART1_ErrorGet();
 
-        while( size > processedSize )
+        /* Check if receive request is in progress */
+        if(usart1Obj.rxBusyStatus == false)
         {
-            /* Error status */
-            errorStatus = (USART1_REGS->US_CSR & (US_CSR_OVRE_Msk | US_CSR_USART_LIN_FRAME_Msk | US_CSR_USART_LIN_PARE_Msk));
-
-            if(errorStatus != 0)
-            {
-                break;
-            }
-
-            if(US_CSR_RXRDY_Msk == (USART1_REGS->US_CSR & US_CSR_RXRDY_Msk))
-            {
-                *lBuffer++ = (USART1_REGS->US_RHR& US_RHR_RXCHR_Msk);
-                processedSize++;
-            }
-        }
-
-        if(size == processedSize)
-        {
+            usart1Obj.rxBuffer = lBuffer;
+            usart1Obj.rxSize = size;
+            usart1Obj.rxProcessedSize = 0;
+            usart1Obj.rxBusyStatus = true;
             status = true;
-        }
 
+            /* Enable Read, Overrun, Parity and Framing error interrupts */
+            USART1_REGS->US_IER = (US_IER_RXRDY_Msk | US_IER_USART_LIN_FRAME_Msk | US_IER_USART_LIN_PARE_Msk | US_IER_OVRE_Msk);
+        }
     }
 
     return status;
@@ -181,55 +290,65 @@ bool USART1_Read( void *buffer, const size_t size )
 bool USART1_Write( void *buffer, const size_t size )
 {
     bool status = false;
-    size_t processedSize = 0;
     uint8_t * lBuffer = (uint8_t *)buffer;
 
     if(NULL != lBuffer)
     {
-        while( size > processedSize )
+        /* Check if transmit request is in progress */
+        if(usart1Obj.txBusyStatus == false)
         {
+            usart1Obj.txBuffer = lBuffer;
+            usart1Obj.txSize = size;
+            usart1Obj.txProcessedSize = 0;
+            usart1Obj.txBusyStatus = true;
+            status = true;
+
+            /* Initiate the transfer by sending first byte */
             if(US_CSR_TXEMPTY_Msk == (USART1_REGS->US_CSR& US_CSR_TXEMPTY_Msk))
             {
-                USART1_REGS->US_THR = (US_THR_TXCHR(*lBuffer++) & US_THR_TXCHR_Msk);
-                processedSize++;
+                USART1_REGS->US_THR = (US_THR_TXCHR(*lBuffer) & US_THR_TXCHR_Msk);
+                usart1Obj.txProcessedSize++;
             }
-        }
 
-        status = true;
+            USART1_REGS->US_IER = US_IER_TXEMPTY_Msk;
+        }
     }
 
     return status;
 }
 
-int USART1_ReadByte(void)
+
+void USART1_WriteCallbackRegister( USART_CALLBACK callback, uintptr_t context )
 {
-    return(USART1_REGS->US_RHR & US_RHR_RXCHR_Msk);
+    usart1Obj.txCallback = callback;
+
+    usart1Obj.txContext = context;
 }
 
-void USART1_WriteByte(int data)
+void USART1_ReadCallbackRegister( USART_CALLBACK callback, uintptr_t context )
 {
-    while ((US_CSR_TXEMPTY_Msk == (USART1_REGS->US_CSR& US_CSR_TXEMPTY_Msk)) == 0);
-    USART1_REGS->US_THR = (US_THR_TXCHR(data) & US_THR_TXCHR_Msk);
+    usart1Obj.rxCallback = callback;
+
+    usart1Obj.rxContext = context;
 }
 
-bool USART1_TransmitterIsReady( void )
+bool USART1_WriteIsBusy( void )
 {
-    if(US_CSR_TXEMPTY_Msk == (USART1_REGS->US_CSR & US_CSR_TXEMPTY_Msk))
-    {
-        return true;
-    }
-
-    return false;
+    return usart1Obj.txBusyStatus;
 }
 
-bool USART1_ReceiverIsReady( void )
+bool USART1_ReadIsBusy( void )
 {
-    if(US_CSR_RXRDY_Msk == (USART1_REGS->US_CSR & US_CSR_RXRDY_Msk))
-    {
-        return true;
-    }
-
-    return false;
+    return usart1Obj.rxBusyStatus;
 }
 
+size_t USART1_WriteCountGet( void )
+{
+    return usart1Obj.txProcessedSize;
+}
+
+size_t USART1_ReadCountGet( void )
+{
+    return usart1Obj.rxProcessedSize;
+}
 
