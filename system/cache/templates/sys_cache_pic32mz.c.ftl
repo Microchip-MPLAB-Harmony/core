@@ -46,10 +46,9 @@
 // *****************************************************************************
 // *****************************************************************************
 #include "device.h"
+#include "device_cache.h"
 #include "system/cache/sys_cache.h"
-<#if core.USE_CACHE_MAINTENANCE?? && core.USE_CACHE_MAINTENANCE == true >
 #include "peripheral/cache/plib_cache.h"
-</#if>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -58,49 +57,82 @@
 // *****************************************************************************
 void SYS_CACHE_EnableCaches (void)
 {
+    if (CACHE_CacheCoherencyGet() == CACHE_DISABLE) // If Data and Instruction Cache is disabled
+    {
+        ICACHE_ENABLE();
+        DCACHE_ENABLE();
+    }
 }
 
 void SYS_CACHE_DisableCaches (void)
 {
+    if (CACHE_CacheCoherencyGet() != CACHE_DISABLE) // If Data and Instruction Cache is enabled
+    {
+        DCACHE_DISABLE();
+        ICACHE_DISABLE();
+    }
 }
 void SYS_CACHE_EnableICache (void)
 {
+    if (CACHE_CacheCoherencyGet() == CACHE_DISABLE) // If Instruction Cache is disabled
+    {
+        ICACHE_ENABLE();
+    }
 }
 
 void SYS_CACHE_DisableICache (void)
 {
+    if (CACHE_CacheCoherencyGet() != CACHE_DISABLE) // If Instruction Cache is enabled
+    {
+        ICACHE_DISABLE();
+    }
 }
 
 void SYS_CACHE_EnableDCache (void)
 {
+    if (CACHE_CacheCoherencyGet() == CACHE_DISABLE) // If Data Cache is disabled
+    {
+        DCACHE_ENABLE();
+    }
 }
 
 void SYS_CACHE_DisableDCache (void)
 {
+    if (CACHE_CacheCoherencyGet() != CACHE_DISABLE) // If Data Cache is enabled
+    {
+        DCACHE_DISABLE();
+    }
 }
 
 void SYS_CACHE_CleanDCache (void)
 {
-
+    if (CACHE_CacheCoherencyGet() != CACHE_DISABLE)
+    {
+        DCACHE_CLEAN();
+    }
 }
 
 void SYS_CACHE_CleanInvalidateDCache (void)
 {
+    if (CACHE_CacheCoherencyGet() != CACHE_DISABLE)
+    {
+        DCACHE_INVALIDATE();
+    }
 }
 
 void SYS_CACHE_InvalidateICache (void)
 {
-    if (CACHE_CacheCoherencyGet() != CACHE_DISABLE) // If Instruction Cache is enabled
+    if (CACHE_CacheCoherencyGet() != CACHE_DISABLE)
     {
-        CACHE_InstructionCacheFlush();
+        ICACHE_INVALIDATE();
     }
 }
 
 void SYS_CACHE_InvalidateDCache (void)
 {
-    if (CACHE_CacheCoherencyGet() != CACHE_DISABLE) // If Data Cache is enabled
+    if (CACHE_CacheCoherencyGet() != CACHE_DISABLE)
     {
-        CACHE_DataCacheFlush();
+        DCACHE_INVALIDATE();
     }
 }
 
@@ -108,7 +140,7 @@ void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 {
     if (CACHE_CacheCoherencyGet() != CACHE_DISABLE) // If Data Cache is enabled
     {
-        CACHE_DataCacheInvalidate((uint32_t)addr, (size_t)size);
+        DCACHE_CLEAN_INVALIDATE_BY_ADDR((uint32_t)addr, (size_t)size);
     }
 }
 
@@ -116,7 +148,7 @@ void SYS_CACHE_CleanDCache_by_Addr (uint32_t *addr, int32_t size)
 {
     if (CACHE_CacheCoherencyGet() != CACHE_DISABLE) // If Data Cache is enabled
     {
-        CACHE_DataCacheClean((uint32_t)addr, (size_t)size);
+        DCACHE_CLEAN_BY_ADDR((uint32_t)addr, (size_t)size);
     }
 }
 
@@ -124,6 +156,6 @@ void SYS_CACHE_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 {
     if (CACHE_CacheCoherencyGet() != CACHE_DISABLE) // If Data Cache is enabled
     {
-        CACHE_CacheClean((uint32_t)addr, (size_t)size);
+        DCACHE_CLEAN_INVALIDATE_BY_ADDR((uint32_t)addr, (size_t)size);
     }
 }
