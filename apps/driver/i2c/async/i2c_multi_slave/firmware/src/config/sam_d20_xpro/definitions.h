@@ -48,7 +48,6 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include <stdio.h>
 #include "peripheral/sercom/usart/plib_sercom3_usart.h"
 #include "peripheral/sercom/i2cm/plib_sercom2_i2c.h"
 #include "peripheral/evsys/plib_evsys.h"
@@ -59,6 +58,9 @@
 #include "driver/i2c/drv_i2c.h"
 #include "system/time/sys_time.h"
 #include "bsp/bsp.h"
+#include "system/console/sys_console.h"
+#include "system/console/src/sys_console_uart_definitions.h"
+#include "system/console/sys_debug.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
 #include "app_i2c_eeprom.h"
@@ -188,6 +190,9 @@ typedef struct
     SYS_MODULE_OBJ drvI2C0;
 
     SYS_MODULE_OBJ  sysTime;
+    SYS_MODULE_OBJ  sysConsole0;
+    SYS_MODULE_OBJ  sysDebug;
+
 
 } SYSTEM_OBJECTS;
 

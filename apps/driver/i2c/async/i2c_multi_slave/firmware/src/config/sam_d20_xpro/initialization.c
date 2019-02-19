@@ -45,6 +45,8 @@
 // *****************************************************************************
 #include "configuration.h"
 #include "definitions.h"
+#include "device.h"
+
 
 
 // ****************************************************************************
@@ -52,6 +54,25 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
+
+#pragma config NVMCTRL_BOOTPROT = SIZE_0BYTES
+#pragma config NVMCTRL_EEPROM_SIZE = SIZE_0BYTES
+#pragma config BOD33USERLEVEL = 0x7 // Enter Hexadecimal value
+#pragma config BOD33_EN = ENABLED
+#pragma config BOD33_ACTION = RESET
+
+#pragma config BOD33_HYST = ENABLED
+#pragma config NVMCTRL_REGION_LOCKS = 0xffff // Enter Hexadecimal value
+
+#pragma config WDT_ENABLE = DISABLED
+#pragma config WDT_ALWAYSON = DISABLED
+#pragma config WDT_PER = CYC16384
+
+#pragma config WDT_WINDOW_0 = SET
+#pragma config WDT_WINDOW_1 = 0x4 // Enter Hexadecimal value
+#pragma config WDT_EWOFFSET = CYC16384
+#pragma config WDT_WEN = DISABLED
+
 
 
 // *****************************************************************************
@@ -86,6 +107,16 @@ const DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
     .callbackRegister = (DRV_I2C_PLIB_CALLBACK_REGISTER)SERCOM2_I2C_CallbackRegister,
 };
 
+
+const DRV_I2C_INTERRUPT_SOURCES drvI2C0InterruptSources =
+{
+    /* Peripheral has single interrupt vector */
+    .isSingleIntSrc                        = true,
+
+    /* Peripheral interrupt line */
+    .intSources.i2cInterrupt             = SERCOM2_IRQn,
+};
+
 /* I2C Driver Initialization Data */
 const DRV_I2C_INIT drvI2C0InitData =
 {
@@ -98,14 +129,14 @@ const DRV_I2C_INIT drvI2C0InitData =
     /* I2C Client Objects Pool */
     .clientObjPool = (uintptr_t)&drvI2C0ClientObjPool[0],
 
-    /* I2C IRQ */
-    .interruptI2C = DRV_I2C_INT_SRC_IDX0,
-
     /* I2C TWI Queue Size */
-    .queueSize = DRV_I2C_QUEUE_SIZE_IDX0,
+    .transferObjPoolSize = DRV_I2C_QUEUE_SIZE_IDX0,
 
     /* I2C Transfer Objects */
-    .transferObj = (uintptr_t)&drvI2C0TransferObj[0],
+    .transferObjPool = (uintptr_t)&drvI2C0TransferObj[0],
+
+    /* I2C interrupt sources */
+    .interruptSources = &drvI2C0InterruptSources,
 
     /* I2C Clock Speed */
     .clockSpeed = DRV_I2C_CLOCK_SPEED_IDX0,
@@ -122,6 +153,7 @@ const DRV_I2C_INIT drvI2C0InitData =
 // *****************************************************************************
 /* Structure to hold the object handles for the modules in the system. */
 SYSTEM_OBJECTS sysObj;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Library/Stack Initialization Data
@@ -153,6 +185,60 @@ const SYS_TIME_INIT sysTimeInitData =
 };
 
 // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="SYS_CONSOLE Instance 0 Initialization Data">
+
+static QElement sysConsole0UARTRdQueueElements[SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX0];
+static QElement sysConsole0UARTWrQueueElements[SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX0];
+
+/* Declared in console device implementation (sys_console_uart.c) */
+extern const SYS_CONSOLE_DEV_DESC sysConsoleUARTDevDesc;
+
+const SYS_CONSOLE_UART_PLIB_INTERFACE sysConsole0UARTPlibAPI =
+{
+    .read = (SYS_CONSOLE_UART_PLIB_READ)SERCOM3_USART_Read,
+    .write = (SYS_CONSOLE_UART_PLIB_WRITE)SERCOM3_USART_Write,
+    .readCallbackRegister = (SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_READ)SERCOM3_USART_ReadCallbackRegister,
+    .writeCallbackRegister = (SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_WRITE)SERCOM3_USART_WriteCallbackRegister,
+    .errorGet = (SYS_CONSOLE_UART_PLIB_ERROR_GET)SERCOM3_USART_ErrorGet,
+};
+
+
+const SYS_CONSOLE_UART_INTERRUPT_SOURCES sysConsole0UARTInterruptSources =
+{
+    /* Peripheral has single interrupt vector */
+    .isSingleIntSrc                        = true,
+
+    /* Peripheral interrupt line */
+    .intSources.usartInterrupt             = SERCOM3_IRQn,
+};
+
+const SYS_CONSOLE_UART_INIT_DATA sysConsole0UARTInitData =
+{
+    .uartPLIB = &sysConsole0UARTPlibAPI,
+    .readQueueElementsArr = sysConsole0UARTRdQueueElements,
+    .writeQueueElementsArr = sysConsole0UARTWrQueueElements,
+    .readQueueDepth = SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX0,
+    .writeQueueDepth = SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX0,
+    .interruptSources = &sysConsole0UARTInterruptSources,
+};
+
+const SYS_CONSOLE_INIT sysConsole0Init =
+{
+    .deviceInitData = (const void*)&sysConsole0UARTInitData,
+    .consDevDesc = &sysConsoleUARTDevDesc,
+    .deviceIndex = 0,
+};
+
+const SYS_DEBUG_INIT debugInit =
+{
+    .moduleInit = {0},
+    .errorLevel = SYS_DEBUG_GLOBAL_ERROR_LEVEL,
+    .consoleIndex = 0,
+};
+
+// </editor-fold>
+
+
 
 
 /*******************************************************************************
@@ -167,6 +253,7 @@ const SYS_TIME_INIT sysTimeInitData =
 
 void SYS_Initialize ( void* data )
 {
+  
     PORT_Initialize();
 
     CLOCK_Initialize();
@@ -179,7 +266,6 @@ void SYS_Initialize ( void* data )
 
     EVSYS_Initialize();
 
-    NVIC_Initialize();
     TC0_TimerInitialize();
 
 	BSP_Initialize();
@@ -188,11 +274,16 @@ void SYS_Initialize ( void* data )
     sysObj.drvI2C0 = DRV_I2C_Initialize(DRV_I2C_INDEX_0, (SYS_MODULE_INIT *)&drvI2C0InitData);
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
+    sysObj.sysConsole0 = SYS_CONSOLE_Initialize(SYS_CONSOLE_INDEX_0, (SYS_MODULE_INIT *)&sysConsole0Init);
+    sysObj.sysDebug = SYS_DEBUG_Initialize(SYS_DEBUG_INDEX_0, (SYS_MODULE_INIT*)&debugInit);
+
 
 
     APP_I2C_EEPROM_Initialize();
     APP_I2C_TEMP_SENSOR_Initialize();
 
+
+    NVIC_Initialize();
 
 }
 
@@ -200,4 +291,3 @@ void SYS_Initialize ( void* data )
 /*******************************************************************************
  End of File
 */
-

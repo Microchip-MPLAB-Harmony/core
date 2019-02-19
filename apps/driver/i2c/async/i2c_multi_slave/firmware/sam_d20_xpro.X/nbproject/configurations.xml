@@ -4,9 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="f2" displayName="arm" projectFiles="true">
-        <itemPath>../src/arm/toolchain_specifics.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_d20_xpro" projectFiles="true">
           <logicalFolder name="f4" displayName="bsp" projectFiles="true">
@@ -49,29 +46,43 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f3" displayName="system" projectFiles="true">
-            <logicalFolder name="f2" displayName="int" projectFiles="true">
+            <logicalFolder name="f4" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/sam_d20_xpro/system/cache/sys_cache.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="console" projectFiles="true">
+              <itemPath>../src/config/sam_d20_xpro/system/console/sys_console.h</itemPath>
+              <itemPath>../src/config/sam_d20_xpro/system/console/src/sys_console_local.h</itemPath>
+              <itemPath>../src/config/sam_d20_xpro/system/console/src/sys_console_uart.h</itemPath>
+              <itemPath>../src/config/sam_d20_xpro/system/console/src/sys_console_uart_definitions.h</itemPath>
+              <itemPath>../src/config/sam_d20_xpro/system/console/sys_debug.h</itemPath>
+              <itemPath>../src/config/sam_d20_xpro/system/console/src/sys_debug_local.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_d20_xpro/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/sam_d20_xpro/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_d20_xpro/system/time/sys_time.h</itemPath>
               <itemPath>../src/config/sam_d20_xpro/system/time/sys_time_definitions.h</itemPath>
+              <itemPath>../src/config/sam_d20_xpro/system/time/src/sys_time_local.h</itemPath>
             </logicalFolder>
             <itemPath>../src/config/sam_d20_xpro/system/system.h</itemPath>
             <itemPath>../src/config/sam_d20_xpro/system/system_common.h</itemPath>
             <itemPath>../src/config/sam_d20_xpro/system/system_module.h</itemPath>
           </logicalFolder>
+          <itemPath>../src/config/sam_d20_xpro/device_cache.h</itemPath>
+          <itemPath>../src/config/sam_d20_xpro/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_d20_xpro/definitions.h</itemPath>
           <itemPath>../src/config/sam_d20_xpro/user.h</itemPath>
           <itemPath>../src/config/sam_d20_xpro/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f4" displayName="osal" projectFiles="true">
+      <logicalFolder name="f3" displayName="osal" projectFiles="true">
         <itemPath>../src/config/sam_d20_xpro/osal/osal.h</itemPath>
         <itemPath>../src/config/sam_d20_xpro/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/sam_d20_xpro/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="packs" projectFiles="true">
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAMD20J18_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAMD20J18_DFP/component/ac.h</itemPath>
@@ -103,6 +114,7 @@
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm0plus.h</itemPath>
@@ -170,18 +182,25 @@
             <itemPath>../src/config/sam_d20_xpro/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
-            <logicalFolder name="f2" displayName="int" projectFiles="true">
+            <logicalFolder name="f4" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/sam_d20_xpro/system/cache/sys_cache.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="console" projectFiles="true">
+              <itemPath>../src/config/sam_d20_xpro/system/console/src/sys_console.c</itemPath>
+              <itemPath>../src/config/sam_d20_xpro/system/console/src/sys_console_uart.c</itemPath>
+              <itemPath>../src/config/sam_d20_xpro/system/console/src/sys_debug.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_d20_xpro/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_d20_xpro/system/time/src/sys_time.c</itemPath>
-              <itemPath>../src/config/sam_d20_xpro/system/time/src/sys_time_local.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <itemPath>../src/config/sam_d20_xpro/initialization.c</itemPath>
           <itemPath>../src/config/sam_d20_xpro/interrupts.c</itemPath>
           <itemPath>../src/config/sam_d20_xpro/exceptions.c</itemPath>
-          <itemPath>../src/config/sam_d20_xpro/startup.c</itemPath>
+          <itemPath>../src/config/sam_d20_xpro/startup_xc32.c</itemPath>
           <itemPath>../src/config/sam_d20_xpro/libc_syscalls.c</itemPath>
           <itemPath>../src/config/sam_d20_xpro/tasks.c</itemPath>
         </logicalFolder>
@@ -207,7 +226,7 @@
         <targetDevice>ATSAMD20J18</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>EdbgTool</platformTool>
+        <platformTool></platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.15</languageToolchainVersion>
         <platform>3</platform>

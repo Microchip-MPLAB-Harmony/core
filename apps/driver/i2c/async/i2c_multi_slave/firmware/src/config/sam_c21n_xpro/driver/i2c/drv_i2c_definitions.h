@@ -5,14 +5,14 @@
     Microchip Technology Inc.
 
   File Name:
-    drv_twi_definitions.h
+    drv_i2c_definitions.h
 
   Summary:
     I2C Driver Definitions Header File
 
   Description:
     This file provides implementation-specific definitions for the I2C
-	driver's system interface.
+    driver's system interface.
 *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -89,8 +89,8 @@ typedef enum
 {
     /* Busy*/
     DRV_I2C_ERROR_NONE,
-	
-	/* Transfer Successful */
+
+    /* Transfer Successful */
     DRV_I2C_ERROR_NACK,
 
 } DRV_I2C_ERROR;
@@ -107,6 +107,26 @@ typedef bool (* DRV_I2C_PLIB_WRITE_READ)( uint16_t, uint8_t *, uint32_t, uint8_t
 typedef DRV_I2C_ERROR (* DRV_I2C_PLIB_ERROR_GET)( void );
 
 typedef void (* DRV_I2C_PLIB_CALLBACK_REGISTER)(DRV_I2C_PLIB_CALLBACK, uintptr_t);
+
+typedef struct
+{
+    int32_t         i2cInt0;
+    int32_t         i2cInt1;
+    int32_t         i2cInt2;
+    int32_t         i2cInt3;
+}DRV_I2C_MULTI_INT_SRC;
+
+typedef union
+{
+    DRV_I2C_MULTI_INT_SRC           multi;
+    int32_t                         i2cInterrupt;
+}DRV_I2C_INT_SRC;
+
+typedef struct
+{
+    bool                            isSingleIntSrc;
+    DRV_I2C_INT_SRC                 intSources;
+}DRV_I2C_INTERRUPT_SOURCES;
 
 // *****************************************************************************
 /* I2C Driver PLib Interface Data
@@ -127,19 +147,19 @@ typedef void (* DRV_I2C_PLIB_CALLBACK_REGISTER)(DRV_I2C_PLIB_CALLBACK, uintptr_t
 typedef struct
 {
     /* I2C PLib read API */
-    DRV_I2C_PLIB_READ read;
+    DRV_I2C_PLIB_READ                           read;
 
     /* I2C PLib write API */
-    DRV_I2C_PLIB_WRITE write;
+    DRV_I2C_PLIB_WRITE                          write;
 
     /* I2C PLib writeRead API */
-    DRV_I2C_PLIB_WRITE_READ writeRead;
+    DRV_I2C_PLIB_WRITE_READ                     writeRead;
 
     /* I2C PLib transfer */
-    DRV_I2C_PLIB_ERROR_GET errorGet;
+    DRV_I2C_PLIB_ERROR_GET                      errorGet;
 
     /* I2C PLib callback register API */
-    DRV_I2C_PLIB_CALLBACK_REGISTER callbackRegister;
+    DRV_I2C_PLIB_CALLBACK_REGISTER              callbackRegister;
 
 } DRV_I2C_PLIB_INTERFACE;
 
@@ -163,25 +183,25 @@ typedef struct
 {
     /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
-    const DRV_I2C_PLIB_INTERFACE* i2cPlib;
+    const DRV_I2C_PLIB_INTERFACE*           i2cPlib;
 
     /* Memory Pool for Client Objects */
-    uintptr_t clientObjPool;
+    uintptr_t                               clientObjPool;
 
     /* Number of clients */
-    uint32_t numClients;
+    uint32_t                                numClients;
 
-    /* Interrupt source ID for the I2C interrupt. */
-    INT_SOURCE interruptI2C;
+    /* Size of buffer objects queue */
+    uint32_t                                transferObjPoolSize;
 
-    /* Driver Queue Size */
-    size_t queueSize;
+    /* Pointer to the buffer pool */
+    uintptr_t                               transferObjPool;
 
-    /* Memory Pool for Transfer Objects */
-    uintptr_t transferObj;
+
+    const DRV_I2C_INTERRUPT_SOURCES*        interruptSources;
 
     /* peripheral clock speed */
-    uint32_t clockSpeed;
+    uint32_t                                clockSpeed;
 
 } DRV_I2C_INIT;
 
@@ -192,7 +212,3 @@ typedef struct
 //DOM-IGNORE-END
 
 #endif // #ifndef DRV_I2C_DEFINITIONS_H
-
-/*******************************************************************************
- End of File
-*/

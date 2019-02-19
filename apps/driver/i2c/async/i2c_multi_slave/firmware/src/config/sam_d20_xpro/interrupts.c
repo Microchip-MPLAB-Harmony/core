@@ -67,7 +67,6 @@ void __attribute__((optimize("-O1"),section(".text.Dummy_Handler"),long_call))Du
     {
     }
 }
-
 /* Device vectors list dummy definition*/
 void Reset_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void NonMaskableInt_Handler     ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -85,7 +84,7 @@ void EVSYS_Handler              ( void ) __attribute__((weak, alias("Dummy_Handl
 void SERCOM0_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM1_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM2_I2C_InterruptHandler ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void SERCOM3_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void SERCOM3_USART_InterruptHandler ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM4_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM5_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void TC0_TimerInterruptHandler  ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -100,7 +99,7 @@ void ADC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handl
 void AC_Handler                 ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void DAC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void PTC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
-    
+
 
 
 /* Mutiple handlers for vector */
@@ -110,8 +109,8 @@ void PTC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handl
 __attribute__ ((section(".vectors")))
 const DeviceVectors exception_table=
 {
-  /* Configure Initial Stack Pointer, using linker-generated symbols */
-  .pvStack = (void*) (&_stack),
+    /* Configure Initial Stack Pointer, using linker-generated symbols */
+    .pvStack = (void*) (&_stack),
 
     .pfnReset_Handler              = ( void * ) Reset_Handler,
     .pfnNonMaskableInt_Handler     = ( void * ) NonMaskableInt_Handler,
@@ -129,7 +128,7 @@ const DeviceVectors exception_table=
     .pfnSERCOM0_Handler            = ( void * ) SERCOM0_Handler,
     .pfnSERCOM1_Handler            = ( void * ) SERCOM1_Handler,
     .pfnSERCOM2_Handler            = ( void * ) SERCOM2_I2C_InterruptHandler,
-    .pfnSERCOM3_Handler            = ( void * ) SERCOM3_Handler,
+    .pfnSERCOM3_Handler            = ( void * ) SERCOM3_USART_InterruptHandler,
     .pfnSERCOM4_Handler            = ( void * ) SERCOM4_Handler,
     .pfnSERCOM5_Handler            = ( void * ) SERCOM5_Handler,
     .pfnTC0_Handler                = ( void * ) TC0_TimerInterruptHandler,
@@ -147,7 +146,6 @@ const DeviceVectors exception_table=
 
 
 };
-
 
 /*******************************************************************************
  End of File

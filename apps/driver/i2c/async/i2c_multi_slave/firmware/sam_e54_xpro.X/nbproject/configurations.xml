@@ -4,9 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="f2" displayName="arm" projectFiles="true">
-        <itemPath>../src/arm/toolchain_specifics.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_e54_xpro" projectFiles="true">
           <logicalFolder name="f4" displayName="bsp" projectFiles="true">
@@ -49,10 +46,15 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f3" displayName="system" projectFiles="true">
-            <logicalFolder name="f3" displayName="cache" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro/system/cache/sys_cache.h</itemPath>
+            <logicalFolder name="f2" displayName="console" projectFiles="true">
+              <itemPath>../src/config/sam_e54_xpro/system/console/sys_console.h</itemPath>
+              <itemPath>../src/config/sam_e54_xpro/system/console/src/sys_console_local.h</itemPath>
+              <itemPath>../src/config/sam_e54_xpro/system/console/src/sys_console_uart.h</itemPath>
+              <itemPath>../src/config/sam_e54_xpro/system/console/src/sys_console_uart_definitions.h</itemPath>
+              <itemPath>../src/config/sam_e54_xpro/system/console/sys_debug.h</itemPath>
+              <itemPath>../src/config/sam_e54_xpro/system/console/src/sys_debug_local.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="int" projectFiles="true">
+            <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_e54_xpro/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/sam_e54_xpro/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
@@ -66,17 +68,18 @@
             <itemPath>../src/config/sam_e54_xpro/system/system_module.h</itemPath>
           </logicalFolder>
           <itemPath>../src/config/sam_e54_xpro/device_cache.h</itemPath>
+          <itemPath>../src/config/sam_e54_xpro/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro/definitions.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro/user.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f4" displayName="osal" projectFiles="true">
+      <logicalFolder name="f3" displayName="osal" projectFiles="true">
         <itemPath>../src/config/sam_e54_xpro/osal/osal.h</itemPath>
         <itemPath>../src/config/sam_e54_xpro/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/sam_e54_xpro/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="packs" projectFiles="true">
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAME54P20A_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/ac.h</itemPath>
@@ -198,10 +201,12 @@
             <itemPath>../src/config/sam_e54_xpro/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
-            <logicalFolder name="f3" displayName="cache" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro/system/cache/sys_cache.c</itemPath>
+            <logicalFolder name="f2" displayName="console" projectFiles="true">
+              <itemPath>../src/config/sam_e54_xpro/system/console/src/sys_console.c</itemPath>
+              <itemPath>../src/config/sam_e54_xpro/system/console/src/sys_console_uart.c</itemPath>
+              <itemPath>../src/config/sam_e54_xpro/system/console/src/sys_debug.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="int" projectFiles="true">
+            <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_e54_xpro/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="time" projectFiles="true">

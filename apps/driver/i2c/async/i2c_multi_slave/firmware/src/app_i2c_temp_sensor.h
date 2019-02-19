@@ -81,7 +81,7 @@ extern "C" {
     Temperature Sensor Application states enumeration
 
   Description:
-    This enumeration defines the valid temperature sensor application states.  
+    This enumeration defines the valid temperature sensor application states.
     These states determine the behavior of the application at various times.
 */
 
@@ -89,15 +89,18 @@ typedef enum
 {
     /* Initial state. */
     APP_TEMP_STATE_INIT,
-            
+
     /* Read Temperature state */
     APP_TEMP_STATE_READ_TEMPERATURE,
-            
+
     /* Wait for read transfer to complete state */
     APP_TEMP_STATE_WAIT_TRANSFER_COMPLETE,
-    
+
     /* Error state */
     APP_TEMP_STATE_ERROR,
+
+    /* Idle state */
+    APP_TEMP_STATE_IDLE,
 
 } APP_TEMP_STATES;
 
@@ -118,22 +121,22 @@ typedef struct
 {
     /* Application's current state */
     APP_TEMP_STATES  state;
-     
+
     /* I2C driver client handle */
     DRV_HANDLE i2cHandle;
-     
+
     /* I2C driver transfer handle */
     DRV_I2C_TRANSFER_HANDLE transferHandle;
-     
+
     /* buffer to hold temperature queried from sensor */
     uint8_t rxBuffer[2];
-     
+
     /* flag to check whether read transfer is done */
     volatile bool isTransferDone;
-     
+
     /* temperature value in degree celcius */
     uint8_t temperature;
-     
+
     /* flag to indicate timer expiry*/
     volatile bool tmrExpired;
 

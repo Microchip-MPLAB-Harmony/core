@@ -73,7 +73,7 @@ extern "C" {
 // Section: Type Definitions
 // *****************************************************************************
 // *****************************************************************************
-
+#define APP_EEPROM_NUM_TEMP_VALUES_TO_SAVE          5
 // *****************************************************************************
 /* Application states
 
@@ -92,21 +92,26 @@ typedef enum
 
     /* Write temperature data to EERPOM state */
     APP_EEPROM_STATE_WRITE,
-    
+
     /* Wait for EEPROM write transfer to complete state */
-    APP_EEPROM_STATE_WAIT_TRANSFER_COMPLETE,                
-    
+    APP_EEPROM_STATE_WAIT_TRANSFER_COMPLETE,
+
     /* Wait for EEPROM write cycle to complete state */
     APP_EEPROM_STATE_WAIT_WRITE_COMPLETE,
+
+    /* Check if user requested to read the temperature data from EEPROM */
+    APP_EEPROM_STATE_CHECK_READ_REQ,
 
     /* Read temperature data from EEPROM state */
     APP_EEPROM_STATE_READ,
 
     /* Wait for temperature data read to complete state */
     APP_EEPROM_STATE_WAIT_READ_COMPLETE,
-    
+
     /* Error state */
     APP_EEPROM_STATE_ERROR,
+
+    APP_EEPROM_STATE_IDLE,
 
 } APP_EEPROM_STATES;
 
@@ -128,31 +133,38 @@ typedef struct
 {
     /* Application's current state */
     APP_EEPROM_STATES  state;
-    
+
     /* I2C driver client handle */
     DRV_HANDLE i2cHandle;
-    
+
     /* I2C driver transfer handle */
     DRV_I2C_TRANSFER_HANDLE transferHandle;
-    
-    /* buffer to hold temperature data to be written to EEPROM */
-    uint8_t txBuffer[2];
-    
-    /* buffer to hold temperature data read from EEPROM */
-    uint8_t rxBuffer;
-    
-    /* buffer to temporarily hold temperature data */
-    uint8_t temperature;
-    
-    /* variable to hold transfer status of every transfer */
-    volatile DRV_I2C_TRANSFER_EVENT transferStatus;
-    
-    /* flag to indicate whether temperature is
-     * read from the temperature sensor */
-    volatile bool isTemperatureReady;                    
 
-    uint8_t dummyData;   
-    
+    /* Variable to hold the character entered on the console */
+    uint8_t consoleData;
+
+    /* Buffer to hold temperature data to be written to EEPROM */
+    uint8_t txBuffer[2];
+
+    /* Buffer to hold temperature data read from EEPROM */
+    uint8_t rxBuffer[APP_EEPROM_NUM_TEMP_VALUES_TO_SAVE];
+
+    /* Buffer to temporarily hold temperature data */
+    uint8_t temperature;
+
+    /* Variable to hold transfer status of every transfer */
+    volatile DRV_I2C_TRANSFER_EVENT transferStatus;
+
+    /* Flag to indicate whether temperature is read from the temperature sensor */
+    volatile bool isTemperatureReady;
+
+    /* Flag to indicate if user requested to read the temperature values from EEPROM */
+    volatile bool isTemperatureReadRequest;
+
+    uint32_t currentWriteIndex;
+
+    uint8_t dummyData;
+
 } APP_EEPROM_DATA;
 
 

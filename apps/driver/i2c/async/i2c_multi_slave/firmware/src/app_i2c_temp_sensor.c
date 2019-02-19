@@ -54,6 +54,7 @@
 
 #include "app_i2c_temp_sensor.h"
 #include "system/time/sys_time.h"
+#include "system/console/sys_debug.h"
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -112,15 +113,15 @@ APP_TEMP_DATA appTempData;
 // *****************************************************************************
 // *****************************************************************************
 
-static void Timer1_Callback ( uintptr_t context )
+static void APP_I2C_TEMP_SENSOR_TimerCallback ( uintptr_t context )
 {
     appTempData.tmrExpired = true;
 }
 
-static void appTempSensorEventHandler( 
-    DRV_I2C_TRANSFER_EVENT event, 
-    DRV_I2C_TRANSFER_HANDLE transferHandle, 
-    uintptr_t context 
+static void APP_I2C_TEMP_SENSOR_EventHandler(
+    DRV_I2C_TRANSFER_EVENT event,
+    DRV_I2C_TRANSFER_HANDLE transferHandle,
+    uintptr_t context
 )
 {
     switch(event)
@@ -128,7 +129,7 @@ static void appTempSensorEventHandler(
         case DRV_I2C_TRANSFER_EVENT_COMPLETE:
             appTempData.isTransferDone = true;
             break;
-        case DRV_I2C_TRANSFER_EVENT_ERROR:            
+        case DRV_I2C_TRANSFER_EVENT_ERROR:
         default:
             break;
     }
@@ -160,21 +161,21 @@ void APP_I2C_TEMP_SENSOR_Initialize ( void )
 void APP_I2C_TEMP_SENSOR_Tasks ( void )
 {
     int16_t temp;
-    
+
     /* Check the application's current state. */
     switch ( appTempData.state )
     {
         case APP_TEMP_STATE_INIT:
-        
+
             /* Open I2C driver client */
             appTempData.i2cHandle = DRV_I2C_Open( DRV_I2C_INDEX_0, DRV_IO_INTENT_READWRITE );
             if (appTempData.i2cHandle != DRV_HANDLE_INVALID)
             {
                 /* Register the I2C Driver client event callback */
-                DRV_I2C_TransferEventHandlerSet(appTempData.i2cHandle, appTempSensorEventHandler, 0);
-                
+                DRV_I2C_TransferEventHandlerSet(appTempData.i2cHandle, APP_I2C_TEMP_SENSOR_EventHandler, 0);
+
                 /* Register the Periodic Timer callback */
-                SYS_TIME_CallbackRegisterMS(Timer1_Callback, 0, APP_TEMP_SAMPLING_TIME, SYS_TIME_PERIODIC);
+                SYS_TIME_CallbackRegisterMS(APP_I2C_TEMP_SENSOR_TimerCallback, 0, APP_TEMP_SAMPLING_TIME, SYS_TIME_PERIODIC);
                 appTempData.state = APP_TEMP_STATE_READ_TEMPERATURE;
             }
             else
@@ -182,53 +183,64 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
                 appTempData.state = APP_TEMP_STATE_ERROR;
             }
             break;
-        
+
         case APP_TEMP_STATE_READ_TEMPERATURE:
-                    
+
             if (appTempData.tmrExpired == true)
             {
-                appTempData.tmrExpired = false;                                
-                
+                appTempData.tmrExpired = false;
+
+                SYS_PRINT("Reading temperature from sensor...");
+
                 /* Initiate a read transfer to read temperature value from temperature sensor */
-                appTempData.registerAddr = APP_TEMP_TEMPERATURE_REG_ADDR;                                                                                
-                DRV_I2C_WriteReadTransferAdd(appTempData.i2cHandle, APP_TEMP_SLAVE_ADDR, (void*)&appTempData.registerAddr, 1, (void *)appTempData.rxBuffer, 2, &appTempData.transferHandle );              
-                                                    
+                appTempData.registerAddr = APP_TEMP_TEMPERATURE_REG_ADDR;
+
+                DRV_I2C_WriteReadTransferAdd(appTempData.i2cHandle, APP_TEMP_SLAVE_ADDR, (void*)&appTempData.registerAddr, 1, (void *)appTempData.rxBuffer, 2, &appTempData.transferHandle );
+
                 if (appTempData.transferHandle != DRV_I2C_TRANSFER_HANDLE_INVALID)
                 {
                     appTempData.state = APP_TEMP_STATE_WAIT_TRANSFER_COMPLETE;
-                }   
+                }
                 else
                 {
                     appTempData.state = APP_TEMP_STATE_ERROR;
                 }
             }
             break;
-                
+
         case APP_TEMP_STATE_WAIT_TRANSFER_COMPLETE:
-        
-            if (appTempData.isTransferDone == true)            
-            {                                
+
+            if (appTempData.isTransferDone == true)
+            {
                 appTempData.isTransferDone = false;
-                
+
                 // Convert the temperature value read from sensor to readable format (Degree Celsius)
                 // For demonstration purpose, temperature value is assumed to be positive.
                 // The maximum positive temperature measured by sensor is +125 C
                 temp = (appTempData.rxBuffer[0] << 8) | appTempData.rxBuffer[1];
                 temp = (temp >> 7) * 0.5;
-                appTempData.temperature = (uint8_t)temp;    
-                
+                appTempData.temperature = (uint8_t)temp;
+
+                SYS_PRINT("%d C\r\n", appTempData.temperature);
+
                 /* Notify EEPROM application that temperature data is available */
                 APP_EEPROM_Notify(appTempData.temperature);
-                               
+
                 appTempData.state = APP_TEMP_STATE_READ_TEMPERATURE;
-            }            
+            }
             break;
-                
-        case APP_TEMP_STATE_ERROR:        
-            break;        
-        
+
+        case APP_TEMP_STATE_ERROR:
+            SYS_PRINT("Temperature Sensor Task Error \r\n");
+            appTempData.state = APP_TEMP_STATE_IDLE;
+            break;
+
+        case APP_TEMP_STATE_IDLE:
+
+            break;
+
         default:
-            break;       
+            break;
     }
 }
 

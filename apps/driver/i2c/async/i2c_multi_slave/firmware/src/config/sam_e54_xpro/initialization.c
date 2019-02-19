@@ -133,12 +133,14 @@ const DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
 
 const DRV_I2C_INTERRUPT_SOURCES drvI2C0InterruptSources =
 {
-    /* Peripheral has more than one interrupt vectors */
+    /* Peripheral has more than one interrupt vector */
     .isSingleIntSrc                        = false,
+
     /* Peripheral interrupt lines */
-    .intSources.multi.i2cTxInt             = SERCOM7_0_IRQn,
-    .intSources.multi.i2cRxInt             = SERCOM7_1_IRQn,
-    .intSources.multi.i2cErrorInt          = SERCOM7_OTHER_IRQn,
+    .intSources.multi.i2cInt0          = SERCOM7_0_IRQn,
+    .intSources.multi.i2cInt1          = SERCOM7_1_IRQn,
+    .intSources.multi.i2cInt2          = SERCOM7_2_IRQn,
+    .intSources.multi.i2cInt3          = SERCOM7_OTHER_IRQn,
 };
 
 /* I2C Driver Initialization Data */
@@ -154,10 +156,10 @@ const DRV_I2C_INIT drvI2C0InitData =
     .clientObjPool = (uintptr_t)&drvI2C0ClientObjPool[0],
 
     /* I2C TWI Queue Size */
-    .queueSize = DRV_I2C_QUEUE_SIZE_IDX0,
+    .transferObjPoolSize = DRV_I2C_QUEUE_SIZE_IDX0,
 
     /* I2C Transfer Objects */
-    .transferObj = (uintptr_t)&drvI2C0TransferObj[0],
+    .transferObjPool = (uintptr_t)&drvI2C0TransferObj[0],
 
     /* I2C interrupt sources */
     .interruptSources = &drvI2C0InterruptSources,
@@ -209,6 +211,62 @@ const SYS_TIME_INIT sysTimeInitData =
 };
 
 // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="SYS_CONSOLE Instance 0 Initialization Data">
+
+static QElement sysConsole0UARTRdQueueElements[SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX0];
+static QElement sysConsole0UARTWrQueueElements[SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX0];
+
+/* Declared in console device implementation (sys_console_uart.c) */
+extern const SYS_CONSOLE_DEV_DESC sysConsoleUARTDevDesc;
+
+const SYS_CONSOLE_UART_PLIB_INTERFACE sysConsole0UARTPlibAPI =
+{
+    .read = (SYS_CONSOLE_UART_PLIB_READ)SERCOM2_USART_Read,
+    .write = (SYS_CONSOLE_UART_PLIB_WRITE)SERCOM2_USART_Write,
+    .readCallbackRegister = (SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_READ)SERCOM2_USART_ReadCallbackRegister,
+    .writeCallbackRegister = (SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_WRITE)SERCOM2_USART_WriteCallbackRegister,
+    .errorGet = (SYS_CONSOLE_UART_PLIB_ERROR_GET)SERCOM2_USART_ErrorGet,
+};
+
+
+const SYS_CONSOLE_UART_INTERRUPT_SOURCES sysConsole0UARTInterruptSources =
+{
+    /* Peripheral has more than one interrupt vector */
+    .isSingleIntSrc                        = false,
+
+    /* Peripheral interrupt lines */
+    .intSources.multi.usartTxCompleteInt   = SERCOM2_1_IRQn,
+    .intSources.multi.usartTxReadyInt      = SERCOM2_0_IRQn,
+    .intSources.multi.usartRxCompleteInt   = SERCOM2_2_IRQn,
+    .intSources.multi.usartErrorInt        = SERCOM2_OTHER_IRQn,
+};
+
+const SYS_CONSOLE_UART_INIT_DATA sysConsole0UARTInitData =
+{
+    .uartPLIB = &sysConsole0UARTPlibAPI,
+    .readQueueElementsArr = sysConsole0UARTRdQueueElements,
+    .writeQueueElementsArr = sysConsole0UARTWrQueueElements,
+    .readQueueDepth = SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX0,
+    .writeQueueDepth = SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX0,
+    .interruptSources = &sysConsole0UARTInterruptSources,
+};
+
+const SYS_CONSOLE_INIT sysConsole0Init =
+{
+    .deviceInitData = (const void*)&sysConsole0UARTInitData,
+    .consDevDesc = &sysConsoleUARTDevDesc,
+    .deviceIndex = 0,
+};
+
+const SYS_DEBUG_INIT debugInit =
+{
+    .moduleInit = {0},
+    .errorLevel = SYS_DEBUG_GLOBAL_ERROR_LEVEL,
+    .consoleIndex = 0,
+};
+
+// </editor-fold>
+
 
 
 
@@ -241,19 +299,21 @@ void SYS_Initialize ( void* data )
 
 	BSP_Initialize();
 
-    NVIC_Initialize();
-
     /* Initialize I2C0 Driver Instance */
     sysObj.drvI2C0 = DRV_I2C_Initialize(DRV_I2C_INDEX_0, (SYS_MODULE_INIT *)&drvI2C0InitData);
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
+    sysObj.sysConsole0 = SYS_CONSOLE_Initialize(SYS_CONSOLE_INDEX_0, (SYS_MODULE_INIT *)&sysConsole0Init);
+    sysObj.sysDebug = SYS_DEBUG_Initialize(SYS_DEBUG_INDEX_0, (SYS_MODULE_INIT*)&debugInit);
+
 
 
     APP_I2C_EEPROM_Initialize();
     APP_I2C_TEMP_SENSOR_Initialize();
 
 
-  
+    NVIC_Initialize();
+
 }
 
 
