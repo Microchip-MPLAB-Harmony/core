@@ -215,10 +215,11 @@ static void _DRV_I2C_ResourceUnlock(DRV_I2C_OBJ * dObj)
 
 static DRV_I2C_TRANSFER_OBJ* _DRV_I2C_FreeTransferObjGet(DRV_I2C_CLIENT_OBJ* clientObj)
 {
+    uint32_t index;
     DRV_I2C_OBJ* dObj = (DRV_I2C_OBJ* )&gDrvI2CObj[clientObj->drvIndex];
     DRV_I2C_TRANSFER_OBJ* pTransferObj = dObj->transferObjPool;
 
-    for (uint32_t index = 0; index < dObj->transferObjPoolSize; index++)
+    for (index = 0; index < dObj->transferObjPoolSize; index++)
     {
         if (pTransferObj[index].inUse == false)
         {
