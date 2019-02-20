@@ -40,12 +40,13 @@ def genSysCacheFiles(symbol, event):
 def enableSysCache(symbol, event):
     component = symbol.getComponent()
 
+    symbol.setValue(False, 1)
+
+    # Enable Sys Cache only if Cache is present on device and enabled
     isDataCacheEnabled          = Database.getSymbolValue("core", "DATA_CACHE_ENABLE")
     isInstructionCacheEnabled   = Database.getSymbolValue("core", "INSTRUCTION_CACHE_ENABLE")
 
-    if ((isDataCacheEnabled == False) and (isInstructionCacheEnabled == False)):
-        symbol.setValue(False, 1)
-    else:
+    if ((isDataCacheEnabled == True) or (isInstructionCacheEnabled == True)):
         symbol.setValue(True, 1)
 
 ############################################################################
@@ -58,6 +59,9 @@ genSysCacheCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_CA
 genSysCacheCommonFiles.setLabel("Enable System Cache")
 if (("PIC32MZ" in Variables.get("__PROCESSOR")) or ("CORTEX-M4" in coreArch)):
     genSysCacheCommonFiles.setDefaultValue(False)
+elif (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23"):
+    genSysCacheCommonFiles.setDefaultValue(False)
+    genSysCacheCommonFiles.setVisible(False)
 else:
     genSysCacheCommonFiles.setDefaultValue(isCachePresent)
 genSysCacheCommonFiles.setDependencies(enableSysCache, ["ENABLE_SYS_COMMON", "core.DATA_CACHE_ENABLE", "core.INSTRUCTION_CACHE_ENABLE"])
