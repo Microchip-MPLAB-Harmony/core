@@ -850,7 +850,11 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 
 
 #if defined(__DEBUG)
-    #define SYS_DEBUG_BreakPoint()  __asm__ volatile (" sdbbp 0")
+    <#if __PROCESSOR?matches("PIC32M.*") == true>
+        <#lt>#define SYS_DEBUG_BreakPoint()  __asm__ volatile (" sdbbp 0")
+    <#else>
+        <#lt>#define SYS_DEBUG_BreakPoint()  __asm__ __volatile__ ("bkpt #0");
+    </#if>
 #else
     #define SYS_DEBUG_BreakPoint()
 #endif

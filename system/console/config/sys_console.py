@@ -270,16 +270,6 @@ def instantiateComponent(consoleComponent):
     consoleUARTSourceFile.setType("SOURCE")
     consoleUARTSourceFile.setOverwrite(True)
 
-    debugHeaderFile = consoleComponent.createFileSymbol("SYS_DEBUG_HEADER", None)
-    debugHeaderFile.setSourcePath("system/console/sys_debug.h")
-    debugHeaderFile.setOutputName("sys_debug.h")
-    debugHeaderFile.setDestPath("system/console/")
-    debugHeaderFile.setProjectPath("config/" + configName + "/system/console/")
-    debugHeaderFile.setType("HEADER")
-    debugHeaderFile.setOverwrite(True)
-    debugHeaderFile.setEnabled(debugEnable.getValue())
-    debugHeaderFile.setDependencies(genDebugFiles, ["SYS_DEBUG_ENABLE"])
-
     debugHeaderLocalFile = consoleComponent.createFileSymbol("SYS_DEBUG_LOCAL", None)
     debugHeaderLocalFile.setSourcePath("system/console/src/sys_debug_local.h")
     debugHeaderLocalFile.setOutputName("sys_debug_local.h")
@@ -363,6 +353,17 @@ def instantiateComponent(consoleComponent):
     commandSystemRtosTasksFile.setMarkup(True)
     commandSystemRtosTasksFile.setEnabled(enable_rtos_settings)
     commandSystemRtosTasksFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS", "SYS_COMMAND_ENABLE"])
+
+    debugHeaderFile = consoleComponent.createFileSymbol("SYS_DEBUG_HEADER", None)
+    debugHeaderFile.setSourcePath("system/console/templates/system/sys_debug.h.ftl")
+    debugHeaderFile.setOutputName("sys_debug.h")
+    debugHeaderFile.setDestPath("system/console/")
+    debugHeaderFile.setProjectPath("config/" + configName + "/system/console/")
+    debugHeaderFile.setType("HEADER")
+    debugHeaderFile.setMarkup(True)
+    debugHeaderFile.setOverwrite(True)
+    debugHeaderFile.setEnabled(debugEnable.getValue())
+    debugHeaderFile.setDependencies(genDebugFiles, ["SYS_DEBUG_ENABLE"])
 
 ############################################################################
 #### Dependency ####
