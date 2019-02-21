@@ -157,6 +157,30 @@ typedef bool (*DRV_SPI_PLIB_IS_BUSY)(void);
 
 typedef void (* DRV_SPI_PLIB_CALLBACK_REGISTER)(DRV_SPI_PLIB_CALLBACK, uintptr_t);
 
+
+typedef struct
+{
+    int32_t         spiTxReadyInt;
+    int32_t         spiTxCompleteInt;
+    int32_t         spiRxInt;
+    int32_t         dmaTxChannelInt;
+    int32_t         dmaRxChannelInt;
+} DRV_SPI_MULTI_INT_SRC;
+
+typedef union
+{
+    DRV_SPI_MULTI_INT_SRC               multi;
+    int32_t                             spiInterrupt;
+    int32_t                             dmaInterrupt;
+} DRV_SPI_INT_SRC;
+
+typedef struct
+{
+    bool                        isSingleIntSrc;
+    DRV_SPI_INT_SRC             intSources;
+} DRV_SPI_INTERRUPT_SOURCES;
+
+
 // *****************************************************************************
 /* SPI Driver PLIB Interface Data
 
@@ -207,17 +231,16 @@ typedef struct
     const DRV_SPI_PLIB_INTERFACE*   spiPlib;
 
     /* SPI transmit DMA channel. */
-    SYS_DMA_CHANNEL             dmaChannelTransmit;
+    SYS_DMA_CHANNEL                 dmaChannelTransmit;
 
     /* SPI receive DMA channel. */
-    SYS_DMA_CHANNEL             dmaChannelReceive;
+    SYS_DMA_CHANNEL                 dmaChannelReceive;
 
     /* SPI transmit register address used for DMA operation. */
     void*                           spiTransmitAddress;
 
     /* SPI receive register address used for DMA operation. */
     void*                           spiReceiveAddress;
-
     /* Memory Pool for Client Objects */
     uintptr_t                       clientObjPool;
 
