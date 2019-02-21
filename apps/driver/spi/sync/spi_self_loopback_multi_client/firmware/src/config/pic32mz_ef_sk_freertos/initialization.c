@@ -214,7 +214,6 @@ void SYS_Initialize ( void* data )
   
     CLK_Initialize();
 	GPIO_Initialize();
-
     /* Configure Prefetch, Wait States and ECC */
     PRECONbits.PREFEN = 3;
     PRECONbits.PFMWS = 2;
@@ -223,8 +222,6 @@ void SYS_Initialize ( void* data )
 
 
 	SPI3_Initialize();
-
-    WDT_Initialize();
 
 	BSP_Initialize();
 
