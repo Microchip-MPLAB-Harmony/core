@@ -52,6 +52,7 @@
 // *****************************************************************************
 
 #include "app_usart_usb_debug_port.h"
+#include "user.h"
 #include <string.h>
 
 // *****************************************************************************
@@ -137,7 +138,7 @@ void APP_USART_USB_DEBUG_PORT_Tasks ( void )
     {
         case APP_USART_USB_DEBUG_PORT_STATE_INIT:
             /* Open USART Driver Instance 0 (USART 0)*/
-            appUsartDebugPortData.usartHandle = DRV_USART_Open(DRV_USART_INDEX_1, 0);
+            appUsartDebugPortData.usartHandle = DRV_USART_Open(DRV_USART_INDEX_1, DRV_IO_INTENT_READWRITE);
             if (appUsartDebugPortData.usartHandle == DRV_HANDLE_INVALID)
             {
                 appUsartDebugPortData.state = APP_USART_USB_DEBUG_PORT_STATE_ERROR;

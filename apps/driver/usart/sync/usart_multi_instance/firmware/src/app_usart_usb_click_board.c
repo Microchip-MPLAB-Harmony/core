@@ -52,6 +52,7 @@
 // *****************************************************************************
 
 #include "app_usart_usb_click_board.h"
+#include "user.h"
 #include <string.h>
 
 // *****************************************************************************
@@ -137,7 +138,7 @@ void APP_USART_USB_CLICK_BOARD_Tasks ( void )
     {
         case APP_USART_USB_CLICK_BOARD_STATE_INIT:
             /* Open USART Driver Instance 1 (USART 1)*/
-            appUsartClickBoardData.usartHandle = DRV_USART_Open(DRV_USART_INDEX_0, 0);
+            appUsartClickBoardData.usartHandle = DRV_USART_Open(DRV_USART_INDEX_0, DRV_IO_INTENT_READWRITE);
 
             if (appUsartClickBoardData.usartHandle == DRV_HANDLE_INVALID)
             {
