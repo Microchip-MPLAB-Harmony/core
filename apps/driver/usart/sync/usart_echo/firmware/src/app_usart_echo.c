@@ -52,6 +52,7 @@
 // *****************************************************************************
 
 #include "app_usart_echo.h"
+#include "user.h"
 #include <string.h>
 
 // *****************************************************************************
@@ -135,7 +136,7 @@ void APP_USART_ECHO_Tasks ( void )
     {
         case APP_USART_ECHO_STATE_INIT:
             /* Open USART Driver Instance 0 (USART 1)*/
-            app_usart_echoData.usartHandle = DRV_USART_Open(DRV_USART_INDEX_0, 0);
+            app_usart_echoData.usartHandle = DRV_USART_Open(DRV_USART_INDEX_0, DRV_IO_INTENT_READWRITE);
             if (app_usart_echoData.usartHandle != DRV_HANDLE_INVALID)
             {
                 app_usart_echoData.state = APP_USART_ECHO_STATE_SEND_MESSGE;

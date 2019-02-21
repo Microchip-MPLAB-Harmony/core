@@ -56,8 +56,6 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
-#include "bsp/bsp.h"
-#include "driver/usart/drv_usart_definitions.h"
 #include "driver/usart/drv_usart.h"
 
 
