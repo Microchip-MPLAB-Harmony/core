@@ -56,6 +56,7 @@
 */
 
 #include "user.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -70,10 +71,8 @@ extern "C" {
 // Section: System Configuration
 // *****************************************************************************
 // *****************************************************************************
-#define DCACHE_CLEAN_BY_ADDR(data, size)
-#define DCACHE_INVALIDATE_BY_ADDR(data, size)
 
-#define DATA_CACHE_ENABLED                         false
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -112,7 +111,7 @@ extern "C" {
 #define DRV_MEMORY_CLIENTS_NUMBER_IDX0       1
 #define DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0    1
 #define DRV_MEMORY_DEVICE_START_ADDRESS      0x20000
-#define DRV_MEMORY_DEVICE_MEDIA_SIZE         1024UL
+#define DRV_MEMORY_DEVICE_MEDIA_SIZE         128UL
 #define DRV_MEMORY_DEVICE_PROGRAM_SIZE       64
 #define DRV_MEMORY_DEVICE_ERASE_SIZE         256
 
