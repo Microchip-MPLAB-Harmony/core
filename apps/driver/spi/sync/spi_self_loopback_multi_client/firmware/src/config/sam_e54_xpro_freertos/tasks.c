@@ -77,7 +77,7 @@ void _APP_CLIENT1_Tasks(  void *pvParameters  )
     while(1)
     {
         APP_CLIENT1_Tasks();
-        vTaskDelay(100 / portTICK_PERIOD_MS);
+        vTaskDelay(1 / portTICK_PERIOD_MS);
     }
 }
 /* Handle for the APP_CLIENT2_Tasks. */
@@ -88,7 +88,7 @@ void _APP_CLIENT2_Tasks(  void *pvParameters  )
     while(1)
     {
         APP_CLIENT2_Tasks();
-        vTaskDelay(100 / portTICK_PERIOD_MS);
+        vTaskDelay(1 / portTICK_PERIOD_MS);
     }
 }
 

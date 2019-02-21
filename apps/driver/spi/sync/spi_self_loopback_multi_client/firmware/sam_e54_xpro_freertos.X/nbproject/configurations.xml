@@ -4,9 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="f2" displayName="arm" projectFiles="true">
-        <itemPath>../src/arm/toolchain_specifics.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1"
                        displayName="sam_e54_xpro_freertos"
@@ -43,10 +40,7 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
-            <logicalFolder name="f3" displayName="cache" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/system/cache/sys_cache.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f4" displayName="dma" projectFiles="true">
+            <logicalFolder name="f3" displayName="dma" projectFiles="true">
               <itemPath>../src/config/sam_e54_xpro_freertos/system/dma/sys_dma.h</itemPath>
               <itemPath>../src/config/sam_e54_xpro_freertos/system/dma/sys_dma_mapping.h</itemPath>
             </logicalFolder>
@@ -63,13 +57,14 @@
             <itemPath>../src/config/sam_e54_xpro_freertos/system/system_module.h</itemPath>
           </logicalFolder>
           <itemPath>../src/config/sam_e54_xpro_freertos/device_cache.h</itemPath>
+          <itemPath>../src/config/sam_e54_xpro_freertos/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro_freertos/definitions.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro_freertos/FreeRTOSConfig.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro_freertos/user.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro_freertos/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f4" displayName="FreeRTOS" projectFiles="true">
+      <logicalFolder name="f3" displayName="FreeRTOS" projectFiles="true">
         <logicalFolder name="f1" displayName="Source" projectFiles="true">
           <logicalFolder name="f1" displayName="include" projectFiles="true">
             <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/croutine.h</itemPath>
@@ -100,12 +95,12 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f5" displayName="osal" projectFiles="true">
+      <logicalFolder name="f4" displayName="osal" projectFiles="true">
         <itemPath>../src/config/sam_e54_xpro_freertos/osal/osal.h</itemPath>
         <itemPath>../src/config/sam_e54_xpro_freertos/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/sam_e54_xpro_freertos/osal/osal_freertos.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="packs" projectFiles="true">
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAME54P20A_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/ac.h</itemPath>
@@ -224,10 +219,7 @@
             <itemPath>../src/config/sam_e54_xpro_freertos/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f5" displayName="system" projectFiles="true">
-            <logicalFolder name="f2" displayName="cache" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/system/cache/sys_cache.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f3" displayName="dma" projectFiles="true">
+            <logicalFolder name="f2" displayName="dma" projectFiles="true">
               <itemPath>../src/config/sam_e54_xpro_freertos/system/dma/sys_dma.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
@@ -297,8 +289,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME54_DFP" vendor="Atmel" version="1.0.94"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
+        <pack name="SAME54_DFP" vendor="Microchip" version="2.0.12"/>
       </packs>
       <compileType>
         <linkerTool>

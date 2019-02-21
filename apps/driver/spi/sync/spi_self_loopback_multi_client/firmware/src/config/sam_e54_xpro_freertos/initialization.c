@@ -106,7 +106,7 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance 0 Initialization Data">
 
 /* SPI Client Objects Pool */
-static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0];
 
 /* SPI PLIB Interface Initialization */
 const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
@@ -205,8 +205,6 @@ void SYS_Initialize ( void* data )
     SERCOM6_SPI_Initialize();
 
 
-    NVIC_Initialize();
-
     /* Initialize SPI0 Driver Instance */
     sysObj.drvSPI0 = DRV_SPI_Initialize(DRV_SPI_INDEX_0, (SYS_MODULE_INIT *)&drvSPI0InitData);
 
@@ -217,7 +215,8 @@ void SYS_Initialize ( void* data )
     APP_CLIENT2_Initialize();
 
 
-  
+    NVIC_Initialize();
+
 }
 
 
