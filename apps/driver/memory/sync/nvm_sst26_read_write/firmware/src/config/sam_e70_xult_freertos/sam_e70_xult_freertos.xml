@@ -5588,11 +5588,11 @@
         <ElementPosition dnOrder="3" id="cmsis" x="120" y="20"/>
         <ElementPosition dnOrder="4" id="core" x="20" y="20"/>
         <ElementPosition dnOrder="5" id="dfp" x="260" y="20"/>
-        <ElementPosition dnOrder="6" id="drv_memory" x="404" y="106"/>
+        <ElementPosition dnOrder="6" id="drv_memory" x="458" y="122"/>
         <ElementPosition dnOrder="7" id="drv_sst26" x="237" y="155"/>
         <ElementPosition dnOrder="8" id="efc" x="45" y="277"/>
         <ElementPosition dnOrder="9" id="qspi" x="39" y="189"/>
-        <ElementPosition dnOrder="10" id="sys_time" x="267" y="364"/>
+        <ElementPosition dnOrder="10" id="sys_time" x="272" y="343"/>
         <ElementPosition dnOrder="11" id="tc0" x="49" y="397"/>
       </ElementPositions>
     </ComponentGraph>
