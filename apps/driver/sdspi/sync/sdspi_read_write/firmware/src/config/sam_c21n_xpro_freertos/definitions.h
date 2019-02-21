@@ -58,12 +58,12 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "driver/sdspi/drv_sdspi.h"
+#include "bsp/bsp.h"
 #include "system/int/sys_int.h"
 #include "system/ports/sys_ports.h"
 #include "system/dma/sys_dma.h"
 #include "osal/osal.h"
 #include "system/time/sys_time.h"
-#include "bsp/bsp.h"
 #include "app.h"
 
 
