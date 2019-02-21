@@ -71,10 +71,8 @@ extern "C" {
 // Section: System Configuration
 // *****************************************************************************
 // *****************************************************************************
-#define DCACHE_CLEAN_BY_ADDR(data, size)
-#define DCACHE_INVALIDATE_BY_ADDR(data, size)
 
-#define DATA_CACHE_ENABLED                         false
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -90,7 +88,6 @@ extern "C" {
 // *****************************************************************************
 /* USART Driver Global Configuration Options */
 #define DRV_USART_INSTANCES_NUMBER         1
-
 /* USART Driver Instance 0 Configuration Options */
 #define DRV_USART_INDEX_0                  0
 #define DRV_USART_CLIENTS_NUMBER_IDX0      1

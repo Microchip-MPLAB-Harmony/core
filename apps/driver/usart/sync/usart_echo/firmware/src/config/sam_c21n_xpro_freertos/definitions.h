@@ -49,7 +49,6 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "peripheral/evsys/plib_evsys.h"
-#include "driver/usart/drv_usart_definitions.h"
 #include "driver/usart/drv_usart.h"
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"

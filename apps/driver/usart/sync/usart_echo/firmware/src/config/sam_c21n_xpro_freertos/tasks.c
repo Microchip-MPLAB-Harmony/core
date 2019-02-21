@@ -100,7 +100,7 @@ void SYS_Tasks ( void )
         /* Create OS Thread for APP_USART_ECHO_Tasks. */
     xTaskCreate((TaskFunction_t) _APP_USART_ECHO_Tasks,
                 "APP_USART_ECHO_Tasks",
-                1024,
+                128,
                 NULL,
                 1,
                 &xAPP_USART_ECHO_Tasks);
