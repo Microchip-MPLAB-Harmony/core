@@ -115,8 +115,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">654C145083396E500FBFC6AF8A592F5F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">654C145083396E500FBFC6AF8A592F5F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C6D651692FD5559BA7C6855D3565F19C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C6D651692FD5559BA7C6855D3565F19C</UserChecksum>
         </File>
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
@@ -163,8 +163,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8207E76B23B3866B4B2F4C5F47CF8594</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8207E76B23B3866B4B2F4C5F47CF8594</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AF9039293A84E5C6D9590CABCC4FCE0A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AF9039293A84E5C6D9590CABCC4FCE0A</UserChecksum>
         </File>
         <File dnOrder="20">
           <Type dnOrder="0">SOURCE</Type>
@@ -675,8 +675,8 @@
           <Name dnOrder="1">user.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4B3C3EF8A318908A22B78500515C3288</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4B3C3EF8A318908A22B78500515C3288</UserChecksum>
+          <GeneratedChecksum dnOrder="4"/>
+          <UserChecksum dnOrder="5"/>
         </File>
       </Files>
       <Settings dnOrder="1">
