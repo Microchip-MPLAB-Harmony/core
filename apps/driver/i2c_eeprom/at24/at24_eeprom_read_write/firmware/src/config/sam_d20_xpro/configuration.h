@@ -71,10 +71,8 @@ extern "C" {
 // Section: System Configuration
 // *****************************************************************************
 // *****************************************************************************
-#define DCACHE_CLEAN_BY_ADDR(data, size)
-#define DCACHE_INVALIDATE_BY_ADDR(data, size)
 
-#define DATA_CACHE_ENABLED                         false
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -96,8 +94,8 @@ extern "C" {
 #define DRV_AT24_CLIENTS_NUMBER_IDX            1
 #define DRV_AT24_INT_SRC_IDX                   SERCOM2_IRQn
 #define DRV_AT24_EEPROM_FLASH_SIZE             262144
-#define DRV_AT24_EEPROM_PAGE_SIZE              16
-#define DRV_AT24_WRITE_BUFFER_SIZE             18
+#define DRV_AT24_EEPROM_PAGE_SIZE              256
+#define DRV_AT24_WRITE_BUFFER_SIZE             258
 
 
 // *****************************************************************************

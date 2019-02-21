@@ -1,27 +1,26 @@
 /*******************************************************************************
-  Interrupt System Service Library Interface Implementation File
+  Cortex-M L1 Cache Header
 
-  Company
-    Microchip Technology Inc.
+  File Name:
+    device_cache.h
 
-  File Name
-    sys_int_nvic.c
+  Summary:
+    Preprocessor definitions to provide L1 Cache control.
 
-  Summary
-    NVIC implementation of interrupt system service library.
-
-  Description
-    This file implements the interface to the interrupt system service library
-    not provided in CMSIS.
+  Description:
+    An MPLAB PLIB or Project can include this header to perform cache cleans,
+    invalidates etc. For the DCache and ICache.
 
   Remarks:
-    None.
+    This header should not define any prototypes or data definitions, or 
+    include any files that do.  The file only provides macro definitions for 
+    build-time.
 
 *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -44,83 +43,50 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
+#ifndef DEVICE_CACHE_H
+#define DEVICE_CACHE_H
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-#include "system/int/sys_int.h"
+/*  This section Includes other configuration headers necessary to completely
+    define this configuration.
+*/
 
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+extern "C" {
+
+#endif
+// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Interface Implementation
+// Section: L1 Cache Configuration
 // *****************************************************************************
 // *****************************************************************************
+#define ICACHE_ENABLE()
+#define ICACHE_DISABLE()
+#define ICACHE_INVALIDATE()
+#define INSTRUCTION_CACHE_ENABLED                      false
 
-// *****************************************************************************
-void SYS_INT_Enable( void )
-{
-    __DMB();
-    __enable_irq();
+#define DCACHE_ENABLE()
+#define DCACHE_DISABLE()
+#define DCACHE_INVALIDATE()
+#define DCACHE_CLEAN()
+#define DCACHE_CLEAN_INVALIDATE()
+#define DCACHE_CLEAN_BY_ADDR(addr,sz)
+#define DCACHE_INVALIDATE_BY_ADDR(addr,sz)
+#define DCACHE_CLEAN_INVALIDATE_BY_ADDR(addr,sz)
+#define DATA_CACHE_ENABLED                             false
 
-    return;
+//DOM-IGNORE-BEGIN
+#ifdef __cplusplus
 }
+#endif
+//DOM-IGNORE-END
 
-
-// *****************************************************************************
-bool SYS_INT_Disable( void )
-{
-    bool processorStatus;
-
-    processorStatus = (bool) (__get_PRIMASK() == 0);
-
-    __disable_irq();
-    __DMB();
-
-    return processorStatus;
-}
-
-
-// *****************************************************************************
-void SYS_INT_Restore( bool state )
-{
-    if( state == true )
-    {
-        __DMB();
-        __enable_irq();
-    }
-    else
-    {
-        __disable_irq();
-        __DMB();
-    }
-
-    return;
-}
-
-bool SYS_INT_SourceDisable( INT_SOURCE source )
-{
-    bool processorStatus;
-    bool intSrcStatus;
-
-    processorStatus = SYS_INT_Disable();
-
-    intSrcStatus = NVIC_GetEnableIRQ(source);
-
-    NVIC_DisableIRQ( source );
-
-    SYS_INT_Restore( processorStatus );
-
-    /* return the source status */
-    return intSrcStatus;
-}
-
-void SYS_INT_SourceRestore( INT_SOURCE source, bool status )
-{
-    if( status ) {
-        SYS_INT_SourceEnable( source );
-    }
-    return;
-}
+#endif // #ifndef DEVICE_CACHE_H
