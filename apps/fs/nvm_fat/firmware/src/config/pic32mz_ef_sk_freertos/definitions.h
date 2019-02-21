@@ -58,7 +58,6 @@
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/gpio/plib_gpio.h"
 #include "peripheral/evic/plib_evic.h"
-#include "peripheral/wdt/plib_wdt.h"
 #include "driver/memory/drv_memory.h"
 #include "bsp/bsp.h"
 #include "FreeRTOS.h"
