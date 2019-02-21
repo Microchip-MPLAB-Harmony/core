@@ -168,6 +168,26 @@ typedef struct
 
 } DRV_USART_PLIB_INTERFACE;
 
+typedef struct
+{
+    int32_t         usartTxReadyInt;
+    int32_t         usartTxCompleteInt;
+    int32_t         usartRxCompleteInt;
+    int32_t         usartErrorInt;
+} DRV_USART_MULTI_INT_SRC;
+
+typedef union
+{
+    DRV_USART_MULTI_INT_SRC             multi;
+    int32_t                             usartInterrupt;
+} DRV_USART_INT_SRC;
+
+typedef struct
+{
+    bool                        isSingleIntSrc;
+    DRV_USART_INT_SRC           intSources;
+} DRV_USART_INTERRUPT_SOURCES;
+
 // *****************************************************************************
 /* USART Driver Initialization Data Declaration */
 
@@ -175,29 +195,30 @@ struct _DRV_USART_INIT
 {
     /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
-    const DRV_USART_PLIB_INTERFACE* usartPlib;
+    const DRV_USART_PLIB_INTERFACE*         usartPlib;
 
-    const uint32_t* remapDataWidth;
+    /* Number of clients */
+    uint32_t                                numClients;
 
-    const uint32_t* remapParity;
+    /* Memory Pool for Client Objects */
+    uintptr_t                               clientObjPool;
 
-    const uint32_t* remapStopBits;
 
-    const uint32_t* remapError;
+    const uint32_t*                         remapDataWidth;
 
-    /* This is the receive buffer queue size. This is the maximum
-     * number of read requests that driver will queue. This can be updated
-     * through DRV_USART_RCV_QUEUE_SIZE_IDXn macro in configuration.h */
-    unsigned int queueSizeReceive;
+    const uint32_t*                         remapParity;
 
-    /* This is the transmit buffer queue size. This is the maximum
-     * number of write requests that driver will queue. This can be updated
-     * through DRV_USART_XMIT_QUEUE_SIZE_IDXn macro in configuration.h */
-    unsigned int queueSizeTransmit;
+    const uint32_t*                         remapStopBits;
 
-    /* Interrupt source ID for the USART interrupt. */
-    INT_SOURCE interruptUSART;
+    const uint32_t*                         remapError;
 
+    /* Size of transmit and receive buffer pool */
+    uint32_t                                bufferObjPoolSize;
+
+    /* Pointer to the transmit and receive buffer pool */
+    uintptr_t                               bufferObjPool;
+
+    const DRV_USART_INTERRUPT_SOURCES*      interruptSources;
 };
 
 //DOM-IGNORE-BEGIN

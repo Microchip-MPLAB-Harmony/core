@@ -56,6 +56,9 @@
 // *****************************************************************************
 // *****************************************************************************
 
+/* SERCOM4 USART baud value for 115200 Hz baud rate */
+#define SERCOM4_USART_INT_BAUD_VALUE			(63017U)
+
 SERCOM_USART_OBJECT sercom4USARTObj;
 
 // *****************************************************************************
@@ -79,7 +82,7 @@ void SERCOM4_USART_Initialize( void )
     SERCOM4_REGS->USART_INT.SERCOM_CTRLA = SERCOM_USART_INT_CTRLA_MODE_USART_INT_CLK | SERCOM_USART_INT_CTRLA_RXPO_PAD1 | SERCOM_USART_INT_CTRLA_TXPO_PAD0 | SERCOM_USART_INT_CTRLA_DORD_Msk | SERCOM_USART_INT_CTRLA_IBON_Msk | SERCOM_USART_INT_CTRLA_FORM(0x0) ;
 
     /* Configure Baud Rate */
-    SERCOM4_REGS->USART_INT.SERCOM_BAUD = SERCOM_USART_INT_BAUD_BAUD(63017);
+    SERCOM4_REGS->USART_INT.SERCOM_BAUD = SERCOM_USART_INT_BAUD_BAUD(SERCOM4_USART_INT_BAUD_VALUE);
 
     /*
      * Configures RXEN
@@ -110,6 +113,11 @@ void SERCOM4_USART_Initialize( void )
     sercom4USARTObj.txProcessedSize = 0;
     sercom4USARTObj.txBusyStatus = false;
     sercom4USARTObj.txCallback = NULL;
+}
+
+uint32_t SERCOM4_USART_FrequencyGet( void )
+{
+    return (uint32_t) (47972352UL);
 }
 
 bool SERCOM4_USART_SerialSetup( USART_SERIAL_SETUP * serialSetup, uint32_t clkFrequency )
@@ -212,7 +220,7 @@ bool SERCOM4_USART_Write( void *buffer, const size_t size )
     return writeStatus;
 }
 
-bool SERCOM4_USART_WriteIsBusy ( void )
+bool SERCOM4_USART_WriteIsBusy( void )
 {
     return sercom4USARTObj.txBusyStatus;
 }
@@ -297,7 +305,6 @@ USART_ERROR SERCOM4_USART_ErrorGet( void )
 
     return errorStatus;
 }
-
 
 void static SERCOM4_USART_ISR_RX_Handler( void )
 {
