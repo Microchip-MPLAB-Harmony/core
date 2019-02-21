@@ -48,7 +48,6 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include "driver/usart/drv_usart_definitions.h"
 #include "driver/usart/drv_usart.h"
 #include "osal/osal.h"
 
@@ -75,16 +74,12 @@
     None
 */
 
-#define _DRV_USART_BUFFER_TOKEN_MAX         (0xFFFF)
-#define _DRV_USART_MAKE_HANDLE(token, index) ((token) << 16 | (index))
-#define _DRV_USART_UPDATE_BUFFER_TOKEN(token) \
-{ \
-    (token)++; \
-    if ((token) >= _DRV_USART_BUFFER_TOKEN_MAX) \
-        (token) = 0; \
-    else \
-        (token) = (token); \
-}
+/* USART Driver Handle Macros*/
+#define DRV_USART_INDEX_MASK                      (0x000000FF)
+
+#define DRV_USART_INSTANCE_MASK                   (0x0000FF00)
+
+#define DRV_USART_TOKEN_MAX                       (0xFFFF)
 
 // *****************************************************************************
 /* USART Driver Buffer States
@@ -106,7 +101,7 @@ typedef enum
 {
     /* Buffer is not added to either write or read queue. In other words,
      * the buffer is in the free pool.
-	 */
+     */
     DRV_USART_BUFFER_IS_FREE,
 
     /* Buffer is in the queue. */
@@ -156,34 +151,31 @@ typedef enum
 
 typedef struct _DRV_USART_BUFFER_OBJ
 {
-    /* The hardware instance object that owns this buffer */
-    void* dObj;
+    /* Handle to the client that owns this buffer object when it was queued */
+    DRV_HANDLE                      clientHandle;
 
     /* This flag tracks whether this object is in use */
-    volatile bool inUse;
+    volatile bool                   inUse;
 
     /* Pointer to the application read or write buffer */
-    void* buffer;
+    void*                           buffer;
 
     /* Number of bytes to be transferred */
-    size_t size;
+    size_t                          size;
 
     /* Number of bytes completed */
-    volatile size_t nCount;
+    volatile size_t                 nCount;
 
     /* Next buffer pointer */
-    struct _DRV_USART_BUFFER_OBJ* next;
+    struct _DRV_USART_BUFFER_OBJ*   next;
 
     /* Current state of the buffer */
-    DRV_USART_BUFFER_STATE currentState;
+    DRV_USART_BUFFER_STATE          currentState;
 
     /* Current status of the buffer */
     volatile DRV_USART_BUFFER_EVENT status;
 
-    /* Buffer Handle that was assigned to this buffer when it was added to the
-     * queue.
-	 */
-    DRV_USART_BUFFER_HANDLE bufferHandle;
+    DRV_USART_BUFFER_HANDLE         bufferHandle;
 
 } DRV_USART_BUFFER_OBJ;
 
@@ -203,76 +195,113 @@ typedef struct _DRV_USART_BUFFER_OBJ
 typedef struct
 {
     /* Flag to indicate this object is in use  */
-    bool inUse;
+    bool                                    inUse;
+
+    /* Flag to indicate that driver has been opened Exclusively*/
+    bool                                    isExclusive;
 
     /* The status of the driver */
-    SYS_STATUS status;
-
-    /* This flags indicates if the client has opened the driver */
-    bool clientInUse;
-
-    /* to identify if we are running from interrupt context or not */
-    uint8_t interruptNestingCount;
-
-    /* Event handler for the client */
-    DRV_USART_BUFFER_EVENT_HANDLER eventHandler;
-
-    /* Application Context associated with the client */
-    uintptr_t context;
+    SYS_STATUS                              status;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    const DRV_USART_PLIB_INTERFACE* usartPlib;
+    const DRV_USART_PLIB_INTERFACE*         usartPlib;
 
-    /* Errors associated with the USART hardware instance */
-    DRV_USART_ERROR errors;
+    /* Number of active clients */
+    size_t                                  nClients;
 
-    /* Interrupt Source of USART */
-    INT_SOURCE interruptUSART;
+    /* Maximum number of clients */
+    size_t                                  nClientsMax;
 
-    /* Hardware instance mutex */
-    OSAL_MUTEX_DECLARE(mutexDriverInstance);
+    /* Memory Pool for Client Objects */
+    uintptr_t                               clientObjPool;
 
-    /* The buffer queue for the write operations */
-    DRV_USART_BUFFER_OBJ* queueWrite;
+    /* Instance specific token counter used to generate unique client/transfer handles */
+    uint16_t                                usartTokenCount;
 
-    /* The buffer queue for the read operations */
-    DRV_USART_BUFFER_OBJ* queueRead;
+    /* Size of transmit and receive buffer queue */
+    uint32_t                                bufferObjPoolSize;
 
-    /* Read queue size */
-    size_t queueSizeRead;
+    /* Pointer to the transmit and receive buffer pool */
+    DRV_USART_BUFFER_OBJ*                   bufferObjPool;
 
-    /* Write queue size */
-    size_t queueSizeWrite;
+    /* Linked list of transmit buffer objects */
+    DRV_USART_BUFFER_OBJ*                   transmitObjList;
 
-    /* Current read queue size */
-    size_t queueSizeCurrentRead;
+    /* Linked list of receive buffer objects */
+    DRV_USART_BUFFER_OBJ*                   receiveObjList;
 
-    /* Current read queue size */
-    size_t queueSizeCurrentWrite;
+    /* To identify if we are running from interrupt context or not */
+    uint8_t                                 interruptNestingCount;
 
     /* TX DMA Channel */
-    SYS_DMA_CHANNEL txDMAChannel;
+    SYS_DMA_CHANNEL                         txDMAChannel;
 
     /* RX DMA Channel */
-    SYS_DMA_CHANNEL rxDMAChannel;
+    SYS_DMA_CHANNEL                         rxDMAChannel;
 
     /* This is the USART transmit register address. Used for DMA operation. */
-    void* txAddress;
+    void*                                   txAddress;
 
     /* This is the USART receive register address. Used for DMA operation. */
-    void* rxAddress;
+    void*                                   rxAddress;
 
-    /* This is the DMA channel interrupt source. */
-    INT_SOURCE interruptDMA;
+    /* Mutex to protect access to the client objects */
+    OSAL_MUTEX_DECLARE(mutexClientObjects);
 
-    const uint32_t* remapDataWidth;
+    /* Mutex to protect access to the transfer objects */
+    OSAL_MUTEX_DECLARE(mutexTransferObjects);
 
-    const uint32_t* remapParity;
+    const uint32_t*                         remapDataWidth;
 
-    const uint32_t* remapStopBits;
+    const uint32_t*                         remapParity;
 
-    const uint32_t* remapError;
+    const uint32_t*                         remapStopBits;
+
+    const uint32_t*                         remapError;
+
+    const DRV_USART_INTERRUPT_SOURCES*      interruptSources;
+
+    bool                                    usartTxReadyIntStatus;
+
+    bool                                    usartTxCompleteIntStatus;
+
+    bool                                    usartRxCompleteIntStatus;
+
+    bool                                    usartErrorIntStatus;
+
+    bool                                    dmaTxChannelIntStatus;
+
+    bool                                    dmaRxChannelIntStatus;
+
+    bool                                    usartInterruptStatus;
+
+    bool                                    dmaInterruptStatus;
 
 } DRV_USART_OBJ;
+
+typedef struct _DRV_USART_CLIENT_OBJ
+{
+    /* The hardware instance index associated with the client */
+    SYS_MODULE_INDEX                    drvIndex;
+
+    /* The IO intent with which the client was opened */
+    DRV_IO_INTENT                       ioIntent;
+
+    /* This flags indicates if the object is in use or is available */
+    bool                                inUse;
+
+    /* Errors associated with the USART hardware instance */
+    DRV_USART_ERROR                     errors;
+
+    /* Event handler for this function */
+    DRV_USART_BUFFER_EVENT_HANDLER      eventHandler;
+
+    /* Application Context associated with this client */
+    uintptr_t                           context;
+
+    /* Client handle assigned to this client object when it was opened */
+    DRV_HANDLE                          clientHandle;
+
+} DRV_USART_CLIENT_OBJ;
 
 #endif //#ifndef DRV_USART_LOCAL_H
