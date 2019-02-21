@@ -51,7 +51,6 @@
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/gpio/plib_gpio.h"
 #include "peripheral/evic/plib_evic.h"
-#include "peripheral/wdt/plib_wdt.h"
 #include "bsp/bsp.h"
 #include "peripheral/sqi/plib_sqi1.h"
 #include "driver/sst26/drv_sst26.h"
