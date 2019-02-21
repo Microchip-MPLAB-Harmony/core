@@ -106,7 +106,7 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance 1 Initialization Data">
 
 /* SPI Client Objects Pool */
-static DRV_SPI_CLIENT_OBJ drvSPI1ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX1] = {0};
+static DRV_SPI_CLIENT_OBJ drvSPI1ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX1];
 
 /* SPI PLIB Interface Initialization */
 const DRV_SPI_PLIB_INTERFACE drvSPI1PlibAPI = {
@@ -164,7 +164,7 @@ const DRV_SPI_INIT drvSPI1InitData =
 // <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance 0 Initialization Data">
 
 /* SPI Client Objects Pool */
-static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0];
 
 /* SPI PLIB Interface Initialization */
 const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
@@ -273,8 +273,6 @@ void SYS_Initialize ( void* data )
     SERCOM4_SPI_Initialize();
 
 
-    NVIC_Initialize();
-
     /* Initialize SPI1 Driver Instance */
     sysObj.drvSPI1 = DRV_SPI_Initialize(DRV_SPI_INDEX_1, (SYS_MODULE_INIT *)&drvSPI1InitData);
     /* Initialize SPI0 Driver Instance */
@@ -287,7 +285,8 @@ void SYS_Initialize ( void* data )
     APP_EEPROM2_Initialize();
 
 
-  
+    NVIC_Initialize();
+
 }
 
 
