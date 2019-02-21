@@ -71,7 +71,7 @@
 #pragma config POSCBOOST =  ON
 #pragma config POSCFGAIN =  GAIN_G3
 #pragma config POSCAGCDLY = POSCAGCDLY1
-#pragma config POSCAGC =      OFF
+#pragma config POSCAGC =      ON
 #pragma config EJTAGBEN =   NORMAL
 
 /*** DEVCFG1 ***/
@@ -106,8 +106,8 @@
 
 /*** DEVCFG3 ***/
 #pragma config USERID =     0xffff
-#pragma config EXTDDRSIZE = DDR_SIZE_32MB
-#pragma config FMIIEN =     OFF
+#pragma config EXTDDRSIZE = DDR_SIZE_128MB
+#pragma config FMIIEN =     ON
 #pragma config FETHIO =     ON
 #pragma config PGL1WAY =    ON
 #pragma config PMDL1WAY =   ON
