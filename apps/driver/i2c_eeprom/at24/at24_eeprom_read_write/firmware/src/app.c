@@ -130,9 +130,6 @@ void APP_Initialize ( void )
 
     appData.isTransferDone = false;
 
-    /* TODO: Initialize your application's state machine and other
-     * parameters.
-     */
 }
 
 /******************************************************************************
