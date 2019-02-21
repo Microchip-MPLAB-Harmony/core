@@ -48,7 +48,6 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "driver/usart/drv_usart_definitions.h"
 #include "driver/usart/drv_usart.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
@@ -60,6 +59,7 @@
 #include "bsp/bsp.h"
 #include "peripheral/usart/plib_usart0.h"
 #include "system/int/sys_int.h"
+#include "system/cache/sys_cache.h"
 #include "system/dma/sys_dma.h"
 #include "osal/osal.h"
 #include "app_usart_usb_click_board.h"
