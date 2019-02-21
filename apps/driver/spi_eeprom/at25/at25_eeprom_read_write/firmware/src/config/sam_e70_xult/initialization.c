@@ -45,6 +45,8 @@
 // *****************************************************************************
 #include "configuration.h"
 #include "definitions.h"
+#include "device.h"
+
 
 
 // ****************************************************************************
@@ -80,6 +82,7 @@
 #pragma config TCM_CONFIGURATION = 0
 #pragma config SECURITY_BIT = CLEAR
 #pragma config BOOT_MODE = SET
+
 
 
 
@@ -143,6 +146,7 @@ const DRV_AT25_INIT drvAT25InitData =
 // *****************************************************************************
 /* Structure to hold the object handles for the modules in the system. */
 SYSTEM_OBJECTS sysObj;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Library/Stack Initialization Data
@@ -157,6 +161,7 @@ SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 
 
+
 /*******************************************************************************
   Function:
     void SYS_Initialize ( void *data )
@@ -169,12 +174,12 @@ SYSTEM_OBJECTS sysObj;
 
 void SYS_Initialize ( void* data )
 {
+  
     CLK_Initialize();
 	PIO_Initialize();
 
 
 	BSP_Initialize();
-    NVIC_Initialize();
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
@@ -190,10 +195,11 @@ void SYS_Initialize ( void* data )
     APP_Initialize();
 
 
+    NVIC_Initialize();
+
 }
 
 
 /*******************************************************************************
  End of File
 */
-
