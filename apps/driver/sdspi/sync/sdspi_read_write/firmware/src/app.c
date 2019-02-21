@@ -53,8 +53,8 @@
 // *****************************************************************************
 
 #include "app.h"
-#include "bsp/bsp.h"
-#include "string.h"
+#include "user.h"
+#include <string.h>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -225,11 +225,12 @@ void APP_Tasks ( void )
             break;
 
         case APP_STATE_SUCCESS:
-            LED_On();
+            LED_ON();
             break;
 
-        case APP_STATE_ERROR:
+        case APP_STATE_ERROR:            
         default:
+            LED_OFF();
             break;
 
     }
