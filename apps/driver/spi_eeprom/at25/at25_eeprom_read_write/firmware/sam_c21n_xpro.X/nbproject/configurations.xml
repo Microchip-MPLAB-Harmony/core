@@ -4,10 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="f1" displayName="arm" projectFiles="true">
-        <itemPath>../src/arm/toolchain_specifics.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f2" displayName="config" projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_c21n_xpro" projectFiles="true">
           <logicalFolder name="f4" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_c21n_xpro/bsp/bsp.h</itemPath>
@@ -21,16 +18,19 @@
             <itemPath>../src/config/sam_c21n_xpro/driver/driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f2" displayName="clock" projectFiles="true">
+            <logicalFolder name="f3" displayName="clock" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/peripheral/clock/plib_clock.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f1" displayName="evsys" projectFiles="true">
+              <itemPath>../src/config/sam_c21n_xpro/peripheral/evsys/plib_evsys.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="port" projectFiles="true">
+            <logicalFolder name="f2" displayName="port" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="sercom" projectFiles="true">
+            <logicalFolder name="f5" displayName="sercom" projectFiles="true">
               <logicalFolder name="f1" displayName="spim" projectFiles="true">
                 <itemPath>../src/config/sam_c21n_xpro/peripheral/sercom/spim/plib_sercom5_spi.h</itemPath>
                 <itemPath>../src/config/sam_c21n_xpro/peripheral/sercom/spim/plib_sercom_spi_common.h</itemPath>
@@ -50,17 +50,19 @@
             <itemPath>../src/config/sam_c21n_xpro/system/system_common.h</itemPath>
             <itemPath>../src/config/sam_c21n_xpro/system/system_module.h</itemPath>
           </logicalFolder>
+          <itemPath>../src/config/sam_c21n_xpro/device_cache.h</itemPath>
+          <itemPath>../src/config/sam_c21n_xpro/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_c21n_xpro/definitions.h</itemPath>
           <itemPath>../src/config/sam_c21n_xpro/user.h</itemPath>
           <itemPath>../src/config/sam_c21n_xpro/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f4" displayName="osal" projectFiles="true">
+      <logicalFolder name="f3" displayName="osal" projectFiles="true">
         <itemPath>../src/config/sam_c21n_xpro/osal/osal.h</itemPath>
         <itemPath>../src/config/sam_c21n_xpro/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/sam_c21n_xpro/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="packs" projectFiles="true">
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAMC21N18A_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAMC21N18A_DFP/component/ac.h</itemPath>
@@ -106,6 +108,7 @@
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm0plus.h</itemPath>
@@ -143,23 +146,26 @@
               <itemPath>../src/config/sam_c21n_xpro/driver/at25/src/drv_at25_local.h</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f2" displayName="clock" projectFiles="true">
+          <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f3" displayName="clock" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/peripheral/clock/plib_clock.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f1" displayName="evsys" projectFiles="true">
+              <itemPath>../src/config/sam_c21n_xpro/peripheral/evsys/plib_evsys.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/peripheral/nvic/plib_nvic.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="port" projectFiles="true">
+            <logicalFolder name="f2" displayName="port" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="sercom" projectFiles="true">
+            <logicalFolder name="f5" displayName="sercom" projectFiles="true">
               <logicalFolder name="f1" displayName="spim" projectFiles="true">
                 <itemPath>../src/config/sam_c21n_xpro/peripheral/sercom/spim/plib_sercom5_spi.c</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f1" displayName="stdio" projectFiles="true">
+          <logicalFolder name="f2" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/sam_c21n_xpro/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
@@ -170,7 +176,7 @@
           <itemPath>../src/config/sam_c21n_xpro/initialization.c</itemPath>
           <itemPath>../src/config/sam_c21n_xpro/interrupts.c</itemPath>
           <itemPath>../src/config/sam_c21n_xpro/exceptions.c</itemPath>
-          <itemPath>../src/config/sam_c21n_xpro/startup.c</itemPath>
+          <itemPath>../src/config/sam_c21n_xpro/startup_xc32.c</itemPath>
           <itemPath>../src/config/sam_c21n_xpro/libc_syscalls.c</itemPath>
           <itemPath>../src/config/sam_c21n_xpro/tasks.c</itemPath>
         </logicalFolder>
@@ -195,13 +201,13 @@
         <targetDevice>ATSAMC21N18A</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool></platformTool>
+        <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.15</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAMC21_DFP" vendor="Atmel" version="1.2.166"/>
+        <pack name="SAMC21_DFP" vendor="Microchip" version="2.0.5"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>
@@ -406,6 +412,7 @@
         <property key="programoptions.preserveprogram.ranges" value=""/>
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.preserveuserid" value="false"/>
+        <property key="programoptions.programuserotp" value="false"/>
       </EdbgTool>
       <PICkit3PlatformTool>
         <property key="ADC 1" value="true"/>
@@ -472,7 +479,6 @@
         <property key="codecoverage.enabled" value="Disable"/>
         <property key="codecoverage.enableoutputtofile" value="false"/>
         <property key="codecoverage.outputfile" value=""/>
-        <property key="codecoverage.report" value=""/>
         <property key="oscillator.auxfrequency" value="120"/>
         <property key="oscillator.auxfrequencyunit" value="Mega"/>
         <property key="oscillator.frequency" value="1"/>
@@ -597,6 +603,8 @@
                   value="report"/>
         <property key="warningmessagebreakoptions.W0034_CORE_UNALIGNED_MEMORY_ACCESS"
                   value="report"/>
+        <property key="warningmessagebreakoptions.W0035_CORE_UNIMPLEMENTED_RAMACCESS_NOTRAP"
+                  value="report"/>
         <property key="warningmessagebreakoptions.W0040_FPU_DIFF_CP10_CP11"
                   value="report"/>
         <property key="warningmessagebreakoptions.W0041_FPU_ACCESS_DENIED"
@@ -645,6 +653,10 @@
         <property key="warningmessagebreakoptions.W0116_SIM_STACK_OVERFLOW"
                   value="report"/>
         <property key="warningmessagebreakoptions.W0117_SIM_STACK_UNDERFLOW"
+                  value="report"/>
+        <property key="warningmessagebreakoptions.W0118_SIM_INVALID_FIELD_VALUE"
+                  value="report"/>
+        <property key="warningmessagebreakoptions.W0119_SIM_SAMPLING_RATE_VIOLATION"
                   value="report"/>
         <property key="warningmessagebreakoptions.W0201_ADC_NO_STIMULUS_FILE"
                   value="report"/>
@@ -742,6 +754,20 @@
                   value="report"/>
         <property key="warningmessagebreakoptions.W0702_CLC_CIRCULAR_LOOP"
                   value="report"/>
+        <property key="warningmessagebreakoptions.W0800_ACC_INPUT_INVALID_CONFIG"
+                  value="report"/>
+        <property key="warningmessagebreakoptions.W0801_ACC_INPUT_NOT_SUPPORTED"
+                  value="report"/>
+        <property key="warningmessagebreakoptions.W0802_ACC_INVERTED_WINDOW_LIMITS"
+                  value="report"/>
+        <property key="warningmessagebreakoptions.W0803_ACC_MISMATCHED_POS_INPUTS"
+                  value="report"/>
+        <property key="warningmessagebreakoptions.W0804_ACC_WINDOW_COMP_DISABLED"
+                  value="report"/>
+        <property key="warningmessagebreakoptions.W0805_ACC_WINDOW_COMPS_MODES"
+                  value="report"/>
+        <property key="warningmessagebreakoptions.W0806_ACC_FEATURE_NOT_SUPPORTED"
+                  value="report"/>
         <property key="warningmessagebreakoptions.W10001_RESERVED_IRQ_HANDLER_INVOKED"
                   value="report"/>
         <property key="warningmessagebreakoptions.W10002_UNSUPPORTED_CLK_SOURCE"
@@ -753,6 +779,8 @@
         <property key="warningmessagebreakoptions.W10103_UNSUPPORTED_RECEIVER_FILTER"
                   value="report"/>
         <property key="warningmessagebreakoptions.W10301_NO_PORT_PINS_FOUND"
+                  value="report"/>
+        <property key="warningmessagebreakoptions.W10500_UNSUPPORTED_SOURCE"
                   value="report"/>
         <property key="warningmessagebreakoptions.W1201_DATAFLASH_MEM_OUTSIDE_RANGE"
                   value="report"/>
