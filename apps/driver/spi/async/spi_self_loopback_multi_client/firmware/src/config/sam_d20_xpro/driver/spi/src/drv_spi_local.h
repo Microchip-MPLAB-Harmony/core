@@ -48,6 +48,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
+#include "driver/spi/drv_spi.h"
 #include "osal/osal.h"
 
 // *****************************************************************************
@@ -99,6 +100,29 @@ typedef enum
 } DRV_SPI_CLIENT_STATUS;
 
 // *****************************************************************************
+/* SPI Transfer Object State
+
+  Summary:
+    Defines the status of the SPI Transfer Object.
+
+  Description:
+    This enumeration defines the status of the SPI Transfer Object.
+
+  Remarks:
+    None.
+*/
+
+typedef enum
+{
+    DRV_SPI_TRANSFER_OBJ_IS_FREE,
+
+    DRV_SPI_TRANSFER_OBJ_IS_IN_QUEUE,
+
+    DRV_SPI_TRANSFER_OBJ_IS_PROCESSING,
+
+}DRV_SPI_TRANSFER_OBJ_STATE;
+
+// *****************************************************************************
 /* SPI Driver Transfer Object
 
   Summary:
@@ -113,31 +137,37 @@ typedef enum
 
 typedef struct _DRV_SPI_TRANSFER_OBJ
 {
+    /* True if object is allocated */
+    bool                            inUse;
+
     /* Pointer to the receive data */
-    void*                    pReceiveData;
+    void*                           pReceiveData;
 
     /* Pointer to the transmit data */
-    void*                    pTransmitData;
+    void*                           pTransmitData;
 
     /* Number of bytes to be written */
-    size_t                  txSize;
+    size_t                          txSize;
 
-    /* Number of bytes to be written */
-    size_t                  rxSize;
+    /* Number of bytes to be read */
+    size_t                          rxSize;
+
 
     /* Current status of the buffer */
-    DRV_SPI_TRANSFER_EVENT  event;
+    DRV_SPI_TRANSFER_EVENT          event;
 
-    /* The hardware instance object that owns this buffer */
-    void*                    hClient;
+    /* Current state of the buffer */
+    DRV_SPI_TRANSFER_OBJ_STATE      currentState;
 
-    /* Buffer Handle object that was assigned to this buffer
-     * when it was added to the queue.
-     */
-    DRV_SPI_TRANSFER_HANDLE transferHandle;
+    /* Handle to the client that owns this buffer object when it was queued */
+    DRV_HANDLE                      clientHandle;
 
-    /* next index to manage the linked list of transfer objects */
-    uint8_t                 nextIndex;
+    /* Buffer Handle object that was assigned to this buffer when it was added to
+     * the queue */
+    DRV_SPI_TRANSFER_HANDLE         transferHandle;
+
+    /* Next buffer pointer */
+    struct _DRV_SPI_TRANSFER_OBJ*   next;
 
 } DRV_SPI_TRANSFER_OBJ;
 
@@ -157,69 +187,69 @@ typedef struct _DRV_SPI_TRANSFER_OBJ
 typedef struct
 {
     /* Flag to indicate this object is in use  */
-    bool inUse;
+    bool                            inUse;
 
     /* Flag to indicate that driver has been opened Exclusively*/
-    bool isExclusive;
+    bool                            isExclusive;
 
     /* Keep track of the number of clients
      * that have opened this driver
      */
-    size_t nClients;
+    size_t                          nClients;
 
     /* Maximum number of clients */
-    size_t nClientsMax;
+    size_t                          nClientsMax;
 
     /* Memory pool for Client Objects */
-    uintptr_t clientObjPool;
+    uintptr_t                       clientObjPool;
 
     /* The status of the driver */
-    SYS_STATUS status;
+    SYS_STATUS                      status;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    const DRV_SPI_PLIB_INTERFACE* spiPlib;
+    const DRV_SPI_PLIB_INTERFACE*   spiPlib;
 
     /* start of the memory pool for transfer objects */
-    DRV_SPI_TRANSFER_OBJ* transferArray;
+    DRV_SPI_TRANSFER_OBJ*           transferObjPool;
 
     /* size/depth of the queue */
-    uint8_t transferQueueSize;
+    uint32_t                        transferObjPoolSize;
 
-    /* objects will be allocated from this end one by one */
-    uint8_t freePoolHeadIndex;
-
-    /* objects will be processed from this end one by one */
-    uint8_t queueHeadIndex;
-
-    /* new objects will be added at this end */
-    uint8_t queueTailIndex;
+    /* Linked list of transfer objects */
+    uintptr_t                       transferObjList;
 
     /* Instance specific token counter used to generate unique client/transfer handles */
-    uint16_t spiTokenCount;
+    uint16_t                        spiTokenCount;
 
     /* to identify if we are running from interrupt context or not */
-    uint8_t interruptNestingCount;
+    uint8_t                         interruptNestingCount;
 
-    /* This holds the number of dummy data to be transmitted */
-    size_t txDummyDataSize;
+    /* Last client handle. This is compared with the new client handle to
+     * decide whether or not to update the client specific SPI parameters. */
+    DRV_HANDLE                      lastClientHandle;
 
-    /* This holds the number of dummy data to be received */
-    size_t rxDummyDataSize;
 
-    /* Interrupt source ID for SPI or DMA interrupt. */
-    INT_SOURCE interruptSource;
+    const uint32_t*                 remapDataBits;
+
+    const uint32_t*                 remapClockPolarity;
+
+    const uint32_t*                 remapClockPhase;
+
+    bool                            spiTxReadyIntStatus;
+    bool                            spiTxCompleteIntStatus;
+    bool                            spiRxIntStatus;
+    bool                            dmaRxChannelIntStatus;
+    bool                            dmaTxChannelIntStatus;
+    bool                            spiInterruptStatus;
+    bool                            dmaInterruptStatus;
+
+    const DRV_SPI_INTERRUPT_SOURCES*      interruptSources;
 
     /* Mutex to protect access to the client objects */
     OSAL_MUTEX_DECLARE(mutexClientObjects);
 
     /* Mutex to protect access to the transfer objects */
     OSAL_MUTEX_DECLARE(mutexTransferObjects);
-
-    const uint32_t*     remapDataBits;
-
-    const uint32_t*     remapClockPolarity;
-
-    const uint32_t*     remapClockPhase;
 
 } DRV_SPI_OBJ;
 

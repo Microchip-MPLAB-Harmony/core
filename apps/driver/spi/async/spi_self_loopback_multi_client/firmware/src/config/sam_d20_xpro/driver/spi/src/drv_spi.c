@@ -45,6 +45,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
+#include <string.h>
 #include "configuration.h"
 #include "driver/spi/drv_spi.h"
 
@@ -56,9 +57,6 @@
 
 /* This is the driver instance object array. */
 static DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER];
-
-/* Dummy data being transmitted by TX DMA */
-static uint8_t __attribute__((aligned(32))) txDummyData[32];
 
 // *****************************************************************************
 // *****************************************************************************
@@ -84,32 +82,81 @@ static inline uint16_t _DRV_SPI_UPDATE_TOKEN(uint16_t token)
     return token;
 }
 
+static void _DRV_SPI_DisableInterrupts(DRV_SPI_OBJ* dObj)
+{
+    bool interruptStatus;
+    const DRV_SPI_INTERRUPT_SOURCES* intInfo = dObj->interruptSources;
+    const DRV_SPI_MULTI_INT_SRC* multiVector = &intInfo->intSources.multi;
+    if (intInfo->isSingleIntSrc == true)
+    {
+        /* Disable SPI interrupt */
+        dObj->spiInterruptStatus = SYS_INT_SourceDisable(intInfo->intSources.spiInterrupt);
+    }
+    else
+    {
+        /* Disable SPI interrupt sources */
+
+        interruptStatus = SYS_INT_Disable();
+        if(multiVector->spiTxReadyInt != -1)
+        {
+            dObj->spiTxReadyIntStatus = SYS_INT_SourceDisable(multiVector->spiTxReadyInt);
+        }
+        if(multiVector->spiTxCompleteInt != -1)
+        {
+            dObj->spiTxCompleteIntStatus = SYS_INT_SourceDisable(multiVector->spiTxCompleteInt);
+        }
+        if(multiVector->spiRxInt != -1)
+        {
+            dObj->spiRxIntStatus = SYS_INT_SourceDisable(multiVector->spiRxInt);
+        }
+        SYS_INT_Restore(interruptStatus);
+    }
+}
+
+static void _DRV_SPI_EnableInterrupts(DRV_SPI_OBJ* dObj)
+{
+    bool interruptStatus;
+    const DRV_SPI_INTERRUPT_SOURCES* intInfo = dObj->interruptSources;
+    const DRV_SPI_MULTI_INT_SRC* multiVector = &intInfo->intSources.multi;
+    if (intInfo->isSingleIntSrc == true)
+    {
+        /* Enable SPI interrupt */
+        SYS_INT_SourceRestore(intInfo->intSources.spiInterrupt, dObj->spiInterruptStatus);
+    }
+    else
+    {
+        /* Enable SPI interrupt sources */
+        interruptStatus = SYS_INT_Disable();
+        if(multiVector->spiTxReadyInt != -1)
+        {
+            SYS_INT_SourceRestore(multiVector->spiTxReadyInt, dObj->spiTxReadyIntStatus);
+        }
+        if(multiVector->spiTxCompleteInt != -1)
+        {
+            SYS_INT_SourceRestore(multiVector->spiTxCompleteInt,dObj->spiTxCompleteIntStatus);
+        }
+        if(multiVector->spiRxInt != -1)
+        {
+            SYS_INT_SourceRestore(multiVector->spiRxInt, dObj->spiRxIntStatus);
+        }
+        SYS_INT_Restore(interruptStatus);
+    }
+}
+
 static bool _DRV_SPI_ResourceLock(DRV_SPI_OBJ * dObj)
 {
-    /* We will allow buffers to be added in the interrupt
-       context of the SPI driver. But we must make
-       sure that if we are inside interrupt, then we should
-       not modify mutexes. */
+    /* We will allow buffers to be added in the interrupt context of the SPI
+     * driver. But we must make sure that if we are inside interrupt, then we
+     * should not modify mutexes. */
     if(dObj->interruptNestingCount == 0)
     {
-        /* Grab a mutex. This is okay because we are not in an
-           interrupt context */
-        if(OSAL_MUTEX_Lock(&(dObj->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+        /* Grab a mutex. This is okay because we are not in an interrupt context */
+        if(OSAL_MUTEX_Lock(&(dObj->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
         {
-            /* We will disable interrupts so that the queue
-               status does not get updated asynchronously.
-               This code will always execute. */
-            SYS_INT_SourceDisable(dObj->interruptSource);
-
-            return true;
-        }
-        else
-        {
-            /* The mutex acquisition timed out. Return with an
-               invalid handle. This code will not execute
-               if there is no RTOS. */
             return false;
         }
+        /* We will disable interrupts so that the queue status does not get updated asynchronously */
+        _DRV_SPI_DisableInterrupts(dObj);
     }
 
     return true;
@@ -117,10 +164,10 @@ static bool _DRV_SPI_ResourceLock(DRV_SPI_OBJ * dObj)
 
 static void _DRV_SPI_ResourceUnlock(DRV_SPI_OBJ * dObj)
 {
-    SYS_INT_SourceEnable(dObj->interruptSource);
-
     if(dObj->interruptNestingCount == 0)
     {
+        _DRV_SPI_EnableInterrupts(dObj);
+
         /* Release mutex */
         OSAL_MUTEX_Unlock(&(dObj->mutexTransferObjects));
     }
@@ -162,71 +209,157 @@ static DRV_SPI_CLIENT_OBJ * _DRV_SPI_DriverHandleValidate(DRV_HANDLE handle)
     return(clientObj);
 }
 
-static void _DRV_SPI_TransferQueuePurge( DRV_SPI_CLIENT_OBJ * clientObj )
+static DRV_SPI_TRANSFER_OBJ* _DRV_SPI_FreeTransferObjGet(DRV_SPI_CLIENT_OBJ* clientObj)
 {
-    DRV_SPI_OBJ * dObj = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
-    uint8_t currentIndex = NULL_INDEX;
-    uint8_t previousIndex = NULL_INDEX;
-    uint8_t savedNextIndex = NULL_INDEX;
+    uint32_t index;
+    DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ* )&gDrvSPIObj[clientObj->drvIndex];
+    DRV_SPI_TRANSFER_OBJ* pTransferObj = (DRV_SPI_TRANSFER_OBJ*)dObj->transferObjPool;
 
-    dObj->queueTailIndex = NULL_INDEX;
-    currentIndex = dObj->queueHeadIndex;
-
-    while(currentIndex != NULL_INDEX)
+    for (index = 0; index < dObj->transferObjPoolSize; index++)
     {
-        savedNextIndex = dObj->transferArray[currentIndex].nextIndex;
-
-        if(clientObj == (DRV_SPI_CLIENT_OBJ *)dObj->transferArray[currentIndex].hClient)
+        if (pTransferObj[index].inUse == false)
         {
-            /* That means this transfer object is owned
-               by this client. This transfer object should
-               be removed. The following code removes
-               the object from a linked list queue. */
+            pTransferObj[index].inUse = true;
+            pTransferObj[index].next = NULL;
 
-            if (previousIndex == NULL_INDEX)
+            /* Generate a unique buffer handle consisting of an incrementing
+             * token counter, driver index and the buffer index.
+             */
+            pTransferObj[index].transferHandle = (DRV_SPI_TRANSFER_HANDLE)_DRV_SPI_MAKE_HANDLE(
+                dObj->spiTokenCount, (uint8_t)clientObj->drvIndex, index);
+
+            /* Update the token for next time */
+            dObj->spiTokenCount = _DRV_SPI_UPDATE_TOKEN(dObj->spiTokenCount);
+
+            return &pTransferObj[index];
+        }
+    }
+    return NULL;
+}
+
+static bool _DRV_SPI_TransferObjAddToList(
+    DRV_SPI_OBJ* dObj,
+    DRV_SPI_TRANSFER_OBJ* transferObj
+)
+{
+    DRV_SPI_TRANSFER_OBJ** pTransferObjList;
+    bool isFirstTransferInList = false;
+
+    pTransferObjList = (DRV_SPI_TRANSFER_OBJ**)&(dObj->transferObjList);
+
+    // Is the buffer object list empty?
+    if (*pTransferObjList == NULL)
+    {
+        *pTransferObjList = transferObj;
+        isFirstTransferInList = true;
+    }
+    else
+    {
+        // List is not empty. Iterate to the end of the buffer object list.
+        while (*pTransferObjList != NULL)
+        {
+            if ((*pTransferObjList)->next == NULL)
             {
-                dObj->queueHeadIndex = dObj->transferArray[currentIndex].nextIndex;
+                // End of the list reached, add the buffer here.
+                (*pTransferObjList)->next = transferObj;
+                break;
             }
             else
             {
-                dObj->transferArray[previousIndex].nextIndex = dObj->transferArray[currentIndex].nextIndex;
+                pTransferObjList = (DRV_SPI_TRANSFER_OBJ**)&((*pTransferObjList)->next);
             }
-
-            /* Now put the freed object into the free pool */
-            dObj->transferArray[currentIndex].nextIndex = dObj->freePoolHeadIndex;
-            dObj->freePoolHeadIndex = currentIndex;
         }
-        else
-        {
-            dObj->queueTailIndex = currentIndex;
-            previousIndex = currentIndex;
-        }
+    }
 
-        currentIndex = savedNextIndex;
+    return isFirstTransferInList;
+}
+
+static DRV_SPI_TRANSFER_OBJ* _DRV_SPI_TransferObjListGet( DRV_SPI_OBJ* dObj )
+{
+    DRV_SPI_TRANSFER_OBJ* pTransferObj = NULL;
+
+    // Return the element at the head of the linked list
+    pTransferObj = (DRV_SPI_TRANSFER_OBJ*)dObj->transferObjList;
+
+    return pTransferObj;
+}
+
+static void _DRV_SPI_RemoveTransferObjFromList( DRV_SPI_OBJ* dObj )
+{
+    DRV_SPI_TRANSFER_OBJ** pTransferObjList;
+
+    pTransferObjList = (DRV_SPI_TRANSFER_OBJ**)&(dObj->transferObjList);
+
+    // Remove the element at the head of the linked list
+    if (*pTransferObjList != NULL)
+    {
+        /* Save the buffer object to be removed. Set the next buffer object as
+         * the new head of the linked list. Reset the removed buffer object. */
+
+        DRV_SPI_TRANSFER_OBJ* temp = *pTransferObjList;
+        *pTransferObjList = (*pTransferObjList)->next;
+        temp->currentState = DRV_SPI_TRANSFER_OBJ_IS_FREE;
+        temp->next = NULL;
+        temp->inUse = false;
     }
 }
 
-static void _DRV_SPI_ReleaseBufferObject(DRV_SPI_TRANSFER_OBJ    *transferObj)
+static void _DRV_SPI_RemoveClientTransfersFromList(
+    DRV_SPI_OBJ* dObj,
+    DRV_SPI_CLIENT_OBJ* clientObj
+)
 {
-    DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)transferObj->hClient;
-    DRV_SPI_OBJ *dObj = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
-    uint8_t     tempQueueHeadIndex = dObj->queueHeadIndex;
+    DRV_SPI_TRANSFER_OBJ** pTransferObjList;
+    DRV_SPI_TRANSFER_OBJ* delTransferObj = NULL;
 
-    /* Get the next buffer in the queue and deallocate this buffer */
-    dObj->queueHeadIndex = transferObj->nextIndex;
-    transferObj->nextIndex = dObj->freePoolHeadIndex;
-    dObj->freePoolHeadIndex = tempQueueHeadIndex;
+    pTransferObjList = (DRV_SPI_TRANSFER_OBJ**)&(dObj->transferObjList);
+
+    while (*pTransferObjList != NULL)
+    {
+        // Do not remove the buffer object that is already in process
+        if (((*pTransferObjList)->clientHandle == clientObj->clientHandle) && 
+                ((*pTransferObjList)->currentState == DRV_SPI_TRANSFER_OBJ_IS_IN_QUEUE))
+        {
+            // Save the node to be deleted off the list
+            delTransferObj = *pTransferObjList;
+
+            // Update the current node to point to the deleted node's next
+            *pTransferObjList = (DRV_SPI_TRANSFER_OBJ*)(*pTransferObjList)->next;
+
+            // Reset the deleted node
+            delTransferObj->currentState = DRV_SPI_TRANSFER_OBJ_IS_FREE;
+            delTransferObj->event = DRV_SPI_TRANSFER_EVENT_COMPLETE;
+            delTransferObj->next = NULL;
+            delTransferObj->inUse = false;
+        }
+        else
+        {
+            // Move to the next node
+            pTransferObjList = (DRV_SPI_TRANSFER_OBJ**)&((*pTransferObjList)->next);
+        }
+    }
 }
 
-static void _DRV_SPI_UpdateTransferSetupAndAssertCS(DRV_SPI_CLIENT_OBJ* clientObj)
+
+static void _DRV_SPI_UpdateTransferSetupAndAssertCS(
+    DRV_SPI_TRANSFER_OBJ* transferObj
+)
 {
-    DRV_SPI_OBJ *dObj = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
+    DRV_SPI_OBJ* dObj;
+    DRV_SPI_CLIENT_OBJ* clientObj;
+
+    /* Get the client object that owns this buffer */
+    clientObj = &((DRV_SPI_CLIENT_OBJ *)gDrvSPIObj[((transferObj->clientHandle & DRV_SPI_INSTANCE_MASK) >> 8)].clientObjPool)
+    [transferObj->clientHandle & DRV_SPI_INDEX_MASK];
+
+    dObj = (DRV_SPI_OBJ*)&gDrvSPIObj[clientObj->drvIndex];
 
     /* Update the PLIB Setup if current request is from a different client or
-    setup has been changed dynamically for the client */
-    if((dObj->transferArray[dObj->freePoolHeadIndex].hClient != clientObj) || (clientObj->setupChanged == true))
+     * setup has been changed dynamically for the client */
+    if((transferObj->clientHandle != dObj->lastClientHandle) || (clientObj->setupChanged == true))
     {
         dObj->spiPlib->setup(&clientObj->setup, _USE_FREQ_CONFIGURED_IN_CLOCK_MANAGER);
+        dObj->lastClientHandle = transferObj->clientHandle;
         clientObj->setupChanged = false;
     }
 
@@ -239,19 +372,25 @@ static void _DRV_SPI_UpdateTransferSetupAndAssertCS(DRV_SPI_CLIENT_OBJ* clientOb
 
 static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
 {
-    DRV_SPI_OBJ             *dObj             = (DRV_SPI_OBJ *)contextHandle;
-    DRV_SPI_CLIENT_OBJ      *clientObj        = (DRV_SPI_CLIENT_OBJ *)NULL;
-    DRV_SPI_TRANSFER_OBJ    *transferObj      = (DRV_SPI_TRANSFER_OBJ *)NULL;
+    DRV_SPI_OBJ* dObj                    = (DRV_SPI_OBJ*)contextHandle;
+    DRV_SPI_CLIENT_OBJ* clientObj        = (DRV_SPI_CLIENT_OBJ*)NULL;
+    DRV_SPI_TRANSFER_OBJ* transferObj    = (DRV_SPI_TRANSFER_OBJ*)NULL;
+    DRV_SPI_TRANSFER_EVENT event;
+    DRV_SPI_TRANSFER_HANDLE transferHandle;
 
-    if((!dObj->inUse) || (dObj->status != SYS_STATUS_READY))
+    if((dObj->inUse == false) || (dObj->status != SYS_STATUS_READY))
     {
         /* This instance of the driver is not initialized. Don't
          * do anything */
         return;
     }
 
-    transferObj = &dObj->transferArray[dObj->queueHeadIndex];
-    clientObj = (DRV_SPI_CLIENT_OBJ *)transferObj->hClient;
+    /* Get the transfer object at the head of the list */
+    transferObj = _DRV_SPI_TransferObjListGet(dObj);
+
+    /* Get the client object that owns this buffer */
+    clientObj = &((DRV_SPI_CLIENT_OBJ *)gDrvSPIObj[((transferObj->clientHandle & DRV_SPI_INSTANCE_MASK) >> 8)].clientObjPool)
+    [transferObj->clientHandle & DRV_SPI_INDEX_MASK];
 
     /* De-assert Chip Select if it is defined by user */
     if(clientObj->setup.chipSelect != SYS_PORT_PIN_NONE)
@@ -259,35 +398,60 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
         SYS_PORT_PinWrite(clientObj->setup.chipSelect, !((bool)(clientObj->setup.csPolarity)));
     }
 
-    transferObj->event = DRV_SPI_TRANSFER_EVENT_COMPLETE;
-
-    _DRV_SPI_ReleaseBufferObject(transferObj);
-
-    if(clientObj->eventHandler != NULL)
+    /* Check if the client that submitted the request is active? */
+    if (clientObj->clientHandle == transferObj->clientHandle)
     {
-        /* Call the event handler. We additionally increment the
-        interrupt nesting count which lets the driver functions
-        that are called from the event handler know that an
-        interrupt context is active. */
-        dObj->interruptNestingCount++;
+        transferObj->event = DRV_SPI_TRANSFER_EVENT_COMPLETE;
 
-        clientObj->eventHandler(transferObj->event, transferObj->transferHandle, clientObj->context);
+        /* Save the transfer handle and event locally before freeing the transfer object*/
+        event = transferObj->event;
+        transferHandle = transferObj->transferHandle;
 
-        /* Event handler has completed, so decrement the nesting count now */
-        dObj->interruptNestingCount--;
+        /* Free the completed buffer.
+         * This is done before giving callback to allow application to use the freed
+         * buffer and queue in a new request from within the callback */
+
+        _DRV_SPI_RemoveTransferObjFromList(dObj);
+
+        if(clientObj->eventHandler != NULL)
+        {
+            /* Call the event handler. We additionally increment the
+            interrupt nesting count which lets the driver functions
+            that are called from the event handler know that an
+            interrupt context is active. */
+            dObj->interruptNestingCount++;
+
+            clientObj->eventHandler(event, transferHandle, clientObj->context);
+
+            /* Event handler has completed, so decrement the nesting count now */
+            dObj->interruptNestingCount--;
+        }
+    }
+    else
+    {
+        /* Free the completed buffer */
+        _DRV_SPI_RemoveTransferObjFromList(dObj);
     }
 
-    /* Process the next transfer in queue */
-    if(dObj->queueHeadIndex != NULL_INDEX)
+     /* Get the transfer object at the head of the list */
+    transferObj = _DRV_SPI_TransferObjListGet(dObj);
+
+    /* Process the next transfer buffer */
+    if((transferObj != NULL) && (transferObj->currentState == DRV_SPI_TRANSFER_OBJ_IS_IN_QUEUE))
     {
-        transferObj = &dObj->transferArray[dObj->queueHeadIndex];
-        clientObj = (DRV_SPI_CLIENT_OBJ *)transferObj->hClient;
+        _DRV_SPI_UpdateTransferSetupAndAssertCS(transferObj);
 
-        _DRV_SPI_UpdateTransferSetupAndAssertCS(clientObj);
+        transferObj->currentState = DRV_SPI_TRANSFER_OBJ_IS_PROCESSING;
 
-        dObj->spiPlib->writeRead(transferObj->pTransmitData, transferObj->txSize, transferObj->pReceiveData, transferObj->rxSize);
+        dObj->spiPlib->writeRead(
+            transferObj->pTransmitData,
+            transferObj->txSize,
+            transferObj->pReceiveData,
+            transferObj->rxSize
+        );
     }
 }
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -295,12 +459,14 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
 // *****************************************************************************
 // *****************************************************************************
 
-SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT * const init )
+SYS_MODULE_OBJ DRV_SPI_Initialize (
+    const SYS_MODULE_INDEX drvIndex,
+    const SYS_MODULE_INIT* const init
+)
 {
-    DRV_SPI_OBJ *dObj     = (DRV_SPI_OBJ *)NULL;
-    DRV_SPI_INIT *spiInit = (DRV_SPI_INIT *)init;
-    size_t  freePoolIndex;
-    size_t  txDummyDataIdx;
+    DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ*)NULL;
+    DRV_SPI_INIT* spiInit = (DRV_SPI_INIT*)init;
+
 
     /* Validate the request */
     if(drvIndex >= DRV_SPI_INSTANCES_NUMBER)
@@ -317,43 +483,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
 
     /* Allocate the driver object */
     dObj = &gDrvSPIObj[drvIndex];
-    dObj->inUse = true;
 
-    /* Update the driver parameters */
-    dObj->spiPlib               = spiInit->spiPlib;
-    dObj->interruptSource       = spiInit->interruptSource;
-    dObj->transferArray         =(DRV_SPI_TRANSFER_OBJ *)spiInit->transferObjPool;
-    dObj->transferQueueSize     = spiInit->queueSize;
-    dObj->freePoolHeadIndex     = 0;
-    dObj->queueHeadIndex        = NULL_INDEX;
-    dObj->queueTailIndex        = NULL_INDEX;
-    dObj->clientObjPool         = spiInit->clientObjPool;
-    dObj->nClientsMax           = spiInit->numClients;
-    dObj->nClients              = 0;
-    dObj->spiTokenCount         = 1;
-    dObj->interruptNestingCount = 0;
-    dObj->isExclusive           = false;
-    dObj->remapDataBits         = spiInit->remapDataBits;
-    dObj->remapClockPolarity    = spiInit->remapClockPolarity;
-    dObj->remapClockPhase       = spiInit->remapClockPhase;
-
-    for (txDummyDataIdx = 0; txDummyDataIdx < sizeof(txDummyData); txDummyDataIdx++)
-    {
-        txDummyData[txDummyDataIdx] = 0xFF;
-    }
-
-    /* initialize buffer free pool*/
-    for(freePoolIndex = 0; freePoolIndex < spiInit->queueSize - 1; freePoolIndex++)
-    {
-        dObj->transferArray[freePoolIndex].nextIndex = freePoolIndex + 1;
-    }
-
-    dObj->transferArray[freePoolIndex].nextIndex = NULL_INDEX;
-
-    /* Register a callback with SPI PLIB.
-     * dObj as a context parameter will be used to distinguish the events
-     * from different instances. */
-    dObj->spiPlib->callbackRegister(&_DRV_SPI_PlibCallbackHandler, (uintptr_t)dObj);
     /* Create mutexes */
     if(OSAL_MUTEX_Create(&(dObj->mutexClientObjects)) != OSAL_RESULT_TRUE)
     {
@@ -364,6 +494,31 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     {
         return SYS_MODULE_OBJ_INVALID;
     }
+
+    dObj->inUse = true;
+
+    /* Update the driver parameters */
+    dObj->spiPlib                   = spiInit->spiPlib;
+    dObj->transferObjPool           = (DRV_SPI_TRANSFER_OBJ*)spiInit->transferObjPool;
+    dObj->transferObjPoolSize       = spiInit->transferObjPoolSize;
+    dObj->transferObjList           = (uintptr_t)NULL;
+    dObj->clientObjPool             = spiInit->clientObjPool;
+    dObj->nClientsMax               = spiInit->numClients;
+    dObj->nClients                  = 0;
+    dObj->spiTokenCount             = 1;
+    dObj->lastClientHandle          = DRV_HANDLE_INVALID;
+    dObj->interruptNestingCount     = 0;
+    dObj->isExclusive               = false;
+    dObj->remapDataBits             = spiInit->remapDataBits;
+    dObj->remapClockPolarity        = spiInit->remapClockPolarity;
+    dObj->remapClockPhase           = spiInit->remapClockPhase;
+    dObj->interruptSources          = spiInit->interruptSources;
+
+
+    /* Register a callback with SPI PLIB.
+     * dObj as a context parameter will be used to distinguish the events
+     * from different instances. */
+    dObj->spiPlib->callbackRegister(&_DRV_SPI_PlibCallbackHandler, (uintptr_t)dObj);
 
     /* Update the status */
     dObj->status = SYS_STATUS_READY;
@@ -384,11 +539,14 @@ SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object)
     return (gDrvSPIObj[object].status);
 }
 
-DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
+DRV_HANDLE DRV_SPI_Open(
+    const SYS_MODULE_INDEX drvIndex,
+    const DRV_IO_INTENT ioIntent
+)
 {
-    DRV_SPI_CLIENT_OBJ *clientObj;
-    DRV_SPI_OBJ *dObj = NULL;
-    unsigned int iClient;
+    DRV_SPI_CLIENT_OBJ* clientObj;
+    DRV_SPI_OBJ* dObj = NULL;
+    uint32_t iClient;
 
     /* Validate the request */
     if (drvIndex >= DRV_SPI_INSTANCES_NUMBER)
@@ -399,33 +557,29 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
 
     dObj = &gDrvSPIObj[drvIndex];
 
-    if((dObj->status != SYS_STATUS_READY) || (dObj->inUse == false))
-    {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Was the driver initialized?");
-        return DRV_HANDLE_INVALID;
-    }
-
-    /* Acquire the instance specific mutex to protect the instance specific
-     * client pool */
+    /* Guard against multiple threads trying to open the driver */
     if (OSAL_MUTEX_Lock(&dObj->mutexClientObjects , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
     {
         return DRV_HANDLE_INVALID;
     }
 
-    /* Take care of Exclusive mode intent of driver */
-    if(dObj->isExclusive)
+    if((dObj->status != SYS_STATUS_READY) || (dObj->inUse == false))
     {
-        /* This means the another client has opened the driver in exclusive
-           mode. So the driver cannot be opened by any other client. */
+        SYS_DEBUG(SYS_ERROR_ERROR, "Was the driver initialized?");
+        OSAL_MUTEX_Unlock( &dObj->mutexClientObjects);
+        return DRV_HANDLE_INVALID;
+    }
+
+    if(dObj->isExclusive == true)
+    {
+        /* Driver is already opened with exclusive access. Hence, cannot be opened again*/
         OSAL_MUTEX_Unlock( &dObj->mutexClientObjects);
         return DRV_HANDLE_INVALID;
     }
 
     if((dObj->nClients > 0) && (ioIntent & DRV_IO_INTENT_EXCLUSIVE))
     {
-        /* This means the driver was already opened and another driver was
-           trying to open it exclusively.  We cannot give exclusive access in
-           this case */
+        /* Exclusive access is requested while the driver is already opened by other client */
         OSAL_MUTEX_Unlock( &dObj->mutexClientObjects);
         return(DRV_HANDLE_INVALID);
     }
@@ -434,10 +588,10 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
     {
         clientObj = &((DRV_SPI_CLIENT_OBJ *)dObj->clientObjPool)[iClient];
 
-        if(!clientObj->inUse)
+        if(clientObj->inUse == false)
         {
             /* This means we have a free client object to use */
-            clientObj->inUse        = true;
+            clientObj->inUse = true;
 
             if(ioIntent & DRV_IO_INTENT_EXCLUSIVE)
             {
@@ -448,12 +602,13 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             dObj->nClients ++;
 
             /* Generate the client handle */
-            clientObj->clientHandle = (DRV_HANDLE)_DRV_SPI_MAKE_HANDLE(dObj->spiTokenCount, (uint8_t)drvIndex, iClient);
+            clientObj->clientHandle = (DRV_HANDLE)_DRV_SPI_MAKE_HANDLE(dObj->spiTokenCount, 
+                    (uint8_t)drvIndex, iClient);
 
             /* Increment the instance specific token counter */
             dObj->spiTokenCount = _DRV_SPI_UPDATE_TOKEN(dObj->spiTokenCount);
 
-            /* We have found a client object and also updated corresponding driver object members, now release the mutex */
+            /* We have found a client object, now release the mutex */
             OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
 
             /* This driver will always work in Non-Blocking mode */
@@ -470,19 +625,19 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
         }
     }
 
-    /* If we have reached here, it means we could not find a spare client object.
-       So now release the mutex and return with an invalid handle. */
+    /* Could not find a client object. Release the mutex and return with an invalid handle. */
     OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
+
     return DRV_HANDLE_INVALID;
 }
 
 void DRV_SPI_Close( DRV_HANDLE handle )
 {
-    /* This function closes the client, The client objects are
-       deallocated and returned to the free pool. */
+    /* This function closes the client, The client objects are deallocated and
+     * returned to the free pool. */
 
-    DRV_SPI_CLIENT_OBJ * clientObj;
-    DRV_SPI_OBJ * dObj;
+    DRV_SPI_CLIENT_OBJ* clientObj;
+    DRV_SPI_OBJ* dObj;
 
     /* Validate the driver handle */
     clientObj = _DRV_SPI_DriverHandleValidate(handle);
@@ -495,20 +650,33 @@ void DRV_SPI_Close( DRV_HANDLE handle )
 
     dObj = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
 
+    /* Guard against multiple threads trying to open/close the driver */
     if (OSAL_MUTEX_Lock(&dObj->mutexClientObjects , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
     {
         SYS_DEBUG(SYS_ERROR_ERROR, "Failed to get client mutex lock");
         return;
     }
+    /* We will be removing the transfers queued by the client. Guard the linked list
+     * against interrupts */
+    if(_DRV_SPI_ResourceLock(dObj) == false)
+    {
+        SYS_DEBUG(SYS_ERROR_ERROR, "Failed to get resource lock");
+        return;
+    }
 
-    /* Remove all buffers that this client owns from the driver queue. */
-    _DRV_SPI_TransferQueuePurge(clientObj);
+    /* Remove all buffers that this client owns from the driver queue */
+    _DRV_SPI_RemoveClientTransfersFromList(dObj, clientObj);
+
+    _DRV_SPI_ResourceUnlock(dObj);
 
     /* Reduce the number of clients */
     dObj->nClients--;
 
     /* Reset the exclusive flag */
     dObj->isExclusive = false;
+
+    /* Invalidate the client handle */
+    clientObj->clientHandle = DRV_HANDLE_INVALID;
 
     /* De-allocate the client object */
     clientObj->inUse = false;
@@ -518,10 +686,14 @@ void DRV_SPI_Close( DRV_HANDLE handle )
     return;
 }
 
-void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRANSFER_EVENT_HANDLER eventHandler, uintptr_t context )
+void DRV_SPI_TransferEventHandlerSet(
+    const DRV_HANDLE handle,
+    const DRV_SPI_TRANSFER_EVENT_HANDLER eventHandler,
+    uintptr_t context
+)
 {
-    DRV_SPI_CLIENT_OBJ * clientObj = NULL;
-    DRV_SPI_OBJ* hDriver           = (DRV_SPI_OBJ *)NULL;
+    DRV_SPI_CLIENT_OBJ* clientObj = NULL;
+    DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ*)NULL;
 
     /* Validate the driver handle */
     clientObj = _DRV_SPI_DriverHandleValidate(handle);
@@ -532,9 +704,9 @@ void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRA
         return;
     }
 
-    hDriver = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
+    dObj = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
 
-    if(_DRV_SPI_ResourceLock(hDriver) == false)
+    if(_DRV_SPI_ResourceLock(dObj) == false)
     {
         SYS_DEBUG(SYS_ERROR_ERROR, "Failed to get resource lock");
         return;
@@ -544,13 +716,16 @@ void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRA
     clientObj->eventHandler = eventHandler;
     clientObj->context = context;
 
-    _DRV_SPI_ResourceUnlock(hDriver);
+    _DRV_SPI_ResourceUnlock(dObj);
 }
 
-bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * setup )
+bool DRV_SPI_TransferSetup (
+    const DRV_HANDLE handle,
+    DRV_SPI_TRANSFER_SETUP* setup
+)
 {
-    DRV_SPI_CLIENT_OBJ * clientObj = NULL;
-    DRV_SPI_OBJ* hDriver = (DRV_SPI_OBJ *)NULL;
+    DRV_SPI_CLIENT_OBJ* clientObj = NULL;
+    DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ*)NULL;
     DRV_SPI_TRANSFER_SETUP setupRemap;
     bool isSuccess = false;
 
@@ -559,15 +734,15 @@ bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * se
 
     if((clientObj != NULL) && (setup != NULL))
     {
-        hDriver = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
+        dObj = (DRV_SPI_OBJ*)&gDrvSPIObj[clientObj->drvIndex];
 
         setupRemap = *setup;
 
-        setupRemap.clockPolarity = (DRV_SPI_CLOCK_POLARITY)hDriver->remapClockPolarity[setup->clockPolarity];
-        setupRemap.clockPhase = (DRV_SPI_CLOCK_PHASE)hDriver->remapClockPhase[setup->clockPhase];
-        setupRemap.dataBits = (DRV_SPI_DATA_BITS)hDriver->remapDataBits[setup->dataBits];
+        setupRemap.clockPolarity = (DRV_SPI_CLOCK_POLARITY)dObj->remapClockPolarity[setup->clockPolarity];
+        setupRemap.clockPhase = (DRV_SPI_CLOCK_PHASE)dObj->remapClockPhase[setup->clockPhase];
+        setupRemap.dataBits = (DRV_SPI_DATA_BITS)dObj->remapDataBits[setup->dataBits];
 
-        if ((setupRemap.clockPhase != DRV_SPI_CLOCK_PHASE_INVALID) && (setupRemap.clockPolarity != DRV_SPI_CLOCK_POLARITY_INVALID) \
+        if ((setupRemap.clockPhase != DRV_SPI_CLOCK_PHASE_INVALID) && (setupRemap.clockPolarity != DRV_SPI_CLOCK_POLARITY_INVALID) 
                 && (setupRemap.dataBits != DRV_SPI_DATA_BITS_INVALID))
         {
             /* Save the required setup in client object which can be used while
@@ -583,130 +758,100 @@ bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * se
     return isSuccess;
 }
 
-void DRV_SPI_WriteReadTransferAdd
-(
+void DRV_SPI_WriteReadTransferAdd (
     const DRV_HANDLE handle,
-    void*       pTransmitData,
-    size_t      txSize,
-    void*       pReceiveData,
-    size_t      rxSize,
-    DRV_SPI_TRANSFER_HANDLE * const transferHandle
+    void* pTransmitData,
+    size_t txSize,
+    void* pReceiveData,
+    size_t rxSize,
+    DRV_SPI_TRANSFER_HANDLE* const transferHandle
 )
-
 {
-    DRV_SPI_CLIENT_OBJ          * clientObj         = (DRV_SPI_CLIENT_OBJ *)NULL;
-    DRV_SPI_OBJ                 * hDriver           = (DRV_SPI_OBJ *)NULL;
-    DRV_SPI_TRANSFER_OBJ        * transferObj       = (DRV_SPI_TRANSFER_OBJ *)NULL;
-    uint8_t                     nextFreePoolHeadIndex;
+    DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ*)NULL;
+    DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ*)NULL;
+    DRV_SPI_TRANSFER_OBJ* transferObj = (DRV_SPI_TRANSFER_OBJ*)NULL;
+
+    if (transferHandle == NULL)
+    {
+        return;
+    }
 
     *transferHandle = DRV_SPI_TRANSFER_HANDLE_INVALID;
 
     /* Validate the driver handle */
     clientObj = _DRV_SPI_DriverHandleValidate(handle);
-
-    if((clientObj != NULL) && (transferHandle != NULL) && (((txSize > 0) && (pTransmitData != NULL)) || ((rxSize > 0) && (pReceiveData != NULL))))
+    if (clientObj == NULL)
     {
-        hDriver = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
+        return;
+    }
 
-        if(hDriver->freePoolHeadIndex == NULL_INDEX)
-        {
-            /* This means we could not find a buffer. This
-               will happen if the the transfer queue size
-               parameter is configured to be less */
+    if( ((txSize > 0) && (pTransmitData != NULL)) || ((rxSize > 0) && (pReceiveData != NULL)) )
+    {
+        dObj = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
 
-            SYS_DEBUG(SYS_ERROR_ERROR, "Insufficient Queue Depth");
-            return;
-        }
-
-        if(_DRV_SPI_ResourceLock(hDriver) == false)
+        if(_DRV_SPI_ResourceLock(dObj) == false)
         {
             SYS_DEBUG(SYS_ERROR_ERROR, "Failed to get resource lock");
             return;
         }
 
-        /* Allocate a free object from the free pool */
-        transferObj = &hDriver->transferArray[hDriver->freePoolHeadIndex];
+        /* Get a free transfer object */
+        transferObj = _DRV_SPI_FreeTransferObjGet(clientObj);
 
-        /* Save the next free pool head index */
-        nextFreePoolHeadIndex = hDriver->transferArray[hDriver->freePoolHeadIndex].nextIndex;
+        if (transferObj == NULL)
+        {
+            /* This means we could not find a buffer. This will happen if the the
+             * transfer queue size parameter is configured to be less */
+
+            SYS_DEBUG(SYS_ERROR_ERROR, "Insufficient Queue Depth");
+            _DRV_SPI_ResourceUnlock(dObj);
+            return;
+        }
 
         /* Configure the object */
         transferObj->pReceiveData   = pReceiveData;
         transferObj->pTransmitData  = pTransmitData;
+        transferObj->currentState   = DRV_SPI_TRANSFER_OBJ_IS_IN_QUEUE;
         transferObj->event          = DRV_SPI_TRANSFER_EVENT_PENDING;
-        transferObj->nextIndex      = NULL_INDEX;
+        transferObj->clientHandle   = handle;
 
         transferObj->txSize = txSize;
         transferObj->rxSize = rxSize;
 
-        /* Update transferHandle object with unique ID.
-        ID is combination of an incrementing token, driver instance number and allocated location from the free pool */
-        transferObj->transferHandle = (DRV_HANDLE)_DRV_SPI_MAKE_HANDLE(hDriver->spiTokenCount, (uint8_t)clientObj->drvIndex, hDriver->freePoolHeadIndex);
-
-        /* Update the Token for next time */
-        hDriver->spiTokenCount = _DRV_SPI_UPDATE_TOKEN(hDriver->spiTokenCount);
-
-        /* Update the unique transfer handle in output parameter.
-        This handle can be used by user to poll the status of transfer operation */
+        /* Update the unique transfer handle in output parameter.This handle can
+         * be used by user to poll the status of transfer operation */
         *transferHandle = transferObj->transferHandle;
 
-        if(hDriver->queueHeadIndex == NULL_INDEX)
+        /* Add the buffer object to the transfer buffer list */
+        if (_DRV_SPI_TransferObjAddToList(dObj, transferObj) == true)
         {
-            /* It means this is the first buffer in the queue */
+            transferObj->currentState = DRV_SPI_TRANSFER_OBJ_IS_PROCESSING;
 
-            /* Since this is the only buffer in the queue, queue head and queue tail should point to the same location */
-            hDriver->queueHeadIndex = hDriver->freePoolHeadIndex;
-            hDriver->queueTailIndex = hDriver->freePoolHeadIndex;
+             /* This is the first request in the queue, hence initiate a transfer */
+            _DRV_SPI_UpdateTransferSetupAndAssertCS(transferObj);
 
-            _DRV_SPI_UpdateTransferSetupAndAssertCS(clientObj);
-
-            /* Update free pool head pointer to point to next free element in the free pool */
-            hDriver->freePoolHeadIndex = nextFreePoolHeadIndex;
-
-            /* Save clientObj */
-            transferObj->hClient = clientObj;
-
-            /* Because this is the first request in the queue, we need to trigger the transfer either
-            with DMA or PLIB based on MHC configuration */
-            hDriver->spiPlib->writeRead(transferObj->pTransmitData, transferObj->txSize, transferObj->pReceiveData, transferObj->rxSize);
-        }
-        else
-        {
-            /* It means there are already one or more buffer in the queue */
-
-            /* take the free object from free pool, add in the queue and update the queue linked list */
-            hDriver->transferArray[hDriver->queueTailIndex].nextIndex = hDriver->freePoolHeadIndex;
-            hDriver->queueTailIndex = hDriver->freePoolHeadIndex;
-
-            /* Update free pool head pointer to point to next free element in the free pool */
-            hDriver->freePoolHeadIndex = nextFreePoolHeadIndex;
-
-            /* Save clientObj */
-            transferObj->hClient = clientObj;
+            dObj->spiPlib->writeRead(transferObj->pTransmitData, transferObj->txSize, transferObj->pReceiveData, transferObj->rxSize);
         }
 
-        _DRV_SPI_ResourceUnlock(hDriver);
+        _DRV_SPI_ResourceUnlock(dObj);
     }
-    return;
 }
 
-void DRV_SPI_WriteTransferAdd
-(
+void DRV_SPI_WriteTransferAdd (
     const   DRV_HANDLE  handle,
     void*   pTransmitData,
     size_t  txSize,
-    DRV_SPI_TRANSFER_HANDLE * const transferHandle
+    DRV_SPI_TRANSFER_HANDLE* const transferHandle
 )
 {
     DRV_SPI_WriteReadTransferAdd(handle, pTransmitData, txSize, NULL, 0, transferHandle);
 }
 
-void DRV_SPI_ReadTransferAdd
-(
+void DRV_SPI_ReadTransferAdd (
     const   DRV_HANDLE  handle,
     void*   pReceiveData,
     size_t  rxSize,
-    DRV_SPI_TRANSFER_HANDLE * const transferHandle
+    DRV_SPI_TRANSFER_HANDLE* const transferHandle
 )
 {
     DRV_SPI_WriteReadTransferAdd(handle, NULL, 0, pReceiveData, rxSize, transferHandle);
@@ -714,11 +859,11 @@ void DRV_SPI_ReadTransferAdd
 
 DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE transferHandle)
 {
-    DRV_SPI_OBJ          * dObj        = NULL;
-    uint8_t             transferIndex;
-    uint32_t            drvInstance = 0;
+    DRV_SPI_OBJ* dObj = NULL;
+    uint32_t drvInstance = 0;
+    uint8_t transferIndex;
 
-    /* Extract drvInstance value from the transfer handle */
+    /* Extract driver instance value from the transfer handle */
     drvInstance = ((transferHandle & DRV_SPI_INSTANCE_MASK) >> 8);
 
     if(drvInstance >= DRV_SPI_INSTANCES_NUMBER)
@@ -729,26 +874,22 @@ DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE t
 
     dObj = (DRV_SPI_OBJ*)&gDrvSPIObj[drvInstance];
 
-    /* Extract transfer index value from the transfer handle */
+    /* Extract transfer buffer index value from the transfer handle */
     transferIndex = transferHandle & DRV_SPI_INDEX_MASK;
 
     /* Validate the transferIndex and corresponding request */
-    if(transferIndex >= dObj->transferQueueSize)
+    if(transferIndex >= dObj->transferObjPoolSize)
     {
         SYS_DEBUG(SYS_ERROR_ERROR, "Transfer Handle Invalid");
         return DRV_SPI_TRANSFER_EVENT_HANDLE_INVALID;
     }
-    else if(transferHandle != dObj->transferArray[transferIndex].transferHandle)
+    else if(transferHandle != dObj->transferObjPool[transferIndex].transferHandle)
     {
         SYS_DEBUG(SYS_ERROR_ERROR, "Transfer Handle Expired");
         return DRV_SPI_TRANSFER_EVENT_HANDLE_EXPIRED;
     }
     else
     {
-        return dObj->transferArray[transferIndex].event;
+        return dObj->transferObjPool[transferIndex].event;
     }
 }
-
-/*******************************************************************************
- End of File
-*/

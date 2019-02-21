@@ -156,6 +156,27 @@ typedef bool (*DRV_SPI_PLIB_IS_BUSY)(void);
 
 typedef void (* DRV_SPI_PLIB_CALLBACK_REGISTER)(DRV_SPI_PLIB_CALLBACK, uintptr_t);
 
+
+typedef struct
+{
+    int32_t         spiTxReadyInt;
+    int32_t         spiTxCompleteInt;
+    int32_t         spiRxInt;
+} DRV_SPI_MULTI_INT_SRC;
+
+typedef union
+{
+    DRV_SPI_MULTI_INT_SRC               multi;
+    int32_t                             spiInterrupt;
+} DRV_SPI_INT_SRC;
+
+typedef struct
+{
+    bool                        isSingleIntSrc;
+    DRV_SPI_INT_SRC             intSources;
+} DRV_SPI_INTERRUPT_SOURCES;
+
+
 // *****************************************************************************
 /* SPI Driver PLIB Interface Data
 
@@ -217,14 +238,13 @@ typedef struct
 
     const uint32_t*                 remapClockPhase;
 
-    /* Queue for Transfer Objects */
+    /* Size of buffer objects queue */
+    uint32_t                        transferObjPoolSize;
+
+    /* Pointer to the buffer pool */
     uintptr_t                       transferObjPool;
 
-    /* Driver Queue Size */
-    size_t                          queueSize;
-
-    /* Interrupt source ID for SPI or DMA based on the mode used */
-    INT_SOURCE                      interruptSource;
+    const DRV_SPI_INTERRUPT_SOURCES*      interruptSources;
 } DRV_SPI_INIT;
 
 
