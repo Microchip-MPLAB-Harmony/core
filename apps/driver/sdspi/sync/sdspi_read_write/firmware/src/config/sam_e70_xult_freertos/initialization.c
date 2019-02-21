@@ -45,6 +45,8 @@
 // *****************************************************************************
 #include "configuration.h"
 #include "definitions.h"
+#include "device.h"
+
 
 
 // ****************************************************************************
@@ -52,6 +54,36 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
+// DOM-IGNORE-BEGIN
+/*******************************************************************************
+* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+*******************************************************************************/
+
+// DOM-IGNORE-END
+#pragma config TCM_CONFIGURATION = 0
+#pragma config SECURITY_BIT = CLEAR
+#pragma config BOOT_MODE = SET
+
+
 
 
 // *****************************************************************************
@@ -62,7 +94,7 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SDSPI Instance 0 Initialization Data">
 
 /* SD Card Client Objects Pool */
-static DRV_SDSPI_CLIENT_OBJ drvSDSPI0ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_SDSPI_CLIENT_OBJ drvSDSPI0ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX0];
 
 /* SPI PLIB Interface Initialization for SDSPI Driver */
 const DRV_SDSPI_PLIB_INTERFACE drvSDSPI0PlibAPI = {
@@ -92,35 +124,39 @@ const uint32_t drvSDSPI0remapClockPhase[] = { 0x0, 0x2 };
 const DRV_SDSPI_INIT drvSDSPI0InitData =
 {
     /* SD Card SPI PLIB API interface*/
-    .spiPlib            = &drvSDSPI0PlibAPI,
+    .spiPlib                = &drvSDSPI0PlibAPI,
 
-    .remapDataBits = drvSDSPI0remapDataBits,
+    .remapDataBits          = drvSDSPI0remapDataBits,
 
-    .remapClockPolarity = drvSDSPI0remapClockPolarity,
+    .remapClockPolarity     = drvSDSPI0remapClockPolarity,
 
-    .remapClockPhase = drvSDSPI0remapClockPhase,
+    .remapClockPhase        = drvSDSPI0remapClockPhase,
 
     /* SDSPI Number of clients */
-    .numClients         = DRV_SDSPI_CLIENTS_NUMBER_IDX0,
+    .numClients             = DRV_SDSPI_CLIENTS_NUMBER_IDX0,
 
     /* SDSPI Client Objects Pool */
-    .clientObjPool      = (uintptr_t)&drvSDSPI0ClientObjPool[0],
+    .clientObjPool          = (uintptr_t)&drvSDSPI0ClientObjPool[0],
 
-    .chipSelectPin      = DRV_SDSPI_CHIP_SELECT_PIN_IDX0,
+    .chipSelectPin          = DRV_SDSPI_CHIP_SELECT_PIN_IDX0,
 
-    .sdcardSpeedHz      = DRV_SDSPI_SPEED_HZ_IDX0,
+    .sdcardSpeedHz          = DRV_SDSPI_SPEED_HZ_IDX0,
 
-    .writeProtectPin    = SYS_PORT_PIN_NONE,
+    .writeProtectPin        = SYS_PORT_PIN_NONE,
 
-    .isFsEnabled        = false,
+    .isFsEnabled            = false,
+
     /* DMA Channel for Transmit */
-    .txDMAChannel = DRV_SDSPI_XMIT_DMA_CH_IDX0,
+    .txDMAChannel           = DRV_SDSPI_XMIT_DMA_CH_IDX0,
+
     /* DMA Channel for Receive */
-    .rxDMAChannel  = DRV_SDSPI_RCV_DMA_CH_IDX0,
+    .rxDMAChannel           = DRV_SDSPI_RCV_DMA_CH_IDX0,
+
     /* SPI Transmit Register */
-    .txAddress = (void *)&(SPI0_REGS->SPI_TDR),
+    .txAddress              = (void *)&(SPI0_REGS->SPI_TDR),
+
     /* SPI Receive Register */
-    .rxAddress  = (void *)&(SPI0_REGS->SPI_RDR),
+    .rxAddress              = (void *)&(SPI0_REGS->SPI_RDR),
 };
 
 // </editor-fold>
@@ -134,6 +170,7 @@ const DRV_SDSPI_INIT drvSDSPI0InitData =
 // *****************************************************************************
 /* Structure to hold the object handles for the modules in the system. */
 SYSTEM_OBJECTS sysObj;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Library/Stack Initialization Data
@@ -167,6 +204,7 @@ const SYS_TIME_INIT sysTimeInitData =
 // </editor-fold>
 
 
+
 /*******************************************************************************
   Function:
     void SYS_Initialize ( void *data )
@@ -179,12 +217,12 @@ const SYS_TIME_INIT sysTimeInitData =
 
 void SYS_Initialize ( void* data )
 {
+  
     CLK_Initialize();
 	PIO_Initialize();
 
 
 	BSP_Initialize();
-    NVIC_Initialize();
     XDMAC_Initialize();
 
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
@@ -208,10 +246,11 @@ void SYS_Initialize ( void* data )
     APP_Initialize();
 
 
+    NVIC_Initialize();
+
 }
 
 
 /*******************************************************************************
  End of File
 */
-
