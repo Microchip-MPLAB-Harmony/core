@@ -180,7 +180,7 @@ void SYS_Tasks ( void );
 
 typedef struct
 {
-
+    char RESERVED;
 } SYSTEM_OBJECTS;
 
 
