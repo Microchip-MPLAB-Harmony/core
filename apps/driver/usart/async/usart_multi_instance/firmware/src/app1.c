@@ -53,6 +53,8 @@
 // *****************************************************************************
 
 #include "app1.h"
+#include "user.h"
+#include <string.h>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -175,7 +177,7 @@ void APP1_Tasks ( void )
             break;
         
         case APP1_STATE_SEND_MESSAGE:        
-            DRV_USART_WriteBufferAdd(app1Data.usartHandle, (void*)message1Buffer, sizeof(message1Buffer), &app1Data.bufferHandler);
+            DRV_USART_WriteBufferAdd(app1Data.usartHandle, (void*)message1Buffer, strlen(message1Buffer), &app1Data.bufferHandler);
             if (app1Data.bufferHandler != DRV_USART_BUFFER_HANDLE_INVALID)
             {
                 app1Data.prevState = APP1_STATE_SEND_MESSAGE;
