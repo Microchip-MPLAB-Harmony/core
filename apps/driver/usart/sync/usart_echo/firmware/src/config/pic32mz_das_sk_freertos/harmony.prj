@@ -91,8 +91,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">037F8343D44F9C2E52551DED46C00C4D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">037F8343D44F9C2E52551DED46C00C4D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">8EDF5F1CC0A81B50734664651933DE93</GeneratedChecksum>
+          <UserChecksum dnOrder="5">8EDF5F1CC0A81B50734664651933DE93</UserChecksum>
         </File>
         <File dnOrder="11">
           <Type dnOrder="0">SOURCE</Type>
@@ -139,8 +139,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">93FF1AD9ED2F8925B908417929719917</GeneratedChecksum>
-          <UserChecksum dnOrder="5">93FF1AD9ED2F8925B908417929719917</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9CD41D61BFE59A8C80082E1C70E41E5A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9CD41D61BFE59A8C80082E1C70E41E5A</UserChecksum>
         </File>
         <File dnOrder="17">
           <Type dnOrder="0">SOURCE</Type>
@@ -595,8 +595,8 @@
           <Name dnOrder="1">user.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4B3C3EF8A318908A22B78500515C3288</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4B3C3EF8A318908A22B78500515C3288</UserChecksum>
+          <GeneratedChecksum dnOrder="4"/>
+          <UserChecksum dnOrder="5"/>
         </File>
       </Files>
       <Settings dnOrder="1">
@@ -614,7 +614,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bootloader;bsp;core;csp;micrium_ucos3;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
     </Settings>
   </Configurator>
 </Configuration>
