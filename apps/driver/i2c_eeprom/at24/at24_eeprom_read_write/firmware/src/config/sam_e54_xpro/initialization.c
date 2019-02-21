@@ -199,8 +199,6 @@ void SYS_Initialize ( void* data )
     SERCOM7_I2C_Initialize();
 
 
-    NVIC_Initialize();
-
     sysObj.drvAT24 = DRV_AT24_Initialize(DRV_AT24_INDEX, (SYS_MODULE_INIT *)&drvAT24InitData);
 
 
@@ -209,7 +207,8 @@ void SYS_Initialize ( void* data )
     APP_Initialize();
 
 
-  
+    NVIC_Initialize();
+
 }
 
 
