@@ -60,7 +60,6 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "system/int/sys_int.h"
-#include "system/cache/sys_cache.h"
 #include "system/dma/sys_dma.h"
 #include "osal/osal.h"
 #include "app_usart_usb_click_board.h"

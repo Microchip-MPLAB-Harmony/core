@@ -172,6 +172,7 @@ typedef struct
 typedef struct
 {
     int32_t         usartTxReadyInt;
+    int32_t         usartTxCompleteInt;
     int32_t         usartRxCompleteInt;
     int32_t         usartErrorInt;
     int32_t         dmaTxChannelInt;
