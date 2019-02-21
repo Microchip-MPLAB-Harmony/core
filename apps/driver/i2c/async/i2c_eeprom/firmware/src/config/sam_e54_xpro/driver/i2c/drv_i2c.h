@@ -133,13 +133,19 @@ typedef uintptr_t DRV_I2C_TRANSFER_HANDLE;
 typedef enum
 {
     /* Transfer request is pending */
-    DRV_I2C_TRANSFER_EVENT_PENDING,
+    DRV_I2C_TRANSFER_EVENT_PENDING = 0,
 
     /* All data from or to the buffer was transferred successfully. */
-    DRV_I2C_TRANSFER_EVENT_COMPLETE,
+    DRV_I2C_TRANSFER_EVENT_COMPLETE = 1,
+
+    /* Transfer Handle given is expired. It means transfer
+    is completed but with or without error is not known. */
+    DRV_I2C_TRANSFER_EVENT_HANDLE_EXPIRED /*DOM-IGNORE-BEGIN*/ = 2 /*DOM-IGNORE-BEGIN*/,
 
     /* There was an error while processing the buffer transfer request. */
-    DRV_I2C_TRANSFER_EVENT_ERROR,
+    DRV_I2C_TRANSFER_EVENT_ERROR  /*DOM-IGNORE-BEGIN*/ = -1 /*DOM-IGNORE-BEGIN*/,
+
+    DRV_I2C_TRANSFER_EVENT_HANDLE_INVALID /*DOM-IGNORE-BEGIN*/ = -2 /*DOM-IGNORE-BEGIN*/
 
 } DRV_I2C_TRANSFER_EVENT;
 
