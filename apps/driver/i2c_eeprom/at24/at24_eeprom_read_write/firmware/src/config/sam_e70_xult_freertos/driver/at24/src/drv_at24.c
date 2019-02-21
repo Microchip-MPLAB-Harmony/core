@@ -91,6 +91,7 @@ static bool _DRV_AT24_Write(
     uint32_t nTransferBytes = 0;
     uint32_t nBytes = 0;
     uint16_t slaveAddr;
+    uint16_t i;
 
     if ((address + txDataLength) > gDrvAT24Obj.flashSize)
     {
@@ -123,7 +124,7 @@ static bool _DRV_AT24_Write(
     /* For 8-bit address */
     gDrvAT24Obj.writeBuffer[nBytes++] = (address & 0x000000FF);
 
-    for (uint16_t i = 0 ; i < nTransferBytes; i++)
+    for (i = 0 ; i < nTransferBytes; i++)
     {
         gDrvAT24Obj.writeBuffer[nBytes + i] = ((uint8_t*)txData)[i];
     }
