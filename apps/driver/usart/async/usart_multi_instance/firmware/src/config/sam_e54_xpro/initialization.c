@@ -105,10 +105,10 @@
 // *****************************************************************************
 // <editor-fold defaultstate="collapsed" desc="DRV_USART Instance 1 Initialization Data">
 
-static DRV_USART_CLIENT_OBJ drvUSART1ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX1] = {0};
+static DRV_USART_CLIENT_OBJ drvUSART1ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX1];
 
 /* USART transmit/receive transfer objects pool */
-static DRV_USART_BUFFER_OBJ drvUSART1BufferObjPool[DRV_USART_QUEUE_SIZE_IDX1] = {0};
+static DRV_USART_BUFFER_OBJ drvUSART1BufferObjPool[DRV_USART_QUEUE_SIZE_IDX1];
 
 const DRV_USART_PLIB_INTERFACE drvUsart1PlibAPI = {
     .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)SERCOM0_USART_ReadCallbackRegister,
@@ -124,7 +124,7 @@ const DRV_USART_PLIB_INTERFACE drvUsart1PlibAPI = {
 };
 
 const uint32_t drvUsart1remapDataWidth[] = { 0x5, 0x6, 0x7, 0x0, 0x1 };
-const uint32_t drvUsart1remapParity[] = { 0x2, 0x80000, 0x0, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
+const uint32_t drvUsart1remapParity[] = { 0x2, 0x0, 0x80000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
 const uint32_t drvUsart1remapStopBits[] = { 0x0, 0xFFFFFFFF, 0x40 };
 const uint32_t drvUsart1remapError[] = { 0x4, 0x0, 0x2 };
 
@@ -132,7 +132,9 @@ const DRV_USART_INTERRUPT_SOURCES drvUSART1InterruptSources =
 {
     /* Peripheral has more than one interrupt vector */
     .isSingleIntSrc                        = false,
+
     /* Peripheral interrupt lines */
+    .intSources.multi.usartTxCompleteInt   = SERCOM0_1_IRQn,
     .intSources.multi.usartTxReadyInt      = SERCOM0_0_IRQn,
     .intSources.multi.usartRxCompleteInt   = SERCOM0_2_IRQn,
     .intSources.multi.usartErrorInt        = SERCOM0_OTHER_IRQn,
@@ -172,10 +174,10 @@ const DRV_USART_INIT drvUsart1InitData =
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DRV_USART Instance 0 Initialization Data">
 
-static DRV_USART_CLIENT_OBJ drvUSART0ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_USART_CLIENT_OBJ drvUSART0ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX0];
 
 /* USART transmit/receive transfer objects pool */
-static DRV_USART_BUFFER_OBJ drvUSART0BufferObjPool[DRV_USART_QUEUE_SIZE_IDX0] = {0};
+static DRV_USART_BUFFER_OBJ drvUSART0BufferObjPool[DRV_USART_QUEUE_SIZE_IDX0];
 
 const DRV_USART_PLIB_INTERFACE drvUsart0PlibAPI = {
     .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)SERCOM2_USART_ReadCallbackRegister,
@@ -191,7 +193,7 @@ const DRV_USART_PLIB_INTERFACE drvUsart0PlibAPI = {
 };
 
 const uint32_t drvUsart0remapDataWidth[] = { 0x5, 0x6, 0x7, 0x0, 0x1 };
-const uint32_t drvUsart0remapParity[] = { 0x2, 0x80000, 0x0, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
+const uint32_t drvUsart0remapParity[] = { 0x2, 0x0, 0x80000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
 const uint32_t drvUsart0remapStopBits[] = { 0x0, 0xFFFFFFFF, 0x40 };
 const uint32_t drvUsart0remapError[] = { 0x4, 0x0, 0x2 };
 
@@ -199,7 +201,9 @@ const DRV_USART_INTERRUPT_SOURCES drvUSART0InterruptSources =
 {
     /* Peripheral has more than one interrupt vector */
     .isSingleIntSrc                        = false,
+
     /* Peripheral interrupt lines */
+    .intSources.multi.usartTxCompleteInt   = SERCOM2_1_IRQn,
     .intSources.multi.usartTxReadyInt      = SERCOM2_0_IRQn,
     .intSources.multi.usartRxCompleteInt   = SERCOM2_2_IRQn,
     .intSources.multi.usartErrorInt        = SERCOM2_OTHER_IRQn,
@@ -289,8 +293,6 @@ void SYS_Initialize ( void* data )
     SERCOM0_USART_Initialize();
 
 
-    NVIC_Initialize();
-
     sysObj.drvUsart1 = DRV_USART_Initialize(DRV_USART_INDEX_1, (SYS_MODULE_INIT *)&drvUsart1InitData);
 
     sysObj.drvUsart0 = DRV_USART_Initialize(DRV_USART_INDEX_0, (SYS_MODULE_INIT *)&drvUsart0InitData);
@@ -302,7 +304,8 @@ void SYS_Initialize ( void* data )
     APP2_Initialize();
 
 
-  
+    NVIC_Initialize();
+
 }
 
 
