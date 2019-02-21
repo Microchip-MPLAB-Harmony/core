@@ -106,10 +106,10 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance 0 Initialization Data">
 
 /* SPI Client Objects Pool */
-static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0];
 
 /* SPI Transfer Objects Pool */
-static DRV_SPI_TRANSFER_OBJ drvSPI0TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX0] = {0};
+static DRV_SPI_TRANSFER_OBJ drvSPI0TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX0];
 
 /* SPI PLIB Interface Initialization */
 const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
@@ -135,10 +135,11 @@ const DRV_SPI_INTERRUPT_SOURCES drvSPI0InterruptSources =
 {
     /* Peripheral has more than one interrupt vectors */
     .isSingleIntSrc                        = false,
+
     /* Peripheral interrupt lines */
-    .intSources.multi.spiTxReadyInt        = SERCOM6_0_IRQn,
-    .intSources.multi.spiTxCompleteInt     = SERCOM6_1_IRQn,
-    .intSources.multi.spiRxInt             = SERCOM6_2_IRQn,
+    .intSources.multi.spiTxReadyInt      = SERCOM6_0_IRQn,
+    .intSources.multi.spiTxCompleteInt   = SERCOM6_1_IRQn,
+    .intSources.multi.spiRxInt           = SERCOM6_2_IRQn,
 };
 
 /* SPI Driver Initialization Data */
@@ -166,7 +167,7 @@ const DRV_SPI_INIT drvSPI0InitData =
     .dmaChannelReceive  = SYS_DMA_CHANNEL_NONE,
 
     /* SPI Queue Size */
-    .queueSize = DRV_SPI_QUEUE_SIZE_IDX0,
+    .transferObjPoolSize = DRV_SPI_QUEUE_SIZE_IDX0,
 
     /* SPI Transfer Objects Pool */
     .transferObjPool = (uintptr_t)&drvSPI0TransferObjPool[0],
@@ -226,8 +227,6 @@ void SYS_Initialize ( void* data )
     SERCOM6_SPI_Initialize();
 
 
-    NVIC_Initialize();
-
     /* Initialize SPI0 Driver Instance */
     sysObj.drvSPI0 = DRV_SPI_Initialize(DRV_SPI_INDEX_0, (SYS_MODULE_INIT *)&drvSPI0InitData);
 
@@ -238,7 +237,8 @@ void SYS_Initialize ( void* data )
     APP_CLIENT2_Initialize();
 
 
-  
+    NVIC_Initialize();
+
 }
 
 
