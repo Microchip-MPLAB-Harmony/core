@@ -151,8 +151,8 @@ typedef enum
 
 typedef struct _DRV_USART_BUFFER_OBJ
 {
-    /* The hardware instance object that owns this buffer */
-    void*                           hClient;
+    /* Handle to the client that owns this buffer object when it was queued */
+    DRV_HANDLE                      clientHandle;
 
     /* This flag tracks whether this object is in use */
     volatile bool                   inUse;
@@ -222,13 +222,13 @@ typedef struct
     uint32_t                                bufferObjPoolSize;
 
     /* Pointer to the transmit and receive buffer pool */
-    uintptr_t                               bufferObjPool;
+    DRV_USART_BUFFER_OBJ*                   bufferObjPool;
 
     /* Linked list of transmit buffer objects */
-    uintptr_t                               transmitObjList;
+    DRV_USART_BUFFER_OBJ*                   transmitObjList;
 
     /* Linked list of receive buffer objects */
-    uintptr_t                               receiveObjList;
+    DRV_USART_BUFFER_OBJ*                   receiveObjList;
 
     /* To identify if we are running from interrupt context or not */
     uint8_t                                 interruptNestingCount;
@@ -260,6 +260,22 @@ typedef struct
     const uint32_t*                         remapError;
 
     const DRV_USART_INTERRUPT_SOURCES*      interruptSources;
+
+    bool                                    usartTxReadyIntStatus;
+
+    bool                                    usartTxCompleteIntStatus;
+
+    bool                                    usartRxCompleteIntStatus;
+
+    bool                                    usartErrorIntStatus;
+
+    bool                                    dmaTxChannelIntStatus;
+
+    bool                                    dmaRxChannelIntStatus;
+
+    bool                                    usartInterruptStatus;
+
+    bool                                    dmaInterruptStatus;
 
 } DRV_USART_OBJ;
 

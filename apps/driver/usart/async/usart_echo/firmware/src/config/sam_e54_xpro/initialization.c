@@ -105,10 +105,10 @@
 // *****************************************************************************
 // <editor-fold defaultstate="collapsed" desc="DRV_USART Instance 0 Initialization Data">
 
-static DRV_USART_CLIENT_OBJ drvUSART0ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_USART_CLIENT_OBJ drvUSART0ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX0];
 
 /* USART transmit/receive transfer objects pool */
-static DRV_USART_BUFFER_OBJ drvUSART0BufferObjPool[DRV_USART_QUEUE_SIZE_IDX0] = {0};
+static DRV_USART_BUFFER_OBJ drvUSART0BufferObjPool[DRV_USART_QUEUE_SIZE_IDX0];
 
 const DRV_USART_PLIB_INTERFACE drvUsart0PlibAPI = {
     .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)SERCOM2_USART_ReadCallbackRegister,
@@ -124,7 +124,7 @@ const DRV_USART_PLIB_INTERFACE drvUsart0PlibAPI = {
 };
 
 const uint32_t drvUsart0remapDataWidth[] = { 0x5, 0x6, 0x7, 0x0, 0x1 };
-const uint32_t drvUsart0remapParity[] = { 0x2, 0x80000, 0x0, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
+const uint32_t drvUsart0remapParity[] = { 0x2, 0x0, 0x80000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
 const uint32_t drvUsart0remapStopBits[] = { 0x0, 0xFFFFFFFF, 0x40 };
 const uint32_t drvUsart0remapError[] = { 0x4, 0x0, 0x2 };
 
@@ -132,7 +132,9 @@ const DRV_USART_INTERRUPT_SOURCES drvUSART0InterruptSources =
 {
     /* Peripheral has more than one interrupt vector */
     .isSingleIntSrc                        = false,
+
     /* Peripheral interrupt lines */
+    .intSources.multi.usartTxCompleteInt   = SERCOM2_1_IRQn,
     .intSources.multi.usartTxReadyInt      = SERCOM2_0_IRQn,
     .intSources.multi.usartRxCompleteInt   = SERCOM2_2_IRQn,
     .intSources.multi.usartErrorInt        = SERCOM2_OTHER_IRQn,
@@ -220,8 +222,6 @@ void SYS_Initialize ( void* data )
     EVSYS_Initialize();
 
 
-    NVIC_Initialize();
-
     sysObj.drvUsart0 = DRV_USART_Initialize(DRV_USART_INDEX_0, (SYS_MODULE_INIT *)&drvUsart0InitData);
 
 
@@ -230,7 +230,8 @@ void SYS_Initialize ( void* data )
     APP_Initialize();
 
 
-  
+    NVIC_Initialize();
+
 }
 
 
