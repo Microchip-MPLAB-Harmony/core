@@ -59,8 +59,6 @@
 #include "bsp/bsp.h"
 #include "configuration.h"
 #include "driver/usart/drv_usart.h"
-#include "system/int/sys_int.h"
-#include "system/dma/sys_dma.h"
 
 
 // DOM-IGNORE-BEGIN
