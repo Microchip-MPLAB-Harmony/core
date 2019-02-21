@@ -30,7 +30,7 @@
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk_freertos/peripheral/clk/plib_clk.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="coretimer" projectFiles="true">
+            <logicalFolder name="f5" displayName="coretimer" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk_freertos/peripheral/coretimer/plib_coretimer.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="evic" projectFiles="true">
@@ -39,15 +39,12 @@
             <logicalFolder name="f2" displayName="gpio" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk_freertos/peripheral/gpio/plib_gpio.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="nvm" projectFiles="true">
+            <logicalFolder name="f4" displayName="nvm" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk_freertos/peripheral/nvm/plib_nvm.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f7" displayName="sqi" projectFiles="true">
+            <logicalFolder name="f6" displayName="sqi" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk_freertos/peripheral/sqi/plib_sqi_common.h</itemPath>
               <itemPath>../src/config/pic32mz_ef_sk_freertos/peripheral/sqi/plib_sqi1.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f4" displayName="wdt" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk_freertos/peripheral/wdt/plib_wdt.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
@@ -145,7 +142,7 @@
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk_freertos/peripheral/clk/plib_clk.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="coretimer" projectFiles="true">
+            <logicalFolder name="f5" displayName="coretimer" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk_freertos/peripheral/coretimer/plib_coretimer.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="evic" projectFiles="true">
@@ -154,14 +151,11 @@
             <logicalFolder name="f2" displayName="gpio" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk_freertos/peripheral/gpio/plib_gpio.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="nvm" projectFiles="true">
+            <logicalFolder name="f4" displayName="nvm" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk_freertos/peripheral/nvm/plib_nvm.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f7" displayName="sqi" projectFiles="true">
+            <logicalFolder name="f6" displayName="sqi" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk_freertos/peripheral/sqi/plib_sqi1.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f4" displayName="wdt" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk_freertos/peripheral/wdt/plib_wdt.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f1" displayName="stdio" projectFiles="true">
@@ -230,13 +224,13 @@
         <targetDevice>PIC32MZ2048EFH144</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>ICD4Tool</platformTool>
+        <platformTool>PKOBSKDEPlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.15</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MZ-EF_DFP" vendor="Microchip" version="1.0.17"/>
+        <pack name="PIC32MZ-EF_DFP" vendor="Microchip" version="1.0.20"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -620,6 +614,7 @@
         <property key="ToolFirmwareFilePath"
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="memories.configurationmemory" value="true"/>
         <property key="memories.dataflash" value="true"/>
         <property key="memories.eeprom" value="true"/>
