@@ -61,30 +61,6 @@
 // *****************************************************************************
 // *****************************************************************************
 
-/*** Macros for LED1 pin ***/
-#define LED1_Set()               (LATHSET = (1<<0))
-#define LED1_Clear()             (LATHCLR = (1<<0))
-#define LED1_Toggle()            (LATHINV= (1<<0))
-#define LED1_Get()               ((PORTH >> 0) & 0x1)
-#define LED1_OutputEnable()      (TRISHCLR = (1<<0))
-#define LED1_InputEnable()       (TRISHSET = (1<<0))
-#define LED1_PIN                  GPIO_PIN_RH0
-/*** Macros for LED2 pin ***/
-#define LED2_Set()               (LATHSET = (1<<1))
-#define LED2_Clear()             (LATHCLR = (1<<1))
-#define LED2_Toggle()            (LATHINV= (1<<1))
-#define LED2_Get()               ((PORTH >> 1) & 0x1)
-#define LED2_OutputEnable()      (TRISHCLR = (1<<1))
-#define LED2_InputEnable()       (TRISHSET = (1<<1))
-#define LED2_PIN                  GPIO_PIN_RH1
-/*** Macros for LED3 pin ***/
-#define LED3_Set()               (LATHSET = (1<<2))
-#define LED3_Clear()             (LATHCLR = (1<<2))
-#define LED3_Toggle()            (LATHINV= (1<<2))
-#define LED3_Get()               ((PORTH >> 2) & 0x1)
-#define LED3_OutputEnable()      (TRISHCLR = (1<<2))
-#define LED3_InputEnable()       (TRISHSET = (1<<2))
-#define LED3_PIN                  GPIO_PIN_RH2
 
 
 // *****************************************************************************

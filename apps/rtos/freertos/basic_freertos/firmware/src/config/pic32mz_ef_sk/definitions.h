@@ -51,7 +51,7 @@
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/gpio/plib_gpio.h"
 #include "peripheral/evic/plib_evic.h"
-#include "peripheral/wdt/plib_wdt.h"
+#include "bsp/bsp.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "osal/osal.h"

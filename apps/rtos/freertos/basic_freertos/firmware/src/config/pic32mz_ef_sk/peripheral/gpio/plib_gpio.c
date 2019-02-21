@@ -44,6 +44,7 @@
 #include "plib_gpio.h"
 
 
+
 /******************************************************************************
   Function:
     GPIO_Initialize ( void )
@@ -59,6 +60,8 @@ void GPIO_Initialize ( void )
     /* PORTA Initialization */
 
     /* PORTB Initialization */
+    ANSELBCLR = 0x7000; /* Digital Mode Enable */
+    CNPUBSET = 0x7000; /* Pull-Up Enable */
 
     /* PORTC Initialization */
 

@@ -6,6 +6,9 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mz_ef_sk" projectFiles="true">
+          <logicalFolder name="f2" displayName="bsp" projectFiles="true">
+            <itemPath>../src/config/pic32mz_ef_sk/bsp/bsp.h</itemPath>
+          </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk/peripheral/clk/plib_clk.h</itemPath>
@@ -15,9 +18,6 @@
             </logicalFolder>
             <logicalFolder name="f2" displayName="gpio" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk/peripheral/gpio/plib_gpio.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f4" displayName="wdt" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/peripheral/wdt/plib_wdt.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <itemPath>../src/config/pic32mz_ef_sk/toolchain_specifics.h</itemPath>
@@ -82,6 +82,9 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mz_ef_sk" projectFiles="true">
+          <logicalFolder name="f3" displayName="bsp" projectFiles="true">
+            <itemPath>../src/config/pic32mz_ef_sk/bsp/bsp.c</itemPath>
+          </logicalFolder>
           <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk/peripheral/clk/plib_clk.c</itemPath>
@@ -91,9 +94,6 @@
             </logicalFolder>
             <logicalFolder name="f2" displayName="gpio" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk/peripheral/gpio/plib_gpio.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f4" displayName="wdt" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/peripheral/wdt/plib_wdt.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f1" displayName="stdio" projectFiles="true">
@@ -156,7 +156,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PKOBSKDEPlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.15</languageToolchainVersion>
+        <languageToolchainVersion>2.20</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
@@ -187,7 +187,7 @@
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
       </makeCustomizationType>
       <C32>
-        <property key="additional-warnings" value="false"/>
+        <property key="additional-warnings" value="true"/>
         <property key="addresss-attribute-use" value="false"/>
         <property key="enable-app-io" value="false"/>
         <property key="enable-omit-frame-pointer" value="false"/>
@@ -195,11 +195,11 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP;../src/mips;../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MZ;../src/third_party/rtos/FreeRTOS/Source/include"/>
+                  value="../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP;../src/mips;../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MZ;../src/third_party/rtos/FreeRTOS/Source/include;"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
-        <property key="make-warnings-into-errors" value="false"/>
+        <property key="make-warnings-into-errors" value="true"/>
         <property key="optimization-level" value="-O1"/>
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
@@ -433,6 +433,7 @@
         <property key="ToolFirmwareFilePath"
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="memories.configurationmemory" value="true"/>
         <property key="memories.dataflash" value="true"/>
         <property key="memories.eeprom" value="true"/>
