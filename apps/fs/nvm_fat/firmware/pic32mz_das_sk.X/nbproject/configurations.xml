@@ -80,8 +80,8 @@
           <itemPath>../src/packs/PIC32MZ2064DAS169_DFP/device.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>../src/app.h</itemPath>
       <itemPath>../src/nvm_disk_images.h</itemPath>
+      <itemPath>../src/app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -141,9 +141,9 @@
           <itemPath>../src/config/pic32mz_das_sk/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
+      <itemPath>../src/nvm_disk_images.c</itemPath>
       <itemPath>../src/main.c</itemPath>
       <itemPath>../src/app.c</itemPath>
-      <itemPath>../src/nvm_disk_images.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
