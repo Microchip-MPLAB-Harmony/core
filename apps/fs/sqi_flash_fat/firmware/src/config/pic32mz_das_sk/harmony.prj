@@ -75,8 +75,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6094E0549E190DB83BF15ED455192FBB</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6094E0549E190DB83BF15ED455192FBB</UserChecksum>
+          <GeneratedChecksum dnOrder="4">CFD2337AF6A6738D8A2EC1C4CE075274</GeneratedChecksum>
+          <UserChecksum dnOrder="5">CFD2337AF6A6738D8A2EC1C4CE075274</UserChecksum>
         </File>
         <File dnOrder="9">
           <Type dnOrder="0">SOURCE</Type>
@@ -107,8 +107,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8207E76B23B3866B4B2F4C5F47CF8594</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8207E76B23B3866B4B2F4C5F47CF8594</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AF9039293A84E5C6D9590CABCC4FCE0A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AF9039293A84E5C6D9590CABCC4FCE0A</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
