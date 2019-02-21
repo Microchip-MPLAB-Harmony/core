@@ -99,7 +99,7 @@ extern "C" {
 #define DRV_SDSPI_INDEX_0                       0
 #define DRV_SDSPI_CLIENTS_NUMBER_IDX0           1
 #define DRV_SDSPI_CHIP_SELECT_PIN_IDX0          SYS_PORT_PIN_RB14
-#define DRV_SDSPI_SPEED_HZ_IDX0                 10000000
+#define DRV_SDSPI_SPEED_HZ_IDX0                 5000000
 
 #define DRV_SDSPI_DMA_MODE
 #define DRV_SDSPI_XMIT_DMA_CH_IDX0              SYS_DMA_CHANNEL_0
