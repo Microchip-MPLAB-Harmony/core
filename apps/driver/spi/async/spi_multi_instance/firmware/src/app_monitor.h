@@ -64,7 +64,7 @@
 extern "C" {
 
 #endif
-// DOM-IGNORE-END 
+// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
@@ -106,7 +106,7 @@ extern "C" {
 // *****************************************************************************
 /* These routines are called by drivers when certain events occur.
 */
-	
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Initialization and State Machine Functions
@@ -121,8 +121,8 @@ extern "C" {
      MPLAB Harmony application initialization routine.
 
   Description:
-    This function initializes the Harmony application.  It places the 
-    application in its initial state and prepares it to run so that its 
+    This function initializes the Harmony application.  It places the
+    application in its initial state and prepares it to run so that its
     APP_MONITOR_Tasks function can be called.
 
   Precondition:

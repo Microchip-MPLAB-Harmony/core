@@ -64,7 +64,7 @@
 extern "C" {
 
 #endif
-// DOM-IGNORE-END 
+// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
@@ -85,16 +85,18 @@ extern "C" {
 
 typedef enum
 {
-	/* Application's state machine's initial state. */
-	APP_INSTANCE2_STATE_DATA_INIT,
+    /* Application's state machine's initial state. */
+    APP_INSTANCE2_STATE_DATA_INIT,
     APP_INSTANCE2_STATE_DRIVER_SETUP,
-	APP_INSTANCE2_STATE_WRITE_ENABLE,
+    APP_INSTANCE2_STATE_WRITE_ENABLE,
     APP_INSTANCE2_STATE_WRITE,
     APP_INSTANCE2_STATE_WAIT_FOR_WRITE_COMPLETE,
+    APP_INSTANCE2_STATE_CHECK_STATUS,
     APP_INSTANCE2_STATE_READ,
-    APP_INSTANCE2_STATE_DATA_COMPARISON,            
-    APP_INSTANCE2_STATE_IDLE
-            
+    APP_INSTANCE2_STATE_DATA_COMPARISON,
+    APP_INSTANCE2_STATE_IDLE,
+    APP_INSTANCE2_STATE_ERROR
+
 } APP_INSTANCE2_STATES;
 
 
@@ -116,11 +118,9 @@ typedef struct
     /* The application's current state */
     APP_INSTANCE2_STATES state;
     DRV_HANDLE drvSPIHandle;
-    DRV_SPI_TRANSFER_HANDLE transferHandle1;
-    DRV_SPI_TRANSFER_HANDLE transferHandle2;
-    DRV_SPI_TRANSFER_HANDLE transferHandle3;
-    DRV_SPI_TRANSFER_HANDLE transferHandle4;
+    DRV_SPI_TRANSFER_HANDLE transferHandle;
     DRV_SPI_TRANSFER_SETUP  setup;
+    volatile bool isTransferComplete;
     bool clientTransferSuccess;
 
 } APP_INSTANCE2_DATA;
@@ -133,7 +133,7 @@ typedef struct
 // *****************************************************************************
 /* These routines are called by drivers when certain events occur.
 */
-	
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Initialization and State Machine Functions
@@ -148,8 +148,8 @@ typedef struct
      MPLAB Harmony application initialization routine.
 
   Description:
-    This function initializes the Harmony application.  It places the 
-    application in its initial state and prepares it to run so that its 
+    This function initializes the Harmony application.  It places the
+    application in its initial state and prepares it to run so that its
     APP_INSTANCE2_Tasks function can be called.
 
   Precondition:
@@ -215,8 +215,3 @@ bool Instance2TransferSuccessStatus(void);
 }
 #endif
 //DOM-IGNORE-END
-
-/*******************************************************************************
- End of File
- */
-

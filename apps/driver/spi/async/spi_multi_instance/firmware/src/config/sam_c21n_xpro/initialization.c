@@ -45,6 +45,8 @@
 // *****************************************************************************
 #include "configuration.h"
 #include "definitions.h"
+#include "device.h"
+
 
 
 // ****************************************************************************
@@ -52,6 +54,24 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
+
+#pragma config NVMCTRL_BOOTPROT = SIZE_0BYTES
+#pragma config NVMCTRL_EEPROM_SIZE = SIZE_0BYTES
+#pragma config BODVDDUSERLEVEL = 0x8 // Enter Hexadecimal value
+#pragma config BODVDD_DIS = DISABLED
+#pragma config BODVDD_ACTION = NONE
+
+#pragma config BODVDD_HYST = DISABLED
+#pragma config NVMCTRL_REGION_LOCKS = 0xffff // Enter Hexadecimal value
+
+#pragma config WDT_ENABLE = DISABLED
+#pragma config WDT_ALWAYSON = DISABLED
+#pragma config WDT_PER = CYC8
+
+#pragma config WDT_WINDOW = CYC8
+#pragma config WDT_EWOFFSET = CYC8
+#pragma config WDT_WEN = DISABLED
+
 
 
 // *****************************************************************************
@@ -62,10 +82,10 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance 1 Initialization Data">
 
 /* SPI Client Objects Pool */
-static DRV_SPI_CLIENT_OBJ drvSPI1ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX1] = {0};
+static DRV_SPI_CLIENT_OBJ drvSPI1ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX1];
 
 /* SPI Transfer Objects Pool */
-static DRV_SPI_TRANSFER_OBJ drvSPI1TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX1] = {0};
+static DRV_SPI_TRANSFER_OBJ drvSPI1TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX1];
 
 /* SPI PLIB Interface Initialization */
 const DRV_SPI_PLIB_INTERFACE drvSPI1PlibAPI = {
@@ -86,6 +106,18 @@ const DRV_SPI_PLIB_INTERFACE drvSPI1PlibAPI = {
 const uint32_t drvSPI1remapDataBits[]= { 0x0, 0x1, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
 const uint32_t drvSPI1remapClockPolarity[] = { 0x0, 0x20000000 };
 const uint32_t drvSPI1remapClockPhase[] = { 0x10000000, 0x0 };
+
+const DRV_SPI_INTERRUPT_SOURCES drvSPI1InterruptSources =
+{
+    /* Peripheral has single interrupt vector */
+    .isSingleIntSrc                        = true,
+
+    /* Peripheral interrupt line */
+    .intSources.spiInterrupt             = SERCOM5_IRQn,
+    /* DMA interrupt line */
+    .intSources.dmaInterrupt               = DMAC_IRQn,
+};
+
 /* SPI Driver Initialization Data */
 const DRV_SPI_INIT drvSPI1InitData =
 {
@@ -105,29 +137,35 @@ const DRV_SPI_INIT drvSPI1InitData =
     .clientObjPool = (uintptr_t)&drvSPI1ClientObjPool[0],
 
     /* DMA Channel for Transmit */
-    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
+    .dmaChannelTransmit = DRV_SPI_XMIT_DMA_CH_IDX1,
 
     /* DMA Channel for Receive */
-    .dmaChannelReceive  = SYS_DMA_CHANNEL_NONE,
+    .dmaChannelReceive  = DRV_SPI_RCV_DMA_CH_IDX1,
 
-    /* Interrupt source is SPI */
-    .interruptSource    = DRV_SPI_INT_SRC_IDX1,
+    /* SPI Transmit Register */
+    .spiTransmitAddress =  (void *)&(SERCOM5_REGS->SPIM.SERCOM_DATA),
+
+    /* SPI Receive Register */
+    .spiReceiveAddress  = (void *)&(SERCOM5_REGS->SPIM.SERCOM_DATA),
 
     /* SPI Queue Size */
-    .queueSize = DRV_SPI_QUEUE_SIZE_IDX1,
+    .transferObjPoolSize = DRV_SPI_QUEUE_SIZE_IDX1,
 
     /* SPI Transfer Objects Pool */
     .transferObjPool = (uintptr_t)&drvSPI1TransferObjPool[0],
+
+    /* SPI interrupt sources (SPI peripheral and DMA) */
+    .interruptSources = &drvSPI1InterruptSources,
 };
 
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance 0 Initialization Data">
 
 /* SPI Client Objects Pool */
-static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0];
 
 /* SPI Transfer Objects Pool */
-static DRV_SPI_TRANSFER_OBJ drvSPI0TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX0] = {0};
+static DRV_SPI_TRANSFER_OBJ drvSPI0TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX0];
 
 /* SPI PLIB Interface Initialization */
 const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
@@ -148,6 +186,18 @@ const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
 const uint32_t drvSPI0remapDataBits[]= { 0x0, 0x1, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
 const uint32_t drvSPI0remapClockPolarity[] = { 0x0, 0x20000000 };
 const uint32_t drvSPI0remapClockPhase[] = { 0x10000000, 0x0 };
+
+const DRV_SPI_INTERRUPT_SOURCES drvSPI0InterruptSources =
+{
+    /* Peripheral has single interrupt vector */
+    .isSingleIntSrc                        = true,
+
+    /* Peripheral interrupt line */
+    .intSources.spiInterrupt             = SERCOM1_IRQn,
+    /* DMA interrupt line */
+    .intSources.dmaInterrupt               = DMAC_IRQn,
+};
+
 /* SPI Driver Initialization Data */
 const DRV_SPI_INIT drvSPI0InitData =
 {
@@ -167,19 +217,25 @@ const DRV_SPI_INIT drvSPI0InitData =
     .clientObjPool = (uintptr_t)&drvSPI0ClientObjPool[0],
 
     /* DMA Channel for Transmit */
-    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
+    .dmaChannelTransmit = DRV_SPI_XMIT_DMA_CH_IDX0,
 
     /* DMA Channel for Receive */
-    .dmaChannelReceive  = SYS_DMA_CHANNEL_NONE,
+    .dmaChannelReceive  = DRV_SPI_RCV_DMA_CH_IDX0,
 
-    /* Interrupt source is SPI */
-    .interruptSource    = DRV_SPI_INT_SRC_IDX0,
+    /* SPI Transmit Register */
+    .spiTransmitAddress =  (void *)&(SERCOM1_REGS->SPIM.SERCOM_DATA),
+
+    /* SPI Receive Register */
+    .spiReceiveAddress  = (void *)&(SERCOM1_REGS->SPIM.SERCOM_DATA),
 
     /* SPI Queue Size */
-    .queueSize = DRV_SPI_QUEUE_SIZE_IDX0,
+    .transferObjPoolSize = DRV_SPI_QUEUE_SIZE_IDX0,
 
     /* SPI Transfer Objects Pool */
     .transferObjPool = (uintptr_t)&drvSPI0TransferObjPool[0],
+
+    /* SPI interrupt sources (SPI peripheral and DMA) */
+    .interruptSources = &drvSPI0InterruptSources,
 };
 
 // </editor-fold>
@@ -192,6 +248,7 @@ const DRV_SPI_INIT drvSPI0InitData =
 // *****************************************************************************
 /* Structure to hold the object handles for the modules in the system. */
 SYSTEM_OBJECTS sysObj;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Library/Stack Initialization Data
@@ -206,6 +263,7 @@ SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 
 
+
 /*******************************************************************************
   Function:
     void SYS_Initialize ( void *data )
@@ -218,6 +276,7 @@ SYSTEM_OBJECTS sysObj;
 
 void SYS_Initialize ( void* data )
 {
+  
     PORT_Initialize();
 
     CLOCK_Initialize();
@@ -228,8 +287,8 @@ void SYS_Initialize ( void* data )
 
     EVSYS_Initialize();
 
-    NVIC_Initialize();
-	SYSTICK_TimerInitialize();
+    DMAC_Initialize();
+
     SERCOM5_SPI_Initialize();
 
 	BSP_Initialize();
@@ -241,10 +300,12 @@ void SYS_Initialize ( void* data )
 
 
 
-    APP_MONITOR_Initialize();
     APP_INSTANCE1_Initialize();
     APP_INSTANCE2_Initialize();
+    APP_MONITOR_Initialize();
 
+
+    NVIC_Initialize();
 
 }
 
@@ -252,4 +313,3 @@ void SYS_Initialize ( void* data )
 /*******************************************************************************
  End of File
 */
-

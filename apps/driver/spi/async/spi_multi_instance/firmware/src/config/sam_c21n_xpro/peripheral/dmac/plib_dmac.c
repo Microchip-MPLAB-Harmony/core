@@ -58,16 +58,20 @@
 typedef struct
 {
     uint8_t                inUse;
+
     DMAC_CHANNEL_CALLBACK  callback;
+
     uintptr_t              context;
+
     uint8_t                busyStatus;
+
 } DMAC_CH_OBJECT ;
 
 /* Initial write back memory section for DMAC */
-static  dmacdescriptor_registers_t _write_back_section[DMAC_CHANNELS_NUMBER]    __attribute__((aligned(16)));
+static  dmac_descriptor_registers_t _write_back_section[DMAC_CHANNELS_NUMBER]    __attribute__((aligned(16)));
 
 /* Descriptor section for DMAC */
-static  dmacdescriptor_registers_t  descriptor_section[DMAC_CHANNELS_NUMBER]    __attribute__((aligned(16)));
+static  dmac_descriptor_registers_t  descriptor_section[DMAC_CHANNELS_NUMBER]    __attribute__((aligned(16)));
 
 /* DMAC Channels object information structure */
 DMAC_CH_OBJECT dmacChannelObj[DMAC_CHANNELS_NUMBER];
@@ -104,39 +108,57 @@ void DMAC_Initialize( void )
     DMAC_REGS->DMAC_WRBADDR  = (uint32_t)_write_back_section;
 
     /* Update the Priority Control register */
-    DMAC_REGS->DMAC_PRICTRL0 = DMAC_PRICTRL0_LVLPRI0(1) | DMAC_PRICTRL0_LVLPRI1(1) | DMAC_PRICTRL0_LVLPRI2(1) | DMAC_PRICTRL0_LVLPRI3(1);
+    DMAC_REGS->DMAC_PRICTRL0 = DMAC_PRICTRL0_LVLPRI0(1) | DMAC_PRICTRL0_RRLVLEN0_Msk | DMAC_PRICTRL0_LVLPRI1(1) | DMAC_PRICTRL0_RRLVLEN1_Msk | DMAC_PRICTRL0_LVLPRI2(1) | DMAC_PRICTRL0_RRLVLEN2_Msk | DMAC_PRICTRL0_LVLPRI3(1) | DMAC_PRICTRL0_RRLVLEN3_Msk;
 
-   /***************** Configure DMA channel 0 ********************/
-   DMAC_REGS->DMAC_CHID = 0;
-   
-   DMAC_REGS->DMAC_CHCTRLB = DMAC_CHCTRLB_TRIGACT(2) | DMAC_CHCTRLB_TRIGSRC(5) | DMAC_CHCTRLB_LVL(0);
-   descriptor_section[0].BTCTRL = DMAC_DESCRIPTOR_BTCTRL_BLOCKACT_INT | DMAC_DESCRIPTOR_BTCTRL_BEATSIZE_BYTE | DMAC_DESCRIPTOR_BTCTRL_VALID_Msk | DMAC_DESCRIPTOR_BTCTRL_SRCINC_Msk ;
-   dmacChannelObj[0].inUse = 1;
-   DMAC_REGS->DMAC_CHINTENSET = (DMAC_CHINTENSET_TERR_Msk | DMAC_CHINTENSET_TCMPL_Msk);
 
-   /***************** Configure DMA channel 1 ********************/
-   DMAC_REGS->DMAC_CHID = 1;
-   
-   DMAC_REGS->DMAC_CHCTRLB = DMAC_CHCTRLB_TRIGACT(2) | DMAC_CHCTRLB_TRIGSRC(4) | DMAC_CHCTRLB_LVL(0);
-   descriptor_section[1].BTCTRL = DMAC_DESCRIPTOR_BTCTRL_BLOCKACT_INT | DMAC_DESCRIPTOR_BTCTRL_BEATSIZE_BYTE | DMAC_DESCRIPTOR_BTCTRL_VALID_Msk | DMAC_DESCRIPTOR_BTCTRL_DSTINC_Msk;
-   dmacChannelObj[1].inUse = 1;
-   DMAC_REGS->DMAC_CHINTENSET = (DMAC_CHINTENSET_TERR_Msk | DMAC_CHINTENSET_TCMPL_Msk);
+    /***************** Configure DMA channel 0 ********************/
 
-   /***************** Configure DMA channel 2 ********************/
-   DMAC_REGS->DMAC_CHID = 2;
-   
-   DMAC_REGS->DMAC_CHCTRLB = DMAC_CHCTRLB_TRIGACT(2) | DMAC_CHCTRLB_TRIGSRC(13) | DMAC_CHCTRLB_LVL(0);
-   descriptor_section[2].BTCTRL = DMAC_DESCRIPTOR_BTCTRL_BLOCKACT_INT | DMAC_DESCRIPTOR_BTCTRL_BEATSIZE_BYTE | DMAC_DESCRIPTOR_BTCTRL_VALID_Msk | DMAC_DESCRIPTOR_BTCTRL_SRCINC_Msk ;
-   dmacChannelObj[2].inUse = 1;
-   DMAC_REGS->DMAC_CHINTENSET = (DMAC_CHINTENSET_TERR_Msk | DMAC_CHINTENSET_TCMPL_Msk);
+    DMAC_REGS->DMAC_CHID = 0;
 
-   /***************** Configure DMA channel 3 ********************/
-   DMAC_REGS->DMAC_CHID = 3;
-   
-   DMAC_REGS->DMAC_CHCTRLB = DMAC_CHCTRLB_TRIGACT(2) | DMAC_CHCTRLB_TRIGSRC(12) | DMAC_CHCTRLB_LVL(0);
-   descriptor_section[3].BTCTRL = DMAC_DESCRIPTOR_BTCTRL_BLOCKACT_INT | DMAC_DESCRIPTOR_BTCTRL_BEATSIZE_BYTE | DMAC_DESCRIPTOR_BTCTRL_VALID_Msk | DMAC_DESCRIPTOR_BTCTRL_DSTINC_Msk;
-   dmacChannelObj[3].inUse = 1;
-   DMAC_REGS->DMAC_CHINTENSET = (DMAC_CHINTENSET_TERR_Msk | DMAC_CHINTENSET_TCMPL_Msk);
+    DMAC_REGS->DMAC_CHCTRLB = DMAC_CHCTRLB_TRIGACT(2) | DMAC_CHCTRLB_TRIGSRC(5) | DMAC_CHCTRLB_LVL(0) ;
+
+    descriptor_section[0].DMAC_BTCTRL = DMAC_BTCTRL_BLOCKACT_INT | DMAC_BTCTRL_BEATSIZE_BYTE | DMAC_BTCTRL_VALID_Msk | DMAC_BTCTRL_SRCINC_Msk ;
+
+    dmacChannelObj[0].inUse = 1;
+
+    DMAC_REGS->DMAC_CHINTENSET = (DMAC_CHINTENSET_TERR_Msk | DMAC_CHINTENSET_TCMPL_Msk);
+
+    /***************** Configure DMA channel 1 ********************/
+
+    DMAC_REGS->DMAC_CHID = 1;
+
+    DMAC_REGS->DMAC_CHCTRLB = DMAC_CHCTRLB_TRIGACT(2) | DMAC_CHCTRLB_TRIGSRC(4) | DMAC_CHCTRLB_LVL(0) ;
+
+    descriptor_section[1].DMAC_BTCTRL = DMAC_BTCTRL_BLOCKACT_INT | DMAC_BTCTRL_BEATSIZE_BYTE | DMAC_BTCTRL_VALID_Msk | DMAC_BTCTRL_DSTINC_Msk ;
+
+    dmacChannelObj[1].inUse = 1;
+
+    DMAC_REGS->DMAC_CHINTENSET = (DMAC_CHINTENSET_TERR_Msk | DMAC_CHINTENSET_TCMPL_Msk);
+
+    /***************** Configure DMA channel 2 ********************/
+
+    DMAC_REGS->DMAC_CHID = 2;
+
+    DMAC_REGS->DMAC_CHCTRLB = DMAC_CHCTRLB_TRIGACT(2) | DMAC_CHCTRLB_TRIGSRC(13) | DMAC_CHCTRLB_LVL(0) ;
+
+    descriptor_section[2].DMAC_BTCTRL = DMAC_BTCTRL_BLOCKACT_INT | DMAC_BTCTRL_BEATSIZE_BYTE | DMAC_BTCTRL_VALID_Msk | DMAC_BTCTRL_SRCINC_Msk ;
+
+    dmacChannelObj[2].inUse = 1;
+
+    DMAC_REGS->DMAC_CHINTENSET = (DMAC_CHINTENSET_TERR_Msk | DMAC_CHINTENSET_TCMPL_Msk);
+
+    /***************** Configure DMA channel 3 ********************/
+
+    DMAC_REGS->DMAC_CHID = 3;
+
+    DMAC_REGS->DMAC_CHCTRLB = DMAC_CHCTRLB_TRIGACT(2) | DMAC_CHCTRLB_TRIGSRC(12) | DMAC_CHCTRLB_LVL(0) ;
+
+    descriptor_section[3].DMAC_BTCTRL = DMAC_BTCTRL_BLOCKACT_INT | DMAC_BTCTRL_BEATSIZE_BYTE | DMAC_BTCTRL_VALID_Msk | DMAC_BTCTRL_DSTINC_Msk ;
+
+    dmacChannelObj[3].inUse = 1;
+
+    DMAC_REGS->DMAC_CHINTENSET = (DMAC_CHINTENSET_TERR_Msk | DMAC_CHINTENSET_TCMPL_Msk);
+
     /* Enable the DMAC module & Priority Level x Enable */
     DMAC_REGS->DMAC_CTRL = DMAC_CTRL_DMAENABLE_Msk | DMAC_CTRL_LVLEN0_Msk | DMAC_CTRL_LVLEN1_Msk | DMAC_CTRL_LVLEN2_Msk | DMAC_CTRL_LVLEN3_Msk;
 }
@@ -153,35 +175,35 @@ bool DMAC_ChannelTransfer( DMAC_CHANNEL channel, const void *srcAddr, const void
     if (dmacChannelObj[channel].busyStatus == false)
     {
         /* Get a pointer to the module hardware instance */
-        dmacdescriptor_registers_t *const dmacDescReg = &descriptor_section[channel];
+        dmac_descriptor_registers_t *const dmacDescReg = &descriptor_section[channel];
 
         dmacChannelObj[channel].busyStatus = true;
 
-       /*Set source address */
-        if ( dmacDescReg->BTCTRL & DMAC_DESCRIPTOR_BTCTRL_SRCINC_Msk)
+        /* Set source address */
+        if (dmacDescReg->DMAC_BTCTRL & DMAC_BTCTRL_SRCINC_Msk)
         {
-            dmacDescReg->SRCADDR = (uint32_t) (srcAddr + blockSize);
+            dmacDescReg->DMAC_SRCADDR = (uint32_t) (srcAddr + blockSize);
         }
         else
         {
-            dmacDescReg->SRCADDR = (uint32_t) (srcAddr);
+            dmacDescReg->DMAC_SRCADDR = (uint32_t) (srcAddr);
         }
 
         /* Set destination address */
-        if ( dmacDescReg->BTCTRL & DMAC_DESCRIPTOR_BTCTRL_DSTINC_Msk)
+        if (dmacDescReg->DMAC_BTCTRL & DMAC_BTCTRL_DSTINC_Msk)
         {
-            dmacDescReg->DSTADDR = (uint32_t) (destAddr + blockSize);
+            dmacDescReg->DMAC_DSTADDR = (uint32_t) (destAddr + blockSize);
         }
         else
         {
-            dmacDescReg->DSTADDR = (uint32_t) (destAddr);
+            dmacDescReg->DMAC_DSTADDR = (uint32_t) (destAddr);
         }
 
-        /*Calculate the beat size and then set the BTCNT value */
-        beat_size = (dmacDescReg->BTCTRL & DMAC_DESCRIPTOR_BTCTRL_BEATSIZE_Msk) >> DMAC_DESCRIPTOR_BTCTRL_BEATSIZE_Pos;
+        /* Calculate the beat size and then set the BTCNT value */
+        beat_size = (dmacDescReg->DMAC_BTCTRL & DMAC_BTCTRL_BEATSIZE_Msk) >> DMAC_BTCTRL_BEATSIZE_Pos;
 
         /* Set Block Transfer Count */
-        dmacDescReg->BTCNT = blockSize / (1 << beat_size);
+        dmacDescReg->DMAC_BTCNT = blockSize / (1 << beat_size);
 
         /* Set the DMA channel */
         DMAC_REGS->DMAC_CHID = channel;
@@ -190,11 +212,12 @@ bool DMAC_ChannelTransfer( DMAC_CHANNEL channel, const void *srcAddr, const void
         DMAC_REGS->DMAC_CHCTRLA |= DMAC_CHCTRLA_ENABLE_Msk;
 
         /* Verify if Trigger source is Software Trigger */
-        if ( ((DMAC_REGS->DMAC_CHCTRLB & DMAC_CHCTRLB_TRIGSRC_Msk) >> DMAC_CHCTRLB_TRIGSRC_Pos) == 0x00)
+        if (((DMAC_REGS->DMAC_CHCTRLB & DMAC_CHCTRLB_TRIGSRC_Msk) >> DMAC_CHCTRLB_TRIGSRC_Pos) == 0x00)
         {
             /* Trigger the DMA transfer */
             DMAC_REGS->DMAC_SWTRIGCTRL |= (1 << channel);
         }
+
         returnStatus = true;
     }
 
@@ -222,8 +245,7 @@ void DMAC_ChannelDisable ( DMAC_CHANNEL channel )
     /* Disable the DMA channel */
     DMAC_REGS->DMAC_CHCTRLA &= (~DMAC_CHCTRLA_ENABLE_Pos);
 
-    dmacChannelObj[channel].busyStatus=false;
-
+    dmacChannelObj[channel].busyStatus = false;
 }
 
 
@@ -234,6 +256,7 @@ void DMAC_ChannelDisable ( DMAC_CHANNEL channel )
 void DMAC_ChannelCallbackRegister( DMAC_CHANNEL channel, const DMAC_CHANNEL_CALLBACK callback, const uintptr_t context )
 {
     dmacChannelObj[channel].callback = callback;
+
     dmacChannelObj[channel].context  = context;
 }
 
@@ -244,9 +267,9 @@ void DMAC_ChannelCallbackRegister( DMAC_CHANNEL channel, const DMAC_CHANNEL_CALL
 DMAC_CHANNEL_CONFIG DMAC_ChannelSettingsGet (DMAC_CHANNEL channel)
 {
     /* Get a pointer to the module hardware instance */
-    dmacdescriptor_registers_t *const dmacDescReg = &descriptor_section[0];
+    dmac_descriptor_registers_t *const dmacDescReg = &descriptor_section[0];
 
-    return (dmacDescReg[channel].BTCTRL);
+    return (dmacDescReg[channel].DMAC_BTCTRL);
 }
 
 /*******************************************************************************
@@ -256,9 +279,8 @@ DMAC_CHANNEL_CONFIG DMAC_ChannelSettingsGet (DMAC_CHANNEL channel)
 bool DMAC_ChannelSettingsSet (DMAC_CHANNEL channel, DMAC_CHANNEL_CONFIG setting)
 {
     /* Get a pointer to the module hardware instance */
-    dmacdescriptor_registers_t *const dmacDescReg = &descriptor_section[0];
+    dmac_descriptor_registers_t *const dmacDescReg = &descriptor_section[0];
 
-    /* Disable the channel */
     /* Set the DMA Channel ID */
     DMAC_REGS->DMAC_CHID = channel;
 
@@ -266,7 +288,7 @@ bool DMAC_ChannelSettingsSet (DMAC_CHANNEL channel, DMAC_CHANNEL_CONFIG setting)
     DMAC_REGS->DMAC_CHCTRLA &= (~DMAC_CHCTRLA_ENABLE_Pos);
 
     /* Set the new settings */
-    dmacDescReg[channel].BTCTRL = setting;
+    dmacDescReg[channel].DMAC_BTCTRL = setting;
 
     return true;
 }
@@ -280,12 +302,12 @@ void DMAC_InterruptHandler( void )
     DMAC_CH_OBJECT  *dmacChObj = NULL;
     uint8_t channel = 0;
     volatile uint32_t chanIntFlagStatus = 0;
-    DMAC_TRANSFER_EVENT event   = DMAC_TRANSFER_EVENT_ERROR;
+    DMAC_TRANSFER_EVENT event = DMAC_TRANSFER_EVENT_ERROR;
 
     /* Get active channel number */
-    channel =  DMAC_REGS->DMAC_INTPEND & DMAC_INTPEND_ID_Msk;
+    channel = DMAC_REGS->DMAC_INTPEND & DMAC_INTPEND_ID_Msk;
 
-	dmacChObj = (DMAC_CH_OBJECT *)&dmacChannelObj[channel];
+    dmacChObj = (DMAC_CH_OBJECT *)&dmacChannelObj[channel];
 
     /* Update the DMAC channel ID */
     DMAC_REGS->DMAC_CHID = DMAC_CHID_ID(channel);
@@ -300,6 +322,7 @@ void DMAC_InterruptHandler( void )
         DMAC_REGS->DMAC_CHINTFLAG = DMAC_CHINTENCLR_TCMPL_Msk;
 
         event = DMAC_TRANSFER_EVENT_COMPLETE;
+
         dmacChObj->busyStatus = false;
     }
 
@@ -310,6 +333,7 @@ void DMAC_InterruptHandler( void )
         DMAC_REGS->DMAC_CHINTFLAG = DMAC_CHINTENCLR_TERR_Msk;
 
         event = DMAC_TRANSFER_EVENT_ERROR;
+
         dmacChObj->busyStatus = false;
     }
 

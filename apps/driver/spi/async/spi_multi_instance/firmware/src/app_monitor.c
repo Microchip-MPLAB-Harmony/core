@@ -52,7 +52,6 @@
 // *****************************************************************************
 
 #include "app_monitor.h"
-#include "peripheral/systick/plib_systick.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -71,7 +70,7 @@
 
   Remarks:
     This structure should be initialized by the APP_MONITOR_Initialize function.
-    
+
     Application strings and buffers are be defined outside this structure.
 */
 
@@ -112,9 +111,8 @@
  */
 
 void APP_MONITOR_Initialize ( void )
-{   
-    /* Start SysTick Timer for delays to be used later */
-    SYSTICK_TimerStart();
+{
+
 }
 
 
@@ -127,13 +125,8 @@ void APP_MONITOR_Initialize ( void )
  */
 
 void APP_MONITOR_Tasks ( void )
-{     
+{
     if((Instance1TransferSuccessStatus() == true) && (Instance2TransferSuccessStatus() == true))
-    {
-        SYSTICK_DelayMs(500);
-        LED_TOGGLE();
-    }
-    else
     {
         LED_ON();
     }

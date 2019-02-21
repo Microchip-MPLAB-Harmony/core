@@ -66,59 +66,59 @@
 // *****************************************************************************
 
 
-/*** Macros for APP_EEPROM0_WP pin ***/
-#define APP_EEPROM0_WP_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 10)
-#define APP_EEPROM0_WP_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 10)
-#define APP_EEPROM0_WP_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 10)
-#define APP_EEPROM0_WP_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 10)) & 0x01)
-#define APP_EEPROM0_WP_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 10)
-#define APP_EEPROM0_WP_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 10)
-#define APP_EEPROM0_WP_PIN                  PORT_PIN_PA10
-
-/*** Macros for APP_EEPROM0_HOLD pin ***/
-#define APP_EEPROM0_HOLD_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 12)
-#define APP_EEPROM0_HOLD_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 12)
-#define APP_EEPROM0_HOLD_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 12)
-#define APP_EEPROM0_HOLD_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 12)) & 0x01)
-#define APP_EEPROM0_HOLD_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 12)
-#define APP_EEPROM0_HOLD_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 12)
-#define APP_EEPROM0_HOLD_PIN                  PORT_PIN_PB12
-
 /*** Macros for APP_EEPROM1_WP pin ***/
-#define APP_EEPROM1_WP_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 20)
-#define APP_EEPROM1_WP_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 20)
-#define APP_EEPROM1_WP_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 20)
-#define APP_EEPROM1_WP_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 20)) & 0x01)
-#define APP_EEPROM1_WP_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 20)
-#define APP_EEPROM1_WP_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 20)
-#define APP_EEPROM1_WP_PIN                  PORT_PIN_PA20
-
-/*** Macros for APP_EEPROM0_CS pin ***/
-#define APP_EEPROM0_CS_Set()               (PORT_REGS->GROUP[2].PORT_OUTSET = 1 << 28)
-#define APP_EEPROM0_CS_Clear()             (PORT_REGS->GROUP[2].PORT_OUTCLR = 1 << 28)
-#define APP_EEPROM0_CS_Toggle()            (PORT_REGS->GROUP[2].PORT_OUTTGL = 1 << 28)
-#define APP_EEPROM0_CS_Get()               (((PORT_REGS->GROUP[2].PORT_IN >> 28)) & 0x01)
-#define APP_EEPROM0_CS_OutputEnable()      (PORT_REGS->GROUP[2].PORT_DIRSET = 1 << 28)
-#define APP_EEPROM0_CS_InputEnable()       (PORT_REGS->GROUP[2].PORT_DIRCLR = 1 << 28)
-#define APP_EEPROM0_CS_PIN                  PORT_PIN_PC28
+#define APP_EEPROM1_WP_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 10)
+#define APP_EEPROM1_WP_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 10)
+#define APP_EEPROM1_WP_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 10)
+#define APP_EEPROM1_WP_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 10)) & 0x01)
+#define APP_EEPROM1_WP_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 10)
+#define APP_EEPROM1_WP_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 10)
+#define APP_EEPROM1_WP_PIN                  PORT_PIN_PA10
 
 /*** Macros for APP_EEPROM1_HOLD pin ***/
-#define APP_EEPROM1_HOLD_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 30)
-#define APP_EEPROM1_HOLD_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 30)
-#define APP_EEPROM1_HOLD_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 30)
-#define APP_EEPROM1_HOLD_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 30)) & 0x01)
-#define APP_EEPROM1_HOLD_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 30)
-#define APP_EEPROM1_HOLD_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 30)
-#define APP_EEPROM1_HOLD_PIN                  PORT_PIN_PB30
+#define APP_EEPROM1_HOLD_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 12)
+#define APP_EEPROM1_HOLD_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 12)
+#define APP_EEPROM1_HOLD_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 12)
+#define APP_EEPROM1_HOLD_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 12)) & 0x01)
+#define APP_EEPROM1_HOLD_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 12)
+#define APP_EEPROM1_HOLD_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 12)
+#define APP_EEPROM1_HOLD_PIN                  PORT_PIN_PB12
+
+/*** Macros for APP_EEPROM2_WP pin ***/
+#define APP_EEPROM2_WP_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 20)
+#define APP_EEPROM2_WP_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 20)
+#define APP_EEPROM2_WP_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 20)
+#define APP_EEPROM2_WP_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 20)) & 0x01)
+#define APP_EEPROM2_WP_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 20)
+#define APP_EEPROM2_WP_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 20)
+#define APP_EEPROM2_WP_PIN                  PORT_PIN_PA20
 
 /*** Macros for APP_EEPROM1_CS pin ***/
-#define APP_EEPROM1_CS_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 3)
-#define APP_EEPROM1_CS_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 3)
-#define APP_EEPROM1_CS_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 3)
-#define APP_EEPROM1_CS_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 3)) & 0x01)
-#define APP_EEPROM1_CS_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 3)
-#define APP_EEPROM1_CS_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 3)
-#define APP_EEPROM1_CS_PIN                  PORT_PIN_PB03
+#define APP_EEPROM1_CS_Set()               (PORT_REGS->GROUP[2].PORT_OUTSET = 1 << 28)
+#define APP_EEPROM1_CS_Clear()             (PORT_REGS->GROUP[2].PORT_OUTCLR = 1 << 28)
+#define APP_EEPROM1_CS_Toggle()            (PORT_REGS->GROUP[2].PORT_OUTTGL = 1 << 28)
+#define APP_EEPROM1_CS_Get()               (((PORT_REGS->GROUP[2].PORT_IN >> 28)) & 0x01)
+#define APP_EEPROM1_CS_OutputEnable()      (PORT_REGS->GROUP[2].PORT_DIRSET = 1 << 28)
+#define APP_EEPROM1_CS_InputEnable()       (PORT_REGS->GROUP[2].PORT_DIRCLR = 1 << 28)
+#define APP_EEPROM1_CS_PIN                  PORT_PIN_PC28
+
+/*** Macros for APP_EEPROM2_HOLD pin ***/
+#define APP_EEPROM2_HOLD_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 30)
+#define APP_EEPROM2_HOLD_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 30)
+#define APP_EEPROM2_HOLD_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 30)
+#define APP_EEPROM2_HOLD_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 30)) & 0x01)
+#define APP_EEPROM2_HOLD_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 30)
+#define APP_EEPROM2_HOLD_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 30)
+#define APP_EEPROM2_HOLD_PIN                  PORT_PIN_PB30
+
+/*** Macros for APP_EEPROM2_CS pin ***/
+#define APP_EEPROM2_CS_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 3)
+#define APP_EEPROM2_CS_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 3)
+#define APP_EEPROM2_CS_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 3)
+#define APP_EEPROM2_CS_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 3)) & 0x01)
+#define APP_EEPROM2_CS_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 3)
+#define APP_EEPROM2_CS_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 3)
+#define APP_EEPROM2_CS_PIN                  PORT_PIN_PB03
 
 
 

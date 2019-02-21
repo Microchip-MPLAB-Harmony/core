@@ -4,12 +4,9 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="f2" displayName="arm" projectFiles="true">
-        <itemPath>../src/arm/toolchain_specifics.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_c21n_xpro" projectFiles="true">
-          <logicalFolder name="f4" displayName="bsp" projectFiles="true">
+          <logicalFolder name="f3" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_c21n_xpro/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="driver" projectFiles="true">
@@ -23,6 +20,9 @@
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f4" displayName="clock" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/peripheral/clock/plib_clock.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="dmac" projectFiles="true">
+              <itemPath>../src/config/sam_c21n_xpro/peripheral/dmac/plib_dmac.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="evsys" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/peripheral/evsys/plib_evsys.h</itemPath>
@@ -40,11 +40,8 @@
                 <itemPath>../src/config/sam_c21n_xpro/peripheral/sercom/spim/plib_sercom5_spi.h</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="systick" projectFiles="true">
-              <itemPath>../src/config/sam_c21n_xpro/peripheral/systick/plib_systick.h</itemPath>
-            </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="system" projectFiles="true">
+          <logicalFolder name="f4" displayName="system" projectFiles="true">
             <logicalFolder name="f3" displayName="dma" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/system/dma/sys_dma.h</itemPath>
               <itemPath>../src/config/sam_c21n_xpro/system/dma/sys_dma_mapping.h</itemPath>
@@ -61,17 +58,19 @@
             <itemPath>../src/config/sam_c21n_xpro/system/system_common.h</itemPath>
             <itemPath>../src/config/sam_c21n_xpro/system/system_module.h</itemPath>
           </logicalFolder>
+          <itemPath>../src/config/sam_c21n_xpro/device_cache.h</itemPath>
+          <itemPath>../src/config/sam_c21n_xpro/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_c21n_xpro/definitions.h</itemPath>
           <itemPath>../src/config/sam_c21n_xpro/user.h</itemPath>
           <itemPath>../src/config/sam_c21n_xpro/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f4" displayName="osal" projectFiles="true">
+      <logicalFolder name="f3" displayName="osal" projectFiles="true">
         <itemPath>../src/config/sam_c21n_xpro/osal/osal.h</itemPath>
         <itemPath>../src/config/sam_c21n_xpro/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/sam_c21n_xpro/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="packs" projectFiles="true">
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAMC21N18A_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAMC21N18A_DFP/component/ac.h</itemPath>
@@ -117,6 +116,7 @@
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm0plus.h</itemPath>
@@ -134,9 +134,9 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>../src/app_monitor.h</itemPath>
       <itemPath>../src/app_instance1.h</itemPath>
       <itemPath>../src/app_instance2.h</itemPath>
+      <itemPath>../src/app_monitor.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -147,7 +147,7 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_c21n_xpro" projectFiles="true">
-          <logicalFolder name="f5" displayName="bsp" projectFiles="true">
+          <logicalFolder name="f4" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_c21n_xpro/bsp/bsp.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="driver" projectFiles="true">
@@ -159,6 +159,9 @@
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f4" displayName="clock" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/peripheral/clock/plib_clock.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="dmac" projectFiles="true">
+              <itemPath>../src/config/sam_c21n_xpro/peripheral/dmac/plib_dmac.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="evsys" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/peripheral/evsys/plib_evsys.c</itemPath>
@@ -175,14 +178,11 @@
                 <itemPath>../src/config/sam_c21n_xpro/peripheral/sercom/spim/plib_sercom5_spi.c</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="systick" projectFiles="true">
-              <itemPath>../src/config/sam_c21n_xpro/peripheral/systick/plib_systick.c</itemPath>
-            </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/sam_c21n_xpro/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f4" displayName="system" projectFiles="true">
+          <logicalFolder name="f5" displayName="system" projectFiles="true">
             <logicalFolder name="f2" displayName="dma" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro/system/dma/sys_dma.c</itemPath>
             </logicalFolder>
@@ -193,15 +193,15 @@
           <itemPath>../src/config/sam_c21n_xpro/initialization.c</itemPath>
           <itemPath>../src/config/sam_c21n_xpro/interrupts.c</itemPath>
           <itemPath>../src/config/sam_c21n_xpro/exceptions.c</itemPath>
-          <itemPath>../src/config/sam_c21n_xpro/startup.c</itemPath>
+          <itemPath>../src/config/sam_c21n_xpro/startup_xc32.c</itemPath>
           <itemPath>../src/config/sam_c21n_xpro/libc_syscalls.c</itemPath>
           <itemPath>../src/config/sam_c21n_xpro/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
       <itemPath>../src/main.c</itemPath>
-      <itemPath>../src/app_monitor.c</itemPath>
       <itemPath>../src/app_instance1.c</itemPath>
       <itemPath>../src/app_instance2.c</itemPath>
+      <itemPath>../src/app_monitor.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -226,7 +226,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAMC21_DFP" vendor="Atmel" version="1.2.166"/>
+        <pack name="SAMC21_DFP" vendor="Microchip" version="2.0.5"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>
