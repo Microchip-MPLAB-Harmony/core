@@ -649,12 +649,12 @@
       <Symbols dnOrder="0">
         <KeyValueSet dnOrder="0" id="DRV_AT25_CHIP_SELECT_PIN">
           <Values dnOrder="0">
-            <User dnOrder="0" value="69"/>
+            <User dnOrder="0" value="67"/>
           </Values>
         </KeyValueSet>
         <KeyValueSet dnOrder="1" id="DRV_AT25_HOLD_PIN">
           <Values dnOrder="0">
-            <User dnOrder="0" value="88"/>
+            <User dnOrder="0" value="43"/>
           </Values>
         </KeyValueSet>
         <String dnOrder="2" id="DRV_AT25_PLIB">
@@ -666,7 +666,7 @@
         </String>
         <KeyValueSet dnOrder="3" id="DRV_AT25_WRITE_PROTECT_PIN">
           <Values dnOrder="0">
-            <User dnOrder="0" value="14"/>
+            <User dnOrder="0" value="30"/>
           </Values>
         </KeyValueSet>
       </Symbols>
@@ -972,7 +972,7 @@
         <Boolean dnOrder="8" id="ENABLE_SYS_CACHE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="HarmonyCore" priority="1" value="true"/>
+              <Value dnOrder="0" id="HarmonyCore" priority="1" value="false"/>
             </Dynamic>
           </Values>
         </Boolean>
@@ -1389,18 +1389,18 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_E54_Xplained_Pro" x="170" y="60"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="640" y="20"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="13" y="93"/>
         <ElementPosition dnOrder="2" id="cmsis" x="500" y="20"/>
         <ElementPosition dnOrder="3" id="core" x="400" y="20"/>
         <ElementPosition dnOrder="4" id="dfp" x="180" y="20"/>
         <ElementPosition dnOrder="5" id="drv_at25" x="390" y="60"/>
         <ElementPosition dnOrder="6" id="evsys" x="20" y="20"/>
-        <ElementPosition dnOrder="7" id="sercom6" x="177" y="101"/>
+        <ElementPosition dnOrder="7" id="sercom6" x="182" y="111"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

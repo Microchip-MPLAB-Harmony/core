@@ -199,8 +199,6 @@ void SYS_Initialize ( void* data )
     SERCOM6_SPI_Initialize();
 
 
-    NVIC_Initialize();
-
     sysObj.drvAT25 = DRV_AT25_Initialize(DRV_AT25_INDEX, (SYS_MODULE_INIT *)&drvAT25InitData);
 
 
@@ -209,7 +207,8 @@ void SYS_Initialize ( void* data )
     APP_Initialize();
 
 
-  
+    NVIC_Initialize();
+
 }
 
 
