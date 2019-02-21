@@ -52,7 +52,7 @@
 // *****************************************************************************
 
 #include "app.h"
-#include "bsp/bsp.h"
+#include "user.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -155,8 +155,7 @@ void APP_Tasks ( void )
     {
         /* Application's initial state. */
         case APP_STATE_INIT:
-
-            appData.prevCounterVal = SYS_TIME_Counter64Get();
+            
             appData.tmr1Handle = SYS_TIME_CallbackRegisterMS(Timer1_Callback, 0, LED_BLINK_RATE_MS, SYS_TIME_PERIODIC);
             appData.tmr2Handle = SYS_TIME_CallbackRegisterMS(Timer2_Callback, 0, CONSOLE_PRINT_RATE_MS, SYS_TIME_PERIODIC);
 
