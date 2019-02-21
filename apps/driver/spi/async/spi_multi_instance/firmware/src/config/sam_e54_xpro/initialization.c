@@ -106,10 +106,10 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance 1 Initialization Data">
 
 /* SPI Client Objects Pool */
-static DRV_SPI_CLIENT_OBJ drvSPI1ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX1] = {0};
+static DRV_SPI_CLIENT_OBJ drvSPI1ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX1];
 
 /* SPI Transfer Objects Pool */
-static DRV_SPI_TRANSFER_OBJ drvSPI1TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX1] = {0};
+static DRV_SPI_TRANSFER_OBJ drvSPI1TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX1];
 
 /* SPI PLIB Interface Initialization */
 const DRV_SPI_PLIB_INTERFACE drvSPI1PlibAPI = {
@@ -135,10 +135,11 @@ const DRV_SPI_INTERRUPT_SOURCES drvSPI1InterruptSources =
 {
     /* Peripheral has more than one interrupt vectors */
     .isSingleIntSrc                        = false,
+
     /* Peripheral interrupt lines */
-    .intSources.multi.spiTxReadyInt        = SERCOM6_0_IRQn,
-    .intSources.multi.spiTxCompleteInt     = SERCOM6_1_IRQn,
-    .intSources.multi.spiRxInt             = SERCOM6_2_IRQn,
+    .intSources.multi.spiTxReadyInt      = SERCOM6_0_IRQn,
+    .intSources.multi.spiTxCompleteInt   = SERCOM6_1_IRQn,
+    .intSources.multi.spiRxInt           = SERCOM6_2_IRQn,
     /* DMA Tx interrupt line */
     .intSources.multi.dmaTxChannelInt      = DMAC_2_IRQn,
     /* DMA Rx interrupt line */
@@ -176,7 +177,7 @@ const DRV_SPI_INIT drvSPI1InitData =
     .spiReceiveAddress  = (void *)&(SERCOM6_REGS->SPIM.SERCOM_DATA),
 
     /* SPI Queue Size */
-    .queueSize = DRV_SPI_QUEUE_SIZE_IDX1,
+    .transferObjPoolSize = DRV_SPI_QUEUE_SIZE_IDX1,
 
     /* SPI Transfer Objects Pool */
     .transferObjPool = (uintptr_t)&drvSPI1TransferObjPool[0],
@@ -189,10 +190,10 @@ const DRV_SPI_INIT drvSPI1InitData =
 // <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance 0 Initialization Data">
 
 /* SPI Client Objects Pool */
-static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0];
 
 /* SPI Transfer Objects Pool */
-static DRV_SPI_TRANSFER_OBJ drvSPI0TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX0] = {0};
+static DRV_SPI_TRANSFER_OBJ drvSPI0TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX0];
 
 /* SPI PLIB Interface Initialization */
 const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
@@ -218,10 +219,11 @@ const DRV_SPI_INTERRUPT_SOURCES drvSPI0InterruptSources =
 {
     /* Peripheral has more than one interrupt vectors */
     .isSingleIntSrc                        = false,
+
     /* Peripheral interrupt lines */
-    .intSources.multi.spiTxReadyInt        = SERCOM4_0_IRQn,
-    .intSources.multi.spiTxCompleteInt     = SERCOM4_1_IRQn,
-    .intSources.multi.spiRxInt             = SERCOM4_2_IRQn,
+    .intSources.multi.spiTxReadyInt      = SERCOM4_0_IRQn,
+    .intSources.multi.spiTxCompleteInt   = SERCOM4_1_IRQn,
+    .intSources.multi.spiRxInt           = SERCOM4_2_IRQn,
     /* DMA Tx interrupt line */
     .intSources.multi.dmaTxChannelInt      = DMAC_0_IRQn,
     /* DMA Rx interrupt line */
@@ -259,7 +261,7 @@ const DRV_SPI_INIT drvSPI0InitData =
     .spiReceiveAddress  = (void *)&(SERCOM4_REGS->SPIM.SERCOM_DATA),
 
     /* SPI Queue Size */
-    .queueSize = DRV_SPI_QUEUE_SIZE_IDX0,
+    .transferObjPoolSize = DRV_SPI_QUEUE_SIZE_IDX0,
 
     /* SPI Transfer Objects Pool */
     .transferObjPool = (uintptr_t)&drvSPI0TransferObjPool[0],
@@ -318,13 +320,10 @@ void SYS_Initialize ( void* data )
 
     SERCOM6_SPI_Initialize();
 
-	SYSTICK_TimerInitialize();
     DMAC_Initialize();
 
     SERCOM4_SPI_Initialize();
 
-
-    NVIC_Initialize();
 
     /* Initialize SPI1 Driver Instance */
     sysObj.drvSPI1 = DRV_SPI_Initialize(DRV_SPI_INDEX_1, (SYS_MODULE_INIT *)&drvSPI1InitData);
@@ -333,12 +332,13 @@ void SYS_Initialize ( void* data )
 
 
 
-    APP_MONITOR_Initialize();
     APP_INSTANCE1_Initialize();
     APP_INSTANCE2_Initialize();
+    APP_MONITOR_Initialize();
 
 
-  
+    NVIC_Initialize();
+
 }
 
 

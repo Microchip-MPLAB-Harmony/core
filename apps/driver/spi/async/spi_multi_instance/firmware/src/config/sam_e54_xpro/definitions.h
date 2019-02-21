@@ -54,18 +54,16 @@
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
-#include "peripheral/systick/plib_systick.h"
 #include "peripheral/dmac/plib_dmac.h"
 #include "peripheral/sercom/spim/plib_sercom4_spi.h"
 #include "driver/spi/drv_spi.h"
 #include "system/int/sys_int.h"
 #include "system/ports/sys_ports.h"
-#include "system/cache/sys_cache.h"
 #include "system/dma/sys_dma.h"
 #include "osal/osal.h"
-#include "app_monitor.h"
 #include "app_instance1.h"
 #include "app_instance2.h"
+#include "app_monitor.h"
 
 
 
