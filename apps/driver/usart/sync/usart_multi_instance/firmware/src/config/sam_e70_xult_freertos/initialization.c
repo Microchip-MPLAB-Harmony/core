@@ -45,6 +45,8 @@
 // *****************************************************************************
 #include "configuration.h"
 #include "definitions.h"
+#include "device.h"
+
 
 
 // ****************************************************************************
@@ -83,6 +85,7 @@
 
 
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Driver Initialization Data
@@ -90,36 +93,36 @@
 // *****************************************************************************
 // <editor-fold defaultstate="collapsed" desc="DRV_USART Instance 1 Initialization Data">
 
-static DRV_USART_CLIENT_OBJ drvUSART1ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX1] = {0};
+static DRV_USART_CLIENT_OBJ drvUSART1ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX1];
+
 
 const DRV_USART_PLIB_INTERFACE drvUsart1PlibAPI = {
-        .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)USART1_ReadCallbackRegister,
-        .read = (DRV_USART_PLIB_READ)USART1_Read,
-        .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)USART1_ReadIsBusy,
-        .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)USART1_ReadCountGet,
-        .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)USART1_WriteCallbackRegister,
-        .write = (DRV_USART_PLIB_WRITE)USART1_Write,
-        .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)USART1_WriteIsBusy,
-        .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)USART1_WriteCountGet,
-        .errorGet = (DRV_USART_PLIB_ERROR_GET)USART1_ErrorGet,
-        .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)USART1_SerialSetup
+    .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)USART1_ReadCallbackRegister,
+    .read = (DRV_USART_PLIB_READ)USART1_Read,
+    .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)USART1_ReadIsBusy,
+    .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)USART1_ReadCountGet,
+    .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)USART1_WriteCallbackRegister,
+    .write = (DRV_USART_PLIB_WRITE)USART1_Write,
+    .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)USART1_WriteIsBusy,
+    .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)USART1_WriteCountGet,
+    .errorGet = (DRV_USART_PLIB_ERROR_GET)USART1_ErrorGet,
+    .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)USART1_SerialSetup
 };
 
 const uint32_t drvUsart1remapDataWidth[] = { 0x0, 0x40, 0x80, 0xC0, 0x20000 };
-const uint32_t drvUsart1remapParity[] = { 0x800, 0x200, 0x0, 0x600, 0x400, 0xC00 };
+const uint32_t drvUsart1remapParity[] = { 0x800, 0x0, 0x200, 0x600, 0x400, 0xC00 };
 const uint32_t drvUsart1remapStopBits[] = { 0x0, 0x1000, 0x2000 };
 const uint32_t drvUsart1remapError[] = { 0x20, 0x80, 0x40 };
+
 const DRV_USART_INIT drvUsart1InitData =
 {
     .usartPlib = &drvUsart1PlibAPI,
 
-    .remapDataWidth = drvUsart1remapDataWidth,
+    /* USART Number of clients */
+    .numClients = DRV_USART_CLIENTS_NUMBER_IDX1,
 
-    .remapParity = drvUsart1remapParity,
-
-    .remapStopBits = drvUsart1remapStopBits,
-
-    .remapError = drvUsart1remapError,
+    /* USART Client Objects Pool */
+    .clientObjPool = (uintptr_t)&drvUSART1ClientObjPool[0],
 
     .dmaChannelTransmit = DRV_USART_XMIT_DMA_CH_IDX1,
 
@@ -129,45 +132,49 @@ const DRV_USART_INIT drvUsart1InitData =
 
     .usartReceiveAddress = (void *)&(USART1_REGS->US_RHR),
 
-    .numClients = DRV_USART_CLIENTS_NUMBER_IDX0,
 
-    .clientObjPool = (uintptr_t)&drvUSART1ClientObjPool[0],
+    .remapDataWidth = drvUsart1remapDataWidth,
 
+    .remapParity = drvUsart1remapParity,
+
+    .remapStopBits = drvUsart1remapStopBits,
+
+    .remapError = drvUsart1remapError,
 };
 
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DRV_USART Instance 0 Initialization Data">
 
-static DRV_USART_CLIENT_OBJ drvUSART0ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_USART_CLIENT_OBJ drvUSART0ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX0];
+
 
 const DRV_USART_PLIB_INTERFACE drvUsart0PlibAPI = {
-        .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)USART0_ReadCallbackRegister,
-        .read = (DRV_USART_PLIB_READ)USART0_Read,
-        .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)USART0_ReadIsBusy,
-        .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)USART0_ReadCountGet,
-        .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)USART0_WriteCallbackRegister,
-        .write = (DRV_USART_PLIB_WRITE)USART0_Write,
-        .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)USART0_WriteIsBusy,
-        .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)USART0_WriteCountGet,
-        .errorGet = (DRV_USART_PLIB_ERROR_GET)USART0_ErrorGet,
-        .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)USART0_SerialSetup
+    .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)USART0_ReadCallbackRegister,
+    .read = (DRV_USART_PLIB_READ)USART0_Read,
+    .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)USART0_ReadIsBusy,
+    .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)USART0_ReadCountGet,
+    .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)USART0_WriteCallbackRegister,
+    .write = (DRV_USART_PLIB_WRITE)USART0_Write,
+    .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)USART0_WriteIsBusy,
+    .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)USART0_WriteCountGet,
+    .errorGet = (DRV_USART_PLIB_ERROR_GET)USART0_ErrorGet,
+    .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)USART0_SerialSetup
 };
 
 const uint32_t drvUsart0remapDataWidth[] = { 0x0, 0x40, 0x80, 0xC0, 0x20000 };
-const uint32_t drvUsart0remapParity[] = { 0x800, 0x200, 0x0, 0x600, 0x400, 0xC00 };
+const uint32_t drvUsart0remapParity[] = { 0x800, 0x0, 0x200, 0x600, 0x400, 0xC00 };
 const uint32_t drvUsart0remapStopBits[] = { 0x0, 0x1000, 0x2000 };
 const uint32_t drvUsart0remapError[] = { 0x20, 0x80, 0x40 };
+
 const DRV_USART_INIT drvUsart0InitData =
 {
     .usartPlib = &drvUsart0PlibAPI,
 
-    .remapDataWidth = drvUsart0remapDataWidth,
+    /* USART Number of clients */
+    .numClients = DRV_USART_CLIENTS_NUMBER_IDX0,
 
-    .remapParity = drvUsart0remapParity,
-
-    .remapStopBits = drvUsart0remapStopBits,
-
-    .remapError = drvUsart0remapError,
+    /* USART Client Objects Pool */
+    .clientObjPool = (uintptr_t)&drvUSART0ClientObjPool[0],
 
     .dmaChannelTransmit = DRV_USART_XMIT_DMA_CH_IDX0,
 
@@ -177,10 +184,14 @@ const DRV_USART_INIT drvUsart0InitData =
 
     .usartReceiveAddress = (void *)&(USART0_REGS->US_RHR),
 
-    .numClients = DRV_USART_CLIENTS_NUMBER_IDX0,
 
-    .clientObjPool = (uintptr_t)&drvUSART0ClientObjPool[0],
+    .remapDataWidth = drvUsart0remapDataWidth,
 
+    .remapParity = drvUsart0remapParity,
+
+    .remapStopBits = drvUsart0remapStopBits,
+
+    .remapError = drvUsart0remapError,
 };
 
 // </editor-fold>
@@ -193,6 +204,7 @@ const DRV_USART_INIT drvUsart0InitData =
 // *****************************************************************************
 /* Structure to hold the object handles for the modules in the system. */
 SYSTEM_OBJECTS sysObj;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Library/Stack Initialization Data
@@ -207,6 +219,7 @@ SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 
 
+
 /*******************************************************************************
   Function:
     void SYS_Initialize ( void *data )
@@ -219,12 +232,12 @@ SYSTEM_OBJECTS sysObj;
 
 void SYS_Initialize ( void* data )
 {
+  
     CLK_Initialize();
 	PIO_Initialize();
 
 
 	BSP_Initialize();
-    NVIC_Initialize();
     XDMAC_Initialize();
 
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
@@ -247,10 +260,11 @@ void SYS_Initialize ( void* data )
     APP_USART_USB_DEBUG_PORT_Initialize();
 
 
+    NVIC_Initialize();
+
 }
 
 
 /*******************************************************************************
  End of File
 */
-
