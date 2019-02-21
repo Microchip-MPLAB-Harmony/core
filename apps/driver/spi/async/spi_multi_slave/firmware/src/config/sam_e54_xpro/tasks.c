@@ -80,14 +80,14 @@ void SYS_Tasks ( void )
     
 
     /* Maintain the application's state machine. */
-        /* Call Application task APP_MONITOR. */
-    APP_MONITOR_Tasks();
-
-    /* Call Application task APP_EEPROM1. */
+        /* Call Application task APP_EEPROM1. */
     APP_EEPROM1_Tasks();
 
     /* Call Application task APP_EEPROM2. */
     APP_EEPROM2_Tasks();
+
+    /* Call Application task APP_MONITOR. */
+    APP_MONITOR_Tasks();
 
 
 
