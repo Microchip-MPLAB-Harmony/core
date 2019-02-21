@@ -50,7 +50,6 @@
 #include <stdbool.h>
 #include "peripheral/sercom/usart/plib_sercom2_usart.h"
 #include "peripheral/evsys/plib_evsys.h"
-#include "driver/usart/drv_usart_definitions.h"
 #include "driver/usart/drv_usart.h"
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
@@ -59,10 +58,10 @@
 #include "peripheral/sercom/usart/plib_sercom4_usart.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "bsp/bsp.h"
 #include "system/int/sys_int.h"
 #include "system/dma/sys_dma.h"
 #include "osal/osal.h"
-#include "bsp/bsp.h"
 #include "app_usart_usb_click_board.h"
 #include "app_usart_usb_debug_port.h"
 

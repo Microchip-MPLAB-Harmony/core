@@ -110,7 +110,7 @@ void SYS_Tasks ( void )
         /* Create OS Thread for APP_USART_USB_CLICK_BOARD_Tasks. */
     xTaskCreate((TaskFunction_t) _APP_USART_USB_CLICK_BOARD_Tasks,
                 "APP_USART_USB_CLICK_BOARD_Tasks",
-                1024,
+                128,
                 NULL,
                 1,
                 &xAPP_USART_USB_CLICK_BOARD_Tasks);
@@ -118,7 +118,7 @@ void SYS_Tasks ( void )
     /* Create OS Thread for APP_USART_USB_DEBUG_PORT_Tasks. */
     xTaskCreate((TaskFunction_t) _APP_USART_USB_DEBUG_PORT_Tasks,
                 "APP_USART_USB_DEBUG_PORT_Tasks",
-                1024,
+                128,
                 NULL,
                 1,
                 &xAPP_USART_USB_DEBUG_PORT_Tasks);
