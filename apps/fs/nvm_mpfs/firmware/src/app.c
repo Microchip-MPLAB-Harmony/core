@@ -109,7 +109,7 @@ const uint8_t compareString[] = "1234567890";
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_DATA CACHE_ALIGN appData;
+APP_DATA appData;
 
 // *****************************************************************************
 // *****************************************************************************
