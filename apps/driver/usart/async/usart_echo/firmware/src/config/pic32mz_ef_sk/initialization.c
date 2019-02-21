@@ -58,7 +58,7 @@
 /*** DEVCFG0 ***/
 #pragma config DEBUG =      OFF
 #pragma config JTAGEN =     OFF
-#pragma config ICESEL =     ICS_PGx1
+#pragma config ICESEL =     ICS_PGx2
 #pragma config TRCEN =      OFF
 #pragma config BOOTISA =    MIPS32
 #pragma config FECCCON =    OFF_UNLOCKED
@@ -231,7 +231,6 @@ void SYS_Initialize ( void* data )
   
     CLK_Initialize();
 	GPIO_Initialize();
-
     /* Configure Prefetch, Wait States and ECC */
     PRECONbits.PREFEN = 3;
     PRECONbits.PFMWS = 2;
@@ -240,8 +239,6 @@ void SYS_Initialize ( void* data )
 
 
 	UART2_Initialize();
-
-    WDT_Initialize();
 
 	BSP_Initialize();
 
