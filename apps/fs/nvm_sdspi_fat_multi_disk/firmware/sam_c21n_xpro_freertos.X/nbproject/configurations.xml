@@ -4,9 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="f2" displayName="arm" projectFiles="true">
-        <itemPath>../src/arm/toolchain_specifics.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1"
                        displayName="sam_c21n_xpro_freertos"
@@ -15,13 +12,13 @@
             <itemPath>../src/config/sam_c21n_xpro_freertos/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="driver" projectFiles="true">
-            <logicalFolder name="f2" displayName="memory" projectFiles="true">
+            <logicalFolder name="f1" displayName="memory" projectFiles="true">
+              <itemPath>../src/config/sam_c21n_xpro_freertos/driver/memory/src/drv_memory_local.h</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/driver/memory/drv_memory.h</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/driver/memory/drv_memory_definitions.h</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/driver/memory/drv_memory_nvmctrl.h</itemPath>
-              <itemPath>../src/config/sam_c21n_xpro_freertos/driver/memory/src/drv_memory_local.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="sdspi" projectFiles="true">
+            <logicalFolder name="f2" displayName="sdspi" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro_freertos/driver/sdspi/drv_sdspi.h</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/driver/sdspi/drv_sdspi_definitions.h</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/driver/sdspi/src/drv_sdspi_local.h</itemPath>
@@ -95,37 +92,40 @@
             <logicalFolder name="f1" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro_freertos/system/time/sys_time.h</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/system/time/sys_time_definitions.h</itemPath>
+              <itemPath>../src/config/sam_c21n_xpro_freertos/system/time/src/sys_time_local.h</itemPath>
             </logicalFolder>
             <itemPath>../src/config/sam_c21n_xpro_freertos/system/system.h</itemPath>
             <itemPath>../src/config/sam_c21n_xpro_freertos/system/system_common.h</itemPath>
             <itemPath>../src/config/sam_c21n_xpro_freertos/system/system_module.h</itemPath>
             <itemPath>../src/config/sam_c21n_xpro_freertos/system/system_media.h</itemPath>
           </logicalFolder>
+          <itemPath>../src/config/sam_c21n_xpro_freertos/device_cache.h</itemPath>
+          <itemPath>../src/config/sam_c21n_xpro_freertos/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_c21n_xpro_freertos/definitions.h</itemPath>
           <itemPath>../src/config/sam_c21n_xpro_freertos/FreeRTOSConfig.h</itemPath>
           <itemPath>../src/config/sam_c21n_xpro_freertos/user.h</itemPath>
           <itemPath>../src/config/sam_c21n_xpro_freertos/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f4" displayName="FreeRTOS" projectFiles="true">
+      <logicalFolder name="f3" displayName="FreeRTOS" projectFiles="true">
         <logicalFolder name="f1" displayName="Source" projectFiles="true">
-          <logicalFolder name="f1" displayName="Include" projectFiles="true">
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/croutine.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/event_groups.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/FreeRTOS.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/list.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/mpu_wrappers.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/portable.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/projdefs.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/queue.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/semphr.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/stack_macros.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/deprecated_definitions.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/task.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/timers.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/mpu_prototypes.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/stream_buffer.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/message_buffer.h</itemPath>
+          <logicalFolder name="f1" displayName="include" projectFiles="true">
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/croutine.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/event_groups.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/FreeRTOS.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/list.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/mpu_wrappers.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/portable.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/projdefs.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/queue.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/semphr.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/stack_macros.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/deprecated_definitions.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/task.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/timers.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/mpu_prototypes.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/stream_buffer.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/message_buffer.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="portable" projectFiles="true">
             <logicalFolder name="f1" displayName="GCC" projectFiles="true">
@@ -136,12 +136,12 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f5" displayName="osal" projectFiles="true">
+      <logicalFolder name="f4" displayName="osal" projectFiles="true">
         <itemPath>../src/config/sam_c21n_xpro_freertos/osal/osal.h</itemPath>
         <itemPath>../src/config/sam_c21n_xpro_freertos/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/sam_c21n_xpro_freertos/osal/osal_freertos.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="packs" projectFiles="true">
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAMC21N18A_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAMC21N18A_DFP/component/ac.h</itemPath>
@@ -187,6 +187,7 @@
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm0plus.h</itemPath>
@@ -223,9 +224,9 @@
           </logicalFolder>
           <logicalFolder name="f3" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="memory" projectFiles="true">
+              <itemPath>../src/config/sam_c21n_xpro_freertos/driver/memory/src/drv_memory.c</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/driver/memory/src/drv_memory_file_system.c</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/driver/memory/src/drv_memory_nvmctrl.c</itemPath>
-              <itemPath>../src/config/sam_c21n_xpro_freertos/driver/memory/src/drv_memory.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="sdspi" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro_freertos/driver/sdspi/src/drv_sdspi.c</itemPath>
@@ -284,13 +285,12 @@
             </logicalFolder>
             <logicalFolder name="f1" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro_freertos/system/time/src/sys_time.c</itemPath>
-              <itemPath>../src/config/sam_c21n_xpro_freertos/system/time/src/sys_time_local.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <itemPath>../src/config/sam_c21n_xpro_freertos/initialization.c</itemPath>
           <itemPath>../src/config/sam_c21n_xpro_freertos/interrupts.c</itemPath>
           <itemPath>../src/config/sam_c21n_xpro_freertos/exceptions.c</itemPath>
-          <itemPath>../src/config/sam_c21n_xpro_freertos/startup.c</itemPath>
+          <itemPath>../src/config/sam_c21n_xpro_freertos/startup_xc32.c</itemPath>
           <itemPath>../src/config/sam_c21n_xpro_freertos/libc_syscalls.c</itemPath>
           <itemPath>../src/config/sam_c21n_xpro_freertos/freertos_hooks.c</itemPath>
           <itemPath>../src/config/sam_c21n_xpro_freertos/tasks.c</itemPath>
@@ -311,7 +311,7 @@
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/croutine.c</itemPath>
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/list.c</itemPath>
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/queue.c</itemPath>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/tasks.c</itemPath>
+          <itemPath>../src/third_party/rtos/FreeRTOS/Source/FreeRTOS_tasks.c</itemPath>
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/timers.c</itemPath>
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/event_groups.c</itemPath>
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/stream_buffer.c</itemPath>
@@ -347,7 +347,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAMC21_DFP" vendor="Atmel" version="1.2.166"/>
+        <pack name="SAMC21_DFP" vendor="Microchip" version="2.0.5"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>
@@ -407,7 +407,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/sam_c21n_xpro_freertos;../src/packs/ATSAMC21N18A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM0;../src/third_party/rtos/FreeRTOS/Source/Include;../src/arm"/>
+                  value="../src;../src/config/sam_c21n_xpro_freertos;../src/packs/ATSAMC21N18A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM0;../src/third_party/rtos/FreeRTOS/Source/Include;../src/arm;../src/third_party/rtos/FreeRTOS/Source/include"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -552,6 +552,7 @@
         <property key="programoptions.preserveprogram.ranges" value=""/>
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.preserveuserid" value="false"/>
+        <property key="programoptions.programuserotp" value="false"/>
       </EdbgTool>
       <PICkit3PlatformTool>
         <property key="ADC 1" value="true"/>
