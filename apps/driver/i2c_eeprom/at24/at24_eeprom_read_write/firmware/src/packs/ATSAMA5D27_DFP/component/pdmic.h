@@ -1,7 +1,7 @@
 /**
  * \brief Component description for PDMIC
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_PDMIC_COMPONENT_H_
 #define _SAMA5D2_PDMIC_COMPONENT_H_
 
@@ -156,16 +156,6 @@
 #define PDMIC_WPSR_Msk                        _U_(0x00FFFF01)                                      /**< (PDMIC_WPSR) Register Mask  */
 
 
-/* -------- PDMIC_VERSION : (PDMIC Offset: 0xFC) ( R/ 32) Version Register -------- */
-#define PDMIC_VERSION_VERSION_Pos             _U_(0)                                               /**< (PDMIC_VERSION) Version of the Hardware Module Position */
-#define PDMIC_VERSION_VERSION_Msk             (_U_(0xFFF) << PDMIC_VERSION_VERSION_Pos)            /**< (PDMIC_VERSION) Version of the Hardware Module Mask */
-#define PDMIC_VERSION_VERSION(value)          (PDMIC_VERSION_VERSION_Msk & ((value) << PDMIC_VERSION_VERSION_Pos))
-#define PDMIC_VERSION_MFN_Pos                 _U_(16)                                              /**< (PDMIC_VERSION) Metal Fix Number Position */
-#define PDMIC_VERSION_MFN_Msk                 (_U_(0x7) << PDMIC_VERSION_MFN_Pos)                  /**< (PDMIC_VERSION) Metal Fix Number Mask */
-#define PDMIC_VERSION_MFN(value)              (PDMIC_VERSION_MFN_Msk & ((value) << PDMIC_VERSION_MFN_Pos))
-#define PDMIC_VERSION_Msk                     _U_(0x00070FFF)                                      /**< (PDMIC_VERSION) Register Mask  */
-
-
 /** \brief PDMIC register offsets definitions */
 #define PDMIC_CR_REG_OFST              (0x00)              /**< (PDMIC_CR) Control Register Offset */
 #define PDMIC_MR_REG_OFST              (0x04)              /**< (PDMIC_MR) Mode Register Offset */
@@ -178,7 +168,6 @@
 #define PDMIC_DSPR1_REG_OFST           (0x5C)              /**< (PDMIC_DSPR1) DSP Configuration Register 1 Offset */
 #define PDMIC_WPMR_REG_OFST            (0xE4)              /**< (PDMIC_WPMR) Write Protection Mode Register Offset */
 #define PDMIC_WPSR_REG_OFST            (0xE8)              /**< (PDMIC_WPSR) Write Protection Status Register Offset */
-#define PDMIC_VERSION_REG_OFST         (0xFC)              /**< (PDMIC_VERSION) Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief PDMIC register API structure */
@@ -198,8 +187,6 @@ typedef struct
   __I   uint8_t                        Reserved3[0x84];
   __IO  uint32_t                       PDMIC_WPMR;         /**< Offset: 0xE4 (R/W  32) Write Protection Mode Register */
   __I   uint32_t                       PDMIC_WPSR;         /**< Offset: 0xE8 (R/   32) Write Protection Status Register */
-  __I   uint8_t                        Reserved4[0x10];
-  __I   uint32_t                       PDMIC_VERSION;      /**< Offset: 0xFC (R/   32) Version Register */
 } pdmic_registers_t;
 
 

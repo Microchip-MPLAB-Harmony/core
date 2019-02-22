@@ -157,7 +157,7 @@ void APP_SAM_A5D2_XULT_Tasks ( void )
         /* Application's initial state. */
         case APP_SAM_A5D2_XULT_STATE_INIT:
         
-            app_sam_a5d2_xultData.drvHandle = DRV_AT24_Open(DRV_AT24_INDEX, 0);
+            app_sam_a5d2_xultData.drvHandle = DRV_AT24_Open(DRV_AT24_INDEX, DRV_IO_INTENT_READWRITE);
             
             if (app_sam_a5d2_xultData.drvHandle != DRV_HANDLE_INVALID)
             {                                

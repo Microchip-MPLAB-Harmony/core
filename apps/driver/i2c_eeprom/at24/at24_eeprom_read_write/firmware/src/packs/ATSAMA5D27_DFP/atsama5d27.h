@@ -1,7 +1,7 @@
 /**
  * \brief Header file for ATSAMA5D27
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:12Z */
 #ifndef _SAMA5D27_H_
 #define _SAMA5D27_H_
 
@@ -75,7 +75,7 @@
 typedef enum IRQn
 {
 /******  SAMA5D27 specific Interrupt Numbers ***********************************/
-  SAIC_IRQn                 =   0, /**< 0   Secure Advanced Interrupt Controller (SAIC) */
+  SAIC_IRQn                 =   0, /**< 0   Advanced Interrupt Controller (SAIC) */
   PIT_IRQn                  =   3, /**< 3   Periodic Interval Timer (PIT)       */
   WDT_IRQn                  =   4, /**< 4   Watchdog Timer (WDT)                */
   GMAC_IRQn                 =   5, /**< 5   Gigabit Ethernet MAC (GMAC)         */
@@ -189,7 +189,6 @@ typedef enum IRQn
 #include "component/rstc.h"
 #include "component/rtc.h"
 #include "component/rxlp.h"
-#include "component/saic.h"
 #include "component/sckc.h"
 #include "component/sdmmc.h"
 #include "component/secumod.h"
@@ -272,7 +271,7 @@ typedef enum IRQn
 #define ID_PTC           ( 58) /**< \brief Peripheral Touch Controller (PTC) */
 #define ID_CLASSD        ( 59) /**< \brief Audio Class D Amplifier (CLASSD) (CLASSD) */
 #define ID_SFR           ( 60) /**< \brief Special Function Registers (SFR) */
-#define ID_SAIC          ( 61) /**< \brief Secure Advanced Interrupt Controller (SAIC) */
+#define ID_SAIC          ( 61) /**< \brief Advanced Interrupt Controller (SAIC) */
 #define ID_AIC           ( 62) /**< \brief Advanced Interrupt Controller (AIC) */
 #define ID_L2CC          ( 63) /**< \brief L2 Cache Controller (L2CC) */
 #define ID_PIOB          ( 68) /**< \brief Parallel Input/Output Controller (PIOB) */
@@ -299,7 +298,7 @@ typedef enum IRQn
 #define AES_REGS                         ((aes_registers_t*)0xf002c000)                /**< \brief AES Registers Address        */
 #define AESB_REGS                        ((aesb_registers_t*)0xf001c000)               /**< \brief AESB Registers Address       */
 #define AIC_REGS                         ((aic_registers_t*)0xfc020000)                /**< \brief AIC Registers Address        */
-#define SAIC_REGS                        ((saic_registers_t*)0xf803c000)               /**< \brief SAIC Registers Address       */
+#define SAIC_REGS                        ((aic_registers_t*)0xf803c000)                /**< \brief SAIC Registers Address       */
 #define AXIMX_REGS                       ((aximx_registers_t*)0x00600000)              /**< \brief AXIMX Registers Address      */
 #define CHIPID_REGS                      ((chipid_registers_t*)0xfc069000)             /**< \brief CHIPID Registers Address     */
 #define CLASSD_REGS                      ((classd_registers_t*)0xfc048000)             /**< \brief CLASSD Registers Address     */
@@ -473,6 +472,7 @@ typedef enum IRQn
 #define NFC_SIZE                       _UL_(0x10000000)    /* 262144kB Memory segment type: other */
 #define QSPI0MEM_SIZE                  _UL_(0x08000000)    /* 131072kB Memory segment type: other */
 #define QSPI1MEM_SIZE                  _UL_(0x08000000)    /* 131072kB Memory segment type: other */
+#define PERIPHERALS_SIZE               _UL_(0x10000000)    /* 262144kB Memory segment type: io */
 #define IROM_SIZE                      _UL_(0x00010000)    /*   64kB Memory segment type: rom */
 #define ECC_ROM_SIZE                   _UL_(0x00018000)    /*   96kB Memory segment type: other */
 #define NFC_RAM_SIZE                   _UL_(0x00002400)    /*    9kB Memory segment type: other */
@@ -499,6 +499,7 @@ typedef enum IRQn
 #define NFC_ADDR                       _UL_(0xc0000000)    /**< NFC base address (type: other)*/
 #define QSPI0MEM_ADDR                  _UL_(0xd0000000)    /**< QSPI0MEM base address (type: other)*/
 #define QSPI1MEM_ADDR                  _UL_(0xd8000000)    /**< QSPI1MEM base address (type: other)*/
+#define PERIPHERALS_ADDR               _UL_(0xf0000000)    /**< PERIPHERALS base address (type: io)*/
 #define IROM_ADDR                      _UL_(0x00000000)    /**< IROM base address (type: rom)*/
 #define ECC_ROM_ADDR                   _UL_(0x00040000)    /**< ECC_ROM base address (type: other)*/
 #define NFC_RAM_ADDR                   _UL_(0x00100000)    /**< NFC_RAM base address (type: other)*/

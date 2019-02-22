@@ -1,7 +1,7 @@
 /**
  * \brief Component description for SFC
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_SFC_COMPONENT_H_
 #define _SAMA5D2_SFC_COMPONENT_H_
 
@@ -119,16 +119,6 @@
 #define SFC_DR_Msk                            _U_(0xFFFFFFFF)                                      /**< (SFC_DR) Register Mask  */
 
 
-/* -------- SFC_VERSION : (SFC Offset: 0xFC) ( R/ 32) SFC Version Register -------- */
-#define SFC_VERSION_VERSION_Pos               _U_(0)                                               /**< (SFC_VERSION) Hardware Module Version Position */
-#define SFC_VERSION_VERSION_Msk               (_U_(0xFFF) << SFC_VERSION_VERSION_Pos)              /**< (SFC_VERSION) Hardware Module Version Mask */
-#define SFC_VERSION_VERSION(value)            (SFC_VERSION_VERSION_Msk & ((value) << SFC_VERSION_VERSION_Pos))
-#define SFC_VERSION_MFN_Pos                   _U_(16)                                              /**< (SFC_VERSION) Metal Fix Number Position */
-#define SFC_VERSION_MFN_Msk                   (_U_(0x7) << SFC_VERSION_MFN_Pos)                    /**< (SFC_VERSION) Metal Fix Number Mask */
-#define SFC_VERSION_MFN(value)                (SFC_VERSION_MFN_Msk & ((value) << SFC_VERSION_MFN_Pos))
-#define SFC_VERSION_Msk                       _U_(0x00070FFF)                                      /**< (SFC_VERSION) Register Mask  */
-
-
 /** \brief SFC register offsets definitions */
 #define SFC_KR_REG_OFST                (0x00)              /**< (SFC_KR) SFC Key Register Offset */
 #define SFC_MR_REG_OFST                (0x04)              /**< (SFC_MR) SFC Mode Register Offset */
@@ -137,7 +127,6 @@
 #define SFC_IMR_REG_OFST               (0x18)              /**< (SFC_IMR) SFC Interrupt Mask Register Offset */
 #define SFC_SR_REG_OFST                (0x1C)              /**< (SFC_SR) SFC Status Register Offset */
 #define SFC_DR_REG_OFST                (0x20)              /**< (SFC_DR) SFC Data Register Offset */
-#define SFC_VERSION_REG_OFST           (0xFC)              /**< (SFC_VERSION) SFC Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief SFC register API structure */
@@ -151,8 +140,6 @@ typedef struct
   __I   uint32_t                       SFC_IMR;            /**< Offset: 0x18 (R/   32) SFC Interrupt Mask Register */
   __I   uint32_t                       SFC_SR;             /**< Offset: 0x1C (R/   32) SFC Status Register */
   __IO  uint32_t                       SFC_DR[17];         /**< Offset: 0x20 (R/W  32) SFC Data Register */
-  __I   uint8_t                        Reserved2[0x98];
-  __I   uint32_t                       SFC_VERSION;        /**< Offset: 0xFC (R/   32) SFC Version Register */
 } sfc_registers_t;
 
 

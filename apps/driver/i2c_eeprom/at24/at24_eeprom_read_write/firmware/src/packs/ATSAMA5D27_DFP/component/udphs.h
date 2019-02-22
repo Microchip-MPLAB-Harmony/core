@@ -1,7 +1,7 @@
 /**
  * \brief Component description for UDPHS
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_UDPHS_COMPONENT_H_
 #define _SAMA5D2_UDPHS_COMPONENT_H_
 
@@ -980,16 +980,6 @@
 #define UDPHS_FEATURES_Msk                    _U_(0x00000000)                                      /**< (UDPHS_FEATURES) Register Mask  */
 
 
-/* -------- UDPHS_VERSION : (UDPHS Offset: 0xFC) ( R/ 32) UDPHS Version Register -------- */
-#define UDPHS_VERSION_VERSION_Pos             _U_(0)                                               /**< (UDPHS_VERSION) Version of the Hardware Module Position */
-#define UDPHS_VERSION_VERSION_Msk             (_U_(0xFFFF) << UDPHS_VERSION_VERSION_Pos)           /**< (UDPHS_VERSION) Version of the Hardware Module Mask */
-#define UDPHS_VERSION_VERSION(value)          (UDPHS_VERSION_VERSION_Msk & ((value) << UDPHS_VERSION_VERSION_Pos))
-#define UDPHS_VERSION_MFN_Pos                 _U_(16)                                              /**< (UDPHS_VERSION) Metal Fix Number Position */
-#define UDPHS_VERSION_MFN_Msk                 (_U_(0x7) << UDPHS_VERSION_MFN_Pos)                  /**< (UDPHS_VERSION) Metal Fix Number Mask */
-#define UDPHS_VERSION_MFN(value)              (UDPHS_VERSION_MFN_Msk & ((value) << UDPHS_VERSION_MFN_Pos))
-#define UDPHS_VERSION_Msk                     _U_(0x0007FFFF)                                      /**< (UDPHS_VERSION) Register Mask  */
-
-
 /** \brief UDPHS register offsets definitions */
 #define UDPHS_DMANXTDSC_REG_OFST       (0x00)              /**< (UDPHS_DMANXTDSC) UDPHS DMA Next Descriptor Address Register (channel = 0) Offset */
 #define UDPHS_DMAADDRESS_REG_OFST      (0x04)              /**< (UDPHS_DMAADDRESS) UDPHS DMA Channel Address Register (channel = 0) Offset */
@@ -1012,7 +1002,6 @@
 #define UDPHS_ADDRSIZE_REG_OFST        (0xEC)              /**< (UDPHS_ADDRSIZE) UDPHS IP Address Size Register Offset */
 #define UDPHS_IPNAME_REG_OFST          (0xF0)              /**< (UDPHS_IPNAME) UDPHS IP Name1 Register Offset */
 #define UDPHS_FEATURES_REG_OFST        (0xF8)              /**< (UDPHS_FEATURES) UDPHS Features Register Offset */
-#define UDPHS_VERSION_REG_OFST         (0xFC)              /**< (UDPHS_VERSION) UDPHS Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief UDPHS_DMA register API structure */
@@ -1057,7 +1046,7 @@ typedef struct
   __I   uint32_t                       UDPHS_ADDRSIZE;     /**< Offset: 0xEC (R/   32) UDPHS IP Address Size Register */
   __I   uint32_t                       UDPHS_IPNAME[2];    /**< Offset: 0xF0 (R/   32) UDPHS IP Name1 Register */
   __I   uint32_t                       UDPHS_FEATURES;     /**< Offset: 0xF8 (R/   32) UDPHS Features Register */
-  __I   uint32_t                       UDPHS_VERSION;      /**< Offset: 0xFC (R/   32) UDPHS Version Register */
+  __I   uint8_t                        Reserved4[0x04];
         udphs_ept_registers_t          UDPHS_EPT[UDPHS_EPT_NUMBER]; /**< Offset: 0x100  */
         udphs_dma_registers_t          UDPHS_DMA[UDPHS_DMA_NUMBER]; /**< Offset: 0x300  */
 } udphs_registers_t;

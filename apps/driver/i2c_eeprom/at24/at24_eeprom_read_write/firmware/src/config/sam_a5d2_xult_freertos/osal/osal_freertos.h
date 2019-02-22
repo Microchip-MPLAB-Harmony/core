@@ -1,6 +1,6 @@
 /*******************************************************************************
   Operating System Abstraction Layer for FreeRTOS
-  
+
   Company:
     Microchip Technology Inc.
 
@@ -48,7 +48,7 @@ extern "C" {
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Included Files 
+// Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
 #include <stdint.h>
@@ -58,7 +58,6 @@ extern "C" {
 #include "semphr.h"
 #include "task.h"
 #include "device.h"
-  
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Types
@@ -91,21 +90,21 @@ typedef BaseType_t                     OSAL_CRITSECT_DATA_TYPE;
 
 typedef enum OSAL_SEM_TYPE
 {
-    OSAL_SEM_TYPE_BINARY,
-    OSAL_SEM_TYPE_COUNTING
+  OSAL_SEM_TYPE_BINARY,
+  OSAL_SEM_TYPE_COUNTING
 } OSAL_SEM_TYPE;
 
 typedef enum OSAL_CRIT_TYPE
 {
-    OSAL_CRIT_TYPE_LOW,
-    OSAL_CRIT_TYPE_HIGH
+  OSAL_CRIT_TYPE_LOW,
+  OSAL_CRIT_TYPE_HIGH
 } OSAL_CRIT_TYPE;
 
 typedef enum OSAL_RESULT
 {
-    OSAL_RESULT_NOT_IMPLEMENTED = -1,
-    OSAL_RESULT_FALSE = 0,
-    OSAL_RESULT_TRUE = 1
+  OSAL_RESULT_NOT_IMPLEMENTED = -1,
+  OSAL_RESULT_FALSE = 0,
+  OSAL_RESULT_TRUE = 1
 } OSAL_RESULT;
 
 // *****************************************************************************
@@ -133,8 +132,41 @@ void OSAL_Free(void* pData);
 
 OSAL_RESULT OSAL_Initialize();
 
-// Added gnu_inline attribute for compatibility with C89 and C99 for unused method in OSAL
-__INLINE __attribute__((always_inline)) const char* OSAL_Name (void);
+// *****************************************************************************
+/* Function: const char* OSAL_Name()
+
+  Summary:
+    Obtain the name of the underlying RTOS.
+
+  Description:
+    This function returns a const char* to the textual name of the RTOS.
+    The name is a NULL terminated string.
+
+  Precondition:
+    None
+
+  Parameters:
+    None
+
+  Returns:
+    const char* -   Name of the underlying RTOS or NULL
+
+  Example:
+    <code>
+    // get the RTOS name
+    const char* sName;
+
+    sName = OSAL_Name();
+    sprintf(buff, "RTOS: %s", sName);
+    </code>
+
+  Remarks:
+
+ */
+__STATIC_INLINE __attribute__((always_inline)) const char* OSAL_Name (void)
+{
+    return "FreeRTOS";
+}
 
 
 // *****************************************************************************

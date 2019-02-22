@@ -58,6 +58,9 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
+/* Handle for the APP_SAM_A5D2_XULT_Tasks. */
+TaskHandle_t xAPP_SAM_A5D2_XULT_Tasks;
+
 void _APP_SAM_A5D2_XULT_Tasks(  void *pvParameters  )
 {
     while(1)
@@ -100,7 +103,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 1,
-                NULL);
+                &xAPP_SAM_A5D2_XULT_Tasks);
 
 
 

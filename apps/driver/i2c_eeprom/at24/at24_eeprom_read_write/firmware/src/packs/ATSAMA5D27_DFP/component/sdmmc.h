@@ -1,7 +1,7 @@
 /**
  * \brief Component description for SDMMC
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_SDMMC_COMPONENT_H_
 #define _SAMA5D2_SDMMC_COMPONENT_H_
 
@@ -1559,27 +1559,6 @@
 #define SDMMC_CALCR_Msk                       _U_(0x0F0FFF31)                                      /**< (SDMMC_CALCR) Register Mask  */
 
 
-/* -------- SDMMC_VERSION1 : (SDMMC Offset: 0x2E8) ( R/ 32) Version Register 1 -------- */
-#define SDMMC_VERSION1_VERSION_Pos            _U_(0)                                               /**< (SDMMC_VERSION1) Version of the Hardware Module Position */
-#define SDMMC_VERSION1_VERSION_Msk            (_U_(0xFFFFFFFF) << SDMMC_VERSION1_VERSION_Pos)      /**< (SDMMC_VERSION1) Version of the Hardware Module Mask */
-#define SDMMC_VERSION1_VERSION(value)         (SDMMC_VERSION1_VERSION_Msk & ((value) << SDMMC_VERSION1_VERSION_Pos))
-#define SDMMC_VERSION1_Msk                    _U_(0xFFFFFFFF)                                      /**< (SDMMC_VERSION1) Register Mask  */
-
-
-/* -------- SDMMC_VERSION2 : (SDMMC Offset: 0x2EC) ( R/ 32) Version Register 2 -------- */
-#define SDMMC_VERSION2_VERSION_Pos            _U_(0)                                               /**< (SDMMC_VERSION2) Version of the Hardware Module Position */
-#define SDMMC_VERSION2_VERSION_Msk            (_U_(0xFFFFFFFF) << SDMMC_VERSION2_VERSION_Pos)      /**< (SDMMC_VERSION2) Version of the Hardware Module Mask */
-#define SDMMC_VERSION2_VERSION(value)         (SDMMC_VERSION2_VERSION_Msk & ((value) << SDMMC_VERSION2_VERSION_Pos))
-#define SDMMC_VERSION2_Msk                    _U_(0xFFFFFFFF)                                      /**< (SDMMC_VERSION2) Register Mask  */
-
-
-/* -------- SDMMC_VERSION3 : (SDMMC Offset: 0x2FC) ( R/ 32) Version Register 3 -------- */
-#define SDMMC_VERSION3_VERSION_Pos            _U_(0)                                               /**< (SDMMC_VERSION3) Version of the Hardware Module Position */
-#define SDMMC_VERSION3_VERSION_Msk            (_U_(0xFFFFFFFF) << SDMMC_VERSION3_VERSION_Pos)      /**< (SDMMC_VERSION3) Version of the Hardware Module Mask */
-#define SDMMC_VERSION3_VERSION(value)         (SDMMC_VERSION3_VERSION_Msk & ((value) << SDMMC_VERSION3_VERSION_Pos))
-#define SDMMC_VERSION3_Msk                    _U_(0xFFFFFFFF)                                      /**< (SDMMC_VERSION3) Register Mask  */
-
-
 /** \brief SDMMC register offsets definitions */
 #define SDMMC_SSAR_REG_OFST            (0x00)              /**< (SDMMC_SSAR) SDMA System Address / Argument 2 Register Offset */
 #define SDMMC_BSR_REG_OFST             (0x04)              /**< (SDMMC_BSR) Block Size Register Offset */
@@ -1630,9 +1609,6 @@
 #define SDMMC_TUNCR_REG_OFST           (0x220)             /**< (SDMMC_TUNCR) Tuning Control Register Offset */
 #define SDMMC_CACR_REG_OFST            (0x230)             /**< (SDMMC_CACR) Capabilities Control Register Offset */
 #define SDMMC_CALCR_REG_OFST           (0x240)             /**< (SDMMC_CALCR) Calibration Control Register Offset */
-#define SDMMC_VERSION1_REG_OFST        (0x2E8)             /**< (SDMMC_VERSION1) Version Register 1 Offset */
-#define SDMMC_VERSION2_REG_OFST        (0x2EC)             /**< (SDMMC_VERSION2) Version Register 2 Offset */
-#define SDMMC_VERSION3_REG_OFST        (0x2FC)             /**< (SDMMC_VERSION3) Version Register 3 Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief SDMMC register API structure */
@@ -1698,11 +1674,6 @@ typedef struct
   __IO  uint32_t                       SDMMC_CACR;         /**< Offset: 0x230 (R/W  32) Capabilities Control Register */
   __I   uint8_t                        Reserved11[0x0C];
   __IO  uint32_t                       SDMMC_CALCR;        /**< Offset: 0x240 (R/W  32) Calibration Control Register */
-  __I   uint8_t                        Reserved12[0xA4];
-  __I   uint32_t                       SDMMC_VERSION1;     /**< Offset: 0x2E8 (R/   32) Version Register 1 */
-  __I   uint32_t                       SDMMC_VERSION2;     /**< Offset: 0x2EC (R/   32) Version Register 2 */
-  __I   uint8_t                        Reserved13[0x0C];
-  __I   uint32_t                       SDMMC_VERSION3;     /**< Offset: 0x2FC (R/   32) Version Register 3 */
 } sdmmc_registers_t;
 
 
