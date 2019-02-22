@@ -45,6 +45,8 @@
 // *****************************************************************************
 #include "configuration.h"
 #include "definitions.h"
+#include "device.h"
+
 
 
 // ****************************************************************************
@@ -83,6 +85,7 @@
 
 
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Driver Initialization Data
@@ -91,10 +94,10 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_I2C Instance 0 Initialization Data">
 
 /* I2C Client Objects Pool */
-static DRV_I2C_CLIENT_OBJ drvI2C0ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_I2C_CLIENT_OBJ drvI2C0ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX0];
 
 /* I2C Transfer Objects Pool */
-static DRV_I2C_TRANSFER_OBJ drvI2C0TransferObj[DRV_I2C_QUEUE_SIZE_IDX0] = {0};
+static DRV_I2C_TRANSFER_OBJ drvI2C0TransferObj[DRV_I2C_QUEUE_SIZE_IDX0];
 
 /* I2C PLib Interface Initialization */
 const DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
@@ -115,6 +118,16 @@ const DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
     .callbackRegister = (DRV_I2C_PLIB_CALLBACK_REGISTER)TWIHS0_CallbackRegister,
 };
 
+
+const DRV_I2C_INTERRUPT_SOURCES drvI2C0InterruptSources =
+{
+    /* Peripheral has single interrupt vector */
+    .isSingleIntSrc                        = true,
+
+    /* Peripheral interrupt line */
+    .intSources.i2cInterrupt             = TWIHS0_IRQn,
+};
+
 /* I2C Driver Initialization Data */
 const DRV_I2C_INIT drvI2C0InitData =
 {
@@ -127,14 +140,14 @@ const DRV_I2C_INIT drvI2C0InitData =
     /* I2C Client Objects Pool */
     .clientObjPool = (uintptr_t)&drvI2C0ClientObjPool[0],
 
-    /* I2C IRQ */
-    .interruptI2C = DRV_I2C_INT_SRC_IDX0,
-
     /* I2C TWI Queue Size */
-    .queueSize = DRV_I2C_QUEUE_SIZE_IDX0,
+    .transferObjPoolSize = DRV_I2C_QUEUE_SIZE_IDX0,
 
     /* I2C Transfer Objects */
-    .transferObj = (uintptr_t)&drvI2C0TransferObj[0],
+    .transferObjPool = (uintptr_t)&drvI2C0TransferObj[0],
+
+    /* I2C interrupt sources */
+    .interruptSources = &drvI2C0InterruptSources,
 
     /* I2C Clock Speed */
     .clockSpeed = DRV_I2C_CLOCK_SPEED_IDX0,
@@ -151,6 +164,7 @@ const DRV_I2C_INIT drvI2C0InitData =
 // *****************************************************************************
 /* Structure to hold the object handles for the modules in the system. */
 SYSTEM_OBJECTS sysObj;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Library/Stack Initialization Data
@@ -165,6 +179,7 @@ SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 
 
+
 /*******************************************************************************
   Function:
     void SYS_Initialize ( void *data )
@@ -177,12 +192,12 @@ SYSTEM_OBJECTS sysObj;
 
 void SYS_Initialize ( void* data )
 {
+  
     CLK_Initialize();
 	PIO_Initialize();
 
 
 	BSP_Initialize();
-    NVIC_Initialize();
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
@@ -198,10 +213,11 @@ void SYS_Initialize ( void* data )
     APP_Initialize();
 
 
+    NVIC_Initialize();
+
 }
 
 
 /*******************************************************************************
  End of File
 */
-
