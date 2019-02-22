@@ -51,8 +51,8 @@
           <Name dnOrder="1">drv_i2c.c</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/driver/i2c/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/i2c/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8A7603E82B8E0581FAE0D3E9BF74B242</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8A7603E82B8E0581FAE0D3E9BF74B242</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1ADEFA5C99CD9DD9BB56F35E5348CA7B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1ADEFA5C99CD9DD9BB56F35E5348CA7B</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -99,8 +99,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">71DE744E20CE6F3A6D568223F444983F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">71DE744E20CE6F3A6D568223F444983F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BA74FBC2D999B68CDA9D66B0D95EDA26</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BA74FBC2D999B68CDA9D66B0D95EDA26</UserChecksum>
         </File>
         <File dnOrder="12">
           <Type dnOrder="0">SOURCE</Type>
@@ -227,8 +227,8 @@
           <Name dnOrder="1">sys_cache.c</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/system/cache/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/cache/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">25FF22692E153473C0D04CBCEAE87FEA</GeneratedChecksum>
-          <UserChecksum dnOrder="5">25FF22692E153473C0D04CBCEAE87FEA</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BFFD794B7A8ACF7103CEC494FF24EB72</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BFFD794B7A8ACF7103CEC494FF24EB72</UserChecksum>
         </File>
         <File dnOrder="28">
           <Type dnOrder="0">SOURCE</Type>
@@ -467,8 +467,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">82DB383A8F8541C4263F6A695C21A8C2</GeneratedChecksum>
-          <UserChecksum dnOrder="5">82DB383A8F8541C4263F6A695C21A8C2</UserChecksum>
+          <GeneratedChecksum dnOrder="4">086792980DA65415EBB0F18C8A4844BB</GeneratedChecksum>
+          <UserChecksum dnOrder="5">086792980DA65415EBB0F18C8A4844BB</UserChecksum>
         </File>
         <File dnOrder="58">
           <Type dnOrder="0">HEADER</Type>
@@ -491,8 +491,8 @@
           <Name dnOrder="1">device_cache.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">DE0BBDD8687E108E911CE625D8E93CDB</GeneratedChecksum>
-          <UserChecksum dnOrder="5">DE0BBDD8687E108E911CE625D8E93CDB</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3ED2C1D9BD295E1B1E1864B52AE72D95</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3ED2C1D9BD295E1B1E1864B52AE72D95</UserChecksum>
         </File>
         <File dnOrder="61">
           <Type dnOrder="0">HEADER</Type>
@@ -963,8 +963,8 @@
           <Name dnOrder="1">sys_debug.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/system/console/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/console/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B1112C6BA5F89C1BADE1FA4DB93882C5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B1112C6BA5F89C1BADE1FA4DB93882C5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A1C5B60E9D7D4927FACEE10CE62BB3C2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A1C5B60E9D7D4927FACEE10CE62BB3C2</UserChecksum>
         </File>
         <File dnOrder="120">
           <Type dnOrder="0">HEADER</Type>
@@ -992,29 +992,13 @@
         </File>
         <File dnOrder="123">
           <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">sys_ports.h</Name>
-          <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/system/ports/</LogicalPath>
-          <PhysicalPath dnOrder="3">/system/ports/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">21862D7817160ABA1FC859004CEBCE27</GeneratedChecksum>
-          <UserChecksum dnOrder="5">21862D7817160ABA1FC859004CEBCE27</UserChecksum>
-        </File>
-        <File dnOrder="124">
-          <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">sys_ports_mapping.h</Name>
-          <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/system/ports/</LogicalPath>
-          <PhysicalPath dnOrder="3">/system/ports/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">CAF280BE12C2D4F40321A45E88524D29</GeneratedChecksum>
-          <UserChecksum dnOrder="5">CAF280BE12C2D4F40321A45E88524D29</UserChecksum>
-        </File>
-        <File dnOrder="125">
-          <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_time.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/system/time/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/time/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">5B1C0201624F17531B457421E59F38CD</GeneratedChecksum>
           <UserChecksum dnOrder="5">5B1C0201624F17531B457421E59F38CD</UserChecksum>
         </File>
-        <File dnOrder="126">
+        <File dnOrder="124">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_time_definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/system/time/</LogicalPath>
@@ -1022,7 +1006,7 @@
           <GeneratedChecksum dnOrder="4">F8165EAB8A02643100386E92CD7EB3C6</GeneratedChecksum>
           <UserChecksum dnOrder="5">F8165EAB8A02643100386E92CD7EB3C6</UserChecksum>
         </File>
-        <File dnOrder="127">
+        <File dnOrder="125">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_time_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/system/time/</LogicalPath>
@@ -1030,7 +1014,7 @@
           <GeneratedChecksum dnOrder="4">62F39464265EC34979649F761FB4FE57</GeneratedChecksum>
           <UserChecksum dnOrder="5">62F39464265EC34979649F761FB4FE57</UserChecksum>
         </File>
-        <File dnOrder="128">
+        <File dnOrder="126">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/system/</LogicalPath>
@@ -1038,7 +1022,7 @@
           <GeneratedChecksum dnOrder="4">BE95B4F134C5C929787B9DA6FDBF3501</GeneratedChecksum>
           <UserChecksum dnOrder="5">BE95B4F134C5C929787B9DA6FDBF3501</UserChecksum>
         </File>
-        <File dnOrder="129">
+        <File dnOrder="127">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_common.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/system/</LogicalPath>
@@ -1046,7 +1030,7 @@
           <GeneratedChecksum dnOrder="4">C3F5136D520DAC4416512EBFCCA023C3</GeneratedChecksum>
           <UserChecksum dnOrder="5">C3F5136D520DAC4416512EBFCCA023C3</UserChecksum>
         </File>
-        <File dnOrder="130">
+        <File dnOrder="128">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_module.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/system/</LogicalPath>
@@ -1054,7 +1038,7 @@
           <GeneratedChecksum dnOrder="4">1C75A8A6B60598A2FD0D533F57839B72</GeneratedChecksum>
           <UserChecksum dnOrder="5">1C75A8A6B60598A2FD0D533F57839B72</UserChecksum>
         </File>
-        <File dnOrder="131">
+        <File dnOrder="129">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">task.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -1062,7 +1046,7 @@
           <GeneratedChecksum dnOrder="4">A9958A1E7E989C452B1ED01177B1C059</GeneratedChecksum>
           <UserChecksum dnOrder="5">A9958A1E7E989C452B1ED01177B1C059</UserChecksum>
         </File>
-        <File dnOrder="132">
+        <File dnOrder="130">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">tc.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAMV71Q21B_DFP/component/</LogicalPath>
@@ -1070,7 +1054,7 @@
           <GeneratedChecksum dnOrder="4">90ADCC3833086B9775C2338046F98EEC</GeneratedChecksum>
           <UserChecksum dnOrder="5">90ADCC3833086B9775C2338046F98EEC</UserChecksum>
         </File>
-        <File dnOrder="133">
+        <File dnOrder="131">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">timers.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -1078,7 +1062,7 @@
           <GeneratedChecksum dnOrder="4">0FB97A98EDB13E4B7EE8E117AAE98EB6</GeneratedChecksum>
           <UserChecksum dnOrder="5">0FB97A98EDB13E4B7EE8E117AAE98EB6</UserChecksum>
         </File>
-        <File dnOrder="134">
+        <File dnOrder="132">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">toolchain_specifics.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/</LogicalPath>
@@ -1086,7 +1070,7 @@
           <GeneratedChecksum dnOrder="4">ECBE73246282EC07A1EC6DB84AE3A470</GeneratedChecksum>
           <UserChecksum dnOrder="5">ECBE73246282EC07A1EC6DB84AE3A470</UserChecksum>
         </File>
-        <File dnOrder="135">
+        <File dnOrder="133">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">trng.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAMV71Q21B_DFP/component/</LogicalPath>
@@ -1094,7 +1078,7 @@
           <GeneratedChecksum dnOrder="4">3632115B7B52833C275E985321675A96</GeneratedChecksum>
           <UserChecksum dnOrder="5">3632115B7B52833C275E985321675A96</UserChecksum>
         </File>
-        <File dnOrder="136">
+        <File dnOrder="134">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">twihs.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAMV71Q21B_DFP/component/</LogicalPath>
@@ -1102,7 +1086,7 @@
           <GeneratedChecksum dnOrder="4">169382B03E236B3F1B1B23068577C20E</GeneratedChecksum>
           <UserChecksum dnOrder="5">169382B03E236B3F1B1B23068577C20E</UserChecksum>
         </File>
-        <File dnOrder="137">
+        <File dnOrder="135">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">tz_context.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
@@ -1110,7 +1094,7 @@
           <GeneratedChecksum dnOrder="4">8710F2682DA1C97558850902DABA38BA</GeneratedChecksum>
           <UserChecksum dnOrder="5">8710F2682DA1C97558850902DABA38BA</UserChecksum>
         </File>
-        <File dnOrder="138">
+        <File dnOrder="136">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">uart.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAMV71Q21B_DFP/component/</LogicalPath>
@@ -1118,7 +1102,7 @@
           <GeneratedChecksum dnOrder="4">CB0E8BDDF08E7344D62B09083496F0CF</GeneratedChecksum>
           <UserChecksum dnOrder="5">CB0E8BDDF08E7344D62B09083496F0CF</UserChecksum>
         </File>
-        <File dnOrder="139">
+        <File dnOrder="137">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usart.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAMV71Q21B_DFP/component/</LogicalPath>
@@ -1126,7 +1110,7 @@
           <GeneratedChecksum dnOrder="4">8D5DDCA5AA60A628B2E90A7E12813E6C</GeneratedChecksum>
           <UserChecksum dnOrder="5">8D5DDCA5AA60A628B2E90A7E12813E6C</UserChecksum>
         </File>
-        <File dnOrder="140">
+        <File dnOrder="138">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAMV71Q21B_DFP/component/</LogicalPath>
@@ -1134,7 +1118,7 @@
           <GeneratedChecksum dnOrder="4">9E4F5C7B74C18F1E38503A5BAB3CFA35</GeneratedChecksum>
           <UserChecksum dnOrder="5">9E4F5C7B74C18F1E38503A5BAB3CFA35</UserChecksum>
         </File>
-        <File dnOrder="141">
+        <File dnOrder="139">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">user.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/</LogicalPath>
@@ -1142,7 +1126,7 @@
           <GeneratedChecksum dnOrder="4"/>
           <UserChecksum dnOrder="5"/>
         </File>
-        <File dnOrder="142">
+        <File dnOrder="140">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">utmi.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAMV71Q21B_DFP/component/</LogicalPath>
@@ -1150,7 +1134,7 @@
           <GeneratedChecksum dnOrder="4">5FE8F3A0D09D712505062754F21760A5</GeneratedChecksum>
           <UserChecksum dnOrder="5">5FE8F3A0D09D712505062754F21760A5</UserChecksum>
         </File>
-        <File dnOrder="143">
+        <File dnOrder="141">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">wdt.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAMV71Q21B_DFP/component/</LogicalPath>
@@ -1158,7 +1142,7 @@
           <GeneratedChecksum dnOrder="4">07891B136AD5CD38E654631B08EFE4D2</GeneratedChecksum>
           <UserChecksum dnOrder="5">07891B136AD5CD38E654631B08EFE4D2</UserChecksum>
         </File>
-        <File dnOrder="144">
+        <File dnOrder="142">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">xdmac.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAMV71Q21B_DFP/component/</LogicalPath>
@@ -1183,7 +1167,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;"/>
     </Settings>
   </Configurator>
 </Configuration>
