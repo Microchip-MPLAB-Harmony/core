@@ -57,12 +57,19 @@
 
 void NonMaskableInt_Handler(void)
 {
-    while( 1 ){
+#if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
+    __builtin_software_breakpoint();
+#endif
+    while (1)
+    {
     }
 }
 
 void HardFault_Handler(void)
 {
+#if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
+   __builtin_software_breakpoint();
+#endif
    while (1)
    {
    }
@@ -70,6 +77,9 @@ void HardFault_Handler(void)
 
 void DebugMonitor_Handler(void)
 {
+#if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
+   __builtin_software_breakpoint();
+#endif
    while (1)
    {
    }
@@ -77,6 +87,9 @@ void DebugMonitor_Handler(void)
 
 void MemoryManagement_Handler(void)
 {
+#if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
+   __builtin_software_breakpoint();
+#endif
    while (1)
    {
    }
@@ -84,6 +97,9 @@ void MemoryManagement_Handler(void)
 
 void BusFault_Handler(void)
 {
+#if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
+   __builtin_software_breakpoint();
+#endif
    while (1)
    {
    }
@@ -91,6 +107,9 @@ void BusFault_Handler(void)
 
 void UsageFault_Handler(void)
 {
+#if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
+   __builtin_software_breakpoint();
+#endif
    while (1)
    {
    }

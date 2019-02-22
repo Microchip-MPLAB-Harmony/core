@@ -1,7 +1,7 @@
 /**
  * \brief Component description for LCDC
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_LCDC_COMPONENT_H_
 #define _SAMA5D2_LCDC_COMPONENT_H_
 
@@ -2619,16 +2619,6 @@
 #define LCDC_HEOCLUT_Msk                      _U_(0xFFFFFFFF)                                      /**< (LCDC_HEOCLUT) Register Mask  */
 
 
-/* -------- LCDC_VERSION : (LCDC Offset: 0x1FFC) ( R/ 32) Version Register -------- */
-#define LCDC_VERSION_VERSION_Pos              _U_(0)                                               /**< (LCDC_VERSION) Version of the Hardware Module Position */
-#define LCDC_VERSION_VERSION_Msk              (_U_(0xFFF) << LCDC_VERSION_VERSION_Pos)             /**< (LCDC_VERSION) Version of the Hardware Module Mask */
-#define LCDC_VERSION_VERSION(value)           (LCDC_VERSION_VERSION_Msk & ((value) << LCDC_VERSION_VERSION_Pos))
-#define LCDC_VERSION_MFN_Pos                  _U_(16)                                              /**< (LCDC_VERSION) Metal Fix Number Position */
-#define LCDC_VERSION_MFN_Msk                  (_U_(0x7) << LCDC_VERSION_MFN_Pos)                   /**< (LCDC_VERSION) Metal Fix Number Mask */
-#define LCDC_VERSION_MFN(value)               (LCDC_VERSION_MFN_Msk & ((value) << LCDC_VERSION_MFN_Pos))
-#define LCDC_VERSION_Msk                      _U_(0x00070FFF)                                      /**< (LCDC_VERSION) Register Mask  */
-
-
 /** \brief LCDC register offsets definitions */
 #define LCDC_LCDCFG0_REG_OFST          (0x00)              /**< (LCDC_LCDCFG0) LCD Controller Configuration Register 0 Offset */
 #define LCDC_LCDCFG1_REG_OFST          (0x04)              /**< (LCDC_LCDCFG1) LCD Controller Configuration Register 1 Offset */
@@ -2787,7 +2777,6 @@
 #define LCDC_OVR1CLUT_REG_OFST         (0xA00)             /**< (LCDC_OVR1CLUT) Overlay 1 CLUT Register Offset */
 #define LCDC_OVR2CLUT_REG_OFST         (0xE00)             /**< (LCDC_OVR2CLUT) Overlay 2 CLUT Register Offset */
 #define LCDC_HEOCLUT_REG_OFST          (0x1200)            /**< (LCDC_HEOCLUT) High-End Overlay CLUT Register Offset */
-#define LCDC_VERSION_REG_OFST          (0x1FFC)            /**< (LCDC_VERSION) Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief LCDC register API structure */
@@ -2956,8 +2945,6 @@ typedef struct
   __IO  uint32_t                       LCDC_OVR1CLUT[256]; /**< Offset: 0xA00 (R/W  32) Overlay 1 CLUT Register */
   __IO  uint32_t                       LCDC_OVR2CLUT[256]; /**< Offset: 0xE00 (R/W  32) Overlay 2 CLUT Register */
   __IO  uint32_t                       LCDC_HEOCLUT[256];  /**< Offset: 0x1200 (R/W  32) High-End Overlay CLUT Register */
-  __I   uint8_t                        Reserved7[0x9FC];
-  __I   uint32_t                       LCDC_VERSION;       /**< Offset: 0x1FFC (R/   32) Version Register */
 } lcdc_registers_t;
 
 

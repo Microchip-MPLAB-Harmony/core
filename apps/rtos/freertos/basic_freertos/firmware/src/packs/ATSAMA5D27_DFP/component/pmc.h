@@ -1,7 +1,7 @@
 /**
  * \brief Component description for PMC
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_PMC_COMPONENT_H_
 #define _SAMA5D2_PMC_COMPONENT_H_
 
@@ -884,16 +884,6 @@
 #define PMC_WPSR_Msk                          _U_(0x00FFFF01)                                      /**< (PMC_WPSR) Register Mask  */
 
 
-/* -------- PMC_VERSION : (PMC Offset: 0xFC) ( R/ 32) Version Register -------- */
-#define PMC_VERSION_VERSION_Pos               _U_(0)                                               /**< (PMC_VERSION) Version of the Hardware Module Position */
-#define PMC_VERSION_VERSION_Msk               (_U_(0xFFF) << PMC_VERSION_VERSION_Pos)              /**< (PMC_VERSION) Version of the Hardware Module Mask */
-#define PMC_VERSION_VERSION(value)            (PMC_VERSION_VERSION_Msk & ((value) << PMC_VERSION_VERSION_Pos))
-#define PMC_VERSION_MFN_Pos                   _U_(16)                                              /**< (PMC_VERSION) Metal Fix Number Position */
-#define PMC_VERSION_MFN_Msk                   (_U_(0x7) << PMC_VERSION_MFN_Pos)                    /**< (PMC_VERSION) Metal Fix Number Mask */
-#define PMC_VERSION_MFN(value)                (PMC_VERSION_MFN_Msk & ((value) << PMC_VERSION_MFN_Pos))
-#define PMC_VERSION_Msk                       _U_(0x00070FFF)                                      /**< (PMC_VERSION) Register Mask  */
-
-
 /* -------- PMC_PCER1 : (PMC Offset: 0x100) ( /W 32) Peripheral Clock Enable Register 1 -------- */
 #define PMC_PCER1_PID32_Pos                   _U_(0)                                               /**< (PMC_PCER1) Peripheral Clock 32 Enable Position */
 #define PMC_PCER1_PID32_Msk                   (_U_(0x1) << PMC_PCER1_PID32_Pos)                    /**< (PMC_PCER1) Peripheral Clock 32 Enable Mask */
@@ -1578,7 +1568,6 @@
 #define PMC_PLLICPR_REG_OFST           (0x80)              /**< (PMC_PLLICPR) PLL Charge Pump Current Register Offset */
 #define PMC_WPMR_REG_OFST              (0xE4)              /**< (PMC_WPMR) Write ProtectIon Mode Register Offset */
 #define PMC_WPSR_REG_OFST              (0xE8)              /**< (PMC_WPSR) Write Protection Status Register Offset */
-#define PMC_VERSION_REG_OFST           (0xFC)              /**< (PMC_VERSION) Version Register Offset */
 #define PMC_PCER1_REG_OFST             (0x100)             /**< (PMC_PCER1) Peripheral Clock Enable Register 1 Offset */
 #define PMC_PCDR1_REG_OFST             (0x104)             /**< (PMC_PCDR1) Peripheral Clock Disable Register 1 Offset */
 #define PMC_PCSR1_REG_OFST             (0x108)             /**< (PMC_PCSR1) Peripheral Clock Status Register 1 Offset */
@@ -1631,8 +1620,7 @@ typedef struct
   __I   uint8_t                        Reserved7[0x60];
   __IO  uint32_t                       PMC_WPMR;           /**< Offset: 0xE4 (R/W  32) Write ProtectIon Mode Register */
   __I   uint32_t                       PMC_WPSR;           /**< Offset: 0xE8 (R/   32) Write Protection Status Register */
-  __I   uint8_t                        Reserved8[0x10];
-  __I   uint32_t                       PMC_VERSION;        /**< Offset: 0xFC (R/   32) Version Register */
+  __I   uint8_t                        Reserved8[0x14];
   __O   uint32_t                       PMC_PCER1;          /**< Offset: 0x100 ( /W  32) Peripheral Clock Enable Register 1 */
   __O   uint32_t                       PMC_PCDR1;          /**< Offset: 0x104 ( /W  32) Peripheral Clock Disable Register 1 */
   __I   uint32_t                       PMC_PCSR1;          /**< Offset: 0x108 (R/   32) Peripheral Clock Status Register 1 */

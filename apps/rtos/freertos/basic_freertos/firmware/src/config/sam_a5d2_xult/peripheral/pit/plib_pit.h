@@ -51,6 +51,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "device.h" // static inline macro
+
 #ifdef __cplusplus  // Provide C++ Compatibility
 
     extern "C" {
@@ -229,6 +231,30 @@ uint32_t PIT_TimerPeriodGet(void);
 */
 uint32_t PIT_TimerCounterGet(void);
 
+
+// *****************************************************************************
+/* Function:
+    void PIT_TimerCompareSet(void);
+
+  Summary:
+   Set the timer comparison value.
+
+  Description:
+    Provide a future PIT count value for comparison purposes.  When PIT timer
+    counter is greater than or equal to the value an event will be created.
+
+  Precondition:
+    None.
+
+  Parameters:
+    None.
+  
+  Returns:
+    None.
+*/
+void PIT_TimerCompareSet( uint16_t compare );
+
+
 // *****************************************************************************
 /* Function:
     uint32_t PIT_TimerFrequencyGet(void);
@@ -315,6 +341,31 @@ void PIT_TimerCallbackSet(PIT_CALLBACK callback, uintptr_t context);
     None.
 */
 void PIT_InterruptHandler(void);
+
+// *****************************************************************************
+/* Function:
+    void PIT_ClearInterrupt(void);
+
+  Summary:
+    PIT Clear Interrupt.
+
+  Description:
+    Clear the PIT interrupt by reading the PIVR register.  Meant
+    to be used by external interrupt handlers (e.g. FreeRTOS tick hanlder).
+
+  Precondition:
+    None.
+
+  Parameters:
+    None.
+  
+  Returns:
+    None.
+*/
+__STATIC_INLINE void PIT_ClearInterrupt(void)
+{
+    (uint32_t)PIT_REGS->PIT_PIVR;
+}
 
 #ifdef __cplusplus  // Provide C++ Compatibility
 

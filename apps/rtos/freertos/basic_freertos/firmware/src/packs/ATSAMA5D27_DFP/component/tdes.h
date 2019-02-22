@@ -1,7 +1,7 @@
 /**
  * \brief Component description for TDES
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_TDES_COMPONENT_H_
 #define _SAMA5D2_TDES_COMPONENT_H_
 
@@ -195,16 +195,6 @@
 #define TDES_XTEA_RNDR_Msk                    _U_(0x0000003F)                                      /**< (TDES_XTEA_RNDR) Register Mask  */
 
 
-/* -------- TDES_VERSION : (TDES Offset: 0xFC) ( R/ 32) Version Register -------- */
-#define TDES_VERSION_VERSION_Pos              _U_(0)                                               /**< (TDES_VERSION) Version of the Hardware Module Position */
-#define TDES_VERSION_VERSION_Msk              (_U_(0xFFF) << TDES_VERSION_VERSION_Pos)             /**< (TDES_VERSION) Version of the Hardware Module Mask */
-#define TDES_VERSION_VERSION(value)           (TDES_VERSION_VERSION_Msk & ((value) << TDES_VERSION_VERSION_Pos))
-#define TDES_VERSION_MFN_Pos                  _U_(16)                                              /**< (TDES_VERSION) Metal Fix Number Position */
-#define TDES_VERSION_MFN_Msk                  (_U_(0x7) << TDES_VERSION_MFN_Pos)                   /**< (TDES_VERSION) Metal Fix Number Mask */
-#define TDES_VERSION_MFN(value)               (TDES_VERSION_MFN_Msk & ((value) << TDES_VERSION_MFN_Pos))
-#define TDES_VERSION_Msk                      _U_(0x00070FFF)                                      /**< (TDES_VERSION) Register Mask  */
-
-
 /** \brief TDES register offsets definitions */
 #define TDES_CR_REG_OFST               (0x00)              /**< (TDES_CR) Control Register Offset */
 #define TDES_MR_REG_OFST               (0x04)              /**< (TDES_MR) Mode Register Offset */
@@ -219,7 +209,6 @@
 #define TDES_ODATAR_REG_OFST           (0x50)              /**< (TDES_ODATAR) Output Data Register Offset */
 #define TDES_IVR_REG_OFST              (0x60)              /**< (TDES_IVR) Initialization Vector Register Offset */
 #define TDES_XTEA_RNDR_REG_OFST        (0x70)              /**< (TDES_XTEA_RNDR) XTEA Rounds Register Offset */
-#define TDES_VERSION_REG_OFST          (0xFC)              /**< (TDES_VERSION) Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief TDES register API structure */
@@ -243,8 +232,6 @@ typedef struct
   __O   uint32_t                       TDES_IVR[2];        /**< Offset: 0x60 ( /W  32) Initialization Vector Register */
   __I   uint8_t                        Reserved5[0x08];
   __IO  uint32_t                       TDES_XTEA_RNDR;     /**< Offset: 0x70 (R/W  32) XTEA Rounds Register */
-  __I   uint8_t                        Reserved6[0x88];
-  __I   uint32_t                       TDES_VERSION;       /**< Offset: 0xFC (R/   32) Version Register */
 } tdes_registers_t;
 
 

@@ -1,7 +1,7 @@
 /**
  * \brief Component description for UART
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_UART_COMPONENT_H_
 #define _SAMA5D2_UART_COMPONENT_H_
 
@@ -288,16 +288,6 @@
 #define UART_WPMR_Msk                         _U_(0xFFFFFF01)                                      /**< (UART_WPMR) Register Mask  */
 
 
-/* -------- UART_VERSION : (UART Offset: 0xFC) ( R/ 32) Version Register -------- */
-#define UART_VERSION_VERSION_Pos              _U_(0)                                               /**< (UART_VERSION) Hardware Module Version Position */
-#define UART_VERSION_VERSION_Msk              (_U_(0xFFF) << UART_VERSION_VERSION_Pos)             /**< (UART_VERSION) Hardware Module Version Mask */
-#define UART_VERSION_VERSION(value)           (UART_VERSION_VERSION_Msk & ((value) << UART_VERSION_VERSION_Pos))
-#define UART_VERSION_MFN_Pos                  _U_(16)                                              /**< (UART_VERSION) Metal Fix Number Position */
-#define UART_VERSION_MFN_Msk                  (_U_(0x7) << UART_VERSION_MFN_Pos)                   /**< (UART_VERSION) Metal Fix Number Mask */
-#define UART_VERSION_MFN(value)               (UART_VERSION_MFN_Msk & ((value) << UART_VERSION_MFN_Pos))
-#define UART_VERSION_Msk                      _U_(0x00070FFF)                                      /**< (UART_VERSION) Register Mask  */
-
-
 /** \brief UART register offsets definitions */
 #define UART_CR_REG_OFST               (0x00)              /**< (UART_CR) Control Register Offset */
 #define UART_MR_REG_OFST               (0x04)              /**< (UART_MR) Mode Register Offset */
@@ -311,7 +301,6 @@
 #define UART_CMPR_REG_OFST             (0x24)              /**< (UART_CMPR) Comparison Register Offset */
 #define UART_RTOR_REG_OFST             (0x28)              /**< (UART_RTOR) Receiver Time-out Register Offset */
 #define UART_WPMR_REG_OFST             (0xE4)              /**< (UART_WPMR) Write Protection Mode Register Offset */
-#define UART_VERSION_REG_OFST          (0xFC)              /**< (UART_VERSION) Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief UART register API structure */
@@ -330,8 +319,6 @@ typedef struct
   __IO  uint32_t                       UART_RTOR;          /**< Offset: 0x28 (R/W  32) Receiver Time-out Register */
   __I   uint8_t                        Reserved1[0xB8];
   __IO  uint32_t                       UART_WPMR;          /**< Offset: 0xE4 (R/W  32) Write Protection Mode Register */
-  __I   uint8_t                        Reserved2[0x14];
-  __I   uint32_t                       UART_VERSION;       /**< Offset: 0xFC (R/   32) Version Register */
 } uart_registers_t;
 
 

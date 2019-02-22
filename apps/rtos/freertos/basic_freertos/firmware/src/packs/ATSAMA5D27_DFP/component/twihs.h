@@ -1,7 +1,7 @@
 /**
  * \brief Component description for TWIHS
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_TWIHS_COMPONENT_H_
 #define _SAMA5D2_TWIHS_COMPONENT_H_
 
@@ -840,16 +840,6 @@
 #define TWIHS_WPSR_Msk                        _U_(0xFFFFFF01)                                      /**< (TWIHS_WPSR) Register Mask  */
 
 
-/* -------- TWIHS_VER : (TWIHS Offset: 0xFC) ( R/ 32) Version Register -------- */
-#define TWIHS_VER_VERSION_Pos                 _U_(0)                                               /**< (TWIHS_VER) Version of the Hardware Module Position */
-#define TWIHS_VER_VERSION_Msk                 (_U_(0xFFF) << TWIHS_VER_VERSION_Pos)                /**< (TWIHS_VER) Version of the Hardware Module Mask */
-#define TWIHS_VER_VERSION(value)              (TWIHS_VER_VERSION_Msk & ((value) << TWIHS_VER_VERSION_Pos))
-#define TWIHS_VER_MFN_Pos                     _U_(16)                                              /**< (TWIHS_VER) Metal Fix Number Position */
-#define TWIHS_VER_MFN_Msk                     (_U_(0x7) << TWIHS_VER_MFN_Pos)                      /**< (TWIHS_VER) Metal Fix Number Mask */
-#define TWIHS_VER_MFN(value)                  (TWIHS_VER_MFN_Msk & ((value) << TWIHS_VER_MFN_Pos))
-#define TWIHS_VER_Msk                         _U_(0x00070FFF)                                      /**< (TWIHS_VER) Register Mask  */
-
-
 /** \brief TWIHS register offsets definitions */
 #define TWIHS_CR_REG_OFST              (0x00)              /**< (TWIHS_CR) Control Register Offset */
 #define TWIHS_MMR_REG_OFST             (0x04)              /**< (TWIHS_MMR) Master Mode Register Offset */
@@ -875,7 +865,6 @@
 #define TWIHS_DR_REG_OFST              (0xD0)              /**< (TWIHS_DR) Debug Register Offset */
 #define TWIHS_WPMR_REG_OFST            (0xE4)              /**< (TWIHS_WPMR) Write Protection Mode Register Offset */
 #define TWIHS_WPSR_REG_OFST            (0xE8)              /**< (TWIHS_WPSR) Write Protection Status Register Offset */
-#define TWIHS_VER_REG_OFST             (0xFC)              /**< (TWIHS_VER) Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief TWIHS register API structure */
@@ -911,8 +900,6 @@ typedef struct
   __I   uint8_t                        Reserved6[0x10];
   __IO  uint32_t                       TWIHS_WPMR;         /**< Offset: 0xE4 (R/W  32) Write Protection Mode Register */
   __I   uint32_t                       TWIHS_WPSR;         /**< Offset: 0xE8 (R/   32) Write Protection Status Register */
-  __I   uint8_t                        Reserved7[0x10];
-  __I   uint32_t                       TWIHS_VER;          /**< Offset: 0xFC (R/   32) Version Register */
 } twihs_registers_t;
 
 

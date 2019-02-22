@@ -1,7 +1,7 @@
 /**
  * \brief Component description for SPI
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_SPI_COMPONENT_H_
 #define _SAMA5D2_SPI_COMPONENT_H_
 
@@ -513,16 +513,6 @@
 #define SPI_WPSR_Msk                          _U_(0x0000FF01)                                      /**< (SPI_WPSR) Register Mask  */
 
 
-/* -------- SPI_VERSION : (SPI Offset: 0xFC) ( R/ 32) Version Register -------- */
-#define SPI_VERSION_VERSION_Pos               _U_(0)                                               /**< (SPI_VERSION) Version of the Hardware Module Position */
-#define SPI_VERSION_VERSION_Msk               (_U_(0xFFF) << SPI_VERSION_VERSION_Pos)              /**< (SPI_VERSION) Version of the Hardware Module Mask */
-#define SPI_VERSION_VERSION(value)            (SPI_VERSION_VERSION_Msk & ((value) << SPI_VERSION_VERSION_Pos))
-#define SPI_VERSION_MFN_Pos                   _U_(16)                                              /**< (SPI_VERSION) Metal Fix Number Position */
-#define SPI_VERSION_MFN_Msk                   (_U_(0x7) << SPI_VERSION_MFN_Pos)                    /**< (SPI_VERSION) Metal Fix Number Mask */
-#define SPI_VERSION_MFN(value)                (SPI_VERSION_MFN_Msk & ((value) << SPI_VERSION_MFN_Pos))
-#define SPI_VERSION_Msk                       _U_(0x00070FFF)                                      /**< (SPI_VERSION) Register Mask  */
-
-
 /** \brief SPI register offsets definitions */
 #define SPI_CR_REG_OFST                (0x00)              /**< (SPI_CR) Control Register Offset */
 #define SPI_MR_REG_OFST                (0x04)              /**< (SPI_MR) Mode Register Offset */
@@ -538,7 +528,6 @@
 #define SPI_CMPR_REG_OFST              (0x48)              /**< (SPI_CMPR) Comparison Register Offset */
 #define SPI_WPMR_REG_OFST              (0xE4)              /**< (SPI_WPMR) Write Protection Mode Register Offset */
 #define SPI_WPSR_REG_OFST              (0xE8)              /**< (SPI_WPSR) Write Protection Status Register Offset */
-#define SPI_VERSION_REG_OFST           (0xFC)              /**< (SPI_VERSION) Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief SPI register API structure */
@@ -560,8 +549,6 @@ typedef struct
   __I   uint8_t                        Reserved2[0x98];
   __IO  uint32_t                       SPI_WPMR;           /**< Offset: 0xE4 (R/W  32) Write Protection Mode Register */
   __I   uint32_t                       SPI_WPSR;           /**< Offset: 0xE8 (R/   32) Write Protection Status Register */
-  __I   uint8_t                        Reserved3[0x10];
-  __I   uint32_t                       SPI_VERSION;        /**< Offset: 0xFC (R/   32) Version Register */
 } spi_registers_t;
 
 

@@ -1,7 +1,7 @@
 /**
  * \brief Component description for AESB
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_AESB_COMPONENT_H_
 #define _SAMA5D2_AESB_COMPONENT_H_
 
@@ -167,16 +167,6 @@
 #define AESB_IVR_Msk                          _U_(0xFFFFFFFF)                                      /**< (AESB_IVR) Register Mask  */
 
 
-/* -------- AESB_VERSION : (AESB Offset: 0xFC) ( R/ 32) Version Register -------- */
-#define AESB_VERSION_VERSION_Pos              _U_(0)                                               /**< (AESB_VERSION) Version of the Hardware Module Position */
-#define AESB_VERSION_VERSION_Msk              (_U_(0xFFF) << AESB_VERSION_VERSION_Pos)             /**< (AESB_VERSION) Version of the Hardware Module Mask */
-#define AESB_VERSION_VERSION(value)           (AESB_VERSION_VERSION_Msk & ((value) << AESB_VERSION_VERSION_Pos))
-#define AESB_VERSION_MFN_Pos                  _U_(16)                                              /**< (AESB_VERSION) Metal Fix Number Position */
-#define AESB_VERSION_MFN_Msk                  (_U_(0x7) << AESB_VERSION_MFN_Pos)                   /**< (AESB_VERSION) Metal Fix Number Mask */
-#define AESB_VERSION_MFN(value)               (AESB_VERSION_MFN_Msk & ((value) << AESB_VERSION_MFN_Pos))
-#define AESB_VERSION_Msk                      _U_(0x00070FFF)                                      /**< (AESB_VERSION) Register Mask  */
-
-
 /** \brief AESB register offsets definitions */
 #define AESB_CR_REG_OFST               (0x00)              /**< (AESB_CR) Control Register Offset */
 #define AESB_MR_REG_OFST               (0x04)              /**< (AESB_MR) Mode Register Offset */
@@ -188,7 +178,6 @@
 #define AESB_IDATAR_REG_OFST           (0x40)              /**< (AESB_IDATAR) Input Data Register Offset */
 #define AESB_ODATAR_REG_OFST           (0x50)              /**< (AESB_ODATAR) Output Data Register Offset */
 #define AESB_IVR_REG_OFST              (0x60)              /**< (AESB_IVR) Initialization Vector Register Offset */
-#define AESB_VERSION_REG_OFST          (0xFC)              /**< (AESB_VERSION) Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief AESB register API structure */
@@ -206,8 +195,6 @@ typedef struct
   __O   uint32_t                       AESB_IDATAR[4];     /**< Offset: 0x40 ( /W  32) Input Data Register */
   __I   uint32_t                       AESB_ODATAR[4];     /**< Offset: 0x50 (R/   32) Output Data Register */
   __O   uint32_t                       AESB_IVR[4];        /**< Offset: 0x60 ( /W  32) Initialization Vector Register */
-  __I   uint8_t                        Reserved3[0x8C];
-  __I   uint32_t                       AESB_VERSION;       /**< Offset: 0xFC (R/   32) Version Register */
 } aesb_registers_t;
 
 
