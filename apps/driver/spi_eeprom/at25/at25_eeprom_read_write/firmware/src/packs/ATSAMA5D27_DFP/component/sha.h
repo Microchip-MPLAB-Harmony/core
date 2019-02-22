@@ -1,7 +1,7 @@
 /**
  * \brief Component description for SHA
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_SHA_COMPONENT_H_
 #define _SAMA5D2_SHA_COMPONENT_H_
 
@@ -204,16 +204,6 @@
 #define SHA_IODATAR_Msk                       _U_(0xFFFFFFFF)                                      /**< (SHA_IODATAR) Register Mask  */
 
 
-/* -------- SHA_VERSION : (SHA Offset: 0xFC) ( R/ 32) Version Register -------- */
-#define SHA_VERSION_VERSION_Pos               _U_(0)                                               /**< (SHA_VERSION) Version of the Hardware Module Position */
-#define SHA_VERSION_VERSION_Msk               (_U_(0xFFF) << SHA_VERSION_VERSION_Pos)              /**< (SHA_VERSION) Version of the Hardware Module Mask */
-#define SHA_VERSION_VERSION(value)            (SHA_VERSION_VERSION_Msk & ((value) << SHA_VERSION_VERSION_Pos))
-#define SHA_VERSION_MFN_Pos                   _U_(16)                                              /**< (SHA_VERSION) Metal Fix Number Position */
-#define SHA_VERSION_MFN_Msk                   (_U_(0x7) << SHA_VERSION_MFN_Pos)                    /**< (SHA_VERSION) Metal Fix Number Mask */
-#define SHA_VERSION_MFN(value)                (SHA_VERSION_MFN_Msk & ((value) << SHA_VERSION_MFN_Pos))
-#define SHA_VERSION_Msk                       _U_(0x00070FFF)                                      /**< (SHA_VERSION) Register Mask  */
-
-
 /** \brief SHA register offsets definitions */
 #define SHA_CR_REG_OFST                (0x00)              /**< (SHA_CR) Control Register Offset */
 #define SHA_MR_REG_OFST                (0x04)              /**< (SHA_MR) Mode Register Offset */
@@ -225,7 +215,6 @@
 #define SHA_BCR_REG_OFST               (0x30)              /**< (SHA_BCR) Bytes Count Register Offset */
 #define SHA_IDATAR_REG_OFST            (0x40)              /**< (SHA_IDATAR) Input Data 0 Register Offset */
 #define SHA_IODATAR_REG_OFST           (0x80)              /**< (SHA_IODATAR) Input/Output Data 0 Register Offset */
-#define SHA_VERSION_REG_OFST           (0xFC)              /**< (SHA_VERSION) Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief SHA register API structure */
@@ -244,8 +233,6 @@ typedef struct
   __I   uint8_t                        Reserved3[0x0C];
   __O   uint32_t                       SHA_IDATAR[16];     /**< Offset: 0x40 ( /W  32) Input Data 0 Register */
   __IO  uint32_t                       SHA_IODATAR[16];    /**< Offset: 0x80 (R/W  32) Input/Output Data 0 Register */
-  __I   uint8_t                        Reserved4[0x3C];
-  __I   uint32_t                       SHA_VERSION;        /**< Offset: 0xFC (R/   32) Version Register */
 } sha_registers_t;
 
 

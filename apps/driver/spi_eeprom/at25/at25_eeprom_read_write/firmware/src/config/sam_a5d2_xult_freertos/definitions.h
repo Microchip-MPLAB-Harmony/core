@@ -48,21 +48,22 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "bsp/bsp.h"
+#include "peripheral/pit/plib_pit.h"
 #include "peripheral/mmu/plib_mmu.h"
 #include "peripheral/matrix/plib_matrix.h"
 #include "peripheral/l2cc/plib_l2cc.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/aic/plib_aic.h"
-#include "bsp/bsp.h"
+#include "driver/at25/drv_at25.h"
+#include "peripheral/spi/plib_spi1.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "system/int/sys_int.h"
 #include "system/ports/sys_ports.h"
+#include "system/cache/sys_cache.h"
 #include "osal/osal.h"
-#include "driver/at25/drv_at25.h"
-#include "peripheral/pit/plib_pit.h"
-#include "peripheral/spi/plib_spi1.h"
 #include "app.h"
 
 

@@ -1,7 +1,7 @@
 /**
  * \brief Component description for CLASSD
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_CLASSD_COMPONENT_H_
 #define _SAMA5D2_CLASSD_COMPONENT_H_
 
@@ -222,16 +222,6 @@
 #define CLASSD_WPMR_Msk                       _U_(0xFFFFFF01)                                      /**< (CLASSD_WPMR) Register Mask  */
 
 
-/* -------- CLASSD_VERSION : (CLASSD Offset: 0xFC) ( R/ 32) IP Version Register -------- */
-#define CLASSD_VERSION_VERSION_Pos            _U_(0)                                               /**< (CLASSD_VERSION) Version of the Hardware Module Position */
-#define CLASSD_VERSION_VERSION_Msk            (_U_(0xFFF) << CLASSD_VERSION_VERSION_Pos)           /**< (CLASSD_VERSION) Version of the Hardware Module Mask */
-#define CLASSD_VERSION_VERSION(value)         (CLASSD_VERSION_VERSION_Msk & ((value) << CLASSD_VERSION_VERSION_Pos))
-#define CLASSD_VERSION_MFN_Pos                _U_(16)                                              /**< (CLASSD_VERSION) Metal Fix Number Position */
-#define CLASSD_VERSION_MFN_Msk                (_U_(0x7) << CLASSD_VERSION_MFN_Pos)                 /**< (CLASSD_VERSION) Metal Fix Number Mask */
-#define CLASSD_VERSION_MFN(value)             (CLASSD_VERSION_MFN_Msk & ((value) << CLASSD_VERSION_MFN_Pos))
-#define CLASSD_VERSION_Msk                    _U_(0x00070FFF)                                      /**< (CLASSD_VERSION) Register Mask  */
-
-
 /** \brief CLASSD register offsets definitions */
 #define CLASSD_CR_REG_OFST             (0x00)              /**< (CLASSD_CR) Control Register Offset */
 #define CLASSD_MR_REG_OFST             (0x04)              /**< (CLASSD_MR) Mode Register Offset */
@@ -243,7 +233,6 @@
 #define CLASSD_IMR_REG_OFST            (0x1C)              /**< (CLASSD_IMR) Interrupt Mask Register Offset */
 #define CLASSD_ISR_REG_OFST            (0x20)              /**< (CLASSD_ISR) Interrupt Status Register Offset */
 #define CLASSD_WPMR_REG_OFST           (0xE4)              /**< (CLASSD_WPMR) Write Protection Mode Register Offset */
-#define CLASSD_VERSION_REG_OFST        (0xFC)              /**< (CLASSD_VERSION) IP Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief CLASSD register API structure */
@@ -260,8 +249,6 @@ typedef struct
   __I   uint32_t                       CLASSD_ISR;         /**< Offset: 0x20 (R/   32) Interrupt Status Register */
   __I   uint8_t                        Reserved1[0xC0];
   __IO  uint32_t                       CLASSD_WPMR;        /**< Offset: 0xE4 (R/W  32) Write Protection Mode Register */
-  __I   uint8_t                        Reserved2[0x14];
-  __I   uint32_t                       CLASSD_VERSION;     /**< Offset: 0xFC (R/   32) IP Version Register */
 } classd_registers_t;
 
 

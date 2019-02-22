@@ -64,10 +64,10 @@ void DefaultInterruptHandler( void )
     while( 1 ){
     }
 }
+uint32_t spuriousEventCount = 0;
 void DefaultInterruptHandlerForSpurious( void )
 {
-    while( 1 ){
-    }
+    ++spuriousEventCount;
 }
 /*  Weak definitions for default handlers.  Users may override these with
     implementations of their own or provide alternate functions to the 
@@ -152,7 +152,7 @@ void PMC_Handler( void )                 __attribute__((weak, alias("DefaultInte
 void RSTC_Handler( void )                __attribute__((weak, alias("DefaultInterruptHandler")));
 void RTC_Handler( void )                 __attribute__((weak, alias("DefaultInterruptHandler")));
 
-void PIT_InterruptHandler(               void );
+void FreeRTOS_Tick_Handler(              void );
 void SPI1_InterruptHandler(              void );
 
 /* Handlers for vectors that are shared by multiple interrupts */
@@ -162,12 +162,11 @@ void SYSC_SharedHandler( void )
 
 /* data for irq register initialization */
 IrqData irqData[] = {
-    { 3,   (uint32_t) AIC_REGS,    FreeRTOS_Tick_Handler,       AIC_SMR_SRCTYPE_INT_LEVEL_SENSITIVE_Val,  AIC_SMR_PRIORITY_MINIMUM_Val   },
+    { 3,   (uint32_t) AIC_REGS,    FreeRTOS_Tick_Handler,      AIC_SMR_SRCTYPE_INT_LEVEL_SENSITIVE_Val,  AIC_SMR_PRIORITY_MINIMUM_Val   },
     { 34,  (uint32_t) AIC_REGS,    SPI1_InterruptHandler,      AIC_SMR_SRCTYPE_INT_LEVEL_SENSITIVE_Val,  AIC_SMR_PRIORITY_MINIMUM_Val   },
 };
 
 uint32_t irqDataEntryCount = sizeof( irqData ) / sizeof( irqData[ 0 ]);
-
 
 
 

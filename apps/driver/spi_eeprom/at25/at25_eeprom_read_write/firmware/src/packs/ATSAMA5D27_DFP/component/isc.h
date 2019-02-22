@@ -1,7 +1,7 @@
 /**
  * \brief Component description for ISC
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_ISC_COMPONENT_H_
 #define _SAMA5D2_ISC_COMPONENT_H_
 
@@ -956,16 +956,6 @@
 #define ISC_DNDA_Msk                          _U_(0xFFFFFFFC)                                      /**< (ISC_DNDA) Register Mask  */
 
 
-/* -------- ISC_VERSION : (ISC Offset: 0x40C) ( R/ 32) Version Register -------- */
-#define ISC_VERSION_VERSION_Pos               _U_(0)                                               /**< (ISC_VERSION) Hardware Module Version Position */
-#define ISC_VERSION_VERSION_Msk               (_U_(0xFFF) << ISC_VERSION_VERSION_Pos)              /**< (ISC_VERSION) Hardware Module Version Mask */
-#define ISC_VERSION_VERSION(value)            (ISC_VERSION_VERSION_Msk & ((value) << ISC_VERSION_VERSION_Pos))
-#define ISC_VERSION_MFN_Pos                   _U_(16)                                              /**< (ISC_VERSION) Metal Fix Number Position */
-#define ISC_VERSION_MFN_Msk                   (_U_(0x7) << ISC_VERSION_MFN_Pos)                    /**< (ISC_VERSION) Metal Fix Number Mask */
-#define ISC_VERSION_MFN(value)                (ISC_VERSION_MFN_Msk & ((value) << ISC_VERSION_MFN_Pos))
-#define ISC_VERSION_Msk                       _U_(0x00070FFF)                                      /**< (ISC_VERSION) Register Mask  */
-
-
 /* -------- ISC_HIS_ENTRY : (ISC Offset: 0x410) ( R/ 32) Histogram Entry -------- */
 #define ISC_HIS_ENTRY_COUNT_Pos               _U_(0)                                               /**< (ISC_HIS_ENTRY) Entry Counter Position */
 #define ISC_HIS_ENTRY_COUNT_Msk               (_U_(0xFFFFF) << ISC_HIS_ENTRY_COUNT_Pos)            /**< (ISC_HIS_ENTRY) Entry Counter Mask */
@@ -1029,7 +1019,6 @@
 #define ISC_DCFG_REG_OFST              (0x3E0)             /**< (ISC_DCFG) DMA Configuration Register Offset */
 #define ISC_DCTRL_REG_OFST             (0x3E4)             /**< (ISC_DCTRL) DMA Control Register Offset */
 #define ISC_DNDA_REG_OFST              (0x3E8)             /**< (ISC_DNDA) DMA Descriptor Address Register Offset */
-#define ISC_VERSION_REG_OFST           (0x40C)             /**< (ISC_VERSION) Version Register Offset */
 #define ISC_HIS_ENTRY_REG_OFST         (0x410)             /**< (ISC_HIS_ENTRY) Histogram Entry Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
@@ -1101,8 +1090,7 @@ typedef struct
   __IO  uint32_t                       ISC_DCTRL;          /**< Offset: 0x3E4 (R/W  32) DMA Control Register */
   __IO  uint32_t                       ISC_DNDA;           /**< Offset: 0x3E8 (R/W  32) DMA Descriptor Address Register */
         isc_sub0_registers_t           ISC_SUB0[ISC_SUB0_NUMBER]; /**< Offset: 0x3EC  */
-  __I   uint8_t                        Reserved3[0x08];
-  __I   uint32_t                       ISC_VERSION;        /**< Offset: 0x40C (R/   32) Version Register */
+  __I   uint8_t                        Reserved3[0x0C];
   __I   uint32_t                       ISC_HIS_ENTRY[512]; /**< Offset: 0x410 (R/   32) Histogram Entry */
 } isc_registers_t;
 

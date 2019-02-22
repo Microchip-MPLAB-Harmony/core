@@ -19,6 +19,8 @@
 #ifndef USER_H
 #define USER_H
 
+#include "bsp/bsp.h"
+
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 
@@ -32,9 +34,9 @@ extern "C" {
 // Section: User Configuration macros
 // *****************************************************************************
 // *****************************************************************************
-#define LED_On()                    LED_GREEN_On()
-#define LED_Off()                   LED_GREEN_Off()
-#define LED_Toggle()                LED_GREEN_Toggle()
+#define LED_ON()                    LED_GREEN_On()
+#define LED_OFF()                   LED_GREEN_Off()
+#define LED_TOGGLE()                LED_GREEN_Toggle()
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

@@ -1,7 +1,7 @@
 /**
  * \brief Component description for AIC
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_AIC_COMPONENT_H_
 #define _SAMA5D2_AIC_COMPONENT_H_
 
@@ -597,16 +597,6 @@
 #define AIC_WPSR_Msk                          _U_(0x00FFFF01)                                      /**< (AIC_WPSR) Register Mask  */
 
 
-/* -------- AIC_VERSION : (AIC Offset: 0xFC) ( R/ 32) AIC Version Register -------- */
-#define AIC_VERSION_VERSION_Pos               _U_(0)                                               /**< (AIC_VERSION) Version of the Hardware Module Position */
-#define AIC_VERSION_VERSION_Msk               (_U_(0xFFF) << AIC_VERSION_VERSION_Pos)              /**< (AIC_VERSION) Version of the Hardware Module Mask */
-#define AIC_VERSION_VERSION(value)            (AIC_VERSION_VERSION_Msk & ((value) << AIC_VERSION_VERSION_Pos))
-#define AIC_VERSION_MFN_Pos                   _U_(16)                                              /**< (AIC_VERSION) Metal Fix Number Position */
-#define AIC_VERSION_MFN_Msk                   (_U_(0x7) << AIC_VERSION_MFN_Pos)                    /**< (AIC_VERSION) Metal Fix Number Mask */
-#define AIC_VERSION_MFN(value)                (AIC_VERSION_MFN_Msk & ((value) << AIC_VERSION_MFN_Pos))
-#define AIC_VERSION_Msk                       _U_(0x00070FFF)                                      /**< (AIC_VERSION) Register Mask  */
-
-
 /** \brief AIC register offsets definitions */
 #define AIC_SSR_REG_OFST               (0x00)              /**< (AIC_SSR) Source Select Register Offset */
 #define AIC_SMR_REG_OFST               (0x04)              /**< (AIC_SMR) Source Mode Register Offset */
@@ -629,7 +619,6 @@
 #define AIC_DCR_REG_OFST               (0x6C)              /**< (AIC_DCR) Debug Control Register Offset */
 #define AIC_WPMR_REG_OFST              (0xE4)              /**< (AIC_WPMR) Write Protection Mode Register Offset */
 #define AIC_WPSR_REG_OFST              (0xE8)              /**< (AIC_WPSR) Write Protection Status Register Offset */
-#define AIC_VERSION_REG_OFST           (0xFC)              /**< (AIC_VERSION) AIC Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief AIC register API structure */
@@ -660,8 +649,6 @@ typedef struct
   __I   uint8_t                        Reserved4[0x74];
   __IO  uint32_t                       AIC_WPMR;           /**< Offset: 0xE4 (R/W  32) Write Protection Mode Register */
   __I   uint32_t                       AIC_WPSR;           /**< Offset: 0xE8 (R/   32) Write Protection Status Register */
-  __I   uint8_t                        Reserved5[0x10];
-  __I   uint32_t                       AIC_VERSION;        /**< Offset: 0xFC (R/   32) AIC Version Register */
 } aic_registers_t;
 
 
