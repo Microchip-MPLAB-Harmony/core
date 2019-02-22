@@ -229,7 +229,7 @@ static void _DRV_SDMMC_RemoveClientBuffersFromList(
     {
         // Do not remove the buffer object that is already in process
 
-        if (((*pBufferObjList)->clientHandle == clientObj->clientHandle) && \
+        if (((*pBufferObjList)->clientHandle == clientObj->clientHandle) &&
                 ((*pBufferObjList)->status == DRV_SDMMC_COMMAND_QUEUED))
         {
             // Save the node to be deleted off the list
@@ -241,7 +241,7 @@ static void _DRV_SDMMC_RemoveClientBuffersFromList(
             if (clientObj->eventHandler != NULL)
             {
                 /* Call the event handler */
-                clientObj->eventHandler(DRV_SDMMC_EVENT_COMMAND_ERROR, delBufferObj->commandHandle, clientObj->context);
+                clientObj->eventHandler((SYS_MEDIA_BLOCK_EVENT)DRV_SDMMC_EVENT_COMMAND_ERROR, delBufferObj->commandHandle, clientObj->context);
             }
 
             // Reset the deleted node
@@ -281,7 +281,7 @@ static void _DRV_SDMMC_RemoveBufferObjects (
         if (clientObj->eventHandler != NULL)
         {
             /* Call the event handler */
-            clientObj->eventHandler(DRV_SDMMC_EVENT_COMMAND_ERROR, delBufferObj->commandHandle, clientObj->context);
+            clientObj->eventHandler((SYS_MEDIA_BLOCK_EVENT)DRV_SDMMC_EVENT_COMMAND_ERROR, delBufferObj->commandHandle, clientObj->context);
         }
 
         // Reset the deleted node
@@ -711,10 +711,10 @@ static void _DRV_SDMMC_MediaInitialize (
                     else
                     {
                         /* Check if cards internal initialization is complete. */
-                        if (response & (1 << 31))
+                        if (response & (1U << 31))
                         {
                             /* Check card capacity - CCS bit */
-                            if (response & (1 << 30))
+                            if (response & (1U << 30))
                             {
                                 dObj->cardCtxt.cardType = DRV_SDMMC_CARD_TYPE_HC;
                             }
@@ -882,7 +882,7 @@ static void _DRV_SDMMC_MediaInitialize (
             dObj->dataTransferFlags.transferType = DRV_SDMMC_DATA_TRANSFER_TYPE_SINGLE;
 
             /* Set up the DMA for the data transfer. */
-            dObj->sdmmcPlib->sdhostSetupDma (&dObj->cardCtxt.scrBuffer[0], 8, DRV_SDMMC_DATA_TRANSFER_DIR_READ);
+            dObj->sdmmcPlib->sdhostSetupDma (&dObj->cardCtxt.scrBuffer[0], 8, DRV_SDMMC_OPERATION_TYPE_READ);
             dObj->initState = DRV_SDMMC_INIT_SEND_SCR;
             break;
 
@@ -911,7 +911,7 @@ static void _DRV_SDMMC_MediaInitialize (
                 /* Check if there are any data errors. */
                 if (dObj->cardCtxt.errorFlag & DRV_SDMMC_ANY_DATA_ERRORS)
                 {
-                    dObj->taskState = DRV_SDMMC_INIT_ERROR;
+                    dObj->initState = DRV_SDMMC_INIT_ERROR;
                 }
                 else
                 {
@@ -978,7 +978,7 @@ static void _DRV_SDMMC_MediaInitialize (
             dObj->dataTransferFlags.transferType = DRV_SDMMC_DATA_TRANSFER_TYPE_SINGLE;
 
             /* Set up the DMA for the data transfer. */
-            dObj->sdmmcPlib->sdhostSetupDma (&dObj->cardCtxt.switchStatusBuffer[0], 64, DRV_SDMMC_DATA_TRANSFER_DIR_READ);
+            dObj->sdmmcPlib->sdhostSetupDma (&dObj->cardCtxt.switchStatusBuffer[0], 64, DRV_SDMMC_OPERATION_TYPE_READ);
             dObj->initState = DRV_SDMMC_INIT_SWITCH_CMD;
             /* Fall through to the next case. */
 
@@ -1010,7 +1010,7 @@ static void _DRV_SDMMC_MediaInitialize (
                 /* Check if there are any data errors. */
                 if (dObj->cardCtxt.errorFlag & DRV_SDMMC_ANY_DATA_ERRORS)
                 {
-                    dObj->taskState = DRV_SDMMC_INIT_ERROR;
+                    dObj->initState = DRV_SDMMC_INIT_ERROR;
                 }
                 else
                 {
@@ -1103,7 +1103,7 @@ static void _DRV_SDMMC_MediaInitialize (
 // *****************************************************************************
 // *****************************************************************************
 
-void __attribute ((weak)) DRV_SDMMC_RegisterWithSysFs(
+__WEAK void DRV_SDMMC_RegisterWithSysFs(
     const SYS_MODULE_INDEX drvIndex
 )
 {
@@ -1116,7 +1116,7 @@ SYS_MODULE_OBJ DRV_SDMMC_Initialize (
 )
 {
     DRV_SDMMC_OBJ* dObj = NULL;
-    const DRV_SDMMC_INIT* const sdmmcInit = (const DRV_SDMMC_INIT* const)init;
+    const DRV_SDMMC_INIT* const sdmmcInit = (DRV_SDMMC_INIT *)init;
 
     /* Validate the driver index */
     if ((drvIndex >= DRV_SDMMC_INSTANCES_NUMBER) || (sdmmcInit == NULL))
@@ -1159,7 +1159,7 @@ SYS_MODULE_OBJ DRV_SDMMC_Initialize (
     dObj->isWriteProtectCheckEnabled    = sdmmcInit->isWriteProtectCheckEnabled;
     dObj->sdmmcTokenCount               = 1;
     dObj->taskState                     = DRV_SDMMC_TASK_WAIT_FOR_DEVICE_ATTACH;
-    dObj->cmdState                      = DRV_SDMMC_CMD_LINE_STATE_CHECK;
+    dObj->cmdState                      = DRV_SDMMC_CMD_EXEC_IS_COMPLETE;
     dObj->mediaState                    = SYS_MEDIA_DETACHED;
     dObj->clockState                    = DRV_SDMMC_CLOCK_SET_DIVIDER;
     dObj->bufferObjList                 = (uintptr_t)NULL;
@@ -1510,7 +1510,7 @@ void DRV_SDMMC_EventHandlerSet (
         if (OSAL_MUTEX_Lock(&dObj->mutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
         {
             /* Set the event handler */
-            clientObj->eventHandler = eventHandler;
+            clientObj->eventHandler = (DRV_SDMMC_EVENT_HANDLER)eventHandler;
             clientObj->context = context;
             OSAL_MUTEX_Unlock(&dObj->mutex);
         }
@@ -1989,7 +1989,7 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
                     if(clientObj->eventHandler != NULL)
                     {
                         /* Call the event handler */
-                        clientObj->eventHandler(evtStatus, currentBufObj->commandHandle, clientObj->context);
+                        clientObj->eventHandler((SYS_MEDIA_BLOCK_EVENT)evtStatus, currentBufObj->commandHandle, clientObj->context);
                     }
                 }
                 /* Free the completed buffer */
@@ -2030,7 +2030,3 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
         SYS_ASSERT(false, "SDMMC Driver: OSAL_MUTEX_Unlock failed");
     }
 }
-
-/*******************************************************************************
-End of File
-*/
