@@ -55,40 +55,40 @@
 #include <stdbool.h>
 #include <string.h>
 
-void HSMCI_SetBusWidth ( HSMCI_BUS_WIDTH busWidth );
+void HSMCI_BusWidthSet ( HSMCI_BUS_WIDTH busWidth );
 
-void HSMCI_SetSpeedMode ( HSMCI_SPEED_MODE speedMode );
+void HSMCI_SpeedModeSet ( HSMCI_SPEED_MODE speedMode );
 
-void HSMCI_SetBlockSize ( uint16_t blockSize );
+void HSMCI_BlockSizeSet ( uint16_t blockSize );
 
-void HSMCI_SetBlockCount ( uint16_t numBlocks );
+void HSMCI_BlockCountSet ( uint16_t numBlocks );
 
 bool HSMCI_IsCmdLineBusy (void);
 
 bool HSMCI_IsDatLineBusy (void);
 
-void HSMCI_SetClock ( uint32_t clock );
+void HSMCI_ClockSet ( uint32_t clock );
 
-uint16_t HSMCI_GetCommandError(void);
+uint16_t HSMCI_CommandErrorGet(void);
 
-uint16_t HSMCI_GetDataError(void);
+uint16_t HSMCI_DataErrorGet(void);
 
-void HSMCI_ReadResponse ( HSMCI_READ_RESPONSE_REG respReg, uint32_t* response );
+void HSMCI_ResponseRead ( HSMCI_READ_RESPONSE_REG respReg, uint32_t* response );
 
 void HSMCI_Initialize( void );
 
-void HSMCI_InitModule( void );
+void HSMCI_ModuleInit( void );
 
 void HSMCI_CallbackRegister(HSMCI_CALLBACK callback, uintptr_t contextHandle);
 
-void HSMCI_SendCommand ( 
+void HSMCI_CommandSend ( 
     uint8_t opCode, 
     uint32_t argument,
     uint8_t respType, 
     HSMCI_DataTransferFlags transferFlags
 );
 
-void HSMCI_SetupDma
+void HSMCI_DmaSetup
 (
     uint8_t* buffer,
     uint32_t numBytes,
