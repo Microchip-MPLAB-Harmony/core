@@ -48,11 +48,13 @@
 #include "device.h"
 
 
+
 // ****************************************************************************
 // ****************************************************************************
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
+
 
 
 // *****************************************************************************
@@ -115,6 +117,7 @@ const DRV_AT24_INIT drvAT24InitData =
 // *****************************************************************************
 /* Structure to hold the object handles for the modules in the system. */
 SYSTEM_OBJECTS sysObj;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Library/Stack Initialization Data
@@ -129,6 +132,7 @@ SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 
 
+
 /*******************************************************************************
   Function:
     void SYS_Initialize ( void *data )
@@ -141,10 +145,12 @@ SYSTEM_OBJECTS sysObj;
 
 void SYS_Initialize ( void* data )
 {
+  
     CLK_Initialize();
 	PIO_Initialize();
 
 
+	BSP_Initialize();
     MMU_Initialize();
     Matrix_Initialize();
 
@@ -153,7 +159,6 @@ void SYS_Initialize ( void* data )
     INT_Initialize();
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
 
-	BSP_Initialize();
 	TWIHS0_Initialize();
 
 
@@ -165,10 +170,10 @@ void SYS_Initialize ( void* data )
     APP_SAM_A5D2_XULT_Initialize();
 
 
+
 }
 
 
 /*******************************************************************************
  End of File
 */
-

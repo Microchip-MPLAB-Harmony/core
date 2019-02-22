@@ -64,10 +64,10 @@ void DefaultInterruptHandler( void )
     while( 1 ){
     }
 }
+uint32_t spuriousEventCount = 0;
 void DefaultInterruptHandlerForSpurious( void )
 {
-    while( 1 ){
-    }
+    ++spuriousEventCount;
 }
 /*  Weak definitions for default handlers.  Users may override these with
     implementations of their own or provide alternate functions to the 
@@ -165,7 +165,6 @@ IrqData irqData[] = {
 };
 
 uint32_t irqDataEntryCount = sizeof( irqData ) / sizeof( irqData[ 0 ]);
-
 
 
 

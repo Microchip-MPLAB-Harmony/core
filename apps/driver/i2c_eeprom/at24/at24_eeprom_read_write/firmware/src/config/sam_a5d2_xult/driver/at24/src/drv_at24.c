@@ -91,6 +91,7 @@ static bool _DRV_AT24_Write(
     uint32_t nTransferBytes = 0;
     uint32_t nBytes = 0;
     uint16_t slaveAddr;
+    uint16_t i;
 
     if ((address + txDataLength) > gDrvAT24Obj.flashSize)
     {
@@ -123,13 +124,13 @@ static bool _DRV_AT24_Write(
     /* For 8-bit address */
     gDrvAT24Obj.writeBuffer[nBytes++] = (address & 0x000000FF);
 
-    for (uint16_t i = 0 ; i < nTransferBytes; i++)
+    for (i = 0 ; i < nTransferBytes; i++)
     {
         gDrvAT24Obj.writeBuffer[nBytes + i] = ((uint8_t*)txData)[i];
     }
 
     gDrvAT24Obj.nextMemoryAddr = address + nTransferBytes;
-    gDrvAT24Obj.nextBufferAddr = (uint8_t*)txData + nTransferBytes;
+    gDrvAT24Obj.nextBufferAddr = (uint8_t *)((uint8_t*)txData + nTransferBytes);
     gDrvAT24Obj.nPendingBytes = txDataLength - nTransferBytes;
 
     gDrvAT24Obj.command = DRV_AT24_CMD_WRITE;
@@ -449,5 +450,3 @@ bool DRV_AT24_GeometryGet(const DRV_HANDLE handle, DRV_AT24_GEOMETRY *geometry)
 
     return true;
 }
-
-
