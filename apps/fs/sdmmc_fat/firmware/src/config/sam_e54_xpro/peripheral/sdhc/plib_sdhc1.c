@@ -57,7 +57,7 @@ static __attribute__((__aligned__(32))) SDHC_ADMA_DESCR sdhc1DmaDescrTable[SDHC1
 
 static SDHC_OBJECT sdhc1Obj;
 
-static void SDHC1_InitVariables ( void )
+static void SDHC1_VariablesInit ( void )
 {
     sdhc1Obj.errorStatus = 0;
     sdhc1Obj.isCmdInProgress = false;
@@ -65,7 +65,7 @@ static void SDHC1_InitVariables ( void )
     sdhc1Obj.callback = NULL;
 }
 
-static void SDHC1_SetTransferMode ( uint32_t opcode )
+static void SDHC1_TransferModeSet ( uint32_t opcode )
 {
     uint16_t transferMode = 0;
 
@@ -131,7 +131,7 @@ void SDHC1_InterruptHandler(void)
                                       SDHC_EISTR_CMDEND_Msk | \
                                       SDHC_EISTR_CMDIDX_Msk))
                 {
-                    SDHC1_ResetError (SDHC_RESET_CMD);
+                    SDHC1_ErrorReset (SDHC_RESET_CMD);
                 }
             }
             sdhc1Obj.isCmdInProgress = false;
@@ -149,7 +149,7 @@ void SDHC1_InterruptHandler(void)
                             SDHC_EISTR_DATCRC_Msk | \
                             SDHC_EISTR_DATEND_Msk))
                 {
-                    SDHC1_ResetError (SDHC_RESET_DAT);
+                    SDHC1_ErrorReset (SDHC_RESET_DAT);
                 }
             }
             if (nistr & SDHC_NISTR_TRFC_Msk)
@@ -172,7 +172,7 @@ void SDHC1_InterruptHandler(void)
     }
 }
 
-void SDHC1_ResetError ( SDHC_RESET_TYPE resetType )
+void SDHC1_ErrorReset ( SDHC_RESET_TYPE resetType )
 {
     SDHC1_REGS->SDHC_SRR = resetType;
 
@@ -185,19 +185,19 @@ uint16_t SDHC1_GetError(void)
     return sdhc1Obj.errorStatus;
 }
 
-uint16_t SDHC1_GetCommandError(void)
+uint16_t SDHC1_CommandErrorGet(void)
 {
     return (sdhc1Obj.errorStatus & (SDHC_EISTR_CMDTEO_Msk | SDHC_EISTR_CMDCRC_Msk | \
                 SDHC_EISTR_CMDEND_Msk));
 }
 
-uint16_t SDHC1_GetDataError(void)
+uint16_t SDHC1_DataErrorGet(void)
 {
     return (sdhc1Obj.errorStatus & (SDHC_EISTR_ADMA_Msk | SDHC_EISTR_DATTEO_Msk | \
             SDHC_EISTR_DATCRC_Msk | SDHC_EISTR_DATEND_Msk));
 }
 
-void SDHC1_SetBusWidth ( SDHC_BUS_WIDTH busWidth )
+void SDHC1_BusWidthSet ( SDHC_BUS_WIDTH busWidth )
 {
     if (busWidth == SDHC_BUS_WIDTH_4_BIT)
     {
@@ -209,7 +209,7 @@ void SDHC1_SetBusWidth ( SDHC_BUS_WIDTH busWidth )
     }
 }
 
-void SDHC1_SetSpeedMode ( SDHC_SPEED_MODE speedMode )
+void SDHC1_SpeedModeSet ( SDHC_SPEED_MODE speedMode )
 {
     if (speedMode == SDHC_SPEED_MODE_HIGH)
     {
@@ -241,12 +241,12 @@ bool SDHC1_IsCardAttached ( void )
     return ((SDHC1_REGS->SDHC_PSR & SDHC_PSR_CARDINS_Msk) == SDHC_PSR_CARDINS_Msk)? true : false;
 }
 
-void SDHC1_SetBlockSize ( uint16_t blockSize )
+void SDHC1_BlockSizeSet ( uint16_t blockSize )
 {
     SDHC1_REGS->SDHC_BSR = blockSize;
 }
 
-void SDHC1_SetBlockCount ( uint16_t numBlocks )
+void SDHC1_BlockCountSet ( uint16_t numBlocks )
 {
     SDHC1_REGS->SDHC_BCR = numBlocks;
 }
@@ -261,7 +261,7 @@ void SDHC1_ClockDisable ( void )
     SDHC1_REGS->SDHC_CCR &= ~(SDHC_CCR_INTCLKEN_Msk | SDHC_CCR_SDCLKEN_Msk);
 }
 
-void SDHC1_SetupDma (
+void SDHC1_DmaSetup (
     uint8_t* buffer,
     uint32_t numBytes,
     SDHC_DATA_TRANSFER_DIR direction
@@ -311,7 +311,7 @@ void SDHC1_SetupDma (
     SDHC1_REGS->SDHC_ASAR[0] = (uint32_t)(&sdhc1DmaDescrTable[0]);
 }
 
-bool SDHC1_SetClock ( uint32_t speed)
+bool SDHC1_ClockSet ( uint32_t speed)
 {
     uint32_t baseclk_frq = 0;
     uint16_t divider = 0;
@@ -330,6 +330,10 @@ bool SDHC1_SetClock ( uint32_t speed)
     if (baseclk_frq == 0)
     {
         baseclk_frq = SDHC1_BASE_CLOCK_FREQUENCY/2;
+    }
+    else
+    {
+        baseclk_frq *= 1000000;
     }
 
     if (clkMode == SDHC_DIVIDED_CLK_MODE)
@@ -397,7 +401,7 @@ bool SDHC1_SetClock ( uint32_t speed)
     return true;
 }
 
-void SDHC1_ReadResponse (
+void SDHC1_ResponseRead (
     SDHC_READ_RESPONSE_REG respReg,
     uint32_t* response
 )
@@ -430,7 +434,7 @@ void SDHC1_ReadResponse (
     }
 }
 
-void SDHC1_SendCommand (
+void SDHC1_CommandSend (
     uint8_t opCode,
     uint32_t argument,
     uint8_t respType,
@@ -488,7 +492,7 @@ void SDHC1_SendCommand (
     if (transferFlags.isDataPresent == true)
     {
         sdhc1Obj.isDataInProgress = true;
-        SDHC1_SetTransferMode(opCode);
+        SDHC1_TransferModeSet(opCode);
         /* Enable data transfer complete and DMA interrupt */
         normalIntSigEnable |= (SDHC_NISIER_TRFC_Msk | SDHC_NISIER_DMAINT_Msk);
     }
@@ -511,7 +515,7 @@ void SDHC1_SendCommand (
     SDHC1_REGS->SDHC_CR = cmd;
 }
 
-void SDHC1_InitModule( void )
+void SDHC1_ModuleInit( void )
 {
     /* Reset module*/
     SDHC1_REGS->SDHC_SRR |= SDHC_SRR_SWRSTALL_Msk;
@@ -535,7 +539,7 @@ void SDHC1_InitModule( void )
     SDHC1_REGS->SDHC_PCR = (SDHC_PCR_SDBVSEL_3V3 | SDHC_PCR_SDBPWR_ON);
 
     /* Set initial clock to 400 KHz*/
-    SDHC1_SetClock (SDHC_CLOCK_FREQ_400_KHZ);
+    SDHC1_ClockSet (SDHC_CLOCK_FREQ_400_KHZ);
 
     /* Clear the high speed bit and set the data width to 1-bit mode */
     SDHC1_REGS->SDHC_HC1R &= ~(SDHC_HC1R_HSEN_Msk | SDHC_HC1R_DW_Msk);
@@ -546,8 +550,8 @@ void SDHC1_InitModule( void )
 
 void SDHC1_Initialize( void )
 {
-    SDHC1_InitVariables();
-    SDHC1_InitModule();
+    SDHC1_VariablesInit();
+    SDHC1_ModuleInit();
 }
 
 void SDHC1_CallbackRegister(SDHC_CALLBACK callback, uintptr_t contextHandle)
