@@ -106,7 +106,7 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SDSPI Instance 0 Initialization Data">
 
 /* SD Card Client Objects Pool */
-static DRV_SDSPI_CLIENT_OBJ drvSDSPI0ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_SDSPI_CLIENT_OBJ drvSDSPI0ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX0];
 
 /* SPI PLIB Interface Initialization for SDSPI Driver */
 const DRV_SDSPI_PLIB_INTERFACE drvSDSPI0PlibAPI = {
@@ -136,35 +136,39 @@ const uint32_t drvSDSPI0remapClockPhase[] = { 0x10000000, 0x0 };
 const DRV_SDSPI_INIT drvSDSPI0InitData =
 {
     /* SD Card SPI PLIB API interface*/
-    .spiPlib            = &drvSDSPI0PlibAPI,
+    .spiPlib                = &drvSDSPI0PlibAPI,
 
-    .remapDataBits = drvSDSPI0remapDataBits,
+    .remapDataBits          = drvSDSPI0remapDataBits,
 
-    .remapClockPolarity = drvSDSPI0remapClockPolarity,
+    .remapClockPolarity     = drvSDSPI0remapClockPolarity,
 
-    .remapClockPhase = drvSDSPI0remapClockPhase,
+    .remapClockPhase        = drvSDSPI0remapClockPhase,
 
     /* SDSPI Number of clients */
-    .numClients         = DRV_SDSPI_CLIENTS_NUMBER_IDX0,
+    .numClients             = DRV_SDSPI_CLIENTS_NUMBER_IDX0,
 
     /* SDSPI Client Objects Pool */
-    .clientObjPool      = (uintptr_t)&drvSDSPI0ClientObjPool[0],
+    .clientObjPool          = (uintptr_t)&drvSDSPI0ClientObjPool[0],
 
-    .chipSelectPin      = DRV_SDSPI_CHIP_SELECT_PIN_IDX0,
+    .chipSelectPin          = DRV_SDSPI_CHIP_SELECT_PIN_IDX0,
 
-    .sdcardSpeedHz      = DRV_SDSPI_SPEED_HZ_IDX0,
+    .sdcardSpeedHz          = DRV_SDSPI_SPEED_HZ_IDX0,
 
-    .writeProtectPin    = SYS_PORT_PIN_NONE,
+    .writeProtectPin        = SYS_PORT_PIN_NONE,
 
-    .isFsEnabled        = true,
+    .isFsEnabled            = true,
+
     /* DMA Channel for Transmit */
-    .txDMAChannel = DRV_SDSPI_XMIT_DMA_CH_IDX0,
+    .txDMAChannel           = DRV_SDSPI_XMIT_DMA_CH_IDX0,
+
     /* DMA Channel for Receive */
-    .rxDMAChannel  = DRV_SDSPI_RCV_DMA_CH_IDX0,
+    .rxDMAChannel           = DRV_SDSPI_RCV_DMA_CH_IDX0,
+
     /* SPI Transmit Register */
-    .txAddress = (void *)&(SERCOM4_REGS->SPIM.SERCOM_DATA),
+    .txAddress              = (void *)&(SERCOM4_REGS->SPIM.SERCOM_DATA),
+
     /* SPI Receive Register */
-    .rxAddress  = (void *)&(SERCOM4_REGS->SPIM.SERCOM_DATA),
+    .rxAddress              = (void *)&(SERCOM4_REGS->SPIM.SERCOM_DATA),
 };
 
 // </editor-fold>
@@ -262,8 +266,6 @@ void SYS_Initialize ( void* data )
 
 	BSP_Initialize();
 
-    NVIC_Initialize();
-
     /* Initialize SDSPI0 Driver Instance */
     sysObj.drvSDSPI0 = DRV_SDSPI_Initialize(DRV_SDSPI_INDEX_0, (SYS_MODULE_INIT *)&drvSDSPI0InitData);
 
@@ -277,7 +279,8 @@ void SYS_Initialize ( void* data )
     APP_Initialize();
 
 
-  
+    NVIC_Initialize();
+
 }
 
 
