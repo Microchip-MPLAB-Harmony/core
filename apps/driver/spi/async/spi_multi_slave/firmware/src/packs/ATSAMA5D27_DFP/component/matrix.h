@@ -1,7 +1,7 @@
 /**
  * \brief Component description for MATRIX
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_MATRIX_COMPONENT_H_
 #define _SAMA5D2_MATRIX_COMPONENT_H_
 
@@ -315,16 +315,6 @@
 #define MATRIX_WPSR_Msk                       _U_(0x00FFFF01)                                      /**< (MATRIX_WPSR) Register Mask  */
 
 
-/* -------- MATRIX_VERSION : (MATRIX Offset: 0x1FC) ( R/ 32) Version Register -------- */
-#define MATRIX_VERSION_VERSION_Pos            _U_(0)                                               /**< (MATRIX_VERSION) Version of the Hardware Module Position */
-#define MATRIX_VERSION_VERSION_Msk            (_U_(0xFFF) << MATRIX_VERSION_VERSION_Pos)           /**< (MATRIX_VERSION) Version of the Hardware Module Mask */
-#define MATRIX_VERSION_VERSION(value)         (MATRIX_VERSION_VERSION_Msk & ((value) << MATRIX_VERSION_VERSION_Pos))
-#define MATRIX_VERSION_MFN_Pos                _U_(16)                                              /**< (MATRIX_VERSION) Metal Fix Number Position */
-#define MATRIX_VERSION_MFN_Msk                (_U_(0x7) << MATRIX_VERSION_MFN_Pos)                 /**< (MATRIX_VERSION) Metal Fix Number Mask */
-#define MATRIX_VERSION_MFN(value)             (MATRIX_VERSION_MFN_Msk & ((value) << MATRIX_VERSION_MFN_Pos))
-#define MATRIX_VERSION_Msk                    _U_(0x00070FFF)                                      /**< (MATRIX_VERSION) Register Mask  */
-
-
 /* -------- MATRIX_SSR : (MATRIX Offset: 0x200) (R/W 32) Security Slave 0 Register -------- */
 #define MATRIX_SSR_LANSECH0_Pos               _U_(0)                                               /**< (MATRIX_SSR) Low Area Non-secured in HSELx Security Region Position */
 #define MATRIX_SSR_LANSECH0_Msk               (_U_(0x1) << MATRIX_SSR_LANSECH0_Pos)                /**< (MATRIX_SSR) Low Area Non-secured in HSELx Security Region Mask */
@@ -581,7 +571,6 @@
 #define MATRIX_MEAR_REG_OFST           (0x160)             /**< (MATRIX_MEAR) Master 0 Error Address Register Offset */
 #define MATRIX_WPMR_REG_OFST           (0x1E4)             /**< (MATRIX_WPMR) Write Protection Mode Register Offset */
 #define MATRIX_WPSR_REG_OFST           (0x1E8)             /**< (MATRIX_WPSR) Write Protection Status Register Offset */
-#define MATRIX_VERSION_REG_OFST        (0x1FC)             /**< (MATRIX_VERSION) Version Register Offset */
 #define MATRIX_SSR_REG_OFST            (0x200)             /**< (MATRIX_SSR) Security Slave 0 Register Offset */
 #define MATRIX_SASSR_REG_OFST          (0x240)             /**< (MATRIX_SASSR) Security Areas Split Slave 0 Register Offset */
 #define MATRIX_SRTSR_REG_OFST          (0x284)             /**< (MATRIX_SRTSR) Security Region Top Slave 1 Register Offset */
@@ -614,8 +603,7 @@ typedef struct
   __I   uint8_t                        Reserved4[0x54];
   __IO  uint32_t                       MATRIX_WPMR;        /**< Offset: 0x1E4 (R/W  32) Write Protection Mode Register */
   __I   uint32_t                       MATRIX_WPSR;        /**< Offset: 0x1E8 (R/   32) Write Protection Status Register */
-  __I   uint8_t                        Reserved5[0x10];
-  __I   uint32_t                       MATRIX_VERSION;     /**< Offset: 0x1FC (R/   32) Version Register */
+  __I   uint8_t                        Reserved5[0x14];
   __IO  uint32_t                       MATRIX_SSR[15];     /**< Offset: 0x200 (R/W  32) Security Slave 0 Register */
   __I   uint8_t                        Reserved6[0x04];
   __IO  uint32_t                       MATRIX_SASSR[15];   /**< Offset: 0x240 (R/W  32) Security Areas Split Slave 0 Register */

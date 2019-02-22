@@ -1,7 +1,7 @@
 /**
  * \brief Component description for TC
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_TC_COMPONENT_H_
 #define _SAMA5D2_TC_COMPONENT_H_
 
@@ -635,16 +635,6 @@
 #define TC_WPMR_Msk                           _U_(0xFFFFFF01)                                      /**< (TC_WPMR) Register Mask  */
 
 
-/* -------- TC_VER : (TC Offset: 0xFC) ( R/ 32) Version Register -------- */
-#define TC_VER_VERSION_Pos                    _U_(0)                                               /**< (TC_VER) Version of the Hardware Module Position */
-#define TC_VER_VERSION_Msk                    (_U_(0xFFF) << TC_VER_VERSION_Pos)                   /**< (TC_VER) Version of the Hardware Module Mask */
-#define TC_VER_VERSION(value)                 (TC_VER_VERSION_Msk & ((value) << TC_VER_VERSION_Pos))
-#define TC_VER_MFN_Pos                        _U_(16)                                              /**< (TC_VER) Metal Fix Number Position */
-#define TC_VER_MFN_Msk                        (_U_(0x7) << TC_VER_MFN_Pos)                         /**< (TC_VER) Metal Fix Number Mask */
-#define TC_VER_MFN(value)                     (TC_VER_MFN_Msk & ((value) << TC_VER_MFN_Pos))      
-#define TC_VER_Msk                            _U_(0x00070FFF)                                      /**< (TC_VER) Register Mask  */
-
-
 /** \brief TC register offsets definitions */
 #define TC_CCR_REG_OFST                (0x00)              /**< (TC_CCR) Channel Control Register Offset */
 #define TC_CMR_REG_OFST                (0x04)              /**< (TC_CMR) Channel Mode Register Offset */
@@ -667,7 +657,6 @@
 #define TC_QISR_REG_OFST               (0xD4)              /**< (TC_QISR) QDEC Interrupt Status Register Offset */
 #define TC_FMR_REG_OFST                (0xD8)              /**< (TC_FMR) Fault Mode Register Offset */
 #define TC_WPMR_REG_OFST               (0xE4)              /**< (TC_WPMR) Write Protection Mode Register Offset */
-#define TC_VER_REG_OFST                (0xFC)              /**< (TC_VER) Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief TC_CHANNEL register API structure */
@@ -704,8 +693,6 @@ typedef struct
   __IO  uint32_t                       TC_FMR;             /**< Offset: 0xD8 (R/W  32) Fault Mode Register */
   __I   uint8_t                        Reserved1[0x08];
   __IO  uint32_t                       TC_WPMR;            /**< Offset: 0xE4 (R/W  32) Write Protection Mode Register */
-  __I   uint8_t                        Reserved2[0x14];
-  __I   uint32_t                       TC_VER;             /**< Offset: 0xFC (R/   32) Version Register */
 } tc_registers_t;
 
 

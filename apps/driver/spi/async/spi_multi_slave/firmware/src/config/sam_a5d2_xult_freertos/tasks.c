@@ -58,22 +58,31 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
+/* Handle for the APP_EEPROM1_Tasks. */
+TaskHandle_t xAPP_EEPROM1_Tasks;
+
 void _APP_EEPROM1_Tasks(  void *pvParameters  )
 {
     while(1)
     {
         APP_EEPROM1_Tasks();
-        vTaskDelay(50 / portTICK_PERIOD_MS);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
+/* Handle for the APP_EEPROM2_Tasks. */
+TaskHandle_t xAPP_EEPROM2_Tasks;
+
 void _APP_EEPROM2_Tasks(  void *pvParameters  )
 {
     while(1)
     {
         APP_EEPROM2_Tasks();
-        vTaskDelay(50 / portTICK_PERIOD_MS);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
+/* Handle for the APP_MONITOR_Tasks. */
+TaskHandle_t xAPP_MONITOR_Tasks;
+
 void _APP_MONITOR_Tasks(  void *pvParameters  )
 {
     while(1)
@@ -117,7 +126,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 1,
-                NULL);
+                &xAPP_EEPROM1_Tasks);
 
     /* Create OS Thread for APP_EEPROM2_Tasks. */
     xTaskCreate((TaskFunction_t) _APP_EEPROM2_Tasks,
@@ -125,7 +134,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 1,
-                NULL);
+                &xAPP_EEPROM2_Tasks);
 
     /* Create OS Thread for APP_MONITOR_Tasks. */
     xTaskCreate((TaskFunction_t) _APP_MONITOR_Tasks,
@@ -133,7 +142,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 1,
-                NULL);
+                &xAPP_MONITOR_Tasks);
 
 
 

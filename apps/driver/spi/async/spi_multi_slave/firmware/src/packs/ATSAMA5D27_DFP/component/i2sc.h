@@ -1,7 +1,7 @@
 /**
  * \brief Component description for I2SC
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_I2SC_COMPONENT_H_
 #define _SAMA5D2_I2SC_COMPONENT_H_
 
@@ -260,10 +260,6 @@
 #define I2SC_THR_Msk                          _U_(0xFFFFFFFF)                                      /**< (I2SC_THR) Register Mask  */
 
 
-/* -------- I2SC_VERSION : (I2SC Offset: 0x28) ( R/ 32) Version Register -------- */
-#define I2SC_VERSION_Msk                      _U_(0x00000000)                                      /**< (I2SC_VERSION) Register Mask  */
-
-
 /** \brief I2SC register offsets definitions */
 #define I2SC_CR_REG_OFST               (0x00)              /**< (I2SC_CR) Control Register Offset */
 #define I2SC_MR_REG_OFST               (0x04)              /**< (I2SC_MR) Mode Register Offset */
@@ -275,7 +271,6 @@
 #define I2SC_IMR_REG_OFST              (0x1C)              /**< (I2SC_IMR) Interrupt Mask Register Offset */
 #define I2SC_RHR_REG_OFST              (0x20)              /**< (I2SC_RHR) Receiver Holding Register Offset */
 #define I2SC_THR_REG_OFST              (0x24)              /**< (I2SC_THR) Transmitter Holding Register Offset */
-#define I2SC_VERSION_REG_OFST          (0x28)              /**< (I2SC_VERSION) Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief I2SC register API structure */
@@ -291,7 +286,6 @@ typedef struct
   __I   uint32_t                       I2SC_IMR;           /**< Offset: 0x1C (R/   32) Interrupt Mask Register */
   __I   uint32_t                       I2SC_RHR;           /**< Offset: 0x20 (R/   32) Receiver Holding Register */
   __O   uint32_t                       I2SC_THR;           /**< Offset: 0x24 ( /W  32) Transmitter Holding Register */
-  __I   uint32_t                       I2SC_VERSION;       /**< Offset: 0x28 (R/   32) Version Register */
 } i2sc_registers_t;
 
 

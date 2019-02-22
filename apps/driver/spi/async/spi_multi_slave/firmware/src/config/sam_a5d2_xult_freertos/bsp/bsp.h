@@ -60,22 +60,25 @@
 // Section: BSP Macros
 // *****************************************************************************
 // *****************************************************************************
-/*** LED Macros for LED1 ***/
-#define LED1_Toggle() (PIOB_REGS->PIO_ODSR ^= (1<<6))
-#define LED1_On() (PIOB_REGS->PIO_CODR = (1<<6))
-#define LED1_Off() (PIOB_REGS->PIO_SODR = (1<<6))
-/*** LED Macros for LED2 ***/
-#define LED2_Toggle() (PIOB_REGS->PIO_ODSR ^= (1<<5))
-#define LED2_On() (PIOB_REGS->PIO_CODR = (1<<5))
-#define LED2_Off() (PIOB_REGS->PIO_SODR = (1<<5))
-/*** LED Macros for LED3 ***/
-#define LED3_Toggle() (PIOB_REGS->PIO_ODSR ^= (1<<0))
-#define LED3_On() (PIOB_REGS->PIO_CODR = (1<<0))
-#define LED3_Off() (PIOB_REGS->PIO_SODR = (1<<0))
-/*** SWITCH Macros for SWITCH ***/
-#define SWITCH_Get() ((PIOB_REGS->PIO_PDSR >> 9) & 0x1)
-#define SWITCH_STATE_PRESSED 0
-#define SWITCH_STATE_RELEASED 1
+/*** LED Macros for LED_GREEN ***/
+#define LED_GREEN_Toggle() do { PIOB_REGS->PIO_MSKR = (1<<5); (PIOB_REGS->PIO_ODSR ^= (1<<5)); } while (0)
+#define LED_GREEN_Get() ((PIOB_REGS->PIO_PDSR >> 5) & 0x1)
+#define LED_GREEN_On() (PIOB_REGS->PIO_CODR = (1<<5))
+#define LED_GREEN_Off() (PIOB_REGS->PIO_SODR = (1<<5))
+/*** LED Macros for LED_RED ***/
+#define LED_RED_Toggle() do { PIOB_REGS->PIO_MSKR = (1<<6); (PIOB_REGS->PIO_ODSR ^= (1<<6)); } while (0)
+#define LED_RED_Get() ((PIOB_REGS->PIO_PDSR >> 6) & 0x1)
+#define LED_RED_On() (PIOB_REGS->PIO_CODR = (1<<6))
+#define LED_RED_Off() (PIOB_REGS->PIO_SODR = (1<<6))
+/*** LED Macros for LED_BLUE ***/
+#define LED_BLUE_Toggle() do { PIOB_REGS->PIO_MSKR = (1<<0); (PIOB_REGS->PIO_ODSR ^= (1<<0)); } while (0)
+#define LED_BLUE_Get() ((PIOB_REGS->PIO_PDSR >> 0) & 0x1)
+#define LED_BLUE_On() (PIOB_REGS->PIO_CODR = (1<<0))
+#define LED_BLUE_Off() (PIOB_REGS->PIO_SODR = (1<<0))
+/*** SWITCH Macros for PB_USER ***/
+#define PB_USER_Get() ((PIOB_REGS->PIO_PDSR >> 9) & 0x1)
+#define PB_USER_STATE_PRESSED 0
+#define PB_USER_STATE_RELEASED 1
 
 
 

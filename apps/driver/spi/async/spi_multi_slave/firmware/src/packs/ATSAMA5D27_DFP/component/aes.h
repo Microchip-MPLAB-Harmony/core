@@ -1,7 +1,7 @@
 /**
  * \brief Component description for AES
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_AES_COMPONENT_H_
 #define _SAMA5D2_AES_COMPONENT_H_
 
@@ -318,16 +318,6 @@
 #define AES_ALPHAR_Msk                        _U_(0xFFFFFFFF)                                      /**< (AES_ALPHAR) Register Mask  */
 
 
-/* -------- AES_VERSION : (AES Offset: 0xFC) ( R/ 32) Version Register -------- */
-#define AES_VERSION_VERSION_Pos               _U_(0)                                               /**< (AES_VERSION) Version of the Hardware Module Position */
-#define AES_VERSION_VERSION_Msk               (_U_(0xFFF) << AES_VERSION_VERSION_Pos)              /**< (AES_VERSION) Version of the Hardware Module Mask */
-#define AES_VERSION_VERSION(value)            (AES_VERSION_VERSION_Msk & ((value) << AES_VERSION_VERSION_Pos))
-#define AES_VERSION_MFN_Pos                   _U_(16)                                              /**< (AES_VERSION) Metal Fix Number Position */
-#define AES_VERSION_MFN_Msk                   (_U_(0x7) << AES_VERSION_MFN_Pos)                    /**< (AES_VERSION) Metal Fix Number Mask */
-#define AES_VERSION_MFN(value)                (AES_VERSION_MFN_Msk & ((value) << AES_VERSION_MFN_Pos))
-#define AES_VERSION_Msk                       _U_(0x00070FFF)                                      /**< (AES_VERSION) Register Mask  */
-
-
 /** \brief AES register offsets definitions */
 #define AES_CR_REG_OFST                (0x00)              /**< (AES_CR) Control Register Offset */
 #define AES_MR_REG_OFST                (0x04)              /**< (AES_MR) Mode Register Offset */
@@ -349,7 +339,6 @@
 #define AES_BCNT_REG_OFST              (0xB4)              /**< (AES_BCNT) Byte Counter Register Offset */
 #define AES_TWR_REG_OFST               (0xC0)              /**< (AES_TWR) Tweak Word Register Offset */
 #define AES_ALPHAR_REG_OFST            (0xD0)              /**< (AES_ALPHAR) Alpha Word Register Offset */
-#define AES_VERSION_REG_OFST           (0xFC)              /**< (AES_VERSION) Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief AES register API structure */
@@ -378,8 +367,6 @@ typedef struct
   __I   uint8_t                        Reserved3[0x08];
   __IO  uint32_t                       AES_TWR[4];         /**< Offset: 0xC0 (R/W  32) Tweak Word Register */
   __O   uint32_t                       AES_ALPHAR[4];      /**< Offset: 0xD0 ( /W  32) Alpha Word Register */
-  __I   uint8_t                        Reserved4[0x1C];
-  __I   uint32_t                       AES_VERSION;        /**< Offset: 0xFC (R/   32) Version Register */
 } aes_registers_t;
 
 

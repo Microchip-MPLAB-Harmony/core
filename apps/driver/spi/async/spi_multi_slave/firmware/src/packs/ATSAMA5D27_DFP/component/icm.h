@@ -1,7 +1,7 @@
 /**
  * \brief Component description for ICM
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_ICM_COMPONENT_H_
 #define _SAMA5D2_ICM_COMPONENT_H_
 
@@ -241,16 +241,6 @@
 #define ICM_UIHVAL_Msk                        _U_(0xFFFFFFFF)                                      /**< (ICM_UIHVAL) Register Mask  */
 
 
-/* -------- ICM_VERSION : (ICM Offset: 0xFC) ( R/ 32) Version Register -------- */
-#define ICM_VERSION_VERSION_Pos               _U_(0)                                               /**< (ICM_VERSION) Version of the Hardware Module Position */
-#define ICM_VERSION_VERSION_Msk               (_U_(0xFFF) << ICM_VERSION_VERSION_Pos)              /**< (ICM_VERSION) Version of the Hardware Module Mask */
-#define ICM_VERSION_VERSION(value)            (ICM_VERSION_VERSION_Msk & ((value) << ICM_VERSION_VERSION_Pos))
-#define ICM_VERSION_MFN_Pos                   _U_(16)                                              /**< (ICM_VERSION) Metal Fix Number Position */
-#define ICM_VERSION_MFN_Msk                   (_U_(0x7) << ICM_VERSION_MFN_Pos)                    /**< (ICM_VERSION) Metal Fix Number Mask */
-#define ICM_VERSION_MFN(value)                (ICM_VERSION_MFN_Msk & ((value) << ICM_VERSION_MFN_Pos))
-#define ICM_VERSION_Msk                       _U_(0x00070FFF)                                      /**< (ICM_VERSION) Register Mask  */
-
-
 /** \brief ICM register offsets definitions */
 #define ICM_CFG_REG_OFST               (0x00)              /**< (ICM_CFG) Configuration Register Offset */
 #define ICM_CTRL_REG_OFST              (0x04)              /**< (ICM_CTRL) Control Register Offset */
@@ -263,7 +253,6 @@
 #define ICM_DSCR_REG_OFST              (0x30)              /**< (ICM_DSCR) Region Descriptor Area Start Address Register Offset */
 #define ICM_HASH_REG_OFST              (0x34)              /**< (ICM_HASH) Region Hash Area Start Address Register Offset */
 #define ICM_UIHVAL_REG_OFST            (0x38)              /**< (ICM_UIHVAL) User Initial Hash Value 0 Register Offset */
-#define ICM_VERSION_REG_OFST           (0xFC)              /**< (ICM_VERSION) Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief ICM register API structure */
@@ -282,8 +271,6 @@ typedef struct
   __IO  uint32_t                       ICM_DSCR;           /**< Offset: 0x30 (R/W  32) Region Descriptor Area Start Address Register */
   __IO  uint32_t                       ICM_HASH;           /**< Offset: 0x34 (R/W  32) Region Hash Area Start Address Register */
   __O   uint32_t                       ICM_UIHVAL[8];      /**< Offset: 0x38 ( /W  32) User Initial Hash Value 0 Register */
-  __I   uint8_t                        Reserved3[0xA4];
-  __I   uint32_t                       ICM_VERSION;        /**< Offset: 0xFC (R/   32) Version Register */
 } icm_registers_t;
 
 

@@ -1,7 +1,7 @@
 /**
  * \brief Component description for RXLP
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_RXLP_COMPONENT_H_
 #define _SAMA5D2_RXLP_COMPONENT_H_
 
@@ -101,16 +101,6 @@
 #define RXLP_WPMR_Msk                         _U_(0xFFFFFF01)                                      /**< (RXLP_WPMR) Register Mask  */
 
 
-/* -------- RXLP_VERSION : (RXLP Offset: 0xFC) ( R/ 32) Version Register -------- */
-#define RXLP_VERSION_VERSION_Pos              _U_(0)                                               /**< (RXLP_VERSION) Hardware Module Version Position */
-#define RXLP_VERSION_VERSION_Msk              (_U_(0xFFF) << RXLP_VERSION_VERSION_Pos)             /**< (RXLP_VERSION) Hardware Module Version Mask */
-#define RXLP_VERSION_VERSION(value)           (RXLP_VERSION_VERSION_Msk & ((value) << RXLP_VERSION_VERSION_Pos))
-#define RXLP_VERSION_MFN_Pos                  _U_(16)                                              /**< (RXLP_VERSION) Metal Fix Number Position */
-#define RXLP_VERSION_MFN_Msk                  (_U_(0x7) << RXLP_VERSION_MFN_Pos)                   /**< (RXLP_VERSION) Metal Fix Number Mask */
-#define RXLP_VERSION_MFN(value)               (RXLP_VERSION_MFN_Msk & ((value) << RXLP_VERSION_MFN_Pos))
-#define RXLP_VERSION_Msk                      _U_(0x00070FFF)                                      /**< (RXLP_VERSION) Register Mask  */
-
-
 /** \brief RXLP register offsets definitions */
 #define RXLP_CR_REG_OFST               (0x00)              /**< (RXLP_CR) Control Register Offset */
 #define RXLP_MR_REG_OFST               (0x04)              /**< (RXLP_MR) Mode Register Offset */
@@ -118,7 +108,6 @@
 #define RXLP_BRGR_REG_OFST             (0x20)              /**< (RXLP_BRGR) Baud Rate Generator Register Offset */
 #define RXLP_CMPR_REG_OFST             (0x24)              /**< (RXLP_CMPR) Comparison Register Offset */
 #define RXLP_WPMR_REG_OFST             (0xE4)              /**< (RXLP_WPMR) Write Protection Mode Register Offset */
-#define RXLP_VERSION_REG_OFST          (0xFC)              /**< (RXLP_VERSION) Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief RXLP register API structure */
@@ -133,8 +122,6 @@ typedef struct
   __IO  uint32_t                       RXLP_CMPR;          /**< Offset: 0x24 (R/W  32) Comparison Register */
   __I   uint8_t                        Reserved3[0xBC];
   __IO  uint32_t                       RXLP_WPMR;          /**< Offset: 0xE4 (R/W  32) Write Protection Mode Register */
-  __I   uint8_t                        Reserved4[0x14];
-  __I   uint32_t                       RXLP_VERSION;       /**< Offset: 0xFC (R/   32) Version Register */
 } rxlp_registers_t;
 
 

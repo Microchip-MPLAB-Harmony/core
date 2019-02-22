@@ -142,9 +142,11 @@ void SYS_INT_Enable( void );
     Disable Global Interrupt
 
    Description:
-    This function disables global interrupt and returns the state of the global interrupt prior to disabling it.
-    When global interrupt is disabled, only NMI and HardFault exceptions are allowed.
-    This may be used to disable global interrupt during critial section and restore the global interrupt state after the critial section.
+    This function disables global interrupt and returns the state of the global
+    interrupt prior to disabling it. When global interrupt is disabled, only
+    NMI and HardFault exceptions are allowed. This may be used to disable global
+    interrupt during critical section and restore the global interrupt state
+    after the critical section.
 
    Precondition:
     None.
@@ -153,10 +155,12 @@ void SYS_INT_Enable( void );
     None.
 
    Returns:
-    This function disables the global interrupt and return the state of global interrupt prior to disabling it.
-    The state information will be used to restore the global interrput to the original state after the critical section
-    true -  Global Interrupt is enabled
-    false -  Global Interrupt is disabled
+    This function disables the global interrupt and return the state of global
+    interrupt prior to disabling it. The state information will be used to
+    restore the global interrupt to the original state after the critical
+    section.
+    - true -  Global Interrupt is enabled
+    - false -  Global Interrupt is disabled
 
   Example:
     <code>
@@ -173,7 +177,7 @@ void SYS_INT_Enable( void );
 
   Remarks:
     Returned status can be passed to SYS_INT_Restore to restore the previous
-       global interrupt status (whether it was enabled or disabled).
+    global interrupt status (whether it was enabled or disabled).
 */
 
 bool SYS_INT_Disable( void );
@@ -196,8 +200,8 @@ bool SYS_INT_Disable( void );
     None.
 
    Returns:
-    true - Global Interrupt is enabled.
-    false - Gloable Interrupt is disabled.
+    - true - Global Interrupt is enabled.
+    - false - Gloable Interrupt is disabled.
 
   Example:
     <code>
@@ -228,8 +232,8 @@ bool SYS_INT_IsEnabled( void );
     SYS_INT_Disable must have been called to get previous state of the global interrupt.
 
    Parameters:
-    true -  Enable Global Interrupt
-    false -  Disable Global Interrupt
+    - true -  Enable Global Interrupt
+    - false -  Disable Global Interrupt
 
    Returns:
     None.
@@ -280,11 +284,10 @@ void SYS_INT_Restore( bool state );
     </code>
 
   Remarks:
-    The corresponding module level interrupts must be enabled
-       to trigger the specified interrupt source/line. For example, USART0
-       interrupt enable at interrupt controller level is not triggered unless
-       USART0 module level interrupt for TXRDY or RXRDY or Error interrupts are not
-       enabled.
+    The corresponding module level interrupts must be enabled to trigger the
+    specified interrupt source/line. For example, USART0 interrupt enable at
+    interrupt controller level is not triggered unless USART0 module level
+    interrupt for TXRDY or RXRDY or Error interrupts are not enabled.
 */
 
 void SYS_INT_SourceEnable( INT_SOURCE source );
@@ -299,8 +302,8 @@ void SYS_INT_SourceEnable( INT_SOURCE source );
 
    Description:
     This function returns the current interrupt enable/disable status and
-       disables the specified interrupt source/line at the interrupt controller
-       level.
+    disables the specified interrupt source/line at the interrupt controller
+    level.
 
    Precondition:
     None.
@@ -309,23 +312,63 @@ void SYS_INT_SourceEnable( INT_SOURCE source );
     source - Interrupt source/line available at interrupt controller.
 
    Returns:
-    true - Interrupt line was enabled.
-       false - Interrupt line was disabled.
+    - true - Interrupt line was enabled.
+    - false - Interrupt line was disabled.
 
   Example:
     <code>
-       bool usart0Int = false;
-    usart0Int = SYS_INT_SourceDisable(USART0_IRQn);
+        bool usart0Int = false;
+        usart0Int = SYS_INT_SourceDisable(USART0_IRQn);
     </code>
 
   Remarks:
     If the corresponding module level interrupts are enabled and triggered,
-       the triggers will be ignored at interrupt controller. For example, USART0
-       doesn't cause interrupt unless both the interrupt controller source/line and
-       USART0 module level interrupt for TX or RX or Error are enabled.
+    the triggers will be ignored at interrupt controller. For example, USART0
+    doesn't cause interrupt unless both the interrupt controller source/line and
+    USART0 module level interrupt for TX or RX or Error are enabled.
 */
 
 bool SYS_INT_SourceDisable( INT_SOURCE source );
+
+
+// *****************************************************************************
+/* Function:
+    void SYS_INT_SourceRestore( INT_SOURCE source, bool state )
+
+   Summary:
+    Restores an interrupt vector to the state specified in the parameter.
+
+   Description:
+    This function restores the interrupt vector to the state specified in the parameters.
+
+   Precondition:
+    SYS_INT_SourceDisable must have been called previously to get the state value.
+
+   Parameters:
+    - true -  Enable Interrupt Vector
+    - false - Disable Interrupt Vector
+
+   Returns:
+    None.
+
+  Example:
+    <code>
+      bool aState;
+
+      // Save interrupt vector state and disable interrupt
+      aState = SYS_INT_SourceDisable( aSrcId );
+
+      // Critical Section
+
+      // Restore interrupt vector state
+      SYS_INT_SourceRestore( aSrcId, aState )
+    </code>
+
+  Remarks:
+    None.
+*/
+
+void SYS_INT_SourceRestore( INT_SOURCE source, bool aState );
 
 
 // *****************************************************************************
@@ -337,7 +380,7 @@ bool SYS_INT_SourceDisable( INT_SOURCE source );
 
    Description:
     This function returns the enable/disable status of the specified interrupt
-       source/line at the interrupt controller level.
+    source/line at the interrupt controller level.
 
    Precondition:
     None.
@@ -346,8 +389,8 @@ bool SYS_INT_SourceDisable( INT_SOURCE source );
     source - Interrupt source/line available at interrupt controller.
 
    Returns:
-    true - Interrupt line is enabled.
-       false - Interrupt line is disabled.
+    - true - Interrupt line is enabled.
+    - false - Interrupt line is disabled.
 
   Example:
     <code>
@@ -357,7 +400,7 @@ bool SYS_INT_SourceDisable( INT_SOURCE source );
 
   Remarks:
     Unlike SYS_INT_Disable, this function just returns the status and doesn't
-       disable the interrupt line.
+    disable the interrupt line.
 */
 
 bool SYS_INT_SourceIsEnabled( INT_SOURCE source );
@@ -372,7 +415,7 @@ bool SYS_INT_SourceIsEnabled( INT_SOURCE source );
 
    Description:
     This function returns the pending status of the specified interrupt source
-       at the interrupt controller level.
+    at the interrupt controller level.
 
    Precondition:
     None.
@@ -381,8 +424,8 @@ bool SYS_INT_SourceIsEnabled( INT_SOURCE source );
     source - Interrupt source/line available at interrupt controller.
 
    Returns:
-    true - Interrupt status is pending.
-       false - Interrupt status is not pending.
+    - true - Interrupt status is pending.
+    - false - Interrupt status is not pending.
 
   Example:
     <code>
@@ -391,7 +434,7 @@ bool SYS_INT_SourceIsEnabled( INT_SOURCE source );
 
   Remarks:
     Interrupt pending status may get cleared automatically once the
-       corresponding interrupt vector executes on some devices.
+    corresponding interrupt vector executes on some devices.
 */
 
 bool SYS_INT_SourceStatusGet( INT_SOURCE source );
@@ -406,9 +449,9 @@ bool SYS_INT_SourceStatusGet( INT_SOURCE source );
 
    Description:
     This function manually sets the pending status of the specified interrupt
-       source at the interrupt controller level. This triggers interrupt controller
-       for a specified source even though the interrupt condition has not met at
-       hardware.
+    source at the interrupt controller level. This triggers interrupt controller
+    for a specified source even though the interrupt condition has not met at
+    hardware.
 
    Precondition:
     None.
@@ -440,9 +483,9 @@ void SYS_INT_SourceStatusSet( INT_SOURCE source );
     Clears the pending status of the specified interrupt source.
 
    Description:
-    This function clears the pending status of the specified interrupt
-       source at the interrupt controller level.  It is ignored if the
-       interrupt condition has already been cleared in hardware.
+    This function clears the pending status of the specified interrupt source
+    at the interrupt controller level. It is ignored if the interrupt condition
+    has already been cleared in hardware.
 
    Precondition:
     None.

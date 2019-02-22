@@ -191,7 +191,7 @@ void APP_EEPROM1_Tasks ( void )
             app_eeprom1Data.setup.clockPhase = DRV_SPI_CLOCK_PHASE_VALID_LEADING_EDGE;
             app_eeprom1Data.setup.clockPolarity = DRV_SPI_CLOCK_POLARITY_IDLE_LOW;
             app_eeprom1Data.setup.dataBits = DRV_SPI_DATA_BITS_8;
-            app_eeprom1Data.setup.chipSelect = APP_EEPROM1_CS_PIN;
+            app_eeprom1Data.setup.chipSelect = (SYS_PORT_PIN)APP_EEPROM1_CS_PIN;
             app_eeprom1Data.setup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;
         
             app_eeprom1Data.state = APP_EEPROM1_STATE_DRIVER_SETUP;
