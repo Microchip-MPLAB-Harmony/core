@@ -14,6 +14,16 @@
         <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5</path>
         <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\Include</path>
     </includePath>
+    <asmIncludePath>
+        <path>$PROJ_DIR$\..\..\firmware\src</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\config\sam_a5d2_xult_freertos</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\packs\ATSAMA5D27_DFP</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS\CMSIS\Core_A\Include</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\arm</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\Include</path>
+    </asmIncludePath>
     <linkerFile>
         <override>true</override>
         <path>$PROJ_DIR$\..\..\firmware\src\config\sam_a5d2_xult_freertos\ddr.icf</path>
@@ -24,25 +34,27 @@
             <path>\driver\mx25l\src\drv_mx25l_local.h</path>
             <path>\driver\mx25l\drv_mx25l_definitions.h</path>
             <path>\peripheral\pit\plib_pit.h</path>
-            <path>\..\..\arm\toolchain_specifics.h</path>
+            <path>\device_cache.h</path>
+            <path>\toolchain_specifics.h</path>
             <path>\definitions.h</path>
             <path>\peripheral\mmu\plib_mmu.h</path>
             <path>\peripheral\matrix\plib_matrix.h</path>
             <path>\peripheral\l2cc\plib_l2cc.h</path>
             <path>\peripheral\clk\plib_clk.h</path>
             <path>\peripheral\pio\plib_pio.h</path>
-            <path>\peripheral\pio\plib_pio_pin.h</path>
             <path>\peripheral\aic\plib_aic.h</path>
+            <path>\driver\memory\src\drv_memory_local.h</path>
             <path>\peripheral\tc\plib_tc0.h</path>
             <path>\peripheral\tc\plib_tc_common.h</path>
             <path>\system\time\sys_time.h</path>
             <path>\system\time\sys_time_definitions.h</path>
+            <path>\system\time\src\sys_time_local.h</path>
             <path>\driver\memory\drv_memory.h</path>
             <path>\driver\memory\drv_memory_definitions.h</path>
-            <path>\driver\memory\src\drv_memory_local.h</path>
             <path>\peripheral\qspi\plib_qspi_common.h</path>
             <path>\peripheral\qspi\plib_qspi0.h</path>
             <path>\bsp\bsp.h</path>
+            <path>\..\..\packs\ATSAMA5D27_DFP\device.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\acc.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\adc.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\aes.h</path>
@@ -92,7 +104,6 @@
             <path>\..\..\packs\ATSAMA5D27_DFP\component\uhphs.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\wdt.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\xdmac.h</path>
-            <path>\..\..\packs\ATSAMA5D27_DFP\device.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\atsama5d27.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\pio\sama5d27.h</path>
             <path>\peripheral\spi\plib_spi_common.h</path>
@@ -105,8 +116,6 @@
             <path>\..\..\packs\CMSIS\CMSIS\DSP\Include\arm_common_tables.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\DSP\Include\arm_const_structs.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\DSP\Include\arm_math.h</path>
-            <path>\driver\spi_flash\at25df\drv_at25df.h</path>
-            <path>\driver\spi_flash\at25df\drv_at25df_definitions.h</path>
             <path>\FreeRTOSConfig.h</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\include\croutine.h</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\include\event_groups.h</path>
@@ -126,6 +135,8 @@
             <path>\..\..\third_party\rtos\FreeRTOS\Source\include\message_buffer.h</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portASM.h</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portmacro.h</path>
+            <path>\driver\spi_flash\at25df\drv_at25df.h</path>
+            <path>\driver\spi_flash\at25df\drv_at25df_definitions.h</path>
             <path>\driver\driver.h</path>
             <path>\driver\driver_common.h</path>
             <path>\system\system.h</path>
@@ -136,6 +147,7 @@
             <path>\system\int\sys_int_mapping.h</path>
             <path>\system\ports\sys_ports.h</path>
             <path>\system\ports\sys_ports_mapping.h</path>
+            <path>\system\cache\sys_cache.h</path>
             <path>\osal\osal.h</path>
             <path>\osal\osal_definitions.h</path>
             <path>\osal\osal_freertos.h</path>
@@ -151,8 +163,8 @@
             <path>\..\..\main.c</path>
             <path>\initialization.c</path>
             <path>\interrupts.c</path>
-            <path>\stdio\iar_monitor.c</path>
             <path>\exceptions.c</path>
+            <path>\stdio\iar_monitor.c</path>
             <path>\peripheral\mmu\plib_mmu.c</path>
             <path>\peripheral\matrix\plib_matrix.c</path>
             <path>\peripheral\l2cc\plib_l2cc.c</path>
@@ -161,15 +173,12 @@
             <path>\peripheral\aic\plib_aic.c</path>
             <path>\cstartup.s</path>
             <path>\vectortrap.s</path>
+            <path>\driver\memory\src\drv_memory.c</path>
             <path>\peripheral\tc\plib_tc0.c</path>
             <path>\system\time\src\sys_time.c</path>
-            <path>\system\time\src\sys_time_local.h</path>
-            <path>\driver\memory\src\drv_memory.c</path>
             <path>\peripheral\qspi\plib_qspi0.c</path>
             <path>\bsp\bsp.c</path>
             <path>\peripheral\spi\plib_spi0.c</path>
-            <path>\driver\spi_flash\at25df\src\drv_at25df.c</path>
-            <path>\driver\spi_flash\at25df\src\drv_at25df_local.h</path>
             <path>\freertos_hooks.c</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\croutine.c</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\list.c</path>
@@ -182,7 +191,10 @@
             <path>\..\..\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\port.c</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portASM.s</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\FreeRTOS_tick_config.c</path>
+            <path>\driver\spi_flash\at25df\src\drv_at25df.c</path>
+            <path>\driver\spi_flash\at25df\src\drv_at25df_local.h</path>
             <path>\system\int\src\sys_int.c</path>
+            <path>\system\cache\sys_cache.c</path>
             <path>\osal\osal_freertos.c</path>
             <path>\..\..\app_mx25l.c</path>
             <path>\..\..\app_at25df.c</path>

@@ -48,11 +48,13 @@
 #include "device.h"
 
 
+
 // ****************************************************************************
 // ****************************************************************************
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
+
 
 
 // *****************************************************************************
@@ -78,11 +80,11 @@ const DRV_MX25L_INIT drvMX25LInitData =
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance 1 Initialization Data">
 
-static uint8_t gDrvMemory1EraseBuffer[DRV_AT25DF_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
+static uint8_t gDrvMemory1EraseBuffer[DRV_AT25DF_ERASE_BUFFER_SIZE] CACHE_ALIGN;
 
-static DRV_MEMORY_CLIENT_OBJECT gDrvMemory1ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX1] = { 0 };
+static DRV_MEMORY_CLIENT_OBJECT gDrvMemory1ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX1];
 
-static DRV_MEMORY_BUFFER_OBJECT gDrvMemory1BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX1] = { 0 };
+static DRV_MEMORY_BUFFER_OBJECT gDrvMemory1BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX1];
 
 const DRV_MEMORY_DEVICE_INTERFACE drvMemory1DeviceAPI = {
     .Open               = DRV_AT25DF_Open,
@@ -112,11 +114,11 @@ const DRV_MEMORY_INIT drvMemory1InitData =
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance 0 Initialization Data">
 
-static uint8_t gDrvMemory0EraseBuffer[DRV_MX25L_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
+static uint8_t gDrvMemory0EraseBuffer[DRV_MX25L_ERASE_BUFFER_SIZE] CACHE_ALIGN;
 
-static DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
+static DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0];
 
-static DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0] = { 0 };
+static DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0];
 
 const DRV_MEMORY_DEVICE_INTERFACE drvMemory0DeviceAPI = {
     .Open               = DRV_MX25L_Open,
@@ -192,6 +194,7 @@ const DRV_AT25DF_INIT drvAT25DFInitData =
 // *****************************************************************************
 /* Structure to hold the object handles for the modules in the system. */
 SYSTEM_OBJECTS sysObj;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Library/Stack Initialization Data
@@ -225,6 +228,7 @@ const SYS_TIME_INIT sysTimeInitData =
 // </editor-fold>
 
 
+
 /*******************************************************************************
   Function:
     void SYS_Initialize ( void *data )
@@ -237,6 +241,7 @@ const SYS_TIME_INIT sysTimeInitData =
 
 void SYS_Initialize ( void* data )
 {
+  
     CLK_Initialize();
 	PIO_Initialize();
 
@@ -261,7 +266,6 @@ void SYS_Initialize ( void* data )
 	SPI0_Initialize();
 
 
-
     sysObj.drvMX25L = DRV_MX25L_Initialize((SYS_MODULE_INDEX)DRV_MX25L_INDEX, (SYS_MODULE_INIT *)&drvMX25LInitData);
 
     sysObj.drvMemory1 = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_1, (SYS_MODULE_INIT *)&drvMemory1InitData);
@@ -277,6 +281,7 @@ void SYS_Initialize ( void* data )
     APP_MX25L_Initialize();
     APP_AT25DF_Initialize();
     APP_MONITOR_Initialize();
+
 
 
 }
