@@ -83,7 +83,7 @@ extern "C" {
 #define SYS_TIME_INDEX_0                     0
 #define SYS_TIME_MAX_TIMERS                  5
 #define SYS_TIME_HW_COUNTER_WIDTH            16
-#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFF
+#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFFU
 #define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
 #define SYS_TIME_CPU_CLOCK_FREQUENCY         48000000
 #define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (188)
@@ -129,7 +129,7 @@ extern "C" {
 
 
 /* SDSPI Driver Instance 0 RTOS Configurations*/
-#define DRV_SDSPI_STACK_SIZE_IDX0               128
+#define DRV_SDSPI_STACK_SIZE_IDX0               256
 #define DRV_SDSPI_PRIORITY_IDX0                 1
 
 /* Memory Driver Global Configuration Options */
