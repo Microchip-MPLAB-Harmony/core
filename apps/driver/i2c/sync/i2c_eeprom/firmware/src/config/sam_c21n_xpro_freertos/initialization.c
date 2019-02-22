@@ -45,6 +45,8 @@
 // *****************************************************************************
 #include "configuration.h"
 #include "definitions.h"
+#include "device.h"
+
 
 
 // ****************************************************************************
@@ -52,6 +54,24 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
+
+#pragma config NVMCTRL_BOOTPROT = SIZE_0BYTES
+#pragma config NVMCTRL_EEPROM_SIZE = SIZE_0BYTES
+#pragma config BODVDDUSERLEVEL = 0x8 // Enter Hexadecimal value
+#pragma config BODVDD_DIS = DISABLED
+#pragma config BODVDD_ACTION = NONE
+
+#pragma config BODVDD_HYST = DISABLED
+#pragma config NVMCTRL_REGION_LOCKS = 0xffff // Enter Hexadecimal value
+
+#pragma config WDT_ENABLE = DISABLED
+#pragma config WDT_ALWAYSON = DISABLED
+#pragma config WDT_PER = CYC8
+
+#pragma config WDT_WINDOW = CYC8
+#pragma config WDT_EWOFFSET = CYC8
+#pragma config WDT_WEN = DISABLED
+
 
 
 // *****************************************************************************
@@ -62,7 +82,7 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_I2C Instance 0 Initialization Data">
 
 /* I2C Client Objects Pool */
-static DRV_I2C_CLIENT_OBJ drvI2C0ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_I2C_CLIENT_OBJ drvI2C0ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX0];
 
 /* I2C PLib Interface Initialization */
 const DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
@@ -82,6 +102,7 @@ const DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
     /* I2C PLib Callback Register */
     .callbackRegister = (DRV_I2C_PLIB_CALLBACK_REGISTER)SERCOM1_I2C_CallbackRegister,
 };
+
 
 /* I2C Driver Initialization Data */
 const DRV_I2C_INIT drvI2C0InitData =
@@ -110,6 +131,7 @@ const DRV_I2C_INIT drvI2C0InitData =
 // *****************************************************************************
 /* Structure to hold the object handles for the modules in the system. */
 SYSTEM_OBJECTS sysObj;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Library/Stack Initialization Data
@@ -124,6 +146,7 @@ SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 
 
+
 /*******************************************************************************
   Function:
     void SYS_Initialize ( void *data )
@@ -136,6 +159,7 @@ SYSTEM_OBJECTS sysObj;
 
 void SYS_Initialize ( void* data )
 {
+  
     PORT_Initialize();
 
     CLOCK_Initialize();
@@ -146,7 +170,6 @@ void SYS_Initialize ( void* data )
 
     EVSYS_Initialize();
 
-    NVIC_Initialize();
 	BSP_Initialize();
 
     /* Initialize I2C0 Driver Instance */
@@ -157,10 +180,11 @@ void SYS_Initialize ( void* data )
     APP_C21N_I2C_EEPROM_Initialize();
 
 
+    NVIC_Initialize();
+
 }
 
 
 /*******************************************************************************
  End of File
 */
-

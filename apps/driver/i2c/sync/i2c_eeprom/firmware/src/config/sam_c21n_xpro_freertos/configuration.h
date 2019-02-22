@@ -56,6 +56,7 @@
 */
 
 #include "user.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -70,10 +71,8 @@ extern "C" {
 // Section: System Configuration
 // *****************************************************************************
 // *****************************************************************************
-#define DCACHE_CLEAN_BY_ADDR(data, size)
-#define DCACHE_INVALIDATE_BY_ADDR(data, size)
 
-#define DATA_CACHE_ENABLED                         false
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -90,8 +89,7 @@ extern "C" {
 /* I2C Driver Instance 0 Configuration Options */
 #define DRV_I2C_INDEX_0                       0
 #define DRV_I2C_CLIENTS_NUMBER_IDX0           1
-#define DRV_I2C_INT_SRC_IDX0                  SERCOM1_IRQn
-#define DRV_I2C_CLOCK_SPEED_IDX0              100
+#define DRV_I2C_CLOCK_SPEED_IDX0              400
 
 /* I2C Driver Common Configuration Options */
 #define DRV_I2C_INSTANCES_NUMBER              1
