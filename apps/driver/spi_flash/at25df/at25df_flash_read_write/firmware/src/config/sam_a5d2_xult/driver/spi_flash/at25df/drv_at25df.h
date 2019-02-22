@@ -948,8 +948,6 @@ void DRV_AT25DF_EventHandlerSet(
 }
 #endif
 
-#include "driver/at25df/src/drv_at25df_local.h"
-
 #endif // #ifndef _DRV_AT25DF_H
 /*******************************************************************************
  End of File

@@ -55,7 +55,7 @@
 #include "configuration.h"
 #include "bsp/bsp.h"
 #include "peripheral/pit/plib_pit.h"
-#include "driver/at25df/drv_at25df.h"
+#include "driver/spi_flash/at25df/drv_at25df.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

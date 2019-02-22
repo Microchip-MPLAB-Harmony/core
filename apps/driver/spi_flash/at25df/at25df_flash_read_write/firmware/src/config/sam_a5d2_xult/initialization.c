@@ -48,6 +48,7 @@
 #include "device.h"
 
 
+
 // ****************************************************************************
 // ****************************************************************************
 // Section: Configuration Bits
@@ -55,13 +56,12 @@
 // ****************************************************************************
 
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Driver Initialization Data
 // *****************************************************************************
 // *****************************************************************************
-// <editor-fold defaultstate="collapsed" desc="DRV_AT25DF Initialization Data">
-
 /* SPI PLIB Interface Initialization for AT25DF Driver */
 const DRV_AT25DF_PLIB_INTERFACE drvAT25DFPlibAPI = {
 
@@ -96,12 +96,11 @@ const DRV_AT25DF_INIT drvAT25DFInitData =
     /* Total size of the FLASH in bytes */
     .flashSize = DRV_AT25DF_FLASH_SIZE,
 
-    .blockStartAddress =    0x0,
+    .blockStartAddress = 0x0,
 
-    .chipSelectPin    = DRV_AT25DF_CHIP_SELECT_PIN_IDX
+    .chipSelectPin = DRV_AT25DF_CHIP_SELECT_PIN_IDX
 };
 
-// </editor-fold>
 
 
 // *****************************************************************************
@@ -111,6 +110,7 @@ const DRV_AT25DF_INIT drvAT25DFInitData =
 // *****************************************************************************
 /* Structure to hold the object handles for the modules in the system. */
 SYSTEM_OBJECTS sysObj;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Library/Stack Initialization Data
@@ -125,6 +125,7 @@ SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 
 
+
 /*******************************************************************************
   Function:
     void SYS_Initialize ( void *data )
@@ -137,6 +138,7 @@ SYSTEM_OBJECTS sysObj;
 
 void SYS_Initialize ( void* data )
 {
+  
     CLK_Initialize();
 	PIO_Initialize();
 
@@ -163,10 +165,10 @@ void SYS_Initialize ( void* data )
     APP_Initialize();
 
 
+
 }
 
 
 /*******************************************************************************
  End of File
 */
-

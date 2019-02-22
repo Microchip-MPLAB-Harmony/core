@@ -46,7 +46,8 @@
 // *****************************************************************************
 // *****************************************************************************
 #include "configuration.h"
-#include "driver/at25df/drv_at25df.h"
+#include "driver/spi_flash/at25df/drv_at25df.h"
+#include "driver/spi_flash/at25df/src/drv_at25df_local.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -506,10 +507,10 @@ static void _DRV_AT25DF_Handler( void )
         case DRV_AT25DF_STATE_WAIT_JEDECID_COMPLETE:
             /* De-assert the chip select */
             SYS_PORT_PinSet(gDrvAT25DFObj.chipSelectPin);
-			if (_DRV_AT25DF_CheckJedecId() == true)
-			{
+            if (_DRV_AT25DF_CheckJedecId() == true)
+            {
                 gDrvAT25DFObj.transferStatus = DRV_AT25DF_TRANSFER_STATUS_COMPLETED;
-			}
+            }
             else
             {
                 gDrvAT25DFObj.transferStatus = DRV_AT25DF_TRANSFER_STATUS_ERROR;
