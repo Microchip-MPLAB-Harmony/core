@@ -93,7 +93,7 @@ void TC0_TimerInitialize( void )
 
     TC0_CallbackObject.callback = NULL;
     /* Enable interrupt*/
-    TC0_REGS->COUNT16.TC_INTENSET = TC_INTENSET_OVF_Msk | TC_INTENSET_MC1_Msk;
+    TC0_REGS->COUNT16.TC_INTENSET = TC_INTENSET_MC1_Msk;
 
 
     while((TC0_REGS->COUNT16.TC_STATUS & TC_STATUS_SYNCBUSY_Msk))
