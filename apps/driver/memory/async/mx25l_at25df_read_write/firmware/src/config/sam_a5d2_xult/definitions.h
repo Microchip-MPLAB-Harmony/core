@@ -49,6 +49,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "driver/mx25l/drv_mx25l.h"
+#include "peripheral/pit/plib_pit.h"
 #include "peripheral/mmu/plib_mmu.h"
 #include "peripheral/matrix/plib_matrix.h"
 #include "peripheral/l2cc/plib_l2cc.h"
@@ -64,6 +65,7 @@
 #include "driver/spi_flash/at25df/drv_at25df.h"
 #include "system/int/sys_int.h"
 #include "system/ports/sys_ports.h"
+#include "system/cache/sys_cache.h"
 #include "osal/osal.h"
 #include "app_mx25l.h"
 #include "app_at25df.h"
