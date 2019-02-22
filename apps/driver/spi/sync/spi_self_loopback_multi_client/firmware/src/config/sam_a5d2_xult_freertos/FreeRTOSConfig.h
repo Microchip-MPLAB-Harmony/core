@@ -114,8 +114,14 @@
 #define INCLUDE_xTaskAbortDelay                 0
 #define INCLUDE_xTaskGetHandle                  0
 
+#ifdef __ICCARM__
+void vConfigureTickInterrupt(void);
+#endif //__ICCARM__
 #define configSETUP_TICK_INTERRUPT vConfigureTickInterrupt
 #define configEOI_ADDRESS 0xfc020038L
+#ifdef __ICCARM__
+void vClear_Tick_Interrupt(void);
+#endif //__ICCARM__
 #define configCLEAR_TICK_INTERRUPT vClear_Tick_Interrupt
 
 #endif /* FREERTOS_H */

@@ -275,8 +275,8 @@
           <Name dnOrder="1">FreeRTOSConfig.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6B57630B682E94157952C6E9B3FFC446</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6B57630B682E94157952C6E9B3FFC446</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3705870D78A71DD8AD311A4427936EE3</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3705870D78A71DD8AD311A4427936EE3</UserChecksum>
         </File>
         <File dnOrder="34">
           <Type dnOrder="0">HEADER</Type>

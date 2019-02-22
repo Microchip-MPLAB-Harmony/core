@@ -49,8 +49,8 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "bsp/bsp.h"
-#include "peripheral/pit/plib_pit.h"
 #include "driver/at24/drv_at24.h"
+#include "peripheral/pit/plib_pit.h"
 #include "peripheral/mmu/plib_mmu.h"
 #include "peripheral/matrix/plib_matrix.h"
 #include "peripheral/l2cc/plib_l2cc.h"

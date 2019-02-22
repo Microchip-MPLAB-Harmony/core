@@ -116,6 +116,8 @@
             <path>\..\..\packs\CMSIS\CMSIS\DSP\Include\arm_common_tables.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\DSP\Include\arm_const_structs.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\DSP\Include\arm_math.h</path>
+            <path>\driver\spi_flash\at25df\drv_at25df.h</path>
+            <path>\driver\spi_flash\at25df\drv_at25df_definitions.h</path>
             <path>\FreeRTOSConfig.h</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\include\croutine.h</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\include\event_groups.h</path>
@@ -135,8 +137,6 @@
             <path>\..\..\third_party\rtos\FreeRTOS\Source\include\message_buffer.h</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portASM.h</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portmacro.h</path>
-            <path>\driver\spi_flash\at25df\drv_at25df.h</path>
-            <path>\driver\spi_flash\at25df\drv_at25df_definitions.h</path>
             <path>\driver\driver.h</path>
             <path>\driver\driver_common.h</path>
             <path>\system\system.h</path>
@@ -179,6 +179,8 @@
             <path>\peripheral\qspi\plib_qspi0.c</path>
             <path>\bsp\bsp.c</path>
             <path>\peripheral\spi\plib_spi0.c</path>
+            <path>\driver\spi_flash\at25df\src\drv_at25df.c</path>
+            <path>\driver\spi_flash\at25df\src\drv_at25df_local.h</path>
             <path>\freertos_hooks.c</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\croutine.c</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\list.c</path>
@@ -191,8 +193,6 @@
             <path>\..\..\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\port.c</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portASM.s</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\FreeRTOS_tick_config.c</path>
-            <path>\driver\spi_flash\at25df\src\drv_at25df.c</path>
-            <path>\driver\spi_flash\at25df\src\drv_at25df_local.h</path>
             <path>\system\int\src\sys_int.c</path>
             <path>\system\cache\sys_cache.c</path>
             <path>\osal\osal_freertos.c</path>

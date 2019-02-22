@@ -283,8 +283,8 @@
           <Name dnOrder="1">FreeRTOSConfig.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6B57630B682E94157952C6E9B3FFC446</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6B57630B682E94157952C6E9B3FFC446</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3705870D78A71DD8AD311A4427936EE3</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3705870D78A71DD8AD311A4427936EE3</UserChecksum>
         </File>
         <File dnOrder="35">
           <Type dnOrder="0">HEADER</Type>
@@ -451,8 +451,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">251B284F726C0D924469A0DBEF7AA823</GeneratedChecksum>
-          <UserChecksum dnOrder="5">251B284F726C0D924469A0DBEF7AA823</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4A97833EA47A69428190AB37E6C6DC52</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4A97833EA47A69428190AB37E6C6DC52</UserChecksum>
         </File>
         <File dnOrder="56">
           <Type dnOrder="0">HEADER</Type>

@@ -153,6 +153,7 @@ void RSTC_Handler( void )                __attribute__((weak, alias("DefaultInte
 void RTC_Handler( void )                 __attribute__((weak, alias("DefaultInterruptHandler")));
 
 void FreeRTOS_Tick_Handler(              void );
+void XDMAC0_InterruptHandler(            void );
 void SPI1_InterruptHandler(              void );
 
 /* Handlers for vectors that are shared by multiple interrupts */
@@ -163,6 +164,7 @@ void SYSC_SharedHandler( void )
 /* data for irq register initialization */
 IrqData irqData[] = {
     { 3,   (uint32_t) AIC_REGS,    FreeRTOS_Tick_Handler,      AIC_SMR_SRCTYPE_INT_LEVEL_SENSITIVE_Val,  AIC_SMR_PRIORITY_MINIMUM_Val   },
+    { 6,   (uint32_t) AIC_REGS,    XDMAC0_InterruptHandler,    AIC_SMR_SRCTYPE_INT_LEVEL_SENSITIVE_Val,  AIC_SMR_PRIORITY_MINIMUM_Val   },
     { 34,  (uint32_t) AIC_REGS,    SPI1_InterruptHandler,      AIC_SMR_SRCTYPE_INT_LEVEL_SENSITIVE_Val,  AIC_SMR_PRIORITY_MINIMUM_Val   },
 };
 

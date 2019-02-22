@@ -66,6 +66,7 @@ void _APP_EEPROM1_Tasks(  void *pvParameters  )
     while(1)
     {
         APP_EEPROM1_Tasks();
+        vTaskDelay(5 / portTICK_PERIOD_MS);
     }
 }
 /* Handle for the APP_EEPROM2_Tasks. */
@@ -76,6 +77,7 @@ void _APP_EEPROM2_Tasks(  void *pvParameters  )
     while(1)
     {
         APP_EEPROM2_Tasks();
+        vTaskDelay(5 / portTICK_PERIOD_MS);
     }
 }
 /* Handle for the APP_MONITOR_Tasks. */
