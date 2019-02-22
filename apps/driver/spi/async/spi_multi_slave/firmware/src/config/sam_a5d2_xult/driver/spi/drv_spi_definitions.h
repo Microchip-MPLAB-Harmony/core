@@ -51,8 +51,8 @@
 
 #include <device.h>
 #include "system/int/sys_int.h"
-#include "system/dma/sys_dma.h"
 #include "system/ports/sys_ports.h"
+#include "system/dma/sys_dma.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -62,7 +62,10 @@
 #endif
 // DOM-IGNORE-END
 
-#define SYS_DEBUG(x, y)
+#ifndef SYS_DEBUG
+    #define SYS_DEBUG(x, y)
+#endif
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Types
@@ -77,7 +80,7 @@ typedef enum
     /* Force the compiler to reserve 32-bit memory space for each enum */
     DRV_SPI_CLOCK_PHASE_INVALID = 0xFFFFFFFF
 
-}DRV_SPI_CLOCK_PHASE;
+} DRV_SPI_CLOCK_PHASE;
 
 typedef enum
 {
@@ -87,7 +90,7 @@ typedef enum
     /* Force the compiler to reserve 32-bit memory space for each enum */
     DRV_SPI_CLOCK_POLARITY_INVALID = 0xFFFFFFFF
 
-}DRV_SPI_CLOCK_POLARITY;
+} DRV_SPI_CLOCK_POLARITY;
 
 typedef enum
 {
@@ -104,14 +107,14 @@ typedef enum
     /* Force the compiler to reserve 32-bit memory space for each enum */
     DRV_SPI_DATA_BITS_INVALID = 0xFFFFFFFF
 
-}DRV_SPI_DATA_BITS;
+} DRV_SPI_DATA_BITS;
 
 typedef enum
 {
     DRV_SPI_CS_POLARITY_ACTIVE_LOW = 0,
     DRV_SPI_CS_POLARITY_ACTIVE_HIGH = 1
 
-}DRV_SPI_CS_POLARITY;
+} DRV_SPI_CS_POLARITY;
 
 // *****************************************************************************
 /* SPI Driver Setup Data
@@ -153,6 +156,30 @@ typedef bool (*DRV_SPI_PLIB_WRITE_READ)(void*, size_t, void *, size_t);
 typedef bool (*DRV_SPI_PLIB_IS_BUSY)(void);
 
 typedef void (* DRV_SPI_PLIB_CALLBACK_REGISTER)(DRV_SPI_PLIB_CALLBACK, uintptr_t);
+
+
+typedef struct
+{
+    int32_t         spiTxReadyInt;
+    int32_t         spiTxCompleteInt;
+    int32_t         spiRxInt;
+    int32_t         dmaTxChannelInt;
+    int32_t         dmaRxChannelInt;
+} DRV_SPI_MULTI_INT_SRC;
+
+typedef union
+{
+    DRV_SPI_MULTI_INT_SRC               multi;
+    int32_t                             spiInterrupt;
+    int32_t                             dmaInterrupt;
+} DRV_SPI_INT_SRC;
+
+typedef struct
+{
+    bool                        isSingleIntSrc;
+    DRV_SPI_INT_SRC             intSources;
+} DRV_SPI_INTERRUPT_SOURCES;
+
 
 // *****************************************************************************
 /* SPI Driver PLIB Interface Data
@@ -214,7 +241,6 @@ typedef struct
 
     /* SPI receive register address used for DMA operation. */
     void*                           spiReceiveAddress;
-
     /* Memory Pool for Client Objects */
     uintptr_t                       clientObjPool;
 
@@ -227,20 +253,21 @@ typedef struct
 
     const uint32_t*                 remapClockPhase;
 
-    /* Queue for Transfer Objects */
+    /* Size of buffer objects queue */
+    uint32_t                        transferObjPoolSize;
+
+    /* Pointer to the buffer pool */
     uintptr_t                       transferObjPool;
 
-    /* Driver Queue Size */
-    size_t                          queueSize;
-
-    /* Interrupt source ID for SPI or DMA based on the mode used */
-    INT_SOURCE                      interruptSource;
+    const DRV_SPI_INTERRUPT_SOURCES*      interruptSources;
 } DRV_SPI_INIT;
 
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
-}
+
+    }
+
 #endif
 //DOM-IGNORE-END
 

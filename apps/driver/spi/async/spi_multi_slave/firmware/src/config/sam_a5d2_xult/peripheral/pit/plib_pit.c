@@ -55,9 +55,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 typedef struct
 {
-	PIT_CALLBACK        callback;
-	uintptr_t           context;
-	volatile uint32_t   tickCounter;
+    PIT_CALLBACK        callback;
+    uintptr_t           context;
+    volatile uint32_t   tickCounter;
 } PIT_OBJECT;
 
 // *****************************************************************************
@@ -71,13 +71,15 @@ static PIT_OBJECT pit;
 void PIT_TimerInitialize(void)
 {
     PIT_REGS->PIT_PIVR;
-    PIT_REGS->PIT_MR = PIT_MR_PIV(518750-1) | PIT_MR_PITEN(0) | PIT_MR_PITIEN(1);
+    PIT_REGS->PIT_MR = PIT_MR_PIV(518750-1) | PIT_MR_PITEN(1) | PIT_MR_PITIEN(1);
 }
 
 void PIT_TimerRestart(void)
 {
     PIT_REGS->PIT_MR &= ~PIT_MR_PITEN_Msk;
-    while ((PIT_REGS->PIT_PIIR & PIT_PIIR_CPIV_Msk) != 0);
+    while((PIT_REGS->PIT_PIIR & PIT_PIIR_CPIV_Msk) != 0) {
+        ;
+    }
     PIT_REGS->PIT_MR |= PIT_MR_PITEN_Msk;
 }
 
@@ -89,7 +91,9 @@ void PIT_TimerStart(void)
 void PIT_TimerStop(void)
 {
     PIT_REGS->PIT_MR &= ~PIT_MR_PITEN_Msk;
-    while ((PIT_REGS->PIT_PIIR & PIT_PIIR_CPIV_Msk) != 0);
+    while ((PIT_REGS->PIT_PIIR & PIT_PIIR_CPIV_Msk) != 0) {
+        ;
+    }
 }
 
 void PIT_TimerPeriodSet(uint32_t period)
@@ -98,7 +102,6 @@ void PIT_TimerPeriodSet(uint32_t period)
     PIT_REGS->PIT_MR &= ~PIT_MR_PIV_Msk;
     PIT_REGS->PIT_MR |= PIT_MR_PIV(period);
     PIT_TimerStart();
-
 }
 
 uint32_t PIT_TimerPeriodGet(void)
@@ -111,6 +114,11 @@ uint32_t PIT_TimerCounterGet(void)
     return (PIT_REGS->PIT_PIIR & PIT_PIIR_CPIV_Msk) >> PIT_PIIR_CPIV_Pos;
 }
 
+void PIT_TimerCompareSet( uint16_t compare )
+{
+    (void) compare;
+}
+
 uint32_t PIT_TimerFrequencyGet(void)
 {
     return 83000000 / 16;
@@ -118,15 +126,17 @@ uint32_t PIT_TimerFrequencyGet(void)
 
 void PIT_DelayMs(uint32_t delay)
 {
-	uint32_t tickStart, delayTicks;
+    uint32_t tickStart, delayTicks;
 
-	if((PIT_REGS->PIT_MR & (PIT_MR_PITEN_Msk | PIT_MR_PITIEN_Msk)) == (PIT_MR_PITEN_Msk | PIT_MR_PITIEN_Msk))
-	{
-		tickStart=pit.tickCounter;
-		delayTicks=delay/100;
+    if((PIT_REGS->PIT_MR & (PIT_MR_PITEN_Msk | PIT_MR_PITIEN_Msk)) == (PIT_MR_PITEN_Msk | PIT_MR_PITIEN_Msk))
+    {
+        tickStart=pit.tickCounter;
+        delayTicks=delay/100;
 
-		while((pit.tickCounter-tickStart)<delayTicks);
-	}
+        while( (pit.tickCounter-tickStart) < delayTicks ) {
+            ;
+        }
+    }
 }
 
 void PIT_TimerCallbackSet(PIT_CALLBACK callback, uintptr_t context)

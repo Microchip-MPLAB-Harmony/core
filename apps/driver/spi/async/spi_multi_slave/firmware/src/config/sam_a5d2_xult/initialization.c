@@ -48,11 +48,13 @@
 #include "device.h"
 
 
+
 // ****************************************************************************
 // ****************************************************************************
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
+
 
 
 // *****************************************************************************
@@ -63,10 +65,10 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance 0 Initialization Data">
 
 /* SPI Client Objects Pool */
-static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0];
 
 /* SPI Transfer Objects Pool */
-static DRV_SPI_TRANSFER_OBJ drvSPI0TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX0] = {0};
+static DRV_SPI_TRANSFER_OBJ drvSPI0TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX0];
 
 /* SPI PLIB Interface Initialization */
 const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
@@ -84,11 +86,18 @@ const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
     .callbackRegister = (DRV_SPI_PLIB_CALLBACK_REGISTER)SPI1_CallbackRegister,
 };
 
-
-
 const uint32_t drvSPI0remapDataBits[]= { 0x0, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80 };
 const uint32_t drvSPI0remapClockPolarity[] = { 0x0, 0x1 };
 const uint32_t drvSPI0remapClockPhase[] = { 0x0, 0x2 };
+
+const DRV_SPI_INTERRUPT_SOURCES drvSPI0InterruptSources =
+{
+    /* Peripheral has single interrupt vector */
+    .isSingleIntSrc                        = true,
+
+    /* Peripheral interrupt line */
+    .intSources.spiInterrupt             = SPI1_IRQn,
+};
 
 /* SPI Driver Initialization Data */
 const DRV_SPI_INIT drvSPI0InitData =
@@ -97,9 +106,10 @@ const DRV_SPI_INIT drvSPI0InitData =
     .spiPlib = &drvSPI0PlibAPI,
 
     .remapDataBits = drvSPI0remapDataBits,
-    .remapClockPolarity = drvSPI0remapClockPolarity,
-    .remapClockPhase = drvSPI0remapClockPhase,
 
+    .remapClockPolarity = drvSPI0remapClockPolarity,
+
+    .remapClockPhase = drvSPI0remapClockPhase,
 
     /* SPI Number of clients */
     .numClients = DRV_SPI_CLIENTS_NUMBER_IDX0,
@@ -108,27 +118,19 @@ const DRV_SPI_INIT drvSPI0InitData =
     .clientObjPool = (uintptr_t)&drvSPI0ClientObjPool[0],
 
     /* DMA Channel for Transmit */
-    .dmaChannelTransmit = DRV_SPI_XMIT_DMA_CH_IDX0,
+    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
 
     /* DMA Channel for Receive */
-    .dmaChannelReceive  = DRV_SPI_RCV_DMA_CH_IDX0,
-
-    /* SPI Transmit Register */
-    .spiTransmitAddress =  (void *)&(SPI1_REGS->SPI_TDR),
-
-    /* SPI Receive Register */
-    .spiReceiveAddress  = (void *)&(SPI1_REGS->SPI_RDR),
-
-    /* Interrupt source is DMA */
- 
-   .interruptSource = XDMAC0_IRQn,
- 
+    .dmaChannelReceive  = SYS_DMA_CHANNEL_NONE,
 
     /* SPI Queue Size */
-    .queueSize = DRV_SPI_QUEUE_SIZE_IDX0,
+    .transferObjPoolSize = DRV_SPI_QUEUE_SIZE_IDX0,
 
     /* SPI Transfer Objects Pool */
     .transferObjPool = (uintptr_t)&drvSPI0TransferObjPool[0],
+
+    /* SPI interrupt sources (SPI peripheral and DMA) */
+    .interruptSources = &drvSPI0InterruptSources,
 };
 
 // </editor-fold>
@@ -141,6 +143,7 @@ const DRV_SPI_INIT drvSPI0InitData =
 // *****************************************************************************
 /* Structure to hold the object handles for the modules in the system. */
 SYSTEM_OBJECTS sysObj;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Library/Stack Initialization Data
@@ -155,6 +158,7 @@ SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 
 
+
 /*******************************************************************************
   Function:
     void SYS_Initialize ( void *data )
@@ -167,9 +171,13 @@ SYSTEM_OBJECTS sysObj;
 
 void SYS_Initialize ( void* data )
 {
+  
     CLK_Initialize();
 	PIO_Initialize();
 
+
+	BSP_Initialize();
+	PIT_TimerInitialize();
 
     MMU_Initialize();
     Matrix_Initialize();
@@ -177,12 +185,7 @@ void SYS_Initialize ( void* data )
     PLIB_L2CC_Initialize();
 
     INT_Initialize();
-    XDMAC0_Initialize();
-
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
-
-	BSP_Initialize();
-	PIT_TimerInitialize();
 
 	SPI1_Initialize();
 
@@ -197,10 +200,10 @@ void SYS_Initialize ( void* data )
     APP_MONITOR_Initialize();
 
 
+
 }
 
 
 /*******************************************************************************
  End of File
 */
-

@@ -56,6 +56,7 @@
 */
 
 #include "user.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -70,12 +71,8 @@ extern "C" {
 // Section: System Configuration
 // *****************************************************************************
 // *****************************************************************************
-#define DCACHE_CLEAN_BY_ADDR(data, size)       PLIB_L2CC_CleanCacheByAddr((uint32_t*)data, size); \
-                                               L1C_CleanDCacheAll()
-#define DCACHE_INVALIDATE_BY_ADDR(data, size)  L1C_InvalidateDCacheAll(); \
-                                               PLIB_L2CC_InvalidateCacheByAddr((uint32_t*)data, size)
 
-#define DATA_CACHE_ENABLED                     true
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -89,18 +86,13 @@ extern "C" {
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
-/* SPI Driver Common Configuration Options */
-#define DRV_SPI_INSTANCES_NUMBER              1
-
 /* SPI Driver Instance 0 Configuration Options */
 #define DRV_SPI_INDEX_0                       0
 #define DRV_SPI_CLIENTS_NUMBER_IDX0           2
-
-#define DRV_SPI_DMA_MODE
-#define DRV_SPI_XMIT_DMA_CH_IDX0              SYS_DMA_CHANNEL_0
-#define DRV_SPI_RCV_DMA_CH_IDX0               SYS_DMA_CHANNEL_1
-#define DRV_SPI_INT_SRC_IDX0                  SPI1_IRQn
 #define DRV_SPI_QUEUE_SIZE_IDX0               4
+
+/* SPI Driver Common Configuration Options */
+#define DRV_SPI_INSTANCES_NUMBER              1
 
 
 

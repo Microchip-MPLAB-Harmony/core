@@ -47,8 +47,8 @@ static void CLK_PeripheralClockInitialize(void)
 {
     /* Enable clock for the selected peripherals, since the rom boot will turn on
      * certain clocks turn off all clocks not expressly enabled */
-   	PMC_REGS->PMC_PCER0=0x42040;
-    PMC_REGS->PMC_PCDR0=~0x42040;
+   	PMC_REGS->PMC_PCER0=0x42000;
+    PMC_REGS->PMC_PCDR0=~0x42000;
     PMC_REGS->PMC_PCER1=0x4;
     PMC_REGS->PMC_PCDR1=~0x4;
 }
@@ -61,16 +61,11 @@ Clock Initialize
 
 void CLK_Initialize( void )
 { 
-	
-
-
 	/* Initialize Generic Clock */
 	CLK_GenericClockInitialize();
 
-
 	/* Initialize Peripheral Clock */
 	CLK_PeripheralClockInitialize();
-
 
 }
 

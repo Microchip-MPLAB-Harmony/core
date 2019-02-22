@@ -1,22 +1,23 @@
 /*******************************************************************************
-  Board Support Package Implementation
+  Cache System Service Library Implementation Source File
 
-  Company:
+  Company
     Microchip Technology Inc.
 
-  File Name:
-    bsp.c
+  File Name
+    sys_cache.c
 
-  Summary:
-    Board Support Package implementation.
+  Summary
+    Cache System Service Library interface implementation.
 
-  Description:
-    This file contains routines that implement the board support package
+  Description
+    This file implements the interface to the Cache System Service Library.
+
 *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -44,44 +45,117 @@
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
-#include "bsp.h"
-
-// *****************************************************************************
-// *****************************************************************************
-// *****************************************************************************
-// Section: Interface Routines
-// *****************************************************************************
-// *****************************************************************************
+#include "device.h"
+#include "system/cache/sys_cache.h"
 
 // *****************************************************************************
-/* Function:
-    void BSP_Initialize(void)
+// *****************************************************************************
+// Section: System Cache Interface Functions
+// *****************************************************************************
+// *****************************************************************************
 
-  Summary:
-    Performs the necessary actions to initialize a board
-
-  Description:
-    This function initializes the LED, Switch and other ports on the board.
-    This function must be called by the user before using any APIs present in
-    this BSP.
-
-  Remarks:
-    Refer to bsp.h for usage information.
-*/
-
-void BSP_Initialize(void )
+/*
+ * Enable both Data and Instruction Caches.
+ */
+void SYS_CACHE_EnableCaches (void)
 {
-
-
-    /* Switch off LEDs */
-		LED_GREEN_Off(); 
-		LED_RED_Off(); 
-		LED_BLUE_Off(); 
-
-
+    L1_ICACHE_ENABLE();
+    L1_DCACHE_ENABLE();
 }
 
-/*******************************************************************************
- End of File
-*/
+/*
+ * Disable both Data and Instruction Caches.
+ */
+void SYS_CACHE_DisableCaches (void)
+{
+    L1_ICACHE_DISABLE();
+    L1_DCACHE_DISABLE();
+}
+
+/*
+ * Enable Instruction Cache.
+ */
+void SYS_CACHE_EnableICache (void)
+{
+    L1_ICACHE_ENABLE();
+}
+
+/*
+ * Disable Instruction Cache.
+ */
+void SYS_CACHE_DisableICache (void)
+{
+    L1_ICACHE_DISABLE();
+}
+
+/*
+ * Invalidate Instruction Cache.
+ */
+void SYS_CACHE_InvalidateICache (void)
+{
+    L1_ICACHE_INVALIDATE_ALL();
+}
+
+/*
+ * Enable Data Cache.
+ */
+void SYS_CACHE_EnableDCache (void)
+{
+    L1_DCACHE_ENABLE();
+}
+
+/*
+ * Disable Data Cache.
+ */
+void SYS_CACHE_DisableDCache (void)
+{
+    L1_DCACHE_DISABLE();
+}
+
+/*
+ * Invalidate whole Data Cache.
+ */
+void SYS_CACHE_InvalidateDCache (void)
+{
+    DCACHE_INVALIDATE_ALL();
+}
+
+/*
+ * Clean whole Data Cache.
+ */
+void SYS_CACHE_CleanDCache (void)
+{
+    DCACHE_CLEAN_ALL();
+}
+
+/*
+ * Clean and Invalidate whole Data Cache.
+ */
+void SYS_CACHE_CleanInvalidateDCache (void)
+{
+    DCACHE_CLEAN_INVALIDATE_ALL();
+}
+
+/*
+ * Invalidate Data Cache by address.
+ */
+void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
+{
+    DCACHE_INVALIDATE_BY_ADDR(addr,(uint32_t)size);
+}
+
+/*
+ * Clean Data Cache by address.
+ */
+void SYS_CACHE_CleanDCache_by_Addr (uint32_t *addr, int32_t size)
+{
+    DCACHE_CLEAN_BY_ADDR(addr,(uint32_t)size);
+}
+
+/*
+ * Clean and Invalidate Data Cache by address.
+ */
+void SYS_CACHE_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
+{
+    DCACHE_CLEAN_INVALIDATE_BY_ADDR(addr,(uint32_t)size);
+}

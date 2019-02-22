@@ -73,36 +73,13 @@ static void l2cacheEnable(void)
     __ISB();
 }
 
-static void l2cacheDisable(void)
-{
-    L2CC_REGS->L2CC_CR &= ~L2CC_CR_L2CEN_Msk;
-    __DSB();
-    __ISB();
-}
-
-static void l2cacheSetExclusive(void)
-{
-    L2CC_REGS->L2CC_ACR |= L2CC_ACR_EXCC_Msk;
-}
 
 static void l2cacheSetNonExclusive(void)
 {
     L2CC_REGS->L2CC_ACR &= ~L2CC_ACR_EXCC_Msk;
 }
 
-static void setTagRamLatency(void)
-{
-    L2CC_REGS->L2CC_TRCR = L2CC_TRCR_TSETLAT(0) |
-                      L2CC_TRCR_TRDLAT(0) |
-                      L2CC_TRCR_TWRLAT(0);
-};
 
-static void setDataRamLatency(void)
-{
-    L2CC_REGS->L2CC_DRCR = L2CC_DRCR_DSETLAT(0) |
-                      L2CC_DRCR_DRDLAT(0) |
-                      L2CC_DRCR_DWRLAT(0);
-}
 
 static void setConfig(void)
 {
@@ -144,82 +121,16 @@ static void instPrefetchEnable(void)
     L2CC_REGS->L2CC_PCR |= L2CC_PCR_INSPEN_Msk;
 }
 
-static void enableEventCounter(uint8_t event_counter)
-{
-    switch (event_counter) {
-    case 0:
-        L2CC_REGS->L2CC_ECR = L2CC_ECR_EVCEN_Msk | L2CC_ECR_EVC0RST_Msk;
-        break;
-    case 1:
-        L2CC_REGS->L2CC_ECR = L2CC_ECR_EVCEN_Msk | L2CC_ECR_EVC1RST_Msk;
-        break;
-    default:
-        break;
-    }
-}
 
-static void eventConfig(uint8_t event_counter, uint8_t source, uint8_t it)
-{
-    switch (event_counter) {
-    case 0:
-        L2CC_REGS->L2CC_ECFGR0 = L2CC_ECFGR0_ESRC(source) |
-                            L2CC_ECFGR0_EIGEN(it);
-        break;
-    case 1:
-        L2CC_REGS->L2CC_ECFGR1 = L2CC_ECFGR1_ESRC(source) |
-                            L2CC_ECFGR1_EIGEN(it);
-        break;
-    default:
-        break;
-    }
-
-}
-
-static uint32_t eventCounterValue(uint8_t event_counter)
-{
-    switch (event_counter) {
-    case 0:
-        return L2CC_REGS->L2CC_EVR0;
-    case 1:
-        return L2CC_REGS->L2CC_EVR1;
-    default:
-        return 0;
-    }
-}
-
-/*TODO: Support interrupts! */
-/*TODO: These should be public??*/
-void enableInt(uint32_t sources)
-{
-    L2CC_REGS->L2CC_IMR |= sources;
-}
-
-void disableInt(uint32_t sources)
+static void disableInt(uint32_t sources)
 {
     L2CC_REGS->L2CC_IMR &= ~sources;
 }
 
-uint32_t intStatus(uint32_t sources)
-{
-    return L2CC_REGS->L2CC_RISR & sources;
-}
-
-uint32_t intStatusMask(uint32_t sources)
-{
-    return L2CC_REGS->L2CC_MISR & sources;
-}
-
-void clearInt(uint32_t sources)
+static void clearInt(uint32_t sources)
 {
     L2CC_REGS->L2CC_ICR |= sources;
 }
-
-/*
-bool l2cc_get_spniden(void)
-{
-    return (L2CC_REGS->L2CC_DCR & L2CC_DCR_SPNIDEN_Msk) != 0;
-}
-*/
 
 static void cacheSync(void)
 {
