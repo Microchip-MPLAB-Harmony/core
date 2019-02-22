@@ -1,20 +1,20 @@
 /*******************************************************************************
-  Interface definition of WDT PLIB.
+  Board Support Package Implementation
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    plib_wdt.h
+    bsp.c
 
   Summary:
-    Interface definition of the Watch Dog Timer Plib (WDT).
+    Board Support Package implementation.
 
   Description:
-    This file defines the interface for the WDT Plib.
-    It allows user to setup timeout duration and restart watch dog timer.
+    This file contains routines that implement the board support package
 *******************************************************************************/
 
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -37,30 +37,51 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-
-#ifndef WDT_H    // Guards against multiple inclusion
-#define WDT_H
-
-#include <stdint.h>
-#include <stddef.h>
-
-#ifdef __cplusplus // Provide C++ Compatibility
- extern "C" {
-#endif
+// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Interface
+// Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
 
-void WDT_Initialize( void );
-void WDT_Clear( void );
-void WDT_Enable( void );
-void WDT_Disable( void );
+#include "bsp.h"
 
-#ifdef __cplusplus // Provide C++ Compatibility
- }
-#endif
+// *****************************************************************************
+// *****************************************************************************
+// *****************************************************************************
+// Section: Interface Routines
+// *****************************************************************************
+// *****************************************************************************
 
-#endif 
+// *****************************************************************************
+/* Function:
+    void BSP_Initialize(void)
+
+  Summary:
+    Performs the necessary actions to initialize a board
+
+  Description:
+    This function initializes the LED, Switch and other ports on the board.
+    This function must be called by the user before using any APIs present in
+    this BSP.
+
+  Remarks:
+    Refer to bsp.h for usage information.
+*/
+
+void BSP_Initialize(void )
+{
+
+
+    /* Switch off LEDs */
+		LED1_Off();
+		LED2_Off();
+		LED3_Off();
+
+
+}
+
+/*******************************************************************************
+ End of File
+*/
