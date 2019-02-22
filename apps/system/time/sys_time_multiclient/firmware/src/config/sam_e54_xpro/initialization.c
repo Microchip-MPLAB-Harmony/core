@@ -174,8 +174,6 @@ void SYS_Initialize ( void* data )
     TC0_TimerInitialize();
 
 
-    NVIC_Initialize();
-
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
 
@@ -183,7 +181,8 @@ void SYS_Initialize ( void* data )
     APP_Initialize();
 
 
-  
+    NVIC_Initialize();
+
 }
 
 

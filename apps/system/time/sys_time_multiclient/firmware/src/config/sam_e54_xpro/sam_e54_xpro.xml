@@ -239,7 +239,7 @@
         </String>
         <String dnOrder="36" id="PIN_122_LAT">
           <Values dnOrder="0">
-            <User dnOrder="0" value=""/>
+            <User dnOrder="0" value="High"/>
           </Values>
         </String>
         <String dnOrder="37" id="PIN_122_MODE">
@@ -346,7 +346,7 @@
         <String dnOrder="56" id="PORT_GROUP_1_OUT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="0x0"/>
+              <Value dnOrder="0" id="core" priority="1" value="0x80000000"/>
             </Dynamic>
           </Values>
         </String>
@@ -943,7 +943,7 @@
         <Boolean dnOrder="5" id="ENABLE_SYS_CACHE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="HarmonyCore" priority="1" value="true"/>
+              <Value dnOrder="0" id="HarmonyCore" priority="1" value="false"/>
             </Dynamic>
           </Values>
         </Boolean>
@@ -1212,21 +1212,14 @@
     </UniqueComponent>
     <UniqueComponent dnOrder="9" id="tc0">
       <Symbols dnOrder="0">
-        <Comment dnOrder="0" id="TC_INTERRUPT_ENABLE_COMMENT">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </Comment>
-        <Boolean dnOrder="1" id="TC_SYS_TIME_CONNECTED">
+        <Boolean dnOrder="0" id="TC_SYS_TIME_CONNECTED">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="tc0" priority="2" value="true"/>
             </Dynamic>
           </Values>
         </Boolean>
-        <Boolean dnOrder="2" id="TC_TIMER_INTENSET_MC1">
+        <Boolean dnOrder="1" id="TC_TIMER_INTENSET_MC1">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -1238,15 +1231,14 @@
             </Dynamic>
           </Values>
         </Boolean>
-        <Boolean dnOrder="3" id="TC_TIMER_INTENSET_OVF">
+        <Boolean dnOrder="2" id="TC_TIMER_INTENSET_OVF">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="tc0" priority="2" value="false"/>
             </Dynamic>
-            <User dnOrder="1" value="true"/>
           </Values>
         </Boolean>
-        <Float dnOrder="4" id="TC_TIMER_TIME_MS">
+        <Float dnOrder="3" id="TC_TIMER_TIME_MS">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">false</Value>
@@ -1278,10 +1270,10 @@
         <ElementPosition dnOrder="3" id="core" x="400" y="20"/>
         <ElementPosition dnOrder="4" id="dfp" x="180" y="20"/>
         <ElementPosition dnOrder="5" id="evsys" x="20" y="20"/>
-        <ElementPosition dnOrder="6" id="sercom2" x="340" y="188"/>
-        <ElementPosition dnOrder="7" id="stdio" x="473" y="169"/>
+        <ElementPosition dnOrder="6" id="sercom2" x="229" y="227"/>
+        <ElementPosition dnOrder="7" id="stdio" x="437" y="204"/>
         <ElementPosition dnOrder="8" id="sys_time" x="210" y="100"/>
-        <ElementPosition dnOrder="9" id="tc0" x="39" y="194"/>
+        <ElementPosition dnOrder="9" id="tc0" x="36" y="199"/>
       </ElementPositions>
     </ComponentGraph>
   </UserData>
