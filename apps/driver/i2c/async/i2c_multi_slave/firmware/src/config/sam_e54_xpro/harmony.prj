@@ -35,8 +35,8 @@
           <Name dnOrder="1">drv_i2c.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/driver/i2c/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/i2c/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8A7603E82B8E0581FAE0D3E9BF74B242</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8A7603E82B8E0581FAE0D3E9BF74B242</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1ADEFA5C99CD9DD9BB56F35E5348CA7B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1ADEFA5C99CD9DD9BB56F35E5348CA7B</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -59,8 +59,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B1777DE15098686C786EF49F5E74CD84</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B1777DE15098686C786EF49F5E74CD84</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F8EFF108D2A9AAFE29169EB84766DCD7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F8EFF108D2A9AAFE29169EB84766DCD7</UserChecksum>
         </File>
         <File dnOrder="7">
           <Type dnOrder="0">SOURCE</Type>
@@ -115,8 +115,8 @@
           <Name dnOrder="1">plib_port.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">22B237D635B2FF5A1AD865A2F33DFB0C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">22B237D635B2FF5A1AD865A2F33DFB0C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E4B94FE7497D2110F406D6B9D1A7E5BC</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E4B94FE7497D2110F406D6B9D1A7E5BC</UserChecksum>
         </File>
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
@@ -387,8 +387,8 @@
           <Name dnOrder="1">device_cache.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6D7E462FF2BAB390D1846FBB4F1BBEB6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6D7E462FF2BAB390D1846FBB4F1BBEB6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9ED2219AFB6FDB7A6E9A066E468DAE8B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9ED2219AFB6FDB7A6E9A066E468DAE8B</UserChecksum>
         </File>
         <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
@@ -795,8 +795,8 @@
           <Name dnOrder="1">sys_debug.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/system/console/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/console/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B1112C6BA5F89C1BADE1FA4DB93882C5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B1112C6BA5F89C1BADE1FA4DB93882C5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A1C5B60E9D7D4927FACEE10CE62BB3C2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A1C5B60E9D7D4927FACEE10CE62BB3C2</UserChecksum>
         </File>
         <File dnOrder="99">
           <Type dnOrder="0">HEADER</Type>
@@ -950,7 +950,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;"/>
     </Settings>
   </Configurator>
 </Configuration>
