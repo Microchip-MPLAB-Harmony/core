@@ -88,8 +88,8 @@ void TC0_TimerInitialize( void )
     TC0_REGS->COUNT16.TC_WAVE = TC_WAVE_WAVEGEN_MPWM;
 
     /* Configure timer period */
-    TC0_REGS->COUNT16.TC_CC[0U] = 48000U;
-    
+    TC0_REGS->COUNT16.TC_CC[0U] = 65534U;
+
     /* Clear all interrupt flags */
     TC0_REGS->COUNT16.TC_INTFLAG = TC_INTFLAG_Msk;
 
@@ -126,7 +126,7 @@ void TC0_TimerStop( void )
 
 uint32_t TC0_TimerFrequencyGet( void )
 {
-    return (uint32_t)(48000000UL);
+    return (uint32_t)(120000000UL);
 }
 
 /* Get the current timer counter value */
@@ -192,16 +192,16 @@ void TC0_TimerCallbackRegister( TC_TIMER_CALLBACK callback, uintptr_t context )
 /* Timer Interrupt handler */
 void TC0_TimerInterruptHandler( void )
 {
-    TC_TIMER_STATUS status;
-    status = TC0_REGS->COUNT16.TC_INTFLAG;
-    /* Clear interrupt flags */
-    TC0_REGS->COUNT16.TC_INTFLAG = TC_INTFLAG_Msk;
-    if((status != TC_TIMER_STATUS_NONE) && TC0_CallbackObject.callback != NULL)
+    if (TC0_REGS->COUNT16.TC_INTENSET != 0)
     {
-        TC0_CallbackObject.callback(status, TC0_CallbackObject.context);
+        TC_TIMER_STATUS status;
+        status = TC0_REGS->COUNT16.TC_INTFLAG;
+        /* Clear interrupt flags */
+        TC0_REGS->COUNT16.TC_INTFLAG = TC_INTFLAG_Msk;
+        if((status != TC_TIMER_STATUS_NONE) && TC0_CallbackObject.callback != NULL)
+        {
+            TC0_CallbackObject.callback(status, TC0_CallbackObject.context);
+        }
     }
 }
-
-
-
 
