@@ -53,7 +53,8 @@
 // *****************************************************************************
 
 #include "app.h"
-#include "string.h"
+#include "user.h"
+#include <string.h>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -61,7 +62,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-SYS_MEDIA_GEOMETRY *geometry = NULL;
+SYS_MEDIA_GEOMETRY* geometry = NULL;
 
 // *****************************************************************************
 /* Application Data
@@ -93,19 +94,16 @@ void appTransferHandler
     uintptr_t context
 )
 {
-    APP_DATA *app_data = (APP_DATA *)context;
+    APP_DATA* app_data = (APP_DATA *)context;
 
     switch(event)
     {
         case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
-            if (commandHandle == app_data->readHandle)
-            {
-                appData.xfer_done = true;
-            }
+            app_data->xfer_done = true;
             break;
 
         case DRV_SDMMC_EVENT_COMMAND_ERROR:
-            appData.state = APP_STATE_ERROR;
+            app_data->state = APP_STATE_ERROR;
             break;
 
         default:
@@ -144,9 +142,12 @@ void APP_Initialize ( void )
 
     /* Place the App state machine in its initial state. */
     appData.state = APP_STATE_OPEN_DRIVER;
+    appData.xfer_done = false;
 
     for (i = 0; i < SDMMC_BUFFER_SIZE; i++)
+    {
         appData.writeBuffer[i] = i;
+    }
 }
 
 
@@ -169,119 +170,109 @@ void APP_Tasks ( void )
     switch ( appData.state )
     {
         case APP_STATE_OPEN_DRIVER:
-        {
+        
             appData.sdmmcHandle = DRV_SDMMC_Open(DRV_SDMMC_INDEX_0, DRV_IO_INTENT_READWRITE);
 
-            if (DRV_HANDLE_INVALID != appData.sdmmcHandle)
+            if (appData.sdmmcHandle != DRV_HANDLE_INVALID)
             {
                 DRV_SDMMC_EventHandlerSet(appData.sdmmcHandle, (const void*)appTransferHandler, (uintptr_t)&appData);
                 appData.state = APP_STATE_SDCARD_ATTACHED;
             }
             else
             {
-                break;
+                appData.state = APP_STATE_ERROR;
             }
-        }
+            break;
 
         case APP_STATE_SDCARD_ATTACHED:
-        {
+        
             if (DRV_SDMMC_IsAttached(appData.sdmmcHandle) == true)
             {
                 appData.state = APP_STATE_GEOMETRY_GET;
             }
-            else
-            {
-                break;
-            }
-        }
-
+            break;
+        
         case APP_STATE_GEOMETRY_GET:
-        {
+        
             geometry = DRV_SDMMC_GeometryGet(appData.sdmmcHandle);
 
             if (geometry == NULL)
             {
-                appData.state = APP_STATE_ERROR;
-                break;
+                appData.state = APP_STATE_ERROR;                
             }
-
-            appData.numReadBlocks  = (SDMMC_DATA_SIZE / geometry->geometryTable[GEOMETRY_TABLE_READ_ENTRY].blockSize);
-            appData.numWriteBlocks = (SDMMC_DATA_SIZE / geometry->geometryTable[GEOMETRY_TABLE_WRITE_ENTRY].blockSize);
-            appData.numEraseBlocks = (SDMMC_DATA_SIZE / geometry->geometryTable[GEOMETRY_TABLE_ERASE_ENTRY].blockSize);
-        }
+            else
+            {
+                appData.numReadBlocks  = (SDMMC_DATA_SIZE / geometry->geometryTable[GEOMETRY_TABLE_READ_ENTRY].blockSize);
+                appData.numWriteBlocks = (SDMMC_DATA_SIZE / geometry->geometryTable[GEOMETRY_TABLE_WRITE_ENTRY].blockSize);
+                appData.numEraseBlocks = (SDMMC_DATA_SIZE / geometry->geometryTable[GEOMETRY_TABLE_ERASE_ENTRY].blockSize);
+                appData.state = APP_STATE_WRITE_MEMORY;                
+            }           
+            break;
 
         case APP_STATE_WRITE_MEMORY:
-        {
-            DRV_SDMMC_AsyncWrite(appData.sdmmcHandle, &appData.writeHandle, (void *)&appData.writeBuffer, BLOCK_START, appData.numWriteBlocks);
+        
+            DRV_SDMMC_AsyncWrite(appData.sdmmcHandle, &appData.writeHandle, (void *)appData.writeBuffer, BLOCK_START, appData.numWriteBlocks);
 
-            if (DRV_SDMMC_COMMAND_HANDLE_INVALID == appData.writeHandle)
+            if (appData.writeHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
             {
                 appData.state = APP_STATE_ERROR;
-                break;
             }
             else
             {
                 appData.state = APP_STATE_READ_MEMORY;
-            }
-        }
-
-        case APP_STATE_READ_MEMORY:
-        {
-            memset((void *)&appData.readBuffer, 0, SDMMC_DATA_SIZE);
-
-            DRV_SDMMC_AsyncRead(appData.sdmmcHandle, &appData.readHandle, (void *)&appData.readBuffer, BLOCK_START, appData.numReadBlocks);
-
-            if (DRV_SDMMC_COMMAND_HANDLE_INVALID == appData.readHandle)
-            {
-                appData.state = APP_STATE_ERROR;
-                break;
-            }
-            else
-            {
-                appData.state = APP_STATE_XFER_WAIT;
-            }
-        }
-
-        case APP_STATE_XFER_WAIT:
-        {
-            /* Wait until all the above queued transfer requests are done */
-            if(appData.xfer_done)
-            {
-                appData.xfer_done = false;
-                appData.state = APP_STATE_VERIFY_DATA;
-            }
-
+            }               
             break;
-        }
+        
+        case APP_STATE_READ_MEMORY:
+            
+            if (appData.xfer_done == true)
+            {
+                /* Write to the SD Card is complete */
+                appData.xfer_done = false;
+                
+                memset((void *)appData.readBuffer, 0, SDMMC_DATA_SIZE);
+
+                DRV_SDMMC_AsyncRead(appData.sdmmcHandle, &appData.readHandle, (void *)appData.readBuffer, BLOCK_START, appData.numReadBlocks);
+
+                if (appData.readHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
+                {
+                    appData.state = APP_STATE_ERROR;
+                }
+                else
+                {
+                    appData.state = APP_STATE_VERIFY_DATA;
+                }
+            }                    
+            break;
 
         case APP_STATE_VERIFY_DATA:
-        {
-            if (!memcmp(appData.writeBuffer, appData.readBuffer, SDMMC_DATA_SIZE))
+        
+            /* Wait until all the above queued transfer requests are done */
+            if(appData.xfer_done == true)
             {
-                appData.state = APP_STATE_SUCCESS;
+                appData.xfer_done = false;
+                if (!memcmp(appData.writeBuffer, appData.readBuffer, SDMMC_DATA_SIZE))
+                {
+                    appData.state = APP_STATE_SUCCESS;
+                }
+                else
+                {
+                    appData.state = APP_STATE_ERROR;
+                }
             }
-            else
-            {
-                appData.state = APP_STATE_ERROR;
-            }
-
-            break;
-        }
-
+            break;        
+        
         case APP_STATE_SUCCESS:
-        {
+        
             DRV_SDMMC_Close(appData.sdmmcHandle);
             LED_ON();
+            
             break;
-        }
+        
         case APP_STATE_ERROR:
-        {
-            DRV_SDMMC_Close(appData.sdmmcHandle);
-        }
         default:
-        {
-            break;
-        }
+            DRV_SDMMC_Close(appData.sdmmcHandle);                        
+            break;        
     }
 }
 

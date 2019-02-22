@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    app_sst26.h
+    app.h
 
   Summary:
     This header file provides prototypes and definitions for the application.
@@ -96,26 +96,20 @@ extern "C" {
 
 typedef enum
 {
-    /* Open the flash driver */
+    /* Open the SDMMC driver */
     APP_STATE_OPEN_DRIVER,
 
     /* Check for SDCARD Attach*/
     APP_STATE_SDCARD_ATTACHED,
 
     /* Get the geometry details */
-    APP_STATE_GEOMETRY_GET,
-
-    /* Erase Flash */
-    APP_STATE_ERASE_FLASH,
+    APP_STATE_GEOMETRY_GET,   
 
     /* Write to Memory */
     APP_STATE_WRITE_MEMORY,
 
-    /* Read From Memory */
-    APP_STATE_READ_MEMORY,
-
-    /* Wait for transfer to complete */
-    APP_STATE_XFER_WAIT,
+    /* Read from Memory */
+    APP_STATE_READ_MEMORY,    
 
     /* Verify Data Read */
     APP_STATE_VERIFY_DATA,
@@ -123,7 +117,7 @@ typedef enum
     /* Transfer success */
     APP_STATE_SUCCESS,
 
-    /* An app error has occurred */
+    /* Error occurred */
     APP_STATE_ERROR
 
 } APP_STATES;
@@ -153,8 +147,8 @@ typedef struct
     volatile bool xfer_done;
 
     /* Erase/Write/Read Command Handles*/
-    DRV_SDMMC_COMMAND_HANDLE eraseHandle;
     DRV_SDMMC_COMMAND_HANDLE writeHandle;
+    
     DRV_SDMMC_COMMAND_HANDLE readHandle;
 
     /* Number of read blocks*/
@@ -167,13 +161,12 @@ typedef struct
     uint32_t numEraseBlocks;
 
     /* Read Buffer */
-    uint32_t __attribute__((aligned(32))) readBuffer[SDMMC_BUFFER_SIZE];
+    uint32_t CACHE_ALIGN readBuffer[SDMMC_BUFFER_SIZE];
 
     /* Write Buffer*/
-    uint32_t __attribute__ ((aligned(32))) writeBuffer[SDMMC_BUFFER_SIZE];
+    uint32_t CACHE_ALIGN writeBuffer[SDMMC_BUFFER_SIZE];
+    
 } APP_DATA;
-
-extern APP_DATA appData;
 
 // *****************************************************************************
 // *****************************************************************************
