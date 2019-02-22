@@ -49,8 +49,8 @@
               <itemPath>../src/config/sam_e54_xpro_freertos/system/console/src/sys_console_local.h</itemPath>
               <itemPath>../src/config/sam_e54_xpro_freertos/system/console/src/sys_console_uart.h</itemPath>
               <itemPath>../src/config/sam_e54_xpro_freertos/system/console/src/sys_console_uart_definitions.h</itemPath>
-              <itemPath>../src/config/sam_e54_xpro_freertos/system/console/sys_debug.h</itemPath>
               <itemPath>../src/config/sam_e54_xpro_freertos/system/console/src/sys_debug_local.h</itemPath>
+              <itemPath>../src/config/sam_e54_xpro_freertos/system/console/sys_debug.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_e54_xpro_freertos/system/int/sys_int.h</itemPath>
@@ -296,7 +296,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME54_DFP" vendor="Atmel" version="1.0.94"/>
+        <pack name="SAME54_DFP" vendor="Microchip" version="2.0.12"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>

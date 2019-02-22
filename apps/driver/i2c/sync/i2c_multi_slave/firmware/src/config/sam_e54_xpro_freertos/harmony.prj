@@ -99,8 +99,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B63EFC0BFEC42EEF84DAA33B54B64B23</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B63EFC0BFEC42EEF84DAA33B54B64B23</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E86F514A8211FD0FB1C6785E6B172323</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E86F514A8211FD0FB1C6785E6B172323</UserChecksum>
         </File>
         <File dnOrder="12">
           <Type dnOrder="0">SOURCE</Type>
@@ -171,8 +171,8 @@
           <Name dnOrder="1">plib_port.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_freertos/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">22B237D635B2FF5A1AD865A2F33DFB0C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">22B237D635B2FF5A1AD865A2F33DFB0C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E4B94FE7497D2110F406D6B9D1A7E5BC</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E4B94FE7497D2110F406D6B9D1A7E5BC</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
@@ -187,8 +187,8 @@
           <Name dnOrder="1">plib_sercom7_i2c.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_freertos/peripheral/sercom/i2cm/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/sercom/i2cm/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1CB93C48E32C4D5E4E9FEE5D74B576B4</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1CB93C48E32C4D5E4E9FEE5D74B576B4</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4C9D82F75F3FF0F87D58EBE2577454EF</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4C9D82F75F3FF0F87D58EBE2577454EF</UserChecksum>
         </File>
         <File dnOrder="23">
           <Type dnOrder="0">SOURCE</Type>
@@ -291,8 +291,8 @@
           <Name dnOrder="1">FreeRTOSConfig.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_freertos</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">52AE827DCF6452E6784FF79CDA435554</GeneratedChecksum>
-          <UserChecksum dnOrder="5">52AE827DCF6452E6784FF79CDA435554</UserChecksum>
+          <GeneratedChecksum dnOrder="4">37C46EA85BA36879DDA3E1B02FDED65A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">37C46EA85BA36879DDA3E1B02FDED65A</UserChecksum>
         </File>
         <File dnOrder="36">
           <Type dnOrder="0">HEADER</Type>
@@ -435,8 +435,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B043F592ED2A80291DABCE198A1CEE45</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B043F592ED2A80291DABCE198A1CEE45</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F21BF5508AA89A687645F98D4CFF34AD</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F21BF5508AA89A687645F98D4CFF34AD</UserChecksum>
         </File>
         <File dnOrder="54">
           <Type dnOrder="0">HEADER</Type>
@@ -491,8 +491,8 @@
           <Name dnOrder="1">device_cache.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6D7E462FF2BAB390D1846FBB4F1BBEB6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6D7E462FF2BAB390D1846FBB4F1BBEB6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9ED2219AFB6FDB7A6E9A066E468DAE8B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9ED2219AFB6FDB7A6E9A066E468DAE8B</UserChecksum>
         </File>
         <File dnOrder="61">
           <Type dnOrder="0">HEADER</Type>
@@ -979,8 +979,8 @@
           <Name dnOrder="1">sys_debug.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_freertos/system/console/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/console/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B1112C6BA5F89C1BADE1FA4DB93882C5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B1112C6BA5F89C1BADE1FA4DB93882C5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A1C5B60E9D7D4927FACEE10CE62BB3C2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A1C5B60E9D7D4927FACEE10CE62BB3C2</UserChecksum>
         </File>
         <File dnOrder="122">
           <Type dnOrder="0">HEADER</Type>
@@ -1127,7 +1127,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;"/>
     </Settings>
   </Configurator>
 </Configuration>

@@ -56,8 +56,8 @@
 // *****************************************************************************
 // *****************************************************************************
 
-/* SERCOM7 I2C baud value for 400 Khz baud rate */
-#define SERCOM7_I2CM_BAUD_VALUE			(13620U)
+/* SERCOM7 I2C baud value for 100 Khz baud rate */
+#define SERCOM7_I2CM_BAUD_VALUE			(59880U)
 
 static SERCOM_I2C_OBJ sercom7I2CObj;
 
