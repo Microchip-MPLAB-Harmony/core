@@ -58,6 +58,7 @@
 // *****************************************************************************
 
 /* FS Function registration table. */
+typedef SYS_FS_MEDIA_COMMAND_STATUS (* CommandStatusGetType)( DRV_HANDLE, SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE );    
 
 const SYS_FS_MEDIA_FUNCTIONS sdspiMediaFunctions =
 {
@@ -66,7 +67,7 @@ const SYS_FS_MEDIA_FUNCTIONS sdspiMediaFunctions =
     .sectorRead         = DRV_SDSPI_Read,
     .sectorWrite        = DRV_SDSPI_Write,
     .eventHandlerset    = DRV_SDSPI_EventHandlerSet,
-    .commandStatusGet   = (void *)DRV_SDSPI_CommandStatusGet,
+    .commandStatusGet   = (CommandStatusGetType) DRV_SDSPI_CommandStatusGet,
     .Read               = DRV_SDSPI_Read,
     .erase              = NULL,
     .addressGet         = NULL,
