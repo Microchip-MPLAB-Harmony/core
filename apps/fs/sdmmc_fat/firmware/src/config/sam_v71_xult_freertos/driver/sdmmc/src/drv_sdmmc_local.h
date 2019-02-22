@@ -8,11 +8,11 @@
     drv_sdmmc_local.h
 
   Summary:
-    SD Host Controller driver local declarations, structures and function 
+    SD Host Controller driver local declarations, structures and function
     prototypes.
 
   Description:
-    This file contains the SD Host Controller driver's local declarations 
+    This file contains the SD Host Controller driver's local declarations
     and definitions.
 *******************************************************************************/
 
@@ -319,7 +319,7 @@ typedef struct
     DRV_SDMMC_BUS_WIDTH          busWidth;
     uint16_t                    rca;
     uint8_t                     cidBuffer[DRV_SDMMC_CID_BUFFER_LEN];
-    uint8_t                     csdBuffer[DRV_SDMMC_CSD_BUFFER_LEN];      
+    uint8_t                     csdBuffer[DRV_SDMMC_CSD_BUFFER_LEN];
     uint8_t __attribute__((aligned(32))) scrBuffer[DRV_SDMMC_SCR_BUFFER_LEN];
     uint8_t __attribute__((aligned(32))) switchStatusBuffer[DRV_SDMMC_SWITCH_STATUS_BUFFER_LEN];
     uint8_t                     cmd6Mode;
@@ -485,7 +485,7 @@ typedef struct
 
     /* Different states in sending a command */
     DRV_SDMMC_COMMAND_STATES     cmdState;
-    
+
     /* Data transfer flags */
     DRV_SDMMC_DataTransferFlags  dataTransferFlags;
 
@@ -525,8 +525,3 @@ typedef struct
 } DRV_SDMMC_OBJ;
 
 #endif //#ifndef _DRV_SDMMC_LOCAL_H
-
-/*******************************************************************************
- End of File
-*/
-

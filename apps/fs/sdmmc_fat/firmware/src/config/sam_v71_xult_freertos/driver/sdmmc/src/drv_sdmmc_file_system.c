@@ -56,6 +56,7 @@
 // *****************************************************************************
 
 /* FS Function registration table. */
+typedef SYS_FS_MEDIA_COMMAND_STATUS (* CommandStatusGetType)( DRV_HANDLE, SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE );
 
 const SYS_FS_MEDIA_FUNCTIONS sdmmcMediaFunctions =
 {
@@ -64,7 +65,7 @@ const SYS_FS_MEDIA_FUNCTIONS sdmmcMediaFunctions =
     .sectorRead         = DRV_SDMMC_AsyncRead,
     .sectorWrite        = DRV_SDMMC_AsyncWrite,
     .eventHandlerset    = DRV_SDMMC_EventHandlerSet,
-    .commandStatusGet   = (void *)DRV_SDMMC_CommandStatus,
+    .commandStatusGet   = (CommandStatusGetType)DRV_SDMMC_CommandStatus,
     .open               = DRV_SDMMC_Open,
     .close              = DRV_SDMMC_Close,
     .tasks              = DRV_SDMMC_Tasks
