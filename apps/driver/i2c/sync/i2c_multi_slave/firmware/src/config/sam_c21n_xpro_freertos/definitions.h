@@ -59,10 +59,10 @@
 #include "system/console/sys_debug.h"
 #include "FreeRTOS.h"
 #include "task.h"
-#include "driver/i2c/drv_i2c.h"
+#include "bsp/bsp.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
-#include "bsp/bsp.h"
+#include "driver/i2c/drv_i2c.h"
 #include "app_i2c_eeprom.h"
 #include "app_i2c_temp_sensor.h"
 

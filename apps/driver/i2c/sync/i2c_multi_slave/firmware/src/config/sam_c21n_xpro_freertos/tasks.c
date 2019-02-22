@@ -119,7 +119,7 @@ void SYS_Tasks ( void )
     /* Create OS Thread for APP_I2C_TEMP_SENSOR_Tasks. */
     xTaskCreate((TaskFunction_t) _APP_I2C_TEMP_SENSOR_Tasks,
                 "APP_I2C_TEMP_SENSOR_Tasks",
-                128,
+                1024,
                 NULL,
                 1,
                 &xAPP_I2C_TEMP_SENSOR_Tasks);
