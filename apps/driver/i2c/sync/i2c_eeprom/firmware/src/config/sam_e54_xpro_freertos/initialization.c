@@ -106,7 +106,7 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_I2C Instance 0 Initialization Data">
 
 /* I2C Client Objects Pool */
-static DRV_I2C_CLIENT_OBJ drvI2C0ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_I2C_CLIENT_OBJ drvI2C0ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX0];
 
 /* I2C PLib Interface Initialization */
 const DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
@@ -196,8 +196,6 @@ void SYS_Initialize ( void* data )
     SERCOM7_I2C_Initialize();
 
 
-    NVIC_Initialize();
-
     /* Initialize I2C0 Driver Instance */
     sysObj.drvI2C0 = DRV_I2C_Initialize(DRV_I2C_INDEX_0, (SYS_MODULE_INIT *)&drvI2C0InitData);
 
@@ -206,7 +204,8 @@ void SYS_Initialize ( void* data )
     APP_I2C_EEPROM_Initialize();
 
 
-  
+    NVIC_Initialize();
+
 }
 
 
