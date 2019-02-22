@@ -139,12 +139,18 @@
 #define INCLUDE_xTaskGetHandle                  <#if FREERTOS_INCLUDE_XTASKGETHANDLE == true>1<#else>0</#if>
 
 <#if FREERTOS_SETUP_TICK_INTERRUPT??>
+    <#lt>#ifdef __ICCARM__
+    <#lt>void ${FREERTOS_SETUP_TICK_INTERRUPT}(void);
+    <#lt>#endif //__ICCARM__
     <#lt>#define configSETUP_TICK_INTERRUPT ${FREERTOS_SETUP_TICK_INTERRUPT}
 </#if>
 <#if FREERTOS_EOI_ADDRESS??>
     <#lt>#define configEOI_ADDRESS ${FREERTOS_EOI_ADDRESS}
 </#if>
 <#if FREERTOS_CONFIG_TICK_INTERRUPT??>
+    <#lt>#ifdef __ICCARM__
+    <#lt>void ${FREERTOS_CONFIG_TICK_INTERRUPT}(void);
+    <#lt>#endif //__ICCARM__
     <#lt>#define configCLEAR_TICK_INTERRUPT ${FREERTOS_CONFIG_TICK_INTERRUPT}
 </#if>
 
