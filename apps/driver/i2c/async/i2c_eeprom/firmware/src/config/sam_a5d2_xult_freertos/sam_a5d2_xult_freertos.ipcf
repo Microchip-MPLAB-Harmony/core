@@ -14,6 +14,16 @@
         <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5</path>
         <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\Include</path>
     </includePath>
+    <asmIncludePath>
+        <path>$PROJ_DIR$\..\..\firmware\src</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\config\sam_a5d2_xult_freertos</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\packs\ATSAMA5D27_DFP</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS\CMSIS\Core_A\Include</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\arm</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\Include</path>
+    </asmIncludePath>
     <linkerFile>
         <override>true</override>
         <path>$PROJ_DIR$\..\..\firmware\src\config\sam_a5d2_xult_freertos\ddr.icf</path>
@@ -22,14 +32,15 @@
         <group name="Header Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_a5d2_xult_freertos">
             <path>\bsp\bsp.h</path>
             <path>\peripheral\pit\plib_pit.h</path>
-            <path>\..\..\arm\toolchain_specifics.h</path>
+            <path>\device_cache.h</path>
+            <path>\toolchain_specifics.h</path>
             <path>\definitions.h</path>
             <path>\peripheral\mmu\plib_mmu.h</path>
             <path>\peripheral\matrix\plib_matrix.h</path>
             <path>\peripheral\clk\plib_clk.h</path>
             <path>\peripheral\pio\plib_pio.h</path>
-            <path>\peripheral\pio\plib_pio_pin.h</path>
             <path>\peripheral\aic\plib_aic.h</path>
+            <path>\..\..\packs\ATSAMA5D27_DFP\device.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\acc.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\adc.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\aes.h</path>
@@ -79,7 +90,6 @@
             <path>\..\..\packs\ATSAMA5D27_DFP\component\uhphs.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\wdt.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\xdmac.h</path>
-            <path>\..\..\packs\ATSAMA5D27_DFP\device.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\atsama5d27.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\pio\sama5d27.h</path>
             <path>\peripheral\twihs\plib_twihs_master.h</path>
@@ -120,6 +130,7 @@
             <path>\system\system_module.h</path>
             <path>\system\int\sys_int.h</path>
             <path>\system\int\sys_int_mapping.h</path>
+            <path>\system\cache\sys_cache.h</path>
             <path>\osal\osal.h</path>
             <path>\osal\osal_definitions.h</path>
             <path>\osal\osal_freertos.h</path>
@@ -133,8 +144,8 @@
             <path>\..\..\main.c</path>
             <path>\initialization.c</path>
             <path>\interrupts.c</path>
-            <path>\stdio\iar_monitor.c</path>
             <path>\exceptions.c</path>
+            <path>\stdio\iar_monitor.c</path>
             <path>\peripheral\mmu\plib_mmu.c</path>
             <path>\peripheral\matrix\plib_matrix.c</path>
             <path>\peripheral\clk\plib_clk.c</path>
@@ -158,6 +169,7 @@
             <path>\driver\i2c\src\drv_i2c.c</path>
             <path>\driver\i2c\src\drv_i2c_local.h</path>
             <path>\system\int\src\sys_int.c</path>
+            <path>\system\cache\sys_cache.c</path>
             <path>\osal\osal_freertos.c</path>
             <path>\..\..\app_sam_a5d2_xult.c</path>
             <path>\tasks.c</path>

@@ -53,6 +53,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define INT_IrqRestore             	SYS_INT_Restore
 #define INT_InterruptEnable        	SYS_INT_SourceEnable
 #define INT_InterruptDisable       	SYS_INT_SourceDisable
+#define INT_InterruptRestore        SYS_INT_SourceRestore
 #define INT_IsInterruptEnabled     	SYS_INT_SourceIsEnabled
 #define INT_IsInterruptPendingFor  	SYS_INT_SourceStatusGet
 #define INT_InterruptPendingSet    	SYS_INT_SourceStatusSet
@@ -94,10 +95,10 @@ INT_IrqEnable( void )
 bool
 INT_IrqDisable( void )
 {
-    bool previousSetting = INT_AreIrqsEnabled();
+    bool previousValue = INT_AreIrqsEnabled();
     __disable_irq();
     __DMB();
-    return( previousSetting );
+    return( previousValue );
 }
 
 void
@@ -140,13 +141,24 @@ INT_InterruptEnable( IRQn_Type aSrcSelection )
 bool
 INT_InterruptDisable( IRQn_Type aSrcSelection )
 {
-    bool previousSetting = INT_IsInterruptEnabled( aSrcSelection );
+    bool previousValue = INT_IsInterruptEnabled( aSrcSelection );
     aic_registers_t * aicPtr = _aicInstanceGet( aSrcSelection );
     aicPtr->AIC_SSR = AIC_SSR_INTSEL( (uint32_t) aSrcSelection );
     aicPtr->AIC_IDCR = AIC_IDCR_Msk;
     __DSB();
     __ISB();
-    return( previousSetting );
+    return( previousValue );
+}
+
+void
+INT_InterruptRestore( IRQn_Type aSrcSelection, bool state )
+{
+    if( state ) {
+        aic_registers_t * aicPtr = _aicInstanceGet( aSrcSelection );
+        aicPtr->AIC_SSR = AIC_SSR_INTSEL( (uint32_t) aSrcSelection );
+        aicPtr->AIC_IECR = AIC_IECR_Msk;
+    }
+    return;
 }
 
 bool
