@@ -4,9 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="f2" displayName="arm" projectFiles="true">
-        <itemPath>../src/arm/toolchain_specifics.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_e54_xpro" projectFiles="true">
           <logicalFolder name="f1" displayName="bsp" projectFiles="true">
@@ -26,13 +23,15 @@
               <itemPath>../src/config/sam_e54_xpro/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
           </logicalFolder>
+          <itemPath>../src/config/sam_e54_xpro/device_cache.h</itemPath>
+          <itemPath>../src/config/sam_e54_xpro/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro/definitions.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro/FreeRTOSConfig.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro/user.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f4" displayName="FreeRTOS" projectFiles="true">
+      <logicalFolder name="f3" displayName="FreeRTOS" projectFiles="true">
         <logicalFolder name="f1" displayName="Source" projectFiles="true">
           <logicalFolder name="f1" displayName="include" projectFiles="true">
             <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/croutine.h</itemPath>
@@ -63,12 +62,12 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f5" displayName="osal" projectFiles="true">
+      <logicalFolder name="f4" displayName="osal" projectFiles="true">
         <itemPath>../src/config/sam_e54_xpro/osal/osal.h</itemPath>
         <itemPath>../src/config/sam_e54_xpro/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/sam_e54_xpro/osal/osal_freertos.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="packs" projectFiles="true">
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAME54P20A_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/ac.h</itemPath>
@@ -77,13 +76,10 @@
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/can.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/ccl.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/cmcc.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/coredebug.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/dac.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/dmac.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/dsu.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/dwt.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/eic.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/etm.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/evsys.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/freqm.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/gclk.h</itemPath>
@@ -91,7 +87,6 @@
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/hmatrixb.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/i2s.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/icm.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/itm.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/mclk.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/nvmctrl.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/osc32kctrl.h</itemPath>
@@ -111,7 +106,6 @@
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/supc.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/tc.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/tcc.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/tpi.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/trng.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/usb.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/wdt.h</itemPath>
@@ -127,6 +121,7 @@
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm4.h</itemPath>
@@ -180,7 +175,7 @@
           <itemPath>../src/config/sam_e54_xpro/initialization.c</itemPath>
           <itemPath>../src/config/sam_e54_xpro/interrupts.c</itemPath>
           <itemPath>../src/config/sam_e54_xpro/exceptions.c</itemPath>
-          <itemPath>../src/config/sam_e54_xpro/startup.c</itemPath>
+          <itemPath>../src/config/sam_e54_xpro/startup_xc32.c</itemPath>
           <itemPath>../src/config/sam_e54_xpro/libc_syscalls.c</itemPath>
           <itemPath>../src/config/sam_e54_xpro/freertos_hooks.c</itemPath>
           <itemPath>../src/config/sam_e54_xpro/tasks.c</itemPath>
@@ -203,7 +198,7 @@
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/croutine.c</itemPath>
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/list.c</itemPath>
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/queue.c</itemPath>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/tasks.c</itemPath>
+          <itemPath>../src/third_party/rtos/FreeRTOS/Source/FreeRTOS_tasks.c</itemPath>
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/timers.c</itemPath>
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/event_groups.c</itemPath>
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/stream_buffer.c</itemPath>
@@ -240,7 +235,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME54_DFP" vendor="Atmel" version="1.0.94"/>
+        <pack name="SAME54_DFP" vendor="Microchip" version="2.0.12"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>
