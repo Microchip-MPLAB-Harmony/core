@@ -65,7 +65,7 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance 0 Initialization Data">
 
 /* SPI Client Objects Pool */
-static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0];
 
 /* SPI PLIB Interface Initialization */
 const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
@@ -106,10 +106,16 @@ const DRV_SPI_INIT drvSPI0InitData =
     .clientObjPool = (uintptr_t)&drvSPI0ClientObjPool[0],
 
     /* DMA Channel for Transmit */
-    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
+    .dmaChannelTransmit = DRV_SPI_XMIT_DMA_CH_IDX0,
 
     /* DMA Channel for Receive */
-    .dmaChannelReceive  = SYS_DMA_CHANNEL_NONE,
+    .dmaChannelReceive  = DRV_SPI_RCV_DMA_CH_IDX0,
+
+    /* SPI Transmit Register */
+    .spiTransmitAddress =  (void *)&(SPI1_REGS->SPI_TDR),
+
+    /* SPI Receive Register */
+    .spiReceiveAddress  = (void *)&(SPI1_REGS->SPI_RDR),
 
 };
 
@@ -165,10 +171,11 @@ void SYS_Initialize ( void* data )
     PLIB_L2CC_Initialize();
 
     INT_Initialize();
+    XDMAC0_Initialize();
+
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
 
 	SPI1_Initialize();
-
 
 
     /* Initialize SPI0 Driver Instance */
@@ -181,7 +188,7 @@ void SYS_Initialize ( void* data )
     APP_MONITOR_Initialize();
 
 
-  
+
 }
 
 
