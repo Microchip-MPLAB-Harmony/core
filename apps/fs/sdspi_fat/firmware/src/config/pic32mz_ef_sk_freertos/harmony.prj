@@ -43,16 +43,16 @@
           <Name dnOrder="1">diskio.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/fs/fat_fs/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/fs/fat_fs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">19E2AF9512A9EE40F1DEE63052350D2C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">19E2AF9512A9EE40F1DEE63052350D2C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">80E88E0E2E63B3FCAED031C5F6949756</GeneratedChecksum>
+          <UserChecksum dnOrder="5">80E88E0E2E63B3FCAED031C5F6949756</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_sdspi.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">76C807095F83FCFC265C5A80E29AF2DE</GeneratedChecksum>
-          <UserChecksum dnOrder="5">76C807095F83FCFC265C5A80E29AF2DE</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A7BE4B9E11374A1FCFABCADB6E4FE3D3</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A7BE4B9E11374A1FCFABCADB6E4FE3D3</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -115,8 +115,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8109A7B099F6CAA31E3C6379055F47A6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">589424676623C3FDD29C66560F7C03F3</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1A22DAB7678DBB21BDFA8573FC141EEC</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1A22DAB7678DBB21BDFA8573FC141EEC</UserChecksum>
         </File>
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
@@ -171,8 +171,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">73FF06EE44C9B2B1B074FA81BA4028CF</GeneratedChecksum>
-          <UserChecksum dnOrder="5">73FF06EE44C9B2B1B074FA81BA4028CF</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C4C33D754A88185B9741FC9B2085273C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C4C33D754A88185B9741FC9B2085273C</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
@@ -187,8 +187,8 @@
           <Name dnOrder="1">plib_dmac.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/dmac/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/dmac/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">255C9A61C60AF3440432A452ACA13A1F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">255C9A61C60AF3440432A452ACA13A1F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">10933C902F1AC8C445DF1EF2AC0C2A42</GeneratedChecksum>
+          <UserChecksum dnOrder="5">10933C902F1AC8C445DF1EF2AC0C2A42</UserChecksum>
         </File>
         <File dnOrder="23">
           <Type dnOrder="0">SOURCE</Type>
@@ -216,21 +216,13 @@
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">SOURCE</Type>
-          <Name dnOrder="1">plib_wdt.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/wdt/</LogicalPath>
-          <PhysicalPath dnOrder="3">/peripheral/wdt/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">171B33F15A7D47957FA9902DC77C7878</GeneratedChecksum>
-          <UserChecksum dnOrder="5">171B33F15A7D47957FA9902DC77C7878</UserChecksum>
-        </File>
-        <File dnOrder="27">
-          <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">port.c</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/portable/MPLAB/PIC32MZ</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MZ/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">9AD7A07CFD0772451C2D7C0B2A93623E</GeneratedChecksum>
           <UserChecksum dnOrder="5">9AD7A07CFD0772451C2D7C0B2A93623E</UserChecksum>
         </File>
-        <File dnOrder="28">
+        <File dnOrder="27">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">port_asm.S</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/portable/MPLAB/PIC32MZ</LogicalPath>
@@ -238,7 +230,7 @@
           <GeneratedChecksum dnOrder="4">449A6DEF889FED055187502B6CDF58BC</GeneratedChecksum>
           <UserChecksum dnOrder="5">449A6DEF889FED055187502B6CDF58BC</UserChecksum>
         </File>
-        <File dnOrder="29">
+        <File dnOrder="28">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">queue.c</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source</LogicalPath>
@@ -246,7 +238,7 @@
           <GeneratedChecksum dnOrder="4">5D6DBFEA93298D6AF94BBB95520D280F</GeneratedChecksum>
           <UserChecksum dnOrder="5">5D6DBFEA93298D6AF94BBB95520D280F</UserChecksum>
         </File>
-        <File dnOrder="30">
+        <File dnOrder="29">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">stream_buffer.c</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source</LogicalPath>
@@ -254,7 +246,7 @@
           <GeneratedChecksum dnOrder="4">AFF38FEB6C575303D2AB185E3931C4E1</GeneratedChecksum>
           <UserChecksum dnOrder="5">AFF38FEB6C575303D2AB185E3931C4E1</UserChecksum>
         </File>
-        <File dnOrder="31">
+        <File dnOrder="30">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">sys_dma.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/dma/</LogicalPath>
@@ -262,7 +254,7 @@
           <GeneratedChecksum dnOrder="4">2E02308556447B0510575953A9E9DF6E</GeneratedChecksum>
           <UserChecksum dnOrder="5">2E02308556447B0510575953A9E9DF6E</UserChecksum>
         </File>
-        <File dnOrder="32">
+        <File dnOrder="31">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">sys_fs.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/fs/</LogicalPath>
@@ -270,7 +262,7 @@
           <GeneratedChecksum dnOrder="4">B3CD34835BFF6C8924751E0ED0D3BDDD</GeneratedChecksum>
           <UserChecksum dnOrder="5">B3CD34835BFF6C8924751E0ED0D3BDDD</UserChecksum>
         </File>
-        <File dnOrder="33">
+        <File dnOrder="32">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">sys_fs_media_manager.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/fs/</LogicalPath>
@@ -278,7 +270,7 @@
           <GeneratedChecksum dnOrder="4">880BB137D9BCE9498AC8C33D185B3608</GeneratedChecksum>
           <UserChecksum dnOrder="5">880BB137D9BCE9498AC8C33D185B3608</UserChecksum>
         </File>
-        <File dnOrder="34">
+        <File dnOrder="33">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">sys_int.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/int/</LogicalPath>
@@ -286,7 +278,7 @@
           <GeneratedChecksum dnOrder="4">640A4B35B8CDB53BD8EA5077D81386BE</GeneratedChecksum>
           <UserChecksum dnOrder="5">640A4B35B8CDB53BD8EA5077D81386BE</UserChecksum>
         </File>
-        <File dnOrder="35">
+        <File dnOrder="34">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">sys_time.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/time/</LogicalPath>
@@ -294,7 +286,7 @@
           <GeneratedChecksum dnOrder="4">70DAE413C209782D51F61D7C896593FB</GeneratedChecksum>
           <UserChecksum dnOrder="5">70DAE413C209782D51F61D7C896593FB</UserChecksum>
         </File>
-        <File dnOrder="36">
+        <File dnOrder="35">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">tasks.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
@@ -302,7 +294,7 @@
           <GeneratedChecksum dnOrder="4">5560F2EBC22DF6BE816273A6C41E783C</GeneratedChecksum>
           <UserChecksum dnOrder="5">5560F2EBC22DF6BE816273A6C41E783C</UserChecksum>
         </File>
-        <File dnOrder="37">
+        <File dnOrder="36">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">timers.c</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source</LogicalPath>
@@ -310,7 +302,7 @@
           <GeneratedChecksum dnOrder="4">9F810635B33FABA6A38F4F1B9409D2E9</GeneratedChecksum>
           <UserChecksum dnOrder="5">9F810635B33FABA6A38F4F1B9409D2E9</UserChecksum>
         </File>
-        <File dnOrder="38">
+        <File dnOrder="37">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">xc32_monitor.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/stdio/</LogicalPath>
@@ -318,7 +310,7 @@
           <GeneratedChecksum dnOrder="4">0CDCE9B6891797FCD2AEA243F841353F</GeneratedChecksum>
           <UserChecksum dnOrder="5">0CDCE9B6891797FCD2AEA243F841353F</UserChecksum>
         </File>
-        <File dnOrder="39">
+        <File dnOrder="38">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">FreeRTOS.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -326,7 +318,7 @@
           <GeneratedChecksum dnOrder="4">C7BB746648A6C4E1B795150EE9E13B23</GeneratedChecksum>
           <UserChecksum dnOrder="5">C7BB746648A6C4E1B795150EE9E13B23</UserChecksum>
         </File>
-        <File dnOrder="40">
+        <File dnOrder="39">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">FreeRTOSConfig.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos</LogicalPath>
@@ -334,7 +326,7 @@
           <GeneratedChecksum dnOrder="4">D26C9C401299FE4FD260708A72A1443C</GeneratedChecksum>
           <UserChecksum dnOrder="5">D26C9C401299FE4FD260708A72A1443C</UserChecksum>
         </File>
-        <File dnOrder="41">
+        <File dnOrder="40">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">ISR_Support.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/portable/MPLAB/PIC32MZ</LogicalPath>
@@ -342,7 +334,7 @@
           <GeneratedChecksum dnOrder="4">405861CE543969D0A0182E7BC277F9BB</GeneratedChecksum>
           <UserChecksum dnOrder="5">405861CE543969D0A0182E7BC277F9BB</UserChecksum>
         </File>
-        <File dnOrder="42">
+        <File dnOrder="41">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">app.h</Name>
           <LogicalPath dnOrder="2"/>
@@ -350,7 +342,7 @@
           <GeneratedChecksum dnOrder="4"/>
           <UserChecksum dnOrder="5"/>
         </File>
-        <File dnOrder="43">
+        <File dnOrder="42">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">bsp.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/bsp/</LogicalPath>
@@ -358,7 +350,7 @@
           <GeneratedChecksum dnOrder="4">A9C595E0E5A92D2B85C18D2A27597B84</GeneratedChecksum>
           <UserChecksum dnOrder="5">A9C595E0E5A92D2B85C18D2A27597B84</UserChecksum>
         </File>
-        <File dnOrder="44">
+        <File dnOrder="43">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
@@ -366,7 +358,7 @@
           <GeneratedChecksum dnOrder="4">76116F7453CE60E1FD502529EEFC82D5</GeneratedChecksum>
           <UserChecksum dnOrder="5">76116F7453CE60E1FD502529EEFC82D5</UserChecksum>
         </File>
-        <File dnOrder="45">
+        <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">croutine.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -374,15 +366,15 @@
           <GeneratedChecksum dnOrder="4">0A32C42550C23D91E88EACF49CB1038D</GeneratedChecksum>
           <UserChecksum dnOrder="5">0A32C42550C23D91E88EACF49CB1038D</UserChecksum>
         </File>
-        <File dnOrder="46">
+        <File dnOrder="45">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6714F9EA4A41DAA32C1AD44DFBD0ED92</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6714F9EA4A41DAA32C1AD44DFBD0ED92</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4294373E971CF896835502B98D6036B4</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4294373E971CF896835502B98D6036B4</UserChecksum>
         </File>
-        <File dnOrder="47">
+        <File dnOrder="46">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">deprecated_definitions.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -390,7 +382,7 @@
           <GeneratedChecksum dnOrder="4">D8668D5366E30077151F27747B127FF9</GeneratedChecksum>
           <UserChecksum dnOrder="5">D8668D5366E30077151F27747B127FF9</UserChecksum>
         </File>
-        <File dnOrder="48">
+        <File dnOrder="47">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">device.h</Name>
           <LogicalPath dnOrder="2">packs/PIC32MZ2048EFH144_DFP/</LogicalPath>
@@ -398,7 +390,7 @@
           <GeneratedChecksum dnOrder="4">5D5C52527AB1435153DB9B50ADE6B79D</GeneratedChecksum>
           <UserChecksum dnOrder="5">5D5C52527AB1435153DB9B50ADE6B79D</UserChecksum>
         </File>
-        <File dnOrder="49">
+        <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">diskio.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/fs/fat_fs/hardware_access/</LogicalPath>
@@ -406,7 +398,7 @@
           <GeneratedChecksum dnOrder="4">ACCDF258E795E441E4BEBF1AF2DE3C13</GeneratedChecksum>
           <UserChecksum dnOrder="5">ACCDF258E795E441E4BEBF1AF2DE3C13</UserChecksum>
         </File>
-        <File dnOrder="50">
+        <File dnOrder="49">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">driver.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/</LogicalPath>
@@ -414,7 +406,7 @@
           <GeneratedChecksum dnOrder="4">1D2094DFA60F847FFD4E8153B6E78027</GeneratedChecksum>
           <UserChecksum dnOrder="5">1D2094DFA60F847FFD4E8153B6E78027</UserChecksum>
         </File>
-        <File dnOrder="51">
+        <File dnOrder="50">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">driver_common.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/</LogicalPath>
@@ -422,7 +414,7 @@
           <GeneratedChecksum dnOrder="4">CC7DFCC51CD25171A3E400E18969354F</GeneratedChecksum>
           <UserChecksum dnOrder="5">CC7DFCC51CD25171A3E400E18969354F</UserChecksum>
         </File>
-        <File dnOrder="52">
+        <File dnOrder="51">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_sdspi.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/sdspi/</LogicalPath>
@@ -430,7 +422,7 @@
           <GeneratedChecksum dnOrder="4">EDB331F31F51C8BCC531C36DE398DB47</GeneratedChecksum>
           <UserChecksum dnOrder="5">EDB331F31F51C8BCC531C36DE398DB47</UserChecksum>
         </File>
-        <File dnOrder="53">
+        <File dnOrder="52">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_sdspi_definitions.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/sdspi/</LogicalPath>
@@ -438,7 +430,7 @@
           <GeneratedChecksum dnOrder="4">6558E674EE48D4C92BE35DB520D16243</GeneratedChecksum>
           <UserChecksum dnOrder="5">6558E674EE48D4C92BE35DB520D16243</UserChecksum>
         </File>
-        <File dnOrder="54">
+        <File dnOrder="53">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_sdspi_local.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/sdspi/</LogicalPath>
@@ -446,7 +438,7 @@
           <GeneratedChecksum dnOrder="4">28CC8C3EAE8AE300321DC1DEAB372DCC</GeneratedChecksum>
           <UserChecksum dnOrder="5">28CC8C3EAE8AE300321DC1DEAB372DCC</UserChecksum>
         </File>
-        <File dnOrder="55">
+        <File dnOrder="54">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_sdspi_plib_interface.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/sdspi/</LogicalPath>
@@ -454,7 +446,7 @@
           <GeneratedChecksum dnOrder="4">92F376B3F4B2D849C9471D353B476C2B</GeneratedChecksum>
           <UserChecksum dnOrder="5">92F376B3F4B2D849C9471D353B476C2B</UserChecksum>
         </File>
-        <File dnOrder="56">
+        <File dnOrder="55">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">event_groups.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -462,7 +454,7 @@
           <GeneratedChecksum dnOrder="4">9596B64893D5B8092B5FBC92D2355803</GeneratedChecksum>
           <UserChecksum dnOrder="5">9596B64893D5B8092B5FBC92D2355803</UserChecksum>
         </File>
-        <File dnOrder="57">
+        <File dnOrder="56">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">ff.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/fs/fat_fs/file_system</LogicalPath>
@@ -470,7 +462,7 @@
           <GeneratedChecksum dnOrder="4">9B58085CCB501A09AD41AD5843BF4351</GeneratedChecksum>
           <UserChecksum dnOrder="5">9B58085CCB501A09AD41AD5843BF4351</UserChecksum>
         </File>
-        <File dnOrder="58">
+        <File dnOrder="57">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">ffconf.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/fs/fat_fs/file_system/</LogicalPath>
@@ -478,7 +470,7 @@
           <GeneratedChecksum dnOrder="4">5781E2F52EEF18B611BDA8DFAED6B5C6</GeneratedChecksum>
           <UserChecksum dnOrder="5">5781E2F52EEF18B611BDA8DFAED6B5C6</UserChecksum>
         </File>
-        <File dnOrder="59">
+        <File dnOrder="58">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">list.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -486,7 +478,7 @@
           <GeneratedChecksum dnOrder="4">32539EFF6BC28ED0F71660A40751ED6A</GeneratedChecksum>
           <UserChecksum dnOrder="5">32539EFF6BC28ED0F71660A40751ED6A</UserChecksum>
         </File>
-        <File dnOrder="60">
+        <File dnOrder="59">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">message_buffer.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -494,7 +486,7 @@
           <GeneratedChecksum dnOrder="4">16FB71596800CA7101A1D4A29AECD777</GeneratedChecksum>
           <UserChecksum dnOrder="5">16FB71596800CA7101A1D4A29AECD777</UserChecksum>
         </File>
-        <File dnOrder="61">
+        <File dnOrder="60">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mpfs.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/fs/mpfs/</LogicalPath>
@@ -502,7 +494,7 @@
           <GeneratedChecksum dnOrder="4">DE1A7F3DAEEE33323DFAC41FF0CE3952</GeneratedChecksum>
           <UserChecksum dnOrder="5">DE1A7F3DAEEE33323DFAC41FF0CE3952</UserChecksum>
         </File>
-        <File dnOrder="62">
+        <File dnOrder="61">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mpfs_local.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/fs/mpfs/</LogicalPath>
@@ -510,7 +502,7 @@
           <GeneratedChecksum dnOrder="4">3CDD023AF2B35F91A80FE5D805E2B5DB</GeneratedChecksum>
           <UserChecksum dnOrder="5">3CDD023AF2B35F91A80FE5D805E2B5DB</UserChecksum>
         </File>
-        <File dnOrder="63">
+        <File dnOrder="62">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mpu_prototypes.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -518,7 +510,7 @@
           <GeneratedChecksum dnOrder="4">754BB96D214BFE26758C4BD27B4FEDD6</GeneratedChecksum>
           <UserChecksum dnOrder="5">754BB96D214BFE26758C4BD27B4FEDD6</UserChecksum>
         </File>
-        <File dnOrder="64">
+        <File dnOrder="63">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mpu_wrappers.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -526,7 +518,7 @@
           <GeneratedChecksum dnOrder="4">52F9B7F7526A81F7294CFA451B5FEC65</GeneratedChecksum>
           <UserChecksum dnOrder="5">52F9B7F7526A81F7294CFA451B5FEC65</UserChecksum>
         </File>
-        <File dnOrder="65">
+        <File dnOrder="64">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
@@ -534,7 +526,7 @@
           <GeneratedChecksum dnOrder="4">F0AD88762263B7CB89B02AB4F5876059</GeneratedChecksum>
           <UserChecksum dnOrder="5">F0AD88762263B7CB89B02AB4F5876059</UserChecksum>
         </File>
-        <File dnOrder="66">
+        <File dnOrder="65">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal_definitions.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
@@ -542,7 +534,7 @@
           <GeneratedChecksum dnOrder="4">FBF1B45173D656DEB995858DC4D32C87</GeneratedChecksum>
           <UserChecksum dnOrder="5">FBF1B45173D656DEB995858DC4D32C87</UserChecksum>
         </File>
-        <File dnOrder="67">
+        <File dnOrder="66">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal_freertos.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
@@ -550,7 +542,7 @@
           <GeneratedChecksum dnOrder="4">0E6C60DFF74D4A0EC993971475F2CEAC</GeneratedChecksum>
           <UserChecksum dnOrder="5">0E6C60DFF74D4A0EC993971475F2CEAC</UserChecksum>
         </File>
-        <File dnOrder="68">
+        <File dnOrder="67">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_clk.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/clk/</LogicalPath>
@@ -558,7 +550,7 @@
           <GeneratedChecksum dnOrder="4">97DD80BC27ABDDC370B1628A74E51C1F</GeneratedChecksum>
           <UserChecksum dnOrder="5">97DD80BC27ABDDC370B1628A74E51C1F</UserChecksum>
         </File>
-        <File dnOrder="69">
+        <File dnOrder="68">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_coretimer.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/coretimer/</LogicalPath>
@@ -566,7 +558,7 @@
           <GeneratedChecksum dnOrder="4">4524642012D523481DD682C6B8A21BAA</GeneratedChecksum>
           <UserChecksum dnOrder="5">4524642012D523481DD682C6B8A21BAA</UserChecksum>
         </File>
-        <File dnOrder="70">
+        <File dnOrder="69">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_dmac.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/dmac/</LogicalPath>
@@ -574,7 +566,7 @@
           <GeneratedChecksum dnOrder="4">010E7C6872724F56A94D25C46D528ECA</GeneratedChecksum>
           <UserChecksum dnOrder="5">010E7C6872724F56A94D25C46D528ECA</UserChecksum>
         </File>
-        <File dnOrder="71">
+        <File dnOrder="70">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_evic.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/evic/</LogicalPath>
@@ -582,7 +574,7 @@
           <GeneratedChecksum dnOrder="4">0718C4C8BAA47288E82FE9CCD4854832</GeneratedChecksum>
           <UserChecksum dnOrder="5">0718C4C8BAA47288E82FE9CCD4854832</UserChecksum>
         </File>
-        <File dnOrder="72">
+        <File dnOrder="71">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_gpio.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/gpio/</LogicalPath>
@@ -590,7 +582,7 @@
           <GeneratedChecksum dnOrder="4">2B38471FB04339DBECC23BAE5ED0E8F4</GeneratedChecksum>
           <UserChecksum dnOrder="5">2B38471FB04339DBECC23BAE5ED0E8F4</UserChecksum>
         </File>
-        <File dnOrder="73">
+        <File dnOrder="72">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_spi2.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/spi/</LogicalPath>
@@ -598,7 +590,7 @@
           <GeneratedChecksum dnOrder="4">8095A68901658768A154ECCF3BE86F2E</GeneratedChecksum>
           <UserChecksum dnOrder="5">8095A68901658768A154ECCF3BE86F2E</UserChecksum>
         </File>
-        <File dnOrder="74">
+        <File dnOrder="73">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_spi_common.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/spi/</LogicalPath>
@@ -606,15 +598,7 @@
           <GeneratedChecksum dnOrder="4">4247D7FA1CFBCADA8B8446FDC0E12559</GeneratedChecksum>
           <UserChecksum dnOrder="5">4247D7FA1CFBCADA8B8446FDC0E12559</UserChecksum>
         </File>
-        <File dnOrder="75">
-          <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">plib_wdt.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/wdt/</LogicalPath>
-          <PhysicalPath dnOrder="3">/peripheral/wdt/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9799E3845FD58183EBBD52E5606ECA72</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9799E3845FD58183EBBD52E5606ECA72</UserChecksum>
-        </File>
-        <File dnOrder="76">
+        <File dnOrder="74">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">portable.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -622,7 +606,7 @@
           <GeneratedChecksum dnOrder="4">CA616A0CC0B2C957A76DE04F645C7F9D</GeneratedChecksum>
           <UserChecksum dnOrder="5">CA616A0CC0B2C957A76DE04F645C7F9D</UserChecksum>
         </File>
-        <File dnOrder="77">
+        <File dnOrder="75">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">portmacro.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/portable/MPLAB/PIC32MZ</LogicalPath>
@@ -630,7 +614,7 @@
           <GeneratedChecksum dnOrder="4">B543B43301FAB32852D4B89309B36CD0</GeneratedChecksum>
           <UserChecksum dnOrder="5">B543B43301FAB32852D4B89309B36CD0</UserChecksum>
         </File>
-        <File dnOrder="78">
+        <File dnOrder="76">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">projdefs.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -638,7 +622,7 @@
           <GeneratedChecksum dnOrder="4">BB447E338E44F78E9396BF4DDC118F39</GeneratedChecksum>
           <UserChecksum dnOrder="5">BB447E338E44F78E9396BF4DDC118F39</UserChecksum>
         </File>
-        <File dnOrder="79">
+        <File dnOrder="77">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">queue.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -646,7 +630,7 @@
           <GeneratedChecksum dnOrder="4">44EE934CAEDBAC9EB9EF5B42137FB9DE</GeneratedChecksum>
           <UserChecksum dnOrder="5">44EE934CAEDBAC9EB9EF5B42137FB9DE</UserChecksum>
         </File>
-        <File dnOrder="80">
+        <File dnOrder="78">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">semphr.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -654,7 +638,7 @@
           <GeneratedChecksum dnOrder="4">11C8C3BAB2C11F5A8EFAA8DD31EDD87A</GeneratedChecksum>
           <UserChecksum dnOrder="5">11C8C3BAB2C11F5A8EFAA8DD31EDD87A</UserChecksum>
         </File>
-        <File dnOrder="81">
+        <File dnOrder="79">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">stack_macros.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -662,7 +646,7 @@
           <GeneratedChecksum dnOrder="4">2C98A994E4B0CBAD54531653D3B1050A</GeneratedChecksum>
           <UserChecksum dnOrder="5">2C98A994E4B0CBAD54531653D3B1050A</UserChecksum>
         </File>
-        <File dnOrder="82">
+        <File dnOrder="80">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">stream_buffer.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -670,7 +654,7 @@
           <GeneratedChecksum dnOrder="4">2ECFF9675FFEBF50A8D8CE0F10A84BEE</GeneratedChecksum>
           <UserChecksum dnOrder="5">2ECFF9675FFEBF50A8D8CE0F10A84BEE</UserChecksum>
         </File>
-        <File dnOrder="83">
+        <File dnOrder="81">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_dma.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/dma/</LogicalPath>
@@ -678,7 +662,7 @@
           <GeneratedChecksum dnOrder="4">4A7FFAD7ACF8378CEC16FBF2BC2368BE</GeneratedChecksum>
           <UserChecksum dnOrder="5">4A7FFAD7ACF8378CEC16FBF2BC2368BE</UserChecksum>
         </File>
-        <File dnOrder="84">
+        <File dnOrder="82">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_dma_mapping.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/dma/</LogicalPath>
@@ -686,7 +670,7 @@
           <GeneratedChecksum dnOrder="4">FF2FADFBBFB94FF4B4A57085D719E7C8</GeneratedChecksum>
           <UserChecksum dnOrder="5">FF2FADFBBFB94FF4B4A57085D719E7C8</UserChecksum>
         </File>
-        <File dnOrder="85">
+        <File dnOrder="83">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_fs.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/fs/</LogicalPath>
@@ -694,7 +678,7 @@
           <GeneratedChecksum dnOrder="4">24AC6AAE4032CB12EB6D1A7C6686F1C6</GeneratedChecksum>
           <UserChecksum dnOrder="5">24AC6AAE4032CB12EB6D1A7C6686F1C6</UserChecksum>
         </File>
-        <File dnOrder="86">
+        <File dnOrder="84">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_fs_local.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/fs/</LogicalPath>
@@ -702,7 +686,7 @@
           <GeneratedChecksum dnOrder="4">5BE2C8EB0D84D19A8704266BB6D0A82F</GeneratedChecksum>
           <UserChecksum dnOrder="5">5BE2C8EB0D84D19A8704266BB6D0A82F</UserChecksum>
         </File>
-        <File dnOrder="87">
+        <File dnOrder="85">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_fs_media_manager.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/fs/</LogicalPath>
@@ -710,7 +694,7 @@
           <GeneratedChecksum dnOrder="4">D0DEC824B933722219A05F00A4CD5BB4</GeneratedChecksum>
           <UserChecksum dnOrder="5">D0DEC824B933722219A05F00A4CD5BB4</UserChecksum>
         </File>
-        <File dnOrder="88">
+        <File dnOrder="86">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_fs_media_manager_local.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/fs/</LogicalPath>
@@ -718,7 +702,7 @@
           <GeneratedChecksum dnOrder="4">C1B9C70393F09337E9C27CFE90C666D1</GeneratedChecksum>
           <UserChecksum dnOrder="5">C1B9C70393F09337E9C27CFE90C666D1</UserChecksum>
         </File>
-        <File dnOrder="89">
+        <File dnOrder="87">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_int.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/int/</LogicalPath>
@@ -726,7 +710,7 @@
           <GeneratedChecksum dnOrder="4">47330C2D8F204B2B69F8A86240A564B6</GeneratedChecksum>
           <UserChecksum dnOrder="5">47330C2D8F204B2B69F8A86240A564B6</UserChecksum>
         </File>
-        <File dnOrder="90">
+        <File dnOrder="88">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_int_mapping.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/int/</LogicalPath>
@@ -734,7 +718,7 @@
           <GeneratedChecksum dnOrder="4">FC7B55936A09E0CA1395AE4DFB1A188F</GeneratedChecksum>
           <UserChecksum dnOrder="5">FC7B55936A09E0CA1395AE4DFB1A188F</UserChecksum>
         </File>
-        <File dnOrder="91">
+        <File dnOrder="89">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_ports.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/ports/</LogicalPath>
@@ -742,7 +726,7 @@
           <GeneratedChecksum dnOrder="4">6348A6C05D5693300B296BD46CCC535D</GeneratedChecksum>
           <UserChecksum dnOrder="5">6348A6C05D5693300B296BD46CCC535D</UserChecksum>
         </File>
-        <File dnOrder="92">
+        <File dnOrder="90">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_ports_mapping.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/ports/</LogicalPath>
@@ -750,7 +734,7 @@
           <GeneratedChecksum dnOrder="4">BC6E1661BF4CAC21B70F5F56A0D7BBDB</GeneratedChecksum>
           <UserChecksum dnOrder="5">BC6E1661BF4CAC21B70F5F56A0D7BBDB</UserChecksum>
         </File>
-        <File dnOrder="93">
+        <File dnOrder="91">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_time.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/time/</LogicalPath>
@@ -758,7 +742,7 @@
           <GeneratedChecksum dnOrder="4">5B1C0201624F17531B457421E59F38CD</GeneratedChecksum>
           <UserChecksum dnOrder="5">5B1C0201624F17531B457421E59F38CD</UserChecksum>
         </File>
-        <File dnOrder="94">
+        <File dnOrder="92">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_time_definitions.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/time/</LogicalPath>
@@ -766,7 +750,7 @@
           <GeneratedChecksum dnOrder="4">F8165EAB8A02643100386E92CD7EB3C6</GeneratedChecksum>
           <UserChecksum dnOrder="5">F8165EAB8A02643100386E92CD7EB3C6</UserChecksum>
         </File>
-        <File dnOrder="95">
+        <File dnOrder="93">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_time_local.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/time/</LogicalPath>
@@ -774,7 +758,7 @@
           <GeneratedChecksum dnOrder="4">62F39464265EC34979649F761FB4FE57</GeneratedChecksum>
           <UserChecksum dnOrder="5">62F39464265EC34979649F761FB4FE57</UserChecksum>
         </File>
-        <File dnOrder="96">
+        <File dnOrder="94">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/</LogicalPath>
@@ -782,7 +766,7 @@
           <GeneratedChecksum dnOrder="4">BE95B4F134C5C929787B9DA6FDBF3501</GeneratedChecksum>
           <UserChecksum dnOrder="5">BE95B4F134C5C929787B9DA6FDBF3501</UserChecksum>
         </File>
-        <File dnOrder="97">
+        <File dnOrder="95">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_common.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/</LogicalPath>
@@ -790,7 +774,7 @@
           <GeneratedChecksum dnOrder="4">C3F5136D520DAC4416512EBFCCA023C3</GeneratedChecksum>
           <UserChecksum dnOrder="5">C3F5136D520DAC4416512EBFCCA023C3</UserChecksum>
         </File>
-        <File dnOrder="98">
+        <File dnOrder="96">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_media.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/</LogicalPath>
@@ -798,7 +782,7 @@
           <GeneratedChecksum dnOrder="4">A1CB3454D5A9393479E09211BEEDDD49</GeneratedChecksum>
           <UserChecksum dnOrder="5">A1CB3454D5A9393479E09211BEEDDD49</UserChecksum>
         </File>
-        <File dnOrder="99">
+        <File dnOrder="97">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_module.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/</LogicalPath>
@@ -806,7 +790,7 @@
           <GeneratedChecksum dnOrder="4">1C75A8A6B60598A2FD0D533F57839B72</GeneratedChecksum>
           <UserChecksum dnOrder="5">1C75A8A6B60598A2FD0D533F57839B72</UserChecksum>
         </File>
-        <File dnOrder="100">
+        <File dnOrder="98">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">task.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -814,7 +798,7 @@
           <GeneratedChecksum dnOrder="4">A9958A1E7E989C452B1ED01177B1C059</GeneratedChecksum>
           <UserChecksum dnOrder="5">A9958A1E7E989C452B1ED01177B1C059</UserChecksum>
         </File>
-        <File dnOrder="101">
+        <File dnOrder="99">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">timers.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
@@ -822,7 +806,7 @@
           <GeneratedChecksum dnOrder="4">0FB97A98EDB13E4B7EE8E117AAE98EB6</GeneratedChecksum>
           <UserChecksum dnOrder="5">0FB97A98EDB13E4B7EE8E117AAE98EB6</UserChecksum>
         </File>
-        <File dnOrder="102">
+        <File dnOrder="100">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">toolchain_specifics.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
@@ -830,7 +814,7 @@
           <GeneratedChecksum dnOrder="4">F7924D60AC5CC08996AB2DAEC62D3C54</GeneratedChecksum>
           <UserChecksum dnOrder="5">F7924D60AC5CC08996AB2DAEC62D3C54</UserChecksum>
         </File>
-        <File dnOrder="103">
+        <File dnOrder="101">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">user.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
