@@ -51,11 +51,9 @@
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
+#include "bsp/bsp.h"
 #include "FreeRTOS.h"
 #include "task.h"
-#include "bsp/bsp.h"
-#include "system/int/sys_int.h"
-#include "system/ports/sys_ports.h"
 #include "osal/osal.h"
 #include "app.h"
 #include "app1.h"
@@ -180,7 +178,7 @@ void SYS_Tasks ( void );
 
 typedef struct
 {
-
+    char RESERVED;
 } SYSTEM_OBJECTS;
 
 
