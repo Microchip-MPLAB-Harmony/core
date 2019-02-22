@@ -51,7 +51,7 @@
 // *****************************************************************************
 static HSMCI_OBJECT hsmciObj;
 
-static void HSMCI_InitVariables ( void )
+static void HSMCI_VariablesInit ( void )
 {
     hsmciObj.errorStatus = 0;
     hsmciObj.isCmdInProgress = false;
@@ -144,14 +144,14 @@ void HSMCI_InterruptHandler(void)
     }
 }
 
-uint16_t HSMCI_GetCommandError(void)
+uint16_t HSMCI_CommandErrorGet(void)
 {
     /* Error status variable is cleared when a new command is sent */
     return (uint16_t)(hsmciObj.errorStatus & (HSMCI_CMD_TIMEOUT_ERROR | HSMCI_CMD_CRC_ERROR | \
                 HSMCI_CMD_END_BIT_ERROR | HSMCI_CMD_INDEX_ERROR));
 }
 
-uint16_t HSMCI_GetDataError(void)
+uint16_t HSMCI_DataErrorGet(void)
 {
     /* Error status variable is cleared when a new command is sent */
     return (uint16_t)(hsmciObj.errorStatus & (HSMCI_DATA_TIMEOUT_ERROR | HSMCI_DATA_CRC_ERROR | \
@@ -168,7 +168,7 @@ bool HSMCI_IsDatLineBusy ( void )
     return (!(HSMCI_REGS->HSMCI_SR & HSMCI_SR_TXRDY_Msk));
 }
 
-void HSMCI_SetBusWidth ( HSMCI_BUS_WIDTH busWidth )
+void HSMCI_BusWidthSet ( HSMCI_BUS_WIDTH busWidth )
 {
     if (busWidth == HSMCI_BUS_WIDTH_4_BIT)
     {
@@ -182,7 +182,7 @@ void HSMCI_SetBusWidth ( HSMCI_BUS_WIDTH busWidth )
     }
 }
 
-void HSMCI_SetSpeedMode ( HSMCI_SPEED_MODE speedMode )
+void HSMCI_SpeedModeSet ( HSMCI_SPEED_MODE speedMode )
 {
     if (speedMode == HSMCI_SPEED_MODE_HIGH)
     {
@@ -194,7 +194,7 @@ void HSMCI_SetSpeedMode ( HSMCI_SPEED_MODE speedMode )
     }
 }
 
-void HSMCI_SetupDma (
+void HSMCI_DmaSetup (
     uint8_t* buffer,
     uint32_t numBytes,
     HSMCI_DATA_TRANSFER_DIR operation
@@ -248,20 +248,20 @@ void HSMCI_SetupDma (
    }
 }
 
-void HSMCI_SetBlockSize ( uint16_t blockSize )
+void HSMCI_BlockSizeSet ( uint16_t blockSize )
 {
     hsmciObj.blockSize = blockSize;
     HSMCI_REGS->HSMCI_BLKR &= ~(HSMCI_BLKR_BLKLEN_Msk);
     HSMCI_REGS->HSMCI_BLKR |= (blockSize << HSMCI_BLKR_BLKLEN_Pos);
 }
 
-void HSMCI_SetBlockCount ( uint16_t numBlocks )
+void HSMCI_BlockCountSet ( uint16_t numBlocks )
 {
     HSMCI_REGS->HSMCI_BLKR &= ~(HSMCI_BLKR_BCNT_Msk);
     HSMCI_REGS->HSMCI_BLKR |= (numBlocks << HSMCI_BLKR_BCNT_Pos);
 }
 
-void HSMCI_SetClock ( uint32_t clock )
+void HSMCI_ClockSet ( uint32_t clock )
 {
     uint32_t mck = 150000000;
     uint32_t clkdiv = 0;
@@ -294,7 +294,7 @@ void HSMCI_SetClock ( uint32_t clock )
     HSMCI_REGS->HSMCI_MR |= HSMCI_MR_CLKDIV(clkdiv);
 }
 
-void HSMCI_ReadResponse (
+void HSMCI_ResponseRead (
     HSMCI_READ_RESPONSE_REG respReg,
     uint32_t* response
 )
@@ -340,7 +340,7 @@ void HSMCI_ReadResponse (
     }
 }
 
-void HSMCI_SendCommand (
+void HSMCI_CommandSend (
     uint8_t opCode,
     uint32_t argument,
     uint8_t respType,
@@ -457,7 +457,7 @@ void HSMCI_SendCommand (
     HSMCI_REGS->HSMCI_CMDR = cmd_reg;
 }
 
-void HSMCI_InitModule( void )
+void HSMCI_ModuleInit ( void )
 {
     /* Set the Data Timeout Register to 2 Mega Cycles */
     HSMCI_REGS->HSMCI_DTOR = HSMCI_DTOR_DTOMUL_1048576 | HSMCI_DTOR_DTOCYC(2);
@@ -481,7 +481,7 @@ void HSMCI_InitModule( void )
     HSMCI_REGS->HSMCI_SDCR &= ~HSMCI_SDCR_SDCBUS_Msk;
 
     /* Set clock to 400 KHz */
-    HSMCI_SetClock (HSMCI_CLOCK_FREQ_400_KHZ);
+    HSMCI_ClockSet (HSMCI_CLOCK_FREQ_400_KHZ);
 
     /* Configure command */
     HSMCI_REGS->HSMCI_MR &= ~(HSMCI_MR_WRPROOF_Msk | HSMCI_MR_RDPROOF_Msk | HSMCI_MR_FBYTE_Msk);
@@ -500,8 +500,8 @@ void HSMCI_InitModule( void )
 
 void HSMCI_Initialize( void )
 {
-    HSMCI_InitVariables();
-    HSMCI_InitModule();
+    HSMCI_VariablesInit();
+    HSMCI_ModuleInit();
 }
 
 void HSMCI_CallbackRegister(HSMCI_CALLBACK callback, uintptr_t contextHandle)
