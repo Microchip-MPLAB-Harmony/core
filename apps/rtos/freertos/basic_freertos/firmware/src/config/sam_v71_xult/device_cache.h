@@ -1,26 +1,26 @@
 /*******************************************************************************
-  System Configuration Header
+  Cortex-M L1 Cache Header
 
   File Name:
-    configuration.h
+    device_cache.h
 
   Summary:
-    Build-time configuration header for the system defined by this project.
+    Preprocessor definitions to provide L1 Cache control.
 
   Description:
-    An MPLAB Project may have multiple configurations.  This file defines the
-    build-time options for a single configuration.
+    An MPLAB PLIB or Project can include this header to perform cache cleans,
+    invalidates etc. For the DCache and ICache.
 
   Remarks:
-    This configuration header must not define any prototypes or data
-    definitions (or include any files that do).  It only provides macro
-    definitions for build-time configuration options
+    This header should not define any prototypes or data definitions, or 
+    include any files that do.  The file only provides macro definitions for 
+    build-time.
 
 *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -43,8 +43,8 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef CONFIGURATION_H
-#define CONFIGURATION_H
+#ifndef DEVICE_CACHE_H
+#define DEVICE_CACHE_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -54,9 +54,6 @@
 /*  This section Includes other configuration headers necessary to completely
     define this configuration.
 */
-
-#include "user.h"
-#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -68,39 +65,23 @@ extern "C" {
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: System Configuration
+// Section: L1 Cache Configuration
 // *****************************************************************************
 // *****************************************************************************
+#define ICACHE_ENABLE()                                SCB_EnableICache()
+#define ICACHE_DISABLE()                               SCB_DisableICache()
+#define ICACHE_INVALIDATE()                            SCB_InvalidateICache()
+#define INSTRUCTION_CACHE_ENABLED                      true
 
-
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: System Service Configuration
-// *****************************************************************************
-// *****************************************************************************
-
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Driver Configuration
-// *****************************************************************************
-// *****************************************************************************
-
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Middleware & Other Library Configuration
-// *****************************************************************************
-// *****************************************************************************
-
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Application Configuration
-// *****************************************************************************
-// *****************************************************************************
-
+#define DCACHE_ENABLE()                                SCB_EnableDCache()
+#define DCACHE_DISABLE()                               SCB_DisableDCache()
+#define DCACHE_INVALIDATE()                            SCB_InvalidateDCache()
+#define DCACHE_CLEAN()                                 SCB_CleanDCache()
+#define DCACHE_CLEAN_INVALIDATE()                      SCB_CleanInvalidateDCache()
+#define DCACHE_CLEAN_BY_ADDR(addr,sz)                  SCB_CleanDCache_by_Addr(addr,sz)
+#define DCACHE_INVALIDATE_BY_ADDR(addr,sz)             SCB_InvalidateDCache_by_Addr(addr,sz)
+#define DCACHE_CLEAN_INVALIDATE_BY_ADDR(addr,sz)       SCB_CleanInvalidateDCache_by_Addr(addr,sz)
+#define DATA_CACHE_ENABLED                             true
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
@@ -108,7 +89,4 @@ extern "C" {
 #endif
 //DOM-IGNORE-END
 
-#endif // CONFIGURATION_H
-/*******************************************************************************
- End of File
-*/
+#endif // #ifndef DEVICE_CACHE_H
