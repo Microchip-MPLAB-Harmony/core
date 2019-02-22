@@ -55,13 +55,13 @@
 #include <stdbool.h>
 #include <string.h>
 
-void SDHC1_SetBusWidth ( SDHC_BUS_WIDTH busWidth );
+void SDHC1_BusWidthSet ( SDHC_BUS_WIDTH busWidth );
 
-void SDHC1_SetSpeedMode( SDHC_SPEED_MODE speedMode );
+void SDHC1_SpeedModeSet ( SDHC_SPEED_MODE speedMode );
 
-void SDHC1_SetBlockSize ( uint16_t blockSize );
+void SDHC1_BlockSizeSet ( uint16_t blockSize );
 
-void SDHC1_SetBlockCount( uint16_t numBlocks );
+void SDHC1_BlockCountSet( uint16_t numBlocks );
 
 bool SDHC1_IsCmdLineBusy ( void );
 
@@ -71,34 +71,34 @@ bool SDHC1_IsWriteProtected ( void );
 
 bool SDHC1_IsCardAttached ( void );
 
-bool SDHC1_SetClock ( uint32_t clock);
+bool SDHC1_ClockSet ( uint32_t clock);
 
 void SDHC1_ClockEnable ( void );
 
 void SDHC1_ClockDisable ( void );
 
-uint16_t SDHC1_GetCommandError(void);
+uint16_t SDHC1_CommandErrorGet (void);
 
-uint16_t SDHC1_GetDataError(void);
+uint16_t SDHC1_DataErrorGet (void);
 
-void SDHC1_ResetError ( SDHC_RESET_TYPE resetType );
+void SDHC1_ErrorReset ( SDHC_RESET_TYPE resetType );
 
-void SDHC1_ReadResponse( SDHC_READ_RESPONSE_REG respReg, uint32_t* response );
+void SDHC1_ResponseRead ( SDHC_READ_RESPONSE_REG respReg, uint32_t* response );
 
-void SDHC1_InitModule( void );
+void SDHC1_ModuleInit ( void );
 
 void SDHC1_Initialize( void );
 
 void SDHC1_CallbackRegister(SDHC_CALLBACK callback, uintptr_t contextHandle);
 
-void SDHC1_SendCommand(
+void SDHC1_CommandSend (
     uint8_t opCode, 
     uint32_t argument,
     uint8_t respType, 
     SDHC_DataTransferFlags transferFlags
 );
 
-void SDHC1_SetupDma(
+void SDHC1_DmaSetup (
     uint8_t* buffer,
     uint32_t numBytes,
     SDHC_DATA_TRANSFER_DIR direction
