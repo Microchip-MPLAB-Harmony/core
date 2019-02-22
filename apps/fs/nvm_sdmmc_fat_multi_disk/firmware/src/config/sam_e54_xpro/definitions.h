@@ -67,7 +67,6 @@
 #include "system/fs/fat_fs/src/file_system/ffconf.h"
 #include "system/fs/fat_fs/src/hardware_access/diskio.h"
 #include "system/int/sys_int.h"
-#include "system/cache/sys_cache.h"
 #include "osal/osal.h"
 #include "app.h"
 

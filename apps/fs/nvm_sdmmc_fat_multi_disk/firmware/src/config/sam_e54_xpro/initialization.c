@@ -105,11 +105,11 @@
 // *****************************************************************************
 // <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance 0 Initialization Data">
 
-static uint8_t gDrvMemory0EraseBuffer[NVMCTRL_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
+static uint8_t gDrvMemory0EraseBuffer[NVMCTRL_ERASE_BUFFER_SIZE] CACHE_ALIGN;
 
-static DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
+static DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0];
 
-static DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0] = { 0 };
+static DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0];
 
 const DRV_MEMORY_DEVICE_INTERFACE drvMemory0DeviceAPI = {
     .Open               = DRV_NVMCTRL_Open,
@@ -149,21 +149,21 @@ static DRV_SDMMC_BUFFER_OBJ drvSDMMC0BufferObjPool[DRV_SDMMC_QUEUE_SIZE_IDX0] = 
 
 const DRV_SDMMC_PLIB_API drvSDMMC0PlibAPI = {
     .sdhostCallbackRegister = (DRV_SDMMC_PLIB_CALLBACK_REGISTER)SDHC1_CallbackRegister,
-    .sdhostInitModule = (DRV_SDMMC_PLIB_INIT_MODULE)SDHC1_InitModule,
-    .sdhostSetClock  = (DRV_SDMMC_PLIB_SET_CLOCK)SDHC1_SetClock,
+    .sdhostInitModule = (DRV_SDMMC_PLIB_INIT_MODULE)SDHC1_ModuleInit,
+    .sdhostSetClock  = (DRV_SDMMC_PLIB_SET_CLOCK)SDHC1_ClockSet,
     .sdhostIsCmdLineBusy = (DRV_SDMMC_PLIB_IS_CMD_LINE_BUSY)SDHC1_IsCmdLineBusy,
     .sdhostIsDatLineBusy = (DRV_SDMMC_PLIB_IS_DATA_LINE_BUSY)SDHC1_IsDatLineBusy,
-    .sdhostSendCommand = (DRV_SDMMC_PLIB_SEND_COMMAND)SDHC1_SendCommand,
-    .sdhostReadResponse = (DRV_SDMMC_PLIB_READ_RESPONSE)SDHC1_ReadResponse,
-    .sdhostSetBlockCount = (DRV_SDMMC_PLIB_SET_BLOCK_COUNT)SDHC1_SetBlockCount,
-    .sdhostSetBlockSize = (DRV_SDMMC_PLIB_SET_BLOCK_SIZE)SDHC1_SetBlockSize,
-    .sdhostSetBusWidth = (DRV_SDMMC_PLIB_SET_BUS_WIDTH)SDHC1_SetBusWidth,
-    .sdhostSetSpeedMode = (DRV_SDMMC_PLIB_SET_SPEED_MODE)SDHC1_SetSpeedMode,
-    .sdhostSetupDma = (DRV_SDMMC_PLIB_SETUP_DMA)SDHC1_SetupDma,
-    .sdhostGetCommandError = (DRV_SDMMC_PLIB_GET_COMMAND_ERROR)SDHC1_GetCommandError,
-    .sdhostGetDataError = (DRV_SDMMC_PLIB_GET_DATA_ERROR)SDHC1_GetDataError,
+    .sdhostSendCommand = (DRV_SDMMC_PLIB_SEND_COMMAND)SDHC1_CommandSend,
+    .sdhostReadResponse = (DRV_SDMMC_PLIB_READ_RESPONSE)SDHC1_ResponseRead,
+    .sdhostSetBlockCount = (DRV_SDMMC_PLIB_SET_BLOCK_COUNT)SDHC1_BlockCountSet,
+    .sdhostSetBlockSize = (DRV_SDMMC_PLIB_SET_BLOCK_SIZE)SDHC1_BlockSizeSet,
+    .sdhostSetBusWidth = (DRV_SDMMC_PLIB_SET_BUS_WIDTH)SDHC1_BusWidthSet,
+    .sdhostSetSpeedMode = (DRV_SDMMC_PLIB_SET_SPEED_MODE)SDHC1_SpeedModeSet,
+    .sdhostSetupDma = (DRV_SDMMC_PLIB_SETUP_DMA)SDHC1_DmaSetup,
+    .sdhostGetCommandError = (DRV_SDMMC_PLIB_GET_COMMAND_ERROR)SDHC1_CommandErrorGet,
+    .sdhostGetDataError = (DRV_SDMMC_PLIB_GET_DATA_ERROR)SDHC1_DataErrorGet,
     .sdhostClockEnable = (DRV_SDMMC_PLIB_CLOCK_ENABLE)SDHC1_ClockEnable,
-    .sdhostResetError = (DRV_SDMMC_PLIB_RESET_ERROR)SDHC1_ResetError,
+    .sdhostResetError = (DRV_SDMMC_PLIB_RESET_ERROR)SDHC1_ErrorReset,
     .sdhostIsCardAttached = (DRV_SDMMC_PLIB_IS_CARD_ATTACHED)SDHC1_IsCardAttached,
     .sdhostIsWriteProtected = (DRV_SDMMC_PLIB_IS_WRITE_PROTECTED)SDHC1_IsWriteProtected,
 };
@@ -178,8 +178,8 @@ const DRV_SDMMC_INIT drvSDMMC0InitData =
     .numClients                     = DRV_SDMMC_CLIENTS_NUMBER_IDX0,
     .isCardDetectEnabled            = false,
     .isWriteProtectCheckEnabled     = false,
-    .speedMode                      = DRV_SDMMC_CONFIG_SPEED_MODE_IDX0,
-    .busWidth                       = DRV_SDMMC_CONFIG_BUS_WIDTH_IDX0,
+    .speedMode                      = (DRV_SDMMC_SPEED_MODE)DRV_SDMMC_CONFIG_SPEED_MODE_IDX0,
+    .busWidth                       = (DRV_SDMMC_BUS_WIDTH)DRV_SDMMC_CONFIG_BUS_WIDTH_IDX0,
     .isFsEnabled                    = true,
 };
 
@@ -278,13 +278,10 @@ void SYS_Initialize ( void* data )
 
 	BSP_Initialize();
 
-    NVIC_Initialize();
-
     sysObj.drvMemory0 = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_0, (SYS_MODULE_INIT *)&drvMemory0InitData);
 
 
     sysObj.drvSDMMC0 = DRV_SDMMC_Initialize(DRV_SDMMC_INDEX_0,(SYS_MODULE_INIT *)&drvSDMMC0InitData);
-
 
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
@@ -296,7 +293,8 @@ void SYS_Initialize ( void* data )
     APP_Initialize();
 
 
-  
+    NVIC_Initialize();
+
 }
 
 
