@@ -94,7 +94,7 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_I2C Instance 0 Initialization Data">
 
 /* I2C Client Objects Pool */
-static DRV_I2C_CLIENT_OBJ drvI2C0ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_I2C_CLIENT_OBJ drvI2C0ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX0];
 
 /* I2C PLib Interface Initialization */
 const DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
