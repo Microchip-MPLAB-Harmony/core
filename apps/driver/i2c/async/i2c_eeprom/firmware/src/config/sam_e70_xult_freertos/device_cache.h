@@ -1,23 +1,26 @@
 /*******************************************************************************
-  Board Support Package Header File.
-
-  Company:
-    Microchip Technology Inc.
+  Cortex-M L1 Cache Header
 
   File Name:
-    bsp.h
+    device_cache.h
 
   Summary:
-    Board Support Package Header File 
+    Preprocessor definitions to provide L1 Cache control.
 
   Description:
-    This file contains constants, macros, type definitions and function
-    declarations 
+    An MPLAB PLIB or Project can include this header to perform cache cleans,
+    invalidates etc. For the DCache and ICache.
+
+  Remarks:
+    This header should not define any prototypes or data definitions, or 
+    include any files that do.  The file only provides macro definitions for 
+    build-time.
+
 *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -40,83 +43,50 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _BSP_H
-#define _BSP_H
+#ifndef DEVICE_CACHE_H
+#define DEVICE_CACHE_H
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <stdbool.h>
-#include "device.h"
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: BSP Macros
-// *****************************************************************************
-// *****************************************************************************
-/*** LED Macros for LED1 ***/
-#define LED1_Toggle() (PIOA_REGS->PIO_ODSR ^= (1<<5))
-#define LED1_On() (PIOA_REGS->PIO_CODR = (1<<5))
-#define LED1_Off() (PIOA_REGS->PIO_SODR = (1<<5))
-/*** LED Macros for LED2 ***/
-#define LED2_Toggle() (PIOB_REGS->PIO_ODSR ^= (1<<8))
-#define LED2_On() (PIOB_REGS->PIO_CODR = (1<<8))
-#define LED2_Off() (PIOB_REGS->PIO_SODR = (1<<8))
-/*** SWITCH Macros for SWITCH ***/
-#define SWITCH_Get() ((PIOA_REGS->PIO_PDSR >> 11) & 0x1)
-#define SWITCH_STATE_PRESSED 0
-#define SWITCH_STATE_RELEASED 1
-
-
-
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Interface Routines
-// *****************************************************************************
-// *****************************************************************************
-
-// *****************************************************************************
-/* Function:
-    void BSP_Initialize(void)
-
-  Summary:
-    Performs the necessary actions to initialize a board
-
-  Description:
-    This function initializes the LED and Switch ports on the board.  This
-    function must be called by the user before using any APIs present on this
-    BSP.
-
-  Precondition:
-    None.
-
-  Parameters:
-    None
-
-  Returns:
-    None.
-
-  Example:
-    <code>
-    //Initialize the BSP
-    BSP_Initialize();
-    </code>
-
-  Remarks:
-    None
+/*  This section Includes other configuration headers necessary to completely
+    define this configuration.
 */
 
-void BSP_Initialize(void);
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
 
-#endif // _BSP_H
+extern "C" {
 
-/*******************************************************************************
- End of File
-*/
+#endif
+// DOM-IGNORE-END
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: L1 Cache Configuration
+// *****************************************************************************
+// *****************************************************************************
+#define ICACHE_ENABLE()                                SCB_EnableICache()
+#define ICACHE_DISABLE()                               SCB_DisableICache()
+#define ICACHE_INVALIDATE()                            SCB_InvalidateICache()
+#define INSTRUCTION_CACHE_ENABLED                      true
+
+#define DCACHE_ENABLE()                                SCB_EnableDCache()
+#define DCACHE_DISABLE()                               SCB_DisableDCache()
+#define DCACHE_INVALIDATE()                            SCB_InvalidateDCache()
+#define DCACHE_CLEAN()                                 SCB_CleanDCache()
+#define DCACHE_CLEAN_INVALIDATE()                      SCB_CleanInvalidateDCache()
+#define DCACHE_CLEAN_BY_ADDR(addr,sz)                  SCB_CleanDCache_by_Addr(addr,sz)
+#define DCACHE_INVALIDATE_BY_ADDR(addr,sz)             SCB_InvalidateDCache_by_Addr(addr,sz)
+#define DCACHE_CLEAN_INVALIDATE_BY_ADDR(addr,sz)       SCB_CleanInvalidateDCache_by_Addr(addr,sz)
+#define DATA_CACHE_ENABLED                             true
+
+//DOM-IGNORE-BEGIN
+#ifdef __cplusplus
+}
+#endif
+//DOM-IGNORE-END
+
+#endif // #ifndef DEVICE_CACHE_H
