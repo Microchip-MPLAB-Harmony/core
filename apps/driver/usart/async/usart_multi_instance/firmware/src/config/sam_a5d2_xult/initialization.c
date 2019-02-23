@@ -48,11 +48,13 @@
 #include "device.h"
 
 
+
 // ****************************************************************************
 // ****************************************************************************
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
+
 
 
 // *****************************************************************************
@@ -62,26 +64,59 @@
 // *****************************************************************************
 // <editor-fold defaultstate="collapsed" desc="DRV_USART Instance 1 Initialization Data">
 
+static DRV_USART_CLIENT_OBJ drvUSART1ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX1];
+
+/* USART transmit/receive transfer objects pool */
+static DRV_USART_BUFFER_OBJ drvUSART1BufferObjPool[DRV_USART_QUEUE_SIZE_IDX1];
+
 const DRV_USART_PLIB_INTERFACE drvUsart1PlibAPI = {
-        .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)FLEXCOM0_USART_ReadCallbackRegister,
-        .read = (DRV_USART_PLIB_READ)FLEXCOM0_USART_Read,
-        .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)FLEXCOM0_USART_ReadIsBusy,
-        .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)FLEXCOM0_USART_ReadCountGet,
-        .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)FLEXCOM0_USART_WriteCallbackRegister,
-        .write = (DRV_USART_PLIB_WRITE)FLEXCOM0_USART_Write,
-        .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)FLEXCOM0_USART_WriteIsBusy,
-        .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)FLEXCOM0_USART_WriteCountGet,
-        .errorGet = (DRV_USART_PLIB_ERROR_GET)FLEXCOM0_USART_ErrorGet,
-        .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)FLEXCOM0_USART_SerialSetup
+    .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)UART1_ReadCallbackRegister,
+    .read = (DRV_USART_PLIB_READ)UART1_Read,
+    .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)UART1_ReadIsBusy,
+    .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)UART1_ReadCountGet,
+    .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)UART1_WriteCallbackRegister,
+    .write = (DRV_USART_PLIB_WRITE)UART1_Write,
+    .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)UART1_WriteIsBusy,
+    .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)UART1_WriteCountGet,
+    .errorGet = (DRV_USART_PLIB_ERROR_GET)UART1_ErrorGet,
+    .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)UART1_SerialSetup
 };
 
-const uint32_t drvUsart1remapDataWidth[] = { 0x0, 0x40, 0x80, 0xC0, 0x20000 };
-const uint32_t drvUsart1remapParity[] = { 0x800, 0x200, 0x0, 0x600, 0x400, 0xC00 };
-const uint32_t drvUsart1remapStopBits[] = { 0x0, 0x1000, 0x2000 };
+const uint32_t drvUsart1remapDataWidth[] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0, 0xFFFFFFFF };
+const uint32_t drvUsart1remapParity[] = { 0x800, 0x0, 0x200, 0x600, 0x400, 0xFFFFFFFF };
+const uint32_t drvUsart1remapStopBits[] = { 0x0, 0xFFFFFFFF, 0xFFFFFFFF };
 const uint32_t drvUsart1remapError[] = { 0x20, 0x80, 0x40 };
+
+const DRV_USART_INTERRUPT_SOURCES drvUSART1InterruptSources =
+{
+    /* Peripheral has single interrupt vector */
+    .isSingleIntSrc                        = true,
+
+    /* Peripheral interrupt line */
+    .intSources.usartInterrupt             = UART1_IRQn,
+};
+
 const DRV_USART_INIT drvUsart1InitData =
 {
     .usartPlib = &drvUsart1PlibAPI,
+
+    /* USART Number of clients */
+    .numClients = DRV_USART_CLIENTS_NUMBER_IDX1,
+
+    /* USART Client Objects Pool */
+    .clientObjPool = (uintptr_t)&drvUSART1ClientObjPool[0],
+
+    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
+
+    .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
+
+    /* Combined size of transmit and receive buffer objects */
+    .bufferObjPoolSize = DRV_USART_QUEUE_SIZE_IDX1,
+
+    /* USART transmit and receive buffer buffer objects pool */
+    .bufferObjPool = (uintptr_t)&drvUSART1BufferObjPool[0],
+
+    .interruptSources = &drvUSART1InterruptSources,
 
     .remapDataWidth = drvUsart1remapDataWidth,
 
@@ -90,46 +125,64 @@ const DRV_USART_INIT drvUsart1InitData =
     .remapStopBits = drvUsart1remapStopBits,
 
     .remapError = drvUsart1remapError,
-
-    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
-
-    .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
-
-
-    .queueSizeTransmit = DRV_USART_XMIT_QUEUE_SIZE_IDX1,
-
-    .queueSizeReceive = DRV_USART_RCV_QUEUE_SIZE_IDX1,
-
-    .interruptUSART = FLEXCOM0_IRQn,
-
-    .interruptDMA = XDMAC0_IRQn,
-
-
 };
 
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DRV_USART Instance 0 Initialization Data">
 
+static DRV_USART_CLIENT_OBJ drvUSART0ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX0];
+
+/* USART transmit/receive transfer objects pool */
+static DRV_USART_BUFFER_OBJ drvUSART0BufferObjPool[DRV_USART_QUEUE_SIZE_IDX0];
+
 const DRV_USART_PLIB_INTERFACE drvUsart0PlibAPI = {
-        .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)UART1_ReadCallbackRegister,
-        .read = (DRV_USART_PLIB_READ)UART1_Read,
-        .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)UART1_ReadIsBusy,
-        .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)UART1_ReadCountGet,
-        .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)UART1_WriteCallbackRegister,
-        .write = (DRV_USART_PLIB_WRITE)UART1_Write,
-        .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)UART1_WriteIsBusy,
-        .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)UART1_WriteCountGet,
-        .errorGet = (DRV_USART_PLIB_ERROR_GET)UART1_ErrorGet,
-        .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)UART1_SerialSetup
+    .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)FLEXCOM0_USART_ReadCallbackRegister,
+    .read = (DRV_USART_PLIB_READ)FLEXCOM0_USART_Read,
+    .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)FLEXCOM0_USART_ReadIsBusy,
+    .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)FLEXCOM0_USART_ReadCountGet,
+    .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)FLEXCOM0_USART_WriteCallbackRegister,
+    .write = (DRV_USART_PLIB_WRITE)FLEXCOM0_USART_Write,
+    .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)FLEXCOM0_USART_WriteIsBusy,
+    .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)FLEXCOM0_USART_WriteCountGet,
+    .errorGet = (DRV_USART_PLIB_ERROR_GET)FLEXCOM0_USART_ErrorGet,
+    .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)FLEXCOM0_USART_SerialSetup
 };
 
-const uint32_t drvUsart0remapDataWidth[] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0, 0xFFFFFFFF };
-const uint32_t drvUsart0remapParity[] = { 0x800, 0x200, 0x0, 0x600, 0x400, 0xFFFFFFFF };
-const uint32_t drvUsart0remapStopBits[] = { 0x0, 0xFFFFFFFF, 0xFFFFFFFF };
+const uint32_t drvUsart0remapDataWidth[] = { 0x0, 0x40, 0x80, 0xC0, 0x20000 };
+const uint32_t drvUsart0remapParity[] = { 0x800, 0x0, 0x200, 0x600, 0x400, 0xC00 };
+const uint32_t drvUsart0remapStopBits[] = { 0x0, 0x1000, 0x2000 };
 const uint32_t drvUsart0remapError[] = { 0x20, 0x80, 0x40 };
+
+const DRV_USART_INTERRUPT_SOURCES drvUSART0InterruptSources =
+{
+    /* Peripheral has single interrupt vector */
+    .isSingleIntSrc                        = true,
+
+    /* Peripheral interrupt line */
+    .intSources.usartInterrupt             = FLEXCOM0_IRQn,
+};
+
 const DRV_USART_INIT drvUsart0InitData =
 {
     .usartPlib = &drvUsart0PlibAPI,
+
+    /* USART Number of clients */
+    .numClients = DRV_USART_CLIENTS_NUMBER_IDX0,
+
+    /* USART Client Objects Pool */
+    .clientObjPool = (uintptr_t)&drvUSART0ClientObjPool[0],
+
+    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
+
+    .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
+
+    /* Combined size of transmit and receive buffer objects */
+    .bufferObjPoolSize = DRV_USART_QUEUE_SIZE_IDX0,
+
+    /* USART transmit and receive buffer buffer objects pool */
+    .bufferObjPool = (uintptr_t)&drvUSART0BufferObjPool[0],
+
+    .interruptSources = &drvUSART0InterruptSources,
 
     .remapDataWidth = drvUsart0remapDataWidth,
 
@@ -138,21 +191,6 @@ const DRV_USART_INIT drvUsart0InitData =
     .remapStopBits = drvUsart0remapStopBits,
 
     .remapError = drvUsart0remapError,
-
-    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
-
-    .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
-
-
-    .queueSizeTransmit = DRV_USART_XMIT_QUEUE_SIZE_IDX0,
-
-    .queueSizeReceive = DRV_USART_RCV_QUEUE_SIZE_IDX0,
-
-    .interruptUSART = UART1_IRQn,
-
-    .interruptDMA = XDMAC0_IRQn,
-
-
 };
 
 // </editor-fold>
@@ -165,6 +203,7 @@ const DRV_USART_INIT drvUsart0InitData =
 // *****************************************************************************
 /* Structure to hold the object handles for the modules in the system. */
 SYSTEM_OBJECTS sysObj;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Library/Stack Initialization Data
@@ -179,6 +218,7 @@ SYSTEM_OBJECTS sysObj;
 // *****************************************************************************
 
 
+
 /*******************************************************************************
   Function:
     void SYS_Initialize ( void *data )
@@ -191,6 +231,7 @@ SYSTEM_OBJECTS sysObj;
 
 void SYS_Initialize ( void* data )
 {
+  
     CLK_Initialize();
 	PIO_Initialize();
 
@@ -220,10 +261,10 @@ void SYS_Initialize ( void* data )
     APP2_Initialize();
 
 
+
 }
 
 
 /*******************************************************************************
  End of File
 */
-

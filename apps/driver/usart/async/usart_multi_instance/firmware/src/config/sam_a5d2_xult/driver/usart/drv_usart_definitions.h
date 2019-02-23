@@ -169,6 +169,29 @@ typedef struct
 
 } DRV_USART_PLIB_INTERFACE;
 
+typedef struct
+{
+    int32_t         usartTxReadyInt;
+    int32_t         usartTxCompleteInt;
+    int32_t         usartRxCompleteInt;
+    int32_t         usartErrorInt;
+    int32_t         dmaTxChannelInt;
+    int32_t         dmaRxChannelInt;
+} DRV_USART_MULTI_INT_SRC;
+
+typedef union
+{
+    DRV_USART_MULTI_INT_SRC             multi;
+    int32_t                             usartInterrupt;
+    int32_t                             dmaInterrupt;
+} DRV_USART_INT_SRC;
+
+typedef struct
+{
+    bool                        isSingleIntSrc;
+    DRV_USART_INT_SRC           intSources;
+} DRV_USART_INTERRUPT_SOURCES;
+
 // *****************************************************************************
 /* USART Driver Initialization Data Declaration */
 
@@ -176,43 +199,42 @@ struct _DRV_USART_INIT
 {
     /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
-    const DRV_USART_PLIB_INTERFACE* usartPlib;
+    const DRV_USART_PLIB_INTERFACE*         usartPlib;
+
+    /* Number of clients */
+    uint32_t                                numClients;
+
+    /* Memory Pool for Client Objects */
+    uintptr_t                               clientObjPool;
 
     /* This is the USART transmit DMA channel. */
-    SYS_DMA_CHANNEL dmaChannelTransmit;
+    SYS_DMA_CHANNEL                         dmaChannelTransmit;
 
     /* This is the USART receive DMA channel. */
-    SYS_DMA_CHANNEL dmaChannelReceive;
+    SYS_DMA_CHANNEL                         dmaChannelReceive;
 
     /* This is the USART transmit register address. Used for DMA operation. */
-    void* usartTransmitAddress;
+    void*                                   usartTransmitAddress;
 
     /* This is the USART receive register address. Used for DMA operation. */
-    void* usartReceiveAddress;
+    void*                                   usartReceiveAddress;
 
-    const uint32_t* remapDataWidth;
 
-    const uint32_t* remapParity;
+    const uint32_t*                         remapDataWidth;
 
-    const uint32_t* remapStopBits;
+    const uint32_t*                         remapParity;
 
-    const uint32_t* remapError;
+    const uint32_t*                         remapStopBits;
 
-    /* This is the receive buffer queue size. This is the maximum
-     * number of read requests that driver will queue. This can be updated
-     * through DRV_USART_RCV_QUEUE_SIZE_IDXn macro in configuration.h */
-    unsigned int queueSizeReceive;
+    const uint32_t*                         remapError;
 
-    /* This is the transmit buffer queue size. This is the maximum
-     * number of write requests that driver will queue. This can be updated
-     * through DRV_USART_XMIT_QUEUE_SIZE_IDXn macro in configuration.h */
-    unsigned int queueSizeTransmit;
+    /* Size of transmit and receive buffer pool */
+    uint32_t                                bufferObjPoolSize;
 
-    /* Interrupt source ID for the USART interrupt. */
-    INT_SOURCE interruptUSART;
+    /* Pointer to the transmit and receive buffer pool */
+    uintptr_t                               bufferObjPool;
 
-    /* This is the DMA channel interrupt source. */
-    INT_SOURCE interruptDMA;
+    const DRV_USART_INTERRUPT_SOURCES*      interruptSources;
 };
 
 //DOM-IGNORE-BEGIN

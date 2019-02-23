@@ -50,7 +50,6 @@
 #include <stdbool.h>
 #include "bsp/bsp.h"
 #include "peripheral/uart/plib_uart1.h"
-#include "driver/usart/drv_usart_definitions.h"
 #include "driver/usart/drv_usart.h"
 #include "peripheral/mmu/plib_mmu.h"
 #include "peripheral/matrix/plib_matrix.h"
@@ -60,6 +59,7 @@
 #include "peripheral/aic/plib_aic.h"
 #include "peripheral/flexcom/usart/plib_flexcom0_usart.h"
 #include "system/int/sys_int.h"
+#include "system/cache/sys_cache.h"
 #include "system/dma/sys_dma.h"
 #include "osal/osal.h"
 #include "app1.h"
