@@ -136,18 +136,18 @@
 
   Remarks:
     None.
-  
-  NOTE - put definition of OSAL_SEM_DECLARE macro inside each specific 
-         implementation file.  Not all implementation files are using same 
+
+  NOTE - put definition of OSAL_SEM_DECLARE macro inside each specific
+         implementation file.  Not all implementation files are using same
          definition.  The type for each individual RTOS is different, to handle
          this properly in the code, each implementation had to define its own
-         declaration.  Leave comment block here as the automated doc generator 
+         declaration.  Leave comment block here as the automated doc generator
          reads this file to output Harmony OSAL help contents..
  */
 
 
 // *****************************************************************************
-/* Function: 
+/* Function:
      OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type,
                                  uint8_t maxCount, uint8_t initialCount)
   Summary:
@@ -189,7 +189,7 @@
 //OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uint8_t maxCount, uint8_t initialCount);
 
 // ****************************************************************************
-/* Function: 
+/* Function:
     OSAL_RESULT OSAL_SEM_Delete(OSAL_SEM_HANDLE_TYPE* semID)
 
   Summary:
@@ -268,7 +268,7 @@
 //OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
      OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID)
 
   Summary:
@@ -351,7 +351,7 @@
 //OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
 
   Summary:
@@ -402,7 +402,7 @@
 
 // Critical Section group
 // *****************************************************************************
-/* Function: 
+/* Function:
     OSAL_CRITSECT_DATA_TYPE void OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity)
 
   Summary:
@@ -411,7 +411,7 @@
   Description:
      This function enters a critical section of code. It is assumed that the
      sequence of operations bounded by the enter and leave critical section
-     operations is treated as one atomic sequence that will not be disturbed.  
+     operations is treated as one atomic sequence that will not be disturbed.
      This function should be paired with OSAL_CRIT_Leave().
 
   Precondition:
@@ -423,11 +423,11 @@
 
                     OSAL_CRIT_TYPE_HIGH, The RTOS should disable all possible
                     interrupts sources including the scheduler ensuring that the
-                    sequence of code operates without interruption.  The state of 
+                    sequence of code operates without interruption.  The state of
                     interrupts are returned to the user before they are disabled.
 
   Returns:
-    A data type of OSAL_CRITSECT_DATA_TYPE, this value represents the state of 
+    A data type of OSAL_CRITSECT_DATA_TYPE, this value represents the state of
     interrupts before entering the critical section.
 
   Example:
@@ -449,7 +449,7 @@
 //__INLINE OSAL_CRITSECT_DATA_TYPE __attribute__((nomips16)) __attribute__((nomicromips)) OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
 
   Summary:
@@ -466,14 +466,14 @@
     None.
 
   Parameters:
-    severity      - OSAL_CRIT_TYPE_LOW, The scheduler will be unlocked, if no 
+    severity      - OSAL_CRIT_TYPE_LOW, The scheduler will be unlocked, if no
                     other nested calls to OSAL_CRIT_ENTER have been made.
 
-                    OSAL_CRIT_TYPE_HIGH, Interrupts are returned to the state 
+                    OSAL_CRIT_TYPE_HIGH, Interrupts are returned to the state
                     passed into this function.  The state should of been saved
                     by an earlier call to OSAL_CRIT_Enter.
-   
-    status        - The value which will be used to set the state of global 
+
+    status        - The value which will be used to set the state of global
                     interrupts, if OSAL_CRIT_TYPE_HIGH is passed in.
   Returns:
     None.
@@ -507,8 +507,8 @@
     This function declares a data item of type OSAL_MUTEX_HANDLE_TYPE
 
   Remarks:
-    Place the definition of OSAL_MUTEX_Declare macro inside each specific 
-    implementation file.  Not all implementation files are using same 
+    Place the definition of OSAL_MUTEX_Declare macro inside each specific
+    implementation file.  Not all implementation files are using same
     definition.  The type for each individual RTOS is different, to handle
     this properly in the code, each implementation had to define its own
     declaration.
@@ -516,7 +516,7 @@
 
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 
   Summary:
@@ -556,7 +556,7 @@
 //OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 
   Summary:
@@ -587,7 +587,7 @@
 //OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
 
   Summary:
@@ -636,7 +636,7 @@
 //OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 
   Summary:
@@ -676,7 +676,7 @@
 //OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     void* OSAL_Malloc(size_t size)
 
   Summary:
@@ -720,7 +720,7 @@
 //void* OSAL_Malloc(size_t size);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     void OSAL_Free(void* pData)
 
   Summary:
@@ -766,7 +766,7 @@
 //void OSAL_Free(void* pData);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     OSAL_RESULT OSAL_Initialize()
 
   Summary:
@@ -807,7 +807,7 @@
 //OSAL_RESULT OSAL_Initialize();
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     const char* OSAL_Name()
 
   Summary:
