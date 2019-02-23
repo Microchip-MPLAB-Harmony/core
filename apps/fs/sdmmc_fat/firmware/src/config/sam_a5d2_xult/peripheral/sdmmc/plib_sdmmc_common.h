@@ -16,7 +16,7 @@
 *******************************************************************************/
 
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -85,7 +85,89 @@ typedef enum
 
 } SDMMC_SPEED_MODE;
 
-typedef enum SDMMC_CMD_RESP_TYPE
+typedef enum
+{
+    /* Command code to reset the SD card */
+    SDMMC_CMD_GO_IDLE_STATE = 0,
+
+    /* Command code to initialize the SD card */
+    SDMMC_CMD_SEND_OP_COND  = 1,
+
+    /* Broadcast command code to get all card IDs */
+    SDMMC_CMD_ALL_SEND_CID  = 2,
+
+    /* Command card to respond with its RCA, tells it to go to standby state */
+    SDMMC_CMD_SEND_RCA  = 3,
+
+    /* ACMD6 sets the card's bus width between 1-bit and 4-bit, only available when the card is unlocked */
+    SDMMC_CMD_SET_BUS_WIDTH  = 6,
+
+    /* Select/Deselect card message, sends the card to transfer state */
+    SDMMC_CMD_SELECT_DESELECT_CARD = 7,
+
+    /* This macro defined the command code to check for sector addressing */
+    SDMMC_CMD_SEND_IF_COND  = 8,
+
+    /* for MMC CMD8 is used to fetch ext csd */
+    SDMMC_CMD_SEND_EXT_CSD = 8,
+
+    /* Command code to get the Card Specific Data */
+    SDMMC_CMD_SEND_CSD      = 9,
+
+    /* Command code to get the Card Information */
+    SDMMC_CMD_SEND_CID      = 10,
+
+    /* Command code to stop transmission during a multi-block read */
+    SDMMC_CMD_STOP_TRANSMISSION = 12,
+
+    /* Command code to get the card status information */
+    SDMMC_CMD_SEND_STATUS       = 13,
+
+    /* Command code to set the block length of the card */
+    SDMMC_CMD_SET_BLOCKLEN      = 16,
+
+    /* Command code to read one block from the card */
+    SDMMC_CMD_READ_SINGLE_BLOCK  = 17,
+
+    /* Command code to read multiple blocks from the card */
+    SDMMC_CMD_READ_MULTI_BLOCK   = 18,
+
+    /* Command code to tell the media how many blocks to pre-erase */
+    SDMMC_CMD_SET_WR_BLK_ERASE_COUNT =  23,
+
+    /* Command code to write one block to the card */
+    SDMMC_CMD_WRITE_SINGLE_BLOCK  = 24,
+
+    /* Command code to write multiple blocks to the card */
+    SDMMC_CMD_WRITE_MULTI_BLOCK   = 25,
+
+    /* Command code to set the address of the start of an erase operation */
+    SDMMC_CMD_TAG_SECTOR_START    = 32,
+
+    /* Command code to set the address of the end of an erase operation */
+    SDMMC_CMD_TAG_SECTOR_END      = 33,
+
+    /* Command code to erase all previously selected blocks */
+    SDMMC_CMD_ERASE              =  38,
+
+    /* Command code to initialize an SD card and provide the CSD register value */
+    SDMMC_CMD_SD_SEND_OP_COND     = 41,
+
+    /* Command code to get the SCR register information from the card */
+    SDMMC_CMD_READ_SCR            = 51,
+
+    /* Command code to begin application specific command inputs */
+    SDMMC_CMD_APP_CMD             = 55,
+
+    /* Command code to get the OCR register information from the card */
+    SDMMC_CMD_READ_OCR            = 58,
+
+    /* Command code to disable CRC checking */
+    SDMMC_CMD_CRC_ON_OFF          = 59,
+
+} SDMMC_SD_COMMAND;
+
+typedef enum
 {
     SDMMC_CMD_RESP_NONE,   /*!< no response type */
     SDMMC_CMD_RESP_R1,     /*!< normal response command */
