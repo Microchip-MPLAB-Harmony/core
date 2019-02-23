@@ -1,7 +1,7 @@
 /**
  * \brief Component description for ADC
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_ADC_COMPONENT_H_
 #define _SAMA5D2_ADC_COMPONENT_H_
 
@@ -1005,16 +1005,6 @@
 #define ADC_WPSR_Msk                          _U_(0x00FFFF01)                                      /**< (ADC_WPSR) Register Mask  */
 
 
-/* -------- ADC_VERSION : (ADC Offset: 0xFC) ( R/ 32) Version Register -------- */
-#define ADC_VERSION_VERSION_Pos               _U_(0)                                               /**< (ADC_VERSION) Version of the Hardware Module Position */
-#define ADC_VERSION_VERSION_Msk               (_U_(0xFFF) << ADC_VERSION_VERSION_Pos)              /**< (ADC_VERSION) Version of the Hardware Module Mask */
-#define ADC_VERSION_VERSION(value)            (ADC_VERSION_VERSION_Msk & ((value) << ADC_VERSION_VERSION_Pos))
-#define ADC_VERSION_MFN_Pos                   _U_(16)                                              /**< (ADC_VERSION) Metal Fix Number Position */
-#define ADC_VERSION_MFN_Msk                   (_U_(0x7) << ADC_VERSION_MFN_Pos)                    /**< (ADC_VERSION) Metal Fix Number Mask */
-#define ADC_VERSION_MFN(value)                (ADC_VERSION_MFN_Msk & ((value) << ADC_VERSION_MFN_Pos))
-#define ADC_VERSION_Msk                       _U_(0x00070FFF)                                      /**< (ADC_VERSION) Register Mask  */
-
-
 /** \brief ADC register offsets definitions */
 #define ADC_CR_REG_OFST                (0x00)              /**< (ADC_CR) Control Register Offset */
 #define ADC_MR_REG_OFST                (0x04)              /**< (ADC_MR) Mode Register Offset */
@@ -1046,7 +1036,6 @@
 #define ADC_TSCVR_REG_OFST             (0xDC)              /**< (ADC_TSCVR) Touchscreen Correction Values Register Offset */
 #define ADC_WPMR_REG_OFST              (0xE4)              /**< (ADC_WPMR) Write Protection Mode Register Offset */
 #define ADC_WPSR_REG_OFST              (0xE8)              /**< (ADC_WPSR) Write Protection Status Register Offset */
-#define ADC_VERSION_REG_OFST           (0xFC)              /**< (ADC_VERSION) Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief ADC register API structure */
@@ -1088,8 +1077,6 @@ typedef struct
   __I   uint8_t                        Reserved6[0x04];
   __IO  uint32_t                       ADC_WPMR;           /**< Offset: 0xE4 (R/W  32) Write Protection Mode Register */
   __I   uint32_t                       ADC_WPSR;           /**< Offset: 0xE8 (R/   32) Write Protection Status Register */
-  __I   uint8_t                        Reserved7[0x10];
-  __I   uint32_t                       ADC_VERSION;        /**< Offset: 0xFC (R/   32) Version Register */
 } adc_registers_t;
 
 

@@ -1,7 +1,7 @@
 /**
  * \brief Component description for MPDDRC
  *
- * © 2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-07T20:03:00Z */
+/* file generated from device description version 2019-01-23T22:42:14Z */
 #ifndef _SAMA5D2_MPDDRC_COMPONENT_H_
 #define _SAMA5D2_MPDDRC_COMPONENT_H_
 
@@ -1319,16 +1319,6 @@
 #define MPDDRC_WPSR_Msk                       _U_(0x00FFFF01)                                      /**< (MPDDRC_WPSR) Register Mask  */
 
 
-/* -------- MPDDRC_VERSION : (MPDDRC Offset: 0xFC) ( R/ 32) MPDDRC Version Register -------- */
-#define MPDDRC_VERSION_VERSION_Pos            _U_(0)                                               /**< (MPDDRC_VERSION) Version of the Hardware Module Position */
-#define MPDDRC_VERSION_VERSION_Msk            (_U_(0xFFFF) << MPDDRC_VERSION_VERSION_Pos)          /**< (MPDDRC_VERSION) Version of the Hardware Module Mask */
-#define MPDDRC_VERSION_VERSION(value)         (MPDDRC_VERSION_VERSION_Msk & ((value) << MPDDRC_VERSION_VERSION_Pos))
-#define MPDDRC_VERSION_MFN_Pos                _U_(16)                                              /**< (MPDDRC_VERSION) Metal Fix Number Position */
-#define MPDDRC_VERSION_MFN_Msk                (_U_(0xF) << MPDDRC_VERSION_MFN_Pos)                 /**< (MPDDRC_VERSION) Metal Fix Number Mask */
-#define MPDDRC_VERSION_MFN(value)             (MPDDRC_VERSION_MFN_Msk & ((value) << MPDDRC_VERSION_MFN_Pos))
-#define MPDDRC_VERSION_Msk                    _U_(0x000FFFFF)                                      /**< (MPDDRC_VERSION) Register Mask  */
-
-
 /** \brief MPDDRC register offsets definitions */
 #define MPDDRC_MR_REG_OFST             (0x00)              /**< (MPDDRC_MR) Mode Register Offset */
 #define MPDDRC_RTR_REG_OFST            (0x04)              /**< (MPDDRC_RTR) Refresh Timer Register Offset */
@@ -1371,7 +1361,6 @@
 #define MPDDRC_MINFO7_REG_OFST         (0xA0)              /**< (MPDDRC_MINFO7) Monitor Information Port 7 Register Offset */
 #define MPDDRC_WPMR_REG_OFST           (0xE4)              /**< (MPDDRC_WPMR) Write Protection Mode Register Offset */
 #define MPDDRC_WPSR_REG_OFST           (0xE8)              /**< (MPDDRC_WPSR) Write Protection Status Register Offset */
-#define MPDDRC_VERSION_REG_OFST        (0xFC)              /**< (MPDDRC_VERSION) MPDDRC Version Register Offset */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** \brief MPDDRC register API structure */
@@ -1421,8 +1410,6 @@ typedef struct
   __I   uint8_t                        Reserved3[0x40];
   __IO  uint32_t                       MPDDRC_WPMR;        /**< Offset: 0xE4 (R/W  32) Write Protection Mode Register */
   __I   uint32_t                       MPDDRC_WPSR;        /**< Offset: 0xE8 (R/   32) Write Protection Status Register */
-  __I   uint8_t                        Reserved4[0x10];
-  __I   uint32_t                       MPDDRC_VERSION;     /**< Offset: 0xFC (R/   32) MPDDRC Version Register */
 } mpddrc_registers_t;
 
 
