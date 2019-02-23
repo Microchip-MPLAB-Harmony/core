@@ -883,6 +883,12 @@ static void _DRV_SDMMC_MediaInitialize (
             dObj->dataTransferFlags.transferDir = DRV_SDMMC_DATA_TRANSFER_DIR_READ;
             dObj->dataTransferFlags.transferType = DRV_SDMMC_DATA_TRANSFER_TYPE_SINGLE;
 
+            <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
+            /* Invalidate the cache to force the CPU to read the latest data
+             * from the main memory. */
+            SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)dObj->cardCtxt.scrBuffer, DRV_SDMMC_SCR_BUFFER_LEN);
+            </#if>
+
             /* Set up the DMA for the data transfer. */
             dObj->sdmmcPlib->sdhostSetupDma (&dObj->cardCtxt.scrBuffer[0], 8, DRV_SDMMC_OPERATION_TYPE_READ);
             dObj->initState = DRV_SDMMC_INIT_SEND_SCR;
@@ -917,11 +923,6 @@ static void _DRV_SDMMC_MediaInitialize (
                 }
                 else
                 {
-                    <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
-                    /* Invalidate the cache to force the CPU to read the latest data
-                    * from the main memory. */
-                    SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)dObj->cardCtxt.scrBuffer, DRV_SDMMC_SCR_BUFFER_LEN);
-                    </#if>
 
                     if ((dObj->cardCtxt.scrBuffer[1] & 0x04) && (dObj->busWidth == DRV_SDMMC_BUS_WIDTH_4_BIT))
                     {
@@ -981,6 +982,12 @@ static void _DRV_SDMMC_MediaInitialize (
             dObj->dataTransferFlags.transferDir = DRV_SDMMC_DATA_TRANSFER_DIR_READ;
             dObj->dataTransferFlags.transferType = DRV_SDMMC_DATA_TRANSFER_TYPE_SINGLE;
 
+            <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
+            /* Invalidate the cache to force the CPU to read the latest data
+             * from the main memory. */
+            SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)dObj->cardCtxt.switchStatusBuffer, DRV_SDMMC_SWITCH_STATUS_BUFFER_LEN);
+            </#if>
+
             /* Set up the DMA for the data transfer. */
             dObj->sdmmcPlib->sdhostSetupDma (&dObj->cardCtxt.switchStatusBuffer[0], 64, DRV_SDMMC_OPERATION_TYPE_READ);
             dObj->initState = DRV_SDMMC_INIT_SWITCH_CMD;
@@ -1018,11 +1025,6 @@ static void _DRV_SDMMC_MediaInitialize (
                 }
                 else
                 {
-                    <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
-                    /* Invalidate the cache to force the CPU to read the latest data
-                     * from the main memory. */
-                    SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)dObj->cardCtxt.switchStatusBuffer, DRV_SDMMC_SWITCH_STATUS_BUFFER_LEN);
-                    </#if>
 
                     /* Wait for the data transfer to complete. */
                     if (dObj->cardCtxt.cmd6Mode == 1)
@@ -1824,6 +1826,12 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
                  * memory to the main memory for the DMA */
                 SYS_CACHE_CleanDCache_by_Addr((uint32_t *)currentBufObj->buffer, (currentBufObj->nBlocks << 9));
             }
+            else if (currentBufObj->opType == DRV_SDMMC_OPERATION_TYPE_READ)
+            {
+                /* Invalidate the cache to force the CPU to read the latest data
+                 * from the main memory. */
+                SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)currentBufObj->buffer, (currentBufObj->nBlocks << 9));
+            }
             </#if>
 
             dObj->sdmmcPlib->sdhostSetupDma (currentBufObj->buffer, (currentBufObj->nBlocks << 9), currentBufObj->opType);
@@ -1987,14 +1995,7 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
                     {
                         evtStatus = DRV_SDMMC_EVENT_COMMAND_ERROR;
                     }
-                    <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
-                    if (currentBufObj->opType == DRV_SDMMC_OPERATION_TYPE_READ)
-                    {
-                        /* Invalidate the cache to force the CPU to read the latest data
-                         * from the main memory. */
-                        SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)currentBufObj->buffer, (currentBufObj->nBlocks << 9));
-                    }
-                    </#if>
+
 
                     if(clientObj->eventHandler != NULL)
                     {
