@@ -2149,7 +2149,7 @@
       <Symbols dnOrder="0">
         <KeyValueSet dnOrder="0" id="DRV_AT25DF_CHIP_SELECT_PIN">
           <Values dnOrder="0">
-            <User dnOrder="0" value="125"/>
+            <User dnOrder="0" value="17"/>
           </Values>
         </KeyValueSet>
         <String dnOrder="1" id="DRV_AT25DF_PLIB">
@@ -2218,6 +2218,8 @@
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="drv_memory_0" priority="1" value="true"/>
               <Value dnOrder="1" id="drv_memory_0" priority="1" value="true"/>
+              <Value dnOrder="2" id="drv_memory_0" priority="1" value="true"/>
+              <Value dnOrder="3" id="drv_memory_0" priority="1" value="true"/>
             </Dynamic>
           </Values>
         </Boolean>
@@ -2865,7 +2867,8 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_A5D2_Xplained_Ultra" x="350" y="160"/>
         <ElementPosition dnOrder="1" id="FreeRTOS" x="190" y="60"/>
@@ -2882,6 +2885,5 @@
         <ElementPosition dnOrder="12" id="tc0" x="0" y="180"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
