@@ -1,5 +1,5 @@
 ;/*
-; * FreeRTOS Kernel V10.0.0
+; * FreeRTOS Kernel V10.0.1
 ; * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
 ; *
 ; * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -10,8 +10,7 @@
 ; * subject to the following conditions:
 ; *
 ; * The above copyright notice and this permission notice shall be included in all
-; * copies or substantial portions of the Software. If you wish to use our Amazon
-; * FreeRTOS name, please do so in a fair use way that does not cause confusion.
+; * copies or substantial portions of the Software.
 ; *
 ; * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 ; * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
@@ -26,28 +25,17 @@
 ; * 1 tab == 4 spaces!
 ; */
 
+	INCLUDE FreeRTOSConfig.h
+	INCLUDE portmacro.h
+
 	EXTERN	vTaskSwitchContext
 	EXTERN	ulPortYieldRequired
 	EXTERN	ulPortInterruptNesting
 	EXTERN	vApplicationIRQHandler
 
-	EXTERN	vTaskSwitchContext
-	EXTERN  ulCriticalNesting
-	EXTERN	pxCurrentTCB
-	EXTERN	ulPortTaskHasFPUContext
-	EXTERN  ulAsmAPIPriorityMask
-
-	PUBLIC  software_interrupt_irq_handler
 	PUBLIC	FreeRTOS_SWI_Handler
-	PUBLIC  irqHandler
 	PUBLIC  FreeRTOS_IRQ_Handler
 	PUBLIC 	vPortRestoreTaskContext
-
-
-AT91C_BASE_AIC  DEFINE		0xFC020000
-AIC_EOICR       DEFINE		0x38
-AIC_SMR         DEFINE		0x04
-AIC_IVR         DEFINE		0x10
 
 SYS_MODE			EQU		0x1f
 SVC_MODE			EQU		0x13
@@ -56,87 +44,11 @@ IRQ_MODE			EQU		0x12
 	SECTION .text:CODE:ROOT(2)
 	ARM
 
-portSAVE_CONTEXT macro
-
-	; Save the LR and SPSR onto the system mode stack before switching to
-	; system mode to save the remaining system mode registers
-	SRSDB	sp!, #SYS_MODE
-	CPS		#SYS_MODE
-	PUSH	{R0-R12, R14}
-
-	; Push the critical nesting count
-	LDR		R2, =ulCriticalNesting
-	LDR		R1, [R2]
-	PUSH	{R1}
-
-	; Does the task have a floating point context that needs saving?  If
-	; ulPortTaskHasFPUContext is 0 then no.
-	LDR		R2, =ulPortTaskHasFPUContext
-	LDR		R3, [R2]
-	CMP		R3, #0
-
-	; Save the floating point context, if any
-	FMRXNE  R1,  FPSCR
-	VPUSHNE {D0-D15}
-#if configFPU_D32 == 1
-	VPUSHNE	{D16-D31}
-#endif ; configFPU_D32
-	PUSHNE	{R1}
-
-	; Save ulPortTaskHasFPUContext itself
-	PUSH	{R3}
-
-	; Save the stack pointer in the TCB
-	LDR		R0, =pxCurrentTCB
-	LDR		R1, [R0]
-	STR		SP, [R1]
-
-	endm
-
-; /**********************************************************************/
-
-portRESTORE_CONTEXT macro
-
-	; Set the SP to point to the stack of the task being restored.
-	LDR		R0, =pxCurrentTCB
-	LDR		R1, [R0]
-	LDR		SP, [R1]
-
-	; Is there a floating point context to restore?  If the restored
-	; ulPortTaskHasFPUContext is zero then no.
-	LDR		R0, =ulPortTaskHasFPUContext
-	POP		{R1}
-	STR		R1, [R0]
-	CMP		R1, #0
-
-	; Restore the floating point context, if any
-	POPNE 	{R0}
-#if configFPU_D32 == 1
-	VPOPNE	{D16-D31}
-#endif ; configFPU_D32
-	VPOPNE	{D0-D15}
-	VMSRNE  FPSCR, R0
-
-	; Restore the critical section nesting depth
-	LDR		R0, =ulCriticalNesting
-	POP		{R1}
-	STR		R1, [R0]
-
-	; Restore all system mode registers other than the SP (which is already
-	; being used)
-	POP		{R0-R12, R14}
-
-	; Return to the task code, loading CPSR on the way.  CPSR has the interrupt
-	; enable bit set appropriately for the task about to execute.
-	RFEIA	sp!
-
-	endm
-
+	INCLUDE portASM.h
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; SVC handler is used to yield a task.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-software_interrupt_irq_handler
 FreeRTOS_SWI_Handler
 
 	PRESERVE8
@@ -161,7 +73,6 @@ vPortRestoreTaskContext
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; IRQ interrupt handler used when individual priorities cannot be masked
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-irqHandler
 FreeRTOS_IRQ_Handler
 
 	PRESERVE8
@@ -197,18 +108,16 @@ FreeRTOS_IRQ_Handler
 	PUSH	{r0-r4, lr}
 
 	; Call the port part specific handler.
-
 	LDR		r0, =vApplicationIRQHandler
 	BLX		r0
-
 	POP		{r0-r4, lr}
 	ADD		sp, sp, r2
 
 	CPSID	i
 
 	; Write to the EOI register.
-	LDR		r4, =AT91C_BASE_AIC
-	STR		r0, [r4, #AIC_EOICR]
+	LDR 	r4, =configEOI_ADDRESS
+	STR		r0, [r4]
 
 	; Restore the old nesting count
 	STR		r1, [r3]
