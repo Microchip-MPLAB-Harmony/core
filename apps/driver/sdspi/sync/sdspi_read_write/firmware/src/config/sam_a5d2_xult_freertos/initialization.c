@@ -48,11 +48,13 @@
 #include "device.h"
 
 
+
 // ****************************************************************************
 // ****************************************************************************
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
+
 
 
 // *****************************************************************************
@@ -63,7 +65,7 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SDSPI Instance 0 Initialization Data">
 
 /* SD Card Client Objects Pool */
-static DRV_SDSPI_CLIENT_OBJ drvSDSPI0ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_SDSPI_CLIENT_OBJ drvSDSPI0ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX0];
 
 /* SPI PLIB Interface Initialization for SDSPI Driver */
 const DRV_SDSPI_PLIB_INTERFACE drvSDSPI0PlibAPI = {
@@ -93,35 +95,39 @@ const uint32_t drvSDSPI0remapClockPhase[] = { 0x0, 0x2 };
 const DRV_SDSPI_INIT drvSDSPI0InitData =
 {
     /* SD Card SPI PLIB API interface*/
-    .spiPlib            = &drvSDSPI0PlibAPI,
+    .spiPlib                = &drvSDSPI0PlibAPI,
 
-    .remapDataBits = drvSDSPI0remapDataBits,
+    .remapDataBits          = drvSDSPI0remapDataBits,
 
-    .remapClockPolarity = drvSDSPI0remapClockPolarity,
+    .remapClockPolarity     = drvSDSPI0remapClockPolarity,
 
-    .remapClockPhase = drvSDSPI0remapClockPhase,
+    .remapClockPhase        = drvSDSPI0remapClockPhase,
 
     /* SDSPI Number of clients */
-    .numClients         = DRV_SDSPI_CLIENTS_NUMBER_IDX0,
+    .numClients             = DRV_SDSPI_CLIENTS_NUMBER_IDX0,
 
     /* SDSPI Client Objects Pool */
-    .clientObjPool      = (uintptr_t)&drvSDSPI0ClientObjPool[0],
+    .clientObjPool          = (uintptr_t)&drvSDSPI0ClientObjPool[0],
 
-    .chipSelectPin      = DRV_SDSPI_CHIP_SELECT_PIN_IDX0,
+    .chipSelectPin          = DRV_SDSPI_CHIP_SELECT_PIN_IDX0,
 
-    .sdcardSpeedHz      = DRV_SDSPI_SPEED_HZ_IDX0,
+    .sdcardSpeedHz          = DRV_SDSPI_SPEED_HZ_IDX0,
 
-    .writeProtectPin    = SYS_PORT_PIN_NONE,
+    .writeProtectPin        = SYS_PORT_PIN_NONE,
 
-    .isFsEnabled        = false,
+    .isFsEnabled            = false,
+
     /* DMA Channel for Transmit */
-    .txDMAChannel = DRV_SDSPI_XMIT_DMA_CH_IDX0,
+    .txDMAChannel           = DRV_SDSPI_XMIT_DMA_CH_IDX0,
+
     /* DMA Channel for Receive */
-    .rxDMAChannel  = DRV_SDSPI_RCV_DMA_CH_IDX0,
+    .rxDMAChannel           = DRV_SDSPI_RCV_DMA_CH_IDX0,
+
     /* SPI Transmit Register */
-    .txAddress = (void *)&(SPI1_REGS->SPI_TDR),
+    .txAddress              = (void *)&(SPI1_REGS->SPI_TDR),
+
     /* SPI Receive Register */
-    .rxAddress  = (void *)&(SPI1_REGS->SPI_RDR),
+    .rxAddress              = (void *)&(SPI1_REGS->SPI_RDR),
 };
 
 // </editor-fold>
@@ -135,6 +141,7 @@ const DRV_SDSPI_INIT drvSDSPI0InitData =
 // *****************************************************************************
 /* Structure to hold the object handles for the modules in the system. */
 SYSTEM_OBJECTS sysObj;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Library/Stack Initialization Data
@@ -168,6 +175,7 @@ const SYS_TIME_INIT sysTimeInitData =
 // </editor-fold>
 
 
+
 /*******************************************************************************
   Function:
     void SYS_Initialize ( void *data )
@@ -180,6 +188,7 @@ const SYS_TIME_INIT sysTimeInitData =
 
 void SYS_Initialize ( void* data )
 {
+  
     CLK_Initialize();
 	PIO_Initialize();
 
@@ -189,6 +198,8 @@ void SYS_Initialize ( void* data )
 
     MMU_Initialize();
     Matrix_Initialize();
+
+    PLIB_L2CC_Initialize();
 
     INT_Initialize();
     XDMAC0_Initialize();
@@ -212,10 +223,10 @@ void SYS_Initialize ( void* data )
     APP_Initialize();
 
 
+
 }
 
 
 /*******************************************************************************
  End of File
 */
-
