@@ -16,7 +16,7 @@
 *******************************************************************************/
 
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -53,15 +53,14 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <string.h>
 
-void SDMMC1_SetBusWidth ( SDMMC_BUS_WIDTH busWidth );
+void SDMMC1_BusWidthSet ( SDMMC_BUS_WIDTH busWidth );
 
-void SDMMC1_SetSpeedMode( SDMMC_SPEED_MODE speedMode );
+void SDMMC1_SpeedModeSet( SDMMC_SPEED_MODE speedMode );
 
-void SDMMC1_SetBlockSize ( uint16_t blockSize );
+void SDMMC1_BlockSizeSet ( uint16_t blockSize );
 
-void SDMMC1_SetBlockCount( uint16_t numBlocks );
+void SDMMC1_BlockCountSet( uint16_t numBlocks );
 
 bool SDMMC1_IsCmdLineBusy ( void );
 
@@ -71,34 +70,36 @@ bool SDMMC1_IsWriteProtected ( void );
 
 bool SDMMC1_IsCardAttached ( void );
 
-bool SDMMC1_SetClock ( uint32_t clock);
+bool SDMMC1_ClockSet ( uint32_t clock );
 
 void SDMMC1_ClockEnable ( void );
 
 void SDMMC1_ClockDisable ( void );
 
-uint16_t SDMMC1_GetCommandError(void);
+uint16_t SDMMC1_ErrorGet( void );
 
-uint16_t SDMMC1_GetDataError(void);
+uint16_t SDMMC1_CommandErrorGet( void );
 
-void SDMMC1_ResetError ( SDMMC_RESET_TYPE resetType );
+uint16_t SDMMC1_DataErrorGet( void );
 
-void SDMMC1_ReadResponse( SDMMC_READ_RESPONSE_REG respReg, uint32_t* response );
+void SDMMC1_ErrorReset ( SDMMC_RESET_TYPE resetType );
 
-void SDMMC1_InitModule( void );
+void SDMMC1_ResponseRead( SDMMC_READ_RESPONSE_REG respReg, uint32_t* response );
+
+void SDMMC1_ModuleInit( void );
 
 void SDMMC1_Initialize( void );
 
-void SDMMC1_CallbackRegister(SDMMC_CALLBACK callback, uintptr_t contextHandle);
+void SDMMC1_CallbackRegister( SDMMC_CALLBACK callback, uintptr_t contextHandle );
 
-void SDMMC1_SendCommand(
+void SDMMC1_CommandSend(
     uint8_t opCode, 
     uint32_t argument,
     uint8_t respType, 
     SDMMC_DataTransferFlags transferFlags
 );
 
-void SDMMC1_SetupDma(
+void SDMMC1_DmaSetup(
     uint8_t* buffer,
     uint32_t numBytes,
     SDMMC_DATA_TRANSFER_DIR direction
