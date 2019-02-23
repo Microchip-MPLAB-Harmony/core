@@ -86,6 +86,9 @@ REMAP_BASE_ADDRESS DEFINE 0x00600000
         EXTERN  prefetch_abort_irq_handler
         EXTERN  data_abort_irq_handler
         EXTERN  software_interrupt_irq_handler
+                EXTERN FreeRTOS_IRQ_Handler
+        EXTERN FreeRTOS_SWI_Handler
+
 
         DATA
 
@@ -113,10 +116,10 @@ _reset_vector:                  ; Make this a DATA label, so that stack usage
 ; If a handler is defined by the application it will take precedence.
 reset_addr:        DCD   __iar_program_start
 undefined_addr:    DCD   undefined_instruction_irq_handler
-soft_int_addr:     DCD   software_interrupt_irq_handler
+soft_int_addr:     DCD   FreeRTOS_SWI_Handler
 prefetch_abt_addr: DCD   prefetch_abort_irq_handler
 data_abt_addr:     DCD   data_abort_irq_handler
-irq_addr:          DCD   irqHandler
+irq_addr:          DCD   FreeRTOS_IRQ_Handler
 fiq_addr:          DCD   fiqHandler
 
 ;------------------------------------------------------------------------------
