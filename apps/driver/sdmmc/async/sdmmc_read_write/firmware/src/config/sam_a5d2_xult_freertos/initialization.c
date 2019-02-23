@@ -73,21 +73,21 @@ static DRV_SDMMC_BUFFER_OBJ drvSDMMC0BufferObjPool[DRV_SDMMC_QUEUE_SIZE_IDX0] = 
 
 const DRV_SDMMC_PLIB_API drvSDMMC0PlibAPI = {
     .sdhostCallbackRegister = (DRV_SDMMC_PLIB_CALLBACK_REGISTER)SDMMC1_CallbackRegister,
-    .sdhostInitModule = (DRV_SDMMC_PLIB_INIT_MODULE)SDMMC1_InitModule,
-    .sdhostSetClock  = (DRV_SDMMC_PLIB_SET_CLOCK)SDMMC1_SetClock,
+    .sdhostInitModule = (DRV_SDMMC_PLIB_INIT_MODULE)SDMMC1_ModuleInit,
+    .sdhostSetClock  = (DRV_SDMMC_PLIB_SET_CLOCK)SDMMC1_ClockSet,
     .sdhostIsCmdLineBusy = (DRV_SDMMC_PLIB_IS_CMD_LINE_BUSY)SDMMC1_IsCmdLineBusy,
     .sdhostIsDatLineBusy = (DRV_SDMMC_PLIB_IS_DATA_LINE_BUSY)SDMMC1_IsDatLineBusy,
-    .sdhostSendCommand = (DRV_SDMMC_PLIB_SEND_COMMAND)SDMMC1_SendCommand,
-    .sdhostReadResponse = (DRV_SDMMC_PLIB_READ_RESPONSE)SDMMC1_ReadResponse,
-    .sdhostSetBlockCount = (DRV_SDMMC_PLIB_SET_BLOCK_COUNT)SDMMC1_SetBlockCount,
-    .sdhostSetBlockSize = (DRV_SDMMC_PLIB_SET_BLOCK_SIZE)SDMMC1_SetBlockSize,
-    .sdhostSetBusWidth = (DRV_SDMMC_PLIB_SET_BUS_WIDTH)SDMMC1_SetBusWidth,
-    .sdhostSetSpeedMode = (DRV_SDMMC_PLIB_SET_SPEED_MODE)SDMMC1_SetSpeedMode,
-    .sdhostSetupDma = (DRV_SDMMC_PLIB_SETUP_DMA)SDMMC1_SetupDma,
-    .sdhostGetCommandError = (DRV_SDMMC_PLIB_GET_COMMAND_ERROR)SDMMC1_GetCommandError,
-    .sdhostGetDataError = (DRV_SDMMC_PLIB_GET_DATA_ERROR)SDMMC1_GetDataError,
+    .sdhostSendCommand = (DRV_SDMMC_PLIB_SEND_COMMAND)SDMMC1_CommandSend,
+    .sdhostReadResponse = (DRV_SDMMC_PLIB_READ_RESPONSE)SDMMC1_ResponseRead,
+    .sdhostSetBlockCount = (DRV_SDMMC_PLIB_SET_BLOCK_COUNT)SDMMC1_BlockCountSet,
+    .sdhostSetBlockSize = (DRV_SDMMC_PLIB_SET_BLOCK_SIZE)SDMMC1_BlockSizeSet,
+    .sdhostSetBusWidth = (DRV_SDMMC_PLIB_SET_BUS_WIDTH)SDMMC1_BusWidthSet,
+    .sdhostSetSpeedMode = (DRV_SDMMC_PLIB_SET_SPEED_MODE)SDMMC1_SpeedModeSet,
+    .sdhostSetupDma = (DRV_SDMMC_PLIB_SETUP_DMA)SDMMC1_DmaSetup,
+    .sdhostGetCommandError = (DRV_SDMMC_PLIB_GET_COMMAND_ERROR)SDMMC1_CommandErrorGet,
+    .sdhostGetDataError = (DRV_SDMMC_PLIB_GET_DATA_ERROR)SDMMC1_DataErrorGet,
     .sdhostClockEnable = (DRV_SDMMC_PLIB_CLOCK_ENABLE)SDMMC1_ClockEnable,
-    .sdhostResetError = (DRV_SDMMC_PLIB_RESET_ERROR)SDMMC1_ResetError,
+    .sdhostResetError = (DRV_SDMMC_PLIB_RESET_ERROR)SDMMC1_ErrorReset,
     .sdhostIsCardAttached = (DRV_SDMMC_PLIB_IS_CARD_ATTACHED)SDMMC1_IsCardAttached,
     .sdhostIsWriteProtected = (DRV_SDMMC_PLIB_IS_WRITE_PROTECTED)SDMMC1_IsWriteProtected,
 };
@@ -187,7 +187,6 @@ void SYS_Initialize ( void* data )
     
 
 
-
     sysObj.drvSDMMC0 = DRV_SDMMC_Initialize(DRV_SDMMC_INDEX_0,(SYS_MODULE_INIT *)&drvSDMMC0InitData);
 
 
@@ -197,7 +196,7 @@ void SYS_Initialize ( void* data )
     APP_Initialize();
 
 
-  
+
 }
 
 
