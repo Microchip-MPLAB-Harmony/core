@@ -50,8 +50,7 @@
 #include "driver/usart/drv_usart.h"
 #include "drv_usart_local.h"
 
-//SYS_DEBUG is not available yet, hence commented for now.
-//#include "system/debug/sys_debug.h"
+#include "system/cache/sys_cache.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -96,9 +95,10 @@ static void _DRV_USART_TX_PLIB_CallbackHandler( uintptr_t context )
 
 static DRV_USART_ERROR _DRV_USART_GetErrorType(const uint32_t* remapError, uint32_t errorMask)
 {
+    uint32_t i;
     DRV_USART_ERROR error = DRV_USART_ERROR_NONE;
 
-    for (uint32_t i = 0; i < 3; i++)
+    for (i = 0; i < 3; i++)
     {
         if (remapError[i] == errorMask)
         {
@@ -290,6 +290,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
 
     if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
+
         SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, _DRV_USART_RX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
     else
@@ -510,15 +511,15 @@ bool DRV_USART_WriteBuffer
 
             if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
             {
-                if (DATA_CACHE_ENABLED == true)
-                {
-                    /* Clean cache lines having source buffer before submitting a transfer
-                     * request to DMA to load the latest data in the cache to the actual
-                     * memory */
-                    DCACHE_CLEAN_BY_ADDR((uint32_t *)buffer, numbytes);
-                }
+                /* Clean the write buffer to push the data to the main memory */
+                SYS_CACHE_CleanDCache_by_Addr((uint32_t *)buffer, numbytes);
 
-                SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)buffer, (const void *)dObj->txAddress, numbytes);
+                SYS_DMA_ChannelTransfer(
+                    dObj->txDMAChannel,
+                    (const void *)buffer,
+                    (const void *)dObj->txAddress,
+                    numbytes
+                );
             }
             else
             {
@@ -568,7 +569,15 @@ bool DRV_USART_ReadBuffer
 
             if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
             {
-                SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void *)dObj->rxAddress, (const void *)buffer, numbytes);
+                /* Invalidate the receive buffer to force the CPU to read from the main memory */
+                SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)buffer, numbytes);
+
+                SYS_DMA_ChannelTransfer(
+                    dObj->rxDMAChannel,
+                    (const void *)dObj->rxAddress,
+                    (const void *)buffer,
+                    numbytes
+                );
             }
             else
             {
@@ -580,12 +589,6 @@ bool DRV_USART_ReadBuffer
                 /* Check and return status */
                 if (dObj->rxRequestStatus == DRV_USART_REQUEST_STATUS_COMPLETE)
                 {
-                    if ((dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE) && (DATA_CACHE_ENABLED == true))
-                    {
-                        /* Invalidate cache lines having received buffer before using it
-                         * to load the latest data in the actual memory to the cache */
-                        DCACHE_INVALIDATE_BY_ADDR((uint32_t *)buffer, numbytes);
-                    }
                     isSuccess = true;
                 }
             }
