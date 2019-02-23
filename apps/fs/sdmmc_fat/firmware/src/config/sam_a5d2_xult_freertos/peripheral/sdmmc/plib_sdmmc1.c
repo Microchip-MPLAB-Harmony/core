@@ -16,7 +16,7 @@
 *******************************************************************************/
 
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -69,26 +69,26 @@ static void SDMMC1_SetTransferMode ( uint32_t opcode )
 {
     uint16_t transferMode = 0;
 
-    switch(opcode)
+    switch (opcode)
     {
-        case 51:
-        case 6:
-        case 17:
+        case SDMMC_CMD_READ_SCR:
+        case SDMMC_CMD_SET_BUS_WIDTH:
+        case SDMMC_CMD_READ_SINGLE_BLOCK:
             /* Read single block of data from the device. */
             transferMode = (SDMMC_TMR_DMAEN_ENABLED | SDMMC_TMR_DTDSEL_Msk);
             break;
 
-        case 18:
+        case SDMMC_CMD_READ_MULTI_BLOCK:
             /* Read multiple blocks of data from the device. */
             transferMode = (SDMMC_TMR_DMAEN_ENABLED | SDMMC_TMR_DTDSEL_Msk | SDMMC_TMR_MSBSEL_Msk | SDMMC_TMR_BCEN_Msk);
             break;
 
-        case 24:
+        case SDMMC_CMD_WRITE_SINGLE_BLOCK:
             /* Write single block of data to the device. */
             transferMode = SDMMC_TMR_DMAEN_ENABLED;
             break;
 
-        case 25:
+        case SDMMC_CMD_WRITE_MULTI_BLOCK:
             /* Write multiple blocks of data to the device. */
             transferMode = (SDMMC_TMR_DMAEN_ENABLED | SDMMC_TMR_MSBSEL_Msk | SDMMC_TMR_BCEN_Msk);
             break;
@@ -100,7 +100,7 @@ static void SDMMC1_SetTransferMode ( uint32_t opcode )
     SDMMC1_REGS->SDMMC_TMR = transferMode;
 }
 
-void SDMMC1_InterruptHandler(void)
+void SDMMC1_InterruptHandler( void )
 {
     uint16_t nistr = 0;
     uint16_t eistr = 0;
@@ -131,7 +131,7 @@ void SDMMC1_InterruptHandler(void)
                                       SDMMC_EISTR_SD_SDIO_CMDEND_Msk | \
                                       SDMMC_EISTR_SD_SDIO_CMDIDX_Msk))
                 {
-                    SDMMC1_ResetError (SDMMC_RESET_CMD);
+                    SDMMC1_ErrorReset (SDMMC_RESET_CMD);
                 }
             }
             sdmmc1Obj.isCmdInProgress = false;
@@ -149,7 +149,7 @@ void SDMMC1_InterruptHandler(void)
                             SDMMC_EISTR_SD_SDIO_DATCRC_Msk | \
                             SDMMC_EISTR_SD_SDIO_DATEND_Msk))
                 {
-                    SDMMC1_ResetError (SDMMC_RESET_DAT);
+                    SDMMC1_ErrorReset (SDMMC_RESET_DAT);
                 }
             }
             if (nistr & SDMMC_NISTR_SD_SDIO_TRFC_Msk)
@@ -172,7 +172,7 @@ void SDMMC1_InterruptHandler(void)
     }
 }
 
-void SDMMC1_ResetError ( SDMMC_RESET_TYPE resetType )
+void SDMMC1_ErrorReset ( SDMMC_RESET_TYPE resetType )
 {
     SDMMC1_REGS->SDMMC_SRR = resetType;
 
@@ -180,24 +180,24 @@ void SDMMC1_ResetError ( SDMMC_RESET_TYPE resetType )
     while (SDMMC1_REGS->SDMMC_SRR & resetType);
 }
 
-uint16_t SDMMC1_GetError(void)
+uint16_t SDMMC1_ErrorGet( void )
 {
     return sdmmc1Obj.errorStatus;
 }
 
-uint16_t SDMMC1_GetCommandError(void)
+uint16_t SDMMC1_CommandErrorGet( void )
 {
     return (sdmmc1Obj.errorStatus & (SDMMC_EISTR_SD_SDIO_CMDTEO_Msk | SDMMC_EISTR_SD_SDIO_CMDCRC_Msk | \
                 SDMMC_EISTR_SD_SDIO_CMDEND_Msk));
 }
 
-uint16_t SDMMC1_GetDataError(void)
+uint16_t SDMMC1_DataErrorGet( void )
 {
     return (sdmmc1Obj.errorStatus & (SDMMC_EISTR_SD_SDIO_ADMA_Msk | SDMMC_EISTR_SD_SDIO_DATTEO_Msk | \
             SDMMC_EISTR_SD_SDIO_DATCRC_Msk | SDMMC_EISTR_SD_SDIO_DATEND_Msk));
 }
 
-void SDMMC1_SetBusWidth ( SDMMC_BUS_WIDTH busWidth )
+void SDMMC1_BusWidthSet ( SDMMC_BUS_WIDTH busWidth )
 {
     if (busWidth == SDMMC_BUS_WIDTH_4_BIT)
     {
@@ -209,7 +209,7 @@ void SDMMC1_SetBusWidth ( SDMMC_BUS_WIDTH busWidth )
     }
 }
 
-void SDMMC1_SetSpeedMode ( SDMMC_SPEED_MODE speedMode )
+void SDMMC1_SpeedModeSet ( SDMMC_SPEED_MODE speedMode )
 {
     if (speedMode == SDMMC_SPEED_MODE_HIGH)
     {
@@ -241,12 +241,12 @@ bool SDMMC1_IsCardAttached ( void )
     return ((SDMMC1_REGS->SDMMC_PSR & SDMMC_PSR_CARDINS_Msk) == SDMMC_PSR_CARDINS_Msk)? true : false;
 }
 
-void SDMMC1_SetBlockSize ( uint16_t blockSize )
+void SDMMC1_BlockSizeSet ( uint16_t blockSize )
 {
     SDMMC1_REGS->SDMMC_BSR = blockSize;
 }
 
-void SDMMC1_SetBlockCount ( uint16_t numBlocks )
+void SDMMC1_BlockCountSet ( uint16_t numBlocks )
 {
     SDMMC1_REGS->SDMMC_BCR = numBlocks;
 }
@@ -261,7 +261,7 @@ void SDMMC1_ClockDisable ( void )
     SDMMC1_REGS->SDMMC_CCR &= ~(SDMMC_CCR_INTCLKEN_Msk | SDMMC_CCR_SDCLKEN_Msk);
 }
 
-void SDMMC1_SetupDma (
+void SDMMC1_DmaSetup (
     uint8_t* buffer,
     uint32_t numBytes,
     SDMMC_DATA_TRANSFER_DIR direction
@@ -311,7 +311,7 @@ void SDMMC1_SetupDma (
     SDMMC1_REGS->SDMMC_ASAR0 = (uint32_t)(&sdmmc1DmaDescrTable[0]);
 }
 
-bool SDMMC1_SetClock ( uint32_t speed)
+bool SDMMC1_ClockSet ( uint32_t speed )
 {
     uint32_t baseclk_frq = 0;
     uint16_t divider = 0;
@@ -401,7 +401,7 @@ bool SDMMC1_SetClock ( uint32_t speed)
     return true;
 }
 
-void SDMMC1_ReadResponse (
+void SDMMC1_ResponseRead (
     SDMMC_READ_RESPONSE_REG respReg,
     uint32_t* response
 )
@@ -434,7 +434,7 @@ void SDMMC1_ReadResponse (
     }
 }
 
-void SDMMC1_SendCommand (
+void SDMMC1_CommandSend (
     uint8_t opCode,
     uint32_t argument,
     uint8_t respType,
@@ -515,7 +515,7 @@ void SDMMC1_SendCommand (
     SDMMC1_REGS->SDMMC_CR = cmd;
 }
 
-void SDMMC1_InitModule( void )
+void SDMMC1_ModuleInit( void )
 {
     /* Reset module*/
     SDMMC1_REGS->SDMMC_SRR |= SDMMC_SRR_SWRSTALL_Msk;
@@ -539,7 +539,7 @@ void SDMMC1_InitModule( void )
     SDMMC1_REGS->SDMMC_PCR |= SDMMC_PCR_SDBPWR_Msk;
 
     /* Set initial clock to 400 KHz*/
-    SDMMC1_SetClock (SDMMC_CLOCK_FREQ_400_KHZ);
+    SDMMC1_ClockSet (SDMMC_CLOCK_FREQ_400_KHZ);
 
     /* Clear the high speed bit and set the data width to 1-bit mode */
     SDMMC1_REGS->SDMMC_HC1R &= ~(SDMMC_HC1R_SD_SDIO_HSEN_Msk | SDMMC_HC1R_SD_SDIO_DW_Msk);
@@ -551,10 +551,10 @@ void SDMMC1_InitModule( void )
 void SDMMC1_Initialize( void )
 {
     SDMMC1_InitVariables();
-    SDMMC1_InitModule();
+    SDMMC1_ModuleInit();
 }
 
-void SDMMC1_CallbackRegister(SDMMC_CALLBACK callback, uintptr_t contextHandle)
+void SDMMC1_CallbackRegister( SDMMC_CALLBACK callback, uintptr_t contextHandle )
 {
     if (callback != NULL)
     {
