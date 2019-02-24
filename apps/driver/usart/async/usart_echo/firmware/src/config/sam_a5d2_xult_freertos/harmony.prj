@@ -51,8 +51,8 @@
           <Name dnOrder="1">drv_usart.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/driver/usart/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usart/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">34DAC886E774CEBCB53ECC940775DF55</GeneratedChecksum>
-          <UserChecksum dnOrder="5">34DAC886E774CEBCB53ECC940775DF55</UserChecksum>
+          <GeneratedChecksum dnOrder="4">84D72D78B8D45D00FEB0E569061CAFA7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">84D72D78B8D45D00FEB0E569061CAFA7</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -251,8 +251,8 @@
           <Name dnOrder="1">sys_int.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/system/int/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/int/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A17DE6CBDF8A45F795A0668213CA9E0E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A17DE6CBDF8A45F795A0668213CA9E0E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0128FD5EAC2B910A9EA7090F32CFE236</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0128FD5EAC2B910A9EA7090F32CFE236</UserChecksum>
         </File>
         <File dnOrder="31">
           <Type dnOrder="0">SOURCE</Type>
