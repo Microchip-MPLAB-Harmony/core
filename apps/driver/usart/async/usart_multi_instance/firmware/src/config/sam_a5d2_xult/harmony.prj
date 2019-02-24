@@ -27,8 +27,8 @@
           <Name dnOrder="1">drv_usart.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usart/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usart/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">34DAC886E774CEBCB53ECC940775DF55</GeneratedChecksum>
-          <UserChecksum dnOrder="5">34DAC886E774CEBCB53ECC940775DF55</UserChecksum>
+          <GeneratedChecksum dnOrder="4">84D72D78B8D45D00FEB0E569061CAFA7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">84D72D78B8D45D00FEB0E569061CAFA7</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
@@ -155,8 +155,8 @@
           <Name dnOrder="1">sys_int.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/system/int/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/int/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A17DE6CBDF8A45F795A0668213CA9E0E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A17DE6CBDF8A45F795A0668213CA9E0E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0128FD5EAC2B910A9EA7090F32CFE236</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0128FD5EAC2B910A9EA7090F32CFE236</UserChecksum>
         </File>
         <File dnOrder="19">
           <Type dnOrder="0">SOURCE</Type>
@@ -910,7 +910,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;net;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
     </Settings>
   </Configurator>
 </Configuration>
