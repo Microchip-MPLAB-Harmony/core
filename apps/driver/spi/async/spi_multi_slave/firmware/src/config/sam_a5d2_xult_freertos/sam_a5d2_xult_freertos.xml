@@ -140,6 +140,7 @@
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="drv_spi_0" priority="2" value="false"/>
+              <Value dnOrder="1" id="drv_spi_0" priority="2" value="false"/>
             </Dynamic>
           </Values>
         </Boolean>
@@ -147,6 +148,7 @@
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="drv_spi_0" priority="2" value="false"/>
+              <Value dnOrder="1" id="drv_spi_0" priority="2" value="false"/>
             </Dynamic>
           </Values>
         </Boolean>
@@ -1844,12 +1846,7 @@
           </Values>
         </Integer>
         <Boolean dnOrder="272" id="SPI1_INTERRUPT_ENABLE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="readOnly">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="core" priority="1" value="true"/>
               <Value dnOrder="1" id="spi1" priority="1" value="true"/>
@@ -2297,7 +2294,10 @@
         </File>
         <Combo dnOrder="2" id="DRV_SPI_COMMON_MODE">
           <Values dnOrder="0">
-            <User dnOrder="0" value="Asynchronous"/>
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="drv_spi" priority="1" value="Synchronous"/>
+            </Dynamic>
+            <User dnOrder="1" value="Asynchronous"/>
           </Values>
         </Combo>
         <File dnOrder="3" id="DRV_SPI_SYNC_HEADER_LOCAL">
@@ -2318,60 +2318,46 @@
       <Instances dnOrder="1">
         <InstanceComponent dnOrder="0" id="drv_spi" instance="0">
           <Symbols dnOrder="0">
-            <Comment dnOrder="0" id="DRV_SPI_DEPENDENCY_DMA_COMMENT">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="visible">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
-            </Comment>
-            <String dnOrder="1" id="DRV_SPI_MODE">
+            <String dnOrder="0" id="DRV_SPI_MODE">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0">
                   <Value dnOrder="0" id="drv_spi_0" priority="1" value="Asynchronous"/>
                 </Dynamic>
               </Values>
             </String>
-            <Integer dnOrder="2" id="DRV_SPI_NUM_CLIENTS">
+            <Integer dnOrder="1" id="DRV_SPI_NUM_CLIENTS">
               <Values dnOrder="0">
                 <User dnOrder="0" value="2"/>
               </Values>
             </Integer>
-            <String dnOrder="3" id="DRV_SPI_PLIB">
+            <String dnOrder="2" id="DRV_SPI_PLIB">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0">
                   <Value dnOrder="0" id="drv_spi_0" priority="1" value="SPI1"/>
                 </Dynamic>
               </Values>
             </String>
-            <Integer dnOrder="4" id="DRV_SPI_QUEUE_SIZE">
+            <Integer dnOrder="3" id="DRV_SPI_QUEUE_SIZE">
               <Attributes dnOrder="0">
                 <Boolean dnOrder="0" id="visible">
                   <Value dnOrder="0">true</Value>
                 </Boolean>
               </Attributes>
             </Integer>
-            <Integer dnOrder="5" id="DRV_SPI_RX_DMA_CHANNEL">
+            <Integer dnOrder="4" id="DRV_SPI_RX_DMA_CHANNEL">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0">
                   <Value dnOrder="0" id="drv_spi_0" priority="2" value="-1"/>
                 </Dynamic>
               </Values>
             </Integer>
-            <Integer dnOrder="6" id="DRV_SPI_TX_DMA_CHANNEL">
+            <Integer dnOrder="5" id="DRV_SPI_TX_DMA_CHANNEL">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0">
                   <Value dnOrder="0" id="drv_spi_0" priority="2" value="-1"/>
                 </Dynamic>
               </Values>
             </Integer>
-            <Boolean dnOrder="7" id="DRV_SPI_TX_RX_DMA">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="readOnly">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
-            </Boolean>
           </Symbols>
           <Attachments dnOrder="1">
             <DirectDependency dnOrder="0" id="drv_spi_SPI_dependency">
@@ -2599,237 +2585,181 @@
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Menu dnOrder="27" id="GEN_APP_RTOS_TASK_CONF_MENU0">
+        <Menu dnOrder="27" id="GEN_APP_RTOS_TASK_CONF_MENU1">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <Menu dnOrder="28" id="GEN_APP_RTOS_TASK_CONF_MENU1">
+        <Menu dnOrder="28" id="GEN_APP_RTOS_TASK_CONF_MENU2">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <Menu dnOrder="29" id="GEN_APP_RTOS_TASK_CONF_MENU2">
+        <Menu dnOrder="29" id="GEN_APP_TASK_CONF_MENU1">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <File dnOrder="30" id="GEN_APP_TASKS">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <Menu dnOrder="31" id="GEN_APP_TASK_CONF_MENU0">
+        <Menu dnOrder="30" id="GEN_APP_TASK_CONF_MENU2">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <Menu dnOrder="32" id="GEN_APP_TASK_CONF_MENU1">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Menu>
-        <Menu dnOrder="33" id="GEN_APP_TASK_CONF_MENU2">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Menu>
-        <Integer dnOrder="34" id="GEN_APP_TASK_COUNT">
+        <Integer dnOrder="31" id="GEN_APP_TASK_COUNT">
           <Values dnOrder="0">
             <User dnOrder="0" value="3"/>
           </Values>
         </Integer>
-        <Menu dnOrder="35" id="GEN_APP_TASK_MENU">
+        <Menu dnOrder="32" id="GEN_APP_TASK_MENU">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <String dnOrder="36" id="GEN_APP_TASK_NAME_0">
+        <String dnOrder="33" id="GEN_APP_TASK_NAME_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="app_eeprom1"/>
           </Values>
         </String>
-        <String dnOrder="37" id="GEN_APP_TASK_NAME_1">
+        <String dnOrder="34" id="GEN_APP_TASK_NAME_1">
           <Values dnOrder="0">
             <User dnOrder="0" value="app_eeprom2"/>
           </Values>
         </String>
-        <String dnOrder="38" id="GEN_APP_TASK_NAME_2">
+        <String dnOrder="35" id="GEN_APP_TASK_NAME_2">
           <Values dnOrder="0">
             <User dnOrder="0" value="app_monitor"/>
           </Values>
         </String>
-        <File dnOrder="39" id="GEN_RTOS_APP_TASKS">
+        <File dnOrder="36" id="INT_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="40" id="GEN_RTOS_APP_TASKS_DEF">
+        <File dnOrder="37" id="INT_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="41" id="INT_DEF">
+        <File dnOrder="38" id="INT_MAPPING">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="42" id="INT_HEADER">
+        <File dnOrder="39" id="INT_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="43" id="INT_MAPPING">
+        <File dnOrder="40" id="OSAL_DEFINITIONS_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="44" id="INT_SOURCE">
+        <File dnOrder="41" id="OSAL_FREERTOS_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="45" id="OSAL_DEFINITIONS_H">
+        <File dnOrder="42" id="OSAL_FREERTOS_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="46" id="OSAL_FREERTOS_C">
+        <File dnOrder="43" id="OSAL_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="47" id="OSAL_FREERTOS_H">
+        <File dnOrder="44" id="OSAL_SYSDEF_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="48" id="OSAL_H">
+        <File dnOrder="45" id="PORTS_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="49" id="OSAL_SYSDEF_H">
+        <File dnOrder="46" id="PORTS_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="50" id="PORTS_DEF">
+        <File dnOrder="47" id="PORTS_MAPPING">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="51" id="PORTS_HEADER">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="52" id="PORTS_MAPPING">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <Combo dnOrder="53" id="SELECT_RTOS">
+        <Combo dnOrder="48" id="SELECT_RTOS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="HarmonyCore" priority="1" value="FreeRTOS"/>
             </Dynamic>
           </Values>
         </Combo>
-        <File dnOrder="54" id="SYSTEM_COMMON">
+        <File dnOrder="49" id="SYSTEM_COMMON">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="55" id="SYSTEM_MODULE">
+        <File dnOrder="50" id="SYSTEM_MODULE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="56" id="SYSTEM_ROOT">
+        <File dnOrder="51" id="SYSTEM_ROOT">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="57" id="SYS_CACHE_DEF">
+        <File dnOrder="52" id="TASKS_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="58" id="SYS_CACHE_HEADER">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="59" id="SYS_CACHE_SOURCE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="60" id="TASKS_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="61" id="USER_H">
+        <File dnOrder="53" id="USER_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
@@ -2921,14 +2851,7 @@
             </Dynamic>
           </Values>
         </Boolean>
-        <Boolean dnOrder="2" id="SPI_INTERRUPT_MODE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="readOnly">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Boolean>
-        <KeyValueSet dnOrder="3" id="SPI_MR_PCS">
+        <KeyValueSet dnOrder="2" id="SPI_MR_PCS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="spi1" priority="1" value="4"/>
@@ -2951,8 +2874,7 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_A5D2_Xplained_Ultra" x="30" y="160"/>
         <ElementPosition dnOrder="1" id="FreeRTOS" x="30" y="60"/>
@@ -2965,5 +2887,6 @@
         <ElementPosition dnOrder="8" id="spi1" x="178" y="206"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
