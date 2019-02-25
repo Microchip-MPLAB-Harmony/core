@@ -50,9 +50,8 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include "app_eeprom1.h"
 #include "app_eeprom2.h"
-#include "string.h"
+#include <string.h>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -75,22 +74,19 @@
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_EEPROM2_DATA app_eeprom2Data;
-
+static APP_EEPROM2_DATA app_eeprom2Data;
+static const uint8_t messageString2[] = "WRITING AND READING DATA ON FIRST INSTANCE EEPROM 2";
 /* Array size has to be of multiple of 32 because of cache alignment */
-uint8_t __attribute__ ((aligned (32))) txData2[64]  = "----WRITING AND READING DATA ON SECOND CLIENT EEPROM 2";
-
-uint8_t __attribute__ ((aligned (32))) rxData2[sizeof(txData2)];
+static uint8_t __attribute__ ((aligned (32))) txData2[64];
+static uint8_t __attribute__ ((aligned (32))) rxData2[64];
+static uint8_t writeEnableCommand2;
+static uint8_t readStatusCommand2;
 
 /* EEPROM Commands */
 #define EEPROM2_CMD_WREN                       0x06
 #define EEPROM2_CMD_WRITE                      0x02
 #define EEPROM2_CMD_RDSR                       0x05
 #define EEPROM2_CMD_READ                       0x03
-
-uint8_t writeEnableCommand2 = EEPROM2_CMD_WREN;
-uint8_t readStatusCommand2  = EEPROM2_CMD_RDSR;
-
 #define EEPROM2_START_ADDRESS                  0x000000
 // *****************************************************************************
 // *****************************************************************************
@@ -98,32 +94,20 @@ uint8_t readStatusCommand2  = EEPROM2_CMD_RDSR;
 // *****************************************************************************
 // *****************************************************************************
 
-void SpiEeprom2EventHandler (DRV_SPI_TRANSFER_EVENT event,
-        DRV_SPI_TRANSFER_HANDLE transferHandle, uintptr_t context )
+void SPI_EEEPROM2_EventHandler (
+    DRV_SPI_TRANSFER_EVENT event,
+    DRV_SPI_TRANSFER_HANDLE transferHandle,
+    uintptr_t context
+)
 {
     if (event == DRV_SPI_TRANSFER_EVENT_COMPLETE)
     {
-        if(transferHandle == app_eeprom2Data.transferHandle3)
-        {            
-            if(!(rxData2[1] & 0x01))
-            {
-                app_eeprom2Data.state = APP_EEPROM2_STATE_READ;
-            }
-            else
-            {
-                app_eeprom2Data.state = APP_EEPROM2_STATE_WAIT_FOR_WRITE_COMPLETE;
-            }
-        }
-        else if(transferHandle == app_eeprom2Data.transferHandle4)
-        {
-            // Both the transfers are done, update the state to compare the received data.
-            app_eeprom2Data.state = APP_EEPROM2_STATE_DATA_COMPARISON;
-        }  
+        app_eeprom2Data.isTransferComplete = true;
     }
     else
     {
-        app_eeprom2Data.transferSuccess = false;
-        app_eeprom2Data.state = APP_EEPROM2_STATE_IDLE;
+        app_eeprom2Data.isTransferComplete = false;
+        app_eeprom2Data.state = APP_EEPROM2_STATE_ERROR;
     }
 }
 
@@ -157,13 +141,16 @@ void APP_EEPROM2_Initialize ( void )
     app_eeprom2Data.state = APP_EEPROM2_STATE_DATA_INIT;
     app_eeprom2Data.drvSPIHandle = DRV_HANDLE_INVALID;
     app_eeprom2Data.transferSuccess = false;
-    
+
+    writeEnableCommand2 = EEPROM2_CMD_WREN;
+    readStatusCommand2  = EEPROM2_CMD_RDSR;
+
+    memset(&txData2, 0, sizeof(txData2));
+    memset(&rxData2, 0, sizeof(rxData2));
+
     APP_EEPROM2_CS_Set();
     APP_EEPROM2_WP_Set();
     APP_EEPROM2_HOLD_Set();
-    
-    /* Clear the receive data array */
-    memset(&rxData2, 0, sizeof(rxData2));
 }
 
 
@@ -176,15 +163,15 @@ void APP_EEPROM2_Initialize ( void )
  */
 
 void APP_EEPROM2_Tasks ( void )
-{   
-    uint32_t eepromAddr = EEPROM2_START_ADDRESS; 
-    
+{
+    uint32_t eepromAddr = EEPROM2_START_ADDRESS;
+
     /* Check the application's current state. */
     switch ( app_eeprom2Data.state )
     {
         /* Application's initial state. */
         case APP_EEPROM2_STATE_DATA_INIT:
-        {
+
             /* Setup SPI for client 2 which is EEPROM 2 */
             app_eeprom2Data.setup.baudRateInHz = 700000;
             app_eeprom2Data.setup.clockPhase = DRV_SPI_CLOCK_PHASE_VALID_LEADING_EDGE;
@@ -192,119 +179,144 @@ void APP_EEPROM2_Tasks ( void )
             app_eeprom2Data.setup.dataBits = DRV_SPI_DATA_BITS_8;
             app_eeprom2Data.setup.chipSelect = (SYS_PORT_PIN)APP_EEPROM2_CS_PIN;
             app_eeprom2Data.setup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;
-        
+
             app_eeprom2Data.state = APP_EEPROM2_STATE_DRIVER_SETUP;
             break;
-        }
+
         case APP_EEPROM2_STATE_DRIVER_SETUP:
-        {
+
             /* Open the SPI Driver for client 2 */
-            if(app_eeprom2Data.drvSPIHandle == DRV_HANDLE_INVALID)
-            {
-                app_eeprom2Data.drvSPIHandle = DRV_SPI_Open( DRV_SPI_INDEX_0, DRV_IO_INTENT_READWRITE );
-            }
+            app_eeprom2Data.drvSPIHandle = DRV_SPI_Open( DRV_SPI_INDEX_0, DRV_IO_INTENT_READWRITE );
             if(app_eeprom2Data.drvSPIHandle != DRV_HANDLE_INVALID)
             {
-                if(DRV_SPI_TransferSetup(app_eeprom2Data.drvSPIHandle, &app_eeprom2Data.setup) == false)
+                if(DRV_SPI_TransferSetup(app_eeprom2Data.drvSPIHandle, &app_eeprom2Data.setup) == true)
                 {
-                   app_eeprom2Data.state = APP_EEPROM2_STATE_IDLE; 
+                    DRV_SPI_TransferEventHandlerSet(app_eeprom2Data.drvSPIHandle, SPI_EEEPROM2_EventHandler, (uintptr_t)NULL);
+                    app_eeprom2Data.state = APP_EEPROM2_STATE_WRITE_ENABLE;
                 }
-               
-                DRV_SPI_TransferEventHandlerSet(app_eeprom2Data.drvSPIHandle, SpiEeprom2EventHandler, (uintptr_t)NULL);
-                app_eeprom2Data.state = APP_EEPROM2_STATE_WRITE_ENABLE;
-            }
-            break;
-        }
-
-        case APP_EEPROM2_STATE_WRITE_ENABLE:
-        {                        
-            DRV_SPI_WriteTransferAdd(app_eeprom2Data.drvSPIHandle, &writeEnableCommand2, 1, &app_eeprom2Data.transferHandle1 );
-            if(app_eeprom2Data.transferHandle1 == DRV_SPI_TRANSFER_HANDLE_INVALID)
-            {
-                /* Remain in the same state */
-                app_eeprom2Data.state = APP_EEPROM2_STATE_WRITE_ENABLE;
+                else
+                {
+                    app_eeprom2Data.state = APP_EEPROM2_STATE_ERROR;
+                }
             }
             else
             {
-                app_eeprom2Data.state = APP_EEPROM2_STATE_WRITE;
+                app_eeprom2Data.state = APP_EEPROM2_STATE_ERROR;
             }
             break;
-        }
+
+        case APP_EEPROM2_STATE_WRITE_ENABLE:
+
+            app_eeprom2Data.state = APP_EEPROM2_STATE_WRITE;
+            DRV_SPI_WriteTransferAdd(app_eeprom2Data.drvSPIHandle, &writeEnableCommand2, 1, &app_eeprom2Data.transferHandle );
+            if(app_eeprom2Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
+            {
+                app_eeprom2Data.state = APP_EEPROM2_STATE_ERROR;
+            }
+            break;
+
         case APP_EEPROM2_STATE_WRITE:
-        {   
-                //Write to EEPROM 
+            if (app_eeprom2Data.isTransferComplete == true)
+            {
+                app_eeprom2Data.isTransferComplete = false;
+
+                //Write to EEPROM
                 txData2[0] = EEPROM2_CMD_WRITE;
                 txData2[1] = (uint8_t)(eepromAddr>>16);
-                txData2[2] = (uint8_t)(eepromAddr>>8);                 
-                txData2[3] = (uint8_t)(eepromAddr);
-                
-                DRV_SPI_WriteTransferAdd(app_eeprom2Data.drvSPIHandle, &txData2, sizeof(txData2), &app_eeprom2Data.transferHandle2 );   
-                if(app_eeprom2Data.transferHandle2 == DRV_SPI_TRANSFER_HANDLE_INVALID)
-                {
-                    /* Remain in the same state */
-                    app_eeprom2Data.state = APP_EEPROM2_STATE_WRITE;
-                }
-                else
-                {
-                    app_eeprom2Data.state = APP_EEPROM2_STATE_WAIT_FOR_WRITE_COMPLETE;
-                }
-            break;
-        }
-        case APP_EEPROM2_STATE_WAIT_FOR_WRITE_COMPLETE:
-        {   
-                app_eeprom2Data.state = APP_EEPROM2_STATE_IDLE;
-            
-                DRV_SPI_WriteReadTransferAdd(app_eeprom2Data.drvSPIHandle, &readStatusCommand2, 1, rxData2, 2, &app_eeprom2Data.transferHandle3 );   
-                if(app_eeprom2Data.transferHandle3 == DRV_SPI_TRANSFER_HANDLE_INVALID)
-                {
-                    /* Remain in the same state */
-                    app_eeprom2Data.state = APP_EEPROM2_STATE_WAIT_FOR_WRITE_COMPLETE;
-                }
-                else
-                {
-                    
-                }
-            break;
-        }
-        case APP_EEPROM2_STATE_READ:
-        {   
-                app_eeprom2Data.state = APP_EEPROM2_STATE_IDLE;
-            
-                //Read from EEPROM     
-                txData2[0] = EEPROM2_CMD_READ;
-                txData2[1] = (uint8_t)(eepromAddr>>16);
-                txData2[2] = (uint8_t)(eepromAddr>>8);                 
+                txData2[2] = (uint8_t)(eepromAddr>>8);
                 txData2[3] = (uint8_t)(eepromAddr);
 
-                DRV_SPI_WriteReadTransferAdd(app_eeprom2Data.drvSPIHandle, txData2, 4, rxData2, sizeof(rxData2), &app_eeprom2Data.transferHandle4 );   
-                if(app_eeprom2Data.transferHandle4 == DRV_SPI_TRANSFER_HANDLE_INVALID)
+                memcpy(&txData2[4], messageString2, strlen((const char*)messageString2));
+
+                app_eeprom2Data.state = APP_EEPROM2_STATE_WAIT_FOR_WRITE_COMPLETE;
+
+                DRV_SPI_WriteTransferAdd(app_eeprom2Data.drvSPIHandle, txData2, (4 + strlen((const char*)messageString2)), &app_eeprom2Data.transferHandle );
+
+                if(app_eeprom2Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
                 {
-                    /* Remain in the same state */
+                    app_eeprom2Data.state = APP_EEPROM2_STATE_ERROR;
+                }
+            }
+            break;
+
+        case APP_EEPROM2_STATE_WAIT_FOR_WRITE_COMPLETE:
+            if (app_eeprom2Data.isTransferComplete == true)
+            {
+                app_eeprom2Data.isTransferComplete = false;
+
+                app_eeprom2Data.state = APP_EEPROM2_STATE_CHECK_STATUS;
+
+                DRV_SPI_WriteReadTransferAdd(app_eeprom2Data.drvSPIHandle, &readStatusCommand2, 1, rxData2, 2, &app_eeprom2Data.transferHandle );
+
+                if(app_eeprom2Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
+                {
+                    app_eeprom2Data.state = APP_EEPROM2_STATE_ERROR;
+                }
+            }
+            break;
+
+        case APP_EEPROM2_STATE_CHECK_STATUS:
+            if (app_eeprom2Data.isTransferComplete == true)
+            {
+                app_eeprom2Data.isTransferComplete = false;
+                if((rxData2[1] & 0x01) == 0x00)
+                {
                     app_eeprom2Data.state = APP_EEPROM2_STATE_READ;
                 }
+                else
+                {
+                    // Keep checking the EEPROM status
+                    DRV_SPI_WriteReadTransferAdd(app_eeprom2Data.drvSPIHandle, &readStatusCommand2, 1, rxData2, 2, &app_eeprom2Data.transferHandle);
+                    if(app_eeprom2Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
+                    {
+                        app_eeprom2Data.state = APP_EEPROM2_STATE_ERROR;
+                    }
+                }
+            }
             break;
-        }
+
+        case APP_EEPROM2_STATE_READ:
+
+            //Read from EEPROM
+            txData2[0] = EEPROM2_CMD_READ;
+            txData2[1] = (uint8_t)(eepromAddr>>16);
+            txData2[2] = (uint8_t)(eepromAddr>>8);
+            txData2[3] = (uint8_t)(eepromAddr);
+
+            app_eeprom2Data.state = APP_EEPROM2_STATE_DATA_COMPARISON;
+
+            DRV_SPI_WriteReadTransferAdd(app_eeprom2Data.drvSPIHandle, txData2, 4, rxData2, (4 + strlen((const char*)messageString2)), &app_eeprom2Data.transferHandle);
+
+            if(app_eeprom2Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
+            {
+                app_eeprom2Data.state = APP_EEPROM2_STATE_ERROR;
+            }
+            break;
+
         case APP_EEPROM2_STATE_DATA_COMPARISON:
-        {
-            /* Transfer Status polling is not done here as we have already checked the transfer status in the SPIEventHandler callback function */
-            if (memcmp(&txData2[4], &rxData2[4], sizeof(txData2)-4) != 0)            
+            if (app_eeprom2Data.isTransferComplete == true)
             {
-                app_eeprom2Data.transferSuccess = false;
+                app_eeprom2Data.isTransferComplete = false;
+
+                if (memcmp(messageString2, &rxData2[4], strlen((const char*)messageString2)) != 0)
+                {
+                    app_eeprom2Data.transferSuccess = false;
+                }
+                else
+                {
+                    app_eeprom2Data.transferSuccess = true;
+                }
+                app_eeprom2Data.state = APP_EEPROM2_STATE_IDLE;
             }
-            else   
-            {
-                app_eeprom2Data.transferSuccess = true;
-            }
+            break;
+        case APP_EEPROM2_STATE_ERROR:
+            app_eeprom2Data.transferSuccess = false;
             app_eeprom2Data.state = APP_EEPROM2_STATE_IDLE;
- 
             break;
-        }
+
         case APP_EEPROM2_STATE_IDLE:
-        {
-            break;
-        }       
         default:
-            while (1);
+            break;
     }
 }
 

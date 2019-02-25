@@ -85,17 +85,17 @@ extern "C" {
 typedef enum
 {
     /* Application's state machine's initial state. */
-	/* Application's state machine's initial state. */
-	APP_EEPROM2_STATE_DATA_INIT,
+    /* Application's state machine's initial state. */
+    APP_EEPROM2_STATE_DATA_INIT,
     APP_EEPROM2_STATE_DRIVER_SETUP,
-	APP_EEPROM2_STATE_WRITE_ENABLE,
+    APP_EEPROM2_STATE_WRITE_ENABLE,
     APP_EEPROM2_STATE_WRITE,
     APP_EEPROM2_STATE_WAIT_FOR_WRITE_COMPLETE,
+    APP_EEPROM2_STATE_CHECK_STATUS,
     APP_EEPROM2_STATE_READ,
-    APP_EEPROM2_STATE_DATA_COMPARISON,            
-    APP_EEPROM2_STATE_IDLE
-
-
+    APP_EEPROM2_STATE_DATA_COMPARISON,
+    APP_EEPROM2_STATE_IDLE,
+    APP_EEPROM2_STATE_ERROR
 } APP_EEPROM2_STATES;
 
 
@@ -117,11 +117,9 @@ typedef struct
     /* The application's current state */
     APP_EEPROM2_STATES state;
     DRV_HANDLE drvSPIHandle;
-    DRV_SPI_TRANSFER_HANDLE transferHandle1;
-    DRV_SPI_TRANSFER_HANDLE transferHandle2;
-    DRV_SPI_TRANSFER_HANDLE transferHandle3;
-    DRV_SPI_TRANSFER_HANDLE transferHandle4;
     DRV_SPI_TRANSFER_SETUP  setup;
+    DRV_SPI_TRANSFER_HANDLE transferHandle;
+    volatile bool isTransferComplete;
     bool transferSuccess;
 
 } APP_EEPROM2_DATA;
