@@ -27,8 +27,8 @@
           <Name dnOrder="1">drv_usart.c</Name>
           <LogicalPath dnOrder="2">config/sam_c21n_xpro/driver/usart/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usart/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">06E5F2301C04D2FCB10907DE7075126B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">06E5F2301C04D2FCB10907DE7075126B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">42CD84C3E5381BBC013B34ACF9B38833</GeneratedChecksum>
+          <UserChecksum dnOrder="5">42CD84C3E5381BBC013B34ACF9B38833</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
@@ -291,8 +291,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_c21n_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">438EDDFC87434B054543E3FBA8344C0E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">438EDDFC87434B054543E3FBA8344C0E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">EFFA9CC45E46DF643519CB006B07DCE2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">EFFA9CC45E46DF643519CB006B07DCE2</UserChecksum>
         </File>
         <File dnOrder="36">
           <Type dnOrder="0">HEADER</Type>

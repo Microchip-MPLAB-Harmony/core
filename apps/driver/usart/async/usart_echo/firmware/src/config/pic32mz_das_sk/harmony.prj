@@ -27,8 +27,8 @@
           <Name dnOrder="1">drv_usart.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/driver/usart/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usart/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9537F3AA33FAD3D10BC2532314A92471</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9537F3AA33FAD3D10BC2532314A92471</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A754177E7F56279F6B4690413399E28C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A754177E7F56279F6B4690413399E28C</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>

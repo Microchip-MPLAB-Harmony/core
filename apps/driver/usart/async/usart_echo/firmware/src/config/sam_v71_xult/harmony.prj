@@ -27,8 +27,8 @@
           <Name dnOrder="1">drv_usart.c</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult/driver/usart/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usart/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3C1BA2634B6D6288C6E24CDC445E667B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3C1BA2634B6D6288C6E24CDC445E667B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">84D72D78B8D45D00FEB0E569061CAFA7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">84D72D78B8D45D00FEB0E569061CAFA7</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
@@ -51,8 +51,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">05DEDC3C2F3D24D99BBD3BA8492CBCC1</GeneratedChecksum>
-          <UserChecksum dnOrder="5">05DEDC3C2F3D24D99BBD3BA8492CBCC1</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C62BFDCB35EF02D65CC9966E67C126FB</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C62BFDCB35EF02D65CC9966E67C126FB</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -299,8 +299,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0CD185D3040F2810CABA44724209C436</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0CD185D3040F2810CABA44724209C436</UserChecksum>
+          <GeneratedChecksum dnOrder="4">DA63596460A6C3BA895FA9CF46C6FE1A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">DA63596460A6C3BA895FA9CF46C6FE1A</UserChecksum>
         </File>
         <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>
