@@ -43,8 +43,8 @@
           <Name dnOrder="1">drv_spi.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/driver/spi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/spi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0317CB5E61F138CF5EF65223E348E6FD</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0317CB5E61F138CF5EF65223E348E6FD</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1AA1252B46A191BF557ABBDE374DB261</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1AA1252B46A191BF557ABBDE374DB261</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
@@ -115,8 +115,8 @@
           <Name dnOrder="1">plib_spi2.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/peripheral/spi/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/spi/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FD89C5304D07059B390568267EB690A3</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FD89C5304D07059B390568267EB690A3</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BBBA0402724BA455967C8D4B96D4CBAC</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BBBA0402724BA455967C8D4B96D4CBAC</UserChecksum>
         </File>
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
