@@ -59,9 +59,9 @@ extern "C" {
 // Section: User Configuration macros
 // *****************************************************************************
 // *****************************************************************************
-#define LED_ON()        LED1_On()
-#define LED_OFF()       LED1_Off()
-#define LED_TOGGLE()    LED1_Toggle()
+#define LED_ON()        LED0_On()
+#define LED_OFF()       LED0_Off()
+#define LED_TOGGLE()    LED0_Toggle()
 
 //Defines the on-board EEPROM AT24MAC402's I2C Address.
 #define APP_AT24MAC_DEVICE_ADDR             0x0057
