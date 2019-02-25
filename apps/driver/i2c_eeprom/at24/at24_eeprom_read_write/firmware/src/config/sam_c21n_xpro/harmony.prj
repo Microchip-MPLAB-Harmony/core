@@ -3,7 +3,7 @@
   <Configurator>
     <Name dnOrder="0" value="sam_c21n_xpro"/>
     <Processor dnOrder="1" value="ATSAMC21N18A"/>
-    <Harmony dnOrder="2" path="../../../../.."/>
+    <Harmony dnOrder="2" path="../../../../../.."/>
     <Manifest dnOrder="3">
       <Files dnOrder="0">
         <File dnOrder="0">
@@ -291,8 +291,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_c21n_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6CFCB76DAC104F1ED7A420B2BDB14784</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6CFCB76DAC104F1ED7A420B2BDB14784</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BCF1804F985D89677A391282E9CBA8A3</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BCF1804F985D89677A391282E9CBA8A3</UserChecksum>
         </File>
         <File dnOrder="36">
           <Type dnOrder="0">HEADER</Type>
@@ -731,7 +731,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
     </Settings>
   </Configurator>
 </Configuration>
