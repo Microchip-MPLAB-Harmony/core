@@ -9,7 +9,7 @@
           <logicalFolder name="f4" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_d21_xpro/bsp/bsp.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="driver" projectFiles="true">
+          <logicalFolder name="f2" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="i2c" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/driver/i2c/drv_i2c.h</itemPath>
               <itemPath>../src/config/sam_d21_xpro/driver/i2c/drv_i2c_definitions.h</itemPath>
@@ -45,7 +45,7 @@
               <itemPath>../src/config/sam_d21_xpro/peripheral/tc/plib_tc3.h</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="system" projectFiles="true">
+          <logicalFolder name="f3" displayName="system" projectFiles="true">
             <logicalFolder name="f2" displayName="console" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/system/console/sys_console.h</itemPath>
               <itemPath>../src/config/sam_d21_xpro/system/console/src/sys_console_local.h</itemPath>
@@ -150,7 +150,7 @@
           <logicalFolder name="f5" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_d21_xpro/bsp/bsp.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f4" displayName="driver" projectFiles="true">
+          <logicalFolder name="f3" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="i2c" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/driver/i2c/src/drv_i2c.c</itemPath>
               <itemPath>../src/config/sam_d21_xpro/driver/i2c/src/drv_i2c_local.h</itemPath>
@@ -184,7 +184,7 @@
           <logicalFolder name="f2" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/sam_d21_xpro/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="system" projectFiles="true">
+          <logicalFolder name="f4" displayName="system" projectFiles="true">
             <logicalFolder name="f2" displayName="console" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/system/console/src/sys_console.c</itemPath>
               <itemPath>../src/config/sam_d21_xpro/system/console/src/sys_console_uart.c</itemPath>

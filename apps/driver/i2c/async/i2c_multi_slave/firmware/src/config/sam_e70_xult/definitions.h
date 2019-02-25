@@ -58,11 +58,11 @@
 #include "system/console/sys_debug.h"
 #include "peripheral/tc/plib_tc0.h"
 #include "peripheral/usart/plib_usart1.h"
-#include "system/time/sys_time.h"
+#include "driver/i2c/drv_i2c.h"
 #include "system/int/sys_int.h"
 #include "system/cache/sys_cache.h"
 #include "osal/osal.h"
-#include "driver/i2c/drv_i2c.h"
+#include "system/time/sys_time.h"
 #include "app_i2c_eeprom.h"
 #include "app_i2c_temp_sensor.h"
 

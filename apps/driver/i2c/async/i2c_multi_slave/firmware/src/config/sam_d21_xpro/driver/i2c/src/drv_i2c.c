@@ -138,7 +138,7 @@ static bool _DRV_I2C_ResourceLock(DRV_I2C_OBJ * dObj)
     if (intInfo->isSingleIntSrc == true)
     {
         /* Disable I2C interrupt */
-         dObj->i2cInterruptStatus = SYS_INT_SourceDisable(intInfo->intSources.i2cInterrupt);
+         dObj->i2cInterruptStatus = SYS_INT_SourceDisable((INT_SOURCE)intInfo->intSources.i2cInterrupt);
     }
     else
     {
@@ -147,19 +147,19 @@ static bool _DRV_I2C_ResourceLock(DRV_I2C_OBJ * dObj)
         /* Disable I2C interrupt sources */
          if(multiVector->i2cInt0 != -1)
          {
-            dObj->i2cInt0Status = SYS_INT_SourceDisable(multiVector->i2cInt0);
+            dObj->i2cInt0Status = SYS_INT_SourceDisable((INT_SOURCE)multiVector->i2cInt0);
          }
          if(multiVector->i2cInt1 != -1)
          {
-            dObj->i2cInt1Status = SYS_INT_SourceDisable(multiVector->i2cInt1);
+            dObj->i2cInt1Status = SYS_INT_SourceDisable((INT_SOURCE)multiVector->i2cInt1);
          }
          if(multiVector->i2cInt2 != -1)
          {
-            dObj->i2cInt2Status = SYS_INT_SourceDisable(multiVector->i2cInt2);
+            dObj->i2cInt2Status = SYS_INT_SourceDisable((INT_SOURCE)multiVector->i2cInt2);
          }
          if(multiVector->i2cInt3 != -1)
          {
-            dObj->i2cInt3Status = SYS_INT_SourceDisable(multiVector->i2cInt3);
+            dObj->i2cInt3Status = SYS_INT_SourceDisable((INT_SOURCE)multiVector->i2cInt3);
          }
 
          SYS_INT_Restore(interruptStatus);
@@ -179,7 +179,7 @@ static void _DRV_I2C_ResourceUnlock(DRV_I2C_OBJ * dObj)
     if (intInfo->isSingleIntSrc == true)
     {
         /* Enable I2C interrupt */
-         SYS_INT_SourceRestore(intInfo->intSources.i2cInterrupt, dObj->i2cInterruptStatus);
+         SYS_INT_SourceRestore((INT_SOURCE)intInfo->intSources.i2cInterrupt, dObj->i2cInterruptStatus);
     }
     else
     {
@@ -188,19 +188,19 @@ static void _DRV_I2C_ResourceUnlock(DRV_I2C_OBJ * dObj)
         /* Enable I2C interrupt sources */
         if(multiVector->i2cInt0 != -1)
         {
-            SYS_INT_SourceRestore(multiVector->i2cInt0,dObj->i2cInt0Status );
+            SYS_INT_SourceRestore((INT_SOURCE)multiVector->i2cInt0,dObj->i2cInt0Status );
         }
         if(multiVector->i2cInt1 != -1)
         {
-            SYS_INT_SourceRestore(multiVector->i2cInt1,dObj->i2cInt1Status );
+            SYS_INT_SourceRestore((INT_SOURCE)multiVector->i2cInt1,dObj->i2cInt1Status );
         }
         if(multiVector->i2cInt2 != -1)
         {
-            SYS_INT_SourceRestore(multiVector->i2cInt2,dObj->i2cInt2Status );
+            SYS_INT_SourceRestore((INT_SOURCE)multiVector->i2cInt2,dObj->i2cInt2Status );
         }
         if(multiVector->i2cInt3 != -1)
         {
-            SYS_INT_SourceRestore(multiVector->i2cInt3,dObj->i2cInt3Status );
+            SYS_INT_SourceRestore((INT_SOURCE)multiVector->i2cInt3,dObj->i2cInt3Status );
         }
 
         SYS_INT_Restore(interruptStatus);
@@ -578,7 +578,7 @@ DRV_HANDLE DRV_I2C_Open(
             OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
 
             clientObj->drvIndex     = drvIndex;
-            clientObj->ioIntent     = (ioIntent | DRV_IO_INTENT_NONBLOCKING);
+            clientObj->ioIntent     = (DRV_IO_INTENT)(ioIntent | DRV_IO_INTENT_NONBLOCKING);
             clientObj->eventHandler = NULL;
             clientObj->context      = (uintptr_t)NULL;
             clientObj->errors       = DRV_I2C_ERROR_NONE;

@@ -35,8 +35,8 @@
           <Name dnOrder="1">drv_i2c.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/driver/i2c/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/i2c/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1ADEFA5C99CD9DD9BB56F35E5348CA7B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1ADEFA5C99CD9DD9BB56F35E5348CA7B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">00BE2152C659AE45DBA8630ACD809BD2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">00BE2152C659AE45DBA8630ACD809BD2</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -339,8 +339,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5E927EC89BE854449931A45486C4F6F1</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5E927EC89BE854449931A45486C4F6F1</UserChecksum>
+          <GeneratedChecksum dnOrder="4">18B89C20DCFB68F68B5FD2B5B774A331</GeneratedChecksum>
+          <UserChecksum dnOrder="5">18B89C20DCFB68F68B5FD2B5B774A331</UserChecksum>
         </File>
         <File dnOrder="42">
           <Type dnOrder="0">HEADER</Type>
@@ -819,7 +819,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
     </Settings>
   </Configurator>
 </Configuration>
