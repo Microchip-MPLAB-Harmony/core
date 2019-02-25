@@ -129,7 +129,7 @@ static void _DRV_USART_DisableInterrupts(DRV_USART_OBJ* dObj)
     if (intInfo->isSingleIntSrc == true)
     {
         /* Disable USART interrupt */
-        dObj->usartInterruptStatus = SYS_INT_SourceDisable(intInfo->intSources.usartInterrupt);
+        dObj->usartInterruptStatus = SYS_INT_SourceDisable((INT_SOURCE)intInfo->intSources.usartInterrupt);
 
     }
     else
@@ -137,22 +137,22 @@ static void _DRV_USART_DisableInterrupts(DRV_USART_OBJ* dObj)
         /* Disable USART interrupt sources */
         if(multiVector->usartTxReadyInt != -1)
         {
-            dObj->usartTxReadyIntStatus = SYS_INT_SourceDisable(multiVector->usartTxReadyInt);
+            dObj->usartTxReadyIntStatus = SYS_INT_SourceDisable((INT_SOURCE)multiVector->usartTxReadyInt);
         }
 
         if(multiVector->usartTxCompleteInt != -1)
         {
-            dObj->usartTxCompleteIntStatus = SYS_INT_SourceDisable(multiVector->usartTxCompleteInt);
+            dObj->usartTxCompleteIntStatus = SYS_INT_SourceDisable((INT_SOURCE)multiVector->usartTxCompleteInt);
         }
 
         if(multiVector->usartRxCompleteInt != -1)
         {
-            dObj->usartRxCompleteIntStatus = SYS_INT_SourceDisable(multiVector->usartRxCompleteInt);
+            dObj->usartRxCompleteIntStatus = SYS_INT_SourceDisable((INT_SOURCE)multiVector->usartRxCompleteInt);
         }
 
         if(multiVector->usartErrorInt != -1)
         {
-            dObj->usartErrorIntStatus = SYS_INT_SourceDisable(multiVector->usartErrorInt);
+            dObj->usartErrorIntStatus = SYS_INT_SourceDisable((INT_SOURCE)multiVector->usartErrorInt);
         }
 
     }
@@ -171,7 +171,7 @@ static void _DRV_USART_EnableInterrupts(DRV_USART_OBJ* dObj)
     if (intInfo->isSingleIntSrc == true)
     {
         /* Enable USART interrupt */
-        SYS_INT_SourceRestore(intInfo->intSources.usartInterrupt, dObj->usartInterruptStatus);
+        SYS_INT_SourceRestore((INT_SOURCE)intInfo->intSources.usartInterrupt, dObj->usartInterruptStatus);
 
     }
     else
@@ -179,22 +179,22 @@ static void _DRV_USART_EnableInterrupts(DRV_USART_OBJ* dObj)
         /* Enable USART interrupt sources */
         if(multiVector->usartTxReadyInt != -1)
         {
-            SYS_INT_SourceRestore(multiVector->usartTxReadyInt, dObj->usartTxReadyIntStatus);
+            SYS_INT_SourceRestore((INT_SOURCE)multiVector->usartTxReadyInt, dObj->usartTxReadyIntStatus);
         }
 
         if(multiVector->usartTxCompleteInt != -1)
         {
-            SYS_INT_SourceRestore(multiVector->usartTxCompleteInt, dObj->usartTxCompleteIntStatus);
+            SYS_INT_SourceRestore((INT_SOURCE)multiVector->usartTxCompleteInt, dObj->usartTxCompleteIntStatus);
         }
 
         if(multiVector->usartRxCompleteInt != -1)
         {
-            SYS_INT_SourceRestore(multiVector->usartRxCompleteInt, dObj->usartRxCompleteIntStatus);
+            SYS_INT_SourceRestore((INT_SOURCE)multiVector->usartRxCompleteInt, dObj->usartRxCompleteIntStatus);
         }
 
         if(multiVector->usartErrorInt != -1)
         {
-            SYS_INT_SourceRestore(multiVector->usartErrorInt, dObj->usartErrorIntStatus);
+            SYS_INT_SourceRestore((INT_SOURCE)multiVector->usartErrorInt, dObj->usartErrorIntStatus);
         }
 
     }
