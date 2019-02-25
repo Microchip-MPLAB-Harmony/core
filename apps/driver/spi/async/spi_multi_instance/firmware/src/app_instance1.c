@@ -47,7 +47,6 @@
 // *****************************************************************************
 
 #include "app_instance1.h"
-#include "app_instance2.h"
 #include <string.h>
 
 // *****************************************************************************
@@ -72,7 +71,8 @@
 */
 
 static APP_INSTANCE1_DATA app_instance1Data;
-const uint8_t messageString1[] = "WRITING AND READING DATA ON FIRST INSTANCE EEPROM 1";
+
+static const uint8_t messageString1[] = "WRITING AND READING DATA ON FIRST INSTANCE EEPROM 1";
 static uint8_t __attribute__ ((aligned (32))) txData1[64];
 static uint8_t __attribute__ ((aligned (32))) rxData1[64];
 static uint8_t writeEnableCommand1;
@@ -103,6 +103,7 @@ void SPIInstance1EventHandler (
     else
     {
         app_instance1Data.isTransferComplete = false;
+        app_instance1Data.state = APP_INSTANCE1_STATE_ERROR;
     }
 }
 
@@ -203,14 +204,13 @@ void APP_INSTANCE1_Tasks ( void )
 
         case APP_INSTANCE1_STATE_WRITE_ENABLE:
 
+            app_instance1Data.state = APP_INSTANCE1_STATE_WRITE;
+
             DRV_SPI_WriteTransferAdd(app_instance1Data.drvSPIHandle, &writeEnableCommand1, 1, &app_instance1Data.transferHandle );
+
             if(app_instance1Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
             {
                 app_instance1Data.state = APP_INSTANCE1_STATE_ERROR;
-            }
-            else
-            {
-                app_instance1Data.state = APP_INSTANCE1_STATE_WRITE;
             }
             break;
 
@@ -228,15 +228,13 @@ void APP_INSTANCE1_Tasks ( void )
 
                 memcpy(&txData1[4], messageString1, strlen((const char*)messageString1));
 
+                app_instance1Data.state = APP_INSTANCE1_STATE_WAIT_FOR_WRITE_COMPLETE;
+
                 DRV_SPI_WriteTransferAdd(app_instance1Data.drvSPIHandle, txData1, (4 + strlen((const char*)messageString1)), &app_instance1Data.transferHandle );
 
                 if(app_instance1Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
                 {
                     app_instance1Data.state = APP_INSTANCE1_STATE_ERROR;
-                }
-                else
-                {
-                    app_instance1Data.state = APP_INSTANCE1_STATE_WAIT_FOR_WRITE_COMPLETE;
                 }
             }
             break;
@@ -247,14 +245,13 @@ void APP_INSTANCE1_Tasks ( void )
             {
                 app_instance1Data.isTransferComplete = false;
 
+                app_instance1Data.state = APP_INSTANCE1_STATE_CHECK_STATUS;
+
                 DRV_SPI_WriteReadTransferAdd(app_instance1Data.drvSPIHandle, &readStatusCommand1, 1, rxData1, 2, &app_instance1Data.transferHandle );
+
                 if(app_instance1Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
                 {
                     app_instance1Data.state = APP_INSTANCE1_STATE_ERROR;
-                }
-                else
-                {
-                    app_instance1Data.state = APP_INSTANCE1_STATE_CHECK_STATUS;
                 }
             }
             break;
@@ -266,12 +263,13 @@ void APP_INSTANCE1_Tasks ( void )
                 app_instance1Data.isTransferComplete = false;
                 if((rxData1[1] & 0x01) == 0x00)
                 {
-                    app_instance1Data.state = APP_INSTANCE2_STATE_READ;
+                    app_instance1Data.state = APP_INSTANCE1_STATE_READ;
                 }
                 else
                 {
                     // Keep checking the EEPROM status
                     DRV_SPI_WriteReadTransferAdd(app_instance1Data.drvSPIHandle, &readStatusCommand1, 1, rxData1, 2, &app_instance1Data.transferHandle );
+
                     if(app_instance1Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
                     {
                         app_instance1Data.state = APP_INSTANCE1_STATE_ERROR;
@@ -280,7 +278,7 @@ void APP_INSTANCE1_Tasks ( void )
             }
             break;
 
-        case APP_INSTANCE2_STATE_READ:
+        case APP_INSTANCE1_STATE_READ:
 
             //Read from EEPROM
             txData1[0] = EEPROM1_CMD_READ;
@@ -288,14 +286,13 @@ void APP_INSTANCE1_Tasks ( void )
             txData1[2] = (uint8_t)(eepromAddr>>8);
             txData1[3] = (uint8_t)(eepromAddr);
 
+            app_instance1Data.state = APP_INSTANCE1_STATE_DATA_COMPARISON;
+
             DRV_SPI_WriteReadTransferAdd(app_instance1Data.drvSPIHandle, txData1, 4, rxData1, (4 + strlen((const char*)messageString1)), &app_instance1Data.transferHandle);
+
             if(app_instance1Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
             {
                 app_instance1Data.state = APP_INSTANCE1_STATE_ERROR;
-            }
-            else
-            {
-                app_instance1Data.state = APP_INSTANCE1_STATE_DATA_COMPARISON;
             }
             break;
 
@@ -313,14 +310,17 @@ void APP_INSTANCE1_Tasks ( void )
                 {
                     app_instance1Data.clientTransferSuccess = true;
                 }
+
                 app_instance1Data.state = APP_INSTANCE1_STATE_IDLE;
             }
+            break;
 
+        case APP_INSTANCE1_STATE_ERROR:
+            app_instance1Data.clientTransferSuccess = false;
+            app_instance1Data.state = APP_INSTANCE1_STATE_IDLE;
             break;
 
         case APP_INSTANCE1_STATE_IDLE:
-            break;
-
         default:
             break;
     }

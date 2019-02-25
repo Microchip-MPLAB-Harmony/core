@@ -46,7 +46,6 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include "app_instance1.h"
 #include "app_instance2.h"
 #include <string.h>
 
@@ -104,6 +103,7 @@ void SPIInstance2EventHandler (
     else
     {
         app_instance2Data.isTransferComplete = false;
+        app_instance2Data.state = APP_INSTANCE2_STATE_ERROR;
     }
 }
 
@@ -204,15 +204,14 @@ void APP_INSTANCE2_Tasks ( void )
 
         case APP_INSTANCE2_STATE_WRITE_ENABLE:
 
+            app_instance2Data.state = APP_INSTANCE2_STATE_WRITE;
+            
             DRV_SPI_WriteTransferAdd(app_instance2Data.drvSPIHandle, &writeEnableCommand2, 1, &app_instance2Data.transferHandle );
+            
             if(app_instance2Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
             {
                 app_instance2Data.state = APP_INSTANCE2_STATE_ERROR;
-            }
-            else
-            {
-                app_instance2Data.state = APP_INSTANCE2_STATE_WRITE;
-            }
+            }            
             break;
 
         case APP_INSTANCE2_STATE_WRITE:
@@ -229,16 +228,14 @@ void APP_INSTANCE2_Tasks ( void )
 
                 memcpy(&txData2[4], messageString2, strlen((const char*)messageString2));
 
+                app_instance2Data.state = APP_INSTANCE2_STATE_WAIT_FOR_WRITE_COMPLETE;
+                
                 DRV_SPI_WriteTransferAdd(app_instance2Data.drvSPIHandle, txData2, (4 + strlen((const char*)messageString2)), &app_instance2Data.transferHandle );
 
                 if(app_instance2Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
                 {
                     app_instance2Data.state = APP_INSTANCE2_STATE_ERROR;
-                }
-                else
-                {
-                    app_instance2Data.state = APP_INSTANCE2_STATE_WAIT_FOR_WRITE_COMPLETE;
-                }
+                }                
             }
             break;
 
@@ -249,14 +246,13 @@ void APP_INSTANCE2_Tasks ( void )
                 app_instance2Data.isTransferComplete = false;
 
                 DRV_SPI_WriteReadTransferAdd(app_instance2Data.drvSPIHandle, &readStatusCommand2, 1, rxData2, 2, &app_instance2Data.transferHandle );
+                
+                app_instance2Data.state = APP_INSTANCE2_STATE_CHECK_STATUS;
+                
                 if(app_instance2Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
                 {
                     app_instance2Data.state = APP_INSTANCE2_STATE_ERROR;
-                }
-                else
-                {
-                    app_instance2Data.state = APP_INSTANCE2_STATE_CHECK_STATUS;
-                }
+                }                
             }
             break;
 
@@ -287,16 +283,15 @@ void APP_INSTANCE2_Tasks ( void )
             txData2[1] = (uint8_t)(eepromAddr>>16);
             txData2[2] = (uint8_t)(eepromAddr>>8);
             txData2[3] = (uint8_t)(eepromAddr);
+            
+            app_instance2Data.state = APP_INSTANCE2_STATE_DATA_COMPARISON;
 
             DRV_SPI_WriteReadTransferAdd(app_instance2Data.drvSPIHandle, txData2, 4, rxData2, (4 + strlen((const char*)messageString2)), &app_instance2Data.transferHandle);
+            
             if(app_instance2Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
             {
                 app_instance2Data.state = APP_INSTANCE2_STATE_ERROR;
-            }
-            else
-            {
-                app_instance2Data.state = APP_INSTANCE2_STATE_DATA_COMPARISON;
-            }
+            }            
             break;
 
         case APP_INSTANCE2_STATE_DATA_COMPARISON:
@@ -317,9 +312,12 @@ void APP_INSTANCE2_Tasks ( void )
             }
             break;
 
-        case APP_INSTANCE2_STATE_IDLE:
+        case APP_INSTANCE2_STATE_ERROR:
+            app_instance2Data.clientTransferSuccess = false;
+            app_instance2Data.state = APP_INSTANCE2_STATE_IDLE;
             break;
 
+        case APP_INSTANCE2_STATE_IDLE:            
         default:
             break;
     }
