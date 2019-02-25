@@ -195,8 +195,8 @@
           <Name dnOrder="1">plib_clock.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_freertos/peripheral/clock/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clock/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">17BEA0DBDFFE42DAC11EC3A684437AB3</GeneratedChecksum>
-          <UserChecksum dnOrder="5">17BEA0DBDFFE42DAC11EC3A684437AB3</UserChecksum>
+          <GeneratedChecksum dnOrder="4">004F85B873AB6585F92792A1B2951072</GeneratedChecksum>
+          <UserChecksum dnOrder="5">004F85B873AB6585F92792A1B2951072</UserChecksum>
         </File>
         <File dnOrder="24">
           <Type dnOrder="0">SOURCE</Type>
@@ -243,16 +243,16 @@
           <Name dnOrder="1">plib_sdhc1.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_freertos/peripheral/sdhc/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/sdhc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F5EB460FBB32CFEDAC0B6809E807919C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F5EB460FBB32CFEDAC0B6809E807919C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F2CA102343506C4B2742366D4C960476</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F2CA102343506C4B2742366D4C960476</UserChecksum>
         </File>
         <File dnOrder="30">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_tc0.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_freertos/peripheral/tc/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/tc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">58780DAF9034D532D5B50296A0EDC308</GeneratedChecksum>
-          <UserChecksum dnOrder="5">58780DAF9034D532D5B50296A0EDC308</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E917579088EACDED43F13634E8BC9B4E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E917579088EACDED43F13634E8BC9B4E</UserChecksum>
         </File>
         <File dnOrder="31">
           <Type dnOrder="0">SOURCE</Type>
@@ -355,8 +355,8 @@
           <Name dnOrder="1">FreeRTOSConfig.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_freertos</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">37C46EA85BA36879DDA3E1B02FDED65A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">37C46EA85BA36879DDA3E1B02FDED65A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">5DFCFCC1DC5596F0FF9F95BB8BDB47C5</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5DFCFCC1DC5596F0FF9F95BB8BDB47C5</UserChecksum>
         </File>
         <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>
@@ -491,8 +491,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">DA198CF57AA24371552212B197830CE4</GeneratedChecksum>
-          <UserChecksum dnOrder="5">DA198CF57AA24371552212B197830CE4</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AB08839DEA2C4B49C2503079632EBDA5</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AB08839DEA2C4B49C2503079632EBDA5</UserChecksum>
         </File>
         <File dnOrder="61">
           <Type dnOrder="0">HEADER</Type>
