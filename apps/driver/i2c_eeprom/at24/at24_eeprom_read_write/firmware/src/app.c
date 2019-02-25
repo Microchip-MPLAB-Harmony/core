@@ -95,6 +95,7 @@ void APP_EEPROM_EventHandler(DRV_AT24_TRANSFER_STATUS event, uintptr_t context)
         case DRV_AT24_TRANSFER_STATUS_ERROR:
         default:
             appData.isTransferDone = false;
+            appData.state = APP_STATE_ERROR;
             break;
     }
 }
@@ -141,85 +142,79 @@ void APP_Initialize ( void )
  */
 
 void APP_Tasks ( void )
-{        
+{
     /* Check the application's current state. */
     switch ( appData.state )
     {
         /* Application's initial state. */
         case APP_STATE_INIT:
-        
+
             appData.drvHandle = DRV_AT24_Open(DRV_AT24_INDEX, DRV_IO_INTENT_READWRITE);
-            
+
             if (appData.drvHandle != DRV_HANDLE_INVALID)
-            {                                
+            {
                 DRV_AT24_EventHandlerSet(appData.drvHandle, APP_EEPROM_EventHandler, 0);
-                
+
                 appData.state = APP_STATE_WRITE;
             }
             else
             {
                 appData.state = APP_STATE_ERROR;
-            }            
+            }
             break;
-            
+
         case APP_STATE_WRITE:
-                        
+
             /* Fill up the write buffer */
             for (uint32_t i = 0; i < BUFFER_SIZE; i++)
             {
                 appData.writeBuffer[i] = i;
-            }                       
-            
-            if (DRV_AT24_Write(appData.drvHandle, 
-                    appData.writeBuffer, 
-                    BUFFER_SIZE, 
-                    AT24_EEPROM_MEM_ADDR) == false)
-            {
-                appData.state = APP_STATE_ERROR;            
             }
-            else
-            {
-                appData.state = APP_STATE_WAIT_WRITE_COMPLETE;            
-            }                        
-            
-            break;
-            
-        case APP_STATE_WAIT_WRITE_COMPLETE:                        
-            
-            if (appData.isTransferDone == true)            
-            {
-                appData.isTransferDone = false;
-                appData.state = APP_STATE_READ;
-            }            
-            break;
-            
-        case APP_STATE_READ:
-                        
-            if (DRV_AT24_Read(appData.drvHandle, 
-                    appData.readBuffer, 
-                    BUFFER_SIZE, 
+
+            appData.state = APP_STATE_WAIT_WRITE_COMPLETE;
+
+            if (DRV_AT24_Write(appData.drvHandle,
+                    appData.writeBuffer,
+                    BUFFER_SIZE,
                     AT24_EEPROM_MEM_ADDR) == false)
             {
                 appData.state = APP_STATE_ERROR;
             }
-            else
-            {
-                appData.state = APP_STATE_WAIT_READ_COMPLETE;
-            }                        
-            
             break;
-            
+
+        case APP_STATE_WAIT_WRITE_COMPLETE:
+
+            if (appData.isTransferDone == true)
+            {
+                appData.isTransferDone = false;
+                appData.state = APP_STATE_READ;
+            }
+            break;
+
+        case APP_STATE_READ:
+
+            appData.state = APP_STATE_WAIT_READ_COMPLETE;
+
+            if (DRV_AT24_Read(appData.drvHandle,
+                    appData.readBuffer,
+                    BUFFER_SIZE,
+                    AT24_EEPROM_MEM_ADDR) == false)
+            {
+                appData.state = APP_STATE_ERROR;
+            }
+            break;
+
         case APP_STATE_WAIT_READ_COMPLETE:
-            
+
             if (appData.isTransferDone == true)
             {
                 appData.isTransferDone = false;
                 appData.state = APP_STATE_VERIFY;
-            }            
+            }
             break;
-            
+
         case APP_STATE_VERIFY:
-                                    
+
             if (memcmp(appData.writeBuffer, appData.readBuffer, BUFFER_SIZE ) == 0)
             {
                 appData.state = APP_STATE_IDLE;
@@ -227,14 +222,14 @@ void APP_Tasks ( void )
             else
             {
                 appData.state = APP_STATE_ERROR;
-            }            
+            }
             break;
-            
+
         case APP_STATE_IDLE:
             /* Turn on the LED to indicate success */
             LED_ON();
             break;
-            
+
         case APP_STATE_ERROR:
         default:
             LED_OFF();
