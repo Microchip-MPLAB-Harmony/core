@@ -3,7 +3,7 @@
   <Configurator>
     <Name dnOrder="0" value="sam_d20_xpro"/>
     <Processor dnOrder="1" value="ATSAMD20J18"/>
-    <Harmony dnOrder="2" path="../../../../.."/>
+    <Harmony dnOrder="2" path="../../../../../.."/>
     <Manifest dnOrder="3">
       <Files dnOrder="0">
         <File dnOrder="0">

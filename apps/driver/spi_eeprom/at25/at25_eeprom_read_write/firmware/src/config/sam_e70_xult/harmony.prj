@@ -3,7 +3,7 @@
   <Configurator>
     <Name dnOrder="0" value="sam_e70_xult"/>
     <Processor dnOrder="1" value="ATSAME70Q21B"/>
-    <Harmony dnOrder="2" path="../../../../.."/>
+    <Harmony dnOrder="2" path="../../../../../.."/>
     <Manifest dnOrder="3">
       <Files dnOrder="0">
         <File dnOrder="0">
