@@ -57,7 +57,6 @@
             <itemPath>../src/config/sam_e54_xpro/system/system_common.h</itemPath>
             <itemPath>../src/config/sam_e54_xpro/system/system_module.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/config/sam_e54_xpro/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro/device_cache.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro/definitions.h</itemPath>
@@ -233,8 +232,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
         <pack name="SAME54_DFP" vendor="Microchip" version="2.0.12"/>
+        <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>
         <linkerTool>

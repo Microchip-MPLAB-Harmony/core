@@ -96,15 +96,15 @@ static void _DRV_SPI_DisableInterrupts(DRV_SPI_OBJ* dObj)
     {
         if (intInfo->isSingleIntSrc == true)
         {
-            dObj->dmaInterruptStatus = SYS_INT_SourceDisable(intInfo->intSources.dmaInterrupt);
+            dObj->dmaInterruptStatus = SYS_INT_SourceDisable((INT_SOURCE)intInfo->intSources.dmaInterrupt);
         }
         else
         {
             /* Disable DMA interrupt sources */
             interruptStatus = SYS_INT_Disable();
 
-            dObj->dmaTxChannelIntStatus = SYS_INT_SourceDisable(multiVector->dmaTxChannelInt);
-            dObj->dmaRxChannelIntStatus = SYS_INT_SourceDisable(multiVector->dmaRxChannelInt);
+            dObj->dmaTxChannelIntStatus = SYS_INT_SourceDisable((INT_SOURCE)multiVector->dmaTxChannelInt);
+            dObj->dmaRxChannelIntStatus = SYS_INT_SourceDisable((INT_SOURCE)multiVector->dmaRxChannelInt);
 
             SYS_INT_Restore(interruptStatus);
         }
@@ -114,22 +114,22 @@ static void _DRV_SPI_DisableInterrupts(DRV_SPI_OBJ* dObj)
         /* Disable SPI interrupt */
         if (intInfo->isSingleIntSrc == true)
         {
-            dObj->spiInterruptStatus = SYS_INT_SourceDisable(intInfo->intSources.spiInterrupt);
+            dObj->spiInterruptStatus = SYS_INT_SourceDisable((INT_SOURCE)intInfo->intSources.spiInterrupt);
         }
         else
         {
             interruptStatus = SYS_INT_Disable();
             if(multiVector->spiTxReadyInt != -1)
             {
-                dObj->spiTxReadyIntStatus = SYS_INT_SourceDisable(multiVector->spiTxReadyInt);
+                dObj->spiTxReadyIntStatus = SYS_INT_SourceDisable((INT_SOURCE)multiVector->spiTxReadyInt);
             }
             if(multiVector->spiTxCompleteInt != -1)
             {
-                dObj->spiTxCompleteIntStatus = SYS_INT_SourceDisable(multiVector->spiTxCompleteInt);
+                dObj->spiTxCompleteIntStatus = SYS_INT_SourceDisable((INT_SOURCE)multiVector->spiTxCompleteInt);
             }
             if(multiVector->spiRxInt != -1)
             {
-                dObj->spiRxIntStatus = SYS_INT_SourceDisable(multiVector->spiRxInt);
+                dObj->spiRxIntStatus = SYS_INT_SourceDisable((INT_SOURCE)multiVector->spiRxInt);
             }
             SYS_INT_Restore(interruptStatus);
         }
@@ -146,15 +146,15 @@ static void _DRV_SPI_EnableInterrupts(DRV_SPI_OBJ* dObj)
     {
         if (intInfo->isSingleIntSrc == true)
         {
-            SYS_INT_SourceRestore(intInfo->intSources.dmaInterrupt, dObj->dmaInterruptStatus);
+            SYS_INT_SourceRestore((INT_SOURCE)intInfo->intSources.dmaInterrupt, dObj->dmaInterruptStatus);
         }
         else
         {
             interruptStatus = SYS_INT_Disable();
 
             /* Enable DMA interrupt sources */
-            SYS_INT_SourceRestore(multiVector->dmaTxChannelInt, dObj->dmaTxChannelIntStatus);
-            SYS_INT_SourceRestore(multiVector->dmaRxChannelInt, dObj->dmaRxChannelIntStatus);
+            SYS_INT_SourceRestore((INT_SOURCE)multiVector->dmaTxChannelInt, dObj->dmaTxChannelIntStatus);
+            SYS_INT_SourceRestore((INT_SOURCE)multiVector->dmaRxChannelInt, dObj->dmaRxChannelIntStatus);
 
             SYS_INT_Restore(interruptStatus);
         }
@@ -164,22 +164,22 @@ static void _DRV_SPI_EnableInterrupts(DRV_SPI_OBJ* dObj)
         /* Enable SPI interrupt */
         if (intInfo->isSingleIntSrc == true)
         {
-            SYS_INT_SourceRestore(intInfo->intSources.spiInterrupt, dObj->spiInterruptStatus);
+            SYS_INT_SourceRestore((INT_SOURCE)intInfo->intSources.spiInterrupt, dObj->spiInterruptStatus);
         }
         else
         {
             interruptStatus = SYS_INT_Disable();
             if(multiVector->spiTxReadyInt != -1)
             {
-                SYS_INT_SourceRestore(multiVector->spiTxReadyInt, dObj->spiTxReadyIntStatus);
+                SYS_INT_SourceRestore((INT_SOURCE)multiVector->spiTxReadyInt, dObj->spiTxReadyIntStatus);
             }
             if(multiVector->spiTxCompleteInt != -1)
             {
-                SYS_INT_SourceRestore(multiVector->spiTxCompleteInt,dObj->spiTxCompleteIntStatus);
+                SYS_INT_SourceRestore((INT_SOURCE)multiVector->spiTxCompleteInt,dObj->spiTxCompleteIntStatus);
             }
             if(multiVector->spiRxInt != -1)
             {
-                SYS_INT_SourceRestore(multiVector->spiRxInt, dObj->spiRxIntStatus);
+                SYS_INT_SourceRestore((INT_SOURCE)multiVector->spiRxInt, dObj->spiRxIntStatus);
             }
             SYS_INT_Restore(interruptStatus);
         }
