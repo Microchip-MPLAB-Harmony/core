@@ -107,8 +107,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FDA9DAE0075CD245109594E6660E3831</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FDA9DAE0075CD245109594E6660E3831</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F7AD05370E96D562EAB8E9A238627A56</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F7AD05370E96D562EAB8E9A238627A56</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
@@ -179,8 +179,8 @@
           <Name dnOrder="1">plib_spi2.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk_freertos/peripheral/spi/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/spi/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FD89C5304D07059B390568267EB690A3</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FD89C5304D07059B390568267EB690A3</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BBBA0402724BA455967C8D4B96D4CBAC</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BBBA0402724BA455967C8D4B96D4CBAC</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">SOURCE</Type>
@@ -662,7 +662,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;"/>
     </Settings>
   </Configurator>
 </Configuration>

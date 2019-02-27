@@ -75,8 +75,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">CFD2337AF6A6738D8A2EC1C4CE075274</GeneratedChecksum>
-          <UserChecksum dnOrder="5">CFD2337AF6A6738D8A2EC1C4CE075274</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BB9F7DC5397308F4BA417D87F77AEA65</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BB9F7DC5397308F4BA417D87F77AEA65</UserChecksum>
         </File>
         <File dnOrder="9">
           <Type dnOrder="0">SOURCE</Type>
@@ -491,7 +491,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;"/>
     </Settings>
   </Configurator>
 </Configuration>
