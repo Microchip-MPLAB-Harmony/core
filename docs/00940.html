@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_CMD_PUTC_FNC Type</title>
+<title>How the Library Works</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00804.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00805.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00940.html" target="topic">SYS_CMD_PUTC_FNC Type</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00942.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00945.html" target="topic">Using the Library</a> &gt; <a href="00940.html" target="topic">How the Library Works</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00939.html" target="topic">Previous</a> | <a href="00805.html" target="topic">Up</a> | <a href="00942.html" target="topic">Next</a></div>
+<a href="00935.html" target="topic">Previous</a> | <a href="00945.html" target="topic">Up</a> | <a href="00938.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CMD_PUTC_FNC Topic Title: SYS_CMD_PUTC_FNC Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS DEBUG How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_CMD_PUTC_FNC Type</div>
+How the Library Works</div>
 </div>
 </div>
 
@@ -49,38 +49,45 @@ SYS_CMD_PUTC_FNC Type</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Single Character Print function API. This handle identifies the interface structure of single character print function API within the Command I/O encapsulation.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">SYS_CMD_PUTC_FNC</span></strong>)(<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">void</span></strong>* cmdIoParam, <strong><span style="color: #000080">char</span></strong> c);</pre></div></div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
+ &nbsp;</p>
 <p class="Element10">
-None.</p></div>
+<strong>Debug Messages and Error Reporting</strong>&nbsp;</p>
+<p class="Element10">
+The following macros are available to output debug and error messages. The default implementation of these macros resolves to nothing by the preprocessor. This is to allow the developer to leave debug messaging in the released code without impacting code size or performance. Typically, the developer would define SYS_DEBUG_USE_CONSOLE macro through MHC configuration for debug builds, to map these macros to appropriate debug service implementation.</p>
+<ul class="Element630">
+<li class="Element600"><a href="01417.html" target="topic">SYS_MESSAGE</a>(message) prints a simple message string to the output device irrespective of the value of the global error level</li>
+<li class="Element600"><a href="01101.html" target="topic">SYS_DEBUG_MESSAGE</a>(level, message) prints a debug message to the console device if the global error level is equal to or lower than that specified by the &quot;level&quot; argument</li>
+<li class="Element600"><a href="01441.html" target="topic">SYS_PRINT</a>(fmt, ...) prints formatted messages to the console. The message formatting is the same as printf</li>
+<li class="Element600"><a href="01103.html" target="topic">SYS_DEBUG_PRINT</a>(level, fmt, ...) prints formatted messages to the console if the global error level is equal to or lower than that specified by the &quot;level&quot; argument. The message formatting is the same as printf</li>
+</ul><p class="Element10">
+<strong>Changing the System Error Level</strong>&nbsp;</p>
+<p class="Element10">
+Two functions are provided to manipulate the global system error level at runtime. This may be useful when you want to increase the debug verbosity for a particular section of code, but not for the entire program</p>
+<ul class="Element630">
+<li class="Element600"><a href="01097.html" target="topic">SYS_DEBUG_ErrorLevelGet</a>() returns the current global system error level</li>
+<li class="Element600"><a href="01098.html" target="topic">SYS_DEBUG_ErrorLevelSet</a>(level) sets the current global system error level</li>
+</ul></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00804.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00805.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00940.html" target="topic">SYS_CMD_PUTC_FNC Type</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00942.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00945.html" target="topic">Using the Library</a> &gt; <a href="00940.html" target="topic">How the Library Works</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00939.html" target="topic">Previous</a> | <a href="00805.html" target="topic">Up</a> | <a href="00942.html" target="topic">Next</a></div>
+<a href="00935.html" target="topic">Previous</a> | <a href="00945.html" target="topic">Up</a> | <a href="00938.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CMD_PUTC_FNC Topic Title: SYS_CMD_PUTC_FNC Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS DEBUG How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_MEDIA_MANAGER_SectorWrite Function</title>
+<title>SYS_FS_FileRead Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00847.html" target="topic">File System Service Library Help</a> &gt; <a href="00848.html" target="topic">Library Interface</a> &gt; c) Media Manager Functions &gt; <a href="01224.html" target="topic">SYS_FS_MEDIA_MANAGER_SectorWrite Function</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01224.html" target="topic">SYS_FS_FileRead Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01223.html" target="topic">Previous</a> | <a href="00848.html" target="topic">Up</a> | <a href="01221.html" target="topic">Next</a></div>
+<a href="01223.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01225.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_MEDIA_MANAGER_SectorWrite@uint16_t@uint32_t@uint8_t *@uint32_t Topic Title: SYS_FS_MEDIA_MANAGER_SectorWrite Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileRead@SYS_FS_HANDLE@void *@size_t Topic Title: SYS_FS_FileRead Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_MEDIA_MANAGER_SectorWrite Function</div>
+SYS_FS_FileRead Function</div>
 </div>
 </div>
 
@@ -49,22 +49,21 @@ SYS_FS_MEDIA_MANAGER_SectorWrite Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function writes to a sector of the specified media (disk). This is the function in the media manager layer. This function in turn calls the specific sector write function from the list of function pointers of the media driver.</p></div>
+This function attempts to read nbyte bytes of data from the file associated with the file handle into the buffer pointed to by buf.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01186.html" target="topic">SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE</a> <strong><span style="color: #000000">SYS_FS_MEDIA_MANAGER_SectorWrite</span></strong>(
-    uint16_t <strong><span style="color: #000000">diskNum</span></strong>, 
-    uint32_t <strong><span style="color: #000000">sector</span></strong>, 
-    uint8_t * <strong><span style="color: #000000">dataBuffer</span></strong>, 
-    uint32_t <strong><span style="color: #000000">numSectors</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100">size_t <strong><span style="color: #000000">SYS_FS_FileRead</span></strong>(
+    <a href="01281.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">buf</span></strong>, 
+    size_t <strong><span style="color: #000000">nbyte</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+A valid file handle must be obtained before reading a file.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -72,7 +71,7 @@ Parameters</div>
 <div class="Element10">
 <div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table3">
+<table cellspacing="0" class="Table2">
 <tr>
 <td class="Element300" valign="top" width="35%">
 <div class="Element301">
@@ -81,24 +80,19 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-diskNo&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-media number&nbsp;</div></td></tr><tr>
+File handle obtained during file open.&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-sector&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+buf&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Sector # to which data to be written&nbsp;</div></td></tr><tr>
+Pointer to buffer into which data is read.&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-dataBuffer&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+nbyte&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-pointer to buffer which holds the data to be written&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-noSectors&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Number of sectors to be written&nbsp;</div></td></tr></table></div></div>
+Number of bytes to be read&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -106,28 +100,50 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Buffer handle of type <a href="01186.html" target="topic">SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE</a>.</p></div>
+On success returns the number of bytes read successfully(0 or positive number). On failure returns -1. The reason for the failure can be retrieved with <a href="01157.html" target="topic">SYS_FS_Error</a> or <a href="01220.html" target="topic">SYS_FS_FileError</a>.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">  ...
+  <strong><span style="color: #000080">char</span></strong> buf[20];
+  size_t nbytes;
+  size_t bytes_read;
+  <a href="01281.html" target="topic">SYS_FS_HANDLE</a> fd;
+  ...
+  nbytes = <strong><span style="color: #000080">sizeof</span></strong>(buf);
+  bytes_read = SYS_FS_FileRead(fd, buf, nbytes);
+  ...</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00847.html" target="topic">File System Service Library Help</a> &gt; <a href="00848.html" target="topic">Library Interface</a> &gt; c) Media Manager Functions &gt; <a href="01224.html" target="topic">SYS_FS_MEDIA_MANAGER_SectorWrite Function</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01224.html" target="topic">SYS_FS_FileRead Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01223.html" target="topic">Previous</a> | <a href="00848.html" target="topic">Up</a> | <a href="01221.html" target="topic">Next</a></div>
+<a href="01223.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01225.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_MEDIA_MANAGER_SectorWrite@uint16_t@uint32_t@uint8_t *@uint32_t Topic Title: SYS_FS_MEDIA_MANAGER_SectorWrite Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileRead@SYS_FS_HANDLE@void *@size_t Topic Title: SYS_FS_FileRead Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

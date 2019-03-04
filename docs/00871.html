@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Library Interface</title>
+<title>Semaphores</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00870.html" target="topic">Time System Service Library Help</a> &gt; <a href="00871.html" target="topic">Library Interface</a></div>
+<a href="00853.html" target="topic">OSAL Library Help</a> &gt; <a href="00872.html" target="topic">Using the Library</a> &gt; <a href="00860.html" target="topic">How the Library Works</a> &gt; <a href="00871.html" target="topic">Semaphores</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00863.html" target="topic">Previous</a> | <a href="00870.html" target="topic">Up</a> | <a href="01540.html" target="topic">Next</a></div>
+<a href="00860.html" target="topic">Previous</a> | <a href="00860.html" target="topic">Up</a> | <a href="00867.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS TIME Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Semaphores Topic Title: Semaphores)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Library Interface</div>
+Semaphores</div>
 </div>
 </div>
 
@@ -48,367 +48,48 @@ Library Interface</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-This section describes the API functions of the Time System Service library.&nbsp;</p>
-<p class="Element10">
-Refer to each section for a detailed description.</p></div>
-</div>
-<a name="61292053797374656D2046756E6374696F6E73"></a><div class="Element14">
-a) System Functions</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01540.html" target="topic">SYS_TIME_Initialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Initializes the System Time module.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01561.html" target="topic">SYS_TIME_Status</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns System Time status.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01532.html" target="topic">SYS_TIME_Deinitialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Deinitializes the specific module instance of the SYS TIMER module&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="62292054696D65722046756E6374696F6E73"></a><div class="Element14">
-b) Timer Functions</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01563.html" target="topic">SYS_TIME_TimerCreate</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Creates and initializes a new 32-bit software timer instance.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01564.html" target="topic">SYS_TIME_TimerDestroy</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Destroys/deallocates a software timer instance.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01567.html" target="topic">SYS_TIME_TimerStart</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Starts a software timer running.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01568.html" target="topic">SYS_TIME_TimerStop</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Stops a running software timer.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01562.html" target="topic">SYS_TIME_TimerCounterGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the elapsed counter value of a software timer.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01565.html" target="topic">SYS_TIME_TimerPeriodHasExpired</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Reports whether or not the current period of a software timer has expired.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01566.html" target="topic">SYS_TIME_TimerReload</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Reloads (or reinitializes) the software timer instance.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="63292043616C6C6261636B20616E642044656C61792046756E6374696F6E73"></a><div class="Element14">
-c) Callback and Delay Functions</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01524.html" target="topic">SYS_TIME_CallbackRegisterMS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Registers a function with the time system service to be called back when the requested number of milliseconds has expired (either once or repeatedly).&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01525.html" target="topic">SYS_TIME_CallbackRegisterUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Registers a function with the time system service to be called back when the requested number of microseconds have expired (either once or repeatedly).&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01534.html" target="topic">SYS_TIME_DelayMS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This function is used to generate a delay of a given number of milliseconds.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01535.html" target="topic">SYS_TIME_DelayUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This function is used to generate a delay of a given number of microseconds.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01533.html" target="topic">SYS_TIME_DelayIsComplete</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Determines if the given delay timer has completed.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="642920436F756E74657220616E6420436F6E76657273696F6E2046756E6374696F6E73"></a><div class="Element14">
-d) Counter and Conversion Functions</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01526.html" target="topic">SYS_TIME_Counter64Get</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Get the common 64-bit system counter value.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01527.html" target="topic">SYS_TIME_CounterGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Get the common 32-bit system counter value.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01528.html" target="topic">SYS_TIME_CounterSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Sets the common 32-bit system counter value.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01529.html" target="topic">SYS_TIME_CountToMS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Converts a counter value to time interval in milliseconds.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01530.html" target="topic">SYS_TIME_CountToUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Converts a counter value to time interval in microseconds.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01541.html" target="topic">SYS_TIME_MSToCount</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Convert the given time interval in milliseconds to an equivalent counter value.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01569.html" target="topic">SYS_TIME_USToCount</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Convert the given time interval in microseconds to an equivalent counter value.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01536.html" target="topic">SYS_TIME_FrequencyGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the frequency at which the hardwaer timer counts.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="6529204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
-e) Data Types and Constants</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00007.html" target="topic">_SYS_TIME_INIT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-TIME system service Initialization Data Declaration&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01539.html" target="topic">SYS_TIME_INIT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the data required to initialize the TIME system service&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01520.html" target="topic">SYS_TIME_CALLBACK</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Pointer to a time system service callback function.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01521.html" target="topic">SYS_TIME_CALLBACK_TYPE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies the type of callback requested (single or periodic).&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01558.html" target="topic">SYS_TIME_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Result of a time service client interface operation.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01538.html" target="topic">SYS_TIME_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Invalid handle value to a software timer instance.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01537.html" target="topic">SYS_TIME_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Handle to a software timer instance.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01542.html" target="topic">SYS_TIME_PLIB_CALLBACK</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-TIME PLIB API Set needed by the system service&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01543.html" target="topic">SYS_TIME_PLIB_CALLBACK_REGISTER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type SYS_TIME_PLIB_CALLBACK_REGISTER.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01544.html" target="topic">SYS_TIME_PLIB_COMPARE_SET</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type SYS_TIME_PLIB_COMPARE_SET.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01545.html" target="topic">SYS_TIME_PLIB_COUNTER_GET</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type SYS_TIME_PLIB_COUNTER_GET.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01546.html" target="topic">SYS_TIME_PLIB_FREQUENCY_GET</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type SYS_TIME_PLIB_FREQUENCY_GET.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01547.html" target="topic">SYS_TIME_PLIB_INTERFACE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type SYS_TIME_PLIB_INTERFACE.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01555.html" target="topic">SYS_TIME_PLIB_PERIOD_SET</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type SYS_TIME_PLIB_PERIOD_SET.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01556.html" target="topic">SYS_TIME_PLIB_START</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type SYS_TIME_PLIB_START.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01557.html" target="topic">SYS_TIME_PLIB_STOP</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type SYS_TIME_PLIB_STOP.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10" style="text-align: justify;">
+A semaphore can be used to lock a shared resource, although it is more normal to use a mutex for such an activity. Once obtained a semaphore should be posted back to enable it to be retaken at a later time or in another thread.</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* mainline code prior to OS start */</span></i>
+    <i><span style="color: #008000">/* declare a variable of type semaphore handle */</span></i>
+    OSAL_SEM_DECLARE(semSync);
+    <i><span style="color: #008000">/* create the semaphore */</span></i>
+    OSAL_SEM_Create(&amp;semSync, OSAL_SEM_TYPE_BINARY, 0, 0);
+
+
+<i><span style="color: #008000">/* thread one */</span></i>
+    ...
+    <i><span style="color: #008000">/* take the semaphore without waiting */</span></i>
+    OSAL_SEM_Pend(semSync, 0);
+    ... perform some actions
+    <i><span style="color: #008000">/* return the semaphore */</span></i>
+    OSAL_SEM_Post(semSync);
+    ...
+
+<i><span style="color: #008000">/* thread two must not execute until thread one has finished its operations*/</span></i>
+    ...
+    <i><span style="color: #008000">/* block on the semaphore */</span></i>
+    OSAL_SEM_Pend(semSync, OSAL_WAIT_FOREVER);
+    ... perform some more actions
+    <i><span style="color: #008000">/* return the semaphore */</span></i>
+    OSAL_SEM_Post(semSync);</pre></div></div>
+<p class="Element10" style="text-align: justify;">
+&nbsp;</p>
+<p class="Element10" style="text-align: justify;">
+A semaphore can be signalled multiple times and so provides a method for an ISR to release a thread waiting on it. Even though the blocked thread never returns the semaphore, because the asynchronous ISR repeatedly posts it the next time the thread wants to pend on the semaphore it will be available. By moving the majority of interrupt service processing from the ISR to a high priority thread the system response time is improved and the eventual processing can take advantage of OSAL features such as mutexes and queues which would normally be harder to implement inside the ISR. This technique is known as deferred interrupt processing.&nbsp;</p>
+<p class="Element10" style="text-align: justify;">
+&nbsp;</p>
+<p class="Element10" style="text-align: justify;">
+&nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* an example interrupt handler called from an ISR that performs task synchronization using a semaphore */</span></i>
+<strong><span style="color: #000080">void</span></strong> _ISRTasksRX(<strong><span style="color: #000080">void</span></strong>) <i><span style="color: #008000">/* N.B. pseudo-code ISR */</span></i>
+{
+    ...
+
+    _DRV_USART_InterruptSourceStatusClear(_DRV_USART_GET_INT_SRC_RX(_DRV_USART_OBJ(dObj, rxInterruptSource)));
+
+    <i><span style="color: #008000">/* Release the receive semaphore unblocking any tasks */</span></i>
+    OSAL_SEM_PostISR(_DRV_USART_OBJ(dObj, rxSemID));
+
+} <i><span style="color: #008000">/* DRV_USART_TasksRX */</span></i></pre></div></div>
 </div>
 </div>
 </div>
@@ -416,21 +97,21 @@ This is type SYS_TIME_PLIB_STOP.&nbsp;</div></td></tr></table></div></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00870.html" target="topic">Time System Service Library Help</a> &gt; <a href="00871.html" target="topic">Library Interface</a></div>
+<a href="00853.html" target="topic">OSAL Library Help</a> &gt; <a href="00872.html" target="topic">Using the Library</a> &gt; <a href="00860.html" target="topic">How the Library Works</a> &gt; <a href="00871.html" target="topic">Semaphores</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00863.html" target="topic">Previous</a> | <a href="00870.html" target="topic">Up</a> | <a href="01540.html" target="topic">Next</a></div>
+<a href="00860.html" target="topic">Previous</a> | <a href="00860.html" target="topic">Up</a> | <a href="00867.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS TIME Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Semaphores Topic Title: Semaphores)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

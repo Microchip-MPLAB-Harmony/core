@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SPI_ReadTransfer Function</title>
+<title>DRV_I2S_WriteReadBufferAdd Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00148.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00149.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00495.html" target="topic">DRV_SPI_ReadTransfer Function</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00124.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00125.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00495.html" target="topic">DRV_I2S_WriteReadBufferAdd Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00507.html" target="topic">Previous</a> | <a href="00149.html" target="topic">Up</a> | <a href="00512.html" target="topic">Next</a></div>
+<a href="00493.html" target="topic">Previous</a> | <a href="00125.html" target="topic">Up</a> | <a href="00449.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_ReadTransfer@DRV_HANDLE@void*@size_t Topic Title: DRV_SPI_ReadTransfer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_WriteReadBufferAdd@DRV_HANDLE@void *@void *@size_t@DRV_I2S_BUFFER_HANDLE * Topic Title: DRV_I2S_WriteReadBufferAdd Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SPI_ReadTransfer Function</div>
+DRV_I2S_WriteReadBufferAdd Function</div>
 </div>
 </div>
 
@@ -49,29 +49,31 @@ DRV_SPI_ReadTransfer Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function does a blocking read operation. The function blocks till the data receive is complete. Function will return true if the receive is successful or false in case of an error. The failure will occur for the following reasons:</p>
+This function schedules a non-blocking write-read operation. The function returns with a valid buffer handle in the bufferHandle argument if the write-read request was scheduled successfully. The function adds the request to the hardware instance queue and returns immediately. While the request is in the queue, the application buffer is owned by the driver and should not be modified. The function returns <a href="00447.html" target="topic">DRV_I2S_BUFFER_HANDLE_INVALID</a>:</p>
 <ul class="Element630">
-<li class="Element600">if the handle is invalid</li>
-<li class="Element600">if the pointer to the receive buffer is NULL</li>
-<li class="Element600">if the receive size is 0</li>
-</ul></div>
+<li class="Element600">if a buffer could not be allocated to the request</li>
+<li class="Element600">if the input buffer pointer is NULL</li>
+<li class="Element600">if the client opened the driver for read only or write only</li>
+<li class="Element600">if the buffer size is 0</li>
+<li class="Element600">if the queue is full or the queue depth is insufficient</li>
+</ul><p class="Element10">
+If the requesting client registered an event callback with the driver, the driver will issue a DRV_I2S_BUFFER_EVENT_COMPLETE event if the buffer was processed successfully of DRV_I2S_BUFFER_EVENT_ERROR event if the buffer was not processed successfully.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_SPI_ReadTransfer</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00268.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">pReceiveData</span></strong>, 
-    size_t <strong><span style="color: #000000">rxSize</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_I2S_WriteReadBufferAdd</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">transmitBuffer</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">receiveBuffer</span></strong>, 
+    size_t <strong><span style="color: #000000">size</span></strong>, 
+    <a href="00446.html" target="topic">DRV_I2S_BUFFER_HANDLE</a> * <strong><span style="color: #000000">bufferHandle</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600"><a href="00494.html" target="topic">DRV_SPI_Open</a> must have been called to obtain a valid opened device handle.</li>
-<li class="Element600"><a href="00508.html" target="topic">DRV_SPI_TransferSetup</a> must have been called if GPIO pin has to be used for chip select or any of the setup parameters has to be changed dynamically.</li>
-</ul></div>
+<p class="Element10">
+<a href="00479.html" target="topic">DRV_I2S_Open</a> must have been called to obtain a valid opened device handle.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -79,7 +81,7 @@ Parameters</div>
 <div class="Element10">
 <div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table3">
+<table cellspacing="0" class="Table2">
 <tr>
 <td class="Element300" valign="top" width="35%">
 <div class="Element301">
@@ -90,75 +92,65 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Handle of the communication channel as returned by the <a href="00494.html" target="topic">DRV_SPI_Open</a> function.<br>&nbsp;</div></td></tr><tr>
+Handle of the communication channel as return by the <a href="00479.html" target="topic">DRV_I2S_Open</a> function.<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-*pReceiveData&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+transmitBuffer&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to the buffer where the data is to be received. For 9 to 15bit mode, data should be right aligned in the 16 bit memory location.<br>&nbsp;</div></td></tr><tr>
+Data to be transmitted.<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-rxSize&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+receiveBuffer&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Number of bytes to be received. Always, size should be given in terms of bytes. For example, if 10 15-bit data are to be received, the receive size should be 20 bytes.&nbsp;</div></td></tr></table></div></div>
+Will hold data that is received.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+size&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Buffer size in bytes (same for both buffers)<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+bufferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to an argument that will contain the return buffer handle.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
 Returns</div>
 <div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600">true - receive is successful</li>
-<li class="Element600">false - error has occurred</li>
-</ul></div>
+<p class="Element10">
+The bufferHandle parameter will contain the return buffer handle. This will be <a href="00447.html" target="topic">DRV_I2S_BUFFER_HANDLE_INVALID</a> if the function was not successful.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600">This function is thread safe in a RTOS application.</li>
-<li class="Element600">This function should not be called from an interrupt context.</li>
-</ul></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-MY_APP_OBJ myAppObj;
-uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
-
-<i><span style="color: #008000">// mySPIHandle is the handle returned by the DRV_SPI_Open function.</span></i>
-
-<strong><span style="color: #000080">if</span></strong> (DRV_SPI_ReadTransfer(mySPIhandle, myRxBuffer, MY_RX_BUFFER_SIZE) == <strong><span style="color: #000080">false</span></strong>)
-{
-    <i><span style="color: #008000">// Handle error here</span></i>
-}</pre></div></div>
-</div>
+<p class="Element10">
+This function is thread safe in a RTOS application. It can be called from within the I2S Driver Buffer Event Handler that is registered by this client. It should not be called in the event handler associated with another I2S driver instance. It should not otherwise be called directly in an ISR.&nbsp;</p>
+<p class="Element10">
+This function is useful when there is valid read expected for every I2S write. The transmit and receive size must be same.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00148.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00149.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00495.html" target="topic">DRV_SPI_ReadTransfer Function</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00124.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00125.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00495.html" target="topic">DRV_I2S_WriteReadBufferAdd Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00507.html" target="topic">Previous</a> | <a href="00149.html" target="topic">Up</a> | <a href="00512.html" target="topic">Next</a></div>
+<a href="00493.html" target="topic">Previous</a> | <a href="00125.html" target="topic">Up</a> | <a href="00449.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_ReadTransfer@DRV_HANDLE@void*@size_t Topic Title: DRV_SPI_ReadTransfer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_WriteReadBufferAdd@DRV_HANDLE@void *@void *@size_t@DRV_I2S_BUFFER_HANDLE * Topic Title: DRV_I2S_WriteReadBufferAdd Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

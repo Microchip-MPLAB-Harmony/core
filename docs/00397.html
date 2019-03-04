@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_MEMORY_GeometryGet Function</title>
+<title>DRV_AT25DF_Initialize Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00106.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00107.html" target="topic">Library Interface</a> &gt; d) Media Interface Functions &gt; <a href="00397.html" target="topic">DRV_MEMORY_GeometryGet Function</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00250.html" target="topic">SPI Flash Driver Libraries Help</a> &gt; <a href="00070.html" target="topic">AT25DF Driver Library Help</a> &gt; <a href="00071.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00397.html" target="topic">DRV_AT25DF_Initialize Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00357.html" target="topic">Previous</a> | <a href="00107.html" target="topic">Up</a> | <a href="00411.html" target="topic">Next</a></div>
+<a href="00071.html" target="topic">Previous</a> | <a href="00071.html" target="topic">Up</a> | <a href="00398.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_GeometryGet@DRV_HANDLE Topic Title: DRV_MEMORY_GeometryGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT25DF_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: DRV_AT25DF_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_MEMORY_GeometryGet Function</div>
+DRV_AT25DF_Initialize Function</div>
 </div>
 </div>
 
@@ -49,24 +49,20 @@ DRV_MEMORY_GeometryGet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This API gives the following geometrical details of the attached memory device:</p>
-<ul class="Element630">
-<li class="Element600">Media Property</li>
-<li class="Element600">Number of Read/Write/Erase regions in the memory device</li>
-<li class="Element600">Number of Blocks and their size in each region of the device</li>
-</ul></div>
+This routine initializes the AT25DF FLASH device driver making it ready for clients to open and use. The initialization data is specified by the init parameter. It is a single instance driver, so this API should be called only once.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01299.html" target="topic">SYS_MEDIA_GEOMETRY</a> * <strong><span style="color: #000000">DRV_MEMORY_GeometryGet</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00268.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01423.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_AT25DF_Initialize</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01418.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="01419.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="00413.html" target="topic">DRV_MEMORY_Open</a>() routine must have been called to obtain a valid opened device handle.</p></div>
+None.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -74,7 +70,7 @@ Parameters</div>
 <div class="Element10">
 <div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table3">
+<table cellspacing="0" class="Table2">
 <tr>
 <td class="Element300" valign="top" width="35%">
 <div class="Element301">
@@ -83,9 +79,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+drvIndex&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open function&nbsp;</div></td></tr></table></div></div>
+Identifier for the instance to be initialized.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the init data structure containing any data necessary to initialize the driver.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -93,37 +94,39 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="01299.html" target="topic">SYS_MEDIA_GEOMETRY</a> - Pointer to structure which holds the media geometry information.</p></div>
+If successful, returns a valid handle to a driver instance object. Otherwise, returns <a href="01424.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Refer sys_media.h for definition of <a href="01299.html" target="topic">SYS_MEDIA_GEOMETRY</a>.</p></div>
+This routine must be called before any other DRV_AT25DF routine is called. This routine should only be called once during system initialization.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-<a href="01299.html" target="topic">SYS_MEDIA_GEOMETRY</a> geometry;
-uint32_t readBlockSize, writeBlockSize, eraseBlockSize;
-uint32_t nReadBlocks, nReadRegions, totalFlashSize;
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01423.html" target="topic">SYS_MODULE_OBJ</a>   sysObjDrvAT25DF;
 
-<strong><span style="color: #000080">if</span></strong> (<strong><span style="color: #000080">true</span></strong> != DRV_MEMORY_GeometryGet(&amp;geometry))
-{
-    <i><span style="color: #008000">// Handle Error</span></i>
-}
+DRV_AT25DF_PLIB_INTERFACE drvAT25DFPlibAPI = {
+.writeRead = (DRV_AT25DF_PLIB_WRITE_READ)SPI0_WriteRead,
+.write = (DRV_AT25DF_PLIB_WRITE)SPI0_Write,
+.read = (DRV_AT25DF_PLIB_READ)SPI0_Read,
+.isBusy = (DRV_AT25DF_PLIB_IS_BUSY)SPI0_IsBusy,
+.callbackRegister = (DRV_AT25DF_PLIB_CALLBACK_REGISTER)SPI0_CallbackRegister,
+};
 
-readBlockSize  = geometry.geometryTable[0].blockSize;
-nReadBlocks = geometry.geometryTable[0].numBlocks;
-nReadRegions = geometry.numReadRegions;
+DRV_AT25DF_INIT drvAT25DFInitData = {
+    .spiPlib = &amp;drvAT25DFPlibAPI,
+    .numClients = DRV_AT25DF_CLIENTS_NUMBER_IDX,
+    .pageSize = DRV_AT25DF_PAGE_SIZE,
+    .flashSize = DRV_AT25DF_FLASH_SIZE,
+    .blockStartAddress = 0x0,
+    .chipSelectPin  = DRV_AT25DF_CHIP_SELECT_PIN_IDX
+};
 
-writeBlockSize  = geometry.geometryTable[1].blockSize;
-eraseBlockSize  = geometry.geometryTable[2].blockSize;
-
-totalFlashSize = readBlockSize * nReadBlocks * nReadRegions;
+sysObjDrvAT25DF = DRV_AT25DF_Initialize(DRV_AT25DF_INDEX, (<a href="01419.html" target="topic">SYS_MODULE_INIT</a> *)&amp;drvAT25DFInitData);
 </pre></div></div>
 </div>
 </div>
@@ -132,21 +135,21 @@ totalFlashSize = readBlockSize * nReadBlocks * nReadRegions;
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00106.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00107.html" target="topic">Library Interface</a> &gt; d) Media Interface Functions &gt; <a href="00397.html" target="topic">DRV_MEMORY_GeometryGet Function</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00250.html" target="topic">SPI Flash Driver Libraries Help</a> &gt; <a href="00070.html" target="topic">AT25DF Driver Library Help</a> &gt; <a href="00071.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00397.html" target="topic">DRV_AT25DF_Initialize Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00357.html" target="topic">Previous</a> | <a href="00107.html" target="topic">Up</a> | <a href="00411.html" target="topic">Next</a></div>
+<a href="00071.html" target="topic">Previous</a> | <a href="00071.html" target="topic">Up</a> | <a href="00398.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_GeometryGet@DRV_HANDLE Topic Title: DRV_MEMORY_GeometryGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT25DF_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: DRV_AT25DF_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Building the Library</title>
+<title>nvm_sst26_read_write</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00149.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00142.html" target="topic">Building the Library</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00135.html" target="topic">Memory Driver Applications</a> &gt; Async &gt; <a href="00142.html" target="topic">nvm_sst26_read_write</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00143.html" target="topic">Previous</a> | <a href="00149.html" target="topic">Up</a> | <a href="00150.html" target="topic">Next</a></div>
+<a href="00135.html" target="topic">Previous</a> | <a href="00135.html" target="topic">Up</a> | <a href="00143.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDHC Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV MEMORY Async nvm_sst26_read_write Topic Title: nvm_sst26_read_write)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Building the Library</div>
+nvm_sst26_read_write</div>
 </div>
 </div>
 
@@ -49,15 +49,54 @@ Building the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<strong>Description</strong> </p><div class="Element63">
+<span style="color: #000000">This application uses multi instances of the Memory driver to communicate with the NVM and the SST26 Flash memories in asynchronous mode of operation in both RTOS and Bare-Metal environment.</span>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">It performs block Erase/Write/Read operations on both the media's.</span>&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">The application consists of five tasks which are called through the SYS_Tasks() routine in Bare-Metal environment and though RTOS thread context in RTOS environment.</span></p>
+<ol class="Element630">
+<li value="1" class="Element600">DRV_MEMORY_0_Tasks() : Manages the state machine of the Memory driver instance 0.</li>
+<li value="2" class="Element600">DRV_MEMORY_1_Tasks() : Manages the state machine of the Memory driver instance 1.</li>
+<li value="3" class="Element600"><span style="color: #000000">APP_SST26_Tasks() : Performs operations on the SST26 QSPI/SQI Flash memory.</span></li>
+<li value="4" class="Element600"><span style="color: #000000">APP_NVM_Tasks() : Performs operations on the NVM.</span></li>
+<li value="5" class="Element600"><span style="color: #000000">APP_MONITOR_Tasks(): Monitors the state of above two Tasks.</span></li>
+</ol></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
 <div class="TableDiv">
-<table cellspacing="0" class="Table2">
+<table cellspacing="0" class="Table0">
 <tr>
-<td class="Element67" valign="top" width="10%" style="border:none;">
-<div class="Element68">
-<img src="MHC_Logo_Medium.png" border="0" alt="" title="">&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
-<div class="Element68">
-<span style="color: #008000"><strong><i>All of the required files are automatically added into the MPLAB X IDE project by the MHC when the library is selected for use.</i></strong></span>&nbsp;</div></td></tr></table></div></div>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00143.html" target="topic">Building The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how to build an application.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00145.html" target="topic">MPLAB Harmony Configuration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This topic provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00144.html" target="topic">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00146.html" target="topic">Running The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how to run the application.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -65,7 +104,7 @@ Building the Library</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00149.html" target="topic">SD Card Host Controller Library</a> &gt; <a href="00142.html" target="topic">Building the Library</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00135.html" target="topic">Memory Driver Applications</a> &gt; Async &gt; <a href="00142.html" target="topic">nvm_sst26_read_write</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -76,10 +115,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00143.html" target="topic">Previous</a> | <a href="00149.html" target="topic">Up</a> | <a href="00150.html" target="topic">Next</a></div>
+<a href="00135.html" target="topic">Previous</a> | <a href="00135.html" target="topic">Up</a> | <a href="00143.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDHC Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV MEMORY Async nvm_sst26_read_write Topic Title: nvm_sst26_read_write)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

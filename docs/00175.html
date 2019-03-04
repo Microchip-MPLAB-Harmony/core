@@ -18,21 +18,21 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">USART Driver Library Help</a> &gt; <a href="00180.html" target="topic">Using the Library</a> &gt; <a href="00175.html" target="topic">How the Library Works</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00181.html" target="topic">Using the Library</a> &gt; <a href="00175.html" target="topic">How the Library Works</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00168.html" target="topic">Previous</a> | <a href="00180.html" target="topic">Up</a> | <a href="00170.html" target="topic">Next</a></div>
+<a href="00169.html" target="topic">Previous</a> | <a href="00181.html" target="topic">Up</a> | <a href="00172.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USART How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV MX25L How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 How the Library Works</div>
 </div>
@@ -48,15 +48,17 @@ How the Library Works</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-Prior to using the USART Driver, the application must configure the USART Driver mode, i.e. whether synchronous (blocking) or asynchronous (non-blocking) mode. Then configurations can be made by selecting each instance.</p>
+
 <ul class="Element630">
-<li class="Element600">The USART driver is built on top of the USART/UART peripheral library</li>
-<li class="Element600">The USART driver registers a callback with the underlying USART peripheral library to receive transfer related events from the peripheral library. The USART driver callback is called by the peripheral library from the interrupt context</li>
-<li class="Element600">The USART driver state machine runs from the interrupt context. Once the transfer is complete, the driver calls the callback registered by the application (from the interrupt context)</li>
-<li class="Element600">Each instance of the driver (in asynchronous/non-blocking mode) has a dedicated queue which can be configured using the MHC configuration options. The requests submitted by the clients are queued in the respective driver instance request queue</li>
-<li class="Element600">The USART driver can be sued with DMA for data Transfer/Receive</li>
-<li class="Element600">The USART driver is capable of supporting multiple instances of the USART/UART peripheral</li>
+<li class="Element600"><span style="color: #000000">The MX25L Driver performs initialization and puts the driver to ready state. This status of the driver can be checked using <a href="00602.html" target="topic">DRV_MX25L_Status</a>()</span></li>
+<li class="Element600"><span style="color: #000000">The MX25L driver library performs set of flash operations during <a href="00596.html" target="topic">DRV_MX25L_Open</a>(). If any of the below flash operations fails, an invalid Handle will be returned. <a href="00596.html" target="topic">DRV_MX25L_Open</a>() can be repeatedly called until it returns a valid handle.</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Resets the Flash</span></li>
+<li class="Element601"><span style="color: #000000">Configures the flash device to QUAD IO Mode</span></li>
+<li class="Element601"><span style="color: #000000">Unlocks the flash</span></li>
+</ul></li>
+<li class="Element600">When the client requests for device geometry, it queries for the JEDEC-Id and populates the geometry table DRV_<span style="color: #000000">MX25L</span>_GEOMETRY appropriately</li>
+<li class="Element600"><span style="color: #000000">The driver does not support queuing of more than one requests. The application must check and ensure that any previous request is completed before submitting a new one. This can be done by polling the status of data transfer using <a href="00607.html" target="topic">DRV_MX25L_TransferStatusGet</a>()</span></li>
 </ul></div>
 </div>
 </div>
@@ -64,21 +66,21 @@ Prior to using the USART Driver, the application must configure the USART Driver
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">USART Driver Library Help</a> &gt; <a href="00180.html" target="topic">Using the Library</a> &gt; <a href="00175.html" target="topic">How the Library Works</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00181.html" target="topic">Using the Library</a> &gt; <a href="00175.html" target="topic">How the Library Works</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00168.html" target="topic">Previous</a> | <a href="00180.html" target="topic">Up</a> | <a href="00170.html" target="topic">Next</a></div>
+<a href="00169.html" target="topic">Previous</a> | <a href="00181.html" target="topic">Up</a> | <a href="00172.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USART How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV MX25L How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

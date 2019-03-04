@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>drv_memory.h</title>
+<title>DRV_AT25_EventHandlerSet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00106.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00103.html" target="topic">Files</a> &gt; <a href="00356.html" target="topic">drv_memory.h</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00248.html" target="topic">SPI EEPROM Driver Libraries Help</a> &gt; <a href="00056.html" target="topic">AT25 Driver Library Help</a> &gt; <a href="00057.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00356.html" target="topic">DRV_AT25_EventHandlerSet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00103.html" target="topic">Previous</a> | <a href="00103.html" target="topic">Up</a> | <a href="00371.html" target="topic">Next</a></div>
+<a href="00354.html" target="topic">Previous</a> | <a href="00057.html" target="topic">Up</a> | <a href="00372.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: drv_memory.h Topic Title: drv_memory.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT25_EventHandlerSet@DRV_HANDLE@DRV_AT25_EVENT_HANDLER@uintptr_t Topic Title: DRV_AT25_EventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-drv_memory.h</div>
+DRV_AT25_EventHandlerSet Function</div>
 </div>
 </div>
 
@@ -46,296 +46,117 @@ drv_memory.h</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="436F6D70616E79"></a><div class="Element11">
+<a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Microchip Technology Inc.</p></div>
+This function allows a client to register a transfer event handling function with the driver to call back when the requested transfer has finished.&nbsp;</p>
+<p class="Element10">
+The event handler should be set before the client submits any transfer requests that could generate events. The event handler once set, persists until the client closes the driver or sets another event handler (which could be a &quot;NULL&quot; pointer to indicate no callback).</p></div>
 </div>
-<a name="46696C65204E616D65"></a><div class="Element14">
-File Name</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_AT25_EventHandlerSet</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="00355.html" target="topic">DRV_AT25_EVENT_HANDLER</a> <strong><span style="color: #000000">eventHandler</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> uintptr_t <strong><span style="color: #000000">context</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-drv_memory.h</p></div>
+<a href="00370.html" target="topic">DRV_AT25_Open</a> must have been called to obtain a valid opened device handle.</p></div>
 </div>
-<a name="4465736372697074696F6E"></a><div class="Element14">
-Description</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A valid open-instance handle, returned from the driver's open routine.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+eventHandler&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the event handler function.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+The value of parameter will be passed back to the client unchanged, when the eventHandler function is called. It can be used to identify any client specific data object that identifies the instance of the client module (for example, it may be a pointer to the client module's state structure).&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Memory Driver Interface Definition&nbsp;</p>
+None.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
 <p class="Element10">
-The Memory driver provides a simple interface to manage the MEMORYVF series of SQI Flash Memory connected to Microchip micro controllers. This file defines the interface definition for the Memory driver.</p></div>
+If the client does not want to be notified when the queued buffer transfer has completed, it does not need to register a callback.</p></div>
 </div>
-<a name="456E756D65726174696F6E73"></a><div class="Element14">
-Enumerations</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00365.html" target="topic">DRV_MEMORY_COMMAND_STATUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Memory Driver command Status&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00393.html" target="topic">DRV_MEMORY_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies the possible events that can result from a request.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="46756E6374696F6E73"></a><div class="Element14">
-Functions</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00357.html" target="topic">DRV_MEMORY_AddressGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the Memory media start address&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00358.html" target="topic">DRV_MEMORY_AsyncErase</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Erase the specified number of memory blocks from the specified block start.<br>Each block is equal to sector size of the memory device attached.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00359.html" target="topic">DRV_MEMORY_AsyncEraseWrite</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Erase and Write blocks of data in the sectors where the block start belongs.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00360.html" target="topic">DRV_MEMORY_AsyncRead</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Reads nblocks of data from the specified block start.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00361.html" target="topic">DRV_MEMORY_AsyncWrite</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Writes nblocks of data starting at the specified block start.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00362.html" target="topic">DRV_MEMORY_Close</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Closes an opened-instance of the Memory driver&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00370.html" target="topic">DRV_MEMORY_CommandStatusGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the current status of the command.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00391.html" target="topic">DRV_MEMORY_Erase</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This routine provides interface to the file system to perform a media erase operation in synchronous mode of the Memory driver.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00392.html" target="topic">DRV_MEMORY_EraseWrite</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This routine provides interface to the file system to perform a media erase-write operation in synchronous mode of the Memory driver.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00397.html" target="topic">DRV_MEMORY_GeometryGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the geometry of the memory device.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00410.html" target="topic">DRV_MEMORY_Initialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Initializes the Memory instance for the specified driver index&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00411.html" target="topic">DRV_MEMORY_IsAttached</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the physical attach status of the Media.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00412.html" target="topic">DRV_MEMORY_IsWriteProtected</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the write protect status of the Memory.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00413.html" target="topic">DRV_MEMORY_Open</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Opens the specified Memory driver instance and returns a handle to it&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00414.html" target="topic">DRV_MEMORY_Read</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This routine provides interface to the file system to perform a media read operation in synchronous mode of the Memory driver.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00415.html" target="topic">DRV_MEMORY_Status</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the current status of the Memory driver module.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00416.html" target="topic">DRV_MEMORY_SyncErase</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Erase the specified number of memory blocks from the specified block start.<br>Each block is equal to sector size of the memory device attached.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00417.html" target="topic">DRV_MEMORY_SyncEraseWrite</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Erase and Write blocks of data in the sectors where the block start belongs.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00418.html" target="topic">DRV_MEMORY_SyncRead</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Reads nblock of data from the specified block start.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00419.html" target="topic">DRV_MEMORY_SyncWrite</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Writes nblock of data starting at the specified block start.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00420.html" target="topic">DRV_MEMORY_Tasks</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Maintains the Memory driver's internal state machine.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00422.html" target="topic">DRV_MEMORY_TransferHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Allows a client to identify an event handling function for the driver to call back when queued operation has completed.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00423.html" target="topic">DRV_MEMORY_TransferStatusGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the current status of the transfer request on attached device.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00424.html" target="topic">DRV_MEMORY_Write</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This routine provides interface to the file system to perform a media write operation in synchronous mode of the Memory driver.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="4D6163726F73"></a><div class="Element14">
-Macros</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00364.html" target="topic">DRV_MEMORY_COMMAND_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This value defines the Memory Driver's Invalid Command Handle.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="5479706573"></a><div class="Element14">
-Types</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00363.html" target="topic">DRV_MEMORY_COMMAND_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Handle to identify commands queued in the driver.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00421.html" target="topic">DRV_MEMORY_TRANSFER_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Pointer to a Memory Driver Event handler function&nbsp;</div></td></tr></table></div></div>
+<div class="Element13"><div class="Element12"><pre class="Element12">
+<strong><span style="color: #000080">#define</span></strong> BUFFER_SIZE  256
+<strong><span style="color: #000080">#define</span></strong> MEM_ADDRESS  0x00
+
+<i><span style="color: #008000">// myAppObj is an application specific state data object.</span></i>
+MY_APP_OBJ myAppObj;
+
+uint8_t myBuffer[BUFFER_SIZE];
+
+<i><span style="color: #008000">// myHandle is the handle returned from DRV_AT25_Open API.</span></i>
+
+<i><span style="color: #008000">// Client registers an event handler with driver. This is done once</span></i>
+
+DRV_AT25_EventHandlerSet( myHandle, APP_AT25TransferEventHandler, (uintptr_t)&amp;myAppObj );
+
+<strong><span style="color: #000080">if</span></strong> (<a href="00372.html" target="topic">DRV_AT25_Read</a>(myHandle, myBuffer, BUFFER_SIZE, MEM_ADDRESS) == <strong><span style="color: #000080">false</span></strong>)
+{
+    <i><span style="color: #008000">// Error handling here</span></i>
+}
+
+<i><span style="color: #008000">// The registered event handler is called when the request is complete.</span></i>
+
+<strong><span style="color: #000080">void</span></strong> APP_AT25TransferEventHandler(<a href="00374.html" target="topic">DRV_AT25_TRANSFER_STATUS</a> event, uintptr_t context)
+{
+    <i><span style="color: #008000">// The context handle was set to an application specific</span></i>
+    <i><span style="color: #008000">// object. It is now retrievable easily in the event handler.</span></i>
+    MY_APP_OBJ* pMyAppObj = (MY_APP_OBJ *) context;
+
+    <strong><span style="color: #000080">switch</span></strong>(event)
+    {
+        <strong><span style="color: #000080">case</span></strong> DRV_AT25_TRANSFER_STATUS_COMPLETED:
+            <i><span style="color: #008000">// This means the data was transferred.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> DRV_AT25_TRANSFER_STATUS_ERROR:
+            <i><span style="color: #008000">// Error handling here.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">default</span></strong>:
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -343,21 +164,21 @@ Pointer to a Memory Driver Event handler function&nbsp;</div></td></tr></table><
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00106.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00103.html" target="topic">Files</a> &gt; <a href="00356.html" target="topic">drv_memory.h</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00248.html" target="topic">SPI EEPROM Driver Libraries Help</a> &gt; <a href="00056.html" target="topic">AT25 Driver Library Help</a> &gt; <a href="00057.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00356.html" target="topic">DRV_AT25_EventHandlerSet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00103.html" target="topic">Previous</a> | <a href="00103.html" target="topic">Up</a> | <a href="00371.html" target="topic">Next</a></div>
+<a href="00354.html" target="topic">Previous</a> | <a href="00057.html" target="topic">Up</a> | <a href="00372.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: drv_memory.h Topic Title: drv_memory.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT25_EventHandlerSet@DRV_HANDLE@DRV_AT25_EVENT_HANDLER@uintptr_t Topic Title: DRV_AT25_EventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

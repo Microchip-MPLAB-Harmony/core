@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Library Interface</title>
+<title>mx25l_flash_read_write</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00847.html" target="topic">File System Service Library Help</a> &gt; <a href="00848.html" target="topic">Library Interface</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00273.html" target="topic">SQI Flash Driver Applications</a> &gt; <a href="00847.html" target="topic">MX25L Applications</a> &gt; <a href="00848.html" target="topic">mx25l_flash_read_write</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00839.html" target="topic">Previous</a> | <a href="00847.html" target="topic">Up</a> | <a href="01124.html" target="topic">Next</a></div>
+<a href="00847.html" target="topic">Previous</a> | <a href="00847.html" target="topic">Up</a> | <a href="00849.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS FS Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: MX25L Applications mx25l_flash_read_write Topic Title: mx25l_flash_read_write)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Library Interface</div>
+mx25l_flash_read_write</div>
 </div>
 </div>
 
@@ -49,720 +49,41 @@ Library Interface</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This section describes the APIs of the File System Service Library.&nbsp;</p>
-<p class="Element10">
-Refer to each section for a detailed description.</p></div>
+<span style="color: #000000">This application uses the MX25L QSPI flash driver to Erase/Write/Read on the On-Board MX25L QSPI Flash memory using the QSPI peripheral library.The application consists of APP_Tasks() which is called through SYS_Tasks() routine.</span></p></div>
 </div>
-<a name="61292046696C6520616E64204469726563746F7279204F7065726174696F6E2046756E6374696F6E73"></a><div class="Element14">
-a) File and Directory Operation Functions</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
 <div class="Element11">
 <div class="Element10">
 <div class="Element212">
 <div class="TableDiv">
 <table cellspacing="0" class="Table0">
 <tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<td class="Element200" valign="top" width="35%">
 <div class="Element201">
 Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
 <div class="Element205">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01124.html" target="topic">SYS_FS_FileOpen</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Opens a file.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01116.html" target="topic">SYS_FS_FileClose</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Closes a file.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01115.html" target="topic">SYS_FS_FileCharacterPut</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Writes a character to a file.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01121.html" target="topic">SYS_FS_FileEOF</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Checks for end of file.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01122.html" target="topic">SYS_FS_FileError</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the file specific error.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01123.html" target="topic">SYS_FS_FileNameGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Reads the file name.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01125.html" target="topic">SYS_FS_FilePrintf</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Writes a formatted string into a file.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01126.html" target="topic">SYS_FS_FileRead</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Read data from the file.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01127.html" target="topic">SYS_FS_FileSeek</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Moves the file pointer by the requested offset.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01128.html" target="topic">SYS_FS_FileSize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the size of the file in bytes.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01129.html" target="topic">SYS_FS_FileStat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets file status.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01130.html" target="topic">SYS_FS_FileStringGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Reads a string from the file into a buffer.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01131.html" target="topic">SYS_FS_FileStringPut</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Writes a string to a file.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01132.html" target="topic">SYS_FS_FileSync</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Flushes the cached information when writing to a file.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01133.html" target="topic">SYS_FS_FileTell</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Obtains the file pointer position.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01134.html" target="topic">SYS_FS_FileTestError</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Checks for errors in the file.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01135.html" target="topic">SYS_FS_FileTruncate</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Truncates a file&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01136.html" target="topic">SYS_FS_FileWrite</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Writes data to the file.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01049.html" target="topic">SYS_FS_DirectoryMake</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Makes a directory.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01050.html" target="topic">SYS_FS_DirOpen</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Open a directory&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01047.html" target="topic">SYS_FS_DirClose</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Closes an opened directory.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01051.html" target="topic">SYS_FS_DirRead</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Reads the files and directories of the specified directory.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01052.html" target="topic">SYS_FS_DirRewind</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Rewinds to the beginning of the directory.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01053.html" target="topic">SYS_FS_DirSearch</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Searches for a file or directory.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01048.html" target="topic">SYS_FS_DirectoryChange</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Changes to a the directory specified.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01046.html" target="topic">SYS_FS_CurrentWorkingDirectoryGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the current working directory&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01117.html" target="topic">SYS_FS_FileDirectoryModeSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Sets the mode for the file or directory.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01118.html" target="topic">SYS_FS_FileDirectoryRemove</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Removes a file or directory.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01119.html" target="topic">SYS_FS_FileDirectoryRenameMove</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Renames or moves a file or directory.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01120.html" target="topic">SYS_FS_FileDirectoryTimeSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Sets or changes the time for a file or directory.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01059.html" target="topic">SYS_FS_Error</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the last error.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="62292047656E6572616C204F7065726174696F6E2046756E6374696F6E73"></a><div class="Element14">
-b) General Operation Functions</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01185.html" target="topic">SYS_FS_Initialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Initializes the file system abstraction layer (sys_fs layer).&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01262.html" target="topic">SYS_FS_Tasks</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Maintains the File System tasks and functionalities.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01255.html" target="topic">SYS_FS_Mount</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Mounts the file system.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01275.html" target="topic">SYS_FS_Unmount</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Unmounts the file system.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01044.html" target="topic">SYS_FS_CurrentDriveGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the current drive&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01045.html" target="topic">SYS_FS_CurrentDriveSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Sets the drive.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01055.html" target="topic">SYS_FS_DriveLabelGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the drive label.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01056.html" target="topic">SYS_FS_DriveLabelSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Sets the drive label&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01054.html" target="topic">SYS_FS_DriveFormat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Formats a drive.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01057.html" target="topic">SYS_FS_DrivePartition</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Partitions a physical drive (media).&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01058.html" target="topic">SYS_FS_DriveSectorGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Obtains total number of sectors and number of free sectors for the specified drive.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01090.html" target="topic">SYS_FS_EventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Allows a client to identify an event handling function for the file system to call back when mount/unmount operation has completed.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="6329204D65646961204D616E616765722046756E6374696F6E73"></a><div class="Element14">
-c) Media Manager Functions</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01225.html" target="topic">SYS_FS_MEDIA_MANAGER_Tasks</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Media manager task function.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01226.html" target="topic">SYS_FS_MEDIA_MANAGER_TransferTask</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Media manager transfer task function.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01220.html" target="topic">SYS_FS_MEDIA_MANAGER_Read</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets data from a specific media address.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01223.html" target="topic">SYS_FS_MEDIA_MANAGER_SectorRead</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Reads a specified media sector.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01224.html" target="topic">SYS_FS_MEDIA_MANAGER_SectorWrite</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Writes a sector to the specified media.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01221.html" target="topic">SYS_FS_MEDIA_MANAGER_Register</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Function to register media drivers with the media manager.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01222.html" target="topic">SYS_FS_MEDIA_MANAGER_RegisterTransferHandler</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Register the event handler for data transfer events.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01216.html" target="topic">SYS_FS_MEDIA_MANAGER_DeRegister</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Function called by a media to deregister itself to the media manager. For static media, (like NVM or SD card), this &quot;deregister function&quot; is never called, since static media never gets deregistered once they are initialized. For dynamic media (like MSD), this register function is called dynamically, once the MSD media is connected.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01214.html" target="topic">SYS_FS_MEDIA_MANAGER_AddressGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the starting media address based on a disk number.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01219.html" target="topic">SYS_FS_MEDIA_MANAGER_MediaStatusGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the media status.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01227.html" target="topic">SYS_FS_MEDIA_MANAGER_VolumePropertyGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the volume property.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01215.html" target="topic">SYS_FS_MEDIA_MANAGER_CommandStatusGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the command status.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01218.html" target="topic">SYS_FS_MEDIA_MANAGER_GetMediaGeometry</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the media geometry information.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01217.html" target="topic">SYS_FS_MEDIA_MANAGER_EventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Register the event handler for Mount/Un-Mount events.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="64292046696C652053797374656D204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
-d) File System Data Types and Constants</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01060.html" target="topic">SYS_FS_ERROR</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Lists the various error cases.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01107.html" target="topic">SYS_FS_FILE_SEEK_CONTROL</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Lists the various modes of file seek.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01140.html" target="topic">SYS_FS_FSTAT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-File System status&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01148.html" target="topic">SYS_FS_FUNCTIONS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-SYS FS Function signature structure for native file systems.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01256.html" target="topic">SYS_FS_REGISTRATION_TABLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-The sys_fs layer has to be initialized by passing this structure with suitably initialized members.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01259.html" target="topic">SYS_FS_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Lists the various results of a file operation.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01100.html" target="topic">SYS_FS_FILE_OPEN_ATTRIBUTES</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Lists the various attributes (modes) in which a file can be opened.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00570.html" target="topic">FAT_FS_MAX_LFN</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Maximum length of the Long File Name.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00571.html" target="topic">FAT_FS_MAX_SS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Lists the definitions for FAT file system sector size.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00572.html" target="topic">FAT_FS_USE_LFN</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Lists the definitions for FAT file system LFN selection.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01111.html" target="topic">SYS_FS_FILE_SYSTEM_TYPE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enumerated data type identifying native file systems supported.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01183.html" target="topic">SYS_FS_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This type defines the file handle.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01184.html" target="topic">SYS_FS_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Invalid file handle&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01091.html" target="topic">SYS_FS_FILE_DIR_ATTR</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enumerated data type identifying the various attributes for file/directory.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01263.html" target="topic">SYS_FS_TIME</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-The structure to specify the time for a file or directory.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01137.html" target="topic">SYS_FS_FORMAT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Specifes the partitioning rule.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01085.html" target="topic">SYS_FS_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies the possible file system events.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01089.html" target="topic">SYS_FS_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Pointer to the File system Handler function.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01187.html" target="topic">SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the invalid media block command handle.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01212.html" target="topic">SYS_FS_MEDIA_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the invalid media handle.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01276.html" target="topic">_SYS_FS_VOLUME_PROPERTY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Structure to obtain the property of volume&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01188.html" target="topic">SYS_FS_MEDIA_BLOCK_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies the possible events that can result from a request.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01191.html" target="topic">SYS_FS_MEDIA_COMMAND_STATUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-The enumeration for status of buffer&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01197.html" target="topic">SYS_FS_MEDIA_FUNCTIONS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Structure of function pointers for media driver&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01228.html" target="topic">SYS_FS_MEDIA_MOUNT_DATA</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Structure to obtain the device and mount name of media&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01233.html" target="topic">SYS_FS_MEDIA_PROPERTY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Contains information of property of a media.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01240.html" target="topic">SYS_FS_MEDIA_STATE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-The enumeration for state of media.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01246.html" target="topic">SYS_FS_MEDIA_STATUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-The state of media.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01249.html" target="topic">SYS_FS_MEDIA_TYPE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-The enumeration for type of media.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01186.html" target="topic">SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00849.html" target="topic">Building The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Handle identifying block commands of the media.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+This section provides information on how to build an application.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01196.html" target="topic">SYS_FS_MEDIA_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Pointer to the Media Event Handler function.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01210.html" target="topic">SYS_FS_MEDIA_GEOMETRY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00851.html" target="topic">MPLAB Harmony Configurations</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Contains all the geometrical information of a media device.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+This topic provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01211.html" target="topic">SYS_FS_MEDIA_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Handle identifying the media registered with the media manager.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01239.html" target="topic">SYS_FS_MEDIA_REGION_GEOMETRY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00850.html" target="topic">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Contains information of a sys media region.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="01276.html" target="topic">SYS_FS_VOLUME_PROPERTY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00852.html" target="topic">Running The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Structure to obtain the property of volume&nbsp;</div></td></tr></table></div></div>
+This section provides information on how to run an application.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -770,21 +91,21 @@ Structure to obtain the property of volume&nbsp;</div></td></tr></table></div></
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00847.html" target="topic">File System Service Library Help</a> &gt; <a href="00848.html" target="topic">Library Interface</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00273.html" target="topic">SQI Flash Driver Applications</a> &gt; <a href="00847.html" target="topic">MX25L Applications</a> &gt; <a href="00848.html" target="topic">mx25l_flash_read_write</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00839.html" target="topic">Previous</a> | <a href="00847.html" target="topic">Up</a> | <a href="01124.html" target="topic">Next</a></div>
+<a href="00847.html" target="topic">Previous</a> | <a href="00847.html" target="topic">Up</a> | <a href="00849.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS FS Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: MX25L Applications mx25l_flash_read_write Topic Title: mx25l_flash_read_write)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

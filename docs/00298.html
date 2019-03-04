@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_I2S_BUFFER_HANDLE_INVALID Macro</title>
+<title>Building the Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00088.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00089.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00298.html" target="topic">DRV_I2S_BUFFER_HANDLE_INVALID Macro</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00295.html" target="topic">USART Driver Applications</a> &gt; Async &gt; <a href="00297.html" target="topic">usart_echo</a> &gt; <a href="00298.html" target="topic">Building the Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00333.html" target="topic">Previous</a> | <a href="00089.html" target="topic">Up</a> | <a href="00269.html" target="topic">Next</a></div>
+<a href="00297.html" target="topic">Previous</a> | <a href="00297.html" target="topic">Up</a> | <a href="00300.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_BUFFER_HANDLE_INVALID Topic Title: DRV_I2S_BUFFER_HANDLE_INVALID Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USART Async usart_echo Building the Application Topic Title: Building the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_I2S_BUFFER_HANDLE_INVALID Macro</div>
+Building the Application</div>
 </div>
 </div>
 
@@ -49,40 +49,116 @@ DRV_I2S_BUFFER_HANDLE_INVALID Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-I2S Driver Invalid Buffer Handle&nbsp;</p>
+The parent folder for all the projects for this application is given below: </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="23%">
+<div class="Element66">
+Application Path&nbsp;</div></td><td class="Element65" valign="top" width="77%">
+<div class="Element66">
+core\apps\driver\usart\async\usart_echo\firmware&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
-This is the definition of an invalid buffer handle. An invalid buffer handle is returned by <a href="00331.html" target="topic">DRV_I2S_ReadBufferAdd</a> and <a href="00337.html" target="topic">DRV_I2S_WriteBufferAdd</a> functions if the buffer add request was not successful.</p></div>
+&nbsp;</p>
+<p class="Element10">
+The following tables provide the project name to be used with the different development kits. Open the required project in their respective IDEs.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>MPLAB X IDE Projects</strong> &nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="28%">
+<div class="Element66">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="72%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+pic32mz_das_sk.X&nbsp;</div></td><td class="Element67" valign="top" width="72%">
+<div class="Element68">
+PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit (Crypto)&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+pic32mz_ef_sk.X&nbsp;</div></td><td class="Element67" valign="top" width="72%">
+<div class="Element68">
+PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+sam_c21n_xpro.X&nbsp;</div></td><td class="Element67" valign="top" width="72%">
+<div class="Element68">
+SAM C21N Xplained Pro Evaluation Kit&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+sam_e54_xpro.X&nbsp;</div></td><td class="Element67" valign="top" width="72%">
+<div class="Element68">
+SAM E54 Xplained Pro Evaluation Kit&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+sam_e70_xult.X&nbsp;</div></td><td class="Element67" valign="top" width="72%">
+<div class="Element68">
+SAM E70 Xplained Ultra Evaluation Kit&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+sam_e70_xult_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="72%">
+<div class="Element68">
+SAM E70 Xplained Ultra Evaluation Kit + FreeRTOS&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+sam_v71_xult.X&nbsp;</div></td><td class="Element67" valign="top" width="72%">
+<div class="Element68">
+SAM V71 Xplained Ultra Evaluation Kit&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+sam_v71_xult_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="72%">
+<div class="Element68">
+SAM V71 Xplained Ultra Evaluation Kit + FreeRTOS&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+IAR Embedded Workbench Projects</div>
+<div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="25%">
+<div class="Element66">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="75%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="25%">
+<div class="Element68">
+sam_a5d2_xult.IAR&nbsp;</div></td><td class="Element67" valign="top" width="75%">
+<div class="Element68">
+SAMA5D2 Xplained Ultra evaluation kit&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="25%">
+<div class="Element68">
+sam_a5d2_xult_freertos.IAR&nbsp;</div></td><td class="Element67" valign="top" width="75%">
+<div class="Element68">
+SAMA5D2 Xplained Ultra evaluation kit + FreeRTOS&nbsp;</div></td></tr></table></div></div>
 </div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">DRV_I2S_BUFFER_HANDLE_INVALID</span></strong> </pre></div></div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00088.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00089.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00298.html" target="topic">DRV_I2S_BUFFER_HANDLE_INVALID Macro</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00295.html" target="topic">USART Driver Applications</a> &gt; Async &gt; <a href="00297.html" target="topic">usart_echo</a> &gt; <a href="00298.html" target="topic">Building the Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00333.html" target="topic">Previous</a> | <a href="00089.html" target="topic">Up</a> | <a href="00269.html" target="topic">Next</a></div>
+<a href="00297.html" target="topic">Previous</a> | <a href="00297.html" target="topic">Up</a> | <a href="00300.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_BUFFER_HANDLE_INVALID Topic Title: DRV_I2S_BUFFER_HANDLE_INVALID Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USART Async usart_echo Building the Application Topic Title: Building the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

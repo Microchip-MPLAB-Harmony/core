@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Memory Operation</title>
+<title>DRV_SPI_WriteReadTransfer Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00688.html" target="topic">OSAL Library Help</a> &gt; <a href="00708.html" target="topic">Using the Library</a> &gt; <a href="00696.html" target="topic">How the Library Works</a> &gt; <a href="00701.html" target="topic">Memory Operation</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00701.html" target="topic">DRV_SPI_WriteReadTransfer Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00693.html" target="topic">Previous</a> | <a href="00696.html" target="topic">Up</a> | <a href="00705.html" target="topic">Next</a></div>
+<a href="00703.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00680.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Memory Operation Topic Title: Memory Operation)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_WriteReadTransfer@DRV_HANDLE@void*@size_t@void*@size_t Topic Title: DRV_SPI_WriteReadTransfer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Memory Operation</div>
+DRV_SPI_WriteReadTransfer Function</div>
 </div>
 </div>
 
@@ -48,20 +48,110 @@ Memory Operation</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10" style="text-align: justify;">
-The OSAL Library provides an interface to a memory allocation mechanism. The memory required for dynamic instantiation of variables is normally provided by allocating it from the heap. However the standard C library implementation of malloc and free are not considered thread safe and so OSAL specific functions must be used if MPLAB Harmony or the application requires dynamic memory during operation.&nbsp;</p>
-<p class="Element10" style="text-align: justify;">
-When operating without an underlying RTOS the OSAL memory allocators default to using standard malloc and free functions. However, when operating with an RTOS the calls will defer to the specific scheme used by the RTOS. This may involve multiple memory pools or it may simply involve adding a critical section around calls to malloc and free. It is left to the implementation to define the most appropriate scheme.</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* allocate a large buffer */</span></i>
-uint8_t* buffer;
+<p class="Element10">
+This function does a blocking write-read operation. The function blocks till the data receive is complete. Function will return true if the receive is successful or false in case of an error. The failure will occur for the following reasons:</p>
+<ul class="Element630">
+<li class="Element600">if the handle is invalid</li>
+<li class="Element600">if the transmit size is non-zero and pointer to the transmit buffer is NULL</li>
+<li class="Element600">if the receive size is non-zero and pointer to the receive buffer is NULL</li>
+</ul></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_SPI_WriteReadTransfer</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">pTransmitData</span></strong>, 
+    size_t <strong><span style="color: #000000">txSize</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">pReceiveData</span></strong>, 
+    size_t <strong><span style="color: #000000">rxSize</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
 
-buffer = OSAL_Malloc(8000);
-<strong><span style="color: #000080">if</span></strong> (buffer != NULL)
+<ul class="Element630">
+<li class="Element600"><a href="00678.html" target="topic">DRV_SPI_Open</a> must have been called to obtain a valid opened device handle.</li>
+<li class="Element600"><a href="00699.html" target="topic">DRV_SPI_TransferSetup</a> must have been called if GPIO pin has to be used for chip select or any of the setup parameters has to be changed dynamically.</li>
+</ul></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Handle of the communication channel as returned by the <a href="00678.html" target="topic">DRV_SPI_Open</a> function.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+*pTransmitData&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the data which has to be transmitted. For 9 to 15bit mode, data should be right aligned in the 16 bit memory location.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+txSize&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Number of bytes to be transmitted. Always, size should be given in terms of bytes. For example, if 10 15-bit data are to be transmitted, the transmit size should be 20 bytes.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+*pReceiveData&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the buffer where the data is to be received. For 9 to 15bit mode, data should be right aligned in the 16 bit memory location.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+rxSize&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Number of bytes to be received. Always, size should be given in terms of bytes. For example, if 10 15-bit data are to be received, the receive size should be 20 bytes. If &quot;n&quot; number of bytes has to be received AFTER transmitting &quot;m&quot; number of bytes, then &quot;txSize&quot; should be set as &quot;m&quot; and &quot;rxSize&quot; should be set as &quot;m+n&quot;.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+
+<ul class="Element630">
+<li class="Element600">true - write-read is successful</li>
+<li class="Element600">false - error has occurred</li>
+</ul></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+
+<ul class="Element630">
+<li class="Element600">This function is thread safe in a RTOS application.</li>
+<li class="Element600">This function should not be called from an interrupt context.</li>
+</ul></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">
+MY_APP_OBJ myAppObj;
+uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
+uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
+
+<i><span style="color: #008000">// mySPIHandle is the handle returned by the DRV_SPI_Open function.</span></i>
+
+<strong><span style="color: #000080">if</span></strong> (DRV_SPI_WriteReadTransfer(mySPIhandle, myTxBuffer, MY_TX_BUFFER_SIZE,
+                                myRxBuffer, MY_RX_BUFFER_SIZE) == <strong><span style="color: #000080">false</span></strong>)
 {
-    ... manipulate the buffer
-    <i><span style="color: #008000">/* free the buffer */</span></i>
-    OSAL_Free(buffer);
-    buffer = NULL;
-}</pre></div></div>
+    <i><span style="color: #008000">// Handle error here</span></i>
+}
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -69,21 +159,21 @@ buffer = OSAL_Malloc(8000);
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00688.html" target="topic">OSAL Library Help</a> &gt; <a href="00708.html" target="topic">Using the Library</a> &gt; <a href="00696.html" target="topic">How the Library Works</a> &gt; <a href="00701.html" target="topic">Memory Operation</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00701.html" target="topic">DRV_SPI_WriteReadTransfer Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00693.html" target="topic">Previous</a> | <a href="00696.html" target="topic">Up</a> | <a href="00705.html" target="topic">Next</a></div>
+<a href="00703.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00680.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Memory Operation Topic Title: Memory Operation)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_WriteReadTransfer@DRV_HANDLE@void*@size_t@void*@size_t Topic Title: DRV_SPI_WriteReadTransfer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

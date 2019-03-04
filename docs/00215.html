@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_AT24_GEOMETRY Structure</title>
+<title>sdspi_read_write</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00063.html" target="topic">AT24 Driver Library Help</a> &gt; <a href="00064.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00215.html" target="topic">DRV_AT24_GEOMETRY Structure</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00203.html" target="topic">SDSPI Driver Applications</a> &gt; Sync &gt; <a href="00215.html" target="topic">sdspi_read_write</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00213.html" target="topic">Previous</a> | <a href="00064.html" target="topic">Up</a> | <a href="00256.html" target="topic">Next</a></div>
+<a href="00203.html" target="topic">Previous</a> | <a href="00203.html" target="topic">Up</a> | <a href="00216.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT24_GEOMETRY Topic Title: DRV_AT24_GEOMETRY Structure)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDSPI Sync sdspi_read_write Topic Title: sdspi_read_write)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_AT24_GEOMETRY Structure</div>
+sdspi_read_write</div>
 </div>
 </div>
 
@@ -49,37 +49,49 @@ DRV_AT24_GEOMETRY Structure</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-DRV_AT24 Geometry data&nbsp;</p>
-<p class="Element10">
-This will be used to get the geometry details of the attached AT24 EEPROM device.</p></div>
+This example uses the SDSPI driver in synchronous mode in an RTOS environment. The synchronous mode of the SDSPI driver performs blocking read and write operations. The SDSPI driver is configured to use DMA. A separate RTOS thread is created by the MHC to run the SDSPI task routine. This task routine checks for the SD-Card attach/detach status and initializes the SD-Card making it ready for the application to submit read and write requests.</p></div>
 </div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong> {
-  uint32_t <strong><span style="color: #000000">readBlockSize</span></strong>;
-  uint32_t <strong><span style="color: #000000">readNumBlocks</span></strong>;
-  uint32_t <strong><span style="color: #000000">readNumRegions</span></strong>;
-  uint32_t <strong><span style="color: #000000">writeBlockSize</span></strong>;
-  uint32_t <strong><span style="color: #000000">writeNumBlocks</span></strong>;
-  uint32_t <strong><span style="color: #000000">writeNumRegions</span></strong>;
-  uint32_t <strong><span style="color: #000000">eraseBlockSize</span></strong>;
-  uint32_t <strong><span style="color: #000000">eraseNumBlocks</span></strong>;
-  uint32_t <strong><span style="color: #000000">eraseNumRegions</span></strong>;
-  uint32_t <strong><span style="color: #000000">blockStartAddress</span></strong>;
-} DRV_AT24_GEOMETRY;</pre></div></div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-None.</p></div>
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00216.html" target="topic">Building the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how to build an application.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00218.html" target="topic">MPLAB Harmony Configuration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00217.html" target="topic">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00219.html" target="topic">Running the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how to run the application.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00063.html" target="topic">AT24 Driver Library Help</a> &gt; <a href="00064.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00215.html" target="topic">DRV_AT24_GEOMETRY Structure</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00203.html" target="topic">SDSPI Driver Applications</a> &gt; Sync &gt; <a href="00215.html" target="topic">sdspi_read_write</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -90,10 +102,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00213.html" target="topic">Previous</a> | <a href="00064.html" target="topic">Up</a> | <a href="00256.html" target="topic">Next</a></div>
+<a href="00203.html" target="topic">Previous</a> | <a href="00203.html" target="topic">Up</a> | <a href="00216.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT24_GEOMETRY Topic Title: DRV_AT24_GEOMETRY Structure)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDSPI Sync sdspi_read_write Topic Title: sdspi_read_write)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>MPLAB Harmony Configuration</title>
+<title>DRV_MX25L_TransferStatusGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00584.html" target="topic">File System Applications</a> &gt; <a href="00587.html" target="topic">nvm_sdhc_fat_multi_disk</a> &gt; <a href="00607.html" target="topic">MPLAB Harmony Configuration</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00178.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00607.html" target="topic">DRV_MX25L_TransferStatusGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00605.html" target="topic">Previous</a> | <a href="00587.html" target="topic">Up</a> | <a href="00606.html" target="topic">Next</a></div>
+<a href="00602.html" target="topic">Previous</a> | <a href="00178.html" target="topic">Up</a> | <a href="00608.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS nvm_sdhc_fat_multi_disk MPLAB Harmony Configuration Topic Title: MPLAB Harmony Configuration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MX25L_TransferStatusGet@DRV_HANDLE Topic Title: DRV_MX25L_TransferStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-MPLAB Harmony Configuration</div>
+DRV_MX25L_TransferStatusGet Function</div>
 </div>
 </div>
 
@@ -48,61 +48,103 @@ MPLAB Harmony Configuration</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element15">
-Components used:</div>
-
+<p class="Element10">
+This routine gets the current status of the transfer request. The application must use this routine where the status of a scheduled request needs to be polled on.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00603.html" target="topic">DRV_MX25L_TRANSFER_STATUS</a> <strong><span style="color: #000000">DRV_MX25L_TransferStatusGet</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The <a href="00596.html" target="topic">DRV_MX25L_Open</a>() routine must have been called for the specified MX25L driver instance.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+DRV_MX25L_TRANSFER_ERROR_UNKNOWN</p>
 <ul class="Element630">
-<li class="Element600"><span style="color: #000000">File System:</span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">FAT Format for SD Card</span></li>
-<li class="Element601"><span style="color: #000000">FAT Format for NVM</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000">Memory Driver connected to NVM Media</span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">For Bare-Metal it is configured to asynchronous Mode</span></li>
-<li class="Element601"><span style="color: #000000">For RTOS it is configured to synchronous Mode</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000">SDHC Driver</span></li>
-<li class="Element600"><span style="color: #000000">Timer System Service</span></li>
-<li class="Element600"><span style="color: #000000">TC peripheral library</span></li>
+<li class="Element600">If the flash status register read request fails</li>
 </ul><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-The following components used may vary based on the project configuration selected:</p>
+DRV_MX25L_TRANSFER_BUSY</p>
 <ul class="Element630">
-<li class="Element600"><span style="color: #000000">EFC or NVMCTRL peripheral library</span></li>
-<li class="Element600">Board Support Package (<span style="color: #000000">BSP)</span></li>
-<li class="Element600"><span style="color: #000000">FreeRTOS</span></li>
+<li class="Element600">If the current transfer request is still being processed</li>
 </ul><p class="Element10">
 &nbsp;</p>
-<div class="Element15">
-Other MHC Configurations:</div>
-
+<p class="Element10">
+DRV_MX25L_TRANSFER_COMPLETED</p>
 <ul class="Element630">
-<li class="Element600"><span style="color: #000000">Enable MPU for reserving Internal Flash region for NVM media operations</span></li>
-<li class="Element600"><span style="color: #000000">Enable XDMAC channels for SDHC Transmit/Receive</span></li>
+<li class="Element600">If the transfer request is completed</li>
 </ul></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This routine will block for hardware access.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">
+<a href="00417.html" target="topic">DRV_HANDLE</a> handle;  <i><span style="color: #008000">// Returned from DRV_MX25L_Open</span></i>
+
+<strong><span style="color: #000080">if</span></strong> (DRV_MX25L_TRANSFER_COMPLETED == DRV_MX25L_TransferStatusGet(handle))
+{
+    <i><span style="color: #008000">// Operation Done</span></i>
+}</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00584.html" target="topic">File System Applications</a> &gt; <a href="00587.html" target="topic">nvm_sdhc_fat_multi_disk</a> &gt; <a href="00607.html" target="topic">MPLAB Harmony Configuration</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00178.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00607.html" target="topic">DRV_MX25L_TransferStatusGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00605.html" target="topic">Previous</a> | <a href="00587.html" target="topic">Up</a> | <a href="00606.html" target="topic">Next</a></div>
+<a href="00602.html" target="topic">Previous</a> | <a href="00178.html" target="topic">Up</a> | <a href="00608.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS nvm_sdhc_fat_multi_disk MPLAB Harmony Configuration Topic Title: MPLAB Harmony Configuration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MX25L_TransferStatusGet@DRV_HANDLE Topic Title: DRV_MX25L_TransferStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

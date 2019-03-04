@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Library Interface</title>
+<title>Building the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00854.html" target="topic">Interrupt System Service Library Help</a> &gt; <a href="00855.html" target="topic">Library Interface</a></div>
+<a href="00853.html" target="topic">OSAL Library Help</a> &gt; <a href="00855.html" target="topic">Building the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00853.html" target="topic">Previous</a> | <a href="00854.html" target="topic">Up</a> | <a href="01278.html" target="topic">Next</a></div>
+<a href="00856.html" target="topic">Previous</a> | <a href="00853.html" target="topic">Up</a> | <a href="00862.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS INT Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Library Interface</div>
+Building the Library</div>
 </div>
 </div>
 
@@ -49,158 +49,84 @@ Library Interface</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This section describes the APIs of the Interrupt System Service Library.&nbsp;</p>
+The following three tables list and describe the header (<span class="Element146">.h</span>) and source (<span class="Element146">.c</span>) files that implement this library. The parent folder for these files is <span class="Element146">&lt;install-dir&gt;/osal</span>.</p><div class="Element15">
+Interface File(s)</div>
 <p class="Element10">
-Refer to each section for a detailed description.</p></div>
-</div>
-<a name="612920476C6F62616C20496E74657272757074204D616E6167656D656E742046756E6374696F6E73"></a><div class="Element14">
-a) Global Interrupt Management Functions</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
+This table lists and describes the header files that must be included (i.e., using <span class="Element146">#include</span>) by any code that uses this library for the selected RTOS. </p><div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table4">
 <tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element65" valign="top" width="28%">
+<div class="Element66">
+Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="72%">
+<div class="Element66">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01278.html" target="topic">SYS_INT_Disable</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Disable Global Interrupt&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01279.html" target="topic">SYS_INT_Enable</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enable Global Interrupt&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01280.html" target="topic">SYS_INT_IsEnabled</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the interrupt controller's global enable/disable status.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01281.html" target="topic">SYS_INT_Restore</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Restores the interrupt controller to the state specificed in the parameter.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="622920496E7465727275707420536F75726365204D616E6167656D656E742046756E6374696F6E73"></a><div class="Element14">
-b) Interrupt Source Management Functions</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
+<td class="Element67" valign="top" width="28%">
+<div class="Element68">
+<span class="Element146">/osal.h</span>&nbsp;</div></td><td class="Element67" valign="top" width="72%">
+<div class="Element68">
+This file provides the interface definitions of the OSAL Library.&nbsp;</div></td></tr></table></div></div>
+<div class="Element15">
+Required File(s)</div>
+<div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table1">
 <tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01282.html" target="topic">SYS_INT_SourceDisable</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Disables the specified interrupt source.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01283.html" target="topic">SYS_INT_SourceEnable</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enables the specified interrupt source.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01284.html" target="topic">SYS_INT_SourceIsEnabled</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the enable/disable status of the specified interrupt source.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01286.html" target="topic">SYS_INT_SourceStatusGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the pending status of the specified interrupt source.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01287.html" target="topic">SYS_INT_SourceStatusSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Sets the pending status of the specified interrupt source manually.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01285.html" target="topic">SYS_INT_SourceStatusClear</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Clears the pending status of the specified interrupt source.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="6329204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
-c) Data Types and Constants</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="MHC_Logo_Medium.png" border="0" alt="" title="">&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+<span style="color: #008000"><strong><i>All of the required files are automatically added into the MPLAB X IDE project by the MHC when the library is selected for use.</i></strong></span>&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+This table lists and describes the source and header files that must be included in the MPLAB X IDE project to build this library. </p><div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table4">
 <tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element65" valign="top" width="26%">
+<div class="Element66">
+Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="74%">
+<div class="Element66">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00650.html" target="topic">INT_SOURCE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the data type for all the interrupt sources associated with the interrupt controller of the device.&nbsp;</div></td></tr></table></div></div>
-</div>
+<td class="Element67" valign="top" width="26%">
+<div class="Element68">
+<span class="Element146">/src/osal.c</span><br><span class="Element146">/src/osal_impl_basic.h</span>&nbsp;</div></td><td class="Element67" valign="top" width="74%">
+<div class="Element68">
+Source files added to the project if using the &quot;BareMetal&quot; OSAL basic implementation used when no RTOS is present.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="26%">
+<div class="Element68">
+<span class="Element146">/src/osal_freertos.c</span><br><span class="Element146">/src/osal_freertos.h</span>&nbsp;</div></td><td class="Element67" valign="top" width="74%">
+<div class="Element68">
+Source files added to the project if using the FreeRTOS implementation for compatibility with the current version 10.0.1 of the FreeRTOS operating system from Amazon.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="26%">
+<div class="Element68">
+/src/osal_ucos3.c<br>/src/osal/ucos3.h&nbsp;</div></td><td class="Element67" valign="top" width="74%">
+<div class="Element68">
+Source files added to the project if using the µC/OS-III implementation for compatibility with the µC/OS-III operating system from Micriµm.&nbsp;</div></td></tr></table></div></div>
+<div class="Element15">
+Optional File(s)</div>
+<p class="Element10">
+There are no optional files for the OSAL Library.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00854.html" target="topic">Interrupt System Service Library Help</a> &gt; <a href="00855.html" target="topic">Library Interface</a></div>
+<a href="00853.html" target="topic">OSAL Library Help</a> &gt; <a href="00855.html" target="topic">Building the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00853.html" target="topic">Previous</a> | <a href="00854.html" target="topic">Up</a> | <a href="01278.html" target="topic">Next</a></div>
+<a href="00856.html" target="topic">Previous</a> | <a href="00853.html" target="topic">Up</a> | <a href="00862.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS INT Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

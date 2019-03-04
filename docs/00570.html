@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>FAT_FS_MAX_LFN Macro</title>
+<title>DRV_MEMORY_Status Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00847.html" target="topic">File System Service Library Help</a> &gt; <a href="00848.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="00570.html" target="topic">FAT_FS_MAX_LFN Macro</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00154.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00155.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00570.html" target="topic">DRV_MEMORY_Status Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01100.html" target="topic">Previous</a> | <a href="00848.html" target="topic">Up</a> | <a href="00571.html" target="topic">Next</a></div>
+<a href="00565.html" target="topic">Previous</a> | <a href="00155.html" target="topic">Up</a> | <a href="00575.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FAT_FS_MAX_LFN Topic Title: FAT_FS_MAX_LFN Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_Status@SYS_MODULE_OBJ Topic Title: DRV_MEMORY_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-FAT_FS_MAX_LFN Macro</div>
+DRV_MEMORY_Status Function</div>
 </div>
 </div>
 
@@ -49,40 +49,89 @@ FAT_FS_MAX_LFN Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-FAT File System LFN (Long File Name) max length&nbsp;</p>
-<p class="Element10">
-Defines the maximum length of file name during LFN selection. Set the value to 255.</p></div>
+This routine provides the current status of the Memory driver module.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">FAT_FS_MAX_LFN</span></strong> 255</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01442.html" target="topic">SYS_STATUS</a> <strong><span style="color: #000000">DRV_MEMORY_Status</span></strong>(
+    <a href="01423.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">object</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Function <a href="00565.html" target="topic">DRV_MEMORY_Initialize</a> should have been called before calling this function.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+object&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Driver object handle, returned from the <a href="00565.html" target="topic">DRV_MEMORY_Initialize</a> routine&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+SYS_STATUS_READY - Indicates that the driver is ready and accept requests for new operations.&nbsp;</p>
+<p class="Element10">
+SYS_STATUS_UNINITIALIZED - Indicates the driver is not initialized.&nbsp;</p>
+<p class="Element10">
+SYS_STATUS_BUSY - Indicates the driver is in busy state.</p></div>
+</div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+This routine will NEVER block waiting for hardware.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01423.html" target="topic">SYS_MODULE_OBJ</a>      object;     <i><span style="color: #008000">// Returned from DRV_MEMORY_Initialize</span></i>
+<a href="01442.html" target="topic">SYS_STATUS</a>          MEMORYStatus;
+
+MEMORYStatus = DRV_MEMORY_Status(object);
+</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00847.html" target="topic">File System Service Library Help</a> &gt; <a href="00848.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="00570.html" target="topic">FAT_FS_MAX_LFN Macro</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00154.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00155.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00570.html" target="topic">DRV_MEMORY_Status Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01100.html" target="topic">Previous</a> | <a href="00848.html" target="topic">Up</a> | <a href="00571.html" target="topic">Next</a></div>
+<a href="00565.html" target="topic">Previous</a> | <a href="00155.html" target="topic">Up</a> | <a href="00575.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FAT_FS_MAX_LFN Topic Title: FAT_FS_MAX_LFN Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_Status@SYS_MODULE_OBJ Topic Title: DRV_MEMORY_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

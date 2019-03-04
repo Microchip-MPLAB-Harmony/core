@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_AT25_TransferStatusGet Function</title>
+<title>MPLAB Harmony Configuration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00054.html" target="topic">AT25 Driver Library Help</a> &gt; <a href="00055.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00258.html" target="topic">DRV_AT25_TransferStatusGet Function</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00224.html" target="topic">SPI Driver Applications</a> &gt; Sync &gt; <a href="00255.html" target="topic">spi_multi_instance</a> &gt; <a href="00258.html" target="topic">MPLAB Harmony Configuration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00251.html" target="topic">Previous</a> | <a href="00055.html" target="topic">Up</a> | <a href="00248.html" target="topic">Next</a></div>
+<a href="00256.html" target="topic">Previous</a> | <a href="00255.html" target="topic">Up</a> | <a href="00257.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT25_TransferStatusGet@DRV_HANDLE Topic Title: DRV_AT25_TransferStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SPI Sync spi_multi_instance_freertos MPLAB Harmony Configuration Topic Title: MPLAB Harmony Configuration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_AT25_TransferStatusGet Function</div>
+MPLAB Harmony Configuration</div>
 </div>
 </div>
 
@@ -48,87 +48,50 @@ DRV_AT25_TransferStatusGet Function</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-This routine gets the current status of the transfer request.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00254.html" target="topic">DRV_AT25_TRANSFER_STATUS</a> <strong><span style="color: #000000">DRV_AT25_TransferStatusGet</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00268.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-<a href="00251.html" target="topic">DRV_AT25_PageWrite</a>, <a href="00259.html" target="topic">DRV_AT25_Write</a> or <a href="00252.html" target="topic">DRV_AT25_Read</a> must have been called to obtain the status of transfer.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
-<div class="TableDiv">
-<table cellspacing="0" class="Table3">
-<tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-One of the status element from the enum <a href="00254.html" target="topic">DRV_AT25_TRANSFER_STATUS</a>.</p></div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// myHandle is the handle returned from DRV_AT25_Open API.</span></i>
+<div class="Element15">
+Components used:</div>
 
-<strong><span style="color: #000080">if</span></strong> (DRV_AT25_TransferStatusGet(myHandle) == DRV_AT25_TRANSFER_STATUS_COMPLETED)
-{
-    <i><span style="color: #008000">// Operation Done</span></i>
-}</pre></div></div>
-</div>
+<ul class="Element630">
+<li class="Element600">SPI Driver (Synchronous mode)</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+The following components used may vary based on the project configuration selected:</p>
+<ul class="Element630">
+<li class="Element600">SERCOM peripheral library</li>
+<li class="Element600">Board Support Package (BSP)</li>
+<li class="Element600">FreeRTOS</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+Other MHC settings:</div>
+
+<ul class="Element630">
+<li class="Element600">Configure the Pins for the SPI peripheral in the Pin Settings</li>
+<li class="Element600">Configure the SPI Chip Select, Hold and Write Protect Pins of both the EEPROMs</li>
+<li class="Element600">Enable DMA for Transmit and Receive (DMA Channels for transmit and receive automatically gets allocated)</li>
+</ul></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00054.html" target="topic">AT25 Driver Library Help</a> &gt; <a href="00055.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00258.html" target="topic">DRV_AT25_TransferStatusGet Function</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00224.html" target="topic">SPI Driver Applications</a> &gt; Sync &gt; <a href="00255.html" target="topic">spi_multi_instance</a> &gt; <a href="00258.html" target="topic">MPLAB Harmony Configuration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00251.html" target="topic">Previous</a> | <a href="00055.html" target="topic">Up</a> | <a href="00248.html" target="topic">Next</a></div>
+<a href="00256.html" target="topic">Previous</a> | <a href="00255.html" target="topic">Up</a> | <a href="00257.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT25_TransferStatusGet@DRV_HANDLE Topic Title: DRV_AT25_TransferStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SPI Sync spi_multi_instance_freertos MPLAB Harmony Configuration Topic Title: MPLAB Harmony Configuration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

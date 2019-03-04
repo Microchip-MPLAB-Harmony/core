@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_CMD_CONSOLE_IO_PARAM Enumeration</title>
+<title>OSAL_Name Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00804.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00805.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00886.html" target="topic">SYS_CMD_CONSOLE_IO_PARAM Enumeration</a></div>
+<a href="00853.html" target="topic">OSAL Library Help</a> &gt; <a href="00862.html" target="topic">Library Interface</a> &gt; e) OSAL Control Functions &gt; <a href="00886.html" target="topic">OSAL_Name Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00885.html" target="topic">Previous</a> | <a href="00805.html" target="topic">Up</a> | <a href="00915.html" target="topic">Next</a></div>
+<a href="00879.html" target="topic">Previous</a> | <a href="00862.html" target="topic">Up</a> | <a href="00875.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CMD_CONSOLE_IO_PARAM Topic Title: SYS_CMD_CONSOLE_IO_PARAM Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_Name Topic Title: OSAL_Name Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_CMD_CONSOLE_IO_PARAM Enumeration</div>
+OSAL_Name Function</div>
 </div>
 </div>
 
@@ -49,17 +49,25 @@ SYS_CMD_CONSOLE_IO_PARAM Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS CMD Console I/O Parameter&nbsp;</p>
-<p class="Element10">
-This enumeration defines whether the command module is single character or full command read.</p></div>
+This function returns a const char* to the textual name of the RTOS. The name is a NULL terminated string.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">SYS_CMD_SINGLE_CHARACTER_READ_CONSOLE_IO_PARAM</span></strong> = 0,
-  <strong><span style="color: #000000">SYS_CMD_FULL_COMMAND_READ_CONSOLE_IO_PARAM</span></strong> = 1,
-  <strong><span style="color: #000000">SYS_CMD_TELNET_COMMAND_READ_CONSOLE_IO_PARAM</span></strong> = 2
-} SYS_CMD_CONSOLE_IO_PARAM;</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong>* <strong><span style="color: #000000">OSAL_Name</span></strong>();</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+const char* - Name of the underlying RTOS or NULL</p></div>
+</div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
@@ -67,26 +75,37 @@ Remarks</div>
 <p class="Element10">
 None.</p></div>
 </div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// get the RTOS name</span></i>
+<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong>* sName;
+
+sName = OSAL_Name();
+sprintf(buff, &quot;RTOS: %s&quot;, sName);</pre></div></div>
+</div>
+</div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00804.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00805.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00886.html" target="topic">SYS_CMD_CONSOLE_IO_PARAM Enumeration</a></div>
+<a href="00853.html" target="topic">OSAL Library Help</a> &gt; <a href="00862.html" target="topic">Library Interface</a> &gt; e) OSAL Control Functions &gt; <a href="00886.html" target="topic">OSAL_Name Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00885.html" target="topic">Previous</a> | <a href="00805.html" target="topic">Up</a> | <a href="00915.html" target="topic">Next</a></div>
+<a href="00879.html" target="topic">Previous</a> | <a href="00862.html" target="topic">Up</a> | <a href="00875.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CMD_CONSOLE_IO_PARAM Topic Title: SYS_CMD_CONSOLE_IO_PARAM Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_Name Topic Title: OSAL_Name Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

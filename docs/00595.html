@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>sdhc_fat</title>
+<title>DRV_MX25L_Initialize Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00584.html" target="topic">File System Applications</a> &gt; <a href="00595.html" target="topic">sdhc_fat</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00178.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00595.html" target="topic">DRV_MX25L_Initialize Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00616.html" target="topic">Previous</a> | <a href="00584.html" target="topic">Up</a> | <a href="00617.html" target="topic">Next</a></div>
+<a href="00178.html" target="topic">Previous</a> | <a href="00178.html" target="topic">Up</a> | <a href="00596.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications sdhc_fat Topic Title: sdhc_fat)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MX25L_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT *const Topic Title: DRV_MX25L_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-sdhc_fat</div>
+DRV_MX25L_Initialize Function</div>
 </div>
 </div>
 
@@ -48,69 +48,98 @@ sdhc_fat</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element15">
-File System Operations on the SD Card:</div>
-
+<p class="Element10">
+This routine initializes the MX25L driver making it ready for client to use.</p>
 <ul class="Element630">
-<li class="Element600"><span style="color: #000000">The application opens a file named <strong>FILE_TOO_LONG_NAME_EXAMPLE_123.JPG</strong> on the SD card</span></li>
-<li class="Element600"><span style="color: #000000">Reads the content of the file and creates a directory named <strong>Dir1</strong></span></li>
-<li class="Element600"><span style="color: #000000">Inside the directory, writes the copied content into another file <strong>Dir1/FILE_TOO_LONG_NAME_EXAMPLE_123.JPG</strong></span></li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">The image file could be any arbitrary JPEG (image) file chosen by the user and then renamed to <strong>FILE_TOO_LONG_NAME_EXAMPLE_123.JPG</strong>.</span>&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">The reason for choosing a JPEG file for test purposes is that the duplicate file, <strong>Dir1/FILE_TOO_LONG_NAME_EXAMPLE_123.JPG</strong> created by the demonstration could be easily verified for correctness.</span>&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">If the new file inside <strong>Dir1</strong> opens for viewing on the computer and matches to original image, the test is deemed to have passed. Otherwise, if the file does not open (i.e., is corrupted), the test will be considered to have failed.</span>&nbsp;</p>
-<div class="Element15">
-Note:</div>
-<p class="Element10">
-<span style="color: #000000">Since the application creates a directory named <strong>Dir1</strong>, it is important that the a folder with the same name does not exist on the SD card. If a directory named<strong> Dir1</strong> is already present on the SD card, the application will <strong>fail</strong>.</span>&nbsp;</p>
-<div class="Element15">
-File system layer uses:</div>
-
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000">SDHC Driver to communicate to SD Card</span></li>
+<li class="Element600">Resets the Flash Device</li>
+<li class="Element600">Puts it on QUAD IO Mode</li>
+<li class="Element600">Unlocks the flash</li>
 </ul></div>
 </div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01423.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_MX25L_Initialize</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01418.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="01419.html" target="topic">SYS_MODULE_INIT</a> *<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table2">
 <tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00617.html" target="topic">Building The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to build an application using the MPLAB X IDE.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00619.html" target="topic">MPLAB Harmony Configuration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This topic provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00618.html" target="topic">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00620.html" target="topic">Running The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to run the application using MPLAB X IDE.&nbsp;</div></td></tr></table></div></div>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+drvIndex&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Identifier for the instance to be initialized<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to a data structure containing any data necessary to initialize the driver.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+If successful, returns a valid handle to a driver instance object. Otherwise it returns <a href="01424.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This routine must be called before any other MX25L driver routine is called.&nbsp;</p>
+<p class="Element10">
+This routine should only be called once during system initialization.&nbsp;</p>
+<p class="Element10">
+This routine will block for hardware access.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// This code snippet shows an example of initializing the MX25L Driver</span></i>
+<i><span style="color: #008000">// with MX25L QSPI flash device attached.</span></i>
+
+<a href="01423.html" target="topic">SYS_MODULE_OBJ</a>  objectHandle;
+
+<strong><span style="color: #000080">const</span></strong> DRV_MX25L_PLIB_INTERFACE drvMX25LPlibAPI = {
+    .CommandWrite  = QSPI_CommandWrite,
+    .RegisterRead  = QSPI_RegisterRead,
+    .RegisterWrite = QSPI_RegisterWrite,
+    .MemoryRead    = QSPI_MemoryRead,
+    .MemoryWrite   = QSPI_MemoryWrite
+};
+
+<strong><span style="color: #000080">const</span></strong> DRV_MX25L_INIT drvMX25LInitData =
+{
+    .mx25lPlib         = &amp;drvMX25LPlibAPI,
+};
+
+objectHandle = DRV_MX25L_Initialize((<a href="01418.html" target="topic">SYS_MODULE_INDEX</a>)DRV_MX25L_INDEX, (<a href="01419.html" target="topic">SYS_MODULE_INIT</a> *)&amp;drvMX25LInitData);
+
+<strong><span style="color: #000080">if</span></strong> (<a href="01424.html" target="topic">SYS_MODULE_OBJ_INVALID</a> == objectHandle)
+{
+    <i><span style="color: #008000">// Handle error</span></i>
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -118,21 +147,21 @@ This section provides information on how to run the application using MPLAB X ID
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00584.html" target="topic">File System Applications</a> &gt; <a href="00595.html" target="topic">sdhc_fat</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00178.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00595.html" target="topic">DRV_MX25L_Initialize Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00616.html" target="topic">Previous</a> | <a href="00584.html" target="topic">Up</a> | <a href="00617.html" target="topic">Next</a></div>
+<a href="00178.html" target="topic">Previous</a> | <a href="00178.html" target="topic">Up</a> | <a href="00596.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications sdhc_fat Topic Title: sdhc_fat)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MX25L_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT *const Topic Title: DRV_MX25L_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

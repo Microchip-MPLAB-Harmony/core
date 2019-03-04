@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>OSAL_SEM_GetCount Function</title>
+<title>DRV_USART_Open Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00707.html" target="topic">OSAL Library Help</a> &gt; <a href="00717.html" target="topic">Library Interface</a> &gt; a) Semaphore Functions &gt; <a href="00750.html" target="topic">OSAL_SEM_GetCount Function</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00314.html" target="topic">USART Driver Library Help</a> &gt; <a href="00315.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00750.html" target="topic">DRV_USART_Open Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00753.html" target="topic">Previous</a> | <a href="00717.html" target="topic">Up</a> | <a href="00737.html" target="topic">Next</a></div>
+<a href="00756.html" target="topic">Previous</a> | <a href="00315.html" target="topic">Up</a> | <a href="00745.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_SEM_GetCount@OSAL_SEM_HANDLE_TYPE* Topic Title: OSAL_SEM_GetCount Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_USART_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-OSAL_SEM_GetCount Function</div>
+DRV_USART_Open Function</div>
 </div>
 </div>
 
@@ -49,19 +49,22 @@ OSAL_SEM_GetCount Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function returns the current value of a counting semaphore. The value returned is assumed to be a single value ranging from 0-255.</p></div>
+This routine opens the specified USART driver instance and provides a handle that must be provided to all other client-level operations to identify the caller and the instance of the driver. The ioIntent parameter defines how the client interacts with this driver instance.&nbsp;</p>
+<p class="Element10">
+Specifying a DRV_IO_INTENT_EXCLUSIVE will cause the driver to provide exclusive access to this client. The driver cannot be opened by any other client.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100">uint8_t <strong><span style="color: #000000">OSAL_SEM_GetCount</span></strong>(
-    OSAL_SEM_HANDLE_TYPE* <strong><span style="color: #000000">semID</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">DRV_USART_Open</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01418.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="00502.html" target="topic">DRV_IO_INTENT</a> <strong><span style="color: #000000">ioIntent</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Semaphore must have been created.</p></div>
+Function <a href="00749.html" target="topic">DRV_USART_Initialize</a> must have been called before calling this function.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -69,7 +72,7 @@ Parameters</div>
 <div class="Element10">
 <div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table3">
+<table cellspacing="0" class="Table2">
 <tr>
 <td class="Element300" valign="top" width="35%">
 <div class="Element301">
@@ -78,19 +81,30 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-semID&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to the Semaphore ID&nbsp;</div></td></tr></table></div></div>
+Identifier for the object instance to be opened<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+intent&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Zero or more of the values from the enumeration <a href="00502.html" target="topic">DRV_IO_INTENT</a> &quot;ORed&quot; together to indicate the intended use of the driver. See function description for details.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
 Returns</div>
 <div class="Element11">
 <div class="Element10">
-
+<p class="Element10">
+If successful, the routine returns a valid open-instance handle (a number identifying both the caller and the module instance).&nbsp;</p>
+<p class="Element10">
+If an error occurs, the return value is <a href="00418.html" target="topic">DRV_HANDLE_INVALID</a>. Error can occur</p>
 <ul class="Element630">
-<li class="Element600">0 - Semaphore is unavailable</li>
-<li class="Element600">1-255 - Current value of the counting semaphore</li>
+<li class="Element600">if the number of client objects allocated via DRV_USART_CLIENTS_NUMBER is insufficient.</li>
+<li class="Element600">if the client is trying to open the driver but driver has been opened exclusively by another client.</li>
+<li class="Element600">if the driver peripheral instance being opened is not initialized or is invalid.</li>
+<li class="Element600">if the client is trying to open the driver exclusively, but has already been opened in a non exclusive mode by another client.</li>
+<li class="Element600">if the driver is not ready to be opened, typically when the initialize routine has not completed execution.</li>
 </ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
@@ -98,30 +112,21 @@ Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+The handle returned is valid until the <a href="00745.html" target="topic">DRV_USART_Close</a> routine is called. This routine will NEVER block waiting for hardware. If the requested intent flags are not supported, the routine will return <a href="00418.html" target="topic">DRV_HANDLE_INVALID</a>. This function is thread safe in a RTOS application.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"> uint8_t semCount;
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="00417.html" target="topic">DRV_HANDLE</a> handle;
 
- semCount = OSAL_SEM_GetCount(semUART);
-
- <strong><span style="color: #000080">if</span></strong> (semCount &gt; 0)
- {
-    <i><span style="color: #008000">// obtain the semaphore</span></i>
-     <strong><span style="color: #000080">if</span></strong> (<a href="00751.html" target="topic">OSAL_SEM_Pend</a>(&amp;semUART) == OSAL_RESULT_TRUE)
-     {
-        <i><span style="color: #008000">// perform processing on the comm channel</span></i>
-        ...
-     }
- }
- <strong><span style="color: #000080">else</span></strong>
- {
-    <i><span style="color: #008000">// no comm channels available</span></i>
-    ...
- }</pre></div></div>
+handle = DRV_USART_Open(DRV_USART_INDEX_0, DRV_IO_INTENT_EXCLUSIVE);
+<strong><span style="color: #000080">if</span></strong> (handle == <a href="00418.html" target="topic">DRV_HANDLE_INVALID</a>)
+{
+    <i><span style="color: #008000">// Unable to open the driver</span></i>
+    <i><span style="color: #008000">// May be the driver is not initialized or the initialization</span></i>
+    <i><span style="color: #008000">// is not complete.</span></i>
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -129,7 +134,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00707.html" target="topic">OSAL Library Help</a> &gt; <a href="00717.html" target="topic">Library Interface</a> &gt; a) Semaphore Functions &gt; <a href="00750.html" target="topic">OSAL_SEM_GetCount Function</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00314.html" target="topic">USART Driver Library Help</a> &gt; <a href="00315.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00750.html" target="topic">DRV_USART_Open Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -140,10 +145,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00753.html" target="topic">Previous</a> | <a href="00717.html" target="topic">Up</a> | <a href="00737.html" target="topic">Next</a></div>
+<a href="00756.html" target="topic">Previous</a> | <a href="00315.html" target="topic">Up</a> | <a href="00745.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_SEM_GetCount@OSAL_SEM_HANDLE_TYPE* Topic Title: OSAL_SEM_GetCount Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_USART_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

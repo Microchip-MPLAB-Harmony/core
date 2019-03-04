@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Memory Driver Library Help</title>
+<title>i2c_multi_slave</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00106.html" target="topic">Memory Driver Library Help</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00078.html" target="topic">I2C Driver Applications</a> &gt; Sync &gt; <a href="00106.html" target="topic">i2c_multi_slave</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00303.html" target="topic">Previous</a> | <a href="00096.html" target="topic">Up</a> | <a href="00105.html" target="topic">Next</a></div>
+<a href="00103.html" target="topic">Previous</a> | <a href="00078.html" target="topic">Up</a> | <a href="00107.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Memory Library Topic Title: Memory Driver Library Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2C Sync i2c_multi_slave Topic Title: i2c_multi_slave)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Memory Driver Library Help</div>
+i2c_multi_slave</div>
 </div>
 </div>
 
@@ -49,7 +49,28 @@ Memory Driver Library Help</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This section describes the Memory driver library.</p></div>
+The application demonstrates the multi-client feature of the <span style="color: #000000">I<sup>2</sup>C</span> driver in synchronous mode. The application uses a <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATIO1-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">IO1 Xplained Pro Extension Kit</a> that has a temperature sensor and an EEPROM interfaced on the same <span style="color: #000000">I<sup>2</sup>C</span> bus.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+Two application threads are created which act as clients to the same instance of the <span style="color: #000000">I<sup>2</sup>C</span> driver:&nbsp;</p>
+<p class="Element10">
+APP_I2C_TEMP_SENSOR_Tasks:</p>
+<ul class="Element630">
+<li class="Element600">Remains in blocked state for 1 second</li>
+<li class="Element600">Once unblocked, reads the temperature from the temperature sensor and posts a semaphore thereby unblocking the second (EEPROM) thread</li>
+</ul><p class="Element10">
+APP_I2C_EEPROM_Tasks:</p>
+<ul class="Element630">
+<li class="Element600">Remains blocked on a semaphore until a new temperature data is available</li>
+<li class="Element600">Once unblocked, writes the temperature data to the EEPROM</li>
+<li class="Element600">Reads and prints the last five saved temperature values from the EEPROM when user inputs a key on the console.</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+Note:</div>
+<p class="Element10">
+Temperature data is written to the same EEPROM memory locations.</p></div>
 </div>
 <a name="546F70696373"></a><div class="Element14">
 Topics</div>
@@ -66,34 +87,24 @@ Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00105.html" target="topic">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00107.html" target="topic">Building the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-<span style="color: #000000">This driver provides an interface to use Memory Driver to communicate with various media devices like QSPI_FLASH, EEPROM_FLASH, NVM_FLASH etc..</span>&nbsp;</div></td></tr><tr>
+This section provides information on how to build an application using the MPLAB X IDE.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00110.html" target="topic">Using the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00109.html" target="topic">MPLAB Harmony Configuration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This section describes the basic architecture of the Memory Driver and provides information on how it works.&nbsp;</div></td></tr><tr>
+This topic provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00100.html" target="topic">Configuring the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00108.html" target="topic">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-<span style="color: #000000">This section provides information on how to configure the Memory driver.</span>&nbsp;</div></td></tr><tr>
+This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00099.html" target="topic">Building the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00110.html" target="topic">Running the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-<span style="color: #000000">This section provides information on how the Memory Driver Library can be built.</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00107.html" target="topic">Library Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes the Application Programming Interface (API) functions of the Memory driver library<span style="color: #0000FF">.</span><br>Refer to each section for a detailed description.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00103.html" target="topic">Files</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This section will list only the library's interface header file(s).</span>&nbsp;</div></td></tr></table></div></div>
+This section provides information on how to run the application using the MPLAB X IDE.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -101,21 +112,21 @@ This section describes the Application Programming Interface (API) functions of 
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00106.html" target="topic">Memory Driver Library Help</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00078.html" target="topic">I2C Driver Applications</a> &gt; Sync &gt; <a href="00106.html" target="topic">i2c_multi_slave</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00303.html" target="topic">Previous</a> | <a href="00096.html" target="topic">Up</a> | <a href="00105.html" target="topic">Next</a></div>
+<a href="00103.html" target="topic">Previous</a> | <a href="00078.html" target="topic">Up</a> | <a href="00107.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Memory Library Topic Title: Memory Driver Library Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2C Sync i2c_multi_slave Topic Title: i2c_multi_slave)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

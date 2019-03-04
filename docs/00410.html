@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_MEMORY_Initialize Function</title>
+<title>DRV_CLIENT_STATUS Enumeration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00106.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00107.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00410.html" target="topic">DRV_MEMORY_Initialize Function</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00132.html" target="topic">Common Driver Library Help</a> &gt; a) Common Driver Services &gt; <a href="00410.html" target="topic">DRV_CLIENT_STATUS Enumeration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00107.html" target="topic">Previous</a> | <a href="00107.html" target="topic">Up</a> | <a href="00415.html" target="topic">Next</a></div>
+<a href="00497.html" target="topic">Previous</a> | <a href="00132.html" target="topic">Up</a> | <a href="01505.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: DRV_MEMORY_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_CLIENT_STATUS Topic Title: DRV_CLIENT_STATUS Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_MEMORY_Initialize Function</div>
+DRV_CLIENT_STATUS Enumeration</div>
 </div>
 </div>
 
@@ -49,132 +49,92 @@ DRV_MEMORY_Initialize Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This routine initializes the Memory driver instance for the specified driver index, making it ready for clients to open and use it.</p></div>
+Driver Client Status&nbsp;</p>
+<p class="Element10">
+This enumeration identifies the current status/state of a client's link to a driver.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01328.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_MEMORY_Initialize</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01322.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="01323.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000">DRV_CLIENT_STATUS_ERROR_EXTENDED</span></strong> = -10,
+  <strong><span style="color: #000000">DRV_CLIENT_STATUS_ERROR</span></strong> = -1,
+  <strong><span style="color: #000000">DRV_CLIENT_STATUS_CLOSED</span></strong> = 0,
+  <strong><span style="color: #000000">DRV_CLIENT_STATUS_BUSY</span></strong> = 1,
+  <strong><span style="color: #000000">DRV_CLIENT_STATUS_READY</span></strong> = 2,
+  <strong><span style="color: #000000">DRV_CLIENT_STATUS_READY_EXTENDED</span></strong> = 10
+} DRV_CLIENT_STATUS;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-None.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
+<div class="Element272">
 <div class="TableDiv">
 <table cellspacing="0" class="Table3">
 <tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-drvIndex&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Identifier for the instance to be initialized&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to a data structure containing any data necessary to initialize the driver.&nbsp;</div></td></tr></table></div></div>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_CLIENT_STATUS_ERROR_EXTENDED = -10&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Indicates that a driver-specific error has occurred.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_CLIENT_STATUS_ERROR = -1&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+An unspecified error has occurred.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_CLIENT_STATUS_CLOSED = 0&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+The driver is closed, no operations for this client are ongoing, and/or the given handle is invalid.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_CLIENT_STATUS_BUSY = 1&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+The driver is currently busy and cannot start additional operations.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_CLIENT_STATUS_READY = 2&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+The module is running and ready for additional operations&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_CLIENT_STATUS_READY_EXTENDED = 10&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Indicates that the module is in a driver-specific ready/run state.&nbsp;</div></td></tr></table></div></div>
 </div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-If successful, returns a valid handle to a driver instance object. Otherwise it returns <a href="01329.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This routine must be called before any other Memory routine is called.&nbsp;</p>
-<p class="Element10">
-This routine should only be called once during system initialization.&nbsp;</p>
-<p class="Element10">
-This routine will NEVER block for hardware access. If the operation requires time to allow the hardware to initialize, it will be reported by the <a href="00415.html" target="topic">DRV_MEMORY_Status</a> operation. The system must use <a href="00415.html" target="topic">DRV_MEMORY_Status</a> to find out when the driver is in the ready state.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// This code snippet shows an example of initializing the Memory Driver</span></i>
-<i><span style="color: #008000">// with SST26 serial flash device attached and File system Enabled.</span></i>
-
-<a href="01328.html" target="topic">SYS_MODULE_OBJ</a>  objectHandle;
-
-<strong><span style="color: #000080">static</span></strong> uint8_t gDrvMemory0EraseBuffer[DRV_MEMORY_ERASE_BUFFER_SIZE_IDX0] __attribute__((aligned(32)));
-
-<strong><span style="color: #000080">static</span></strong> DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
-
-<strong><span style="color: #000080">static</span></strong> DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0] = { 0 };
-
-<strong><span style="color: #000080">const</span></strong> <a href="00375.html" target="topic">DRV_MEMORY_DEVICE_INTERFACE</a> drvMemory0DeviceAPI = {
-    .Open               = <a href="00531.html" target="topic">DRV_SST26_Open</a>,
-    .Close              = <a href="00517.html" target="topic">DRV_SST26_Close</a>,
-    .Status             = <a href="00536.html" target="topic">DRV_SST26_Status</a>,
-    .SectorErase        = <a href="00535.html" target="topic">DRV_SST26_SectorErase</a>,
-    .Read               = <a href="00533.html" target="topic">DRV_SST26_Read</a>,
-    .PageWrite          = <a href="00532.html" target="topic">DRV_SST26_PageWrite</a>,
-    .GeometryGet        = (<a href="00374.html" target="topic">DRV_MEMORY_DEVICE_GEOMETRY_GET</a>)<a href="00529.html" target="topic">DRV_SST26_GeometryGet</a>,
-    .TransferStatusGet  = (<a href="00390.html" target="topic">DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET</a>)<a href="00541.html" target="topic">DRV_SST26_TransferStatusGet</a>
-};
-
-<strong><span style="color: #000080">const</span></strong> <a href="00398.html" target="topic">DRV_MEMORY_INIT</a> drvMemory0InitData =
-{
-    .memDevIndex          = DRV_SST26_INDEX,
-    .memoryDevice         = &amp;drvMemory0DeviceAPI,
-    .isFsEnabled          = <strong><span style="color: #000080">true</span></strong>,
-    .deviceMediaType      = (uint8_t)SYS_FS_MEDIA_TYPE_SPIFLASH,
-    .ewBuffer             = &amp;gDrvMemory0EraseBuffer[0],
-    .clientObjPool        = (uintptr_t)&amp;gDrvMemory0ClientObject[0],
-    .bufferObj            = (uintptr_t)&amp;gDrvMemory0BufferObject[0],
-    .queueSize            = DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0,
-    .nClientsMax          = DRV_MEMORY_CLIENTS_NUMBER_IDX0
-};
-
-<i><span style="color: #008000">//usage of DRV_MEMORY_INDEX_0 indicates usage of Flash-related APIs</span></i>
-objectHandle = DRV_MEMORY_Initialize((<a href="01322.html" target="topic">SYS_MODULE_INDEX</a>)DRV_MEMORY_INDEX_0, (<a href="01323.html" target="topic">SYS_MODULE_INIT</a> *)&amp;drvMemory0InitData);
-
-<strong><span style="color: #000080">if</span></strong> (<a href="01329.html" target="topic">SYS_MODULE_OBJ_INVALID</a> == objectHandle)
-{
-    <i><span style="color: #008000">// Handle error</span></i>
-}</pre></div></div>
-</div>
+The enumeration used as the return type for the client-level status routines defined by each device driver or system module (for example, DRV_USART_ClientStatus) must be based on the values in this enumeration.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00106.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00107.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00410.html" target="topic">DRV_MEMORY_Initialize Function</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00132.html" target="topic">Common Driver Library Help</a> &gt; a) Common Driver Services &gt; <a href="00410.html" target="topic">DRV_CLIENT_STATUS Enumeration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00107.html" target="topic">Previous</a> | <a href="00107.html" target="topic">Up</a> | <a href="00415.html" target="topic">Next</a></div>
+<a href="00497.html" target="topic">Previous</a> | <a href="00132.html" target="topic">Up</a> | <a href="01505.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: DRV_MEMORY_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_CLIENT_STATUS Topic Title: DRV_CLIENT_STATUS Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

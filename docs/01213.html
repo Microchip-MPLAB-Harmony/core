@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>sys_fs_media_manager.h</title>
+<title>SYS_FS_FileCharacterPut Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00847.html" target="topic">File System Service Library Help</a> &gt; <a href="00843.html" target="topic">Files</a> &gt; <a href="01213.html" target="topic">sys_fs_media_manager.h</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01213.html" target="topic">SYS_FS_FileCharacterPut Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01043.html" target="topic">Previous</a> | <a href="00843.html" target="topic">Up</a> | <a href="00854.html" target="topic">Next</a></div>
+<a href="01214.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01219.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: sys_fs_media_manager.h Topic Title: sys_fs_media_manager.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileCharacterPut@SYS_FS_HANDLE@char Topic Title: SYS_FS_FileCharacterPut Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-sys_fs_media_manager.h</div>
+SYS_FS_FileCharacterPut Function</div>
 </div>
 </div>
 
@@ -46,327 +46,82 @@ sys_fs_media_manager.h</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="436F6D70616E79"></a><div class="Element11">
+<a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Microchip Technology Inc.</p></div>
+This function writes a character to a file.</p></div>
 </div>
-<a name="46696C65204E616D65"></a><div class="Element14">
-File Name</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01356.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_FileCharacterPut</span></strong>(
+    <a href="01281.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <strong><span style="color: #000080">char</span></strong> <strong><span style="color: #000000">data</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-sys_fs_media_manager.h</p></div>
+The file into which a character has to be written, has to be present and should have been opened.</p></div>
 </div>
-<a name="4465736372697074696F6E"></a><div class="Element14">
-Description</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+file handle to which the character is to be written.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+data&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+character to be written to the file.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-File System Service Media Manager Interface Declarations and Types&nbsp;</p>
+SYS_FS_RES_SUCCESS - Write operation was successful. SYS_FS_RES_FAILURE - Write operation was unsuccessful. The reason for the failure can be retrieved with <a href="01157.html" target="topic">SYS_FS_Error</a> or <a href="01220.html" target="topic">SYS_FS_FileError</a>.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
 <p class="Element10">
-This file contains function and type declarations required to interact with the MPLAB Harmony File System Media Manager Framework.</p></div>
+None.</p></div>
 </div>
-<a name="456E756D65726174696F6E73"></a><div class="Element14">
-Enumerations</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01188.html" target="topic">SYS_FS_MEDIA_BLOCK_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies the possible events that can result from a request.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01191.html" target="topic">SYS_FS_MEDIA_COMMAND_STATUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-The enumeration for status of buffer&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01233.html" target="topic">SYS_FS_MEDIA_PROPERTY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Contains information of property of a media.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01240.html" target="topic">SYS_FS_MEDIA_STATE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-The enumeration for state of media.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01246.html" target="topic">SYS_FS_MEDIA_STATUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-The state of media.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01249.html" target="topic">SYS_FS_MEDIA_TYPE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-The enumeration for type of media.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="46756E6374696F6E73"></a><div class="Element14">
-Functions</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01214.html" target="topic">SYS_FS_MEDIA_MANAGER_AddressGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the starting media address based on a disk number.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01215.html" target="topic">SYS_FS_MEDIA_MANAGER_CommandStatusGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the command status.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01216.html" target="topic">SYS_FS_MEDIA_MANAGER_DeRegister</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Function called by a media to deregister itself to the media manager. For static media, (like NVM or SD card), this &quot;deregister function&quot; is never called, since static media never gets deregistered once they are initialized. For dynamic media (like MSD), this register function is called dynamically, once the MSD media is connected.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01217.html" target="topic">SYS_FS_MEDIA_MANAGER_EventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Register the event handler for Mount/Un-Mount events.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01218.html" target="topic">SYS_FS_MEDIA_MANAGER_GetMediaGeometry</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the media geometry information.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01219.html" target="topic">SYS_FS_MEDIA_MANAGER_MediaStatusGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the media status.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01220.html" target="topic">SYS_FS_MEDIA_MANAGER_Read</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets data from a specific media address.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01221.html" target="topic">SYS_FS_MEDIA_MANAGER_Register</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Function to register media drivers with the media manager.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01222.html" target="topic">SYS_FS_MEDIA_MANAGER_RegisterTransferHandler</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Register the event handler for data transfer events.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01223.html" target="topic">SYS_FS_MEDIA_MANAGER_SectorRead</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Reads a specified media sector.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01224.html" target="topic">SYS_FS_MEDIA_MANAGER_SectorWrite</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Writes a sector to the specified media.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01225.html" target="topic">SYS_FS_MEDIA_MANAGER_Tasks</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Media manager task function.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01226.html" target="topic">SYS_FS_MEDIA_MANAGER_TransferTask</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Media manager transfer task function.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01227.html" target="topic">SYS_FS_MEDIA_MANAGER_VolumePropertyGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the volume property.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="4D6163726F73"></a><div class="Element14">
-Macros</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01187.html" target="topic">SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the invalid media block command handle.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01212.html" target="topic">SYS_FS_MEDIA_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the invalid media handle.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="53747275637475726573"></a><div class="Element14">
-Structures</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01276.html" target="topic">_SYS_FS_VOLUME_PROPERTY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Structure to obtain the property of volume&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01197.html" target="topic">SYS_FS_MEDIA_FUNCTIONS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Structure of function pointers for media driver&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01228.html" target="topic">SYS_FS_MEDIA_MOUNT_DATA</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Structure to obtain the device and mount name of media&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01276.html" target="topic">SYS_FS_VOLUME_PROPERTY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Structure to obtain the property of volume&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="5479706573"></a><div class="Element14">
-Types</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01186.html" target="topic">SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Handle identifying block commands of the media.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01196.html" target="topic">SYS_FS_MEDIA_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Pointer to the Media Event Handler function.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01210.html" target="topic">SYS_FS_MEDIA_GEOMETRY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Contains all the geometrical information of a media device.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01211.html" target="topic">SYS_FS_MEDIA_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Handle identifying the media registered with the media manager.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01239.html" target="topic">SYS_FS_MEDIA_REGION_GEOMETRY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Contains information of a sys media region.&nbsp;</div></td></tr></table></div></div>
+<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01356.html" target="topic">SYS_FS_RESULT</a> res;
+  <a href="01281.html" target="topic">SYS_FS_HANDLE</a> fileHandle;
+
+  fileHandle = <a href="01222.html" target="topic">SYS_FS_FileOpen</a>(&quot;/mnt/myDrive/FILE.JPG&quot;, (SYS_FS_FILE_OPEN_WRITE_PLUS));
+  <strong><span style="color: #000080">if</span></strong>(fileHandle != <a href="01282.html" target="topic">SYS_FS_HANDLE_INVALID</a>)
+  {
+      <i><span style="color: #008000">// File open is successful</span></i>
+  }
+
+  <i><span style="color: #008000">// Write a character to the file.</span></i>
+  res = SYS_FS_FileCharacterPut(fileHandle, 'c');
+  <strong><span style="color: #000080">if</span></strong>(res != SYS_FS_RES_SUCCESS)
+  {
+      <i><span style="color: #008000">// Character write operation failed.</span></i>
+  }</pre></div></div>
 </div>
 </div>
 </div>
@@ -374,21 +129,21 @@ Contains information of a sys media region.&nbsp;</div></td></tr></table></div><
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00847.html" target="topic">File System Service Library Help</a> &gt; <a href="00843.html" target="topic">Files</a> &gt; <a href="01213.html" target="topic">sys_fs_media_manager.h</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01213.html" target="topic">SYS_FS_FileCharacterPut Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01043.html" target="topic">Previous</a> | <a href="00843.html" target="topic">Up</a> | <a href="00854.html" target="topic">Next</a></div>
+<a href="01214.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01219.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: sys_fs_media_manager.h Topic Title: sys_fs_media_manager.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileCharacterPut@SYS_FS_HANDLE@char Topic Title: SYS_FS_FileCharacterPut Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

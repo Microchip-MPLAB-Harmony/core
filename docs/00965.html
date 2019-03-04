@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_CONSOLE_Initialize Function</title>
+<title>Using the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00815.html" target="topic">Console System Service Library Help</a> &gt; <a href="00816.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00965.html" target="topic">SYS_CONSOLE_Initialize Function</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00965.html" target="topic">Using the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00816.html" target="topic">Previous</a> | <a href="00816.html" target="topic">Up</a> | <a href="00970.html" target="topic">Next</a></div>
+<a href="00960.html" target="topic">Previous</a> | <a href="00961.html" target="topic">Up</a> | <a href="00952.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT* const Topic Title: SYS_CONSOLE_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS FS Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_CONSOLE_Initialize Function</div>
+Using the Library</div>
 </div>
 </div>
 
@@ -49,79 +49,33 @@ SYS_CONSOLE_Initialize Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function initializes the internal data structures used by the console module. It also initializes the associated I/O driver/PLIB.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01328.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">SYS_CONSOLE_Initialize</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01322.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="01323.html" target="topic">SYS_MODULE_INIT</a>* <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
+<strong>Interface Header File</strong>: <span class="Element146">sys_fs.h</span>&nbsp;</p>
 <p class="Element10">
-None.</p></div>
+The interface to the File System Service library is defined in the <span class="Element146">sys_fs.h</span> header file. Any C language source (<span class="Element146">.c</span>) file that uses the File System Service Library use this API's to perform file operation on various connected media's.</p></div>
 </div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element312">
+<div class="Element212">
 <div class="TableDiv">
-<table cellspacing="0" class="Table3">
+<table cellspacing="0" class="Table0">
 <tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Index for the instance to be initialized<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to a data structure containing any data necessary to initialize the Console System service. This pointer may be null if no data is required because static overrides have been provided.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-If successful, returns a valid handle to the console instance. Otherwise, it returns <a href="01329.html" target="topic">SYS_MODULE_OBJ_INVALID</a>. The returned object must be passed as argument to <a href="00971.html" target="topic">SYS_CONSOLE_Tasks</a> and <a href="00970.html" target="topic">SYS_CONSOLE_Status</a> routines.</p></div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-This routine should only be called once during system initialization.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01328.html" target="topic">SYS_MODULE_OBJ</a>  objectHandle;
-
-<i><span style="color: #008000">// Populate the console initialization structure</span></i>
-<strong><span style="color: #000080">const</span></strong> SYS_CONSOLE_INIT sysConsole0Init =
-{
-    .deviceInitData = (<strong><span style="color: #000080">void</span></strong>*)&amp;sysConsole0UARTInitData,
-    .consDevDesc = &amp;sysConsoleUARTDevDesc,
-    .deviceIndex = 0,
-};
-
-objectHandle = SYS_CONSOLE_Initialize(<a href="00961.html" target="topic">SYS_CONSOLE_INDEX_0</a>, (<a href="01323.html" target="topic">SYS_MODULE_INIT</a> *)&amp;sysConsole0Init);
-<strong><span style="color: #000080">if</span></strong> (objectHandle == <a href="01329.html" target="topic">SYS_MODULE_OBJ_INVALID</a>)
-{
-    <i><span style="color: #008000">// Handle error</span></i>
-}</pre></div></div>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00952.html" target="topic">Abstraction Model</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the abstraction model of the MPLAB Harmony File System.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00959.html" target="topic">How the Library Works</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This topic provides information on how the MPLAB Harmony File System works.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -129,21 +83,21 @@ objectHandle = SYS_CONSOLE_Initialize(<a href="00961.html" target="topic">SYS_CO
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00815.html" target="topic">Console System Service Library Help</a> &gt; <a href="00816.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00965.html" target="topic">SYS_CONSOLE_Initialize Function</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00965.html" target="topic">Using the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00816.html" target="topic">Previous</a> | <a href="00816.html" target="topic">Up</a> | <a href="00970.html" target="topic">Next</a></div>
+<a href="00960.html" target="topic">Previous</a> | <a href="00961.html" target="topic">Up</a> | <a href="00952.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT* const Topic Title: SYS_CONSOLE_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS FS Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

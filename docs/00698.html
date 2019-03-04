@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Library Interface</title>
+<title>DRV_SPI_TransferEventHandlerSet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00688.html" target="topic">OSAL Library Help</a> &gt; <a href="00698.html" target="topic">Library Interface</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; b) Client Setup Functions &gt; <a href="00698.html" target="topic">DRV_SPI_TransferEventHandlerSet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00690.html" target="topic">Previous</a> | <a href="00688.html" target="topic">Up</a> | <a href="00728.html" target="topic">Next</a></div>
+<a href="00699.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00679.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_TransferEventHandlerSet@DRV_HANDLE@DRV_SPI_TRANSFER_EVENT_HANDLER@uintptr_t Topic Title: DRV_SPI_TransferEventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Library Interface</div>
+DRV_SPI_TransferEventHandlerSet Function</div>
 </div>
 </div>
 
@@ -49,262 +49,118 @@ Library Interface</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This section describes the APIs of the OSAL Library. Refer to each section for a description.</p></div>
+This function allows a client to register a transfer event handling function with the driver to call back when queued transfer has finished. When a client calls either the <a href="00680.html" target="topic">DRV_SPI_ReadTransferAdd</a> or <a href="00704.html" target="topic">DRV_SPI_WriteTransferAdd</a> or <a href="00702.html" target="topic">DRV_SPI_WriteReadTransferAdd</a> function, it is provided with a handle identifying the transfer request that was added to the driver's queue. The driver will pass this handle back to the client by calling &quot;eventHandler&quot; function when the transfer has completed.&nbsp;</p>
+<p class="Element10">
+The event handler should be set before the client performs any &quot;transfer add&quot; operations that could generate events. The event handler once set, persists until the client closes the driver or sets another event handler (which could be a &quot;NULL&quot; pointer to indicate no callback).</p></div>
 </div>
-<a name="61292053656D6170686F72652046756E6374696F6E73"></a><div class="Element14">
-a) Semaphore Functions</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_SPI_TransferEventHandlerSet</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="00688.html" target="topic">DRV_SPI_TRANSFER_EVENT_HANDLER</a> <strong><span style="color: #000000">eventHandler</span></strong>, 
+    uintptr_t <strong><span style="color: #000000">context</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00728.html" target="topic">OSAL_SEM_Create</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Creates an OSAL Semaphore.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00730.html" target="topic">OSAL_SEM_Delete</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Deletes an OSAL Semaphore.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00732.html" target="topic">OSAL_SEM_Pend</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Waits on a semaphore. Returns true if the semaphore was obtained within the time limit.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00733.html" target="topic">OSAL_SEM_Post</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Posts a semaphore or increments a counting semaphore.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00734.html" target="topic">OSAL_SEM_PostISR</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Posts a semaphore or increments a counting semaphore from within an Interrupt Service Routine (ISR).&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00731.html" target="topic">OSAL_SEM_GetCount</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the current value of a counting semaphore.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+<a href="00678.html" target="topic">DRV_SPI_Open</a> must have been called to obtain a valid open instance handle.</p></div>
 </div>
-</div>
-<a name="6229204D757465782046756E6374696F6E73"></a><div class="Element14">
-b) Mutex Functions</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
+<div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table2">
 <tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00718.html" target="topic">OSAL_MUTEX_Create</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Creates a mutex.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00720.html" target="topic">OSAL_MUTEX_Delete</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Deletes a mutex.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00721.html" target="topic">OSAL_MUTEX_Lock</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Locks a mutex.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00722.html" target="topic">OSAL_MUTEX_Unlock</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Unlocks a mutex.&nbsp;</div></td></tr></table></div></div>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A valid open-instance handle, returned from the driver's open routine.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+eventHandler&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the event handler function.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+The value of parameter will be passed back to the client unchanged, when the eventHandler function is called. It can be used to identify any client specific data object that identifies the instance of the client module (for example, it may be a pointer to the client module's state structure).&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
-<a name="632920437269746963616C2053656374696F6E2046756E6374696F6E73"></a><div class="Element14">
-c) Critical Section Functions</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00710.html" target="topic">OSAL_CRIT_Enter</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enters a critical section with the specified severity level.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00711.html" target="topic">OSAL_CRIT_Leave</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Leaves a critical section with the specified severity level.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+None.</p></div>
 </div>
-</div>
-<a name="6429204D656D6F727920416C6C6F636174696F6E2046756E6374696F6E73"></a><div class="Element14">
-d) Memory Allocation Functions</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00717.html" target="topic">OSAL_Malloc</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Allocates memory using the OSAL default allocator.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00715.html" target="topic">OSAL_Free</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Deallocates a block of memory and return to the default pool.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+If the client does not want to be notified when the queued transfer request has completed, it does not need to register a callback.</p></div>
 </div>
-</div>
-<a name="6529204F53414C20436F6E74726F6C2046756E6374696F6E73"></a><div class="Element14">
-e) OSAL Control Functions</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00716.html" target="topic">OSAL_Initialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Performs OSAL initialization.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00723.html" target="topic">OSAL_Name</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Obtains the name of the underlying RTOS.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="6629204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
-f) Data Types and Constants</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_enum.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00712.html" target="topic">OSAL_CRIT_TYPE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enumerated type representing the possible types of critical section.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_enum.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00724.html" target="topic">OSAL_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enumerated type representing the general return value from OSAL functions.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_enum.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00735.html" target="topic">OSAL_SEM_TYPE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enumerated type representing the possible types of semaphore.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00729.html" target="topic">OSAL_SEM_DECLARE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Declares an OSAL semaphore.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00719.html" target="topic">OSAL_MUTEX_DECLARE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Declares an OSAL mutex.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00000.html" target="topic">_OSAL_H</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro _OSAL_H.&nbsp;</div></td></tr></table></div></div>
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// myAppObj is an application specific state data object.</span></i>
+MY_APP_OBJ myAppObj;
+
+uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
+uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
+<a href="00689.html" target="topic">DRV_SPI_TRANSFER_HANDLE</a> transferHandle;
+
+<i><span style="color: #008000">// mySPIHandle is the handle returned by the DRV_SPI_Open function.</span></i>
+
+<i><span style="color: #008000">// Client registers an event handler with driver. This is done once</span></i>
+
+DRV_SPI_TransferEventHandlerSet( mySPIHandle, APP_SPITransferEventHandler,
+                                 (uintptr_t)&amp;myAppObj );
+
+<a href="00702.html" target="topic">DRV_SPI_WriteReadTransferAdd</a>(mySPIhandle, myTxBuffer,
+                            MY_TX_BUFFER_SIZE, myRxBuffer,
+                            MY_RX_BUFFER_SIZE, &amp;transferHandle);
+
+<strong><span style="color: #000080">if</span></strong>(transferHandle == <a href="00690.html" target="topic">DRV_SPI_TRANSFER_HANDLE_INVALID</a>)
+{
+    <i><span style="color: #008000">// Error handling here</span></i>
+}
+
+<i><span style="color: #008000">// Event is received when the transfer is completed.</span></i>
+
+<strong><span style="color: #000080">void</span></strong> APP_SPITransferEventHandler(<a href="00682.html" target="topic">DRV_SPI_TRANSFER_EVENT</a> event,
+        <a href="00689.html" target="topic">DRV_SPI_TRANSFER_HANDLE</a> handle, uintptr_t context)
+{
+    <i><span style="color: #008000">// The context handle was set to an application specific</span></i>
+    <i><span style="color: #008000">// object. It is now retrievable easily in the event handler.</span></i>
+    MY_APP_OBJ myAppObj = (MY_APP_OBJ *) context;
+
+    <strong><span style="color: #000080">switch</span></strong>(event)
+    {
+        <strong><span style="color: #000080">case</span></strong> DRV_SPI_TRANSFER_EVENT_COMPLETE:
+            <i><span style="color: #008000">// This means the data was transferred.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> DRV_SPI_TRANSFER_EVENT_ERROR:
+            <i><span style="color: #008000">// Error handling here.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">default</span></strong>:
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -312,21 +168,21 @@ This is macro _OSAL_H.&nbsp;</div></td></tr></table></div></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00688.html" target="topic">OSAL Library Help</a> &gt; <a href="00698.html" target="topic">Library Interface</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; b) Client Setup Functions &gt; <a href="00698.html" target="topic">DRV_SPI_TransferEventHandlerSet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00690.html" target="topic">Previous</a> | <a href="00688.html" target="topic">Up</a> | <a href="00728.html" target="topic">Next</a></div>
+<a href="00699.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00679.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_TransferEventHandlerSet@DRV_HANDLE@DRV_SPI_TRANSFER_EVENT_HANDLER@uintptr_t Topic Title: DRV_SPI_TransferEventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

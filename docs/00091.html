@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Using Driver Interface Functions</title>
+<title>Configuring the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00050.html" target="topic">Driver Library Overview</a> &gt; <a href="00091.html" target="topic">Using Driver Interface Functions</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00099.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00091.html" target="topic">Configuring the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00086.html" target="topic">Previous</a> | <a href="00050.html" target="topic">Up</a> | <a href="00090.html" target="topic">Next</a></div>
+<a href="00097.html" target="topic">Previous</a> | <a href="00099.html" target="topic">Up</a> | <a href="00090.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Using Driver Interface Functions Topic Title: Using Driver Interface Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2C Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Using Driver Interface Functions</div>
+Configuring the Library</div>
 </div>
 </div>
 
@@ -49,52 +49,52 @@ Using Driver Interface Functions</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-To use a MPLAB Harmony driver’s client interface, the application must first obtain a valid handle from the driver’s “open” function. The examples in this section assume that that has already occurred and that the value of the USART driver handle in the appData.usart variable is valid. The following example code demonstrates the implementation of a state transition function in a state machine-based application (as shown in the previous <a href="00087.html" target="topic">Using a Driver in an Application</a> section) that writes data to a USART driver for transmission on the associated USART peripheral.&nbsp;</p>
-<p class="Element10">
-<strong>Example Writing Data To a Driver</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">static</span></strong> <strong><span style="color: #000080">bool</span></strong> MessageSend ( <strong><span style="color: #000080">void</span></strong> )
-{
-    size_t  count;
-    size_t  length = strlen(appData.message);
+I<sup>2</sup>C<span style="color: #000000"> Driver library should be configured via MHC. Below is the snapshot of the MHC configuration window for configuring the </span>I<sup>2</sup>C<span style="color: #000000"> driver in asynchronous and synchronous mode and a brief description of various configuration options.</span>&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="drv_i2c_mhc_config_async.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<strong>Asynchronous Mode</strong></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="drv_i2c_mhc_config_sync.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<strong>Synchronous Mode</strong>&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<div class="Element15">
+Common User Configuration for all Instances</div>
 
-    count = DRV_USART_Write(appData.usart, appData.message, length);
+<ul class="Element630">
+<li class="Element600"><span style="color: #000000"><strong>Driver Mode:</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Allows User to select the mode of driver(Asynchronous or Synchronous). This setting is common for all the instances</span></li>
+</ul></li>
+</ul><p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+Instance Specific User Configurations</div>
 
-    appData.message += count;
-
-    <strong><span style="color: #000080">if</span></strong> (count == length)
-    {
-        <strong><span style="color: #000080">return</span></strong> <strong><span style="color: #000080">true</span></strong>;
-    }
-
-    <strong><span style="color: #000080">return</span></strong> <strong><span style="color: #000080">false</span></strong>;
-}</pre></div></div>
-<p class="Element10">
-In this example, the appData.message variable is a char pointer pointing to a null-terminated C-language string that was defined and initialized, as shown in the <a href="00087.html" target="topic">Using a Driver in an Application</a> section. When <span class="Element146">MessageSend</span> function is first called by the application’s state machine, it points to the first character in the string to be transmitted. The function calculates the current length of the message string (using the standard C-language strlen function) and calls the driver’s DRV_USART_Write function, passing it the valid driver handle (<span class="Element146">appData.usart</span>) along with the pointer to the message string and its length, to transmit the message string on the associated USART.&nbsp;</p>
-<p class="Element10">
-If the driver is configured for blocking, the DRV_USART_Write function will not return until it has processed all of the data in the message string. However, that usually requires the use of a RTOS. Normally, in a bare-metal system (one that does not use a RTOS), MPLAB Harmony drivers are used in a non-blocking mode. In that case, a driver will perform as much of a task as it can when one of its interface functions is called without blocking. This means that the function will then return immediately, not waiting for the task to complete, and provide information on how much of the task was completed so the client can react appropriately. In this example, the DRV_USART_Write function will return a count of the number of bytes that were processed by the USART driver by this call to the function.&nbsp;</p>
-<p class="Element10">
-The <span class="Element146">MessageSend</span> function captures the number of bytes processed by the DRV_USART_Write function in a local count variable. It then effectively removes those bytes from the message string by incrementing the pointer by count bytes (<span class="Element146">appData.message</span> is a char pointer that increments by the size of one byte for every ‘1’ added to it). Then, the <span class="Element146">MessageSend</span> function checks to see if it was able to write the entire string by comparing the value of count to the value of length that it calculated before calling the driver’s write function. If the two are equal, the task is complete and the <span class="Element146">MessageSend</span> function returns true and the application’s state machine can continue to the next state. If the two values are not equal, this indicates there are remaining bytes in the message string. The <span class="Element146">MessageSend</span> function returns false and the application must stay in the same state so that the function can attempt to send the remaining bytes next time it is called. A driver only accepts data when it can process it; therefore, the client can call its data transfer function as many times as necessary, even when the function returns bytes processed if it cannot accept more data at that time.&nbsp;</p>
-<p class="Element10">
-When a client has called a driver interface function there are really only two possibilities. Either the operation has completed when the function returns, or the operation continues after the function has returned. If the operation completes immediately, the client can continue on without taking further action. However, in this example, while the USART driver may have accepted some of the bytes in the message string (perhaps copying them to an internal hardware or software FIFO buffer), it still takes some time to transmit the data over the USART peripheral. In many cases the client may need to know when the operation has actually completed. For this reason, most drivers provide one or more status functions that client applications may call to determine the current status of an operation, as demonstrated in the following example.&nbsp;</p>
-<p class="Element10">
-<strong>Example Using a Driver Status Function</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">static</span></strong> <strong><span style="color: #000080">bool</span></strong> MessageComplete ( <strong><span style="color: #000080">void</span></strong> )
-{
-    <strong><span style="color: #000080">if</span></strong> (DRV_USART_ClientStatus(appData.usart) == DRV_USART_CLIENT_STATUS_BUSY)
-    {
-        <strong><span style="color: #000080">return</span></strong> <strong><span style="color: #000080">false</span></strong>;
-    }
-    <strong><span style="color: #000080">return</span></strong> <strong><span style="color: #000080">true</span></strong>;
-}</pre></div></div>
-<p class="Element10">
-This example extends the previous one and assumes that the <span class="Element146">MessageSend</span> function has returned true and the application has moved to a new state where it calls this function to determine when the driver is idle, which indicates that the message has been completely transmitted. To do that, the <span class="Element146">MessageComplete</span> function calls the DRV_USART_ClientStatus function. If its return value is DRV_USART_CLIENT_STATUS_BUSY, the USART driver is still working on a previous request by the client. If any other status value is returned, this indicates that the driver is no longer busy with a current request and the <span class="Element146">MessageComplete</span> function returns true so that the client application’s state machine can move on. A more sophisticated example would check for other possible status values that might indicate some error has occurred and take appropriate action. However, this example is sufficient to demonstrate the concept of checking a driver status function to determine when it is safe to move to another state.&nbsp;</p>
-<p class="Element10">
-Since the client application stays in the same state calling the status function each time its tasks function is called until the desired status is returned, it is effectively polling the status as if it were in a <span class="Element146">while</span> loop. In fact, it is in the system-wide while loop. However, by not trapping the CPU within its own internal <span class="Element146">while</span> loop, the application allows other modules (including, potentially, the driver it is using) to continue running and servicing requests. Failing to allow the rest of the system to run can result in a deadlock where the polling application is waiting for a status; however, the driver it is polling will never be able to provide the expected status, as the driver’s own tasks function is not allowed to run. This is why it is important to use the technique described here to “poll” status from modules outside of the current module.</p></div>
+<ul class="Element630">
+<li class="Element600"><span style="color: #000000"><strong>PLIB Used:</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Indicates the underlying </span>I<sup>2</sup>C<span style="color: #000000"> peripheral libratry used by the driver</span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>Number of clients:</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">The total number of clients that can open the given </span>I<sup>2</sup>C<span style="color: #000000"> driver instance</span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>Transfer Queue Size:</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Indicates the size of the transfer queue for the given </span>I<sup>2</sup>C<span style="color: #000000"> driver instance. Available only in Asynchronous mode</span></li>
+</ul></li>
+</ul></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00050.html" target="topic">Driver Library Overview</a> &gt; <a href="00091.html" target="topic">Using Driver Interface Functions</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00099.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00091.html" target="topic">Configuring the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -105,10 +105,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00086.html" target="topic">Previous</a> | <a href="00050.html" target="topic">Up</a> | <a href="00090.html" target="topic">Next</a></div>
+<a href="00097.html" target="topic">Previous</a> | <a href="00099.html" target="topic">Up</a> | <a href="00090.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Using Driver Interface Functions Topic Title: Using Driver Interface Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2C Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

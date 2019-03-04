@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_I2C_ReadTransfer Function</title>
+<title>Abstraction Model</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00072.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00073.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00275.html" target="topic">DRV_I2C_ReadTransfer Function</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00285.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00292.html" target="topic">Using the Library</a> &gt; <a href="00275.html" target="topic">Abstraction Model</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00285.html" target="topic">Previous</a> | <a href="00073.html" target="topic">Up</a> | <a href="00276.html" target="topic">Next</a></div>
+<a href="00292.html" target="topic">Previous</a> | <a href="00292.html" target="topic">Up</a> | <a href="00283.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2C_ReadTransfer@DRV_HANDLE@uint16_t@void* const@size_t Topic Title: DRV_I2C_ReadTransfer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SST26 Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_I2C_ReadTransfer Function</div>
+Abstraction Model</div>
 </div>
 </div>
 
@@ -49,115 +49,33 @@ DRV_I2C_ReadTransfer Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function does a blocking read operation. The function blocks till the read is complete or error has occurred during read. Function will return false to report failure. The failure will occur for the following reasons:</p>
-<ul class="Element630">
-<li class="Element600">Invalid input parameters</li>
-<li class="Element600">Hardware error</li>
-</ul></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_I2C_ReadTransfer</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00268.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    uint16_t <strong><span style="color: #000000">address</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">buffer</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> size_t <strong><span style="color: #000000">size</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
+The SST26 driver interface provides read, write and Erase functions that abstract out the internal workings of the SST26 driver and the underlying QSPI/SQI protocol.&nbsp;</p>
 <p class="Element10">
-<a href="00274.html" target="topic">DRV_I2C_Open</a> must have been called to obtain a valid opened device handle.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
-<div class="TableDiv">
-<table cellspacing="0" class="Table3">
-<tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-A valid open-instance handle, returned from the driver's open routine <a href="00274.html" target="topic">DRV_I2C_Open</a> function.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-address&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Slave Address<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-buffer&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Destination buffer where read data is stored.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-size&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Size in bytes of data to be read.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-true - read is successful false - error has occurred</p></div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-This function is thread safe in a RTOS application. This function should not be called from an interrupt context. This function is available only in the synchronous mode.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
-
-<i><span style="color: #008000">// myI2CHandle is the handle returned</span></i>
-<i><span style="color: #008000">// by the DRV_I2C_Open function.</span></i>
-
-<i><span style="color: #008000">// slaveAddress is address of I2C slave device</span></i>
-<i><span style="color: #008000">// to which data is to be written</span></i>
-
-<strong><span style="color: #000080">if</span></strong> (DRV_I2C_ReadTransfer(myI2CHandle, slaveAddress, myRxBuffer, MY_RX_BUFFER_SIZE) == <strong><span style="color: #000080">false</span></strong>)
-{
-    <i><span style="color: #008000">// Error handling here</span></i>
-}
-</pre></div></div>
-</div>
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="drv_sst26_abstraction_model.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<strong>SST26 Driver Block Diagram</strong>&nbsp;</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00072.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00073.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00275.html" target="topic">DRV_I2C_ReadTransfer Function</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00285.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00292.html" target="topic">Using the Library</a> &gt; <a href="00275.html" target="topic">Abstraction Model</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00285.html" target="topic">Previous</a> | <a href="00073.html" target="topic">Up</a> | <a href="00276.html" target="topic">Next</a></div>
+<a href="00292.html" target="topic">Previous</a> | <a href="00292.html" target="topic">Up</a> | <a href="00283.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2C_ReadTransfer@DRV_HANDLE@uint16_t@void* const@size_t Topic Title: DRV_I2C_ReadTransfer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SST26 Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

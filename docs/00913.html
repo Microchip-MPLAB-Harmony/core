@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_CMD_FNC Type</title>
+<title>Configuring the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00046.html" target="topic">Command Processor System Service Library</a> &gt; <a href="01340.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00913.html" target="topic">SYS_CMD_FNC Type</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00916.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00913.html" target="topic">Configuring the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00896.html" target="topic">Previous</a> | <a href="01340.html" target="topic">Up</a> | <a href="00914.html" target="topic">Next</a></div>
+<a href="00914.html" target="topic">Previous</a> | <a href="00916.html" target="topic">Up</a> | <a href="00912.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CMD_FNC Topic Title: SYS_CMD_FNC Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS COMMAND Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_CMD_FNC Type</div>
+Configuring the Library</div>
 </div>
 </div>
 
@@ -49,26 +49,54 @@ SYS_CMD_FNC Type</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS CMD Command Function&nbsp;</p>
+The Command Processor System Service library should be configured via MHC. Below is the snapshot of the MHC configuration window and a brief description of various configuration options.&nbsp;</p>
 <p class="Element10">
-Command Process Function API. This handle identifies the interface structure of the command process function API.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">int</span></strong> (* <strong><span style="color: #000000">SYS_CMD_FNC</span></strong>)(<a href="00901.html" target="topic">SYS_CMD_DEVICE_NODE</a>* pCmdIO, <strong><span style="color: #000080">int</span></strong> argc, <strong><span style="color: #000080">char</span></strong> **argv);</pre></div></div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
+In MHC, the Command Processor System Service configuration options are available under the Console System Service component. </p><p class="Element10" style="text-align: center;">
+<img src="sys_command_configuration.png" border="0" alt="" title=""></p><div class="Element15">
+Configuration Options:</div>
+
+<ul class="Element630">
+<li class="Element600"><strong>Device Used:</strong>
+<ul class="Element631">
+<li class="Element601">Indicates the hardware UART Peripheral Library instance used by the Console System Service</li>
+</ul></li>
+<li class="Element600"><strong>Transmit Buffer Queue Size (1-128):</strong>
+<ul class="Element631">
+<li class="Element601">Indicates the maximum number of data transmit requests that can be queued</li>
+</ul></li>
+<li class="Element600"><strong>Receive Buffer Queue Size (1-128):</strong>
+<ul class="Element631">
+<li class="Element601">Indicates the maximum number of data reception requests that can be queued</li>
+</ul></li>
+<li class="Element600"><strong>Enable Debug?:</strong>
+<ul class="Element631">
+<li class="Element601">Enable Debug System Service. Refer the Debug System Service for the Debug service configuration options</li>
+</ul></li>
+<li class="Element600"><strong>Enable Command Processor?:</strong>
+<ul class="Element631">
+<li class="Element601">Enable Command Processor System Service</li>
+<li class="Element601"><strong>Command Print Buffer Size (512-8192):</strong>
+<ul class="Element632">
+<li class="Element602">Size of the command print buffer in bytes</li>
+</ul></li>
+<li class="Element601"><strong>Re-route Console Message/Print through Command Service?:</strong>
+<ul class="Element632">
+<li class="Element602">Re-routes the <a href="01417.html" target="topic">SYS_MESSAGE</a>, <a href="01088.html" target="topic">SYS_CONSOLE_MESSAGE</a>, <a href="01441.html" target="topic">SYS_PRINT</a> and <a href="01089.html" target="topic">SYS_CONSOLE_PRINT</a> macros through the Command Service</li>
+</ul></li>
+<li class="Element601"><strong>Re-route Debug Message/Print through Command Service?:</strong>
+<ul class="Element632">
+<li class="Element602">Re-routes the <a href="01101.html" target="topic">SYS_DEBUG_MESSAGE</a>, <a href="01103.html" target="topic">SYS_DEBUG_PRINT</a>, <a href="01141.html" target="topic">SYS_ERROR_PRINT</a>, <a href="01095.html" target="topic">SYS_DEBUG</a> and <a href="01134.html" target="topic">SYS_ERROR</a> macros through the Command Service</li>
+<li class="Element602">For re-routing debug messages through command service, the debug system service must be enabled in MHC configuration</li>
+</ul></li>
+</ul></li>
+</ul></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00046.html" target="topic">Command Processor System Service Library</a> &gt; <a href="01340.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00913.html" target="topic">SYS_CMD_FNC Type</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00916.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00913.html" target="topic">Configuring the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -79,10 +107,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00896.html" target="topic">Previous</a> | <a href="01340.html" target="topic">Up</a> | <a href="00914.html" target="topic">Next</a></div>
+<a href="00914.html" target="topic">Previous</a> | <a href="00916.html" target="topic">Up</a> | <a href="00912.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CMD_FNC Topic Title: SYS_CMD_FNC Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS COMMAND Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

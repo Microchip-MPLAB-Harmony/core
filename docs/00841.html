@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Abstraction Model</title>
+<title>Micrium OS III Applications</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00851.html" target="topic">File System Service Library Help</a> &gt; <a href="00855.html" target="topic">Using the Library</a> &gt; <a href="00841.html" target="topic">Abstraction Model</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00012.html" target="topic">RTOS Applications</a> &gt; <a href="00841.html" target="topic">Micrium OS III Applications</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00855.html" target="topic">Previous</a> | <a href="00855.html" target="topic">Up</a> | <a href="00849.html" target="topic">Next</a></div>
+<a href="00774.html" target="topic">Previous</a> | <a href="00012.html" target="topic">Up</a> | <a href="00842.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS FS Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Micrium OS III Applications Help Topic Title: Micrium OS III Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Abstraction Model</div>
+Micrium OS III Applications</div>
 </div>
 </div>
 
@@ -49,40 +49,52 @@ Abstraction Model</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The FS framework features a modular and layered architecture, as shown in the following figure. </p><p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="FS_Architecture Diagram.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<strong>FS Framework Architecture</strong></p><p class="Element10">
+This section provides descriptions of the Micrium OS III RTOS demonstrations which are located in <strong>&quot;micrium_ucos3&quot;</strong> repository.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element15">
+Legal Disclaimer</div>
+<p class="Element10">
+<span style="color: #000000">The source code for this demonstration is not freely distributed. To obtain the proper licensing agreement go to the Micriµm website: </span><a href="#" onclick="openExternalLink('http://www.micrium.com');"><img src="indicator_external_link.gif" border="0" alt="" title="">http://www.micrium.com</a><span style="color: #000000">.</span>&nbsp;</p>
+<p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-As seen in the figure, the FS Framework consists of the following major blocks:</p>
-<ul class="Element630">
-<li class="Element600">The <strong>Driver</strong> for the physical media has to be included as a part of the FS Framework. This layer<span style="color: #FFFFFF">_</span>provides a low-level interface to access the physical media. This layer<span style="color: #FFFFFF">_</span>also enables multiple instances of media. Examples of drivers are:
-<ul class="Element631">
-<li class="Element601">Memory driver – To access files using Various Flash Memories (QSPI Flash, NVM Flash, EEPROM Flash)</li>
-<li class="Element601">SDCARD driver – To access files from SD card</li>
-</ul></li>
-<li class="Element600">The <strong>Media driver</strong> provides a mechanism to access the media as &quot;sectors&quot;. Sectors are the smallest storage element accessed by a file system and are contiguous memory locations. Typically, each sector has 512 bytes. Depending on the requirement, in some cases, the driver and media driver could be combined as one<span style="color: #FFFFFF">_</span>layer.</li>
-<li class="Element600">The <strong>Media manager</strong> implements a disk and sector based media access mechanism. It also performs disk allocated/deallocated on media attach/detach. Due to the implementation of this<span style="color: #FFFFFF">_</span>layer, the FS Framework can support multiple disks. The media manager detects and analyzes a media based on its Master Boot Record (MBR). Therefore, it is mandatory for the media to have a MBR for it to work with the FS.</li>
-<li class="Element600">The <strong>Native file system</strong> implements support for the media file system format. Examples of native file systems are: FAT12, FAT32, and MPFS, among other. At present, only the FAT and MPFS files systems are supported by the FS framework; however, more native file systems can be included.</li>
-<li class="Element600">The <strong>Virtual file system (or SYS_FS )</strong> layer<span style="color: #FFFFFF">_</span>provides a file system independent file system operation interface. This layer<span style="color: #FFFFFF">_</span>translates virtual file systems calls to native file system calls. Due to this<span style="color: #FFFFFF">_</span>layer, applications can now support multiple file systems. Interfaces provided by this<span style="color: #FFFFFF">_</span>layer, but not limited to, include:
-<ul class="Element631">
-<li class="Element601">SYS_FS_mount</li>
-<li class="Element601">SYS_FS_open</li>
-<li class="Element601">SYS_FS_read</li>
-<li class="Element601">SYS_FS_write</li>
-<li class="Element601">SYS_FS_close</li>
-</ul></li>
-</ul></div>
+<span style="color: #000000">The Micriµm µC/OS-III source has to be installed in the following location</span> for<span style="color: #000000"> the demonstrations to work.</span> </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="39%">
+<div class="Element66">
+Micrium OS III Source Path&nbsp;</div></td><td class="Element65" valign="top" width="61%">
+<div class="Element66">
+thirdparty_micrium/MicriumOSIII/Software&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00842.html" target="topic">basic</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+<span style="color: #000000">This example application blinks an LED on a starter kit to show the Micrium OS III threads that are running and to indicate status.</span>&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00851.html" target="topic">File System Service Library Help</a> &gt; <a href="00855.html" target="topic">Using the Library</a> &gt; <a href="00841.html" target="topic">Abstraction Model</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00012.html" target="topic">RTOS Applications</a> &gt; <a href="00841.html" target="topic">Micrium OS III Applications</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -93,10 +105,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00855.html" target="topic">Previous</a> | <a href="00855.html" target="topic">Up</a> | <a href="00849.html" target="topic">Next</a></div>
+<a href="00774.html" target="topic">Previous</a> | <a href="00012.html" target="topic">Up</a> | <a href="00842.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS FS Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Micrium OS III Applications Help Topic Title: Micrium OS III Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

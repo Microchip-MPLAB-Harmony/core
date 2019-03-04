@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>nvm_sst26_read_write</title>
+<title>DRV_SPI_TRANSFER_EVENT Enumeration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00680.html" target="topic">Memory Driver Applications</a> &gt; Async &gt; <a href="00682.html" target="topic">nvm_sst26_read_write</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00682.html" target="topic">DRV_SPI_TRANSFER_EVENT Enumeration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00680.html" target="topic">Previous</a> | <a href="00680.html" target="topic">Up</a> | <a href="00683.html" target="topic">Next</a></div>
+<a href="00691.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00689.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: MEMORY Async nvm_sst26_read_write Topic Title: nvm_sst26_read_write)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_TRANSFER_EVENT Topic Title: DRV_SPI_TRANSFER_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-nvm_sst26_read_write</div>
+DRV_SPI_TRANSFER_EVENT Enumeration</div>
 </div>
 </div>
 
@@ -49,62 +49,74 @@ nvm_sst26_read_write</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<span style="color: #000000">This application uses multi instances of the Memory driver to communicate with the NVM and the SST26 QSPI Flash memories in asynchronous mode of operation in both RTOS and Bare-Metal environment.</span>&nbsp;</p>
+SPI Driver Transfer Events&nbsp;</p>
 <p class="Element10">
-<span style="color: #000000">It performs block Erase/Write/Read operations on both the media's.</span>&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">The application consists of five tasks which are called through the SYS_Tasks() routine in Bare-Metal environment and though RTOS thread context in RTOS environment.</span></p>
-<ol class="Element630">
-<li value="1" class="Element600">DRV_MEMORY_0_Tasks() : Manages the state machine of the Memory driver instance 0.</li>
-<li value="2" class="Element600">DRV_MEMORY_1_Tasks() : Manages the state machine of the Memory driver instance 1.</li>
-<li value="3" class="Element600"><span style="color: #000000">APP_SST26_Tasks() : Performs operations on the SST26 QSPI Flash memory.</span></li>
-<li value="4" class="Element600"><span style="color: #000000">APP_NVM_Tasks() : Performs operations on the NVM.</span></li>
-<li value="5" class="Element600"><span style="color: #000000">APP_MONITOR_Tasks(): Monitors the state of above two Tasks.</span></li>
-</ol></div>
+This enumeration identifies the possible events that can result from a transfer add request caused by the client calling either <a href="00680.html" target="topic">DRV_SPI_ReadTransferAdd</a> or <a href="00704.html" target="topic">DRV_SPI_WriteTransferAdd</a> or <a href="00702.html" target="topic">DRV_SPI_WriteReadTransferAdd</a> functions.</p></div>
 </div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000">DRV_SPI_TRANSFER_EVENT_PENDING</span></strong>,
+  <strong><span style="color: #000000">DRV_SPI_TRANSFER_EVENT_COMPLETE</span></strong>,
+  <strong><span style="color: #000000">DRV_SPI_TRANSFER_EVENT_HANDLE_EXPIRED</span></strong>,
+  <strong><span style="color: #000000">DRV_SPI_TRANSFER_EVENT_ERROR</span></strong>,
+  <strong><span style="color: #000000">DRV_SPI_TRANSFER_EVENT_HANDLE_INVALID</span></strong>
+} DRV_SPI_TRANSFER_EVENT;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
+<div class="Element272">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table3">
 <tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00683.html" target="topic">Building The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to build an application using the MPLAB X IDE.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00685.html" target="topic">MPLAB Harmony Configuration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This topic provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00684.html" target="topic">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00686.html" target="topic">Running The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to run the application using the MPLAB X IDE.&nbsp;</div></td></tr></table></div></div>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_SPI_TRANSFER_EVENT_PENDING&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Transfer request is pending&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_SPI_TRANSFER_EVENT_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+All data were transfered successfully.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_SPI_TRANSFER_EVENT_HANDLE_EXPIRED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Transfer Handle given is expired. It means transfer is completed but with or without error is not known. In case of Non-DMA transfer, since there is no possibility of error, it can be assumed same as DRV_SPI_TRANSFER_EVENT_COMPLETE&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_SPI_TRANSFER_EVENT_ERROR&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+There was an error while processing transfer request.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_SPI_TRANSFER_EVENT_HANDLE_INVALID&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Transfer Handle given is invalid&nbsp;</div></td></tr></table></div></div>
 </div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Either DRV_SPI_TRANSFER_EVENT_COMPLETE or DRV_SPI_TRANSFER_EVENT_ERROR is passed in the &quot;event&quot; parameter of the event handling callback function that the client registered with the driver by calling the <a href="00698.html" target="topic">DRV_SPI_TransferEventHandlerSet</a> function when a transfer request is completed.&nbsp;</p>
+<p class="Element10">
+When status polling is used, any one of these events is returned by <a href="00700.html" target="topic">DRV_SPI_TransferStatusGet</a> function.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00680.html" target="topic">Memory Driver Applications</a> &gt; Async &gt; <a href="00682.html" target="topic">nvm_sst26_read_write</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00682.html" target="topic">DRV_SPI_TRANSFER_EVENT Enumeration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -115,10 +127,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00680.html" target="topic">Previous</a> | <a href="00680.html" target="topic">Up</a> | <a href="00683.html" target="topic">Next</a></div>
+<a href="00691.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00689.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: MEMORY Async nvm_sst26_read_write Topic Title: nvm_sst26_read_write)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_TRANSFER_EVENT Topic Title: DRV_SPI_TRANSFER_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

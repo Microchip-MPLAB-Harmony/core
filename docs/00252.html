@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_AT25_Read Function</title>
+<title>SPI Driver Library Help</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00054.html" target="topic">AT25 Driver Library Help</a> &gt; <a href="00055.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00252.html" target="topic">DRV_AT25_Read Function</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00236.html" target="topic">Previous</a> | <a href="00055.html" target="topic">Up</a> | <a href="00259.html" target="topic">Next</a></div>
+<a href="00355.html" target="topic">Previous</a> | <a href="00020.html" target="topic">Up</a> | <a href="00251.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT25_Read@DRV_HANDLE@void *@uint32_t@uint32_t Topic Title: DRV_AT25_Read Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SPI Library Topic Title: SPI Driver Library Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_AT25_Read Function</div>
+SPI Driver Library Help</div>
 </div>
 </div>
 
@@ -46,112 +46,44 @@ DRV_AT25_Read Function</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
-<div class="Element10">
-<p class="Element10">
-This function schedules a non-blocking read operation for the requested number of data bytes from the given address of the EEPROM.&nbsp;</p>
-<p class="Element10">
-The requesting client should call <a href="00258.html" target="topic">DRV_AT25_TransferStatusGet</a> API to know the current status of the request OR the requesting client can register a callback function with the driver to get notified of the status.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_AT25_Read</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00268.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">rxData</span></strong>, 
-    uint32_t <strong><span style="color: #000000">rxDataLength</span></strong>, 
-    uint32_t <strong><span style="color: #000000">address</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-<a href="00250.html" target="topic">DRV_AT25_Open</a> must have been called to obtain a valid opened device handle.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
+<div class="Element212">
 <div class="TableDiv">
-<table cellspacing="0" class="Table3">
+<table cellspacing="0" class="Table0">
 <tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-rxData&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Buffer pointer into which the data read from the DRV_AT25 Flash memory will be placed.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-rxDataLength&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Total number of bytes to be read.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-address&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Memory start address from where the data should be read.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-false</p>
-<ul class="Element630">
-<li class="Element600">if handle is invalid</li>
-<li class="Element600">if the pointer to the receive buffer is NULL or number of bytes to read is 0</li>
-<li class="Element600">if the driver is busy handling another transfer request</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-true</p>
-<ul class="Element630">
-<li class="Element600">if the read request is accepted.</li>
-</ul></div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-<strong><span style="color: #000080">#define</span></strong> BUFFER_SIZE  1024
-<strong><span style="color: #000080">#define</span></strong> MEM_ADDRESS  0x00
-
-uint8_t readBuffer[BUFFER_SIZE];
-
-<i><span style="color: #008000">// myHandle is the handle returned from DRV_AT25_Open API.</span></i>
-<i><span style="color: #008000">// In the below example, the transfer status is polled. However, application can</span></i>
-<i><span style="color: #008000">// register a callback and get notified when the transfer is complete.</span></i>
-
-<strong><span style="color: #000080">if</span></strong> (DRV_AT25_Read(myHandle, readBuffer, BUFFER_SIZE, MEM_ADDRESS) != <strong><span style="color: #000080">true</span></strong>)
-{
-    <i><span style="color: #008000">// Error handling here</span></i>
-}
-<strong><span style="color: #000080">else</span></strong>
-{
-    <i><span style="color: #008000">// Wait for read to be completed</span></i>
-    <strong><span style="color: #000080">while</span></strong>(<a href="00258.html" target="topic">DRV_AT25_TransferStatusGet</a>(myHandle) == DRV_AT25_TRANSFER_STATUS_BUSY);
-}
-</pre></div></div>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00251.html" target="topic">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This driver provides an interface to manage the Serial Peripheral Interface (SPI) module.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00272.html" target="topic">Using the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the basic architecture of the SPI Driver Library and provides information on its use.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00244.html" target="topic">Configuring the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+<span style="color: #000000">This section provides information on how to configure SPI Driver library.</span>&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00242.html" target="topic">Building the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+<span style="color: #000000">This section provides information on how the SPI Driver Library can be built.</span>&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00253.html" target="topic">Library Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the API functions of the SPI Driver library.<br>Refer to each section for a detailed description.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -159,21 +91,21 @@ uint8_t readBuffer[BUFFER_SIZE];
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00054.html" target="topic">AT25 Driver Library Help</a> &gt; <a href="00055.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00252.html" target="topic">DRV_AT25_Read Function</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00236.html" target="topic">Previous</a> | <a href="00055.html" target="topic">Up</a> | <a href="00259.html" target="topic">Next</a></div>
+<a href="00355.html" target="topic">Previous</a> | <a href="00020.html" target="topic">Up</a> | <a href="00251.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT25_Read@DRV_HANDLE@void *@uint32_t@uint32_t Topic Title: DRV_AT25_Read Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SPI Library Topic Title: SPI Driver Library Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

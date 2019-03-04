@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SDSPI_EventHandlerSet Function</title>
+<title>DRV_I2S_Open Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00134.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00135.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00479.html" target="topic">DRV_SDSPI_EventHandlerSet Function</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00124.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00125.html" target="topic">Library Interface</a> &gt; b) Client Setup Functions &gt; <a href="00479.html" target="topic">DRV_I2S_Open Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00466.html" target="topic">Previous</a> | <a href="00135.html" target="topic">Up</a> | <a href="00487.html" target="topic">Next</a></div>
+<a href="00491.html" target="topic">Previous</a> | <a href="00125.html" target="topic">Up</a> | <a href="00452.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDSPI_EventHandlerSet@DRV_HANDLE@void *@uintptr_t Topic Title: DRV_SDSPI_EventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_I2S_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SDSPI_EventHandlerSet Function</div>
+DRV_I2S_Open Function</div>
 </div>
 </div>
 
@@ -49,25 +49,22 @@ DRV_SDSPI_EventHandlerSet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function allows a client to identify an event handling function for the driver to call back when queued operation has completed. When a client queues a request for a read or a write operation, it is provided with a handle identifying the buffer that was added to the driver's buffer queue. The driver will pass this handle back to the client by calling &quot;eventHandler&quot; function when the queued operation has completed.&nbsp;</p>
+This routine opens the specified I2S driver instance and provides a handle that must be provided to all other client-level operations to identify the caller and the instance of the driver. The ioIntent parameter defines how the client interacts with this driver instance.&nbsp;</p>
 <p class="Element10">
-The event handler should be set before the client performs any read or write operations that could generate events. The event handler once set, persists until the client closes the driver or sets another event handler (which could be a &quot;NULL&quot; pointer to indicate no callback).</p></div>
+Specifying a DRV_IO_INTENT_EXCLUSIVE will cause the driver to provide exclusive access to this client. The driver cannot be opened by any other client.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_SDSPI_EventHandlerSet</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00268.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">eventHandler</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> uintptr_t <strong><span style="color: #000000">context</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">DRV_I2S_Open</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01418.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="00502.html" target="topic">DRV_IO_INTENT</a> <strong><span style="color: #000000">ioIntent</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="00481.html" target="topic">DRV_SDSPI_Initialize</a> routine must have been called for the specified SDSPI driver instance.&nbsp;</p>
-<p class="Element10">
-The <a href="00484.html" target="topic">DRV_SDSPI_Open</a> routine must have been called to obtain a valid opened device handle.</p></div>
+Function <a href="00475.html" target="topic">DRV_I2S_Initialize</a> must have been called before calling this function.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -75,7 +72,7 @@ Parameters</div>
 <div class="Element10">
 <div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table3">
+<table cellspacing="0" class="Table2">
 <tr>
 <td class="Element300" valign="top" width="35%">
 <div class="Element301">
@@ -84,19 +81,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open function<br>&nbsp;</div></td></tr><tr>
+Identifier for the object instance to be opened<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-eventHandler&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+intent&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to the event handler function implemented by the user<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-The value of parameter will be passed back to the client unchanged, when the eventHandler function is called. It can be used to identify any client specific data object that identifies the instance of the client module (for example, it may be a pointer to the client module's state structure).&nbsp;</div></td></tr></table></div></div>
+Zero or more of the values from the enumeration <a href="00502.html" target="topic">DRV_IO_INTENT</a> &quot;ORed&quot; together to indicate the intended useof the driver. See function description for details.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -104,42 +96,59 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+If successful, the routine returns a valid open-instance handle (a number identifying both the caller and the module instance).&nbsp;</p>
+<p class="Element10">
+If an error occurs, the return value is <a href="00418.html" target="topic">DRV_HANDLE_INVALID</a>. Error can occur</p>
+<ul class="Element630">
+<li class="Element600">if the number of client objects allocated via DRV_I2S_CLIENTS_NUMBER is insufficient.</li>
+<li class="Element600">if the client is trying to open the driver but driver has been opened exclusively by another client.</li>
+<li class="Element600">if the driver peripheral instance being opened is not initialized or is invalid.</li>
+<li class="Element600">if the client is trying to open the driver exclusively, but has already been opened in a non exclusive mode by another client.</li>
+<li class="Element600">if the driver is not ready to be opened, typically when the initialize routine has not completed execution.</li>
+</ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If the client does not want to be notified when the queued operation has completed, it does not need to register a callback. This API may not be used in applications using the SDSPI Driver in synchronous mode.</p></div>
+The handle returned is valid until the <a href="00452.html" target="topic">DRV_I2S_Close</a> routine is called. This routine will NEVER block waiting for hardware. If the requested intent flags are not supported, the routine will return <a href="00418.html" target="topic">DRV_HANDLE_INVALID</a>. This function is thread safe in a RTOS application.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-None.</p></div>
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="00417.html" target="topic">DRV_HANDLE</a> handle;
+
+handle = DRV_I2S_Open(DRV_I2S_INDEX_0, DRV_IO_INTENT_EXCLUSIVE);
+<strong><span style="color: #000080">if</span></strong> (<a href="00418.html" target="topic">DRV_HANDLE_INVALID</a> == handle)
+{
+    <i><span style="color: #008000">// Unable to open the driver</span></i>
+    <i><span style="color: #008000">// May be the driver is not initialized or the initialization</span></i>
+    <i><span style="color: #008000">// is not complete.</span></i>
+}</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00134.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00135.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00479.html" target="topic">DRV_SDSPI_EventHandlerSet Function</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00124.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00125.html" target="topic">Library Interface</a> &gt; b) Client Setup Functions &gt; <a href="00479.html" target="topic">DRV_I2S_Open Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00466.html" target="topic">Previous</a> | <a href="00135.html" target="topic">Up</a> | <a href="00487.html" target="topic">Next</a></div>
+<a href="00491.html" target="topic">Previous</a> | <a href="00125.html" target="topic">Up</a> | <a href="00452.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDSPI_EventHandlerSet@DRV_HANDLE@void *@uintptr_t Topic Title: DRV_SDSPI_EventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_I2S_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

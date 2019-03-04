@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_CONSOLE_Read Function</title>
+<title>Library Interface</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00815.html" target="topic">Console System Service Library Help</a> &gt; <a href="00816.html" target="topic">Library Interface</a> &gt; b) Core Functions &gt; <a href="00968.html" target="topic">SYS_CONSOLE_Read Function</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00967.html" target="topic">Interrupt System Service Library Help</a> &gt; <a href="00968.html" target="topic">Library Interface</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00971.html" target="topic">Previous</a> | <a href="00816.html" target="topic">Up</a> | <a href="00972.html" target="topic">Next</a></div>
+<a href="00966.html" target="topic">Previous</a> | <a href="00967.html" target="topic">Up</a> | <a href="01374.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_Read@SYS_MODULE_INDEX@int@void*@size_t Topic Title: SYS_CONSOLE_Read Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS INT Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_CONSOLE_Read Function</div>
+Library Interface</div>
 </div>
 </div>
 
@@ -49,83 +49,143 @@ SYS_CONSOLE_Read Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function reads the data from the console device.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100">ssize_t <strong><span style="color: #000000">SYS_CONSOLE_Read</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01322.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
-    <strong><span style="color: #000080">int</span></strong> <strong><span style="color: #000000">fd</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">buf</span></strong>, 
-    size_t <strong><span style="color: #000000">count</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
+This section describes the APIs of the Interrupt System Service Library.&nbsp;</p>
 <p class="Element10">
-The <a href="00965.html" target="topic">SYS_CONSOLE_Initialize</a> function should have been called before calling this function.</p></div>
+Refer to each section for a detailed description.</p></div>
 </div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
+<a name="612920476C6F62616C20496E74657272757074204D616E6167656D656E742046756E6374696F6E73"></a><div class="Element14">
+a) Global Interrupt Management Functions</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element312">
+<div class="Element212">
 <div class="TableDiv">
-<table cellspacing="0" class="Table3">
+<table cellspacing="0" class="Table0">
 <tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Console instance index&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-fd&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-I/O stream handle. Maintained for backward compatibility. NULL value can be passed as a parameter.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-buf&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Buffer to hold the read data.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-count&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Number of bytes to read.&nbsp;</div></td></tr></table></div></div>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01374.html" target="topic">SYS_INT_Disable</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Disable Global Interrupt&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01375.html" target="topic">SYS_INT_Enable</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Enable Global Interrupt&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01376.html" target="topic">SYS_INT_IsEnabled</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Returns the interrupt controller's global enable/disable status.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01377.html" target="topic">SYS_INT_Restore</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Restores the interrupt controller to the state specificed in the parameter.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01381.html" target="topic">SYS_INT_SourceRestore</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Restores an interrupt vector to the state specified in the parameter.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
+<a name="622920496E7465727275707420536F75726365204D616E6167656D656E742046756E6374696F6E73"></a><div class="Element14">
+b) Interrupt Source Management Functions</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The requested number of bytes to read is returned back if the request is accepted successfully. In case of error, the returned value is less than the requested number of bytes to read.</p></div>
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01378.html" target="topic">SYS_INT_SourceDisable</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Disables the specified interrupt source.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01379.html" target="topic">SYS_INT_SourceEnable</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Enables the specified interrupt source.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01380.html" target="topic">SYS_INT_SourceIsEnabled</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Gets the enable/disable status of the specified interrupt source.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01383.html" target="topic">SYS_INT_SourceStatusGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Gets the pending status of the specified interrupt source.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01384.html" target="topic">SYS_INT_SourceStatusSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Sets the pending status of the specified interrupt source manually.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01382.html" target="topic">SYS_INT_SourceStatusClear</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Clears the pending status of the specified interrupt source.&nbsp;</div></td></tr></table></div></div>
 </div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
+</div>
+<a name="6329204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
+c) Data Types and Constants</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-None.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">ssize_t nr;
-<strong><span style="color: #000080">char</span></strong> myBuffer[MY_BUFFER_SIZE];
-nr = SYS_CONSOLE_Read( <a href="00961.html" target="topic">SYS_CONSOLE_INDEX_0</a>, 0, myBuffer, MY_BUFFER_SIZE );
-<strong><span style="color: #000080">if</span></strong> (nr != MY_BUFFER_SIZE)
-{
-    <i><span style="color: #008000">// handle error</span></i>
-}</pre></div></div>
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00822.html" target="topic">INT_SOURCE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Defines the data type for all the interrupt sources associated with the interrupt controller of the device.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -133,21 +193,21 @@ nr = SYS_CONSOLE_Read( <a href="00961.html" target="topic">SYS_CONSOLE_INDEX_0</
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00815.html" target="topic">Console System Service Library Help</a> &gt; <a href="00816.html" target="topic">Library Interface</a> &gt; b) Core Functions &gt; <a href="00968.html" target="topic">SYS_CONSOLE_Read Function</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00967.html" target="topic">Interrupt System Service Library Help</a> &gt; <a href="00968.html" target="topic">Library Interface</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00971.html" target="topic">Previous</a> | <a href="00816.html" target="topic">Up</a> | <a href="00972.html" target="topic">Next</a></div>
+<a href="00966.html" target="topic">Previous</a> | <a href="00967.html" target="topic">Up</a> | <a href="01374.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_Read@SYS_MODULE_INDEX@int@void*@size_t Topic Title: SYS_CONSOLE_Read Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS INT Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

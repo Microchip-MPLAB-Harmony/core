@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Using the Library</title>
+<title>AT25 Driver Applications</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00040.html" target="topic">AT24 Driver Library Help</a> &gt; <a href="00043.html" target="topic">Using the Library</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00247.html" target="topic">SPI EEPROM Driver Applications</a> &gt; <a href="00043.html" target="topic">AT25 Driver Applications</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00039.html" target="topic">Previous</a> | <a href="00040.html" target="topic">Up</a> | <a href="00030.html" target="topic">Next</a></div>
+<a href="00247.html" target="topic">Previous</a> | <a href="00247.html" target="topic">Up</a> | <a href="00042.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT24 Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT25 Applications Help Topic Title: AT25 Driver Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Using the Library</div>
+AT25 Driver Applications</div>
 </div>
 </div>
 
@@ -49,13 +49,7 @@ Using the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The AT24 library provides non-blocking APIs to read and write to external AT24 EEPROM. It uses the <span style="color: #000000">I<sup>2</sup>C</span> (or TWIHS) peripheral library to interface with the AT24 EEPROM.</p>
-<ul class="Element630">
-<li class="Element600">The library provides APIs to perform reads/writes from/to any EEPROM memory address, with number of bytes spanning multiple pages</li>
-<li class="Element600">The library provides API to perform page write to EEPROM. Here, the memory start address must be aligned to the EEPROM page boundary</li>
-<li class="Element600">Application can either register a callback to get notified once the data transfer is complete or can poll the status of the data transfer</li>
-<li class="Element600">The library can be used in both bare-metal and RTOS environments</li>
-</ul></div>
+This section provides help for the AT25 driver applications.</p></div>
 </div>
 <a name="546F70696373"></a><div class="Element14">
 Topics</div>
@@ -72,14 +66,9 @@ Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00030.html" target="topic">Abstraction Model</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00042.html" target="topic">at25_eeprom_read_write</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This library provides an abstraction of the AT24 Driver library.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00038.html" target="topic">How the Library Works</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes the basic architecture of the AT24 Driver Library and provides information on how the library works.&nbsp;</div></td></tr></table></div></div>
+<span style="color: #000000">This example application shows how to use the AT25 driver to perform read and write operations on AT25 series of EEPROM.</span>&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -87,21 +76,21 @@ This section describes the basic architecture of the AT24 Driver Library and pro
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00040.html" target="topic">AT24 Driver Library Help</a> &gt; <a href="00043.html" target="topic">Using the Library</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00247.html" target="topic">SPI EEPROM Driver Applications</a> &gt; <a href="00043.html" target="topic">AT25 Driver Applications</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00039.html" target="topic">Previous</a> | <a href="00040.html" target="topic">Up</a> | <a href="00030.html" target="topic">Next</a></div>
+<a href="00247.html" target="topic">Previous</a> | <a href="00247.html" target="topic">Up</a> | <a href="00042.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT24 Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT25 Applications Help Topic Title: AT25 Driver Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

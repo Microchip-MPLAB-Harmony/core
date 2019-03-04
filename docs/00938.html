@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_CMD_PRINT Function</title>
+<title>Configuring the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00804.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00805.html" target="topic">Library Interface</a> &gt; a) System Interaction Functions &gt; <a href="00938.html" target="topic">SYS_CMD_PRINT Function</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00942.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00938.html" target="topic">Configuring the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00935.html" target="topic">Previous</a> | <a href="00805.html" target="topic">Up</a> | <a href="00943.html" target="topic">Next</a></div>
+<a href="00940.html" target="topic">Previous</a> | <a href="00942.html" target="topic">Up</a> | <a href="00936.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CMD_PRINT@char *@... Topic Title: SYS_CMD_PRINT Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS DEBUG Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_CMD_PRINT Function</div>
+Configuring the Library</div>
 </div>
 </div>
 
@@ -49,55 +49,71 @@ SYS_CMD_PRINT Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function outputs a printout to the Command Processor System Service console.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">SYS_CMD_PRINT</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong> * <strong><span style="color: #000000">format</span></strong>, 
-    ...
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
+The Debug System Service library should be configured through the MHC. The following figure shows the MHC configuration window and a brief description of various configuration options.&nbsp;</p>
 <p class="Element10">
-<a href="00932.html" target="topic">SYS_CMD_Initialize</a> was successfully run once.</p></div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
+In MHC, the Debug System Service configuration options are available under the Console System Service component. </p><p class="Element10" style="text-align: center;">
+<img src="sys_debug_configuration.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+Configuration Options:</div>
+
+<ul class="Element630">
+<li class="Element600"><strong>Device Used:</strong>
+<ul class="Element631">
+<li class="Element601">Indicates the hardware UART Peripheral Library instance used by the Console System Service</li>
+</ul></li>
+<li class="Element600"><strong>Transmit Buffer Queue Size (1-128):</strong>
+<ul class="Element631">
+<li class="Element601">Indicates the maximum number of data transmit requests that can be queued</li>
+</ul></li>
+<li class="Element600"><strong>Receive Buffer Queue Size (1-128):</strong>
+<ul class="Element631">
+<li class="Element601">Indicates the maximum number of data reception requests that can be queued</li>
+</ul></li>
+<li class="Element600"><strong>Enable Debug?:</strong>
+<ul class="Element631">
+<li class="Element601">Enable Debug System Service</li>
+<li class="Element601"><strong>Debug Level:</strong>
+<ul class="Element632">
+<li class="Element602">Indicates the global error level set during initialization. Application can change the global error level during runtime using an API</li>
+</ul></li>
+<li class="Element601"><strong>Debug Print Buffer Size (128-8192):</strong>
+<ul class="Element632">
+<li class="Element602">Indicates the size of the print buffer in bytes</li>
+</ul></li>
+<li class="Element601"><strong>Use Console for Debug:</strong>
+<ul class="Element632">
+<li class="Element602">Check this option to map the debug macros to debug implementation. Un-checking this option maps the debug macros to nothing</li>
+</ul></li>
+</ul></li>
+<li class="Element600"><strong>Enable Command Processor:</strong>
+<ul class="Element631">
+<li class="Element601">Enable Command Processor System Service. Refer the Command Processor System Service for more information on configuring the Command Processor System Service</li>
+</ul></li>
+</ul></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00804.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00805.html" target="topic">Library Interface</a> &gt; a) System Interaction Functions &gt; <a href="00938.html" target="topic">SYS_CMD_PRINT Function</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00942.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00938.html" target="topic">Configuring the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00935.html" target="topic">Previous</a> | <a href="00805.html" target="topic">Up</a> | <a href="00943.html" target="topic">Next</a></div>
+<a href="00940.html" target="topic">Previous</a> | <a href="00942.html" target="topic">Up</a> | <a href="00936.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CMD_PRINT@char *@... Topic Title: SYS_CMD_PRINT Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS DEBUG Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

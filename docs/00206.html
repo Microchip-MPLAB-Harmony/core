@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USART Driver Library Help</title>
+<title>Configuring the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00206.html" target="topic">USART Driver Library Help</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00212.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00206.html" target="topic">Configuring the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00519.html" target="topic">Previous</a> | <a href="00125.html" target="topic">Up</a> | <a href="00205.html" target="topic">Next</a></div>
+<a href="00210.html" target="topic">Previous</a> | <a href="00212.html" target="topic">Up</a> | <a href="00205.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USART Library Topic Title: USART Driver Library Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDSPI Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USART Driver Library Help</div>
+Configuring the Library</div>
 </div>
 </div>
 
@@ -46,57 +46,105 @@ USART Driver Library Help</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
+<a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00205.html" target="topic">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This library provides an interface to manage the data transfer operations using the USART module.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00209.html" target="topic">Using the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This topic describes the basic architecture of the USART driver library and provides information on how to use it.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00199.html" target="topic">Configuring the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This Section provides information on how to configure the USART Driver library.</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00198.html" target="topic">Building the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information <span style="color: #000000">on how the USART driver library can be built.</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00207.html" target="topic">Library Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes the Application Programming Interface (API) functions of the USART Driver Library.<br>Refer to each section for a detailed description.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00203.html" target="topic">Files</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This section will list only the library's interface header file(s).</span>&nbsp;</div></td></tr></table></div></div>
-</div>
+<p class="Element10">
+<span style="color: #000000">The SDSPI driver library should be configured through the MHC. The following figures show the MHC configuration window for the SDHC driver and brief description.</span>&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="drv_sdspi_sync_fs_mhc_config.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<strong>Synchronous Mode with File-System</strong>&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="drv_sdspi_sync_mhc_config.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<strong>Synchronous Mode without File-System</strong></p><p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+Common User Configuration for all Instances</div>
+
+<ul class="Element630">
+<li class="Element600"><span style="color: #000000"><strong>Driver Mode:</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Allows User to select the mode of driver(Asynchronous or Synchronous).This setting is common for all the instances</span></li>
+<li class="Element601"><span style="color: #000000">Only Synchronous mode is supported for now</span></li>
+</ul></li>
+</ul><p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+Instance Specific User Configurations</div>
+
+<ul class="Element630">
+<li class="Element600"><span style="color: #000000"><strong>PLIB Used:</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Indicates the SPI peripheral instance used by the SDSPI driver</span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>Number of Clients:</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Indicates the number of clients to the given SDSPI driver instance</span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>SD Card Speed (Hz):</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">The maximum SPI speed at which the SDSPI driver interacts with the SD Card</span></li>
+<li class="Element601"><span style="color: #000000">SDSPI driver overrides the SPI PLIB clock speed settings</span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>File System For SDSPI Driver Enabled:</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Indicates whether SDSPI driver will register its services with the file system or not</span></li>
+<li class="Element601"><span style="color: #000000">This option is automatically checked when the file system is connected to the SDSPI driver</span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>Chip Select Pin:</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">The SD Card chip select pin</span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>Use Write Protect Pin (Active High)?</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Enable write protection check. The selected write protect pin must be configured as GPIO input under the Pin Settings window</span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>Use DMA for Transmit and Receive?:</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Enable/disable SDSPI driver to use DMA</span></li>
+<li class="Element601"><span style="color: #000000"><strong>DMA Channel For Transmit:</strong></span>
+<ul class="Element632">
+<li class="Element602"><span style="color: #000000">Indicates the DMA channel the SDSPI driver will use for transmission</span></li>
+</ul></li>
+<li class="Element601"><span style="color: #000000"><strong>DMA Channel For Receive:</strong></span>
+<ul class="Element632">
+<li class="Element602"><span style="color: #000000">Indicates the DMA channel the SDSPI driver will use for reception</span></li>
+</ul></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>RTOS Settings:</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000"><strong>Stack Size:</strong></span>
+<ul class="Element632">
+<li class="Element602"><span style="color: #000000">The stack size of the SDSPI RTOS thread</span></li>
+</ul></li>
+<li class="Element601"><span style="color: #000000"><strong>Task Priority:</strong></span>
+<ul class="Element632">
+<li class="Element602"><span style="color: #000000">The priority of the SDSPI RTOS thread</span></li>
+</ul></li>
+<li class="Element601"><span style="color: #000000"><strong>Use Task Delay?:</strong></span>
+<ul class="Element632">
+<li class="Element602"><span style="color: #000000">Indicates whether the Task Delay is used to yield the SDSPI RTOS thread</span></li>
+</ul></li>
+<li class="Element601"><span style="color: #000000"><strong>Task Delay (ms):</strong></span>
+<ul class="Element632">
+<li class="Element602"><span style="color: #000000">Indicates the amount of time for which the SDSPI RTOS thread is put in blocked state by the scheduler before it is run again</span></li>
+<li class="Element602"><span style="color: #000000">This inturn controls the rate at which the SDSPI driver checks for the SD Card attach/detach status</span></li>
+</ul></li>
+</ul></li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000"><strong>Note: </strong>The Time System Service is used by the SDSPI driver to maintain the SD Card protocol timings, and hence must be enabled.</span></p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00125.html" target="topic">Driver Libraries Help</a> &gt; <a href="00206.html" target="topic">USART Driver Library Help</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00212.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00206.html" target="topic">Configuring the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -107,10 +155,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00519.html" target="topic">Previous</a> | <a href="00125.html" target="topic">Up</a> | <a href="00205.html" target="topic">Next</a></div>
+<a href="00210.html" target="topic">Previous</a> | <a href="00212.html" target="topic">Up</a> | <a href="00205.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USART Library Topic Title: USART Driver Library Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDSPI Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_DEBUG_PRINT Macro</title>
+<title>Library Interface</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00829.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00830.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00982.html" target="topic">SYS_DEBUG_PRINT Macro</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00981.html" target="topic">Time System Service Library Help</a> &gt; <a href="00982.html" target="topic">Library Interface</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00973.html" target="topic">Previous</a> | <a href="00830.html" target="topic">Up</a> | <a href="00002.html" target="topic">Next</a></div>
+<a href="00975.html" target="topic">Previous</a> | <a href="00981.html" target="topic">Up</a> | <a href="01468.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_DEBUG_PRINT Topic Title: SYS_DEBUG_PRINT Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS TIME Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_DEBUG_PRINT Macro</div>
+Library Interface</div>
 </div>
 </div>
 
@@ -49,84 +49,366 @@ SYS_DEBUG_PRINT Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Macro: SYS_DEBUG_PRINT( <a href="01035.html" target="topic">SYS_ERROR_LEVEL</a> level, const char* format, ... )&nbsp;</p>
+This section describes the API functions of the Time System Service library.&nbsp;</p>
 <p class="Element10">
-This macro formats and prints an error message if the system error level is defined at or lower than the level specified.</p></div>
+Refer to each section for a detailed description.</p></div>
 </div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">SYS_DEBUG_PRINT</span></strong>(level, fmt, ...) </pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
+<a name="61292053797374656D2046756E6374696F6E73"></a><div class="Element14">
+a) System Functions</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-If mapped to the <a href="00983.html" target="topic">SYS_DEBUG_Print</a> function, then the system debug service must be initialized and running.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
+<div class="Element212">
 <div class="TableDiv">
-<table cellspacing="0" class="Table3">
+<table cellspacing="0" class="Table0">
 <tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-level&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-The current error level threshold for displaying the message.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-format&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to a buffer containing the format string for the message to be displayed.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-...&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Zero or more optional parameters to be formated as defined by the format string.&nbsp;</div></td></tr></table></div></div>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01468.html" target="topic">SYS_TIME_Initialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Initializes the System Time module.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01489.html" target="topic">SYS_TIME_Status</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Returns System Time status.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01460.html" target="topic">SYS_TIME_Deinitialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Deinitializes the specific module instance of the SYS TIMER module&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
+<a name="62292054696D65722046756E6374696F6E73"></a><div class="Element14">
+b) Timer Functions</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-None.</p></div>
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01491.html" target="topic">SYS_TIME_TimerCreate</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Creates and initializes a new 32-bit software timer instance.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01492.html" target="topic">SYS_TIME_TimerDestroy</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Destroys/deallocates a software timer instance.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01495.html" target="topic">SYS_TIME_TimerStart</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Starts a software timer running.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01496.html" target="topic">SYS_TIME_TimerStop</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Stops a running software timer.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01490.html" target="topic">SYS_TIME_TimerCounterGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Gets the elapsed counter value of a software timer.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01493.html" target="topic">SYS_TIME_TimerPeriodHasExpired</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Reports whether or not the current period of a software timer has expired.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01494.html" target="topic">SYS_TIME_TimerReload</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Reloads (or reinitializes) the software timer instance.&nbsp;</div></td></tr></table></div></div>
 </div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
+</div>
+<a name="63292043616C6C6261636B20616E642044656C61792046756E6374696F6E73"></a><div class="Element14">
+c) Callback and Delay Functions</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The format string and arguments follow the printf convention.&nbsp;</p>
-<p class="Element10">
-By default, this macro is defined as nothing, effectively removing all code generated by calls to it. To process SYS_DEBUG_PRINT calls, this macro must be defined in a way that maps calls to it to the desired implementation (see example, above).&nbsp;</p>
-<p class="Element10">
-This macro can be mapped to the system console service (along with other system debug macros) by defining SYS_DEBUG_USE_CONSOLE in the system configuration (configuration.h) instead of defining it individually.</p></div>
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01453.html" target="topic">SYS_TIME_CallbackRegisterMS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Registers a function with the time system service to be called back when the requested number of milliseconds has expired (either once or repeatedly).&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01454.html" target="topic">SYS_TIME_CallbackRegisterUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Registers a function with the time system service to be called back when the requested number of microseconds have expired (either once or repeatedly).&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01462.html" target="topic">SYS_TIME_DelayMS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function is used to generate a delay of a given number of milliseconds.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01463.html" target="topic">SYS_TIME_DelayUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function is used to generate a delay of a given number of microseconds.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01461.html" target="topic">SYS_TIME_DelayIsComplete</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Determines if the given delay timer has completed.&nbsp;</div></td></tr></table></div></div>
 </div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
+</div>
+<a name="642920436F756E74657220616E6420436F6E76657273696F6E2046756E6374696F6E73"></a><div class="Element14">
+d) Counter and Conversion Functions</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// In configuration.h file: #define SYS_DEBUG_USE_CONSOLE</span></i>
-<i><span style="color: #008000">// In sys_debug.h: #define SYS_DEBUG_PRINT(level, fmt, ...) _SYS_DEBUG_PRINT(level, fmt, ##__VA_ARGS__)</span></i>
-
-<i><span style="color: #008000">// In source code</span></i>
-<strong><span style="color: #000080">int</span></strong> result;
-
-result = SomeOperation();
-<strong><span style="color: #000080">if</span></strong> (result &gt; MAX_VALUE)
-{
-    SYS_DEBUG_PRINT(SYS_ERROR_WARNING, &quot;Result of %d exceeds max valuern&quot;, result);
-    <i><span style="color: #008000">// Take appropriate action</span></i>
-}</pre></div></div>
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01455.html" target="topic">SYS_TIME_Counter64Get</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Get the common 64-bit system counter value.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01456.html" target="topic">SYS_TIME_CounterGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Get the common 32-bit system counter value.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01457.html" target="topic">SYS_TIME_CounterSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Sets the common 32-bit system counter value.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01458.html" target="topic">SYS_TIME_CountToMS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Converts a counter value to time interval in milliseconds.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01459.html" target="topic">SYS_TIME_CountToUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Converts a counter value to time interval in microseconds.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01469.html" target="topic">SYS_TIME_MSToCount</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Convert the given time interval in milliseconds to an equivalent counter value.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01497.html" target="topic">SYS_TIME_USToCount</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Convert the given time interval in microseconds to an equivalent counter value.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01464.html" target="topic">SYS_TIME_FrequencyGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Gets the frequency at which the hardwaer timer counts.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="6529204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
+e) Data Types and Constants</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00007.html" target="topic">_SYS_TIME_INIT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+TIME system service Initialization Data Declaration&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01467.html" target="topic">SYS_TIME_INIT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Defines the data required to initialize the TIME system service&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01449.html" target="topic">SYS_TIME_CALLBACK</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Pointer to a time system service callback function.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01450.html" target="topic">SYS_TIME_CALLBACK_TYPE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Identifies the type of callback requested (single or periodic).&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01486.html" target="topic">SYS_TIME_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Result of a time service client interface operation.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01466.html" target="topic">SYS_TIME_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Invalid handle value to a software timer instance.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01465.html" target="topic">SYS_TIME_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Handle to a software timer instance.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01470.html" target="topic">SYS_TIME_PLIB_CALLBACK</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+TIME PLIB API Set needed by the system service&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01471.html" target="topic">SYS_TIME_PLIB_CALLBACK_REGISTER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type SYS_TIME_PLIB_CALLBACK_REGISTER.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01472.html" target="topic">SYS_TIME_PLIB_COMPARE_SET</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type SYS_TIME_PLIB_COMPARE_SET.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01473.html" target="topic">SYS_TIME_PLIB_COUNTER_GET</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type SYS_TIME_PLIB_COUNTER_GET.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01474.html" target="topic">SYS_TIME_PLIB_FREQUENCY_GET</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type SYS_TIME_PLIB_FREQUENCY_GET.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01475.html" target="topic">SYS_TIME_PLIB_INTERFACE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type SYS_TIME_PLIB_INTERFACE.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01483.html" target="topic">SYS_TIME_PLIB_PERIOD_SET</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type SYS_TIME_PLIB_PERIOD_SET.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01484.html" target="topic">SYS_TIME_PLIB_START</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type SYS_TIME_PLIB_START.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01485.html" target="topic">SYS_TIME_PLIB_STOP</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type SYS_TIME_PLIB_STOP.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -134,21 +416,21 @@ result = SomeOperation();
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="00829.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00830.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00982.html" target="topic">SYS_DEBUG_PRINT Macro</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00981.html" target="topic">Time System Service Library Help</a> &gt; <a href="00982.html" target="topic">Library Interface</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00973.html" target="topic">Previous</a> | <a href="00830.html" target="topic">Up</a> | <a href="00002.html" target="topic">Next</a></div>
+<a href="00975.html" target="topic">Previous</a> | <a href="00981.html" target="topic">Up</a> | <a href="01468.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_DEBUG_PRINT Topic Title: SYS_DEBUG_PRINT Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS TIME Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Building the Application</title>
+<title>DRV_USART_ReadBufferAdd Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00749.html" target="topic">SDSPI Driver Applications</a> &gt; Sync &gt; <a href="00751.html" target="topic">sdspi_read_write</a> &gt; <a href="00752.html" target="topic">Building the Application</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00314.html" target="topic">USART Driver Library Help</a> &gt; <a href="00315.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00752.html" target="topic">DRV_USART_ReadBufferAdd Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00751.html" target="topic">Previous</a> | <a href="00751.html" target="topic">Up</a> | <a href="00754.html" target="topic">Next</a></div>
+<a href="00751.html" target="topic">Previous</a> | <a href="00315.html" target="topic">Up</a> | <a href="00757.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SDSPI Driver Sync sdspi_read_write Building the Application Topic Title: Building the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_ReadBufferAdd@DRV_HANDLE@void*@size_t@DRV_USART_BUFFER_HANDLE* const Topic Title: DRV_USART_ReadBufferAdd Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Building the Application</div>
+DRV_USART_ReadBufferAdd Function</div>
 </div>
 </div>
 
@@ -49,37 +49,107 @@ Building the Application</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The parent folder for all the MPLAB X projects for this application is given below: </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table4">
-<tr>
-<td class="Element65" valign="top" width="23%">
-<div class="Element66">
-Application Path&nbsp;</div></td><td class="Element65" valign="top" width="77%">
-<div class="Element66">
-core/apps/driver/sdspi/sync/sdspi_read_write/firmware&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
+This function schedules a non-blocking read operation. The function returns with a valid buffer handle in the bufferHandle argument if the read request was scheduled successfully. The function adds the request to the hardware instance receive queue and returns immediately. While the request is in the queue, the application buffer is owned by the driver and should not be modified. The function returns <a href="00741.html" target="topic">DRV_USART_BUFFER_HANDLE_INVALID</a> in the bufferHandle argument:</p>
+<ul class="Element630">
+<li class="Element600">if a buffer could not be allocated to the request because the queue is full</li>
+<li class="Element600">if the input buffer handle is NULL</li>
+<li class="Element600">if the input buffer pointer is NULL</li>
+<li class="Element600">if the buffer size (number of bytes to read) is 0</li>
+<li class="Element600">if the driver handle is invalid</li>
+</ul><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-<span style="color: #000000">To build the application, refer to the following table and open the appropriate project file in </span>the <span style="color: #000000">MPLAB X IDE.</span> </p><div class="Element63">
+If the requesting client registered an event callback with the driver, the driver will issue a DRV_USART_BUFFER_EVENT_COMPLETE event if the buffer was processed successfully of DRV_USART_BUFFER_EVENT_ERROR event if the buffer was not processed successfully.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_USART_ReadBufferAdd</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">buffer</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> size_t <strong><span style="color: #000000">size</span></strong>, 
+    <a href="00740.html" target="topic">DRV_USART_BUFFER_HANDLE</a>* <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">bufferHandle</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+<a href="00750.html" target="topic">DRV_USART_Open</a> must have been called to obtain a valid opened device handle.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table4">
+<table cellspacing="0" class="Table2">
 <tr>
-<td class="Element65" valign="top" width="35%">
-<div class="Element66">
-Project Name&nbsp;</div></td><td class="Element65" valign="top" width="65%">
-<div class="Element66">
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="35%">
-<div class="Element68">
-sam_c21n_xpro_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="65%">
-<div class="Element68">
-SAM C21N Xplained Pro Evaluation Kit + FreeRTOS&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="35%">
-<div class="Element68">
-sam_e70_xult_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="65%">
-<div class="Element68">
-SAM E70 Xplained Ultra Evaluation Kit + FreeRTOS&nbsp;</div></td></tr></table></div></div>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Handle of the communication channel as returned by the <a href="00750.html" target="topic">DRV_USART_Open</a> function.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+buffer&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Buffer where the received data will be stored.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+size&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Buffer size in bytes.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+bufferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to an argument that will contain the return buffer handle.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The buffer handle is returned in the bufferHandle argument. This is <a href="00741.html" target="topic">DRV_USART_BUFFER_HANDLE_INVALID</a> if the request was not successful.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function is thread safe in a RTOS application. It can be called from within the USART Driver Buffer Event Handler that is registered by the client. It should not be called in the event handler associated with another USART driver instance. It should not be called directly in an ISR.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">
+MY_APP_OBJ myAppObj;
+uint8_t mybuffer[MY_BUFFER_SIZE];
+<a href="00740.html" target="topic">DRV_USART_BUFFER_HANDLE</a> bufferHandle;
+
+<i><span style="color: #008000">// myUSARTHandle is the handle returned</span></i>
+<i><span style="color: #008000">// by the DRV_USART_Open function.</span></i>
+
+DRV_USART_ReadBufferAdd(
+    myUSARThandle,
+    myBuffer,
+    MY_BUFFER_SIZE,
+    &amp;bufferHandle
+);
+
+<strong><span style="color: #000080">if</span></strong>(bufferHandle == <a href="00741.html" target="topic">DRV_USART_BUFFER_HANDLE_INVALID</a>)
+{
+    <i><span style="color: #008000">// Error handling here</span></i>
+}
+
+<i><span style="color: #008000">// Event is received when the buffer is processed.</span></i></pre></div></div>
 </div>
 </div>
 </div>
@@ -87,21 +157,21 @@ SAM E70 Xplained Ultra Evaluation Kit + FreeRTOS&nbsp;</div></td></tr></table></
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00749.html" target="topic">SDSPI Driver Applications</a> &gt; Sync &gt; <a href="00751.html" target="topic">sdspi_read_write</a> &gt; <a href="00752.html" target="topic">Building the Application</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00314.html" target="topic">USART Driver Library Help</a> &gt; <a href="00315.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00752.html" target="topic">DRV_USART_ReadBufferAdd Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00751.html" target="topic">Previous</a> | <a href="00751.html" target="topic">Up</a> | <a href="00754.html" target="topic">Next</a></div>
+<a href="00751.html" target="topic">Previous</a> | <a href="00315.html" target="topic">Up</a> | <a href="00757.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SDSPI Driver Sync sdspi_read_write Building the Application Topic Title: Building the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_ReadBufferAdd@DRV_HANDLE@void*@size_t@DRV_USART_BUFFER_HANDLE* const Topic Title: DRV_USART_ReadBufferAdd Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

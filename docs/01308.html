@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_MEDIA_PROPERTY Enumeration</title>
+<title>SYS_FS_MEDIA_GEOMETRY Type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="01586.html" target="topic">System Services Libraries Overview</a> &gt; <a href="01582.html" target="topic">Library Interface</a> &gt; Media System &gt; <a href="01308.html" target="topic">SYS_MEDIA_PROPERTY Enumeration</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01308.html" target="topic">SYS_FS_MEDIA_GEOMETRY Type</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01299.html" target="topic">Previous</a> | <a href="01582.html" target="topic">Up</a> | <a href="01314.html" target="topic">Next</a></div>
+<a href="01294.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01309.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_MEDIA_PROPERTY Topic Title: SYS_MEDIA_PROPERTY Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_MEDIA_GEOMETRY Topic Title: SYS_FS_MEDIA_GEOMETRY Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_MEDIA_PROPERTY Enumeration</div>
+SYS_FS_MEDIA_GEOMETRY Type</div>
 </div>
 </div>
 
@@ -49,86 +49,40 @@ SYS_MEDIA_PROPERTY Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS Media Property Structure&nbsp;</p>
+SYS FS Media Device Geometry&nbsp;</p>
 <p class="Element10">
-This structure contains the information of property of a media device.</p></div>
+This structure contains all the geometrical information of a media device. the structure also has property of the media like media is one time programmable (OTP) or Read Only etc.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">SYS_MEDIA_SUPPORTS_BYTE_WRITES</span></strong> = 0x01,
-  <strong><span style="color: #000000">SYS_MEDIA_SUPPORTS_READ_ONLY</span></strong> = 0x02,
-  <strong><span style="color: #000000">SYS_MEDIA_SUPPORTS_ONE_TIME_PROGRAMING</span></strong> = 0x04,
-  <strong><span style="color: #000000">SYS_MEDIA_READ_IS_BLOCKING</span></strong> = 0x08,
-  <strong><span style="color: #000000">SYS_MEDIA_WRITE_IS_BLOCKING</span></strong> = 0x10
-} SYS_MEDIA_PROPERTY;</pre></div></div>
-<a name="4D656D62657273"></a><div class="Element14">
-Members</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element272">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element260" valign="top" width="35%">
-<div class="Element261">
-Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
-<div class="Element265">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_MEDIA_SUPPORTS_BYTE_WRITES = 0x01&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Media supports Byte Write&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_MEDIA_SUPPORTS_READ_ONLY = 0x02&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Media supports only Read operation&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_MEDIA_SUPPORTS_ONE_TIME_PROGRAMING = 0x04&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Media supports OTP (One Time Programming)&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_MEDIA_READ_IS_BLOCKING = 0x08&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Read in blocking&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_MEDIA_WRITE_IS_BLOCKING = 0x10&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Write is blocking&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <a href="01396.html" target="topic">SYS_MEDIA_GEOMETRY</a> <strong><span style="color: #000000">SYS_FS_MEDIA_GEOMETRY</span></strong>;</pre></div></div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-For a device, if multiple properties are applicable, they can be ORed together and used.</p></div>
+A memory device can have multiple erase block regions. Sum of all the regions is the total memory size of the device.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01585.html" target="topic">System Service Libraries Help</a> &gt; <a href="01586.html" target="topic">System Services Libraries Overview</a> &gt; <a href="01582.html" target="topic">Library Interface</a> &gt; Media System &gt; <a href="01308.html" target="topic">SYS_MEDIA_PROPERTY Enumeration</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01308.html" target="topic">SYS_FS_MEDIA_GEOMETRY Type</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01299.html" target="topic">Previous</a> | <a href="01582.html" target="topic">Up</a> | <a href="01314.html" target="topic">Next</a></div>
+<a href="01294.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01309.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_MEDIA_PROPERTY Topic Title: SYS_MEDIA_PROPERTY Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_MEDIA_GEOMETRY Topic Title: SYS_FS_MEDIA_GEOMETRY Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_I2S_BufferCompletedBytesGet Function</title>
+<title>Hardware Setup</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00088.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00089.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00299.html" target="topic">DRV_I2S_BufferCompletedBytesGet Function</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00295.html" target="topic">USART Driver Applications</a> &gt; Async &gt; <a href="00297.html" target="topic">usart_echo</a> &gt; <a href="00299.html" target="topic">Hardware Setup</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00301.html" target="topic">Previous</a> | <a href="00089.html" target="topic">Up</a> | <a href="00310.html" target="topic">Next</a></div>
+<a href="00300.html" target="topic">Previous</a> | <a href="00297.html" target="topic">Up</a> | <a href="00301.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_BufferCompletedBytesGet@DRV_I2S_BUFFER_HANDLE Topic Title: DRV_I2S_BufferCompletedBytesGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USART Async usart_echo Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_I2S_BufferCompletedBytesGet Function</div>
+Hardware Setup</div>
 </div>
 </div>
 
@@ -48,135 +48,144 @@ DRV_I2S_BufferCompletedBytesGet Function</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The client can use this function, in a case where the buffer is terminated due to an error, to obtain the number of bytes that have been processed. Or in any other use case. This function can be used for non-DMA buffer transfers only. It cannot be used when the I2S driver is configured to use DMA.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100">size_t <strong><span style="color: #000000">DRV_I2S_BufferCompletedBytesGet</span></strong>(
-    <a href="00297.html" target="topic">DRV_I2S_BUFFER_HANDLE</a> <strong><span style="color: #000000">bufferHandle</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-<a href="00326.html" target="topic">DRV_I2S_Open</a> must have been called to obtain a valid opened device handle.&nbsp;</p>
-<p class="Element10">
-Either the <a href="00331.html" target="topic">DRV_I2S_ReadBufferAdd</a> or <a href="00337.html" target="topic">DRV_I2S_WriteBufferAdd</a> function must have been called and a valid buffer handle returned.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
-<div class="TableDiv">
-<table cellspacing="0" class="Table3">
-<tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-bufferhandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Handle for the buffer of which the processed number of bytes to be obtained.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-Returns the number of bytes that have been processed for this buffer.&nbsp;</p>
-<p class="Element10">
-Returns <a href="00298.html" target="topic">DRV_I2S_BUFFER_HANDLE_INVALID</a> for an invalid or an expired buffer handle.</p></div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-This function is expected to work in non-DMA mode only. This function is thread safe when used in a RTOS application. If called from the callback, it must not call an OSAL mutex or critical section.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// myAppObj is an application specific object.</span></i>
-MY_APP_OBJ myAppObj;
 
-uint8_t mybuffer[MY_BUFFER_SIZE];
-<a href="00297.html" target="topic">DRV_I2S_BUFFER_HANDLE</a> bufferHandle;
+<ol class="Element630">
+<li value="1" class="Element600"><strong>Project pic32mz_das_sk.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used:</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/DM320010-C');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit (Crypto)</a></li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup:</strong>
+<ul class="Element632">
+<li class="Element602">Connect a micro USB cable to the USART-USB port J5</li>
+<li class="Element602">For programming, connect a micro USB cable to the USB Debug port J19</li>
+</ul></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
 
-<i><span style="color: #008000">// myI2SHandle is the handle returned</span></i>
-<i><span style="color: #008000">// by the DRV_I2S_Open function.</span></i>
+<ol class="Element630">
+<li value="2" class="Element600"><strong>Project pic32mz_ef_sk.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used:</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/Dm320007');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit</a></li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup:</strong>
+<ul class="Element632">
+<li class="Element602">Connect a mini USB cable to the USART-USB port J11</li>
+<li class="Element602">For programming, connect a mini USB cable to the USB Debug port J3</li>
+</ul></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
 
-<i><span style="color: #008000">// Client registers an event handler with driver. This is done once</span></i>
+<ol class="Element630">
+<li value="3" class="Element600"><strong>Project sam_c21n_xpro.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used:</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsamc21n-xpro');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM C21N Xplained Pro Evaluation Kit</a></li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup:</strong>
+<ul class="Element632">
+<li class="Element602">Connect a micro USB cable to the DEBUG port</li>
+</ul></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
 
-<a href="00300.html" target="topic">DRV_I2S_BufferEventHandlerSet</a>( myI2SHandle, APP_I2SBufferEventHandle,
-                                 (uintptr_t)&amp;myAppObj );
+<ol class="Element630">
+<li value="4" class="Element600"><strong>Project sam_e54_xpro.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used:</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsame54-xpro');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM E54 Xplained Pro Evaluation Kit</a></li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup:</strong>
+<ul class="Element632">
+<li class="Element602">Connect a micro USB cable to the DEBUG port</li>
+</ul></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
 
-<a href="00331.html" target="topic">DRV_I2S_ReadBufferAdd</a>( myI2Shandle, myBuffer, MY_BUFFER_SIZE,
-    bufferHandle);
+<ol class="Element630">
+<li value="5" class="Element600"><strong>Project sam_e70_xult.X.</strong></li>
+<li value="6" class="Element600"><strong>Project sam_e70_xult_freertos.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used:</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM320113');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM E70 Xplained Ultra Evaluation Kit</a></li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup:</strong>
+<ul class="Element632">
+<li class="Element602">Connect a micro USB cable to the DEBUG port</li>
+</ul></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
 
-<strong><span style="color: #000080">if</span></strong>(<a href="00298.html" target="topic">DRV_I2S_BUFFER_HANDLE_INVALID</a> == bufferHandle)
-{
-    <i><span style="color: #008000">// Error handling here</span></i>
-}
+<ol class="Element630">
+<li value="7" class="Element600"><strong>Project sam_v71_xult.X.</strong></li>
+<li value="8" class="Element600"><strong>Project sam_v71_xult_freertos.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used:</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsamv71-xult');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM V71 Xplained Ultra Evaluation Kit</a></li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup:</strong>
+<ul class="Element632">
+<li class="Element602">Connect a micro USB cable to the DEBUG port</li>
+</ul></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
 
-<i><span style="color: #008000">// Event Processing Technique. Event is received when</span></i>
-<i><span style="color: #008000">// the buffer is processed.</span></i>
-
-<strong><span style="color: #000080">void</span></strong> APP_I2SBufferEventHandler( <a href="00292.html" target="topic">DRV_I2S_BUFFER_EVENT</a> event,
-        <a href="00297.html" target="topic">DRV_I2S_BUFFER_HANDLE</a> bufferHandle, uintptr_t contextHandle )
-{
-    <i><span style="color: #008000">// The context handle was set to an application specific</span></i>
-    <i><span style="color: #008000">// object. It is now retrievable easily in the event handler.</span></i>
-    MY_APP_OBJ myAppObj = (MY_APP_OBJ *) contextHandle;
-    size_t processedBytes;
-
-    <strong><span style="color: #000080">switch</span></strong>(event)
-    {
-        <strong><span style="color: #000080">case</span></strong> DRV_I2S_BUFFER_EVENT_COMPLETE:
-            <i><span style="color: #008000">// This means the data was transferred.</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> DRV_I2S_BUFFER_EVENT_ERROR:
-            <i><span style="color: #008000">// Error handling here.</span></i>
-            <i><span style="color: #008000">// We can find out how many bytes have been processed in this</span></i>
-            <i><span style="color: #008000">// buffer request prior to the error.</span></i>
-            processedBytes= DRV_I2S_BufferCompletedBytesGet(bufferHandle);
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-}</pre></div></div>
-</div>
+<ol class="Element630">
+<li value="9" class="Element600"><strong>Project sam_a5d2_xult.IAR</strong></li>
+<li value="10" class="Element600"><strong>Project sam_a5d2_xult_freertos.IAR</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('http://www.microchip.com/DevelopmentTools/ProductDetails/ATSAMA5D2C-XULT');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM A5D2 Xplained Ultra board</a></li>
+<li class="Element602">SD Card with FAT32 file system</li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup</strong>
+<ul class="Element632">
+<li class="Element602">Setup the SD card
+<ul class="Element633">
+<li class="Element603">Download harmony MPU bootstrap loader from this <a href="#" onclick="openExternalLink('http://github.com/Microchip-MPLAB-Harmony/at91bootstrap/blob/master/boot.bin');"><img src="indicator_external_link.gif" border="0" alt="" title="">location</a></li>
+<li class="Element603">Copy the downloaded boot loader binary( boot.bin) and generated application binary (harmony.bin)into the SD card</li>
+<li class="Element603">Insert the SD card into the SDMMC1 slot on the board</li>
+</ul></li>
+<li class="Element602">Short jumper JP2(DEBUG_DIS)</li>
+<li class="Element602">Connect the Debug USB port on the board to the computer using a micro USB cable</li>
+</ul></li>
+</ul></li>
+</ol></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00088.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00089.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00299.html" target="topic">DRV_I2S_BufferCompletedBytesGet Function</a></div>
+<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00010.html" target="topic">Driver Applications</a> &gt; <a href="00295.html" target="topic">USART Driver Applications</a> &gt; Async &gt; <a href="00297.html" target="topic">usart_echo</a> &gt; <a href="00299.html" target="topic">Hardware Setup</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00301.html" target="topic">Previous</a> | <a href="00089.html" target="topic">Up</a> | <a href="00310.html" target="topic">Next</a></div>
+<a href="00300.html" target="topic">Previous</a> | <a href="00297.html" target="topic">Up</a> | <a href="00301.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_BufferCompletedBytesGet@DRV_I2S_BUFFER_HANDLE Topic Title: DRV_I2S_BufferCompletedBytesGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USART Async usart_echo Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

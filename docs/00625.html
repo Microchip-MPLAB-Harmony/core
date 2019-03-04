@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>help_osal.h</title>
+<title>DRV_SDMMC_GeometryGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00688.html" target="topic">OSAL Library Help</a> &gt; <a href="00695.html" target="topic">Files</a> &gt; <a href="00625.html" target="topic">help_osal.h</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00197.html" target="topic">SDMMC Driver Library</a> &gt; <a href="00198.html" target="topic">Library Interface</a> &gt; d) Status Functions &gt; <a href="00625.html" target="topic">DRV_SDMMC_GeometryGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00709.html" target="topic">Previous</a> | <a href="00695.html" target="topic">Up</a> | <a href="00011.html" target="topic">Next</a></div>
+<a href="00619.html" target="topic">Previous</a> | <a href="00198.html" target="topic">Up</a> | <a href="00627.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: help_osal.h Topic Title: help_osal.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDMMC_GeometryGet@DRV_HANDLE Topic Title: DRV_SDMMC_GeometryGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-help_osal.h</div>
+DRV_SDMMC_GeometryGet Function</div>
 </div>
 </div>
 
@@ -46,230 +46,84 @@ help_osal.h</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="436F6D70616E79"></a><div class="Element11">
+<a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Microchip Technology Inc.</p></div>
+This API gives the following geometrical details of the SD Card.</p>
+<ul class="Element630">
+<li class="Element600">Media Property</li>
+<li class="Element600">Number of Read/Write/Erase regions in the SD Card</li>
+<li class="Element600">Number of Blocks and their size in each region of the device</li>
+</ul></div>
 </div>
-<a name="46696C65204E616D65"></a><div class="Element14">
-File Name</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01396.html" target="topic">SYS_MEDIA_GEOMETRY</a>* <strong><span style="color: #000000">DRV_SDMMC_GeometryGet</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="00709.html" target="topic">osal.h</a></p></div>
+The <a href="00626.html" target="topic">DRV_SDMMC_Initialize</a> routine must have been called for the specified SDMMC driver instance.&nbsp;</p>
+<p class="Element10">
+The <a href="00629.html" target="topic">DRV_SDMMC_Open</a> routine must have been called to obtain a valid opened device handle.</p></div>
 </div>
-<a name="4465736372697074696F6E"></a><div class="Element14">
-Description</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-Operating System Abstraction Layer&nbsp;</p>
-<p class="Element10">
-This file defines the common interface to the Operating System Abstraction Layer. It defines the common types used by the OSAL and defines the function prototypes. Depending upon the OSAL mode, a support level specific implementation file is included by this file to give the required level of compatibility. The available support levels include, OSAL_USE_NONE, OSAL_USE_BASIC, and OSAL_USE_RTOS.</p></div>
-</div>
-<a name="456E756D65726174696F6E73"></a><div class="Element14">
-Enumerations</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
+<div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table2">
 <tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_enum.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00712.html" target="topic">OSAL_CRIT_TYPE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enumerated type representing the possible types of critical section.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_enum.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00724.html" target="topic">OSAL_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enumerated type representing the general return value from OSAL functions.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_enum.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00735.html" target="topic">OSAL_SEM_TYPE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enumerated type representing the possible types of semaphore.&nbsp;</div></td></tr></table></div></div>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A valid open-instance handle, returned from the driver's open function&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
-<a name="46756E6374696F6E73"></a><div class="Element14">
-Functions</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00710.html" target="topic">OSAL_CRIT_Enter</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enters a critical section with the specified severity level.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00711.html" target="topic">OSAL_CRIT_Leave</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Leaves a critical section with the specified severity level.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00715.html" target="topic">OSAL_Free</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Deallocates a block of memory and return to the default pool.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00716.html" target="topic">OSAL_Initialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Performs OSAL initialization.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00717.html" target="topic">OSAL_Malloc</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Allocates memory using the OSAL default allocator.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00718.html" target="topic">OSAL_MUTEX_Create</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Creates a mutex.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00720.html" target="topic">OSAL_MUTEX_Delete</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Deletes a mutex.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00721.html" target="topic">OSAL_MUTEX_Lock</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Locks a mutex.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00722.html" target="topic">OSAL_MUTEX_Unlock</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Unlocks a mutex.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00723.html" target="topic">OSAL_Name</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Obtains the name of the underlying RTOS.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00728.html" target="topic">OSAL_SEM_Create</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Creates an OSAL Semaphore.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00730.html" target="topic">OSAL_SEM_Delete</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Deletes an OSAL Semaphore.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00731.html" target="topic">OSAL_SEM_GetCount</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the current value of a counting semaphore.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00732.html" target="topic">OSAL_SEM_Pend</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Waits on a semaphore. Returns true if the semaphore was obtained within the time limit.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00733.html" target="topic">OSAL_SEM_Post</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Posts a semaphore or increments a counting semaphore.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00734.html" target="topic">OSAL_SEM_PostISR</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Posts a semaphore or increments a counting semaphore from within an Interrupt Service Routine (ISR).&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+<a href="01396.html" target="topic">SYS_MEDIA_GEOMETRY</a> - Pointer to structure which holds the media geometry information.</p></div>
 </div>
-</div>
-<a name="4D6163726F73"></a><div class="Element14">
-Macros</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00000.html" target="topic">_OSAL_H</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro _OSAL_H.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00719.html" target="topic">OSAL_MUTEX_DECLARE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Declares an OSAL mutex.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00729.html" target="topic">OSAL_SEM_DECLARE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Declares an OSAL semaphore.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">
+<a href="01396.html" target="topic">SYS_MEDIA_GEOMETRY</a>* SDMMCGeometry;
+uint32_t readBlockSize, writeBlockSize, eraseBlockSize;
+uint32_t nReadBlocks, nReadRegions, totalSize;
+
+SDMMCGeometry = DRV_SDMMC_GeometryGet(SDMMCOpenHandle1);
+
+readBlockSize  = SDMMCGeometry-&gt;geometryTable-&gt;blockSize;
+nReadBlocks = SDMMCGeometry-&gt;geometryTable-&gt;numBlocks;
+nReadRegions = SDMMCGeometry-&gt;numReadRegions;
+
+writeBlockSize  = (SDMMCGeometry-&gt;geometryTable +1)-&gt;blockSize;
+eraseBlockSize  = (SDMMCGeometry-&gt;geometryTable +2)-&gt;blockSize;
+
+totalSize = readBlockSize * nReadBlocks * nReadRegions;
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -277,21 +131,21 @@ Declares an OSAL semaphore.&nbsp;</div></td></tr></table></div></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00688.html" target="topic">OSAL Library Help</a> &gt; <a href="00695.html" target="topic">Files</a> &gt; <a href="00625.html" target="topic">help_osal.h</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00197.html" target="topic">SDMMC Driver Library</a> &gt; <a href="00198.html" target="topic">Library Interface</a> &gt; d) Status Functions &gt; <a href="00625.html" target="topic">DRV_SDMMC_GeometryGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00709.html" target="topic">Previous</a> | <a href="00695.html" target="topic">Up</a> | <a href="00011.html" target="topic">Next</a></div>
+<a href="00619.html" target="topic">Previous</a> | <a href="00198.html" target="topic">Up</a> | <a href="00627.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: help_osal.h Topic Title: help_osal.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDMMC_GeometryGet@DRV_HANDLE Topic Title: DRV_SDMMC_GeometryGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

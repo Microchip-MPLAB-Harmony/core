@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Files</title>
+<title>Abstraction Model</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00027.html" target="topic">Driver Library Overview</a> &gt; <a href="00060.html" target="topic">Files</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00250.html" target="topic">SPI Flash Driver Libraries Help</a> &gt; <a href="00070.html" target="topic">AT25DF Driver Library Help</a> &gt; <a href="00073.html" target="topic">Using the Library</a> &gt; <a href="00060.html" target="topic">Abstraction Model</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00345.html" target="topic">Previous</a> | <a href="00027.html" target="topic">Up</a> | <a href="00028.html" target="topic">Next</a></div>
+<a href="00073.html" target="topic">Previous</a> | <a href="00073.html" target="topic">Up</a> | <a href="00068.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Files Topic Title: Files)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT25DF Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Files</div>
+Abstraction Model</div>
 </div>
 </div>
 
@@ -48,48 +48,40 @@ Files</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-</div>
-</div>
-<a name="46696C6573"></a><div class="Element14">
-Files</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00028.html" target="topic">driver.h</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Driver layer data types and definitions.&nbsp;</div></td></tr></table></div></div>
-</div>
+<p class="Element10">
+The AT25DF library interface provides read, write and erase functions that abstract out the internal workings of the AT25DF driver and the underlying SPI protocol. The AT25DF library supports a single instance of the AT25DF Flash and a single client.&nbsp;</p>
+<p class="Element10">
+The client can be:</p>
+<ul class="Element630">
+<li class="Element600">Application - Directly access the AT25DF Flash using the APIs provided by the AT25DF library</li>
+<li class="Element600">Memory Driver - Application can run a file system on the AT25DF Flash by connecting it to the Memory Driver which can further be connected to the File System Service</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="drv_at25df_abstraction_model.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<strong>AT25DF Driver Block Diagram</strong></p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00096.html" target="topic">Driver Libraries Help</a> &gt; <a href="00027.html" target="topic">Driver Library Overview</a> &gt; <a href="00060.html" target="topic">Files</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00250.html" target="topic">SPI Flash Driver Libraries Help</a> &gt; <a href="00070.html" target="topic">AT25DF Driver Library Help</a> &gt; <a href="00073.html" target="topic">Using the Library</a> &gt; <a href="00060.html" target="topic">Abstraction Model</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00345.html" target="topic">Previous</a> | <a href="00027.html" target="topic">Up</a> | <a href="00028.html" target="topic">Next</a></div>
+<a href="00073.html" target="topic">Previous</a> | <a href="00073.html" target="topic">Up</a> | <a href="00068.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV COMMON Files Topic Title: Files)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT25DF Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

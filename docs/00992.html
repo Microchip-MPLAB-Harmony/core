@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_CurrentDriveGet Function</title>
+<title>SYS_CACHE_DisableDCache Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00851.html" target="topic">File System Service Library Help</a> &gt; <a href="00852.html" target="topic">Library Interface</a> &gt; b) General Operation Functions &gt; <a href="00992.html" target="topic">SYS_FS_CurrentDriveGet Function</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00908.html" target="topic">Cache System Service Library Help</a> &gt; <a href="00909.html" target="topic">Library Interface</a> &gt; <a href="00992.html" target="topic">SYS_CACHE_DisableDCache Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01223.html" target="topic">Previous</a> | <a href="00852.html" target="topic">Up</a> | <a href="00993.html" target="topic">Next</a></div>
+<a href="00991.html" target="topic">Previous</a> | <a href="00909.html" target="topic">Up</a> | <a href="00993.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_CurrentDriveGet@char* Topic Title: SYS_FS_CurrentDriveGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CACHE_DisableDCache Topic Title: SYS_CACHE_DisableDCache Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_CurrentDriveGet Function</div>
+SYS_CACHE_DisableDCache Function</div>
 </div>
 </div>
 
@@ -49,46 +49,24 @@ SYS_FS_CurrentDriveGet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function gets the present drive being used. The drive information is populated in the buffer.</p></div>
+Turns off Data Cache.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01207.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_CurrentDriveGet</span></strong>(
-    <strong><span style="color: #000080">char</span></strong>* <strong><span style="color: #000000">buffer</span></strong>
-);</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">SYS_CACHE_DisableDCache</span></strong>();</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The disk has to be mounted.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
-<div class="TableDiv">
-<table cellspacing="0" class="Table3">
-<tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-buffer&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to buffer which will hold the name of present drive being used.&nbsp;</div></td></tr></table></div></div>
-</div>
+None.</p></div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
 Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS_FS_RES_SUCCESS - Current drive get operation was successful. SYS_FS_RES_FAILURE - Current drive get operation was unsucessful. The reason for the failure can be retrieved with <a href="01007.html" target="topic">SYS_FS_Error</a>.</p></div>
+None.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -101,14 +79,9 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01207.html" target="topic">SYS_FS_RESULT</a> res;
-  <strong><span style="color: #000080">char</span></strong> buffer[255];
-
-  res = SYS_FS_CurrentDriveGet(buffer);
-  <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
-  {
-      <i><span style="color: #008000">// Operation failed.</span></i>
-  }</pre></div></div>
+<div class="Element13"><div class="Element12"><pre class="Element12">
+SYS_CACHE_DisableDCache();
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -116,7 +89,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01351.html" target="topic">System Service Libraries Help</a> &gt; <a href="00851.html" target="topic">File System Service Library Help</a> &gt; <a href="00852.html" target="topic">Library Interface</a> &gt; b) General Operation Functions &gt; <a href="00992.html" target="topic">SYS_FS_CurrentDriveGet Function</a></div>
+<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00908.html" target="topic">Cache System Service Library Help</a> &gt; <a href="00909.html" target="topic">Library Interface</a> &gt; <a href="00992.html" target="topic">SYS_CACHE_DisableDCache Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -127,10 +100,10 @@ MPLAB Harmony Help Template</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01223.html" target="topic">Previous</a> | <a href="00852.html" target="topic">Up</a> | <a href="00993.html" target="topic">Next</a></div>
+<a href="00991.html" target="topic">Previous</a> | <a href="00909.html" target="topic">Up</a> | <a href="00993.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_CurrentDriveGet@char* Topic Title: SYS_FS_CurrentDriveGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CACHE_DisableDCache Topic Title: SYS_CACHE_DisableDCache Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

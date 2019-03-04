@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Running The Application</title>
+<title>DRV_MX25L_ResetFlash Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,23 +18,23 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00584.html" target="topic">File System Applications</a> &gt; <a href="00585.html" target="topic">nvm_fat</a> &gt; <a href="00600.html" target="topic">Running The Application</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00178.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00600.html" target="topic">DRV_MX25L_ResetFlash Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element1">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00598.html" target="topic">Previous</a> | <a href="00585.html" target="topic">Up</a> | <a href="00586.html" target="topic">Next</a></div>
+<a href="00599.html" target="topic">Previous</a> | <a href="00178.html" target="topic">Up</a> | <a href="00601.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS nvm_fat Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MX25L_ResetFlash Topic Title: DRV_MX25L_ResetFlash Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Running The Application</div>
+DRV_MX25L_ResetFlash Function</div>
 </div>
 </div>
 
@@ -48,48 +48,71 @@ Running The Application</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-
-<ol class="Element630">
-<li value="1" class="Element600">Connect a micro USB cable to the DEBUG port.</li>
-<li value="2" class="Element600">Build and Program the application using the MPLAB X IDE.</li>
-<li value="3" class="Element600">The LED is turned ON when the File &quot;<span style="color: #000000"><strong>FILE.TXT</strong></span>&quot; has the app data <span style="color: #000000"><strong>&quot;Hello World&quot;</span> </strong>written in it</li>
-</ol><p class="Element10">
+<p class="Element10">
+This function schedules a blocking operation for resetting the flash device to standby mode. All the volatile bits and settings will be cleared then, which makes the device return to the default status as power on.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_MX25L_ResetFlash</span></strong>();</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The <a href="00596.html" target="topic">DRV_MX25L_Open</a>() routine must have been called for the specified MX25L driver instance.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+false</p>
+<ul class="Element630">
+<li class="Element600">if Reset-Enable or Reset flash command itself fails</li>
+</ul><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-The following table provides the LED name: </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table4">
-<tr>
-<td class="Element65" valign="top" width="85%">
-<div class="Element66">
-Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="15%">
-<div class="Element66">
-LED Name&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="85%">
-<div class="Element68">
-SAM C21N Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
-<div class="Element68">
-LED 0&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="85%">
-<div class="Element68">
-SAM D20 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
-<div class="Element68">
-LED 0&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="85%">
-<div class="Element68">
-SAM D21 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
-<div class="Element68">
-LED 0&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="85%">
-<div class="Element68">
-SAM E70 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
-<div class="Element68">
-LED 1&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="85%">
-<div class="Element68">
-SAM V71 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
-<div class="Element68">
-LED 0&nbsp;</div></td></tr></table></div></div>
+true</p>
+<ul class="Element630">
+<li class="Element600">if the reset is successfully completed</li>
+</ul></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This routine will block wait for request to complete.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">if</span></strong>(<strong><span style="color: #000080">true</span></strong> != DRV_MX25L_ResetFlash())
+{
+    <i><span style="color: #008000">// Error handling here</span></i>
+}
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -97,21 +120,21 @@ LED 0&nbsp;</div></td></tr></table></div></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00584.html" target="topic">File System Applications</a> &gt; <a href="00585.html" target="topic">nvm_fat</a> &gt; <a href="00600.html" target="topic">Running The Application</a></div>
+<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00178.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00600.html" target="topic">DRV_MX25L_ResetFlash Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
 <div class="Element3">
-MPLAB Harmony 3 Core Help</div>
+MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00096.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00598.html" target="topic">Previous</a> | <a href="00585.html" target="topic">Up</a> | <a href="00586.html" target="topic">Next</a></div>
+<a href="00599.html" target="topic">Previous</a> | <a href="00178.html" target="topic">Up</a> | <a href="00601.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS nvm_fat Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MX25L_ResetFlash Topic Title: DRV_MX25L_ResetFlash Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
