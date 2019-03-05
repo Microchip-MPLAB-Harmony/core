@@ -64,6 +64,9 @@ extern "C" {
 #define LED_OFF()       LED1_Off()
 #define LED_TOGGLE()    LED1_Toggle()
 
+#define SWITCH_GET()    SWITCH_Get()
+#define SWITCH_PRESSED  SWITCH_STATE_PRESSED
+
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }

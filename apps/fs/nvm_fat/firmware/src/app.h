@@ -89,8 +89,11 @@ extern "C" {
 
 typedef enum
 {
+    /* The app waits for Switch press */
+    APP_SWITCH_PRESS_WAIT = 0,
+
     /* The app mounts the disk */
-    APP_MOUNT_DISK = 0,
+    APP_MOUNT_DISK,
 
     /* The app opens the file */
     APP_OPEN_FILE,

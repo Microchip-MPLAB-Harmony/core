@@ -154,7 +154,7 @@ void APP_Initialize ( void )
 {
     /* Initialize the app state to wait for
      * media attach. */
-    appData.state = APP_MOUNT_DISK;
+    appData.state = APP_SWITCH_PRESS_WAIT;
 }
 
 
@@ -172,6 +172,14 @@ void APP_Tasks ( void )
     /* Check the application's current state. */
     switch ( appData.state )
     {
+        case APP_SWITCH_PRESS_WAIT:
+        {
+            if (SWITCH_GET() == SWITCH_PRESSED)
+            {
+                appData.state = APP_MOUNT_DISK;
+            }
+            break;
+        }
         case APP_MOUNT_DISK:
         {
             if(SYS_FS_Mount(APP_DEVICE_NAME, APP_MOUNT_NAME, APP_FS_TYPE, 0, NULL) != 0)

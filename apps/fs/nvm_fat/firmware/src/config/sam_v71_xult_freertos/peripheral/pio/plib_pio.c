@@ -56,6 +56,8 @@
 */
 void PIO_Initialize ( void )
 {
+    /* Selected System IO pins are configured as GPIO */
+    MATRIX_REGS->CCFG_SYSIO |= 0x1000;
 
     /************************ PIO A Initialization ************************/
     /* PORTA Pull Up Enable/Disable as per MHC selection */
