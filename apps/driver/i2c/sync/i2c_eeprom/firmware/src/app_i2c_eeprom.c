@@ -121,8 +121,7 @@ void APP_I2C_EEPROM_Initialize ( void )
     /* Place the App state machine in its initial state. */
     appData.state = APP_I2C_EEPROM_STATE_INIT;
 
-    LED_OFF();
-    
+    LED_OFF();    
 }
 
 
@@ -136,8 +135,6 @@ void APP_I2C_EEPROM_Initialize ( void )
 
 void APP_I2C_EEPROM_Tasks ( void )
 {
-    static bool isSuccess = false;
-
     /* Check the application's current state. */
     switch(appData.state)
     {
@@ -164,7 +161,7 @@ void APP_I2C_EEPROM_Tasks ( void )
             /* Write data to EEPROM */
             if (DRV_I2C_WriteTransfer( appData.drvI2CHandle, APP_EEPROM_AT24MAC402_SLAVE_ADDR, (void *)appData.txBuffer, (1+APP_EEPROM_TEST_STRING_SIZE)) == true)
             {
-                /* Poll EEPROM busy status. EEPROM will NAK while write is in progress*/
+                /* Poll EEPROM busy status. EEPROM will NAK while internal write is in progress*/
                 while (DRV_I2C_WriteTransfer( appData.drvI2CHandle, APP_EEPROM_AT24MAC402_SLAVE_ADDR, (void *)&appData.dummyData, 1 ) == false);
                 appData.state = APP_I2C_EEPROM_STATE_READ;
             }
@@ -190,8 +187,7 @@ void APP_I2C_EEPROM_Tasks ( void )
             /* Compare the read data with the written data */
             if (memcmp(appData.rxBuffer, &appData.txBuffer[1], APP_EEPROM_TEST_STRING_SIZE) == 0)
             {
-                isSuccess = true;
-                appData.state = APP_I2C_EEPROM_STATE_IDLE;
+                appData.state = APP_I2C_EEPROM_STATE_SUCCESS;
             }
             else
             {
@@ -200,21 +196,17 @@ void APP_I2C_EEPROM_Tasks ( void )
             DRV_I2C_Close(appData.drvI2CHandle);
             break;
 
+        case APP_I2C_EEPROM_STATE_SUCCESS:
+            LED_ON();
+            appData.state = APP_I2C_EEPROM_STATE_IDLE;
+            break;
+            
         case APP_I2C_EEPROM_STATE_ERROR:
-            isSuccess = false;
+            LED_OFF();
             appData.state = APP_I2C_EEPROM_STATE_IDLE;
             break;
 
-        case APP_I2C_EEPROM_STATE_IDLE:
-            if (isSuccess == true)
-            {
-                LED_ON();
-            }
-            else
-            {
-                LED_OFF();
-            }
-            
+        case APP_I2C_EEPROM_STATE_IDLE:            
             vTaskSuspend(NULL);
             break;
     }
