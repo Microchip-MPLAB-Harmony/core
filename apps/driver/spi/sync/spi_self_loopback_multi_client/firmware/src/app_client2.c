@@ -59,7 +59,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-/* Make sure the size of the loop-back string is smaller than the buffer size 
+/* Make sure the size of the loop-back string is smaller than the buffer size
  * defined in app_client2.h file
  */
 #define APP_CLIENT2_STR                 "APP-Task2-Loopback-String"
@@ -83,7 +83,7 @@
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_CLIENT2_DATA app_client2Data;
+static APP_CLIENT2_DATA app_client2Data;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -101,11 +101,6 @@ bool APP_CLIENT2_GetStatus(void)
 // Section: Application Local Functions
 // *****************************************************************************
 // *****************************************************************************
-
-
-/* TODO:  Add any necessary local functions.
-*/
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -142,23 +137,24 @@ void APP_CLIENT2_Tasks ( void )
     switch(app_client2Data.state)
     {
         case APP_CLIENT2_STATE_INIT:
+
             app_client2Data.spi_setup.baudRateInHz = APP_CLIENT2_SPI_CLK_SPEED;
             app_client2Data.spi_setup.clockPhase = DRV_SPI_CLOCK_PHASE_VALID_LEADING_EDGE;
             app_client2Data.spi_setup.clockPolarity = DRV_SPI_CLOCK_POLARITY_IDLE_LOW;
             app_client2Data.spi_setup.dataBits = DRV_SPI_DATA_BITS_8;
             app_client2Data.spi_setup.chipSelect = (SYS_PORT_PIN)APP_CLIENT2_CS_PIN;
-            app_client2Data.spi_setup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;       
+            app_client2Data.spi_setup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;
 
             app_client2Data.spi_handle = DRV_SPI_Open( DRV_SPI_INDEX_0, DRV_IO_INTENT_READWRITE );
 
             if (app_client2Data.spi_handle != DRV_HANDLE_INVALID)
-            {            
+            {
                 DRV_SPI_TransferSetup(app_client2Data.spi_handle, &app_client2Data.spi_setup);
                 app_client2Data.state = APP_CLIENT2_STATE_SELF_LOOPBACK;
-            }        
+            }
             else
             {
-                app_client2Data.state = APP_CLIENT2_STATE_ERROR;                    
+                app_client2Data.state = APP_CLIENT2_STATE_ERROR;
             }
             break;
 
@@ -166,36 +162,39 @@ void APP_CLIENT2_Tasks ( void )
 
             // Clear the read buffer
             memset(app_client2Data.rdBuffer, 0, APP_CLIENT2_TX_RX_BUFFER_SIZE);
-            
+
             // Copy the loop-back data into the write buffer
             memcpy(app_client2Data.wrBuffer, APP_CLIENT2_STR, APP_CLIENT2_NUM_BYTES);
-            
+
             if (DRV_SPI_WriteReadTransfer(app_client2Data.spi_handle, app_client2Data.wrBuffer, APP_CLIENT2_NUM_BYTES, app_client2Data.rdBuffer, APP_CLIENT2_NUM_BYTES) == false)
             {
                 app_client2Data.state = APP_CLIENT2_STATE_ERROR;
-            }  
+            }
             else
-            {                
+            {
                 /* Compare the received data */
                 if (memcmp(app_client2Data.rdBuffer, app_client2Data.wrBuffer, APP_CLIENT2_NUM_BYTES) != 0)
                 {
                     /* Received data does not match the transmitted data */
-                    app_client2Data.state = APP_CLIENT2_STATE_ERROR;                    
+                    app_client2Data.state = APP_CLIENT2_STATE_ERROR;
                 }
                 else
                 {
-                    app_client2Data.status = APP_SUCCESS;                                                                  
+                    app_client2Data.status = APP_SUCCESS;
                 }
-            }              
+            }
             break;
 
-        case APP_CLIENT2_STATE_ERROR:                           
+        case APP_CLIENT2_STATE_ERROR:
+
             DRV_SPI_Close(app_client2Data.spi_handle);
-            
+
             app_client2Data.status = APP_ERROR;
 
-            /* Suspend the task and allow other threads to run */
-            vTaskSuspend(NULL);
+            app_client2Data.state = APP_CLIENT2_STATE_IDLE;
+
+        case APP_CLIENT2_STATE_IDLE:
+        default:
             break;
     }
 }

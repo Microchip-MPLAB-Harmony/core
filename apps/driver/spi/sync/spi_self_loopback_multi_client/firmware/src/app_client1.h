@@ -72,9 +72,9 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
-/* The size of the DMA buffers must be a multiple of cache line size (32 bytes) */    
-#define APP_CLIENT1_TX_RX_BUFFER_SIZE               32  
-    
+/* The size of the DMA buffers must be a multiple of cache line size (32 bytes) */
+#define APP_CLIENT1_TX_RX_BUFFER_SIZE               32
+
 // *****************************************************************************
 /* Application states
 
@@ -91,8 +91,9 @@ typedef enum
     /* Application's state machine's initial state. */
     APP_CLIENT1_STATE_INIT=0,
     APP_CLIENT1_STATE_SELF_LOOPBACK,
-    APP_CLIENT1_STATE_ERROR
-            
+    APP_CLIENT1_STATE_ERROR,
+    APP_CLIENT1_STATE_IDLE
+
 } APP_CLIENT1_STATES;
 
 
@@ -113,18 +114,18 @@ typedef struct
 {
     /* The application's current state */
      APP_CLIENT1_STATES  state;
-     
+
      DRV_HANDLE spi_handle;
-     
-     DRV_SPI_TRANSFER_SETUP spi_setup;        
-     
+
+     DRV_SPI_TRANSFER_SETUP spi_setup;
+
      volatile bool status;
-     
+
      /* The DMA buffers must be aligned to 32 byte boundary and the size must be
       * a multiple of 32 bytes (cache line size)
       */
      __attribute__ ((aligned (32))) uint8_t rdBuffer[APP_CLIENT1_TX_RX_BUFFER_SIZE];
-     
+
      __attribute__ ((aligned (32))) uint8_t wrBuffer[APP_CLIENT1_TX_RX_BUFFER_SIZE];
 
 } APP_CLIENT1_DATA;
