@@ -94,8 +94,9 @@ typedef enum
     APP_INSTANCE2_STATE_CHECK_STATUS,
     APP_INSTANCE2_STATE_READ,
     APP_INSTANCE2_STATE_DATA_COMPARISON,
-    APP_INSTANCE2_STATE_IDLE,
-    APP_INSTANCE2_STATE_ERROR
+    APP_INSTANCE2_STATE_SUCCESS,
+    APP_INSTANCE2_STATE_ERROR,
+    APP_INSTANCE2_STATE_IDLE
 
 } APP_INSTANCE2_STATES;
 
@@ -120,8 +121,10 @@ typedef struct
     DRV_HANDLE drvSPIHandle;
     DRV_SPI_TRANSFER_HANDLE transferHandle;
     DRV_SPI_TRANSFER_SETUP  setup;
+    uint8_t wrEnableCmd;
+    uint8_t rdStatusCmd;
     volatile bool isTransferComplete;
-    bool clientTransferSuccess;
+    volatile bool transferStatus;
 
 } APP_INSTANCE2_DATA;
 
@@ -206,7 +209,7 @@ void APP_INSTANCE2_Initialize ( void );
 
 void APP_INSTANCE2_Tasks( void );
 
-bool Instance2TransferSuccessStatus(void);
+bool APP_INSTANCE2_TransferStatus(void);
 
 #endif /* _APP_INSTANCE2_H */
 

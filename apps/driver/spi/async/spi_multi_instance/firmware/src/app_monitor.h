@@ -82,7 +82,8 @@ extern "C" {
     This enumeration defines the valid application states.  These states
     determine the behavior of the application at various times.
 */
-
+#define APP_SUCCESS                     0
+#define APP_ERROR                       1
 
 
 // *****************************************************************************
