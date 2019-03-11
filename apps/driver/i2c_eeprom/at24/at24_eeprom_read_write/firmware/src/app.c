@@ -85,7 +85,7 @@ APP_DATA appData;
 
 /* TODO:  Add any necessary callback functions.
 */
-void APP_EEPROM_EventHandler(DRV_AT24_TRANSFER_STATUS event, uintptr_t context)
+static void APP_EEPROM_EventHandler(DRV_AT24_TRANSFER_STATUS event, uintptr_t context)
 {
     switch(event)
     {
@@ -171,6 +171,8 @@ void APP_Tasks ( void )
                 appData.writeBuffer[i] = i;
             }
 
+            /* Set the next state first as callback may be fired before the state 
+             * is changed; potentially over-writing error state set from the callback */
             appData.state = APP_STATE_WAIT_WRITE_COMPLETE;
 
             if (DRV_AT24_Write(appData.drvHandle,
@@ -217,7 +219,7 @@ void APP_Tasks ( void )
 
             if (memcmp(appData.writeBuffer, appData.readBuffer, BUFFER_SIZE ) == 0)
             {
-                appData.state = APP_STATE_IDLE;
+                appData.state = APP_STATE_SUCCESS;
             }
             else
             {
@@ -225,14 +227,19 @@ void APP_Tasks ( void )
             }
             break;
 
-        case APP_STATE_IDLE:
+        case APP_STATE_SUCCESS:
             /* Turn on the LED to indicate success */
             LED_ON();
-            break;
+            appData.state = APP_STATE_IDLE;
+            break;                        
 
-        case APP_STATE_ERROR:
-        default:
+        case APP_STATE_ERROR:        
             LED_OFF();
+            appData.state = APP_STATE_IDLE;
+            break;
+            
+        case APP_STATE_IDLE:
+        default:
             break;
     }
 }

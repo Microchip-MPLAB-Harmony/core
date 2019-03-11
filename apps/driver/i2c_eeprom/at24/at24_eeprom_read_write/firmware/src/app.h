@@ -93,6 +93,7 @@ typedef enum
     APP_STATE_READ,
     APP_STATE_WAIT_READ_COMPLETE,
     APP_STATE_VERIFY,
+    APP_STATE_SUCCESS,
     APP_STATE_ERROR,
     APP_STATE_IDLE,
     /* TODO: Define states used by the application state machine. */
