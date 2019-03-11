@@ -139,7 +139,7 @@ void APP_Initialize ( void )
     appData.transferHandle = DRV_I2C_TRANSFER_HANDLE_INVALID;   
     appData.transferStatus = APP_TRANSFER_STATUS_ERROR;
     
-    /* Initialize the success LED */
+    /* Initialize the LED to failure state */
     LED_OFF();
 }
 
@@ -335,7 +335,7 @@ void APP_Tasks ( void )
                         
         case APP_STATE_SUCCESS:
         
-            /* On success make LED 0 on*/
+            /* On success turn LED on*/
             LED_ON();
             appData.state = APP_STATE_IDLE;
             break;
@@ -346,6 +346,7 @@ void APP_Tasks ( void )
             appData.state = APP_STATE_IDLE;
             break;
             
+        case APP_STATE_IDLE:
         default:        
             break;        
     }
