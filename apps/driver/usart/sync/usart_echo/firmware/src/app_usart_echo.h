@@ -90,14 +90,9 @@ typedef enum
 {
     /* Application's state machine's initial state. */
     APP_USART_ECHO_STATE_INIT=0,
-
-    /* TODO: Define states used by the application state machine. */
     APP_USART_ECHO_STATE_SEND_MESSGE,
-
     APP_USART_ECHO_STATE_RECEIVE_BUFFER,
-
     APP_USART_ECHO_STATE_SEND_BUFFER,
-
     APP_USART_ECHO_STATE_ERROR,
 } APP_USART_ECHO_STATES;
 
@@ -118,12 +113,9 @@ typedef enum
 typedef struct
 {
     /* The application's current state */
-    APP_USART_ECHO_STATES state;
-
-    /* TODO: Define any additional data used by the application. */
-    DRV_HANDLE usartHandle;
-
-    uint8_t receiveBuffer[APP_USART_ECHO_LOOPBACK_DATA_SIZE];
+    APP_USART_ECHO_STATES   state;
+    DRV_HANDLE              usartHandle;
+    uint8_t                 receiveBuffer[APP_USART_ECHO_LOOPBACK_DATA_SIZE];
 
 } APP_USART_ECHO_DATA;
 

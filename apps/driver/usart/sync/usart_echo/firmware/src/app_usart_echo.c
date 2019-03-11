@@ -87,19 +87,11 @@ APP_USART_ECHO_DATA app_usart_echoData;
 // *****************************************************************************
 // *****************************************************************************
 
-/* TODO:  Add any necessary callback functions.
-*/
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Local Functions
 // *****************************************************************************
 // *****************************************************************************
-
-
-/* TODO:  Add any necessary local functions.
-*/
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -135,6 +127,7 @@ void APP_USART_ECHO_Tasks ( void )
     switch(app_usart_echoData.state)
     {
         case APP_USART_ECHO_STATE_INIT:
+
             /* Open USART Driver Instance 0 (USART 1)*/
             app_usart_echoData.usartHandle = DRV_USART_Open(DRV_USART_INDEX_0, DRV_IO_INTENT_READWRITE);
             if (app_usart_echoData.usartHandle != DRV_HANDLE_INVALID)
@@ -148,6 +141,7 @@ void APP_USART_ECHO_Tasks ( void )
             break;
 
         case APP_USART_ECHO_STATE_SEND_MESSGE:
+
             if (DRV_USART_WriteBuffer( app_usart_echoData.usartHandle, (void*)startMessage, strlen(startMessage)) == true)
             {
                 LED_TOGGLE();
@@ -160,6 +154,7 @@ void APP_USART_ECHO_Tasks ( void )
             break;
 
         case APP_USART_ECHO_STATE_RECEIVE_BUFFER:
+
             /* Submit a read request and block until read completes */
             if (DRV_USART_ReadBuffer( app_usart_echoData.usartHandle, app_usart_echoData.receiveBuffer, APP_USART_ECHO_LOOPBACK_DATA_SIZE) == true)
             {
@@ -172,6 +167,7 @@ void APP_USART_ECHO_Tasks ( void )
             break;
 
         case APP_USART_ECHO_STATE_SEND_BUFFER:
+
             /* Echo the received character back */
             if (DRV_USART_WriteBuffer( app_usart_echoData.usartHandle, app_usart_echoData.receiveBuffer, APP_USART_ECHO_LOOPBACK_DATA_SIZE) == true)
             {
@@ -185,8 +181,7 @@ void APP_USART_ECHO_Tasks ( void )
             break;
 
         case APP_USART_ECHO_STATE_ERROR:
-            /* Suspend the current task and allow other threads to run */
-            vTaskSuspend(NULL);
+        default:
             break;
     }
 }
