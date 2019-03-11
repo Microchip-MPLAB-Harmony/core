@@ -51,6 +51,7 @@
 // *****************************************************************************
 
 #include "app_eeprom2.h"
+#include "app_monitor.h"
 #include <string.h>
 
 // *****************************************************************************
@@ -75,12 +76,10 @@
 */
 
 static APP_EEPROM2_DATA app_eeprom2Data;
-static const uint8_t messageString2[] = "WRITING AND READING DATA ON FIRST INSTANCE EEPROM 2";
+static const uint8_t EEPROM2_MSG_STR[] = "WRITING AND READING DATA ON FIRST INSTANCE EEPROM 2";
 /* Array size has to be of multiple of 32 because of cache alignment */
-static uint8_t __attribute__ ((aligned (32))) txData2[64];
-static uint8_t __attribute__ ((aligned (32))) rxData2[64];
-static uint8_t writeEnableCommand2;
-static uint8_t readStatusCommand2;
+static uint8_t __attribute__ ((aligned (32))) eeprom2TxData[64];
+static uint8_t __attribute__ ((aligned (32))) eeprom2RxData[64];
 
 /* EEPROM Commands */
 #define EEPROM2_CMD_WREN                       0x06
@@ -88,13 +87,14 @@ static uint8_t readStatusCommand2;
 #define EEPROM2_CMD_RDSR                       0x05
 #define EEPROM2_CMD_READ                       0x03
 #define EEPROM2_START_ADDRESS                  0x000000
+#define EEPROM2_STATUS_BUSY_BIT                0x01
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
 // *****************************************************************************
 // *****************************************************************************
 
-void SPI_EEEPROM2_EventHandler (
+static void SPI_EEEPROM2_EventHandler (
     DRV_SPI_TRANSFER_EVENT event,
     DRV_SPI_TRANSFER_HANDLE transferHandle,
     uintptr_t context
@@ -116,9 +116,9 @@ void SPI_EEEPROM2_EventHandler (
 // Section: Application Local Functions
 // *****************************************************************************
 // *****************************************************************************
-bool EEPROM2TransferSuccessStatus(void)
+bool APP_EEPROM2_TransferStatus(void)
 {
-    return app_eeprom2Data.transferSuccess;
+    return app_eeprom2Data.transferStatus;
 }
 
 // *****************************************************************************
@@ -140,13 +140,13 @@ void APP_EEPROM2_Initialize ( void )
     /* Place the App state machine in its initial state. */
     app_eeprom2Data.state = APP_EEPROM2_STATE_DATA_INIT;
     app_eeprom2Data.drvSPIHandle = DRV_HANDLE_INVALID;
-    app_eeprom2Data.transferSuccess = false;
+    app_eeprom2Data.transferStatus = APP_ERROR;
 
-    writeEnableCommand2 = EEPROM2_CMD_WREN;
-    readStatusCommand2  = EEPROM2_CMD_RDSR;
+    app_eeprom2Data.wrEnableCmd = EEPROM2_CMD_WREN;
+    app_eeprom2Data.rdStatusCmd  = EEPROM2_CMD_RDSR;
 
-    memset(&txData2, 0, sizeof(txData2));
-    memset(&rxData2, 0, sizeof(rxData2));
+    memset(eeprom2TxData, 0, sizeof(eeprom2TxData));
+    memset(eeprom2RxData, 0, sizeof(eeprom2RxData));
 
     APP_EEPROM2_CS_Set();
     APP_EEPROM2_WP_Set();
@@ -179,7 +179,6 @@ void APP_EEPROM2_Tasks ( void )
             app_eeprom2Data.setup.dataBits = DRV_SPI_DATA_BITS_8;
             app_eeprom2Data.setup.chipSelect = (SYS_PORT_PIN)APP_EEPROM2_CS_PIN;
             app_eeprom2Data.setup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;
-
             app_eeprom2Data.state = APP_EEPROM2_STATE_DRIVER_SETUP;
             break;
 
@@ -191,7 +190,7 @@ void APP_EEPROM2_Tasks ( void )
             {
                 if(DRV_SPI_TransferSetup(app_eeprom2Data.drvSPIHandle, &app_eeprom2Data.setup) == true)
                 {
-                    DRV_SPI_TransferEventHandlerSet(app_eeprom2Data.drvSPIHandle, SPI_EEEPROM2_EventHandler, (uintptr_t)NULL);
+                    DRV_SPI_TransferEventHandlerSet(app_eeprom2Data.drvSPIHandle, SPI_EEEPROM2_EventHandler, (uintptr_t)0);
                     app_eeprom2Data.state = APP_EEPROM2_STATE_WRITE_ENABLE;
                 }
                 else
@@ -207,8 +206,13 @@ void APP_EEPROM2_Tasks ( void )
 
         case APP_EEPROM2_STATE_WRITE_ENABLE:
 
+            /* Set the next state first as callback may be fired before the state
+             * is changed; potentially over-writing error state set from the callback */
+            
             app_eeprom2Data.state = APP_EEPROM2_STATE_WRITE;
-            DRV_SPI_WriteTransferAdd(app_eeprom2Data.drvSPIHandle, &writeEnableCommand2, 1, &app_eeprom2Data.transferHandle );
+            
+            DRV_SPI_WriteTransferAdd(app_eeprom2Data.drvSPIHandle, &app_eeprom2Data.wrEnableCmd, 1, &app_eeprom2Data.transferHandle );
+            
             if(app_eeprom2Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
             {
                 app_eeprom2Data.state = APP_EEPROM2_STATE_ERROR;
@@ -220,17 +224,17 @@ void APP_EEPROM2_Tasks ( void )
             {
                 app_eeprom2Data.isTransferComplete = false;
 
-                //Write to EEPROM
-                txData2[0] = EEPROM2_CMD_WRITE;
-                txData2[1] = (uint8_t)(eepromAddr>>16);
-                txData2[2] = (uint8_t)(eepromAddr>>8);
-                txData2[3] = (uint8_t)(eepromAddr);
+                // Write to EEPROM
+                eeprom2TxData[0] = EEPROM2_CMD_WRITE;
+                eeprom2TxData[1] = (uint8_t)(eepromAddr>>16);
+                eeprom2TxData[2] = (uint8_t)(eepromAddr>>8);
+                eeprom2TxData[3] = (uint8_t)(eepromAddr);
 
-                memcpy(&txData2[4], messageString2, strlen((const char*)messageString2));
+                memcpy(&eeprom2TxData[4], EEPROM2_MSG_STR, strlen((const char*)EEPROM2_MSG_STR));
 
                 app_eeprom2Data.state = APP_EEPROM2_STATE_WAIT_FOR_WRITE_COMPLETE;
 
-                DRV_SPI_WriteTransferAdd(app_eeprom2Data.drvSPIHandle, txData2, (4 + strlen((const char*)messageString2)), &app_eeprom2Data.transferHandle );
+                DRV_SPI_WriteTransferAdd(app_eeprom2Data.drvSPIHandle, eeprom2TxData, (4 + strlen((const char*)EEPROM2_MSG_STR)), &app_eeprom2Data.transferHandle );
 
                 if(app_eeprom2Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
                 {
@@ -246,7 +250,7 @@ void APP_EEPROM2_Tasks ( void )
 
                 app_eeprom2Data.state = APP_EEPROM2_STATE_CHECK_STATUS;
 
-                DRV_SPI_WriteReadTransferAdd(app_eeprom2Data.drvSPIHandle, &readStatusCommand2, 1, rxData2, 2, &app_eeprom2Data.transferHandle );
+                DRV_SPI_WriteReadTransferAdd(app_eeprom2Data.drvSPIHandle, &app_eeprom2Data.rdStatusCmd, 1, eeprom2RxData, 2, &app_eeprom2Data.transferHandle );
 
                 if(app_eeprom2Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
                 {
@@ -259,14 +263,14 @@ void APP_EEPROM2_Tasks ( void )
             if (app_eeprom2Data.isTransferComplete == true)
             {
                 app_eeprom2Data.isTransferComplete = false;
-                if((rxData2[1] & 0x01) == 0x00)
+                if((eeprom2RxData[1] & EEPROM2_STATUS_BUSY_BIT) == 0x00)
                 {
                     app_eeprom2Data.state = APP_EEPROM2_STATE_READ;
                 }
                 else
                 {
-                    // Keep checking the EEPROM status
-                    DRV_SPI_WriteReadTransferAdd(app_eeprom2Data.drvSPIHandle, &readStatusCommand2, 1, rxData2, 2, &app_eeprom2Data.transferHandle);
+                    /* EEPROM is still busy. Keep checking the status. */
+                    DRV_SPI_WriteReadTransferAdd(app_eeprom2Data.drvSPIHandle, &app_eeprom2Data.rdStatusCmd, 1, eeprom2RxData, 2, &app_eeprom2Data.transferHandle);
                     if(app_eeprom2Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
                     {
                         app_eeprom2Data.state = APP_EEPROM2_STATE_ERROR;
@@ -277,15 +281,15 @@ void APP_EEPROM2_Tasks ( void )
 
         case APP_EEPROM2_STATE_READ:
 
-            //Read from EEPROM
-            txData2[0] = EEPROM2_CMD_READ;
-            txData2[1] = (uint8_t)(eepromAddr>>16);
-            txData2[2] = (uint8_t)(eepromAddr>>8);
-            txData2[3] = (uint8_t)(eepromAddr);
+            // Read from EEPROM
+            eeprom2TxData[0] = EEPROM2_CMD_READ;
+            eeprom2TxData[1] = (uint8_t)(eepromAddr>>16);
+            eeprom2TxData[2] = (uint8_t)(eepromAddr>>8);
+            eeprom2TxData[3] = (uint8_t)(eepromAddr);
 
             app_eeprom2Data.state = APP_EEPROM2_STATE_DATA_COMPARISON;
 
-            DRV_SPI_WriteReadTransferAdd(app_eeprom2Data.drvSPIHandle, txData2, 4, rxData2, (4 + strlen((const char*)messageString2)), &app_eeprom2Data.transferHandle);
+            DRV_SPI_WriteReadTransferAdd(app_eeprom2Data.drvSPIHandle, eeprom2TxData, 4, eeprom2RxData, (4 + strlen((const char*)EEPROM2_MSG_STR)), &app_eeprom2Data.transferHandle);
 
             if(app_eeprom2Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
             {
@@ -298,19 +302,24 @@ void APP_EEPROM2_Tasks ( void )
             {
                 app_eeprom2Data.isTransferComplete = false;
 
-                if (memcmp(messageString2, &rxData2[4], strlen((const char*)messageString2)) != 0)
+                if (memcmp(&eeprom2RxData[4], EEPROM2_MSG_STR, strlen((const char*)EEPROM2_MSG_STR)) == 0)
                 {
-                    app_eeprom2Data.transferSuccess = false;
+                    app_eeprom2Data.state = APP_EEPROM2_STATE_SUCCESS;
                 }
                 else
                 {
-                    app_eeprom2Data.transferSuccess = true;
-                }
-                app_eeprom2Data.state = APP_EEPROM2_STATE_IDLE;
+                    app_eeprom2Data.state = APP_EEPROM2_STATE_ERROR;
+                }                
             }
             break;
+            
+        case APP_EEPROM2_STATE_SUCCESS:
+            app_eeprom2Data.transferStatus = APP_SUCCESS;
+            app_eeprom2Data.state = APP_EEPROM2_STATE_IDLE;
+            break;
+
         case APP_EEPROM2_STATE_ERROR:
-            app_eeprom2Data.transferSuccess = false;
+            app_eeprom2Data.transferStatus = APP_ERROR;
             app_eeprom2Data.state = APP_EEPROM2_STATE_IDLE;
             break;
 

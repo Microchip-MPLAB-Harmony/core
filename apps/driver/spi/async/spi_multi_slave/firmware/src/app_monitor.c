@@ -125,14 +125,10 @@ void APP_MONITOR_Initialize ( void )
 
 void APP_MONITOR_Tasks ( void )
 {
-    if((EEPROM1TransferSuccessStatus() == true) && (EEPROM2TransferSuccessStatus() == true))
+    if((APP_EEPROM1_TransferStatus() == APP_SUCCESS) && (APP_EEPROM2_TransferStatus() == APP_SUCCESS))
     {
         LED_ON();
-    }
-    else
-    {
-        LED_OFF();
-    }
+    }    
 }
 
 

@@ -93,8 +93,9 @@ typedef enum
     APP_EEPROM1_STATE_CHECK_STATUS,
     APP_EEPROM1_STATE_READ,
     APP_EEPROM1_STATE_DATA_COMPARISON,
+    APP_EEPROM1_STATE_SUCCESS,
+    APP_EEPROM1_STATE_ERROR,
     APP_EEPROM1_STATE_IDLE,
-    APP_EEPROM1_STATE_ERROR
 } APP_EEPROM1_STATES;
 
 
@@ -118,8 +119,10 @@ typedef struct
     DRV_HANDLE drvSPIHandle;
     DRV_SPI_TRANSFER_SETUP  setup;
     DRV_SPI_TRANSFER_HANDLE transferHandle;
+    uint8_t wrEnableCmd;
+    uint8_t rdStatusCmd;
     volatile bool isTransferComplete;
-    bool transferSuccess;
+    volatile bool transferStatus;
 
 } APP_EEPROM1_DATA;
 
@@ -204,7 +207,7 @@ void APP_EEPROM1_Initialize ( void );
 
 void APP_EEPROM1_Tasks( void );
 
-bool EEPROM1TransferSuccessStatus(void);
+bool APP_EEPROM1_TransferStatus(void);
 
 #endif /* _APP_EEPROM1_H */
 
