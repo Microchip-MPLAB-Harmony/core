@@ -77,7 +77,7 @@
 
 APP_DATA appData;
 
-static const char messageBuffer[] = 
+static const char messageBuffer[] =
 "*** USART Driver Echo Demo Application ***\r\n"
 "*** Type a character and observe it echo back ***\r\n"
 "*** LED toggles on each time the character is echoed ***\r\n";
@@ -88,24 +88,24 @@ static const char messageBuffer[] =
 // *****************************************************************************
 // *****************************************************************************
 
-void APP_BufferEventHandler(
-    DRV_USART_BUFFER_EVENT bufferEvent, 
-    DRV_USART_BUFFER_HANDLE bufferHandle, 
-    uintptr_t context 
+static void APP_USARTBufferEventHandler(
+    DRV_USART_BUFFER_EVENT bufferEvent,
+    DRV_USART_BUFFER_HANDLE bufferHandle,
+    uintptr_t context
 )
 {
     switch(bufferEvent)
     {
-        case DRV_USART_BUFFER_EVENT_COMPLETE:        
-            appData.completeStatus = true;
+        case DRV_USART_BUFFER_EVENT_COMPLETE:
+            appData.transferStatus = true;
             break;
-        
-        case DRV_USART_BUFFER_EVENT_ERROR:        
-            appData.errorStatus = true;
-            break;        
 
-        default:        
-            break;        
+        case DRV_USART_BUFFER_EVENT_ERROR:
+            appData.state = APP_STATE_ERROR;
+            break;
+
+        default:
+            break;
     }
 }
 
@@ -136,12 +136,12 @@ void APP_BufferEventHandler(
 
 void APP_Initialize ( void )
 {
-    /* Place the App state machine in its initial state. */    
-    appData.state = APP_STATE_INIT;
-    appData.prevState = APP_STATE_INIT;
-    appData.usartHandle = DRV_HANDLE_INVALID;
-    appData.bufferHandler = DRV_USART_BUFFER_HANDLE_INVALID;    
-    
+    /* Place the App state machine in its initial state. */
+    appData.state           = APP_STATE_INIT;
+    appData.transferStatus  = false;
+    appData.usartHandle     = DRV_HANDLE_INVALID;
+    appData.bufferHandle    = DRV_USART_BUFFER_HANDLE_INVALID;
+
     LED_OFF();
 }
 
@@ -161,94 +161,97 @@ void APP_Tasks ( void )
     {
         /* Application's initial state. */
         case APP_STATE_INIT:
-        
+
             appData.usartHandle = DRV_USART_Open(DRV_USART_INDEX_0, DRV_IO_INTENT_READWRITE);
             if (appData.usartHandle != DRV_HANDLE_INVALID)
             {
-                DRV_USART_BufferEventHandlerSet(appData.usartHandle, APP_BufferEventHandler, 0);
-                appData.state = APP_STATE_SEND_MESSGE;
+                DRV_USART_BufferEventHandlerSet(appData.usartHandle, APP_USARTBufferEventHandler, 0);
+                appData.state = APP1_STATE_TRANSMIT_MESSAGE;
             }
             else
             {
                 appData.state = APP_STATE_ERROR;
             }
             break;
-        
-        case APP_STATE_SEND_MESSGE:
-        
-            DRV_USART_WriteBufferAdd(appData.usartHandle, (void*)messageBuffer, strlen(messageBuffer), &appData.bufferHandler);
-            if (appData.bufferHandler != DRV_USART_BUFFER_HANDLE_INVALID)
-            {
-                appData.prevState = APP_STATE_SEND_MESSGE;
-                appData.state = APP_STATE_WAIT;
-            }            
-            else
-            {
-                appData.state = APP_STATE_ERROR;
-            }
-            break;
-        
-        case APP_STATE_RECEIVE_BUFFER:
-        
-            DRV_USART_ReadBufferAdd(appData.usartHandle, appData.readBuffer, APP_DATA_SIZE, &appData.bufferHandler);
-            if (appData.bufferHandler != DRV_USART_BUFFER_HANDLE_INVALID)
-            {
-                appData.prevState = APP_STATE_RECEIVE_BUFFER;
-                appData.state = APP_STATE_WAIT;
-            }            
-            else
-            {
-                appData.state = APP_STATE_ERROR;
-            }
-            break;
-        
-        case APP_STATE_SEND_BUFFER:
-        
-            DRV_USART_WriteBufferAdd(appData.usartHandle, appData.readBuffer, APP_DATA_SIZE, &appData.bufferHandler);
-            if (appData.bufferHandler != DRV_USART_BUFFER_HANDLE_INVALID)
-            {
-                appData.prevState = APP_STATE_SEND_BUFFER;
-                appData.state = APP_STATE_WAIT;
-            }            
-            else
-            {
-                appData.state = APP_STATE_ERROR;
-            }
-            break;
-        
-        case APP_STATE_WAIT:
-        
-            if(appData.completeStatus == true)
-            {
-                appData.completeStatus = false;
 
-                if(appData.prevState == APP_STATE_SEND_MESSGE || appData.prevState == APP_STATE_SEND_BUFFER)
-                {
-                    LED_TOGGLE();
-                    appData.state = APP_STATE_RECEIVE_BUFFER;
-                }
-                else if(appData.prevState == APP_STATE_RECEIVE_BUFFER)
-                {
-                    appData.state = APP_STATE_SEND_BUFFER;
-                }
+        case APP1_STATE_TRANSMIT_MESSAGE:
 
-                appData.prevState = APP_STATE_WAIT;
-            }
-            else if(appData.errorStatus == true)
+            DRV_USART_WriteBufferAdd(appData.usartHandle, (void*)messageBuffer, strlen(messageBuffer), &appData.bufferHandle);
+            if (appData.bufferHandle != DRV_USART_BUFFER_HANDLE_INVALID)
             {
-                appData.errorStatus = false;
-                appData.prevState = APP_STATE_WAIT;
+                appData.state = APP_STATE_WAIT_MESSAGE_TRANSFER_COMPLETE;
+            }
+            else
+            {
                 appData.state = APP_STATE_ERROR;
             }
             break;
-        
-        case APP_STATE_ERROR:        
+
+        case APP_STATE_WAIT_MESSAGE_TRANSFER_COMPLETE:
+            if(appData.transferStatus == true)
+            {
+                appData.transferStatus = false;
+                appData.state = APP_STATE_RECEIVE_DATA;
+            }
+            break;
+
+        case APP_STATE_RECEIVE_DATA:
+
+            DRV_USART_ReadBufferAdd(appData.usartHandle, appData.readBuffer, APP_DATA_SIZE, &appData.bufferHandle);
+            if (appData.bufferHandle != DRV_USART_BUFFER_HANDLE_INVALID)
+            {
+                appData.state = APP_STATE_WAIT_RECEIVE_COMPLETE;
+            }
+            else
+            {
+                appData.state = APP_STATE_ERROR;
+            }
+            break;
+
+        case APP_STATE_WAIT_RECEIVE_COMPLETE:
+
+            if(appData.transferStatus == true)
+            {
+                appData.transferStatus = false;
+                appData.state = APP_STATE_TRANSMIT_DATA;
+            }
+            break;
+
+        case APP_STATE_TRANSMIT_DATA:
+
+            /* Echo the received data back on the terminal */
+            DRV_USART_WriteBufferAdd(appData.usartHandle, appData.readBuffer, APP_DATA_SIZE, &appData.bufferHandle);
+            if (appData.bufferHandle != DRV_USART_BUFFER_HANDLE_INVALID)
+            {
+                appData.state = APP_STATE_WAIT_TRANSMIT_COMPLETE;
+            }
+            else
+            {
+                appData.state = APP_STATE_ERROR;
+            }
+            break;
+
+        case APP_STATE_WAIT_TRANSMIT_COMPLETE:
+
+            if(appData.transferStatus == true)
+            {
+                appData.transferStatus = false;
+
+                LED_TOGGLE();
+
+                appData.state = APP_STATE_RECEIVE_DATA;
+            }
+            break;
+
+        case APP_STATE_ERROR:
+
             LED_OFF();
-            break;       
-            
+            appData.state = APP_STATE_IDLE;
+            break;
+
+        case APP_STATE_IDLE:
         default:
-            /* The default state should never be executed. */
-            break;        
+            break;
     }
 }
 
