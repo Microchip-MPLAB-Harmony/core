@@ -137,9 +137,9 @@ void APP_USART_USB_CLICK_BOARD_Tasks ( void )
     switch ( appUsartClickBoardData.state )
     {
         case APP_USART_USB_CLICK_BOARD_STATE_INIT:
-            /* Open USART Driver Instance 1 (USART 1)*/
+            
+            /* Open USART Driver Instance 1 */
             appUsartClickBoardData.usartHandle = DRV_USART_Open(DRV_USART_INDEX_0, DRV_IO_INTENT_READWRITE);
-
             if (appUsartClickBoardData.usartHandle == DRV_HANDLE_INVALID)
             {
                 appUsartClickBoardData.state = APP_USART_USB_CLICK_BOARD_STATE_ERROR;
@@ -188,9 +188,7 @@ void APP_USART_USB_CLICK_BOARD_Tasks ( void )
             break;
 
         case APP_USART_USB_CLICK_BOARD_STATE_ERROR:
-        default:
-            /* If error then suspend the task thereby allowing other threads to run */
-            vTaskSuspend(NULL);
+        default:            
             break;
     }
 }
