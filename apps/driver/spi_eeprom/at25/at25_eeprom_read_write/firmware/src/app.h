@@ -93,6 +93,7 @@ typedef enum
     APP_STATE_READ,
     APP_STATE_WAIT_READ_COMPLETE,
     APP_STATE_VERIFY,
+    APP_STATE_SUCCESS,
     APP_STATE_ERROR,
     APP_STATE_IDLE,
     /* TODO: Define states used by the application state machine. */
@@ -116,13 +117,13 @@ typedef struct
 {
     /* The application's current state */
     APP_STATES state;
-    
+
     DRV_HANDLE drvHandle;
-    
+
     uint8_t writeBuffer[BUFFER_SIZE];
-    
+
     uint8_t readBuffer[BUFFER_SIZE];
-    
+
     volatile bool isTransferDone;
 
     /* TODO: Define any additional data used by the application. */

@@ -83,7 +83,7 @@ APP_DATA appData;
 // Section: Application Callback Functions
 // *****************************************************************************
 // *****************************************************************************
-void APP_EEPROM_EventHandler(DRV_AT25_TRANSFER_STATUS event, uintptr_t context)
+static void APP_EEPROM_EventHandler(DRV_AT25_TRANSFER_STATUS event, uintptr_t context)
 {
     switch(event)
     {
@@ -171,6 +171,8 @@ void APP_Tasks ( void )
                 appData.writeBuffer[i] = i;
             }
 
+            /* Set the next state first as callback may be fired before the state
+             * is changed; potentially over-writing error state set from the callback */
             appData.state = APP_STATE_WAIT_WRITE_COMPLETE;
 
             if (DRV_AT25_Write(appData.drvHandle,
@@ -217,7 +219,7 @@ void APP_Tasks ( void )
 
             if (memcmp(appData.writeBuffer, appData.readBuffer, BUFFER_SIZE ) == 0)
             {
-                appData.state = APP_STATE_IDLE;
+                appData.state = APP_STATE_SUCCESS;
             }
             else
             {
@@ -225,14 +227,19 @@ void APP_Tasks ( void )
             }
             break;
 
-        case APP_STATE_IDLE:
+        case APP_STATE_SUCCESS:
             /* Turn on LED to indicate success */
             LED_ON();
+            appData.state = APP_STATE_IDLE;
             break;
 
         case APP_STATE_ERROR:
-        default:
             LED_OFF();
+            appData.state = APP_STATE_IDLE;
+            break;
+
+        case APP_STATE_IDLE:
+        default:
             break;
     }
 }
