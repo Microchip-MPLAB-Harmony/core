@@ -53,7 +53,7 @@
 
 #include "app_eeprom1.h"
 #include "app_monitor.h"
-#include "string.h"
+#include <string.h>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -71,7 +71,7 @@
 
 #define APP_EEPROM1_READ_WRITE_RATE_MS          1000
 
-/* For demonstration 16 bytes are written to EEPROM in each write cycle */    
+/* For demonstration 16 bytes are written to EEPROM in each write cycle */
 #define EEPROM1_NUM_BYTES_RD_WR                 16
 
 // *****************************************************************************
@@ -89,7 +89,7 @@
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_EEPROM1_DATA app_eeprom1Data;
+static APP_EEPROM1_DATA app_eeprom1Data;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -107,11 +107,6 @@ bool APP_EEPROM1_Task_GetStatus(void)
 // Section: Application Local Functions
 // *****************************************************************************
 // *****************************************************************************
-
-
-/* TODO:  Add any necessary local functions.
-*/
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -131,8 +126,14 @@ void APP_EEPROM1_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
     app_eeprom1Data.state = APP_EEPROM1_STATE_INIT;
-    app_eeprom1Data.eeprom_addr = 0;                    
+    app_eeprom1Data.eeprom_addr = 0;
     app_eeprom1Data.status = APP_ERROR;
+
+    /* Clear the read buffer */
+    memset(app_eeprom1Data.rdBuffer, 0, sizeof(app_eeprom1Data.rdBuffer));
+
+    /* Clear the write buffer */
+    memset(app_eeprom1Data.wrBuffer, 0, sizeof(app_eeprom1Data.wrBuffer));
 }
 
 
@@ -141,47 +142,59 @@ void APP_EEPROM1_Initialize ( void )
     void APP_EEPROM1_Tasks ( void )
 
   Remarks:
-    See prototype in app_eeprom1.h.
     Writes 16 bytes of data to EEPROM every 1 second.
  */
 
 void APP_EEPROM1_Tasks ( void )
 {
     uint32_t i;
-        
+
     switch (app_eeprom1Data.state)
     {
         case APP_EEPROM1_STATE_INIT:
+
             app_eeprom1Data.spiSetup.baudRateInHz = APP_EEPROM1_SPI_CLK_SPEED;
             app_eeprom1Data.spiSetup.clockPhase = DRV_SPI_CLOCK_PHASE_VALID_LEADING_EDGE;
             app_eeprom1Data.spiSetup.clockPolarity = DRV_SPI_CLOCK_POLARITY_IDLE_LOW;
             app_eeprom1Data.spiSetup.dataBits = DRV_SPI_DATA_BITS_8;
             app_eeprom1Data.spiSetup.chipSelect = (SYS_PORT_PIN)APP_EEPROM1_CS_PIN;
-            app_eeprom1Data.spiSetup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;       
+            app_eeprom1Data.spiSetup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;
 
             app_eeprom1Data.spiHandle = DRV_SPI_Open( DRV_SPI_INDEX_0, DRV_IO_INTENT_READWRITE );
 
-            if (DRV_HANDLE_INVALID != app_eeprom1Data.spiHandle)
-            {            
+            if (app_eeprom1Data.spiHandle != DRV_HANDLE_INVALID)
+            {
                 DRV_SPI_TransferSetup(app_eeprom1Data.spiHandle, &app_eeprom1Data.spiSetup);
-                app_eeprom1Data.state = APP_EEPROM1_STATE_READ_WRITE;
-            }        
+                app_eeprom1Data.state = APP_EEPROM1_STATE_WRITE_ENABLE;
+            }
             else
             {
                 app_eeprom1Data.state = APP_EEPROM1_STATE_ERROR;
             }
             break;
-        case APP_EEPROM1_STATE_READ_WRITE:
+
+        case APP_EEPROM1_STATE_WRITE_ENABLE:
+
             /* Enable Writes to EEPROM */
-            app_eeprom1Data.wrBuffer[0] = EEPROM1_CMD_WREN;                
-            
-            DRV_SPI_WriteTransfer(app_eeprom1Data.spiHandle, app_eeprom1Data.wrBuffer, 1);
+            app_eeprom1Data.wrBuffer[0] = EEPROM1_CMD_WREN;
+
+            if (DRV_SPI_WriteTransfer(app_eeprom1Data.spiHandle, app_eeprom1Data.wrBuffer, 1) == true)
+            {
+                app_eeprom1Data.state = APP_EEPROM1_STATE_WRITE;
+            }
+            else
+            {
+                app_eeprom1Data.state = APP_EEPROM1_STATE_ERROR;
+            }
+            break;
+
+        case APP_EEPROM1_STATE_WRITE:
 
             /* Write data to EEPROM */
             app_eeprom1Data.wrBuffer[0] = EEPROM1_CMD_WRITE;
             app_eeprom1Data.wrBuffer[1] = (uint8_t)(app_eeprom1Data.eeprom_addr >> 16);
-            app_eeprom1Data.wrBuffer[2] = (uint8_t)(app_eeprom1Data.eeprom_addr >> 8);                
-            app_eeprom1Data.wrBuffer[3] = (uint8_t)(app_eeprom1Data.eeprom_addr);                
+            app_eeprom1Data.wrBuffer[2] = (uint8_t)(app_eeprom1Data.eeprom_addr >> 8);
+            app_eeprom1Data.wrBuffer[3] = (uint8_t)(app_eeprom1Data.eeprom_addr);
 
             /* Copy the data to be written to the EEPROM */
             for (i = 0; i < EEPROM1_NUM_BYTES_RD_WR; i++)
@@ -189,28 +202,52 @@ void APP_EEPROM1_Tasks ( void )
                 app_eeprom1Data.wrBuffer[4+i] = i;
             }
 
-            DRV_SPI_WriteTransfer(app_eeprom1Data.spiHandle, app_eeprom1Data.wrBuffer, (4+EEPROM1_NUM_BYTES_RD_WR));                                
+            if (DRV_SPI_WriteTransfer(app_eeprom1Data.spiHandle, app_eeprom1Data.wrBuffer, (4+EEPROM1_NUM_BYTES_RD_WR)) == true)
+            {
+                app_eeprom1Data.state = APP_EEPROM1_STATE_INTERNAL_WRITE_WAIT;
+            }
+            else
+            {
+                app_eeprom1Data.state = APP_EEPROM1_STATE_ERROR;
+            }
+            break;
+
+        case APP_EEPROM1_STATE_INTERNAL_WRITE_WAIT:
 
             /* Poll for the write status to ensure that the write is complete */
-            app_eeprom1Data.wrBuffer[0] = EEPROM1_CMD_RDSR;           
+            app_eeprom1Data.wrBuffer[0] = EEPROM1_CMD_RDSR;
 
-            do
+            if (DRV_SPI_WriteReadTransfer(app_eeprom1Data.spiHandle, app_eeprom1Data.wrBuffer, 1, app_eeprom1Data.rdBuffer, (1+1)) == true)
             {
-                DRV_SPI_WriteReadTransfer(app_eeprom1Data.spiHandle, app_eeprom1Data.wrBuffer, 1, app_eeprom1Data.rdBuffer, (1+1));                
-            }while(app_eeprom1Data.rdBuffer[1] & EEPROM1_STATUS_BUSY_BIT);
+                if ((app_eeprom1Data.rdBuffer[1] & EEPROM1_STATUS_BUSY_BIT) == 0x00)
+                {
+                    app_eeprom1Data.state = APP_EEPROM1_STATE_READ;
+                }
+                else
+                {
+                    /* EEPROM is still busy. Keep checking the status. */
+                }
+            }
+            else
+            {
+                app_eeprom1Data.state = APP_EEPROM1_STATE_ERROR;
+            }
+            break;
+
+        case APP_EEPROM1_STATE_READ:
 
             /* Read data from EEPROM */
             app_eeprom1Data.wrBuffer[0] = EEPROM1_CMD_READ;
             app_eeprom1Data.wrBuffer[1] = (uint8_t)(app_eeprom1Data.eeprom_addr >> 16);
-            app_eeprom1Data.wrBuffer[2] = (uint8_t)(app_eeprom1Data.eeprom_addr >> 8);                
-            app_eeprom1Data.wrBuffer[3] = (uint8_t)(app_eeprom1Data.eeprom_addr);                        
-            
+            app_eeprom1Data.wrBuffer[2] = (uint8_t)(app_eeprom1Data.eeprom_addr >> 8);
+            app_eeprom1Data.wrBuffer[3] = (uint8_t)(app_eeprom1Data.eeprom_addr);
+
             if (DRV_SPI_WriteReadTransfer(app_eeprom1Data.spiHandle, app_eeprom1Data.wrBuffer, 4, app_eeprom1Data.rdBuffer, (4+EEPROM1_NUM_BYTES_RD_WR)) == true)
             {
                 /* Verify the read data */
                 if (memcmp(&app_eeprom1Data.rdBuffer[4], &app_eeprom1Data.wrBuffer[4], EEPROM1_NUM_BYTES_RD_WR) == 0)
-                {                    
-                    app_eeprom1Data.state = APP_EEPROM1_STATE_SUCCESS;                         
+                {
+                    app_eeprom1Data.state = APP_EEPROM1_STATE_SUCCESS;
                 }
                 else
                 {
@@ -220,21 +257,25 @@ void APP_EEPROM1_Tasks ( void )
             else
             {
                 app_eeprom1Data.state = APP_EEPROM1_STATE_ERROR;
-            }                                                            
+            }
             break;
-            
+
         case APP_EEPROM1_STATE_SUCCESS:
-            DRV_SPI_Close(app_eeprom1Data.spiHandle);            
-            app_eeprom1Data.status = APP_SUCCESS;       
-            /* Task complete, suspend the thread */
-            vTaskSuspend(NULL);
+
+            DRV_SPI_Close(app_eeprom1Data.spiHandle);
+            app_eeprom1Data.status = APP_SUCCESS;
+            app_eeprom1Data.state = APP_EEPROM1_STATE_IDLE;
             break;
-            
+
         case APP_EEPROM1_STATE_ERROR:
-            DRV_SPI_Close(app_eeprom1Data.spiHandle);            
-            app_eeprom1Data.status = APP_ERROR;   
-            /* Task complete, suspend the thread */
-            vTaskSuspend(NULL);
+
+            DRV_SPI_Close(app_eeprom1Data.spiHandle);
+            app_eeprom1Data.status = APP_ERROR;
+            app_eeprom1Data.state = APP_EEPROM1_STATE_IDLE;
+            break;
+
+        case APP_EEPROM1_STATE_IDLE:
+        default:
             break;
     }
 }

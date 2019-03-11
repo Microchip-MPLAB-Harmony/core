@@ -72,9 +72,9 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
-/* The size of the DMA buffers must be a multiple of cache line size (32 bytes) */    
+/* The size of the DMA buffers must be a multiple of cache line size (32 bytes) */
 #define APP_EEPROM2_DMA_TX_RX_BUFFER_SIZE    32
-    
+
 // *****************************************************************************
 /* Application states
 
@@ -90,9 +90,13 @@ typedef enum
 {
     /* Application's state machine's initial state. */
     APP_EEPROM2_STATE_INIT=0,
-    APP_EEPROM2_STATE_READ_WRITE,   
+    APP_EEPROM2_STATE_WRITE_ENABLE,
+    APP_EEPROM2_STATE_WRITE,
+    APP_EEPROM2_STATE_INTERNAL_WRITE_WAIT,
+    APP_EEPROM2_STATE_READ,
     APP_EEPROM2_STATE_SUCCESS,
-    APP_EEPROM2_STATE_ERROR
+    APP_EEPROM2_STATE_ERROR,
+    APP_EEPROM2_STATE_IDLE,
 
 } APP_EEPROM2_STATES;
 
@@ -114,20 +118,20 @@ typedef struct
 {
     /* The application's current state */
      APP_EEPROM2_STATES  state;
-     
-     DRV_SPI_TRANSFER_SETUP spiSetup;        
-     
+
+     DRV_SPI_TRANSFER_SETUP spiSetup;
+
      DRV_HANDLE  spiHandle;
-     
-     uint32_t eeprom_addr; 
-     
+
+     uint32_t eeprom_addr;
+
      volatile bool status;
-          
+
      /* The DMA buffers must be aligned to 32 byte boundary and the size must be
      * a multiple of 32 bytes (cache line size)
      */
      __attribute__ ((aligned (32))) uint8_t rdBuffer[APP_EEPROM2_DMA_TX_RX_BUFFER_SIZE];
-     
+
      __attribute__ ((aligned (32))) uint8_t wrBuffer[APP_EEPROM2_DMA_TX_RX_BUFFER_SIZE];
 
 } APP_EEPROM2_DATA;
