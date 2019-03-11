@@ -192,8 +192,15 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
 
         case APP_I2C_TEMP_SENSOR_STATE_ERROR:
             SYS_PRINT("Temperature Sensor Task Error \r\n");
+            appTempSensorData.state = APP_I2C_TEMP_SENSOR_STATE_IDLE;            
+            break;
+            
+        case APP_I2C_TEMP_SENSOR_STATE_IDLE:
             /* Allow other threads to run */
             vTaskSuspend(NULL);
+            break;
+            
+        default:
             break;
     }
 }

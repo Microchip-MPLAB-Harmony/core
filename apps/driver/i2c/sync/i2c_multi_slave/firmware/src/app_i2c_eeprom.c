@@ -99,7 +99,7 @@ extern OSAL_SEM_DECLARE(temperatureReady);
 // *****************************************************************************
 // *****************************************************************************
 
-void APP_I2C_EEPROM_ConsoleReadEventHandler (void* pBuffer)
+static void APP_I2C_EEPROM_ConsoleReadEventHandler (void* pBuffer)
 {
     /* pBuffer always points to the starting address of the read buffer of the completed request */
 
@@ -162,9 +162,15 @@ void APP_I2C_EEPROM_Tasks ( void )
                 );
 
                 /* Submit a read request with the console service */
-                SYS_CONSOLE_Read(SYS_CONSOLE_INDEX_0, 0, &appEEPROMData.consoleData, 1);
-
-                appEEPROMData.state = APP_I2C_EEPROM_STATE_WRITE;
+                if (SYS_CONSOLE_Read(SYS_CONSOLE_INDEX_0, 0, &appEEPROMData.consoleData, 1) != 0)
+                {
+                    appEEPROMData.state = APP_I2C_EEPROM_STATE_WRITE;
+                }
+                else
+                {
+                    /* Console read request could not be submitted */
+                    appEEPROMData.state = APP_I2C_EEPROM_STATE_ERROR;
+                }
             }
             else
             {
@@ -237,15 +243,28 @@ void APP_I2C_EEPROM_Tasks ( void )
             SYS_PRINT("\r\n");
 
             /* Submit another read request with the console service */
-            SYS_CONSOLE_Read(SYS_CONSOLE_INDEX_0, 0, &appEEPROMData.consoleData, 1);
-
-            /* Go back waiting for a temperature write request */
-            appEEPROMData.state = APP_I2C_EEPROM_STATE_WRITE;
+            if (SYS_CONSOLE_Read(SYS_CONSOLE_INDEX_0, 0, &appEEPROMData.consoleData, 1) != 0)
+            {
+                /* Go back waiting for a temperature write request */
+                appEEPROMData.state = APP_I2C_EEPROM_STATE_WRITE;
+            }
+            else
+            {
+                /* Console read request could not be submitted */
+                appEEPROMData.state = APP_I2C_EEPROM_STATE_ERROR;   
+            }           
             break;
 
         case APP_I2C_EEPROM_STATE_ERROR:
             SYS_PRINT("EEPROM Task Error \r\n");
+            appEEPROMData.state = APP_I2C_EEPROM_STATE_IDLE;   
+            break;
+            
+        case APP_I2C_EEPROM_STATE_IDLE:
             vTaskSuspend(NULL);
+            break;
+            
+        default:
             break;
     }
 }
