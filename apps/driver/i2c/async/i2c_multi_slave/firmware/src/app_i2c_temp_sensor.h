@@ -58,6 +58,7 @@
 #include <stdlib.h>
 #include "configuration.h"
 #include "driver/i2c/drv_i2c.h"
+#include "system/time/sys_time.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -127,6 +128,9 @@ typedef struct
 
     /* I2C driver transfer handle */
     DRV_I2C_TRANSFER_HANDLE transferHandle;
+    
+    /* Handle to periodic system timer */
+    SYS_TIME_HANDLE tmrHandle;
 
     /* buffer to hold temperature queried from sensor */
     uint8_t rxBuffer[2];

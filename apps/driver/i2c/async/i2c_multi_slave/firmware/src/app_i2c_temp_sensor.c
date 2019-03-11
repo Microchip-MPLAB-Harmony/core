@@ -53,7 +53,6 @@
 // *****************************************************************************
 
 #include "app_i2c_temp_sensor.h"
-#include "system/time/sys_time.h"
 #include "system/console/sys_debug.h"
 // *****************************************************************************
 // *****************************************************************************
@@ -130,6 +129,8 @@ static void APP_I2C_TEMP_SENSOR_EventHandler(
             appTempData.isTransferDone = true;
             break;
         case DRV_I2C_TRANSFER_EVENT_ERROR:
+            appTempData.state = APP_TEMP_STATE_ERROR;
+            break;
         default:
             break;
     }
@@ -148,6 +149,7 @@ void APP_I2C_TEMP_SENSOR_Initialize ( void )
     appTempData.state          = APP_TEMP_STATE_INIT;
     appTempData.i2cHandle      = DRV_HANDLE_INVALID;
     appTempData.transferHandle = DRV_I2C_TRANSFER_HANDLE_INVALID;
+    appTempData.tmrExpired     = false;
 }
 
 /******************************************************************************
@@ -175,8 +177,16 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
                 DRV_I2C_TransferEventHandlerSet(appTempData.i2cHandle, APP_I2C_TEMP_SENSOR_EventHandler, 0);
 
                 /* Register the Periodic Timer callback */
-                SYS_TIME_CallbackRegisterMS(APP_I2C_TEMP_SENSOR_TimerCallback, 0, APP_TEMP_SAMPLING_TIME, SYS_TIME_PERIODIC);
-                appTempData.state = APP_TEMP_STATE_READ_TEMPERATURE;
+                appTempData.tmrHandle = SYS_TIME_CallbackRegisterMS(APP_I2C_TEMP_SENSOR_TimerCallback, 0, APP_TEMP_SAMPLING_TIME, SYS_TIME_PERIODIC);
+                if (appTempData.tmrHandle == SYS_TIME_HANDLE_INVALID)
+                {
+                    /* Could not start a periodic timer */
+                    appTempData.state = APP_TEMP_STATE_ERROR;
+                }
+                else
+                {
+                    appTempData.state = APP_TEMP_STATE_READ_TEMPERATURE;
+                }                                
             }
             else
             {
@@ -236,7 +246,6 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
             break;
 
         case APP_TEMP_STATE_IDLE:
-
             break;
 
         default:

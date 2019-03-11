@@ -90,22 +90,22 @@ typedef enum
     /* Initial state. */
     APP_EEPROM_STATE_INIT,
 
-    /* Write temperature data to EERPOM state */
+    /* Write temperature data to EERPOM */
     APP_EEPROM_STATE_WRITE,
 
-    /* Wait for EEPROM write transfer to complete state */
+    /* Wait for EEPROM write transfer to complete */
     APP_EEPROM_STATE_WAIT_TRANSFER_COMPLETE,
 
-    /* Wait for EEPROM write cycle to complete state */
+    /* Wait for EEPROM's internal write cycle to complete */
     APP_EEPROM_STATE_WAIT_WRITE_COMPLETE,
 
     /* Check if user requested to read the temperature data from EEPROM */
     APP_EEPROM_STATE_CHECK_READ_REQ,
 
-    /* Read temperature data from EEPROM state */
+    /* Read temperature data from EEPROM */
     APP_EEPROM_STATE_READ,
 
-    /* Wait for temperature data read to complete state */
+    /* Wait for temperature data read to complete */
     APP_EEPROM_STATE_WAIT_READ_COMPLETE,
 
     /* Error state */
@@ -149,7 +149,7 @@ typedef struct
     /* Buffer to hold temperature data read from EEPROM */
     uint8_t rxBuffer[APP_EEPROM_NUM_TEMP_VALUES_TO_SAVE];
 
-    /* Buffer to temporarily hold temperature data */
+    /* Temperature value written to EEPROM */
     uint8_t temperature;
 
     /* Variable to hold transfer status of every transfer */
