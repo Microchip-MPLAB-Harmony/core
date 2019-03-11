@@ -77,9 +77,9 @@
     Application strings and buffers are be defined outside this structure.
 */
 
-APP2_DATA app2Data;
+static APP2_DATA app2Data;
 
-const static char message2Buffer[] = 
+const static char message2Buffer[] =
 "*** Console 2 ***\r\n"
 "*** USART Driver Echo Demo Application ***\r\n"
 "*** Type a character and observe it echo back ***\r\n"
@@ -90,24 +90,24 @@ const static char message2Buffer[] =
 // *****************************************************************************
 // *****************************************************************************
 
-void APP2_BufferEventHandler(
-    DRV_USART_BUFFER_EVENT bufferEvent, 
-    DRV_USART_BUFFER_HANDLE bufferHandle, 
-    uintptr_t context 
+static void APP2_USARTBufferEventHandler(
+    DRV_USART_BUFFER_EVENT bufferEvent,
+    DRV_USART_BUFFER_HANDLE bufferHandle,
+    uintptr_t context
 )
 {
     switch(bufferEvent)
     {
-        case DRV_USART_BUFFER_EVENT_COMPLETE:        
-            app2Data.completeStatus = true;
+        case DRV_USART_BUFFER_EVENT_COMPLETE:
+            app2Data.transferStatus = true;
             break;
-        
-        case DRV_USART_BUFFER_EVENT_ERROR:        
-            app2Data.errorStatus = true;
+
+        case DRV_USART_BUFFER_EVENT_ERROR:
+            app2Data.state = APP2_STATE_ERROR;
             break;
-        
-        default:        
-            break;        
+
+        default:
+            break;
     }
 }
 
@@ -116,11 +116,6 @@ void APP2_BufferEventHandler(
 // Section: Application Local Functions
 // *****************************************************************************
 // *****************************************************************************
-
-
-/* TODO:  Add any necessary local functions.
-*/
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -139,10 +134,10 @@ void APP2_BufferEventHandler(
 void APP2_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
-    app2Data.state = APP2_STATE_INIT;
-    app2Data.prevState = APP2_STATE_INIT;
-    app2Data.usartHandle = DRV_HANDLE_INVALID;
-    app2Data.bufferHandler = DRV_USART_BUFFER_HANDLE_INVALID;    
+    app2Data.state          = APP2_STATE_INIT;
+    app2Data.transferStatus = false;
+    app2Data.usartHandle    = DRV_HANDLE_INVALID;
+    app2Data.bufferHandle   = DRV_USART_BUFFER_HANDLE_INVALID;
 }
 
 
@@ -160,90 +155,95 @@ void APP2_Tasks ( void )
     switch ( app2Data.state )
     {
         /* Application's initial state. */
-        case APP2_STATE_INIT:        
-            app2Data.usartHandle = DRV_USART_Open(DRV_USART_INDEX_1, DRV_IO_INTENT_READWRITE);
+        case APP2_STATE_INIT:
 
+            app2Data.usartHandle = DRV_USART_Open(DRV_USART_INDEX_1, DRV_IO_INTENT_READWRITE);
             if (app2Data.usartHandle != DRV_HANDLE_INVALID)
             {
-                DRV_USART_BufferEventHandlerSet(app2Data.usartHandle, APP2_BufferEventHandler, 0);
-                app2Data.state = APP2_STATE_SEND_MESSAGE;
+                DRV_USART_BufferEventHandlerSet(app2Data.usartHandle, APP2_USARTBufferEventHandler, 0);
+                app2Data.state = APP2_STATE_TRANSMIT_MESSAGE;
             }
             else
             {
                 app2Data.state = APP2_STATE_ERROR;
             }
             break;
-        
-        case APP2_STATE_SEND_MESSAGE:        
-            DRV_USART_WriteBufferAdd(app2Data.usartHandle, (void*)message2Buffer, strlen(message2Buffer), &app2Data.bufferHandler);
-            if (app2Data.bufferHandler != DRV_USART_BUFFER_HANDLE_INVALID)
+
+        case APP2_STATE_TRANSMIT_MESSAGE:
+
+            DRV_USART_WriteBufferAdd(app2Data.usartHandle, (void*)message2Buffer, strlen(message2Buffer), &app2Data.bufferHandle);
+            if (app2Data.bufferHandle != DRV_USART_BUFFER_HANDLE_INVALID)
             {
-                app2Data.prevState = APP2_STATE_SEND_MESSAGE;
-                app2Data.state = APP2_STATE_WAIT;
+                app2Data.state = APP2_STATE_WAIT_MESSAGE_TRANSFER_COMPLETE;
             }
             else
             {
                 app2Data.state = APP2_STATE_ERROR;
-            }            
-            break;        
-
-        case APP2_STATE_RECEIVE_BUFFER:       
-            DRV_USART_ReadBufferAdd(app2Data.usartHandle, app2Data.readBuffer, APP2_DATA_SIZE, &app2Data.bufferHandler);
-            if (app2Data.bufferHandler != DRV_USART_BUFFER_HANDLE_INVALID)
-            {
-                app2Data.prevState = APP2_STATE_RECEIVE_BUFFER;
-                app2Data.state = APP2_STATE_WAIT;
             }
-            else
-            {
-                app2Data.state = APP2_STATE_ERROR;
-            }             
-            break;        
-
-        case APP2_STATE_SEND_BUFFER:        
-            DRV_USART_WriteBufferAdd(app2Data.usartHandle, app2Data.readBuffer, APP2_DATA_SIZE, &app2Data.bufferHandler);
-            if (app2Data.bufferHandler != DRV_USART_BUFFER_HANDLE_INVALID)
-            {
-                app2Data.prevState = APP2_STATE_SEND_BUFFER;
-                app2Data.state = APP2_STATE_WAIT;
-            }
-            else
-            {
-                app2Data.state = APP2_STATE_ERROR;
-            }                        
-            break;        
-
-        case APP2_STATE_WAIT:        
-            if(app2Data.completeStatus == true)
-            {
-                app2Data.completeStatus = false;
-
-                if(app2Data.prevState == APP2_STATE_SEND_MESSAGE || app2Data.prevState == APP2_STATE_SEND_BUFFER)
-                {
-                    LED_TOGGLE();
-                    app2Data.state = APP2_STATE_RECEIVE_BUFFER;
-                }
-                else if(app2Data.prevState == APP2_STATE_RECEIVE_BUFFER)
-                {
-                    app2Data.state = APP2_STATE_SEND_BUFFER;
-                }
-
-                app2Data.prevState = APP2_STATE_WAIT;
-            }
-            else if(app2Data.errorStatus == true)
-            {
-                app2Data.errorStatus = false;
-                app2Data.prevState = APP2_STATE_WAIT;
-                app2Data.state = APP2_STATE_ERROR;
-            }
-            break;        
-
-        case APP2_STATE_ERROR:        
             break;
-               
-        default:        
-            /* The default state should never be executed. */
-            break;        
+
+        case APP2_STATE_WAIT_MESSAGE_TRANSFER_COMPLETE:
+
+            if(app2Data.transferStatus == true)
+            {
+                app2Data.transferStatus = false;
+                app2Data.state = APP2_STATE_RECEIVE_DATA;
+            }
+            break;
+
+        case APP2_STATE_RECEIVE_DATA:
+
+            DRV_USART_ReadBufferAdd(app2Data.usartHandle, app2Data.readBuffer, APP2_DATA_SIZE, &app2Data.bufferHandle);
+            if (app2Data.bufferHandle != DRV_USART_BUFFER_HANDLE_INVALID)
+            {
+                app2Data.state = APP2_STATE_WAIT_RECEIVE_COMPLETE;
+            }
+            else
+            {
+                app2Data.state = APP2_STATE_ERROR;
+            }
+            break;
+
+        case APP2_STATE_WAIT_RECEIVE_COMPLETE:
+
+            if(app2Data.transferStatus == true)
+            {
+                app2Data.transferStatus = false;
+                app2Data.state = APP2_STATE_TRANSMIT_DATA;
+            }
+            break;
+
+        case APP2_STATE_TRANSMIT_DATA:
+
+            /* Echo the received data back on the terminal */
+            DRV_USART_WriteBufferAdd(app2Data.usartHandle, app2Data.readBuffer, APP2_DATA_SIZE, &app2Data.bufferHandle);
+            if (app2Data.bufferHandle != DRV_USART_BUFFER_HANDLE_INVALID)
+            {
+                app2Data.state = APP2_STATE_WAIT_TRANSMIT_COMPLETE;
+            }
+            else
+            {
+                app2Data.state = APP2_STATE_ERROR;
+            }
+            break;
+
+        case APP2_STATE_WAIT_TRANSMIT_COMPLETE:
+
+            if(app2Data.transferStatus == true)
+            {
+                app2Data.transferStatus = false;
+
+                LED_TOGGLE();
+
+                app2Data.state = APP2_STATE_RECEIVE_DATA;
+            }
+            break;
+
+        case APP2_STATE_ERROR:
+            break;
+
+        default:
+            break;
     }
 }
 

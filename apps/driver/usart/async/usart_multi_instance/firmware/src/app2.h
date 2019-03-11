@@ -88,15 +88,12 @@ extern "C" {
 typedef enum
 {
     APP2_STATE_INIT,
-
-    APP2_STATE_SEND_MESSAGE,
-
-    APP2_STATE_RECEIVE_BUFFER,
-
-    APP2_STATE_SEND_BUFFER,
-
-    APP2_STATE_WAIT,
-
+    APP2_STATE_TRANSMIT_MESSAGE,
+    APP2_STATE_WAIT_MESSAGE_TRANSFER_COMPLETE,
+    APP2_STATE_RECEIVE_DATA,
+    APP2_STATE_WAIT_RECEIVE_COMPLETE,
+    APP2_STATE_TRANSMIT_DATA,
+    APP2_STATE_WAIT_TRANSMIT_COMPLETE,
     APP2_STATE_ERROR
 
 } APP2_STATES;
@@ -117,13 +114,11 @@ typedef enum
 
 typedef struct
 {
-    APP2_STATES  state;
-    APP2_STATES  prevState;
-    DRV_HANDLE usartHandle;
-    DRV_USART_BUFFER_HANDLE bufferHandler;   
-    char readBuffer[APP2_DATA_SIZE];
-    volatile bool completeStatus;
-    volatile bool errorStatus;
+    APP2_STATES             state;
+    DRV_HANDLE              usartHandle;
+    DRV_USART_BUFFER_HANDLE bufferHandle;
+    char                    readBuffer[APP2_DATA_SIZE];
+    volatile bool           transferStatus;
 } APP2_DATA;
 
 
