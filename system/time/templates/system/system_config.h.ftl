@@ -17,6 +17,6 @@
 <#if core.CoreArchitecture == "CORTEX-M4">
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (188)
 </#if>
-<#if __PROCESSOR?contains("PIC32MZ")>
+<#if __PROCESSOR?contains("PIC32MZ") || __PROCESSOR?contains("PIC32MK") >
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (620)
 </#if>
