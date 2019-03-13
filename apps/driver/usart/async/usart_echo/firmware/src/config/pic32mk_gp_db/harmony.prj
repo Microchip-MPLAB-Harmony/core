@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Configuration>
+  <Configurator>
+    <Name dnOrder="0" value="pic32mk_gp_db"/>
+    <Processor dnOrder="1" value="PIC32MK1024GPE100"/>
+    <Harmony dnOrder="2" path="../../../../../.."/>
+    <Manifest dnOrder="3">
+      <Files dnOrder="0">
+        <File dnOrder="0">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">app.c</Name>
+          <LogicalPath dnOrder="2"/>
+          <PhysicalPath dnOrder="3">/../../</PhysicalPath>
+          <GeneratedChecksum dnOrder="4"/>
+          <UserChecksum dnOrder="5"/>
+        </File>
+        <File dnOrder="1">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">bsp.c</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/bsp/</LogicalPath>
+          <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">D26088F21E3A03BD0AF1C72C387BDD81</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D26088F21E3A03BD0AF1C72C387BDD81</UserChecksum>
+        </File>
+        <File dnOrder="2">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">drv_usart.c</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/driver/usart/</LogicalPath>
+          <PhysicalPath dnOrder="3">/driver/usart/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">A754177E7F56279F6B4690413399E28C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A754177E7F56279F6B4690413399E28C</UserChecksum>
+        </File>
+        <File dnOrder="3">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">drv_usart_local.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/driver/usart/</LogicalPath>
+          <PhysicalPath dnOrder="3">/driver/usart/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">3E394AAD9DF69A5CD82AD1D4DDFDE7E5</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3E394AAD9DF69A5CD82AD1D4DDFDE7E5</UserChecksum>
+        </File>
+        <File dnOrder="4">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">exceptions.c</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">259D9CFDA6FAEDA4B98F9DBE2D9AA082</GeneratedChecksum>
+          <UserChecksum dnOrder="5">259D9CFDA6FAEDA4B98F9DBE2D9AA082</UserChecksum>
+        </File>
+        <File dnOrder="5">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">initialization.c</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">960A4802C02F1E363A799CAAEA121D02</GeneratedChecksum>
+          <UserChecksum dnOrder="5">960A4802C02F1E363A799CAAEA121D02</UserChecksum>
+        </File>
+        <File dnOrder="6">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">interrupts.c</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">29C52FBDCFDDD00C7A2527059701E87B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">29C52FBDCFDDD00C7A2527059701E87B</UserChecksum>
+        </File>
+        <File dnOrder="7">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">main.c</Name>
+          <LogicalPath dnOrder="2"/>
+          <PhysicalPath dnOrder="3">/../../</PhysicalPath>
+          <GeneratedChecksum dnOrder="4"/>
+          <UserChecksum dnOrder="5"/>
+        </File>
+        <File dnOrder="8">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_clk.c</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/clk/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">AE67EF207FA1798CBAE6A93021590D8C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AE67EF207FA1798CBAE6A93021590D8C</UserChecksum>
+        </File>
+        <File dnOrder="9">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_evic.c</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/evic/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/evic/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">17D728885B1874A05CC49FDA399ED92F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">17D728885B1874A05CC49FDA399ED92F</UserChecksum>
+        </File>
+        <File dnOrder="10">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_gpio.c</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/gpio/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/gpio/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">87ACC902CDD2DAB2AF984FA3286AF48F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">87ACC902CDD2DAB2AF984FA3286AF48F</UserChecksum>
+        </File>
+        <File dnOrder="11">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_uart6.c</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/uart/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/uart/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">2927CD6989FDF890378D4DAA511DCCD7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2927CD6989FDF890378D4DAA511DCCD7</UserChecksum>
+        </File>
+        <File dnOrder="12">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">sys_dma.c</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/system/dma/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/dma/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">0A6893369C4DA0EE7906866EB6E1D310</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0A6893369C4DA0EE7906866EB6E1D310</UserChecksum>
+        </File>
+        <File dnOrder="13">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">sys_int.c</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/system/int/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/int/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">640A4B35B8CDB53BD8EA5077D81386BE</GeneratedChecksum>
+          <UserChecksum dnOrder="5">640A4B35B8CDB53BD8EA5077D81386BE</UserChecksum>
+        </File>
+        <File dnOrder="14">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">tasks.c</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">DE51BB8F6FDBC39FB049CB2A14E56B25</GeneratedChecksum>
+          <UserChecksum dnOrder="5">DE51BB8F6FDBC39FB049CB2A14E56B25</UserChecksum>
+        </File>
+        <File dnOrder="15">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">xc32_monitor.c</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/stdio/</LogicalPath>
+          <PhysicalPath dnOrder="3">/stdio/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">0CDCE9B6891797FCD2AEA243F841353F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0CDCE9B6891797FCD2AEA243F841353F</UserChecksum>
+        </File>
+        <File dnOrder="16">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">app.h</Name>
+          <LogicalPath dnOrder="2"/>
+          <PhysicalPath dnOrder="3">/../../</PhysicalPath>
+          <GeneratedChecksum dnOrder="4"/>
+          <UserChecksum dnOrder="5"/>
+        </File>
+        <File dnOrder="17">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">bsp.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/bsp/</LogicalPath>
+          <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">3FEAC95DFD4DE6C583AAACC2E785135D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3FEAC95DFD4DE6C583AAACC2E785135D</UserChecksum>
+        </File>
+        <File dnOrder="18">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">configuration.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">262028E35AD3243E0F0DB93E07D039D8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">262028E35AD3243E0F0DB93E07D039D8</UserChecksum>
+        </File>
+        <File dnOrder="19">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">definitions.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">A253D601974188ECC2CC943AD454AAB4</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A253D601974188ECC2CC943AD454AAB4</UserChecksum>
+        </File>
+        <File dnOrder="20">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">device.h</Name>
+          <LogicalPath dnOrder="2">packs/PIC32MK1024GPE100_DFP/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/PIC32MK1024GPE100_DFP/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">5D5C52527AB1435153DB9B50ADE6B79D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5D5C52527AB1435153DB9B50ADE6B79D</UserChecksum>
+        </File>
+        <File dnOrder="21">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">driver.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/driver/</LogicalPath>
+          <PhysicalPath dnOrder="3">/driver/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">1D2094DFA60F847FFD4E8153B6E78027</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1D2094DFA60F847FFD4E8153B6E78027</UserChecksum>
+        </File>
+        <File dnOrder="22">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">driver_common.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/driver/</LogicalPath>
+          <PhysicalPath dnOrder="3">/driver/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">CC7DFCC51CD25171A3E400E18969354F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">CC7DFCC51CD25171A3E400E18969354F</UserChecksum>
+        </File>
+        <File dnOrder="23">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">drv_usart.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/driver/usart/</LogicalPath>
+          <PhysicalPath dnOrder="3">/driver/usart/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">51C7B4F72276D0DF26BB9BF5CE4082D7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">51C7B4F72276D0DF26BB9BF5CE4082D7</UserChecksum>
+        </File>
+        <File dnOrder="24">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">drv_usart_definitions.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/driver/usart/</LogicalPath>
+          <PhysicalPath dnOrder="3">/driver/usart/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">F20C08158BE0F57915039A9DCB7B91FC</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F20C08158BE0F57915039A9DCB7B91FC</UserChecksum>
+        </File>
+        <File dnOrder="25">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">osal.h</Name>
+          <LogicalPath dnOrder="2">/osal/</LogicalPath>
+          <PhysicalPath dnOrder="3">/osal/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">F0AD88762263B7CB89B02AB4F5876059</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F0AD88762263B7CB89B02AB4F5876059</UserChecksum>
+        </File>
+        <File dnOrder="26">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">osal_definitions.h</Name>
+          <LogicalPath dnOrder="2">/osal/</LogicalPath>
+          <PhysicalPath dnOrder="3">/osal/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">0AC88C49E4585B606FD5AC6804F0C340</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0AC88C49E4585B606FD5AC6804F0C340</UserChecksum>
+        </File>
+        <File dnOrder="27">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">osal_impl_basic.h</Name>
+          <LogicalPath dnOrder="2">/osal/</LogicalPath>
+          <PhysicalPath dnOrder="3">/osal/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">AA54D5F27CBE04A817F6DD2B18F207A1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AA54D5F27CBE04A817F6DD2B18F207A1</UserChecksum>
+        </File>
+        <File dnOrder="28">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_clk.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/clk/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">3E3D4E58DB06EE9CC23A83588DC5276A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3E3D4E58DB06EE9CC23A83588DC5276A</UserChecksum>
+        </File>
+        <File dnOrder="29">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_evic.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/evic/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/evic/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">A1364CE634E5EDFC0CD338822137A62D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A1364CE634E5EDFC0CD338822137A62D</UserChecksum>
+        </File>
+        <File dnOrder="30">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_gpio.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/gpio/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/gpio/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">6156B67327FEDB5E4076EFD2AA53920E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6156B67327FEDB5E4076EFD2AA53920E</UserChecksum>
+        </File>
+        <File dnOrder="31">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_uart6.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/uart/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/uart/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">C91B2D97858305FDBFAD6D2D9C80C175</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C91B2D97858305FDBFAD6D2D9C80C175</UserChecksum>
+        </File>
+        <File dnOrder="32">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_uart_common.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/uart/</LogicalPath>
+          <PhysicalPath dnOrder="3">/peripheral/uart/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">ACBD2B4A88E233BD4B260CD136DA33A8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">ACBD2B4A88E233BD4B260CD136DA33A8</UserChecksum>
+        </File>
+        <File dnOrder="33">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_dma.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/system/dma/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/dma/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">4A7FFAD7ACF8378CEC16FBF2BC2368BE</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4A7FFAD7ACF8378CEC16FBF2BC2368BE</UserChecksum>
+        </File>
+        <File dnOrder="34">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_dma_mapping.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/system/dma/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/dma/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">42E557EFE638D7A736FB88AA84F085F1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">42E557EFE638D7A736FB88AA84F085F1</UserChecksum>
+        </File>
+        <File dnOrder="35">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_int.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/system/int/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/int/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">47330C2D8F204B2B69F8A86240A564B6</GeneratedChecksum>
+          <UserChecksum dnOrder="5">47330C2D8F204B2B69F8A86240A564B6</UserChecksum>
+        </File>
+        <File dnOrder="36">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_int_mapping.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/system/int/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/int/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">FC7B55936A09E0CA1395AE4DFB1A188F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">FC7B55936A09E0CA1395AE4DFB1A188F</UserChecksum>
+        </File>
+        <File dnOrder="37">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">system.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/system/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">BE95B4F134C5C929787B9DA6FDBF3501</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BE95B4F134C5C929787B9DA6FDBF3501</UserChecksum>
+        </File>
+        <File dnOrder="38">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">system_common.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/system/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">C3F5136D520DAC4416512EBFCCA023C3</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C3F5136D520DAC4416512EBFCCA023C3</UserChecksum>
+        </File>
+        <File dnOrder="39">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">system_module.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/system/</LogicalPath>
+          <PhysicalPath dnOrder="3">/system/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">1C75A8A6B60598A2FD0D533F57839B72</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1C75A8A6B60598A2FD0D533F57839B72</UserChecksum>
+        </File>
+        <File dnOrder="40">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">toolchain_specifics.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">5F0B87C955FBF569CBD67F4861B6B7AD</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5F0B87C955FBF569CBD67F4861B6B7AD</UserChecksum>
+        </File>
+        <File dnOrder="41">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">user.h</Name>
+          <LogicalPath dnOrder="2">config/pic32mk_gp_db/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4"/>
+          <UserChecksum dnOrder="5"/>
+        </File>
+      </Files>
+      <Settings dnOrder="1">
+        <Setting append="true" category="C32" delimiter=";" dnOrder="0" key="extra-include-directories" value="../src;../src/config/pic32mk_gp_db;../src/packs/PIC32MK1024GPE100_DFP;;../src/mips"/>
+        <Setting category="C32-LD" dnOrder="1" key="heap-size" value="0"/>
+        <Setting category="C32-LD" dnOrder="2" key="no-device-startup-code" value="true"/>
+      </Settings>
+    </Manifest>
+    <Settings dnOrder="4">
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.4.0"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MK_DFP\0.1\PIC32MK\atdf\PIC32MK1024GPE100.atdf"/>
+      <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
+      <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
+    </Settings>
+  </Configurator>
+</Configuration>
