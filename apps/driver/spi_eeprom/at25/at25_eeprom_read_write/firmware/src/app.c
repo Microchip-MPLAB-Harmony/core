@@ -141,6 +141,8 @@ void APP_Initialize ( void )
 
 void APP_Tasks ( void )
 {
+    uint32_t i;
+    
     /* Check the application's current state. */
     switch ( appData.state )
     {
@@ -164,7 +166,7 @@ void APP_Tasks ( void )
         case APP_STATE_WRITE:
 
             /* Fill up the write buffer */
-            for (uint32_t i = 0; i < BUFFER_SIZE; i++)
+            for (i = 0; i < BUFFER_SIZE; i++)
             {
                 appData.writeBuffer[i] = i;
             }
