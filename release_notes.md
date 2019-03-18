@@ -1,14 +1,17 @@
+![Microchip logo](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png)
+![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB® Harmony 3 Release Notes
 ## Core Release v3.2.1
 ### New Features
+
 - **New part support** - This release introduces initial support for [PIC32MK](https://www.microchip.com/design-centers/32-bit/pic-32-bit-mcus/pic32mk-family) family of 32-bit microcontrollers.
 
 - **Development kit and demo application support** - The following table provides number of demo application available for different development kits newly added in this release.
 
-   | Development kits | Bare-metal applications | RTOS applications |
+    | Development kits | Bare-metal applications | RTOS applications |
     | --- | --- | --- |
-     | [PIC32MK GP Development Kit](https://www.microchip.com/developmenttools/ProductDetails/dm320106) | 6 |3|
+    | [PIC32MK GP Development Kit](https://www.microchip.com/developmenttools/ProductDetails/dm320106) | 6 |3|
     | [ATSAMA5D2C-XULT](https://www.microchip.com/Developmenttools/ProductDetails/ATSAMA5D2C-XULT) | 13 |22|
     | [PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit (Crypto)](https://www.microchip.com/DevelopmentTools/ProductDetails/DM320010-C) | 7 |5|
     | [PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit](https://www.microchip.com/Developmenttools/ProductDetails/Dm320007) | 8 |11|
@@ -35,14 +38,15 @@ The current known issues are as follows:
 
 ### Development Tools
 
-* [MPLAB X IDE v5.15](https://www.microchip.com/mplab/mplab-x-ide)
-* [MPLAB XC32 C/C++ Compiler v2.15](https://www.microchip.com/mplab/compilers)
-* [IAR Embedded Workbench for ARM v8.32 or above](https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
-* MPLAB X IDE plug-ins:
-  * MPLAB Harmony Configurator (MHC) v3.2.0.0.
+* [MPLAB® X IDE v5.15](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB® XC32 C/C++ Compiler v2.15](https://www.microchip.com/mplab/compilers)
+* [IAR Embedded Workbench® for ARM® (v8.32 or above)](https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
+* MPLAB® X IDE plug-ins:
+  * MPLAB® Harmony Configurator (MHC) v3.2.0.0 and above.
 
 ## Core Release v3.2.0
 ### New Features
+
 - **New part support** - This release introduces initial support for [SAME5x](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-e-mcus), [SAMD5x](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-d-mcus), [SAMA5D2](https://www.microchip.com/design-centers/32-bit-mpus/microprocessors/sama5/sama5d2-series), [PIC32MZ EF](https://www.microchip.com/design-centers/32-bit/pic-32-bit-mcus/pic32mz-ef-family), [PIC32MZ DA](https://www.microchip.com/design-centers/32-bit/pic-32-bit-mcus/pic32mz-da-family) families of 32-bit microcontrollers.
 
 - **Driver and System Services** - The following table provides the list of newly added core components
@@ -54,11 +58,11 @@ The current known issues are as follows:
     | Driver | DRV_AT25DF | AT25DF SPI Flash Driver |
     | System Service | SYS\_CACHE | Cache System Service |
 
-      The SDHC Driver (DRV_SDHC) is renamed to SDMMC Driver (DRV_SDMMC)
+    The SDHC Driver (DRV_SDHC) is renamed to SDMMC Driver (DRV_SDMMC)
 
 - **Development kit and demo application support** - The following table provides number of demo application available for different development kits newly added in this release.
 
-   | Development kits | Bare-metal applications | RTOS applications |
+    | Development kits | Bare-metal applications | RTOS applications |
     | --- | --- | --- |
     | [ATSAMA5D2C-XULT](https://www.microchip.com/Developmenttools/ProductDetails/ATSAMA5D2C-XULT) | 13 |22|
     | [PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit (Crypto)](https://www.microchip.com/DevelopmentTools/ProductDetails/DM320010-C) | 7 |5|
@@ -87,19 +91,21 @@ The current known issues are as follows:
 
 ### Development Tools
 
-* [MPLAB X IDE v5.15](https://www.microchip.com/mplab/mplab-x-ide)
-* [MPLAB XC32 C/C++ Compiler v2.15](https://www.microchip.com/mplab/compilers)
-* [IAR Embedded Workbench for ARM v8.32 or above](https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
-* MPLAB X IDE plug-ins:
-  * MPLAB Harmony Configurator (MHC) v3.2.0.0.
+* [MPLAB® X IDE v5.15](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB® XC32 C/C++ Compiler v2.15](https://www.microchip.com/mplab/compilers)
+* [IAR Embedded Workbench® for ARM® (v8.32 or above)](https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
+* MPLAB® X IDE plug-ins:
+  * MPLAB® Harmony Configurator (MHC) v3.2.0.0 and above.
 
 ## Core Release v3.1.1
 ### New Features
+
 - Moved HTML doc to specific folder for better Github integration (https://microchip-mplab-harmony.github.io/core)
 - Minor documentation update.
 
 ## Core Release v3.1.0
 ### New Features
+
 - **New part support** - This release introduces initial support for [SAM C20/C21](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-c-mcus), [SAM D20/D21](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-d-mcus), [SAM S70](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-s-mcus), [SAM E70](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-e-mcus), [SAM V70/V71](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-v-mcus) families of 32-bit microcontrollers.
 
 - **Driver and System Services** - The following table provides the list of core components
@@ -146,11 +152,11 @@ The current known issues are as follows:
 
 - The ICD4 loads the reset line of the SAM V71 Xplained Ultra board. The ICD4 flex cable must be removed after programming the device to run the application.
 
-- Interactive help using the Show User Manual Entry in the Right-click menu for configuration options provided by this module is not yet available from within the MPLAB Harmony Configurator (MHC).  Please see the &quot;Configuring the Library&quot; section in the help documentation in the doc folder for this module instead.  Help is available in both CHM and PDF formats.
+- Interactive help using the Show User Manual Entry in the Right-click menu for configuration options provided by this module is not yet available from within the MPLAB® Harmony Configurator (MHC).  Please see the &quot;Configuring the Library&quot; section in the help documentation in the doc folder for this module instead.  Help is available in both CHM and PDF formats.
 
 ### Development Tools
 
-- [MPLAB X IDE v5.10](https://www.microchip.com/mplab/mplab-x-ide)
-- [MPLAB XC32 C/C++ Compiler v2.15](https://www.microchip.com/mplab/compilers)
-- MPLAB X IDE plug-ins:
-  - MPLAB Harmony Configurator (MHC) v3.1.
+* [MPLAB® X IDE v5.10](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB® XC32 C/C++ Compiler v2.15](https://www.microchip.com/mplab/compilers)
+* MPLAB® X IDE plug-ins:
+  * MPLAB® Harmony Configurator (MHC) v3.1.0 and above.
