@@ -158,13 +158,7 @@ typedef struct
     uint32_t numWriteBlocks;
 
     /* Number of read blocks*/
-    uint32_t numEraseBlocks;
-
-    /* Read Buffer */
-    uint32_t CACHE_ALIGN readBuffer[SDMMC_BUFFER_SIZE];
-
-    /* Write Buffer*/
-    uint32_t CACHE_ALIGN writeBuffer[SDMMC_BUFFER_SIZE];
+    uint32_t numEraseBlocks;    
     
 } APP_DATA;
 

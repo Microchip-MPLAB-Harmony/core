@@ -81,6 +81,11 @@ SYS_MEDIA_GEOMETRY* geometry = NULL;
 
 APP_DATA appData;
 
+/* Read Buffer */
+uint32_t BUFFER_ATTRIBUTES readBuffer[SDMMC_BUFFER_SIZE];
+
+/* Write Buffer*/
+uint32_t BUFFER_ATTRIBUTES writeBuffer[SDMMC_BUFFER_SIZE];
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
@@ -146,7 +151,7 @@ void APP_Initialize ( void )
 
     for (i = 0; i < SDMMC_BUFFER_SIZE; i++)
     {
-        appData.writeBuffer[i] = i;
+        writeBuffer[i] = i;
     }
 }
 
@@ -211,7 +216,7 @@ void APP_Tasks ( void )
 
         case APP_STATE_WRITE_MEMORY:
         
-            DRV_SDMMC_AsyncWrite(appData.sdmmcHandle, &appData.writeHandle, (void *)appData.writeBuffer, BLOCK_START, appData.numWriteBlocks);
+            DRV_SDMMC_AsyncWrite(appData.sdmmcHandle, &appData.writeHandle, (void *)writeBuffer, BLOCK_START, appData.numWriteBlocks);
 
             if (appData.writeHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
             {
@@ -230,9 +235,9 @@ void APP_Tasks ( void )
                 /* Write to the SD Card is complete */
                 appData.xfer_done = false;
                 
-                memset((void *)appData.readBuffer, 0, SDMMC_DATA_SIZE);
+                memset((void *)readBuffer, 0, SDMMC_DATA_SIZE);
 
-                DRV_SDMMC_AsyncRead(appData.sdmmcHandle, &appData.readHandle, (void *)appData.readBuffer, BLOCK_START, appData.numReadBlocks);
+                DRV_SDMMC_AsyncRead(appData.sdmmcHandle, &appData.readHandle, (void *)readBuffer, BLOCK_START, appData.numReadBlocks);
 
                 if (appData.readHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
                 {
@@ -251,7 +256,7 @@ void APP_Tasks ( void )
             if(appData.xfer_done == true)
             {
                 appData.xfer_done = false;
-                if (!memcmp(appData.writeBuffer, appData.readBuffer, SDMMC_DATA_SIZE))
+                if (!memcmp(writeBuffer, readBuffer, SDMMC_DATA_SIZE))
                 {
                     appData.state = APP_STATE_SUCCESS;
                 }
