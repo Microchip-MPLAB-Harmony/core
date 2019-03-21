@@ -151,9 +151,6 @@ typedef struct
     /* Application's current state */
     APP_STATES         state;
 
-    /* Application data buffer */
-    uint32_t           data[APP_DATA_LEN] DATA_BUFFER_ALIGN;
-
     uint32_t           nBytesWritten;
 
     uint32_t           nBytesRead;
