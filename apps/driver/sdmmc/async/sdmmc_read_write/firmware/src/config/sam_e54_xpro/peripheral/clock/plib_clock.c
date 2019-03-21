@@ -224,4 +224,5 @@ void CLOCK_Initialize (void)
     /* Configure the APBA Bridge Clocks */
     MCLK_REGS->MCLK_APBAMASK = 0x47ff;
 
+
 }
