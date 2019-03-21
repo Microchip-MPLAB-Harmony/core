@@ -25,10 +25,10 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SDMMC Instance ${INDEX?string} Initialization Data">
 
 /* SDMMC Client Objects Pool */
-static DRV_SDMMC_CLIENT_OBJ drvSDMMC${INDEX?string}ClientObjPool[DRV_SDMMC_CLIENTS_NUMBER_IDX${INDEX?string}] = {0};
+static DRV_SDMMC_CLIENT_OBJ drvSDMMC${INDEX?string}ClientObjPool[DRV_SDMMC_CLIENTS_NUMBER_IDX${INDEX?string}];
 
 /* SDMMC Transfer Objects Pool */
-static DRV_SDMMC_BUFFER_OBJ drvSDMMC${INDEX?string}BufferObjPool[DRV_SDMMC_QUEUE_SIZE_IDX${INDEX?string}] = {0};
+static DRV_SDMMC_BUFFER_OBJ drvSDMMC${INDEX?string}BufferObjPool[DRV_SDMMC_QUEUE_SIZE_IDX${INDEX?string}];
 
 
 const DRV_SDMMC_PLIB_API drvSDMMC${INDEX?string}PlibAPI = {
@@ -67,8 +67,9 @@ const DRV_SDMMC_INIT drvSDMMC${INDEX?string}InitData =
     .bufferObjPoolSize              = DRV_SDMMC_QUEUE_SIZE_IDX${INDEX?string},
     .clientObjPool                  = (uintptr_t)&drvSDMMC${INDEX?string}ClientObjPool[0],
     .numClients                     = DRV_SDMMC_CLIENTS_NUMBER_IDX${INDEX?string},
-    .isCardDetectEnabled            = false,
-    .isWriteProtectCheckEnabled     = false,
+    .cardDetectionMethod            = DRV_SDMMC_CARD_DETECTION_METHOD_IDX${INDEX?string},
+    .cardDetectionPollingIntervalMs = ${DRV_SDMMC_POLLING_INTERVAL},
+    .isWriteProtectCheckEnabled     = ${DRV_SDMMC_WP_CHECK_ENABLE?c},
     .speedMode                      = (DRV_SDMMC_SPEED_MODE)DRV_SDMMC_CONFIG_SPEED_MODE_IDX${INDEX?string},
     .busWidth                       = (DRV_SDMMC_BUS_WIDTH)DRV_SDMMC_CONFIG_BUS_WIDTH_IDX${INDEX?string},
 <#if DRV_SDMMC_FS_ENABLE == true>

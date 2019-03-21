@@ -54,7 +54,11 @@
 <#else>
     <#lt>#define DRV_SDMMC_CONFIG_BUS_WIDTH_IDX${INDEX?string}                  DRV_SDMMC_CONFIG_BUS_WIDTH_4_BIT
 </#if>
-
+<#if DRV_SDMMC_CARD_DETECTION_METHOD == "Use Polling">
+    <#lt>#define DRV_SDMMC_CARD_DETECTION_METHOD_IDX${INDEX?string}             DRV_SDMMC_CONFIG_CD_METHOD_USE_POLLING
+<#else>
+    <#lt>#define DRV_SDMMC_CARD_DETECTION_METHOD_IDX${INDEX?string}             DRV_SDMMC_CONFIG_CD_METHOD_USE_SDCD_PIN
+</#if>
 
 <#if HarmonyCore.SELECT_RTOS != "BareMetal">
     <#lt>/* SDMMC Driver Instance ${INDEX?string} RTOS Configurations*/

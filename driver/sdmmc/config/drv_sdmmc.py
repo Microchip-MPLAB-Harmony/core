@@ -23,6 +23,14 @@
 *****************************************************************************"""
 
 global sdmmcFsEnable
+global sdmmcWPCheckEnable
+global sdmmcCardDetectionMethod
+global sdmmcPLIBRemoteID
+
+sdmmcPLIBRemoteID = None
+
+cardDetectMethodComboValuesSDHC = ["Use Polling", "Use SDCD Pin"]
+cardDetectMethodComboValuesHSMCI = ["Use Polling"]
 
 def showRTOSMenu(symbol,event):
     if (event["value"] != "BareMetal"):
@@ -45,8 +53,70 @@ def setBufferSize(symbol, event):
     else:
         symbol.setReadOnly(False)
 
+def setVisibleCDMethodForSDHC(symbol, event):
+    plibName = event["value"]
+    symbol.clearValue()
+    if (plibName[:4] == "SDHC"):
+        symbol.setVisible(True)
+        symbol.setValue("Use SDCD Pin", 1)
+    else:
+        symbol.setVisible(False)
+
+def setVisibleCDMethodForHSMCI(symbol, event):
+    plibName = event["value"]
+    symbol.clearValue()
+    if (plibName[:5] == "HSMCI"):
+        symbol.setVisible(True)
+        symbol.setValue("Use Polling", 1)
+    else:
+        symbol.setVisible(False)
+
+def setWPCheckVisible(symbol, event):
+    plibName = event["value"]
+    if (plibName[:4] == "SDHC"):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
+
+def setCDMethod(symbol, event):
+    symbol.setValue(event["value"], 2)
+
+def setCDCommentVisible(symbol, event):
+    symbol.setVisible(event["value"])
+
+def setWPCommentVisible(symbol, event):
+    symbol.setVisible(event["value"])
+
+def setPLIBWPEN(symbol, event):
+    global sdmmcWPCheckEnable
+    global sdmmcPLIBRemoteID
+
+    if (sdmmcPLIBRemoteID != None):
+        plibSDWPEN = Database.getSymbolValue(sdmmcPLIBRemoteID, "SDHC_SDWPEN")
+        if (plibSDWPEN != None):
+            Database.setSymbolValue(sdmmcPLIBRemoteID, "SDHC_SDWPEN", sdmmcWPCheckEnable.getValue(), 2)
+            symbol.setValue(sdmmcWPCheckEnable.getValue(), 2)
+
+def setPLIBCDEN(symbol, event):
+    global sdmmcCardDetectionMethod
+    global sdmmcPLIBRemoteID
+
+    if (sdmmcPLIBRemoteID != None):
+        plibSDCDEN = Database.getSymbolValue(sdmmcPLIBRemoteID, "SDHC_SDCDEN")
+        if (plibSDCDEN != None):
+            Database.setSymbolValue(sdmmcPLIBRemoteID, "SDHC_SDCDEN", sdmmcCardDetectionMethod.getValue() == "Use SDCD Pin", 2)
+            symbol.setValue(sdmmcCardDetectionMethod.getValue() == "Use SDCD Pin", 2)
+
+def setVisiblePollingInterval(symbol, event):
+    if (event["value"] == "Use Polling"):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
+
 def instantiateComponent(sdmmcComponent, index):
     global sdmmcFsEnable
+    global sdmmcWPCheckEnable
+    global sdmmcCardDetectionMethod
 
     # Enable dependent Harmony core components
     Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
@@ -91,6 +161,59 @@ def instantiateComponent(sdmmcComponent, index):
     sdmmcProtocol.setLabel("Protocol")
     sdmmcProtocol.setDefaultValue("SD")
     sdmmcProtocol.setReadOnly(True)
+
+    sdmmcCardDetectionMethodForSDHC = sdmmcComponent.createComboSymbol("DRV_SDMMC_CARD_DETECTION_METHOD_SDHC", None, cardDetectMethodComboValuesSDHC)
+    sdmmcCardDetectionMethodForSDHC.setLabel("Card Detection Method")
+    sdmmcCardDetectionMethodForSDHC.setDefaultValue("Use SDCD Pin")
+    sdmmcCardDetectionMethodForSDHC.setVisible(False)
+    sdmmcCardDetectionMethodForSDHC.setDependencies(setVisibleCDMethodForSDHC, ["DRV_SDMMC_PLIB"])
+
+    sdmmcCardDetectionMethodForHSMCI = sdmmcComponent.createComboSymbol("DRV_SDMMC_CARD_DETECTION_METHOD_HSMCI", None, cardDetectMethodComboValuesHSMCI)
+    sdmmcCardDetectionMethodForHSMCI.setLabel("Card Detection Method")
+    sdmmcCardDetectionMethodForHSMCI.setDefaultValue("Use Polling")
+    sdmmcCardDetectionMethodForHSMCI.setVisible(False)
+    sdmmcCardDetectionMethodForHSMCI.setDependencies(setVisibleCDMethodForHSMCI, ["DRV_SDMMC_PLIB"])
+
+    sdmmcCardDetectionMethod = sdmmcComponent.createStringSymbol("DRV_SDMMC_CARD_DETECTION_METHOD", None)
+    sdmmcCardDetectionMethod.setLabel("Selected Card Detection Method")
+    sdmmcCardDetectionMethod.setVisible(False)
+    sdmmcCardDetectionMethod.setDefaultValue("None")
+    sdmmcCardDetectionMethod.setDependencies(setCDMethod, ["DRV_SDMMC_CARD_DETECTION_METHOD_SDHC" , "DRV_SDMMC_CARD_DETECTION_METHOD_HSMCI"])
+
+    sdmmcPlibSdcdEnable = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_PLIB_SDCD_ENABLE", None)
+    sdmmcPlibSdcdEnable.setLabel("Enable PLIB SDCD?")
+    sdmmcPlibSdcdEnable.setVisible(False)
+    sdmmcPlibSdcdEnable.setDefaultValue(sdmmcCardDetectionMethod.getValue() == "Use SDCD Pin")
+    sdmmcPlibSdcdEnable.setDependencies(setPLIBCDEN, ["DRV_SDMMC_CARD_DETECTION_METHOD", "DRV_SDMMC_PLIB"])
+
+    sdmmcPollingInterval = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_POLLING_INTERVAL", None)
+    sdmmcPollingInterval.setLabel("Polling Interval (ms)")
+    sdmmcPollingInterval.setVisible(False)
+    sdmmcPollingInterval.setMin(1)
+    sdmmcPollingInterval.setDefaultValue(100)
+    sdmmcPollingInterval.setDependencies(setVisiblePollingInterval, ["DRV_SDMMC_CARD_DETECTION_METHOD"])
+
+    sdmmcCDComment = sdmmcComponent.createCommentSymbol("DRV_SDMMC_SDCDEN_COMMENT", None)
+    sdmmcCDComment.setLabel("!!!Configure SDCD pin in Pin Configuration!!!")
+    sdmmcCDComment.setVisible(sdmmcPlibSdcdEnable.getValue())
+    sdmmcCDComment.setDependencies(setCDCommentVisible, ["DRV_SDMMC_PLIB_SDCD_ENABLE"])
+
+    sdmmcWPCheckEnable = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_WP_CHECK_ENABLE", None)
+    sdmmcWPCheckEnable.setLabel("Enable Write Protection Check?")
+    sdmmcWPCheckEnable.setDefaultValue(False)
+    sdmmcWPCheckEnable.setVisible(False)
+    sdmmcWPCheckEnable.setDependencies(setWPCheckVisible, ["DRV_SDMMC_PLIB"])
+
+    sdmmcPlibSdwpEnable = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_PLIB_SDWP_ENABLE", None)
+    sdmmcPlibSdwpEnable.setLabel("Enable PLIB SDWP?")
+    sdmmcPlibSdwpEnable.setVisible(False)
+    sdmmcPlibSdwpEnable.setDefaultValue(sdmmcWPCheckEnable.getValue())
+    sdmmcPlibSdwpEnable.setDependencies(setPLIBWPEN, ["DRV_SDMMC_WP_CHECK_ENABLE", "DRV_SDMMC_PLIB"])
+
+    sdmmcWPComment = sdmmcComponent.createCommentSymbol("DRV_SDMMC_SDWPEN_COMMENT", None)
+    sdmmcWPComment.setLabel("!!!Configure SDWP pin in Pin Configuration!!!")
+    sdmmcWPComment.setVisible(sdmmcPlibSdwpEnable.getValue())
+    sdmmcWPComment.setDependencies(setWPCommentVisible, ["DRV_SDMMC_PLIB_SDWP_ENABLE"])
 
     sdmmcFsEnable = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_FS_ENABLE", None)
     sdmmcFsEnable.setLabel("File system for SDMMC Driver Enabled")
@@ -169,6 +292,15 @@ def instantiateComponent(sdmmcComponent, index):
     sdmmcSystemRtosTasksFile.setEnabled((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"))
     sdmmcSystemRtosTasksFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS"])
 
+    sdmmcSourceFile = sdmmcComponent.createFileSymbol("DRV_SDMMC_C", None)
+    sdmmcSourceFile.setSourcePath("driver/sdmmc/templates/drv_sdmmc.c.ftl")
+    sdmmcSourceFile.setOutputName("drv_sdmmc.c")
+    sdmmcSourceFile.setDestPath("/driver/sdmmc/src/")
+    sdmmcSourceFile.setProjectPath("config/" + configName + "/driver/sdmmc/")
+    sdmmcSourceFile.setType("SOURCE")
+    sdmmcSourceFile.setMarkup(True)
+    sdmmcSourceFile.setOverwrite(True)
+
 def onCapabilityConnected(connectionInfo):
     global sdmmcFsEnable
 
@@ -194,7 +326,7 @@ def onCapabilityDisconnected(connectionInfo):
 
 def onAttachmentConnected(source, target):
     #global sdcardFsEnable
-    global isDMAPresent
+    global sdmmcPLIBRemoteID
 
     localComponent = source["component"]
     remoteComponent = target["component"]
@@ -210,13 +342,13 @@ def onAttachmentConnected(source, target):
 
     # For Dependency Connected (SDHC/HSMCI)
     if (connectID == "drv_sdmmc_SDHC_dependency"):
+        sdmmcPLIBRemoteID = remoteID
         plibUsed = localComponent.getSymbolByID("DRV_SDMMC_PLIB")
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper(), 2)
 
 def onAttachmentDisconnected(source, target):
     #global sdcardFsEnable
-    global isDMAPresent
 
     localComponent = source["component"]
     remoteComponent = target["component"]
