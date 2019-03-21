@@ -64,6 +64,7 @@ extern "C" {
 #define LED_ON()        LED1_On()
 #define LED_OFF()       LED1_Off()
 #define LED_TOGGLE()    LED1_Toggle()
+#define BUFFER_ATTRIBUTES       CACHE_ALIGN
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
