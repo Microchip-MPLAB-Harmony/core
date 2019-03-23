@@ -857,44 +857,19 @@ bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
   Remarks:
 
 */
-bool _DRV_SDSPI_CmdResponseTimerStart(
+bool _DRV_SDSPI_CardDetectPollingTimerStart(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t period
 )
 {
     bool isSuccess = false;
-    dObj->cmdRespTmrExpired = false;
+    dObj->cardPollingTimerExpired = false;
 
-    dObj->cmdRespTmrHandle = SYS_TIME_CallbackRegisterMS(DRV_SDSPI_TimerCallback,
-             (uintptr_t)&dObj->cmdRespTmrExpired, period, SYS_TIME_SINGLE);
+    dObj->cardPollingTmrHandle = SYS_TIME_CallbackRegisterMS(DRV_SDSPI_TimerCallback,
+             (uintptr_t)&dObj->cardPollingTimerExpired, period, SYS_TIME_SINGLE);
 
-    if (dObj->cmdRespTmrHandle != SYS_TIME_HANDLE_INVALID)
+    if (dObj->cardPollingTmrHandle != SYS_TIME_HANDLE_INVALID)
     {
-        isSuccess = true;
-    }
-
-    return isSuccess;
-}
-
-// *****************************************************************************
-/* Command Response Timer Stop
-
-  Summary:
-    Stops the command-response timer.
-
-  Description:
-
-  Remarks:
-
-*/
-
-bool _DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj )
-{
-    bool isSuccess = false;
-
-    if (dObj->cmdRespTmrHandle != SYS_TIME_HANDLE_INVALID)
-    {
-        SYS_TIME_TimerDestroy(dObj->cmdRespTmrHandle);
         isSuccess = true;
     }
 

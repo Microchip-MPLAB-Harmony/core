@@ -29,8 +29,9 @@
 sdspiFsEnable = None
 
 global isDMAPresent
-
 global sort_alphanumeric
+
+cardDetectMethodComboValues = ["Use Polling"]
 
 def sort_alphanumeric(l):
     import re
@@ -147,6 +148,16 @@ def instantiateComponent(sdspiComponent, index):
     sdspiSymNumClients.setMin(1)
     sdspiSymNumClients.setMax(25000000)
     sdspiSymNumClients.setDefaultValue(5000000)
+
+    sdspiCardDetectionMethod = sdspiComponent.createComboSymbol("DRV_SDSPI_CARD_DETECTION_METHOD", None, cardDetectMethodComboValues)
+    sdspiCardDetectionMethod.setLabel("Card Detection Method")
+    sdspiCardDetectionMethod.setDefaultValue("Use Polling")
+    sdspiCardDetectionMethod.setReadOnly(True)
+
+    sdspiPollingInterval = sdspiComponent.createIntegerSymbol("DRV_SDSPI_POLLING_INTERVAL", None)
+    sdspiPollingInterval.setLabel("Polling Interval (ms)")
+    sdspiPollingInterval.setMin(1)
+    sdspiPollingInterval.setDefaultValue(1000)
 
     sdspiFsEnable = sdspiComponent.createBooleanSymbol("DRV_SDSPI_FS_ENABLE", None)
     sdspiFsEnable.setLabel("File system for SDSPI Driver Enabled")

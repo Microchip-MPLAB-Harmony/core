@@ -68,7 +68,7 @@
 
 #define _DRV_SDSPI_INSTANCE_GET(object)            &gDrvSDSPIObj[object]
 
-#define _DRV_SDSPI_FLOATING_BUS_TIMEOUT            (1000)
+#define _DRV_SDSPI_COMMAND_RESPONSE_TRIES           (8)
 #define _DRV_SDSPI_R1B_RESP_TIMEOUT                (100)
 
 #define _DRV_SDSPI_READ_TIMEOUT_IN_MS              (250)
@@ -89,7 +89,7 @@
 #define _DRV_SDSPI_SPI_INITIAL_SPEED                            (400000)
 
 /* No of bytes to be read for SD card CSD. */
-#define _DRV_SDSPI_CSD_READ_SIZE                                (19)
+#define _DRV_SDSPI_CSD_READ_SIZE                                (20)
 
 /* SD card V2 device type Check. */
 #define _DRV_SDSPI_CHECK_V2_DEVICE                              (0xC0)
@@ -164,6 +164,8 @@ typedef enum
 typedef enum
 {
     /* Initial state of the task, check for SD card attach/detach */
+    DRV_SDSPI_TASK_START_POLLING_TIMER,
+
     DRV_SDSPI_TASK_CHECK_DEVICE,
 
     /* If the card is attached, initialize */
@@ -356,6 +358,10 @@ typedef enum
 {
     /* Initial state */
     DRV_SDSPI_CMD_DETECT_START_INIT,
+
+    DRV_SDSPI_CMD_DETECT_START_POLLING_TIMER,
+
+    DRV_SDSPI_CMD_DETECT_WAIT_POLL_TIMER_EXPIRY,
 
     DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD,
 
@@ -626,9 +632,9 @@ typedef struct
      * on the SPI bus. Buffer must be cache line aligned when using DMA with cache or
      * the buffer must be in coherent memory region */
 <#if __PROCESSOR?matches("PIC32M.*") == true>
-    uint8_t                             cmdRespBuffer[32];
+    volatile uint8_t                    cmdRespBuffer[32];
 <#else>
-    CACHE_ALIGN  uint8_t                cmdRespBuffer[32];
+    volatile CACHE_ALIGN  uint8_t       cmdRespBuffer[32];
 </#if>
 
     /* Flag to indicate this object is in use  */
@@ -674,12 +680,12 @@ typedef struct
     DRV_SDSPI_INIT_STATE                mediaInitState;
 
     /* Handle to the timer used for command timeouts */
-    SYS_TIME_HANDLE                     cmdRespTmrHandle;
+    SYS_TIME_HANDLE                     cardPollingTmrHandle;
 
     /* Handle to the timer used for read/write transaction timeouts. */
     SYS_TIME_HANDLE                     timerHandle;
 
-    volatile bool                       cmdRespTmrExpired;
+    volatile bool                       cardPollingTimerExpired;
 
     volatile bool                       timerExpired;
 
@@ -703,6 +709,8 @@ typedef struct
 
     /* Speed at which SD card communication should happen */
     uint32_t                            sdcardSpeedHz;
+
+    uint32_t                            pollingIntervalMs;
 
     uint32_t                            blockStartAddress;
 

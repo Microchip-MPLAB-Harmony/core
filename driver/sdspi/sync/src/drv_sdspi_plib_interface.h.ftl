@@ -208,11 +208,11 @@ bool _DRV_SDSPI_SPIRead(
 );
 
 // *****************************************************************************
-/* Command Response Timer Start
+/* Card Insertion/Removal Polling Timer
 
   Summary:
     Registers an event handler with the Timer System Service and starts the
-    command-response timer.
+    timer.
 
   Description:
     The registered event handler is called when the time period elapses.
@@ -221,24 +221,10 @@ bool _DRV_SDSPI_SPIRead(
 
 */
 
-bool _DRV_SDSPI_CmdResponseTimerStart(
+bool _DRV_SDSPI_CardDetectPollingTimerStart(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t period
 );
-
-// *****************************************************************************
-/* Command Response Timer Stop
-
-  Summary:
-    Stops the command-response timer.
-
-  Description:
-
-  Remarks:
-
-*/
-
-bool _DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj );
 
 // *****************************************************************************
 /* SD Card Timer Start

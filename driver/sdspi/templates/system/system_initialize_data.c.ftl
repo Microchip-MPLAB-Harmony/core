@@ -120,6 +120,8 @@ const DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
     .chipSelectPin          = DRV_SDSPI_CHIP_SELECT_PIN_IDX${INDEX?string},
 
     .sdcardSpeedHz          = DRV_SDSPI_SPEED_HZ_IDX${INDEX?string},
+    
+    .pollingIntervalMs      = DRV_SDSPI_POLLING_INTERVAL_MS_IDX${INDEX?string},
 
 <#if DRV_SDSPI_ENABLE_WRITE_PROTECT_CHECKING == true>
     .writeProtectPin        = DRV_SDSPI_WRITE_PROTECT_PIN_IDX${INDEX?string},

@@ -248,6 +248,8 @@ typedef struct
     /* Speed at which SD card communication should happen */
     uint32_t                        sdcardSpeedHz;
 
+    uint32_t                        pollingIntervalMs;
+
 } DRV_SDSPI_INIT;
 
 
