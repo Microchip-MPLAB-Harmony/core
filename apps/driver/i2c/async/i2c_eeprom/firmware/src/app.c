@@ -81,7 +81,7 @@ APP_DATA appData;
 
 static const uint8_t testTxData[APP_WRITE_DATA_LENGTH] = 
 {
-	APP_AT24MAC_MEMORY_ADDR, 
+	APP_AT24MAC_MEMORY_ADDR1, APP_AT24MAC_MEMORY_ADDR2, 
     'A', 'T', 'S', 'A', 'M', ' ', 'T', 'W', 'I', 'H', 'S', ' ', 'D', 'e', 'm', 'o',
 };
 
@@ -292,7 +292,7 @@ void APP_Tasks ( void )
                 appData.drvI2CHandle,
                 APP_AT24MAC_DEVICE_ADDR,
                 (void *)&testTxData[0],
-                1,
+                2,
                 (void *)&testRxData[0],
                 APP_READ_DATA_LENGTH,
                 &appData.transferHandle
@@ -322,7 +322,7 @@ void APP_Tasks ( void )
         case APP_STATE_DATA_VERIFY:
             
             /* Compare data written and data read */
-            if (memcmp(&testTxData[1], &testRxData[0], APP_READ_DATA_LENGTH) == 0)
+            if (memcmp(&testTxData[2], &testRxData[0], APP_READ_DATA_LENGTH) == 0)
             {                                       
                 appData.state = APP_STATE_SUCCESS;
             }            
