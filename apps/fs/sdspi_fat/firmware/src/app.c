@@ -119,7 +119,7 @@ APP_DATA DATA_BUFFER_ALIGN appData;
 void APP_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
-    appData.state = APP_MOUNT_DISK;            
+    appData.state = APP_WAIT_SWITCH_PRESS;            
 }
 
 
@@ -136,6 +136,12 @@ void APP_Tasks ( void )
     /* Check the application's current state. */
     switch ( appData.state )
     {
+        case APP_WAIT_SWITCH_PRESS:
+            if (SWITCH_GET() == SWITCH_STATE_PRESSED)
+            {
+                appData.state = APP_MOUNT_DISK;
+            }
+            break;
         case APP_MOUNT_DISK:
             if(SYS_FS_Mount(SDCARD_DEV_NAME, SDCARD_MOUNT_NAME, FAT, 0, NULL) != 0)
             {

@@ -92,7 +92,9 @@ typedef enum
 {
     /* Application's state machine's initial state. */
     /* The app mounts the disk */
-    APP_MOUNT_DISK = 0,
+    APP_WAIT_SWITCH_PRESS = 0,
+            
+    APP_MOUNT_DISK,
 
     /* The app unmounts the disk */
     APP_UNMOUNT_DISK,
