@@ -86,7 +86,7 @@ static const DRV_SDSPI_CMD_OBJ gDrvSDSPICmdTable[] =
 
 /* This is the driver instance object array. */
 <#if __PROCESSOR?matches("PIC32M.*") == true>
-static __COHERENT DRV_SDSPI_OBJ gDrvSDSPIObj[DRV_SDSPI_INSTANCES_NUMBER];
+static CACHE_ALIGN DRV_SDSPI_OBJ gDrvSDSPIObj[DRV_SDSPI_INSTANCES_NUMBER];
 <#else>
 static DRV_SDSPI_OBJ gDrvSDSPIObj[DRV_SDSPI_INSTANCES_NUMBER];
 </#if>
