@@ -65,7 +65,7 @@
 
 /* This is the driver instance object array. */
 <#if __PROCESSOR?matches("PIC32M.*") == true>
-static __COHERENT DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER];
+static CACHE_ALIGN DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER];
 <#else>
 static DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER];
 <#if core.DMA_ENABLE?has_content>
