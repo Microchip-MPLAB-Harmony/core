@@ -32,15 +32,15 @@ def instantiateComponent(spiComponent, index):
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
 
     # Enable "Enable System Ports" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True)
 
     # Enable "ENABLE_SYS_DMA" option in MHC
     if Database.getSymbolValue("core", "DMA_ENABLE") == None:
@@ -50,7 +50,7 @@ def instantiateComponent(spiComponent, index):
 
         # Enable "Enable System DMA" option in MHC
         if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_DMA") == False):
-            Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
+            Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True)
 
     spiSymIndex = spiComponent.createIntegerSymbol("INDEX", None)
     spiSymIndex.setVisible(False)
@@ -63,7 +63,7 @@ def instantiateComponent(spiComponent, index):
 
     spiGlobalMode = spiComponent.createStringSymbol("DRV_SPI_MODE", None)
     spiGlobalMode.setLabel("**** Driver Mode Update ****")
-    spiGlobalMode.setValue(Database.getSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE"), 1)
+    spiGlobalMode.setValue(Database.getSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE"))
     spiGlobalMode.setVisible(False)
     spiGlobalMode.setDependencies(spiDriverMode, ["drv_spi.DRV_SPI_COMMON_MODE"])
 
@@ -173,7 +173,7 @@ def instantiateComponent(spiComponent, index):
 ################################################################################
 
 def spiDriverMode(symbol, event):
-    symbol.setValue(event["value"], 1)
+    symbol.setValue(event["value"])
 
 def onAttachmentConnected(source, target):
     global isDMAPresent
@@ -187,9 +187,9 @@ def onAttachmentConnected(source, target):
     if connectID == "drv_spi_SPI_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_SPI_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(remoteID.upper(), 1)
+        plibUsed.setValue(remoteID.upper())
 
-        Database.setSymbolValue(remoteID, "SPI_DRIVER_CONTROLLED", True, 1)
+        Database.setSymbolValue(remoteID, "SPI_DRIVER_CONTROLLED", True)
 
         # Do not change the order as DMA Channels needs to be allocated
         # after setting the plibUsed symbol
@@ -216,7 +216,7 @@ def onAttachmentDisconnected(source, target):
 
         plibUsed = localComponent.getSymbolByID("DRV_SPI_PLIB")
         plibUsed.clearValue()
-        Database.setSymbolValue(remoteID, "SPI_DRIVER_CONTROLLED", False, 1)
+        Database.setSymbolValue(remoteID, "SPI_DRIVER_CONTROLLED", False)
 
 def requestAndAssignTxDMAChannel(symbol, event):
     global drvSpiInstanceSpace
@@ -228,16 +228,16 @@ def requestAndAssignTxDMAChannel(symbol, event):
     dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
 
     if event["value"] == False:
-        Database.setSymbolValue("core", dmaRequestID, False, 2)
+        Database.setSymbolValue("core", dmaRequestID, False)
         spiTXDMAChannelComment.setVisible(False)
         symbol.setVisible(False)
     else:
         symbol.setVisible(True)
-        Database.setSymbolValue("core", dmaRequestID, True, 2)
+        Database.setSymbolValue("core", dmaRequestID, True)
 
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
-    symbol.setValue(channel, 2)
+    symbol.setValue(channel)
 
 def requestAndAssignRxDMAChannel(symbol, event):
     global drvSpiInstanceSpace
@@ -249,16 +249,16 @@ def requestAndAssignRxDMAChannel(symbol, event):
     dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
 
     if event["value"] == False:
-        Database.setSymbolValue("core", dmaRequestID, False, 2)
+        Database.setSymbolValue("core", dmaRequestID, False)
         spiRXDMAChannelComment.setVisible(False)
         symbol.setVisible(False)
     else:
         symbol.setVisible(True)
-        Database.setSymbolValue("core", dmaRequestID, True, 2)
+        Database.setSymbolValue("core", dmaRequestID, True)
 
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
-    symbol.setValue(channel, 2)
+    symbol.setValue(channel)
 
 def requestDMAComment(symbol, event):
     global spiTXRXDMA
@@ -278,8 +278,8 @@ def destroyComponent(spiComponent):
         dmaTxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
         dmaRxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
 
-        Database.setSymbolValue("core", dmaTxID, False, 2)
-        Database.setSymbolValue("core", dmaRxID, False, 2)
+        Database.setSymbolValue("core", dmaTxID, False)
+        Database.setSymbolValue("core", dmaRxID, False)
 
 def asyncModeOptions(symbol, event):
     if (event["value"] == "Asynchronous"):

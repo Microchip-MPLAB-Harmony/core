@@ -82,13 +82,13 @@ def requestAndAssignDMAChannel(symbol, event):
     symbol.setVisible(event["value"])
 
     if event["value"] == False:
-        Database.setSymbolValue("core", dmaRequestID, False, 2)
+        Database.setSymbolValue("core", dmaRequestID, False)
     else:
-        Database.setSymbolValue("core", dmaRequestID, True, 2)
+        Database.setSymbolValue("core", dmaRequestID, True)
 
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
-    symbol.setValue(channel, 2)
+    symbol.setValue(channel)
 
 def instantiateComponent(sdspiComponent, index):
     global drvSdspiInstanceSpace
@@ -100,27 +100,27 @@ def instantiateComponent(sdspiComponent, index):
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
 
     # Enable "Enable System Interrupt" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_INT") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True)
 
     # Enable "Enable System Ports" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True)
 
     # Enable "Enable OSAL" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_OSAL") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True)
 
     # Enable "ENABLE_SYS_MEDIA" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True)
 
     if Database.getSymbolValue("core", "DMA_ENABLE") == None:
         isDMAPresent = False
@@ -129,7 +129,7 @@ def instantiateComponent(sdspiComponent, index):
 
         # Enable "Enable System DMA" option in MHC
         if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_DMA") == False):
-            Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
+            Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True)
 
     availablePinDictionary = {}
 
@@ -327,8 +327,8 @@ def destroyComponent(sdspiComponent):
         dmaTxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
         dmaRxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
 
-        Database.setSymbolValue("core", dmaTxID, False, 2)
-        Database.setSymbolValue("core", dmaRxID, False, 2)
+        Database.setSymbolValue("core", dmaTxID, False)
+        Database.setSymbolValue("core", dmaRxID, False)
 
 def onAttachmentConnected(source, target):
     global sdcardFsEnable
@@ -343,16 +343,16 @@ def onAttachmentConnected(source, target):
     # For Capability Connected (drv_sdcard)
     if (connectID == "drv_media"):
         if (remoteID == "sys_fs"):
-            sdspiFsEnable.setValue(True, 1)
-            Database.setSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_FS_COUNTER", True, 1)
+            sdspiFsEnable.setValue(True)
+            Database.setSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_FS_COUNTER", True)
 
     # For Dependency Connected (SPI)
     if (connectID == "drv_sdspi_SPI_dependency"):
         plibUsed = localComponent.getSymbolByID("DRV_SDSPI_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(remoteID.upper(), 2)
+        plibUsed.setValue(remoteID.upper())
 
-        Database.setSymbolValue(remoteID.upper(), "SPI_DRIVER_CONTROLLED", True, 1)
+        Database.setSymbolValue(remoteID.upper(), "SPI_DRIVER_CONTROLLED", True)
 
         # Do not change the order as DMA Channels needs to be allocated
         # after setting the plibUsed symbol
@@ -373,8 +373,8 @@ def onAttachmentDisconnected(source, target):
     # For Capability Disconnected (drv_sdcard)
     if (connectID == "drv_media"):
         if (remoteID == "sys_fs"):
-            sdspiFsEnable.setValue(False, 1)
-            Database.setSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_FS_COUNTER", False, 1)
+            sdspiFsEnable.setValue(False)
+            Database.setSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_FS_COUNTER", False)
 
     # For Dependency Disonnected (SPI)
     if (connectID == "drv_sdspi_SPI_dependency"):
@@ -387,4 +387,4 @@ def onAttachmentDisconnected(source, target):
 
         plibUsed = localComponent.getSymbolByID("DRV_SDSPI_PLIB")
         plibUsed.clearValue()
-        Database.setSymbolValue(remoteID.upper(), "SPI_DRIVER_CONTROLLED", False, 1)
+        Database.setSymbolValue(remoteID.upper(), "SPI_DRIVER_CONTROLLED", False)

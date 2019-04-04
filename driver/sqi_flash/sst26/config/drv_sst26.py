@@ -71,12 +71,12 @@ def instantiateComponent(sst26Component):
     # Enable "Generate Harmony Driver Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
 
     sst26PLIB = sst26Component.createStringSymbol("DRV_SST26_PLIB", None)
     sst26PLIB.setLabel("PLIB Used")
@@ -211,7 +211,7 @@ def onAttachmentConnected(source, target):
     if connectID == "drv_sst26_SQI_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_SST26_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(remoteID.upper(), 2)
+        plibUsed.setValue(remoteID.upper())
 
         if ("sqi" in remoteID):
             remoteComponent.getSymbolByID("SQI_FLASH_STATUS_CHECK").setReadOnly(True)

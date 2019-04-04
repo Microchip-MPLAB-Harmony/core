@@ -39,9 +39,9 @@ def setCommonMode(symbol, event):
 
     if rtos_mode != None:
         if rtos_mode == "BareMetal":
-            symbol.setValue("Asynchronous", 1)
+            symbol.setValue("Asynchronous")
         else:
-            symbol.setValue("Synchronous", 1)
+            symbol.setValue("Synchronous")
 
 ################################################################################
 #### Component ####

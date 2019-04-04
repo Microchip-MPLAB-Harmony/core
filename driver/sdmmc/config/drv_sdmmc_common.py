@@ -35,14 +35,14 @@ def setFileSystem(symbol, event):
     if (event["value"] == True):
         fsCounter = fsCounter + 1
         symbol.clearValue()
-        symbol.setValue(True, 1)
+        symbol.setValue(True)
     else:
         if (fsCounter != 0):
             fsCounter = fsCounter - 1
 
     if (fsCounter == 0):
         symbol.clearValue()
-        symbol.setValue(False, 1)
+        symbol.setValue(False)
 
 def aSyncFileGen(symbol, event):
     if(event["value"] == "Asynchronous"):
@@ -61,9 +61,9 @@ def setCommonMode(symbol, event):
 
     if (rtos_mode != None):
         if (rtos_mode == "BareMetal"):
-            symbol.setValue("Asynchronous", 1)
+            symbol.setValue("Asynchronous")
         else:
-            symbol.setValue("Synchronous", 1)
+            symbol.setValue("Synchronous")
 
 def instantiateComponent(sdmmcCommonComponent):
     res = Database.activateComponents(["HarmonyCore"])

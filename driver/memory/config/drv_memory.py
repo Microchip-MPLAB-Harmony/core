@@ -80,7 +80,7 @@ def showRTOSMenu(symbol, event):
 
 def setMemoryDeviceValue(symbol, event):
     symbol.clearValue()
-    symbol.setValue(event["value"], 1)
+    symbol.setValue(event["value"])
 
 def setMemoryBuffer(symbol, event):
     if (event["id"] == "DRV_MEMORY_COMMON_MODE"):
@@ -91,7 +91,7 @@ def setMemoryBuffer(symbol, event):
     else:
         if (event["value"] == True):
             symbol.clearValue()
-            symbol.setValue(1, 1)
+            symbol.setValue(1)
             symbol.setReadOnly(True)
         else:
             symbol.setReadOnly(False)
@@ -110,15 +110,15 @@ def instantiateComponent(memoryComponent, index):
     # Enable dependent Harmony core components
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
 
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True)
 
     memoryIndex = memoryComponent.createIntegerSymbol("INDEX", None)
     memoryIndex.setVisible(False)
@@ -337,27 +337,27 @@ def onAttachmentConnected(source, target):
     # For Capability Connected (drv_media)
     if (connectID == "drv_media"):
         if (remoteID == "sys_fs"):
-            memoryFsEnable.setValue(True, 1)
-            Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_COUNTER", True, 1)
+            memoryFsEnable.setValue(True)
+            Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_COUNTER", True)
 
     # For Dependency Connected (memory)
     if (connectID == "drv_memory_MEMORY_dependency"):
-        memoryDeviceUsed.setValue(remoteID.upper(), 1)
+        memoryDeviceUsed.setValue(remoteID.upper())
 
         memoryPlibUsed.clearValue()
 
         memoryDeviceComment.setLabel("*** Configure Memory Device in "+ memoryDeviceUsed.getValue() + " Configurations ***")
         memoryDeviceComment.setVisible(True)
 
-        memoryDeviceInterruptEnable.setValue(remoteComponent.getSymbolValue("INTERRUPT_ENABLE"), 1)
+        memoryDeviceInterruptEnable.setValue(remoteComponent.getSymbolValue("INTERRUPT_ENABLE"))
 
-        memoryDeviceEraseEnable.setValue(remoteComponent.getSymbolValue("ERASE_ENABLE"), 1)
+        memoryDeviceEraseEnable.setValue(remoteComponent.getSymbolValue("ERASE_ENABLE"))
 
-        remoteComponent.setSymbolValue("DRV_MEMORY_CONNECTED", True, 1)
+        remoteComponent.setSymbolValue("DRV_MEMORY_CONNECTED", True)
 
         # If a PLIB is directly connected create plib wrappers
         if ("drv_" not in remoteID):
-            memoryPlibUsed.setValue("DRV_" + remoteID.upper(), 1)
+            memoryPlibUsed.setValue("DRV_" + remoteID.upper())
             memoryPlibSourceFile.setOutputName("drv_memory_" + remoteID +".c")
             memoryPlibHeaderFile.setOutputName("drv_memory_" + remoteID +".h")
             memoryPlibSourceFile.setEnabled(True)
@@ -385,7 +385,7 @@ def onAttachmentDisconnected(source, target):
     if (connectID == "drv_media"):
         if (remoteID == "sys_fs"):
             memoryFsEnable.setValue(False, 1)
-            Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_COUNTER", False, 1)
+            Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_COUNTER", False)
 
     # For Dependency Disconnected (memory)
     if (connectID == "drv_memory_MEMORY_dependency"):
@@ -399,7 +399,7 @@ def onAttachmentDisconnected(source, target):
 
         memoryDeviceEraseEnable.clearValue()
 
-        remoteComponent.setSymbolValue("DRV_MEMORY_CONNECTED", False, 1)
+        remoteComponent.setSymbolValue("DRV_MEMORY_CONNECTED", False)
 
         # If PLIB was connected
         if ("drv_" not in remoteID):

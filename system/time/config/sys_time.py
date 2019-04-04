@@ -45,7 +45,7 @@ def instantiateComponent(sysTimeComponent):
     # Enable dependent Harmony core components
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
 
     sysTimePLIB = sysTimeComponent.createStringSymbol("SYS_TIME_PLIB", None)
     sysTimePLIB.setLabel("PLIB Used")
@@ -143,7 +143,7 @@ def onAttachmentConnected(source, target):
     if (connectID == "sys_time_TMR_dependency"):
         plibUsed = localComponent.getSymbolByID("SYS_TIME_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(remoteID.upper(), 2)
+        plibUsed.setValue(remoteID.upper())
 
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]

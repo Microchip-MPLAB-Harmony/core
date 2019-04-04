@@ -85,10 +85,10 @@ def freeRtosTimerTaskVisibility(symbol, event):
 
     if(freeRtosTimerTask.getValue() == True):
         symbol.setVisible(True)
-        symbol.setValue(3, 1)
+        symbol.setValue(3)
     else:
         symbol.setVisible(False)
-        symbol.setValue(0, 1)
+        symbol.setValue(0)
 
 def freeRtosTimerQueueVisibility(symbol, event):
     id = symbol.getID()[-1]
@@ -97,10 +97,10 @@ def freeRtosTimerQueueVisibility(symbol, event):
 
     if(freeRtosTimerQueue.getValue() == True):
         symbol.setVisible(True)
-        symbol.setValue(10, 1)
+        symbol.setValue(10)
     else:
         symbol.setVisible(False)
-        symbol.setValue(0, 1)
+        symbol.setValue(0)
 
 def freeRtosTimerTaskStackVisibility(symbol, event):
     id = symbol.getID()[-1]
@@ -109,10 +109,10 @@ def freeRtosTimerTaskStackVisibility(symbol, event):
 
     if(freeRtosTimerTaskStack.getValue() == True):
         symbol.setVisible(True)
-        symbol.setValue(256, 1)
+        symbol.setValue(256)
     else:
         symbol.setVisible(False)
-        symbol.setValue(0, 1)
+        symbol.setValue(0)
 
 def freeRtosTimerDaemonVisibility(symbol, event):
     id = symbol.getID()[-1]
@@ -121,10 +121,10 @@ def freeRtosTimerDaemonVisibility(symbol, event):
 
     if(freeRtosTimerDaemon.getValue() == True):
         symbol.setVisible(True)
-        symbol.setValue(True, 1)
+        symbol.setValue(True)
     else:
         symbol.setVisible(False)
-        symbol.setValue(False, 1)
+        symbol.setValue(False)
 
 def buildStreamBuffer (symbol, event):
     id = symbol.getID()[-1]
@@ -168,7 +168,7 @@ def freeRtosMemMangEnableHeap5(freeRtosMemMangHeap5, event):
 
 def freeRtosCpuClockHz(symbol, event):
     clock = int(event["value"])
-    symbol.setValue(clock, 1)
+    symbol.setValue(clock)
 
 def deactivateActiveRtos():
     activeComponents = Database.getActiveComponentIDs()
@@ -193,67 +193,67 @@ def freeRtosIntConfig():
         Timer1InterruptHandlerLock          = "EVIC_"+ str(Timer1InterruptHandlerIndex) +"_HANDLER_LOCK"
 
         Database.clearSymbolValue("core", Timer1InterruptEnable)
-        Database.setSymbolValue("core", Timer1InterruptEnable, True, 2)
+        Database.setSymbolValue("core", Timer1InterruptEnable, True)
 
         Database.clearSymbolValue("core", Timer1InterruptEnableLock)
-        Database.setSymbolValue("core", Timer1InterruptEnableLock, True, 2)
+        Database.setSymbolValue("core", Timer1InterruptEnableLock, True)
 
         Database.clearSymbolValue("core", Timer1InterruptGenerate)
-        Database.setSymbolValue("core", Timer1InterruptGenerate, False, 2)
+        Database.setSymbolValue("core", Timer1InterruptGenerate, False)
 
         Database.clearSymbolValue("core", Timer1InterruptPriority)
-        Database.setSymbolValue("core", Timer1InterruptPriority, "1", 2)
+        Database.setSymbolValue("core", Timer1InterruptPriority, "1")
 
         Database.clearSymbolValue("core", Timer1InterruptPriorityLock)
-        Database.setSymbolValue("core", Timer1InterruptPriorityLock, True, 2)
+        Database.setSymbolValue("core", Timer1InterruptPriorityLock, True)
 
         Database.clearSymbolValue("core", Timer1InterruptPriorityGenerate)
-        Database.setSymbolValue("core", Timer1InterruptPriorityGenerate, False, 2)
+        Database.setSymbolValue("core", Timer1InterruptPriorityGenerate, False)
 
         Database.clearSymbolValue("core", Timer1InterruptSubPriority)
-        Database.setSymbolValue("core", Timer1InterruptSubPriority, "0", 2)
+        Database.setSymbolValue("core", Timer1InterruptSubPriority, "0")
 
         Database.clearSymbolValue("core", Timer1InterruptSubPriorityLock)
-        Database.setSymbolValue("core", Timer1InterruptSubPriorityLock, True, 2)
+        Database.setSymbolValue("core", Timer1InterruptSubPriorityLock, True)
 
         Database.clearSymbolValue("core", Timer1InterruptSubPriorityGenerate)
-        Database.setSymbolValue("core", Timer1InterruptSubPriorityGenerate, False, 2)
+        Database.setSymbolValue("core", Timer1InterruptSubPriorityGenerate, False)
 
         Database.clearSymbolValue("core", Timer1InterruptHandlerLock)
-        Database.setSymbolValue("core", Timer1InterruptHandlerLock, True, 2)
+        Database.setSymbolValue("core", Timer1InterruptHandlerLock, True)
     else:
         SysTickInterruptEnable      = "SysTick_INTERRUPT_ENABLE"
         SysTickInterruptHandler     = "SysTick_INTERRUPT_HANDLER"
         SysTickInterruptHandlerLock = "SysTick_INTERRUPT_HANDLER_LOCK"
 
         Database.clearSymbolValue("core", SysTickInterruptEnable)
-        Database.setSymbolValue("core", SysTickInterruptEnable, True, 2)
+        Database.setSymbolValue("core", SysTickInterruptEnable, True)
         Database.clearSymbolValue("core", SysTickInterruptHandler)
-        Database.setSymbolValue("core", SysTickInterruptHandler, "xPortSysTickHandler", 2)
+        Database.setSymbolValue("core", SysTickInterruptHandler, "xPortSysTickHandler")
         Database.clearSymbolValue("core", SysTickInterruptHandlerLock)
-        Database.setSymbolValue("core", SysTickInterruptHandlerLock, True, 2)
+        Database.setSymbolValue("core", SysTickInterruptHandlerLock, True)
 
         PendSVInterruptEnable       = "PendSV_INTERRUPT_ENABLE"
         PendSVInterruptHandler      = "PendSV_INTERRUPT_HANDLER"
         PendSVInterruptHandlerLock  = "PendSV_INTERRUPT_HANDLER_LOCK"
 
         Database.clearSymbolValue("core", PendSVInterruptEnable)
-        Database.setSymbolValue("core", PendSVInterruptEnable, True, 2)
+        Database.setSymbolValue("core", PendSVInterruptEnable, True)
         Database.clearSymbolValue("core", PendSVInterruptHandler)
-        Database.setSymbolValue("core", PendSVInterruptHandler, "xPortPendSVHandler", 2)
+        Database.setSymbolValue("core", PendSVInterruptHandler, "xPortPendSVHandler")
         Database.clearSymbolValue("core", PendSVInterruptHandlerLock)
-        Database.setSymbolValue("core", PendSVInterruptHandlerLock, True, 2)
+        Database.setSymbolValue("core", PendSVInterruptHandlerLock, True)
 
         SVCallInterruptEnable       = "SVCall_INTERRUPT_ENABLE"
         SVCallInterruptHandler      = "SVCall_INTERRUPT_HANDLER"
         SVCallInterruptHandlerLock  = "SVCall_INTERRUPT_HANDLER_LOCK"
 
         Database.clearSymbolValue("core", SVCallInterruptEnable)
-        Database.setSymbolValue("core", SVCallInterruptEnable, True, 2)
+        Database.setSymbolValue("core", SVCallInterruptEnable, True)
         Database.clearSymbolValue("core", SVCallInterruptHandler)
-        Database.setSymbolValue("core", SVCallInterruptHandler, "vPortSVCHandler", 2)
+        Database.setSymbolValue("core", SVCallInterruptHandler, "vPortSVCHandler")
         Database.clearSymbolValue("core", SVCallInterruptHandlerLock)
-        Database.setSymbolValue("core", SVCallInterruptHandlerLock, True, 2)
+        Database.setSymbolValue("core", SVCallInterruptHandlerLock, True)
 
 # Instatntiate FreeRTOS Component
 def instantiateComponent(thirdPartyFreeRTOS):

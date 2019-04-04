@@ -48,7 +48,7 @@ def setVisible(symbol, event):
 def setBufferSize(symbol, event):
     if (event["value"] == True):
         symbol.clearValue()
-        symbol.setValue(1, 1)
+        symbol.setValue(1)
         symbol.setReadOnly(True)
     else:
         symbol.setReadOnly(False)
@@ -58,7 +58,7 @@ def setVisibleCDMethodForSDHC(symbol, event):
     symbol.clearValue()
     if (plibName[:4] == "SDHC"):
         symbol.setVisible(True)
-        symbol.setValue("Use SDCD Pin", 1)
+        symbol.setValue("Use SDCD Pin")
     else:
         symbol.setVisible(False)
 
@@ -67,7 +67,7 @@ def setVisibleCDMethodForHSMCI(symbol, event):
     symbol.clearValue()
     if (plibName[:5] == "HSMCI"):
         symbol.setVisible(True)
-        symbol.setValue("Use Polling", 1)
+        symbol.setValue("Use Polling")
     else:
         symbol.setVisible(False)
 
@@ -79,7 +79,7 @@ def setWPCheckVisible(symbol, event):
         symbol.setVisible(False)
 
 def setCDMethod(symbol, event):
-    symbol.setValue(event["value"], 2)
+    symbol.setValue(event["value"])
 
 def setCDCommentVisible(symbol, event):
     symbol.setVisible(event["value"])
@@ -94,8 +94,8 @@ def setPLIBWPEN(symbol, event):
     if (sdmmcPLIBRemoteID != None):
         plibSDWPEN = Database.getSymbolValue(sdmmcPLIBRemoteID, "SDHC_SDWPEN")
         if (plibSDWPEN != None):
-            Database.setSymbolValue(sdmmcPLIBRemoteID, "SDHC_SDWPEN", sdmmcWPCheckEnable.getValue(), 2)
-            symbol.setValue(sdmmcWPCheckEnable.getValue(), 2)
+            Database.setSymbolValue(sdmmcPLIBRemoteID, "SDHC_SDWPEN", sdmmcWPCheckEnable.getValue())
+            symbol.setValue(sdmmcWPCheckEnable.getValue())
 
 def setPLIBCDEN(symbol, event):
     global sdmmcCardDetectionMethod
@@ -104,8 +104,8 @@ def setPLIBCDEN(symbol, event):
     if (sdmmcPLIBRemoteID != None):
         plibSDCDEN = Database.getSymbolValue(sdmmcPLIBRemoteID, "SDHC_SDCDEN")
         if (plibSDCDEN != None):
-            Database.setSymbolValue(sdmmcPLIBRemoteID, "SDHC_SDCDEN", sdmmcCardDetectionMethod.getValue() == "Use SDCD Pin", 2)
-            symbol.setValue(sdmmcCardDetectionMethod.getValue() == "Use SDCD Pin", 2)
+            Database.setSymbolValue(sdmmcPLIBRemoteID, "SDHC_SDCDEN", sdmmcCardDetectionMethod.getValue() == "Use SDCD Pin")
+            symbol.setValue(sdmmcCardDetectionMethod.getValue() == "Use SDCD Pin")
 
 def setVisiblePollingInterval(symbol, event):
     if (event["value"] == "Use Polling"):
@@ -121,15 +121,15 @@ def instantiateComponent(sdmmcComponent, index):
     # Enable dependent Harmony core components
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
 
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True)
 
     sdmmcIndex = sdmmcComponent.createIntegerSymbol("INDEX", None)
     sdmmcIndex.setVisible(False)
@@ -312,8 +312,8 @@ def onCapabilityConnected(connectionInfo):
     remoteComponent = connectionInfo["remoteComponent"]
 
     if (remoteComponent.getID() == "sys_fs"):
-        sdmmcFsEnable.setValue(True, 1)
-        Database.setSymbolValue("drv_sdmmc", "DRV_SDMMC_COMMON_FS_COUNTER", True, 1)
+        sdmmcFsEnable.setValue(True)
+        Database.setSymbolValue("drv_sdmmc", "DRV_SDMMC_COMMON_FS_COUNTER", True)
 
 def onCapabilityDisconnected(connectionInfo):
     global sdmmcFsEnable
@@ -323,8 +323,8 @@ def onCapabilityDisconnected(connectionInfo):
     remoteComponent = connectionInfo["remoteComponent"]
 
     if (remoteComponent.getID() == "sys_fs"):
-        sdmmcFsEnable.setValue(False, 1)
-        Database.setSymbolValue("drv_sdmmc", "DRV_SDMMC_COMMON_FS_COUNTER", False, 1)
+        sdmmcFsEnable.setValue(False)
+        Database.setSymbolValue("drv_sdmmc", "DRV_SDMMC_COMMON_FS_COUNTER", False)
 
 
 def onAttachmentConnected(source, target):
@@ -340,15 +340,15 @@ def onAttachmentConnected(source, target):
     # For Capability Connected (DRV_MEDIA)
     if (connectID == "drv_media"):
         if (remoteID == "sys_fs"):
-            sdmmcFsEnable.setValue(True, 1)
-            Database.setSymbolValue("drv_sdmmc", "DRV_SDMMC_COMMON_FS_COUNTER", True, 1)
+            sdmmcFsEnable.setValue(True)
+            Database.setSymbolValue("drv_sdmmc", "DRV_SDMMC_COMMON_FS_COUNTER", True)
 
     # For Dependency Connected (SDHC/HSMCI)
     if (connectID == "drv_sdmmc_SDHC_dependency"):
         sdmmcPLIBRemoteID = remoteID
         plibUsed = localComponent.getSymbolByID("DRV_SDMMC_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(remoteID.upper(), 2)
+        plibUsed.setValue(remoteID.upper())
 
 def onAttachmentDisconnected(source, target):
     #global sdcardFsEnable
@@ -362,12 +362,12 @@ def onAttachmentDisconnected(source, target):
     # For Capability Disconnected (DRV_MEDIA)
     if (connectID == "drv_media"):
         if (remoteID == "sys_fs"):
-            sdmmcFsEnable.setValue(False, 1)
-            Database.setSymbolValue("drv_sdmmc", "DRV_SDMMC_COMMON_FS_COUNTER", False, 1)
+            sdmmcFsEnable.setValue(False)
+            Database.setSymbolValue("drv_sdmmc", "DRV_SDMMC_COMMON_FS_COUNTER", False)
 
     # For Dependency Disonnected (SDHC/HSMCI)
     if (connectID == "drv_sdmmc_SDHC_dependency"):
 
         plibUsed = localComponent.getSymbolByID("DRV_SDMMC_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue("None", 1)
+        plibUsed.setValue("None")

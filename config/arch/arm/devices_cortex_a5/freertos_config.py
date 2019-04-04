@@ -62,9 +62,9 @@ address     = baseAddr + offset
 eoiAddress.setDefaultValue(str(hex(address)))
 
 Database.activateComponents(["pit"]);
-Database.setSymbolValue("core", "PIT_INTERRUPT_HANDLER", "FreeRTOS_Tick_Handler", 1);
-Database.setSymbolValue("core", "USE_FREERTOS_VECTORS", True, 1)
-Database.setSymbolValue("pit", "ENABLE_COUNTER", False, 1)
+Database.setSymbolValue("core", "PIT_INTERRUPT_HANDLER", "FreeRTOS_Tick_Handler");
+Database.setSymbolValue("core", "USE_FREERTOS_VECTORS", True)
+Database.setSymbolValue("pit", "ENABLE_COUNTER", False)
 
 ############################################################################
 #### Code Generation ####

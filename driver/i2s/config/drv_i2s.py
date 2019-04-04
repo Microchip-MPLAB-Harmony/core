@@ -56,13 +56,13 @@ def requestDMAChannel(Sym, event):
                 dmaRequestID = "DMA_CH_NEEDED_FOR_" + i2sPlibId + "_Receive_Left"
         if dmaRequestID!="":
             Database.clearSymbolValue("core", dmaRequestID)
-            Database.setSymbolValue("core", dmaRequestID, event["value"], 2)
+            Database.setSymbolValue("core", dmaRequestID, event["value"])
             dmaChannelRequests.append(dmaRequestID)
 
     # Response from DMA Manager
     else:
         Sym.clearValue()
-        Sym.setValue(event["value"], 2)
+        Sym.setValue(event["value"])
 
 def requestDMAComment(Sym, event):
     if(event["value"] == -2):
@@ -71,7 +71,7 @@ def requestDMAComment(Sym, event):
         Sym.setVisible(False)        
         
 def commonTxRxOption(Sym, event):
-    Sym.setValue(event["value"], 1)
+    Sym.setValue(event["value"])
 
 def instantiateComponent(i2sComponent, index):
     global i2sPlibId
@@ -85,11 +85,11 @@ def instantiateComponent(i2sComponent, index):
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
 
     i2sSymIndex = i2sComponent.createIntegerSymbol("INDEX", None)
     i2sSymIndex.setVisible(False)
@@ -253,27 +253,27 @@ def onDependencyConnected(info):
         plibUsed = info["localComponent"].getSymbolByID("DRV_I2S_PLIB")
         # info["remoteComponent"].getID() returns ssc or 12sc1 for example
         i2sPlibId = info["remoteComponent"].getID().upper()
-        plibUsed.setValue(i2sPlibId, 1)
+        plibUsed.setValue(i2sPlibId)
         if i2sPlibId[:3] == "SSC":
             dataLength = info["remoteComponent"].getSymbolValue("SSC_DATA_LENGTH")
             i2sDataWidth = info["localComponent"].getSymbolByID("I2S_DATA_LENGTH")
-            i2sDataWidth.setValue(dataLength, 1)
+            i2sDataWidth.setValue(dataLength)
             # force DMA channels to be allocated
             i2sTXRXDMA = info["localComponent"].getSymbolByID("DRV_I2S_TX_RX_DMA")
-            i2sTXRXDMA.setValue(True, 1)
+            i2sTXRXDMA.setValue(True)
         elif i2sPlibId[:4] == "I2SC":
             dataLengthIdx = info["remoteComponent"].getSymbolValue("I2SC_MR_DATALENGTH")
             i2sDataWidth = info["localComponent"].getSymbolByID("I2S_DATA_LENGTH")
             if dataLengthIdx==0:
-                i2sDataWidth.setValue(32, 1)
+                i2sDataWidth.setValue(32)
             elif dataLengthIdx==4:
-                i2sDataWidth.setValue(16, 1)
+                i2sDataWidth.setValue(16)
             # force DMA channels to be allocated
             i2sTXRXDMA = info["localComponent"].getSymbolByID("DRV_I2S_TX_RX_DMA")
-            i2sTXRXDMA.setValue(True, 1)
+            i2sTXRXDMA.setValue(True)
 
 # this callback occurs when user disconnects SSC or I2SCx block from I2S driver block in Project Graph (or I2S driver is destroyed)    
 def onDependencyDisconnected(info):
     global dmaChannelRequests
     for dmaChannelRequest in dmaChannelRequests:
-        Database.setSymbolValue("core", dmaChannelRequest , False, 2)
+        Database.setSymbolValue("core", dmaChannelRequest , False)

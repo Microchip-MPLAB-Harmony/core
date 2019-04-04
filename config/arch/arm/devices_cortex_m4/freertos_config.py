@@ -49,16 +49,16 @@ SysTickInterruptPriority     = "NVIC_"+ str(SysTickInterruptIndex) +"_0_PRIORITY
 SysTickInterruptPriorityLock = "NVIC_" + str(SysTickInterruptIndex) +"_0_PRIORITY_LOCK"
 
 Database.clearSymbolValue("core", SysTickInterruptPriority)
-Database.setSymbolValue("core", SysTickInterruptPriority, "7", 2)
+Database.setSymbolValue("core", SysTickInterruptPriority, "7")
 Database.clearSymbolValue("core", SysTickInterruptPriorityLock)
-Database.setSymbolValue("core", SysTickInterruptPriorityLock, True, 2)
+Database.setSymbolValue("core", SysTickInterruptPriorityLock, True)
 
 #Set SVCall Priority and Lock the Priority
 SVCallInterruptIndex        = Interrupt.getInterruptIndex("SVCall")
 SVCallInterruptPriorityLock = "NVIC_" + str(SVCallInterruptIndex) +"_0_PRIORITY_LOCK"
 
 Database.clearSymbolValue("core", SVCallInterruptPriorityLock)
-Database.setSymbolValue("core", SVCallInterruptPriorityLock, True, 2)
+Database.setSymbolValue("core", SVCallInterruptPriorityLock, True)
 
 ############################################################################
 #### Code Generation ####

@@ -40,14 +40,14 @@ def genSysCacheFiles(symbol, event):
 def enableSysCache(symbol, event):
     component = symbol.getComponent()
 
-    symbol.setValue(False, 1)
+    symbol.setValue(False)
 
     # Enable Sys Cache only if Cache is present on device and enabled
     isDataCacheEnabled          = Database.getSymbolValue("core", "DATA_CACHE_ENABLE")
     isInstructionCacheEnabled   = Database.getSymbolValue("core", "INSTRUCTION_CACHE_ENABLE")
 
     if ((isDataCacheEnabled == True) or (isInstructionCacheEnabled == True)):
-        symbol.setValue(True, 1)
+        symbol.setValue(True)
 
 ############################################################################
 #### Code Generation ####

@@ -87,7 +87,7 @@ def onAttachmentConnected(source, target):
     if connectID == "drv_i2c_I2C_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_I2C_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(remoteID.upper(), 1)
+        plibUsed.setValue(remoteID.upper())
 
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]

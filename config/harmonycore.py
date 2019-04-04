@@ -38,9 +38,9 @@ def enableAppFile(symbol, event):
     sys_common = component.getSymbolValue("ENABLE_SYS_COMMON")
 
     if ((drv_common == True) or (sys_common == True)):
-        symbol.setValue(True,1)
+        symbol.setValue(True)
     else:
-        symbol.setValue(False,1)
+        symbol.setValue(False)
 
 
 def genHarmonyFiles(symbol, event):
@@ -148,10 +148,10 @@ def onAttachmentConnected(source, target):
 
     if targetID == "FreeRTOS":
         localComponent.clearSymbolValue("SELECT_RTOS")
-        localComponent.setSymbolValue("SELECT_RTOS", "FreeRTOS", 1)
+        localComponent.setSymbolValue("SELECT_RTOS", "FreeRTOS")
     elif targetID == "MicriumOSIII":
         localComponent.clearSymbolValue("SELECT_RTOS")
-        localComponent.setSymbolValue("SELECT_RTOS", "MicriumOSIII", 2)
+        localComponent.setSymbolValue("SELECT_RTOS", "MicriumOSIII")
 
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]
@@ -164,4 +164,4 @@ def onAttachmentDisconnected(source, target):
 
     if targetID == "FreeRTOS" or targetID == "MicriumOSIII":
         localComponent.clearSymbolValue("SELECT_RTOS")
-        localComponent.setSymbolValue("SELECT_RTOS", "BareMetal", 1)
+        localComponent.setSymbolValue("SELECT_RTOS", "BareMetal")

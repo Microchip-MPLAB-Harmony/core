@@ -32,9 +32,9 @@ def enableSysInt(symbol, event):
     sys_common = Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
 
     if ((drv_common == True) or (sys_common == True)):
-        symbol.setValue(True, 1)
+        symbol.setValue(True)
     else:
-        symbol.setValue(False, 1)
+        symbol.setValue(False)
 
 def genSysIntFiles(symbol, event):
 

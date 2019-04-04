@@ -37,11 +37,11 @@ def instantiateComponent(usartComponent, index):
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
 
     # Enable "ENABLE_SYS_DMA" option in MHC
     if Database.getSymbolValue("core", "DMA_ENABLE") == None:
@@ -51,7 +51,7 @@ def instantiateComponent(usartComponent, index):
 
         # Enable "Enable System DMA" option in MHC
         if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_DMA") == False):
-            Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
+            Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True)
 
     # Menu
     usartIndex = usartComponent.createIntegerSymbol("INDEX", None)
@@ -176,7 +176,7 @@ def onAttachmentConnected(source, target):
     if connectID == "drv_usart_UART_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_USART_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(remoteID.upper(), 1)
+        plibUsed.setValue(remoteID.upper())
 
         # Do not change the order as DMA Channels needs to be allocated
         # after setting the plibUsed symbol
@@ -217,16 +217,16 @@ def requestAndAssignTxDMAChannel(symbol, event):
     dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(usartPeripheral) + "_Transmit"
 
     if event["value"] == False:
-        Database.setSymbolValue("core", dmaRequestID, False, 2)
+        Database.setSymbolValue("core", dmaRequestID, False)
         usartTXDMAChannelComment.setVisible(False)
         symbol.setVisible(False)
     else:
         symbol.setVisible(True)
-        Database.setSymbolValue("core", dmaRequestID, True, 2)
+        Database.setSymbolValue("core", dmaRequestID, True)
 
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
-    symbol.setValue(channel, 2)
+    symbol.setValue(channel)
 
 def requestAndAssignRxDMAChannel(symbol, event):
     global drvUsartInstanceSpace
@@ -238,16 +238,16 @@ def requestAndAssignRxDMAChannel(symbol, event):
     dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(usartPeripheral) + "_Receive"
 
     if event["value"] == False:
-        Database.setSymbolValue("core", dmaRequestID, False, 2)
+        Database.setSymbolValue("core", dmaRequestID, False)
         usartRXDMAChannelComment.setVisible(False)
         symbol.setVisible(False)
     else:
         symbol.setVisible(True)
-        Database.setSymbolValue("core", dmaRequestID, True, 2)
+        Database.setSymbolValue("core", dmaRequestID, True)
 
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
-    symbol.setValue(channel, 2)
+    symbol.setValue(channel)
 
 def requestTxDMAComment(symbol, event):
     global usartTXDMA
@@ -276,8 +276,8 @@ def destroyComponent(usartComponent):
         dmaTxID = "DMA_CH_NEEDED_FOR_" + str(usartPeripheral) + "_Transmit"
         dmaRxID = "DMA_CH_NEEDED_FOR_" + str(usartPeripheral) + "_Receive"
 
-        Database.setSymbolValue("core", dmaTxID, False, 2)
-        Database.setSymbolValue("core", dmaRxID, False, 2)
+        Database.setSymbolValue("core", dmaTxID, False)
+        Database.setSymbolValue("core", dmaRxID, False)
 
 def asyncModeOptions(symbol, event):
     if event["value"] == "Asynchronous":

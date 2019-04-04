@@ -35,16 +35,16 @@ def instantiateComponent(sysFSComponent):
     # Enable "Generate Harmony Driver Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
 
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True)
 
     sysFSMenu = sysFSComponent.createMenuSymbol("SYS_FS_MENU", None)
     sysFSMenu.setLabel("File System settings")
@@ -411,7 +411,7 @@ def showMedia(sysFSMedia, count):
     component = sysFSMedia.getComponent()
     for i in range(0,4):
         component.getSymbolByID("SYS_FS_IDX" + str(i)).setVisible(count["value"] >= i + 1)
-        component.getSymbolByID("SYS_FS_IDX" + str(i)).setValue(count["value"] >= i + 1, 2)
+        component.getSymbolByID("SYS_FS_IDX" + str(i)).setValue(count["value"] >= i + 1)
 
 def showMediaConfMenu(sysFSMediaConfMenu, enable):
     component = sysFSMediaConfMenu.getComponent()
@@ -438,25 +438,25 @@ def showMediaVOL0(sysFSVol, count):
     component = sysFSVol.getComponent()
     for i in range(0,4):
         component.getSymbolByID("SYS_FS_VOL_" + str(i + 1) + "_IDX0").setVisible(count["value"] >= i + 1)
-        component.getSymbolByID("SYS_FS_VOL_" + str(i + 1) + "_IDX0").setValue(count["value"] >= i + 1, 2)
+        component.getSymbolByID("SYS_FS_VOL_" + str(i + 1) + "_IDX0").setValue(count["value"] >= i + 1)
 
 def showMediaVOL1(sysFSVol, count):
     component = sysFSVol.getComponent()
     for i in range(0,4):
         component.getSymbolByID("SYS_FS_VOL_" + str(i + 1) + "_IDX1").setVisible(count["value"] >= i + 1)
-        component.getSymbolByID("SYS_FS_VOL_" + str(i + 1) + "_IDX1").setValue(count["value"] >= i + 1, 2)
+        component.getSymbolByID("SYS_FS_VOL_" + str(i + 1) + "_IDX1").setValue(count["value"] >= i + 1)
 
 def showMediaVOL2(sysFSVol, count):
     component = sysFSVol.getComponent()
     for i in range(0,4):
         component.getSymbolByID("SYS_FS_VOL_" + str(i + 1) + "_IDX2").setVisible(count["value"] >= i + 1)
-        component.getSymbolByID("SYS_FS_VOL_" + str(i + 1) + "_IDX2").setValue(count["value"] >= i + 1, 2)
+        component.getSymbolByID("SYS_FS_VOL_" + str(i + 1) + "_IDX2").setValue(count["value"] >= i + 1)
 
 def showMediaVOL3(sysFSVol, count):
     component = sysFSVol.getComponent()
     for i in range(0,4):
         component.getSymbolByID("SYS_FS_VOL_" + str(i + 1) + "_IDX3").setVisible(count["value"] >= i + 1)
-        component.getSymbolByID("SYS_FS_VOL_" + str(i + 1) + "_IDX3").setValue(count["value"] >= i + 1, 2)
+        component.getSymbolByID("SYS_FS_VOL_" + str(i + 1) + "_IDX3").setValue(count["value"] >= i + 1)
 
 def showMediaVolMenu(sysFSMediaVolConfMenu, enable):
     sysFSMediaVolConfMenu.setVisible(enable["value"])
@@ -465,23 +465,23 @@ def mediaDeviceName0(sysFSMedia0VOL0DeviceName, name):
     component = sysFSMedia0VOL0DeviceName.getComponent()
     for i in range(0,4):
         component.getSymbolByID("SYS_FS_MEDIA_DEVICE_" + str(i + 1) + "_NAME_IDX0").clearValue()
-        component.getSymbolByID("SYS_FS_MEDIA_DEVICE_" + str(i + 1) + "_NAME_IDX0").setValue(deviceNames.get(name["value"])  + str(i + 1),2)
+        component.getSymbolByID("SYS_FS_MEDIA_DEVICE_" + str(i + 1) + "_NAME_IDX0").setValue(deviceNames.get(name["value"])  + str(i + 1))
 
 def mediaDeviceName1(sysFSMedia0VOL0DeviceName, name):
     component = sysFSMedia0VOL0DeviceName.getComponent()
     for i in range(0,4):
         component.getSymbolByID("SYS_FS_MEDIA_DEVICE_" + str(i + 1) + "_NAME_IDX1").clearValue()
-        component.getSymbolByID("SYS_FS_MEDIA_DEVICE_" + str(i + 1) + "_NAME_IDX1").setValue(deviceNames.get(name["value"])  + str(i + 1),2)
+        component.getSymbolByID("SYS_FS_MEDIA_DEVICE_" + str(i + 1) + "_NAME_IDX1").setValue(deviceNames.get(name["value"])  + str(i + 1))
 
 def mediaDeviceName2(sysFSMedia0VOL0DeviceName, name):
     component = sysFSMedia0VOL0DeviceName.getComponent()
     for i in range(0,4):
         component.getSymbolByID("SYS_FS_MEDIA_DEVICE_" + str(i + 1) + "_NAME_IDX2").clearValue()
-        component.getSymbolByID("SYS_FS_MEDIA_DEVICE_" + str(i + 1) + "_NAME_IDX2").setValue(deviceNames.get(name["value"])  + str(i + 1),2)
+        component.getSymbolByID("SYS_FS_MEDIA_DEVICE_" + str(i + 1) + "_NAME_IDX2").setValue(deviceNames.get(name["value"])  + str(i + 1))
 
 def mediaDeviceName3(sysFSMedia0VOL0DeviceName, name):
     component = sysFSMedia0VOL0DeviceName.getComponent()
     for i in range(0,4):
         component.getSymbolByID("SYS_FS_MEDIA_DEVICE_" + str(i + 1) + "_NAME_IDX3").clearValue()
-        component.getSymbolByID("SYS_FS_MEDIA_DEVICE_" + str(i + 1) + "_NAME_IDX3").setValue(deviceNames.get(name["value"])  + str(i + 1),2)
+        component.getSymbolByID("SYS_FS_MEDIA_DEVICE_" + str(i + 1) + "_NAME_IDX3").setValue(deviceNames.get(name["value"])  + str(i + 1))
 

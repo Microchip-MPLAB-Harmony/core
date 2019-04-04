@@ -47,15 +47,15 @@ def instantiateComponent(at25dfComponent):
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
 
     # Enable "Enable System Ports" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True)
 
     at25dfSymNumInst = at25dfComponent.createIntegerSymbol("DRV_AT25DF_NUM_INSTANCES", None)
     at25dfSymNumInst.setLabel("Number of Instances")
@@ -209,8 +209,8 @@ def onAttachmentConnected(source, target):
     if connectID == "drv_at25df_SPI_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_AT25DF_PLIB")
         at25dfPlibId = remoteID.upper()
-        plibUsed.setValue(at25dfPlibId.upper(), 1)
-        Database.setSymbolValue(at25dfPlibId, "SPI_DRIVER_CONTROLLED", True, 1)
+        plibUsed.setValue(at25dfPlibId.upper())
+        Database.setSymbolValue(at25dfPlibId, "SPI_DRIVER_CONTROLLED", True)
 
 def onAttachmentDisconnected(source, target):
 
@@ -224,4 +224,4 @@ def onAttachmentDisconnected(source, target):
         plibUsed = localComponent.getSymbolByID("DRV_AT25DF_PLIB")
         plibUsed.clearValue()
         at25dfPlibId = remoteID.upper()
-        Database.setSymbolValue(at25dfPlibId, "SPI_DRIVER_CONTROLLED", False, 1)
+        Database.setSymbolValue(at25dfPlibId, "SPI_DRIVER_CONTROLLED", False)

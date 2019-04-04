@@ -39,20 +39,20 @@ def setCommonMode(symbol, event):
 
     if rtos_mode != None:
         if rtos_mode == "BareMetal":
-            symbol.setValue("Asynchronous", 1)
+            symbol.setValue("Asynchronous")
         else:
-            symbol.setValue("Synchronous", 1)
+            symbol.setValue("Synchronous")
 
 def instantiateComponent(i2cComponentCommon):
     res = Database.activateComponents(["HarmonyCore"])
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
 
     rtos_mode = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
 

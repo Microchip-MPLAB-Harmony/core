@@ -32,11 +32,11 @@
 def selectDeviceSet(symbol, event):
     symbol.clearValue()
     if "USART" or "UART" in event["value"]:
-        symbol.setValue("UART", 2)
+        symbol.setValue("UART")
     elif "USB" in event["value"]:
-        symbol.setValue("USB_CDC", 2)
+        symbol.setValue("USB_CDC")
     elif "APP" in event["value"]:
-        symbol.setValue("APPIO", 2)
+        symbol.setValue("APPIO")
     else:
         Log.WriteErrorMessage("Incorrect Component is attached to Console System Service")
 
@@ -60,7 +60,7 @@ def enableDebugProcessorOptions(symbol, event):
         symbol.setVisible(True)
     else:
         symbol.setVisible(False)
-        symbol.setValue(False, 1)
+        symbol.setValue(False)
 
 
 def setVisible(symbol, event):
@@ -102,12 +102,12 @@ def instantiateComponent(consoleComponent):
     # Enable "Generate Harmony Driver Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
 
     consoleIndex = consoleComponent.createIntegerSymbol("INDEX", None)
     consoleIndex.setVisible(False)
@@ -381,7 +381,7 @@ def onAttachmentConnected(source, target):
     if connectID == "sys_console_UART_dependency" :
         deviceUsed = localComponent.getSymbolByID("SYS_CONSOLE_DEVICE")
         deviceUsed.clearValue()
-        deviceUsed.setValue(remoteID.upper(), 2)
+        deviceUsed.setValue(remoteID.upper())
 
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]

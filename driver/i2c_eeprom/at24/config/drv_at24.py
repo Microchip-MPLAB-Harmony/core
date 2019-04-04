@@ -31,9 +31,9 @@ at24MemoryInterruptEnable = None
 def updateEEPROMAddressLen(symbol, event):
     symObj=event["symbol"]
     if (symObj.getValue() > 256):
-        symbol.setValue(2, 2)
+        symbol.setValue(2)
     else:
-        symbol.setValue(1, 2)
+        symbol.setValue(1)
 
 
 def at24SetMemoryDependency(symbol, event):
@@ -49,15 +49,15 @@ def instantiateComponent(at24Component):
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
 
     # Enable "Enable System Ports" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True, 1)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True)
 
     at24SymNumInst = at24Component.createIntegerSymbol("DRV_AT24_NUM_INSTANCES", None)
     at24SymNumInst.setLabel("Number of Instances")
@@ -217,8 +217,8 @@ def onAttachmentConnected(source, target):
         plibUsed = localComponent.getSymbolByID("DRV_AT24_PLIB")
         plibUsed.clearValue()
         at24PlibId = remoteID.upper()
-        plibUsed.setValue(at24PlibId, 1)
-        Database.setSymbolValue(at24PlibId, "I2C_DRIVER_CONTROLLED", True, 1)
+        plibUsed.setValue(at24PlibId)
+        Database.setSymbolValue(at24PlibId, "I2C_DRIVER_CONTROLLED", True)
 
 
 def onAttachmentDisconnected(source, target):
@@ -233,5 +233,5 @@ def onAttachmentDisconnected(source, target):
         plibUsed = localComponent.getSymbolByID("DRV_AT24_PLIB")
         plibUsed.clearValue()
         at24PlibId = remoteID.upper()
-        Database.setSymbolValue(at24PlibId, "I2C_DRIVER_CONTROLLED", False, 1)
+        Database.setSymbolValue(at24PlibId, "I2C_DRIVER_CONTROLLED", False)
 

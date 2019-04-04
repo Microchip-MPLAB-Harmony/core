@@ -39,12 +39,12 @@ def instantiateComponent(mx25lComponent):
     # Enable "Generate Harmony Driver Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
 
     mx25lPLIB = mx25lComponent.createStringSymbol("DRV_MX25L_PLIB", None)
     mx25lPLIB.setLabel("PLIB Used")
@@ -164,7 +164,7 @@ def onAttachmentConnected(source, target):
     if connectID == "drv_mx25l_SQI_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_MX25L_PLIB")
         plibUsed.clearValue()
-        plibUsed.setValue(remoteID.upper(), 2)
+        plibUsed.setValue(remoteID.upper())
 
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]
