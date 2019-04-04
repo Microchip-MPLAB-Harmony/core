@@ -108,14 +108,17 @@ def instantiateComponent(memoryComponent, index):
     global memoryFsEnable
 
     # Enable dependent Harmony core components
-    Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-    Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
+        Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
 
-    Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
+        Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
 
-    Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA")
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True, 2)
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA") == False):
+        Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA")
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True, 2)
 
     memoryIndex = memoryComponent.createIntegerSymbol("INDEX", None)
     memoryIndex.setVisible(False)

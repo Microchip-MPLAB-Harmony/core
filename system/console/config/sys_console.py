@@ -99,12 +99,15 @@ def instantiateComponent(consoleComponent):
 
     Log.writeInfoMessage("Loading System Console Module...")
 
-    # Enable dependent Harmony core components
-    Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
+    # Enable "Generate Harmony Driver Common Files" option in MHC
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
+        Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
 
-    Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-    Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
+    # Enable "Generate Harmony System Service Common Files" option in MHC
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
+        Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
 
     consoleIndex = consoleComponent.createIntegerSymbol("INDEX", None)
     consoleIndex.setVisible(False)

@@ -99,22 +99,28 @@ def instantiateComponent(sdspiComponent, index):
     drvSdspiInstanceSpace = "drv_sdspi_" + str(index)
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 1)
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 1)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
 
     # Enable "Enable System Interrupt" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True, 1)
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_INT") == False):
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True, 1)
 
     # Enable "Enable System Ports" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True, 1)
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS") == False):
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True, 1)
 
     # Enable "Enable OSAL" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True, 1)
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_OSAL") == False):
+        Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True, 1)
 
     # Enable "ENABLE_SYS_MEDIA" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True, 1)
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA") == False):
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True, 1)
 
     if Database.getSymbolValue("core", "DMA_ENABLE") == None:
         isDMAPresent = False
@@ -122,7 +128,8 @@ def instantiateComponent(sdspiComponent, index):
         isDMAPresent = True
 
         # Enable "Enable System DMA" option in MHC
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
+        if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_DMA") == False):
+            Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
 
     availablePinDictionary = {}
 
@@ -225,7 +232,7 @@ def instantiateComponent(sdspiComponent, index):
     sdspiRTOSMenu = sdspiComponent.createMenuSymbol("DRV_SDSPI_RTOS_MENU", None)
     sdspiRTOSMenu.setLabel("RTOS settings")
     sdspiRTOSMenu.setDescription("RTOS settings")
-    sdspiRTOSMenu.setVisible((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != 0))
+    sdspiRTOSMenu.setVisible((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"))
     sdspiRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS"])
 
     sdspiRTOSTask = sdspiComponent.createComboSymbol("DRV_SDSPI_RTOS", sdspiRTOSMenu, ["Standalone"])
@@ -309,7 +316,7 @@ def instantiateComponent(sdspiComponent, index):
     sdspiSystemRtosTasksFile.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
     sdspiSystemRtosTasksFile.setSourcePath("driver/sdspi/templates/system/system_rtos_tasks.c.ftl")
     sdspiSystemRtosTasksFile.setMarkup(True)
-    sdspiSystemRtosTasksFile.setEnabled((Database.getSymbolValue("Harmony", "SELECT_RTOS") != 0))
+    sdspiSystemRtosTasksFile.setEnabled((Database.getSymbolValue("Harmony", "SELECT_RTOS") != "BareMetal"))
     sdspiSystemRtosTasksFile.setDependencies(genRtosTask, ["Harmony.SELECT_RTOS"])
 
 def destroyComponent(sdspiComponent):

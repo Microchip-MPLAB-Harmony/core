@@ -84,10 +84,12 @@ def instantiateComponent(i2sComponent, index):
     dmaChannelRequests = []
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 1)
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 1)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
 
     i2sSymIndex = i2sComponent.createIntegerSymbol("INDEX", None)
     i2sSymIndex.setVisible(False)

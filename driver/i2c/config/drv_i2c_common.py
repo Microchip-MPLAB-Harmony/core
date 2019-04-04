@@ -47,10 +47,12 @@ def instantiateComponent(i2cComponentCommon):
     res = Database.activateComponents(["HarmonyCore"])
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 1)
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 1)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
 
     rtos_mode = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
 

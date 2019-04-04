@@ -36,18 +36,22 @@ def instantiateComponent(usartComponent, index):
     drvUsartInstanceSpace = "drv_usart_" + str(index)
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 1)
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 1)
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
+        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
 
+    # Enable "ENABLE_SYS_DMA" option in MHC
     if Database.getSymbolValue("core", "DMA_ENABLE") == None:
         isDMAPresent = False
     else:
         isDMAPresent = True
 
         # Enable "Enable System DMA" option in MHC
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
+        if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_DMA") == False):
+            Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True, 1)
 
     # Menu
     usartIndex = usartComponent.createIntegerSymbol("INDEX", None)
