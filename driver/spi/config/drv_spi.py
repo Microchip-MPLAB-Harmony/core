@@ -184,16 +184,19 @@ def onAttachmentConnected(source, target):
     connectID = source["id"]
     targetID = target["id"]
 
-    if connectID == "drv_spi_SPI_dependency" :
+    if connectID == "drv_spi_SPI_dependency":
         plibUsed = localComponent.getSymbolByID("DRV_SPI_PLIB")
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper())
 
         Database.setSymbolValue(remoteID, "SPI_DRIVER_CONTROLLED", True)
+        dmaChannelSym = Database.getSymbolValue("core", "DMA_CH_FOR_" + remoteID.upper() + "_Transmit")
+        dmaRequestSym = Database.getSymbolValue("core", "DMA_CH_NEEDED_FOR_" + remoteID.upper() + "_Transmit")
 
         # Do not change the order as DMA Channels needs to be allocated
         # after setting the plibUsed symbol
-        if isDMAPresent == True:
+        # Both device and connected plib should support DMA
+        if isDMAPresent == True and dmaChannelSym != None and dmaRequestSym != None:
             localComponent.getSymbolByID("DRV_SPI_DEPENDENCY_DMA_COMMENT").setVisible(False)
             localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").setReadOnly(False)
 
@@ -206,10 +209,15 @@ def onAttachmentDisconnected(source, target):
     connectID = source["id"]
     targetID = target["id"]
 
-    if connectID == "drv_spi_SPI_dependency" :
+    if connectID == "drv_spi_SPI_dependency":
+
+        dmaChannelSym = Database.getSymbolValue("core", "DMA_CH_FOR_" + remoteID.upper() + "_Transmit")
+        dmaRequestSym = Database.getSymbolValue("core", "DMA_CH_NEEDED_FOR_" + remoteID.upper() + "_Transmit")
+
         # Do not change the order as DMA Channels needs to be cleared
         # before clearing the plibUsed symbol
-        if isDMAPresent == True:
+        # Both device and connected plib should support DMA
+        if isDMAPresent == True and dmaChannelSym != None and dmaRequestSym != None:
             localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").clearValue()
             localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").setReadOnly(True)
             localComponent.getSymbolByID("DRV_SPI_DEPENDENCY_DMA_COMMENT").setVisible(True)
