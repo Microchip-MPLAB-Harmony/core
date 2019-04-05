@@ -54,7 +54,7 @@ processor = Variables.get("__PROCESSOR")
 sysIntHeaderFile = "sys_int"
 sysIntCFileStem = "sys_int_nvic"
 
-if "SAMA5" in processor:
+if "SAMA5" in processor or "SAM9X6" in processor:
     sysIntCFileStem = "sys_int_aic"
 elif "PIC32M" in processor:
 	sysIntCFileStem = "sys_int_pic32"
