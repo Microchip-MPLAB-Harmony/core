@@ -23,3 +23,6 @@
 <#if __PROCESSOR?contains("PIC32MX")>
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (460)
 </#if>
+<#if core.CoreArchitecture == "ARM926EJS">
+    <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (470)
+</#if>
