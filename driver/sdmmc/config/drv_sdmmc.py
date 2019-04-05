@@ -25,12 +25,10 @@
 global sdmmcFsEnable
 global sdmmcWPCheckEnable
 global sdmmcCardDetectionMethod
-global sdmmcPLIBRemoteID
+global sdmmcPLIB
 
-sdmmcPLIBRemoteID = None
-
-cardDetectMethodComboValuesSDHC = ["Use Polling", "Use SDCD Pin"]
-cardDetectMethodComboValuesHSMCI = ["Use Polling"]
+cardDetectMethodList1ComboValues = ["Use Polling", "Use SDCD Pin"]
+cardDetectMethodList2ComboValues = ["Use Polling"]
 
 def showRTOSMenu(symbol,event):
     if (event["value"] != "BareMetal"):
@@ -53,30 +51,59 @@ def setBufferSize(symbol, event):
     else:
         symbol.setReadOnly(False)
 
-def setVisibleCDMethodForSDHC(symbol, event):
+def setPLIBSDCDSupport(symbol, event):
     plibName = event["value"]
-    symbol.clearValue()
-    if (plibName[:4] == "SDHC"):
-        symbol.setVisible(True)
-        symbol.setValue("Use SDCD Pin")
+    if (plibName == "None"):
+        symbol.setValue(False)
     else:
-        symbol.setVisible(False)
+        if (Database.getSymbolValue(plibName.lower(), "SDCARD_SDCD_SUPPORT") == True):
+            symbol.setValue(True)
+        else:
+            symbol.setValue(False)
 
-def setVisibleCDMethodForHSMCI(symbol, event):
+def setPLIBSDWPSupport(symbol, event):
     plibName = event["value"]
-    symbol.clearValue()
-    if (plibName[:5] == "HSMCI"):
-        symbol.setVisible(True)
-        symbol.setValue("Use Polling")
+    if (plibName == "None"):
+        symbol.setValue(False)
     else:
+        if (Database.getSymbolValue(plibName.lower(), "SDCARD_SDWP_SUPPORT") == True):
+            symbol.setValue(True)
+        else:
+            symbol.setValue(False)
+
+def setVisibleCDList1(symbol, event):
+    symbol.clearValue()
+    plibName = event["value"]
+    if (plibName == "None"):
         symbol.setVisible(False)
+    else:
+        if (Database.getSymbolValue(plibName.lower(), "SDCARD_SDCD_SUPPORT") == True):
+            symbol.setVisible(True)
+            symbol.setValue(cardDetectMethodList1ComboValues[1])
+        else:
+            symbol.setVisible(False)
+
+def setVisibleCDList2(symbol, event):
+    symbol.clearValue()
+    plibName = event["value"]
+    if (plibName == "None"):
+        symbol.setVisible(False)
+    else:
+        if (Database.getSymbolValue(plibName.lower(), "SDCARD_SDCD_SUPPORT") == False):
+            symbol.setVisible(True)
+            symbol.setValue(cardDetectMethodList2ComboValues[0])
+        else:
+            symbol.setVisible(False)
 
 def setWPCheckVisible(symbol, event):
     plibName = event["value"]
-    if (plibName[:4] == "SDHC"):
-        symbol.setVisible(True)
-    else:
+    if (plibName == "None"):
         symbol.setVisible(False)
+    else:
+        if (Database.getSymbolValue(plibName.lower(), "SDCARD_SDWP_SUPPORT") == True):
+            symbol.setVisible(True)
+        else:
+            symbol.setVisible(False)
 
 def setCDMethod(symbol, event):
     symbol.setValue(event["value"])
@@ -89,34 +116,49 @@ def setWPCommentVisible(symbol, event):
 
 def setPLIBWPEN(symbol, event):
     global sdmmcWPCheckEnable
-    global sdmmcPLIBRemoteID
-
-    if (sdmmcPLIBRemoteID != None):
-        plibSDWPEN = Database.getSymbolValue(sdmmcPLIBRemoteID, "SDHC_SDWPEN")
+    global sdmmcPLIB
+    plibName = sdmmcPLIB.getValue()
+    if (plibName != "None"):
+        plibSDWPEN = Database.getSymbolValue(plibName.lower(), "SDCARD_SDWPEN")
         if (plibSDWPEN != None):
-            Database.setSymbolValue(sdmmcPLIBRemoteID, "SDHC_SDWPEN", sdmmcWPCheckEnable.getValue())
+            Database.setSymbolValue(plibName.lower(), "SDCARD_SDWPEN", sdmmcWPCheckEnable.getValue())
             symbol.setValue(sdmmcWPCheckEnable.getValue())
+        else:
+            symbol.setValue(False)
+    else:
+        symbol.setValue(False)
 
 def setPLIBCDEN(symbol, event):
     global sdmmcCardDetectionMethod
-    global sdmmcPLIBRemoteID
-
-    if (sdmmcPLIBRemoteID != None):
-        plibSDCDEN = Database.getSymbolValue(sdmmcPLIBRemoteID, "SDHC_SDCDEN")
+    global sdmmcPLIB
+    plibName = sdmmcPLIB.getValue()
+    if (plibName != "None"):
+        plibSDCDEN = Database.getSymbolValue(plibName.lower(), "SDCARD_SDCDEN")
         if (plibSDCDEN != None):
-            Database.setSymbolValue(sdmmcPLIBRemoteID, "SDHC_SDCDEN", sdmmcCardDetectionMethod.getValue() == "Use SDCD Pin")
+            Database.setSymbolValue(plibName.lower(), "SDCARD_SDCDEN", sdmmcCardDetectionMethod.getValue() == "Use SDCD Pin")
             symbol.setValue(sdmmcCardDetectionMethod.getValue() == "Use SDCD Pin")
+        else:
+            symbol.setValue(False)
+    else:
+        symbol.setValue(False)
 
 def setVisiblePollingInterval(symbol, event):
-    if (event["value"] == "Use Polling"):
-        symbol.setVisible(True)
-    else:
+    global sdmmcCardDetectionMethod
+    global sdmmcPLIB
+    plibName = sdmmcPLIB.getValue()
+    if (plibName == "None"):
         symbol.setVisible(False)
+    else:
+        if (sdmmcCardDetectionMethod.getValue() == "Use Polling"):
+            symbol.setVisible(True)
+        else:
+            symbol.setVisible(False)
 
 def instantiateComponent(sdmmcComponent, index):
     global sdmmcFsEnable
     global sdmmcWPCheckEnable
     global sdmmcCardDetectionMethod
+    global sdmmcPLIB
 
     # Enable dependent Harmony core components
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
@@ -165,23 +207,23 @@ def instantiateComponent(sdmmcComponent, index):
     sdmmcProtocol.setDefaultValue("SD")
     sdmmcProtocol.setReadOnly(True)
 
-    sdmmcCardDetectionMethodForSDHC = sdmmcComponent.createComboSymbol("DRV_SDMMC_CARD_DETECTION_METHOD_SDHC", None, cardDetectMethodComboValuesSDHC)
-    sdmmcCardDetectionMethodForSDHC.setLabel("Card Detection Method")
-    sdmmcCardDetectionMethodForSDHC.setDefaultValue("Use SDCD Pin")
-    sdmmcCardDetectionMethodForSDHC.setVisible(False)
-    sdmmcCardDetectionMethodForSDHC.setDependencies(setVisibleCDMethodForSDHC, ["DRV_SDMMC_PLIB"])
+    sdmmcCardDetectionMethodsList1 = sdmmcComponent.createComboSymbol("DRV_SDMMC_CARD_DETECTION_METHODS_LIST1", None, cardDetectMethodList1ComboValues)
+    sdmmcCardDetectionMethodsList1.setLabel("Card Detection Method")
+    sdmmcCardDetectionMethodsList1.setDefaultValue(cardDetectMethodList1ComboValues[1])
+    sdmmcCardDetectionMethodsList1.setVisible(False)
+    sdmmcCardDetectionMethodsList1.setDependencies(setVisibleCDList1, ["DRV_SDMMC_PLIB"])
 
-    sdmmcCardDetectionMethodForHSMCI = sdmmcComponent.createComboSymbol("DRV_SDMMC_CARD_DETECTION_METHOD_HSMCI", None, cardDetectMethodComboValuesHSMCI)
-    sdmmcCardDetectionMethodForHSMCI.setLabel("Card Detection Method")
-    sdmmcCardDetectionMethodForHSMCI.setDefaultValue("Use Polling")
-    sdmmcCardDetectionMethodForHSMCI.setVisible(False)
-    sdmmcCardDetectionMethodForHSMCI.setDependencies(setVisibleCDMethodForHSMCI, ["DRV_SDMMC_PLIB"])
+    sdmmcCardDetectionMethodsList2 = sdmmcComponent.createComboSymbol("DRV_SDMMC_CARD_DETECTION_METHODS_LIST2", None, cardDetectMethodList2ComboValues)
+    sdmmcCardDetectionMethodsList2.setLabel("Card Detection Method")
+    sdmmcCardDetectionMethodsList2.setDefaultValue(cardDetectMethodList2ComboValues[0])
+    sdmmcCardDetectionMethodsList2.setVisible(False)
+    sdmmcCardDetectionMethodsList2.setDependencies(setVisibleCDList2, ["DRV_SDMMC_PLIB"])
 
     sdmmcCardDetectionMethod = sdmmcComponent.createStringSymbol("DRV_SDMMC_CARD_DETECTION_METHOD", None)
     sdmmcCardDetectionMethod.setLabel("Selected Card Detection Method")
     sdmmcCardDetectionMethod.setVisible(False)
     sdmmcCardDetectionMethod.setDefaultValue("None")
-    sdmmcCardDetectionMethod.setDependencies(setCDMethod, ["DRV_SDMMC_CARD_DETECTION_METHOD_SDHC" , "DRV_SDMMC_CARD_DETECTION_METHOD_HSMCI"])
+    sdmmcCardDetectionMethod.setDependencies(setCDMethod, ["DRV_SDMMC_CARD_DETECTION_METHODS_LIST1" , "DRV_SDMMC_CARD_DETECTION_METHODS_LIST2"])
 
     sdmmcPlibSdcdEnable = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_PLIB_SDCD_ENABLE", None)
     sdmmcPlibSdcdEnable.setLabel("Enable PLIB SDCD?")
@@ -189,12 +231,24 @@ def instantiateComponent(sdmmcComponent, index):
     sdmmcPlibSdcdEnable.setDefaultValue(sdmmcCardDetectionMethod.getValue() == "Use SDCD Pin")
     sdmmcPlibSdcdEnable.setDependencies(setPLIBCDEN, ["DRV_SDMMC_CARD_DETECTION_METHOD", "DRV_SDMMC_PLIB"])
 
+    sdmmcPLIBSDCDSupport = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_PLIB_SDCD_SUPPORT", None)
+    sdmmcPLIBSDCDSupport.setLabel("PLIB_SDCD_SUPPORT")
+    sdmmcPLIBSDCDSupport.setVisible(False)
+    sdmmcPLIBSDCDSupport.setDefaultValue(False)
+    sdmmcPLIBSDCDSupport.setDependencies(setPLIBSDCDSupport, ["DRV_SDMMC_PLIB"])
+
+    sdmmcPLIBSDWPSupport = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_PLIB_SDWP_SUPPORT", None)
+    sdmmcPLIBSDWPSupport.setLabel("PLIB_SDWP_SUPPORT")
+    sdmmcPLIBSDWPSupport.setVisible(False)
+    sdmmcPLIBSDWPSupport.setDefaultValue(False)
+    sdmmcPLIBSDWPSupport.setDependencies(setPLIBSDWPSupport, ["DRV_SDMMC_PLIB"])
+
     sdmmcPollingInterval = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_POLLING_INTERVAL", None)
     sdmmcPollingInterval.setLabel("Polling Interval (ms)")
     sdmmcPollingInterval.setVisible(False)
     sdmmcPollingInterval.setMin(1)
     sdmmcPollingInterval.setDefaultValue(100)
-    sdmmcPollingInterval.setDependencies(setVisiblePollingInterval, ["DRV_SDMMC_CARD_DETECTION_METHOD"])
+    sdmmcPollingInterval.setDependencies(setVisiblePollingInterval, ["DRV_SDMMC_CARD_DETECTION_METHOD", "DRV_SDMMC_PLIB"])
 
     sdmmcCDComment = sdmmcComponent.createCommentSymbol("DRV_SDMMC_SDCDEN_COMMENT", None)
     sdmmcCDComment.setLabel("!!!Configure SDCD pin in Pin Configuration!!!")
