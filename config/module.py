@@ -52,7 +52,7 @@ def loadModule():
 
         {"name":"at25df", "label": "AT25DF", "type":"driver", "display_path":"SPI FLASH", "actual_path":"spi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SPI"], "condition":"True"},
 
-        {"name":"sdmmc", "label":"SDMMC", "type":"driver", "display_path":"SDCARD", "actual_path":"", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["SDHC", "SYS_TIME"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "SAMD5", "SAME5", "SAMA5D2", "PIC32MZ"])'},
+        {"name":"sdmmc", "label":"SDMMC", "type":"driver", "display_path":"SDCARD", "actual_path":"", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["SDHC", "SYS_TIME"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "SAMD5", "SAME5", "SAMA5D2", "PIC32MZ", "SAM9X60"])'},
 
         {"name":"sdspi", "label": "SD Card (SPI)", "type":"driver", "display_path":"SDCARD", "actual_path":"", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["SPI", "SYS_TIME"], "condition":"True"}
 
