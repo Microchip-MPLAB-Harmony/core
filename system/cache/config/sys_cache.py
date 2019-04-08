@@ -81,6 +81,8 @@ if "CORTEX-A" in coreArch:
     cacheSourceFile.setSourcePath("system/cache/templates/sys_cache_cortex_a.c.ftl")
 elif "CORTEX-M" in coreArch:
     cacheSourceFile.setSourcePath("system/cache/templates/sys_cache_cortex_m.c.ftl")
+elif "ARM926" in coreArch:
+    cacheSourceFile.setSourcePath("system/cache/templates/sys_cache_arm_926.c.ftl")
 else:
     cacheSourceFile.setSourcePath("system/cache/templates/sys_cache_pic32mz.c.ftl")
 cacheSourceFile.setOutputName("sys_cache.c")
