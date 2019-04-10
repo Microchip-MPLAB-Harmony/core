@@ -23,15 +23,12 @@
 *****************************************************************************"""
 
 ################################################################################
-#### Global Variables ####
-################################################################################
-
-################################################################################
 #### Business Logic ####
 ################################################################################
+
 def selectDeviceSet(symbol, event):
     symbol.clearValue()
-    if "USART" or "UART" in event["value"]:
+    if "USART" or "UART" or "SERCOM" or "FLEXCOM" in event["value"]:
         symbol.setValue("UART")
     elif "USB" in event["value"]:
         symbol.setValue("USB_CDC")
@@ -40,83 +37,34 @@ def selectDeviceSet(symbol, event):
     else:
         Log.WriteErrorMessage("Incorrect Component is attached to Console System Service")
 
-def genDebugFiles(symbol, event):
-    symbol.setEnabled(event["value"])
-
-def genCommandFiles(symbol, event):
-    symbol.setEnabled(event["value"])
-
-def enableSysDebugConfigOptions(symbol, event):
-    symbol.setVisible(event["value"])
-
-def enableCommandProcessorOptions(symbol, event):
-    symbol.setVisible(event["value"])
-
-def enableDebugProcessorOptions(symbol, event):
-    component = symbol.getComponent()
-    commandEnable = component.getSymbolValue("SYS_COMMAND_ENABLE")
-    debugEnable = component.getSymbolValue("SYS_DEBUG_ENABLE")
-    if ((commandEnable == True) and (debugEnable == True)):
-        symbol.setVisible(True)
-    else:
-        symbol.setVisible(False)
-        symbol.setValue(False)
-
-
-def setVisible(symbol, event):
-    if (event["value"] == True):
-        symbol.setVisible(True)
-    else:
-        symbol.setVisible(False)
-
-def showRTOSMenu(symbol, event):
-    show_rtos_menu = False
-    component = symbol.getComponent()
-    commandEnable = component.getSymbolValue("SYS_COMMAND_ENABLE")
-
-    if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
-        if (commandEnable == True):
-            show_rtos_menu = True
-
-    symbol.setVisible(show_rtos_menu)
-
-def genRtosTask(symbol, event):
-    gen_rtos_task = False
-    component = symbol.getComponent()
-    commandEnable = component.getSymbolValue("SYS_COMMAND_ENABLE")
-
-    if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
-        if (commandEnable == True):
-            gen_rtos_task = True
-
-    symbol.setEnabled(gen_rtos_task)
-
 ################################################################################
 #### Component ####
 ################################################################################
-def instantiateComponent(consoleComponent):
-    res = Database.activateComponents(["HarmonyCore"])
 
-    Log.writeInfoMessage("Loading System Console Module...")
+def instantiateComponent(consoleComponent, index):
 
-    # Enable "Generate Harmony Driver Common Files" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
-
-    # Enable "Generate Harmony System Service Common Files" option in MHC
+    # Enable dependent Harmony core components
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
         Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
 
+    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
+        Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
+        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
+
     consoleIndex = consoleComponent.createIntegerSymbol("INDEX", None)
     consoleIndex.setVisible(False)
-    consoleIndex.setDefaultValue(0)
+    consoleIndex.setDefaultValue(index)
 
     consoleDevice = consoleComponent.createStringSymbol("SYS_CONSOLE_DEVICE", None)
     consoleDevice.setLabel("Device Used")
     consoleDevice.setReadOnly(True)
     consoleDevice.setDefaultValue("")
+
+    consoleUARTIndex = consoleComponent.createIntegerSymbol("SYS_CONSOLE_DEVICE_UART_INDEX", None)
+    consoleUARTIndex.setVisible(False)
+    consoleUARTIndex.setDefaultValue(0)
+    consoleUARTIndex.setUseSingleDynamicValue(True)
 
     consoleDeviceSet = consoleComponent.createStringSymbol("SYS_CONSOLE_DEVICE_SET", None)
     consoleDeviceSet.setLabel("Device Set")
@@ -136,188 +84,11 @@ def instantiateComponent(consoleComponent):
     consoleSymRXQueueSize.setMax(128)
     consoleSymRXQueueSize.setDefaultValue(10)
 
-    debugEnable = consoleComponent.createBooleanSymbol("SYS_DEBUG_ENABLE", None)
-    debugEnable.setLabel("Enable Debug?")
-
-    debugLevel = consoleComponent.createComboSymbol("SYS_DEBUG_LEVEL", debugEnable, ["SYS_ERROR_FATAL", "SYS_ERROR_ERROR", "SYS_ERROR_WARNING", "SYS_ERROR_INFO", "SYS_ERROR_DEBUG"])
-    debugLevel.setLabel("Debug Level")
-    debugLevel.setDefaultValue("SYS_ERROR_DEBUG")
-    debugLevel.setVisible(debugEnable.getValue())
-    debugLevel.setDependencies(enableSysDebugConfigOptions, ["SYS_DEBUG_ENABLE"])
-
-    debugPrintBufferSize = consoleComponent.createIntegerSymbol("SYS_DEBUG_PRINT_BUFFER_SIZE", debugEnable)
-    debugPrintBufferSize.setLabel("Debug Print Buffer Size (128-8192)")
-    debugPrintBufferSize.setMin(128)
-    debugPrintBufferSize.setMax(8192)
-    debugPrintBufferSize.setDefaultValue(200)
-    debugPrintBufferSize.setVisible(debugEnable.getValue())
-    debugPrintBufferSize.setDependencies(enableSysDebugConfigOptions, ["SYS_DEBUG_ENABLE"])
-
-    debugUseConsole = consoleComponent.createBooleanSymbol("SYS_DEBUG_USE_CONSOLE", debugEnable)
-    debugUseConsole.setLabel("Use Console for Debug?")
-    debugUseConsole.setDefaultValue(True)
-    debugUseConsole.setVisible(debugEnable.getValue())
-    debugUseConsole.setDependencies(enableSysDebugConfigOptions, ["SYS_DEBUG_ENABLE"])
-
-    commandEnable = consoleComponent.createBooleanSymbol("SYS_COMMAND_ENABLE", None)
-    commandEnable.setLabel("Enable Command Processor?")
-
-    commandPrintBufferSize = consoleComponent.createIntegerSymbol("SYS_COMMAND_PRINT_BUFFER_SIZE", commandEnable)
-    commandPrintBufferSize.setLabel("Command Print Buffer Size (512-8192)")
-    commandPrintBufferSize.setMin(512)
-    commandPrintBufferSize.setMax(8192)
-    commandPrintBufferSize.setDefaultValue(1024)
-    commandPrintBufferSize.setVisible(commandEnable.getValue())
-    commandPrintBufferSize.setDependencies(enableCommandProcessorOptions, ["SYS_COMMAND_ENABLE"])
-
-    commandConsoleEnable = consoleComponent.createBooleanSymbol("SYS_COMMAND_CONSOLE_ENABLE", commandEnable)
-    commandConsoleEnable.setLabel("Re-route Console Message/Print through Command Service?")
-    commandConsoleEnable.setDefaultValue(True)
-    commandConsoleEnable.setVisible(commandEnable.getValue())
-    commandConsoleEnable.setDependencies(enableCommandProcessorOptions, ["SYS_COMMAND_ENABLE"])
-
-    commandDebugEnable = consoleComponent.createBooleanSymbol("SYS_COMMAND_DEBUG_ENABLE", commandEnable)
-    commandDebugEnable.setLabel("Re-route Debug Message/Print through Command Service?")
-    commandDebugEnable.setVisible(commandEnable.getValue())
-    commandDebugEnable.setDependencies(enableDebugProcessorOptions, ["SYS_COMMAND_ENABLE", "SYS_DEBUG_ENABLE"])
-
-    enable_rtos_settings = False
-
-    if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
-        if (commandEnable.getValue() == True):
-            enable_rtos_settings = True
-
-    # RTOS Settings
-    commandRTOSMenu = consoleComponent.createMenuSymbol("SYS_COMMAND_RTOS_MENU", commandEnable)
-    commandRTOSMenu.setLabel("RTOS settings")
-    commandRTOSMenu.setDescription("RTOS settings")
-    commandRTOSMenu.setVisible(enable_rtos_settings)
-    commandRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS", "SYS_COMMAND_ENABLE"])
-
-    commandRTOSStackSize = consoleComponent.createIntegerSymbol("SYS_COMMAND_RTOS_STACK_SIZE", commandRTOSMenu)
-    commandRTOSStackSize.setLabel("Stack Size")
-    commandRTOSStackSize.setDefaultValue(256)
-    #commandRTOSStackSize.setReadOnly(True)
-
-    commandRTOSTaskPriority = consoleComponent.createIntegerSymbol("SYS_COMMAND_RTOS_TASK_PRIORITY", commandRTOSMenu)
-    commandRTOSTaskPriority.setLabel("Task Priority")
-    commandRTOSTaskPriority.setDefaultValue(1)
-
-    commandRTOSTaskDelay = consoleComponent.createBooleanSymbol("SYS_COMMAND_RTOS_USE_DELAY", commandRTOSMenu)
-    commandRTOSTaskDelay.setLabel("Use Task Delay?")
-    commandRTOSTaskDelay.setDefaultValue(True)
-
-    commandRTOSTaskDelayVal = consoleComponent.createIntegerSymbol("SYS_COMMAND_RTOS_DELAY", commandRTOSMenu)
-    commandRTOSTaskDelayVal.setLabel("Task Delay")
-    commandRTOSTaskDelayVal.setDefaultValue(10)
-    commandRTOSTaskDelayVal.setVisible((commandRTOSTaskDelay.getValue() == True))
-    commandRTOSTaskDelayVal.setDependencies(setVisible, ["SYS_COMMAND_RTOS_USE_DELAY"])
-
-
-
-    ############################################################################
-    #### Dependency ####
-    ############################################################################
-
-
     ############################################################################
     #### Code Generation ####
     ############################################################################
+
     configName = Variables.get("__CONFIGURATION_NAME")
-
-    consoleHeaderFile = consoleComponent.createFileSymbol("SYS_CONSOLE_HEADER", None)
-    consoleHeaderFile.setSourcePath("system/console/sys_console.h")
-    consoleHeaderFile.setOutputName("sys_console.h")
-    consoleHeaderFile.setDestPath("system/console/")
-    consoleHeaderFile.setProjectPath("config/" + configName + "/system/console/")
-    consoleHeaderFile.setType("HEADER")
-    consoleHeaderFile.setOverwrite(True)
-
-    consoleHeaderLocalFile = consoleComponent.createFileSymbol("SYS_CONSOLE_LOCAL", None)
-    consoleHeaderLocalFile.setSourcePath("system/console/src/sys_console_local.h")
-    consoleHeaderLocalFile.setOutputName("sys_console_local.h")
-    consoleHeaderLocalFile.setDestPath("system/console/src")
-    consoleHeaderLocalFile.setProjectPath("config/" + configName + "/system/console/")
-    consoleHeaderLocalFile.setType("HEADER")
-    consoleHeaderLocalFile.setOverwrite(True)
-
-    consoleSourceFile = consoleComponent.createFileSymbol("SYS_CONSOLE_SOURCE", None)
-    consoleSourceFile.setSourcePath("system/console/src/sys_console.c")
-    consoleSourceFile.setOutputName("sys_console.c")
-    consoleSourceFile.setDestPath("system/console/src")
-    consoleSourceFile.setProjectPath("config/" + configName + "/system/console/")
-    consoleSourceFile.setType("SOURCE")
-    consoleSourceFile.setOverwrite(True)
-
-    consoleUARTHeaderFile = consoleComponent.createFileSymbol("SYS_CONSOLE_UART_HEADER", None)
-    consoleUARTHeaderFile.setSourcePath("system/console/src/sys_console_uart.h")
-    consoleUARTHeaderFile.setOutputName("sys_console_uart.h")
-    consoleUARTHeaderFile.setDestPath("system/console/src")
-    consoleUARTHeaderFile.setProjectPath("config/" + configName + "/system/console/")
-    consoleUARTHeaderFile.setType("HEADER")
-    consoleUARTHeaderFile.setOverwrite(True)
-
-    consoleUARTDefinitionsHeaderFile = consoleComponent.createFileSymbol("SYS_CONSOLE_UART_DEFINITIONS_HEADER", None)
-    consoleUARTDefinitionsHeaderFile.setSourcePath("system/console/src/sys_console_uart_definitions.h")
-    consoleUARTDefinitionsHeaderFile.setOutputName("sys_console_uart_definitions.h")
-    consoleUARTDefinitionsHeaderFile.setDestPath("system/console/src")
-    consoleUARTDefinitionsHeaderFile.setProjectPath("config/" + configName + "/system/console/")
-    consoleUARTDefinitionsHeaderFile.setType("HEADER")
-    consoleUARTDefinitionsHeaderFile.setOverwrite(True)
-
-    consoleUARTSourceFile = consoleComponent.createFileSymbol("SYS_CONSOLE_UART_SOURCE", None)
-    consoleUARTSourceFile.setSourcePath("system/console/src/sys_console_uart.c")
-    consoleUARTSourceFile.setOutputName("sys_console_uart.c")
-    consoleUARTSourceFile.setDestPath("system/console/src")
-    consoleUARTSourceFile.setProjectPath("config/" + configName + "/system/console/")
-    consoleUARTSourceFile.setType("SOURCE")
-    consoleUARTSourceFile.setOverwrite(True)
-
-    debugHeaderLocalFile = consoleComponent.createFileSymbol("SYS_DEBUG_LOCAL", None)
-    debugHeaderLocalFile.setSourcePath("system/console/src/sys_debug_local.h")
-    debugHeaderLocalFile.setOutputName("sys_debug_local.h")
-    debugHeaderLocalFile.setDestPath("system/console/src")
-    debugHeaderLocalFile.setProjectPath("config/" + configName + "/system/console/")
-    debugHeaderLocalFile.setType("HEADER")
-    debugHeaderLocalFile.setOverwrite(True)
-    debugHeaderLocalFile.setEnabled(debugEnable.getValue())
-    debugHeaderLocalFile.setDependencies(genDebugFiles, ["SYS_DEBUG_ENABLE"])
-
-    debugSourceFile = consoleComponent.createFileSymbol("SYS_DEBUG_SOURCE", None)
-    debugSourceFile.setSourcePath("system/console/src/sys_debug.c")
-    debugSourceFile.setOutputName("sys_debug.c")
-    debugSourceFile.setDestPath("system/console/src")
-    debugSourceFile.setProjectPath("config/" + configName + "/system/console/")
-    debugSourceFile.setType("SOURCE")
-    debugSourceFile.setOverwrite(True)
-    debugSourceFile.setEnabled(debugEnable.getValue())
-    debugSourceFile.setDependencies(genDebugFiles, ["SYS_DEBUG_ENABLE"])
-
-    commandHeaderFile = consoleComponent.createFileSymbol("SYS_COMMAND_HEADER", None)
-    commandHeaderFile.setSourcePath("system/console/sys_command.h")
-    commandHeaderFile.setOutputName("sys_command.h")
-    commandHeaderFile.setDestPath("system/console/")
-    commandHeaderFile.setProjectPath("config/" + configName + "/system/console/")
-    commandHeaderFile.setType("HEADER")
-    commandHeaderFile.setOverwrite(True)
-    commandHeaderFile.setEnabled(commandEnable.getValue())
-    commandHeaderFile.setDependencies(genCommandFiles, ["SYS_COMMAND_ENABLE"])
-
-    commandSourceFile = consoleComponent.createFileSymbol("SYS_COMMAND_SOURCE", None)
-    commandSourceFile.setSourcePath("system/console/src/sys_command.c")
-    commandSourceFile.setOutputName("sys_command.c")
-    commandSourceFile.setDestPath("system/console/src")
-    commandSourceFile.setProjectPath("config/" + configName + "/system/console/")
-    commandSourceFile.setType("SOURCE")
-    commandSourceFile.setOverwrite(True)
-    commandSourceFile.setEnabled(commandEnable.getValue())
-    commandSourceFile.setDependencies(genCommandFiles, ["SYS_COMMAND_ENABLE"])
-
-    consoleSystemDefFile = consoleComponent.createFileSymbol("SYS_CONSOLE_SYS_DEF", None)
-    consoleSystemDefFile.setType("STRING")
-    consoleSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-    consoleSystemDefFile.setSourcePath("system/console/templates/system/system_definitions.h.ftl")
-    consoleSystemDefFile.setMarkup(True)
 
     consoleSystemDefObjFile = consoleComponent.createFileSymbol("SYS_CONSOLE_SYS_DEF_OBJ", None)
     consoleSystemDefObjFile.setType("STRING")
@@ -343,45 +114,30 @@ def instantiateComponent(consoleComponent):
     consoleSystemInitFile.setSourcePath("system/console/templates/system/system_initialize.c.ftl")
     consoleSystemInitFile.setMarkup(True)
 
-    consoleSystemTasksFile = consoleComponent.createFileSymbol("SYS_CONSOLE_SYS_TASKS", None)
-    consoleSystemTasksFile.setType("STRING")
-    consoleSystemTasksFile.setOutputName("core.LIST_SYSTEM_TASKS_C_CALL_SYSTEM_TASKS")
-    consoleSystemTasksFile.setSourcePath("system/console/templates/system/system_tasks.c.ftl")
-    consoleSystemTasksFile.setMarkup(True)
-
-    commandSystemRtosTasksFile = consoleComponent.createFileSymbol("SYS_COMMAND_SYS_RTOS_TASK", None)
-    commandSystemRtosTasksFile.setType("STRING")
-    commandSystemRtosTasksFile.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
-    commandSystemRtosTasksFile.setSourcePath("system/console/templates/system/system_cmd_rtos_tasks.c.ftl")
-    commandSystemRtosTasksFile.setMarkup(True)
-    commandSystemRtosTasksFile.setEnabled(enable_rtos_settings)
-    commandSystemRtosTasksFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS", "SYS_COMMAND_ENABLE"])
-
-    debugHeaderFile = consoleComponent.createFileSymbol("SYS_DEBUG_HEADER", None)
-    debugHeaderFile.setSourcePath("system/console/templates/system/sys_debug.h.ftl")
-    debugHeaderFile.setOutputName("sys_debug.h")
-    debugHeaderFile.setDestPath("system/console/")
-    debugHeaderFile.setProjectPath("config/" + configName + "/system/console/")
-    debugHeaderFile.setType("HEADER")
-    debugHeaderFile.setMarkup(True)
-    debugHeaderFile.setOverwrite(True)
-    debugHeaderFile.setEnabled(debugEnable.getValue())
-    debugHeaderFile.setDependencies(genDebugFiles, ["SYS_DEBUG_ENABLE"])
-
 ############################################################################
 #### Dependency ####
 ############################################################################
+
 def onAttachmentConnected(source, target):
     localComponent = source["component"]
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
     connectID = source["id"]
     targetID = target["id"]
+    
+    print "local component"
+    print localComponent.getID()
 
     if connectID == "sys_console_UART_dependency" :
         deviceUsed = localComponent.getSymbolByID("SYS_CONSOLE_DEVICE")
-        deviceUsed.clearValue()
         deviceUsed.setValue(remoteID.upper())
+
+        if "USART" or "UART" or "SERCOM" or "FLEXCOM" in remoteID:
+            console_uart_connection_counter_dict = {}
+            console_uart_connection_counter_dict = Database.sendMessage("sys_console", "SYS_CONSOLE_UART_CONNECTION_COUNTER_INC", console_uart_connection_counter_dict)
+        elif "USB" in remoteID:
+            console_usb_connection_counter_dict = {}
+            console_usb_connection_counter_dict = Database.sendMessage("sys_console", "SYS_CONSOLE_USB_CONNECTION_COUNTER_INC", console_usb_connection_counter_dict)
 
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]
@@ -393,3 +149,11 @@ def onAttachmentDisconnected(source, target):
     if connectID == "sys_console_UART_dependency" :
         deviceUsed = localComponent.getSymbolByID("SYS_CONSOLE_DEVICE")
         deviceUsed.clearValue()
+
+        if "USART" or "UART" or "SERCOM" or "FLEXCOM" in remoteID:
+            console_uart_connection_counter_dict = {}
+            console_uart_connection_counter_dict = Database.sendMessage("sys_console", "SYS_CONSOLE_UART_CONNECTION_COUNTER_DEC", console_uart_connection_counter_dict)
+            #localComponent.getSymbolByID("SYS_CONSOLE_DEVICE_UART_INDEX").setValue(0)
+        elif "USB" in remoteID:
+            console_usb_connection_counter_dict = {}
+            console_usb_connection_counter_dict = Database.sendMessage("sys_console", "SYS_CONSOLE_USB_CONNECTION_COUNTER_INC", console_usb_connection_counter_dict)

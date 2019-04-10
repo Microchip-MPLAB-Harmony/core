@@ -1,0 +1,3 @@
+/* Console System Service Configuration Options */
+#define SYS_CONSOLE_DEVICE_MAX_INSTANCES   ${__INSTANCE_COUNT}
+#define SYS_CONSOLE_UART_MAX_INSTANCES     ${SYS_CONSOLE_UART_CONNECTION_COUNTER}

@@ -48,7 +48,10 @@ for coreComponent in coreComponents:
             actualPath  = "system/" + coreComponent['actual_path'] + "/"
             displayPath = "/Harmony/System Services/" + coreComponent['display_path']
 
-            Component = Module.CreateSharedComponent("sys_" + Name, Label, displayPath, actualPath + Name + "/config/sys_" + Name + ".py")
+            if "instance" in coreComponent:
+                Component = Module.CreateGeneratorComponent("sys_" + Name, Label, displayPath, actualPath + Name + "/config/sys_" + Name + "_common.py", actualPath + Name + "/config/sys_" + Name + ".py")
+            else:
+                Component = Module.CreateSharedComponent("sys_" + Name, Label, displayPath, actualPath + Name + "/config/sys_" + Name + ".py")
 
             if "capability" in coreComponent:
                 for capability in coreComponent['capability']:
