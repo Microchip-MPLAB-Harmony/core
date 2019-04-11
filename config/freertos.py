@@ -855,5 +855,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     # load family specific configuration
     if (coreArch == "MIPS"):
         execfile(Module.getPath() + "config/arch/mips/devices_" + coreFamily[:7].lower() + "/freertos_config.py")
+    elif (coreArch[:6] == "ARM926"):
+        execfile(Module.getPath() + "config/arch/arm/devices_" + coreArch[:6].lower() + "/freertos_config.py")
     else:
         execfile(Module.getPath() + "config/arch/arm/devices_" + coreArch.replace("-", "_").replace("PLUS", "").lower() + "/freertos_config.py")
