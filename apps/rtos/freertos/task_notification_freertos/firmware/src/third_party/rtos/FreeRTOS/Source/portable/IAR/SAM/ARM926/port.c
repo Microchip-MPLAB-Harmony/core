@@ -145,7 +145,7 @@ StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t px
 	*pxTopOfStack = ( StackType_t ) pxCode + portINSTRUCTION_SIZE;
 	pxTopOfStack--;
 
-	*pxTopOfStack = ( StackType_t ) portTASK_RETURN_ADDRESS;	/* R14 */
+	*pxTopOfStack = ( StackType_t ) prvTaskExitError;	/* R14 */
 	pxTopOfStack--;	
 	*pxTopOfStack = ( StackType_t ) pxOriginalTOS; /* Stack used when task starts goes in R13. */
 	pxTopOfStack--;
