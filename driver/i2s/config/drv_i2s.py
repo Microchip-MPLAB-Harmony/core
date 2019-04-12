@@ -49,11 +49,15 @@ def requestDMAChannel(Sym, event):
                 dmaRequestID = "DMA_CH_NEEDED_FOR_SSC_Transmit"
             elif (i2sPlibId[:4] == "I2SC"):
                 dmaRequestID = "DMA_CH_NEEDED_FOR_" + i2sPlibId + "_Transmit_Left"
+            elif (i2sPlibId[:3] == "I2S"):
+                dmaRequestID = "DMA_CH_NEEDED_FOR_" + i2sPlibId + "_Transmit_0"
         elif event["id"] == "DRV_I2S_RX_DMA":
             if i2sPlibId[:3] == "SSC":
                 dmaRequestID = "DMA_CH_NEEDED_FOR_SSC_Receive"
             elif (i2sPlibId[:4] == "I2SC"):
                 dmaRequestID = "DMA_CH_NEEDED_FOR_" + i2sPlibId + "_Receive_Left"
+            elif (i2sPlibId[:3] == "I2S"):
+                dmaRequestID = "DMA_CH_NEEDED_FOR_" + i2sPlibId + "_Receive_0"
         if dmaRequestID!="":
             Database.clearSymbolValue("core", dmaRequestID)
             Database.setSymbolValue("core", dmaRequestID, event["value"])
@@ -141,11 +145,11 @@ def instantiateComponent(i2sComponent, index):
     i2sTXDMAChannel.setDefaultValue(0)
     i2sTXDMAChannel.setVisible(True)
     i2sTXDMAChannel.setReadOnly(False)
-    i2sTXDMAChannel.setDependencies(requestDMAChannel, ["DRV_I2S_TX_RX_DMA","DRV_I2S_TX_DMA", "core.DMA_CH_FOR_" + "SSC" + "_Transmit", "core.DMA_CH_FOR_" + "I2SC0" + "_Transmit_Left", "core.DMA_CH_FOR_" + "I2SC1" + "_Transmit_Left"])
+    i2sTXDMAChannel.setDependencies(requestDMAChannel, ["DRV_I2S_TX_RX_DMA","DRV_I2S_TX_DMA", "core.DMA_CH_FOR_SSC_Transmit", "core.DMA_CH_FOR_I2SC0_Transmit_Left", "core.DMA_CH_FOR_I2SC1_Transmit_Left", "core.DMA_CH_FOR_I2S_Transmit_0"])
 
     i2sTXDMAChannelComment = i2sComponent.createCommentSymbol("DRV_I2S_TX_DMA_CH_COMMENT", None)
     i2sTXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate any DMA Channel. Check DMA manager.")
-    i2sTXDMAChannelComment.setDependencies(requestDMAComment, ["core.DMA_CH_FOR_" + "I2SC0" + "_Transmit_Left", "core.DMA_CH_FOR_" + "I2SC1" + "_Transmit_Left"])
+    i2sTXDMAChannelComment.setDependencies(requestDMAComment, ["core.DMA_CH_FOR_" + "I2SC0" + "_Transmit_Left", "core.DMA_CH_FOR_" + "I2SC1" + "_Transmit_Left","core.DMA_CH_FOR_" + "I2S_Transmit_0"])
     i2sTXDMAChannelComment.setVisible(False)
 
     i2sRXDMA = i2sComponent.createBooleanSymbol("DRV_I2S_RX_DMA", None)
@@ -159,11 +163,11 @@ def instantiateComponent(i2sComponent, index):
     i2sRXDMAChannel.setDefaultValue(1)
     i2sRXDMAChannel.setVisible(True)
     i2sRXDMAChannel.setReadOnly(False)
-    i2sRXDMAChannel.setDependencies(requestDMAChannel, ["DRV_I2S_TX_RX_DMA","DRV_I2S_RX_DMA", "core.DMA_CH_FOR_" + "SSC" + "_Receive", "core.DMA_CH_FOR_" + "I2SC0" + "_Receive_Left", "core.DMA_CH_FOR_" + "I2SC1" + "_Receive_Left"])
+    i2sRXDMAChannel.setDependencies(requestDMAChannel, ["DRV_I2S_TX_RX_DMA","DRV_I2S_RX_DMA", "core.DMA_CH_FOR_SSC_Receive", "core.DMA_CH_FOR_I2SC0_Receive_Left", "core.DMA_CH_FOR_I2SC1_Receive_Left", "core.DMA_CH_FOR_I2S_Receive_0"])
 
     i2sRXDMAChannelComment = i2sComponent.createCommentSymbol("DRV_I2S_RX_DMA_CH_COMMENT", None)
     i2sRXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate any DMA Channel. Check DMA manager.")
-    i2sRXDMAChannelComment.setDependencies(requestDMAComment, ["core.DMA_CH_FOR_" + "SSC" + "_Receive", "core.DMA_CH_FOR_" + "I2SC0" + "_Receive_Left", "core.DMA_CH_FOR_" + "I2SC1" + "_Receive_Left"])
+    i2sRXDMAChannelComment.setDependencies(requestDMAComment, ["core.DMA_CH_FOR_SSC_Receive", "core.DMA_CH_FOR_I2SC0_Receive_Left", "core.DMA_CH_FOR_I2SC1_Receive_Left", "core.DMA_CH_FOR_I2S_Receive_0"])
     i2sRXDMAChannelComment.setVisible(False)
 
     i2sDMALinkedList = i2sComponent.createBooleanSymbol("DRV_I2S_DMA_LL_ENABLE", None)
@@ -262,6 +266,16 @@ def onDependencyConnected(info):
             i2sTXRXDMA = info["localComponent"].getSymbolByID("DRV_I2S_TX_RX_DMA")
             i2sTXRXDMA.setValue(True)
         elif i2sPlibId[:4] == "I2SC":
+            dataLengthIdx = info["remoteComponent"].getSymbolValue("I2SC_MR_DATALENGTH")
+            i2sDataWidth = info["localComponent"].getSymbolByID("I2S_DATA_LENGTH")
+            if dataLengthIdx==0:
+                i2sDataWidth.setValue(32)
+            elif dataLengthIdx==4:
+                i2sDataWidth.setValue(16)
+            # force DMA channels to be allocated
+            i2sTXRXDMA = info["localComponent"].getSymbolByID("DRV_I2S_TX_RX_DMA")
+            i2sTXRXDMA.setValue(True)
+        elif i2sPlibId[:3] == "I2S":
             dataLengthIdx = info["remoteComponent"].getSymbolValue("I2SC_MR_DATALENGTH")
             i2sDataWidth = info["localComponent"].getSymbolByID("I2S_DATA_LENGTH")
             if dataLengthIdx==0:

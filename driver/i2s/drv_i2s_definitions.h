@@ -52,8 +52,6 @@
 #include <device.h>
 #include "system/int/sys_int.h"
 #include "system/dma/sys_dma.h"
-#include "peripheral/pio/plib_pio.h"
-
 #include "stddef.h"
 #include "system/system_module.h"
 #include "driver/driver.h"
