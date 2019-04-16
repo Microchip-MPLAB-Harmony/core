@@ -112,7 +112,7 @@ extern "C" {
     This define is used by the TWIHS PLib Write API.
  */
 
-#define APP_SAM_9X60_EK_WRITE_DATA_LENGTH            19
+#define APP_SAM_9X60_EK_WRITE_DATA_LENGTH            18
 
 // *****************************************************************************
 /* Acknowledge polling data length.
@@ -153,7 +153,7 @@ extern "C" {
  *  This define is used by the TWIHS PLib Read API.
  */
 
-#define APP_SAM_9X60_EK_READ_DATA_LENGTH           17
+#define APP_SAM_9X60_EK_READ_DATA_LENGTH           16
     
 // *****************************************************************************
 /* Application states
@@ -196,7 +196,7 @@ typedef enum
     APP_SAM_9X60_EK_STATE_ERROR,
             
     /* Application done state */
-    APP_SAM_9X60_EK_STATE_DONE,
+    APP_SAM_9X60_EK_STATE_DONE
 
 } APP_SAM_9X60_EK_STATES;
 
@@ -246,7 +246,7 @@ typedef enum
     APP_SAM_9X60_EK_EEPROM_WRITE_CYCLE_IN_PROGRESS,
             
     /* Application EEPROM write Cycle Complete State */
-    APP_SAM_9X60_EK_EEPROM_WRITE_CYCLE_COMPLETE,
+    APP_SAM_9X60_EK_EEPROM_WRITE_CYCLE_COMPLETE
             
 } APP_EEPROM_WRITE_CYCLE;
 

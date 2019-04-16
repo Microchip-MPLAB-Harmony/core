@@ -93,7 +93,7 @@ APP_SAM_9X60_EK_DATA app_sam_9x60_ekData;
 static const uint8_t testWriteData[APP_SAM_9X60_EK_WRITE_DATA_LENGTH] = 
 {
     APP_SAM_9X60_EK_AT24CM_MEMORY_ADDR,APP_SAM_9X60_EK_AT24CM_MEMORY_ADDR, 
-    'A', 'T', 'S', 'A', 'M', ' ', 'S', 'E', 'R', 'C', 'O','M', ' ', 'D', 'E', 'M', 'O',
+    'S', 'A', 'M', ' ', 'F', 'L', 'E', 'X', 'C','O', 'M', ' ', 'D', 'E', 'M', 'O'
 };
 
 // *****************************************************************************
