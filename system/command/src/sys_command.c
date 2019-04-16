@@ -212,6 +212,7 @@ bool SYS_CMD_Initialize(const SYS_MODULE_INIT * const init )
 
     _cmdAppData.moduleInFd = STDIN_FILENO;
     _cmdAppData.moduleOutFd = STDOUT_FILENO;
+    _cmdAppData.cmdConsole = initConfig->consoleIndex;
 
     return true;
 }
@@ -317,7 +318,7 @@ bool SYS_CMD_READY_TO_READ()
                 if ( (pCmdIO->cmdState != SYS_CMD_STATE_SETUP_READ)  &&             //modified code when CMD_Tasks() called before CONSOLE_Tasks()
                         (pCmdIO->cmdState != SYS_CMD_STATE_WAIT_FOR_READ_DONE) )
                 {
-                    SYS_CONSOLE_Flush(SYS_CONSOLE_INDEX_0);
+                    SYS_CONSOLE_Flush(_cmdAppData.cmdConsole);
 
                     (*pCmdIO->pCmdApi->msg)(pCmdIO->cmdIoParam, LINE_TERM LINE_TERM _promptStr);
                     pCmdIO->cmdState = SYS_CMD_STATE_SETUP_READ;
@@ -707,21 +708,16 @@ void SYS_CMD_PRINT(const char* format, ...)
 
 void SYS_CMD_RegisterCallback(SYS_CMD_CallbackFunction cbFunc, SYS_CMD_EVENT event)
 {
-    int moduleIndex = 0;
-
-    for (moduleIndex = 0; moduleIndex < SYS_CONSOLE_DEVICE_MAX_INSTANCES; ++moduleIndex)
+    switch (event)
     {
-        switch (event)
-        {
-            case SYS_CMD_EVENT_WRITE_COMPLETE:
-                SYS_CONSOLE_RegisterCallback(_cmdAppData.moduleIndices[moduleIndex], cbFunc, SYS_CONSOLE_EVENT_WRITE_COMPLETE);
-                break;
-            case SYS_CMD_EVENT_READ_COMPLETE:
-                SYS_CONSOLE_RegisterCallback(_cmdAppData.moduleIndices[moduleIndex], cbFunc, SYS_CONSOLE_EVENT_READ_COMPLETE);
-                break;
-            default:
-                break;
-        }
+        case SYS_CMD_EVENT_WRITE_COMPLETE:
+            SYS_CONSOLE_RegisterCallback(_cmdAppData.cmdConsole, cbFunc, SYS_CONSOLE_EVENT_WRITE_COMPLETE);
+            break;
+        case SYS_CMD_EVENT_READ_COMPLETE:
+            SYS_CONSOLE_RegisterCallback(_cmdAppData.cmdConsole, cbFunc, SYS_CONSOLE_EVENT_READ_COMPLETE);
+            break;
+        default:
+            break;
     }
 }
 
@@ -837,12 +833,7 @@ bool SYS_CMD_DELETE(SYS_CMD_DEVICE_NODE* pDevNode)
 // ignore the console handle for now, we support a single system console
 static void SendCommandMessage(const void* cmdIoParam, const char* message)
 {
-    int consoleIndex = 0;
-
-    for (consoleIndex = 0; consoleIndex < SYS_CONSOLE_DEVICE_MAX_INSTANCES; ++consoleIndex)
-    {
-        SYS_CONSOLE_Write(consoleIndex, STDOUT_FILENO, message, strlen(message));
-    }
+    SYS_CONSOLE_Write(_cmdAppData.cmdConsole, STDOUT_FILENO, message, strlen(message));
 }
 
 static void SendCommandPrint(const void* cmdIoParam, const char* format, ...)
@@ -883,25 +874,19 @@ static void SendCommandPrint(const void* cmdIoParam, const char* format, ...)
 
 static void SendCommandCharacter(const void* cmdIoParam, char c)
 {
-    int consoleIndex = 0;
-
-    for (consoleIndex = 0; consoleIndex < SYS_CONSOLE_DEVICE_MAX_INSTANCES; ++consoleIndex)
+    if (SYS_CONSOLE_Status((SYS_MODULE_OBJ)_cmdAppData.cmdConsole) == SYS_STATUS_READY)
     {
-        if (SYS_CONSOLE_Status((SYS_MODULE_OBJ)consoleIndex) != SYS_STATUS_READY)
-            continue;
-
-        SYS_CONSOLE_Write(consoleIndex, STDOUT_FILENO, (const char*)&c, 1);
+        SYS_CONSOLE_Write(_cmdAppData.cmdConsole, STDOUT_FILENO, (const char*)&c, 1);
     }
 }
 
 static bool IsCommandReady(const void* cmdIoParam)
 {
-    int consoleIndex = 0;
     bool ready = false;
 
-    for (consoleIndex = 0; consoleIndex < SYS_CONSOLE_DEVICE_MAX_INSTANCES; ++consoleIndex)
+    if (SYS_CONSOLE_Status((SYS_MODULE_OBJ)_cmdAppData.cmdConsole) == SYS_STATUS_READY)
     {
-        ready |= SYS_CONSOLE_Status((SYS_MODULE_OBJ)consoleIndex) == SYS_STATUS_READY;
+        ready = true;
     }
 
     return ready;
@@ -915,19 +900,11 @@ static char GetCommandCharacter(const void* cmdIoParam)
 
 static size_t ReadCommandCharacter(const void* cmdIoParam)
 {
-    int readConsoleIndex = 0;
-
     size_t readyBytes = 0;
 
-    for (readConsoleIndex = 0; readConsoleIndex < SYS_CONSOLE_DEVICE_MAX_INSTANCES; ++readConsoleIndex)
+    if (SYS_CONSOLE_Status((SYS_MODULE_OBJ)_cmdAppData.cmdConsole) == SYS_STATUS_READY)
     {
-        if (SYS_CONSOLE_Status((SYS_MODULE_OBJ)readConsoleIndex) == SYS_STATUS_READY)
-        {
-            readyBytes = SYS_CONSOLE_Read(readConsoleIndex, _cmdAppData.moduleInFd, readBuff, 1);
-        }
-
-        if (readyBytes > 0)
-            break;
+        readyBytes = SYS_CONSOLE_Read(_cmdAppData.cmdConsole, _cmdAppData.moduleInFd, readBuff, 1);
     }
 
     return readyBytes;

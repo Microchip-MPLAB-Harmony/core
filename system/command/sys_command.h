@@ -563,6 +563,7 @@ typedef struct
     SYS_MODULE_INDEX  moduleIndices[SYS_CMD_DEVICE_MAX_INSTANCES];
     int               moduleInFd;
     int               moduleOutFd;
+    SYS_MODULE_INDEX  cmdConsole;
 
 } SYS_CMD_INIT_DATA;
 
