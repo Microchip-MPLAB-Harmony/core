@@ -160,7 +160,7 @@ typedef struct
 
     /* I2C Driver Handle */
     DRV_HANDLE drvI2CHandle;
-    
+            
     /* Ready transfer handle */
     DRV_I2C_TRANSFER_HANDLE transferHandle;        
     

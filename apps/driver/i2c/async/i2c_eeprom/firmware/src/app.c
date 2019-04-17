@@ -61,7 +61,19 @@
 // *****************************************************************************
 // *****************************************************************************
 // *****************************************************************************
-
+#define APP_EEPROM_MEMORY_ADDR                  0x0000
+/* Size of the string written to EEPROM must be less than or equal to the EEPROM page size */
+#define APP_EEPROM_TEST_DATA                    "I2C EEPROM Demo"
+#define APP_EEPROM_TEST_DATA_SIZE               (sizeof(APP_EEPROM_TEST_DATA)-1)
+#define APP_EEPROM_READ_BUFFER_SIZE             APP_EEPROM_TEST_DATA_SIZE
+#if APP_EEPROM_ADDR_LEN_BITS == 18 || APP_EEPROM_ADDR_LEN_BITS == 16
+    /* For 18 bit address, A16 and A17 are part of the EEPROM slave address.
+     * The A16 and A17 bits are set to 0 in this demonstration. */
+    #define APP_EEPROM_NUM_ADDR_BYTES           2    
+#elif APP_EEPROM_ADDR_LEN_BITS == 8
+    #define APP_EEPROM_NUM_ADDR_BYTES           1    
+#endif
+#define APP_EEPROM_WRITE_BUFFER_SIZE        (APP_EEPROM_TEST_DATA_SIZE + APP_EEPROM_NUM_ADDR_BYTES)
 // *****************************************************************************
 /* Application Data
 
@@ -79,13 +91,8 @@
 
 APP_DATA appData;
 
-static const uint8_t testTxData[APP_WRITE_DATA_LENGTH] = 
-{
-	APP_AT24MAC_MEMORY_ADDR1, APP_AT24MAC_MEMORY_ADDR2, 
-    'A', 'T', 'S', 'A', 'M', ' ', 'T', 'W', 'I', 'H', 'S', ' ', 'D', 'e', 'm', 'o',
-};
-
-static uint8_t testRxData[APP_READ_DATA_LENGTH] = {0};
+static uint8_t testTxData[APP_EEPROM_WRITE_BUFFER_SIZE] = {0};
+static uint8_t testRxData[APP_EEPROM_READ_BUFFER_SIZE] = {0};
 
 // *****************************************************************************
 // *****************************************************************************
@@ -93,14 +100,14 @@ static uint8_t testRxData[APP_READ_DATA_LENGTH] = {0};
 // *****************************************************************************
 // *****************************************************************************
 
-void APP_I2CEventHandler ( 
+void APP_I2CEventHandler (
     DRV_I2C_TRANSFER_EVENT event,
-    DRV_I2C_TRANSFER_HANDLE transferHandle, 
-    uintptr_t context 
+    DRV_I2C_TRANSFER_HANDLE transferHandle,
+    uintptr_t context
 )
 {
     APP_TRANSFER_STATUS* transferStatus = (APP_TRANSFER_STATUS*)context;
-    
+
     if (event == DRV_I2C_TRANSFER_EVENT_COMPLETE)
     {
         if (transferStatus)
@@ -113,8 +120,8 @@ void APP_I2CEventHandler (
         if (transferStatus)
         {
             *transferStatus = APP_TRANSFER_STATUS_ERROR;
-        }        
-    }    
+        }
+    }
 }
 
 // *****************************************************************************
@@ -136,9 +143,17 @@ void APP_Initialize ( void )
     /* Initialize the appData structure. */
     appData.state = APP_STATE_INIT;
     appData.drvI2CHandle   = DRV_HANDLE_INVALID;
-    appData.transferHandle = DRV_I2C_TRANSFER_HANDLE_INVALID;   
+    appData.transferHandle = DRV_I2C_TRANSFER_HANDLE_INVALID;
     appData.transferStatus = APP_TRANSFER_STATUS_ERROR;
-    
+#if APP_EEPROM_NUM_ADDR_BYTES == 2
+    testTxData[0] = (APP_EEPROM_MEMORY_ADDR >> 8);
+    testTxData[1] = APP_EEPROM_MEMORY_ADDR;
+    memcpy(&testTxData[2], (const void*)APP_EEPROM_TEST_DATA, APP_EEPROM_TEST_DATA_SIZE);
+#else
+    testTxData[0] = APP_EEPROM_MEMORY_ADDR;
+    memcpy(&testTxData[1], (const void*)APP_EEPROM_TEST_DATA, APP_EEPROM_TEST_DATA_SIZE);
+#endif
+
     /* Initialize the LED to failure state */
     LED_OFF();
 }
@@ -152,43 +167,43 @@ void APP_Initialize ( void )
  */
 
 void APP_Tasks ( void )
-{        
+{
     /* Check the application's current state. */
     switch ( appData.state )
     {
         /* Application's initial state. */
         case APP_STATE_INIT:
-            
+
             /* Open the I2C Driver */
             appData.drvI2CHandle = DRV_I2C_Open( DRV_I2C_INDEX_0, DRV_IO_INTENT_READWRITE );
             if(appData.drvI2CHandle == DRV_HANDLE_INVALID)
             {
                 appData.state = APP_STATE_ERROR;
-            }    
+            }
             else
             {
                 /* Register the I2C Driver event Handler */
-                DRV_I2C_TransferEventHandlerSet( 
-                    appData.drvI2CHandle, 
-                    APP_I2CEventHandler, 
-                    (uintptr_t)&appData.transferStatus 
-                );            
+                DRV_I2C_TransferEventHandlerSet(
+                    appData.drvI2CHandle,
+                    APP_I2CEventHandler,
+                    (uintptr_t)&appData.transferStatus
+                );
                 appData.state  = APP_STATE_IS_EEPROM_READY;
-            }                        
+            }
             break;
-                
+
         case APP_STATE_IS_EEPROM_READY:
-        
+
             appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;
             /* Add a dummy write transfer request to verify whether EEPROM is ready */
-            DRV_I2C_WriteTransferAdd( 
+            DRV_I2C_WriteTransferAdd(
                 appData.drvI2CHandle,
-                APP_AT24MAC_DEVICE_ADDR,
+                APP_EEPROM_SLAVE_ADDR,
                 (void *)&appData.dummyData,
                 1,
-                &appData.transferHandle 
+                &appData.transferHandle
             );
-            
+
             if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )
             {
                 appData.state = APP_STATE_ERROR;
@@ -196,23 +211,23 @@ void APP_Tasks ( void )
             else
             {
                 appData.state = APP_STATE_DATA_WRITE;
-            }            
-            break;        
+            }
+            break;
 
         case APP_STATE_DATA_WRITE:
             if (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS)
             {
                 appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;
-                
+
                 /* Add a request to write the application data */
                 DRV_I2C_WriteTransferAdd(
                     appData.drvI2CHandle,
-                    APP_AT24MAC_DEVICE_ADDR,
+                    APP_EEPROM_SLAVE_ADDR,
                     (void *)&testTxData[0],
-                    APP_WRITE_DATA_LENGTH,
-                    &appData.transferHandle 
+                    APP_EEPROM_WRITE_BUFFER_SIZE,
+                    &appData.transferHandle
                 );
-                
+
                 if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )
                 {
                     appData.state = APP_STATE_ERROR;
@@ -226,21 +241,21 @@ void APP_Tasks ( void )
             {
                 // EEPROM is not ready. Go to error state.
                 appData.state = APP_STATE_ERROR;
-            }            
+            }
             break;
-        
+
         case APP_STATE_WAIT_WRITE_COMPLETE:
             if (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS)
             {
                 appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;
-                
+
                 /* Add a dummy write request to check if EEPROM's internal write cycle is complete */
-                DRV_I2C_WriteTransferAdd( 
+                DRV_I2C_WriteTransferAdd(
                     appData.drvI2CHandle,
-                    APP_AT24MAC_DEVICE_ADDR,
+                    APP_EEPROM_SLAVE_ADDR,
                     (void *)&appData.dummyData,
                     1,
-                    &appData.transferHandle 
+                    &appData.transferHandle
                 );
 
                 if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )
@@ -257,7 +272,7 @@ void APP_Tasks ( void )
                 appData.state = APP_STATE_ERROR;
             }
             break;
-            
+
         case APP_STATE_EEPROM_CHECK_INTERNAL_WRITE_STATUS:
             if (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS)
             {
@@ -266,38 +281,38 @@ void APP_Tasks ( void )
             else if (appData.transferStatus == APP_TRANSFER_STATUS_ERROR)
             {
                 appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;
-                
+
                 /* Keep checking if EEPROM's internal write cycle is complete */
-                DRV_I2C_WriteTransferAdd( 
+                DRV_I2C_WriteTransferAdd(
                     appData.drvI2CHandle,
-                    APP_AT24MAC_DEVICE_ADDR,
+                    APP_EEPROM_SLAVE_ADDR,
                     (void *)&appData.dummyData,
                     1,
-                    &appData.transferHandle 
+                    &appData.transferHandle
                 );
 
                 if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )
                 {
                     appData.state = APP_STATE_ERROR;
-                }                
-            }                        
+                }
+            }
             break;
-                
+
         case APP_STATE_DATA_READ:
-        
+
             appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;
-            
+
             /* Add a request to read data from EEPROM. */
-            DRV_I2C_WriteReadTransferAdd(  
+            DRV_I2C_WriteReadTransferAdd(
                 appData.drvI2CHandle,
-                APP_AT24MAC_DEVICE_ADDR,
+                APP_EEPROM_SLAVE_ADDR,
                 (void *)&testTxData[0],
-                2,
+                APP_EEPROM_NUM_ADDR_BYTES,
                 (void *)&testRxData[0],
-                APP_READ_DATA_LENGTH,
+                APP_EEPROM_TEST_DATA_SIZE,
                 &appData.transferHandle
             );
-            
+
             if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )
             {
                 appData.state = APP_STATE_ERROR;
@@ -307,7 +322,7 @@ void APP_Tasks ( void )
                 appData.state = APP_STATE_WAIT_READ_COMPLETE;
             }
             break;
-                
+
         case APP_STATE_WAIT_READ_COMPLETE:
             if (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS)
             {
@@ -316,39 +331,38 @@ void APP_Tasks ( void )
             else if (appData.transferStatus == APP_TRANSFER_STATUS_ERROR)
             {
                 appData.state = APP_STATE_ERROR;
-            }            
+            }
             break;
-            
+
         case APP_STATE_DATA_VERIFY:
-            
+
             /* Compare data written and data read */
-            if (memcmp(&testTxData[2], &testRxData[0], APP_READ_DATA_LENGTH) == 0)
-            {                                       
+            if (memcmp(&testTxData[APP_EEPROM_NUM_ADDR_BYTES], &testRxData[0], APP_EEPROM_TEST_DATA_SIZE) == 0)
+            {
                 appData.state = APP_STATE_SUCCESS;
-            }            
+            }
             else
             {
                 appData.state = APP_STATE_ERROR;
             }
-            
             break;
-                        
+
         case APP_STATE_SUCCESS:
-        
+
             /* On success turn LED on*/
             LED_ON();
             appData.state = APP_STATE_IDLE;
             break;
-                
+
         case APP_STATE_ERROR:
-            
+
             LED_OFF();
             appData.state = APP_STATE_IDLE;
             break;
-            
+
         case APP_STATE_IDLE:
-        default:        
-            break;        
+        default:
+            break;
     }
 }
 
