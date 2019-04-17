@@ -60,6 +60,10 @@ extern "C" {
 #define LED_ON()        LED_On()
 #define LED_OFF()       LED_Off()
 #define LED_TOGGLE()    LED_Toggle()
+    
+//Defines the EEPROM 3 Click I2C Address.
+#define APP_EEPROM_SLAVE_ADDR               0x0054
+#define APP_EEPROM_ADDR_LEN_BITS            18    
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

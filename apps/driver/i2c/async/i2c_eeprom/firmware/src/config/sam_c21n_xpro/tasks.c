@@ -80,8 +80,8 @@ void SYS_Tasks ( void )
     
 
     /* Maintain the application's state machine. */
-        /* Call Application task APP_C21N. */
-    APP_C21N_Tasks();
+        /* Call Application task APP. */
+    APP_Tasks();
 
 
 

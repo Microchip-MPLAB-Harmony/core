@@ -56,7 +56,7 @@
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
 #include "bsp/bsp.h"
-#include "app_c21n.h"
+#include "app.h"
 
 
 
