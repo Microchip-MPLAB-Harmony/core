@@ -91,8 +91,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">46957471792A16A32D04C1B79E320F9D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">46957471792A16A32D04C1B79E320F9D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">066812C947E5F48EB6978A833D61775E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">066812C947E5F48EB6978A833D61775E</UserChecksum>
         </File>
         <File dnOrder="11">
           <Type dnOrder="0">SOURCE</Type>
@@ -139,8 +139,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3924A7557AA6BF0EFB0FC5F3981E760B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3924A7557AA6BF0EFB0FC5F3981E760B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">65F9809D23E005B2EB0B1F05314097CB</GeneratedChecksum>
+          <UserChecksum dnOrder="5">65F9809D23E005B2EB0B1F05314097CB</UserChecksum>
         </File>
         <File dnOrder="17">
           <Type dnOrder="0">SOURCE</Type>
@@ -155,16 +155,16 @@
           <Name dnOrder="1">plib_pio.c</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/peripheral/pio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/pio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A4040431D39A796152C2B7D257C6B5AE</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A4040431D39A796152C2B7D257C6B5AE</UserChecksum>
+          <GeneratedChecksum dnOrder="4">EF05C7C1BF63F8A8729CB93693A83429</GeneratedChecksum>
+          <UserChecksum dnOrder="5">EF05C7C1BF63F8A8729CB93693A83429</UserChecksum>
         </File>
         <File dnOrder="19">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_twihs0.c</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/peripheral/twihs/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/twihs/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0FA339DA4C7A00906731F1188256DC92</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0FA339DA4C7A00906731F1188256DC92</UserChecksum>
+          <GeneratedChecksum dnOrder="4">878E506153F78CFE0ECB49D1EB08BDEE</GeneratedChecksum>
+          <UserChecksum dnOrder="5">878E506153F78CFE0ECB49D1EB08BDEE</UserChecksum>
         </File>
         <File dnOrder="20">
           <Type dnOrder="0">SOURCE</Type>
@@ -451,8 +451,8 @@
           <Name dnOrder="1">drv_i2c.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/driver/i2c/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/i2c/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F44645515479E033B969EE5CE6C40E64</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F44645515479E033B969EE5CE6C40E64</UserChecksum>
+          <GeneratedChecksum dnOrder="4">7DC093674665965E223A7AD52F7BAF83</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7DC093674665965E223A7AD52F7BAF83</UserChecksum>
         </File>
         <File dnOrder="56">
           <Type dnOrder="0">HEADER</Type>
@@ -603,8 +603,8 @@
           <Name dnOrder="1">osal_definitions.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
           <PhysicalPath dnOrder="3">/osal/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FBF1B45173D656DEB995858DC4D32C87</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FBF1B45173D656DEB995858DC4D32C87</UserChecksum>
+          <GeneratedChecksum dnOrder="4">167A43EFF8A31441EBF85AC77958A30B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">167A43EFF8A31441EBF85AC77958A30B</UserChecksum>
         </File>
         <File dnOrder="75">
           <Type dnOrder="0">HEADER</Type>
@@ -627,8 +627,8 @@
           <Name dnOrder="1">plib_clk.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3176DF5386ABD348A93A3A6169F52E8B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3176DF5386ABD348A93A3A6169F52E8B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">115B0136EFE9ED871D67D3B10CBEBDC8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">115B0136EFE9ED871D67D3B10CBEBDC8</UserChecksum>
         </File>
         <File dnOrder="78">
           <Type dnOrder="0">HEADER</Type>
@@ -643,8 +643,8 @@
           <Name dnOrder="1">plib_pio.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/peripheral/pio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/pio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">69DE27D91C2FB816FEB6271C5A193173</GeneratedChecksum>
-          <UserChecksum dnOrder="5">69DE27D91C2FB816FEB6271C5A193173</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C35016060DEF1B2807ABEB3D696EF536</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C35016060DEF1B2807ABEB3D696EF536</UserChecksum>
         </File>
         <File dnOrder="80">
           <Type dnOrder="0">HEADER</Type>
@@ -899,8 +899,8 @@
           <Name dnOrder="1">toolchain_specifics.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">ECBE73246282EC07A1EC6DB84AE3A470</GeneratedChecksum>
-          <UserChecksum dnOrder="5">ECBE73246282EC07A1EC6DB84AE3A470</UserChecksum>
+          <GeneratedChecksum dnOrder="4">05E9A0D057500FDF32C8D711811FF003</GeneratedChecksum>
+          <UserChecksum dnOrder="5">05E9A0D057500FDF32C8D711811FF003</UserChecksum>
         </File>
         <File dnOrder="112">
           <Type dnOrder="0">HEADER</Type>
@@ -988,9 +988,10 @@
         <Setting append="true" category="C32" delimiter=";" dnOrder="1" key="extra-include-directories" value="../src;../src/config/sam_v71_xult_freertos;../src/packs/ATSAMV71Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
         <Setting category="C32-LD" dnOrder="2" key="heap-size" value="0"/>
         <Setting category="C32-LD" dnOrder="3" key="no-device-startup-code" value="true"/>
-        <Setting category="C32Global" dnOrder="4" key="mdtcm" value=""/>
-        <Setting category="C32Global" dnOrder="5" key="mitcm" value=""/>
-        <Setting category="C32Global" dnOrder="6" key="mstacktcm" value="false"/>
+        <Setting category="C32-LD" dnOrder="4" key="preprocessor-macros" value=""/>
+        <Setting category="C32Global" dnOrder="5" key="mdtcm" value=""/>
+        <Setting category="C32Global" dnOrder="6" key="mitcm" value=""/>
+        <Setting category="C32Global" dnOrder="7" key="mstacktcm" value="false"/>
       </Settings>
     </Manifest>
     <Settings dnOrder="4">

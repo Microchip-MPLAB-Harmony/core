@@ -64,10 +64,8 @@ extern "C" {
 #define LED_TOGGLE()    LED0_Toggle()
 
 //Defines the on-board EEPROM AT24MAC402's I2C Address.
-#define APP_AT24MAC_DEVICE_ADDR             0x0057
-#define APP_AT24MAC_MEMORY_ADDR             0x00
-#define APP_WRITE_DATA_LENGTH               17
-#define APP_READ_DATA_LENGTH                16
+#define APP_EEPROM_SLAVE_ADDR               0x0057
+#define APP_EEPROM_ADDR_LEN_BITS            8
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
