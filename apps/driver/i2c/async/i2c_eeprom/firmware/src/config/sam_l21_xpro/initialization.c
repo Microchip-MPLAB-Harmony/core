@@ -185,7 +185,6 @@ void SYS_Initialize ( void* data )
     CLOCK_Initialize();
 
 
-
     SERCOM2_I2C_Initialize();
 
     EVSYS_Initialize();
@@ -197,7 +196,7 @@ void SYS_Initialize ( void* data )
 
 
 
-    APP_L21_Initialize();
+    APP_Initialize();
 
 
     NVIC_Initialize();
