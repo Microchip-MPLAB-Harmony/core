@@ -55,22 +55,22 @@
 // ****************************************************************************
 // ****************************************************************************
 
-#pragma config NVMCTRL_BOOTPROT = SIZE_0BYTES
-#pragma config NVMCTRL_EEPROM_SIZE = SIZE_0BYTES
+#pragma config NVMCTRL_BOOTPROT = 0
+#pragma config NVMCTRL_EEPROM_SIZE = 0
 #pragma config BODVDDUSERLEVEL = 0x8 // Enter Hexadecimal value
-#pragma config BODVDD_DIS = DISABLED
+#pragma config BODVDD_DIS = CLEAR
 #pragma config BODVDD_ACTION = NONE
 
-#pragma config BODVDD_HYST = DISABLED
+#pragma config BODVDD_HYST = CLEAR
 #pragma config NVMCTRL_REGION_LOCKS = 0xffff // Enter Hexadecimal value
 
-#pragma config WDT_ENABLE = DISABLED
-#pragma config WDT_ALWAYSON = DISABLED
+#pragma config WDT_ENABLE = CLEAR
+#pragma config WDT_ALWAYSON = CLEAR
 #pragma config WDT_PER = CYC8
 
 #pragma config WDT_WINDOW = CYC8
 #pragma config WDT_EWOFFSET = CYC8
-#pragma config WDT_WEN = DISABLED
+#pragma config WDT_WEN = CLEAR
 
 
 
@@ -165,7 +165,6 @@ void SYS_Initialize ( void* data )
     CLOCK_Initialize();
 
 
-
     SERCOM1_I2C_Initialize();
 
     EVSYS_Initialize();
@@ -177,7 +176,7 @@ void SYS_Initialize ( void* data )
 
 
 
-    APP_C21N_I2C_EEPROM_Initialize();
+    APP_I2C_EEPROM_Initialize();
 
 
     NVIC_Initialize();

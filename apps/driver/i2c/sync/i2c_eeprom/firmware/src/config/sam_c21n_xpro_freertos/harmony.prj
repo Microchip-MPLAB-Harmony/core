@@ -16,7 +16,7 @@
         </File>
         <File dnOrder="1">
           <Type dnOrder="0">SOURCE</Type>
-          <Name dnOrder="1">app_c21n_i2c_eeprom.c</Name>
+          <Name dnOrder="1">app_i2c_eeprom.c</Name>
           <LogicalPath dnOrder="2"/>
           <PhysicalPath dnOrder="3">/../../</PhysicalPath>
           <GeneratedChecksum dnOrder="4"/>
@@ -91,8 +91,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/sam_c21n_xpro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6BC46665C4FAABCF1CA0FE75DF9D5785</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6BC46665C4FAABCF1CA0FE75DF9D5785</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E3B76DE77A8A9E2418E09D21A70028ED</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4CFCCF4803D22EA540359F754FAF9EB6</UserChecksum>
         </File>
         <File dnOrder="11">
           <Type dnOrder="0">SOURCE</Type>
@@ -171,8 +171,8 @@
           <Name dnOrder="1">plib_sercom1_i2c.c</Name>
           <LogicalPath dnOrder="2">config/sam_c21n_xpro_freertos/peripheral/sercom/i2cm/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/sercom/i2cm/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">47291D2AF397568930FBE14E5629BF1B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">47291D2AF397568930FBE14E5629BF1B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">18E77492067143B2A67C7EE0F153BDF0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">18E77492067143B2A67C7EE0F153BDF0</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
@@ -219,8 +219,8 @@
           <Name dnOrder="1">tasks.c</Name>
           <LogicalPath dnOrder="2">config/sam_c21n_xpro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">82D945981D111C5F18C4E20DC72C4247</GeneratedChecksum>
-          <UserChecksum dnOrder="5">82D945981D111C5F18C4E20DC72C4247</UserChecksum>
+          <GeneratedChecksum dnOrder="4">691E51FD280968A7257AFEB54FFBC06E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">691E51FD280968A7257AFEB54FFBC06E</UserChecksum>
         </File>
         <File dnOrder="27">
           <Type dnOrder="0">SOURCE</Type>
@@ -272,7 +272,7 @@
         </File>
         <File dnOrder="33">
           <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">app_c21n_i2c_eeprom.h</Name>
+          <Name dnOrder="1">app_i2c_eeprom.h</Name>
           <LogicalPath dnOrder="2"/>
           <PhysicalPath dnOrder="3">/../../</PhysicalPath>
           <GeneratedChecksum dnOrder="4"/>
@@ -403,8 +403,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_c21n_xpro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E5E106293888C7AF8B9B840A326924F0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">E5E106293888C7AF8B9B840A326924F0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9CC383168B689B60D56A7EB1F841721D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9CC383168B689B60D56A7EB1F841721D</UserChecksum>
         </File>
         <File dnOrder="50">
           <Type dnOrder="0">HEADER</Type>
@@ -467,8 +467,8 @@
           <Name dnOrder="1">drv_i2c.h</Name>
           <LogicalPath dnOrder="2">config/sam_c21n_xpro_freertos/driver/i2c/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/i2c/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F44645515479E033B969EE5CE6C40E64</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F44645515479E033B969EE5CE6C40E64</UserChecksum>
+          <GeneratedChecksum dnOrder="4">7DC093674665965E223A7AD52F7BAF83</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7DC093674665965E223A7AD52F7BAF83</UserChecksum>
         </File>
         <File dnOrder="58">
           <Type dnOrder="0">HEADER</Type>
@@ -611,8 +611,8 @@
           <Name dnOrder="1">osal_definitions.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
           <PhysicalPath dnOrder="3">/osal/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FBF1B45173D656DEB995858DC4D32C87</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FBF1B45173D656DEB995858DC4D32C87</UserChecksum>
+          <GeneratedChecksum dnOrder="4">167A43EFF8A31441EBF85AC77958A30B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">167A43EFF8A31441EBF85AC77958A30B</UserChecksum>
         </File>
         <File dnOrder="76">
           <Type dnOrder="0">HEADER</Type>
@@ -899,8 +899,8 @@
           <Name dnOrder="1">toolchain_specifics.h</Name>
           <LogicalPath dnOrder="2">config/sam_c21n_xpro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">17977FA08815BEA33AFA421957178FD6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">17977FA08815BEA33AFA421957178FD6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4F3C5B6A299E310404C004FB60312B4A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4F3C5B6A299E310404C004FB60312B4A</UserChecksum>
         </File>
         <File dnOrder="112">
           <Type dnOrder="0">HEADER</Type>
@@ -940,6 +940,7 @@
         <Setting append="true" category="C32" delimiter=";" dnOrder="1" key="extra-include-directories" value="../src;../src/config/sam_c21n_xpro_freertos;../src/packs/ATSAMC21N18A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
         <Setting category="C32-LD" dnOrder="2" key="heap-size" value="0"/>
         <Setting category="C32-LD" dnOrder="3" key="no-device-startup-code" value="true"/>
+        <Setting category="C32-LD" dnOrder="4" key="preprocessor-macros" value=""/>
       </Settings>
     </Manifest>
     <Settings dnOrder="4">
@@ -948,7 +949,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
     </Settings>
   </Configurator>
 </Configuration>
