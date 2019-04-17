@@ -71,7 +71,7 @@ extern "C" {
 // *****************************************************************************
 // Section: Type Definitions
 // *****************************************************************************
-// *****************************************************************************    
+// *****************************************************************************
 /* Transfer status enum
 
   Summary:
@@ -90,7 +90,7 @@ typedef enum
     APP_TRANSFER_STATUS_ERROR,
     APP_TRANSFER_STATUS_IDLE,
 
-} APP_TRANSFER_STATUS;    
+} APP_TRANSFER_STATUS;
 
 // *****************************************************************************
 /* Application states
@@ -105,36 +105,36 @@ typedef enum
 
 typedef enum
 {
-	/* Application's state machine's initial state. */
-	APP_STATE_INIT = 0,
+    /* Application's state machine's initial state. */
+    APP_STATE_INIT = 0,
 
     /* Is EEPROM ready */
     APP_STATE_IS_EEPROM_READY,
-            
+
     /* EEPROM write state */
-	APP_STATE_DATA_WRITE,
-    
+    APP_STATE_DATA_WRITE,
+
     /* Wait for EEPROM write to complete */
     APP_STATE_WAIT_WRITE_COMPLETE,
-            
+
     /* Check if EEPROM's internal write cycle has completed */
     APP_STATE_EEPROM_CHECK_INTERNAL_WRITE_STATUS,
 
     /* Read data from EEPROM */
     APP_STATE_DATA_READ,
-            
+
     /* Wait for the read to complete */
     APP_STATE_WAIT_READ_COMPLETE,
-	
+
     /* Verify the read data with the written data */
     APP_STATE_DATA_VERIFY,
-                            
+
     /* Application success state */
     APP_STATE_SUCCESS,
-            
+
     /* Application error state */
     APP_STATE_ERROR,
-            
+
     /* Application idle state */
     APP_STATE_IDLE,
 
@@ -160,15 +160,15 @@ typedef struct
 
     /* I2C Driver Handle */
     DRV_HANDLE drvI2CHandle;
-            
+
     /* Ready transfer handle */
-    DRV_I2C_TRANSFER_HANDLE transferHandle;        
-    
+    DRV_I2C_TRANSFER_HANDLE transferHandle;
+
     /* Transfer status */
     volatile APP_TRANSFER_STATUS transferStatus;
-    
+
     uint8_t dummyData;
-    
+
 } APP_DATA;
 
 // *****************************************************************************

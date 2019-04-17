@@ -53,6 +53,7 @@
 // *****************************************************************************
 
 #include "app.h"
+#include "user.h"
 #include <string.h>
 
 // *****************************************************************************
@@ -65,15 +66,16 @@
 /* Size of the string written to EEPROM must be less than or equal to the EEPROM page size */
 #define APP_EEPROM_TEST_DATA                    "I2C EEPROM Demo"
 #define APP_EEPROM_TEST_DATA_SIZE               (sizeof(APP_EEPROM_TEST_DATA)-1)
-#define APP_EEPROM_READ_BUFFER_SIZE             APP_EEPROM_TEST_DATA_SIZE
+#define APP_EEPROM_RX_BUFFER_SIZE               APP_EEPROM_TEST_DATA_SIZE
 #if APP_EEPROM_ADDR_LEN_BITS == 18 || APP_EEPROM_ADDR_LEN_BITS == 16
     /* For 18 bit address, A16 and A17 are part of the EEPROM slave address.
      * The A16 and A17 bits are set to 0 in this demonstration. */
-    #define APP_EEPROM_NUM_ADDR_BYTES           2    
+    #define APP_EEPROM_NUM_ADDR_BYTES           2
 #elif APP_EEPROM_ADDR_LEN_BITS == 8
-    #define APP_EEPROM_NUM_ADDR_BYTES           1    
+    #define APP_EEPROM_NUM_ADDR_BYTES           1
 #endif
-#define APP_EEPROM_WRITE_BUFFER_SIZE        (APP_EEPROM_TEST_DATA_SIZE + APP_EEPROM_NUM_ADDR_BYTES)
+#define APP_EEPROM_TX_BUFFER_SIZE        (APP_EEPROM_TEST_DATA_SIZE + APP_EEPROM_NUM_ADDR_BYTES)
+
 // *****************************************************************************
 /* Application Data
 
@@ -91,8 +93,8 @@
 
 APP_DATA appData;
 
-static uint8_t testTxData[APP_EEPROM_WRITE_BUFFER_SIZE] = {0};
-static uint8_t testRxData[APP_EEPROM_READ_BUFFER_SIZE] = {0};
+static uint8_t testTxData[APP_EEPROM_TX_BUFFER_SIZE] = {0};
+static uint8_t testRxData[APP_EEPROM_RX_BUFFER_SIZE] = {0};
 
 // *****************************************************************************
 // *****************************************************************************
@@ -224,7 +226,7 @@ void APP_Tasks ( void )
                     appData.drvI2CHandle,
                     APP_EEPROM_SLAVE_ADDR,
                     (void *)&testTxData[0],
-                    APP_EEPROM_WRITE_BUFFER_SIZE,
+                    APP_EEPROM_TX_BUFFER_SIZE,
                     &appData.transferHandle
                 );
 
