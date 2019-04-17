@@ -62,11 +62,9 @@ extern "C" {
 #define LED_TOGGLE()                LED_Toggle()
 
 // *****************************************************************************
-#define APP_EEPROM_MEMORY_ADDR                     0x00
-/* Size of the test string must be less than or equal to EEPROM page size (16 bytes)*/
-#define APP_EEPROM_TEST_STRING                     "ATSAM TWIHS DEMO"
-#define APP_EEPROM_TEST_STRING_SIZE                strlen(APP_EEPROM_TEST_STRING)
-#define APP_EEPROM_AT24MAC402_SLAVE_ADDR           0x0056
+//Defines the on-board EEPROM AT24MAC402's I2C Address.
+#define APP_EEPROM_SLAVE_ADDR               0x0056
+#define APP_EEPROM_ADDR_LEN_BITS            8    
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
