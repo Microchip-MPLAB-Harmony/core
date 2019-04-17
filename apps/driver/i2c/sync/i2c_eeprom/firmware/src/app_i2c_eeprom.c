@@ -52,19 +52,14 @@
 // *****************************************************************************
 
 #include "app_i2c_eeprom.h"
+#include "user.h"
 #include <string.h>
-
-/*
- * EEPROM AT24MAC402
- * EEPROM Address Range: 00h to FFh (256 bytes)
- * EEPROM Page Size: 16 bytes
- */
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
 // *****************************************************************************
-
+#define APP_EEPROM_MEMORY_ADDR                      0x0000
 // *****************************************************************************
 /* Application Data
 
@@ -120,8 +115,16 @@ void APP_I2C_EEPROM_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
     appData.state = APP_I2C_EEPROM_STATE_INIT;
+#if APP_EEPROM_NUM_ADDR_BYTES == 2
+    appData.txBuffer[0] = (APP_EEPROM_MEMORY_ADDR >> 8);
+    appData.txBuffer[1] = APP_EEPROM_MEMORY_ADDR;
+    memcpy(&appData.txBuffer[2], (const void*)APP_EEPROM_TEST_DATA, APP_EEPROM_TEST_DATA_SIZE);
+#else
+    appData.txBuffer[0] = APP_EEPROM_MEMORY_ADDR;
+    memcpy(&appData.txBuffer[1], (const void*)APP_EEPROM_TEST_DATA, APP_EEPROM_TEST_DATA_SIZE);
+#endif
 
-    LED_OFF();    
+    LED_OFF();
 }
 
 
@@ -143,7 +146,7 @@ void APP_I2C_EEPROM_Tasks ( void )
             appData.drvI2CHandle = DRV_I2C_Open( DRV_I2C_INDEX_0, DRV_IO_INTENT_READWRITE);
 
             if(appData.drvI2CHandle != DRV_HANDLE_INVALID)
-            {                
+            {
                 appData.state = APP_I2C_EEPROM_STATE_WRITE;
             }
             else
@@ -154,15 +157,11 @@ void APP_I2C_EEPROM_Tasks ( void )
 
         case APP_I2C_EEPROM_STATE_WRITE:
 
-            /* Setup the data to be transmitted */
-            appData.txBuffer[0] = APP_EEPROM_MEMORY_ADDR;
-            memcpy(&appData.txBuffer[1], APP_EEPROM_TEST_STRING, APP_EEPROM_TEST_STRING_SIZE);
-
             /* Write data to EEPROM */
-            if (DRV_I2C_WriteTransfer( appData.drvI2CHandle, APP_EEPROM_AT24MAC402_SLAVE_ADDR, (void *)appData.txBuffer, (1+APP_EEPROM_TEST_STRING_SIZE)) == true)
+            if (DRV_I2C_WriteTransfer( appData.drvI2CHandle, APP_EEPROM_SLAVE_ADDR, (void *)appData.txBuffer, (APP_EEPROM_NUM_ADDR_BYTES + APP_EEPROM_TEST_DATA_SIZE)) == true)
             {
                 /* Poll EEPROM busy status. EEPROM will NAK while internal write is in progress*/
-                while (DRV_I2C_WriteTransfer( appData.drvI2CHandle, APP_EEPROM_AT24MAC402_SLAVE_ADDR, (void *)&appData.dummyData, 1 ) == false);
+                while (DRV_I2C_WriteTransfer( appData.drvI2CHandle, APP_EEPROM_SLAVE_ADDR, (void *)&appData.dummyData, 1 ) == false);
                 appData.state = APP_I2C_EEPROM_STATE_READ;
             }
             else
@@ -173,7 +172,7 @@ void APP_I2C_EEPROM_Tasks ( void )
 
         case APP_I2C_EEPROM_STATE_READ:
             /* Read data from EEPROM */
-            if (DRV_I2C_WriteReadTransfer(appData.drvI2CHandle, APP_EEPROM_AT24MAC402_SLAVE_ADDR, (void*)appData.txBuffer, 1, (void *)appData.rxBuffer, APP_EEPROM_TEST_STRING_SIZE) == true)
+            if (DRV_I2C_WriteReadTransfer(appData.drvI2CHandle, APP_EEPROM_SLAVE_ADDR, (void*)appData.txBuffer, APP_EEPROM_NUM_ADDR_BYTES, (void *)appData.rxBuffer, APP_EEPROM_TEST_DATA_SIZE) == true)
             {
                 appData.state = APP_I2C_EEPROM_STATE_VERIFY;
             }
@@ -185,7 +184,7 @@ void APP_I2C_EEPROM_Tasks ( void )
 
         case APP_I2C_EEPROM_STATE_VERIFY:
             /* Compare the read data with the written data */
-            if (memcmp(appData.rxBuffer, &appData.txBuffer[1], APP_EEPROM_TEST_STRING_SIZE) == 0)
+            if (memcmp(appData.rxBuffer, &appData.txBuffer[APP_EEPROM_NUM_ADDR_BYTES], APP_EEPROM_TEST_DATA_SIZE) == 0)
             {
                 appData.state = APP_I2C_EEPROM_STATE_SUCCESS;
             }
@@ -200,13 +199,13 @@ void APP_I2C_EEPROM_Tasks ( void )
             LED_ON();
             appData.state = APP_I2C_EEPROM_STATE_IDLE;
             break;
-            
+
         case APP_I2C_EEPROM_STATE_ERROR:
             LED_OFF();
             appData.state = APP_I2C_EEPROM_STATE_IDLE;
             break;
 
-        case APP_I2C_EEPROM_STATE_IDLE:            
+        case APP_I2C_EEPROM_STATE_IDLE:
             vTaskSuspend(NULL);
             break;
     }

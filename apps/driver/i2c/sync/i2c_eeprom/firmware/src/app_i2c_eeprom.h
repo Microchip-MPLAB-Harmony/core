@@ -56,6 +56,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
+#include "user.h"
 #include "driver/i2c/drv_i2c.h"
 
 // DOM-IGNORE-BEGIN
@@ -71,7 +72,19 @@ extern "C" {
 // Section: Type Definitions
 // *****************************************************************************
 // *****************************************************************************
-#define APP_EEPROM_PAGE_SIZE                       16
+/* Size of the string written to EEPROM must be less than or equal to the EEPROM page size */
+#define APP_EEPROM_TEST_DATA                        "I2C EEPROM Demo"
+#define APP_EEPROM_TEST_DATA_SIZE                   (sizeof(APP_EEPROM_TEST_DATA)-1)
+#define APP_EEPROM_RX_BUFFER_SIZE                   APP_EEPROM_TEST_DATA_SIZE
+#if APP_EEPROM_ADDR_LEN_BITS == 18 || APP_EEPROM_ADDR_LEN_BITS == 16
+    /* For 18 bit address, A16 and A17 are part of the EEPROM slave address.
+     * The A16 and A17 bits are set to 0 in this demonstration. */
+    #define APP_EEPROM_NUM_ADDR_BYTES               2
+#elif APP_EEPROM_ADDR_LEN_BITS == 8
+    #define APP_EEPROM_NUM_ADDR_BYTES               1
+#endif
+
+#define APP_EEPROM_TX_BUFFER_SIZE                   (APP_EEPROM_TEST_DATA_SIZE + APP_EEPROM_NUM_ADDR_BYTES)
 
 // *****************************************************************************
 /* Application states
@@ -96,10 +109,10 @@ typedef enum
     APP_I2C_EEPROM_STATE_VERIFY,
 
     APP_I2C_EEPROM_STATE_SUCCESS,
-            
+
     APP_I2C_EEPROM_STATE_ERROR,
 
-    APP_I2C_EEPROM_STATE_IDLE,    
+    APP_I2C_EEPROM_STATE_IDLE,
 
 } APP_I2C_EEPROM_STATES;
 
@@ -125,9 +138,9 @@ typedef struct
     /* TODO: Define any additional data used by the application. */
      DRV_HANDLE drvI2CHandle;
 
-     uint8_t txBuffer[1 + APP_EEPROM_PAGE_SIZE];
+     uint8_t txBuffer[APP_EEPROM_TX_BUFFER_SIZE];
 
-     uint8_t rxBuffer[APP_EEPROM_PAGE_SIZE];
+     uint8_t rxBuffer[APP_EEPROM_RX_BUFFER_SIZE];
 
      uint8_t dummyData;
 } APP_I2C_EEPROM_DATA;
