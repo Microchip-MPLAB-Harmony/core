@@ -49,7 +49,6 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "peripheral/i2c/plib_i2c1.h"
-#include "bsp/bsp.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/gpio/plib_gpio.h"
 #include "peripheral/evic/plib_evic.h"
@@ -58,7 +57,7 @@
 #include "driver/i2c/drv_i2c.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
-#include "app_at24cm02_i2c_eeprom.h"
+#include "app_i2c_eeprom.h"
 
 
 

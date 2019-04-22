@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Configuration>
   <Configurator>
-    <Name dnOrder="0" value="pic32mx470_curiosity"/>
+    <Name dnOrder="0" value="pic32mx470_curiosity_freertos"/>
     <Processor dnOrder="1" value="PIC32MX470F512H"/>
     <Harmony dnOrder="2" path="../../../../../.."/>
     <Manifest dnOrder="3">
@@ -11,12 +11,12 @@
           <Name dnOrder="1">FreeRTOS_tasks.c</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">327B521EF2146AFEEF100CA7A4F52804</GeneratedChecksum>
-          <UserChecksum dnOrder="5">327B521EF2146AFEEF100CA7A4F52804</UserChecksum>
+          <GeneratedChecksum dnOrder="4">628C4CB68FA0168FB49E2FBF68B66196</GeneratedChecksum>
+          <UserChecksum dnOrder="5">628C4CB68FA0168FB49E2FBF68B66196</UserChecksum>
         </File>
         <File dnOrder="1">
           <Type dnOrder="0">SOURCE</Type>
-          <Name dnOrder="1">app_at24cm02_i2c_eeprom.c</Name>
+          <Name dnOrder="1">app_i2c_eeprom.c</Name>
           <LogicalPath dnOrder="2"/>
           <PhysicalPath dnOrder="3">/../../</PhysicalPath>
           <GeneratedChecksum dnOrder="4"/>
@@ -24,101 +24,93 @@
         </File>
         <File dnOrder="2">
           <Type dnOrder="0">SOURCE</Type>
-          <Name dnOrder="1">bsp.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/bsp/</LogicalPath>
-          <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8E6E4893125920C25696936C33DBF3E4</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8E6E4893125920C25696936C33DBF3E4</UserChecksum>
-        </File>
-        <File dnOrder="3">
-          <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">croutine.c</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BD3CE1579F5E47CE7B4F14A340A45899</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BD3CE1579F5E47CE7B4F14A340A45899</UserChecksum>
+          <GeneratedChecksum dnOrder="4">8FAF087FF1688A1B0C90983803018B71</GeneratedChecksum>
+          <UserChecksum dnOrder="5">8FAF087FF1688A1B0C90983803018B71</UserChecksum>
         </File>
-        <File dnOrder="4">
+        <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_i2c.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/driver/i2c/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/i2c/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/i2c/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">74CF5DCC813B24177E7373E5C1F2A763</GeneratedChecksum>
           <UserChecksum dnOrder="5">74CF5DCC813B24177E7373E5C1F2A763</UserChecksum>
         </File>
-        <File dnOrder="5">
+        <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_i2c_local.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/driver/i2c/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/i2c/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/i2c/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">C0C39FD2BD069B2C43B19013FE58D4AB</GeneratedChecksum>
           <UserChecksum dnOrder="5">C0C39FD2BD069B2C43B19013FE58D4AB</UserChecksum>
         </File>
-        <File dnOrder="6">
+        <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">event_groups.c</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0FE11127E84922BCBDC00139B56F61B9</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0FE11127E84922BCBDC00139B56F61B9</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C7DE9F11C68D9B7EF13B8EF69449C748</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C7DE9F11C68D9B7EF13B8EF69449C748</UserChecksum>
         </File>
-        <File dnOrder="7">
+        <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">exceptions.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">322976BB28859B437B0D6D3B8E2AFE42</GeneratedChecksum>
           <UserChecksum dnOrder="5">322976BB28859B437B0D6D3B8E2AFE42</UserChecksum>
         </File>
-        <File dnOrder="8">
+        <File dnOrder="7">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">freertos_hooks.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">B7DBFD6F500AAD4713403E985EB18EAE</GeneratedChecksum>
           <UserChecksum dnOrder="5">B7DBFD6F500AAD4713403E985EB18EAE</UserChecksum>
         </File>
-        <File dnOrder="9">
+        <File dnOrder="8">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">heap_1.c</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/portable/MemMang/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/portable/MemMang/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1F7254C3ACDA86602746F8FAC0403493</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1F7254C3ACDA86602746F8FAC0403493</UserChecksum>
+          <GeneratedChecksum dnOrder="4">703DC52C8DA59AE98436C29D5D7140E2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">703DC52C8DA59AE98436C29D5D7140E2</UserChecksum>
+        </File>
+        <File dnOrder="9">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">initialization.c</Name>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/</LogicalPath>
+          <PhysicalPath dnOrder="3">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="4">DF70C31DCAFFBE34A354D8555AD1A965</GeneratedChecksum>
+          <UserChecksum dnOrder="5">DF70C31DCAFFBE34A354D8555AD1A965</UserChecksum>
         </File>
         <File dnOrder="10">
           <Type dnOrder="0">SOURCE</Type>
-          <Name dnOrder="1">initialization.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/</LogicalPath>
-          <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">08DB7388E451CF28B0C9666ABC3395EA</GeneratedChecksum>
-          <UserChecksum dnOrder="5">08DB7388E451CF28B0C9666ABC3395EA</UserChecksum>
-        </File>
-        <File dnOrder="11">
-          <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">interrupts.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">2DC162012A7240B77737B58FFBCD9B18</GeneratedChecksum>
           <UserChecksum dnOrder="5">2DC162012A7240B77737B58FFBCD9B18</UserChecksum>
         </File>
-        <File dnOrder="12">
+        <File dnOrder="11">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">interrupts_a.S</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">1BF8DDB69D96EFD2D5DA42DBA167EDE1</GeneratedChecksum>
           <UserChecksum dnOrder="5">1BF8DDB69D96EFD2D5DA42DBA167EDE1</UserChecksum>
         </File>
-        <File dnOrder="13">
+        <File dnOrder="12">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">list.c</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">782B40ECD54301961CB55F89703A3CD4</GeneratedChecksum>
-          <UserChecksum dnOrder="5">782B40ECD54301961CB55F89703A3CD4</UserChecksum>
+          <GeneratedChecksum dnOrder="4">17ED426CF72047F289CD58849BC0C60F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">17ED426CF72047F289CD58849BC0C60F</UserChecksum>
         </File>
-        <File dnOrder="14">
+        <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">main.c</Name>
           <LogicalPath dnOrder="2"/>
@@ -126,7 +118,7 @@
           <GeneratedChecksum dnOrder="4"/>
           <UserChecksum dnOrder="5"/>
         </File>
-        <File dnOrder="15">
+        <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">osal_freertos.c</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
@@ -134,175 +126,167 @@
           <GeneratedChecksum dnOrder="4">13F747CBE45AD5A7C4DF007FEA796CC9</GeneratedChecksum>
           <UserChecksum dnOrder="5">13F747CBE45AD5A7C4DF007FEA796CC9</UserChecksum>
         </File>
-        <File dnOrder="16">
+        <File dnOrder="15">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_clk.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/peripheral/clk/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">9BE7E9709B8F48118709838D71620EAB</GeneratedChecksum>
           <UserChecksum dnOrder="5">9BE7E9709B8F48118709838D71620EAB</UserChecksum>
         </File>
-        <File dnOrder="17">
+        <File dnOrder="16">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_evic.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/peripheral/evic/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/evic/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/evic/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">1922E11A5A685FCCE5FB4F11376C4282</GeneratedChecksum>
           <UserChecksum dnOrder="5">1922E11A5A685FCCE5FB4F11376C4282</UserChecksum>
         </File>
-        <File dnOrder="18">
+        <File dnOrder="17">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_gpio.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/peripheral/gpio/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/gpio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/gpio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C746D1F902844D61B3EF538FB2F1AD1F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C746D1F902844D61B3EF538FB2F1AD1F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">ED56F201A2931EB315CDA020E8D3ADAE</GeneratedChecksum>
+          <UserChecksum dnOrder="5">ED56F201A2931EB315CDA020E8D3ADAE</UserChecksum>
         </File>
-        <File dnOrder="19">
+        <File dnOrder="18">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_i2c1.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/peripheral/i2c/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/i2c/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/i2c/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">04474C65DEC0183ED9BD7D766F56AC70</GeneratedChecksum>
           <UserChecksum dnOrder="5">04474C65DEC0183ED9BD7D766F56AC70</UserChecksum>
         </File>
-        <File dnOrder="20">
+        <File dnOrder="19">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">port.c</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/portable/MPLAB/PIC32MX</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">723534A409BE4BF8BC3FD5F84946BD60</GeneratedChecksum>
-          <UserChecksum dnOrder="5">723534A409BE4BF8BC3FD5F84946BD60</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0050462E9C49D502623A3050E39916DB</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0050462E9C49D502623A3050E39916DB</UserChecksum>
         </File>
-        <File dnOrder="21">
+        <File dnOrder="20">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">port_asm.S</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/portable/MPLAB/PIC32MX</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B1FE7EE9184C54991C20B9894D37637B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B1FE7EE9184C54991C20B9894D37637B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C3A5A08B2030F988090D854607C497CF</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C3A5A08B2030F988090D854607C497CF</UserChecksum>
         </File>
-        <File dnOrder="22">
+        <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">queue.c</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5D6DBFEA93298D6AF94BBB95520D280F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5D6DBFEA93298D6AF94BBB95520D280F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F5394E2E84773BFF1A4BD6CDBB7C5840</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F5394E2E84773BFF1A4BD6CDBB7C5840</UserChecksum>
         </File>
-        <File dnOrder="23">
+        <File dnOrder="22">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">stream_buffer.c</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AFF38FEB6C575303D2AB185E3931C4E1</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AFF38FEB6C575303D2AB185E3931C4E1</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4825B12AEBF317AB1B8AAD54428F70BD</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4825B12AEBF317AB1B8AAD54428F70BD</UserChecksum>
         </File>
-        <File dnOrder="24">
+        <File dnOrder="23">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">sys_int.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/system/int/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/system/int/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/int/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">640A4B35B8CDB53BD8EA5077D81386BE</GeneratedChecksum>
           <UserChecksum dnOrder="5">640A4B35B8CDB53BD8EA5077D81386BE</UserChecksum>
         </File>
-        <File dnOrder="25">
+        <File dnOrder="24">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">tasks.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1698F30DF80754BA006BD2F800EB42E8</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1698F30DF80754BA006BD2F800EB42E8</UserChecksum>
+          <GeneratedChecksum dnOrder="4">CE0B29A1A315BB4D869CFD0D5238A5F8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">CE0B29A1A315BB4D869CFD0D5238A5F8</UserChecksum>
         </File>
-        <File dnOrder="26">
+        <File dnOrder="25">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">timers.c</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9F810635B33FABA6A38F4F1B9409D2E9</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9F810635B33FABA6A38F4F1B9409D2E9</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0319C91A5CE9B15DD2E91A78C4D92A40</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0319C91A5CE9B15DD2E91A78C4D92A40</UserChecksum>
         </File>
-        <File dnOrder="27">
+        <File dnOrder="26">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">xc32_monitor.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/stdio/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/stdio/</LogicalPath>
           <PhysicalPath dnOrder="3">/stdio/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">0CDCE9B6891797FCD2AEA243F841353F</GeneratedChecksum>
           <UserChecksum dnOrder="5">0CDCE9B6891797FCD2AEA243F841353F</UserChecksum>
         </File>
-        <File dnOrder="28">
+        <File dnOrder="27">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">FreeRTOS.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C7BB746648A6C4E1B795150EE9E13B23</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C7BB746648A6C4E1B795150EE9E13B23</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A678E2C3E9855094DBB7DF6643133C73</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A678E2C3E9855094DBB7DF6643133C73</UserChecksum>
         </File>
-        <File dnOrder="29">
+        <File dnOrder="28">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">FreeRTOSConfig.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">C1CB7146E2F2338994969F35681EF79A</GeneratedChecksum>
           <UserChecksum dnOrder="5">C1CB7146E2F2338994969F35681EF79A</UserChecksum>
         </File>
-        <File dnOrder="30">
+        <File dnOrder="29">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">ISR_Support.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/portable/MPLAB/PIC32MX</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">248EA860920008BCE14D4486999EA637</GeneratedChecksum>
-          <UserChecksum dnOrder="5">248EA860920008BCE14D4486999EA637</UserChecksum>
+          <GeneratedChecksum dnOrder="4">968C65D1D30FDD362AE4E7C45C695EA8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">968C65D1D30FDD362AE4E7C45C695EA8</UserChecksum>
         </File>
-        <File dnOrder="31">
+        <File dnOrder="30">
           <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">app_at24cm02_i2c_eeprom.h</Name>
+          <Name dnOrder="1">app_i2c_eeprom.h</Name>
           <LogicalPath dnOrder="2"/>
           <PhysicalPath dnOrder="3">/../../</PhysicalPath>
           <GeneratedChecksum dnOrder="4"/>
           <UserChecksum dnOrder="5"/>
         </File>
-        <File dnOrder="32">
-          <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">bsp.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/bsp/</LogicalPath>
-          <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3AD9B94DC2D509696331D0EA0B4CFD37</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3AD9B94DC2D509696331D0EA0B4CFD37</UserChecksum>
-        </File>
-        <File dnOrder="33">
+        <File dnOrder="31">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">configuration.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">7B1ADDD1C6A392A4099513B6AA5F7EC0</GeneratedChecksum>
           <UserChecksum dnOrder="5">7B1ADDD1C6A392A4099513B6AA5F7EC0</UserChecksum>
         </File>
-        <File dnOrder="34">
+        <File dnOrder="32">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">croutine.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0A32C42550C23D91E88EACF49CB1038D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0A32C42550C23D91E88EACF49CB1038D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">704E831E7499FFC3C0424AE431341286</GeneratedChecksum>
+          <UserChecksum dnOrder="5">704E831E7499FFC3C0424AE431341286</UserChecksum>
         </File>
-        <File dnOrder="35">
+        <File dnOrder="33">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">definitions.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C794361DA91D873B6F383C1AE06A381B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C794361DA91D873B6F383C1AE06A381B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">ED535F1D204BC6D8B510E7055DFA5B47</GeneratedChecksum>
+          <UserChecksum dnOrder="5">ED535F1D204BC6D8B510E7055DFA5B47</UserChecksum>
         </File>
-        <File dnOrder="36">
+        <File dnOrder="34">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">deprecated_definitions.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D8668D5366E30077151F27747B127FF9</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D8668D5366E30077151F27747B127FF9</UserChecksum>
+          <GeneratedChecksum dnOrder="4">2F1A823655EAF732C206989C44FBCA23</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2F1A823655EAF732C206989C44FBCA23</UserChecksum>
         </File>
-        <File dnOrder="37">
+        <File dnOrder="35">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">device.h</Name>
           <LogicalPath dnOrder="2">packs/PIC32MX470F512H_DFP/</LogicalPath>
@@ -310,79 +294,79 @@
           <GeneratedChecksum dnOrder="4">5D5C52527AB1435153DB9B50ADE6B79D</GeneratedChecksum>
           <UserChecksum dnOrder="5">5D5C52527AB1435153DB9B50ADE6B79D</UserChecksum>
         </File>
-        <File dnOrder="38">
+        <File dnOrder="36">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">driver.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/driver/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">1D2094DFA60F847FFD4E8153B6E78027</GeneratedChecksum>
           <UserChecksum dnOrder="5">1D2094DFA60F847FFD4E8153B6E78027</UserChecksum>
         </File>
-        <File dnOrder="39">
+        <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">driver_common.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/driver/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">CC7DFCC51CD25171A3E400E18969354F</GeneratedChecksum>
           <UserChecksum dnOrder="5">CC7DFCC51CD25171A3E400E18969354F</UserChecksum>
         </File>
-        <File dnOrder="40">
+        <File dnOrder="38">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_i2c.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/driver/i2c/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/i2c/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/i2c/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">7DC093674665965E223A7AD52F7BAF83</GeneratedChecksum>
           <UserChecksum dnOrder="5">7DC093674665965E223A7AD52F7BAF83</UserChecksum>
         </File>
-        <File dnOrder="41">
+        <File dnOrder="39">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_i2c_definitions.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/driver/i2c/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/i2c/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/i2c/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">5E007307AC81BD02CC48039990BD0B28</GeneratedChecksum>
           <UserChecksum dnOrder="5">5E007307AC81BD02CC48039990BD0B28</UserChecksum>
         </File>
-        <File dnOrder="42">
+        <File dnOrder="40">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">event_groups.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9596B64893D5B8092B5FBC92D2355803</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9596B64893D5B8092B5FBC92D2355803</UserChecksum>
+          <GeneratedChecksum dnOrder="4">FDBAD33B943F959F74DE0D2D11D85EFE</GeneratedChecksum>
+          <UserChecksum dnOrder="5">FDBAD33B943F959F74DE0D2D11D85EFE</UserChecksum>
         </File>
-        <File dnOrder="43">
+        <File dnOrder="41">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">list.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">32539EFF6BC28ED0F71660A40751ED6A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">32539EFF6BC28ED0F71660A40751ED6A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4D85F0F869CB012DED6C82D454A13487</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4D85F0F869CB012DED6C82D454A13487</UserChecksum>
         </File>
-        <File dnOrder="44">
+        <File dnOrder="42">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">message_buffer.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">16FB71596800CA7101A1D4A29AECD777</GeneratedChecksum>
-          <UserChecksum dnOrder="5">16FB71596800CA7101A1D4A29AECD777</UserChecksum>
+          <GeneratedChecksum dnOrder="4">64659FA6F03AC96B0BF691238AB47C04</GeneratedChecksum>
+          <UserChecksum dnOrder="5">64659FA6F03AC96B0BF691238AB47C04</UserChecksum>
         </File>
-        <File dnOrder="45">
+        <File dnOrder="43">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mpu_prototypes.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">754BB96D214BFE26758C4BD27B4FEDD6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">754BB96D214BFE26758C4BD27B4FEDD6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">DC31F16E45F999DBACA3447CAAB3795D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">DC31F16E45F999DBACA3447CAAB3795D</UserChecksum>
         </File>
-        <File dnOrder="46">
+        <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mpu_wrappers.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">52F9B7F7526A81F7294CFA451B5FEC65</GeneratedChecksum>
-          <UserChecksum dnOrder="5">52F9B7F7526A81F7294CFA451B5FEC65</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F4155A9ACE4FB5B0EBE00CD118DC2162</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F4155A9ACE4FB5B0EBE00CD118DC2162</UserChecksum>
         </File>
-        <File dnOrder="47">
+        <File dnOrder="45">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
@@ -390,7 +374,7 @@
           <GeneratedChecksum dnOrder="4">F0AD88762263B7CB89B02AB4F5876059</GeneratedChecksum>
           <UserChecksum dnOrder="5">F0AD88762263B7CB89B02AB4F5876059</UserChecksum>
         </File>
-        <File dnOrder="48">
+        <File dnOrder="46">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal_definitions.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
@@ -398,7 +382,7 @@
           <GeneratedChecksum dnOrder="4">167A43EFF8A31441EBF85AC77958A30B</GeneratedChecksum>
           <UserChecksum dnOrder="5">167A43EFF8A31441EBF85AC77958A30B</UserChecksum>
         </File>
-        <File dnOrder="49">
+        <File dnOrder="47">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal_freertos.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
@@ -406,170 +390,170 @@
           <GeneratedChecksum dnOrder="4">0E6C60DFF74D4A0EC993971475F2CEAC</GeneratedChecksum>
           <UserChecksum dnOrder="5">0E6C60DFF74D4A0EC993971475F2CEAC</UserChecksum>
         </File>
-        <File dnOrder="50">
+        <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_clk.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/peripheral/clk/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">AED8D8C760D4C814EBDD91798758ED53</GeneratedChecksum>
           <UserChecksum dnOrder="5">AED8D8C760D4C814EBDD91798758ED53</UserChecksum>
         </File>
-        <File dnOrder="51">
+        <File dnOrder="49">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_evic.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/peripheral/evic/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/evic/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/evic/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">9E0B07134C1501D0DB9A238C57E8654B</GeneratedChecksum>
           <UserChecksum dnOrder="5">9E0B07134C1501D0DB9A238C57E8654B</UserChecksum>
         </File>
-        <File dnOrder="52">
+        <File dnOrder="50">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_gpio.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/peripheral/gpio/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/gpio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/gpio/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">74FBDBAD71A483761491848BBE0BE3EA</GeneratedChecksum>
           <UserChecksum dnOrder="5">74FBDBAD71A483761491848BBE0BE3EA</UserChecksum>
         </File>
-        <File dnOrder="53">
+        <File dnOrder="51">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_i2c1.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/peripheral/i2c/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/i2c/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/i2c/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">6B7CE55C6287B6BC5FB3FE9E26DC7BB8</GeneratedChecksum>
           <UserChecksum dnOrder="5">6B7CE55C6287B6BC5FB3FE9E26DC7BB8</UserChecksum>
         </File>
-        <File dnOrder="54">
+        <File dnOrder="52">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_i2c_master.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/peripheral/i2c/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/i2c/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/i2c/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">FE1F77611D435D0C55012B2886CFBD69</GeneratedChecksum>
           <UserChecksum dnOrder="5">FE1F77611D435D0C55012B2886CFBD69</UserChecksum>
         </File>
-        <File dnOrder="55">
+        <File dnOrder="53">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">portable.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">CA616A0CC0B2C957A76DE04F645C7F9D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">CA616A0CC0B2C957A76DE04F645C7F9D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3DD4DD0A44DABEF42A2945130458D606</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3DD4DD0A44DABEF42A2945130458D606</UserChecksum>
         </File>
-        <File dnOrder="56">
+        <File dnOrder="54">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">portmacro.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/portable/MPLAB/PIC32MX</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C394350148D79208CAC8E001108DA72D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C394350148D79208CAC8E001108DA72D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">60416DDC5C4179A0D9CB5D28BC55579A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">60416DDC5C4179A0D9CB5D28BC55579A</UserChecksum>
         </File>
-        <File dnOrder="57">
+        <File dnOrder="55">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">projdefs.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BB447E338E44F78E9396BF4DDC118F39</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BB447E338E44F78E9396BF4DDC118F39</UserChecksum>
+          <GeneratedChecksum dnOrder="4">CE78EF96C36D88D22E99EA091C304A52</GeneratedChecksum>
+          <UserChecksum dnOrder="5">CE78EF96C36D88D22E99EA091C304A52</UserChecksum>
         </File>
-        <File dnOrder="58">
+        <File dnOrder="56">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">queue.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">44EE934CAEDBAC9EB9EF5B42137FB9DE</GeneratedChecksum>
-          <UserChecksum dnOrder="5">44EE934CAEDBAC9EB9EF5B42137FB9DE</UserChecksum>
+          <GeneratedChecksum dnOrder="4">CC58866D184128BAF381F1FEBE67DAA8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">CC58866D184128BAF381F1FEBE67DAA8</UserChecksum>
         </File>
-        <File dnOrder="59">
+        <File dnOrder="57">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">semphr.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">11C8C3BAB2C11F5A8EFAA8DD31EDD87A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">11C8C3BAB2C11F5A8EFAA8DD31EDD87A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">44E99649CAE3DE01AEE11929BF08E01F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">44E99649CAE3DE01AEE11929BF08E01F</UserChecksum>
         </File>
-        <File dnOrder="60">
+        <File dnOrder="58">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">stack_macros.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">2C98A994E4B0CBAD54531653D3B1050A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">2C98A994E4B0CBAD54531653D3B1050A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">2A74BD05F3F1D28DD4B0925D419DEF24</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2A74BD05F3F1D28DD4B0925D419DEF24</UserChecksum>
         </File>
-        <File dnOrder="61">
+        <File dnOrder="59">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">stream_buffer.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">2ECFF9675FFEBF50A8D8CE0F10A84BEE</GeneratedChecksum>
-          <UserChecksum dnOrder="5">2ECFF9675FFEBF50A8D8CE0F10A84BEE</UserChecksum>
+          <GeneratedChecksum dnOrder="4">92A84BBB4C20E15E21E63F818E101BD7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">92A84BBB4C20E15E21E63F818E101BD7</UserChecksum>
         </File>
-        <File dnOrder="62">
+        <File dnOrder="60">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_int.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/system/int/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/system/int/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/int/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">47330C2D8F204B2B69F8A86240A564B6</GeneratedChecksum>
           <UserChecksum dnOrder="5">47330C2D8F204B2B69F8A86240A564B6</UserChecksum>
         </File>
-        <File dnOrder="63">
+        <File dnOrder="61">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_int_mapping.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/system/int/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/system/int/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/int/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">FC7B55936A09E0CA1395AE4DFB1A188F</GeneratedChecksum>
           <UserChecksum dnOrder="5">FC7B55936A09E0CA1395AE4DFB1A188F</UserChecksum>
         </File>
-        <File dnOrder="64">
+        <File dnOrder="62">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/system/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/system/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">BE95B4F134C5C929787B9DA6FDBF3501</GeneratedChecksum>
           <UserChecksum dnOrder="5">BE95B4F134C5C929787B9DA6FDBF3501</UserChecksum>
         </File>
-        <File dnOrder="65">
+        <File dnOrder="63">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_common.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/system/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/system/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">C3F5136D520DAC4416512EBFCCA023C3</GeneratedChecksum>
           <UserChecksum dnOrder="5">C3F5136D520DAC4416512EBFCCA023C3</UserChecksum>
         </File>
-        <File dnOrder="66">
+        <File dnOrder="64">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_module.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/system/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/system/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">1C75A8A6B60598A2FD0D533F57839B72</GeneratedChecksum>
           <UserChecksum dnOrder="5">1C75A8A6B60598A2FD0D533F57839B72</UserChecksum>
         </File>
-        <File dnOrder="67">
+        <File dnOrder="65">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">task.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A9958A1E7E989C452B1ED01177B1C059</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A9958A1E7E989C452B1ED01177B1C059</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AF035B34736027A83C7BD0BB54C1E786</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AF035B34736027A83C7BD0BB54C1E786</UserChecksum>
         </File>
-        <File dnOrder="68">
+        <File dnOrder="66">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">timers.h</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/include</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0FB97A98EDB13E4B7EE8E117AAE98EB6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0FB97A98EDB13E4B7EE8E117AAE98EB6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">28E52676B0B3F85FF6D0CAC0D6172034</GeneratedChecksum>
+          <UserChecksum dnOrder="5">28E52676B0B3F85FF6D0CAC0D6172034</UserChecksum>
         </File>
-        <File dnOrder="69">
+        <File dnOrder="67">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">toolchain_specifics.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">5F0B87C955FBF569CBD67F4861B6B7AD</GeneratedChecksum>
           <UserChecksum dnOrder="5">5F0B87C955FBF569CBD67F4861B6B7AD</UserChecksum>
         </File>
-        <File dnOrder="70">
+        <File dnOrder="68">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">user.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mx470_curiosity/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4"/>
           <UserChecksum dnOrder="5"/>
@@ -577,11 +561,12 @@
       </Files>
       <Settings dnOrder="1">
         <Setting append="true" category="C32" delimiter=";" dnOrder="0" key="extra-include-directories" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;"/>
-        <Setting append="true" category="C32" delimiter=";" dnOrder="1" key="extra-include-directories" value="../src;../src/config/pic32mx470_curiosity;../src/packs/PIC32MX470F512H_DFP;;../src/mips"/>
-        <Setting append="true" category="C32-AS" delimiter=";" dnOrder="2" key="extra-include-directories-for-assembler" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity;"/>
-        <Setting append="true" category="C32-AS" delimiter=";" dnOrder="3" key="extra-include-directories-for-preprocessor" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity;"/>
+        <Setting append="true" category="C32" delimiter=";" dnOrder="1" key="extra-include-directories" value="../src;../src/config/pic32mx470_curiosity_freertos;../src/packs/PIC32MX470F512H_DFP;;../src/mips"/>
+        <Setting append="true" category="C32-AS" delimiter=";" dnOrder="2" key="extra-include-directories-for-assembler" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos;"/>
+        <Setting append="true" category="C32-AS" delimiter=";" dnOrder="3" key="extra-include-directories-for-preprocessor" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos;"/>
         <Setting category="C32-LD" dnOrder="4" key="heap-size" value="0"/>
         <Setting category="C32-LD" dnOrder="5" key="no-device-startup-code" value="true"/>
+        <Setting category="C32-LD" dnOrder="6" key="preprocessor-macros" value=""/>
       </Settings>
     </Manifest>
     <Settings dnOrder="4">
@@ -590,7 +575,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
     </Settings>
   </Configurator>
 </Configuration>

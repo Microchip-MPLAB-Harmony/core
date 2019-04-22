@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Configuration>
   <Components>
-    <UniqueComponent bsp="true" dnOrder="0" id="BSP_PIC32MX470_Curiosity_Development_Board"/>
-    <UniqueComponent dnOrder="1" id="core">
+    <UniqueComponent dnOrder="0" id="core">
       <Symbols dnOrder="0">
         <String dnOrder="0" id="BSP_PIN_31_MODE">
           <Values dnOrder="0">
@@ -239,121 +238,100 @@
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Boolean dnOrder="47" id="I2C_1_INTERRUPT_ENABLE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="i2c1" value="true"/>
-          </Values>
-        </Boolean>
-        <Boolean dnOrder="48" id="I2C_1_INTERRUPT_ENABLE_UPDATE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="false"/>
-          </Values>
-        </Boolean>
-        <String dnOrder="49" id="I2C_1_INTERRUPT_HANDLER">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="i2c1" value="I2C_1_InterruptHandler"/>
-          </Values>
-        </String>
-        <Boolean dnOrder="50" id="I2C_1_INTERRUPT_HANDLER_LOCK">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="i2c1" value="true"/>
-          </Values>
-        </Boolean>
-        <File dnOrder="51" id="INTERRUPTS_ASM">
+        <File dnOrder="47" id="EVIC_INT_ASM">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <Hex dnOrder="52" id="SYS_PORT_B_ANSEL">
+        <Boolean dnOrder="48" id="I2C_1_INTERRUPT_ENABLE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="1036"/>
+            <Dynamic dnOrder="0" id="i2c1" value="true"/>
           </Values>
-        </Hex>
-        <Hex dnOrder="53" id="SYS_PORT_B_LAT">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0"/>
-          </Values>
-        </Hex>
-        <Hex dnOrder="54" id="SYS_PORT_B_TRIS">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="1036"/>
-          </Values>
-        </Hex>
-        <Hex dnOrder="55" id="SYS_PORT_D_CNPU">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="64"/>
-          </Values>
-        </Hex>
-        <Hex dnOrder="56" id="SYS_PORT_D_TRIS">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0"/>
-          </Values>
-        </Hex>
-        <Hex dnOrder="57" id="SYS_PORT_E_ANSEL">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="208"/>
-          </Values>
-        </Hex>
-        <Hex dnOrder="58" id="SYS_PORT_E_LAT">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0"/>
-          </Values>
-        </Hex>
-        <Hex dnOrder="59" id="SYS_PORT_E_TRIS">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="208"/>
-          </Values>
-        </Hex>
-        <Boolean dnOrder="60" id="TIMER_1_INTERRUPT_ENABLE_UPDATE">
+        </Boolean>
+        <Boolean dnOrder="49" id="I2C_1_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <KeyValueSet dnOrder="61" id="clkSvcMode">
+        <String dnOrder="50" id="I2C_1_INTERRUPT_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="i2c1" value="I2C_1_InterruptHandler"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="51" id="I2C_1_INTERRUPT_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="i2c1" value="true"/>
+          </Values>
+        </Boolean>
+        <File dnOrder="52" id="INTERRUPTS_ASM">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Hex dnOrder="53" id="SYS_PORT_B_ANSEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="1036"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="54" id="SYS_PORT_B_LAT">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="55" id="SYS_PORT_B_TRIS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="1036"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="56" id="SYS_PORT_D_CNPU">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="64"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="57" id="SYS_PORT_D_TRIS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="58" id="SYS_PORT_E_ANSEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="208"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="59" id="SYS_PORT_E_LAT">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="60" id="SYS_PORT_E_TRIS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="208"/>
+          </Values>
+        </Hex>
+        <Boolean dnOrder="61" id="TIMER_1_INTERRUPT_ENABLE_UPDATE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="false"/>
+          </Values>
+        </Boolean>
+        <KeyValueSet dnOrder="62" id="clkSvcMode">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </KeyValueSet>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent dnOrder="2" id="dfp"/>
-    <GeneratorComponent dnOrder="3" id="drv_i2c">
+    <UniqueComponent dnOrder="1" id="dfp"/>
+    <GeneratorComponent dnOrder="2" id="drv_i2c">
       <Symbols dnOrder="0">
-        <File dnOrder="0" id="DRV_I2C_ASYNC_HEADER">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="1" id="DRV_I2C_ASYNC_SRC">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <Combo dnOrder="2" id="DRV_I2C_MODE">
+        <Combo dnOrder="0" id="DRV_I2C_MODE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_i2c" value="Synchronous"/>
           </Values>
         </Combo>
-        <File dnOrder="3" id="DRV_I2C_SYNC_HEADER">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="4" id="DRV_I2C_SYNC_SRC">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
       </Symbols>
       <Instances dnOrder="1">
         <InstanceComponent dnOrder="0" id="drv_i2c" instance="0">
@@ -363,13 +341,6 @@
                 <Dynamic dnOrder="0" id="drv_i2c_0" value="I2C1"/>
               </Values>
             </String>
-            <Integer dnOrder="1" id="DRV_I2C_QUEUE_SIZE">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="visible">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
-            </Integer>
           </Symbols>
           <Attachments dnOrder="1">
             <DirectDependency dnOrder="0" id="drv_i2c_I2C_dependency">
@@ -386,8 +357,8 @@
         </InstanceComponent>
       </Instances>
     </GeneratorComponent>
-    <UniqueComponent dnOrder="4" id="FreeRTOS"/>
-    <UniqueComponent dnOrder="5" id="HarmonyCore">
+    <UniqueComponent dnOrder="3" id="FreeRTOS"/>
+    <UniqueComponent dnOrder="4" id="HarmonyCore">
       <Symbols dnOrder="0">
         <File dnOrder="0" id="APP0_C">
           <Attributes dnOrder="0">
@@ -395,7 +366,7 @@
               <Value dnOrder="0">true</Value>
             </Boolean>
             <String dnOrder="1" id="name">
-              <Value dnOrder="0">app_at24cm02_i2c_eeprom.c</Value>
+              <Value dnOrder="0">app_i2c_eeprom.c</Value>
             </String>
           </Attributes>
         </File>
@@ -405,7 +376,7 @@
               <Value dnOrder="0">true</Value>
             </Boolean>
             <String dnOrder="1" id="name">
-              <Value dnOrder="0">app_at24cm02_i2c_eeprom.h</Value>
+              <Value dnOrder="0">app_i2c_eeprom.h</Value>
             </String>
           </Attributes>
         </File>
@@ -482,115 +453,136 @@
             </Boolean>
           </Attributes>
         </Menu>
-        <Menu dnOrder="14" id="GEN_APP_TASK_MENU">
+        <File dnOrder="14" id="GEN_APP_TASKS">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Menu dnOrder="15" id="GEN_APP_TASK_MENU">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <String dnOrder="15" id="GEN_APP_TASK_NAME_0">
+        <String dnOrder="16" id="GEN_APP_TASK_NAME_0">
           <Values dnOrder="0">
-            <User dnOrder="0" value="app_at24cm02_i2c_eeprom"/>
+            <User dnOrder="0" value="app_i2c_eeprom"/>
           </Values>
         </String>
-        <File dnOrder="16" id="INT_DEF">
+        <File dnOrder="17" id="GEN_RTOS_APP_TASKS">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="17" id="INT_HEADER">
+        <File dnOrder="18" id="GEN_RTOS_APP_TASKS_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="18" id="INT_MAPPING">
+        <File dnOrder="19" id="INT_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="19" id="INT_SOURCE">
+        <File dnOrder="20" id="INT_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="20" id="OSAL_DEFINITIONS_H">
+        <File dnOrder="21" id="INT_MAPPING">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="21" id="OSAL_FREERTOS_C">
+        <File dnOrder="22" id="INT_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="22" id="OSAL_FREERTOS_H">
+        <File dnOrder="23" id="OSAL_DEFINITIONS_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="23" id="OSAL_H">
+        <File dnOrder="24" id="OSAL_FREERTOS_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="24" id="OSAL_SYSDEF_H">
+        <File dnOrder="25" id="OSAL_FREERTOS_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <Combo dnOrder="25" id="SELECT_RTOS">
+        <File dnOrder="26" id="OSAL_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="27" id="OSAL_SYSDEF_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Combo dnOrder="28" id="SELECT_RTOS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="FreeRTOS"/>
           </Values>
         </Combo>
-        <File dnOrder="26" id="SYSTEM_COMMON">
+        <File dnOrder="29" id="SYSTEM_COMMON">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="27" id="SYSTEM_MODULE">
+        <File dnOrder="30" id="SYSTEM_MODULE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="28" id="SYSTEM_ROOT">
+        <File dnOrder="31" id="SYSTEM_ROOT">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="29" id="TASKS_C">
+        <File dnOrder="32" id="TASKS_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="30" id="USER_H">
+        <File dnOrder="33" id="USER_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
@@ -599,7 +591,7 @@
         </File>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent dnOrder="6" id="i2c1">
+    <UniqueComponent dnOrder="5" id="i2c1">
       <Symbols dnOrder="0">
         <Integer dnOrder="0" id="BRG_VALUE">
           <Values dnOrder="0">
@@ -627,17 +619,16 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_PIC32MX470_Curiosity_Development_Board" x="310" y="120"/>
-        <ElementPosition dnOrder="1" id="FreeRTOS" x="340" y="20"/>
-        <ElementPosition dnOrder="2" id="HarmonyCore" x="500" y="20"/>
-        <ElementPosition dnOrder="3" id="core" x="240" y="20"/>
-        <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_i2c" x="154" y="80"/>
-        <ElementPosition dnOrder="6" id="i2c1" x="10" y="131"/>
+        <ElementPosition dnOrder="0" id="FreeRTOS" x="340" y="20"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="500" y="20"/>
+        <ElementPosition dnOrder="2" id="core" x="240" y="20"/>
+        <ElementPosition dnOrder="3" id="dfp" x="20" y="20"/>
+        <ElementPosition dnOrder="4" id="drv_i2c" x="154" y="80"/>
+        <ElementPosition dnOrder="5" id="i2c1" x="10" y="131"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
