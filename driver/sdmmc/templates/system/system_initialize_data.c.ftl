@@ -73,7 +73,7 @@ const DRV_SDMMC_INIT drvSDMMC${INDEX?string}InitData =
     .bufferObjPoolSize              = DRV_SDMMC_QUEUE_SIZE_IDX${INDEX?string},
     .clientObjPool                  = (uintptr_t)&drvSDMMC${INDEX?string}ClientObjPool[0],
     .numClients                     = DRV_SDMMC_CLIENTS_NUMBER_IDX${INDEX?string},
-    .cardDetectionMethod            = DRV_SDMMC_CARD_DETECTION_METHOD_IDX${INDEX?string},
+    .cardDetectionMethod            = (DRV_SDMMC_CD_METHOD)DRV_SDMMC_CARD_DETECTION_METHOD_IDX${INDEX?string},
 <#if DRV_SDMMC_CARD_DETECTION_METHOD == "Use Polling">
     .cardDetectionPollingIntervalMs = ${DRV_SDMMC_POLLING_INTERVAL},
 <#else>
