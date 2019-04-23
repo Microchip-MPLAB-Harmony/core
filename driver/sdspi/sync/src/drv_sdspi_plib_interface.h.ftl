@@ -245,6 +245,23 @@ bool _DRV_SDSPI_TimerStart(
 );
 
 // *****************************************************************************
+/* SD Card Command-Response Timer Start
+
+  Summary:
+    Starts the command-response timer.
+
+  Description:
+    The registered event handler is called when the time period elapses.
+
+  Remarks:
+
+*/
+bool _DRV_SDSPI_CmdResponseTimerStart(
+    DRV_SDSPI_OBJ* const dObj,
+    uint32_t period
+);
+
+// *****************************************************************************
 /* SD Card Timer Stop
 
   Summary:
@@ -260,10 +277,24 @@ bool _DRV_SDSPI_TimerStart(
 bool _DRV_SDSPI_TimerStop( DRV_SDSPI_OBJ* const dObj );
 
 // *****************************************************************************
+/* SD Card Command-Response Timer Stop
+
+  Summary:
+    Stops the command-response timer.
+
+  Description:
+    None.
+
+  Remarks:
+
+*/
+bool _DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj );
+
+// *****************************************************************************
 /* SD Card SPI Speed Setup
 
   Summary:
-    Configures the SPI clock frequency.
+    Configures the SPI clock frequency by calling the SPI PLIB.
 
   Description:
     This function is used by the SD Card driver to switch between the initial

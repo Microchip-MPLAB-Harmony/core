@@ -685,9 +685,14 @@ typedef struct
     /* Handle to the timer used for read/write transaction timeouts. */
     SYS_TIME_HANDLE                     timerHandle;
 
+    /* Handle to the timer used for command timeouts */
+    SYS_TIME_HANDLE                     cmdRespTmrHandle;
+
     volatile bool                       cardPollingTimerExpired;
 
     volatile bool                       timerExpired;
+
+    volatile bool                       cmdRespTmrExpired;
 
     DRV_SDSPI_SPI_TRANSFER_TYPE         sdcardSPITransferType;
 
