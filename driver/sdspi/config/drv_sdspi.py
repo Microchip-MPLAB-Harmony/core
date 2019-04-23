@@ -66,6 +66,12 @@ def requestDMAComment(symbol, event):
     else:
         symbol.setVisible(False)
 
+def asyncModeOptions(symbol, event):
+    if (event["value"] == "Asynchronous"):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
+
 def requestAndAssignDMAChannel(symbol, event):
     global drvSdspiInstanceSpace
 
@@ -155,6 +161,14 @@ def instantiateComponent(sdspiComponent, index):
     sdspiSymNumClients.setMin(1)
     sdspiSymNumClients.setMax(25000000)
     sdspiSymNumClients.setDefaultValue(5000000)
+
+    sdspiQueueSize = sdspiComponent.createIntegerSymbol("DRV_SDSPI_QUEUE_SIZE", None)
+    sdspiQueueSize.setLabel("Transfer Queue Size")
+    sdspiQueueSize.setMin(1)
+    sdspiQueueSize.setMax(64)
+    sdspiQueueSize.setVisible((Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE") == "Asynchronous"))
+    sdspiQueueSize.setDefaultValue(4)
+    sdspiQueueSize.setDependencies(asyncModeOptions, ["drv_sdspi.DRV_SDSPI_COMMON_MODE"])
 
     sdspiCardDetectionMethod = sdspiComponent.createComboSymbol("DRV_SDSPI_CARD_DETECTION_METHOD", None, cardDetectMethodComboValues)
     sdspiCardDetectionMethod.setLabel("Card Detection Method")

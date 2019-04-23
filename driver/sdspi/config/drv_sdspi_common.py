@@ -72,17 +72,16 @@ def instantiateComponent(sdspiComponentCommon):
 
     rtos_mode = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
 
-    sdspi_default_mode = "Synchronous"
+    sdspi_default_mode = "Asynchronous"
 
     # Below Lines to be enabled when we have Synchronous support
-#    if ((rtos_mode != "BareMetal") and (rtos_mode != None)):
-#        sdspi_default_mode = "Synchronous"
+    if ((rtos_mode != "BareMetal") and (rtos_mode != None)):
+        sdspi_default_mode = "Synchronous"
 
     sdspiCommonMode = sdspiComponentCommon.createComboSymbol("DRV_SDSPI_COMMON_MODE", None, ["Asynchronous", "Synchronous"])
     sdspiCommonMode.setLabel("Driver Mode")
     sdspiCommonMode.setDefaultValue(sdspi_default_mode)
-    sdspiCommonMode.setReadOnly(True)
-#    sdhcCommonMode.setDependencies(setCommonMode, ["HarmonyCore.SELECT_RTOS"])
+    sdspiCommonMode.setDependencies(setCommonMode, ["HarmonyCore.SELECT_RTOS"])
 
     sdspiCommonfsCounter = sdspiComponentCommon.createBooleanSymbol("DRV_SDSPI_COMMON_FS_COUNTER", None)
     sdspiCommonfsCounter.setLabel("Number of Instances Using FS")
@@ -144,8 +143,8 @@ def instantiateComponent(sdspiComponentCommon):
     sdspiAsyncSymHeaderLocalFile.setDependencies(aSyncFileGen, ["DRV_SDSPI_COMMON_MODE"])
 
     sdspiAsyncSymInterfaceSourceFile = sdspiComponentCommon.createFileSymbol("DRV_SDSPI_ASYNC_INTERFACE_SOURCE", None)
-    sdspiAsyncSymInterfaceSourceFile.setSourcePath("driver/sdspi/async/src/drv_sdspi_interface.c.ftl")
-    sdspiAsyncSymInterfaceSourceFile.setOutputName("drv_sdspi_interface.c")
+    sdspiAsyncSymInterfaceSourceFile.setSourcePath("driver/sdspi/async/src/drv_sdspi_plib_interface.c.ftl")
+    sdspiAsyncSymInterfaceSourceFile.setOutputName("drv_sdspi_plib_interface.c")
     sdspiAsyncSymInterfaceSourceFile.setDestPath("driver/sdspi/src")
     sdspiAsyncSymInterfaceSourceFile.setProjectPath("config/" + configName + "/driver/sdspi/")
     sdspiAsyncSymInterfaceSourceFile.setType("SOURCE")
@@ -155,8 +154,8 @@ def instantiateComponent(sdspiComponentCommon):
     sdspiAsyncSymInterfaceSourceFile.setDependencies(aSyncFileGen, ["DRV_SDSPI_COMMON_MODE"])
 
     sdspiAsyncSymInterfaceHeaderFile = sdspiComponentCommon.createFileSymbol("DRV_SDSPI_ASYNC_INTERFACE_HEADER", None)
-    sdspiAsyncSymInterfaceHeaderFile.setSourcePath("driver/sdspi/async/src/drv_sdspi_interface.h.ftl")
-    sdspiAsyncSymInterfaceHeaderFile.setOutputName("drv_sdspi_interface.h")
+    sdspiAsyncSymInterfaceHeaderFile.setSourcePath("driver/sdspi/async/src/drv_sdspi_plib_interface.h.ftl")
+    sdspiAsyncSymInterfaceHeaderFile.setOutputName("drv_sdspi_plib_interface.h")
     sdspiAsyncSymInterfaceHeaderFile.setDestPath("driver/sdspi/src")
     sdspiAsyncSymInterfaceHeaderFile.setProjectPath("config/" + configName + "/driver/sdspi/")
     sdspiAsyncSymInterfaceHeaderFile.setType("HEADER")

@@ -1,7 +1,12 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SDSPI Instance ${INDEX?string} Initialization Data">
 
-/* SD Card Client Objects Pool */
+/* SDSPI Client Objects Pool */
 static DRV_SDSPI_CLIENT_OBJ drvSDSPI${INDEX}ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX${INDEX?string}];
+
+<#if drv_sdspi.DRV_SDSPI_COMMON_MODE == "Asynchronous" >
+/* SDSPI Transfer Objects Pool */
+static DRV_SDSPI_BUFFER_OBJ drvSDSPI${INDEX}TransferObjPool[DRV_SDSPI_QUEUE_SIZE_IDX${INDEX?string}];
+</#if>
 
 /* SPI PLIB Interface Initialization for SDSPI Driver */
 const DRV_SDSPI_PLIB_INTERFACE drvSDSPI${INDEX?string}PlibAPI = {
@@ -116,6 +121,14 @@ const DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
 
     /* SDSPI Client Objects Pool */
     .clientObjPool          = (uintptr_t)&drvSDSPI${INDEX?string}ClientObjPool[0],
+
+<#if drv_sdspi.DRV_SDSPI_COMMON_MODE == "Asynchronous" >
+    /* SDSPI Transfer Objects Pool */
+    .bufferObjPool          = (uintptr_t)&drvSDSPI${INDEX?string}TransferObjPool[0],
+
+    /* SDSPI Transfer Objects Queue Size */
+    .bufferObjPoolSize      = DRV_SDSPI_QUEUE_SIZE_IDX${INDEX?string},
+</#if>
 
     .chipSelectPin          = DRV_SDSPI_CHIP_SELECT_PIN_IDX${INDEX?string},
 

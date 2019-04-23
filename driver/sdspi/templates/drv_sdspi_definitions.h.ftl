@@ -143,7 +143,7 @@ typedef struct
 
 } DRV_SDSPI_TRANSFER_SETUP;
 
-typedef void (* DRV_SDSPI_PLIB_CALLBACK)( uintptr_t );
+typedef    void (* DRV_SDSPI_PLIB_CALLBACK)( uintptr_t );
 
 typedef    bool (* DRV_SDSPI_PLIB_WRITEREAD)(void*, size_t, void *, size_t);
 
@@ -249,6 +249,14 @@ typedef struct
     uint32_t                        sdcardSpeedHz;
 
     uint32_t                        pollingIntervalMs;
+
+<#if DRV_SDSPI_COMMON_MODE == "Asynchronous" >
+    /* Size of buffer objects queue */
+    uint32_t                        bufferObjPoolSize;
+
+    /* Pointer to the buffer pool */
+    uintptr_t                       bufferObjPool;
+</#if>
 
 } DRV_SDSPI_INIT;
 

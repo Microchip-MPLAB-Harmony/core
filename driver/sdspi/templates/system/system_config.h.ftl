@@ -1,6 +1,9 @@
 /* SDSPI Driver Instance ${INDEX?string} Configuration Options */
 #define DRV_SDSPI_INDEX_${INDEX?string}                       ${INDEX?string}
 #define DRV_SDSPI_CLIENTS_NUMBER_IDX${INDEX?string}           ${DRV_SDSPI_NUM_CLIENTS?string}
+<#if drv_sdspi.DRV_SDSPI_COMMON_MODE == "Asynchronous" >
+#define DRV_SDSPI_QUEUE_SIZE_IDX${INDEX?string}               ${DRV_SDSPI_QUEUE_SIZE?string}
+</#if>
 #define DRV_SDSPI_CHIP_SELECT_PIN_IDX${INDEX?string}          ${DRV_SDSPI_CHIP_SELECT_PIN?string}
 #define DRV_SDSPI_SPEED_HZ_IDX${INDEX?string}                 ${DRV_SDSPI_SPEED_HZ?string}
 #define DRV_SDSPI_POLLING_INTERVAL_MS_IDX${INDEX?string}      ${DRV_SDSPI_POLLING_INTERVAL?string}
