@@ -16,26 +16,26 @@
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-Copyright (c) 2018 released Microchip Technology Inc.  All rights reserved.
-
-Microchip licenses to you the right to use, modify, copy and distribute
-Software only when embedded on a Microchip microcontroller or digital signal
-controller that is integrated into your product or third party product
-(pursuant to the sublicense terms in the accompanying license agreement).
-
-You should refer to the license agreement accompanying this Software for
-additional information regarding your rights and obligations.
-
-SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
-MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
-IN NO EVENT SHALL MICROCHIP OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER
-CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR
-OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
-INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
-CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
-SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
-(INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
+* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 // DOM-IGNORE-END
 
@@ -73,6 +73,11 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 /* TTB Section Descriptor: Section Base Address */
 #define TTB_SECT_ADDR(x)           ((x) & 0xFFF00000)
+/* L1 data cache line size, Number of ways and Number of sets */
+#define L1_DATA_CACHE_BYTES        32U
+#define L1_DATA_CACHE_WAYS         4U
+#define L1_DATA_CACHE_SETS         256U
+#define L1_DATA_CACHE_SETWAY(set, way) (((set) << 5) | ((way) << 30))
 
 __ALIGNED(16384) static uint32_t tlb[4096];
 
@@ -114,6 +119,130 @@ static void mmu_enable(void)
         __set_SCTLR(control | SCTLR_M_Msk);
 }
 
+void icache_InvalidateAll(void)
+{
+    __set_ICIALLU(0);
+    __ISB();
+}
+
+void icache_Enable(void)
+{
+    uint32_t sctlr = __get_SCTLR();
+    if ((sctlr & SCTLR_I_Msk) == 0)
+    {
+        icache_InvalidateAll();
+        __set_SCTLR(sctlr | SCTLR_I_Msk);
+    }
+}
+
+void icache_Disable(void)
+{
+    uint32_t sctlr = __get_SCTLR();
+    if (sctlr & SCTLR_I_Msk)
+    {
+        __set_SCTLR(sctlr & ~SCTLR_I_Msk);
+        icache_InvalidateAll();
+    }
+}
+
+void dcache_InvalidateAll(void)
+{
+    uint32_t set, way;
+
+    for (way = 0; way < L1_DATA_CACHE_WAYS; way++)
+    {
+        for (set = 0; set < L1_DATA_CACHE_SETS; set++)
+        {
+            __set_DCISW(L1_DATA_CACHE_SETWAY(set, way));
+        }
+    }
+    __DSB();
+}
+
+void dcache_CleanAll(void)
+{
+    uint32_t set, way;
+
+    for (way = 0; way < L1_DATA_CACHE_WAYS; way++)
+    {
+        for (set = 0; set < L1_DATA_CACHE_SETS; set++)
+        {
+            __set_DCCSW(L1_DATA_CACHE_SETWAY(set, way));
+        }
+    }
+    __DSB();
+}
+
+void dcache_CleanInvalidateAll(void)
+{
+    uint32_t set, way;
+
+    for (way = 0; way < L1_DATA_CACHE_WAYS; way++)
+    {
+        for (set = 0; set < L1_DATA_CACHE_SETS; set++)
+        {
+            __set_DCCISW(L1_DATA_CACHE_SETWAY(set, way));
+        }
+    }
+    __DSB();
+}
+
+void dcache_InvalidateByAddr (uint32_t *addr, uint32_t size)
+{
+    uint32_t mva = (uint32_t)addr & ~(L1_DATA_CACHE_BYTES - 1);
+
+    for ( ; mva < ((uint32_t)addr + size); mva += L1_DATA_CACHE_BYTES)
+    {
+        __set_DCIMVAC(mva);
+        __DMB();
+    }
+    __DSB();
+}
+
+void dcache_CleanByAddr (uint32_t *addr, uint32_t size)
+{
+    uint32_t mva = (uint32_t)addr & ~(L1_DATA_CACHE_BYTES - 1);
+
+    for ( ; mva < ((uint32_t)addr + size); mva += L1_DATA_CACHE_BYTES)
+    {
+        __set_DCCMVAC(mva);
+        __DMB();
+    }
+    __DSB();
+}
+
+void dcache_CleanInvalidateByAddr (uint32_t *addr, uint32_t size)
+{
+    uint32_t mva = (uint32_t)addr & ~(L1_DATA_CACHE_BYTES - 1);
+
+    for ( ; mva < ((uint32_t)addr + size); mva += L1_DATA_CACHE_BYTES)
+    {
+        __set_DCCIMVAC((uint32_t)mva);
+        __DMB();
+    }
+    __DSB();
+}
+
+void dcache_Enable(void)
+{
+    uint32_t sctlr = __get_SCTLR();
+    if ((sctlr & SCTLR_C_Msk) == 0)
+    {
+        dcache_InvalidateAll();
+        __set_SCTLR(sctlr | SCTLR_C_Msk);
+    }
+}
+
+void dcache_Disable(void)
+{
+    uint32_t sctlr = __get_SCTLR();
+    if (sctlr & SCTLR_C_Msk)
+    {
+        dcache_CleanAll();
+        __set_SCTLR(sctlr & ~SCTLR_C_Msk);
+        dcache_InvalidateAll();
+    }
+}
 
 
 static inline uint32_t cp15_read_sctlr(void)
@@ -376,7 +505,9 @@ void MMU_Initialize(void)
 
     /* Enable MMU, I-Cache and D-Cache */
     mmu_configure(tlb);
+    icache_Enable();
     mmu_enable();
+    dcache_Enable();
 
     // disable the processor alignment fault testing
     uint32_t sctlrValue = cp15_read_sctlr();

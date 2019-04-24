@@ -2464,6 +2464,9 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\sdmmc\drv_sdmmc_definitions.h</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\sdmmc\src\drv_sdmmc_local.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\event_groups.h</name>
             </file>
             <file>
@@ -2552,6 +2555,9 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\clk\plib_clk.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\l2cc\plib_l2cc.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\matrix\plib_matrix.h</name>
@@ -2659,6 +2665,9 @@
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\stream_buffer.h</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\cache\sys_cache.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\sys_fs.h</name>
             </file>
             <file>
@@ -2761,9 +2770,6 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\sdmmc\src\drv_sdmmc_file_system.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\sdmmc\src\drv_sdmmc_local.h</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\event_groups.c</name>
             </file>
             <file>
@@ -2812,6 +2818,9 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\clk\plib_clk.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\l2cc\plib_l2cc.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\matrix\plib_matrix.c</name>
             </file>
             <file>
@@ -2840,6 +2849,9 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\stream_buffer.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\cache\sys_cache.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\src\sys_fs.c</name>
