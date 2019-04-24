@@ -185,7 +185,7 @@ void APP_Tasks ( void )
                 printf("Single shot timer of %d ms expired \r\n", SINGLE_SHOT_TIMER_MS);
                 appData.tmr3Expired = false;
             }
-            if(SWITCH1_Get() == SWITCH1_STATE_PRESSED)
+            if(SWITCH_GET() == SWITCH_STATUS_PRESSED)
             {
                 /* Wait on delay */
                 appData.prevCounterVal = SYS_TIME_Counter64Get();

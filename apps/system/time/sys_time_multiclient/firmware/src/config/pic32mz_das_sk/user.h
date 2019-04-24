@@ -57,8 +57,8 @@ extern "C" {
 // Section: User Configuration macros
 // *****************************************************************************
 // *****************************************************************************
-#define SWITCH_Get()                    SWITCH1_Get()
-#define SWITCH_STATE_PRESSED            SWITCH1_STATE_PRESSED
+#define SWITCH_GET()            		SWITCH1_Get()
+#define SWITCH_STATUS_PRESSED   		SWITCH1_STATE_PRESSED
 #define LED_TOGGLE()                    LED1_Toggle()
     
 //DOM-IGNORE-BEGIN

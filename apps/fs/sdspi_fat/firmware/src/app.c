@@ -137,7 +137,7 @@ void APP_Tasks ( void )
     switch ( appData.state )
     {
         case APP_WAIT_SWITCH_PRESS:
-            if (SWITCH_GET() == SWITCH_STATE_PRESSED)
+            if (SWITCH_GET() == SWITCH_STATUS_PRESSED)
             {
                 appData.state = APP_MOUNT_DISK;
             }

@@ -55,10 +55,9 @@ extern "C" {
 // Section: User Configuration macros
 // *****************************************************************************
 // *****************************************************************************
-#include "bsp/bsp.h"
-#define SWITCH_Get PB_USER_Get
-#define SWITCH_STATE_PRESSED PB_USER_STATE_PRESSED
-#define LED_TOGGLE LED_BLUE_Toggle
+#define SWITCH_GET()              PB_USER_Get()
+#define SWITCH_STATUS_PRESSED     PB_USER_STATE_PRESSED
+#define LED_TOGGLE                LED_BLUE_Toggle
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
