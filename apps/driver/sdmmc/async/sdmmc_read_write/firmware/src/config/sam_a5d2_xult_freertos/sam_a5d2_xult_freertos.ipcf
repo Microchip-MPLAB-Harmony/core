@@ -32,6 +32,7 @@
         <group name="Header Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_a5d2_xult_freertos">
             <path>\bsp\bsp.h</path>
             <path>\driver\sdmmc\drv_sdmmc.h</path>
+            <path>\driver\sdmmc\src\drv_sdmmc_local.h</path>
             <path>\driver\sdmmc\drv_sdmmc_definitions.h</path>
             <path>\peripheral\pit\plib_pit.h</path>
             <path>\device_cache.h</path>
@@ -39,6 +40,7 @@
             <path>\definitions.h</path>
             <path>\peripheral\mmu\plib_mmu.h</path>
             <path>\peripheral\matrix\plib_matrix.h</path>
+            <path>\peripheral\l2cc\plib_l2cc.h</path>
             <path>\peripheral\clk\plib_clk.h</path>
             <path>\peripheral\pio\plib_pio.h</path>
             <path>\peripheral\aic\plib_aic.h</path>
@@ -133,6 +135,7 @@
             <path>\system\system_media.h</path>
             <path>\system\int\sys_int.h</path>
             <path>\system\int\sys_int_mapping.h</path>
+            <path>\system\cache\sys_cache.h</path>
             <path>\osal\osal.h</path>
             <path>\osal\osal_definitions.h</path>
             <path>\osal\osal_freertos.h</path>
@@ -145,8 +148,6 @@
         </group>
         <group name="Source Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_a5d2_xult_freertos">
             <path>\bsp\bsp.c</path>
-            <path>\driver\sdmmc\src\drv_sdmmc.c</path>
-            <path>\driver\sdmmc\src\drv_sdmmc_local.h</path>
             <path>\peripheral\pit\plib_pit.c</path>
             <path>\..\..\main.c</path>
             <path>\initialization.c</path>
@@ -155,6 +156,7 @@
             <path>\stdio\iar_monitor.c</path>
             <path>\peripheral\mmu\plib_mmu.c</path>
             <path>\peripheral\matrix\plib_matrix.c</path>
+            <path>\peripheral\l2cc\plib_l2cc.c</path>
             <path>\peripheral\clk\plib_clk.c</path>
             <path>\peripheral\pio\plib_pio.c</path>
             <path>\peripheral\aic\plib_aic.c</path>
@@ -162,6 +164,7 @@
             <path>\vectortrap.s</path>
             <path>\peripheral\sdmmc\plib_sdmmc1.c</path>
             <path>\peripheral\tc\plib_tc0.c</path>
+            <path>\driver\sdmmc\src\drv_sdmmc.c</path>
             <path>\freertos_hooks.c</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\croutine.c</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\list.c</path>
@@ -175,6 +178,7 @@
             <path>\..\..\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portASM.s</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\FreeRTOS_tick_config.c</path>
             <path>\system\int\src\sys_int.c</path>
+            <path>\system\cache\sys_cache.c</path>
             <path>\osal\osal_freertos.c</path>
             <path>\..\..\app.c</path>
             <path>\tasks.c</path>
