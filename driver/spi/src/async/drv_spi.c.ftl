@@ -820,6 +820,9 @@ void _DRV_SPI_RX_DMA_CallbackHandler(
     }
     else
     {
+        /* Make sure the shift register is empty before de-asserting the CS line */
+        while (dObj->spiPlib->isBusy());
+
         /* Transfer complete. De-assert Chip Select if it is defined by user. */
         if(clientObj->setup.chipSelect != SYS_PORT_PIN_NONE)
         {
@@ -942,6 +945,9 @@ void _DRV_SPI_RX_DMA_CallbackHandler(
     }
     else
     {
+        /* Make sure the shift register is empty before de-asserting the CS line */
+        while (dObj->spiPlib->isBusy());
+
         /* De-assert Chip Select if it is defined by user */
         if(clientObj->setup.chipSelect != SYS_PORT_PIN_NONE)
         {
