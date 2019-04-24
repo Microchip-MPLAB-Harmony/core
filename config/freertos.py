@@ -186,6 +186,12 @@ def freeRtosIntConfig():
         if (Database.getSymbolValue("core", Timer1InterruptEnable) == False):
             Database.clearSymbolValue("core", Timer1InterruptEnable)
             Database.setSymbolValue("core", Timer1InterruptEnable, True)
+
+        #Enable TMR1 Peripheral Clock for FreeRTOS Tick Interrupt Generation
+        if (Database.getSymbolValue("core", "TMR1_CLOCK_ENABLE") == False):
+            Database.clearSymbolValue("core", "TMR1_CLOCK_ENABLE")
+            Database.setSymbolValue("core", "TMR1_CLOCK_ENABLE", True)
+
     else:
         SysTickInterruptEnable      = "SysTick_INTERRUPT_ENABLE"
         SysTickInterruptHandler     = "SysTick_INTERRUPT_HANDLER"
