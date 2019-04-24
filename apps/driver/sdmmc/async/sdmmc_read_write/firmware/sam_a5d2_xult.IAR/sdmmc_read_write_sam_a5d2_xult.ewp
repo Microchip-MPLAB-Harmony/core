@@ -66,7 +66,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.1.18618</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -116,7 +116,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>26</version>
+                    <version>27</version>
                     <state>50</state>
                 </option>
                 <option>
@@ -133,7 +133,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>26</version>
+                    <version>27</version>
                     <state>50</state>
                 </option>
                 <option>
@@ -156,7 +156,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>26</version>
+                    <version>27</version>
                     <state>50</state>
                 </option>
                 <option>
@@ -1161,7 +1161,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>26</version>
+                    <version>27</version>
                     <state>38</state>
                 </option>
                 <option>
@@ -1178,7 +1178,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>26</version>
+                    <version>27</version>
                     <state>38</state>
                 </option>
                 <option>
@@ -1201,7 +1201,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>26</version>
+                    <version>27</version>
                     <state>38</state>
                 </option>
                 <option>
@@ -2177,6 +2177,9 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\sdmmc\drv_sdmmc_definitions.h</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\sdmmc\src\drv_sdmmc_local.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\flexcom.h</name>
             </file>
             <file>
@@ -2232,6 +2235,9 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\clk\plib_clk.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\l2cc\plib_l2cc.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\matrix\plib_matrix.h</name>
@@ -2312,6 +2318,9 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\ssc.h</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\cache\sys_cache.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\int\sys_int.h</name>
             </file>
             <file>
@@ -2387,9 +2396,6 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\sdmmc\src\drv_sdmmc.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\sdmmc\src\drv_sdmmc_local.h</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\exceptions.c</name>
             </file>
             <file>
@@ -2411,6 +2417,9 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\clk\plib_clk.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\l2cc\plib_l2cc.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\matrix\plib_matrix.c</name>
             </file>
             <file>
@@ -2424,6 +2433,9 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\tc\plib_tc0.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\cache\sys_cache.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\int\src\sys_int.c</name>
