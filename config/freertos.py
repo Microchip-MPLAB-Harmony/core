@@ -382,7 +382,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_TimeSlicing = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_USE_TIME_SLICING", freeRtosSymMenu)
     freeRtosSym_TimeSlicing.setLabel("Use Time Slicing")
     freeRtosSym_TimeSlicing.setDescription("FreeRTOS - Use Time Slicing")
-    freeRtosSym_TimeSlicing.setDefaultValue(False)
+    freeRtosSym_TimeSlicing.setDefaultValue(True)
 
     freeRtosSym_NewlibReEntrant = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_USE_NEWLIB_REENTRANT", freeRtosSymMenu)
     freeRtosSym_NewlibReEntrant.setLabel("Use newlib reentrant structure")
