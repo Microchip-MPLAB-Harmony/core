@@ -180,7 +180,7 @@ MMU_Initialize();
 
 
 
-    APP_SAM_9X60_EK_Initialize();
+    APP_Initialize();
 
 
 

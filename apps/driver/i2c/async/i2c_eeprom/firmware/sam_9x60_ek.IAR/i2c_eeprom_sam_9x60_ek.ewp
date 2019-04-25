@@ -2105,7 +2105,7 @@
                 <name>$PROJ_DIR$\..\src\packs\SAM9X60_DFP\component\aic.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\app_sam_9x60_ek.h</name>
+                <name>$PROJ_DIR$\..\src\app.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\SAM9X60_DFP\component\bsc.h</name>
@@ -2324,7 +2324,7 @@
         <group>
             <name>Source Files</name>
             <file>
-                <name>$PROJ_DIR$\..\src\app_sam_9x60_ek.c</name>
+                <name>$PROJ_DIR$\..\src\app.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_9x60_ek\bsp\bsp.c</name>

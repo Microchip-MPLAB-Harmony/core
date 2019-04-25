@@ -27,6 +27,14 @@
     <files relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_9x60_ek">
         <group name="Header Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_9x60_ek">
             <path>\bsp\bsp.h</path>
+            <path>\device_cache.h</path>
+            <path>\toolchain_specifics.h</path>
+            <path>\definitions.h</path>
+            <path>\peripheral\mmu\plib_mmu.h</path>
+            <path>\peripheral\mmu\cp15.h</path>
+            <path>\peripheral\clk\plib_clk.h</path>
+            <path>\peripheral\pio\plib_pio.h</path>
+            <path>\peripheral\aic\plib_aic.h</path>
             <path>\..\..\packs\SAM9X60_DFP\device.h</path>
             <path>\..\..\packs\SAM9X60_DFP\component\adc.h</path>
             <path>\..\..\packs\SAM9X60_DFP\component\aes.h</path>
@@ -75,16 +83,10 @@
             <path>\..\..\packs\SAM9X60_DFP\component\xdmac.h</path>
             <path>\..\..\packs\SAM9X60_DFP\sam9x60.h</path>
             <path>\..\..\packs\SAM9X60_DFP\pio\sam9x60.h</path>
-            <path>\device_cache.h</path>
-            <path>\toolchain_specifics.h</path>
-            <path>\definitions.h</path>
-            <path>\peripheral\mmu\plib_mmu.h</path>
-            <path>\peripheral\mmu\cp15.h</path>
-            <path>\peripheral\clk\plib_clk.h</path>
-            <path>\peripheral\pio\plib_pio.h</path>
-            <path>\peripheral\aic\plib_aic.h</path>
             <path>\peripheral\flexcom\twi\plib_flexcom0_twi.h</path>
             <path>\peripheral\flexcom\twi\plib_flexcom_twi_master.h</path>
+            <path>\driver\i2c\drv_i2c.h</path>
+            <path>\driver\i2c\drv_i2c_definitions.h</path>
             <path>\driver\driver.h</path>
             <path>\driver\driver_common.h</path>
             <path>\system\system.h</path>
@@ -96,11 +98,9 @@
             <path>\osal\osal.h</path>
             <path>\osal\osal_definitions.h</path>
             <path>\osal\osal_impl_basic.h</path>
-            <path>\..\..\app_sam_9x60_ek.h</path>
+            <path>\..\..\app.h</path>
             <path>\user.h</path>
             <path>\configuration.h</path>
-            <path>\driver\i2c\drv_i2c.h</path>
-            <path>\driver\i2c\drv_i2c_definitions.h</path>
         </group>
         <group name="Source Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_9x60_ek">
             <path>\bsp\bsp.c</path>
@@ -116,12 +116,12 @@
             <path>\cstartup.s</path>
             <path>\vectortrap.s</path>
             <path>\peripheral\flexcom\twi\plib_flexcom0_twi.c</path>
-            <path>\system\int\src\sys_int.c</path>
-            <path>\system\cache\sys_cache.c</path>
-            <path>\..\..\app_sam_9x60_ek.c</path>
-            <path>\tasks.c</path>
             <path>\driver\i2c\src\drv_i2c.c</path>
             <path>\driver\i2c\src\drv_i2c_local.h</path>
+            <path>\system\int\src\sys_int.c</path>
+            <path>\system\cache\sys_cache.c</path>
+            <path>\..\..\app.c</path>
+            <path>\tasks.c</path>
         </group>
     </files>
 </iarProjectConnection>

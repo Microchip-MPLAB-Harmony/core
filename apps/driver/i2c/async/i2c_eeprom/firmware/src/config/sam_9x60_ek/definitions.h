@@ -54,11 +54,11 @@
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/aic/plib_aic.h"
 #include "peripheral/flexcom/twi/plib_flexcom0_twi.h"
+#include "driver/i2c/drv_i2c.h"
 #include "system/int/sys_int.h"
 #include "system/cache/sys_cache.h"
 #include "osal/osal.h"
-#include "driver/i2c/drv_i2c.h"
-#include "app_sam_9x60_ek.h"
+#include "app.h"
 
 
 
