@@ -24,7 +24,7 @@
 
 def loadModule():
 
-    i2c_bbComponent = Module.CreateComponent("i2c_bb", "I2C_BB", "/Libraries/i2c_bb/", "/Libraries/i2c_bb/config/i2c_bb.py")
+    i2c_bbComponent = Module.CreateComponent("i2c_bb", "I2C_BB", "/Libraries/i2c_bb/", "/libraries/i2c_bb/config/i2c_bb.py")
     i2c_bbComponent.setDisplayType("I2C BIT BANG")
     i2c_bbComponent.addCapability("I2C", "I2C", False)
     i2c_bbComponent.addDependency("TMR", "TMR", False, True)
