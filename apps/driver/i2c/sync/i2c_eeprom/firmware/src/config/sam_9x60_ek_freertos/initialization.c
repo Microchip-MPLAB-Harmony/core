@@ -161,7 +161,7 @@ MMU_Initialize();
 
 
 
-    APP_I2C_EEPROM_SAM_9X60_EK_Initialize();
+    APP_I2C_EEPROM_Initialize();
 
 
 

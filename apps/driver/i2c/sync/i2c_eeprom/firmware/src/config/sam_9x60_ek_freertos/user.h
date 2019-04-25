@@ -34,9 +34,13 @@ extern "C" {
 // Section: User Configuration macros
 // *****************************************************************************
 // *****************************************************************************
-#define LED_Off()    LED_GREEN_Off()
-#define LED_On()     LED_GREEN_On()
-  
+#define LED_OFF()    LED_GREEN_Off()
+#define LED_ON()     LED_GREEN_On()
+
+//Defines the EEPROM 3 Click I2C Address.    
+#define APP_EEPROM_SLAVE_ADDR               0x0054
+#define APP_EEPROM_ADDR_LEN_BITS            18  
+
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
