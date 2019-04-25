@@ -18,13 +18,13 @@
                     <analyzeTimeoutEnabled>1</analyzeTimeoutEnabled>
                     <analyzeTimeout>600</analyzeTimeout>
                     <enableParallel>1</enableParallel>
-                    <parallelThreads>4</parallelThreads>
+                    <parallelThreads>2</parallelThreads>
                     <enableFalsePositives>0</enableFalsePositives>
                     <messagesLimitEnabled>1</messagesLimitEnabled>
                     <messagesLimit>100</messagesLimit>
                 </cstatargs>
                 <cstat_settings>
-                    <cstat_version>1.5.3</cstat_version>
+                    <cstat_version>1.5.5</cstat_version>
                     <checks_tree>
                         <package name="STDCHECKS" enabled="true">
                             <group enabled="true" name="ARR">
@@ -1202,13 +1202,13 @@
                     <analyzeTimeoutEnabled>1</analyzeTimeoutEnabled>
                     <analyzeTimeout>600</analyzeTimeout>
                     <enableParallel>1</enableParallel>
-                    <parallelThreads>4</parallelThreads>
+                    <parallelThreads>2</parallelThreads>
                     <enableFalsePositives>0</enableFalsePositives>
                     <messagesLimitEnabled>1</messagesLimitEnabled>
                     <messagesLimit>100</messagesLimit>
                 </cstatargs>
                 <cstat_settings>
-                    <cstat_version>1.5.3</cstat_version>
+                    <cstat_version>1.5.5</cstat_version>
                     <checks_tree>
                         <package name="STDCHECKS" enabled="true">
                             <group enabled="true" name="ARR">
@@ -2389,7 +2389,7 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\aic.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\app_i2c_eeprom_sam_a5d2_xult.h</name>
+                <name>$PROJ_DIR$\..\src\app_i2c_eeprom.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\DSP\Include\arm_common_tables.h</name>
@@ -2407,7 +2407,7 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\aximx.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\bsp\bsp.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\bsp\bsp.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\chipid.h</name>
@@ -2428,7 +2428,7 @@
                 <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core_A\Include\cmsis_iccarm.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\configuration.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\configuration.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core_A\Include\core_ca.h</name>
@@ -2437,7 +2437,7 @@
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\croutine.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\definitions.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\definitions.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\deprecated_definitions.h</name>
@@ -2446,19 +2446,19 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\device.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\device_cache.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\device_cache.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\driver.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\driver.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\driver_common.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\driver_common.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\i2c\drv_i2c.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\i2c\drv_i2c.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\i2c\drv_i2c_definitions.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\i2c\drv_i2c_definitions.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\event_groups.h</name>
@@ -2470,7 +2470,7 @@
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\FreeRTOS.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\FreeRTOSConfig.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\FreeRTOSConfig.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\gmac.h</name>
@@ -2512,13 +2512,13 @@
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\mpu_wrappers.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\osal\osal.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\osal\osal.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\osal\osal_definitions.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\osal\osal_definitions.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\osal\osal_freertos.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\osal\osal_freertos.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\pdmic.h</name>
@@ -2533,28 +2533,28 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\pit.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\aic\plib_aic.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\aic\plib_aic.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\clk\plib_clk.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\clk\plib_clk.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\matrix\plib_matrix.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\matrix\plib_matrix.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\mmu\plib_mmu.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\mmu\plib_mmu.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\pio\plib_pio.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\pio\plib_pio.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\pit\plib_pit.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\pit\plib_pit.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\twihs\plib_twihs1.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\twihs\plib_twihs1.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\twihs\plib_twihs_master.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\twihs\plib_twihs_master.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\pmc.h</name>
@@ -2638,22 +2638,22 @@
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\stream_buffer.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\cache\sys_cache.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\cache\sys_cache.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\int\sys_int.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\int\sys_int.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\int\sys_int_mapping.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\int\sys_int_mapping.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\system.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\system.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\system_common.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\system_common.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\system_module.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\system_module.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\task.h</name>
@@ -2668,7 +2668,7 @@
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\timers.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\toolchain_specifics.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\toolchain_specifics.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\trng.h</name>
@@ -2686,7 +2686,7 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\uhphs.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\user.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\user.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\wdt.h</name>
@@ -2698,31 +2698,31 @@
         <group>
             <name>Source Files</name>
             <file>
-                <name>$PROJ_DIR$\..\src\app_i2c_eeprom_sam_a5d2_xult.c</name>
+                <name>$PROJ_DIR$\..\src\app_i2c_eeprom.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\bsp\bsp.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\bsp\bsp.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\croutine.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\cstartup.s</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\cstartup.s</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\i2c\src\drv_i2c.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\i2c\src\drv_i2c.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\i2c\src\drv_i2c_local.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\i2c\src\drv_i2c_local.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\event_groups.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\exceptions.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\exceptions.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\freertos_hooks.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\freertos_hooks.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\FreeRTOS_tasks.c</name>
@@ -2734,13 +2734,13 @@
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\MemMang\heap_1.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\stdio\iar_monitor.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\stdio\iar_monitor.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\initialization.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\initialization.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\interrupts.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\interrupts.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\list.c</name>
@@ -2749,28 +2749,28 @@
                 <name>$PROJ_DIR$\..\src\main.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\osal\osal_freertos.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\osal\osal_freertos.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\aic\plib_aic.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\aic\plib_aic.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\clk\plib_clk.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\clk\plib_clk.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\matrix\plib_matrix.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\matrix\plib_matrix.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\mmu\plib_mmu.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\mmu\plib_mmu.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\pio\plib_pio.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\pio\plib_pio.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\pit\plib_pit.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\pit\plib_pit.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\twihs\plib_twihs1.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\twihs\plib_twihs1.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\port.c</name>
@@ -2785,23 +2785,23 @@
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\stream_buffer.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\cache\sys_cache.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\cache\sys_cache.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\int\src\sys_int.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\int\src\sys_int.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\tasks.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\tasks.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\timers.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\vectortrap.s</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\vectortrap.s</name>
             </file>
         </group>
     </group>
     <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\sam_a5d2_xult.ipcf</name>
+        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\sam_a5d2_xult_freertos.ipcf</name>
     </file>
 </project>
