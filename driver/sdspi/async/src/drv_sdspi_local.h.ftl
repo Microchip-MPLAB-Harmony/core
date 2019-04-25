@@ -1454,7 +1454,7 @@ typedef struct
     /* This variable holds the current state of the DRV_SDSPI_Task */
     DRV_SDSPI_TASK_STATES                           taskState;
 
-    DRV_SDSPI_TASK_STATES                           nextTaskState;
+    DRV_SDSPI_BUFFER_IO_TASK_STATES                 nextTaskState;
 
     /* This variable holds the current state of the DRV_SDSPI_Task */
     DRV_SDSPI_BUFFER_IO_TASK_STATES                 taskBufferIOState;

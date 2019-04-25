@@ -820,7 +820,7 @@ static void _DRV_SDSPI_CommandSend
     }
 }
 
-static bool _DRV_SDSPI_MediaCommandDetect
+static DRV_SDSPI_ATTACH _DRV_SDSPI_MediaCommandDetect
 (
     SYS_MODULE_OBJ object
 )
@@ -879,7 +879,7 @@ static bool _DRV_SDSPI_MediaCommandDetect
             }
             else if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR)
             {
-                dObj->cmdState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
                 dObj->sdState = TASK_STATE_IDLE;
             }
             break;
@@ -900,7 +900,7 @@ static bool _DRV_SDSPI_MediaCommandDetect
                 else
                 {
                     dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_IDLE_STATE;
-                    return true;
+                    return DRV_SDSPI_IS_ATTACHED;
                 }
             }
             else if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_ERROR)
@@ -914,7 +914,7 @@ static bool _DRV_SDSPI_MediaCommandDetect
 
             if (dObj->sdState == TASK_STATE_CARD_COMMAND)
             {
-                return true;
+                return DRV_SDSPI_IS_ATTACHED;
             }
 
             dObj->sdState = TASK_STATE_CARD_STATUS;
@@ -928,7 +928,7 @@ static bool _DRV_SDSPI_MediaCommandDetect
                 if ((dObj->cmdResponse.response2.word & 0xEC0C) != 0x0000)
                 {
                     dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
-                    return false;
+                    return DRV_SDSPI_IS_DETACHED;
                 }
                 else
                 {
@@ -939,9 +939,9 @@ static bool _DRV_SDSPI_MediaCommandDetect
             {
                 dObj->sdState = TASK_STATE_IDLE;
                 dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
-                return false;
+                return DRV_SDSPI_IS_DETACHED;
             }
-            return true;
+            return DRV_SDSPI_IS_ATTACHED;
 
         case DRV_SDSPI_CMD_DETECT_IDLE_STATE:
 
@@ -950,7 +950,7 @@ static bool _DRV_SDSPI_MediaCommandDetect
             break;
     }
 
-    return false;
+    return DRV_SDSPI_IS_DETACHED;
 }
 
 static void _DRV_SDSPI_MediaInitialize ( SYS_MODULE_OBJ object )
@@ -1377,7 +1377,7 @@ static void _DRV_SDSPI_AttachDetachTasks
         case DRV_SDSPI_TASK_CHECK_DEVICE:
             /* Check for device attach */
 
-            dObj->isAttached = _DRV_SDSPI_MediaCommandDetect (object);
+            dObj->isAttached = (DRV_SDSPI_ATTACH)_DRV_SDSPI_MediaCommandDetect (object);
             if (dObj->isAttachedLastStatus != dObj->isAttached)
             {
                 dObj->isAttachedLastStatus = dObj->isAttached;
@@ -1531,7 +1531,7 @@ static void _DRV_SDSPI_BufferIOTasks
                getting the response. This meets the NAC Min timing parameter, so
                we don't need additional clocking here.
              */
-            _DRV_SDSPI_CommandSend (object, currentBufObj->command, currentBufObj->blockStart);
+            _DRV_SDSPI_CommandSend (object, (DRV_SDSPI_COMMANDS)currentBufObj->command, currentBufObj->blockStart);
             if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_IS_COMPLETE)
             {
                 if (dObj->cmdResponse.response1.byte == 0x00)
@@ -1699,7 +1699,7 @@ static void _DRV_SDSPI_BufferIOTasks
 
             /* Send the write single or write multi command, with the LBA or byte
                address (depending upon SDHC or standard capacity card) */
-            _DRV_SDSPI_CommandSend (object, currentBufObj->command, currentBufObj->blockStart);
+            _DRV_SDSPI_CommandSend (object, (DRV_SDSPI_COMMANDS)currentBufObj->command, currentBufObj->blockStart);
             if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_IS_COMPLETE)
             {
                 if (dObj->cmdResponse.response1.byte == 0x00)
@@ -1980,7 +1980,7 @@ static void _DRV_SDSPI_BufferIOTasks
             if(clientObj->eventHandler != NULL)
             {
                 /* Call the event handler */
-                clientObj->eventHandler(evtStatus,
+                clientObj->eventHandler((SYS_MEDIA_BLOCK_EVENT)evtStatus,
                         (DRV_SDSPI_COMMAND_HANDLE)currentBufObj->commandHandle, clientObj->context);
             }
 
