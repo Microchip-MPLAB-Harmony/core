@@ -27,25 +27,24 @@ global fsCounter
 fsCounter = 0
 
 def enableFileSystemIntegration(symbol, event):
-    if (event["value"] == True):
-        symbol.setEnabled(True)
-    else:
-        symbol.setEnabled(False)
+    symbol.setEnabled(event["value"])
 
-def setFileSystem(symbol, event):
+def handleMessage(messageID, args):
     global fsCounter
 
-    if (event["value"] == True):
+    result_dict = {}
+
+    if (messageID == "DRV_MEMORY_FS_CONNECTION_COUNTER_INC"):
         fsCounter = fsCounter + 1
-        symbol.clearValue()
-        symbol.setValue(True)
-    else:
+        Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_ENABLE", True)
+    if (messageID == "DRV_MEMORY_FS_CONNECTION_COUNTER_DEC"):
         if (fsCounter != 0):
             fsCounter = fsCounter - 1
 
     if (fsCounter == 0):
-        symbol.clearValue()
-        symbol.setValue(False)
+        Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_ENABLE", False)
+
+    return result_dict
 
 def setSysTimeEnable(symbol, event):
     if (event["value"] == "Synchronous"):
@@ -101,17 +100,9 @@ def instantiateComponent(memoryCommonComponent):
     if (memorySysTimeEnable.getValue() == True):
         res = Database.activateComponents(["sys_time"])
 
-    memoryCommonfsCounter = memoryCommonComponent.createBooleanSymbol("DRV_MEMORY_COMMON_FS_COUNTER", None)
-    memoryCommonfsCounter.setLabel("Number of Instances Using FS")
-    memoryCommonfsCounter.setDefaultValue(False)
-    memoryCommonfsCounter.setVisible(False)
-    memoryCommonfsCounter.setUseSingleDynamicValue(True)
-
     memoryCommonFsEnable = memoryCommonComponent.createBooleanSymbol("DRV_MEMORY_COMMON_FS_ENABLE", None)
     memoryCommonFsEnable.setLabel("Enable Common File system for Memory Driver")
-    memoryCommonFsEnable.setDefaultValue(False)
     memoryCommonFsEnable.setVisible(False)
-    memoryCommonFsEnable.setDependencies(setFileSystem, ["DRV_MEMORY_COMMON_FS_COUNTER"])
 
     ############################################################################
     #### Code Generation ####

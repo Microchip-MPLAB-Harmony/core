@@ -132,9 +132,7 @@ def instantiateComponent(memoryComponent, index):
     memorySymNumClients.setVisible(True)
 
     memoryFsEnable = memoryComponent.createBooleanSymbol("DRV_MEMORY_FS_ENABLE", None)
-    memoryFsEnable.setLabel("Enable File system for Memory Driver")
-    memoryFsEnable.setDefaultValue(False)
-    memoryFsEnable.setVisible(False)
+    memoryFsEnable.setLabel("File system Enabled for Memory Driver")
     memoryFsEnable.setReadOnly(True)
 
     memorySymBufPool = memoryComponent.createIntegerSymbol("DRV_MEMORY_BUFFER_QUEUE_SIZE", None)
@@ -338,7 +336,8 @@ def onAttachmentConnected(source, target):
     if (connectID == "drv_media"):
         if (remoteID == "sys_fs"):
             memoryFsEnable.setValue(True)
-            Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_COUNTER", True)
+            memoryFsConnectionCounterDict = {}
+            memoryFsConnectionCounterDict = Database.sendMessage("drv_memory", "DRV_MEMORY_FS_CONNECTION_COUNTER_INC", memoryFsConnectionCounterDict)
 
     # For Dependency Connected (memory)
     if (connectID == "drv_memory_MEMORY_dependency"):
@@ -385,7 +384,8 @@ def onAttachmentDisconnected(source, target):
     if (connectID == "drv_media"):
         if (remoteID == "sys_fs"):
             memoryFsEnable.setValue(False, 1)
-            Database.setSymbolValue("drv_memory", "DRV_MEMORY_COMMON_FS_COUNTER", False)
+            memoryFsConnectionCounterDict = {}
+            memoryFsConnectionCounterDict = Database.sendMessage("drv_memory", "DRV_MEMORY_FS_CONNECTION_COUNTER_DEC", memoryFsConnectionCounterDict)
 
     # For Dependency Disconnected (memory)
     if (connectID == "drv_memory_MEMORY_dependency"):
