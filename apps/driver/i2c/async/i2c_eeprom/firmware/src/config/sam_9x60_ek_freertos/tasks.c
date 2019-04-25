@@ -58,14 +58,14 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
-/* Handle for the APP_SAM_9X60_EK_Tasks. */
-TaskHandle_t xAPP_SAM_9X60_EK_Tasks;
+/* Handle for the APP_Tasks. */
+TaskHandle_t xAPP_Tasks;
 
-void _APP_SAM_9X60_EK_Tasks(  void *pvParameters  )
+void _APP_Tasks(  void *pvParameters  )
 {
     while(1)
     {
-        APP_SAM_9X60_EK_Tasks();
+        APP_Tasks();
         vTaskDelay(5 / portTICK_PERIOD_MS);
     }
 }
@@ -98,13 +98,13 @@ void SYS_Tasks ( void )
     
 
     /* Maintain the application's state machine. */
-        /* Create OS Thread for APP_SAM_9X60_EK_Tasks. */
-    xTaskCreate((TaskFunction_t) _APP_SAM_9X60_EK_Tasks,
-                "APP_SAM_9X60_EK_Tasks",
+        /* Create OS Thread for APP_Tasks. */
+    xTaskCreate((TaskFunction_t) _APP_Tasks,
+                "APP_Tasks",
                 1024,
                 NULL,
                 1,
-                &xAPP_SAM_9X60_EK_Tasks);
+                &xAPP_Tasks);
 
 
 

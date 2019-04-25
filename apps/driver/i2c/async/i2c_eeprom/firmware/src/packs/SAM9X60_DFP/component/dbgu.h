@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-04-11T18:28:35Z */
+/* file generated from device description version 2019-04-12T22:09:26Z */
 #ifndef _SAM9X_DBGU_COMPONENT_H_
 #define _SAM9X_DBGU_COMPONENT_H_
 
