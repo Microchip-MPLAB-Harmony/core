@@ -50,12 +50,19 @@ extern "C" {
 #endif
 // DOM-IGNORE-END
 
+#include "bsp/bsp.h"
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: User Configuration macros
 // *****************************************************************************
 // *****************************************************************************
+#define LED_ON() LED_GREEN_On()
+#define LED_OFF() LED_GREEN_Off()
 
+//Defines the EEPROM 3 Click I2C Address.
+#define APP_EEPROM_SLAVE_ADDR               0x0054
+#define APP_EEPROM_ADDR_LEN_BITS            18
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
