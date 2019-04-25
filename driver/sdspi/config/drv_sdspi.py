@@ -358,7 +358,8 @@ def onAttachmentConnected(source, target):
     if (connectID == "drv_media"):
         if (remoteID == "sys_fs"):
             sdspiFsEnable.setValue(True)
-            Database.setSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_FS_COUNTER", True)
+            sdspiFsConnectionCounterDict = {}
+            sdspiFsConnectionCounterDict = Database.sendMessage("drv_sdspi", "DRV_SDSPI_FS_CONNECTION_COUNTER_INC", sdspiFsConnectionCounterDict)
 
     # For Dependency Connected (SPI)
     if (connectID == "drv_sdspi_SPI_dependency"):
@@ -388,7 +389,8 @@ def onAttachmentDisconnected(source, target):
     if (connectID == "drv_media"):
         if (remoteID == "sys_fs"):
             sdspiFsEnable.setValue(False)
-            Database.setSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_FS_COUNTER", False)
+            sdspiFsConnectionCounterDict = {}
+            sdspiFsConnectionCounterDict = Database.sendMessage("drv_sdspi", "DRV_SDSPI_FS_CONNECTION_COUNTER_DEC", sdspiFsConnectionCounterDict)
 
     # For Dependency Disonnected (SPI)
     if (connectID == "drv_sdspi_SPI_dependency"):

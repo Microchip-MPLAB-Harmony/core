@@ -26,22 +26,25 @@ global fsCounter
 fsCounter = 0
 
 def enableFileSystemIntegration(symbol, event):
+    print(event["value"])
     symbol.setEnabled(event["value"])
 
-def setFileSystem(symbol, event):
+def handleMessage(messageID, args):
     global fsCounter
 
-    if event["value"] == True:
+    result_dict = {}
+
+    if (messageID == "DRV_SDSPI_FS_CONNECTION_COUNTER_INC"):
         fsCounter = fsCounter + 1
-        symbol.clearValue()
-        symbol.setValue(True)
-    else:
-        if fsCounter > 0:
+        Database.setSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_FS_ENABLE", True)
+    if (messageID == "DRV_SDSPI_FS_CONNECTION_COUNTER_DEC"):
+        if (fsCounter != 0):
             fsCounter = fsCounter - 1
 
-    if fsCounter == 0:
-        symbol.clearValue()
-        symbol.setValue(False)
+    if (fsCounter == 0):
+        Database.setSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_FS_ENABLE", False)
+
+    return result_dict
 
 def aSyncFileGen(symbol, event):
     if(event["value"] == "Asynchronous"):
@@ -83,17 +86,9 @@ def instantiateComponent(sdspiComponentCommon):
     sdspiCommonMode.setDefaultValue(sdspi_default_mode)
     sdspiCommonMode.setDependencies(setCommonMode, ["HarmonyCore.SELECT_RTOS"])
 
-    sdspiCommonfsCounter = sdspiComponentCommon.createBooleanSymbol("DRV_SDSPI_COMMON_FS_COUNTER", None)
-    sdspiCommonfsCounter.setLabel("Number of Instances Using FS")
-    sdspiCommonfsCounter.setDefaultValue(False)
-    sdspiCommonfsCounter.setVisible(False)
-    sdspiCommonfsCounter.setUseSingleDynamicValue(True)
-
     sdspiCommonFsEnable = sdspiComponentCommon.createBooleanSymbol("DRV_SDSPI_COMMON_FS_ENABLE", None)
     sdspiCommonFsEnable.setLabel("Enable Common File system for SD Card Driver")
-    sdspiCommonFsEnable.setDefaultValue(False)
     sdspiCommonFsEnable.setVisible(False)
-    sdspiCommonFsEnable.setDependencies(setFileSystem, ["DRV_SDSPI_COMMON_FS_COUNTER"])
 
     ############################################################################
     #### Code Generation ####
