@@ -29,20 +29,22 @@ fsCounter = 0
 def enableFileSystemIntegration(symbol, event):
     symbol.setEnabled(event["value"])
 
-def setFileSystem(symbol, event):
+def handleMessage(messageID, args):
     global fsCounter
 
-    if (event["value"] == True):
+    result_dict = {}
+
+    if (messageID == "DRV_SDMMC_FS_CONNECTION_COUNTER_INC"):
         fsCounter = fsCounter + 1
-        symbol.clearValue()
-        symbol.setValue(True)
-    else:
+        Database.setSymbolValue("drv_sdmmc", "DRV_SDMMC_COMMON_FS_ENABLE", True)
+    if (messageID == "DRV_SDMMC_FS_CONNECTION_COUNTER_DEC"):
         if (fsCounter != 0):
             fsCounter = fsCounter - 1
 
     if (fsCounter == 0):
-        symbol.clearValue()
-        symbol.setValue(False)
+        Database.setSymbolValue("drv_sdmmc", "DRV_SDMMC_COMMON_FS_ENABLE", False)
+
+    return result_dict
 
 def aSyncFileGen(symbol, event):
     if(event["value"] == "Asynchronous"):
@@ -77,19 +79,10 @@ def instantiateComponent(sdmmcCommonComponent):
     sdmmcCommonMode.setLabel("Driver Mode")
     sdmmcCommonMode.setDefaultValue(sdmmc_default_mode)
     sdmmcCommonMode.setReadOnly(True)
-#    sdmmcCommonMode.setDependencies(setCommonMode, ["HarmonyCore.SELECT_RTOS"])
-
-    sdmmcCommonfsCounter = sdmmcCommonComponent.createBooleanSymbol("DRV_SDMMC_COMMON_FS_COUNTER", None)
-    sdmmcCommonfsCounter.setLabel("Number of Instances Using FS")
-    sdmmcCommonfsCounter.setDefaultValue(False)
-    sdmmcCommonfsCounter.setVisible(False)
-    sdmmcCommonfsCounter.setUseSingleDynamicValue(True)
 
     sdmmcCommonFsEnable = sdmmcCommonComponent.createBooleanSymbol("DRV_SDMMC_COMMON_FS_ENABLE", None)
     sdmmcCommonFsEnable.setLabel("Enable Common File system for SDMMC Driver")
-    sdmmcCommonFsEnable.setDefaultValue(False)
     sdmmcCommonFsEnable.setVisible(False)
-    sdmmcCommonFsEnable.setDependencies(setFileSystem, ["DRV_SDMMC_COMMON_FS_COUNTER"])
 
     ############################################################################
     #### Code Generation ####

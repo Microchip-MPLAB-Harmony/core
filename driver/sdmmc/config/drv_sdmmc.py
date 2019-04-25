@@ -274,7 +274,6 @@ def instantiateComponent(sdmmcComponent, index):
 
     sdmmcFsEnable = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_FS_ENABLE", None)
     sdmmcFsEnable.setLabel("File system for SDMMC Driver Enabled")
-    sdmmcFsEnable.setDefaultValue(False)
     sdmmcFsEnable.setReadOnly(True)
 
     sdmmcBufferObjects.setReadOnly((sdmmcFsEnable.getValue() == True))
@@ -358,29 +357,6 @@ def instantiateComponent(sdmmcComponent, index):
     sdmmcSourceFile.setMarkup(True)
     sdmmcSourceFile.setOverwrite(True)
 
-def onCapabilityConnected(connectionInfo):
-    global sdmmcFsEnable
-
-    capability = connectionInfo["capabilityID"]
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
-
-    if (remoteComponent.getID() == "sys_fs"):
-        sdmmcFsEnable.setValue(True)
-        Database.setSymbolValue("drv_sdmmc", "DRV_SDMMC_COMMON_FS_COUNTER", True)
-
-def onCapabilityDisconnected(connectionInfo):
-    global sdmmcFsEnable
-
-    capability = connectionInfo["capabilityID"]
-    localComponent = connectionInfo["localComponent"]
-    remoteComponent = connectionInfo["remoteComponent"]
-
-    if (remoteComponent.getID() == "sys_fs"):
-        sdmmcFsEnable.setValue(False)
-        Database.setSymbolValue("drv_sdmmc", "DRV_SDMMC_COMMON_FS_COUNTER", False)
-
-
 def onAttachmentConnected(source, target):
     #global sdcardFsEnable
     global sdmmcPLIBRemoteID
@@ -395,7 +371,8 @@ def onAttachmentConnected(source, target):
     if (connectID == "drv_media"):
         if (remoteID == "sys_fs"):
             sdmmcFsEnable.setValue(True)
-            Database.setSymbolValue("drv_sdmmc", "DRV_SDMMC_COMMON_FS_COUNTER", True)
+            sdmmcFsConnectionCounterDict = {}
+            sdmmcFsConnectionCounterDict = Database.sendMessage("drv_sdmmc", "DRV_SDMMC_FS_CONNECTION_COUNTER_INC", sdmmcFsConnectionCounterDict)
 
     # For Dependency Connected (SDHC/HSMCI)
     if (connectID == "drv_sdmmc_SDHC_dependency"):
@@ -417,7 +394,8 @@ def onAttachmentDisconnected(source, target):
     if (connectID == "drv_media"):
         if (remoteID == "sys_fs"):
             sdmmcFsEnable.setValue(False)
-            Database.setSymbolValue("drv_sdmmc", "DRV_SDMMC_COMMON_FS_COUNTER", False)
+            sdmmcFsConnectionCounterDict = {}
+            sdmmcFsConnectionCounterDict = Database.sendMessage("drv_sdmmc", "DRV_SDMMC_FS_CONNECTION_COUNTER_DEC", sdmmcFsConnectionCounterDict)
 
     # For Dependency Disonnected (SDHC/HSMCI)
     if (connectID == "drv_sdmmc_SDHC_dependency"):
