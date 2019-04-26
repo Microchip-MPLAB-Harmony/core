@@ -76,7 +76,7 @@ const DRV_MEMORY_DEVICE_INTERFACE drvMemory0DeviceAPI = {
     .SectorErase        = DRV_AT25DF_SectorErase,
     .Read               = DRV_AT25DF_Read,
     .PageWrite          = DRV_AT25DF_PageWrite,
-    .EventHandlerSet    = NULL,
+    .EventHandlerSet    = (DRV_MEMORY_DEVICE_EVENT_HANDLER_SET)DRV_AT25DF_EventHandlerSet,
     .GeometryGet        = (DRV_MEMORY_DEVICE_GEOMETRY_GET)DRV_AT25DF_GeometryGet,
     .TransferStatusGet  = (DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET)DRV_AT25DF_TransferStatusGet
 };
@@ -85,8 +85,8 @@ const DRV_MEMORY_INIT drvMemory0InitData =
 {
     .memDevIndex                = DRV_AT25DF_INDEX,
     .memoryDevice               = &drvMemory0DeviceAPI,
-    .isMemDevInterruptEnabled   = false,
-    .memDevStatusPollUs         = 500,
+    .isMemDevInterruptEnabled   = true,
+    .memDevStatusPollUs         = 0,
     .isFsEnabled                = true,
     .deviceMediaType            = (uint8_t)SYS_FS_MEDIA_TYPE_SPIFLASH,
     .ewBuffer                   = &gDrvMemory0EraseBuffer[0],
@@ -213,7 +213,6 @@ void SYS_Initialize ( void* data )
   
     CLK_Initialize();
 	PIO_Initialize();
-
 
 	PIT_TimerInitialize();
 
