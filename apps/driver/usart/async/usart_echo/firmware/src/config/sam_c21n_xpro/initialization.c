@@ -54,7 +54,6 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
-
 #pragma config NVMCTRL_BOOTPROT = SIZE_0BYTES
 #pragma config NVMCTRL_EEPROM_SIZE = SIZE_0BYTES
 #pragma config BODVDDUSERLEVEL = 0x8 // Enter Hexadecimal value
@@ -71,6 +70,7 @@
 #pragma config WDT_WINDOW = CYC8
 #pragma config WDT_EWOFFSET = CYC8
 #pragma config WDT_WEN = DISABLED
+
 
 
 
@@ -182,11 +182,12 @@ SYSTEM_OBJECTS sysObj;
 
 void SYS_Initialize ( void* data )
 {
+    NVMCTRL_Initialize( );
+
   
     PORT_Initialize();
 
     CLOCK_Initialize();
-
 
 
     SERCOM4_USART_Initialize();
