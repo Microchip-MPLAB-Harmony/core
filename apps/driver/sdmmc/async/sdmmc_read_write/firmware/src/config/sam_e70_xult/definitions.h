@@ -54,6 +54,7 @@
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/xdmac/plib_xdmac.h"
+#include "peripheral/efc/plib_efc.h"
 #include "peripheral/tc/plib_tc0.h"
 #include "peripheral/hsmci/plib_hsmci.h"
 #include "system/int/sys_int.h"
