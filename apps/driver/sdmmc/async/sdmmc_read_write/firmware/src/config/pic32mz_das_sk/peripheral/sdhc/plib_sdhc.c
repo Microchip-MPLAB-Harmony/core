@@ -58,7 +58,7 @@
 #define SDHC_MODE_RESPTYPE_NONE                                 (0x00 << 16)
 
 #define SDHC_DMA_NUM_DESCR_LINES               1
-#define SDHC_BASE_CLOCK_FREQUENCY              100000000
+#define SDHC_BASE_CLOCK_FREQUENCY              200000000
 
 typedef unsigned long _paddr_t; /* a physical address */
 #define KVA_TO_PA(v)    ((_paddr_t)(v) & 0x1fffffff)
@@ -192,6 +192,26 @@ void SDHC_InterruptHandler(void)
     {
         sdhcObj.callback(xferStatus, sdhcObj.context);
     }
+}
+
+void SDHC_CardDetectEnable(void)
+{
+    CFGCON2bits.SDCDEN = 0x1;
+}
+
+void SDHC_CardDetectDisable(void)
+{
+    CFGCON2bits.SDCDEN = 0x0;
+}
+
+void SDHC_WriteProtectEnable(void)
+{
+    CFGCON2bits.SDWPEN = 0x1;
+}
+
+void SDHC_WriteProtectDisable(void)
+{
+    CFGCON2bits.SDWPEN = 0x0;
 }
 
 void SDHC_ErrorReset ( SDHC_RESET_TYPE resetType )
@@ -531,7 +551,7 @@ void SDHC_ModuleInit( void )
 
     /* Wait for the internal clock to stabilize */
     SDHC_Delay(1000);
-    
+
     /* Enable the SDCLK */
     SDHCCON2 |= _SDHCCON2_SDCLKEN_MASK;
 
