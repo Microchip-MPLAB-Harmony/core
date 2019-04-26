@@ -119,7 +119,6 @@ void SYS_Initialize ( void* data )
     CLK_Initialize();
 	PIO_Initialize();
 
-
     QSPI0_Initialize();
 
 	BSP_Initialize();
