@@ -52,8 +52,9 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include "app.h"
 #include <string.h>
+#include "app.h"
+#include "user.h"
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -166,7 +167,7 @@ void APP_Tasks ( void )
             if (appData.usartHandle != DRV_HANDLE_INVALID)
             {
                 DRV_USART_BufferEventHandlerSet(appData.usartHandle, APP_USARTBufferEventHandler, 0);
-                appData.state = APP1_STATE_TRANSMIT_MESSAGE;
+                appData.state = APP_STATE_TRANSMIT_MESSAGE;
             }
             else
             {
@@ -174,7 +175,7 @@ void APP_Tasks ( void )
             }
             break;
 
-        case APP1_STATE_TRANSMIT_MESSAGE:
+        case APP_STATE_TRANSMIT_MESSAGE:
 
             DRV_USART_WriteBufferAdd(appData.usartHandle, (void*)messageBuffer, strlen(messageBuffer), &appData.bufferHandle);
             if (appData.bufferHandle != DRV_USART_BUFFER_HANDLE_INVALID)
