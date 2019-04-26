@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="65">
+<configurationDescriptor version="66">
   <logicalFolder name="root" displayName="root" projectFiles="true">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -7,141 +7,144 @@
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_v71_xult" projectFiles="true">
           <logicalFolder name="f3" displayName="bsp" projectFiles="true">
-            <itemPath>../src/config/sam_v71_xult/bsp/bsp.h</itemPath>
+            <itemPath ex="false">../src/config/sam_v71_xult/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="sdmmc" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/driver/sdmmc/drv_sdmmc.h</itemPath>
-              <itemPath>../src/config/sam_v71_xult/driver/sdmmc/src/drv_sdmmc_local.h</itemPath>
-              <itemPath>../src/config/sam_v71_xult/driver/sdmmc/drv_sdmmc_definitions.h</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/driver/sdmmc/drv_sdmmc.h</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/driver/sdmmc/src/drv_sdmmc_local.h</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/driver/sdmmc/drv_sdmmc_definitions.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/sam_v71_xult/driver/driver.h</itemPath>
-            <itemPath>../src/config/sam_v71_xult/driver/driver_common.h</itemPath>
+            <itemPath ex="false">../src/config/sam_v71_xult/driver/driver.h</itemPath>
+            <itemPath ex="false">../src/config/sam_v71_xult/driver/driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/peripheral/clk/plib_clk.h</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/clk/plib_clk.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="hsmci" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/peripheral/hsmci/plib_hsmci_common.h</itemPath>
-              <itemPath>../src/config/sam_v71_xult/peripheral/hsmci/plib_hsmci.h</itemPath>
+            <logicalFolder name="f5" displayName="efc" projectFiles="true">
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/efc/plib_efc.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f7" displayName="hsmci" projectFiles="true">
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/hsmci/plib_hsmci_common.h</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/hsmci/plib_hsmci.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="nvic" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/peripheral/nvic/plib_nvic.h</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="pio" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/peripheral/pio/plib_pio.h</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/pio/plib_pio.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="tc" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/peripheral/tc/plib_tc0.h</itemPath>
-              <itemPath>../src/config/sam_v71_xult/peripheral/tc/plib_tc_common.h</itemPath>
+            <logicalFolder name="f6" displayName="tc" projectFiles="true">
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/tc/plib_tc0.h</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/tc/plib_tc_common.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="xdmac" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/peripheral/xdmac/plib_xdmac_common.h</itemPath>
-              <itemPath>../src/config/sam_v71_xult/peripheral/xdmac/plib_xdmac.h</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/xdmac/plib_xdmac_common.h</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/xdmac/plib_xdmac.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
             <logicalFolder name="f2" displayName="cache" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/system/cache/sys_cache.h</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/system/cache/sys_cache.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/system/int/sys_int.h</itemPath>
-              <itemPath>../src/config/sam_v71_xult/system/int/sys_int_mapping.h</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/system/int/sys_int.h</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="time" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/system/time/sys_time.h</itemPath>
-              <itemPath>../src/config/sam_v71_xult/system/time/sys_time_definitions.h</itemPath>
-              <itemPath>../src/config/sam_v71_xult/system/time/src/sys_time_local.h</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/system/time/sys_time.h</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/system/time/sys_time_definitions.h</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/system/time/src/sys_time_local.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/sam_v71_xult/system/system.h</itemPath>
-            <itemPath>../src/config/sam_v71_xult/system/system_common.h</itemPath>
-            <itemPath>../src/config/sam_v71_xult/system/system_module.h</itemPath>
-            <itemPath>../src/config/sam_v71_xult/system/system_media.h</itemPath>
+            <itemPath ex="false">../src/config/sam_v71_xult/system/system.h</itemPath>
+            <itemPath ex="false">../src/config/sam_v71_xult/system/system_common.h</itemPath>
+            <itemPath ex="false">../src/config/sam_v71_xult/system/system_module.h</itemPath>
+            <itemPath ex="false">../src/config/sam_v71_xult/system/system_media.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/config/sam_v71_xult/device_cache.h</itemPath>
-          <itemPath>../src/config/sam_v71_xult/toolchain_specifics.h</itemPath>
-          <itemPath>../src/config/sam_v71_xult/definitions.h</itemPath>
-          <itemPath>../src/config/sam_v71_xult/user.h</itemPath>
-          <itemPath>../src/config/sam_v71_xult/configuration.h</itemPath>
+          <itemPath ex="false">../src/config/sam_v71_xult/device_cache.h</itemPath>
+          <itemPath ex="false">../src/config/sam_v71_xult/toolchain_specifics.h</itemPath>
+          <itemPath ex="false">../src/config/sam_v71_xult/definitions.h</itemPath>
+          <itemPath ex="false">../src/config/sam_v71_xult/user.h</itemPath>
+          <itemPath ex="false">../src/config/sam_v71_xult/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f3" displayName="osal" projectFiles="true">
-        <itemPath>../src/config/sam_v71_xult/osal/osal.h</itemPath>
-        <itemPath>../src/config/sam_v71_xult/osal/osal_definitions.h</itemPath>
-        <itemPath>../src/config/sam_v71_xult/osal/osal_impl_basic.h</itemPath>
+        <itemPath ex="false">../src/config/sam_v71_xult/osal/osal.h</itemPath>
+        <itemPath ex="false">../src/config/sam_v71_xult/osal/osal_definitions.h</itemPath>
+        <itemPath ex="false">../src/config/sam_v71_xult/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAMV71Q21B_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/acc.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/aes.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/afec.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/chipid.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/dacc.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/efc.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/gmac.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/gpbr.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/hsmci.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/i2sc.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/icm.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/isi.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/matrix.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/mcan.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/mlb.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/pio.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/pmc.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/pwm.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/qspi.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/rstc.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/rswdt.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/rtc.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/rtt.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/sdramc.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/smc.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/spi.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/ssc.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/supc.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/tc.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/trng.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/twihs.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/uart.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/usart.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/usbhs.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/utmi.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/wdt.h</itemPath>
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/xdmac.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/acc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/aes.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/afec.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/chipid.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/dacc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/efc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/gmac.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/gpbr.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/hsmci.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/i2sc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/icm.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/isi.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/matrix.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/mcan.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/mlb.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/pio.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/pmc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/pwm.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/qspi.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/rstc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/rswdt.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/rtc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/rtt.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/sdramc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/smc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/spi.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/ssc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/supc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/tc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/trng.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/twihs.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/uart.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/usart.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/usbhs.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/utmi.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/wdt.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/component/xdmac.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="pio" projectFiles="true">
-            <itemPath>../src/packs/ATSAMV71Q21B_DFP/pio/samv71q21b.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/pio/samv71q21b.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/packs/ATSAMV71Q21B_DFP/device.h</itemPath>
-          <itemPath>../src/packs/ATSAMV71Q21B_DFP/atsamv71q21b.h</itemPath>
+          <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/device.h</itemPath>
+          <itemPath ex="false">../src/packs/ATSAMV71Q21B_DFP/atsamv71q21b.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm7.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/core_cm7.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
               </logicalFolder>
             </logicalFolder>
             <logicalFolder name="f2" displayName="DSP" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_common_tables.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_const_structs.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_math.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/DSP/Include/arm_common_tables.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/DSP/Include/arm_const_structs.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/DSP/Include/arm_math.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>../src/app.h</itemPath>
+      <itemPath ex="false">../src/app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -153,62 +156,65 @@
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_v71_xult" projectFiles="true">
           <logicalFolder name="f4" displayName="bsp" projectFiles="true">
-            <itemPath>../src/config/sam_v71_xult/bsp/bsp.c</itemPath>
+            <itemPath ex="false">../src/config/sam_v71_xult/bsp/bsp.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="sdmmc" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/driver/sdmmc/src/drv_sdmmc.c</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/driver/sdmmc/src/drv_sdmmc.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/peripheral/clk/plib_clk.c</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/clk/plib_clk.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="hsmci" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/peripheral/hsmci/plib_hsmci.c</itemPath>
+            <logicalFolder name="f5" displayName="efc" projectFiles="true">
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/efc/plib_efc.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f7" displayName="hsmci" projectFiles="true">
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/hsmci/plib_hsmci.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="nvic" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/peripheral/nvic/plib_nvic.c</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/nvic/plib_nvic.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="pio" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/peripheral/pio/plib_pio.c</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/pio/plib_pio.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="tc" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/peripheral/tc/plib_tc0.c</itemPath>
+            <logicalFolder name="f6" displayName="tc" projectFiles="true">
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/tc/plib_tc0.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="xdmac" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/peripheral/xdmac/plib_xdmac.c</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/peripheral/xdmac/plib_xdmac.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f1" displayName="stdio" projectFiles="true">
-            <itemPath>../src/config/sam_v71_xult/stdio/xc32_monitor.c</itemPath>
+            <itemPath ex="false">../src/config/sam_v71_xult/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f5" displayName="system" projectFiles="true">
             <logicalFolder name="f2" displayName="cache" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/system/cache/sys_cache.c</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/system/cache/sys_cache.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/system/int/src/sys_int.c</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="time" projectFiles="true">
-              <itemPath>../src/config/sam_v71_xult/system/time/src/sys_time.c</itemPath>
+              <itemPath ex="false">../src/config/sam_v71_xult/system/time/src/sys_time.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <itemPath>../src/config/sam_v71_xult/initialization.c</itemPath>
-          <itemPath>../src/config/sam_v71_xult/interrupts.c</itemPath>
-          <itemPath>../src/config/sam_v71_xult/exceptions.c</itemPath>
-          <itemPath>../src/config/sam_v71_xult/startup_xc32.c</itemPath>
-          <itemPath>../src/config/sam_v71_xult/libc_syscalls.c</itemPath>
-          <itemPath>../src/config/sam_v71_xult/tasks.c</itemPath>
+          <itemPath ex="false">../src/config/sam_v71_xult/initialization.c</itemPath>
+          <itemPath ex="false">../src/config/sam_v71_xult/interrupts.c</itemPath>
+          <itemPath ex="false">../src/config/sam_v71_xult/exceptions.c</itemPath>
+          <itemPath ex="false">../src/config/sam_v71_xult/startup_xc32.c</itemPath>
+          <itemPath ex="false">../src/config/sam_v71_xult/libc_syscalls.c</itemPath>
+          <itemPath ex="false">../src/config/sam_v71_xult/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>../src/main.c</itemPath>
-      <itemPath>../src/app.c</itemPath>
+      <itemPath ex="false">../src/main.c</itemPath>
+      <itemPath ex="false">../src/app.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
-      <itemPath>Makefile</itemPath>
+      <itemPath ex="false">Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -222,7 +228,7 @@
         <targetDevice>ATSAMV71Q21B</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>ICD4Tool</platformTool>
+        <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.20</languageToolchainVersion>
         <platform>3</platform>
@@ -427,13 +433,18 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="400000-5fffff"/>
+        <property key="poweroptions.powerenable" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${memories.dataflash.default}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value=""/>
         <property key="programoptions.preserveprogram.ranges" value=""/>
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.preserveuserid" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>
+        <property key="voltagevalue" value=""/>
       </EdbgTool>
       <ICD4Tool>
         <property key="AutoSelectMemRanges" value="auto"/>
