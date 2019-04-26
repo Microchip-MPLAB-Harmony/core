@@ -54,7 +54,6 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
-
 #pragma config BOD33_DIS = SET
 #pragma config BOD33USERLEVEL = 0x1c
 #pragma config BOD33_ACTION = RESET
@@ -117,8 +116,8 @@ const DRV_SDMMC_INIT drvSDMMC0InitData =
     .bufferObjPoolSize              = DRV_SDMMC_QUEUE_SIZE_IDX0,
     .clientObjPool                  = (uintptr_t)&drvSDMMC0ClientObjPool[0],
     .numClients                     = DRV_SDMMC_CLIENTS_NUMBER_IDX0,
-    .cardDetectionMethod            = DRV_SDMMC_CARD_DETECTION_METHOD_IDX0,
-    .cardDetectionPollingIntervalMs = 100,
+    .cardDetectionMethod            = (DRV_SDMMC_CD_METHOD)DRV_SDMMC_CARD_DETECTION_METHOD_IDX0,
+    .cardDetectionPollingIntervalMs = 0,
     .isWriteProtectCheckEnabled     = false,
     .speedMode                      = (DRV_SDMMC_SPEED_MODE)DRV_SDMMC_CONFIG_SPEED_MODE_IDX0,
     .busWidth                       = (DRV_SDMMC_BUS_WIDTH)DRV_SDMMC_CONFIG_BUS_WIDTH_IDX0,
@@ -183,11 +182,12 @@ const SYS_TIME_INIT sysTimeInitData =
 
 void SYS_Initialize ( void* data )
 {
+    NVMCTRL_Initialize( );
+
   
     PORT_Initialize();
 
     CLOCK_Initialize();
-
 
 
 	BSP_Initialize();

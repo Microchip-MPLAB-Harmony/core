@@ -233,7 +233,7 @@ bool SDHC1_IsDatLineBusy ( void )
 
 bool SDHC1_IsWriteProtected ( void )
 {
-   return false;
+    return (SDHC1_REGS->SDHC_PSR & SDHC_PSR_WRPPL_Msk) ? false : true;
 }
 
 bool SDHC1_IsCardAttached ( void )

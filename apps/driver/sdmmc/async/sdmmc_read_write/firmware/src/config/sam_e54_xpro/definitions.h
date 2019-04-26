@@ -48,6 +48,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "peripheral/nvmctrl/plib_nvmctrl.h"
 #include "bsp/bsp.h"
 #include "peripheral/evsys/plib_evsys.h"
 #include "driver/sdmmc/drv_sdmmc.h"
