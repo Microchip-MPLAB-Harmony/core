@@ -142,7 +142,6 @@ void SYS_Initialize ( void* data )
     CLK_Initialize();
 	PIO_Initialize();
 
-
 	BSP_Initialize();
 	PIT_TimerInitialize();
 
