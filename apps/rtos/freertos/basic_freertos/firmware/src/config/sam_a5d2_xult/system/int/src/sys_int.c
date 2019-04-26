@@ -59,6 +59,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define INT_InterruptPendingSet    	SYS_INT_SourceStatusSet
 #define INT_InterruptPendingClear  	SYS_INT_SourceStatusClear
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Implementation
@@ -66,6 +67,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 // private methods *************************************************************
+
 
 static aic_registers_t *
 _aicInstanceGet( IRQn_Type aSrcSelection )
@@ -118,7 +120,7 @@ INT_IrqRestore( bool state )
 }
 
 bool
-INT_IsInterruptEnabled( IRQn_Type aSrcSelection )
+INT_IsInterruptEnabled( INT_SOURCE aSrcSelection )
 {
     bool retval = false;
     aic_registers_t * aicPtr = _aicInstanceGet( aSrcSelection );
@@ -130,7 +132,7 @@ INT_IsInterruptEnabled( IRQn_Type aSrcSelection )
 }
 
 void
-INT_InterruptEnable( IRQn_Type aSrcSelection )
+INT_InterruptEnable( INT_SOURCE aSrcSelection )
 {
     aic_registers_t * aicPtr = _aicInstanceGet( aSrcSelection );
     aicPtr->AIC_SSR = AIC_SSR_INTSEL( (uint32_t) aSrcSelection );
@@ -139,7 +141,7 @@ INT_InterruptEnable( IRQn_Type aSrcSelection )
 }
 
 bool
-INT_InterruptDisable( IRQn_Type aSrcSelection )
+INT_InterruptDisable( INT_SOURCE aSrcSelection )
 {
     bool previousValue = INT_IsInterruptEnabled( aSrcSelection );
     aic_registers_t * aicPtr = _aicInstanceGet( aSrcSelection );
@@ -151,7 +153,7 @@ INT_InterruptDisable( IRQn_Type aSrcSelection )
 }
 
 void
-INT_InterruptRestore( IRQn_Type aSrcSelection, bool state )
+INT_InterruptRestore( INT_SOURCE aSrcSelection, bool state )
 {
     if( state ) {
         aic_registers_t * aicPtr = _aicInstanceGet( aSrcSelection );
@@ -162,7 +164,7 @@ INT_InterruptRestore( IRQn_Type aSrcSelection, bool state )
 }
 
 bool
-INT_IsInterruptPendingFor( IRQn_Type aSrcSelection )
+INT_IsInterruptPendingFor( INT_SOURCE aSrcSelection )
 {
     bool retval = false;
     if( aSrcSelection < 127 )
@@ -196,7 +198,7 @@ INT_IsInterruptPendingFor( IRQn_Type aSrcSelection )
 }
 
 void
-INT_InterruptPendingSet( IRQn_Type aSrcSelection )
+INT_InterruptPendingSet( INT_SOURCE aSrcSelection )
 {
     aic_registers_t * aicPtr = _aicInstanceGet( aSrcSelection );
     aicPtr->AIC_SSR = AIC_SSR_INTSEL( (uint32_t) aSrcSelection );
@@ -205,7 +207,7 @@ INT_InterruptPendingSet( IRQn_Type aSrcSelection )
 }
 
 void
-INT_InterruptPendingClear( IRQn_Type aSrcSelection )
+INT_InterruptPendingClear( INT_SOURCE aSrcSelection )
 {
     aic_registers_t * aicPtr = _aicInstanceGet( aSrcSelection );
     aicPtr->AIC_SSR = AIC_SSR_INTSEL( (uint32_t) aSrcSelection );
