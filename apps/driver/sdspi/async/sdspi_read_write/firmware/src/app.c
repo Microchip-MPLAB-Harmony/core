@@ -62,7 +62,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-SYS_MEDIA_GEOMETRY* geometry = NULL;
+static SYS_MEDIA_GEOMETRY* geometry = NULL;
 
 // *****************************************************************************
 /* Application Data
@@ -82,17 +82,17 @@ SYS_MEDIA_GEOMETRY* geometry = NULL;
 APP_DATA appData;
 
 /* Read Buffer */
-CACHE_ALIGN uint32_t readBuffer[SDSPI_BUFFER_SIZE];
+static CACHE_ALIGN uint32_t readBuffer[SDSPI_BUFFER_SIZE];
 
 /* Write Buffer*/
-CACHE_ALIGN uint32_t writeBuffer[SDSPI_BUFFER_SIZE];
+static CACHE_ALIGN uint32_t writeBuffer[SDSPI_BUFFER_SIZE];
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
 // *****************************************************************************
 // *****************************************************************************
 
-void APP_SDSPI_EventHandler
+static void APP_SDSPI_EventHandler
 (
     DRV_SDSPI_EVENT event,
     DRV_SDSPI_COMMAND_HANDLE commandHandle,
