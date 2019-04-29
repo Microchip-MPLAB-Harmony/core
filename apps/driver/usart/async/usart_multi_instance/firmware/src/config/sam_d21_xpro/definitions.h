@@ -50,6 +50,7 @@
 #include <stdbool.h>
 #include "peripheral/sercom/usart/plib_sercom3_usart.h"
 #include "bsp/bsp.h"
+#include "peripheral/nvmctrl/plib_nvmctrl.h"
 #include "peripheral/evsys/plib_evsys.h"
 #include "driver/usart/drv_usart.h"
 #include "peripheral/port/plib_port.h"
