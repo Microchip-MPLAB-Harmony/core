@@ -56,6 +56,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
+#include "toolchain_specifics.h"
 #include "driver/usart/drv_usart.h"
 
 // DOM-IGNORE-BEGIN
@@ -126,8 +127,8 @@ typedef struct
      * The DMA buffers must be aligned to 32 byte boundary and the size must be
      * a multiple of 32 bytes (cache line size)
      */
-     __attribute__ ((aligned (32))) uint8_t receiveBuffer[APP_USART_USB_CLICK_DMA_TX_RX_BUFFER_SIZE];
-     __attribute__ ((aligned (32))) uint8_t transmitBuffer[APP_USART_USB_CLICK_DMA_TX_RX_BUFFER_SIZE];
+     CACHE_ALIGN uint8_t receiveBuffer[APP_USART_USB_CLICK_DMA_TX_RX_BUFFER_SIZE];
+     CACHE_ALIGN uint8_t transmitBuffer[APP_USART_USB_CLICK_DMA_TX_RX_BUFFER_SIZE];
      
 } APP_USART_USB_CLICK_BOARD_DATA;
 

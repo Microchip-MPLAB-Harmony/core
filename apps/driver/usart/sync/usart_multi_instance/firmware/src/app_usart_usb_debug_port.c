@@ -52,6 +52,7 @@
 // *****************************************************************************
 
 #include "app_usart_usb_debug_port.h"
+#include "toolchain_specifics.h"
 #include "user.h"
 #include <string.h>
 
@@ -60,7 +61,7 @@
 // Section: Global Data Definitions
 // *****************************************************************************
 // *****************************************************************************
-__attribute__ ((aligned (32))) static char usart1_StartMessage[192] = 
+static CACHE_ALIGN char appUsartDebugPort_StartMessage[192] =
 "*** USART Driver Multi-Instance Echo Demo Application ***\r\n"
 "*** Type 10 characters and observe it echo back using DMA ***\r\n"
 "*** LED toggles each time the data is echoed ***\r\n";
@@ -80,7 +81,7 @@ __attribute__ ((aligned (32))) static char usart1_StartMessage[192] =
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_USART_USB_DEBUG_PORT_DATA appUsartDebugPortData;
+static APP_USART_USB_DEBUG_PORT_DATA appUsartDebugPortData;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -150,7 +151,7 @@ void APP_USART_USB_DEBUG_PORT_Tasks ( void )
             break;
 
         case APP_USART_USB_DEBUG_PORT_STATE_SEND_MESSAGE:
-            if (DRV_USART_WriteBuffer( appUsartDebugPortData.usartHandle, usart1_StartMessage, strlen(usart1_StartMessage)) == true)
+            if (DRV_USART_WriteBuffer( appUsartDebugPortData.usartHandle, appUsartDebugPort_StartMessage, strlen(appUsartDebugPort_StartMessage)) == true)
             {
                 appUsartDebugPortData.state = APP_USART_USB_DEBUG_PORT_STATE_LOOPBACK;
             }
@@ -188,8 +189,6 @@ void APP_USART_USB_DEBUG_PORT_Tasks ( void )
 
         case APP_USART_USB_DEBUG_PORT_STATE_ERROR:
         default:
-            /* If error then suspend the task thereby allowing other threads to run */
-            vTaskSuspend(NULL);
             break;
     }
 }
