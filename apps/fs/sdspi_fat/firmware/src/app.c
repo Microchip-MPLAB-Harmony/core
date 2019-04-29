@@ -54,6 +54,7 @@
 
 #include "app.h"
 #include "bsp/bsp.h"
+#include "user.h"
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -64,6 +65,8 @@
 #define SDCARD_DEV_NAME      "/dev/mmcblka1"
 #define SDCARD_FILE_NAME     "FILE_TOO_LONG_NAME_EXAMPLE_123.JPG"
 #define SDCARD_DIR_NAME      "Dir1"
+
+#define APP_DATA_LEN         512
 
 // *****************************************************************************
 /* Application Data
@@ -80,7 +83,9 @@
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_DATA DATA_BUFFER_ALIGN appData;
+APP_DATA appData;
+
+static uint8_t BUFFER_ATTRIBUTES readWriteBuffer[APP_DATA_LEN];
 
 // *****************************************************************************
 // *****************************************************************************
@@ -242,7 +247,7 @@ void APP_Tasks ( void )
             }
             break;
         case APP_READ_WRITE_TO_FILE:
-            if(SYS_FS_FileRead(appData.fileHandle, (void *)appData.data, APP_DATA_LEN) == -1)
+            if(SYS_FS_FileRead(appData.fileHandle, (void *)readWriteBuffer, APP_DATA_LEN) == -1)
             {
                 /* There was an error while reading the file.
                  * Close the file and error out. */
@@ -252,7 +257,7 @@ void APP_Tasks ( void )
             else
             {
                 /* If read was success, try writing to the new file */
-                if(SYS_FS_FileWrite(appData.fileHandle1, (const void *)appData.data, APP_DATA_LEN) == -1)
+                if(SYS_FS_FileWrite(appData.fileHandle1, (const void *)readWriteBuffer, APP_DATA_LEN) == -1)
                 {                    
                     /* Write was not successful. Close the file
                      * and error out.*/

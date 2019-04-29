@@ -73,10 +73,6 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
-#define DATA_BUFFER_ALIGN     __attribute__((aligned(32)))
-
-#define APP_DATA_LEN         512
-
 // *****************************************************************************
 /* Application states
 
@@ -145,17 +141,14 @@ typedef enum
 typedef struct
 {
     /* SYS_FS File handle for 1st file */
-    SYS_FS_HANDLE      fileHandle;
+    SYS_FS_HANDLE               fileHandle;
 
     /* SYS_FS File handle for 2nd file */
-    SYS_FS_HANDLE      fileHandle1;
+    SYS_FS_HANDLE               fileHandle1;
 
     /* Application's current state */
-    APP_STATES         state;
-
-    /* Application data buffer */
-    uint8_t            data[APP_DATA_LEN] DATA_BUFFER_ALIGN;
-
+    APP_STATES                  state;
+       
     volatile uint32_t           nBytesWritten;
 
     volatile uint32_t           nBytesRead;
