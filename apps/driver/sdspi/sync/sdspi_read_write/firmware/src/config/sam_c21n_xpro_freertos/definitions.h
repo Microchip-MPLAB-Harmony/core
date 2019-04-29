@@ -48,6 +48,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "peripheral/nvmctrl/plib_nvmctrl.h"
 #include "peripheral/sercom/spim/plib_sercom1_spi.h"
 #include "peripheral/evsys/plib_evsys.h"
 #include "peripheral/port/plib_port.h"
@@ -55,15 +56,15 @@
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/dmac/plib_dmac.h"
 #include "peripheral/tc/plib_tc0.h"
+#include "driver/sdspi/drv_sdspi.h"
+#include "system/time/sys_time.h"
 #include "FreeRTOS.h"
 #include "task.h"
-#include "driver/sdspi/drv_sdspi.h"
-#include "bsp/bsp.h"
 #include "system/int/sys_int.h"
 #include "system/ports/sys_ports.h"
 #include "system/dma/sys_dma.h"
 #include "osal/osal.h"
-#include "system/time/sys_time.h"
+#include "bsp/bsp.h"
 #include "app.h"
 
 
