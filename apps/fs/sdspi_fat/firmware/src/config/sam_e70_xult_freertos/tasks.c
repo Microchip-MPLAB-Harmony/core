@@ -63,7 +63,7 @@ void _DRV_SDSPI_0_Tasks(  void *pvParameters  )
     while(1)
     {
         DRV_SDSPI_Tasks(sysObj.drvSDSPI0);
-        vTaskDelay(10 / portTICK_PERIOD_MS);
+        vTaskDelay(5 / portTICK_PERIOD_MS);
     }
 }
 

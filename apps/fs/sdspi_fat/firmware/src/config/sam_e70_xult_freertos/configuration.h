@@ -79,6 +79,15 @@ extern "C" {
 // Section: System Service Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* TIME System Service Configuration Options */
+#define SYS_TIME_INDEX_0                     0
+#define SYS_TIME_MAX_TIMERS                  5
+#define SYS_TIME_HW_COUNTER_WIDTH            16
+#define SYS_TIME_HW_COUNTER_PERIOD           65535U
+#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
+#define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
+#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
+
 
 /* File System Service Configuration */
 
@@ -101,15 +110,6 @@ extern "C" {
 
 
 
-/* TIME System Service Configuration Options */
-#define SYS_TIME_INDEX_0                     0
-#define SYS_TIME_MAX_TIMERS                  5
-#define SYS_TIME_HW_COUNTER_WIDTH            16
-#define SYS_TIME_HW_COUNTER_PERIOD           65535U
-#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
-#define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
-#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
-
 
 
 // *****************************************************************************
@@ -122,6 +122,7 @@ extern "C" {
 #define DRV_SDSPI_CLIENTS_NUMBER_IDX0           1
 #define DRV_SDSPI_CHIP_SELECT_PIN_IDX0          SYS_PORT_PIN_PD25
 #define DRV_SDSPI_SPEED_HZ_IDX0                 25000000
+#define DRV_SDSPI_POLLING_INTERVAL_MS_IDX0      1000
 
 #define DRV_SDSPI_DMA_MODE
 #define DRV_SDSPI_XMIT_DMA_CH_IDX0              SYS_DMA_CHANNEL_0
