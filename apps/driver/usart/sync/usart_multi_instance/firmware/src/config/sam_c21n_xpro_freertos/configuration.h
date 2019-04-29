@@ -86,8 +86,6 @@ extern "C" {
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
-/* USART Driver Global Configuration Options */
-#define DRV_USART_INSTANCES_NUMBER         2
 /* USART Driver Instance 1 Configuration Options */
 #define DRV_USART_INDEX_1                  1
 #define DRV_USART_CLIENTS_NUMBER_IDX1      1
@@ -100,6 +98,8 @@ extern "C" {
 #define DRV_USART_XMIT_DMA_CH_IDX0         SYS_DMA_CHANNEL_0
 #define DRV_USART_RCV_DMA_CH_IDX0          SYS_DMA_CHANNEL_1
 
+/* USART Driver Global Configuration Options */
+#define DRV_USART_INSTANCES_NUMBER         2
 
 
 // *****************************************************************************
