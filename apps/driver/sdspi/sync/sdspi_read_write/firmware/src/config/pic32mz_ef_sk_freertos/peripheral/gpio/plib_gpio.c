@@ -68,6 +68,7 @@ void GPIO_Initialize ( void )
     /* PORTC Initialization */
 
     /* PORTD Initialization */
+    CNPUDSET = 0x80; /* Pull-Up Enable */
 
     /* PORTE Initialization */
 
@@ -77,6 +78,7 @@ void GPIO_Initialize ( void )
     ANSELGCLR = 0x140; /* Digital Mode Enable */
 
     /* PORTH Initialization */
+    LATH = 0x0; /* Initial Latch Value */
     TRISHCLR = 0x7; /* Direction Control */
     ANSELHCLR = 0x3; /* Digital Mode Enable */
 
