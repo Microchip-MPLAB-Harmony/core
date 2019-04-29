@@ -51,7 +51,7 @@
 #include "plib_sdhc_common.h"
 
 #define SDHC1_DMA_NUM_DESCR_LINES        1
-#define SDHC1_BASE_CLOCK_FREQUENCY       48000000
+#define SDHC1_BASE_CLOCK_FREQUENCY       100000000
 
 static __attribute__((__aligned__(32))) SDHC_ADMA_DESCR sdhc1DmaDescrTable[SDHC1_DMA_NUM_DESCR_LINES];
 
@@ -233,7 +233,7 @@ bool SDHC1_IsDatLineBusy ( void )
 
 bool SDHC1_IsWriteProtected ( void )
 {
-   return false;
+    return (SDHC1_REGS->SDHC_PSR & SDHC_PSR_WRPPL_Msk) ? false : true;
 }
 
 bool SDHC1_IsCardAttached ( void )

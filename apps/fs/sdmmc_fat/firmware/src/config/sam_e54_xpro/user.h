@@ -44,6 +44,7 @@
 
 #include "configuration.h"
 #include "bsp/bsp.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
