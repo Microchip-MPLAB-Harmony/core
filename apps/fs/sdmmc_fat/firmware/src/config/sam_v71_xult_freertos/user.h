@@ -61,9 +61,9 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
-#define LED_ON()        LED0_On()
-#define LED_OFF()       LED0_Off()
-#define LED_TOGGLE()    LED0_Toggle()
+#define LED_ON()                LED0_On()
+#define LED_OFF()               LED0_Off()
+#define LED_TOGGLE()            LED0_Toggle()
 #define BUFFER_ATTRIBUTES       CACHE_ALIGN    
 
 //DOM-IGNORE-BEGIN
