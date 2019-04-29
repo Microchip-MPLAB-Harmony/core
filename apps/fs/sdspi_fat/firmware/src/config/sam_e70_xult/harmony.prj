@@ -35,8 +35,8 @@
           <Name dnOrder="1">drv_sdspi.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EF3CEFF5A20D5BA571FDE241FAD499CF</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EF3CEFF5A20D5BA571FDE241FAD499CF</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D8094593F6D27B1744773CF23B9C5EA2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D8094593F6D27B1744773CF23B9C5EA2</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -51,8 +51,8 @@
           <Name dnOrder="1">drv_sdspi_plib_interface.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6E00A8D62FDDCF5A2E4F150F8A21AE9A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6E00A8D62FDDCF5A2E4F150F8A21AE9A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">FDB47CF1685FA5B899F289499FEC4FC8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">FDB47CF1685FA5B899F289499FEC4FC8</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -443,8 +443,8 @@
           <Name dnOrder="1">drv_sdspi_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EA342657012E373EF4F0240CD29873F2</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EA342657012E373EF4F0240CD29873F2</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C0CC605E7F1CD10D2C22744270B44CB6</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C0CC605E7F1CD10D2C22744270B44CB6</UserChecksum>
         </File>
         <File dnOrder="55">
           <Type dnOrder="0">HEADER</Type>
