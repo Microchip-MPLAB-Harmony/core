@@ -53,6 +53,7 @@
 // *****************************************************************************
 
 #include "app.h"
+#include "user.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -219,10 +220,10 @@ void APP_Tasks ( void )
         case APP_CREATE_DIRECTORY:
             /* Delete the files under Dir1 directory (if any) */
             SYS_FS_FileDirectoryRemove(SDCARD_DIR_NAME"/"SDCARD_FILE_NAME);
-            
+
             /* Delete the Dir1 directory if it exists */
             SYS_FS_FileDirectoryRemove(SDCARD_DIR_NAME);
-            
+
             if(SYS_FS_DirectoryMake(SDCARD_DIR_NAME) == SYS_FS_RES_FAILURE)
             {
                 /* Error while setting current drive */
