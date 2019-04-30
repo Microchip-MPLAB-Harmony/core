@@ -3,7 +3,7 @@
   <Configurator>
     <Name dnOrder="0" value="pic32mz_ef_sk_freertos"/>
     <Processor dnOrder="1" value="PIC32MZ2048EFH144"/>
-    <Harmony dnOrder="2" path="../../../../.."/>
+    <Harmony dnOrder="2" path="../../../.."/>
     <Manifest dnOrder="3">
       <Files dnOrder="0">
         <File dnOrder="0">
@@ -51,8 +51,8 @@
           <Name dnOrder="1">drv_sdspi.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">43C228D9ACF835527467D4A4B3B8F93D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">43C228D9ACF835527467D4A4B3B8F93D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E8871B770C0C40EED4997A7221717ED1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E8871B770C0C40EED4997A7221717ED1</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -67,8 +67,8 @@
           <Name dnOrder="1">drv_sdspi_plib_interface.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">ABAF2310A46CD44B4281318EE672022C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">ABAF2310A46CD44B4281318EE672022C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1DA61A119147F17183990D1A50F824C4</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1DA61A119147F17183990D1A50F824C4</UserChecksum>
         </File>
         <File dnOrder="8">
           <Type dnOrder="0">SOURCE</Type>
@@ -115,8 +115,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BB8716F5D2AB7716F12809E0A8A5810C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BB8716F5D2AB7716F12809E0A8A5810C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4B617F6D58C512FB5A224834AC68FCDD</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4B617F6D58C512FB5A224834AC68FCDD</UserChecksum>
         </File>
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
@@ -171,8 +171,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D2583546610F260E6FCEF77D2C9208A0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D2583546610F260E6FCEF77D2C9208A0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A7EDA6CA22DF61EA3287D0DB4FC5EC5A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A7EDA6CA22DF61EA3287D0DB4FC5EC5A</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
@@ -203,16 +203,16 @@
           <Name dnOrder="1">plib_gpio.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/gpio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/gpio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4367DE9418439056B5CB03F46911574D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4367DE9418439056B5CB03F46911574D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">978BAD4451F31A61F323F7635FBD5B7D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">978BAD4451F31A61F323F7635FBD5B7D</UserChecksum>
         </File>
         <File dnOrder="25">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_spi2.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/spi/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/spi/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">110410F84F60E49E0E54B2A239BE3D17</GeneratedChecksum>
-          <UserChecksum dnOrder="5">110410F84F60E49E0E54B2A239BE3D17</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3CE72FE96D22493EB3F3952AEBB13F30</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3CE72FE96D22493EB3F3952AEBB13F30</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">SOURCE</Type>
@@ -291,8 +291,8 @@
           <Name dnOrder="1">tasks.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5560F2EBC22DF6BE816273A6C41E783C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5560F2EBC22DF6BE816273A6C41E783C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">648B368E3136C2EC0190F426C271BE3A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">648B368E3136C2EC0190F426C271BE3A</UserChecksum>
         </File>
         <File dnOrder="36">
           <Type dnOrder="0">SOURCE</Type>
@@ -323,8 +323,8 @@
           <Name dnOrder="1">FreeRTOSConfig.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D26C9C401299FE4FD260708A72A1443C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D26C9C401299FE4FD260708A72A1443C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">2BA3208BD946D156F12D7146C162D76C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2BA3208BD946D156F12D7146C162D76C</UserChecksum>
         </File>
         <File dnOrder="40">
           <Type dnOrder="0">HEADER</Type>
@@ -419,8 +419,8 @@
           <Name dnOrder="1">drv_sdspi.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EDB331F31F51C8BCC531C36DE398DB47</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EDB331F31F51C8BCC531C36DE398DB47</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BD9340AEB3684529895E8D3D050C412A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BD9340AEB3684529895E8D3D050C412A</UserChecksum>
         </File>
         <File dnOrder="52">
           <Type dnOrder="0">HEADER</Type>
@@ -435,16 +435,16 @@
           <Name dnOrder="1">drv_sdspi_local.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D92B8A1C55FC8D28EE88EE57B50A9BC4</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D92B8A1C55FC8D28EE88EE57B50A9BC4</UserChecksum>
+          <GeneratedChecksum dnOrder="4">66C0954FD52141B6C2335A29E3B73E6B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">66C0954FD52141B6C2335A29E3B73E6B</UserChecksum>
         </File>
         <File dnOrder="54">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_sdspi_plib_interface.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BD6CFEB9F3A36F4882C7DCFBA1ACD0BE</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BD6CFEB9F3A36F4882C7DCFBA1ACD0BE</UserChecksum>
+          <GeneratedChecksum dnOrder="4">DE2BF6F3DC35F9CEC69C04FF3F487619</GeneratedChecksum>
+          <UserChecksum dnOrder="5">DE2BF6F3DC35F9CEC69C04FF3F487619</UserChecksum>
         </File>
         <File dnOrder="55">
           <Type dnOrder="0">HEADER</Type>
