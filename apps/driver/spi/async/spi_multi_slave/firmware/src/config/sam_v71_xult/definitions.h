@@ -53,6 +53,7 @@
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/xdmac/plib_xdmac.h"
 #include "peripheral/spi/plib_spi0.h"
+#include "peripheral/efc/plib_efc.h"
 #include "bsp/bsp.h"
 #include "driver/spi/drv_spi.h"
 #include "system/int/sys_int.h"
