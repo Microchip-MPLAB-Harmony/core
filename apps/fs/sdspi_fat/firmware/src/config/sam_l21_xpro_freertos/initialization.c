@@ -54,13 +54,11 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
-
 #pragma config NVMCTRL_BOOTPROT = 0x7
 #pragma config NVMCTRL_EEPROM_SIZE = 0x7
 #pragma config BOD33USERLEVEL = 0x6
 #pragma config BOD33_DIS = CLEAR
 #pragma config BOD33_ACTION = 0x0
-#pragma config BOD12_DIS = CLEAR
 #pragma config WDT_ENABLE = CLEAR
 #pragma config WDT_ALWAYSON = CLEAR
 #pragma config WDT_PER = 0xB
@@ -68,7 +66,6 @@
 #pragma config WDT_EWOFFSET = 0xB
 #pragma config WDT_WEN = CLEAR
 #pragma config BOD33_HYST = CLEAR
-#pragma config BOD12_HYST = CLEAR
 #pragma config NVMCTRL_REGION_LOCKS = 0xffff
 
 
@@ -81,8 +78,9 @@
 // *****************************************************************************
 // <editor-fold defaultstate="collapsed" desc="DRV_SDSPI Instance 0 Initialization Data">
 
-/* SD Card Client Objects Pool */
+/* SDSPI Client Objects Pool */
 static DRV_SDSPI_CLIENT_OBJ drvSDSPI0ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX0];
+
 
 /* SPI PLIB Interface Initialization for SDSPI Driver */
 const DRV_SDSPI_PLIB_INTERFACE drvSDSPI0PlibAPI = {
@@ -125,6 +123,7 @@ const DRV_SDSPI_INIT drvSDSPI0InitData =
 
     /* SDSPI Client Objects Pool */
     .clientObjPool          = (uintptr_t)&drvSDSPI0ClientObjPool[0],
+
 
     .chipSelectPin          = DRV_SDSPI_CHIP_SELECT_PIN_IDX0,
 
@@ -221,12 +220,13 @@ const SYS_TIME_INIT sysTimeInitData =
 
 void SYS_Initialize ( void* data )
 {
+    NVMCTRL_Initialize( );
+
   
     PORT_Initialize();
 
 
     CLOCK_Initialize();
-
 
 
     EVSYS_Initialize();
