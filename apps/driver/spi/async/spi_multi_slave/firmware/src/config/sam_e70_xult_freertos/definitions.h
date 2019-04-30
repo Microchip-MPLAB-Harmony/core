@@ -54,6 +54,7 @@
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/xdmac/plib_xdmac.h"
 #include "peripheral/spi/plib_spi0.h"
+#include "peripheral/efc/plib_efc.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "driver/spi/drv_spi.h"
