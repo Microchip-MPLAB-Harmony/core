@@ -53,6 +53,7 @@
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/twihs/plib_twihs0.h"
+#include "peripheral/efc/plib_efc.h"
 #include "driver/i2c/drv_i2c.h"
 #include "system/int/sys_int.h"
 #include "system/cache/sys_cache.h"
