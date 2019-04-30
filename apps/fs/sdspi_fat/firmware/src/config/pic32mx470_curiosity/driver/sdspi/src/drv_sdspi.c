@@ -1,46 +1,42 @@
 /*******************************************************************************
-  SD CARD Device Driver Definition
+  SD Card (SPI) Driver
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    drv_sdcard.c
+    drv_sdspi.c
 
   Summary:
-    SD CARD Device Driver Dynamic Implementation
+    SD Card (SPI) Asynchronous driver implementation.
 
   Description:
-    The SD CARD device driver provides a simple interface to manage the SD CARD
-    modules on Microchip microcontrollers. This file Implements the core
-    interface routines for the SD CARD driver.
-
-    While building the driver from source, ALWAYS use this file in the build.
+    This file contains the SD Card (SPI) Driver's asynchronous driver implementation.
 *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
-Copyright (c) 2012 released Microchip Technology Inc.  All rights reserved.
-
-Microchip licenses to you the right to use, modify, copy and distribute
-Software only when embedded on a Microchip microcontroller or digital signal
-controller that is integrated into your product or third party product
-(pursuant to the sublicense terms in the accompanying license agreement).
-
-You should refer to the license agreement accompanying this Software for
-additional information regarding your rights and obligations.
-
-SOFTWARE AND DOCUMENTATION ARE PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND,
-EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
-MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
-IN NO EVENT SHALL MICROCHIP OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER
-CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR
-OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
-INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
-CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
-SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
-(INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+ *******************************************************************************/
 //DOM-IGNORE-END
 
 
@@ -803,7 +799,7 @@ static void _DRV_SDSPI_CommandSend
     }
 }
 
-static bool _DRV_SDSPI_MediaCommandDetect
+static DRV_SDSPI_ATTACH _DRV_SDSPI_MediaCommandDetect
 (
     SYS_MODULE_OBJ object
 )
@@ -862,7 +858,7 @@ static bool _DRV_SDSPI_MediaCommandDetect
             }
             else if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR)
             {
-                dObj->cmdState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
                 dObj->sdState = TASK_STATE_IDLE;
             }
             break;
@@ -883,7 +879,7 @@ static bool _DRV_SDSPI_MediaCommandDetect
                 else
                 {
                     dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_IDLE_STATE;
-                    return true;
+                    return DRV_SDSPI_IS_ATTACHED;
                 }
             }
             else if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_ERROR)
@@ -897,7 +893,7 @@ static bool _DRV_SDSPI_MediaCommandDetect
 
             if (dObj->sdState == TASK_STATE_CARD_COMMAND)
             {
-                return true;
+                return DRV_SDSPI_IS_ATTACHED;
             }
 
             dObj->sdState = TASK_STATE_CARD_STATUS;
@@ -911,7 +907,7 @@ static bool _DRV_SDSPI_MediaCommandDetect
                 if ((dObj->cmdResponse.response2.word & 0xEC0C) != 0x0000)
                 {
                     dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
-                    return false;
+                    return DRV_SDSPI_IS_DETACHED;
                 }
                 else
                 {
@@ -922,9 +918,9 @@ static bool _DRV_SDSPI_MediaCommandDetect
             {
                 dObj->sdState = TASK_STATE_IDLE;
                 dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
-                return false;
+                return DRV_SDSPI_IS_DETACHED;
             }
-            return true;
+            return DRV_SDSPI_IS_ATTACHED;
 
         case DRV_SDSPI_CMD_DETECT_IDLE_STATE:
 
@@ -933,7 +929,7 @@ static bool _DRV_SDSPI_MediaCommandDetect
             break;
     }
 
-    return false;
+    return DRV_SDSPI_IS_DETACHED;
 }
 
 static void _DRV_SDSPI_MediaInitialize ( SYS_MODULE_OBJ object )
@@ -1360,7 +1356,7 @@ static void _DRV_SDSPI_AttachDetachTasks
         case DRV_SDSPI_TASK_CHECK_DEVICE:
             /* Check for device attach */
 
-            dObj->isAttached = _DRV_SDSPI_MediaCommandDetect (object);
+            dObj->isAttached = (DRV_SDSPI_ATTACH)_DRV_SDSPI_MediaCommandDetect (object);
             if (dObj->isAttachedLastStatus != dObj->isAttached)
             {
                 dObj->isAttachedLastStatus = dObj->isAttached;
@@ -1514,7 +1510,7 @@ static void _DRV_SDSPI_BufferIOTasks
                getting the response. This meets the NAC Min timing parameter, so
                we don't need additional clocking here.
              */
-            _DRV_SDSPI_CommandSend (object, currentBufObj->command, currentBufObj->blockStart);
+            _DRV_SDSPI_CommandSend (object, (DRV_SDSPI_COMMANDS)currentBufObj->command, currentBufObj->blockStart);
             if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_IS_COMPLETE)
             {
                 if (dObj->cmdResponse.response1.byte == 0x00)
@@ -1682,7 +1678,7 @@ static void _DRV_SDSPI_BufferIOTasks
 
             /* Send the write single or write multi command, with the LBA or byte
                address (depending upon SDHC or standard capacity card) */
-            _DRV_SDSPI_CommandSend (object, currentBufObj->command, currentBufObj->blockStart);
+            _DRV_SDSPI_CommandSend (object, (DRV_SDSPI_COMMANDS)currentBufObj->command, currentBufObj->blockStart);
             if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_IS_COMPLETE)
             {
                 if (dObj->cmdResponse.response1.byte == 0x00)
@@ -1963,7 +1959,7 @@ static void _DRV_SDSPI_BufferIOTasks
             if(clientObj->eventHandler != NULL)
             {
                 /* Call the event handler */
-                clientObj->eventHandler(evtStatus,
+                clientObj->eventHandler((SYS_MEDIA_BLOCK_EVENT)evtStatus,
                         (DRV_SDSPI_COMMAND_HANDLE)currentBufObj->commandHandle, clientObj->context);
             }
 
