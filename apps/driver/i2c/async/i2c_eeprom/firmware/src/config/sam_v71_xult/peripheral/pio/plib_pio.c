@@ -77,6 +77,8 @@ void PIO_Initialize ( void )
     ((pio_registers_t*)PIO_PORT_A)->PIO_ODR = ~0x800000;
     /* PORTA Initial state High */
     ((pio_registers_t*)PIO_PORT_A)->PIO_ODSR = 0x800000;
+    /* PORTA drive control */
+    ((pio_registers_t*)PIO_PORT_A)->PIO_DRIVER = 0x0;
 
     /************************ PIO B Initialization ************************/
     ((pio_registers_t*)PIO_PORT_B)->PIO_PER = 0xFFFFFFFF;
@@ -91,6 +93,8 @@ void PIO_Initialize ( void )
     /* PORTB Output Direction Enable */
     ((pio_registers_t*)PIO_PORT_B)->PIO_OER = 0x0;
     ((pio_registers_t*)PIO_PORT_B)->PIO_ODR = ~0x0;
+    /* PORTB drive control */
+    ((pio_registers_t*)PIO_PORT_B)->PIO_DRIVER = 0x0;
 
     /************************ PIO C Initialization ************************/
     ((pio_registers_t*)PIO_PORT_C)->PIO_PER = 0xFFFFFFFF;
@@ -106,6 +110,8 @@ void PIO_Initialize ( void )
     ((pio_registers_t*)PIO_PORT_C)->PIO_ODR = ~0x10200;
     /* PORTC Initial state High */
     ((pio_registers_t*)PIO_PORT_C)->PIO_ODSR = 0x200;
+    /* PORTC drive control */
+    ((pio_registers_t*)PIO_PORT_C)->PIO_DRIVER = 0x0;
 
     /************************ PIO D Initialization ************************/
     ((pio_registers_t*)PIO_PORT_D)->PIO_PER = 0xFFFFFFFF;
@@ -119,6 +125,8 @@ void PIO_Initialize ( void )
     /* PORTD Output Direction Enable */
     ((pio_registers_t*)PIO_PORT_D)->PIO_OER = 0x0;
     ((pio_registers_t*)PIO_PORT_D)->PIO_ODR = ~0x0;
+    /* PORTD drive control */
+    ((pio_registers_t*)PIO_PORT_D)->PIO_DRIVER = 0x0;
 
     /************************ PIO E Initialization ************************/
     ((pio_registers_t*)PIO_PORT_E)->PIO_PER = 0xFFFFFFFF;
@@ -132,6 +140,8 @@ void PIO_Initialize ( void )
     /* PORTE Output Direction Enable */
     ((pio_registers_t*)PIO_PORT_E)->PIO_OER = 0x0;
     ((pio_registers_t*)PIO_PORT_E)->PIO_ODR = ~0x0;
+    /* PORTE drive control */
+    ((pio_registers_t*)PIO_PORT_E)->PIO_DRIVER = 0x0;
 
 }
 
