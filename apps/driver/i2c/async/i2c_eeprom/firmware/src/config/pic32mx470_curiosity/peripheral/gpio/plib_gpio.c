@@ -58,6 +58,7 @@
 void GPIO_Initialize ( void )
 {
     /* PORTB Initialization */
+    LATB = 0x40c; /* Initial Latch Value */
     TRISBCLR = 0x40c; /* Direction Control */
     ANSELBCLR = 0x40c; /* Digital Mode Enable */
 
@@ -67,6 +68,7 @@ void GPIO_Initialize ( void )
     CNPUDSET = 0x40; /* Pull-Up Enable */
 
     /* PORTE Initialization */
+    LATE = 0x0; /* Initial Latch Value */
     TRISECLR = 0xd0; /* Direction Control */
     ANSELECLR = 0xd0; /* Digital Mode Enable */
 
