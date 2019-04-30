@@ -94,7 +94,8 @@ def requestAndAssignDMAChannel(symbol, event):
 
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
-    symbol.setValue(channel)
+    if channel != None:
+        symbol.setValue(channel)
 
 def instantiateComponent(sdspiComponent, index):
     global drvSdspiInstanceSpace
