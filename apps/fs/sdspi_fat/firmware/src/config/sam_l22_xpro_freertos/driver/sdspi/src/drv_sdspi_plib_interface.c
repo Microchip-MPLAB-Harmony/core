@@ -328,6 +328,9 @@ bool _DRV_SDSPI_SPIBlockWrite(
         }
     }
 
+    /* Make sure all the bytes have shifted out before de-asserting the CS */
+    while(dObj->spiPlib->isBusy());
+
     SYS_PORT_PinSet(dObj->chipSelectPin);
     return isSuccess;
 }
@@ -382,6 +385,9 @@ bool _DRV_SDSPI_SPIWrite(
     {
         isSuccess = true;
     }
+
+    /* Make sure all the bytes have shifted out before de-asserting the CS */
+    while(dObj->spiPlib->isBusy());
 
     SYS_PORT_PinSet(dObj->chipSelectPin);
     return isSuccess;
@@ -440,6 +446,9 @@ bool _DRV_SDSPI_SPIBlockRead(
         }
     }
 
+    /* Make sure all the bytes have shifted out before de-asserting the CS */
+    while(dObj->spiPlib->isBusy());
+
     SYS_PORT_PinSet(dObj->chipSelectPin);
 
     return isSuccess;
@@ -495,6 +504,9 @@ bool _DRV_SDSPI_SPIRead(
     {
         isSuccess = true;
     }
+
+    /* Make sure all the bytes have shifted out before de-asserting the CS */
+    while(dObj->spiPlib->isBusy());
 
     SYS_PORT_PinSet(dObj->chipSelectPin);
 
@@ -567,6 +579,63 @@ bool _DRV_SDSPI_CardDetectPollingTimerStart(
 
     if (dObj->cardPollingTmrHandle != SYS_TIME_HANDLE_INVALID)
     {
+        isSuccess = true;
+    }
+
+    return isSuccess;
+}
+
+// *****************************************************************************
+/* Command Response Timer Start
+
+  Summary:
+    Registers an event handler with the Timer System Service and starts the
+    command-response timer.
+
+  Description:
+    The registered event handler is called when the time period elapses.
+
+  Remarks:
+
+*/
+bool _DRV_SDSPI_CmdResponseTimerStart(
+    DRV_SDSPI_OBJ* const dObj,
+    uint32_t period
+)
+{
+    bool isSuccess = false;
+    dObj->cmdRespTmrExpired = false;
+
+    dObj->cmdRespTmrHandle = SYS_TIME_CallbackRegisterMS(DRV_SDSPI_TimerCallback,
+             (uintptr_t)&dObj->cmdRespTmrExpired, period, SYS_TIME_SINGLE);
+
+    if (dObj->cmdRespTmrHandle != SYS_TIME_HANDLE_INVALID)
+    {
+        isSuccess = true;
+    }
+
+    return isSuccess;
+}
+
+// *****************************************************************************
+/* Command Response Timer Stop
+
+  Summary:
+    Stops the command-response timer.
+
+  Description:
+
+  Remarks:
+
+*/
+
+bool _DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj )
+{
+    bool isSuccess = false;
+
+    if (dObj->cmdRespTmrHandle != SYS_TIME_HANDLE_INVALID)
+    {
+        SYS_TIME_TimerDestroy(dObj->cmdRespTmrHandle);
         isSuccess = true;
     }
 

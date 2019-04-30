@@ -574,6 +574,88 @@ bool DRV_SDSPI_SyncRead (
 
 // *****************************************************************************
 /* Function:
+    void DRV_SDSPI_AsyncRead (
+        const DRV_HANDLE handle,
+        DRV_SDSPI_COMMAND_HANDLE* commandHandle,
+        void* targetBuffer,
+        uint32_t blockStart,
+        uint32_t nBlocks
+    )
+
+  Summary:
+    Reads blocks of data from the specified block address of the SD Card.
+
+  Description:
+    This function performs a blocking read operation to read blocks of data
+    from the SD Card. The function returns true if the request was successfully
+    executed; returns false otherwise.
+    The function returns false under following conditions:
+    - if the driver handle is invalid
+    - if the target buffer pointer is NULL
+    - if the number of blocks to be read is zero or more than the actual number
+      of blocks available.
+    - Error during the read operation
+
+  Precondition:
+    The DRV_SDSPI_Initialize routine must have been called for the specified SDSPI
+    driver instance.
+
+    DRV_SDSPI_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    targetBuffer  - Buffer into which the data read from the SD Card will be placed
+
+    blockStart    - Starting block address of the SD Card from where the read should begin.
+
+    nBlock        - Total number of blocks to be read.
+
+  Returns:
+    true - If the request was executed successfully.
+
+    false - If there was an error executing the request.
+
+  Example:
+    <code>
+    #define MY_BUFFER_SIZE 1024
+    uint8_t myBuffer[MY_BUFFER_SIZE];
+    DRV_SDSPI_COMMAND_HANDLE readHandle;
+
+    // Address must be block aligned.
+    uint32_t blockStart = 0x00;
+    uint32_t nBlock = 2;
+
+    // mySDSPIHandle is the handle returned by the DRV_SDSPI_Open function.
+
+    DRV_SDSPI_AsyncRead(mySDSPIHandle, &readHandle, myBuffer, blockStart, nBlock);
+    if (readHandle == DRV_SDSPI_COMMAND_HANDLE_INVALID)
+    {
+        // Handle error
+    }
+    else
+    {
+        // Read request queued successfully
+    }
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
+void DRV_SDSPI_AsyncRead 
+(
+    const DRV_HANDLE handle,
+    DRV_SDSPI_COMMAND_HANDLE* commandHandle,
+    void* targetBuffer,
+    uint32_t blockStart,
+    uint32_t nBlocks
+);
+
+// *****************************************************************************
+/* Function:
     bool DRV_SDSPI_SyncWrite(
         const DRV_HANDLE handle,
         void* sourceBuffer,
@@ -647,6 +729,88 @@ bool DRV_SDSPI_SyncWrite(
     void* sourceBuffer,
     uint32_t blockStart,
     uint32_t nBlock
+);
+
+// *****************************************************************************
+/* Function:
+    void DRV_SDSPI_AsyncWrite(
+        const DRV_HANDLE handle,
+        DRV_SDSPI_COMMAND_HANDLE* commandHandle,
+        void* sourceBuffer,
+        uint32_t blockStart,
+        uint32_t nBlocks
+    )
+
+  Summary:
+    Writes blocks of data starting at the specified address of the SD Card.
+
+  Description:
+    This function performs a blocking write operation to write blocks of data to
+    the SD Card. The function returns true if the request was successfully
+    executed. The function returns false under the following circumstances:
+    - if the driver handle is invalid
+    - if the source buffer pointer is NULL
+    - if the number of blocks to be written is either zero or more than the number
+      of blocks actually available
+    - if the SD card is write-protected
+    - if there was an error during the SD card write operation
+
+  Precondition:
+    The DRV_SDSPI_Initialize routine must have been called for the specified
+    SDSPI driver instance.
+
+    DRV_SDSPI_Open routine must have been called to obtain a valid opened device
+    handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    sourceBuffer  - The source buffer containing data to be written to the SD Card.
+
+    blockStart    - Starting block address of SD Card where the writes should begin.
+
+    nBlock        - Total number of blocks to be written.
+
+  Returns:
+    true - If the request was executed successfully.
+
+    false - If there was an error executing the request.
+
+  Example:
+    <code>
+
+    #define MY_BUFFER_SIZE          1024
+    uint8_t myBuffer[MY_BUFFER_SIZE];
+    DRV_SDSPI_COMMAND_HANDLE writeHandle;
+
+    // Address must be block aligned.
+    uint32_t blockStart = 0x00;
+    uint32_t nBlock = 2;
+
+    // mySDSPIHandle is the handle returned by the DRV_SDSPI_Open function.
+
+    DRV_SDSPI_AsyncWrite(mySDSPIHandle, &writeHandle, myBuffer, blockStart, nBlock);
+    if (writeHandle == DRV_SDSPI_COMMAND_HANDLE_INVALID)
+    {
+        // Handle error
+    }
+    else
+    {
+        // Write request queued successfully
+    }
+    </code>
+
+  Remarks:
+    None.
+*/
+void DRV_SDSPI_AsyncWrite
+(
+    const DRV_HANDLE handle,
+    DRV_SDSPI_COMMAND_HANDLE* commandHandle,
+    void* sourceBuffer,
+    uint32_t blockStart,
+    uint32_t nBlocks
 );
 
 // *****************************************************************************
