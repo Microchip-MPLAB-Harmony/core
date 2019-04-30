@@ -51,8 +51,8 @@
           <Name dnOrder="1">drv_sdspi.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">43C228D9ACF835527467D4A4B3B8F93D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">43C228D9ACF835527467D4A4B3B8F93D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E8871B770C0C40EED4997A7221717ED1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E8871B770C0C40EED4997A7221717ED1</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -67,8 +67,8 @@
           <Name dnOrder="1">drv_sdspi_plib_interface.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">ABAF2310A46CD44B4281318EE672022C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">ABAF2310A46CD44B4281318EE672022C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1DA61A119147F17183990D1A50F824C4</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1DA61A119147F17183990D1A50F824C4</UserChecksum>
         </File>
         <File dnOrder="8">
           <Type dnOrder="0">SOURCE</Type>
@@ -115,8 +115,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">2FF1702364A4BE92B42B38D70DAE5D91</GeneratedChecksum>
-          <UserChecksum dnOrder="5">2FF1702364A4BE92B42B38D70DAE5D91</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E69B03A8F0C56F40BF5ADAB83C9C1A23</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E69B03A8F0C56F40BF5ADAB83C9C1A23</UserChecksum>
         </File>
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
@@ -171,16 +171,16 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9BE7E9709B8F48118709838D71620EAB</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9BE7E9709B8F48118709838D71620EAB</UserChecksum>
+          <GeneratedChecksum dnOrder="4">FBD3D2A9612620734B305A396E19A642</GeneratedChecksum>
+          <UserChecksum dnOrder="5">FBD3D2A9612620734B305A396E19A642</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_coretimer.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/coretimer/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/coretimer/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">69091AC5990DAAE4C3DFFC1541118378</GeneratedChecksum>
-          <UserChecksum dnOrder="5">69091AC5990DAAE4C3DFFC1541118378</UserChecksum>
+          <GeneratedChecksum dnOrder="4">2FEFEA0D4E94F5A5F3D76BAEC3D602E5</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2FEFEA0D4E94F5A5F3D76BAEC3D602E5</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">SOURCE</Type>
@@ -203,16 +203,16 @@
           <Name dnOrder="1">plib_gpio.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/gpio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/gpio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">13947848A5E4A983A109159965E13781</GeneratedChecksum>
-          <UserChecksum dnOrder="5">13947848A5E4A983A109159965E13781</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B3E9A727B7A6073CE35C8F823822E0E9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B3E9A727B7A6073CE35C8F823822E0E9</UserChecksum>
         </File>
         <File dnOrder="25">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_spi1.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/spi/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/spi/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">819F957FA07EC1FDB465AF31F465B288</GeneratedChecksum>
-          <UserChecksum dnOrder="5">819F957FA07EC1FDB465AF31F465B288</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9B4FBA557C2448A4D9128EE4DC9C3E59</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9B4FBA557C2448A4D9128EE4DC9C3E59</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">SOURCE</Type>
@@ -291,8 +291,8 @@
           <Name dnOrder="1">tasks.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5560F2EBC22DF6BE816273A6C41E783C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5560F2EBC22DF6BE816273A6C41E783C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">5089A8DECF6FA71C9C370B296E28BB03</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5089A8DECF6FA71C9C370B296E28BB03</UserChecksum>
         </File>
         <File dnOrder="36">
           <Type dnOrder="0">SOURCE</Type>
@@ -323,8 +323,8 @@
           <Name dnOrder="1">FreeRTOSConfig.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C1CB7146E2F2338994969F35681EF79A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C1CB7146E2F2338994969F35681EF79A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">FE506CD79657D3BD08993EFBB8E854D9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">FE506CD79657D3BD08993EFBB8E854D9</UserChecksum>
         </File>
         <File dnOrder="40">
           <Type dnOrder="0">HEADER</Type>
@@ -355,8 +355,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">09F94186F29A2F69576C7DBD54852BA0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">09F94186F29A2F69576C7DBD54852BA0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D9F520416EE1BC170F1F375E54095790</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D9F520416EE1BC170F1F375E54095790</UserChecksum>
         </File>
         <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>
@@ -419,8 +419,8 @@
           <Name dnOrder="1">drv_sdspi.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EDB331F31F51C8BCC531C36DE398DB47</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EDB331F31F51C8BCC531C36DE398DB47</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BD9340AEB3684529895E8D3D050C412A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BD9340AEB3684529895E8D3D050C412A</UserChecksum>
         </File>
         <File dnOrder="52">
           <Type dnOrder="0">HEADER</Type>
@@ -435,16 +435,16 @@
           <Name dnOrder="1">drv_sdspi_local.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D92B8A1C55FC8D28EE88EE57B50A9BC4</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D92B8A1C55FC8D28EE88EE57B50A9BC4</UserChecksum>
+          <GeneratedChecksum dnOrder="4">66C0954FD52141B6C2335A29E3B73E6B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">66C0954FD52141B6C2335A29E3B73E6B</UserChecksum>
         </File>
         <File dnOrder="54">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_sdspi_plib_interface.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BD6CFEB9F3A36F4882C7DCFBA1ACD0BE</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BD6CFEB9F3A36F4882C7DCFBA1ACD0BE</UserChecksum>
+          <GeneratedChecksum dnOrder="4">DE2BF6F3DC35F9CEC69C04FF3F487619</GeneratedChecksum>
+          <UserChecksum dnOrder="5">DE2BF6F3DC35F9CEC69C04FF3F487619</UserChecksum>
         </File>
         <File dnOrder="55">
           <Type dnOrder="0">HEADER</Type>
@@ -547,16 +547,16 @@
           <Name dnOrder="1">plib_clk.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AED8D8C760D4C814EBDD91798758ED53</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AED8D8C760D4C814EBDD91798758ED53</UserChecksum>
+          <GeneratedChecksum dnOrder="4">7066CC390335CF75126E2A50C46E3BDD</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7066CC390335CF75126E2A50C46E3BDD</UserChecksum>
         </File>
         <File dnOrder="68">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_coretimer.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/coretimer/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/coretimer/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A77105DF622304DDAFD3F35330246334</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A77105DF622304DDAFD3F35330246334</UserChecksum>
+          <GeneratedChecksum dnOrder="4">703A4222E2EE7A178846266EB036CA45</GeneratedChecksum>
+          <UserChecksum dnOrder="5">703A4222E2EE7A178846266EB036CA45</UserChecksum>
         </File>
         <File dnOrder="69">
           <Type dnOrder="0">HEADER</Type>
@@ -830,11 +830,12 @@
         <Setting append="true" category="C32-AS" delimiter=";" dnOrder="3" key="extra-include-directories-for-preprocessor" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos;"/>
         <Setting category="C32-LD" dnOrder="4" key="heap-size" value="0"/>
         <Setting category="C32-LD" dnOrder="5" key="no-device-startup-code" value="true"/>
+        <Setting category="C32-LD" dnOrder="6" key="preprocessor-macros" value=""/>
       </Settings>
     </Manifest>
     <Settings dnOrder="4">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.4.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MX_DFP\0.1\PIC32MX\atdf\PIC32MX470F512H.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MX_DFP\1.0.49\atdf\PIC32MX470F512H.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>

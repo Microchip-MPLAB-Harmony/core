@@ -95,7 +95,7 @@ extern "C" {
 #define SYS_FS_CWD_STRING_LEN             1024
 
 /* File System RTOS Configurations*/
-#define SYS_FS_STACK_SIZE                 1024
+#define SYS_FS_STACK_SIZE                 256
 #define SYS_FS_PRIORITY                   1
 
 
