@@ -68,10 +68,10 @@ typedef struct
 } DMAC_CH_OBJECT ;
 
 /* Initial write back memory section for DMAC */
-static  dmac_descriptor_registers_t _write_back_section[DMAC_CHANNELS_NUMBER]    __attribute__((aligned(16)));
+static  dmac_descriptor_registers_t _write_back_section[DMAC_CHANNELS_NUMBER]    __attribute__((aligned(16))) ;
 
 /* Descriptor section for DMAC */
-static  dmac_descriptor_registers_t  descriptor_section[DMAC_CHANNELS_NUMBER]    __attribute__((aligned(16)));
+static  dmac_descriptor_registers_t  descriptor_section[DMAC_CHANNELS_NUMBER]    __attribute__((aligned(16))) ;
 
 /* DMAC Channels object information structure */
 DMAC_CH_OBJECT dmacChannelObj[DMAC_CHANNELS_NUMBER];
@@ -110,6 +110,30 @@ void DMAC_Initialize( void )
     /* Update the Priority Control register */
     DMAC_REGS->DMAC_PRICTRL0 = DMAC_PRICTRL0_LVLPRI0(1) | DMAC_PRICTRL0_RRLVLEN0_Msk | DMAC_PRICTRL0_LVLPRI1(1) | DMAC_PRICTRL0_RRLVLEN1_Msk | DMAC_PRICTRL0_LVLPRI2(1) | DMAC_PRICTRL0_RRLVLEN2_Msk | DMAC_PRICTRL0_LVLPRI3(1) | DMAC_PRICTRL0_RRLVLEN3_Msk;
 
+
+    /***************** Configure DMA channel 0 ********************/
+
+    DMAC_REGS->DMAC_CHID = 0;
+
+    DMAC_REGS->DMAC_CHCTRLB = DMAC_CHCTRLB_TRIGACT(2) | DMAC_CHCTRLB_TRIGSRC(4) | DMAC_CHCTRLB_LVL(0) ;
+
+    descriptor_section[0].DMAC_BTCTRL = DMAC_BTCTRL_BLOCKACT_INT | DMAC_BTCTRL_BEATSIZE_BYTE | DMAC_BTCTRL_VALID_Msk | DMAC_BTCTRL_DSTINC_Msk ;
+
+    dmacChannelObj[0].inUse = 1;
+
+    DMAC_REGS->DMAC_CHINTENSET = (DMAC_CHINTENSET_TERR_Msk | DMAC_CHINTENSET_TCMPL_Msk);
+
+    /***************** Configure DMA channel 1 ********************/
+
+    DMAC_REGS->DMAC_CHID = 1;
+
+    DMAC_REGS->DMAC_CHCTRLB = DMAC_CHCTRLB_TRIGACT(2) | DMAC_CHCTRLB_TRIGSRC(5) | DMAC_CHCTRLB_LVL(0) ;
+
+    descriptor_section[1].DMAC_BTCTRL = DMAC_BTCTRL_BLOCKACT_INT | DMAC_BTCTRL_BEATSIZE_BYTE | DMAC_BTCTRL_VALID_Msk | DMAC_BTCTRL_SRCINC_Msk ;
+
+    dmacChannelObj[1].inUse = 1;
+
+    DMAC_REGS->DMAC_CHINTENSET = (DMAC_CHINTENSET_TERR_Msk | DMAC_CHINTENSET_TCMPL_Msk);
 
     /***************** Configure DMA channel 2 ********************/
 
