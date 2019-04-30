@@ -138,7 +138,7 @@ bool SPI2_TransferSetup (SPI_TRANSFER_SETUP* setup, uint32_t spiSourceClock )
         t_brg++;
     }
 
-    if(t_brg > 8191)
+    if(t_brg > 511)
     {
         return false;
     }
@@ -305,7 +305,7 @@ bool SPI2_WriteRead (void* pTransmitData, size_t txSize, void* pReceiveData, siz
 
 bool SPI2_IsBusy (void)
 {
-    return spi2Obj.transferIsBusy;
+    return ( (spi2Obj.transferIsBusy) || ((SPI2STAT & _SPI2STAT_SRMT_MASK) == 0));
 }
 
 void SPI2_CallbackRegister (SPI_CALLBACK callback, uintptr_t context)

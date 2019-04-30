@@ -429,112 +429,142 @@
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="85" id="SPI_1_INTERRUPT_ENABLE">
+        <Hex dnOrder="85" id="PMD5_REG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="4294966527"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="86" id="PMD6_REG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="4294967293"/>
+          </Values>
+        </Hex>
+        <Boolean dnOrder="87" id="SPI1_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="spi1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="86" id="SPI_1_INTERRUPT_ENABLE_UPDATE">
+        <Integer dnOrder="88" id="SPI1_CLOCK_FREQUENCY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="48000000"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="89" id="SPI2_CLOCK_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="spi2" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="90" id="SPI2_CLOCK_FREQUENCY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="48000000"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="91" id="SPI_1_INTERRUPT_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="spi1" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="92" id="SPI_1_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="87" id="SPI_1_INTERRUPT_HANDLER">
+        <String dnOrder="93" id="SPI_1_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="spi1" value="SPI_1_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="88" id="SPI_1_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="94" id="SPI_1_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="spi1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="89" id="SPI_2_INTERRUPT_ENABLE">
+        <Boolean dnOrder="95" id="SPI_2_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="spi2" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="90" id="SPI_2_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="96" id="SPI_2_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="91" id="SPI_2_INTERRUPT_HANDLER">
+        <String dnOrder="97" id="SPI_2_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="spi2" value="SPI_2_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="92" id="SPI_2_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="98" id="SPI_2_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="spi2" value="true"/>
           </Values>
         </Boolean>
-        <Hex dnOrder="93" id="SYS_PORT_B_ANSEL">
+        <Hex dnOrder="99" id="SYS_PORT_B_ANSEL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="50188"/>
           </Values>
         </Hex>
-        <Hex dnOrder="94" id="SYS_PORT_B_LAT">
+        <Hex dnOrder="100" id="SYS_PORT_B_LAT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="49152"/>
           </Values>
         </Hex>
-        <Hex dnOrder="95" id="SYS_PORT_B_TRIS">
+        <Hex dnOrder="101" id="SYS_PORT_B_TRIS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="50188"/>
           </Values>
         </Hex>
-        <Hex dnOrder="96" id="SYS_PORT_D_ANSEL">
+        <Hex dnOrder="102" id="SYS_PORT_D_ANSEL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="12"/>
           </Values>
         </Hex>
-        <Hex dnOrder="97" id="SYS_PORT_D_CNPU">
+        <Hex dnOrder="103" id="SYS_PORT_D_CNPU">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="64"/>
           </Values>
         </Hex>
-        <Hex dnOrder="98" id="SYS_PORT_D_LAT">
+        <Hex dnOrder="104" id="SYS_PORT_D_LAT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="272"/>
           </Values>
         </Hex>
-        <Hex dnOrder="99" id="SYS_PORT_D_TRIS">
+        <Hex dnOrder="105" id="SYS_PORT_D_TRIS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="272"/>
           </Values>
         </Hex>
-        <Hex dnOrder="100" id="SYS_PORT_E_ANSEL">
+        <Hex dnOrder="106" id="SYS_PORT_E_ANSEL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="208"/>
           </Values>
         </Hex>
-        <Hex dnOrder="101" id="SYS_PORT_E_LAT">
+        <Hex dnOrder="107" id="SYS_PORT_E_LAT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="8"/>
           </Values>
         </Hex>
-        <Hex dnOrder="102" id="SYS_PORT_E_TRIS">
+        <Hex dnOrder="108" id="SYS_PORT_E_TRIS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="216"/>
           </Values>
         </Hex>
-        <Hex dnOrder="103" id="SYS_PORT_G_ANSEL">
+        <Hex dnOrder="109" id="SYS_PORT_G_ANSEL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="960"/>
           </Values>
         </Hex>
-        <Hex dnOrder="104" id="SYS_PORT_G_LAT">
+        <Hex dnOrder="110" id="SYS_PORT_G_LAT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="512"/>
           </Values>
         </Hex>
-        <Hex dnOrder="105" id="SYS_PORT_G_TRIS">
+        <Hex dnOrder="111" id="SYS_PORT_G_TRIS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="512"/>
           </Values>
         </Hex>
-        <Combo dnOrder="106" id="SYS_PORT_PPS_INPUT_FUNCTION_0">
+        <Combo dnOrder="112" id="SYS_PORT_PPS_INPUT_FUNCTION_0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -544,7 +574,7 @@
             <User dnOrder="0" value="SDI1"/>
           </Values>
         </Combo>
-        <Combo dnOrder="107" id="SYS_PORT_PPS_INPUT_FUNCTION_1">
+        <Combo dnOrder="113" id="SYS_PORT_PPS_INPUT_FUNCTION_1">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -554,12 +584,12 @@
             <User dnOrder="0" value="SDI2"/>
           </Values>
         </Combo>
-        <Combo dnOrder="108" id="SYS_PORT_PPS_INPUT_FUNCTION_2">
+        <Combo dnOrder="114" id="SYS_PORT_PPS_INPUT_FUNCTION_2">
           <Values dnOrder="0">
             <User dnOrder="0" value="IC1"/>
           </Values>
         </Combo>
-        <KeyValueSet dnOrder="109" id="SYS_PORT_PPS_INPUT_PIN_0">
+        <KeyValueSet dnOrder="115" id="SYS_PORT_PPS_INPUT_PIN_0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -569,7 +599,7 @@
             <User dnOrder="0" value="11"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="110" id="SYS_PORT_PPS_INPUT_PIN_1">
+        <KeyValueSet dnOrder="116" id="SYS_PORT_PPS_INPUT_PIN_1">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -579,12 +609,12 @@
             <User dnOrder="0" value="29"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="111" id="SYS_PORT_PPS_INPUT_PIN_2">
+        <KeyValueSet dnOrder="117" id="SYS_PORT_PPS_INPUT_PIN_2">
           <Values dnOrder="0">
             <User dnOrder="0" value="20"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="112" id="SYS_PORT_PPS_OUTPUT_FUNCTION_0">
+        <KeyValueSet dnOrder="118" id="SYS_PORT_PPS_OUTPUT_FUNCTION_0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -594,7 +624,7 @@
             <User dnOrder="0" value="13"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="113" id="SYS_PORT_PPS_OUTPUT_FUNCTION_1">
+        <KeyValueSet dnOrder="119" id="SYS_PORT_PPS_OUTPUT_FUNCTION_1">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -604,7 +634,7 @@
             <User dnOrder="0" value="10"/>
           </Values>
         </KeyValueSet>
-        <Combo dnOrder="114" id="SYS_PORT_PPS_OUTPUT_PIN_0">
+        <Combo dnOrder="120" id="SYS_PORT_PPS_OUTPUT_PIN_0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -614,7 +644,7 @@
             <User dnOrder="0" value="RPD5"/>
           </Values>
         </Combo>
-        <Combo dnOrder="115" id="SYS_PORT_PPS_OUTPUT_PIN_1">
+        <Combo dnOrder="121" id="SYS_PORT_PPS_OUTPUT_PIN_1">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -624,32 +654,32 @@
             <User dnOrder="0" value="RPG8"/>
           </Values>
         </Combo>
-        <Boolean dnOrder="116" id="USE_PPS_INPUT_0">
+        <Boolean dnOrder="122" id="USE_PPS_INPUT_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="117" id="USE_PPS_INPUT_1">
+        <Boolean dnOrder="123" id="USE_PPS_INPUT_1">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="118" id="USE_PPS_INPUT_2">
+        <Boolean dnOrder="124" id="USE_PPS_INPUT_2">
           <Values dnOrder="0">
             <User dnOrder="0" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="119" id="USE_PPS_OUTPUT_0">
+        <Boolean dnOrder="125" id="USE_PPS_OUTPUT_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="120" id="USE_PPS_OUTPUT_1">
+        <Boolean dnOrder="126" id="USE_PPS_OUTPUT_1">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <KeyValueSet dnOrder="121" id="clkSvcMode">
+        <KeyValueSet dnOrder="127" id="clkSvcMode">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
@@ -668,26 +698,40 @@
       <Instances dnOrder="1">
         <InstanceComponent dnOrder="0" id="drv_spi" instance="0">
           <Symbols dnOrder="0">
-            <String dnOrder="0" id="DRV_SPI_MODE">
+            <Comment dnOrder="0" id="DRV_SPI_DEPENDENCY_DMA_COMMENT">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </Comment>
+            <String dnOrder="1" id="DRV_SPI_MODE">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="drv_spi_0" value="Asynchronous"/>
               </Values>
             </String>
-            <String dnOrder="1" id="DRV_SPI_PLIB">
+            <String dnOrder="2" id="DRV_SPI_PLIB">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="drv_spi_0" value="SPI1"/>
               </Values>
             </String>
-            <Integer dnOrder="2" id="DRV_SPI_RX_DMA_CHANNEL">
+            <Integer dnOrder="3" id="DRV_SPI_RX_DMA_CHANNEL">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="drv_spi_0" value="-1"/>
               </Values>
             </Integer>
-            <Integer dnOrder="3" id="DRV_SPI_TX_DMA_CHANNEL">
+            <Integer dnOrder="4" id="DRV_SPI_TX_DMA_CHANNEL">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="drv_spi_0" value="-1"/>
               </Values>
             </Integer>
+            <Boolean dnOrder="5" id="DRV_SPI_TX_RX_DMA">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="readOnly">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </Boolean>
           </Symbols>
           <Attachments dnOrder="1">
             <DirectDependency dnOrder="0" id="drv_spi_SPI_dependency">
@@ -704,26 +748,40 @@
         </InstanceComponent>
         <InstanceComponent dnOrder="1" id="drv_spi" instance="1">
           <Symbols dnOrder="0">
-            <String dnOrder="0" id="DRV_SPI_MODE">
+            <Comment dnOrder="0" id="DRV_SPI_DEPENDENCY_DMA_COMMENT">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </Comment>
+            <String dnOrder="1" id="DRV_SPI_MODE">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="drv_spi_1" value="Asynchronous"/>
               </Values>
             </String>
-            <String dnOrder="1" id="DRV_SPI_PLIB">
+            <String dnOrder="2" id="DRV_SPI_PLIB">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="drv_spi_1" value="SPI2"/>
               </Values>
             </String>
-            <Integer dnOrder="2" id="DRV_SPI_RX_DMA_CHANNEL">
+            <Integer dnOrder="3" id="DRV_SPI_RX_DMA_CHANNEL">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="drv_spi_1" value="-1"/>
               </Values>
             </Integer>
-            <Integer dnOrder="3" id="DRV_SPI_TX_DMA_CHANNEL">
+            <Integer dnOrder="4" id="DRV_SPI_TX_DMA_CHANNEL">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="drv_spi_1" value="-1"/>
               </Values>
             </Integer>
+            <Boolean dnOrder="5" id="DRV_SPI_TX_RX_DMA">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="readOnly">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </Boolean>
           </Symbols>
           <Attachments dnOrder="1">
             <DirectDependency dnOrder="0" id="drv_spi_SPI_dependency">
@@ -1107,11 +1165,10 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_PIC32MX470_Curiosity_Development_Board" x="240" y="20"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="313" y="113"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="325" y="100"/>
         <ElementPosition dnOrder="2" id="core" x="323" y="63"/>
         <ElementPosition dnOrder="3" id="dfp" x="20" y="20"/>
         <ElementPosition dnOrder="4" id="drv_spi" x="170" y="60"/>
@@ -1119,5 +1176,6 @@
         <ElementPosition dnOrder="6" id="spi2" x="18" y="211"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
