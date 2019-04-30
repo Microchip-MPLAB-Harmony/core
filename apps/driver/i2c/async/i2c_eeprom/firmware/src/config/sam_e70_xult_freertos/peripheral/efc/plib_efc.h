@@ -1,23 +1,22 @@
 /*******************************************************************************
-  Ports System Service Mapping File
+ Interface definition of EFC PLIB.
 
-  Company:
+ Company:
     Microchip Technology Inc.
 
-  File Name:
-    sys_ports_mapping.h
+ File Name:
+    plib_efc.h
 
-  Summary:
-    Ports System Service mapping file.
+ Summary:
+    Interface definition of EFC Plib.
 
-  Description:
-    This header file contains the mapping of the APIs defined in the API header
-    to either the function implementations or macro implementation or the
-    specific variant implementation.
+ Description:
+    This file defines the interface for the EFC Plib.
+    It allows user to Program, Erase and lock the on-chip FLASH memory.
 *******************************************************************************/
 
-//DOM-IGNORE-BEGIN
-/******************************************************************************
+// DOM-IGNORE-BEGIN
+/*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
@@ -39,64 +38,69 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-//DOM-IGNORE-END
+// DOM-IGNORE-END
 
-#ifndef SYS_PORTS_MAPPING_H
-#define SYS_PORTS_MAPPING_H
+#ifndef EFC_H    // Guards against multiple inclusion
+#define EFC_H
 
+#include <stdint.h>
+#include <stdbool.h>
+#include <stddef.h>
 
-
-#include "peripheral/pio/plib_pio.h"
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus // Provide C++ Compatibility
+    extern "C" {
+#endif
+// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: PORTS System Service Mapping
+// Section: Interface
 // *****************************************************************************
 // *****************************************************************************
 
+#define EFC_SECTORSIZE              8192
+#define EFC_PAGESIZE                512
+#define EFC_LOCKSIZE                0x4000
 
-static inline void SYS_PORT_PinWrite(SYS_PORT_PIN pin, bool value)
+
+typedef enum
 {
-    PIO_PinWrite((PIO_PIN)pin, value);
+    EFC_ERROR_NONE = 0x1,
+    /*In-valid command*/
+    EFC_CMD_ERROR = 0x2,
+    /*Flash region is locked*/
+    EFC_LOCK_ERROR = 0x4,
+    /*Flash Error*/
+    EFC_FLERR_ERROR = 0x8,
+    /*Flash Encountered an ECC error*/
+    EFC_ECC_ERROR = 0xF0000,
+} EFC_ERROR;
+
+
+void EFC_Initialize(void);
+
+bool EFC_Read( uint32_t *data, uint32_t length, uint32_t address );
+
+bool EFC_SectorErase( uint32_t address );
+
+bool EFC_PageWrite( uint32_t *data, uint32_t address );
+
+bool EFC_QuadWordWrite( uint32_t *data, uint32_t address );
+
+EFC_ERROR EFC_ErrorGet( void );
+
+bool EFC_IsBusy(void);
+
+void EFC_RegionLock(uint32_t address);
+
+void EFC_RegionUnlock(uint32_t address);
+
+
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus // Provide C++ Compatibility
 }
+#endif
+// DOM-IGNORE-END
 
-static inline bool SYS_PORT_PinRead(SYS_PORT_PIN pin)
-{
-    return(PIO_PinRead((PIO_PIN)pin));
-}
-
-static inline bool SYS_PORT_PinLatchRead(SYS_PORT_PIN pin)
-{
-    return(PIO_PinLatchRead((PIO_PIN)pin));
-}
-
-static inline void SYS_PORT_PinToggle(SYS_PORT_PIN pin)
-{
-    PIO_PinToggle((PIO_PIN)pin);
-}
-
-static inline void SYS_PORT_PinSet(SYS_PORT_PIN pin)
-{
-    PIO_PinSet((PIO_PIN)pin);
-}
-
-static inline void SYS_PORT_PinClear(SYS_PORT_PIN pin)
-{
-    PIO_PinClear((PIO_PIN)pin);
-}
-
-static inline void SYS_PORT_PinInputEnable(SYS_PORT_PIN pin)
-{
-    PIO_PinInputEnable((PIO_PIN)pin);
-}
-
-static inline void SYS_PORT_PinOutputEnable(SYS_PORT_PIN pin)
-{
-    PIO_PinOutputEnable((PIO_PIN)pin);
-}
-
-#endif // SYS_PORTS_MAPPING_H
-
-/*******************************************************************************
- End of File
-*/
+#endif
