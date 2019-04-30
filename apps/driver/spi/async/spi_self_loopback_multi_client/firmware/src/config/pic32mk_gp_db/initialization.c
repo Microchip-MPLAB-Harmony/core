@@ -250,7 +250,6 @@ void SYS_Initialize ( void* data )
     CHECONbits.PREFEN = 1;
 
 
-
 	BSP_Initialize();
 	SPI6_Initialize();
 
