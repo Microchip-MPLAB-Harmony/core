@@ -35,8 +35,8 @@
           <Name dnOrder="1">drv_sdmmc.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/driver/sdmmc/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdmmc/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B9D71A5CC0CFE3F905CDECCD1B87B581</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B9D71A5CC0CFE3F905CDECCD1B87B581</UserChecksum>
+          <GeneratedChecksum dnOrder="4">DBE9C108AB9E0AC6E4170D4D4FDE7560</GeneratedChecksum>
+          <UserChecksum dnOrder="5">DBE9C108AB9E0AC6E4170D4D4FDE7560</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -67,8 +67,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FA767E34D9751637A9B989DF7F34F6ED</GeneratedChecksum>
-          <UserChecksum dnOrder="5">80CD8E078399C3165AB05379E6C5F684</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AFC4517E6861D2C01BD58DDE4C6A11B5</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AFC4517E6861D2C01BD58DDE4C6A11B5</UserChecksum>
         </File>
         <File dnOrder="8">
           <Type dnOrder="0">SOURCE</Type>
@@ -99,16 +99,16 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F66633837B8F5C6B40C457F39DDEA4EA</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F66633837B8F5C6B40C457F39DDEA4EA</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3A017B5A40D4CDA40BBE6EBD7626828E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3A017B5A40D4CDA40BBE6EBD7626828E</UserChecksum>
         </File>
         <File dnOrder="12">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_coretimer.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/peripheral/coretimer/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/coretimer/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">69091AC5990DAAE4C3DFFC1541118378</GeneratedChecksum>
-          <UserChecksum dnOrder="5">69091AC5990DAAE4C3DFFC1541118378</UserChecksum>
+          <GeneratedChecksum dnOrder="4">2FEFEA0D4E94F5A5F3D76BAEC3D602E5</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2FEFEA0D4E94F5A5F3D76BAEC3D602E5</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
@@ -123,16 +123,16 @@
           <Name dnOrder="1">plib_gpio.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/peripheral/gpio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/gpio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E3F9EA22B67A0D8AB846517107EFEB2F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">E3F9EA22B67A0D8AB846517107EFEB2F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AB58F1EC9D966CD3B33A28359DCFBDC4</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AB58F1EC9D966CD3B33A28359DCFBDC4</UserChecksum>
         </File>
         <File dnOrder="15">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_sdhc.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/peripheral/sdhc/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/sdhc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9A06A51EAC6CE8339F43D693F0430282</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9A06A51EAC6CE8339F43D693F0430282</UserChecksum>
+          <GeneratedChecksum dnOrder="4">214A615AD1C2DF18A256D1C90881604A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">214A615AD1C2DF18A256D1C90881604A</UserChecksum>
         </File>
         <File dnOrder="16">
           <Type dnOrder="0">SOURCE</Type>
@@ -323,24 +323,24 @@
           <Name dnOrder="1">osal_impl_basic.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
           <PhysicalPath dnOrder="3">/osal/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AA54D5F27CBE04A817F6DD2B18F207A1</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AA54D5F27CBE04A817F6DD2B18F207A1</UserChecksum>
+          <GeneratedChecksum dnOrder="4">63FBE37825657165B9EA584BF05DBA43</GeneratedChecksum>
+          <UserChecksum dnOrder="5">63FBE37825657165B9EA584BF05DBA43</UserChecksum>
         </File>
         <File dnOrder="40">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_clk.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3E3D4E58DB06EE9CC23A83588DC5276A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3E3D4E58DB06EE9CC23A83588DC5276A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">7066CC390335CF75126E2A50C46E3BDD</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7066CC390335CF75126E2A50C46E3BDD</UserChecksum>
         </File>
         <File dnOrder="41">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_coretimer.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/peripheral/coretimer/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/coretimer/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4524642012D523481DD682C6B8A21BAA</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4524642012D523481DD682C6B8A21BAA</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B56E73929AA8C9899F0BA761F7053A87</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B56E73929AA8C9899F0BA761F7053A87</UserChecksum>
         </File>
         <File dnOrder="42">
           <Type dnOrder="0">HEADER</Type>
@@ -363,8 +363,8 @@
           <Name dnOrder="1">plib_sdhc.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/peripheral/sdhc/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/sdhc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0C6D567394B1FA9E1FB29C1BBD6511F2</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0C6D567394B1FA9E1FB29C1BBD6511F2</UserChecksum>
+          <GeneratedChecksum dnOrder="4">05F458D72CAAEF8EC9C865A5943D23EF</GeneratedChecksum>
+          <UserChecksum dnOrder="5">05F458D72CAAEF8EC9C865A5943D23EF</UserChecksum>
         </File>
         <File dnOrder="45">
           <Type dnOrder="0">HEADER</Type>
@@ -499,11 +499,12 @@
         <Setting append="true" category="C32" delimiter=";" dnOrder="0" key="extra-include-directories" value="../src;../src/config/pic32mz_das_sk;../src/packs/PIC32MZ2064DAS169_DFP;;../src/mips"/>
         <Setting category="C32-LD" dnOrder="1" key="heap-size" value="0"/>
         <Setting category="C32-LD" dnOrder="2" key="no-device-startup-code" value="true"/>
+        <Setting category="C32-LD" dnOrder="3" key="preprocessor-macros" value=""/>
       </Settings>
     </Manifest>
     <Settings dnOrder="4">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.4.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_DA_DFP\0.1\PIC32MZDA\atdf\PIC32MZ2064DAS169.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_DA_DFP\1.0.64\atdf\PIC32MZ2064DAS169.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>

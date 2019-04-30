@@ -36,7 +36,7 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 #define LED_ON()                    LED1_On()
-#define BUFFER_ATTRIBUTES           __COHERENT __ALIGNED(32)
+#define BUFFER_ATTRIBUTES           __COHERENT
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

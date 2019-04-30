@@ -1747,7 +1747,11 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
                     break;
                 }
 
-                if (dObj->sdmmcPlib->sdhostIsCardAttached != NULL)
+                if (dObj->cardDetectionMethod == DRV_SDMMC_CD_METHOD_POLLING)
+                {
+                    /* Assume card is attached */
+                }
+                else
                 {
                     if (dObj->sdmmcPlib->sdhostIsCardAttached () == false)
                     {
@@ -1755,10 +1759,6 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
                         dObj->taskState = DRV_SDMMC_TASK_HANDLE_CARD_DETACH;
                         break;
                     }
-                }
-                else
-                {
-                    /* Assume card is attached */
                 }
 
                 currentBufObj->status = DRV_SDMMC_COMMAND_IN_PROGRESS;
