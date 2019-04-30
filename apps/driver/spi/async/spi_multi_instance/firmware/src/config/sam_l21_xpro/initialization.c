@@ -54,9 +54,8 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
-
-#pragma config NVMCTRL_BOOTPROT = 0x0
-#pragma config NVMCTRL_EEPROM_SIZE = 0x0
+#pragma config NVMCTRL_BOOTPROT = 0x7
+#pragma config NVMCTRL_EEPROM_SIZE = 0x7
 #pragma config BOD33USERLEVEL = 0x6
 #pragma config BOD33_DIS = CLEAR
 #pragma config BOD33_ACTION = 0x0
@@ -258,12 +257,13 @@ SYSTEM_OBJECTS sysObj;
 
 void SYS_Initialize ( void* data )
 {
+    NVMCTRL_Initialize( );
+
   
     PORT_Initialize();
 
 
     CLOCK_Initialize();
-
 
 
     EVSYS_Initialize();
