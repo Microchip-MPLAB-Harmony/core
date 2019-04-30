@@ -55,6 +55,13 @@
 // Section: Global Data Definitions
 // *****************************************************************************
 // *****************************************************************************
+/* EEPROM Commands */
+#define EEPROM2_CMD_WREN                       0x06
+#define EEPROM2_CMD_WRITE                      0x02
+#define EEPROM2_CMD_RDSR                       0x05
+#define EEPROM2_CMD_READ                       0x03
+#define EEPROM2_START_ADDRESS                  0x000000
+#define EEPROM2_STATUS_BUSY_BIT                0x01
 
 // *****************************************************************************
 /* Application Data
@@ -74,16 +81,8 @@
 static APP_INSTANCE2_DATA app_instance2Data;
 
 static const uint8_t EEPROM2_MSG_STR[] = "WRITING AND READING DATA ON FIRST INSTANCE EEPROM 2";
-static uint8_t __attribute__ ((aligned (32))) eeprom2TxData[64];
-static uint8_t __attribute__ ((aligned (32))) eeprom2RxData[64];
-
-/* EEPROM Commands */
-#define EEPROM2_CMD_WREN                       0x06
-#define EEPROM2_CMD_WRITE                      0x02
-#define EEPROM2_CMD_RDSR                       0x05
-#define EEPROM2_CMD_READ                       0x03
-#define EEPROM2_START_ADDRESS                  0x000000
-#define EEPROM2_STATUS_BUSY_BIT                0x01
+static uint8_t CACHE_ALIGN eeprom2TxData[64];
+static uint8_t CACHE_ALIGN eeprom2RxData[64];
 
 // *****************************************************************************
 // *****************************************************************************
@@ -134,12 +133,12 @@ bool APP_INSTANCE2_TransferStatus(void)
 void APP_INSTANCE2_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
-    app_instance2Data.state = APP_INSTANCE2_STATE_DATA_INIT;
-    app_instance2Data.drvSPIHandle = DRV_HANDLE_INVALID;
-    app_instance2Data.transferStatus = APP_ERROR;
+    app_instance2Data.state             = APP_INSTANCE2_STATE_DATA_INIT;
+    app_instance2Data.drvSPIHandle      = DRV_HANDLE_INVALID;
+    app_instance2Data.transferStatus    = APP_ERROR;
 
-    app_instance2Data.wrEnableCmd = EEPROM2_CMD_WREN;
-    app_instance2Data.rdStatusCmd = EEPROM2_CMD_RDSR;
+    app_instance2Data.wrEnableCmd       = EEPROM2_CMD_WREN;
+    app_instance2Data.rdStatusCmd       = EEPROM2_CMD_RDSR;
 
     memset(eeprom2TxData, 0, sizeof(eeprom2TxData) );
     memset(eeprom2RxData, 0, sizeof(eeprom2RxData) );
@@ -169,13 +168,13 @@ void APP_INSTANCE2_Tasks ( void )
         case APP_INSTANCE2_STATE_DATA_INIT:
 
             /* Setup SPI for instance 2 which is EEPROM 1 */
-            app_instance2Data.setup.baudRateInHz = 500000;
-            app_instance2Data.setup.clockPhase = DRV_SPI_CLOCK_PHASE_VALID_LEADING_EDGE;
-            app_instance2Data.setup.clockPolarity = DRV_SPI_CLOCK_POLARITY_IDLE_LOW;
-            app_instance2Data.setup.dataBits = DRV_SPI_DATA_BITS_8;
-            app_instance2Data.setup.chipSelect = APP_EEPROM2_CS_PIN;
-            app_instance2Data.setup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;
-            app_instance2Data.state = APP_INSTANCE2_STATE_DRIVER_SETUP;
+            app_instance2Data.setup.baudRateInHz    = 500000;
+            app_instance2Data.setup.clockPhase      = DRV_SPI_CLOCK_PHASE_VALID_LEADING_EDGE;
+            app_instance2Data.setup.clockPolarity   = DRV_SPI_CLOCK_POLARITY_IDLE_LOW;
+            app_instance2Data.setup.dataBits        = DRV_SPI_DATA_BITS_8;
+            app_instance2Data.setup.chipSelect      = APP_EEPROM2_CS_PIN;
+            app_instance2Data.setup.csPolarity      = DRV_SPI_CS_POLARITY_ACTIVE_LOW;
+            app_instance2Data.state                 = APP_INSTANCE2_STATE_DRIVER_SETUP;
             break;
 
         case APP_INSTANCE2_STATE_DRIVER_SETUP:

@@ -53,11 +53,12 @@
 // *****************************************************************************
 // *****************************************************************************
 
+
 /* SERCOM4 clk freq value for the baud calculation */
-#define SERCOM4_Frequency      (uint32_t) (48000000UL)
+#define SERCOM4_Frequency      (uint32_t) (60000000UL)
 
 /* SERCOM4 SPI baud value for 1000000 Hz baud rate */
-#define SERCOM4_SPIM_BAUD_VALUE			(23U)
+#define SERCOM4_SPIM_BAUD_VALUE         (29U)
 
 /*Global object to save SPI Exchange related data  */
 SPI_OBJECT sercom4SPIObj;
@@ -240,7 +241,7 @@ void SERCOM4_SPI_CallbackRegister(SERCOM_SPI_CALLBACK callBack, uintptr_t contex
 
 bool SERCOM4_SPI_IsBusy(void)
 {
-    return sercom4SPIObj.transferIsBusy;
+    return ((sercom4SPIObj.transferIsBusy == true) || ((SERCOM4_REGS->SPIM.SERCOM_INTFLAG & SERCOM_SPIM_INTFLAG_TXC_Msk) == 0));
 }
 
 // *****************************************************************************
@@ -324,8 +325,15 @@ bool SERCOM4_SPI_WriteRead (void* pTransmitData, size_t txSize, void* pReceiveDa
         sercom4SPIObj.transferIsBusy = true;
 
         /* Flush out any unread data in SPI read buffer */
-        dummyData = SERCOM4_REGS->SPIM.SERCOM_DATA;
-        (void)dummyData;
+        while(SERCOM4_REGS->SPIM.SERCOM_INTFLAG & SERCOM_SPIM_INTFLAG_RXC_Msk)
+        {
+            dummyData = SERCOM4_REGS->SPIM.SERCOM_DATA;
+            (void)dummyData;
+        }
+
+        SERCOM4_REGS->SPIM.SERCOM_STATUS |= SERCOM_SPIM_STATUS_BUFOVF_Msk;
+
+        SERCOM4_REGS->SPIM.SERCOM_INTFLAG |= SERCOM_SPIM_INTFLAG_ERROR_Msk;
 
         if(sercom4SPIObj.rxSize > sercom4SPIObj.txSize)
         {
