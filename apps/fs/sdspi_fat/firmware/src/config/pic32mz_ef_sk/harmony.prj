@@ -35,8 +35,8 @@
           <Name dnOrder="1">drv_sdspi.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5B78546289339EDED1D9373B21166850</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5B78546289339EDED1D9373B21166850</UserChecksum>
+          <GeneratedChecksum dnOrder="4">341ADB9E68F3BB9B7A138F2D1C0EA640</GeneratedChecksum>
+          <UserChecksum dnOrder="5">341ADB9E68F3BB9B7A138F2D1C0EA640</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -51,8 +51,8 @@
           <Name dnOrder="1">drv_sdspi_plib_interface.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E1E3481657C23734667BC803B9D79AAC</GeneratedChecksum>
-          <UserChecksum dnOrder="5">E1E3481657C23734667BC803B9D79AAC</UserChecksum>
+          <GeneratedChecksum dnOrder="4">93B81B181623661E2E461AB1D6436F6A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">93B81B181623661E2E461AB1D6436F6A</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -291,8 +291,8 @@
           <Name dnOrder="1">drv_sdspi_local.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BF6F2909E0A25C967E42BF30C92F0D37</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BF6F2909E0A25C967E42BF30C92F0D37</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D1A6D699A57B4766BB398DE48C51962C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D1A6D699A57B4766BB398DE48C51962C</UserChecksum>
         </File>
         <File dnOrder="36">
           <Type dnOrder="0">HEADER</Type>
