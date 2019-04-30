@@ -45,12 +45,21 @@
 #ifndef SYS_DEBUG_H
 #define SYS_DEBUG_H
 
+// *****************************************************************************
+// *****************************************************************************
+// Section: File includes
+// *****************************************************************************
+// *****************************************************************************
+
 #include "system/system.h"
 
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
 
-#ifdef __cplusplus
     extern "C" {
+
 #endif
+// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
@@ -239,8 +248,8 @@ SYS_MODULE_OBJ SYS_DEBUG_Initialize(
     </code>
 
   Remarks:
-    This function is normally not called directly by an application. 
-    The task routine may not be called if the debug service does not require 
+    This function is normally not called directly by an application.
+    The task routine may not be called if the debug service does not require
     maintaining an internal state machine.
 */
 
@@ -850,7 +859,7 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 
 
 #if defined(__DEBUG)
-    #define SYS_DEBUG_BreakPoint()  __asm__ __volatile__ ("bkpt #0");
+    #define SYS_DEBUG_BreakPoint()  __asm__ volatile (" sdbbp 0")
 #else
     #define SYS_DEBUG_BreakPoint()
 #endif
@@ -879,11 +888,12 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 //DOM-IGNORE-END
 
 
+//DOM-IGNORE-BEGIN
 #ifdef __cplusplus
+
     }
+
 #endif
+//DOM-IGNORE-END
 
 #endif // SYS_DEBUG_H
-/*******************************************************************************
- End of File
-*/
