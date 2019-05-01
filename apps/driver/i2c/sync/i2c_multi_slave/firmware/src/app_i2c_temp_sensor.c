@@ -52,7 +52,7 @@
 // *****************************************************************************
 
 #include "app_i2c_temp_sensor.h"
-#include "system/console/sys_debug.h"
+#include "system/debug/sys_debug.h"
 #include "osal/osal.h"
 
 // *****************************************************************************
