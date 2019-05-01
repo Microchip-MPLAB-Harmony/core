@@ -100,7 +100,6 @@ void SYS_Tasks ( void )
     /* Maintain system services */
     
 
-
     /* Maintain Device Drivers */
     
 
@@ -111,7 +110,7 @@ void SYS_Tasks ( void )
         /* Create OS Thread for APP_I2C_EEPROM_Tasks. */
     xTaskCreate((TaskFunction_t) _APP_I2C_EEPROM_Tasks,
                 "APP_I2C_EEPROM_Tasks",
-                1024,
+                256,
                 NULL,
                 1,
                 &xAPP_I2C_EEPROM_Tasks);
@@ -119,7 +118,7 @@ void SYS_Tasks ( void )
     /* Create OS Thread for APP_I2C_TEMP_SENSOR_Tasks. */
     xTaskCreate((TaskFunction_t) _APP_I2C_TEMP_SENSOR_Tasks,
                 "APP_I2C_TEMP_SENSOR_Tasks",
-                1024,
+                256,
                 NULL,
                 1,
                 &xAPP_I2C_TEMP_SENSOR_Tasks);
