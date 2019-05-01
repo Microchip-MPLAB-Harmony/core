@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="65">
+<configurationDescriptor version="66">
   <logicalFolder name="root" displayName="root" projectFiles="true">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -9,76 +9,79 @@
                        displayName="sam_e70_xult_freertos"
                        projectFiles="true">
           <logicalFolder name="f1" displayName="bsp" projectFiles="true">
-            <itemPath>../src/config/sam_e70_xult_freertos/bsp/bsp.h</itemPath>
+            <itemPath ex="false">../src/config/sam_e70_xult_freertos/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="i2c" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult_freertos/driver/i2c/drv_i2c.h</itemPath>
-              <itemPath>../src/config/sam_e70_xult_freertos/driver/i2c/drv_i2c_definitions.h</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/driver/i2c/drv_i2c.h</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/driver/i2c/drv_i2c_definitions.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/sam_e70_xult_freertos/driver/driver.h</itemPath>
-            <itemPath>../src/config/sam_e70_xult_freertos/driver/driver_common.h</itemPath>
+            <itemPath ex="false">../src/config/sam_e70_xult_freertos/driver/driver.h</itemPath>
+            <itemPath ex="false">../src/config/sam_e70_xult_freertos/driver/driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult_freertos/peripheral/clk/plib_clk.h</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/peripheral/clk/plib_clk.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="efc" projectFiles="true">
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/peripheral/efc/plib_efc.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="nvic" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult_freertos/peripheral/nvic/plib_nvic.h</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="pio" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult_freertos/peripheral/pio/plib_pio.h</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/peripheral/pio/plib_pio.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="twihs" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult_freertos/peripheral/twihs/plib_twihs_master.h</itemPath>
-              <itemPath>../src/config/sam_e70_xult_freertos/peripheral/twihs/plib_twihs0.h</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/peripheral/twihs/plib_twihs_master.h</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/peripheral/twihs/plib_twihs0.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
             <logicalFolder name="f2" displayName="cache" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult_freertos/system/cache/sys_cache.h</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/system/cache/sys_cache.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult_freertos/system/int/sys_int.h</itemPath>
-              <itemPath>../src/config/sam_e70_xult_freertos/system/int/sys_int_mapping.h</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/system/int/sys_int.h</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/sam_e70_xult_freertos/system/system.h</itemPath>
-            <itemPath>../src/config/sam_e70_xult_freertos/system/system_common.h</itemPath>
-            <itemPath>../src/config/sam_e70_xult_freertos/system/system_module.h</itemPath>
+            <itemPath ex="false">../src/config/sam_e70_xult_freertos/system/system.h</itemPath>
+            <itemPath ex="false">../src/config/sam_e70_xult_freertos/system/system_common.h</itemPath>
+            <itemPath ex="false">../src/config/sam_e70_xult_freertos/system/system_module.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/config/sam_e70_xult_freertos/device_cache.h</itemPath>
-          <itemPath>../src/config/sam_e70_xult_freertos/toolchain_specifics.h</itemPath>
-          <itemPath>../src/config/sam_e70_xult_freertos/definitions.h</itemPath>
-          <itemPath>../src/config/sam_e70_xult_freertos/FreeRTOSConfig.h</itemPath>
-          <itemPath>../src/config/sam_e70_xult_freertos/user.h</itemPath>
-          <itemPath>../src/config/sam_e70_xult_freertos/configuration.h</itemPath>
+          <itemPath ex="false">../src/config/sam_e70_xult_freertos/device_cache.h</itemPath>
+          <itemPath ex="false">../src/config/sam_e70_xult_freertos/toolchain_specifics.h</itemPath>
+          <itemPath ex="false">../src/config/sam_e70_xult_freertos/definitions.h</itemPath>
+          <itemPath ex="false">../src/config/sam_e70_xult_freertos/FreeRTOSConfig.h</itemPath>
+          <itemPath ex="false">../src/config/sam_e70_xult_freertos/user.h</itemPath>
+          <itemPath ex="false">../src/config/sam_e70_xult_freertos/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f3" displayName="FreeRTOS" projectFiles="true">
         <logicalFolder name="f1" displayName="Source" projectFiles="true">
           <logicalFolder name="f1" displayName="include" projectFiles="true">
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/croutine.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/event_groups.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/FreeRTOS.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/list.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/mpu_wrappers.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/portable.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/projdefs.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/queue.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/semphr.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/stack_macros.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/deprecated_definitions.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/task.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/timers.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/mpu_prototypes.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/stream_buffer.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/message_buffer.h</itemPath>
+            <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/include/croutine.h</itemPath>
+            <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/include/event_groups.h</itemPath>
+            <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/include/FreeRTOS.h</itemPath>
+            <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/include/list.h</itemPath>
+            <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/include/mpu_wrappers.h</itemPath>
+            <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/include/portable.h</itemPath>
+            <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/include/projdefs.h</itemPath>
+            <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/include/queue.h</itemPath>
+            <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/include/semphr.h</itemPath>
+            <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/include/stack_macros.h</itemPath>
+            <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/include/deprecated_definitions.h</itemPath>
+            <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/include/task.h</itemPath>
+            <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/include/timers.h</itemPath>
+            <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/include/mpu_prototypes.h</itemPath>
+            <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/include/stream_buffer.h</itemPath>
+            <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/include/message_buffer.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="portable" projectFiles="true">
             <logicalFolder name="f1" displayName="GCC" projectFiles="true">
               <logicalFolder name="f1" displayName="SAM" projectFiles="true">
                 <logicalFolder name="f1" displayName="CM7" projectFiles="true">
-                  <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/CM7/portmacro.h</itemPath>
+                  <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/CM7/portmacro.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
@@ -86,80 +89,80 @@
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f4" displayName="osal" projectFiles="true">
-        <itemPath>../src/config/sam_e70_xult_freertos/osal/osal.h</itemPath>
-        <itemPath>../src/config/sam_e70_xult_freertos/osal/osal_definitions.h</itemPath>
-        <itemPath>../src/config/sam_e70_xult_freertos/osal/osal_freertos.h</itemPath>
+        <itemPath ex="false">../src/config/sam_e70_xult_freertos/osal/osal.h</itemPath>
+        <itemPath ex="false">../src/config/sam_e70_xult_freertos/osal/osal_definitions.h</itemPath>
+        <itemPath ex="false">../src/config/sam_e70_xult_freertos/osal/osal_freertos.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAME70Q21B_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/acc.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/aes.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/afec.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/chipid.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/dacc.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/efc.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/gmac.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/gpbr.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/hsmci.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/i2sc.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/icm.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/isi.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/matrix.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/mcan.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/pio.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/pmc.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/pwm.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/qspi.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/rstc.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/rswdt.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/rtc.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/rtt.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/sdramc.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/smc.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/spi.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/ssc.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/supc.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/tc.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/trng.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/twihs.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/uart.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/usart.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/usbhs.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/utmi.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/wdt.h</itemPath>
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/xdmac.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/acc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/aes.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/afec.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/chipid.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/dacc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/efc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/gmac.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/gpbr.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/hsmci.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/i2sc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/icm.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/isi.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/matrix.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/mcan.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/pio.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/pmc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/pwm.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/qspi.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/rstc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/rswdt.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/rtc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/rtt.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/sdramc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/smc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/spi.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/ssc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/supc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/tc.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/trng.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/twihs.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/uart.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/usart.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/usbhs.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/utmi.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/wdt.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/xdmac.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="pio" projectFiles="true">
-            <itemPath>../src/packs/ATSAME70Q21B_DFP/pio/same70q21b.h</itemPath>
+            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/pio/same70q21b.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/packs/ATSAME70Q21B_DFP/device.h</itemPath>
-          <itemPath>../src/packs/ATSAME70Q21B_DFP/atsame70q21b.h</itemPath>
+          <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/device.h</itemPath>
+          <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/atsame70q21b.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm7.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/core_cm7.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
               </logicalFolder>
             </logicalFolder>
             <logicalFolder name="f2" displayName="DSP" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_common_tables.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_const_structs.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_math.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/DSP/Include/arm_common_tables.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/DSP/Include/arm_const_structs.h</itemPath>
+                <itemPath ex="false">../src/packs/CMSIS/CMSIS/DSP/Include/arm_math.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>../src/app_i2c_eeprom.h</itemPath>
+      <itemPath ex="false">../src/app_i2c_eeprom.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -173,46 +176,49 @@
                        displayName="sam_e70_xult_freertos"
                        projectFiles="true">
           <logicalFolder name="f1" displayName="bsp" projectFiles="true">
-            <itemPath>../src/config/sam_e70_xult_freertos/bsp/bsp.c</itemPath>
+            <itemPath ex="false">../src/config/sam_e70_xult_freertos/bsp/bsp.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f4" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="i2c" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult_freertos/driver/i2c/src/drv_i2c.c</itemPath>
-              <itemPath>../src/config/sam_e70_xult_freertos/driver/i2c/src/drv_i2c_local.h</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/driver/i2c/src/drv_i2c.c</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/driver/i2c/src/drv_i2c_local.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f3" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult_freertos/peripheral/clk/plib_clk.c</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/peripheral/clk/plib_clk.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="efc" projectFiles="true">
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/peripheral/efc/plib_efc.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="nvic" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult_freertos/peripheral/nvic/plib_nvic.c</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/peripheral/nvic/plib_nvic.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="pio" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult_freertos/peripheral/pio/plib_pio.c</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/peripheral/pio/plib_pio.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="twihs" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult_freertos/peripheral/twihs/plib_twihs0.c</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/peripheral/twihs/plib_twihs0.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="stdio" projectFiles="true">
-            <itemPath>../src/config/sam_e70_xult_freertos/stdio/xc32_monitor.c</itemPath>
+            <itemPath ex="false">../src/config/sam_e70_xult_freertos/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f5" displayName="system" projectFiles="true">
             <logicalFolder name="f2" displayName="cache" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult_freertos/system/cache/sys_cache.c</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/system/cache/sys_cache.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult_freertos/system/int/src/sys_int.c</itemPath>
+              <itemPath ex="false">../src/config/sam_e70_xult_freertos/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <itemPath>../src/config/sam_e70_xult_freertos/initialization.c</itemPath>
-          <itemPath>../src/config/sam_e70_xult_freertos/interrupts.c</itemPath>
-          <itemPath>../src/config/sam_e70_xult_freertos/exceptions.c</itemPath>
-          <itemPath>../src/config/sam_e70_xult_freertos/startup_xc32.c</itemPath>
-          <itemPath>../src/config/sam_e70_xult_freertos/libc_syscalls.c</itemPath>
-          <itemPath>../src/config/sam_e70_xult_freertos/freertos_hooks.c</itemPath>
-          <itemPath>../src/config/sam_e70_xult_freertos/tasks.c</itemPath>
+          <itemPath ex="false">../src/config/sam_e70_xult_freertos/initialization.c</itemPath>
+          <itemPath ex="false">../src/config/sam_e70_xult_freertos/interrupts.c</itemPath>
+          <itemPath ex="false">../src/config/sam_e70_xult_freertos/exceptions.c</itemPath>
+          <itemPath ex="false">../src/config/sam_e70_xult_freertos/startup_xc32.c</itemPath>
+          <itemPath ex="false">../src/config/sam_e70_xult_freertos/libc_syscalls.c</itemPath>
+          <itemPath ex="false">../src/config/sam_e70_xult_freertos/freertos_hooks.c</itemPath>
+          <itemPath ex="false">../src/config/sam_e70_xult_freertos/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f2" displayName="FreeRTOS" projectFiles="true">
@@ -221,33 +227,33 @@
             <logicalFolder name="f2" displayName="GCC" projectFiles="true">
               <logicalFolder name="f1" displayName="SAM" projectFiles="true">
                 <logicalFolder name="f1" displayName="CM7" projectFiles="true">
-                  <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/CM7/port.c</itemPath>
+                  <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/CM7/port.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
             <logicalFolder name="f1" displayName="MemMang" projectFiles="true">
-              <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/MemMang/heap_1.c</itemPath>
+              <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/portable/MemMang/heap_1.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/croutine.c</itemPath>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/list.c</itemPath>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/queue.c</itemPath>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/FreeRTOS_tasks.c</itemPath>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/timers.c</itemPath>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/event_groups.c</itemPath>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/stream_buffer.c</itemPath>
+          <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/croutine.c</itemPath>
+          <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/list.c</itemPath>
+          <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/queue.c</itemPath>
+          <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/FreeRTOS_tasks.c</itemPath>
+          <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/timers.c</itemPath>
+          <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/event_groups.c</itemPath>
+          <itemPath ex="false">../src/third_party/rtos/FreeRTOS/Source/stream_buffer.c</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f3" displayName="osal" projectFiles="true">
-        <itemPath>../src/config/sam_e70_xult_freertos/osal/osal_freertos.c</itemPath>
+        <itemPath ex="false">../src/config/sam_e70_xult_freertos/osal/osal_freertos.c</itemPath>
       </logicalFolder>
-      <itemPath>../src/main.c</itemPath>
-      <itemPath>../src/app_i2c_eeprom.c</itemPath>
+      <itemPath ex="false">../src/main.c</itemPath>
+      <itemPath ex="false">../src/app_i2c_eeprom.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
-      <itemPath>Makefile</itemPath>
+      <itemPath ex="false">Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -466,13 +472,18 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="400000-5fffff"/>
+        <property key="poweroptions.powerenable" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${memories.dataflash.default}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value=""/>
         <property key="programoptions.preserveprogram.ranges" value=""/>
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.preserveuserid" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>
+        <property key="voltagevalue" value=""/>
       </EdbgTool>
       <ICD4Tool>
         <property key="AutoSelectMemRanges" value="auto"/>
