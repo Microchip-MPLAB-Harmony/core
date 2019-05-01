@@ -88,7 +88,7 @@ void TC0_TimerInitialize( void )
     TC0_REGS->COUNT16.TC_WAVE = TC_WAVE_WAVEGEN_MPWM;
 
     /* Configure timer period */
-    TC0_REGS->COUNT16.TC_CC[0U] = 187U;
+    TC0_REGS->COUNT16.TC_CC[0U] = 234U;
 
     /* Clear all interrupt flags */
     TC0_REGS->COUNT16.TC_INTFLAG = TC_INTFLAG_Msk;
@@ -126,7 +126,7 @@ void TC0_TimerStop( void )
 
 uint32_t TC0_TimerFrequencyGet( void )
 {
-    return (uint32_t)(187500UL);
+    return (uint32_t)(234375UL);
 }
 
 /* Get the current timer counter value */
