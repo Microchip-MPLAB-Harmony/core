@@ -72,8 +72,13 @@ void PIO_Initialize ( void )
     /* PORTA Output Direction Enable */
     ((pio_registers_t*)PIO_PORT_A)->PIO_OER = 0x0;
     ((pio_registers_t*)PIO_PORT_A)->PIO_ODR = ~0x0;
+    /* PORTA Slew rate control */
+    ((pio_registers_t*)PIO_PORT_A)->PIO_SLEWR = 0x0;
+    /* PORTA drive control */
+    ((pio_registers_t*)PIO_PORT_A)->PIO_DRIVER = 0x0;
 
     /************************ PIO B Initialization ************************/
+    ((pio_registers_t*)PIO_PORT_B)->PIO_PER = 0xFFFFFFFF;
     ((pio_registers_t*)PIO_PORT_B)->PIO_MDDR = 0xFFFFFFFF;
     /* PORTB Pull Up Enable/Disable as per MHC selection */
     ((pio_registers_t*)PIO_PORT_B)->PIO_PUDR = 0xFFFFFFFF;
@@ -84,8 +89,13 @@ void PIO_Initialize ( void )
     /* PORTB Output Direction Enable */
     ((pio_registers_t*)PIO_PORT_B)->PIO_OER = 0x3800;
     ((pio_registers_t*)PIO_PORT_B)->PIO_ODR = ~0x3800;
+    /* PORTB Slew rate control */
+    ((pio_registers_t*)PIO_PORT_B)->PIO_SLEWR = 0x0;
+    /* PORTB drive control */
+    ((pio_registers_t*)PIO_PORT_B)->PIO_DRIVER = 0x0;
 
     /************************ PIO C Initialization ************************/
+    ((pio_registers_t*)PIO_PORT_C)->PIO_PER = 0xFFFFFFFF;
     ((pio_registers_t*)PIO_PORT_C)->PIO_MDDR = 0xFFFFFFFF;
     /* PORTC Pull Up Enable/Disable as per MHC selection */
     ((pio_registers_t*)PIO_PORT_C)->PIO_PUDR = 0xFFFFFFFF;
@@ -96,9 +106,13 @@ void PIO_Initialize ( void )
     /* PORTC Output Direction Enable */
     ((pio_registers_t*)PIO_PORT_C)->PIO_OER = 0x0;
     ((pio_registers_t*)PIO_PORT_C)->PIO_ODR = ~0x0;
+    /* PORTC Slew rate control */
+    ((pio_registers_t*)PIO_PORT_C)->PIO_SLEWR = 0x0;
+    /* PORTC drive control */
+    ((pio_registers_t*)PIO_PORT_C)->PIO_DRIVER = 0x0;
 
     /************************ PIO D Initialization ************************/
-    ((pio_registers_t*)PIO_PORT_D)->PIO_PER = 0x40000;
+    ((pio_registers_t*)PIO_PORT_D)->PIO_PER = 0xFFFFFFFF;
     ((pio_registers_t*)PIO_PORT_D)->PIO_MDDR = 0xFFFFFFFF;
     /* PORTD Pull Up Enable/Disable as per MHC selection */
     ((pio_registers_t*)PIO_PORT_D)->PIO_PUDR = ~0x40000;
@@ -110,6 +124,10 @@ void PIO_Initialize ( void )
     /* PORTD Output Direction Enable */
     ((pio_registers_t*)PIO_PORT_D)->PIO_OER = 0x0;
     ((pio_registers_t*)PIO_PORT_D)->PIO_ODR = ~0x0;
+    /* PORTD Slew rate control */
+    ((pio_registers_t*)PIO_PORT_D)->PIO_SLEWR = 0x0;
+    /* PORTD drive control */
+    ((pio_registers_t*)PIO_PORT_D)->PIO_DRIVER = 0x0;
 
 }
 

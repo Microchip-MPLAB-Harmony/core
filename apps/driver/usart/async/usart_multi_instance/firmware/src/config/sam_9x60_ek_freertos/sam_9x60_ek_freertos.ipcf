@@ -33,6 +33,14 @@
             <path>\bsp\bsp.h</path>
             <path>\driver\usart\drv_usart_definitions.h</path>
             <path>\peripheral\pit\plib_pit.h</path>
+            <path>\device_cache.h</path>
+            <path>\toolchain_specifics.h</path>
+            <path>\definitions.h</path>
+            <path>\peripheral\mmu\plib_mmu.h</path>
+            <path>\peripheral\mmu\cp15.h</path>
+            <path>\peripheral\clk\plib_clk.h</path>
+            <path>\peripheral\pio\plib_pio.h</path>
+            <path>\peripheral\aic\plib_aic.h</path>
             <path>\..\..\packs\SAM9X60_DFP\device.h</path>
             <path>\..\..\packs\SAM9X60_DFP\component\adc.h</path>
             <path>\..\..\packs\SAM9X60_DFP\component\aes.h</path>
@@ -81,14 +89,6 @@
             <path>\..\..\packs\SAM9X60_DFP\component\xdmac.h</path>
             <path>\..\..\packs\SAM9X60_DFP\sam9x60.h</path>
             <path>\..\..\packs\SAM9X60_DFP\pio\sam9x60.h</path>
-            <path>\device_cache.h</path>
-            <path>\toolchain_specifics.h</path>
-            <path>\definitions.h</path>
-            <path>\peripheral\mmu\plib_mmu.h</path>
-            <path>\peripheral\mmu\cp15.h</path>
-            <path>\peripheral\clk\plib_clk.h</path>
-            <path>\peripheral\pio\plib_pio.h</path>
-            <path>\peripheral\aic\plib_aic.h</path>
             <path>\peripheral\flexcom\usart\plib_flexcom5_usart.h</path>
             <path>\peripheral\flexcom\usart\plib_flexcom_usart_local.h</path>
             <path>\peripheral\dbgu\plib_dbgu_common.h</path>

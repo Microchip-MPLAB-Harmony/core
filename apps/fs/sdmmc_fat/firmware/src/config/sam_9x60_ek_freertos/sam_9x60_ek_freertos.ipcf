@@ -31,6 +31,9 @@
     <files relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_9x60_ek_freertos">
         <group name="Header Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_9x60_ek_freertos">
             <path>\bsp\bsp.h</path>
+            <path>\driver\sdmmc\drv_sdmmc.h</path>
+            <path>\driver\sdmmc\src\drv_sdmmc_local.h</path>
+            <path>\driver\sdmmc\drv_sdmmc_definitions.h</path>
             <path>\system\fs\sys_fs.h</path>
             <path>\system\fs\src\sys_fs_local.h</path>
             <path>\system\fs\sys_fs_media_manager.h</path>
@@ -40,10 +43,15 @@
             <path>\system\fs\fat_fs\src\hardware_access\diskio.h</path>
             <path>\system\fs\mpfs\mpfs.h</path>
             <path>\system\fs\mpfs\src\mpfs_local.h</path>
-            <path>\driver\sdmmc\drv_sdmmc.h</path>
-            <path>\driver\sdmmc\src\drv_sdmmc_local.h</path>
-            <path>\driver\sdmmc\drv_sdmmc_definitions.h</path>
             <path>\peripheral\pit\plib_pit.h</path>
+            <path>\device_cache.h</path>
+            <path>\toolchain_specifics.h</path>
+            <path>\definitions.h</path>
+            <path>\peripheral\mmu\plib_mmu.h</path>
+            <path>\peripheral\mmu\cp15.h</path>
+            <path>\peripheral\clk\plib_clk.h</path>
+            <path>\peripheral\pio\plib_pio.h</path>
+            <path>\peripheral\aic\plib_aic.h</path>
             <path>\..\..\packs\SAM9X60_DFP\device.h</path>
             <path>\..\..\packs\SAM9X60_DFP\component\adc.h</path>
             <path>\..\..\packs\SAM9X60_DFP\component\aes.h</path>
@@ -92,14 +100,6 @@
             <path>\..\..\packs\SAM9X60_DFP\component\xdmac.h</path>
             <path>\..\..\packs\SAM9X60_DFP\sam9x60.h</path>
             <path>\..\..\packs\SAM9X60_DFP\pio\sam9x60.h</path>
-            <path>\device_cache.h</path>
-            <path>\toolchain_specifics.h</path>
-            <path>\definitions.h</path>
-            <path>\peripheral\mmu\plib_mmu.h</path>
-            <path>\peripheral\mmu\cp15.h</path>
-            <path>\peripheral\clk\plib_clk.h</path>
-            <path>\peripheral\pio\plib_pio.h</path>
-            <path>\peripheral\aic\plib_aic.h</path>
             <path>\peripheral\sdmmc\plib_sdmmc_common.h</path>
             <path>\peripheral\sdmmc\plib_sdmmc0.h</path>
             <path>\peripheral\tc\plib_tc0.h</path>
@@ -143,12 +143,12 @@
         </group>
         <group name="Source Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_9x60_ek_freertos">
             <path>\bsp\bsp.c</path>
+            <path>\driver\sdmmc\src\drv_sdmmc_file_system.c</path>
             <path>\system\fs\src\sys_fs.c</path>
             <path>\system\fs\src\sys_fs_media_manager.c</path>
             <path>\system\fs\fat_fs\src\ff.c</path>
             <path>\system\fs\fat_fs\src\diskio.c</path>
             <path>\system\fs\mpfs\src\mpfs.c</path>
-            <path>\driver\sdmmc\src\drv_sdmmc_file_system.c</path>
             <path>\peripheral\pit\plib_pit.c</path>
             <path>\..\..\main.c</path>
             <path>\initialization.c</path>

@@ -59,6 +59,14 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define INT_InterruptPendingSet    	SYS_INT_SourceStatusSet
 #define INT_InterruptPendingClear  	SYS_INT_SourceStatusClear
 
+#ifndef CPSR_I_Pos
+#define CPSR_I_Pos      7U
+#endif
+
+#ifndef CPSR_I_Msk
+#define CPSR_I_Msk      (1UL << CPSR_I_Pos)
+#endif
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Implementation
@@ -66,6 +74,13 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 // private methods *************************************************************
+
+static inline unsigned int __get_CPSR( void )
+{
+    unsigned int value;
+    asm volatile( "MRS %0, cpsr" : "=r"(value) );
+    return value;
+}
 
 static aic_registers_t *
 _aicInstanceGet( IRQn_Type aSrcSelection )

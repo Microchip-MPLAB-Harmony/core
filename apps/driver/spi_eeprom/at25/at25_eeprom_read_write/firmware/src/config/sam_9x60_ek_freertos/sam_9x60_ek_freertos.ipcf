@@ -32,6 +32,14 @@
         <group name="Header Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_9x60_ek_freertos">
             <path>\bsp\bsp.h</path>
             <path>\peripheral\pit\plib_pit.h</path>
+            <path>\device_cache.h</path>
+            <path>\toolchain_specifics.h</path>
+            <path>\definitions.h</path>
+            <path>\peripheral\mmu\plib_mmu.h</path>
+            <path>\peripheral\mmu\cp15.h</path>
+            <path>\peripheral\clk\plib_clk.h</path>
+            <path>\peripheral\pio\plib_pio.h</path>
+            <path>\peripheral\aic\plib_aic.h</path>
             <path>\..\..\packs\SAM9X60_DFP\device.h</path>
             <path>\..\..\packs\SAM9X60_DFP\component\adc.h</path>
             <path>\..\..\packs\SAM9X60_DFP\component\aes.h</path>
@@ -80,14 +88,6 @@
             <path>\..\..\packs\SAM9X60_DFP\component\xdmac.h</path>
             <path>\..\..\packs\SAM9X60_DFP\sam9x60.h</path>
             <path>\..\..\packs\SAM9X60_DFP\pio\sam9x60.h</path>
-            <path>\device_cache.h</path>
-            <path>\toolchain_specifics.h</path>
-            <path>\definitions.h</path>
-            <path>\peripheral\mmu\plib_mmu.h</path>
-            <path>\peripheral\mmu\cp15.h</path>
-            <path>\peripheral\clk\plib_clk.h</path>
-            <path>\peripheral\pio\plib_pio.h</path>
-            <path>\peripheral\aic\plib_aic.h</path>
             <path>\driver\at25\drv_at25.h</path>
             <path>\driver\at25\drv_at25_definitions.h</path>
             <path>\peripheral\flexcom\spi\plib_flexcom4_spi.h</path>
