@@ -51,18 +51,19 @@
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
+#include "peripheral/efc/plib_efc.h"
+#include "bsp/bsp.h"
+#include "driver/i2c/drv_i2c.h"
+#include "system/debug/sys_debug.h"
 #include "peripheral/twihs/plib_twihs0.h"
 #include "system/console/sys_console.h"
 #include "system/console/src/sys_console_uart_definitions.h"
-#include "system/console/sys_debug.h"
 #include "peripheral/usart/plib_usart1.h"
-#include "bsp/bsp.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "system/int/sys_int.h"
 #include "system/cache/sys_cache.h"
 #include "osal/osal.h"
-#include "driver/i2c/drv_i2c.h"
 #include "app_i2c_eeprom.h"
 #include "app_i2c_temp_sensor.h"
 
@@ -189,8 +190,9 @@ typedef struct
     /* I2C0 Driver Object */
     SYS_MODULE_OBJ drvI2C0;
 
-    SYS_MODULE_OBJ  sysConsole0;
     SYS_MODULE_OBJ  sysDebug;
+
+    SYS_MODULE_OBJ  sysConsole0;
 
 
 } SYSTEM_OBJECTS;
