@@ -793,7 +793,16 @@
         </File>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent dnOrder="7" id="sercom2">
+    <UniqueComponent dnOrder="7" id="nvmctrl">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="NVM_RWS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="nvmctrl" value="2"/>
+          </Values>
+        </Integer>
+      </Symbols>
+    </UniqueComponent>
+    <UniqueComponent dnOrder="8" id="sercom2">
       <Symbols dnOrder="0">
         <Integer dnOrder="0" id="I2CM_BAUD">
           <Values dnOrder="0">
@@ -1015,7 +1024,7 @@
         </DirectCapability>
       </Attachments>
     </UniqueComponent>
-    <UniqueComponent dnOrder="8" id="sercom3">
+    <UniqueComponent dnOrder="9" id="sercom3">
       <Symbols dnOrder="0">
         <Integer dnOrder="0" id="I2CM_BAUD">
           <Values dnOrder="0">
@@ -1116,7 +1125,7 @@
         </DirectCapability>
       </Attachments>
     </UniqueComponent>
-    <GeneratorComponent dnOrder="9" id="sys_console">
+    <GeneratorComponent dnOrder="10" id="sys_console">
       <Symbols dnOrder="0">
         <Integer dnOrder="0" id="SYS_CONSOLE_UART_CONNECTION_COUNTER">
           <Values dnOrder="0">
@@ -1158,7 +1167,7 @@
         </InstanceComponent>
       </Instances>
     </GeneratorComponent>
-    <UniqueComponent dnOrder="10" id="sys_debug">
+    <UniqueComponent dnOrder="11" id="sys_debug">
       <Symbols dnOrder="0">
         <String dnOrder="0" id="SYS_CONSOLE_DEVICE">
           <Values dnOrder="0">
@@ -1184,7 +1193,7 @@
         </DirectDependency>
       </Attachments>
     </UniqueComponent>
-    <UniqueComponent dnOrder="11" id="sys_time">
+    <UniqueComponent dnOrder="12" id="sys_time">
       <Symbols dnOrder="0">
         <String dnOrder="0" id="SYS_TIME_PLIB">
           <Values dnOrder="0">
@@ -1205,7 +1214,7 @@
         </DirectDependency>
       </Attachments>
     </UniqueComponent>
-    <UniqueComponent dnOrder="12" id="tc0">
+    <UniqueComponent dnOrder="13" id="tc0">
       <Symbols dnOrder="0">
         <Integer dnOrder="0" id="TC_FREQUENCY">
           <Values dnOrder="0">
@@ -1263,19 +1272,20 @@
     <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
     <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_SAM_L21_Xplained_Pro" x="308" y="49"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="640" y="20"/>
+        <ElementPosition dnOrder="0" id="BSP_SAM_L21_Xplained_Pro" x="0" y="49"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="532" y="78"/>
         <ElementPosition dnOrder="2" id="cmsis" x="500" y="20"/>
         <ElementPosition dnOrder="3" id="core" x="400" y="20"/>
         <ElementPosition dnOrder="4" id="dfp" x="180" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_i2c" x="488" y="57"/>
-        <ElementPosition dnOrder="6" id="evsys" x="20" y="20"/>
-        <ElementPosition dnOrder="7" id="sercom2" x="325" y="133"/>
-        <ElementPosition dnOrder="8" id="sercom3" x="25" y="83"/>
-        <ElementPosition dnOrder="9" id="sys_console" x="181" y="59"/>
-        <ElementPosition dnOrder="10" id="sys_debug" x="393" y="274"/>
-        <ElementPosition dnOrder="11" id="sys_time" x="898" y="23"/>
-        <ElementPosition dnOrder="12" id="tc0" x="733" y="122"/>
+        <ElementPosition dnOrder="5" id="drv_i2c" x="203" y="226"/>
+        <ElementPosition dnOrder="6" id="evsys" x="550" y="180"/>
+        <ElementPosition dnOrder="7" id="nvmctrl" x="30" y="160"/>
+        <ElementPosition dnOrder="8" id="sercom2" x="37" y="266"/>
+        <ElementPosition dnOrder="9" id="sercom3" x="25" y="83"/>
+        <ElementPosition dnOrder="10" id="sys_console" x="198" y="59"/>
+        <ElementPosition dnOrder="11" id="sys_debug" x="393" y="81"/>
+        <ElementPosition dnOrder="12" id="sys_time" x="499" y="232"/>
+        <ElementPosition dnOrder="13" id="tc0" x="352" y="246"/>
       </ElementPositions>
     </ComponentGraph>
   </UserData>
