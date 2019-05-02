@@ -54,12 +54,10 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
-
 #pragma config NVMCTRL_BOOTPROT = 0x7
 #pragma config NVMCTRL_EEPROM_SIZE = 0x7
 #pragma config BOD33USERLEVEL = 0x6
 #pragma config BOD33_DIS = CLEAR
-#pragma config BOD12_DIS = CLEAR
 #pragma config BOD33_ACTION = 0x0
 #pragma config WDT_ENABLE = CLEAR
 #pragma config WDT_ALWAYSON = CLEAR
@@ -68,7 +66,6 @@
 #pragma config WDT_EWOFFSET = 0xB
 #pragma config WDT_WEN = CLEAR
 #pragma config BOD33_HYST = CLEAR
-#pragma config BOD12_HYST = CLEAR
 #pragma config NVMCTRL_REGION_LOCKS = 0xffff
 
 
@@ -116,12 +113,13 @@ SYSTEM_OBJECTS sysObj;
 
 void SYS_Initialize ( void* data )
 {
+    NVMCTRL_Initialize( );
+
   
     PORT_Initialize();
 
 
     CLOCK_Initialize();
-
 
 
     EVSYS_Initialize();
