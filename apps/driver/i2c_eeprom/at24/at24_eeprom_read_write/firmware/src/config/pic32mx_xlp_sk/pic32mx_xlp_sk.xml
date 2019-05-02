@@ -199,52 +199,72 @@
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="39" id="I2C_1_INTERRUPT_ENABLE">
+        <Boolean dnOrder="39" id="I2C1_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="i2c1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="40" id="I2C_1_INTERRUPT_ENABLE_UPDATE">
+        <Integer dnOrder="40" id="I2C1_CLOCK_FREQUENCY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="36000000"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="41" id="I2C_1_INTERRUPT_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="i2c1" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="42" id="I2C_1_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="41" id="I2C_1_INTERRUPT_HANDLER">
+        <String dnOrder="43" id="I2C_1_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="i2c1" value="I2C_1_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="42" id="I2C_1_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="44" id="I2C_1_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="i2c1" value="true"/>
           </Values>
         </Boolean>
-        <Hex dnOrder="43" id="SYS_PORT_B_ANSEL">
+        <Hex dnOrder="45" id="PMD5_REG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="4294901759"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="46" id="PMD6_REG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="4294967293"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="47" id="SYS_PORT_B_ANSEL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="4"/>
           </Values>
         </Hex>
-        <Hex dnOrder="44" id="SYS_PORT_B_LAT">
+        <Hex dnOrder="48" id="SYS_PORT_B_LAT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="4"/>
           </Values>
         </Hex>
-        <Hex dnOrder="45" id="SYS_PORT_B_TRIS">
+        <Hex dnOrder="49" id="SYS_PORT_B_TRIS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="4"/>
           </Values>
         </Hex>
-        <Hex dnOrder="46" id="SYS_PORT_C_LAT">
+        <Hex dnOrder="50" id="SYS_PORT_C_LAT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="48"/>
           </Values>
         </Hex>
-        <Hex dnOrder="47" id="SYS_PORT_C_TRIS">
+        <Hex dnOrder="51" id="SYS_PORT_C_TRIS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="48"/>
           </Values>
         </Hex>
-        <KeyValueSet dnOrder="48" id="clkSvcMode">
+        <KeyValueSet dnOrder="52" id="clkSvcMode">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
@@ -509,16 +529,16 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_PIC32MX274_XLP_Starter_Kit" x="30" y="60"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="340" y="20"/>
         <ElementPosition dnOrder="2" id="core" x="240" y="20"/>
         <ElementPosition dnOrder="3" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="4" id="drv_at24" x="684" y="6"/>
-        <ElementPosition dnOrder="5" id="i2c1" x="520" y="20"/>
+        <ElementPosition dnOrder="4" id="drv_at24" x="190" y="140"/>
+        <ElementPosition dnOrder="5" id="i2c1" x="33" y="162"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
