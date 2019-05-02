@@ -474,11 +474,10 @@ bool DRV_AT25_Read(
     gDrvAT25Obj.bufferAddr = rxData;
     gDrvAT25Obj.memoryAddr = address;
 
-    gDrvAT25Obj.state = DRV_AT25_STATE_READ_CMD_ADDR;
+    gDrvAT25Obj.state = DRV_AT25_STATE_READ_DATA;
 
     if (_DRV_AT25_WriteMemoryAddress(DRV_AT25_CMD_READ, address) == true)
     {
-        gDrvAT25Obj.state = DRV_AT25_STATE_READ_DATA;
         isRequestAccepted = true;
     }
     else
