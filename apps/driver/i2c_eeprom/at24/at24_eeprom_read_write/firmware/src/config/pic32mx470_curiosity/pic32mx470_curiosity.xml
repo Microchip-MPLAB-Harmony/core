@@ -234,97 +234,117 @@
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="46" id="I2C_1_INTERRUPT_ENABLE">
+        <Boolean dnOrder="46" id="I2C1_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="i2c1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="47" id="I2C_1_INTERRUPT_ENABLE_UPDATE">
+        <Integer dnOrder="47" id="I2C1_CLOCK_FREQUENCY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="48000000"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="48" id="I2C_1_INTERRUPT_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="i2c1" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="49" id="I2C_1_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="48" id="I2C_1_INTERRUPT_HANDLER">
+        <String dnOrder="50" id="I2C_1_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="i2c1" value="I2C_1_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="49" id="I2C_1_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="51" id="I2C_1_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="i2c1" value="true"/>
           </Values>
         </Boolean>
-        <Hex dnOrder="50" id="SYS_PORT_B_ANSEL">
+        <Hex dnOrder="52" id="PMD5_REG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="4294901759"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="53" id="PMD6_REG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="4294967293"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="54" id="SYS_PORT_B_ANSEL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1036"/>
           </Values>
         </Hex>
-        <Hex dnOrder="51" id="SYS_PORT_B_LAT">
+        <Hex dnOrder="55" id="SYS_PORT_B_LAT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1036"/>
           </Values>
         </Hex>
-        <Hex dnOrder="52" id="SYS_PORT_B_TRIS">
+        <Hex dnOrder="56" id="SYS_PORT_B_TRIS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1036"/>
           </Values>
         </Hex>
-        <Hex dnOrder="53" id="SYS_PORT_D_CNPU">
+        <Hex dnOrder="57" id="SYS_PORT_D_CNPU">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="64"/>
           </Values>
         </Hex>
-        <Hex dnOrder="54" id="SYS_PORT_D_TRIS">
+        <Hex dnOrder="58" id="SYS_PORT_D_TRIS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Hex dnOrder="55" id="SYS_PORT_E_ANSEL">
+        <Hex dnOrder="59" id="SYS_PORT_E_ANSEL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="208"/>
           </Values>
         </Hex>
-        <Hex dnOrder="56" id="SYS_PORT_E_LAT">
+        <Hex dnOrder="60" id="SYS_PORT_E_LAT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Hex dnOrder="57" id="SYS_PORT_E_TRIS">
+        <Hex dnOrder="61" id="SYS_PORT_E_TRIS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="208"/>
           </Values>
         </Hex>
-        <Combo dnOrder="58" id="SYS_PORT_PPS_INPUT_FUNCTION_0">
+        <Combo dnOrder="62" id="SYS_PORT_PPS_INPUT_FUNCTION_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="REFCLKI"/>
           </Values>
         </Combo>
-        <KeyValueSet dnOrder="59" id="SYS_PORT_PPS_INPUT_PIN_0">
+        <KeyValueSet dnOrder="63" id="SYS_PORT_PPS_INPUT_PIN_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="14"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="60" id="SYS_PORT_PPS_OUTPUT_FUNCTION_0">
+        <KeyValueSet dnOrder="64" id="SYS_PORT_PPS_OUTPUT_FUNCTION_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="13"/>
           </Values>
         </KeyValueSet>
-        <Combo dnOrder="61" id="SYS_PORT_PPS_OUTPUT_PIN_0">
+        <Combo dnOrder="65" id="SYS_PORT_PPS_OUTPUT_PIN_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="RPD9"/>
           </Values>
         </Combo>
-        <Boolean dnOrder="62" id="USE_PPS_INPUT_0">
+        <Boolean dnOrder="66" id="USE_PPS_INPUT_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="63" id="USE_PPS_OUTPUT_0">
+        <Boolean dnOrder="67" id="USE_PPS_OUTPUT_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="false"/>
           </Values>
         </Boolean>
-        <KeyValueSet dnOrder="64" id="clkSvcMode">
+        <KeyValueSet dnOrder="68" id="clkSvcMode">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
@@ -589,16 +609,16 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_PIC32MX470_Curiosity_Development_Board" x="12" y="69"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="340" y="20"/>
         <ElementPosition dnOrder="2" id="core" x="240" y="20"/>
         <ElementPosition dnOrder="3" id="dfp" x="20" y="20"/>
         <ElementPosition dnOrder="4" id="drv_at24" x="191" y="119"/>
-        <ElementPosition dnOrder="5" id="i2c1" x="31" y="158"/>
+        <ElementPosition dnOrder="5" id="i2c1" x="43" y="141"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
