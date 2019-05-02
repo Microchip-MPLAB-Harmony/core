@@ -48,7 +48,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "bsp/bsp.h"
+#include "peripheral/nvmctrl/plib_nvmctrl.h"
 #include "peripheral/evsys/plib_evsys.h"
 #include "peripheral/sercom/spim/plib_sercom6_spi.h"
 #include "peripheral/port/plib_port.h"
@@ -56,11 +56,13 @@
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/dmac/plib_dmac.h"
 #include "peripheral/sercom/spim/plib_sercom4_spi.h"
+#include "bsp/bsp.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "driver/spi/drv_spi.h"
 #include "system/int/sys_int.h"
 #include "system/ports/sys_ports.h"
+#include "system/cache/sys_cache.h"
 #include "system/dma/sys_dma.h"
 #include "osal/osal.h"
 #include "app_monitor.h"
@@ -187,11 +189,11 @@ void SYS_Tasks ( void );
 
 typedef struct
 {
-    /* SPI1 Driver Object */
-    SYS_MODULE_OBJ drvSPI1;
-
     /* SPI0 Driver Object */
     SYS_MODULE_OBJ drvSPI0;
+
+    /* SPI1 Driver Object */
+    SYS_MODULE_OBJ drvSPI1;
 
 
 } SYSTEM_OBJECTS;

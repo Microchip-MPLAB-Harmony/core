@@ -54,7 +54,6 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
-
 #pragma config BOD33_DIS = SET
 #pragma config BOD33USERLEVEL = 0x1c
 #pragma config BOD33_ACTION = RESET
@@ -79,64 +78,6 @@
 // Section: Driver Initialization Data
 // *****************************************************************************
 // *****************************************************************************
-// <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance 1 Initialization Data">
-
-/* SPI Client Objects Pool */
-static DRV_SPI_CLIENT_OBJ drvSPI1ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX1];
-
-/* SPI PLIB Interface Initialization */
-const DRV_SPI_PLIB_INTERFACE drvSPI1PlibAPI = {
-
-    /* SPI PLIB Setup */
-    .setup = (DRV_SPI_PLIB_SETUP)SERCOM6_SPI_TransferSetup,
-
-    /* SPI PLIB WriteRead function */
-    .writeRead = (DRV_SPI_PLIB_WRITE_READ)SERCOM6_SPI_WriteRead,
-
-    /* SPI PLIB Transfer Status function */
-    .isBusy = (DRV_SPI_PLIB_IS_BUSY)SERCOM6_SPI_IsBusy,
-
-    /* SPI PLIB Callback Register */
-    .callbackRegister = (DRV_SPI_PLIB_CALLBACK_REGISTER)SERCOM6_SPI_CallbackRegister,
-};
-
-const uint32_t drvSPI1remapDataBits[]= { 0x0, 0x1, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
-const uint32_t drvSPI1remapClockPolarity[] = { 0x0, 0x20000000 };
-const uint32_t drvSPI1remapClockPhase[] = { 0x10000000, 0x0 };
-
-/* SPI Driver Initialization Data */
-const DRV_SPI_INIT drvSPI1InitData =
-{
-    /* SPI PLIB API */
-    .spiPlib = &drvSPI1PlibAPI,
-
-    .remapDataBits = drvSPI1remapDataBits,
-
-    .remapClockPolarity = drvSPI1remapClockPolarity,
-
-    .remapClockPhase = drvSPI1remapClockPhase,
-
-    /* SPI Number of clients */
-    .numClients = DRV_SPI_CLIENTS_NUMBER_IDX1,
-
-    /* SPI Client Objects Pool */
-    .clientObjPool = (uintptr_t)&drvSPI1ClientObjPool[0],
-
-    /* DMA Channel for Transmit */
-    .dmaChannelTransmit = DRV_SPI_XMIT_DMA_CH_IDX1,
-
-    /* DMA Channel for Receive */
-    .dmaChannelReceive  = DRV_SPI_RCV_DMA_CH_IDX1,
-
-    /* SPI Transmit Register */
-    .spiTransmitAddress =  (void *)&(SERCOM6_REGS->SPIM.SERCOM_DATA),
-
-    /* SPI Receive Register */
-    .spiReceiveAddress  = (void *)&(SERCOM6_REGS->SPIM.SERCOM_DATA),
-
-};
-
-// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance 0 Initialization Data">
 
 /* SPI Client Objects Pool */
@@ -195,6 +136,64 @@ const DRV_SPI_INIT drvSPI0InitData =
 };
 
 // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance 1 Initialization Data">
+
+/* SPI Client Objects Pool */
+static DRV_SPI_CLIENT_OBJ drvSPI1ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX1];
+
+/* SPI PLIB Interface Initialization */
+const DRV_SPI_PLIB_INTERFACE drvSPI1PlibAPI = {
+
+    /* SPI PLIB Setup */
+    .setup = (DRV_SPI_PLIB_SETUP)SERCOM6_SPI_TransferSetup,
+
+    /* SPI PLIB WriteRead function */
+    .writeRead = (DRV_SPI_PLIB_WRITE_READ)SERCOM6_SPI_WriteRead,
+
+    /* SPI PLIB Transfer Status function */
+    .isBusy = (DRV_SPI_PLIB_IS_BUSY)SERCOM6_SPI_IsBusy,
+
+    /* SPI PLIB Callback Register */
+    .callbackRegister = (DRV_SPI_PLIB_CALLBACK_REGISTER)SERCOM6_SPI_CallbackRegister,
+};
+
+const uint32_t drvSPI1remapDataBits[]= { 0x0, 0x1, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
+const uint32_t drvSPI1remapClockPolarity[] = { 0x0, 0x20000000 };
+const uint32_t drvSPI1remapClockPhase[] = { 0x10000000, 0x0 };
+
+/* SPI Driver Initialization Data */
+const DRV_SPI_INIT drvSPI1InitData =
+{
+    /* SPI PLIB API */
+    .spiPlib = &drvSPI1PlibAPI,
+
+    .remapDataBits = drvSPI1remapDataBits,
+
+    .remapClockPolarity = drvSPI1remapClockPolarity,
+
+    .remapClockPhase = drvSPI1remapClockPhase,
+
+    /* SPI Number of clients */
+    .numClients = DRV_SPI_CLIENTS_NUMBER_IDX1,
+
+    /* SPI Client Objects Pool */
+    .clientObjPool = (uintptr_t)&drvSPI1ClientObjPool[0],
+
+    /* DMA Channel for Transmit */
+    .dmaChannelTransmit = DRV_SPI_XMIT_DMA_CH_IDX1,
+
+    /* DMA Channel for Receive */
+    .dmaChannelReceive  = DRV_SPI_RCV_DMA_CH_IDX1,
+
+    /* SPI Transmit Register */
+    .spiTransmitAddress =  (void *)&(SERCOM6_REGS->SPIM.SERCOM_DATA),
+
+    /* SPI Receive Register */
+    .spiReceiveAddress  = (void *)&(SERCOM6_REGS->SPIM.SERCOM_DATA),
+
+};
+
+// </editor-fold>
 
 
 // *****************************************************************************
@@ -232,14 +231,14 @@ SYSTEM_OBJECTS sysObj;
 
 void SYS_Initialize ( void* data )
 {
+    NVMCTRL_Initialize( );
+
   
     PORT_Initialize();
 
     CLOCK_Initialize();
 
 
-
-	BSP_Initialize();
     EVSYS_Initialize();
 
     SERCOM6_SPI_Initialize();
@@ -248,11 +247,12 @@ void SYS_Initialize ( void* data )
 
     SERCOM4_SPI_Initialize();
 
+	BSP_Initialize();
 
-    /* Initialize SPI1 Driver Instance */
-    sysObj.drvSPI1 = DRV_SPI_Initialize(DRV_SPI_INDEX_1, (SYS_MODULE_INIT *)&drvSPI1InitData);
     /* Initialize SPI0 Driver Instance */
     sysObj.drvSPI0 = DRV_SPI_Initialize(DRV_SPI_INDEX_0, (SYS_MODULE_INIT *)&drvSPI0InitData);
+    /* Initialize SPI1 Driver Instance */
+    sysObj.drvSPI1 = DRV_SPI_Initialize(DRV_SPI_INDEX_1, (SYS_MODULE_INIT *)&drvSPI1InitData);
 
 
 
