@@ -25,6 +25,11 @@
 #define TOOLCHAIN_SPECIFICS_H
 
 
+static inline void __NOP()
+{
+    asm("nop");
+}
+
 static inline void __disable_irq( void )
 {   // read, modify and write back the CPSR
     asm("MRS r0, cpsr");
@@ -56,7 +61,6 @@ static inline void __ISB(void)
 #define __ALIGNED(x) __attribute__((aligned(x)))
 
 #define __STATIC_INLINE static inline
-#define __INLINE        inline
 
 #define COMPILER_PRAGMA(arg)            _Pragma(#arg)
 #define SECTION(a)                      COMPILER_PRAGMA(location = a)
