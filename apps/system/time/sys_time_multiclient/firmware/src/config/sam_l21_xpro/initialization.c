@@ -54,7 +54,6 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
-
 #pragma config NVMCTRL_BOOTPROT = 0x7
 #pragma config NVMCTRL_EEPROM_SIZE = 0x7
 #pragma config BOD33USERLEVEL = 0x6
@@ -133,12 +132,13 @@ const SYS_TIME_INIT sysTimeInitData =
 
 void SYS_Initialize ( void* data )
 {
+    NVMCTRL_Initialize( );
+
   
     PORT_Initialize();
 
 
     CLOCK_Initialize();
-
 
 
     SERCOM3_USART_Initialize();
