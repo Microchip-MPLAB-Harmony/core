@@ -91,8 +91,6 @@ extern "C" {
 /* USART Driver Instance 1 Configuration Options */
 #define DRV_USART_INDEX_1                  1
 #define DRV_USART_CLIENTS_NUMBER_IDX1      1
-#define DRV_USART_XMIT_DMA_CH_IDX1         SYS_DMA_CHANNEL_2
-#define DRV_USART_RCV_DMA_CH_IDX1          SYS_DMA_CHANNEL_3
 
 /* USART Driver Instance 0 Configuration Options */
 #define DRV_USART_INDEX_0                  0

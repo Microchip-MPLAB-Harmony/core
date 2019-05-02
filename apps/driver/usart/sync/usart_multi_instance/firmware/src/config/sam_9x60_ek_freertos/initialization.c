@@ -95,13 +95,9 @@ const DRV_USART_INIT drvUsart1InitData =
     /* USART Client Objects Pool */
     .clientObjPool = (uintptr_t)&drvUSART1ClientObjPool[0],
 
-    .dmaChannelTransmit = DRV_USART_XMIT_DMA_CH_IDX1,
+    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
 
-    .usartTransmitAddress = (void *)&(DBGU_REGS->DBGU_THR),
-
-    .dmaChannelReceive = DRV_USART_RCV_DMA_CH_IDX1,
-
-    .usartReceiveAddress = (void *)&(DBGU_REGS->DBGU_RHR),
+    .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
 
 
     .remapDataWidth = drvUsart1remapDataWidth,
