@@ -1,26 +1,23 @@
 /*******************************************************************************
-  SERCOM Universal Synchronous/Asynchrnous Receiver/Transmitter PLIB
+  Cache System Service Library Implementation Source File
 
   Company
     Microchip Technology Inc.
 
   File Name
-    plib_sercom2_usart.h
+    sys_cache.c
 
   Summary
-    USART peripheral library interface.
+    Cache System Service Library interface implementation.
 
   Description
-    This file defines the interface to the USART peripheral library. This
-    library provides access to and control of the associated peripheral
-    instance.
+    This file implements the interface to the Cache System Service Library.
 
-  Remarks:
-    None.
 *******************************************************************************/
 
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -41,60 +38,70 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-
-#ifndef PLIB_SERCOM2_USART_H // Guards against multiple inclusion
-#define PLIB_SERCOM2_USART_H
+// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
+#include "device.h"
+#include "device_cache.h"
+#include "system/cache/sys_cache.h"
 
-#include "plib_sercom_usart_common.h"
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus // Provide C++ Compatibility
-
-	extern "C" {
-
-#endif
-// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Interface Routines
+// Section: System Cache Interface Functions
 // *****************************************************************************
 // *****************************************************************************
+void SYS_CACHE_EnableCaches (void)
+{
+}
 
-void SERCOM2_USART_Initialize( void );
+void SYS_CACHE_DisableCaches (void)
+{
+}
+void SYS_CACHE_EnableICache (void)
+{
+}
 
-bool SERCOM2_USART_SerialSetup( USART_SERIAL_SETUP * serialSetup, uint32_t clkFrequency );
+void SYS_CACHE_DisableICache (void)
+{
+}
 
-bool SERCOM2_USART_Write( void *buffer, const size_t size );
+void SYS_CACHE_InvalidateICache (void)
+{
+}
 
-bool SERCOM2_USART_TransmitterIsReady( void );
+void SYS_CACHE_EnableDCache (void)
+{
+}
 
-bool SERCOM2_USART_TransmitComplete( void );
+void SYS_CACHE_DisableDCache (void)
+{
+}
 
-void SERCOM2_USART_WriteByte( int data );
+void SYS_CACHE_InvalidateDCache (void)
+{
+}
 
-bool SERCOM2_USART_Read( void *buffer, const size_t size );
+void SYS_CACHE_CleanDCache (void)
+{
+}
 
-bool SERCOM2_USART_ReceiverIsReady( void );
+void SYS_CACHE_CleanInvalidateDCache (void)
+{
+}
 
-int SERCOM2_USART_ReadByte( void );
+void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
+{
+}
 
-USART_ERROR SERCOM2_USART_ErrorGet( void );
+void SYS_CACHE_CleanDCache_by_Addr (uint32_t *addr, int32_t size)
+{
+}
 
-uint32_t SERCOM2_USART_FrequencyGet( void );
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-    }
-
-#endif
-// DOM-IGNORE-END
-
-#endif //PLIB_SERCOM2_USART_H
+void SYS_CACHE_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
+{
+}
