@@ -108,52 +108,72 @@
             </Boolean>
           </Attributes>
         </File>
-        <Hex dnOrder="20" id="SYS_PORT_B_ANSEL">
+        <Hex dnOrder="20" id="PMD4_REG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="4294967294"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="21" id="PMD6_REG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="4294967293"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="22" id="SYS_PORT_B_ANSEL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1036"/>
           </Values>
         </Hex>
-        <Hex dnOrder="21" id="SYS_PORT_B_LAT">
+        <Hex dnOrder="23" id="SYS_PORT_B_LAT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Hex dnOrder="22" id="SYS_PORT_B_TRIS">
+        <Hex dnOrder="24" id="SYS_PORT_B_TRIS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1036"/>
           </Values>
         </Hex>
-        <Hex dnOrder="23" id="SYS_PORT_D_CNPU">
+        <Hex dnOrder="25" id="SYS_PORT_D_CNPU">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="64"/>
           </Values>
         </Hex>
-        <Hex dnOrder="24" id="SYS_PORT_D_TRIS">
+        <Hex dnOrder="26" id="SYS_PORT_D_TRIS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Hex dnOrder="25" id="SYS_PORT_E_ANSEL">
+        <Hex dnOrder="27" id="SYS_PORT_E_ANSEL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="208"/>
           </Values>
         </Hex>
-        <Hex dnOrder="26" id="SYS_PORT_E_LAT">
+        <Hex dnOrder="28" id="SYS_PORT_E_LAT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Hex dnOrder="27" id="SYS_PORT_E_TRIS">
+        <Hex dnOrder="29" id="SYS_PORT_E_TRIS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="208"/>
           </Values>
         </Hex>
-        <Boolean dnOrder="28" id="TIMER_1_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="30" id="TIMER_1_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <KeyValueSet dnOrder="29" id="clkSvcMode">
+        <Boolean dnOrder="31" id="TMR1_CLOCK_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="32" id="TMR1_CLOCK_FREQUENCY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="48000000"/>
+          </Values>
+        </Integer>
+        <KeyValueSet dnOrder="33" id="clkSvcMode">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
@@ -299,26 +319,33 @@
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="20" id="OSAL_SYSDEF_H">
+        <File dnOrder="20" id="OSAL_IMPL_BASIC_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="21" id="OSAL_SYSDEF_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <Combo dnOrder="21" id="SELECT_RTOS">
+        <Combo dnOrder="22" id="SELECT_RTOS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="FreeRTOS"/>
           </Values>
         </Combo>
-        <File dnOrder="22" id="TASKS_C">
+        <File dnOrder="23" id="TASKS_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="23" id="USER_H">
+        <File dnOrder="24" id="USER_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
@@ -329,15 +356,15 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_PIC32MX470_Curiosity_Development_Board" x="340" y="20"/>
-        <ElementPosition dnOrder="1" id="FreeRTOS" x="24" y="60"/>
+        <ElementPosition dnOrder="1" id="FreeRTOS" x="26" y="67"/>
         <ElementPosition dnOrder="2" id="HarmonyCore" x="226" y="54"/>
         <ElementPosition dnOrder="3" id="core" x="240" y="20"/>
         <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
