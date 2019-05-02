@@ -314,7 +314,6 @@ void SYS_Initialize ( void* data )
     CHECONbits.PREFEN = 1;
 
 
-
 	UART4_Initialize();
 
 	BSP_Initialize();

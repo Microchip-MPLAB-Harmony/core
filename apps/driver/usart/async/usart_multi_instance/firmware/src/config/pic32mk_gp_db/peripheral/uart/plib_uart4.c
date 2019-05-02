@@ -51,9 +51,9 @@ UART_OBJECT uart4Obj;
 
 void static UART4_ErrorClear( void )
 {
-    uint8_t dummyData = 0u;
     /* rxBufferLen = (FIFO level + RX register) */
     uint8_t rxBufferLen = UART_RXFIFO_DEPTH;
+    uint8_t dummyData = 0u;
 
     /* If it's a overrun error then clear it to flush FIFO */
     if(U4STA & _U4STA_OERR_MASK)
@@ -69,7 +69,7 @@ void static UART4_ErrorClear( void )
 
         /* Try to flush error bytes for one full FIFO and exit instead of
          * blocking here if more error bytes are received */
-        if(0u ==  rxBufferLen)
+        if(rxBufferLen == 0u)
         {
             break;
         }
@@ -90,34 +90,31 @@ void static UART4_ErrorClear( void )
 
 void UART4_Initialize( void )
 {
-    /*Set up UxMODE bits */
-    /*STSEL  = 0*/
-    /*PDSEL = 0 */
-    /*BRGH = 1 */
-    /*RXINV = 0 */
-    /*ABAUD = 0 */
-    /*LPBACK = 0 */
-    /*WAKE = 0 */
-    /*SIDL = 0 */
-    /*RUNOVF = 0 */
-    /*CLKSEL = 0 */
-    /*SLPEN = 0 */
+    /* Set up UxMODE bits */
+    /* STSEL  = 0*/
+    /* PDSEL = 0 */
+    /* BRGH = 1 */
+    /* RXINV = 0 */
+    /* ABAUD = 0 */
+    /* LPBACK = 0 */
+    /* WAKE = 0 */
+    /* SIDL = 0 */
+    /* RUNOVF = 0 */
+    /* CLKSEL = 0 */
+    /* SLPEN = 0 */
     U4MODE = 0x8;
 
-    /*Enable UART4 Receiver, Transmitter and TX Interrupt selection */
+    /* Enable UART4 Receiver, Transmitter and TX Interrupt selection */
     U4STASET = (_U4STA_UTXEN_MASK | _U4STA_URXEN_MASK | _U4STA_UTXISEL0_MASK);
+
     /* BAUD Rate register Setup */
     U4BRG = 129;
 
-    /*Setup UART4_FAULT Interrupt*/
-    /*Disable UART4_FAULT Interrupt*/
+    /* Disable Interrupts */
     IEC2CLR = _IEC2_U4EIE_MASK;
 
-    /*Setup UART4_RX Interrupt*/
-    /*Disable UART4_RX Interrupt*/
     IEC2CLR = _IEC2_U4RXIE_MASK;
-    /*Setup UART4_TX Interrupt*/
-    /*Disable UART4_TX Interrupt*/
+
     IEC2CLR = _IEC2_U4TXIE_MASK;
 
     /* Initialize instance object */
@@ -132,7 +129,7 @@ void UART4_Initialize( void )
     uart4Obj.txBusyStatus = false;
     uart4Obj.txCallback = NULL;
 
-    /* Turn ON UART4*/
+    /* Turn ON UART4 */
     U4MODESET = _U4MODE_ON_MASK;
 }
 
@@ -153,7 +150,7 @@ bool UART4_SerialSetup( UART_SERIAL_SETUP *setup, uint32_t srcClkFreq )
 
     if (setup != NULL)
     {
-        /* Turn OFF UART4*/
+        /* Turn OFF UART4 */
         U4MODECLR = _U4MODE_ON_MASK;
 
         if(srcClkFreq == 0)
@@ -186,7 +183,6 @@ bool UART4_SerialSetup( UART_SERIAL_SETUP *setup, uint32_t srcClkFreq )
             if(setup->parity != UART_PARITY_NONE)
             {
                return status;
-
             }
             else
             {
@@ -195,7 +191,6 @@ bool UART4_SerialSetup( UART_SERIAL_SETUP *setup, uint32_t srcClkFreq )
                uartMode &= ~_U4MODE_PDSEL_MASK;
                U4MODE = uartMode | setup->dataWidth;
             }
-
         }
         else
         {
@@ -221,41 +216,43 @@ bool UART4_SerialSetup( UART_SERIAL_SETUP *setup, uint32_t srcClkFreq )
     return status;
 }
 
-bool UART4_Read( void *buffer, const size_t size )
+bool UART4_Read(void* buffer, const size_t size )
 {
     bool status = false;
-    uint8_t * lBuffer = (uint8_t *)buffer;
+    uint8_t* lBuffer = (uint8_t* )buffer;
 
-    if(NULL != lBuffer)
+    if(lBuffer != NULL)
     {
-        /* Clear errors before submitting the request.
-         * ErrorGet clears errors internally. */
-        UART4_ErrorGet();
-
         /* Check if receive request is in progress */
         if(uart4Obj.rxBusyStatus == false)
         {
+            /* Clear errors before submitting the request.
+             * ErrorGet clears errors internally. */
+            UART4_ErrorGet();
+
             uart4Obj.rxBuffer = lBuffer;
             uart4Obj.rxSize = size;
             uart4Obj.rxProcessedSize = 0;
             uart4Obj.rxBusyStatus = true;
             status = true;
+
+            /* Enable UART4_FAULT Interrupt */
+            IEC2SET = _IEC2_U4EIE_MASK;
+
+            /* Enable UART4_RX Interrupt */
+            IEC2SET = _IEC2_U4RXIE_MASK;
         }
-        /*Enable UART4_FAULT Interrupt*/
-        IEC2SET = _IEC2_U4EIE_MASK;
-        /*Enable UART4_RX Interrupt*/
-        IEC2SET = _IEC2_U4RXIE_MASK;
     }
 
     return status;
 }
 
-bool UART4_Write( void *buffer, const size_t size )
+bool UART4_Write( void* buffer, const size_t size )
 {
     bool status = false;
-    uint8_t * lBuffer = (uint8_t *)buffer;
+    uint8_t* lBuffer = (uint8_t*)buffer;
 
-    if(NULL != lBuffer)
+    if(lBuffer != NULL)
     {
         /* Check if transmit request is in progress */
         if(uart4Obj.txBusyStatus == false)
@@ -272,6 +269,7 @@ bool UART4_Write( void *buffer, const size_t size )
                 U4TXREG = *lBuffer;
                 uart4Obj.txProcessedSize++;
             }
+
             IEC2SET = _IEC2_U4TXIE_MASK;
         }
     }
@@ -294,7 +292,6 @@ UART_ERROR UART4_ErrorGet( void )
     /* All errors are cleared, but send the previous error state */
     return errors;
 }
-
 
 void UART4_ReadCallbackRegister( UART_CALLBACK callback, uintptr_t context )
 {
@@ -332,21 +329,17 @@ size_t UART4_WriteCountGet( void )
 
 void UART4_FAULT_InterruptHandler (void)
 {
+    /* Clear size and rx status */
+    uart4Obj.rxBusyStatus = false;
+
+    /* Disable the fault interrupt */
+    IEC2CLR = _IEC2_U4EIE_MASK;
+
     /* Client must call UARTx_ErrorGet() function to clear the errors */
     if( uart4Obj.rxCallback != NULL )
     {
         uart4Obj.rxCallback(uart4Obj.rxContext);
     }
-
-    /* Clear size and rx status */
-    uart4Obj.rxBusyStatus = false;
-    uart4Obj.rxSize = 0;
-    uart4Obj.rxProcessedSize = 0;
-
-    UART4_ErrorClear();
-
-    /* Disable the interrupt*/
-    IEC2CLR = _IEC2_U4EIE_MASK;
 }
 
 void UART4_RX_InterruptHandler (void)
@@ -365,9 +358,8 @@ void UART4_RX_InterruptHandler (void)
         if(uart4Obj.rxProcessedSize >= uart4Obj.rxSize)
         {
             uart4Obj.rxBusyStatus = false;
-            uart4Obj.rxSize = 0;
-            uart4Obj.rxProcessedSize = 0;
-            /* Disable the interrupt*/
+
+            /* Disable the receive interrupt */
             IEC2CLR = _IEC2_U4RXIE_MASK;
 
             if(uart4Obj.rxCallback != NULL)
@@ -387,7 +379,7 @@ void UART4_TX_InterruptHandler (void)
 {
     if(uart4Obj.txBusyStatus == true)
     {
-        while((!(U4STA & _U4STA_UTXBF_MASK)) && (uart4Obj.txSize > uart4Obj.txProcessedSize))
+        while((!(U4STA & _U4STA_UTXBF_MASK)) && (uart4Obj.txSize > uart4Obj.txProcessedSize) )
         {
             U4TXREG = uart4Obj.txBuffer[uart4Obj.txProcessedSize++];
         }
@@ -399,10 +391,8 @@ void UART4_TX_InterruptHandler (void)
         if(uart4Obj.txProcessedSize >= uart4Obj.txSize)
         {
             uart4Obj.txBusyStatus = false;
-            uart4Obj.txSize = 0;
-            uart4Obj.txProcessedSize = 0;
 
-            /* Disable the interrupt, to avoid calling ISR continuously*/
+            /* Disable the transmit interrupt, to avoid calling ISR continuously */
             IEC2CLR = _IEC2_U4TXIE_MASK;
 
             if(uart4Obj.txCallback != NULL)
@@ -417,3 +407,5 @@ void UART4_TX_InterruptHandler (void)
         ;
     }
 }
+
+
