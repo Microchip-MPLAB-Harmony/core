@@ -52,7 +52,6 @@
 #include <xc.h>
 #include "ISR_Support.h"
 
-
     .extern  SPI6_RX_Handler
 
     .section   .vector_228,code, keep
@@ -71,8 +70,6 @@ IntVectorSPI6_RX_Handler:
     nop
     portRESTORE_CONTEXT
     .end   IntVectorSPI6_RX_Handler
-
-
     .extern  SPI6_TX_Handler
 
     .section   .vector_229,code, keep
@@ -91,5 +88,4 @@ IntVectorSPI6_TX_Handler:
     nop
     portRESTORE_CONTEXT
     .end   IntVectorSPI6_TX_Handler
-
 
