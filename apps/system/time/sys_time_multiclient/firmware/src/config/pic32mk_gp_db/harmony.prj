@@ -27,8 +27,8 @@
           <Name dnOrder="1">exceptions.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">259D9CFDA6FAEDA4B98F9DBE2D9AA082</GeneratedChecksum>
-          <UserChecksum dnOrder="5">259D9CFDA6FAEDA4B98F9DBE2D9AA082</UserChecksum>
+          <GeneratedChecksum dnOrder="4">322976BB28859B437B0D6D3B8E2AFE42</GeneratedChecksum>
+          <UserChecksum dnOrder="5">322976BB28859B437B0D6D3B8E2AFE42</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
@@ -59,16 +59,16 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AE67EF207FA1798CBAE6A93021590D8C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AE67EF207FA1798CBAE6A93021590D8C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1A37FC921E3095A1A5F08325A9A6A52A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1A37FC921E3095A1A5F08325A9A6A52A</UserChecksum>
         </File>
         <File dnOrder="7">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_coretimer.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/coretimer/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/coretimer/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">69091AC5990DAAE4C3DFFC1541118378</GeneratedChecksum>
-          <UserChecksum dnOrder="5">69091AC5990DAAE4C3DFFC1541118378</UserChecksum>
+          <GeneratedChecksum dnOrder="4">2FEFEA0D4E94F5A5F3D76BAEC3D602E5</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2FEFEA0D4E94F5A5F3D76BAEC3D602E5</UserChecksum>
         </File>
         <File dnOrder="8">
           <Type dnOrder="0">SOURCE</Type>
@@ -83,16 +83,16 @@
           <Name dnOrder="1">plib_gpio.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/gpio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/gpio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">87ACC902CDD2DAB2AF984FA3286AF48F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">87ACC902CDD2DAB2AF984FA3286AF48F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1A5A19774D21F2C9240F48677CE4271D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1A5A19774D21F2C9240F48677CE4271D</UserChecksum>
         </File>
         <File dnOrder="10">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_uart6.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/uart/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/uart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8292780F98265A7B4D283D5F058D7261</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8292780F98265A7B4D283D5F058D7261</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F0CF3DB7D2F62D1711EFBC332236133A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F0CF3DB7D2F62D1711EFBC332236133A</UserChecksum>
         </File>
         <File dnOrder="11">
           <Type dnOrder="0">SOURCE</Type>
@@ -187,24 +187,24 @@
           <Name dnOrder="1">osal_impl_basic.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
           <PhysicalPath dnOrder="3">/osal/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AA54D5F27CBE04A817F6DD2B18F207A1</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AA54D5F27CBE04A817F6DD2B18F207A1</UserChecksum>
+          <GeneratedChecksum dnOrder="4">63FBE37825657165B9EA584BF05DBA43</GeneratedChecksum>
+          <UserChecksum dnOrder="5">63FBE37825657165B9EA584BF05DBA43</UserChecksum>
         </File>
         <File dnOrder="23">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_clk.h</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3E3D4E58DB06EE9CC23A83588DC5276A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3E3D4E58DB06EE9CC23A83588DC5276A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">7066CC390335CF75126E2A50C46E3BDD</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7066CC390335CF75126E2A50C46E3BDD</UserChecksum>
         </File>
         <File dnOrder="24">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_coretimer.h</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/coretimer/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/coretimer/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8436B743596D738A65CC857BC83154B4</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8436B743596D738A65CC857BC83154B4</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F4867F96351A4976FAFFABAD1A57837C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F4867F96351A4976FAFFABAD1A57837C</UserChecksum>
         </File>
         <File dnOrder="25">
           <Type dnOrder="0">HEADER</Type>
@@ -323,11 +323,12 @@
         <Setting append="true" category="C32" delimiter=";" dnOrder="0" key="extra-include-directories" value="../src;../src/config/pic32mk_gp_db;../src/packs/PIC32MK1024GPE100_DFP;;../src/mips"/>
         <Setting category="C32-LD" dnOrder="1" key="heap-size" value="0"/>
         <Setting category="C32-LD" dnOrder="2" key="no-device-startup-code" value="true"/>
+        <Setting category="C32-LD" dnOrder="3" key="preprocessor-macros" value=""/>
       </Settings>
     </Manifest>
     <Settings dnOrder="4">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.4.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MK_DFP\0.1\PIC32MK\atdf\PIC32MK1024GPE100.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MK-GP_DFP\1.0.39\atdf\PIC32MK1024GPE100.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
