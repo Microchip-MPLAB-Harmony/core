@@ -10,16 +10,19 @@
             <itemPath ex="false">../src/config/sam_l22_xpro/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f3" displayName="clock" projectFiles="true">
+            <logicalFolder name="f4" displayName="clock" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/clock/plib_clock.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="evsys" projectFiles="true">
+            <logicalFolder name="f2" displayName="evsys" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/evsys/plib_evsys.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f5" displayName="nvic" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="port" projectFiles="true">
+            <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
+              <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/nvmctrl/plib_nvmctrl.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="port" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
           </logicalFolder>
@@ -144,16 +147,19 @@
             <itemPath ex="false">../src/config/sam_l22_xpro/bsp/bsp.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f3" displayName="clock" projectFiles="true">
+            <logicalFolder name="f4" displayName="clock" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/clock/plib_clock.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="evsys" projectFiles="true">
+            <logicalFolder name="f2" displayName="evsys" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/evsys/plib_evsys.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f5" displayName="nvic" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/nvic/plib_nvic.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="port" projectFiles="true">
+            <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
+              <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/nvmctrl/plib_nvmctrl.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="port" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
           </logicalFolder>
@@ -221,7 +227,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAML22_DFP" vendor="Microchip" version="2.0.13"/>
+        <pack name="SAML22_DFP" vendor="Microchip" version="3.0.20"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>
@@ -421,6 +427,7 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-3ffff"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
                   value="${memories.dataflash.default}"/>
