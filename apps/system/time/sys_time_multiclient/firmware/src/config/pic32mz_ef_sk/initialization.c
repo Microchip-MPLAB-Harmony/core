@@ -186,7 +186,6 @@ void SYS_Initialize ( void* data )
     CFGCONbits.ECCCON = 3;
 
 
-
     CORETIMER_Initialize();
 	UART2_Initialize();
 
