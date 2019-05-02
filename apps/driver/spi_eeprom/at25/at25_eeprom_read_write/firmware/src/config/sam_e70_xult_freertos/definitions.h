@@ -54,6 +54,7 @@
 #include "peripheral/nvic/plib_nvic.h"
 #include "driver/at25/drv_at25.h"
 #include "peripheral/spi/plib_spi0.h"
+#include "peripheral/efc/plib_efc.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "system/int/sys_int.h"
