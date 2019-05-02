@@ -61,73 +61,73 @@
         </Boolean>
         <Boolean dnOrder="11" id="EVIC_4_ENABLE_GENERATE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="FreeRTOS" value="false"/>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="12" id="EVIC_4_ENABLE_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="13" id="EVIC_4_HANDLER_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Combo dnOrder="14" id="EVIC_4_PRIORITY">
+        <Boolean dnOrder="14" id="EVIC_4_PRIORITY_GENERATE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="FreeRTOS" value="1"/>
-          </Values>
-        </Combo>
-        <Boolean dnOrder="15" id="EVIC_4_PRIORITY_GENERATE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="FreeRTOS" value="false"/>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="16" id="EVIC_4_PRIORITY_LOCK">
+        <Boolean dnOrder="15" id="EVIC_4_PRIORITY_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Hex dnOrder="17" id="EVIC_4_PRIVALUE">
+        <Hex dnOrder="16" id="EVIC_4_PRIVALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="4"/>
           </Values>
         </Hex>
-        <Combo dnOrder="18" id="EVIC_4_SUBPRIORITY">
+        <Boolean dnOrder="17" id="EVIC_4_SUBPRIORITY_GENERATE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="FreeRTOS" value="0"/>
-          </Values>
-        </Combo>
-        <Boolean dnOrder="19" id="EVIC_4_SUBPRIORITY_GENERATE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="FreeRTOS" value="false"/>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="20" id="EVIC_4_SUBPRIORITY_LOCK">
+        <Boolean dnOrder="18" id="EVIC_4_SUBPRIORITY_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Hex dnOrder="21" id="EVIC_4_SUBPRIVALUE">
+        <Hex dnOrder="19" id="EVIC_4_SUBPRIVALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <File dnOrder="22" id="EVIC_INT_ASM">
+        <File dnOrder="20" id="EVIC_INT_ASM">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="23" id="INTERRUPTS_ASM">
+        <File dnOrder="21" id="INTERRUPTS_ASM">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
+        <Hex dnOrder="22" id="PMD4_REG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="4294967294"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="23" id="PMD6_REG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="4294967293"/>
+          </Values>
+        </Hex>
         <Hex dnOrder="24" id="SYS_PORT_B_ANSEL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="4"/>
@@ -158,7 +158,17 @@
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <KeyValueSet dnOrder="30" id="clkSvcMode">
+        <Boolean dnOrder="30" id="TMR1_CLOCK_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="31" id="TMR1_CLOCK_FREQUENCY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="36000000"/>
+          </Values>
+        </Integer>
+        <KeyValueSet dnOrder="32" id="clkSvcMode">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
@@ -342,26 +352,33 @@
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="26" id="OSAL_SYSDEF_H">
+        <File dnOrder="26" id="OSAL_IMPL_BASIC_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="27" id="OSAL_SYSDEF_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <Combo dnOrder="27" id="SELECT_RTOS">
+        <Combo dnOrder="28" id="SELECT_RTOS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="FreeRTOS"/>
           </Values>
         </Combo>
-        <File dnOrder="28" id="TASKS_C">
+        <File dnOrder="29" id="TASKS_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="29" id="USER_H">
+        <File dnOrder="30" id="USER_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
