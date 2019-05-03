@@ -210,26 +210,7 @@
     None.
 
 */
-#define         COMMAND_HISTORY_DEPTH   3
-
-
-// *****************************************************************************
-/* SYS CMD Processor Command Terminal Support Definitions
-
-  Summary:
-    Command Processor System Service Terminal Support Definitions.
-
-  Description:
-    These definitions are used by the Command Processor System Service to
-    support VT100 ASCII terminal.
-
-  Remarks:
-    None.
-
-*/
-#define         LINE_TERM       "\r\n"          // line terminator
-#define         _promptStr      ">"             // prompt string
-#define         ESC_SEQ_SIZE    2               // standard VT100 escape sequences
+#define         COMMAND_HISTORY_DEPTH   4
 
 
 // *****************************************************************************
@@ -318,10 +299,12 @@ typedef void (*SYS_CMD_PUTC_FNC)(const void* cmdIoParam, char c);
     Ready Status Check function API. This handle identifies the interface structure
     of the data available function API within the Command IO encapsulation.
 
+    Returns the number of available characters that could be read
+
   Remarks:
     None.
 */
-typedef bool (*SYS_CMD_DATA_RDY_FNC)(const void* cmdIoParam);
+typedef int (*SYS_CMD_DATA_RDY_FNC)(const void* cmdIoParam);
 
 
 // *****************************************************************************
@@ -385,9 +368,6 @@ typedef struct
     // Get single data API
     SYS_CMD_GETC_FNC getc;
 
-    // Read single data API
-    SYS_CMD_READC_FNC readc;
-
 } SYS_CMD_API;
 
 
@@ -401,7 +381,6 @@ typedef struct
     This structure identifies the Command Event Types.
 
   Remarks:
-    None.
 */
 typedef enum
 {
@@ -410,32 +389,6 @@ typedef enum
     SYS_CMD_EVENT_READ_COMPLETE,
 
 } SYS_CMD_EVENT;
-
-
-// *****************************************************************************
-/* SYS CMD State Machine States
-
-   Summary
-    Defines the various states that can be achieved by a Command instance.
-
-   Description
-    This enumeration defines the various states that can be achieved by the
-    command operation.
-
-   Remarks:
-    None.
-*/
-typedef enum
-{
-    SYS_CMD_STATE_DISABLE,
-
-    SYS_CMD_STATE_SETUP_READ,
-
-    SYS_CMD_STATE_WAIT_FOR_READ_DONE,
-
-    SYS_CMD_STATE_PROCESS_FULL_READ
-
-} SYS_CMD_STATE;
 
 
 // *****************************************************************************
@@ -449,15 +402,10 @@ typedef enum
     full command read.
 
    Remarks:
-    None.
 */
 typedef enum
 {
     SYS_CMD_SINGLE_CHARACTER_READ_CONSOLE_IO_PARAM = 0,
-
-    SYS_CMD_FULL_COMMAND_READ_CONSOLE_IO_PARAM = 1,
-
-    SYS_CMD_TELNET_COMMAND_READ_CONSOLE_IO_PARAM = 2
 
 } SYS_CMD_CONSOLE_IO_PARAM;
 
@@ -478,14 +426,12 @@ typedef enum
 typedef struct
 {
     /* System module initialization */
-    SYS_MODULE_INIT moduleInit;
+    SYS_MODULE_INIT     moduleInit;
 
-    uint8_t         consoleCmdIOParam;
-
-    SYS_CMD_CONSOLE_IO_PARAM cmdIoType;
+    uint8_t             consoleCmdIOParam;
 
     /* Console index to receive debug messages */
-    SYS_MODULE_INDEX        consoleIndex;
+    SYS_MODULE_INDEX    consoleIndex;
 
 } SYS_CMD_INIT;
 
@@ -504,68 +450,11 @@ typedef struct
    Remarks:
     None.
 */
-typedef struct SYS_CMD_DEVICE_NODE
+typedef struct
 {
-    char*            cmdPnt;
-    char*            cmdEnd;
-    char             cmdBuff[SYS_CMD_MAX_LENGTH+1] SYS_CMD_BUFFER_DMA_READY;
     const SYS_CMD_API*  pCmdApi;    // Cmd IO APIs
     const void*         cmdIoParam; // channel specific parameter
-    SYS_CMD_CONSOLE_IO_PARAM    cmdIoType;
-    struct SYS_CMD_DEVICE_NODE* next;
-    SYS_CMD_STATE  cmdState;
-
 } SYS_CMD_DEVICE_NODE;
-
-
-// *****************************************************************************
-/* SYS CMD Command List Structure
-
-   Summary
-    Defines the list structure to store a list of command instances.
-
-   Description
-    This data structure defines he linked list structure to support the
-    Command Processor System Service's command history feature
-
-   Remarks:
-    None.
-*/
-typedef struct
-{
-    int num;
-    SYS_CMD_DEVICE_NODE* head;
-    SYS_CMD_DEVICE_NODE* tail;
-
-} SYS_CMD_DEVICE_LIST;
-
-
-// *****************************************************************************
-/* SYS CMD Command App Init Structure
-
-   Summary
-    Defines the data structure to store each command.
-
-   Description
-    This data structure stores all the data relevant to a uniquely entered
-    command.  It is a node for a linked list structure to support the command
-    history functionality
-
-   Remarks:
-    None.
-*/
-typedef struct
-{
-    size_t          bytesRead;
-    int             seqBytesRead;
-    char            seqBuff[ESC_SEQ_SIZE + 1];
-
-    SYS_MODULE_INDEX  moduleIndices[SYS_CMD_DEVICE_MAX_INSTANCES];
-    int               moduleInFd;
-    int               moduleOutFd;
-    SYS_MODULE_INDEX  cmdConsole;
-
-} SYS_CMD_INIT_DATA;
 
 
 // *****************************************************************************
@@ -586,9 +475,8 @@ typedef struct
     of the command process function API.
 
   Remarks:
-    None.
 */
-typedef int (*SYS_CMD_FNC)(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char **argv);
+typedef void (*SYS_CMD_FNC)(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char **argv);
 
 
 // *****************************************************************************
@@ -607,33 +495,12 @@ typedef int (*SYS_CMD_FNC)(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char **argv);
 typedef struct
 {
     const char*     cmdStr;        // string identifying the command
-    SYS_CMD_FNC    cmdFnc;         // function to execute for this command
+    SYS_CMD_FNC     cmdFnc;        // function to execute for this command
     const char*     cmdDescr;      // simple command description
 
 } SYS_CMD_DESCRIPTOR;              // a simple command descriptor
 
 
-// *****************************************************************************
-/* SYS CMD Command Process Table Structure
-
-   Summary
-    Defines the command table structure for the Command Processor
-    System Service.
-
-   Description
-    This data structure stores is used to store a list of command process.
-
-   Remarks:
-    None.
-*/
-typedef struct
-{
-    int                     nCmds;          // number of commands available in the table
-    const SYS_CMD_DESCRIPTOR*    pCmd;      // pointer to an array of command descriptors
-    const char*             cmdGroupName;   // name identifying the commands
-    const char*             cmdMenuStr;     // help string
-
-} SYS_CMD_DESCRIPTOR_TABLE;                 // table containing the supported commands
 
 
 // *****************************************************************************
@@ -743,7 +610,6 @@ bool    SYS_CMD_ADDGRP(const SYS_CMD_DESCRIPTOR* pCmdTbl, int nCmds, const char*
     - false - Indicates command module is not ready
 
   Remarks:
-    None.
 */
 #ifdef SYS_CMD_ENABLE
 bool    SYS_CMD_READY_TO_READ( void );
@@ -772,13 +638,13 @@ bool    SYS_CMD_READY_TO_READ( void );
     - false - Indicates command module is not ready
 
   Remarks:
-    None.
 */
 #ifdef SYS_CMD_ENABLE
 bool    SYS_CMD_READY_TO_WRITE( void );
 #endif
 
 
+#if 0
 // *****************************************************************************
 /* Function:
     void SYS_CMD_RegisterCallback(SYS_CMD_CallbackFunction cbFunc, SYS_CMD_EVENT event)
@@ -803,11 +669,11 @@ bool    SYS_CMD_READY_TO_WRITE( void );
     None.
 
   Remarks:
-    None.
 */
 #ifdef SYS_CMD_ENABLE
 void SYS_CMD_RegisterCallback(SYS_CMD_CallbackFunction cbFunc, SYS_CMD_EVENT event);
 #endif
+#endif  // 0
 
 
 // *****************************************************************************
@@ -922,7 +788,7 @@ SYS_CMD_DEVICE_NODE* SYS_CMDIO_GET_HANDLE(short num);
 // *****************************************************************************
 /* Function:
     SYS_CMD_DEVICE_NODE* SYS_CMDIO_ADD(const SYS_CMD_API* opApi, const void* cmdIoParam,
-                                       const SYS_CMD_CONSOLE_IO_PARAM cmdIoType)
+                                       int unused)
 
   Summary:
     Adds CMDIO parameters to the Command Processor System Service console.
@@ -945,7 +811,7 @@ SYS_CMD_DEVICE_NODE* SYS_CMDIO_GET_HANDLE(short num);
 */
 #ifdef SYS_CMD_ENABLE
     SYS_CMD_DEVICE_NODE* SYS_CMDIO_ADD(const SYS_CMD_API* opApi, const void* cmdIoParam,
-                                       const SYS_CMD_CONSOLE_IO_PARAM cmdIoType);
+                                       int unused);
 #endif
 
 // *****************************************************************************
@@ -966,7 +832,8 @@ SYS_CMD_DEVICE_NODE* SYS_CMDIO_GET_HANDLE(short num);
     None.
 
   Returns:
-    None.
+    True if rhe corresponding dommand device has been deleted
+    False otherwise (no such node).
 
   Remarks:
     None.
