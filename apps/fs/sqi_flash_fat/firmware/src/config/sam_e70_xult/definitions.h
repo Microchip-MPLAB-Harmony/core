@@ -60,6 +60,7 @@
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/mpu/plib_mpu.h"
 #include "driver/memory/drv_memory.h"
+#include "peripheral/efc/plib_efc.h"
 #include "driver/sst26/drv_sst26.h"
 #include "system/int/sys_int.h"
 #include "system/cache/sys_cache.h"
