@@ -48,6 +48,10 @@ static uint32_t status = 0;
 
 EFC_OBJECT efc;
 
+void EFC_Initialize(void)
+{
+    EFC_REGS->EEFC_FMR = EEFC_FMR_FWS(6) | EEFC_FMR_CLOE_Msk;
+}
 bool EFC_Read( uint32_t *data, uint32_t length, uint32_t address )
 {
     memcpy((void *)data, (void *)address, length);
