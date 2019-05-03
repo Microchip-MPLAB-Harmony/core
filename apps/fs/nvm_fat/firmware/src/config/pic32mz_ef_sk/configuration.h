@@ -112,8 +112,8 @@ extern "C" {
 #define DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0    1
 #define DRV_MEMORY_DEVICE_START_ADDRESS      0x9d100000
 #define DRV_MEMORY_DEVICE_MEDIA_SIZE         1024UL
-#define DRV_MEMORY_DEVICE_PROGRAM_SIZE       0x800
-#define DRV_MEMORY_DEVICE_ERASE_SIZE         0x4000
+#define DRV_MEMORY_DEVICE_PROGRAM_SIZE       2048
+#define DRV_MEMORY_DEVICE_ERASE_SIZE         16384
 
 
 /* Memory Driver Global Configuration Options */
