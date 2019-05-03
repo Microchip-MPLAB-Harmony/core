@@ -253,7 +253,6 @@ void SYS_Initialize ( void* data )
     CFGCONbits.ECCCON = 3;
 
 
-
     CORETIMER_Initialize();
 	BSP_Initialize();
     SQI1_Initialize();
