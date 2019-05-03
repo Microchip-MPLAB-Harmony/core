@@ -73,8 +73,8 @@
 #define NVMCTRL_RWWEEPROM_ROWSIZE          (0U)
 
 #define NVMCTRL_START_ADDRESS              0x20000
-#define NVMCTRL_MEDIA_SIZE                 128
-#define NVMCTRL_ERASE_BUFFER_SIZE          256
+#define NVMCTRL_MEDIA_SIZE                 512
+#define NVMCTRL_ERASE_BUFFER_SIZE          8192
 
 typedef enum
 {

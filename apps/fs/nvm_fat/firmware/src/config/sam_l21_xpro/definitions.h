@@ -60,9 +60,9 @@
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "driver/memory/drv_memory.h"
-#include "bsp/bsp.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
+#include "bsp/bsp.h"
 #include "app.h"
 
 

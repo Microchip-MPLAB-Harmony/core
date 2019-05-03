@@ -54,7 +54,6 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
-
 #pragma config NVMCTRL_BOOTPROT = 0x7
 #pragma config NVMCTRL_EEPROM_SIZE = 0x7
 #pragma config BOD33USERLEVEL = 0x6
@@ -169,15 +168,14 @@ const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
 
 void SYS_Initialize ( void* data )
 {
+    NVMCTRL_Initialize( );
+
   
     PORT_Initialize();
 
 
     CLOCK_Initialize();
 
-
-
-    NVMCTRL_Initialize( );
 
     EVSYS_Initialize();
 
