@@ -328,6 +328,9 @@ bool _DRV_SDSPI_SPIBlockWrite(
         }
     }
 
+    /* Make sure all the bytes have shifted out before de-asserting the CS */
+    while(dObj->spiPlib->isBusy());
+
     SYS_PORT_PinSet(dObj->chipSelectPin);
     return isSuccess;
 }
@@ -382,6 +385,9 @@ bool _DRV_SDSPI_SPIWrite(
     {
         isSuccess = true;
     }
+
+    /* Make sure all the bytes have shifted out before de-asserting the CS */
+    while(dObj->spiPlib->isBusy());
 
     SYS_PORT_PinSet(dObj->chipSelectPin);
     return isSuccess;
@@ -440,6 +446,9 @@ bool _DRV_SDSPI_SPIBlockRead(
         }
     }
 
+    /* Make sure all the bytes have shifted out before de-asserting the CS */
+    while(dObj->spiPlib->isBusy());
+
     SYS_PORT_PinSet(dObj->chipSelectPin);
 
     return isSuccess;
@@ -496,6 +505,9 @@ bool _DRV_SDSPI_SPIRead(
         isSuccess = true;
     }
 
+    /* Make sure all the bytes have shifted out before de-asserting the CS */
+    while(dObj->spiPlib->isBusy());
+
     SYS_PORT_PinSet(dObj->chipSelectPin);
 
     return isSuccess;
@@ -534,6 +546,38 @@ bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
     while (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_IN_PROGRESS);
 
     if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE)
+    {
+        isSuccess = true;
+    }
+
+    return isSuccess;
+}
+
+// *****************************************************************************
+/* Command Response Timer Start
+
+  Summary:
+    Registers an event handler with the Timer System Service and starts the
+    command-response timer.
+
+  Description:
+    The registered event handler is called when the time period elapses.
+
+  Remarks:
+
+*/
+bool _DRV_SDSPI_CardDetectPollingTimerStart(
+    DRV_SDSPI_OBJ* const dObj,
+    uint32_t period
+)
+{
+    bool isSuccess = false;
+    dObj->cardPollingTimerExpired = false;
+
+    dObj->cardPollingTmrHandle = SYS_TIME_CallbackRegisterMS(DRV_SDSPI_TimerCallback,
+             (uintptr_t)&dObj->cardPollingTimerExpired, period, SYS_TIME_SINGLE);
+
+    if (dObj->cardPollingTmrHandle != SYS_TIME_HANDLE_INVALID)
     {
         isSuccess = true;
     }
