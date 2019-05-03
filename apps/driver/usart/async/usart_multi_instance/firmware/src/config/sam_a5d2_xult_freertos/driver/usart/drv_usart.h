@@ -133,20 +133,20 @@ typedef uintptr_t DRV_USART_BUFFER_HANDLE;
 typedef enum
 {
     /* The buffer is pending to be serviced */
-    DRV_USART_BUFFER_EVENT_PENDING /*DOM-IGNORE-BEGIN*/ = 0 /*DOM-IGNORE-END*/,
+    DRV_USART_BUFFER_EVENT_PENDING = 0,
 
     /* All data from or to the buffer was transferred successfully. */
-    DRV_USART_BUFFER_EVENT_COMPLETE /*DOM-IGNORE-BEGIN*/ = 1 /*DOM-IGNORE-BEGIN*/,
+    DRV_USART_BUFFER_EVENT_COMPLETE = 1,
 
     /* Transfer Handle given is expired. It means transfer
     is completed but with or without error is not known. */
-    DRV_USART_BUFFER_EVENT_HANDLE_EXPIRED /*DOM-IGNORE-BEGIN*/ = 2 /*DOM-IGNORE-BEGIN*/,
+    DRV_USART_BUFFER_EVENT_HANDLE_EXPIRED = 2,
 
     /* There was an error while processing the buffer transfer request. */
-    DRV_USART_BUFFER_EVENT_ERROR /*DOM-IGNORE-BEGIN*/ = -1 /*DOM-IGNORE-BEGIN*/,
+    DRV_USART_BUFFER_EVENT_ERROR = -1,
 
     /* Transfer Handle given is invalid */
-    DRV_USART_BUFFER_EVENT_HANDLE_INVALID /*DOM-IGNORE-BEGIN*/ = -2 /*DOM-IGNORE-BEGIN*/
+    DRV_USART_BUFFER_EVENT_HANDLE_INVALID = -2
 
 } DRV_USART_BUFFER_EVENT;
 
