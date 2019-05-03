@@ -36,6 +36,8 @@ def customUpdate(linkedList, event):
 def requestDMAChannel(Sym, event):
     global i2sPlibId
     global dmaChannelRequests
+    global i2sDMAInt
+    global series
 
     # Control visibility
     if event["id"] == "DRV_I2S_TX_RX_DMA":
@@ -66,7 +68,10 @@ def requestDMAChannel(Sym, event):
     # Response from DMA Manager
     else:
         Sym.clearValue()
-        Sym.setValue(event["value"])
+        Sym.setValue(event["value"])      
+        i2sDMA = i2sDMAInt.getValue()
+        if (series == "SAME54") and (i2sDMA == ""):
+            i2sDMAInt.setValue("DMAC_" + str(event["value"]))
 
 def requestDMAComment(Sym, event):
     if(event["value"] == -2):
@@ -82,11 +87,15 @@ def instantiateComponent(i2sComponent, index):
     global customVisible 
     global i2sLinkedListComment
     global dmaChannelRequests
+    global i2sDMAInt
+    global series
 
     customVisible = False
     customVisible2 = False
     dmaChannelRequests = []
 
+    series = ATDF.getNode("/avr-tools-device-file/devices/device").getAttribute("series")
+        
     # Enable "Generate Harmony Driver Common Files" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
         Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
@@ -169,6 +178,9 @@ def instantiateComponent(i2sComponent, index):
     i2sRXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate any DMA Channel. Check DMA manager.")
     i2sRXDMAChannelComment.setDependencies(requestDMAComment, ["core.DMA_CH_FOR_SSC_Receive", "core.DMA_CH_FOR_I2SC0_Receive_Left", "core.DMA_CH_FOR_I2SC1_Receive_Left", "core.DMA_CH_FOR_I2S_Receive_0"])
     i2sRXDMAChannelComment.setVisible(False)
+
+    i2sDMAInt = i2sComponent.createStringSymbol("DMA_INSTANCE_NAME", None)  # used only for E54
+    i2sDMAInt.setVisible(False)
 
     i2sDMALinkedList = i2sComponent.createBooleanSymbol("DRV_I2S_DMA_LL_ENABLE", None)
     i2sDMALinkedList.setLabel("Include Linked List DMA Functions?")

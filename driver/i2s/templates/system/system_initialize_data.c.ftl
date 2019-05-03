@@ -32,8 +32,12 @@ DRV_I2S_INIT drvI2S${INDEX?string}InitData =
     .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
 
 </#if>
+<#if DMA_INSTANCE_NAME?has_content>
+    .interruptDMA = ${DMA_INSTANCE_NAME}_IRQn,
+<#else>
 <#if core.DMA_ENABLE?has_content>
     .interruptDMA = ${core.DMA_INSTANCE_NAME}_IRQn,
+</#if>
 </#if>
 
     .dmaDataLength = DRV_I2S_DATA_LENGTH_IDX${INDEX?string},
