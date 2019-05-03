@@ -105,7 +105,7 @@ extern "C" {
 
 /* File System RTOS Configurations*/
 #define SYS_FS_STACK_SIZE                 1024
-#define SYS_FS_PRIORITY                   2
+#define SYS_FS_PRIORITY                   1
 
 
 
