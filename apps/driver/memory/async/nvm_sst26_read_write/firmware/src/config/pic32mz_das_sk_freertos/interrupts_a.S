@@ -52,7 +52,6 @@
 #include <xc.h>
 #include "ISR_Support.h"
 
-
     .extern  FLASH_CONTROL_Handler
 
     .section   .vector_167,code, keep
@@ -71,8 +70,6 @@ IntVectorFLASH_CONTROL_Handler:
     nop
     portRESTORE_CONTEXT
     .end   IntVectorFLASH_CONTROL_Handler
-
-
     .extern  SQI1_Handler
 
     .section   .vector_169,code, keep
@@ -91,5 +88,4 @@ IntVectorSQI1_Handler:
     nop
     portRESTORE_CONTEXT
     .end   IntVectorSQI1_Handler
-
 
