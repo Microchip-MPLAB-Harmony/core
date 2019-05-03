@@ -54,7 +54,6 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
-
 #pragma config TCM_CONFIGURATION = 0
 #pragma config SECURITY_BIT = CLEAR
 #pragma config BOOT_MODE = SET
@@ -82,7 +81,7 @@ const DRV_MEMORY_DEVICE_INTERFACE drvMemory0DeviceAPI = {
     .SectorErase        = DRV_EFC_SectorErase,
     .Read               = DRV_EFC_Read,
     .PageWrite          = DRV_EFC_PageWrite,
-    .EventHandlerSet    = (DRV_MEMORY_DEVICE_EVENT_HANDLER_SET)DRV_EFC_EventHandlerSet,
+    .EventHandlerSet    = NULL,
     .GeometryGet        = (DRV_MEMORY_DEVICE_GEOMETRY_GET)DRV_EFC_GeometryGet,
     .TransferStatusGet  = (DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET)DRV_EFC_TransferStatusGet
 };
@@ -91,7 +90,7 @@ const DRV_MEMORY_INIT drvMemory0InitData =
 {
     .memDevIndex                = 0,
     .memoryDevice               = &drvMemory0DeviceAPI,
-    .isMemDevInterruptEnabled   = true,
+    .isMemDevInterruptEnabled   = false,
     .isFsEnabled                = true,
     .deviceMediaType            = (uint8_t)SYS_FS_MEDIA_TYPE_NVM,
     .ewBuffer                   = &gDrvMemory0EraseBuffer[0],
@@ -159,10 +158,11 @@ const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
 
 void SYS_Initialize ( void* data )
 {
+
+    EFC_Initialize();
   
     CLK_Initialize();
 	PIO_Initialize();
-
 
 	BSP_Initialize();
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
