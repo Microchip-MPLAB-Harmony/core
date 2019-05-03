@@ -54,7 +54,6 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
-
 #pragma config TCM_CONFIGURATION = 0
 #pragma config SECURITY_BIT = CLEAR
 #pragma config BOOT_MODE = SET
@@ -69,8 +68,9 @@
 // *****************************************************************************
 // <editor-fold defaultstate="collapsed" desc="DRV_SDSPI Instance 0 Initialization Data">
 
-/* SD Card Client Objects Pool */
+/* SDSPI Client Objects Pool */
 static DRV_SDSPI_CLIENT_OBJ drvSDSPI0ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX0];
+
 
 /* SPI PLIB Interface Initialization for SDSPI Driver */
 const DRV_SDSPI_PLIB_INTERFACE drvSDSPI0PlibAPI = {
@@ -114,9 +114,12 @@ const DRV_SDSPI_INIT drvSDSPI0InitData =
     /* SDSPI Client Objects Pool */
     .clientObjPool          = (uintptr_t)&drvSDSPI0ClientObjPool[0],
 
+
     .chipSelectPin          = DRV_SDSPI_CHIP_SELECT_PIN_IDX0,
 
     .sdcardSpeedHz          = DRV_SDSPI_SPEED_HZ_IDX0,
+    
+    .pollingIntervalMs      = DRV_SDSPI_POLLING_INTERVAL_MS_IDX0,
 
     .writeProtectPin        = SYS_PORT_PIN_NONE,
 
@@ -240,10 +243,11 @@ const SYS_TIME_INIT sysTimeInitData =
 
 void SYS_Initialize ( void* data )
 {
+
+    EFC_Initialize();
   
     CLK_Initialize();
 	PIO_Initialize();
-
 
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
 

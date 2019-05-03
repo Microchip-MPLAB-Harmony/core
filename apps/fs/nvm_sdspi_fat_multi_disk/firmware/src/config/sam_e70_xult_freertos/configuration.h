@@ -104,7 +104,7 @@ extern "C" {
 #define SYS_FS_CWD_STRING_LEN             1024
 
 /* File System RTOS Configurations*/
-#define SYS_FS_STACK_SIZE                 256
+#define SYS_FS_STACK_SIZE                 1024
 #define SYS_FS_PRIORITY                   1
 
 
@@ -122,6 +122,7 @@ extern "C" {
 #define DRV_SDSPI_CLIENTS_NUMBER_IDX0           1
 #define DRV_SDSPI_CHIP_SELECT_PIN_IDX0          SYS_PORT_PIN_PD25
 #define DRV_SDSPI_SPEED_HZ_IDX0                 5000000
+#define DRV_SDSPI_POLLING_INTERVAL_MS_IDX0      1000
 
 
 
