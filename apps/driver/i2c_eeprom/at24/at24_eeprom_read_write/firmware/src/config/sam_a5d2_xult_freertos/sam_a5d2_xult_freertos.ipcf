@@ -137,7 +137,7 @@
             <path>\osal\osal.h</path>
             <path>\osal\osal_definitions.h</path>
             <path>\osal\osal_freertos.h</path>
-            <path>\..\..\app_sam_a5d2_xult.h</path>
+            <path>\..\..\app.h</path>
             <path>\user.h</path>
             <path>\configuration.h</path>
         </group>
@@ -175,7 +175,7 @@
             <path>\system\int\src\sys_int.c</path>
             <path>\system\cache\sys_cache.c</path>
             <path>\osal\osal_freertos.c</path>
-            <path>\..\..\app_sam_a5d2_xult.c</path>
+            <path>\..\..\app.c</path>
             <path>\tasks.c</path>
         </group>
     </files>
