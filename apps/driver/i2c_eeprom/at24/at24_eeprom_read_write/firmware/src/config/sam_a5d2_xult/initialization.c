@@ -149,7 +149,6 @@ void SYS_Initialize ( void* data )
     CLK_Initialize();
 	PIO_Initialize();
 
-
 	BSP_Initialize();
     MMU_Initialize();
     Matrix_Initialize();
@@ -167,7 +166,7 @@ void SYS_Initialize ( void* data )
 
 
 
-    APP_SAM_A5D2_XULT_Initialize();
+    APP_Initialize();
 
 
 

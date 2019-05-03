@@ -80,8 +80,8 @@ void SYS_Tasks ( void )
     
 
     /* Maintain the application's state machine. */
-        /* Call Application task APP_SAM_A5D2_XULT. */
-    APP_SAM_A5D2_XULT_Tasks();
+        /* Call Application task APP. */
+    APP_Tasks();
 
 
 

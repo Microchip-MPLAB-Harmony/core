@@ -61,7 +61,7 @@
 #include "system/ports/sys_ports.h"
 #include "system/cache/sys_cache.h"
 #include "osal/osal.h"
-#include "app_sam_a5d2_xult.h"
+#include "app.h"
 
 
 
