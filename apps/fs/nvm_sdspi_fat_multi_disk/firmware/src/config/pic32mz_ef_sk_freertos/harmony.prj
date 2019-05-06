@@ -483,8 +483,8 @@
           <Name dnOrder="1">drv_sdspi.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/sdspi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdspi/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BD9340AEB3684529895E8D3D050C412A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BD9340AEB3684529895E8D3D050C412A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">341441BD242D06D0382178FB46ECDAC1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">341441BD242D06D0382178FB46ECDAC1</UserChecksum>
         </File>
         <File dnOrder="60">
           <Type dnOrder="0">HEADER</Type>

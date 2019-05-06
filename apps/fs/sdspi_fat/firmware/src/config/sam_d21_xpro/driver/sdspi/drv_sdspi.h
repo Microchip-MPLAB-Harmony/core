@@ -586,10 +586,14 @@ bool DRV_SDSPI_SyncRead (
     Reads blocks of data from the specified block address of the SD Card.
 
   Description:
-    This function performs a blocking read operation to read blocks of data
-    from the SD Card. The function returns true if the request was successfully
-    executed; returns false otherwise.
-    The function returns false under following conditions:
+    This function schedules a non-blocking read operation for reading blocks
+    of data from the SD Card. The function returns with a valid buffer handle
+    in the commandHandle argument if the read request was scheduled successfully.
+    The function adds the request to the hardware instance queue and returns
+    immediately. While the request is in the queue, the application buffer is
+    owned by the driver and should not be modified. The function returns
+    DRV_SDSPI_COMMAND_HANDLE_INVALID in the commandHandle argument under the
+    following circumstances:
     - if the driver handle is invalid
     - if the target buffer pointer is NULL
     - if the number of blocks to be read is zero or more than the actual number
@@ -606,6 +610,9 @@ bool DRV_SDSPI_SyncRead (
     handle        - A valid open-instance handle, returned from the driver's
                     open function
 
+    commandHandle - Pointer to an argument that will contain the return buffer
+                    handle
+
     targetBuffer  - Buffer into which the data read from the SD Card will be placed
 
     blockStart    - Starting block address of the SD Card from where the read should begin.
@@ -613,30 +620,62 @@ bool DRV_SDSPI_SyncRead (
     nBlock        - Total number of blocks to be read.
 
   Returns:
-    true - If the request was executed successfully.
-
-    false - If there was an error executing the request.
+    The buffer handle is returned in the commandHandle argument. It will be
+    DRV_SDSPI_COMMAND_HANDLE_INVALID if the request was not successful.
 
   Example:
     <code>
-    #define MY_BUFFER_SIZE 1024
     uint8_t myBuffer[MY_BUFFER_SIZE];
-    DRV_SDSPI_COMMAND_HANDLE readHandle;
 
-    // Address must be block aligned.
+    // address should be block aligned.
     uint32_t blockStart = 0x00;
     uint32_t nBlock = 2;
+    DRV_SDSPI_COMMAND_HANDLE commandHandle;
+    MY_APP_OBJ myAppObj;
 
-    // mySDSPIHandle is the handle returned by the DRV_SDSPI_Open function.
+    // mySDSPIHandle is the handle returned
+    // by the DRV_SDSPI_Open function.
 
-    DRV_SDSPI_AsyncRead(mySDSPIHandle, &readHandle, myBuffer, blockStart, nBlock);
-    if (readHandle == DRV_SDSPI_COMMAND_HANDLE_INVALID)
+    // Client registers an event handler with driver
+    DRV_SDSPI_EventHandlerSet(mySDSPIHandle, APP_SDSPIEventHandler, (uintptr_t)&myAppObj);
+
+    DRV_SDSPI_AsyncRead(mySDSPIHandle, &commandHandle, &myBuffer[0], blockStart, nBlock);
+
+    if(commandHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
     {
-        // Handle error
+        // Error handling here
     }
     else
     {
-        // Read request queued successfully
+        // Read Successfully queued
+    }
+
+    // Event is received when
+    // the buffer is processed.
+
+    void APP_SDSPIEventHandler(
+        DRV_SDSPI_EVENT event,
+        DRV_SDSPI_COMMAND_HANDLE commandHandle,
+        uintptr_t contextHandle
+    )
+    {
+        // contextHandle points to myAppObj.
+
+        switch(event)
+        {
+            case DRV_SDSPI_EVENT_COMMAND_COMPLETE:
+
+                // This means the data was transferred successfully
+                break;
+
+            case DRV_SDSPI_EVENT_COMMAND_ERROR:
+
+                // Error handling here
+                break;
+
+            default:
+                break;
+        }
     }
 
     </code>
@@ -645,7 +684,7 @@ bool DRV_SDSPI_SyncRead (
     None.
 */
 
-void DRV_SDSPI_AsyncRead 
+void DRV_SDSPI_AsyncRead
 (
     const DRV_HANDLE handle,
     DRV_SDSPI_COMMAND_HANDLE* commandHandle,
@@ -745,15 +784,25 @@ bool DRV_SDSPI_SyncWrite(
     Writes blocks of data starting at the specified address of the SD Card.
 
   Description:
-    This function performs a blocking write operation to write blocks of data to
-    the SD Card. The function returns true if the request was successfully
-    executed. The function returns false under the following circumstances:
+    This function performs a non-blocking write operation to write blocks of data to
+    the SD Card. The function returns with a valid buffer handle
+    in the commandHandle argument if the write request was scheduled successfully.
+    The function adds the request to the hardware instance queue and returns
+    immediately. While the request is in the queue, the application buffer is
+    owned by the driver and should not be modified. The function returns
+    DRV_SDSPI_COMMAND_HANDLE_INVALID in the commandHandle argument under the
+    following circumstances:
     - if the driver handle is invalid
     - if the source buffer pointer is NULL
     - if the number of blocks to be written is either zero or more than the number
       of blocks actually available
     - if the SD card is write-protected
     - if there was an error during the SD card write operation
+
+    If the requesting client registered an event callback with the driver, the
+    driver will issue a DRV_SDSPI_EVENT_COMMAND_COMPLETE event if the
+    buffer was processed successfully or DRV_SDSPI_EVENT_COMMAND_ERROR
+    event if the buffer was not processed successfully.
 
   Precondition:
     The DRV_SDSPI_Initialize routine must have been called for the specified
@@ -766,6 +815,9 @@ bool DRV_SDSPI_SyncWrite(
     handle        - A valid open-instance handle, returned from the driver's
                     open function
 
+    commandHandle - Pointer to an argument that will contain the return buffer
+                    handle
+
     sourceBuffer  - The source buffer containing data to be written to the SD Card.
 
     blockStart    - Starting block address of SD Card where the writes should begin.
@@ -773,31 +825,59 @@ bool DRV_SDSPI_SyncWrite(
     nBlock        - Total number of blocks to be written.
 
   Returns:
-    true - If the request was executed successfully.
-
-    false - If there was an error executing the request.
+    The buffer handle is returned in the commandHandle argument. It will be
+    DRV_SDSPI_COMMAND_HANDLE_INVALID if the request was not queued successfully.
 
   Example:
     <code>
 
-    #define MY_BUFFER_SIZE          1024
     uint8_t myBuffer[MY_BUFFER_SIZE];
-    DRV_SDSPI_COMMAND_HANDLE writeHandle;
 
-    // Address must be block aligned.
+    // address should be block aligned.
     uint32_t blockStart = 0x00;
     uint32_t nBlock = 2;
+    DRV_SDSPI_COMMAND_HANDLE commandHandle;
+    MY_APP_OBJ myAppObj;
 
-    // mySDSPIHandle is the handle returned by the DRV_SDSPI_Open function.
+    // mySDSPIHandle is the handle returned
+    // by the DRV_SDSPI_Open function.
 
-    DRV_SDSPI_AsyncWrite(mySDSPIHandle, &writeHandle, myBuffer, blockStart, nBlock);
-    if (writeHandle == DRV_SDSPI_COMMAND_HANDLE_INVALID)
+    // Client registers an event handler with driver
+    DRV_SDSPI_EventHandlerSet(mySDSPIHandle, APP_SDSPIEventHandler, (uintptr_t)&myAppObj);
+
+    DRV_SDSPI_AsyncWrite(mySDSPIHandle, &commandHandle, &myBuffer[0], blockStart, nBlock);
+
+    if(commandHandle == DRV_SDSPI_COMMAND_HANDLE_INVALID)
     {
-        // Handle error
+        // Error handling here
     }
-    else
+
+    // Event is received when
+    // the buffer is processed.
+
+    void APP_SDSPIEventHandler(
+        DRV_SDSPI_EVENT event,
+        DRV_SDSPI_COMMAND_HANDLE commandHandle,
+        uintptr_t contextHandle
+    )
     {
-        // Write request queued successfully
+        // contextHandle points to myAppObj.
+
+        switch(event)
+        {
+            case DRV_SDSPI_EVENT_COMMAND_COMPLETE:
+
+                // This means the data was transferred successfully
+                break;
+
+            case DRV_SDSPI_EVENT_COMMAND_ERROR:
+
+                // Error handling here
+                break;
+
+            default:
+                break;
+        }
     }
     </code>
 
