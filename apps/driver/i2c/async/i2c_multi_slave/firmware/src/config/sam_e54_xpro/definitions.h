@@ -48,8 +48,8 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "peripheral/sercom/usart/plib_sercom2_usart.h"
 #include "peripheral/nvmctrl/plib_nvmctrl.h"
+#include "peripheral/sercom/usart/plib_sercom2_usart.h"
 #include "peripheral/evsys/plib_evsys.h"
 #include "peripheral/sercom/i2cm/plib_sercom7_i2c.h"
 #include "peripheral/port/plib_port.h"

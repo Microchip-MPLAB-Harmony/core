@@ -48,8 +48,8 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "peripheral/sercom/i2cm/plib_sercom2_i2c.h"
 #include "peripheral/nvmctrl/plib_nvmctrl.h"
+#include "peripheral/sercom/i2cm/plib_sercom2_i2c.h"
 #include "peripheral/evsys/plib_evsys.h"
 #include "bsp/bsp.h"
 #include "driver/at24/drv_at24.h"

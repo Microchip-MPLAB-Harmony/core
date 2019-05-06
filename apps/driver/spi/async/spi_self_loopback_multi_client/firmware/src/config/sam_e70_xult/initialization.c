@@ -175,8 +175,6 @@ SYSTEM_OBJECTS sysObj;
 
 void SYS_Initialize ( void* data )
 {
-
-    EFC_Initialize();
   
     CLK_Initialize();
 	PIO_Initialize();
