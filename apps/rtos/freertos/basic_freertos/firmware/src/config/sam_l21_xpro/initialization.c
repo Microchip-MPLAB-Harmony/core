@@ -124,6 +124,8 @@ void SYS_Initialize ( void* data )
 
     EVSYS_Initialize();
 
+    PM_Initialize();
+
 	BSP_Initialize();
 
 

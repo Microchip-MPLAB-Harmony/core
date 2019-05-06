@@ -22,6 +22,9 @@
             <logicalFolder name="f2" displayName="nvmctrl" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l21_xpro/peripheral/nvmctrl/plib_nvmctrl.h</itemPath>
             </logicalFolder>
+            <logicalFolder name="f7" displayName="pm" projectFiles="true">
+              <itemPath ex="false">../src/config/sam_l21_xpro/peripheral/pm/plib_pm.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f4" displayName="port" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l21_xpro/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
@@ -31,7 +34,7 @@
                 <itemPath ex="false">../src/config/sam_l21_xpro/peripheral/sercom/usart/plib_sercom_usart_common.h</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f7" displayName="tc" projectFiles="true">
+            <logicalFolder name="f8" displayName="tc" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l21_xpro/peripheral/tc/plib_tc_common.h</itemPath>
               <itemPath ex="false">../src/config/sam_l21_xpro/peripheral/tc/plib_tc0.h</itemPath>
             </logicalFolder>
@@ -151,6 +154,9 @@
             <logicalFolder name="f2" displayName="nvmctrl" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l21_xpro/peripheral/nvmctrl/plib_nvmctrl.c</itemPath>
             </logicalFolder>
+            <logicalFolder name="f7" displayName="pm" projectFiles="true">
+              <itemPath ex="false">../src/config/sam_l21_xpro/peripheral/pm/plib_pm.c</itemPath>
+            </logicalFolder>
             <logicalFolder name="f4" displayName="port" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l21_xpro/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
@@ -159,7 +165,7 @@
                 <itemPath ex="false">../src/config/sam_l21_xpro/peripheral/sercom/usart/plib_sercom3_usart.c</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f7" displayName="tc" projectFiles="true">
+            <logicalFolder name="f8" displayName="tc" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l21_xpro/peripheral/tc/plib_tc0.c</itemPath>
             </logicalFolder>
           </logicalFolder>

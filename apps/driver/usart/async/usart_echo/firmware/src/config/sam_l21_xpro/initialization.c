@@ -192,6 +192,8 @@ void SYS_Initialize ( void* data )
 
     EVSYS_Initialize();
 
+    PM_Initialize();
+
 	BSP_Initialize();
 
     sysObj.drvUsart0 = DRV_USART_Initialize(DRV_USART_INDEX_0, (SYS_MODULE_INIT *)&drvUsart0InitData);

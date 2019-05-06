@@ -233,6 +233,8 @@ void SYS_Initialize ( void* data )
 
     SERCOM5_SPI_Initialize();
 
+    PM_Initialize();
+
     TC0_TimerInitialize();
 
 	BSP_Initialize();

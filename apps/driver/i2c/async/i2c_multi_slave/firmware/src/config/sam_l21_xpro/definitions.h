@@ -55,6 +55,7 @@
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
+#include "peripheral/pm/plib_pm.h"
 #include "peripheral/tc/plib_tc0.h"
 #include "driver/i2c/drv_i2c.h"
 #include "system/debug/sys_debug.h"

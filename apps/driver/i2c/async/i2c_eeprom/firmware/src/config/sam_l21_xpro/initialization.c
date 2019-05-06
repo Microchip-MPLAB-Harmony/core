@@ -190,6 +190,8 @@ void SYS_Initialize ( void* data )
 
     EVSYS_Initialize();
 
+    PM_Initialize();
+
 	BSP_Initialize();
 
     /* Initialize I2C0 Driver Instance */
