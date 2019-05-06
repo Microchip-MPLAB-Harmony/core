@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_I2S_BUFFER_HANDLE Type</title>
+<title>DRV_I2S_BUFFER_HANDLE_INVALID Macro</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00124.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00125.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00446.html" target="topic">DRV_I2S_BUFFER_HANDLE Type</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00122.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00123.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00446.html" target="topic">DRV_I2S_BUFFER_HANDLE_INVALID Macro</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00441.html" target="topic">Previous</a> | <a href="00125.html" target="topic">Up</a> | <a href="00462.html" target="topic">Next</a></div>
+<a href="00488.html" target="topic">Previous</a> | <a href="00123.html" target="topic">Up</a> | <a href="00476.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_BUFFER_HANDLE Topic Title: DRV_I2S_BUFFER_HANDLE Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_BUFFER_HANDLE_INVALID Topic Title: DRV_I2S_BUFFER_HANDLE_INVALID Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_I2S_BUFFER_HANDLE Type</div>
+DRV_I2S_BUFFER_HANDLE_INVALID Macro</div>
 </div>
 </div>
 
@@ -49,15 +49,13 @@ DRV_I2S_BUFFER_HANDLE Type</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-I2S Driver Buffer Handle&nbsp;</p>
+I2S Driver Invalid Buffer Handle&nbsp;</p>
 <p class="Element10">
-A buffer handle value is returned by a call to the <a href="00487.html" target="topic">DRV_I2S_ReadBufferAdd</a> or <a href="00493.html" target="topic">DRV_I2S_WriteBufferAdd</a> functions. This handle is associated with the buffer passed into the function and it allows the application to track the completion of the data from (or into) that buffer. The buffer handle value returned from the &quot;buffer add&quot; function is returned back to the client by the &quot;event handler callback&quot; function registered with the driver.&nbsp;</p>
-<p class="Element10">
-The buffer handle assigned to a client request expires when the client has been notified of the completion of the buffer transfer (after event handler function that notifies the client returns) or after the buffer has been retired by the driver if no event handler callback was set.</p></div>
+This is the definition of an invalid buffer handle. An invalid buffer handle is returned by <a href="00486.html" target="topic">DRV_I2S_ReadBufferAdd</a> and <a href="00492.html" target="topic">DRV_I2S_WriteBufferAdd</a> functions if the buffer add request was not successful.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> uintptr_t <strong><span style="color: #000000">DRV_I2S_BUFFER_HANDLE</span></strong>;</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">DRV_I2S_BUFFER_HANDLE_INVALID</span></strong> </pre></div></div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
@@ -70,7 +68,7 @@ None</p></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00124.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00125.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00446.html" target="topic">DRV_I2S_BUFFER_HANDLE Type</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00122.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00123.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00446.html" target="topic">DRV_I2S_BUFFER_HANDLE_INVALID Macro</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -78,13 +76,13 @@ None</p></div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00441.html" target="topic">Previous</a> | <a href="00125.html" target="topic">Up</a> | <a href="00462.html" target="topic">Next</a></div>
+<a href="00488.html" target="topic">Previous</a> | <a href="00123.html" target="topic">Up</a> | <a href="00476.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_BUFFER_HANDLE Topic Title: DRV_I2S_BUFFER_HANDLE Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_BUFFER_HANDLE_INVALID Topic Title: DRV_I2S_BUFFER_HANDLE_INVALID Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

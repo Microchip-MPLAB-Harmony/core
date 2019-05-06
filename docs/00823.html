@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>LINE_TERM Macro</title>
+<title>Running The Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00916.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00917.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00823.html" target="topic">LINE_TERM Macro</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00778.html" target="topic">File System Applications</a> &gt; <a href="00791.html" target="topic">sqi_flash_fat</a> &gt; <a href="00823.html" target="topic">Running The Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00760.html" target="topic">Previous</a> | <a href="00917.html" target="topic">Up</a> | <a href="00824.html" target="topic">Next</a></div>
+<a href="00821.html" target="topic">Previous</a> | <a href="00791.html" target="topic">Up</a> | <a href="00011.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: LINE_TERM Topic Title: LINE_TERM Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS sqi_flash_fat Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-LINE_TERM Macro</div>
+Running The Application</div>
 </div>
 </div>
 
@@ -49,17 +49,73 @@ LINE_TERM Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-line terminator</p></div>
+<strong><u>Running project with MPLAB X IDE</u></strong>&nbsp;</p>
+
+<ol class="Element630">
+<li value="1" class="Element600">Connect a micro/mini USB cable to the DEBUG port.</li>
+<li value="2" class="Element600">Build and Program the application using MPLAB X IDE.</li>
+<li value="3" class="Element600">The LED is turned ON if data has successfully been written and read back from file &quot;<strong>newfile.txt</strong>&quot;</li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+The following table provides the LED name: </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="87%">
+<div class="Element66">
+Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="13%">
+<div class="Element66">
+LED Name&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 3&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 3&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM E70 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong><u>Running project with IAR Embedded work bench</u></strong></p>
+<ol class="Element630">
+<li value="1" class="Element600">Build the project using IAR Embedded Workbench</li>
+<li value="2" class="Element600">Use the output binary file (harmony.bin) to setup the board as detailed in <a href="00821.html" target="topic">hardware setup</a></li>
+<li value="3" class="Element600"> Reset the board to run the application</li>
+<li value="4" class="Element600">The LED is turned ON if data has successfully been written and read back from file &quot;<strong>newfile.txt</strong>&quot;</li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+The following table provides the LED name: </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="67%">
+<div class="Element66">
+Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="33%">
+<div class="Element66">
+LED Name&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="67%">
+<div class="Element68">
+SAMA5D2 Xplained Ultra Evaluation kit&nbsp;</div></td><td class="Element67" valign="top" width="33%">
+<div class="Element68">
+RGB_LED(Green)&nbsp;</div></td></tr></table></div></div>
 </div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">LINE_TERM</span></strong> &quot;\r\n&quot;          <i><span style="color: #008000">// line terminator</span></i></pre></div></div>
+</div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00916.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00917.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00823.html" target="topic">LINE_TERM Macro</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00778.html" target="topic">File System Applications</a> &gt; <a href="00791.html" target="topic">sqi_flash_fat</a> &gt; <a href="00823.html" target="topic">Running The Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -67,13 +123,13 @@ C</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00760.html" target="topic">Previous</a> | <a href="00917.html" target="topic">Up</a> | <a href="00824.html" target="topic">Next</a></div>
+<a href="00821.html" target="topic">Previous</a> | <a href="00791.html" target="topic">Up</a> | <a href="00011.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: LINE_TERM Topic Title: LINE_TERM Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS sqi_flash_fat Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

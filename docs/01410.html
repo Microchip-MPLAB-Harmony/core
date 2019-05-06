@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>SYS_TIME_TimerCreate Function</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '01410.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00981.html" target="topic">Time System Service Library Help</a> &gt; <a href="00982.html" target="topic">Library Interface</a> &gt; b) Timer Functions &gt; <a href="01410.html" target="topic">SYS_TIME_TimerCreate Function</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Core Help</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="01379.html" target="topic">Previous</a> | <a href="00982.html" target="topic">Up</a> | <a href="01411.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_TimerCreate@uint32_t@uint32_t@SYS_TIME_CALLBACK@uintptr_t@SYS_TIME_CALLBACK_TYPE Topic Title: SYS_TIME_TimerCreate Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+SYS_TIME_TimerCreate Function</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function creates/allocates a new instance of a 32-bit software timer.&nbsp;</p>
+<p class="Element10">
+A software timer provides a counter that is separate from other timer counters and is under control of the caller. The counter can be started and stopped under caller control and its counter value and period value can be changed while the counter is either running or stopped.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01384.html" target="topic">SYS_TIME_HANDLE</a> <strong><span style="color: #000000">SYS_TIME_TimerCreate</span></strong>(
+    uint32_t <strong><span style="color: #000000">count</span></strong>, 
+    uint32_t <strong><span style="color: #000000">period</span></strong>, 
+    <a href="01368.html" target="topic">SYS_TIME_CALLBACK</a> <strong><span style="color: #000000">callback</span></strong>, 
+    uintptr_t <strong><span style="color: #000000">context</span></strong>, 
+    <a href="01369.html" target="topic">SYS_TIME_CALLBACK_TYPE</a> <strong><span style="color: #000000">type</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The <a href="01387.html" target="topic">SYS_TIME_Initialize</a> function should have been called before calling this function.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+count&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+The initial value of the counter, after the timer has been created and before it has been started.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+period&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+The counter interval at which the timer indicates time has elapsed.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+callback&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to function that will be called every time the period counts have elapsed. (Actual timing will depend on system performance and the base frequency at which the time service is configured).<br>For single shot timers, the callback cannot be NULL. For periodic timers, if the callback pointer is given as NULL, no callback will occur, but <a href="01412.html" target="topic">SYS_TIME_TimerPeriodHasExpired</a> can still be polled to determine if the period has expired for a periodic shot timer.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A caller-defined value that's passed (unmodified) back to the client as a parameter of callback function. It can be used to identify the client's context or passed with any value.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+type&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Type of callback requested. If type is SYS_TIME_SINGLE, the Callback function will be called once when the time period expires. If type is SYS_TIME_PERIODIC Callback function will be called repeatedly, every time the time period expires until the timer object is stopped or deleted.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+An opaque value used to identify software timer instance if the call succeeds in allocating/creating the software timer. If the call fails <a href="01385.html" target="topic">SYS_TIME_HANDLE_INVALID</a> is returned.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Given an implementation of the following function prototype: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> MyCallback ( uintptr_t context);</pre></div></div>
+<p class="Element10">
+The following example creates a software timer instance. </p><div class="Element13"><div class="Element12"><pre class="Element12"><a href="01384.html" target="topic">SYS_TIME_HANDLE</a> handle;
+<i><span style="color: #008000">//myData is the user-defined data that will be passed back in the registered callback function.</span></i>
+handle = SYS_TIME_TimerCreate(0, <a href="01388.html" target="topic">SYS_TIME_MSToCount</a>(200), &amp;MyCallback, (uintptr_t)&amp;myData, SYS_TIME_SINGLE);
+<strong><span style="color: #000080">if</span></strong> (handle != <a href="01385.html" target="topic">SYS_TIME_HANDLE_INVALID</a>)
+{
+    <i><span style="color: #008000">//timer is created successfully.</span></i>
+}</pre></div></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00981.html" target="topic">Time System Service Library Help</a> &gt; <a href="00982.html" target="topic">Library Interface</a> &gt; b) Timer Functions &gt; <a href="01410.html" target="topic">SYS_TIME_TimerCreate Function</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Core Help</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="01379.html" target="topic">Previous</a> | <a href="00982.html" target="topic">Up</a> | <a href="01411.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_TimerCreate@uint32_t@uint32_t@SYS_TIME_CALLBACK@uintptr_t@SYS_TIME_CALLBACK_TYPE Topic Title: SYS_TIME_TimerCreate Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

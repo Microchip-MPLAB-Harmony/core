@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_DirRewind Function</title>
+<title>SYS_FS_FileTell Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01150.html" target="topic">SYS_FS_DirRewind Function</a></div>
+<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01150.html" target="topic">SYS_FS_FileTell Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
 <a href="01149.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01151.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_DirRewind@SYS_FS_HANDLE Topic Title: SYS_FS_DirRewind Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileTell@SYS_FS_HANDLE Topic Title: SYS_FS_FileTell Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_DirRewind Function</div>
+SYS_FS_FileTell Function</div>
 </div>
 </div>
 
@@ -49,19 +49,19 @@ SYS_FS_DirRewind Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function rewinds the directory to the start. Once a search of directory or directory read is completed, the rewind function is used to begin searching the directory from the start.</p></div>
+Obtains the current value of the file position indicator for the file pointed to by handle.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01356.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_DirRewind</span></strong>(
-    <a href="01281.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100">int32_t <strong><span style="color: #000000">SYS_FS_FileTell</span></strong>(
+    <a href="01200.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-A valid directory handle must be obtained before reading a directory.</p></div>
+A valid file handle must be obtained before performing a file tell.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -80,7 +80,7 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-directory handle obtained during directory open.&nbsp;</div></td></tr></table></div></div>
+File handle obtained during file Open.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,7 +88,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS_FS_RES_SUCCESS - Directory rewind operation was successful. SYS_FS_RES_FAILURE - Directory rewind operation was unsuccessful. The reason for the failure can be retrieved with <a href="01157.html" target="topic">SYS_FS_Error</a> or <a href="01220.html" target="topic">SYS_FS_FileError</a>.</p></div>
+On success returns the current file position. On failure returns -1. The reason for the failure can be retrieved with <a href="01076.html" target="topic">SYS_FS_Error</a> or <a href="01139.html" target="topic">SYS_FS_FileError</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -101,36 +101,24 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01281.html" target="topic">SYS_FS_HANDLE</a> dirHandle;
-  <a href="01238.html" target="topic">SYS_FS_FSTAT</a> stat;
-  <strong><span style="color: #000080">char</span></strong> longFileName[300];
-  uintptr_t  longFileSize;
+<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01200.html" target="topic">SYS_FS_HANDLE</a> fileHandle;
+  int32_t tell;
 
-  dirHandle = <a href="01148.html" target="topic">SYS_FS_DirOpen</a>(&quot;/mnt/myDrive/Dir1&quot;);
+  fileHandle = <a href="01141.html" target="topic">SYS_FS_FileOpen</a>(&quot;/mnt/myDrive/FILE.JPG&quot;,
+          (SYS_FS_FILE_OPEN_READ));
 
-  <strong><span style="color: #000080">if</span></strong>(dirHandle != <a href="01282.html" target="topic">SYS_FS_HANDLE_INVALID</a>)
+  <strong><span style="color: #000080">if</span></strong>(fileHandle != <a href="01201.html" target="topic">SYS_FS_HANDLE_INVALID</a>)
   {
-      <i><span style="color: #008000">// Directory open is successful</span></i>
+      <i><span style="color: #008000">// File open is successful</span></i>
   }
+  ...
+  ...
 
-  <i><span style="color: #008000">// If long file name is used, the following elements of the &quot;stat&quot;</span></i>
-  <i><span style="color: #008000">// structure needs to be initialized with address of proper buffer.</span></i>
-  stat.lfname = longFileName;
-  stat.lfsize = 300;
+  tell = SYS_FS_FileTell(fileHandle);
 
-  <strong><span style="color: #000080">if</span></strong>(<a href="01149.html" target="topic">SYS_FS_DirRead</a>(dirHandle, &amp;stat) == SYS_FS_RES_FAILURE)
+  <strong><span style="color: #000080">if</span></strong>(tell != -1)
   {
-     <i><span style="color: #008000">// Directory read operation failed.</span></i>
-  }
-
-  <i><span style="color: #008000">// Do more search</span></i>
-  <i><span style="color: #008000">// Do some more search</span></i>
-
-  <i><span style="color: #008000">// Now, rewind the directory to begin search from start</span></i>
-
-  <strong><span style="color: #000080">if</span></strong>(SYS_FS_DirRewind(dirHandle) == SYS_FS_RES_FAILURE)
-  {
-     <i><span style="color: #008000">// Directory rewind failed.</span></i>
+      <i><span style="color: #008000">// Success</span></i>
   }</pre></div></div>
 </div>
 </div>
@@ -139,7 +127,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01150.html" target="topic">SYS_FS_DirRewind Function</a></div>
+<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01150.html" target="topic">SYS_FS_FileTell Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -147,13 +135,13 @@ Example</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
 <a href="01149.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01151.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_DirRewind@SYS_FS_HANDLE Topic Title: SYS_FS_DirRewind Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileTell@SYS_FS_HANDLE Topic Title: SYS_FS_FileTell Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

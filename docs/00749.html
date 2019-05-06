@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_USART_Initialize Function</title>
+<title>DRV_USART_Close Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00314.html" target="topic">USART Driver Library Help</a> &gt; <a href="00315.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00749.html" target="topic">DRV_USART_Initialize Function</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00313.html" target="topic">USART Driver Library Help</a> &gt; <a href="00314.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00749.html" target="topic">DRV_USART_Close Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00315.html" target="topic">Previous</a> | <a href="00315.html" target="topic">Up</a> | <a href="00756.html" target="topic">Next</a></div>
+<a href="00754.html" target="topic">Previous</a> | <a href="00314.html" target="topic">Up</a> | <a href="00759.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT* const Topic Title: DRV_USART_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_Close@DRV_HANDLE Topic Title: DRV_USART_Close Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_USART_Initialize Function</div>
+DRV_USART_Close Function</div>
 </div>
 </div>
 
@@ -49,20 +49,19 @@ DRV_USART_Initialize Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This routine initializes the USART driver instance for the specified driver index, making it ready for clients to open and use it. The initialization data is specified by the init parameter. The initialization may fail if the number of driver objects allocated are insufficient or if the specified driver instance is already initialized. The driver instance index is independent of the USART module ID. For example, driver instance 0 can be assigned to USART2.</p></div>
+This routine closes an opened-instance of the USART driver, invalidating the handle. Any buffers in the driver queue that were submitted by this client will be removed. A new handle must be obtained by calling <a href="00754.html" target="topic">DRV_USART_Open</a> before the caller may use the driver again.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01423.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_USART_Initialize</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01418.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="01419.html" target="topic">SYS_MODULE_INIT</a>* <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_USART_Close</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00416.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+<a href="00754.html" target="topic">DRV_USART_Open</a> must have been called to obtain a valid opened device handle.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -79,14 +78,9 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Identifier for the instance to be initialized<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to the init data structure containing any data necessary to initialize the driver.&nbsp;</div></td></tr></table></div></div>
+A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -94,62 +88,23 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If successful, returns a valid handle to a driver instance object. Otherwise, returns <a href="01424.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
+None.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This routine must be called before any other USART routine is called.&nbsp;</p>
-<p class="Element10">
-This routine should only be called once during system initialization. This routine will NEVER block for hardware access.</p></div>
+None.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// The following code snippet shows an example USART driver initialization.</span></i>
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// 'handle', returned from the DRV_USART_Open</span></i>
 
-<a href="01423.html" target="topic">SYS_MODULE_OBJ</a>              objectHandle;
-
-<strong><span style="color: #000080">const</span></strong> DRV_USART_PLIB_INTERFACE drvUsart0PlibAPI = {
-    .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)USART1_ReadCallbackRegister,
-    .read = (DRV_USART_PLIB_READ)USART1_Read,
-    .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)USART1_ReadIsBusy,
-    .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)USART1_ReadCountGet,
-    .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)USART1_WriteCallbackRegister,
-    .write = (DRV_USART_PLIB_WRITE)USART1_Write,
-    .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)USART1_WriteIsBusy,
-    .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)USART1_WriteCountGet,
-    .errorGet = (DRV_USART_PLIB_ERROR_GET)USART1_ErrorGet,
-    .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)USART1_SerialSetup
-};
-
-<strong><span style="color: #000080">const</span></strong> <a href="00748.html" target="topic">DRV_USART_INIT</a> drvUsart0InitData = {
-    .usartPlib = &amp;drvUsart0PlibAPI,
-    .numClients = DRV_USART_CLIENTS_NUMBER_IDX0,
-    .clientObjPool = (uintptr_t)&amp;drvUSART0ClientObjPool[0],
-    .dmaChannelTransmit = DRV_USART_XMIT_DMA_CH_IDX0,
-    .usartTransmitAddress = (<strong><span style="color: #000080">void</span></strong> *)&amp;(USART1_REGS-&gt;US_THR),
-    .dmaChannelReceive = DRV_USART_RCV_DMA_CH_IDX0,
-    .usartReceiveAddress = (<strong><span style="color: #000080">void</span></strong> *)&amp;(USART1_REGS-&gt;US_RHR),
-    .bufferObjPoolSize = DRV_USART_QUEUE_SIZE_IDX0,
-    .bufferObjPool = (uintptr_t)&amp;drvUSART0BufferObjPool[0],
-    .interruptUSART = USART1_IRQn,
-    .interruptDMA = XDMAC_IRQn,
-    .remapDataWidth = drvUsart0remapDataWidth,
-    .remapParity = drvUsart0remapParity,
-    .remapStopBits = drvUsart0remapStopBits,
-    .remapError = drvUsart0remapError,
-};
-
-objectHandle = DRV_USART_Initialize(DRV_USART_INDEX_1, (<a href="01419.html" target="topic">SYS_MODULE_INIT</a>*)&amp;drvUsart0InitData);
-
-<strong><span style="color: #000080">if</span></strong> (objectHandle == <a href="01424.html" target="topic">SYS_MODULE_OBJ_INVALID</a>)
-{
-    <i><span style="color: #008000">// Handle error</span></i>
-}</pre></div></div>
+DRV_USART_Close(handle);
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -157,7 +112,7 @@ objectHandle = DRV_USART_Initialize(DRV_USART_INDEX_1, (<a href="01419.html" tar
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00314.html" target="topic">USART Driver Library Help</a> &gt; <a href="00315.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00749.html" target="topic">DRV_USART_Initialize Function</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00313.html" target="topic">USART Driver Library Help</a> &gt; <a href="00314.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00749.html" target="topic">DRV_USART_Close Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -165,13 +120,13 @@ objectHandle = DRV_USART_Initialize(DRV_USART_INDEX_1, (<a href="01419.html" tar
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00315.html" target="topic">Previous</a> | <a href="00315.html" target="topic">Up</a> | <a href="00756.html" target="topic">Next</a></div>
+<a href="00754.html" target="topic">Previous</a> | <a href="00314.html" target="topic">Up</a> | <a href="00759.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT* const Topic Title: DRV_USART_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_Close@DRV_HANDLE Topic Title: DRV_USART_Close Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

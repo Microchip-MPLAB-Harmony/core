@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>MPLAB Harmony Configuration</title>
+<title>nvm_sdspi_fat_multi_disk</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00775.html" target="topic">File System Applications</a> &gt; <a href="00779.html" target="topic">nvm_sdspi_fat_multi_disk</a> &gt; <a href="00782.html" target="topic">MPLAB Harmony Configuration</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00778.html" target="topic">File System Applications</a> &gt; <a href="00782.html" target="topic">nvm_sdspi_fat_multi_disk</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00780.html" target="topic">Previous</a> | <a href="00779.html" target="topic">Up</a> | <a href="00781.html" target="topic">Next</a></div>
+<a href="00803.html" target="topic">Previous</a> | <a href="00778.html" target="topic">Up</a> | <a href="00783.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications nvm_sdspi_fat_multi_disk MPLAB Harmony Configuration Topic Title: MPLAB Harmony Configuration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications nvm_sdspi_fat_mult_disk Topic Title: nvm_sdspi_fat_multi_disk)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-MPLAB Harmony Configuration</div>
+nvm_sdspi_fat_multi_disk</div>
 </div>
 </div>
 
@@ -49,44 +49,64 @@ MPLAB Harmony Configuration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <div class="Element15">
-Components used:</div>
-<p class="Element10">
-The components used may vary based on the project configuration selected:</p>
+File System Operations on NVM and SD Card:</div>
+
 <ul class="Element630">
-<li class="Element600"><span style="color: #000000">File System</span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">FAT Format for SDCARD</span></li>
-<li class="Element601"><span style="color: #000000">FAT Format for NVM</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000">SDSPI driver configured to synchronous mode</span></li>
-<li class="Element600"><span style="color: #000000">Memory driver connected to NVM Media and configured to synchronous mode</span></li>
-<li class="Element600"><span style="color: #000000">Timer System Service</span></li>
-<li class="Element600"><span style="color: #000000">TC peripheral library</span></li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-The following components used may vary based on the project configuration selected:</p>
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000">EFC or NVMCTRL or NVM peripheral library</span></li>
-<li class="Element600"><span style="color: #000000">SPI or SERCOM peripheral library</span></li>
-<li class="Element600">Board Support Package (<span style="color: #000000">BSP)</span></li>
-<li class="Element600"><span style="color: #000000">FreeRTOS</span></li>
+<li class="Element600"><span style="color: #000000">The application contains a FAT disk image consisting of a Master Boot Record (MBR) sector, Logical Boot Sector, File Allocation Table, and Root Directory Area, placed in the internal Flash memory (NVM)</span></li>
+<li class="Element600"><span style="color: #000000">A SD card is used as another disk, which might have FAT16 or FAT32 implemented on it (dependent on the formatting of SD card)</span></li>
+<li class="Element600"><span style="color: #000000">The application searches the NVM media for a named <strong>FILE.TXT</strong>, opens and reads the contents of the file in NVM and copies the contents to the file, <strong>FILE.TXT</strong>, in the SD card</span></li>
+<li class="Element600"><span style="color: #000000">Once the copy is successful, an addition string <strong>&quot;Test is successful&quot;</strong> is added to the file. If the write operation is successful, LED indication is provided.</span></li>
 </ul><p class="Element10">
 &nbsp;</p>
 <div class="Element15">
-Other MHC Configurations:</div>
+File system layer uses:</div>
 
 <ul class="Element630">
-<li class="Element600">If Cache is enabled, create a non-cacheable memory region for NVM using MPU</li>
-<li class="Element600">Configure the SD Card chip select pin in Pin Settings</li>
+<li class="Element600"><span style="color: #000000">Memory driver to communicate with underlying NVM media.</span></li>
+<li class="Element600"><span style="color: #000000">SDSPI Driver to communicate to SD Card over SPI.</span></li>
 </ul></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00783.html" target="topic">Building the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how to build an application using the MPLAB X IDE.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00785.html" target="topic">MPLAB Harmony Configuration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00784.html" target="topic">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00786.html" target="topic">Running the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how to run an application using the MPLAB X IDE.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Applications Help</a> &gt; <a href="00775.html" target="topic">File System Applications</a> &gt; <a href="00779.html" target="topic">nvm_sdspi_fat_multi_disk</a> &gt; <a href="00782.html" target="topic">MPLAB Harmony Configuration</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00778.html" target="topic">File System Applications</a> &gt; <a href="00782.html" target="topic">nvm_sdspi_fat_multi_disk</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -94,13 +114,13 @@ Other MHC Configurations:</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00780.html" target="topic">Previous</a> | <a href="00779.html" target="topic">Up</a> | <a href="00781.html" target="topic">Next</a></div>
+<a href="00803.html" target="topic">Previous</a> | <a href="00778.html" target="topic">Up</a> | <a href="00783.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications nvm_sdspi_fat_multi_disk MPLAB Harmony Configuration Topic Title: MPLAB Harmony Configuration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications nvm_sdspi_fat_mult_disk Topic Title: nvm_sdspi_fat_multi_disk)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

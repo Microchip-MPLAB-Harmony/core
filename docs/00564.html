@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>DRV_MEMORY_Initialize Function</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00564.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00152.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00153.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00564.html" target="topic">DRV_MEMORY_Initialize Function</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Core Help</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00153.html" target="topic">Previous</a> | <a href="00153.html" target="topic">Up</a> | <a href="00569.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: DRV_MEMORY_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+DRV_MEMORY_Initialize Function</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This routine initializes the Memory driver instance for the specified driver index, making it ready for clients to open and use it.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01342.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_MEMORY_Initialize</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01337.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="01338.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+drvIndex&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Identifier for the instance to be initialized&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to a data structure containing any data necessary to initialize the driver.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+If successful, returns a valid handle to a driver instance object. Otherwise it returns <a href="01343.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This routine must be called before any other Memory routine is called.&nbsp;</p>
+<p class="Element10">
+This routine should only be called once during system initialization.&nbsp;</p>
+<p class="Element10">
+This routine will NEVER block for hardware access. If the operation requires time to allow the hardware to initialize, it will be reported by the <a href="00569.html" target="topic">DRV_MEMORY_Status</a> operation. The system must use <a href="00569.html" target="topic">DRV_MEMORY_Status</a> to find out when the driver is in the ready state.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// This code snippet shows an example of initializing the Memory Driver</span></i>
+<i><span style="color: #008000">// with SST26 serial flash device attached and File system Enabled.</span></i>
+
+<a href="01342.html" target="topic">SYS_MODULE_OBJ</a>  objectHandle;
+
+<strong><span style="color: #000080">static</span></strong> uint8_t gDrvMemory0EraseBuffer[DRV_MEMORY_ERASE_BUFFER_SIZE_IDX0] __attribute__((aligned(32)));
+
+<strong><span style="color: #000080">static</span></strong> DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
+
+<strong><span style="color: #000080">static</span></strong> DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0] = { 0 };
+
+<strong><span style="color: #000080">const</span></strong> <a href="00529.html" target="topic">DRV_MEMORY_DEVICE_INTERFACE</a> drvMemory0DeviceAPI = {
+    .Open               = <a href="00725.html" target="topic">DRV_SST26_Open</a>,
+    .Close              = <a href="00711.html" target="topic">DRV_SST26_Close</a>,
+    .Status             = <a href="00730.html" target="topic">DRV_SST26_Status</a>,
+    .SectorErase        = <a href="00729.html" target="topic">DRV_SST26_SectorErase</a>,
+    .Read               = <a href="00727.html" target="topic">DRV_SST26_Read</a>,
+    .PageWrite          = <a href="00726.html" target="topic">DRV_SST26_PageWrite</a>,
+    .GeometryGet        = (<a href="00528.html" target="topic">DRV_MEMORY_DEVICE_GEOMETRY_GET</a>)<a href="00723.html" target="topic">DRV_SST26_GeometryGet</a>,
+    .TransferStatusGet  = (<a href="00544.html" target="topic">DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET</a>)<a href="00735.html" target="topic">DRV_SST26_TransferStatusGet</a>
+};
+
+<strong><span style="color: #000080">const</span></strong> <a href="00552.html" target="topic">DRV_MEMORY_INIT</a> drvMemory0InitData =
+{
+    .memDevIndex          = DRV_SST26_INDEX,
+    .memoryDevice         = &amp;drvMemory0DeviceAPI,
+    .isFsEnabled          = <strong><span style="color: #000080">true</span></strong>,
+    .deviceMediaType      = (uint8_t)SYS_FS_MEDIA_TYPE_SPIFLASH,
+    .ewBuffer             = &amp;gDrvMemory0EraseBuffer[0],
+    .clientObjPool        = (uintptr_t)&amp;gDrvMemory0ClientObject[0],
+    .bufferObj            = (uintptr_t)&amp;gDrvMemory0BufferObject[0],
+    .queueSize            = DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0,
+    .nClientsMax          = DRV_MEMORY_CLIENTS_NUMBER_IDX0
+};
+
+<i><span style="color: #008000">//usage of DRV_MEMORY_INDEX_0 indicates usage of Flash-related APIs</span></i>
+objectHandle = DRV_MEMORY_Initialize((<a href="01337.html" target="topic">SYS_MODULE_INDEX</a>)DRV_MEMORY_INDEX_0, (<a href="01338.html" target="topic">SYS_MODULE_INIT</a> *)&amp;drvMemory0InitData);
+
+<strong><span style="color: #000080">if</span></strong> (<a href="01343.html" target="topic">SYS_MODULE_OBJ_INVALID</a> == objectHandle)
+{
+    <i><span style="color: #008000">// Handle error</span></i>
+}</pre></div></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00152.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00153.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00564.html" target="topic">DRV_MEMORY_Initialize Function</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Core Help</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00153.html" target="topic">Previous</a> | <a href="00153.html" target="topic">Up</a> | <a href="00569.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: DRV_MEMORY_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

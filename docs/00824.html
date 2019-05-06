@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>MAX_CMD_ARGS Macro</title>
+<title>Configuring MHC</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00916.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00917.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00824.html" target="topic">MAX_CMD_ARGS Macro</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00122.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00824.html" target="topic">Configuring MHC</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00823.html" target="topic">Previous</a> | <a href="00917.html" target="topic">Up</a> | <a href="00825.html" target="topic">Next</a></div>
+<a href="00484.html" target="topic">Previous</a> | <a href="00122.html" target="topic">Up</a> | <a href="00112.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: MAX_CMD_ARGS Topic Title: MAX_CMD_ARGS Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: I2S Driver Configuring MHC Topic Title: Configuring MHC)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-MAX_CMD_ARGS Macro</div>
+Configuring MHC</div>
 </div>
 </div>
 
@@ -49,26 +49,44 @@ MAX_CMD_ARGS Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS CMD Processor Maximum Number of Command Arguments&nbsp;</p>
+ &nbsp;</p>
 <p class="Element10">
-This macro defines the maximum number of arguments per command.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">MAX_CMD_ARGS</span></strong> 15</pre></div></div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
+When building a new application, start by creating a 32-bit MPLAB Harmony 3 project in MPLAB X IDE by selecting <i>File &gt; New Project</i>. Chose the Configuration name the based on the BSP, and select the appropriate processor (such as ATSAME70Q21B).&nbsp;</p>
 <p class="Element10">
-None.</p></div>
+In MHC, under Available Components select the appropriate BSP, such as SAM E70 Xplained Ultra. Under Audio<i>-&gt;Templates</i>, double-click on a codec template such as WM8904. Answer Yes to all questions.&nbsp;</p>
+<p class="Element10">
+You should end up with a project graph that looks like this, after rearranging the boxes: </p><p class="Element10" style="text-align: center;">
+<img src="APPS AUDIO audio_tone_V71_ssc_project_graph.png" border="0" alt="" title=""></p><p class="Element10">
+Click on the I2S Driver component, Instance 0, and the following menu will be displayed in the Configurations Options: </p><p class="Element10" style="text-align: center;">
+<img src="I2S driver MHC.png" border="0" alt="" title=""></p><p class="Element10">
+<strong>PLIB Used</strong> will display the hardware peripheral instance connected to the I2S Driver, such as SPI0, SSC, or I2SC1.&nbsp;</p>
+<p class="Element10">
+<strong>Number of Clients</strong> indicates the maximum number of clients that can be connected to the I2S Driver.&nbsp;</p>
+<p class="Element10">
+<strong>Transfer Queue Size</strong> indicates number of buffers, of each transfer queue (transmit/receive).&nbsp;</p>
+<p class="Element10">
+<strong>I2S Data Length</strong> is the number of bits for one channel of audio (left or right). It must match the size of the PLIB.&nbsp;</p>
+<p class="Element10">
+<strong>Use DMA for Transmit and Receive</strong> should always be checked if using DMA, which is currently the only supported mode.&nbsp;</p>
+<p class="Element10">
+<strong>Use DMA for Transmit</strong> should be checked if sending data to a codec or Bluetooth module.&nbsp;</p>
+<p class="Element10">
+<strong>DMA Channel for Transmit</strong> indicates the DMA channel # assigned (done automatically when you connect the PLIB).&nbsp;</p>
+<p class="Element10">
+<strong>Use DMA for Receive</strong> should be checked if receiving data from a codec or Bluetooth module.However if you are only writing to the I2S stream, leaving this checked won't harm anything.&nbsp;</p>
+<p class="Element10">
+<strong>DMA Channel for Receive</strong> indicates the DMA channel # assigned (done automatically when you connect the PLIB).&nbsp;</p>
+<p class="Element10">
+<strong>Included Linked List DMA Functions </strong>should be checked if using the Linked DMA feature of some MCUs.&nbsp;</p>
+<p class="Element10">
+You can also bring in the I2S Driver by itself, by double clicking I2S under Harmony<i>-&gt;Drivers</i> in the Available Components list. You will then need to add any additional needed components manually and connect them together.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00916.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00917.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00824.html" target="topic">MAX_CMD_ARGS Macro</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00122.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00824.html" target="topic">Configuring MHC</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -76,13 +94,13 @@ None.</p></div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00823.html" target="topic">Previous</a> | <a href="00917.html" target="topic">Up</a> | <a href="00825.html" target="topic">Next</a></div>
+<a href="00484.html" target="topic">Previous</a> | <a href="00122.html" target="topic">Up</a> | <a href="00112.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: MAX_CMD_ARGS Topic Title: MAX_CMD_ARGS Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: I2S Driver Configuring MHC Topic Title: Configuring MHC)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

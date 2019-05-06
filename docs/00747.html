@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_USART_ErrorGet Function</title>
+<title>DRV_USART_BufferEventHandlerSet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00314.html" target="topic">USART Driver Library Help</a> &gt; <a href="00315.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00747.html" target="topic">DRV_USART_ErrorGet Function</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00313.html" target="topic">USART Driver Library Help</a> &gt; <a href="00314.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00747.html" target="topic">DRV_USART_BufferEventHandlerSet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00759.html" target="topic">Previous</a> | <a href="00315.html" target="topic">Up</a> | <a href="00748.html" target="topic">Next</a></div>
+<a href="00759.html" target="topic">Previous</a> | <a href="00314.html" target="topic">Up</a> | <a href="00755.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_ErrorGet@DRV_HANDLE Topic Title: DRV_USART_ErrorGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_BufferEventHandlerSet@DRV_HANDLE@DRV_USART_BUFFER_EVENT_HANDLER@uintptr_t Topic Title: DRV_USART_BufferEventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_USART_ErrorGet Function</div>
+DRV_USART_BufferEventHandlerSet Function</div>
 </div>
 </div>
 
@@ -49,19 +49,23 @@ DRV_USART_ErrorGet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function returns the errors associated with the given client. The call to this function also clears all the associated error flags. This function can be used for non-DMA buffer transfers only. It cannot be used when the USART driver is configured to use DMA.</p></div>
+This function allows a client to register a buffer event handling function with the driver to call back when queued buffer transfers have finished. When a client calls either the <a href="00756.html" target="topic">DRV_USART_ReadBufferAdd</a> or <a href="00762.html" target="topic">DRV_USART_WriteBufferAdd</a> function, it is provided with a handle identifying the buffer that was added to the driver's buffer queue. The driver will pass this handle back to the client by calling &quot;eventHandler&quot; function when the buffer transfer has completed.&nbsp;</p>
+<p class="Element10">
+The event handler should be set before the client performs any &quot;buffer add&quot; operations that could generate events. The event handler once set, persists until the client closes the driver or sets another event handler (which could be a &quot;NULL&quot; pointer to indicate no callback).</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00746.html" target="topic">DRV_USART_ERROR</a> <strong><span style="color: #000000">DRV_USART_ErrorGet</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_USART_BufferEventHandlerSet</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00416.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="00743.html" target="topic">DRV_USART_BUFFER_EVENT_HANDLER</a> <strong><span style="color: #000000">eventHandler</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> uintptr_t <strong><span style="color: #000000">context</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="00750.html" target="topic">DRV_USART_Open</a> must have been called to obtain a valid opened device handle.</p></div>
+<a href="00754.html" target="topic">DRV_USART_Open</a> must have been called to obtain a valid opened device handle.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -80,7 +84,17 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr></table></div></div>
+A valid open-instance handle, returned from the driver's open routine.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+eventHandler&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the event handler function.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+The value of parameter will be passed back to the client unchanged, when the eventHandler function is called. It can be used to identify any client specific data object that identifies the instance of the client module (for example, it may be a pointer to the client module's state structure).&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,25 +102,73 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Errors occurred as listed by <a href="00746.html" target="topic">DRV_USART_ERROR</a>. This function reports multiple USART errors if occurred.</p></div>
+None.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USART errors are normally associated with the receiver. The driver clears all the errors internally and only returns the occurred error information for the client. The errors are valid only until it is over written by the error status of the next transfer. Hence, application may want to call this routine from the callback itself, in case error is reported by the driver in the callback. This function is expected to work in non-DMA mode only.</p></div>
+If the client does not want to be notified when the queued buffer transfer has completed, it does not need to register a callback. This function is thread safe when called in a RTOS application.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// 'handle', returned from the DRV_USART_Open</span></i>
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// myAppObj is an application specific state data object.</span></i>
+MY_APP_OBJ myAppObj;
 
-<strong><span style="color: #000080">if</span></strong> (DRV_USART_ErrorGet(handle) &amp; DRV_USART_ERROR_OVERRUN)
+uint8_t mybuffer[MY_BUFFER_SIZE];
+<a href="00744.html" target="topic">DRV_USART_BUFFER_HANDLE</a> bufferHandle;
+
+<i><span style="color: #008000">// myUSARTHandle is the handle returned</span></i>
+<i><span style="color: #008000">// by the DRV_USART_Open function.</span></i>
+
+<i><span style="color: #008000">// Client registers an event handler with driver. This is done once</span></i>
+
+DRV_USART_BufferEventHandlerSet(
+    myUSARTHandle,
+    APP_USARTBufferEventHandler,
+    (uintptr_t)&amp;myAppObj
+);
+
+<a href="00756.html" target="topic">DRV_USART_ReadBufferAdd</a>(
+    myUSARThandle,
+    myBuffer,
+    MY_BUFFER_SIZE,
+    &amp;bufferHandle
+);
+
+<strong><span style="color: #000080">if</span></strong>(bufferHandle == <a href="00745.html" target="topic">DRV_USART_BUFFER_HANDLE_INVALID</a>)
 {
-    <i><span style="color: #008000">//Errors are cleared by the driver, take respective action</span></i>
-    <i><span style="color: #008000">//for the overrun error case.</span></i>
+    <i><span style="color: #008000">// Error handling here</span></i>
+}
+
+<i><span style="color: #008000">// Event is received when the buffer is processed.</span></i>
+
+<strong><span style="color: #000080">void</span></strong> APP_USARTBufferEventHandler(
+    <a href="00737.html" target="topic">DRV_USART_BUFFER_EVENT</a> event,
+    <a href="00744.html" target="topic">DRV_USART_BUFFER_HANDLE</a> handle,
+    uintptr_t context
+)
+{
+    <i><span style="color: #008000">// The context handle was set to an application specific</span></i>
+    <i><span style="color: #008000">// object. It is now retrievable easily in the event handler.</span></i>
+    MY_APP_OBJ* myAppObj = (MY_APP_OBJ *) context;
+
+    <strong><span style="color: #000080">switch</span></strong>(event)
+    {
+        <strong><span style="color: #000080">case</span></strong> DRV_USART_BUFFER_EVENT_COMPLETE:
+            <i><span style="color: #008000">// This means the data was transferred.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> DRV_USART_BUFFER_EVENT_ERROR:
+            <i><span style="color: #008000">// Error handling here.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">default</span></strong>:
+            <strong><span style="color: #000080">break</span></strong>;
+    }
 }</pre></div></div>
 </div>
 </div>
@@ -115,7 +177,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00314.html" target="topic">USART Driver Library Help</a> &gt; <a href="00315.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00747.html" target="topic">DRV_USART_ErrorGet Function</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00313.html" target="topic">USART Driver Library Help</a> &gt; <a href="00314.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00747.html" target="topic">DRV_USART_BufferEventHandlerSet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -123,13 +185,13 @@ Example</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00759.html" target="topic">Previous</a> | <a href="00315.html" target="topic">Up</a> | <a href="00748.html" target="topic">Next</a></div>
+<a href="00759.html" target="topic">Previous</a> | <a href="00314.html" target="topic">Up</a> | <a href="00755.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_ErrorGet@DRV_HANDLE Topic Title: DRV_USART_ErrorGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_BufferEventHandlerSet@DRV_HANDLE@DRV_USART_BUFFER_EVENT_HANDLER@uintptr_t Topic Title: DRV_USART_BufferEventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

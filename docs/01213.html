@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_FileCharacterPut Function</title>
+<title>SYS_FS_MEDIA_EVENT_HANDLER Type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01213.html" target="topic">SYS_FS_FileCharacterPut Function</a></div>
+<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01213.html" target="topic">SYS_FS_MEDIA_EVENT_HANDLER Type</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01214.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01219.html" target="topic">Next</a></div>
+<a href="01203.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01227.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileCharacterPut@SYS_FS_HANDLE@char Topic Title: SYS_FS_FileCharacterPut Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_MEDIA_EVENT_HANDLER Topic Title: SYS_FS_MEDIA_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_FileCharacterPut Function</div>
+SYS_FS_MEDIA_EVENT_HANDLER Type</div>
 </div>
 </div>
 
@@ -49,21 +49,13 @@ SYS_FS_FileCharacterPut Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function writes a character to a file.</p></div>
+Media Event Handler function pointer&nbsp;</p>
+<p class="Element10">
+This data type defines the required function signature for the media event handling callback function. A client must register a pointer to an event handling function whose function signature (parameter and return value types) match the types specified by this function pointer in order to receive event calls back from the driver.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01356.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_FileCharacterPut</span></strong>(
-    <a href="01281.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">char</span></strong> <strong><span style="color: #000000">data</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-The file into which a character has to be written, has to be present and should have been opened.</p></div>
-</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <a href="01314.html" target="topic">SYS_MEDIA_EVENT_HANDLER</a> <strong><span style="color: #000000">SYS_FS_MEDIA_EVENT_HANDLER</span></strong>;</pre></div></div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
 <div class="Element11">
@@ -79,14 +71,19 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+event&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-file handle to which the character is to be written.&nbsp;</div></td></tr><tr>
+Identifies the type of event&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-data&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+commandHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-character to be written to the file.&nbsp;</div></td></tr></table></div></div>
+Handle returned from the media operation requests&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Value identifying the context of the application that registered the event handling function&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -94,7 +91,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS_FS_RES_SUCCESS - Write operation was successful. SYS_FS_RES_FAILURE - Write operation was unsuccessful. The reason for the failure can be retrieved with <a href="01157.html" target="topic">SYS_FS_Error</a> or <a href="01220.html" target="topic">SYS_FS_FileError</a>.</p></div>
+None.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -103,33 +100,12 @@ Remarks</div>
 <p class="Element10">
 None.</p></div>
 </div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01356.html" target="topic">SYS_FS_RESULT</a> res;
-  <a href="01281.html" target="topic">SYS_FS_HANDLE</a> fileHandle;
-
-  fileHandle = <a href="01222.html" target="topic">SYS_FS_FileOpen</a>(&quot;/mnt/myDrive/FILE.JPG&quot;, (SYS_FS_FILE_OPEN_WRITE_PLUS));
-  <strong><span style="color: #000080">if</span></strong>(fileHandle != <a href="01282.html" target="topic">SYS_FS_HANDLE_INVALID</a>)
-  {
-      <i><span style="color: #008000">// File open is successful</span></i>
-  }
-
-  <i><span style="color: #008000">// Write a character to the file.</span></i>
-  res = SYS_FS_FileCharacterPut(fileHandle, 'c');
-  <strong><span style="color: #000080">if</span></strong>(res != SYS_FS_RES_SUCCESS)
-  {
-      <i><span style="color: #008000">// Character write operation failed.</span></i>
-  }</pre></div></div>
-</div>
-</div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01213.html" target="topic">SYS_FS_FileCharacterPut Function</a></div>
+<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01213.html" target="topic">SYS_FS_MEDIA_EVENT_HANDLER Type</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -137,13 +113,13 @@ Example</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01214.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01219.html" target="topic">Next</a></div>
+<a href="01203.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01227.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileCharacterPut@SYS_FS_HANDLE@char Topic Title: SYS_FS_FileCharacterPut Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_MEDIA_EVENT_HANDLER Topic Title: SYS_FS_MEDIA_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

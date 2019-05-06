@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SPI_TRANSFER_EVENT Enumeration</title>
+<title>DRV_SPI_Open Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00682.html" target="topic">DRV_SPI_TRANSFER_EVENT Enumeration</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00251.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00252.html" target="topic">Library Interface</a> &gt; b) Client Setup Functions &gt; <a href="00682.html" target="topic">DRV_SPI_Open Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00691.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00689.html" target="topic">Next</a></div>
+<a href="00685.html" target="topic">Previous</a> | <a href="00252.html" target="topic">Up</a> | <a href="00667.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_TRANSFER_EVENT Topic Title: DRV_SPI_TRANSFER_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_SPI_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SPI_TRANSFER_EVENT Enumeration</div>
+DRV_SPI_Open Function</div>
 </div>
 </div>
 
@@ -49,74 +49,95 @@ DRV_SPI_TRANSFER_EVENT Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SPI Driver Transfer Events&nbsp;</p>
+This routine opens the specified SPI driver instance and provides a handle that must be provided to all other client-level operations to identify the caller and the instance of the driver. The ioIntent parameter defines how the client interacts with this driver instance.&nbsp;</p>
 <p class="Element10">
-This enumeration identifies the possible events that can result from a transfer add request caused by the client calling either <a href="00680.html" target="topic">DRV_SPI_ReadTransferAdd</a> or <a href="00704.html" target="topic">DRV_SPI_WriteTransferAdd</a> or <a href="00702.html" target="topic">DRV_SPI_WriteReadTransferAdd</a> functions.</p></div>
+Specifying a DRV_IO_INTENT_EXCLUSIVE will cause the driver to provide exclusive access to this client. The driver cannot be opened by any other client.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">DRV_SPI_TRANSFER_EVENT_PENDING</span></strong>,
-  <strong><span style="color: #000000">DRV_SPI_TRANSFER_EVENT_COMPLETE</span></strong>,
-  <strong><span style="color: #000000">DRV_SPI_TRANSFER_EVENT_HANDLE_EXPIRED</span></strong>,
-  <strong><span style="color: #000000">DRV_SPI_TRANSFER_EVENT_ERROR</span></strong>,
-  <strong><span style="color: #000000">DRV_SPI_TRANSFER_EVENT_HANDLE_INVALID</span></strong>
-} DRV_SPI_TRANSFER_EVENT;</pre></div></div>
-<a name="4D656D62657273"></a><div class="Element14">
-Members</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00416.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">DRV_SPI_Open</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01337.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="00501.html" target="topic">DRV_IO_INTENT</a> <strong><span style="color: #000000">ioIntent</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element272">
-<div class="TableDiv">
-<table cellspacing="0" class="Table3">
-<tr>
-<td class="Element260" valign="top" width="35%">
-<div class="Element261">
-Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
-<div class="Element265">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-DRV_SPI_TRANSFER_EVENT_PENDING&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Transfer request is pending&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-DRV_SPI_TRANSFER_EVENT_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-All data were transfered successfully.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-DRV_SPI_TRANSFER_EVENT_HANDLE_EXPIRED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Transfer Handle given is expired. It means transfer is completed but with or without error is not known. In case of Non-DMA transfer, since there is no possibility of error, it can be assumed same as DRV_SPI_TRANSFER_EVENT_COMPLETE&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-DRV_SPI_TRANSFER_EVENT_ERROR&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-There was an error while processing transfer request.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-DRV_SPI_TRANSFER_EVENT_HANDLE_INVALID&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Transfer Handle given is invalid&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+Function <a href="00681.html" target="topic">DRV_SPI_Initialize</a> must have been called before calling this function.</p></div>
 </div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Identifier for the object instance to be opened<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+intent&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Zero or more of the values from the enumeration <a href="00501.html" target="topic">DRV_IO_INTENT</a> &quot;ORed&quot; together to indicate the intended use of the driver. See function description for details.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+If successful, the routine returns a valid open-instance handle (a number identifying both the caller and the module instance).&nbsp;</p>
+<p class="Element10">
+If an error occurs, the return value is <a href="00417.html" target="topic">DRV_HANDLE_INVALID</a>. Error can occur</p>
+<ul class="Element630">
+<li class="Element600">if the number of client objects allocated via DRV_SPI_CLIENTS_NUMBER is insufficient.</li>
+<li class="Element600">if the client is trying to open the driver but driver has been opened exclusively by another client.</li>
+<li class="Element600">if the driver peripheral instance being opened is not initialized or is invalid.</li>
+<li class="Element600">if the client is trying to open the driver exclusively, but has already been opened in a non exclusive mode by another client.</li>
+<li class="Element600">if the driver is not ready to be opened, typically when the initialize routine has not completed execution.</li>
+</ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-Either DRV_SPI_TRANSFER_EVENT_COMPLETE or DRV_SPI_TRANSFER_EVENT_ERROR is passed in the &quot;event&quot; parameter of the event handling callback function that the client registered with the driver by calling the <a href="00698.html" target="topic">DRV_SPI_TransferEventHandlerSet</a> function when a transfer request is completed.&nbsp;</p>
-<p class="Element10">
-When status polling is used, any one of these events is returned by <a href="00700.html" target="topic">DRV_SPI_TransferStatusGet</a> function.</p></div>
+
+<ul class="Element630">
+<li class="Element600">The handle returned is valid until the <a href="00667.html" target="topic">DRV_SPI_Close</a> routine is called.</li>
+<li class="Element600">This routine will NEVER block waiting for hardware.</li>
+</ul></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="00416.html" target="topic">DRV_HANDLE</a> handle;
+
+handle = DRV_SPI_Open(DRV_SPI_INDEX_0, DRV_IO_INTENT_EXCLUSIVE);
+<strong><span style="color: #000080">if</span></strong> (handle == <a href="00417.html" target="topic">DRV_HANDLE_INVALID</a>)
+{
+    <i><span style="color: #008000">// Unable to open the driver</span></i>
+    <i><span style="color: #008000">// May be the driver is not initialized or the initialization</span></i>
+    <i><span style="color: #008000">// is not complete.</span></i>
+}</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00682.html" target="topic">DRV_SPI_TRANSFER_EVENT Enumeration</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00251.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00252.html" target="topic">Library Interface</a> &gt; b) Client Setup Functions &gt; <a href="00682.html" target="topic">DRV_SPI_Open Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -124,13 +145,13 @@ When status polling is used, any one of these events is returned by <a href="007
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00691.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00689.html" target="topic">Next</a></div>
+<a href="00685.html" target="topic">Previous</a> | <a href="00252.html" target="topic">Up</a> | <a href="00667.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_TRANSFER_EVENT Topic Title: DRV_SPI_TRANSFER_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_SPI_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

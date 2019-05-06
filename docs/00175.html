@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>How the Library Works</title>
+<title>MX25L Driver Library Help</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00181.html" target="topic">Using the Library</a> &gt; <a href="00175.html" target="topic">How the Library Works</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00273.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00175.html" target="topic">MX25L Driver Library Help</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00169.html" target="topic">Previous</a> | <a href="00181.html" target="topic">Up</a> | <a href="00172.html" target="topic">Next</a></div>
+<a href="00273.html" target="topic">Previous</a> | <a href="00273.html" target="topic">Up</a> | <a href="00174.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV MX25L How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV MX25L Library Topic Title: MX25L Driver Library Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-How the Library Works</div>
+MX25L Driver Library Help</div>
 </div>
 </div>
 
@@ -48,25 +48,55 @@ How the Library Works</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000">The MX25L Driver performs initialization and puts the driver to ready state. This status of the driver can be checked using <a href="00602.html" target="topic">DRV_MX25L_Status</a>()</span></li>
-<li class="Element600"><span style="color: #000000">The MX25L driver library performs set of flash operations during <a href="00596.html" target="topic">DRV_MX25L_Open</a>(). If any of the below flash operations fails, an invalid Handle will be returned. <a href="00596.html" target="topic">DRV_MX25L_Open</a>() can be repeatedly called until it returns a valid handle.</span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">Resets the Flash</span></li>
-<li class="Element601"><span style="color: #000000">Configures the flash device to QUAD IO Mode</span></li>
-<li class="Element601"><span style="color: #000000">Unlocks the flash</span></li>
-</ul></li>
-<li class="Element600">When the client requests for device geometry, it queries for the JEDEC-Id and populates the geometry table DRV_<span style="color: #000000">MX25L</span>_GEOMETRY appropriately</li>
-<li class="Element600"><span style="color: #000000">The driver does not support queuing of more than one requests. The application must check and ensure that any previous request is completed before submitting a new one. This can be done by polling the status of data transfer using <a href="00607.html" target="topic">DRV_MX25L_TransferStatusGet</a>()</span></li>
-</ul></div>
+<p class="Element10">
+This section describes the MX25L driver Library.</p></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00174.html" target="topic">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+<span style="color: #000000">This section provides an interface to access the MX25L Flash Memory over the QSPI interface.</span>&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00179.html" target="topic">Using the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the basic architecture of the MX25L driver and provides information on how it works.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00170.html" target="topic">Configuring the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+<span style="color: #000000">This section provides information on how to configure the MX25L driver.</span>&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00169.html" target="topic">Building the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+<span style="color: #000000">This section provides information on how the MX25L driver can be built.</span>&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00176.html" target="topic">Library Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the Application Programming Interface (API) functions of the MX25L driver<span style="color: #0000FF">.</span>&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00177.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00181.html" target="topic">Using the Library</a> &gt; <a href="00175.html" target="topic">How the Library Works</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00273.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00175.html" target="topic">MX25L Driver Library Help</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -74,13 +104,13 @@ How the Library Works</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00169.html" target="topic">Previous</a> | <a href="00181.html" target="topic">Up</a> | <a href="00172.html" target="topic">Next</a></div>
+<a href="00273.html" target="topic">Previous</a> | <a href="00273.html" target="topic">Up</a> | <a href="00174.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV MX25L How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV MX25L Library Topic Title: MX25L Driver Library Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

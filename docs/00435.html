@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_I2C_TransferEventHandlerSet Function</title>
+<title>DRV_I2C_TransferStatusGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00099.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00100.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00435.html" target="topic">DRV_I2C_TransferEventHandlerSet Function</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00097.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00098.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00435.html" target="topic">DRV_I2C_TransferStatusGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00419.html" target="topic">Previous</a> | <a href="00100.html" target="topic">Up</a> | <a href="00423.html" target="topic">Next</a></div>
+<a href="00437.html" target="topic">Previous</a> | <a href="00098.html" target="topic">Up</a> | <a href="00419.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2C_TransferEventHandlerSet@DRV_HANDLE@DRV_I2C_TRANSFER_EVENT_HANDLER@uintptr_t Topic Title: DRV_I2C_TransferEventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2C_TransferStatusGet@DRV_I2C_TRANSFER_HANDLE Topic Title: DRV_I2C_TransferStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_I2C_TransferEventHandlerSet Function</div>
+DRV_I2C_TransferStatusGet Function</div>
 </div>
 </div>
 
@@ -49,23 +49,21 @@ DRV_I2C_TransferEventHandlerSet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function allows a client to register a transfer event handling function with the driver to call back when queued transfers have finished. When a client calls either the <a href="00424.html" target="topic">DRV_I2C_ReadTransferAdd</a>, <a href="00440.html" target="topic">DRV_I2C_WriteTransferAdd</a> or <a href="00438.html" target="topic">DRV_I2C_WriteReadTransferAdd</a> function, it is provided with a handle identifying the transfer that was added to the driver's transfer queue. The driver will pass this handle back to the client by calling &quot;eventHandler&quot; function when the transfer has completed.&nbsp;</p>
-<p class="Element10">
-The event handler should be set before the client performs any &quot;transfer add&quot; operations that could generate events. The event handler once set, persists until the client closes the driver or sets another event handler (which could be a &quot;NULL&quot; pointer to indicate no callback).</p></div>
+This function can be used to poll the status of the queued transfer request if the application doesn't prefer to use the event handler (callback) function to get notified.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_I2C_TransferEventHandlerSet</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="00432.html" target="topic">DRV_I2C_TRANSFER_EVENT_HANDLER</a> <strong><span style="color: #000000">eventHandler</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> uintptr_t <strong><span style="color: #000000">context</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00425.html" target="topic">DRV_I2C_TRANSFER_EVENT</a> <strong><span style="color: #000000">DRV_I2C_TransferStatusGet</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00432.html" target="topic">DRV_I2C_TRANSFER_HANDLE</a> <strong><span style="color: #000000">transferHandle</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="00422.html" target="topic">DRV_I2C_Open</a> must have been called to obtain a valid opened device handle.</p></div>
+<a href="00421.html" target="topic">DRV_I2C_Open</a> must have been called to obtain a valid opened device handle.&nbsp;</p>
+<p class="Element10">
+Either the <a href="00423.html" target="topic">DRV_I2C_ReadTransferAdd</a>, <a href="00439.html" target="topic">DRV_I2C_WriteTransferAdd</a> or <a href="00437.html" target="topic">DRV_I2C_WriteReadTransferAdd</a> function must have been called and a valid buffer handle returned.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -82,19 +80,9 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+transferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open routine <a href="00422.html" target="topic">DRV_I2C_Open</a> function.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-eventHandler&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to the event handler function.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-The value of parameter will be passed back to the client unchanged, when the eventHandler function is called. It can be used to identify any client specific data object that identifies the instance of the client module (for example, it may be a pointer to the client module's state structure).&nbsp;</div></td></tr></table></div></div>
+Handle for the buffer of which the processed number of bytes to be obtained.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -102,61 +90,37 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+The success or error event of the transfer.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If the client does not want to be notified when the queued buffer transfer has completed, it does not need to register a callback. This function is thread safe when called in a RTOS application. This function is available only in the asynchronous mode.</p></div>
+This function is available only in the asynchronous mode.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// myAppObj is an application specific state data object.</span></i>
-MY_APP_OBJ myAppObj;
+<div class="Element13"><div class="Element12"><pre class="Element12">  uint8_t myBuffer[MY_BUFFER_SIZE];
+  <a href="00432.html" target="topic">DRV_I2C_TRANSFER_HANDLE</a> transferHandle;
+  <a href="00425.html" target="topic">DRV_I2C_TRANSFER_EVENT</a> event;
 
-uint8_t myBuffer[MY_BUFFER_SIZE];
-<a href="00433.html" target="topic">DRV_I2C_TRANSFER_HANDLE</a> transferHandle;
+  <i><span style="color: #008000">// myI2CHandle is the handle returned</span></i>
+  <i><span style="color: #008000">// by the DRV_I2C_Open function.</span></i>
 
-<i><span style="color: #008000">// myI2CHandle is the handle returned</span></i>
-<i><span style="color: #008000">// by the DRV_I2C_Open function.</span></i>
+  <a href="00423.html" target="topic">DRV_I2C_ReadTransferAdd</a>(myI2CHandle, slaveAddress, myBuffer, MY_BUFFER_SIZE, &amp;transferHandle);
 
-<i><span style="color: #008000">// Client registers an event handler with driver. This is done once</span></i>
+  <strong><span style="color: #000080">if</span></strong>(transferHandle == <a href="00433.html" target="topic">DRV_I2C_TRANSFER_HANDLE_INVALID</a>)
+  {
+      <i><span style="color: #008000">// Error handling here</span></i>
+  }
 
-DRV_I2C_TransferEventHandlerSet( myI2CHandle, APP_I2CTransferEventHandler, (uintptr_t)&amp;myAppObj );
+  <i><span style="color: #008000">//Check the status of the transfer</span></i>
+  <i><span style="color: #008000">//This call can be used to wait until the transfer is processed.</span></i>
 
-<a href="00424.html" target="topic">DRV_I2C_ReadTransferAdd</a>(myI2CHandle, slaveAddress, myBuffer, MY_BUFFER_SIZE, &amp;transferHandle);
-
-<strong><span style="color: #000080">if</span></strong>(transferHandle == <a href="00434.html" target="topic">DRV_I2C_TRANSFER_HANDLE_INVALID</a>)
-{
-    <i><span style="color: #008000">// Error handling here</span></i>
-}
-
-<i><span style="color: #008000">// The registered event handler is called when the transfer is completed.</span></i>
-
-<strong><span style="color: #000080">void</span></strong> APP_I2CTransferEventHandler(<a href="00426.html" target="topic">DRV_I2C_TRANSFER_EVENT</a> event, <a href="00433.html" target="topic">DRV_I2C_TRANSFER_HANDLE</a> handle, uintptr_t context)
-{
-    <i><span style="color: #008000">// The context handle was set to an application specific</span></i>
-    <i><span style="color: #008000">// object. It is now retrievable easily in the event handler.</span></i>
-    MY_APP_OBJ* pMyAppObj = (MY_APP_OBJ *) context;
-
-    <strong><span style="color: #000080">switch</span></strong>(event)
-    {
-        <strong><span style="color: #000080">case</span></strong> DRV_I2C_TRANSFER_EVENT_COMPLETE:
-            <i><span style="color: #008000">// This means the data was transferred.</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> DRV_I2C_TRANSFER_EVENT_ERROR:
-            <i><span style="color: #008000">// Error handling here.</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-}</pre></div></div>
+  event = DRV_I2C_TransferStatusGet(transferHandle);</pre></div></div>
 </div>
 </div>
 </div>
@@ -164,7 +128,7 @@ DRV_I2C_TransferEventHandlerSet( myI2CHandle, APP_I2CTransferEventHandler, (uint
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00099.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00100.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00435.html" target="topic">DRV_I2C_TransferEventHandlerSet Function</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00097.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00098.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00435.html" target="topic">DRV_I2C_TransferStatusGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -172,13 +136,13 @@ DRV_I2C_TransferEventHandlerSet( myI2CHandle, APP_I2CTransferEventHandler, (uint
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00419.html" target="topic">Previous</a> | <a href="00100.html" target="topic">Up</a> | <a href="00423.html" target="topic">Next</a></div>
+<a href="00437.html" target="topic">Previous</a> | <a href="00098.html" target="topic">Up</a> | <a href="00419.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2C_TransferEventHandlerSet@DRV_HANDLE@DRV_I2C_TRANSFER_EVENT_HANDLER@uintptr_t Topic Title: DRV_I2C_TransferEventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2C_TransferStatusGet@DRV_I2C_TRANSFER_HANDLE Topic Title: DRV_I2C_TransferStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

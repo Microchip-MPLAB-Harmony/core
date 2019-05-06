@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_CurrentWorkingDirectoryGet Function</title>
+<title>SYS_FS_FileSeek Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01144.html" target="topic">SYS_FS_CurrentWorkingDirectoryGet Function</a></div>
+<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01144.html" target="topic">SYS_FS_FileSeek Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01146.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01215.html" target="topic">Next</a></div>
+<a href="01143.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01145.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_CurrentWorkingDirectoryGet@char *@uint32_t Topic Title: SYS_FS_CurrentWorkingDirectoryGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileSeek@SYS_FS_HANDLE@int32_t@SYS_FS_FILE_SEEK_CONTROL Topic Title: SYS_FS_FileSeek Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_CurrentWorkingDirectoryGet Function</div>
+SYS_FS_FileSeek Function</div>
 </div>
 </div>
 
@@ -49,20 +49,23 @@ SYS_FS_CurrentWorkingDirectoryGet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function gets the current working directory path along with the working drive.</p></div>
+This function sets the file pointer for a open file associated with the file handle, as follows: whence = SYS_FS_SEEK_SET - File offset is set to offset bytes from the beginning. whence = SYS_FS_SEEK_CUR - File offset is set to its current location plus offset. whence = SYS_FS_SEEK_END - File offset is set to the size of the file plus offset. The offset specified for this option should be negative for the file pointer to be valid.&nbsp;</p>
+<p class="Element10">
+Trying to move the file pointer using SYS_FS_FileSeek, beyond the range of file will only cause the pointer to be moved to the last location of the file.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01356.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_CurrentWorkingDirectoryGet</span></strong>(
-    <strong><span style="color: #000080">char</span></strong> * <strong><span style="color: #000000">buff</span></strong>, 
-    uint32_t <strong><span style="color: #000000">len</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100">int32_t <strong><span style="color: #000000">SYS_FS_FileSeek</span></strong>(
+    <a href="01200.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">fildes</span></strong>, 
+    int32_t <strong><span style="color: #000000">offset</span></strong>, 
+    <a href="01124.html" target="topic">SYS_FS_FILE_SEEK_CONTROL</a> <strong><span style="color: #000000">whence</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-At least one disk must be mounted.</p></div>
+A valid file handle must be obtained before seeking a file.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -79,14 +82,19 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-buff&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to a buffer which will contain the name of the current working directory and drive, once the function completes.&nbsp;</div></td></tr><tr>
+A valid file handle obtained during file open.&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-len&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+offset&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Size of the buffer.&nbsp;</div></td></tr></table></div></div>
+The number of bytes which act as file offset. This value could be a positive or negative value.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+whence&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Type of File Seek operation as specified in <a href="01124.html" target="topic">SYS_FS_FILE_SEEK_CONTROL</a>.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -94,7 +102,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS_FS_RES_SUCCESS - Get current working directory operation was successful. SYS_FS_RES_FAILURE - Get current working directory operation was unsucessful. The reason for the failure can be retrieved with <a href="01157.html" target="topic">SYS_FS_Error</a>.</p></div>
+On success - The number of bytes by which file pointer is moved (0 or positive number) On Failure - (-1) If the chosen offset value was (-1), the success or failure can be determined with <a href="01076.html" target="topic">SYS_FS_Error</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -107,63 +115,25 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01356.html" target="topic">SYS_FS_RESULT</a> res;
-  <strong><span style="color: #000080">char</span></strong> buffer[16];
+<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01200.html" target="topic">SYS_FS_HANDLE</a> fileHandle;
+  <strong><span style="color: #000080">int</span></strong> status;
 
-  <strong><span style="color: #000080">switch</span></strong>(appState)
+  fileHandle = <a href="01141.html" target="topic">SYS_FS_FileOpen</a>(&quot;/mnt/myDrive/FILE.JPG&quot;,
+          (SYS_FS_FILE_OPEN_READ));
+
+  <strong><span style="color: #000080">if</span></strong>(fileHandle != <a href="01201.html" target="topic">SYS_FS_HANDLE_INVALID</a>)
   {
-      <strong><span style="color: #000080">case</span></strong> TRY_MOUNT:
-          <strong><span style="color: #000080">if</span></strong>(<a href="01352.html" target="topic">SYS_FS_Mount</a>(&quot;/dev/mmcblka1&quot;, &quot;/mnt/myDrive&quot;, FAT, 0, NULL) != SYS_FS_RES_SUCCESS)
-          {
-              <i><span style="color: #008000">// Failure, try mounting again</span></i>
-          }
-          <strong><span style="color: #000080">else</span></strong>
-          {
-              <i><span style="color: #008000">// Mount was successful. Create a directory.</span></i>
-              appState = CREATE_DIR;
-          }
-          <strong><span style="color: #000080">break</span></strong>;
-
-      <strong><span style="color: #000080">case</span></strong> CREATE_DIR:
-          res = <a href="01147.html" target="topic">SYS_FS_DirectoryMake</a>(&quot;Dir1&quot;);
-          <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
-          {
-              <i><span style="color: #008000">// Directory creation failed</span></i>
-              appState = ERROR;
-          }
-          <strong><span style="color: #000080">else</span></strong>
-          {
-              <i><span style="color: #008000">// Directory creation was successful. Change to the new</span></i>
-              <i><span style="color: #008000">// directory.</span></i>
-              appState = CHANGE_DIR;
-          }
-          <strong><span style="color: #000080">break</span></strong>;
-
-      <strong><span style="color: #000080">case</span></strong> CHANGE_DIR:
-          res = <a href="01146.html" target="topic">SYS_FS_DirectoryChange</a>(&quot;Dir1&quot;);
-          <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
-          {
-              <i><span style="color: #008000">// Directory change failed</span></i>
-              appState = ERROR;
-          }
-          <strong><span style="color: #000080">else</span></strong>
-          {
-              <i><span style="color: #008000">// Directory change was successful. Get current working</span></i>
-              <i><span style="color: #008000">// directory</span></i>
-              appState = GET_CWD;
-          }
-          <strong><span style="color: #000080">break</span></strong>;
-
-      <strong><span style="color: #000080">case</span></strong> GET_CWD:
-          res = SYS_FS_CurrentWorkingDirectoryGet(buffer, 15);
-          <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
-          {
-              <i><span style="color: #008000">// Get current directory operation failed</span></i>
-              appState = ERROR;
-          }
-          <strong><span style="color: #000080">break</span></strong>;
+      <i><span style="color: #008000">// File open is successful</span></i>
   }
-</pre></div></div>
+  ...
+  ...
+
+  status = SYS_FS_FileSeek(fileHandle, 5, SYS_FS_SEEK_CUR);
+
+  <strong><span style="color: #000080">if</span></strong>((status != -1) &amp;&amp; (status == 5))
+  {
+      <i><span style="color: #008000">// Success</span></i>
+  }</pre></div></div>
 </div>
 </div>
 </div>
@@ -171,7 +141,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01505.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01144.html" target="topic">SYS_FS_CurrentWorkingDirectoryGet Function</a></div>
+<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01144.html" target="topic">SYS_FS_FileSeek Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -179,13 +149,13 @@ Example</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01146.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01215.html" target="topic">Next</a></div>
+<a href="01143.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01145.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_CurrentWorkingDirectoryGet@char *@uint32_t Topic Title: SYS_FS_CurrentWorkingDirectoryGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileSeek@SYS_FS_HANDLE@int32_t@SYS_FS_FILE_SEEK_CONTROL Topic Title: SYS_FS_FileSeek Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

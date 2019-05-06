@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SPI_WriteTransfer Function</title>
+<title>DRV_SPI_TransferSetup Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00703.html" target="topic">DRV_SPI_WriteTransfer Function</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00251.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00252.html" target="topic">Library Interface</a> &gt; b) Client Setup Functions &gt; <a href="00703.html" target="topic">DRV_SPI_TransferSetup Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00679.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00701.html" target="topic">Next</a></div>
+<a href="00667.html" target="topic">Previous</a> | <a href="00252.html" target="topic">Up</a> | <a href="00702.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_WriteTransfer@DRV_HANDLE@void*@size_t Topic Title: DRV_SPI_WriteTransfer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_TransferSetup@DRV_HANDLE@DRV_SPI_TRANSFER_SETUP * Topic Title: DRV_SPI_TransferSetup Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SPI_WriteTransfer Function</div>
+DRV_SPI_TransferSetup Function</div>
 </div>
 </div>
 
@@ -49,29 +49,22 @@ DRV_SPI_WriteTransfer Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function does a blocking write operation. The function blocks till the data transmit is complete. Function will return true if the transmit is successful or false in case of an error. The failure will occur for the following reasons:</p>
-<ul class="Element630">
-<li class="Element600">if the handle is invalid</li>
-<li class="Element600">if the pointer to the transmit buffer is NULL</li>
-<li class="Element600">if the transmit size is 0</li>
-</ul></div>
+This function is used to update any of the <a href="00695.html" target="topic">DRV_SPI_TRANSFER_SETUP</a> parameters for the selected client of the driver dynamically. For single client scenario, if GPIO has to be used for chip select, then calling this API with appropriate GPIO pin information becomes mandatory. For multi client scenario where different clients need different setup like baud rate, clock settings, chip select etc, then also calling this API is mandatory.&nbsp;</p>
+<p class="Element10">
+Note that all the elements of setup structure must be filled appropriately before using this API.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_SPI_WriteTransfer</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">pTransmitData</span></strong>, 
-    size_t <strong><span style="color: #000000">txSize</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_SPI_TransferSetup</span></strong>(
+    <a href="00416.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <a href="00695.html" target="topic">DRV_SPI_TRANSFER_SETUP</a> * <strong><span style="color: #000000">setup</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600"><a href="00678.html" target="topic">DRV_SPI_Open</a> must have been called to obtain a valid opened device handle.</li>
-<li class="Element600"><a href="00699.html" target="topic">DRV_SPI_TransferSetup</a> must have been called if GPIO pin has to be used for chip select or any of the setup parameters has to be changed dynamically.</li>
-</ul></div>
+<p class="Element10">
+<a href="00682.html" target="topic">DRV_SPI_Open</a> must have been called to obtain a valid opened device handle.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -90,53 +83,43 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Handle of the communication channel as returned by the <a href="00678.html" target="topic">DRV_SPI_Open</a> function.<br>&nbsp;</div></td></tr><tr>
+A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-*pTransmitData&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+*setup&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to the data which has to be transmitted. For 9 to 15bit mode, data should be right aligned in the 16 bit memory location.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-txSize&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Number of bytes to be transmitted. Always, size should be given in terms of bytes. For example, if 10 15-bit data are to be transmitted, the transmit size should be 20 bytes.&nbsp;</div></td></tr></table></div></div>
+A structure containing the new configuration settings&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
 Returns</div>
 <div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600">true - transfer is successful</li>
-<li class="Element600">false - error has occurred</li>
-</ul></div>
+<p class="Element10">
+None.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600">This function is thread safe in a RTOS application.</li>
-<li class="Element600">This function should not be called from an interrupt context.</li>
-</ul></div>
+<p class="Element10">
+None.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-MY_APP_OBJ myAppObj;
-uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
+<div class="Element13"><div class="Element12"><pre class="Element12">    <i><span style="color: #008000">// mySPIHandle is the handle returned by the DRV_SPI_Open function.</span></i>
+    <a href="00695.html" target="topic">DRV_SPI_TRANSFER_SETUP</a> setup;
 
-<i><span style="color: #008000">// mySPIHandle is the handle returned by the DRV_SPI_Open function.</span></i>
+    setup.baudRateInHz = 10000000;
+    setup.clockPhase = DRV_SPI_CLOCK_PHASE_TRAILING_EDGE;
+    setup.clockPolarity = DRV_SPI_CLOCK_POLARITY_IDLE_LOW;
+    setup.dataBits = DRV_SPI_DATA_BITS_16;
+    setup.chipSelect = SYS_PORT_PIN_PC5;
+    setup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;
 
-<strong><span style="color: #000080">if</span></strong> (DRV_SPI_WriteTransfer(mySPIhandle, myTxBuffer, MY_TX_BUFFER_SIZE) == <strong><span style="color: #000080">false</span></strong>)
-{
-    <i><span style="color: #008000">// Handle error here</span></i>
-}</pre></div></div>
+    DRV_SPI_TransferSetup ( mySPIHandle, &amp;setup );</pre></div></div>
 </div>
 </div>
 </div>
@@ -144,7 +127,7 @@ uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00703.html" target="topic">DRV_SPI_WriteTransfer Function</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00251.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00252.html" target="topic">Library Interface</a> &gt; b) Client Setup Functions &gt; <a href="00703.html" target="topic">DRV_SPI_TransferSetup Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -152,13 +135,13 @@ uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00679.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00701.html" target="topic">Next</a></div>
+<a href="00667.html" target="topic">Previous</a> | <a href="00252.html" target="topic">Up</a> | <a href="00702.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_WriteTransfer@DRV_HANDLE@void*@size_t Topic Title: DRV_SPI_WriteTransfer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_TransferSetup@DRV_HANDLE@DRV_SPI_TRANSFER_SETUP * Topic Title: DRV_SPI_TransferSetup Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

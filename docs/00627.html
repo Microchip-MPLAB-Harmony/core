@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SDMMC_IsAttached Function</title>
+<title>DRV_SDMMC_Status Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00197.html" target="topic">SDMMC Driver Library</a> &gt; <a href="00198.html" target="topic">Library Interface</a> &gt; d) Status Functions &gt; <a href="00627.html" target="topic">DRV_SDMMC_IsAttached Function</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00195.html" target="topic">SDMMC Driver Library</a> &gt; <a href="00196.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00627.html" target="topic">DRV_SDMMC_Status Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00625.html" target="topic">Previous</a> | <a href="00198.html" target="topic">Up</a> | <a href="00628.html" target="topic">Next</a></div>
+<a href="00623.html" target="topic">Previous</a> | <a href="00196.html" target="topic">Up</a> | <a href="00628.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDMMC_IsAttached@DRV_HANDLE Topic Title: DRV_SDMMC_IsAttached Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDMMC_Status@SYS_MODULE_OBJ Topic Title: DRV_SDMMC_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SDMMC_IsAttached Function</div>
+DRV_SDMMC_Status Function</div>
 </div>
 </div>
 
@@ -49,21 +49,19 @@ DRV_SDMMC_IsAttached Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function returns the physical attach status of the SD Card.</p></div>
+This routine provides the current status of the SD Card driver module.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_SDMMC_IsAttached</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01361.html" target="topic">SYS_STATUS</a> <strong><span style="color: #000000">DRV_SDMMC_Status</span></strong>(
+    <a href="01342.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">object</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="00626.html" target="topic">DRV_SDMMC_Initialize</a> routine must have been called for the specified SDMMC driver instance.&nbsp;</p>
-<p class="Element10">
-The <a href="00629.html" target="topic">DRV_SDMMC_Open</a> routine must have been called to obtain a valid opened device handle.</p></div>
+Function <a href="00623.html" target="topic">DRV_SDMMC_Initialize</a> must have been called before calling this</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -80,9 +78,9 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+object&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open function&nbsp;</div></td></tr></table></div></div>
+Driver object handle, returned from the <a href="00623.html" target="topic">DRV_SDMMC_Initialize</a> routine&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -90,7 +88,11 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Returns false if the handle is invalid otherwise returns the attach status of the SD Card. Returns true if the SD Card is attached and initialized by the SDMMC driver otherwise returns false.</p></div>
+SYS_STATUS_READY - Indicates that the driver is busy with a previous system level operation and cannot start another&nbsp;</p>
+<p class="Element10">
+Note Any value greater than SYS_STATUS_READY is also a normal running state in which the driver is ready to accept new operations.&nbsp;</p>
+<p class="Element10">
+SYS_STATUS_UNINITIALIZED - Driver is not initialized.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -103,13 +105,15 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-<i><span style="color: #008000">// drvSDMMCHandle is the handle returned</span></i>
-<i><span style="color: #008000">// by the DRV_SDMMC_Open function.</span></i>
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01342.html" target="topic">SYS_MODULE_OBJ</a>      object;     <i><span style="color: #008000">// Returned from DRV_SDMMC_Initialize</span></i>
+<a href="01361.html" target="topic">SYS_STATUS</a>          status;
 
-<strong><span style="color: #000080">bool</span></strong> isSDMMCAttached;
-isSDMMCAttached = DRV_SDMMC_isAttached(drvSDMMCHandle);
-</pre></div></div>
+status = DRV_SDMMC_Status(object);
+
+<strong><span style="color: #000080">if</span></strong> (status == SYS_STATUS_READY)
+{
+    <i><span style="color: #008000">// Driver is initialized and ready to accept requests</span></i>
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -117,7 +121,7 @@ isSDMMCAttached = DRV_SDMMC_isAttached(drvSDMMCHandle);
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00197.html" target="topic">SDMMC Driver Library</a> &gt; <a href="00198.html" target="topic">Library Interface</a> &gt; d) Status Functions &gt; <a href="00627.html" target="topic">DRV_SDMMC_IsAttached Function</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00195.html" target="topic">SDMMC Driver Library</a> &gt; <a href="00196.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00627.html" target="topic">DRV_SDMMC_Status Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -125,13 +129,13 @@ isSDMMCAttached = DRV_SDMMC_isAttached(drvSDMMCHandle);
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00625.html" target="topic">Previous</a> | <a href="00198.html" target="topic">Up</a> | <a href="00628.html" target="topic">Next</a></div>
+<a href="00623.html" target="topic">Previous</a> | <a href="00196.html" target="topic">Up</a> | <a href="00628.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDMMC_IsAttached@DRV_HANDLE Topic Title: DRV_SDMMC_IsAttached Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDMMC_Status@SYS_MODULE_OBJ Topic Title: DRV_SDMMC_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_I2S_Initialize Function</title>
+<title>DRV_I2S_INT_SRC_IDXx Macro</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00124.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00125.html" target="topic">Library Interface</a> &gt; a) System Interaction Functions &gt; <a href="00475.html" target="topic">DRV_I2S_Initialize Function</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00122.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00117.html" target="topic">Configuring the Library</a> &gt; <a href="00127.html" target="topic">System Configuration</a> &gt; <a href="00475.html" target="topic">DRV_I2S_INT_SRC_IDXx Macro</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00125.html" target="topic">Previous</a> | <a href="00125.html" target="topic">Up</a> | <a href="00491.html" target="topic">Next</a></div>
+<a href="00452.html" target="topic">Previous</a> | <a href="00127.html" target="topic">Up</a> | <a href="00495.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: DRV_I2S_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_INT_SRC_IDXx Topic Title: DRV_I2S_INT_SRC_IDXx Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_I2S_Initialize Function</div>
+DRV_I2S_INT_SRC_IDXx Macro</div>
 </div>
 </div>
 
@@ -49,111 +49,26 @@ DRV_I2S_Initialize Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This routine initializes the I2S driver instance for the specified driver index, making it ready for clients to open and use it. The initialization data is specified by the init parameter. The initialization may fail if the number of driver objects allocated are insufficient or if the specified driver instance is already initialized. The driver instance index is independent of the I2S module ID. For example, driver instance 0 can be assigned to I2S2.</p></div>
+Interrupt Source&nbsp;</p>
+<p class="Element10">
+Macro to define the interrupt source. This will override the interruptI2S member of the <a href="00461.html" target="topic">DRV_I2S_INIT</a> initialization data structure in the driver initialization routine. This value should be set to the I2S module interrupt enumeration in the Interrupt PLIB for the microcontroller.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01423.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_I2S_Initialize</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01418.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="01419.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
-<div class="TableDiv">
-<table cellspacing="0" class="Table2">
-<tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Identifier for the instance to be initialized<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to the init data structure containing any data necessary to initialize the driver.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-If successful, returns a valid handle to a driver instance object. Otherwise, returns <a href="01424.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
-</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">DRV_I2S_INT_SRC_IDXx</span></strong> </pre></div></div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This routine must be called before any other I2S routine is called.&nbsp;</p>
-<p class="Element10">
-This routine should only be called once during system initialization. This routine will NEVER block for hardware access.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// The following code snippet shows an example I2S driver initialization.</span></i>
-
-<a href="01423.html" target="topic">SYS_MODULE_OBJ</a>              objectHandle;
-
-I2S_PLIB_API drvUsart0PlibAPI = {
-    {
-        .readCallbackRegister = I2S1_ReadCallbackRegister,
-        .read = I2S1_Read,
-        .readIsBusy = I2S1_ReadIsBusy,
-        .readCountGet = I2S1_ReadCountGet,
-        .writeCallbackRegister = I2S1_WriteCallbackRegister,
-        .write = I2S1_Write,
-        .writeIsBusy = I2S1_WriteIsBusy,
-        .writeCountGet = I2S1_WriteCountGet,
-        .errorGet = I2S1_ErrorGet
-    }
-};
-
-<a href="00462.html" target="topic">DRV_I2S_INIT</a> drvUsart0InitData =
-{
-    .i2sPlib = &amp;drvUsart0PlibAPI,
-    .interruptI2S = I2S1_IRQn,
-    .queueSizeTransmit = DRV_I2S_XMIT_QUEUE_SIZE_IDX0,
-    .queueSizeReceive = DRV_I2S_RCV_QUEUE_SIZE_IDX0,
-    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
-    .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
-    .i2sTransmitAddress = I2S1_TRANSMIT_ADDRESS,
-    .i2sReceiveAddress = I2S1_RECEIVE_ADDRESS,
-    .interruptDMA = XDMAC_IRQn
-};
-
-objectHandle = DRV_I2S_Initialize(DRV_I2S_INDEX_1,
-    (<a href="01419.html" target="topic">SYS_MODULE_INIT</a>*)&amp;drvUsart0InitData);
-<strong><span style="color: #000080">if</span></strong> (<a href="01424.html" target="topic">SYS_MODULE_OBJ_INVALID</a> == objectHandle)
-{
-    <i><span style="color: #008000">// Handle error</span></i>
-}</pre></div></div>
-</div>
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00124.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00125.html" target="topic">Library Interface</a> &gt; a) System Interaction Functions &gt; <a href="00475.html" target="topic">DRV_I2S_Initialize Function</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00122.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00117.html" target="topic">Configuring the Library</a> &gt; <a href="00127.html" target="topic">System Configuration</a> &gt; <a href="00475.html" target="topic">DRV_I2S_INT_SRC_IDXx Macro</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -161,13 +76,13 @@ objectHandle = DRV_I2S_Initialize(DRV_I2S_INDEX_1,
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00125.html" target="topic">Previous</a> | <a href="00125.html" target="topic">Up</a> | <a href="00491.html" target="topic">Next</a></div>
+<a href="00452.html" target="topic">Previous</a> | <a href="00127.html" target="topic">Up</a> | <a href="00495.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: DRV_I2S_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_INT_SRC_IDXx Topic Title: DRV_I2S_INT_SRC_IDXx Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

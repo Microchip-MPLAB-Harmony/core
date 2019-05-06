@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Introduction</title>
+<title>Library Interface</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00250.html" target="topic">SPI Flash Driver Libraries Help</a> &gt; <a href="00070.html" target="topic">AT25DF Driver Library Help</a> &gt; <a href="00069.html" target="topic">Introduction</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00249.html" target="topic">SPI Flash Driver Libraries Help</a> &gt; <a href="00068.html" target="topic">AT25DF Driver Library Help</a> &gt; <a href="00069.html" target="topic">Library Interface</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00070.html" target="topic">Previous</a> | <a href="00070.html" target="topic">Up</a> | <a href="00073.html" target="topic">Next</a></div>
+<a href="00061.html" target="topic">Previous</a> | <a href="00068.html" target="topic">Up</a> | <a href="00396.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT25DF Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT25DF Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Introduction</div>
+Library Interface</div>
 </div>
 </div>
 
@@ -49,26 +49,213 @@ Introduction</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<span style="color: #000000">This library provides a non-blocking interface to read, write and erase AT25DF Flash Memory. The library uses the SPI peripheral library (PLIB) to interface with the AT25DF Flash.</span>&nbsp;</p>
+This section describes the API functions of the AT25DF Driver library.&nbsp;</p>
 <p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000"><strong>Key Features:</strong></span></p>
-<ul class="Element630">
-<li class="Element600">Supports Multiple variants of the <span style="color: #000000">AT25DF</span> Flash devices</li>
-<li class="Element600"><span style="color: #000000">Supports a single instance of the AT25DF Flash and a single client to the driver</span></li>
-<li class="Element600"><span style="color: #000000">Supports page writes and Sector/Bulk/Chip Erase Operations</span></li>
-<li class="Element600"><span style="color: #000000">Supports writes to random memory address and across page boundaries</span></li>
-<li class="Element600"><span style="color: #000000">The library interface is compliant to the block media interface expected by the Memory Driver. This allows running a file system on the AT25DF Flash using the Memory Driver and the File System Service</span></li>
-<li class="Element600"><span style="color: #000000">The library can be used in both bare-metal and RTOS environments</span></li>
-</ul></div>
+Refer to each section for a detailed description.</p></div>
+</div>
+<a name="61292053797374656D2046756E6374696F6E73"></a><div class="Element14">
+a) System Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00396.html" target="topic">DRV_AT25DF_Initialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Initializes the AT25DF FLASH device&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="622920436F726520436C69656E742046756E6374696F6E73"></a><div class="Element14">
+b) Core Client Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00397.html" target="topic">DRV_AT25DF_Open</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Opens the specified AT25DF driver instance and returns a handle to it.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00381.html" target="topic">DRV_AT25DF_Close</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Closes the opened-instance of the AT25DF driver.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="63292044617461205472616E736665722046756E6374696F6E73"></a><div class="Element14">
+c) Data Transfer Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00379.html" target="topic">DRV_AT25DF_BlockErase</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Erase a block from the specified block start address.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00380.html" target="topic">DRV_AT25DF_ChipErase</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Erase entire flash memory.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00383.html" target="topic">DRV_AT25DF_EventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Allows a client to identify a transfer event handling function for the driver to call back when the requested transfer has finished.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00398.html" target="topic">DRV_AT25DF_PageWrite</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Writes one page of data starting at the specified address.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00399.html" target="topic">DRV_AT25DF_Read</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Reads 'n' bytes of data from the specified start address of FLASH.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00400.html" target="topic">DRV_AT25DF_SectorErase</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Erase the sector from the specified block start address.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00401.html" target="topic">DRV_AT25DF_Status</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Gets the current status of the AT25DF driver module.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00406.html" target="topic">DRV_AT25DF_TransferStatusGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Gets the current status of the transfer request.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00407.html" target="topic">DRV_AT25DF_Write</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Writes 'n' bytes of data starting at the specified address.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="642920426C6F636B20496E746572666163652046756E6374696F6E73"></a><div class="Element14">
+d) Block Interface Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00395.html" target="topic">DRV_AT25DF_GeometryGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Returns the geometry of the device.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="6529204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
+e) Data Types and Constants</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00382.html" target="topic">DRV_AT25DF_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Pointer to a AT25DF Driver Event handler function&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00384.html" target="topic">DRV_AT25DF_GEOMETRY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Defines the data type for AT25DF FLASH Geometry details.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00402.html" target="topic">DRV_AT25DF_TRANSFER_STATUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Defines the data type for AT25DF Driver transfer status.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00250.html" target="topic">SPI Flash Driver Libraries Help</a> &gt; <a href="00070.html" target="topic">AT25DF Driver Library Help</a> &gt; <a href="00069.html" target="topic">Introduction</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00249.html" target="topic">SPI Flash Driver Libraries Help</a> &gt; <a href="00068.html" target="topic">AT25DF Driver Library Help</a> &gt; <a href="00069.html" target="topic">Library Interface</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -76,13 +263,13 @@ Introduction</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00070.html" target="topic">Previous</a> | <a href="00070.html" target="topic">Up</a> | <a href="00073.html" target="topic">Next</a></div>
+<a href="00061.html" target="topic">Previous</a> | <a href="00068.html" target="topic">Up</a> | <a href="00396.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT25DF Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT25DF Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

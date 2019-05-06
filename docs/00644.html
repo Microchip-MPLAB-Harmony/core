@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SDSPI_EVENT_HANDLER Type</title>
+<title>DRV_SDSPI_CommandStatusGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00212.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00213.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00644.html" target="topic">DRV_SDSPI_EVENT_HANDLER Type</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00211.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00212.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00644.html" target="topic">DRV_SDSPI_CommandStatusGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00641.html" target="topic">Previous</a> | <a href="00213.html" target="topic">Up</a> | <a href="00634.html" target="topic">Next</a></div>
+<a href="00660.html" target="topic">Previous</a> | <a href="00212.html" target="topic">Up</a> | <a href="00652.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDSPI_EVENT_HANDLER Topic Title: DRV_SDSPI_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDSPI_CommandStatusGet@DRV_HANDLE@DRV_SDSPI_COMMAND_HANDLE Topic Title: DRV_SDSPI_CommandStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SDSPI_EVENT_HANDLER Type</div>
+DRV_SDSPI_CommandStatusGet Function</div>
 </div>
 </div>
 
@@ -49,15 +49,27 @@ DRV_SDSPI_EVENT_HANDLER Type</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SDSPI Driver Event Handler Function Pointer&nbsp;</p>
+This routine gets the current status of the command. The application must use this routine where the status of a scheduled command needs to be polled on. The function may return <a href="00638.html" target="topic">DRV_SDSPI_COMMAND_HANDLE_INVALID</a> in a case where the command handle has expired. A command handle expires when the internal buffer object is re-assigned to another read or write request. It is recommended that this function be called regularly in order to track the command status correctly.&nbsp;</p>
 <p class="Element10">
-This data type defines the required function signature for the SDSPI event handling callback function. A client must register a pointer to an event handling function whose function signature (parameter and return value types) match the types specified by this function pointer in order to receive event calls back from the driver.&nbsp;</p>
-<p class="Element10">
-The parameters and return values are described here and a partial example implementation is provided.</p></div>
+The application can alternatively register an event handler to receive read or write operation completion events.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <a href="01395.html" target="topic">SYS_MEDIA_EVENT_HANDLER</a> <strong><span style="color: #000000">DRV_SDSPI_EVENT_HANDLER</span></strong>;</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00639.html" target="topic">DRV_SDSPI_COMMAND_STATUS</a> <strong><span style="color: #000000">DRV_SDSPI_CommandStatusGet</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00416.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="00637.html" target="topic">DRV_SDSPI_COMMAND_HANDLE</a> <strong><span style="color: #000000">commandHandle</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The <a href="00651.html" target="topic">DRV_SDSPI_Initialize</a> routine must have been called.&nbsp;</p>
+<p class="Element10">
+The <a href="00654.html" target="topic">DRV_SDSPI_Open</a> must have been called to obtain a valid opened device handle.&nbsp;</p>
+<p class="Element10">
+A read or write request must have been submitted to the SDSPI driver.</p></div>
+</div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
 <div class="Element11">
@@ -73,19 +85,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-event&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Identifies the type of event<br>&nbsp;</div></td></tr><tr>
+A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
 commandHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Handle returned from the Read/Write requests<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Value identifying the context of the application that registered the event handling function&nbsp;</div></td></tr></table></div></div>
+Handle to the command whose status is to be known.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -93,54 +100,28 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+A <a href="00639.html" target="topic">DRV_SDSPI_COMMAND_STATUS</a> value describing the current status of the command. Returns DRV_SDSPI_COMMAND_ERROR_UNKNOWN if the client handle or the command handle is not valid.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If the event is DRV_SDSPI_EVENT_COMMAND_COMPLETE, it means that the write or a erase operation was completed successfully.&nbsp;</p>
-<p class="Element10">
-If the event is DRV_SDSPI_EVENT_COMMAND_ERROR, it means that the scheduled operation was not completed successfully.&nbsp;</p>
-<p class="Element10">
-The context parameter contains the handle to the client context, provided at the time the event handling function was registered using the <a href="00645.html" target="topic">DRV_SDSPI_EventHandlerSet</a> function. This context handle value is passed back to the client as the &quot;context&quot; parameter. It can be any value necessary to identify the client context or instance (such as a pointer to the client's data) instance of the client that made the read/write/erase request.</p></div>
+This API may not be used in applications using the SDSPI Driver in synchronous mode.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> APP_MySDSPIEventHandler
-(
-    <a href="00641.html" target="topic">DRV_SDSPI_EVENT</a> event,
-    <a href="00633.html" target="topic">DRV_SDSPI_COMMAND_HANDLE</a> commandHandle,
-    uintptr_t context
-)
-{
-    MY_APP_DATA_STRUCT* pAppData = (MY_APP_DATA_STRUCT*) context;
-
-    <strong><span style="color: #000080">switch</span></strong>(event)
-    {
-        <strong><span style="color: #000080">case</span></strong> DRV_SDSPI_EVENT_COMMAND_COMPLETE:
-
-            <i><span style="color: #008000">// Handle the completed buffer.</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> DRV_SDSPI_EVENT_COMMAND_ERROR:
-        <strong><span style="color: #000080">default</span></strong>:
-
-            <i><span style="color: #008000">// Handle error.</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-}</pre></div></div>
-</div>
+<p class="Element10">
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00020.html" target="topic">Driver Libraries Help</a> &gt; <a href="00212.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00213.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00644.html" target="topic">DRV_SDSPI_EVENT_HANDLER Type</a></div>
+<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00211.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00212.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00644.html" target="topic">DRV_SDSPI_CommandStatusGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -148,13 +129,13 @@ Example</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00020.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00641.html" target="topic">Previous</a> | <a href="00213.html" target="topic">Up</a> | <a href="00634.html" target="topic">Next</a></div>
+<a href="00660.html" target="topic">Previous</a> | <a href="00212.html" target="topic">Up</a> | <a href="00652.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDSPI_EVENT_HANDLER Topic Title: DRV_SDSPI_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDSPI_CommandStatusGet@DRV_HANDLE@DRV_SDSPI_COMMAND_HANDLE Topic Title: DRV_SDSPI_CommandStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
