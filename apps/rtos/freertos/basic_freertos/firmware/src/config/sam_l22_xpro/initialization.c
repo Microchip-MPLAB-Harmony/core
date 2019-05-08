@@ -115,6 +115,8 @@ void SYS_Initialize ( void* data )
 {
     NVMCTRL_Initialize( );
 
+    PM_Initialize();
+
   
     PORT_Initialize();
 

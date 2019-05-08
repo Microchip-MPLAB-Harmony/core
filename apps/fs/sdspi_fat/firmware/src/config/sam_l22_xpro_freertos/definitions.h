@@ -55,6 +55,7 @@
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/dmac/plib_dmac.h"
+#include "peripheral/pm/plib_pm.h"
 #include "peripheral/tc/plib_tc0.h"
 #include "driver/sdspi/drv_sdspi.h"
 #include "system/time/sys_time.h"

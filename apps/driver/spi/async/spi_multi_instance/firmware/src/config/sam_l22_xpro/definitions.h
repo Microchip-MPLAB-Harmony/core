@@ -56,6 +56,7 @@
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/dmac/plib_dmac.h"
+#include "peripheral/pm/plib_pm.h"
 #include "bsp/bsp.h"
 #include "driver/spi/drv_spi.h"
 #include "system/int/sys_int.h"
@@ -186,11 +187,11 @@ void SYS_Tasks ( void );
 
 typedef struct
 {
-    /* SPI1 Driver Object */
-    SYS_MODULE_OBJ drvSPI1;
-
     /* SPI0 Driver Object */
     SYS_MODULE_OBJ drvSPI0;
+
+    /* SPI1 Driver Object */
+    SYS_MODULE_OBJ drvSPI1;
 
 
 } SYSTEM_OBJECTS;
