@@ -69,7 +69,7 @@
 #define NVM_FILE_NAME        "FILE.txt"
 
 /* This data from NVM Disk    */
-#define APP_DATA_LEN         27
+#define APP_DATA_LEN         23
 
 // *****************************************************************************
 /* Application Data
