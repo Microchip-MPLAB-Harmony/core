@@ -101,6 +101,8 @@ typedef enum
 {
     /* Application's state machine's initial state. */
     APP_I2C_EEPROM_STATE_INIT=0,
+            
+    APP_I2C_EEPROM_STATE_READY_WAIT,
 
     APP_I2C_EEPROM_STATE_WRITE,
 

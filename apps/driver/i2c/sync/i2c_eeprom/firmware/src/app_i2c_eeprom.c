@@ -147,12 +147,25 @@ void APP_I2C_EEPROM_Tasks ( void )
 
             if(appData.drvI2CHandle != DRV_HANDLE_INVALID)
             {
-                appData.state = APP_I2C_EEPROM_STATE_WRITE;
+                appData.state = APP_I2C_EEPROM_STATE_READY_WAIT;
             }
             else
             {
                 appData.state = APP_I2C_EEPROM_STATE_ERROR;
             }
+            break;
+            
+        case APP_I2C_EEPROM_STATE_READY_WAIT:
+            
+            if (DRV_I2C_WriteTransfer( appData.drvI2CHandle, APP_EEPROM_SLAVE_ADDR, (void *)appData.txBuffer, 1) == true)
+            {
+                appData.state = APP_I2C_EEPROM_STATE_WRITE;
+            }
+            else
+            {
+                //EEPROM is not ready. Keep checking until it is ready to receive commands.
+                //Some EEPROMs need stabilization time before they can start responding to commands.
+            }            
             break;
 
         case APP_I2C_EEPROM_STATE_WRITE:

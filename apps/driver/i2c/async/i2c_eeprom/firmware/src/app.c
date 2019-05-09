@@ -241,8 +241,9 @@ void APP_Tasks ( void )
             }
             else if (appData.transferStatus == APP_TRANSFER_STATUS_ERROR)
             {
-                // EEPROM is not ready. Go to error state.
-                appData.state = APP_STATE_ERROR;
+                //EEPROM is not ready. Keep checking until it is ready to receive commands.
+                //Some EEPROMs need stabilization time before they can start responding to commands.
+                appData.state = APP_STATE_IS_EEPROM_READY;
             }
             break;
 
