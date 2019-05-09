@@ -124,7 +124,10 @@ static uint8_t BUFFER_ATTRIBUTES readWriteBuffer[APP_DATA_LEN];
 void APP_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
-    appData.state = APP_WAIT_SWITCH_PRESS;            
+    appData.state = APP_WAIT_SWITCH_PRESS; 
+    
+    /* Wait for the switch status to return to the default "not pressed" state */
+    while(SWITCH_GET() == SWITCH_STATUS_PRESSED);
 }
 
 

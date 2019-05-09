@@ -2,7 +2,7 @@
 <Configuration>
   <Configurator>
     <Name dnOrder="0" value="pic32mz_ef_sk"/>
-    <Processor dnOrder="1" value="PIC32MZ2048EFM144"/>
+    <Processor dnOrder="1" value="PIC32MZ2048EFH144"/>
     <Harmony dnOrder="2" path="../../../.."/>
     <Manifest dnOrder="3">
       <Files dnOrder="0">
@@ -107,8 +107,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D2583546610F260E6FCEF77D2C9208A0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D2583546610F260E6FCEF77D2C9208A0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0D5A6C1561EEF4E1CA1F6243F5A4B873</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0D5A6C1561EEF4E1CA1F6243F5A4B873</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
@@ -241,8 +241,8 @@
         <File dnOrder="29">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">device.h</Name>
-          <LogicalPath dnOrder="2">packs/PIC32MZ2048EFM144_DFP/</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../packs/PIC32MZ2048EFM144_DFP/</PhysicalPath>
+          <LogicalPath dnOrder="2">packs/PIC32MZ2048EFH144_DFP/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/PIC32MZ2048EFH144_DFP/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">5D5C52527AB1435153DB9B50ADE6B79D</GeneratedChecksum>
           <UserChecksum dnOrder="5">5D5C52527AB1435153DB9B50ADE6B79D</UserChecksum>
         </File>
@@ -387,8 +387,8 @@
           <Name dnOrder="1">plib_evic.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/peripheral/evic/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/evic/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B38028A617FDD4D90B80660771629645</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B38028A617FDD4D90B80660771629645</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0718C4C8BAA47288E82FE9CCD4854832</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0718C4C8BAA47288E82FE9CCD4854832</UserChecksum>
         </File>
         <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
@@ -568,7 +568,7 @@
         </File>
       </Files>
       <Settings dnOrder="1">
-        <Setting append="true" category="C32" delimiter=";" dnOrder="0" key="extra-include-directories" value="../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFM144_DFP;;../src/mips"/>
+        <Setting append="true" category="C32" delimiter=";" dnOrder="0" key="extra-include-directories" value="../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP;;../src/mips"/>
         <Setting category="C32-LD" dnOrder="1" key="heap-size" value="0"/>
         <Setting category="C32-LD" dnOrder="2" key="no-device-startup-code" value="true"/>
         <Setting category="C32-LD" dnOrder="3" key="preprocessor-macros" value=""/>
@@ -576,7 +576,7 @@
     </Manifest>
     <Settings dnOrder="4">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.4.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.0.28\atdf\PIC32MZ2048EFM144.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.0.28\atdf\PIC32MZ2048EFH144.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
