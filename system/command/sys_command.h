@@ -146,7 +146,7 @@
     None.
 
 */
-#define         SYS_CMD_MAX_LENGTH  128
+#define         SYS_CMD_MAX_LENGTH  80
 
 
 // *****************************************************************************
@@ -159,7 +159,7 @@
     This macro defines the maximum size of the command buffer.
 
   Remarks:
-    None.
+    None
 
 */
 #define         SYS_CMD_READ_BUFFER_SIZE 128
@@ -381,6 +381,7 @@ typedef struct
     This structure identifies the Command Event Types.
 
   Remarks:
+    None
 */
 typedef enum
 {
@@ -402,6 +403,7 @@ typedef enum
     full command read.
 
    Remarks:
+    None
 */
 typedef enum
 {
@@ -475,6 +477,7 @@ typedef struct
     of the command process function API.
 
   Remarks:
+    None
 */
 typedef void (*SYS_CMD_FNC)(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char **argv);
 
@@ -610,6 +613,7 @@ bool    SYS_CMD_ADDGRP(const SYS_CMD_DESCRIPTOR* pCmdTbl, int nCmds, const char*
     - false - Indicates command module is not ready
 
   Remarks:
+    None
 */
 #ifdef SYS_CMD_ENABLE
 bool    SYS_CMD_READY_TO_READ( void );
@@ -638,42 +642,11 @@ bool    SYS_CMD_READY_TO_READ( void );
     - false - Indicates command module is not ready
 
   Remarks:
+    None
 */
 #ifdef SYS_CMD_ENABLE
 bool    SYS_CMD_READY_TO_WRITE( void );
 #endif
-
-
-#if 0
-// *****************************************************************************
-/* Function:
-    void SYS_CMD_RegisterCallback(SYS_CMD_CallbackFunction cbFunc, SYS_CMD_EVENT event)
-
-  Summary:
-    Registers a callback function with the command service that will be
-    executed when the lower layer read or write queue is empty.
-
-  Description:
-    This function is used by an application to register a callback function
-    with the command service. The callback function is called in response to
-    an event. Separate callback functions are required for each event.
-
-  Preconditions:
-    None.
-
-  Parameters:
-    cbFunc              - The name of the callback function
-    event               - Enumerated list of events that can trigger a callback
-
-  Returns:
-    None.
-
-  Remarks:
-*/
-#ifdef SYS_CMD_ENABLE
-void SYS_CMD_RegisterCallback(SYS_CMD_CallbackFunction cbFunc, SYS_CMD_EVENT event);
-#endif
-#endif  // 0
 
 
 // *****************************************************************************
