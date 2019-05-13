@@ -179,16 +179,16 @@
           <Name dnOrder="1">plib_nvmctrl.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_freertos/peripheral/nvmctrl/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/nvmctrl/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AEA5D4D1D6AA6186422018CFC542BF4A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AEA5D4D1D6AA6186422018CFC542BF4A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4D87AA590411EFCF464FFED838D01C7B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4D87AA590411EFCF464FFED838D01C7B</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_port.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_freertos/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E4B94FE7497D2110F406D6B9D1A7E5BC</GeneratedChecksum>
-          <UserChecksum dnOrder="5">E4B94FE7497D2110F406D6B9D1A7E5BC</UserChecksum>
+          <GeneratedChecksum dnOrder="4">DC11B028E7CB8D0DC3FF0DD5816670D2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">DC11B028E7CB8D0DC3FF0DD5816670D2</UserChecksum>
         </File>
         <File dnOrder="23">
           <Type dnOrder="0">SOURCE</Type>
@@ -523,8 +523,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8CC68F299CF7E5FDD801871FEFA21B99</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8CC68F299CF7E5FDD801871FEFA21B99</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E643CD5A46C51C9EC0280EB8F4748FE8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E643CD5A46C51C9EC0280EB8F4748FE8</UserChecksum>
         </File>
         <File dnOrder="65">
           <Type dnOrder="0">HEADER</Type>

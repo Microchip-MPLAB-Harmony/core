@@ -131,8 +131,8 @@
           <Name dnOrder="1">plib_port.c</Name>
           <LogicalPath dnOrder="2">config/sam_l22_xpro/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9683A03ED3A019EE7E513C4BFE462930</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9683A03ED3A019EE7E513C4BFE462930</UserChecksum>
+          <GeneratedChecksum dnOrder="4">85F3560BB8D85D2892C3ADC5B9B45ADD</GeneratedChecksum>
+          <UserChecksum dnOrder="5">85F3560BB8D85D2892C3ADC5B9B45ADD</UserChecksum>
         </File>
         <File dnOrder="16">
           <Type dnOrder="0">SOURCE</Type>
@@ -395,8 +395,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_l22_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D3C8D47E7CD86DA7EE25715FCD479B20</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D3C8D47E7CD86DA7EE25715FCD479B20</UserChecksum>
+          <GeneratedChecksum dnOrder="4">59B9FF111D0EBA8E21E33DD8A748CFD2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">59B9FF111D0EBA8E21E33DD8A748CFD2</UserChecksum>
         </File>
         <File dnOrder="49">
           <Type dnOrder="0">HEADER</Type>

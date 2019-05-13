@@ -28,13 +28,13 @@
             <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/nvmctrl/plib_nvmctrl.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f7" displayName="pm" projectFiles="true">
+            <logicalFolder name="f6" displayName="pm" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/pm/plib_pm.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="port" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="sercom" projectFiles="true">
+            <logicalFolder name="f7" displayName="sercom" projectFiles="true">
               <logicalFolder name="f1" displayName="i2cm" projectFiles="true">
                 <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/sercom/i2cm/plib_sercom_i2c_master.h</itemPath>
                 <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/sercom/i2cm/plib_sercom5_i2c.h</itemPath>
@@ -176,13 +176,13 @@
             <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/nvmctrl/plib_nvmctrl.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f7" displayName="pm" projectFiles="true">
+            <logicalFolder name="f6" displayName="pm" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/pm/plib_pm.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="port" projectFiles="true">
               <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="sercom" projectFiles="true">
+            <logicalFolder name="f7" displayName="sercom" projectFiles="true">
               <logicalFolder name="f1" displayName="i2cm" projectFiles="true">
                 <itemPath ex="false">../src/config/sam_l22_xpro/peripheral/sercom/i2cm/plib_sercom5_i2c.c</itemPath>
               </logicalFolder>
