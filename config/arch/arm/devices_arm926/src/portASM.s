@@ -43,8 +43,11 @@
 
 AIC_BASE_ADDRESS  DEFINE		0xFFFFF100
 AIC_EOICR         DEFINE		0x038
-AIC_SMR0          DEFINE		0x004
+AIC_SMR           DEFINE		0x004
 AIC_IVR           DEFINE		0x010
+
+I_BIT             DEFINE		0x80
+F_BIT             DEFINE		0x40
 
 SYS_MODE			EQU		0x1f
 SVC_MODE			EQU		0x13
@@ -156,16 +159,36 @@ FreeRTOS_SWI_Handler:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 FreeRTOS_IRQ_Handler:
 
-	portSAVE_CONTEXT
+			portSAVE_CONTEXT
 
 			/* Write in the IVR to support Protect Mode */
 			LDR 	lr, =AIC_BASE_ADDRESS
 			LDR 	r0, [r14, #AIC_IVR]
 			STR 	lr, [r14, #AIC_IVR]
+			; Dummy read to force AIC_IVR write completion
+			ldr         lr, [r14, #AIC_SMR]
+
+			; Branch to interrupt handler in Supervisor mode
+
+			msr         CPSR_c, #SVC_MODE
+			stmfd       sp!, { r1-r3, r4, r12, lr}
+
+			; Check for 8-byte alignment and save lr plus a
+			; word to indicate the stack adjustment used (0 or 4)
+
+			and         r1, sp, #4
+			sub         sp, sp, r1
+			stmfd       sp!, {r1, lr}
 
 			/* Branch to C portion of the interrupt handler */
 			MOV 	lr, pc
 			BX		r0
+
+			ldmia       sp!, {r1, lr}
+			add         sp, sp, r1
+
+			ldmia       sp!, { r1-r3, r4, r12, lr}
+			msr         CPSR_c, #IRQ_MODE | I_BIT | F_BIT
 
 			/* Acknowledge interrupt */
 			LDR 	lr, =AIC_BASE_ADDRESS
