@@ -171,8 +171,8 @@
           <Name dnOrder="1">plib_pio.c</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek_freertos/peripheral/pio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/pio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7A97AB077DCF1803FE52D880479B6394</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7A97AB077DCF1803FE52D880479B6394</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4CAB87B7CCAE3ACF8273DF830B65D0BC</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4CAB87B7CCAE3ACF8273DF830B65D0BC</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
@@ -195,8 +195,8 @@
           <Name dnOrder="1">portASM.s</Name>
           <LogicalPath dnOrder="2">FreeRTOS/Source/portable/IAR/SAM/ARM926</LogicalPath>
           <PhysicalPath dnOrder="3">/../../third_party/rtos/FreeRTOS/Source/portable/IAR/SAM/ARM926/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">05A3B643721B57E6ABEAC84BBD49915D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">05A3B643721B57E6ABEAC84BBD49915D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AC572541E5E3F3807A69661BD31F4A8B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AC572541E5E3F3807A69661BD31F4A8B</UserChecksum>
         </File>
         <File dnOrder="24">
           <Type dnOrder="0">SOURCE</Type>
