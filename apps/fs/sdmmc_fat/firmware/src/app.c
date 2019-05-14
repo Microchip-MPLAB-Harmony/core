@@ -84,7 +84,7 @@
 APP_DATA appData;
 
 /* Application data buffer */
-uint32_t BUFFER_ATTRIBUTES dataBuffer[APP_DATA_LEN];
+uint8_t BUFFER_ATTRIBUTES dataBuffer[APP_DATA_LEN];
 
 // *****************************************************************************
 // *****************************************************************************
@@ -254,7 +254,9 @@ void APP_Tasks ( void )
 
         case APP_READ_WRITE_TO_FILE:
 
-            if(SYS_FS_FileRead(appData.fileHandle, (void *)dataBuffer, APP_DATA_LEN) == -1)
+            appData.nBytesRead = SYS_FS_FileRead(appData.fileHandle, (void *)dataBuffer, APP_DATA_LEN);
+            
+            if (appData.nBytesRead == -1)
             {
                 /* There was an error while reading the file.
                  * Close the file and error out. */
@@ -265,7 +267,7 @@ void APP_Tasks ( void )
             else
             {
                 /* If read was success, try writing to the new file */
-                if(SYS_FS_FileWrite(appData.fileHandle1, (const void *)dataBuffer, APP_DATA_LEN) == -1)
+                if(SYS_FS_FileWrite(appData.fileHandle1, (const void *)dataBuffer, appData.nBytesRead) == -1)
                 {
                     /* Write was not successful. Close the file
                      * and error out.*/

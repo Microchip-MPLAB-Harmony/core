@@ -148,9 +148,7 @@ typedef struct
     /* Application's current state */
     APP_STATES         state;
 
-    uint32_t           nBytesWritten;
-
-    uint32_t           nBytesRead;
+    int32_t            nBytesRead;
 } APP_DATA;
 
 

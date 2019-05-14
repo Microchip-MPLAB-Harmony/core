@@ -250,7 +250,10 @@ void APP_Tasks ( void )
             }
             break;
         case APP_READ_WRITE_TO_FILE:
-            if(SYS_FS_FileRead(appData.fileHandle, (void *)readWriteBuffer, APP_DATA_LEN) == -1)
+            
+            appData.nBytesRead = SYS_FS_FileRead(appData.fileHandle, (void *)readWriteBuffer, APP_DATA_LEN);
+            
+            if (appData.nBytesRead == -1)
             {
                 /* There was an error while reading the file.
                  * Close the file and error out. */
@@ -260,7 +263,7 @@ void APP_Tasks ( void )
             else
             {
                 /* If read was success, try writing to the new file */
-                if(SYS_FS_FileWrite(appData.fileHandle1, (const void *)readWriteBuffer, APP_DATA_LEN) == -1)
+                if(SYS_FS_FileWrite(appData.fileHandle1, (const void *)readWriteBuffer, appData.nBytesRead) == -1)
                 {                    
                     /* Write was not successful. Close the file
                      * and error out.*/
@@ -272,7 +275,6 @@ void APP_Tasks ( void )
                     /* Continue the read and write process, until the end of file is reached */
                     appData.state = APP_CLOSE_FILE;
                 }
-                appData.nBytesWritten += APP_DATA_LEN;
             }
             break;
 

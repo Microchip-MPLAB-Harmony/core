@@ -147,11 +147,9 @@ typedef struct
     SYS_FS_HANDLE               fileHandle1;
 
     /* Application's current state */
-    APP_STATES                  state;
-       
-    volatile uint32_t           nBytesWritten;
+    APP_STATES                  state;           
 
-    volatile uint32_t           nBytesRead;
+    int32_t                     nBytesRead;
 } APP_DATA;
 
 
