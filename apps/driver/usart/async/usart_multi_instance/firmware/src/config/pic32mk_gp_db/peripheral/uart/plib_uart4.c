@@ -334,6 +334,8 @@ void UART4_FAULT_InterruptHandler (void)
 
     /* Disable the fault interrupt */
     IEC2CLR = _IEC2_U4EIE_MASK;
+    /* Disable the receive interrupt */
+    IEC2CLR = _IEC2_U4RXIE_MASK;
 
     /* Client must call UARTx_ErrorGet() function to clear the errors */
     if( uart4Obj.rxCallback != NULL )

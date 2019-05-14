@@ -43,8 +43,8 @@
           <Name dnOrder="1">drv_usart_local.h</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/driver/usart/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usart/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3E394AAD9DF69A5CD82AD1D4DDFDE7E5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3E394AAD9DF69A5CD82AD1D4DDFDE7E5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">DEB1735C6500FAA96262050264574EC0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">DEB1735C6500FAA96262050264574EC0</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
@@ -107,16 +107,16 @@
           <Name dnOrder="1">plib_uart4.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/uart/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/uart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F73943AF523BC61659139E259FFB583D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F73943AF523BC61659139E259FFB583D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6A6C62F4E8785F7763A828B96FE179C1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6A6C62F4E8785F7763A828B96FE179C1</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_uart6.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/uart/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/uart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A0F5B9EDF8BBB5EDAB617AFD7104716E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A0F5B9EDF8BBB5EDAB617AFD7104716E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">62243D8CA633988326CC8FE8BD9B9CBB</GeneratedChecksum>
+          <UserChecksum dnOrder="5">62243D8CA633988326CC8FE8BD9B9CBB</UserChecksum>
         </File>
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
