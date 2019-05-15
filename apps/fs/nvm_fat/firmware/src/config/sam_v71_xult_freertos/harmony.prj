@@ -203,8 +203,8 @@
           <Name dnOrder="1">plib_pio.c</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/peripheral/pio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/pio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BDC74E9DEEEEE8C76CDDE9CEC1E260A5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BDC74E9DEEEEE8C76CDDE9CEC1E260A5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">8C20A949A62960EF7F0968EAFC4DCDF3</GeneratedChecksum>
+          <UserChecksum dnOrder="5">8C20A949A62960EF7F0968EAFC4DCDF3</UserChecksum>
         </File>
         <File dnOrder="25">
           <Type dnOrder="0">SOURCE</Type>
@@ -475,8 +475,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D89C3FAB0FF98D215DEACD6CEB0EE08E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D89C3FAB0FF98D215DEACD6CEB0EE08E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">2A80D4745EDCA8F75BEF7B1E8604F4A1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2A80D4745EDCA8F75BEF7B1E8604F4A1</UserChecksum>
         </File>
         <File dnOrder="59">
           <Type dnOrder="0">HEADER</Type>
