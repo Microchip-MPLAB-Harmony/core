@@ -36,8 +36,8 @@ freeRtosSym_CpuClockHz.setDefaultValue(cpuclk)
 #Default Heap size
 freeRtosSym_TotalHeapSize.setDefaultValue(8192)
 
-#Enable FPU
-freeRtosSym_EnableFpu.setVisible(True)
+# Cortex-M23 does not have a Floating Point Unit (FPU) and therefore configENABLE_FPU must be set to 0
+freeRtosSym_EnableFpu.setVisible(False)
 
 #TrustZone configuration
 freeRtosSym_EnableTrustZone.setVisible(True)
