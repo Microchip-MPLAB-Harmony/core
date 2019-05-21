@@ -35,9 +35,9 @@ def loadModule():
 
         {"name":"console", "label": "CONSOLE", "type":"system", "display_path":"", "actual_path":"", "instance":"multi", "capability":["SYS_CONSOLE"], "capability_type":"multi", "dependency":["UART"], "condition":"True"},
 
-        {"name":"command", "label": "COMMAND", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_COMMAND"], "dependency":["SYS_CONSOLE"], "condition":"True"},
+        {"name":"command", "label": "COMMAND", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_COMMAND"],"capability_type":"generic", "dependency":["SYS_CONSOLE"], "condition":"True"},
 
-        {"name":"debug", "label": "DEBUG", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_DEBUG"], "dependency":["SYS_CONSOLE"], "condition":"True"},
+        {"name":"debug", "label": "DEBUG", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_DEBUG"],"capability_type":"generic", "dependency":["SYS_CONSOLE"], "condition":"True"},
 
         {"name":"fs", "label": "FILE SYSTEM", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_FS"], "dependency":["DRV_MEDIA"], "dependency_type":"multi", "condition":"True"},
 
