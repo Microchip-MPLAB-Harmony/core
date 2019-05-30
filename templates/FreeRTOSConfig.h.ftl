@@ -69,6 +69,13 @@
 #define configUSE_NEWLIB_REENTRANT              <#if FREERTOS_USE_NEWLIB_REENTRANT == true>1<#else>0</#if>
 #define configUSE_TASK_FPU_SUPPORT              <#if FREERTOS_USE_TASK_FPU_SUPPORT == true>1<#else>0</#if>
 
+<#if core.CoreArchitecture == "CORTEX-M23">
+#define configENABLE_FPU                        <#if FREERTOS_ENABLE_FPU == true>1<#else>0</#if>
+#define configENABLE_TRUSTZONE                  <#if FREERTOS_ENABLE_TRUSTZONE == true>1<#else>0</#if>
+#define configENABLE_MPU                        <#if FREERTOS_ENABLE_MPU == true>1<#else>0</#if>
+#define configRUN_FREERTOS_SECURE_ONLY          <#if FREERTOS_RUN_FREERTOS_SECURE_ONLY == true>1<#else>0</#if>
+</#if>
+
 /* Hook function related definitions. */
 #define configUSE_IDLE_HOOK                     <#if FREERTOS_IDLE_HOOK == true>1<#else>0</#if>
 #define configUSE_TICK_HOOK                     <#if FREERTOS_TICK_HOOK == true>1<#else>0</#if>

@@ -400,6 +400,30 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_TaskFpuSupport.setDescription("FreeRTOS - Enable hardware FPU support for tasks")
     freeRtosSym_TaskFpuSupport.setDefaultValue(False)
 
+    freeRtosSym_EnableFpu = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_ENABLE_FPU", freeRtosSymMenu)
+    freeRtosSym_EnableFpu.setLabel("Enable FPU support")
+    freeRtosSym_EnableFpu.setDescription("FreeRTOS - Enable hardware FPU")
+    freeRtosSym_EnableFpu.setDefaultValue(False)
+    freeRtosSym_EnableFpu.setVisible(False)
+
+    freeRtosSym_EnableTrustZone = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_ENABLE_TRUSTZONE", freeRtosSymMenu)
+    freeRtosSym_EnableTrustZone.setLabel("Enable TrustZone")
+    freeRtosSym_EnableTrustZone.setDescription("FreeRTOS - Enable TrustZone")
+    freeRtosSym_EnableTrustZone.setDefaultValue(False)
+    freeRtosSym_EnableTrustZone.setVisible(False)
+
+    freeRtosSym_EnableMpu = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_ENABLE_MPU", freeRtosSymMenu)
+    freeRtosSym_EnableMpu.setLabel("Enable MPU")
+    freeRtosSym_EnableMpu.setDescription("FreeRTOS - Enable Memory Protection Unit")
+    freeRtosSym_EnableMpu.setDefaultValue(False)
+    freeRtosSym_EnableMpu.setVisible(False)
+
+    freeRtosSym_RunFreeRtosSecure = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_RUN_FREERTOS_SECURE_ONLY", freeRtosSymMenu)
+    freeRtosSym_RunFreeRtosSecure.setLabel("Run FreeRTOS on the Secure Side")
+    freeRtosSym_RunFreeRtosSecure.setDescription("FreeRTOS - Run FreeRTOS on the Secure Side")
+    freeRtosSym_RunFreeRtosSecure.setDefaultValue(False)
+    freeRtosSym_RunFreeRtosSecure.setVisible(False)
+
     freeRtosSym_IdleHook = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_IDLE_HOOK", freeRtosSymMenu)
     freeRtosSym_IdleHook.setLabel("Use Idle Hook")
     freeRtosSym_IdleHook.setDescription("FreeRTOS - Use Idle Hook")
