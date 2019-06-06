@@ -150,6 +150,8 @@
         <#lt>#ifdef __ICCARM__
         <#lt>void ${FREERTOS_SETUP_TICK_INTERRUPT}(void);
         <#lt>#endif //__ICCARM__
+    <#elseif core.COMPILER_CHOICE == "XC32">
+        <#lt>void ${FREERTOS_SETUP_TICK_INTERRUPT}(void);
     </#if>
     <#lt>#define configSETUP_TICK_INTERRUPT ${FREERTOS_SETUP_TICK_INTERRUPT}
 </#if>
@@ -161,6 +163,8 @@
         <#lt>#ifdef __ICCARM__
         <#lt>void ${FREERTOS_CONFIG_TICK_INTERRUPT}(void);
         <#lt>#endif //__ICCARM__
+    <#elseif core.COMPILER_CHOICE == "XC32">
+        <#lt>void ${FREERTOS_CONFIG_TICK_INTERRUPT}(void);
     </#if>
     <#lt>#define configCLEAR_TICK_INTERRUPT ${FREERTOS_CONFIG_TICK_INTERRUPT}
 </#if>
