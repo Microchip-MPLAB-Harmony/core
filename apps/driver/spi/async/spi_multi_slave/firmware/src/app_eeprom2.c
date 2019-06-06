@@ -149,8 +149,10 @@ void APP_EEPROM2_Initialize ( void )
     memset(eeprom2RxData, 0, sizeof(eeprom2RxData));
 
     APP_EEPROM2_CS_Set();
-    APP_EEPROM2_WP_Set();
-    APP_EEPROM2_HOLD_Set();
+
+    /* As EEPROM2 WP and HOLD pins are already latched high from
+     * Pin Configuration, no need to set both pins high again.
+     */
 }
 
 
