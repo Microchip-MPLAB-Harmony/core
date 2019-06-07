@@ -89,8 +89,7 @@ def instantiateComponent(commandComponent):
     enable_rtos_settings = False
 
     if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
-        if (commandEnable.getValue() == True):
-            enable_rtos_settings = True
+        enable_rtos_settings = True
 
     # RTOS Settings
     commandRTOSMenu = commandComponent.createMenuSymbol("SYS_COMMAND_RTOS_MENU", None)
