@@ -94,8 +94,6 @@ extern uint32_t ulPortYieldRequired;            \
 
 extern void vPortEnterCritical( void );
 extern void vPortExitCritical( void );
-extern uint32_t ulPortSetInterruptMask( void );
-extern void vPortClearInterruptMask( uint32_t ulNewMaskValue );
 
 #include "core_ca.h"
 
@@ -103,8 +101,22 @@ extern void vPortClearInterruptMask( uint32_t ulNewMaskValue );
 #define portEXIT_CRITICAL()         vPortExitCritical();
 #define portDISABLE_INTERRUPTS()    __disable_irq(); __DSB(); __ISB() /* No priority mask register so global disable is used. */
 #define portENABLE_INTERRUPTS()     __enable_irq()
-#define portSET_INTERRUPT_MASK_FROM_ISR()       ulPortSetInterruptMask()
-#define portCLEAR_INTERRUPT_MASK_FROM_ISR(x)    vPortClearInterruptMask(x)
+
+/* The I bit within the CPSR. */
+#define portINTERRUPT_ENABLE_BIT	( 1 << 7 )
+
+__attribute__( ( always_inline ) ) static __inline uint32_t portINLINE_SET_INTERRUPT_MASK_FROM_ISR( void )
+{
+	volatile uint32_t ulCPSR;
+
+	__asm volatile ( "MRS %0, CPSR" : "=r" (ulCPSR) :: "memory" );
+	ulCPSR &= portINTERRUPT_ENABLE_BIT;
+	portDISABLE_INTERRUPTS();
+	return ulCPSR;
+}
+
+#define portSET_INTERRUPT_MASK_FROM_ISR()       portINLINE_SET_INTERRUPT_MASK_FROM_ISR()
+#define portCLEAR_INTERRUPT_MASK_FROM_ISR(x)	if( x == 0 ) portENABLE_INTERRUPTS()
 
 /*-----------------------------------------------------------*/
 
