@@ -11,6 +11,9 @@
 <#if core.CoreArchitecture == "CORTEX-M0PLUS">
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (200)
 </#if>
+<#if core.CoreArchitecture == "CORTEX-M23">
+    <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (160)
+</#if>
 <#if core.CoreArchitecture == "CORTEX-A5">
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (2200)
 </#if>
