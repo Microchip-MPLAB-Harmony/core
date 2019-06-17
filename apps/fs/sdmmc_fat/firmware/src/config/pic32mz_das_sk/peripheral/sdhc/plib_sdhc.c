@@ -50,7 +50,7 @@
 
 #include "plib_sdhc_common.h"
 
-#define SDHC_INTEN_Msk                                          0x03FF81FF
+#define SDHC_INTEN_Msk                                          0x03FF01FF
 #define SDHC_EISIER_Msk                                         0x03FF0000
 #define SDHC_MODE_RESPTYPE_48_BIT_BUSY                          (0x03 << 16)
 #define SDHC_MODE_RESPTYPE_48_BIT                               (0x02 << 16)
@@ -59,6 +59,7 @@
 
 #define SDHC_DMA_NUM_DESCR_LINES               1
 #define SDHC_BASE_CLOCK_FREQUENCY              200000000
+#define SDHC_MAX_BLOCK_SIZE                    0x200
 
 typedef unsigned long _paddr_t; /* a physical address */
 #define KVA_TO_PA(v)    ((_paddr_t)(v) & 0x1fffffff)
@@ -231,7 +232,7 @@ uint16_t SDHC_CommandErrorGet(void)
 {
     uint32_t errorStatus = sdhcObj.errorStatus;
 
-    errorStatus &= (_SDHCINTSTAT_CTOEIF_MASK | _SDHCINTSTAT_CCRCEIF_MASK | _SDHCINTSTAT_CEBEIF_MASK);
+    errorStatus &= (_SDHCINTSTAT_CTOEIF_MASK | _SDHCINTSTAT_CCRCEIF_MASK | _SDHCINTSTAT_CEBEIF_MASK | _SDHCINTSTAT_CIDXEIF_MASK);
 
     return (errorStatus >> 16);
 }
@@ -299,6 +300,11 @@ bool SDHC_IsCardAttached ( void )
 
 void SDHC_BlockSizeSet ( uint16_t blockSize )
 {
+    if (blockSize > SDHC_MAX_BLOCK_SIZE)
+    {
+        blockSize = SDHC_MAX_BLOCK_SIZE;
+    }
+    
     SDHCBLKCON = ((SDHCBLKCON & ~_SDHCBLKCON_BSIZE_MASK) | (blockSize));
 }
 
@@ -309,7 +315,14 @@ void SDHC_BlockCountSet ( uint16_t numBlocks )
 
 void SDHC_ClockEnable ( void )
 {
-    SDHCCON2 |= (_SDHCCON2_ICLKEN_MASK | _SDHCCON2_SDCLKEN_MASK);
+    /* Enable internal clock */
+    SDHCCON2 |= _SDHCCON2_ICLKEN_MASK;
+    
+    /* Wait for the internal clock to stabilize */
+    SDHC_Delay(1000);
+
+    /* Enable the SDCLK */
+    SDHCCON2 |= _SDHCCON2_SDCLKEN_MASK;
 }
 
 void SDHC_ClockDisable ( void )
