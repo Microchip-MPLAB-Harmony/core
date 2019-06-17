@@ -87,7 +87,7 @@ void TC3_TimerInitialize( void )
 
     /* Configure timer period */
     TC3_REGS->COUNT16.TC_CC[0U] = 48000U;
-    
+
     /* Clear all interrupt flags */
     TC3_REGS->COUNT16.TC_INTFLAG = TC_INTFLAG_Msk;
 
@@ -206,7 +206,4 @@ void TC3_TimerInterruptHandler( void )
         TC3_CallbackObject.callback(status, TC3_CallbackObject.context);
     }
 }
-
-
-
 
