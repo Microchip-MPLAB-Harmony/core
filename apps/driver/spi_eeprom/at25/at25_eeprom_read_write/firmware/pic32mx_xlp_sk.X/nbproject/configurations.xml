@@ -1,121 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="66">
+<configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="HeaderFiles"
-                   displayName="Header Files"
-                   projectFiles="true">
+    <logicalFolder name="f1" displayName="Header Files" projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mx_xlp_sk" projectFiles="true">
           <logicalFolder name="f3" displayName="bsp" projectFiles="true">
-            <itemPath ex="false">../src/config/pic32mx_xlp_sk/bsp/bsp.h</itemPath>
+            <itemPath>../src/config/pic32mx_xlp_sk/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="at25" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/driver/at25/drv_at25.h</itemPath>
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/driver/at25/drv_at25_definitions.h</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/driver/at25/drv_at25.h</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/driver/at25/drv_at25_definitions.h</itemPath>
             </logicalFolder>
-            <itemPath ex="false">../src/config/pic32mx_xlp_sk/driver/driver.h</itemPath>
-            <itemPath ex="false">../src/config/pic32mx_xlp_sk/driver/driver_common.h</itemPath>
+            <itemPath>../src/config/pic32mx_xlp_sk/driver/driver.h</itemPath>
+            <itemPath>../src/config/pic32mx_xlp_sk/driver/driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/peripheral/clk/plib_clk.h</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/peripheral/clk/plib_clk.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="evic" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/peripheral/evic/plib_evic.h</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/peripheral/evic/plib_evic.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="gpio" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/peripheral/gpio/plib_gpio.h</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/peripheral/gpio/plib_gpio.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="spi" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/peripheral/spi/plib_spi_common.h</itemPath>
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/peripheral/spi/plib_spi1.h</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/peripheral/spi/plib_spi_common.h</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/peripheral/spi/plib_spi1.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
             <logicalFolder name="f1" displayName="int" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/system/int/sys_int.h</itemPath>
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/system/int/sys_int_mapping.h</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/system/int/sys_int.h</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="ports" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/system/ports/sys_ports.h</itemPath>
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/system/ports/sys_ports_mapping.h</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/system/ports/sys_ports.h</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/system/ports/sys_ports_mapping.h</itemPath>
             </logicalFolder>
-            <itemPath ex="false">../src/config/pic32mx_xlp_sk/system/system.h</itemPath>
-            <itemPath ex="false">../src/config/pic32mx_xlp_sk/system/system_common.h</itemPath>
-            <itemPath ex="false">../src/config/pic32mx_xlp_sk/system/system_module.h</itemPath>
+            <itemPath>../src/config/pic32mx_xlp_sk/system/system.h</itemPath>
+            <itemPath>../src/config/pic32mx_xlp_sk/system/system_common.h</itemPath>
+            <itemPath>../src/config/pic32mx_xlp_sk/system/system_module.h</itemPath>
           </logicalFolder>
-          <itemPath ex="false">../src/config/pic32mx_xlp_sk/toolchain_specifics.h</itemPath>
-          <itemPath ex="false">../src/config/pic32mx_xlp_sk/definitions.h</itemPath>
-          <itemPath ex="false">../src/config/pic32mx_xlp_sk/user.h</itemPath>
-          <itemPath ex="false">../src/config/pic32mx_xlp_sk/configuration.h</itemPath>
+          <itemPath>../src/config/pic32mx_xlp_sk/toolchain_specifics.h</itemPath>
+          <itemPath>../src/config/pic32mx_xlp_sk/definitions.h</itemPath>
+          <itemPath>../src/config/pic32mx_xlp_sk/user.h</itemPath>
+          <itemPath>../src/config/pic32mx_xlp_sk/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f3" displayName="osal" projectFiles="true">
-        <itemPath ex="false">../src/config/pic32mx_xlp_sk/osal/osal.h</itemPath>
-        <itemPath ex="false">../src/config/pic32mx_xlp_sk/osal/osal_definitions.h</itemPath>
-        <itemPath ex="false">../src/config/pic32mx_xlp_sk/osal/osal_impl_basic.h</itemPath>
+        <itemPath>../src/config/pic32mx_xlp_sk/osal/osal.h</itemPath>
+        <itemPath>../src/config/pic32mx_xlp_sk/osal/osal_definitions.h</itemPath>
+        <itemPath>../src/config/pic32mx_xlp_sk/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="PIC32MX274F256D_DFP" projectFiles="true">
-          <itemPath ex="false">../src/packs/PIC32MX274F256D_DFP/device.h</itemPath>
+          <itemPath>../src/packs/PIC32MX274F256D_DFP/device.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <itemPath ex="false">../src/app.h</itemPath>
+      <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="LinkerScript"
-                   displayName="Linker Files"
-                   projectFiles="true">
+    <logicalFolder name="f4" displayName="Important Files" projectFiles="true">
+      <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder name="SourceFiles"
-                   displayName="Source Files"
-                   projectFiles="true">
+    <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="f3" displayName="Source Files" projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mx_xlp_sk" projectFiles="true">
           <logicalFolder name="f4" displayName="bsp" projectFiles="true">
-            <itemPath ex="false">../src/config/pic32mx_xlp_sk/bsp/bsp.c</itemPath>
+            <itemPath>../src/config/pic32mx_xlp_sk/bsp/bsp.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="at25" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/driver/at25/src/drv_at25.c</itemPath>
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/driver/at25/src/drv_at25_local.h</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/driver/at25/src/drv_at25.c</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/driver/at25/src/drv_at25_local.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/peripheral/clk/plib_clk.c</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/peripheral/clk/plib_clk.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="evic" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/peripheral/evic/plib_evic.c</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/peripheral/evic/plib_evic.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="gpio" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/peripheral/gpio/plib_gpio.c</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/peripheral/gpio/plib_gpio.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="spi" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/peripheral/spi/plib_spi1.c</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/peripheral/spi/plib_spi1.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f1" displayName="stdio" projectFiles="true">
-            <itemPath ex="false">../src/config/pic32mx_xlp_sk/stdio/xc32_monitor.c</itemPath>
+            <itemPath>../src/config/pic32mx_xlp_sk/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f5" displayName="system" projectFiles="true">
             <logicalFolder name="f1" displayName="int" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx_xlp_sk/system/int/src/sys_int.c</itemPath>
+              <itemPath>../src/config/pic32mx_xlp_sk/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <itemPath ex="false">../src/config/pic32mx_xlp_sk/initialization.c</itemPath>
-          <itemPath ex="false">../src/config/pic32mx_xlp_sk/interrupts.c</itemPath>
-          <itemPath ex="false">../src/config/pic32mx_xlp_sk/exceptions.c</itemPath>
-          <itemPath ex="false">../src/config/pic32mx_xlp_sk/tasks.c</itemPath>
+          <itemPath>../src/config/pic32mx_xlp_sk/initialization.c</itemPath>
+          <itemPath>../src/config/pic32mx_xlp_sk/interrupts.c</itemPath>
+          <itemPath>../src/config/pic32mx_xlp_sk/exceptions.c</itemPath>
+          <itemPath>../src/config/pic32mx_xlp_sk/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <itemPath ex="false">../src/main.c</itemPath>
-      <itemPath ex="false">../src/app.c</itemPath>
-    </logicalFolder>
-    <logicalFolder name="ExternalFiles"
-                   displayName="Important Files"
-                   projectFiles="false">
-      <itemPath ex="false">Makefile</itemPath>
+      <itemPath>../src/main.c</itemPath>
+      <itemPath>../src/app.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -135,7 +127,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.0.46"/>
+        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.0.28"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -231,7 +223,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="heap-size" value="0"/>
+        <property key="heap-size" value="512"/>
         <property key="input-libraries" value=""/>
         <property key="kseg-length" value=""/>
         <property key="kseg-origin" value=""/>
