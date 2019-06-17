@@ -238,6 +238,8 @@ void SYS_Initialize ( void* data )
 
 	SPI0_Initialize();
 
+  
+
  
     TC0_CH0_TimerInitialize(); 
      
