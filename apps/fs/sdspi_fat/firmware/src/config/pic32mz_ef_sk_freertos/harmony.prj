@@ -171,8 +171,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A7EDA6CA22DF61EA3287D0DB4FC5EC5A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A7EDA6CA22DF61EA3287D0DB4FC5EC5A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">53254B96B72601BA2C602521F82D58E7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">53254B96B72601BA2C602521F82D58E7</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
@@ -211,8 +211,8 @@
           <Name dnOrder="1">plib_spi2.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/spi/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/spi/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3CE72FE96D22493EB3F3952AEBB13F30</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3CE72FE96D22493EB3F3952AEBB13F30</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9D630DB436E8CFF4818412547FE0E365</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9D630DB436E8CFF4818412547FE0E365</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">SOURCE</Type>
@@ -828,14 +828,14 @@
         <Setting append="true" category="C32" delimiter=";" dnOrder="1" key="extra-include-directories" value="../src;../src/config/pic32mz_ef_sk_freertos;../src/packs/PIC32MZ2048EFH144_DFP;;../src/mips"/>
         <Setting append="true" category="C32-AS" delimiter=";" dnOrder="2" key="extra-include-directories-for-assembler" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MZ;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mz_ef_sk_freertos;"/>
         <Setting append="true" category="C32-AS" delimiter=";" dnOrder="3" key="extra-include-directories-for-preprocessor" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MZ;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mz_ef_sk_freertos;"/>
-        <Setting category="C32-LD" dnOrder="4" key="heap-size" value="0"/>
+        <Setting category="C32-LD" dnOrder="4" key="heap-size" value="512"/>
         <Setting category="C32-LD" dnOrder="5" key="no-device-startup-code" value="true"/>
         <Setting category="C32-LD" dnOrder="6" key="preprocessor-macros" value=""/>
       </Settings>
     </Manifest>
     <Settings dnOrder="4">
-      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.4.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.0.28\atdf\PIC32MZ2048EFH144.atdf"/>
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.0.29\atdf\PIC32MZ2048EFH144.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
