@@ -1314,7 +1314,7 @@
         </Integer>
         <String dnOrder="261" id="PIN_77_PU">
           <Values dnOrder="0">
-            <User dnOrder="0" value="True"/>
+            <User dnOrder="0" value=""/>
           </Values>
         </String>
         <String dnOrder="262" id="PIN_78_PIO_CHANNEL">
@@ -1509,7 +1509,7 @@
         </Integer>
         <String dnOrder="300" id="PIN_91_PU">
           <Values dnOrder="0">
-            <User dnOrder="0" value="True"/>
+            <User dnOrder="0" value=""/>
           </Values>
         </String>
         <String dnOrder="301" id="PIN_92_PIO_CHANNEL">
@@ -1649,7 +1649,7 @@
         </Hex>
         <Hex dnOrder="328" id="PIOA_PUER_VALUE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="2072"/>
+            <Dynamic dnOrder="0" id="core" value="2048"/>
           </Values>
         </Hex>
         <Hex dnOrder="329" id="PIOA_SODR_VALUE">
