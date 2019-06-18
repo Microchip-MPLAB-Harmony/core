@@ -211,6 +211,8 @@ void SYS_Initialize ( void* data )
 
 	SPI1_Initialize();
 
+  
+
  
     TC0_CH0_TimerInitialize(); 
      
