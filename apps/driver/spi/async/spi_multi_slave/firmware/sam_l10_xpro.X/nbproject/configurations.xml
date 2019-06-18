@@ -14,8 +14,6 @@
               <itemPath>../src/config/sam_l10_xpro/driver/spi/drv_spi.h</itemPath>
               <itemPath>../src/config/sam_l10_xpro/driver/spi/drv_spi_definitions.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/sam_l10_xpro/driver/driver.h</itemPath>
-            <itemPath>../src/config/sam_l10_xpro/driver/driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f5" displayName="clock" projectFiles="true">
@@ -44,17 +42,13 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
-            <logicalFolder name="f3" displayName="dma" projectFiles="true">
+            <logicalFolder name="f2" displayName="dma" projectFiles="true">
               <itemPath>../src/config/sam_l10_xpro/system/dma/sys_dma.h</itemPath>
               <itemPath>../src/config/sam_l10_xpro/system/dma/sys_dma_mapping.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_l10_xpro/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/sam_l10_xpro/system/int/sys_int_mapping.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f2" displayName="ports" projectFiles="true">
-              <itemPath>../src/config/sam_l10_xpro/system/ports/sys_ports.h</itemPath>
-              <itemPath>../src/config/sam_l10_xpro/system/ports/sys_ports_mapping.h</itemPath>
             </logicalFolder>
             <itemPath>../src/config/sam_l10_xpro/system/system.h</itemPath>
             <itemPath>../src/config/sam_l10_xpro/system/system_common.h</itemPath>
@@ -109,6 +103,28 @@
           </logicalFolder>
           <itemPath>../src/packs/ATSAML10E16A_DFP/device.h</itemPath>
           <itemPath>../src/packs/ATSAML10E16A_DFP/atsaml10e16a.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
+          <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
+            <logicalFolder name="f1" displayName="Core" projectFiles="true">
+              <logicalFolder name="f1" displayName="Include" projectFiles="true">
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm23.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv8.h</itemPath>
+              </logicalFolder>
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="DSP" projectFiles="true">
+              <logicalFolder name="f1" displayName="Include" projectFiles="true">
+                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_common_tables.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_const_structs.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_math.h</itemPath>
+              </logicalFolder>
+            </logicalFolder>
+          </logicalFolder>
         </logicalFolder>
       </logicalFolder>
       <itemPath>../src/app_eeprom1.h</itemPath>
