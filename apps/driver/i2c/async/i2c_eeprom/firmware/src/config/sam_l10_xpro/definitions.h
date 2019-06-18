@@ -52,13 +52,13 @@
 #include "peripheral/evsys/plib_evsys.h"
 #include "peripheral/sercom/i2cm/plib_sercom0_i2c.h"
 #include "bsp/bsp.h"
-#include "peripheral/pm/plib_pm.h"
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
+#include "peripheral/pm/plib_pm.h"
+#include "driver/i2c/drv_i2c.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
-#include "driver/i2c/drv_i2c.h"
 #include "app.h"
 
 
