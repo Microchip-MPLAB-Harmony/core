@@ -505,7 +505,7 @@ static void _DRV_USART_RemoveClientTransfersFromList(
     }
 }
 
-static bool _DRV_USART_QueuePurge (const DRV_HANDLE handle, DRV_USART_DIRECTION dir)
+static bool _DRV_USART_QueuePurge(const DRV_HANDLE handle, DRV_USART_DIRECTION dir)
 {
     DRV_USART_OBJ* dObj = NULL;
     DRV_USART_CLIENT_OBJ* clientObj = NULL;
@@ -617,6 +617,12 @@ static void _DRV_USART_BufferQueueTask(
 
     // Get the buffer object at the head of the list
     bufferObj = _DRV_USART_TransferObjListGet(dObj, direction);
+
+    // bufferObj can never be NULL. Very likely a false PLIB callback to the driver.
+    if (bufferObj == NULL)
+    {
+        return;
+    }
 
     // Get the client object that owns this buffer
     clientObj = &((DRV_USART_CLIENT_OBJ *)gDrvUSARTObj[((bufferObj->clientHandle & DRV_USART_INSTANCE_MASK) >> 8)].clientObjPool)
