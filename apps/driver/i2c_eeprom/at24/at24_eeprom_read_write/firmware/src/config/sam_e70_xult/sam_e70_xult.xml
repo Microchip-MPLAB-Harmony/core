@@ -1299,7 +1299,7 @@
         </Integer>
         <String dnOrder="258" id="PIN_77_PU">
           <Values dnOrder="0">
-            <User dnOrder="0" value="True"/>
+            <User dnOrder="0" value=""/>
           </Values>
         </String>
         <String dnOrder="259" id="PIN_78_PIO_CHANNEL">
@@ -1494,7 +1494,7 @@
         </Integer>
         <String dnOrder="297" id="PIN_91_PU">
           <Values dnOrder="0">
-            <User dnOrder="0" value="True"/>
+            <User dnOrder="0" value=""/>
           </Values>
         </String>
         <String dnOrder="298" id="PIN_92_PIO_CHANNEL">
@@ -1634,7 +1634,7 @@
         </Hex>
         <Hex dnOrder="325" id="PIOA_PUER_VALUE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="2072"/>
+            <Dynamic dnOrder="0" id="core" value="2048"/>
           </Values>
         </Hex>
         <Hex dnOrder="326" id="PIOA_SODR_VALUE">
@@ -3281,8 +3281,7 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_E70_Xplained_Ultra" x="480" y="20"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="355" y="55"/>
@@ -3294,5 +3293,6 @@
         <ElementPosition dnOrder="7" id="twihs0" x="26" y="69"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
