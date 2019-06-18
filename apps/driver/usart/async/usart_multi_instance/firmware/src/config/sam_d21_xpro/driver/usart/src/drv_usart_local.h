@@ -234,10 +234,10 @@ typedef struct
     uint8_t                                 interruptNestingCount;
 
     /* TX DMA Channel */
-    SYS_DMA_CHANNEL                         txDMAChannel;
+    volatile SYS_DMA_CHANNEL                txDMAChannel;
 
     /* RX DMA Channel */
-    SYS_DMA_CHANNEL                         rxDMAChannel;
+    volatile SYS_DMA_CHANNEL                rxDMAChannel;
 
     /* This is the USART transmit register address. Used for DMA operation. */
     void*                                   txAddress;
