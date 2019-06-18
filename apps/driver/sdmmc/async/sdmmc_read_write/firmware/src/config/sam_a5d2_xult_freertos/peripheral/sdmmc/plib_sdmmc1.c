@@ -56,9 +56,12 @@
 #define SDMMC1_MAX_SUPPORTED_SDCLK_FREQUENCY    50000000UL
 #define SDMMC1_MAX_SUPPORTED_DIVIDER            0x3FF
 
+#define SDMMC1_MAX_BLOCK_SIZE                   0x200
+
 #define SDMMC1_MAX_ADMA2_TRANSFER_SIZE          0x10000U
 
 #define SDMMC1_MAX_DMA_TRANSFER_SIZE            (SDMMC1_MAX_ADMA2_TRANSFER_SIZE * SDMMC1_DMA_NUM_DESCR_LINES)
+
 
 /* Absolute difference between two 32 bit integers */
 static inline uint32_t SDMMC1_ABS_DIFF_U32(uint32_t a, uint32_t b)
@@ -213,7 +216,7 @@ uint16_t SDMMC1_ErrorGet( void )
 uint16_t SDMMC1_CommandErrorGet( void )
 {
     return (sdmmc1Obj.errorStatus & (SDMMC_EISTR_SD_SDIO_CMDTEO_Msk | SDMMC_EISTR_SD_SDIO_CMDCRC_Msk | \
-                SDMMC_EISTR_SD_SDIO_CMDEND_Msk));
+                SDMMC_EISTR_SD_SDIO_CMDEND_Msk | SDMMC_EISTR_SD_SDIO_CMDIDX_Msk));
 }
 
 uint16_t SDMMC1_DataErrorGet( void )
@@ -268,7 +271,19 @@ bool SDMMC1_IsCardAttached ( void )
 
 void SDMMC1_BlockSizeSet ( uint16_t blockSize )
 {
-    SDMMC1_REGS->SDMMC_BSR = blockSize;
+    if(blockSize == 0)
+    {
+        blockSize = 1;
+    }
+    else if(blockSize > SDMMC1_MAX_BLOCK_SIZE)
+    {
+        blockSize = SDMMC1_MAX_BLOCK_SIZE;
+    }
+    else
+    {
+      /* Do not modify the block size */
+    }
+    SDMMC1_REGS->SDMMC_BSR = (SDMMC_BSR_BOUNDARY_4K | SDMMC_BSR_BLKSIZE(blockSize));
 }
 
 void SDMMC1_BlockCountSet ( uint16_t numBlocks )
@@ -278,7 +293,14 @@ void SDMMC1_BlockCountSet ( uint16_t numBlocks )
 
 void SDMMC1_ClockEnable ( void )
 {
-    SDMMC1_REGS->SDMMC_CCR |= (SDMMC_CCR_INTCLKEN_Msk | SDMMC_CCR_SDCLKEN_Msk);
+    /* Start the internal clock  */
+    SDMMC1_REGS->SDMMC_CCR |= SDMMC_CCR_INTCLKEN_Msk;
+
+    /* Wait for internal clock to stabilize */
+    while (!(SDMMC1_REGS->SDMMC_CCR & SDMMC_CCR_INTCLKS_Msk)) ;
+
+    /* Enable the SD Clock */
+    SDMMC1_REGS->SDMMC_CCR |= SDMMC_CCR_SDCLKEN_Msk;
 }
 
 void SDMMC1_ClockDisable ( void )
