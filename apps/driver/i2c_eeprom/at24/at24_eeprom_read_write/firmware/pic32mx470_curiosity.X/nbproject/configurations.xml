@@ -1,121 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="66">
+<configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="HeaderFiles"
-                   displayName="Header Files"
-                   projectFiles="true">
+    <logicalFolder name="f1" displayName="Header Files" projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mx470_curiosity" projectFiles="true">
           <logicalFolder name="f2" displayName="bsp" projectFiles="true">
-            <itemPath ex="false">../src/config/pic32mx470_curiosity/bsp/bsp.h</itemPath>
+            <itemPath>../src/config/pic32mx470_curiosity/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="at24" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/driver/at24/drv_at24.h</itemPath>
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/driver/at24/drv_at24_definitions.h</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/driver/at24/drv_at24.h</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/driver/at24/drv_at24_definitions.h</itemPath>
             </logicalFolder>
-            <itemPath ex="false">../src/config/pic32mx470_curiosity/driver/driver.h</itemPath>
-            <itemPath ex="false">../src/config/pic32mx470_curiosity/driver/driver_common.h</itemPath>
+            <itemPath>../src/config/pic32mx470_curiosity/driver/driver.h</itemPath>
+            <itemPath>../src/config/pic32mx470_curiosity/driver/driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f2" displayName="clk" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/peripheral/clk/plib_clk.h</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/peripheral/clk/plib_clk.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="evic" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/peripheral/evic/plib_evic.h</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/peripheral/evic/plib_evic.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="gpio" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/peripheral/gpio/plib_gpio.h</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/peripheral/gpio/plib_gpio.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="i2c" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/peripheral/i2c/plib_i2c1.h</itemPath>
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/peripheral/i2c/plib_i2c_master.h</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/peripheral/i2c/plib_i2c1.h</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/peripheral/i2c/plib_i2c_master.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
             <logicalFolder name="f1" displayName="int" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/system/int/sys_int.h</itemPath>
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/system/int/sys_int_mapping.h</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/system/int/sys_int.h</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="ports" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/system/ports/sys_ports.h</itemPath>
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/system/ports/sys_ports_mapping.h</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/system/ports/sys_ports.h</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/system/ports/sys_ports_mapping.h</itemPath>
             </logicalFolder>
-            <itemPath ex="false">../src/config/pic32mx470_curiosity/system/system.h</itemPath>
-            <itemPath ex="false">../src/config/pic32mx470_curiosity/system/system_common.h</itemPath>
-            <itemPath ex="false">../src/config/pic32mx470_curiosity/system/system_module.h</itemPath>
+            <itemPath>../src/config/pic32mx470_curiosity/system/system.h</itemPath>
+            <itemPath>../src/config/pic32mx470_curiosity/system/system_common.h</itemPath>
+            <itemPath>../src/config/pic32mx470_curiosity/system/system_module.h</itemPath>
           </logicalFolder>
-          <itemPath ex="false">../src/config/pic32mx470_curiosity/toolchain_specifics.h</itemPath>
-          <itemPath ex="false">../src/config/pic32mx470_curiosity/definitions.h</itemPath>
-          <itemPath ex="false">../src/config/pic32mx470_curiosity/user.h</itemPath>
-          <itemPath ex="false">../src/config/pic32mx470_curiosity/configuration.h</itemPath>
+          <itemPath>../src/config/pic32mx470_curiosity/toolchain_specifics.h</itemPath>
+          <itemPath>../src/config/pic32mx470_curiosity/definitions.h</itemPath>
+          <itemPath>../src/config/pic32mx470_curiosity/user.h</itemPath>
+          <itemPath>../src/config/pic32mx470_curiosity/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f3" displayName="osal" projectFiles="true">
-        <itemPath ex="false">../src/config/pic32mx470_curiosity/osal/osal.h</itemPath>
-        <itemPath ex="false">../src/config/pic32mx470_curiosity/osal/osal_definitions.h</itemPath>
-        <itemPath ex="false">../src/config/pic32mx470_curiosity/osal/osal_impl_basic.h</itemPath>
+        <itemPath>../src/config/pic32mx470_curiosity/osal/osal.h</itemPath>
+        <itemPath>../src/config/pic32mx470_curiosity/osal/osal_definitions.h</itemPath>
+        <itemPath>../src/config/pic32mx470_curiosity/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="PIC32MX470F512H_DFP" projectFiles="true">
-          <itemPath ex="false">../src/packs/PIC32MX470F512H_DFP/device.h</itemPath>
+          <itemPath>../src/packs/PIC32MX470F512H_DFP/device.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <itemPath ex="false">../src/app.h</itemPath>
+      <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="LinkerScript"
-                   displayName="Linker Files"
-                   projectFiles="true">
+    <logicalFolder name="f4" displayName="Important Files" projectFiles="true">
+      <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder name="SourceFiles"
-                   displayName="Source Files"
-                   projectFiles="true">
+    <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="f3" displayName="Source Files" projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mx470_curiosity" projectFiles="true">
           <logicalFolder name="f2" displayName="bsp" projectFiles="true">
-            <itemPath ex="false">../src/config/pic32mx470_curiosity/bsp/bsp.c</itemPath>
+            <itemPath>../src/config/pic32mx470_curiosity/bsp/bsp.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="at24" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/driver/at24/src/drv_at24.c</itemPath>
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/driver/at24/src/drv_at24_local.h</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/driver/at24/src/drv_at24.c</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/driver/at24/src/drv_at24_local.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f2" displayName="clk" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/peripheral/clk/plib_clk.c</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/peripheral/clk/plib_clk.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="evic" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/peripheral/evic/plib_evic.c</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/peripheral/evic/plib_evic.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="gpio" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/peripheral/gpio/plib_gpio.c</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/peripheral/gpio/plib_gpio.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="i2c" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/peripheral/i2c/plib_i2c1.c</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/peripheral/i2c/plib_i2c1.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="stdio" projectFiles="true">
-            <itemPath ex="false">../src/config/pic32mx470_curiosity/stdio/xc32_monitor.c</itemPath>
+            <itemPath>../src/config/pic32mx470_curiosity/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f5" displayName="system" projectFiles="true">
             <logicalFolder name="f1" displayName="int" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mx470_curiosity/system/int/src/sys_int.c</itemPath>
+              <itemPath>../src/config/pic32mx470_curiosity/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <itemPath ex="false">../src/config/pic32mx470_curiosity/initialization.c</itemPath>
-          <itemPath ex="false">../src/config/pic32mx470_curiosity/interrupts.c</itemPath>
-          <itemPath ex="false">../src/config/pic32mx470_curiosity/exceptions.c</itemPath>
-          <itemPath ex="false">../src/config/pic32mx470_curiosity/tasks.c</itemPath>
+          <itemPath>../src/config/pic32mx470_curiosity/initialization.c</itemPath>
+          <itemPath>../src/config/pic32mx470_curiosity/interrupts.c</itemPath>
+          <itemPath>../src/config/pic32mx470_curiosity/exceptions.c</itemPath>
+          <itemPath>../src/config/pic32mx470_curiosity/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <itemPath ex="false">../src/main.c</itemPath>
-      <itemPath ex="false">../src/app.c</itemPath>
-    </logicalFolder>
-    <logicalFolder name="ExternalFiles"
-                   displayName="Important Files"
-                   projectFiles="false">
-      <itemPath ex="false">Makefile</itemPath>
+      <itemPath>../src/main.c</itemPath>
+      <itemPath>../src/app.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -129,13 +121,13 @@
         <targetDevice>PIC32MX470F512H</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>ICD4Tool</platformTool>
+        <platformTool>PKOBSKDEPlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.20</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.0.46"/>
+        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.0.28"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -231,7 +223,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="heap-size" value="0"/>
+        <property key="heap-size" value="512"/>
         <property key="input-libraries" value=""/>
         <property key="kseg-length" value=""/>
         <property key="kseg-origin" value=""/>
@@ -447,6 +439,7 @@
         <property key="ToolFirmwareFilePath"
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="memories.configurationmemory" value="true"/>
         <property key="memories.dataflash" value="true"/>
         <property key="memories.eeprom" value="true"/>
