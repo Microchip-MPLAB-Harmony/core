@@ -2713,6 +2713,9 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\exceptions.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\fault_handlers.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\fs\fat_fs\src\ff.c</name>
             </file>
             <file>
@@ -2765,9 +2768,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\tasks.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\vectortrap.s</name>
             </file>
         </group>
     </group>
