@@ -58,11 +58,9 @@
 void GPIO_Initialize ( void )
 {
     /* PORTA Initialization */
-    ODCASET = 0x100; /* Open Drain Enable */
     ANSELACLR = 0x100; /* Digital Mode Enable */
 
     /* PORTB Initialization */
-    ODCBSET = 0x10; /* Open Drain Enable */
 
     /* PORTC Initialization */
 

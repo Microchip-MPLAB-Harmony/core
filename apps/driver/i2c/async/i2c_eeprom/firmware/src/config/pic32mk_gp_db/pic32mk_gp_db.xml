@@ -21,12 +21,12 @@
         </String>
         <String dnOrder="3" id="BSP_PIN_49_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="GPIO_RA8"/>
+            <User dnOrder="0" value=""/>
           </Values>
         </String>
         <String dnOrder="4" id="BSP_PIN_49_FUNCTION_TYPE">
           <Values dnOrder="0">
-            <User dnOrder="0" value="GPIO"/>
+            <User dnOrder="0" value="SDA2"/>
           </Values>
         </String>
         <String dnOrder="5" id="BSP_PIN_49_MODE">
@@ -36,7 +36,7 @@
         </String>
         <String dnOrder="6" id="BSP_PIN_49_OD">
           <Values dnOrder="0">
-            <User dnOrder="0" value="True"/>
+            <User dnOrder="0" value=""/>
           </Values>
         </String>
         <String dnOrder="7" id="BSP_PIN_4_MODE">
@@ -46,12 +46,12 @@
         </String>
         <String dnOrder="8" id="BSP_PIN_50_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="GPIO_RB4"/>
+            <User dnOrder="0" value=""/>
           </Values>
         </String>
         <String dnOrder="9" id="BSP_PIN_50_FUNCTION_TYPE">
           <Values dnOrder="0">
-            <User dnOrder="0" value="GPIO"/>
+            <User dnOrder="0" value="SCL2"/>
           </Values>
         </String>
         <String dnOrder="10" id="BSP_PIN_50_MODE">
@@ -61,7 +61,7 @@
         </String>
         <String dnOrder="11" id="BSP_PIN_50_OD">
           <Values dnOrder="0">
-            <User dnOrder="0" value="True"/>
+            <User dnOrder="0" value=""/>
           </Values>
         </String>
         <String dnOrder="12" id="BSP_PIN_54_MODE">
@@ -326,12 +326,12 @@
         </Hex>
         <Hex dnOrder="64" id="SYS_PORT_A_ODC">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="256"/>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
         <Hex dnOrder="65" id="SYS_PORT_B_ODC">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="16"/>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
         <Hex dnOrder="66" id="SYS_PORT_F_ANSEL">
@@ -574,35 +574,56 @@
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="21" id="SYSTEM_COMMON">
+        <File dnOrder="21" id="PORTS_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="22" id="SYSTEM_MODULE">
+        <File dnOrder="22" id="PORTS_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="23" id="SYSTEM_ROOT">
+        <File dnOrder="23" id="PORTS_MAPPING">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="24" id="TASKS_C">
+        <File dnOrder="24" id="SYSTEM_COMMON">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="25" id="USER_H">
+        <File dnOrder="25" id="SYSTEM_MODULE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="26" id="SYSTEM_ROOT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="27" id="TASKS_C">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="28" id="USER_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>

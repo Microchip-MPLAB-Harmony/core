@@ -83,8 +83,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9DA7A221136EB7E31D9059F7E7BE1A23</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9DA7A221136EB7E31D9059F7E7BE1A23</UserChecksum>
+          <GeneratedChecksum dnOrder="4">30C0563B582D57E290A15886F6FCBDD1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">30C0563B582D57E290A15886F6FCBDD1</UserChecksum>
         </File>
         <File dnOrder="10">
           <Type dnOrder="0">SOURCE</Type>
@@ -99,8 +99,8 @@
           <Name dnOrder="1">plib_gpio.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/gpio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/gpio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AA48255FC0E7A20E565A09620FF38FD2</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AA48255FC0E7A20E565A09620FF38FD2</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D581F5E91C90935A081239EA0C150D02</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D581F5E91C90935A081239EA0C150D02</UserChecksum>
         </File>
         <File dnOrder="12">
           <Type dnOrder="0">SOURCE</Type>
@@ -267,8 +267,8 @@
           <Name dnOrder="1">plib_gpio.h</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/peripheral/gpio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/gpio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">60AE748BFC9E92984436BC01C640416B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">60AE748BFC9E92984436BC01C640416B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6156B67327FEDB5E4076EFD2AA53920E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6156B67327FEDB5E4076EFD2AA53920E</UserChecksum>
         </File>
         <File dnOrder="33">
           <Type dnOrder="0">HEADER</Type>
@@ -361,14 +361,14 @@
       </Files>
       <Settings dnOrder="1">
         <Setting append="true" category="C32" delimiter=";" dnOrder="0" key="extra-include-directories" value="../src;../src/config/pic32mk_gp_db;../src/packs/PIC32MK1024GPE100_DFP;;../src/mips"/>
-        <Setting category="C32-LD" dnOrder="1" key="heap-size" value="0"/>
+        <Setting category="C32-LD" dnOrder="1" key="heap-size" value="512"/>
         <Setting category="C32-LD" dnOrder="2" key="no-device-startup-code" value="true"/>
         <Setting category="C32-LD" dnOrder="3" key="preprocessor-macros" value=""/>
       </Settings>
     </Manifest>
     <Settings dnOrder="4">
-      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.4.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MK-GP_DFP\1.0.39\atdf\PIC32MK1024GPE100.atdf"/>
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MK-GP_DFP\1.0.44\atdf\PIC32MK1024GPE100.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>

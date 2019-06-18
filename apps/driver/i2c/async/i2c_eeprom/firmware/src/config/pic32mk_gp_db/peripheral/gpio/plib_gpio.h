@@ -61,22 +61,6 @@
 // *****************************************************************************
 // *****************************************************************************
 
-/*** Macros for GPIO_RA8 pin ***/
-#define GPIO_RA8_Set()               (LATASET = (1<<8))
-#define GPIO_RA8_Clear()             (LATACLR = (1<<8))
-#define GPIO_RA8_Toggle()            (LATAINV= (1<<8))
-#define GPIO_RA8_Get()               ((PORTA >> 8) & 0x1)
-#define GPIO_RA8_OutputEnable()      (TRISACLR = (1<<8))
-#define GPIO_RA8_InputEnable()       (TRISASET = (1<<8))
-#define GPIO_RA8_PIN                  GPIO_PIN_RA8
-/*** Macros for GPIO_RB4 pin ***/
-#define GPIO_RB4_Set()               (LATBSET = (1<<4))
-#define GPIO_RB4_Clear()             (LATBCLR = (1<<4))
-#define GPIO_RB4_Toggle()            (LATBINV= (1<<4))
-#define GPIO_RB4_Get()               ((PORTB >> 4) & 0x1)
-#define GPIO_RB4_OutputEnable()      (TRISBCLR = (1<<4))
-#define GPIO_RB4_InputEnable()       (TRISBSET = (1<<4))
-#define GPIO_RB4_PIN                  GPIO_PIN_RB4
 
 
 // *****************************************************************************
