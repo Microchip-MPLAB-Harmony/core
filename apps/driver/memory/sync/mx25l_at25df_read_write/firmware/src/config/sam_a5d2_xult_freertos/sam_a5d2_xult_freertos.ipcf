@@ -12,7 +12,7 @@
         <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</path>
         <path>$PROJ_DIR$\..\..\firmware\src\arm</path>
         <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5</path>
-        <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\Include</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\include</path>
     </includePath>
     <asmIncludePath>
         <path>$PROJ_DIR$\..\..\firmware\src</path>
@@ -22,8 +22,11 @@
         <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</path>
         <path>$PROJ_DIR$\..\..\firmware\src\arm</path>
         <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5</path>
-        <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\Include</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\include</path>
     </asmIncludePath>
+    <defines>
+        <defines>__FPU_PRESENT=1</defines>
+    </defines>
     <linkerFile>
         <override>true</override>
         <path>$PROJ_DIR$\..\..\firmware\src\config\sam_a5d2_xult_freertos\ddr.icf</path>
@@ -172,7 +175,7 @@
             <path>\peripheral\pio\plib_pio.c</path>
             <path>\peripheral\aic\plib_aic.c</path>
             <path>\cstartup.s</path>
-            <path>\vectortrap.s</path>
+            <path>\fault_handlers.c</path>
             <path>\driver\memory\src\drv_memory.c</path>
             <path>\peripheral\tc\plib_tc0.c</path>
             <path>\system\time\src\sys_time.c</path>
