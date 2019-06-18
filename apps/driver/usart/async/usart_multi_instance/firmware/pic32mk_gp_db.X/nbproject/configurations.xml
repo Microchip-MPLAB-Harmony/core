@@ -1,133 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="66">
+<configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="HeaderFiles"
-                   displayName="Header Files"
-                   projectFiles="true">
+    <logicalFolder name="f1" displayName="Header Files" projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mk_gp_db" projectFiles="true">
           <logicalFolder name="f2" displayName="bsp" projectFiles="true">
-            <itemPath ex="false">../src/config/pic32mk_gp_db/bsp/bsp.h</itemPath>
+            <itemPath>../src/config/pic32mk_gp_db/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="usart" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mk_gp_db/driver/usart/drv_usart_definitions.h</itemPath>
-              <itemPath ex="false">../src/config/pic32mk_gp_db/driver/usart/drv_usart.h</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/driver/usart/drv_usart_definitions.h</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/driver/usart/drv_usart.h</itemPath>
             </logicalFolder>
-            <itemPath ex="false">../src/config/pic32mk_gp_db/driver/driver.h</itemPath>
-            <itemPath ex="false">../src/config/pic32mk_gp_db/driver/driver_common.h</itemPath>
+            <itemPath>../src/config/pic32mk_gp_db/driver/driver.h</itemPath>
+            <itemPath>../src/config/pic32mk_gp_db/driver/driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f2" displayName="clk" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mk_gp_db/peripheral/clk/plib_clk.h</itemPath>
+            <logicalFolder name="f3" displayName="clk" projectFiles="true">
+              <itemPath>../src/config/pic32mk_gp_db/peripheral/clk/plib_clk.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="dmac" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mk_gp_db/peripheral/dmac/plib_dmac.h</itemPath>
+            <logicalFolder name="f1" displayName="dmac" projectFiles="true">
+              <itemPath>../src/config/pic32mk_gp_db/peripheral/dmac/plib_dmac.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="evic" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mk_gp_db/peripheral/evic/plib_evic.h</itemPath>
+            <logicalFolder name="f5" displayName="evic" projectFiles="true">
+              <itemPath>../src/config/pic32mk_gp_db/peripheral/evic/plib_evic.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="gpio" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mk_gp_db/peripheral/gpio/plib_gpio.h</itemPath>
+            <logicalFolder name="f4" displayName="gpio" projectFiles="true">
+              <itemPath>../src/config/pic32mk_gp_db/peripheral/gpio/plib_gpio.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="uart" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mk_gp_db/peripheral/uart/plib_uart_common.h</itemPath>
-              <itemPath ex="false">../src/config/pic32mk_gp_db/peripheral/uart/plib_uart4.h</itemPath>
-              <itemPath ex="false">../src/config/pic32mk_gp_db/peripheral/uart/plib_uart6.h</itemPath>
+            <logicalFolder name="f2" displayName="uart" projectFiles="true">
+              <itemPath>../src/config/pic32mk_gp_db/peripheral/uart/plib_uart_common.h</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/peripheral/uart/plib_uart4.h</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/peripheral/uart/plib_uart6.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
             <logicalFolder name="f2" displayName="dma" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mk_gp_db/system/dma/sys_dma.h</itemPath>
-              <itemPath ex="false">../src/config/pic32mk_gp_db/system/dma/sys_dma_mapping.h</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/system/dma/sys_dma.h</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/system/dma/sys_dma_mapping.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mk_gp_db/system/int/sys_int.h</itemPath>
-              <itemPath ex="false">../src/config/pic32mk_gp_db/system/int/sys_int_mapping.h</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/system/int/sys_int.h</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
-            <itemPath ex="false">../src/config/pic32mk_gp_db/system/system.h</itemPath>
-            <itemPath ex="false">../src/config/pic32mk_gp_db/system/system_common.h</itemPath>
-            <itemPath ex="false">../src/config/pic32mk_gp_db/system/system_module.h</itemPath>
+            <itemPath>../src/config/pic32mk_gp_db/system/system.h</itemPath>
+            <itemPath>../src/config/pic32mk_gp_db/system/system_common.h</itemPath>
+            <itemPath>../src/config/pic32mk_gp_db/system/system_module.h</itemPath>
           </logicalFolder>
-          <itemPath ex="false">../src/config/pic32mk_gp_db/toolchain_specifics.h</itemPath>
-          <itemPath ex="false">../src/config/pic32mk_gp_db/definitions.h</itemPath>
-          <itemPath ex="false">../src/config/pic32mk_gp_db/user.h</itemPath>
-          <itemPath ex="false">../src/config/pic32mk_gp_db/configuration.h</itemPath>
+          <itemPath>../src/config/pic32mk_gp_db/toolchain_specifics.h</itemPath>
+          <itemPath>../src/config/pic32mk_gp_db/definitions.h</itemPath>
+          <itemPath>../src/config/pic32mk_gp_db/user.h</itemPath>
+          <itemPath>../src/config/pic32mk_gp_db/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f3" displayName="osal" projectFiles="true">
-        <itemPath ex="false">../src/config/pic32mk_gp_db/osal/osal.h</itemPath>
-        <itemPath ex="false">../src/config/pic32mk_gp_db/osal/osal_definitions.h</itemPath>
-        <itemPath ex="false">../src/config/pic32mk_gp_db/osal/osal_impl_basic.h</itemPath>
+        <itemPath>../src/config/pic32mk_gp_db/osal/osal.h</itemPath>
+        <itemPath>../src/config/pic32mk_gp_db/osal/osal_definitions.h</itemPath>
+        <itemPath>../src/config/pic32mk_gp_db/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1"
                        displayName="PIC32MK1024GPE100_DFP"
                        projectFiles="true">
-          <itemPath ex="false">../src/packs/PIC32MK1024GPE100_DFP/device.h</itemPath>
+          <itemPath>../src/packs/PIC32MK1024GPE100_DFP/device.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <itemPath ex="false">../src/app1.h</itemPath>
-      <itemPath ex="false">../src/app2.h</itemPath>
+      <itemPath>../src/app1.h</itemPath>
+      <itemPath>../src/app2.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="LinkerScript"
-                   displayName="Linker Files"
-                   projectFiles="true">
+    <logicalFolder name="f4" displayName="Important Files" projectFiles="true">
+      <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder name="SourceFiles"
-                   displayName="Source Files"
-                   projectFiles="true">
+    <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="f3" displayName="Source Files" projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mk_gp_db" projectFiles="true">
           <logicalFolder name="f2" displayName="bsp" projectFiles="true">
-            <itemPath ex="false">../src/config/pic32mk_gp_db/bsp/bsp.c</itemPath>
+            <itemPath>../src/config/pic32mk_gp_db/bsp/bsp.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="usart" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mk_gp_db/driver/usart/src/drv_usart.c</itemPath>
-              <itemPath ex="false">../src/config/pic32mk_gp_db/driver/usart/src/drv_usart_local.h</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/driver/usart/src/drv_usart.c</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/driver/usart/src/drv_usart_local.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f2" displayName="clk" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mk_gp_db/peripheral/clk/plib_clk.c</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/peripheral/clk/plib_clk.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="evic" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mk_gp_db/peripheral/evic/plib_evic.c</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/peripheral/evic/plib_evic.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="gpio" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mk_gp_db/peripheral/gpio/plib_gpio.c</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/peripheral/gpio/plib_gpio.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="uart" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mk_gp_db/peripheral/uart/plib_uart4.c</itemPath>
-              <itemPath ex="false">../src/config/pic32mk_gp_db/peripheral/uart/plib_uart6.c</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/peripheral/uart/plib_uart4.c</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/peripheral/uart/plib_uart6.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="stdio" projectFiles="true">
-            <itemPath ex="false">../src/config/pic32mk_gp_db/stdio/xc32_monitor.c</itemPath>
+            <itemPath>../src/config/pic32mk_gp_db/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f5" displayName="system" projectFiles="true">
             <logicalFolder name="f2" displayName="dma" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mk_gp_db/system/dma/sys_dma.c</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/system/dma/sys_dma.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
-              <itemPath ex="false">../src/config/pic32mk_gp_db/system/int/src/sys_int.c</itemPath>
+              <itemPath>../src/config/pic32mk_gp_db/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <itemPath ex="false">../src/config/pic32mk_gp_db/initialization.c</itemPath>
-          <itemPath ex="false">../src/config/pic32mk_gp_db/interrupts.c</itemPath>
-          <itemPath ex="false">../src/config/pic32mk_gp_db/exceptions.c</itemPath>
-          <itemPath ex="false">../src/config/pic32mk_gp_db/tasks.c</itemPath>
+          <itemPath>../src/config/pic32mk_gp_db/initialization.c</itemPath>
+          <itemPath>../src/config/pic32mk_gp_db/interrupts.c</itemPath>
+          <itemPath>../src/config/pic32mk_gp_db/exceptions.c</itemPath>
+          <itemPath>../src/config/pic32mk_gp_db/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <itemPath ex="false">../src/main.c</itemPath>
-      <itemPath ex="false">../src/app1.c</itemPath>
-      <itemPath ex="false">../src/app2.c</itemPath>
-    </logicalFolder>
-    <logicalFolder name="ExternalFiles"
-                   displayName="Important Files"
-                   projectFiles="false">
-      <itemPath ex="false">Makefile</itemPath>
+      <itemPath>../src/main.c</itemPath>
+      <itemPath>../src/app1.c</itemPath>
+      <itemPath>../src/app2.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -182,7 +174,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/pic32mk_gp_db;../src/packs/PIC32MK1024GPE100_DFP;../src/mips;"/>
+                  value="../src;../src/config/pic32mk_gp_db;../src/packs/PIC32MK1024GPE100_DFP;../src/mips"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -243,7 +235,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="heap-size" value="0"/>
+        <property key="heap-size" value="512"/>
         <property key="input-libraries" value=""/>
         <property key="kseg-length" value=""/>
         <property key="kseg-origin" value=""/>
