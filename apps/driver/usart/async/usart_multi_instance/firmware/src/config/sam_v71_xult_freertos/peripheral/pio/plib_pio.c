@@ -58,7 +58,7 @@
 void PIO_Initialize ( void )
 {
     /* Selected System IO pins are configured as GPIO */
-    MATRIX_REGS->CCFG_SYSIO |= 0x1010;
+    MATRIX_REGS->CCFG_SYSIO |= 0x1c10;
 
     /************************ PIO A Initialization ************************/
     /* PORTA PIO Disable and Peripheral Enable*/
@@ -98,6 +98,8 @@ void PIO_Initialize ( void )
     /* PORTB Output Direction Enable */
     ((pio_registers_t*)PIO_PORT_B)->PIO_OER = 0x0;
     ((pio_registers_t*)PIO_PORT_B)->PIO_ODR = ~0x0;
+    /* PORTB Initial state High */
+    ((pio_registers_t*)PIO_PORT_B)->PIO_ODSR = 0x0;
     /* PORTB drive control */
     ((pio_registers_t*)PIO_PORT_B)->PIO_DRIVER = 0x0;
 
@@ -130,6 +132,8 @@ void PIO_Initialize ( void )
     /* PORTD Output Direction Enable */
     ((pio_registers_t*)PIO_PORT_D)->PIO_OER = 0x0;
     ((pio_registers_t*)PIO_PORT_D)->PIO_ODR = ~0x0;
+    /* PORTD Initial state High */
+    ((pio_registers_t*)PIO_PORT_D)->PIO_ODSR = 0x0;
     /* PORTD drive control */
     ((pio_registers_t*)PIO_PORT_D)->PIO_DRIVER = 0x0;
 
@@ -145,6 +149,8 @@ void PIO_Initialize ( void )
     /* PORTE Output Direction Enable */
     ((pio_registers_t*)PIO_PORT_E)->PIO_OER = 0x0;
     ((pio_registers_t*)PIO_PORT_E)->PIO_ODR = ~0x0;
+    /* PORTE Initial state High */
+    ((pio_registers_t*)PIO_PORT_E)->PIO_ODSR = 0x0;
     /* PORTE drive control */
     ((pio_registers_t*)PIO_PORT_E)->PIO_DRIVER = 0x0;
 
