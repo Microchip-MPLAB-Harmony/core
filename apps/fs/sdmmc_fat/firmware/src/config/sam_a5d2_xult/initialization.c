@@ -201,6 +201,8 @@ void SYS_Initialize ( void* data )
 
 	SDMMC1_Initialize();
 
+  
+
  
     TC0_CH0_TimerInitialize(); 
      
