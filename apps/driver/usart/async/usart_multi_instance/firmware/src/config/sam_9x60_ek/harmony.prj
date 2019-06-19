@@ -27,16 +27,16 @@
           <Name dnOrder="1">drv_usart.c</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek/driver/usart/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usart/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">84D72D78B8D45D00FEB0E569061CAFA7</GeneratedChecksum>
-          <UserChecksum dnOrder="5">84D72D78B8D45D00FEB0E569061CAFA7</UserChecksum>
+          <GeneratedChecksum dnOrder="4">477C40A1C9F70EB0508904452AF43108</GeneratedChecksum>
+          <UserChecksum dnOrder="5">477C40A1C9F70EB0508904452AF43108</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usart_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek/driver/usart/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usart/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3E394AAD9DF69A5CD82AD1D4DDFDE7E5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3E394AAD9DF69A5CD82AD1D4DDFDE7E5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">DEB1735C6500FAA96262050264574EC0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">DEB1735C6500FAA96262050264574EC0</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -115,8 +115,8 @@
           <Name dnOrder="1">plib_pio.c</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek/peripheral/pio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/pio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4B2C6400B008F3995329CE289EB29415</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4B2C6400B008F3995329CE289EB29415</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F69385C0FDC5B5EE085166916867066D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F69385C0FDC5B5EE085166916867066D</UserChecksum>
         </File>
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
@@ -785,7 +785,7 @@
       </Files>
     </Manifest>
     <Settings dnOrder="4">
-      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.4.0"/>
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAM9X60_DFP\0.1.14\atdf\SAM9X60.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
