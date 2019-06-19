@@ -195,24 +195,24 @@
           <Name dnOrder="1">plib_pit.c</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek_freertos/peripheral/pit/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/pit/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">037195C4AA684ADC5C55DE2303AA742F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">037195C4AA684ADC5C55DE2303AA742F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">21FCEA40BF0881BC509440DCD60D98CF</GeneratedChecksum>
+          <UserChecksum dnOrder="5">21FCEA40BF0881BC509440DCD60D98CF</UserChecksum>
         </File>
         <File dnOrder="24">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_sdmmc0.c</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek_freertos/peripheral/sdmmc/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/sdmmc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">218D281CF939685EF28C45AF72EAF8D5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">218D281CF939685EF28C45AF72EAF8D5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">653714CDFCD4FF8CDEE033E24C3813B4</GeneratedChecksum>
+          <UserChecksum dnOrder="5">653714CDFCD4FF8CDEE033E24C3813B4</UserChecksum>
         </File>
         <File dnOrder="25">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_tc0.c</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek_freertos/peripheral/tc/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/tc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E615A70652631E746B62A084D6E8BD5A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">E615A70652631E746B62A084D6E8BD5A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BCD1E5BD986F1CA48EF54BD30E16F66B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BCD1E5BD986F1CA48EF54BD30E16F66B</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">SOURCE</Type>
@@ -1185,7 +1185,7 @@
       </Files>
     </Manifest>
     <Settings dnOrder="4">
-      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.4.0"/>
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAM9X60_DFP\0.1.14\atdf\SAM9X60.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
