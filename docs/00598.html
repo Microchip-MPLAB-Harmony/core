@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_MX25L_ResetFlash Function</title>
+<title>DRV_MX25L_Read Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00273.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00175.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00176.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00598.html" target="topic">DRV_MX25L_ResetFlash Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00176.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00177.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00598.html" target="topic">DRV_MX25L_Read Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00597.html" target="topic">Previous</a> | <a href="00176.html" target="topic">Up</a> | <a href="00599.html" target="topic">Next</a></div>
+<a href="00597.html" target="topic">Previous</a> | <a href="00177.html" target="topic">Up</a> | <a href="00599.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MX25L_ResetFlash Topic Title: DRV_MX25L_ResetFlash Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MX25L_Read@DRV_HANDLE@void *@uint32_t@uint32_t Topic Title: DRV_MX25L_Read Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_MX25L_ResetFlash Function</div>
+DRV_MX25L_Read Function</div>
 </div>
 </div>
 
@@ -49,17 +49,24 @@ DRV_MX25L_ResetFlash Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function schedules a blocking operation for resetting the flash device to standby mode. All the volatile bits and settings will be cleared then, which makes the device return to the default status as power on.</p></div>
+This function schedules a blocking operation for reading requested number of data bytes from the flash memory.&nbsp;</p>
+<p class="Element10">
+The request is sent in QUAD_MODE to flash device.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_MX25L_ResetFlash</span></strong>();</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_MX25L_Read</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">rx_data</span></strong>, 
+    uint32_t <strong><span style="color: #000000">rx_data_length</span></strong>, 
+    uint32_t <strong><span style="color: #000000">address</span></strong>
+);</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="00594.html" target="topic">DRV_MX25L_Open</a>() routine must have been called for the specified MX25L driver instance.</p></div>
+The <a href="00596.html" target="topic">DRV_MX25L_Open</a>() routine must have been called for the specified MX25L driver instance.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -78,7 +85,22 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr></table></div></div>
+A valid open-instance handle, returned from the driver's open routine<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+*rx_data&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Buffer pointer into which the data read from the MX25L Flash memory will be placed.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+rx_data_length&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Total number of bytes to be read.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+address&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Read memory start address from where the data should be read.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,13 +110,13 @@ Returns</div>
 <p class="Element10">
 false</p>
 <ul class="Element630">
-<li class="Element600">if Reset-Enable or Reset flash command itself fails</li>
+<li class="Element600">if read command itself fails</li>
 </ul><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
 true</p>
 <ul class="Element630">
-<li class="Element600">if the reset is successfully completed</li>
+<li class="Element600">if number of bytes requested are read from flash memory</li>
 </ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
@@ -102,13 +124,20 @@ Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This routine will block wait for request to complete.</p></div>
+This routine will block waiting until read request is completed successfully.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">if</span></strong>(<strong><span style="color: #000080">true</span></strong> != DRV_MX25L_ResetFlash())
+<div class="Element13"><div class="Element12"><pre class="Element12">
+<strong><span style="color: #000080">#define</span></strong> BUFFER_SIZE  1024
+<strong><span style="color: #000080">#define</span></strong> MEM_ADDRESS  0x0
+
+<a href="00417.html" target="topic">DRV_HANDLE</a> handle;  <i><span style="color: #008000">// Returned from DRV_MX25L_Open</span></i>
+uint8_t readBuffer[BUFFER_SIZE];
+
+<strong><span style="color: #000080">if</span></strong> (<strong><span style="color: #000080">true</span></strong> != DRV_MX25L_Read(handle, (<strong><span style="color: #000080">void</span></strong> *)&amp;readBuffer, BUFFER_SIZE, MEM_ADDRESS))
 {
     <i><span style="color: #008000">// Error handling here</span></i>
 }
@@ -120,7 +149,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00273.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00175.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00176.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00598.html" target="topic">DRV_MX25L_ResetFlash Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00176.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00177.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00598.html" target="topic">DRV_MX25L_Read Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -128,13 +157,13 @@ Example</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00597.html" target="topic">Previous</a> | <a href="00176.html" target="topic">Up</a> | <a href="00599.html" target="topic">Next</a></div>
+<a href="00597.html" target="topic">Previous</a> | <a href="00177.html" target="topic">Up</a> | <a href="00599.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MX25L_ResetFlash Topic Title: DRV_MX25L_ResetFlash Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MX25L_Read@DRV_HANDLE@void *@uint32_t@uint32_t Topic Title: DRV_MX25L_Read Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

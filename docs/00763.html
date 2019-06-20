@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_USART_WriteQueuePurge Function</title>
+<title>DRV_USART_WriteBuffer Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00313.html" target="topic">USART Driver Library Help</a> &gt; <a href="00314.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00763.html" target="topic">DRV_USART_WriteQueuePurge Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00314.html" target="topic">USART Driver Library Help</a> &gt; <a href="00315.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00763.html" target="topic">DRV_USART_WriteBuffer Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00757.html" target="topic">Previous</a> | <a href="00314.html" target="topic">Up</a> | <a href="00751.html" target="topic">Next</a></div>
+<a href="00758.html" target="topic">Previous</a> | <a href="00315.html" target="topic">Up</a> | <a href="00764.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_WriteQueuePurge@DRV_HANDLE Topic Title: DRV_USART_WriteQueuePurge Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_WriteBuffer@DRV_HANDLE@void*@size_t Topic Title: DRV_USART_WriteBuffer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_USART_WriteQueuePurge Function</div>
+DRV_USART_WriteBuffer Function</div>
 </div>
 </div>
 
@@ -49,19 +49,26 @@ DRV_USART_WriteQueuePurge Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function removes all the buffer requests from the queue. The client can use this function to purge the queue on timeout or to remove unwanted stalled buffer requests or in any other use case.</p></div>
+This function does a blocking write operation. The function blocks till the data write is complete. Function will return false to report failure. The failure will occur for the following reasons:</p>
+<ul class="Element630">
+<li class="Element600">if the handle is invalid</li>
+<li class="Element600">if the input buffer pointer is NULL</li>
+<li class="Element600">if the buffer size is 0</li>
+</ul></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_USART_WriteQueuePurge</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00416.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_USART_WriteBuffer</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">buffer</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> size_t <strong><span style="color: #000000">size</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="00754.html" target="topic">DRV_USART_Open</a> must have been called to obtain a valid opened device handle.</p></div>
+<a href="00756.html" target="topic">DRV_USART_Open</a> must have been called to obtain a valid opened device handle.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -80,7 +87,17 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Handle of the communication channel as returned by the <a href="00754.html" target="topic">DRV_USART_Open</a> function.&nbsp;</div></td></tr></table></div></div>
+Handle of the communication channel as return by the <a href="00756.html" target="topic">DRV_USART_Open</a> function.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+buffer&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the data to be transmitted.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+size&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Buffer size in bytes.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,35 +105,29 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-true - Write queue purge is successful.&nbsp;</p>
-<p class="Element10">
-false - Write queue purge has failed.</p></div>
+true - write is successful false - error has occurred</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function is thread safe when used in an RTOS environment. Avoid this function call from within the callback.</p></div>
+This function is thread safe in a RTOS application. This function should not be called from an interrupt context.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// myUSARTHandle is the handle returned by the DRV_USART_Open function.</span></i>
-<i><span style="color: #008000">// Use DRV_USART_WriteBufferAdd to queue write requests</span></i>
+<div class="Element13"><div class="Element12"><pre class="Element12">
+MY_APP_OBJ myAppObj;
+uint8_t myBuffer[MY_BUFFER_SIZE];
 
-<i><span style="color: #008000">// Application timeout function, where remove queued buffers.</span></i>
-<strong><span style="color: #000080">void</span></strong> APP_TimeOut(<strong><span style="color: #000080">void</span></strong>)
+<i><span style="color: #008000">// myUSARTHandle is the handle returned</span></i>
+<i><span style="color: #008000">// by the DRV_USART_Open function.</span></i>
+
+<strong><span style="color: #000080">if</span></strong> (DRV_USART_WriteBuffer(myUSARTHandle, myBuffer, MY_BUFFER_SIZE) == <strong><span style="color: #000080">false</span></strong>)
 {
-    <strong><span style="color: #000080">if</span></strong>(DRV_USART_WriteQueuePurge(myUSARThandle) == <strong><span style="color: #000080">false</span></strong>)
-    {
-        <i><span style="color: #008000">//Couldn't purge the write queue, try again.</span></i>
-    }
-    <strong><span style="color: #000080">else</span></strong>
-    {
-        <i><span style="color: #008000">//Queue purge successful.</span></i>
-    }
+    <i><span style="color: #008000">// Error handling here</span></i>
 }</pre></div></div>
 </div>
 </div>
@@ -125,7 +136,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00313.html" target="topic">USART Driver Library Help</a> &gt; <a href="00314.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00763.html" target="topic">DRV_USART_WriteQueuePurge Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00314.html" target="topic">USART Driver Library Help</a> &gt; <a href="00315.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00763.html" target="topic">DRV_USART_WriteBuffer Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -133,13 +144,13 @@ Example</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00757.html" target="topic">Previous</a> | <a href="00314.html" target="topic">Up</a> | <a href="00751.html" target="topic">Next</a></div>
+<a href="00758.html" target="topic">Previous</a> | <a href="00315.html" target="topic">Up</a> | <a href="00764.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_WriteQueuePurge@DRV_HANDLE Topic Title: DRV_USART_WriteQueuePurge Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_WriteBuffer@DRV_HANDLE@void*@size_t Topic Title: DRV_USART_WriteBuffer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

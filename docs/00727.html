@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SST26_Read Function</title>
+<title>DRV_SST26_Open Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00273.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00284.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00285.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00727.html" target="topic">DRV_SST26_Read Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00285.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00286.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00727.html" target="topic">DRV_SST26_Open Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00726.html" target="topic">Previous</a> | <a href="00285.html" target="topic">Up</a> | <a href="00730.html" target="topic">Next</a></div>
+<a href="00726.html" target="topic">Previous</a> | <a href="00286.html" target="topic">Up</a> | <a href="00713.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_Read@DRV_HANDLE@void *@uint32_t@uint32_t Topic Title: DRV_SST26_Read Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_SST26_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SST26_Read Function</div>
+DRV_SST26_Open Function</div>
 </div>
 </div>
 
@@ -49,24 +49,32 @@ DRV_SST26_Read Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function schedules a blocking operation for reading requested number of data bytes from the flash memory.&nbsp;</p>
+This routine opens the specified SST26 driver instance and provides a handle.&nbsp;</p>
 <p class="Element10">
-The request is sent in QUAD_MODE to flash device.</p></div>
+It performs the following blocking operations:</p>
+<ul class="Element630">
+<li class="Element600">Resets the Flash Device</li>
+<li class="Element600">Puts it on QUAD IO Mode</li>
+<li class="Element600">Unlocks the flash if DRV_SST26_Open was called with write intent.</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+This handle must be provided to all other client-level operations to identify the caller and the instance of the driver.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_SST26_Read</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00416.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">rx_data</span></strong>, 
-    uint32_t <strong><span style="color: #000000">rx_data_length</span></strong>, 
-    uint32_t <strong><span style="color: #000000">address</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">DRV_SST26_Open</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01391.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="00502.html" target="topic">DRV_IO_INTENT</a> <strong><span style="color: #000000">ioIntent</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="00725.html" target="topic">DRV_SST26_Open</a>() routine must have been called for the specified SST26 driver instance.</p></div>
+Function <a href="00726.html" target="topic">DRV_SST26_Initialize</a> must have been called before calling this function.&nbsp;</p>
+<p class="Element10">
+Driver should be in ready state to accept the request. Can be checked by calling <a href="00732.html" target="topic">DRV_SST26_Status</a>().</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -83,24 +91,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+drvIndex&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open routine<br>&nbsp;</div></td></tr><tr>
+Identifier for the instance to be opened<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-*rx_data&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+ioIntent&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Buffer pointer into which the data read from the SST26 Flash memory will be placed.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-rx_data_length&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Total number of bytes to be read.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-address&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Read memory start address from where the data should be read.&nbsp;</div></td></tr></table></div></div>
+Zero or more of the values from the enumeration <a href="00502.html" target="topic">DRV_IO_INTENT</a> &quot;ORed&quot; together to indicate the intended use of the driver&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -108,15 +106,11 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-false</p>
-<ul class="Element630">
-<li class="Element600">if read command itself fails</li>
-</ul><p class="Element10">
-&nbsp;</p>
+If successful, the routine returns a valid open-instance handle (a number identifying both the caller and the module instance).&nbsp;</p>
 <p class="Element10">
-true</p>
+If an error occurs, <a href="00418.html" target="topic">DRV_HANDLE_INVALID</a> is returned. Errors can occur under the following circumstances:</p>
 <ul class="Element630">
-<li class="Element600">if number of bytes requested are read from flash memory</li>
+<li class="Element600">if the driver hardware instance being opened is not initialized.</li>
 </ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
@@ -124,24 +118,21 @@ Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+The handle returned is valid until the <a href="00713.html" target="topic">DRV_SST26_Close</a> routine is called.&nbsp;</p>
+<p class="Element10">
+If the driver has already been opened, it should not be opened again.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-<strong><span style="color: #000080">#define</span></strong> BUFFER_SIZE  1024
-<strong><span style="color: #000080">#define</span></strong> MEM_ADDRESS  0x0
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="00417.html" target="topic">DRV_HANDLE</a> handle;
 
-<a href="00416.html" target="topic">DRV_HANDLE</a> handle;  <i><span style="color: #008000">// Returned from DRV_SST26_Open</span></i>
-uint8_t readBuffer[BUFFER_SIZE];
-
-<strong><span style="color: #000080">if</span></strong> (<strong><span style="color: #000080">true</span></strong> != DRV_SST26_Read(handle, (<strong><span style="color: #000080">void</span></strong> *)&amp;readBuffer, BUFFER_SIZE, MEM_ADDRESS))
+handle = DRV_SST26_Open(DRV_SST26_INDEX);
+<strong><span style="color: #000080">if</span></strong> (<a href="00418.html" target="topic">DRV_HANDLE_INVALID</a> == handle)
 {
-    <i><span style="color: #008000">// Error handling here</span></i>
-}
-</pre></div></div>
+    <i><span style="color: #008000">// Unable to open the driver</span></i>
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -149,7 +140,7 @@ uint8_t readBuffer[BUFFER_SIZE];
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00273.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00284.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00285.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00727.html" target="topic">DRV_SST26_Read Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00285.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00286.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00727.html" target="topic">DRV_SST26_Open Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -157,13 +148,13 @@ uint8_t readBuffer[BUFFER_SIZE];
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00726.html" target="topic">Previous</a> | <a href="00285.html" target="topic">Up</a> | <a href="00730.html" target="topic">Next</a></div>
+<a href="00726.html" target="topic">Previous</a> | <a href="00286.html" target="topic">Up</a> | <a href="00713.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_Read@DRV_HANDLE@void *@uint32_t@uint32_t Topic Title: DRV_SST26_Read Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_SST26_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

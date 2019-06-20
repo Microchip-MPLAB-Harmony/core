@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>nvm_mpfs</title>
+<title>File System Applications</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00778.html" target="topic">File System Applications</a> &gt; <a href="00780.html" target="topic">nvm_mpfs</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00780.html" target="topic">File System Applications</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00795.html" target="topic">Previous</a> | <a href="00778.html" target="topic">Up</a> | <a href="00796.html" target="topic">Next</a></div>
+<a href="00325.html" target="topic">Previous</a> | <a href="00010.html" target="topic">Up</a> | <a href="00781.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications nvm_mpfs Topic Title: nvm_mpfs)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications Help Topic Title: File System Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-nvm_mpfs</div>
+File System Applications</div>
 </div>
 </div>
 
@@ -48,31 +48,8 @@ nvm_mpfs</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element15">
-File System Operations on NVM:</div>
-
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000">The application contains a MPFS disk image in the internal Flash memory. The disk image contains two files named:</span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000"><strong>FILE.txt</strong>, Size = <strong>11 Bytes</strong>. The content of the file is: <strong>&quot;Hello World&quot;</strong></span></li>
-<li class="Element601"><span style="color: #000000"><strong>TEST.txt</strong>, Size = <strong>10 Bytes</strong>. The content of the file is: <strong>&quot;1234567890&quot;</strong></span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000">The application performs following file system related operations:</span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000"><a href="01143.html" target="topic">SYS_FS_FileRead</a></span></li>
-<li class="Element601"><span style="color: #000000"><a href="01146.html" target="topic">SYS_FS_FileStat</a></span></li>
-<li class="Element601"><span style="color: #000000"><a href="01145.html" target="topic">SYS_FS_FileSize</a></span></li>
-<li class="Element601"><span style="color: #000000"><a href="01144.html" target="topic">SYS_FS_FileSeek</a></span></li>
-<li class="Element601"><span style="color: #000000"><a href="01138.html" target="topic">SYS_FS_FileEOF</a></span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000">The contents of both the files are read and compared with the expected strings as mentioned above. If the string compare is successful, An LED indication is provided.</span></li>
-</ul><p class="Element10">
-&nbsp;</p>
 <p class="Element10">
-<span style="color: #000000"><strong>File system layer uses:</strong></span></p>
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000">Memory driver to communicate with underlying NVM media</span></li>
-</ul></div>
+<span style="color: #000000">This section provides help for the File System applications.</span></p></div>
 </div>
 <a name="546F70696373"></a><div class="Element14">
 Topics</div>
@@ -89,24 +66,49 @@ Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00796.html" target="topic">Building The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00781.html" target="topic">nvm_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This section provides information on how to build an application using the MPLAB X IDE.&nbsp;</div></td></tr><tr>
+<span style="color: #000000">This application shows an example of implementing a FAT disk in the device internal Flash memory.</span>&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00798.html" target="topic">MPLAB Harmony Configuration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00782.html" target="topic">nvm_mpfs</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This section provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
+<span style="color: #000000">This application shows an example of implementing a MPFS disk in device Internal Flash memory.</span>&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00797.html" target="topic">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00783.html" target="topic">nvm_sdmmc_fat_multi_disk</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
+<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access files across multiple media (NVM, SDMMC).</span>&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00799.html" target="topic">Running The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00784.html" target="topic">nvm_sdspi_fat_multi_disk</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This section provides information on how to run the application using the MPLAB X IDE.&nbsp;</div></td></tr></table></div></div>
+<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access files across multiple media (NVM, SDSPI).</span>&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00789.html" target="topic">nvm_sqi_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access multiple files across multiple media (NVM, SQI FLASH).</span>&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00790.html" target="topic">sdmmc_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access and modify the contents of a SD card using the SDMMC driver.</span>&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00791.html" target="topic">sdspi_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access and modify the contents of a SD card using the SDSPI driver.</span>&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00792.html" target="topic">spi_flash_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access and modify the contents of a flash memory using SPI Flash driver.</span>&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00793.html" target="topic">sqi_flash_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access SQI based flash media.</span>&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -114,7 +116,7 @@ This section provides information on how to run the application using the MPLAB 
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00778.html" target="topic">File System Applications</a> &gt; <a href="00780.html" target="topic">nvm_mpfs</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00780.html" target="topic">File System Applications</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -122,13 +124,13 @@ This section provides information on how to run the application using the MPLAB 
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00795.html" target="topic">Previous</a> | <a href="00778.html" target="topic">Up</a> | <a href="00796.html" target="topic">Next</a></div>
+<a href="00325.html" target="topic">Previous</a> | <a href="00010.html" target="topic">Up</a> | <a href="00781.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications nvm_mpfs Topic Title: nvm_mpfs)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications Help Topic Title: File System Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

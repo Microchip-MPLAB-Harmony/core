@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>i2c_multi_slave</title>
+<title>Running the Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00009.html" target="topic">Driver Applications</a> &gt; <a href="00076.html" target="topic">I2C Driver Applications</a> &gt; Async &gt; <a href="00084.html" target="topic">i2c_multi_slave</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00009.html" target="topic">Driver Applications</a> &gt; <a href="00077.html" target="topic">I2C Driver Applications</a> &gt; Async &gt; <a href="00080.html" target="topic">i2c_eeprom</a> &gt; <a href="00084.html" target="topic">Running the Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00083.html" target="topic">Previous</a> | <a href="00076.html" target="topic">Up</a> | <a href="00078.html" target="topic">Next</a></div>
+<a href="00082.html" target="topic">Previous</a> | <a href="00080.html" target="topic">Up</a> | <a href="00085.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2C Async i2c_multi_slave Topic Title: i2c_multi_slave)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2C Async i2c_eeprom Running the Application Topic Title: Running the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-i2c_multi_slave</div>
+Running the Application</div>
 </div>
 </div>
 
@@ -49,56 +49,110 @@ i2c_multi_slave</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The application demonstrates the multi-client feature of the <span style="color: #000000">I<sup>2</sup>C</span> driver in asynchronous mode. The example uses a <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATIO1-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">IO1 Xplained Pro Extension Kit</a> that has a temperature sensor and an EEPROM interfaced on the same <span style="color: #000000">I<sup>2</sup>C</span> bus.&nbsp;</p>
+<strong><u>MPLAB X IDE</u></strong></p>
+<ol class="Element630">
+<li value="1" class="Element600">Connect a USB cable to the DEBUG port.</li>
+<li value="2" class="Element600">Build and program the application using the MPLAB X IDE.</li>
+<li value="3" class="Element600">The LED indicates the success or failure.
+<ul class="Element631">
+<li class="Element601">The LED is turned ON when the data read from EEPROM matches with the written data</li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+The following table provides the LED name: </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="85%">
+<div class="Element66">
+Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="15%">
+<div class="Element66">
+LED Name&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="85%">
+<div class="Element68">
+PIC32MK General Purpose (GP) Development Board&nbsp;</div></td><td class="Element67" valign="top" width="15%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="85%">
+<div class="Element68">
+PIC32MX Curiosity Development Board&nbsp;</div></td><td class="Element67" valign="top" width="15%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="85%">
+<div class="Element68">
+PIC32MX XLP Starter Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
+<div class="Element68">
+LED 1 (Red)&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="85%">
+<div class="Element68">
+SAM C21N Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="85%">
+<div class="Element68">
+SAM E54 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="85%">
+<div class="Element68">
+SAM E70 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="85%">
+<div class="Element68">
+SAM G55 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="85%">
+<div class="Element68">
+SAM L10 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="85%">
+<div class="Element68">
+SAM L21 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="85%">
+<div class="Element68">
+SAM V71 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="15%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-Two application tasks are created which act as clients to the same instance of the <span style="color: #000000">I<sup>2</sup>C</span> driver:&nbsp;</p>
+<strong><u>IAR Embedded work bench</u></strong></p>
+<ol class="Element630">
+<li value="1" class="Element600">Build the project using IAR Embedded Workbench</li>
+<li value="2" class="Element600">Use the output binary file (harmony.bin) to setup the board as detailed in <a href="00082.html" target="topic">hardware setup</a></li>
+<li value="3" class="Element600">Reset the board to run the application</li>
+<li value="4" class="Element600">The LED indicates the success or failure.
+<ul class="Element631">
+<li class="Element601">The LED is turned ON when the data read from EEPROM matches with the written data</li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
 <p class="Element10">
-APP_I2C_TEMP_SENSOR_Tasks:</p>
-<ul class="Element630">
-<li class="Element600">Reads temperature every 1 second, prints on console and notifies the EEPROM client</li>
-<li class="Element600">The Time System Service is used to generate a callback every 1 second</li>
-</ul><p class="Element10">
-APP_I2C_EEPROM_Tasks:</p>
-<ul class="Element630">
-<li class="Element600">Writes temperature values to the EEPROM once the temperature read complete notification is received</li>
-<li class="Element600">Reads and prints the last five saved temperature data back from the EEPROM when user enters any key on the console.</li>
-</ul></div>
-</div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
+The following table provides the LED name. </p><div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table4">
 <tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00078.html" target="topic">Building the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to build an application using the MPLAB X IDE.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00086.html" target="topic">MPLAB Harmony Configuration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This topic provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00085.html" target="topic">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00087.html" target="topic">Running the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to run the application using the MPLAB X IDE.&nbsp;</div></td></tr></table></div></div>
+<td class="Element65" valign="top" width="64%">
+<div class="Element66">
+Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="36%">
+<div class="Element66">
+LED Name&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="64%">
+<div class="Element68">
+SAMA5D2 Xplained Ultra evaluation kit&nbsp;</div></td><td class="Element67" valign="top" width="36%">
+<div class="Element68">
+RGB_LED (Green)&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="64%">
+<div class="Element68">
+SAM9X60 evaluation kit&nbsp;</div></td><td class="Element67" valign="top" width="36%">
+<div class="Element68">
+RGB_LED (Green)&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -106,7 +160,7 @@ This section provides information on how to run the application using the MPLAB 
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00009.html" target="topic">Driver Applications</a> &gt; <a href="00076.html" target="topic">I2C Driver Applications</a> &gt; Async &gt; <a href="00084.html" target="topic">i2c_multi_slave</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00009.html" target="topic">Driver Applications</a> &gt; <a href="00077.html" target="topic">I2C Driver Applications</a> &gt; Async &gt; <a href="00080.html" target="topic">i2c_eeprom</a> &gt; <a href="00084.html" target="topic">Running the Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -114,13 +168,13 @@ This section provides information on how to run the application using the MPLAB 
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00083.html" target="topic">Previous</a> | <a href="00076.html" target="topic">Up</a> | <a href="00078.html" target="topic">Next</a></div>
+<a href="00082.html" target="topic">Previous</a> | <a href="00080.html" target="topic">Up</a> | <a href="00085.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2C Async i2c_multi_slave Topic Title: i2c_multi_slave)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2C Async i2c_eeprom Running the Application Topic Title: Running the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

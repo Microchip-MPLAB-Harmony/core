@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>STDERR_FILENO Macro</title>
+<title>OSAL_SEM_PostISR Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00929.html" target="topic">Console System Service Library Help</a> &gt; <a href="00930.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00901.html" target="topic">STDERR_FILENO Macro</a></div>
+<a href="00857.html" target="topic">OSAL Library Help</a> &gt; <a href="00866.html" target="topic">Library Interface</a> &gt; a) Semaphore Functions &gt; <a href="00901.html" target="topic">OSAL_SEM_PostISR Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01004.html" target="topic">Previous</a> | <a href="00930.html" target="topic">Up</a> | <a href="00902.html" target="topic">Next</a></div>
+<a href="00900.html" target="topic">Previous</a> | <a href="00866.html" target="topic">Up</a> | <a href="00898.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: STDERR_FILENO Topic Title: STDERR_FILENO Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_SEM_PostISR@OSAL_SEM_HANDLE_TYPE* Topic Title: OSAL_SEM_PostISR Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-STDERR_FILENO Macro</div>
+OSAL_SEM_PostISR Function</div>
 </div>
 </div>
 
@@ -49,17 +49,81 @@ STDERR_FILENO Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This is macro STDERR_FILENO.</p></div>
+This function posts a binary semaphore or increments a counting semaphore. The highest priority task currently blocked on the semaphore will be released and made ready to run. This form of the post function should be used inside an ISR.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">STDERR_FILENO</span></strong> 2</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00891.html" target="topic">OSAL_RESULT</a> <strong><span style="color: #000000">OSAL_SEM_PostISR</span></strong>(
+    OSAL_SEM_HANDLE_TYPE* <strong><span style="color: #000000">semID</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Semaphore must have been created.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+semID&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the Semaphore ID&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+
+<ul class="Element630">
+<li class="Element600">OSAL_RESULT_TRUE - Semaphore posted</li>
+<li class="Element600">OSAL_RESULT_FALSE - Semaphore not posted</li>
+</ul></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This version of the <a href="00900.html" target="topic">OSAL_SEM_Post</a> function should be used if the program is, or may be, operating inside an ISR. The OSAL will take the necessary steps to ensure correct operation possibly disabling interrupts or entering a critical section. The exact requirements will depend upon the particular RTOS being used.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"> <strong><span style="color: #000080">void</span></strong> __ISR(UART_2_VECTOR) _UART2RXHandler()
+ {
+    <strong><span style="color: #000080">char</span></strong> c;
+
+    <i><span style="color: #008000">// read the character</span></i>
+    c = U2RXREG;
+    <i><span style="color: #008000">// clear the interrupt flag</span></i>
+    IFS1bits.U2IF = 0;
+    <i><span style="color: #008000">// post a semaphore indicating a character has been received</span></i>
+    OSAL_SEM_PostISR(&amp;semSignal);
+
+ }</pre></div></div>
+</div>
+</div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00929.html" target="topic">Console System Service Library Help</a> &gt; <a href="00930.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00901.html" target="topic">STDERR_FILENO Macro</a></div>
+<a href="00857.html" target="topic">OSAL Library Help</a> &gt; <a href="00866.html" target="topic">Library Interface</a> &gt; a) Semaphore Functions &gt; <a href="00901.html" target="topic">OSAL_SEM_PostISR Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -67,13 +131,13 @@ C</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01004.html" target="topic">Previous</a> | <a href="00930.html" target="topic">Up</a> | <a href="00902.html" target="topic">Next</a></div>
+<a href="00900.html" target="topic">Previous</a> | <a href="00866.html" target="topic">Up</a> | <a href="00898.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: STDERR_FILENO Topic Title: STDERR_FILENO Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_SEM_PostISR@OSAL_SEM_HANDLE_TYPE* Topic Title: OSAL_SEM_PostISR Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

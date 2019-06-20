@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Introduction</title>
+<title>How the Library Works</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00195.html" target="topic">SDMMC Driver Library</a> &gt; <a href="00194.html" target="topic">Introduction</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00196.html" target="topic">SDMMC Driver Library</a> &gt; <a href="00200.html" target="topic">Using the Library</a> &gt; <a href="00194.html" target="topic">How the Library Works</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00195.html" target="topic">Previous</a> | <a href="00195.html" target="topic">Up</a> | <a href="00199.html" target="topic">Next</a></div>
+<a href="00181.html" target="topic">Previous</a> | <a href="00200.html" target="topic">Up</a> | <a href="00191.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDMMC Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDMMC How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Introduction</div>
+How the Library Works</div>
 </div>
 </div>
 
@@ -49,25 +49,37 @@ Introduction</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<span style="color: #000000">The SDMMC driver is a multi-client multi-instance buffer model based block driver interface which can be used to communicate with SD or eMMC cards.</span>&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000"><strong>Key Features of the SDMMC driver:</strong></span></p>
-<ol class="Element630">
-<li value="1" class="Element600"><span style="color: #000000">Supports Asynchronous (non-blocking) mode of operation.</span></li>
-<li value="2" class="Element600"><span style="color: #000000">It works in both Bare Metal and RTOS environment.</span></li>
-</ol><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000"><strong>Note: Support for eMMC card is currently not available.</strong></span></p></div>
+<span style="color: #000000">The SDMMC driver is a multi-client, multi-instance buffer queue model based block driver interface.</span>&nbsp;</p>
+<div class="Element15">
+SDMMC Driver Features:</div>
+
+<ul class="Element630">
+<li class="Element600"><span style="color: #000000">Driver has a buffer queue which allows the capability of accepting multiple requests</span></li>
+<li class="Element600">Driver can either have File-system as client or Application or USB as client</li>
+<li class="Element600">Every transfer request expects data in blocks. Block details (<strong>Size and number of blocks</strong>) can be retrieved by <a href="00624.html" target="topic">DRV_SDMMC_GeometryGet</a>()</li>
+<li class="Element600">Driver provides feature to register call back for transfer complete event, which can used by clients to get notified</li>
+<li class="Element600">When SDMMC driver is connected to File System buffer queue is disabled as File system is blocking interface</li>
+<li class="Element600">Works in both Bare-Metal and RTOS environment in Asynchronous mode
+<ul class="Element631">
+<li class="Element601"><strong>Bare-Metal:</strong>
+<ul class="Element632">
+<li class="Element602">A dedicated task routine <a href="00630.html" target="topic">DRV_SDMMC_Tasks</a>() is called from SYS_Tasks() to process the data from the instance queue</li>
+</ul></li>
+<li class="Element601"><strong>RTOS:</strong>
+<ul class="Element632">
+<li class="Element602">A dedicated thread is created for task routine <a href="00630.html" target="topic">DRV_SDMMC_Tasks</a>() to process the data from the instance queue</li>
+</ul></li>
+</ul></li>
+<li class="Element600">API's return with a valid handle which can be used to check whether transfer request is accepted or not</li>
+<li class="Element600">A Client specific handler will be called to indicate the status of transfer</li>
+</ul></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00195.html" target="topic">SDMMC Driver Library</a> &gt; <a href="00194.html" target="topic">Introduction</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00196.html" target="topic">SDMMC Driver Library</a> &gt; <a href="00200.html" target="topic">Using the Library</a> &gt; <a href="00194.html" target="topic">How the Library Works</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -75,13 +87,13 @@ Introduction</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00195.html" target="topic">Previous</a> | <a href="00195.html" target="topic">Up</a> | <a href="00199.html" target="topic">Next</a></div>
+<a href="00181.html" target="topic">Previous</a> | <a href="00200.html" target="topic">Up</a> | <a href="00191.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDMMC Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDMMC How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

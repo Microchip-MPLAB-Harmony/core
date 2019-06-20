@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>How the Library Works</title>
+<title>Abstraction Model</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00929.html" target="topic">Console System Service Library Help</a> &gt; <a href="00934.html" target="topic">Using the Library</a> &gt; <a href="00926.html" target="topic">How the Library Works</a></div>
+<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00933.html" target="topic">Console System Service Library Help</a> &gt; <a href="00938.html" target="topic">Using the Library</a> &gt; <a href="00926.html" target="topic">Abstraction Model</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00922.html" target="topic">Previous</a> | <a href="00934.html" target="topic">Up</a> | <a href="00932.html" target="topic">Next</a></div>
+<a href="00938.html" target="topic">Previous</a> | <a href="00938.html" target="topic">Up</a> | <a href="00930.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-How the Library Works</div>
+Abstraction Model</div>
 </div>
 </div>
 
@@ -48,37 +48,22 @@ How the Library Works</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
+<p class="Element10" style="text-align: center;">
+<img src="sys_console_block_diagram.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<span style="color: #000000"><strong>Console Service Software Abstraction Block Diagram</strong></span></p><p class="Element10">
+&nbsp;</p>
 <p class="Element10">
-Each supported console device has its own implementation of the Console System service APIs. Function pointers to the console device implementations are provided in the console device descriptor registered to each console instance. This allows the user to utilize the same API for all console devices, making application code more portable across different devices.&nbsp;</p>
+The Console System Service is a middleware library that is part of a layered software architecture. The purpose of this software layering is to allow each module to provide a consistent interface to its client, thus making it easy for the developer to add and remove modules as needed. The console core layer<span style="color: #FFFFFF">_</span>provides a POSIX-like read/write API to applications and middleware libraries to send and receive data to and from the console device. Data and message buffering, along with the details of the data transfer are contained within the console device and peripheral library (PLIB) layers.&nbsp;</p>
 <p class="Element10">
-<strong>Note</strong>: Currently only the UART Console Device is implemented.&nbsp;</p></div>
-</div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00932.html" target="topic">UART Console Device</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-The UART Console Device provides a convenient user I/O interface to applications running on a SAM/PIC32 with UART support.&nbsp;</div></td></tr></table></div></div>
-</div>
+Additional APIs are provided to handle system functions, register a callback function for non-blocking implementations, and flush (reset) the internal queues in the event of an error condition.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00929.html" target="topic">Console System Service Library Help</a> &gt; <a href="00934.html" target="topic">Using the Library</a> &gt; <a href="00926.html" target="topic">How the Library Works</a></div>
+<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00933.html" target="topic">Console System Service Library Help</a> &gt; <a href="00938.html" target="topic">Using the Library</a> &gt; <a href="00926.html" target="topic">Abstraction Model</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -86,13 +71,13 @@ The UART Console Device provides a convenient user I/O interface to applications
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00922.html" target="topic">Previous</a> | <a href="00934.html" target="topic">Up</a> | <a href="00932.html" target="topic">Next</a></div>
+<a href="00938.html" target="topic">Previous</a> | <a href="00938.html" target="topic">Up</a> | <a href="00930.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

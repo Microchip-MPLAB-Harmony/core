@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Client Operations - Non-buffered</title>
+<title>Client Operations - Buffered</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00122.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00129.html" target="topic">Using the Library</a> &gt; <a href="00120.html" target="topic">How the Library Works</a> &gt; <a href="00115.html" target="topic">Client Operations - Non-buffered</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00123.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00130.html" target="topic">Using the Library</a> &gt; <a href="00121.html" target="topic">How the Library Works</a> &gt; <a href="00115.html" target="topic">Client Operations - Buffered</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00114.html" target="topic">Previous</a> | <a href="00120.html" target="topic">Up</a> | <a href="00117.html" target="topic">Next</a></div>
+<a href="00114.html" target="topic">Previous</a> | <a href="00121.html" target="topic">Up</a> | <a href="00116.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2S Client Operations - Non-buffered Topic Title: Client Operations - Non-buffered)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2S Client Operations - Buffered Topic Title: Client Operations - Buffered)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Client Operations - Non-buffered</div>
+Client Operations - Buffered</div>
 </div>
 </div>
 
@@ -48,21 +48,15 @@ Client Operations - Non-buffered</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element15">
-Client Operations - Non-buffered</div>
 <p class="Element10">
-Client non-buffered operations provide a basic interface for the driver operation. This interface could be used by applications which have do not have buffered data transfer requirements. The functions DRV_I2S_Read and DRV_I2S_Write are the non-buffered data operation functions. The non-buffered functions are blocking/non-blocking depending upon the mode (ioIntent) the client was opened. If the client was opened for blocking mode these functions will only return when (or will block until) the specified data operation is completed or if an error occurred. If the client was opened for non-blocking mode, these functions will return with the number of bytes that were actually accepted for operation. The function will not wait until the data operation has completed. </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element67" valign="top" width="10%" style="border:none;">
-<div class="Element68">
-<img src="Note Icon.png" border="0" alt="" title=""> <strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
-<div class="Element68">
-Non-buffered functions do not support interrupt/DMA mode.&nbsp;</div></td></tr></table></div></div>
+<strong>Client Operations - Buffered</strong>&nbsp;</p>
 <p class="Element10">
-The following diagram illustrates the non-buffered data operations </p><p class="Element10" style="text-align: center;">
-<img src="nonbufferedmodel.png" border="0" alt="" title=""></p><div class="Element63">
+Client buffered operations provide a the typical audio interface. The functions DRV_I2S_BufferAddRead, DRV_I2S_BufferAddWrite, and DRV_I2S_BufferAddWriteRead are the buffered data operation functions. The buffered functions schedules non-blocking operations. The function adds the request to the hardware instance queues and returns a buffer handle. The requesting client also registers a callback event with the driver. The driver notifies the client with DRV_I2S_BUFFER_EVENT_COMPLETE, DRV_I2S_BUFFER_EVENT_ERROR or DRV_I2S_BUFFER_EVENT_ABORT events.&nbsp;</p>
+<p class="Element10">
+The buffer add requests are processed from the I2S channel ISR in interrupt mode.&nbsp;</p>
+<p class="Element10">
+The following diagram illustrates the buffered data operations </p><p class="Element10" style="text-align: center;">
+<img src="bufferedmodelintonly.png" border="0" alt="" title=""></p><div class="Element63">
 <div class="TableDiv">
 <table cellspacing="0" class="Table1">
 <tr>
@@ -72,100 +66,43 @@ The following diagram illustrates the non-buffered data operations </p><p class=
 <div class="Element68">
 It is not necessary to close and reopen the client between multiple transfers.&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
-An application using the non-buffered functionality needs to perform the following steps:</p>
+An application using the buffered functionality needs to perform the following steps:</p>
 <ol class="Element630">
 <li value="1" class="Element600">The system should have completed necessary setup and initializations.</li>
-<li value="2" class="Element600">The necessary ports setup and remapping must be done for I2S lines: ADCDAT, DACDAT, BCLK, LRCK and MCLK (if required).</li>
-<li value="3" class="Element600">The driver object should have been initialized by calling <a href="00474.html" target="topic">DRV_I2S_Initialize</a>.</li>
-<li value="4" class="Element600">Open the driver using <a href="00478.html" target="topic">DRV_I2S_Open</a> with the necessary ioIntent to get a client handle.</li>
-<li value="5" class="Element600">The necessary BCLK, LRCK, and MCLK should be set up so as to generate the required media bit rate.</li>
-<li value="6" class="Element600">The necessary Baud rate value should be set up by calling DRV_I2S_BaudrateSet.</li>
-<li value="7" class="Element600">The Transmit/Receive data should be set up by calling DRV_I2S_Write/DRV_I2S_Read.</li>
-<li value="8" class="Element600">Repeat step 5 through step 7 to handle multiple buffer transmission and reception.</li>
-<li value="9" class="Element600">When the client is done it can use <a href="00451.html" target="topic">DRV_I2S_Close</a> to close the client handle.</li>
+<li value="2" class="Element600">If DMA mode is desired, the DMA should be initialized by calling SYS_DMA_Initialize.</li>
+<li value="3" class="Element600">The necessary ports setup and remapping must be done for I2S lines: ADCDAT, DACDAT, BCLK, LRCK and MCLK (if required).</li>
+<li value="4" class="Element600">The driver object should have been initialized by calling <a href="00475.html" target="topic">DRV_I2S_Initialize</a>. If DMA mode is desired, related attributes in the init structure must be set.</li>
+<li value="5" class="Element600">Open the driver using <a href="00479.html" target="topic">DRV_I2S_Open</a> with the necessary ioIntent to get a client handle.</li>
+<li value="6" class="Element600">The necessary BCLK, LRCK, and MCLK should be set up so as to generate the required media bit rate.</li>
+<li value="7" class="Element600">The necessary Baud rate value should be set up by calling DRV_I2S_BaudrateSet.</li>
+<li value="8" class="Element600">The Register and event handler for the client handle should be set up by calling <a href="00449.html" target="topic">DRV_I2S_BufferEventHandlerSet</a>.</li>
+<li value="9" class="Element600">Add a buffer to initiate the data transfer by calling DRV_I2S_BufferAddWrite/DRV_I2S_BufferAddRead/DRV_I2S_BufferAddWriteRead.</li>
+<li value="10" class="Element600">When the DMA Channel has finished, the callback function registered in step 8 will be called.</li>
+<li value="11" class="Element600">Repeat step 9 through step 10 to handle multiple buffer transmission and reception.</li>
+<li value="12" class="Element600">When the client is done it can use <a href="00452.html" target="topic">DRV_I2S_Close</a> to close the client handle.</li>
 </ol><div class="Element15">
-Example 1:</div>
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// The following is an example for a blocking transmit</span></i>
-    <strong><span style="color: #000080">#define</span></strong> SYS_I2S_DRIVER_INDEX DRV_I2S_1 <i><span style="color: #008000">// I2S Uses SPI Hardware</span></i>
-    <strong><span style="color: #000080">#define</span></strong> BUFFER_SIZE 1000
-    DRV_I2S_INIT i2sInit; <i><span style="color: #008000">//I2S initialization structure</span></i>
-                          <i><span style="color: #008000">//This should be populated with necessary settings</span></i>
-    SYS_MODULE_OBJ sysObj; <i><span style="color: #008000">//I2S module object</span></i>
-    APP_DATA_S state; <i><span style="color: #008000">//Application specific state</span></i>
-    DRV_HANDLE handle;  <i><span style="color: #008000">//Client handle</span></i>
-    uint32_t i2sClock;   <i><span style="color: #008000">//BCLK frequency</span></i>
-    uint32_t baudrate;   <i><span style="color: #008000">//baudrate</span></i>
-    uint16_t myAudioBuffer[BUFFER_SIZE]; <i><span style="color: #008000">//Audio buffer to be transmitted</span></i>
-    uint32_t count;
+Example:</div>
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// The following is an example for interrupt mode buffered transmit</span></i>
 
-    <i><span style="color: #008000">// The system should have completed necessary setup and initializations.</span></i>
-    <i><span style="color: #008000">// Necessary ports setup and remapping must be done for</span></i>
-    <i><span style="color: #008000">// I2S lines ADCDAT, DACDAT, BCLK, LRCK and MCLK</span></i>
+<strong><span style="color: #000080">#define</span></strong> SYS_I2S_DRIVER_INDEX DRV_I2S_1 <i><span style="color: #008000">// I2S Uses SPI Hardware</span></i>
+<strong><span style="color: #000080">#define</span></strong> BUFFER_SIZE 1000
+<i><span style="color: #008000">// I2S initialization structure.</span></i>
+<i><span style="color: #008000">// This should be populated with necessary settings.</span></i>
+<i><span style="color: #008000">// attributes dmaChannelTransmit/dmaChannelReceive</span></i>
+<i><span style="color: #008000">// and dmaInterruptTransmitSource/dmaInterruptReceiveSource</span></i>
+<i><span style="color: #008000">// must be set if DMA mode of operation is desired.</span></i>
+DRV_I2S_INIT i2sInit;
+SYS_MODULE_OBJ sysObj; <i><span style="color: #008000">//I2S module object</span></i>
+DRV_HANDLE handle;  <i><span style="color: #008000">//Client handle</span></i>
+uint32_t i2sClock;   <i><span style="color: #008000">//BCLK frequency</span></i>
+uint32_t baudrate;   <i><span style="color: #008000">//baudrate</span></i>
+uint16_t myAudioBuffer[BUFFER_SIZE]; <i><span style="color: #008000">//Audio buffer to be transmitted</span></i>
+DRV_I2S_BUFFER_HANDLE bufferHandle;
+APP_DATA_S state; <i><span style="color: #008000">//Application specific state</span></i>
+uintptr_t contextHandle;
 
-    sysObj = DRV_I2S_Initialize(SYS_I2S_DRIVER_INDEX, (SYS_MODULE_INIT*)&amp;i2sInit);
-    <strong><span style="color: #000080">if</span></strong> (SYS_MODULE_OBJ_INVALID == sysObj)
-    {
-        <i><span style="color: #008000">// Handle error</span></i>
-    }
-    <strong><span style="color: #000080">while</span></strong>(1)
-    {
-        <strong><span style="color: #000080">switch</span></strong>(state)
-        {
-            <strong><span style="color: #000080">case</span></strong> APP_STATE_INIT:
-            {
-                handle = DRV_I2S_Open(SYS_I2S_DRIVER_INDEX, (DRV_IO_INTENT_WRITE | DRV_IO_INTENT_BLOCKING));
-                <strong><span style="color: #000080">if</span></strong>(handle != DRV_HANDLE_INVALID )
-                {
-                    <i><span style="color: #008000">/* Update the state */</span></i>
-                    state = APP_STATE_WAIT_FOR_READY;
-                }
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-            <strong><span style="color: #000080">case</span></strong>  APP_STATE_WAIT_FOR_READY:
-            {
-                <i><span style="color: #008000">// Necessary clock settings must be done to generate</span></i>
-                <i><span style="color: #008000">// required MCLK, BCLK and LRCK</span></i>
-                DRV_I2S_BaudrateSet(handle, i2sClock, baudrate);
-                <i><span style="color: #008000">// Blocks here and transfer the buffer</span></i>
-                count = DRV_I2S_Write(handle, &amp;myAudioBuffer,BUFFER_SIZE);
-                <strong><span style="color: #000080">if</span></strong>(count == DRV_I2S_WRITE_ERROR)
-                {
-                    <i><span style="color: #008000">//Handle Error</span></i>
-                } <strong><span style="color: #000080">else</span></strong>
-                {
-                    <i><span style="color: #008000">// Transfer Done</span></i>
-                    state = APP_STATE_DONE;
-                }
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-            <strong><span style="color: #000080">case</span></strong>  APP_STATE_DONE:
-            {
-                <i><span style="color: #008000">// Close done</span></i>
-                DRV_I2S_Close(handle);
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-            <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-        }
-    }</pre></div></div>
-<div class="Element15">
-Example 2:</div>
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// Following is an example for a non blocking transmit</span></i>
-    <strong><span style="color: #000080">#define</span></strong> SYS_I2S_DRIVER_INDEX DRV_I2S_1 <i><span style="color: #008000">//I2S Uses SPI Hardware</span></i>
-    <strong><span style="color: #000080">#define</span></strong> BUFFER_SIZE 1000
-    DRV_I2S_INIT i2sInit; <i><span style="color: #008000">//I2S initialization structure.</span></i>
-                          <i><span style="color: #008000">// This should be populated with necessary settings</span></i>
-    SYS_MODULE_OBJ sysObj; <i><span style="color: #008000">//I2S module object</span></i>
-    APP_DATA_S state; <i><span style="color: #008000">//Application specific state</span></i>
-    DRV_HANDLE handle;  <i><span style="color: #008000">//Client handle</span></i>
-    uint32_t i2sClock;   <i><span style="color: #008000">//BCLK frequency</span></i>
-    uint32_t baudrate;   <i><span style="color: #008000">//baudrate</span></i>
-    uint16_t myAudioBuffer[BUFFER_SIZE]; <i><span style="color: #008000">//Audio buffer to be transmitted</span></i>
-    uint32_t count,total,size;
-
-    total = 0;
-    size = BUFFER_SIZE;
-
+<strong><span style="color: #000080">void</span></strong> SYS_Initialize ( <strong><span style="color: #000080">void</span></strong>* data )
+{
     <i><span style="color: #008000">// The system should have completed necessary setup and initializations.</span></i>
     <i><span style="color: #008000">// Necessary ports setup and remapping must be done for I2S lines ADCDAT,</span></i>
     <i><span style="color: #008000">// DACDAT, BCLK, LRCK and MCLK</span></i>
@@ -175,9 +112,11 @@ Example 2:</div>
     {
         <i><span style="color: #008000">// Handle error</span></i>
     }
+}
 
-    <strong><span style="color: #000080">while</span></strong>(1)
-    {
+
+<strong><span style="color: #000080">void</span></strong> App_Task(<strong><span style="color: #000080">void</span></strong>)
+{
         <strong><span style="color: #000080">switch</span></strong>(state)
         {
             <strong><span style="color: #000080">case</span></strong> APP_STATE_INIT:
@@ -190,57 +129,82 @@ Example 2:</div>
                 }
             }
             <strong><span style="color: #000080">break</span></strong>;
+
             <strong><span style="color: #000080">case</span></strong>  APP_STATE_WAIT_FOR_READY:
             {
                 <i><span style="color: #008000">// Necessary clock settings must be done to generate</span></i>
                 <i><span style="color: #008000">// required MCLK, BCLK and LRCK</span></i>
                 DRV_I2S_BaudrateSet(handle, i2sClock, baudrate);
-                <i><span style="color: #008000">// Transfer whatever possible number of bytes</span></i>
-                count = DRV_I2S_Write(handle, &amp;myAudioBuffer,size);
-                <strong><span style="color: #000080">if</span></strong>(count == DRV_I2S_WRITE_ERROR)
+
+                <i><span style="color: #008000">/* Set the Event handler */</span></i>
+                DRV_I2S_BufferEventHandlerSet(handle,App_BufferEventHandler,
+                contextHandle);
+
+                <i><span style="color: #008000">/* Add a buffer to write*/</span></i>
+                DRV_I2S_WriteBufferAdd(handle, myAudioBuffer, BUFFER_SIZE,
+                    &amp;bufferHandle);
+                <strong><span style="color: #000080">if</span></strong>(DRV_I2S_BUFFER_HANDLE_INVALID == bufferHandle)
                 {
-                    <i><span style="color: #008000">//Handle Error</span></i>
-                } <strong><span style="color: #000080">else</span></strong>
-                {
-                    <i><span style="color: #008000">// 'count' bytes transferred</span></i>
-                    state = APP_STATE_WAIT_FOR_DONE;
+                    <i><span style="color: #008000">// Error handling here</span></i>
                 }
+                state = APP_STATE_IDLE;
             }
             <strong><span style="color: #000080">break</span></strong>;
+
             <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_DONE:
-                <i><span style="color: #008000">// Can perform other Application tasks here</span></i>
-                <i><span style="color: #008000">// .........................</span></i>
-                <i><span style="color: #008000">// .........................</span></i>
-                <i><span style="color: #008000">// .........................</span></i>
-                size = size - count;
-                <strong><span style="color: #000080">if</span></strong>(size!=0)
-                {
-                    <i><span style="color: #008000">// Change the state so as to submit</span></i>
-                    <i><span style="color: #008000">// another possible transmission</span></i>
-                    state = APP_STATE_WAIT_FOR_READY;
-                }
-                <strong><span style="color: #000080">else</span></strong>
-                {
-                    <i><span style="color: #008000">// We are done</span></i>
-                    state = APP_STATE_DONE;
-                }
+
+                state = APP_STATE_DONE;
             <strong><span style="color: #000080">break</span></strong>;
+
+
             <strong><span style="color: #000080">case</span></strong>  APP_STATE_DONE:
             {
-                <strong><span style="color: #000080">if</span></strong>(DRV_I2S_CLOSE_FAILURE == DRV_I2S_Close(handle))
-                {
-                    <i><span style="color: #008000">// Handle error</span></i>
-                }
-                <strong><span style="color: #000080">else</span></strong>
-                {
-                    <i><span style="color: #008000">// Close done</span></i>
-                }
+                <i><span style="color: #008000">// Close done</span></i>
+                DRV_I2S_Close(handle);
             }
             <strong><span style="color: #000080">break</span></strong>;
+
+            <strong><span style="color: #000080">case</span></strong>  APP_STATE_IDLE:
+                <i><span style="color: #008000">// Do nothing</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
             <strong><span style="color: #000080">default</span></strong>:
             <strong><span style="color: #000080">break</span></strong>;
         }
-    }</pre></div></div>
+}
+
+
+<strong><span style="color: #000080">void</span></strong> App_BufferEventHandler(DRV_I2S_BUFFER_EVENT event,
+        DRV_I2S_BUFFER_HANDLE bufferHandle, uintptr_t contextHandle)
+{
+    uint8_t temp;
+
+    <strong><span style="color: #000080">if</span></strong>(DRV_I2S_BUFFER_EVENT_COMPLETE == event)
+    {
+        <i><span style="color: #008000">// Can set state = APP_STATE_WAIT_FOR_DONE;</span></i>
+        <i><span style="color: #008000">// Take Action as needed</span></i>
+    }
+    <strong><span style="color: #000080">else</span></strong> <strong><span style="color: #000080">if</span></strong>(DRV_I2S_BUFFER_EVENT_ERROR == event)
+    {
+        <i><span style="color: #008000">// Take Action as needed</span></i>
+    }
+    <strong><span style="color: #000080">else</span></strong> <strong><span style="color: #000080">if</span></strong>(DRV_I2S_BUFFER_EVENT_ABORT == event)
+    {
+        <i><span style="color: #008000">// Take Action as needed</span></i>
+    }
+    <strong><span style="color: #000080">else</span></strong>
+    {
+        <i><span style="color: #008000">// Do nothing</span></i>
+    }
+}
+
+
+<strong><span style="color: #000080">void</span></strong> SYS_Tasks ( <strong><span style="color: #000080">void</span></strong> )
+{
+    <i><span style="color: #008000">/* Call the application's tasks routine */</span></i>
+    APP_Tasks ( );
+}
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -248,7 +212,7 @@ Example 2:</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00122.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00129.html" target="topic">Using the Library</a> &gt; <a href="00120.html" target="topic">How the Library Works</a> &gt; <a href="00115.html" target="topic">Client Operations - Non-buffered</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00123.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00130.html" target="topic">Using the Library</a> &gt; <a href="00121.html" target="topic">How the Library Works</a> &gt; <a href="00115.html" target="topic">Client Operations - Buffered</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -256,13 +220,13 @@ Example 2:</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00114.html" target="topic">Previous</a> | <a href="00120.html" target="topic">Up</a> | <a href="00117.html" target="topic">Next</a></div>
+<a href="00114.html" target="topic">Previous</a> | <a href="00121.html" target="topic">Up</a> | <a href="00116.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2S Client Operations - Non-buffered Topic Title: Client Operations - Non-buffered)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV I2S Client Operations - Buffered Topic Title: Client Operations - Buffered)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

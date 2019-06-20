@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_CONSOLE_CALLBACK Type</title>
+<title>SYS_CACHE_EnableICache Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00929.html" target="topic">Console System Service Library Help</a> &gt; <a href="00930.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="01000.html" target="topic">SYS_CONSOLE_CALLBACK Type</a></div>
+<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00912.html" target="topic">Cache System Service Library Help</a> &gt; <a href="00913.html" target="topic">Library Interface</a> &gt; <a href="01000.html" target="topic">SYS_CACHE_EnableICache Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01011.html" target="topic">Previous</a> | <a href="00930.html" target="topic">Up</a> | <a href="01001.html" target="topic">Next</a></div>
+<a href="00999.html" target="topic">Previous</a> | <a href="00913.html" target="topic">Up</a> | <a href="01001.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_CALLBACK Topic Title: SYS_CONSOLE_CALLBACK Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CACHE_EnableICache Topic Title: SYS_CACHE_EnableICache Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_CONSOLE_CALLBACK Type</div>
+SYS_CACHE_EnableICache Function</div>
 </div>
 </div>
 
@@ -49,37 +49,17 @@ SYS_CONSOLE_CALLBACK Type</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This data type defines a pointer to a console service callback function, thus defining the function signature.</p></div>
+Turns on Instruction Cache.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">SYS_CONSOLE_CALLBACK</span></strong>)(<strong><span style="color: #000080">void</span></strong>* pBuffer);</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">SYS_CACHE_EnableICache</span></strong>();</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The console service must have been initialized using the <a href="01009.html" target="topic">SYS_CONSOLE_Initialize</a> function before attempting to register a SYS Console callback function.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
-<div class="TableDiv">
-<table cellspacing="0" class="Table2">
-<tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-pBuffer&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to the processed read/write buffer. It can be used identify the buffer that is processed by the console system service and free the buffer memory if it was allocated dynamically.&nbsp;</div></td></tr></table></div></div>
-</div>
+None.</p></div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
 Returns</div>
@@ -99,13 +79,9 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> MyCallback ( <strong><span style="color: #000080">void</span></strong>* pBuffer )
-{
-    <strong><span style="color: #000080">if</span></strong> (pBuffer != NULL)
-    {
-        <i><span style="color: #008000">//Free the memory pointed by pBuffer if it was allocated dynamically.</span></i>
-    }
-}</pre></div></div>
+<div class="Element13"><div class="Element12"><pre class="Element12">
+SYS_CACHE_EnableICache();
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -113,7 +89,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00929.html" target="topic">Console System Service Library Help</a> &gt; <a href="00930.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="01000.html" target="topic">SYS_CONSOLE_CALLBACK Type</a></div>
+<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00912.html" target="topic">Cache System Service Library Help</a> &gt; <a href="00913.html" target="topic">Library Interface</a> &gt; <a href="01000.html" target="topic">SYS_CACHE_EnableICache Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -121,13 +97,13 @@ Example</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01011.html" target="topic">Previous</a> | <a href="00930.html" target="topic">Up</a> | <a href="01001.html" target="topic">Next</a></div>
+<a href="00999.html" target="topic">Previous</a> | <a href="00913.html" target="topic">Up</a> | <a href="01001.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_CALLBACK Topic Title: SYS_CONSOLE_CALLBACK Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CACHE_EnableICache Topic Title: SYS_CACHE_EnableICache Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

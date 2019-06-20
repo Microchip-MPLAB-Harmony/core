@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Abstraction Model</title>
+<title>Using the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00249.html" target="topic">SPI Flash Driver Libraries Help</a> &gt; <a href="00068.html" target="topic">AT25DF Driver Library Help</a> &gt; <a href="00071.html" target="topic">Using the Library</a> &gt; <a href="00058.html" target="topic">Abstraction Model</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00248.html" target="topic">SPI EEPROM Driver Libraries Help</a> &gt; <a href="00055.html" target="topic">AT25 Driver Library Help</a> &gt; <a href="00058.html" target="topic">Using the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00071.html" target="topic">Previous</a> | <a href="00071.html" target="topic">Up</a> | <a href="00066.html" target="topic">Next</a></div>
+<a href="00054.html" target="topic">Previous</a> | <a href="00055.html" target="topic">Up</a> | <a href="00040.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT25DF Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT25 Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Abstraction Model</div>
+Using the Library</div>
 </div>
 </div>
 
@@ -49,25 +49,46 @@ Abstraction Model</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The AT25DF library interface provides read, write and erase functions that abstract out the internal workings of the AT25DF driver and the underlying SPI protocol. The AT25DF library supports a single instance of the AT25DF Flash and a single client.&nbsp;</p>
-<p class="Element10">
-The client can be:</p>
+The AT25 library provides non-blocking APIs to read and write to external AT25 EEPROM. It uses the SPI peripheral library to interface with the AT25 EEPROM.</p>
 <ul class="Element630">
-<li class="Element600">Application - Directly access the AT25DF Flash using the APIs provided by the AT25DF library</li>
-<li class="Element600">Memory Driver - Application can run a file system on the AT25DF Flash by connecting it to the Memory Driver which can further be connected to the File System Service</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="drv_at25df_abstraction_model.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<strong>AT25DF Driver Block Diagram</strong></p></div>
+<li class="Element600">The library provides APIs to perform reads/writes from/to any EEPROM memory address, with number of bytes spanning multiple pages</li>
+<li class="Element600">The library provides API to perform page write to EEPROM. Here, the memory start address must be aligned to the EEPROM page boundary</li>
+<li class="Element600">Application can either register a callback to get notified once the data transfer is complete or can poll the status of the data transfer</li>
+<li class="Element600">The library interface complies to the block driver interface expected by the Memory Driver. This allows application to run a file system on the AT25 EEPROM media using the Memory Driver and the File System Service</li>
+<li class="Element600">The library can be used in both bare-metal and RTOS environments</li>
+</ul></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00040.html" target="topic">Abstraction Model</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This library provides a low-level abstraction of the AT25 EEPROM Driver Library with a convenient C language interface.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00053.html" target="topic">How the Library Works</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how the AT25 driver library works.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00249.html" target="topic">SPI Flash Driver Libraries Help</a> &gt; <a href="00068.html" target="topic">AT25DF Driver Library Help</a> &gt; <a href="00071.html" target="topic">Using the Library</a> &gt; <a href="00058.html" target="topic">Abstraction Model</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00248.html" target="topic">SPI EEPROM Driver Libraries Help</a> &gt; <a href="00055.html" target="topic">AT25 Driver Library Help</a> &gt; <a href="00058.html" target="topic">Using the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -75,13 +96,13 @@ The client can be:</p>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00071.html" target="topic">Previous</a> | <a href="00071.html" target="topic">Up</a> | <a href="00066.html" target="topic">Next</a></div>
+<a href="00054.html" target="topic">Previous</a> | <a href="00055.html" target="topic">Up</a> | <a href="00040.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT25DF Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV AT25 Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_AT24_PageWrite Function</title>
+<title>DRV_AT24_Open Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00094.html" target="topic">I2C EEPROM Driver Libraries Help</a> &gt; <a href="00035.html" target="topic">AT24 Driver Library Help</a> &gt; <a href="00036.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00344.html" target="topic">DRV_AT24_PageWrite Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00095.html" target="topic">I2C EEPROM Driver Libraries Help</a> &gt; <a href="00036.html" target="topic">AT24 Driver Library Help</a> &gt; <a href="00037.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00344.html" target="topic">DRV_AT24_Open Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00352.html" target="topic">Previous</a> | <a href="00036.html" target="topic">Up</a> | <a href="00345.html" target="topic">Next</a></div>
+<a href="00347.html" target="topic">Previous</a> | <a href="00037.html" target="topic">Up</a> | <a href="00328.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT24_PageWrite@DRV_HANDLE@void *@uint32_t Topic Title: DRV_AT24_PageWrite Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT24_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_AT24_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_AT24_PageWrite Function</div>
+DRV_AT24_Open Function</div>
 </div>
 </div>
 
@@ -49,25 +49,22 @@ DRV_AT24_PageWrite Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function schedules a non-blocking write operation for writing one page of data starting from given address of EEPROM.&nbsp;</p>
+This routine opens the specified AT24 driver instance and provides a handle that must be provided to all other client-level operations to identify the caller and the instance of the driver. The ioIntent parameter defines how the client interacts with this driver instance.&nbsp;</p>
 <p class="Element10">
-The requesting client should call <a href="00351.html" target="topic">DRV_AT24_TransferStatusGet</a> API to know the current status of the request OR the requesting client can register a callback function with the driver to get notified of the status.</p></div>
+This driver is a single client driver, so DRV_AT24_Open API should be called only once until driver is closed.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_AT24_PageWrite</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00416.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">txData</span></strong>, 
-    uint32_t <strong><span style="color: #000000">address</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">DRV_AT24_Open</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01391.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="00502.html" target="topic">DRV_IO_INTENT</a> <strong><span style="color: #000000">ioIntent</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="00343.html" target="topic">DRV_AT24_Open</a> must have been called to obtain a valid opened device handle.&nbsp;</p>
-<p class="Element10">
-&quot;address&quot; provided must be page boundary aligned in order to avoid overwriting the data in the beginning of the page.</p></div>
+Function <a href="00343.html" target="topic">DRV_AT24_Initialize</a> must have been called before calling this function.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -84,19 +81,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+drvIndex&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr><tr>
+Identifier for the object instance to be opened<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-txData&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+ioIntent&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-The source buffer containing data to be programmed into AT24 EEPROM&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-address&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Memory start address from where the data should be written. It must be page boundary aligned in order to avoid overwriting the data in the beginning of the page.&nbsp;</div></td></tr></table></div></div>
+Zero or more of the values from the enumeration <a href="00502.html" target="topic">DRV_IO_INTENT</a> &quot;ORed&quot; together to indicate the intended use of the driver.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -104,17 +96,12 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-false</p>
-<ul class="Element630">
-<li class="Element600">if handle is not right</li>
-<li class="Element600">if the pointer to the transmit data buffer is NULL</li>
-<li class="Element600">if the driver is busy handling another transfer request</li>
-</ul><p class="Element10">
-&nbsp;</p>
+If successful, the routine returns a valid open-instance handle (a number identifying both the caller and the module instance).&nbsp;</p>
 <p class="Element10">
-true</p>
+If an error occurs, the return value is <a href="00418.html" target="topic">DRV_HANDLE_INVALID</a>. Error can occur</p>
 <ul class="Element630">
-<li class="Element600">if the write request is accepted.</li>
+<li class="Element600">if the driver has been already opened once and in use.</li>
+<li class="Element600">if the driver instance being opened is not initialized or is invalid.</li>
 </ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
@@ -122,30 +109,21 @@ Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+This driver ignores the ioIntent argument.&nbsp;</p>
+<p class="Element10">
+The handle returned is valid until the <a href="00328.html" target="topic">DRV_AT24_Close</a> routine is called.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-<strong><span style="color: #000080">#define</span></strong> BUFFER_SIZE  1024
-<strong><span style="color: #000080">#define</span></strong> MEM_ADDRESS  0x00
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="00417.html" target="topic">DRV_HANDLE</a> handle;
 
-uint8_t writeBuffer[BUFFER_SIZE];
-
-<i><span style="color: #008000">// myHandle is the handle returned from DRV_AT24_Open API.</span></i>
-<i><span style="color: #008000">// In the below example, the transfer status is polled. However, application can</span></i>
-<i><span style="color: #008000">// register a callback and get notified when the transfer is complete.</span></i>
-
-<strong><span style="color: #000080">if</span></strong> (DRV_AT24_PageWrite(myHandle, writeBuffer, MEM_ADDRESS) != <strong><span style="color: #000080">true</span></strong>)
+handle = DRV_AT24_Open(DRV_AT24_INDEX, DRV_IO_INTENT_READWRITE);
+<strong><span style="color: #000080">if</span></strong> (handle == <a href="00418.html" target="topic">DRV_HANDLE_INVALID</a>)
 {
-    <i><span style="color: #008000">// Error handling here</span></i>
-}
-<strong><span style="color: #000080">else</span></strong>
-{
-    <i><span style="color: #008000">// Wait for write to be completed</span></i>
-    <strong><span style="color: #000080">while</span></strong>(<a href="00351.html" target="topic">DRV_AT24_TransferStatusGet</a>(myHandle) == DRV_AT24_TRANSFER_STATUS_BUSY);
+    <i><span style="color: #008000">// Unable to open the driver</span></i>
+    <i><span style="color: #008000">// May be the driver is not initialized</span></i>
 }</pre></div></div>
 </div>
 </div>
@@ -154,7 +132,7 @@ uint8_t writeBuffer[BUFFER_SIZE];
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00094.html" target="topic">I2C EEPROM Driver Libraries Help</a> &gt; <a href="00035.html" target="topic">AT24 Driver Library Help</a> &gt; <a href="00036.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00344.html" target="topic">DRV_AT24_PageWrite Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00095.html" target="topic">I2C EEPROM Driver Libraries Help</a> &gt; <a href="00036.html" target="topic">AT24 Driver Library Help</a> &gt; <a href="00037.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00344.html" target="topic">DRV_AT24_Open Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -162,13 +140,13 @@ uint8_t writeBuffer[BUFFER_SIZE];
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00352.html" target="topic">Previous</a> | <a href="00036.html" target="topic">Up</a> | <a href="00345.html" target="topic">Next</a></div>
+<a href="00347.html" target="topic">Previous</a> | <a href="00037.html" target="topic">Up</a> | <a href="00328.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT24_PageWrite@DRV_HANDLE@void *@uint32_t Topic Title: DRV_AT24_PageWrite Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT24_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_AT24_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

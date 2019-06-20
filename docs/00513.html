@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_MEMORY_AsyncErase Function</title>
+<title>DRV_MEMORY_AddressGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00152.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00153.html" target="topic">Library Interface</a> &gt; c) Block Operation Functions &gt; <a href="00513.html" target="topic">DRV_MEMORY_AsyncErase Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00153.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00154.html" target="topic">Library Interface</a> &gt; d) Media Interface Functions &gt; <a href="00513.html" target="topic">DRV_MEMORY_AddressGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00576.html" target="topic">Previous</a> | <a href="00153.html" target="topic">Up</a> | <a href="00514.html" target="topic">Next</a></div>
+<a href="00578.html" target="topic">Previous</a> | <a href="00154.html" target="topic">Up</a> | <a href="00552.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_AsyncErase@DRV_HANDLE@DRV_MEMORY_COMMAND_HANDLE *@uint32_t@uint32_t Topic Title: DRV_MEMORY_AsyncErase Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_AddressGet@DRV_HANDLE Topic Title: DRV_MEMORY_AddressGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_MEMORY_AsyncErase Function</div>
+DRV_MEMORY_AddressGet Function</div>
 </div>
 </div>
 
@@ -49,38 +49,19 @@ DRV_MEMORY_AsyncErase Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function schedules a non-blocking sector erase operation on attached memory device.&nbsp;</p>
-<p class="Element10">
-The function returns with a valid erase handle in the commandHandle argument if the erase request was scheduled successfully. The function adds the request to the hardware instance queue and returns immediately.&nbsp;</p>
-<p class="Element10">
-The function returns <a href="00519.html" target="topic">DRV_MEMORY_COMMAND_HANDLE_INVALID</a> in the commandHandle argument under the following circumstances:</p>
-<ul class="Element630">
-<li class="Element600">if a buffer object could not be allocated to the request</li>
-<li class="Element600">if the client opened the driver for read only</li>
-<li class="Element600">if the number of blocks to be erased is either zero or more than the number of blocks actually available</li>
-<li class="Element600">if the erase queue size is full or queue depth is insufficient</li>
-<li class="Element600">if the driver handle is invalid</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-If the requesting client registered a transfer handler callback with the driver will issue a DRV_MEMORY_EVENT_COMMAND_COMPLETE event if the erase operation was successful or DRV_MEMORY_EVENT_COMMAND_ERROR event if the erase operation was not successful.&nbsp;</p>
-<p class="Element10">
-If the requesting client has not registered any transfer handler callback with the driver, he can call <a href="00525.html" target="topic">DRV_MEMORY_CommandStatusGet</a>() API to know the current status of the request.</p></div>
+This function returns the Memory Media start address.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_MEMORY_AsyncErase</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00416.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <a href="00518.html" target="topic">DRV_MEMORY_COMMAND_HANDLE</a> * <strong><span style="color: #000000">commandHandle</span></strong>, 
-    uint32_t <strong><span style="color: #000000">blockStart</span></strong>, 
-    uint32_t <strong><span style="color: #000000">nBlock</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100">uintptr_t <strong><span style="color: #000000">DRV_MEMORY_AddressGet</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="00567.html" target="topic">DRV_MEMORY_Open</a>() must have been called with DRV_IO_INTENT_WRITE or DRV_IO_INTENT_READWRITE as a parameter to obtain a valid opened device handle.</p></div>
+The <a href="00568.html" target="topic">DRV_MEMORY_Open</a>() routine must have been called to obtain a valid opened device handle.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -99,22 +80,7 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open function<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-commandHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to an argument that will contain the return buffer handle<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-blockStart&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Block start from where the blocks should be erased.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-nBlock&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Total number of blocks to be erased.&nbsp;</div></td></tr></table></div></div>
+A valid open-instance handle, returned from the driver's open function&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -122,7 +88,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The command handle is returned in the commandHandle argument. It Will be <a href="00519.html" target="topic">DRV_MEMORY_COMMAND_HANDLE_INVALID</a> if the request was not queued.</p></div>
+Start address of the Memory Media if the handle is valid otherwise NULL.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -136,45 +102,8 @@ Example</div>
 <div class="Element11">
 <div class="Element10">
 <div class="Element13"><div class="Element12"><pre class="Element12">
-<i><span style="color: #008000">// Use DRV_MEMORY_GeometryGet () to find the write region geometry.</span></i>
-uint32_t blockStart = 0;
-uint32_t nBlocks = 10;
-<strong><span style="color: #000080">bool</span></strong> xfer_done = <strong><span style="color: #000080">false</span></strong>;
-
-<i><span style="color: #008000">// memoryHandle is the handle returned by the DRV_MEMORY_Open function.</span></i>
-
-<i><span style="color: #008000">// Event is received when the erase request is completed.</span></i>
-<strong><span style="color: #000080">void</span></strong> appTransferHandler
-(
-    <a href="00547.html" target="topic">DRV_MEMORY_EVENT</a> event,
-    <a href="00518.html" target="topic">DRV_MEMORY_COMMAND_HANDLE</a> commandHandle,
-    uintptr_t context
-)
-{
-    <strong><span style="color: #000080">switch</span></strong>(event)
-    {
-        <strong><span style="color: #000080">case</span></strong> DRV_MEMORY_EVENT_COMMAND_COMPLETE:
-            xfer_done = <strong><span style="color: #000080">true</span></strong>;
-            <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">case</span></strong> DRV_MEMORY_EVENT_COMMAND_ERROR:
-            <i><span style="color: #008000">// Handle Error</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-}
-
-<a href="00576.html" target="topic">DRV_MEMORY_TransferHandlerSet</a>(memoryHandle, appTransferHandler, (uintptr_t)NULL);
-
-DRV_MEMORY_AsyncErase( memoryHandle, &amp;commandHandle, blockStart, nBlock );
-
-<strong><span style="color: #000080">if</span></strong>(<a href="00519.html" target="topic">DRV_MEMORY_COMMAND_HANDLE_INVALID</a> == commandHandle)
-{
-    <i><span style="color: #008000">// Error handling here</span></i>
-}
-
-<i><span style="color: #008000">// Wait for erase to be completed</span></i>
-<strong><span style="color: #000080">while</span></strong>(!xfer_done);
+uintptr_t startAddress;
+startAddress = DRV_MEMORY_AddressGet(drvMEMORYHandle);
 </pre></div></div>
 </div>
 </div>
@@ -183,7 +112,7 @@ DRV_MEMORY_AsyncErase( memoryHandle, &amp;commandHandle, blockStart, nBlock );
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00152.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00153.html" target="topic">Library Interface</a> &gt; c) Block Operation Functions &gt; <a href="00513.html" target="topic">DRV_MEMORY_AsyncErase Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00153.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00154.html" target="topic">Library Interface</a> &gt; d) Media Interface Functions &gt; <a href="00513.html" target="topic">DRV_MEMORY_AddressGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -191,13 +120,13 @@ DRV_MEMORY_AsyncErase( memoryHandle, &amp;commandHandle, blockStart, nBlock );
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00576.html" target="topic">Previous</a> | <a href="00153.html" target="topic">Up</a> | <a href="00514.html" target="topic">Next</a></div>
+<a href="00578.html" target="topic">Previous</a> | <a href="00154.html" target="topic">Up</a> | <a href="00552.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_AsyncErase@DRV_HANDLE@DRV_MEMORY_COMMAND_HANDLE *@uint32_t@uint32_t Topic Title: DRV_MEMORY_AsyncErase Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_MEMORY_AddressGet@DRV_HANDLE Topic Title: DRV_MEMORY_AddressGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

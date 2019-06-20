@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SPI_ReadTransferAdd Function</title>
+<title>DRV_SPI_Open Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00251.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00252.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00684.html" target="topic">DRV_SPI_ReadTransferAdd Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; b) Client Setup Functions &gt; <a href="00684.html" target="topic">DRV_SPI_Open Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00705.html" target="topic">Previous</a> | <a href="00252.html" target="topic">Up</a> | <a href="00708.html" target="topic">Next</a></div>
+<a href="00687.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00669.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_ReadTransferAdd@DRV_HANDLE@void*@size_t@DRV_SPI_TRANSFER_HANDLE * const Topic Title: DRV_SPI_ReadTransferAdd Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_SPI_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SPI_ReadTransferAdd Function</div>
+DRV_SPI_Open Function</div>
 </div>
 </div>
 
@@ -49,37 +49,22 @@ DRV_SPI_ReadTransferAdd Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function schedules a non-blocking read operation. The function returns with a valid transfer handle in the transferHandle argument if the request was scheduled successfully. The function adds the request to the instance specific software queue and returns immediately. While the request is in the queue, the application buffer is owned by the driver and should not be modified. This API will write rxSize bytes of dummy data and will read rxSize bytes of data in the memory location pointed by pReceiveData.&nbsp;</p>
+This routine opens the specified SPI driver instance and provides a handle that must be provided to all other client-level operations to identify the caller and the instance of the driver. The ioIntent parameter defines how the client interacts with this driver instance.&nbsp;</p>
 <p class="Element10">
-The function returns <a href="00694.html" target="topic">DRV_SPI_TRANSFER_HANDLE_INVALID</a> in the transferHandle argument:</p>
-<ul class="Element630">
-<li class="Element600">if pReceiveData is NULL.</li>
-<li class="Element600">if rxSize is zero.</li>
-<li class="Element600">if the transfer handle is NULL.</li>
-<li class="Element600">if the queue size is full or queue depth is insufficient.</li>
-<li class="Element600">if the driver handle is invalid.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-If the requesting client registered an event callback with the driver, the driver will issue a DRV_SPI_TRANSFER_EVENT_COMPLETE event if the transfer was processed successfully or DRV_SPI_TRANSFER_EVENT_ERROR event if the transfer was not processed successfully.</p></div>
+Specifying a DRV_IO_INTENT_EXCLUSIVE will cause the driver to provide exclusive access to this client. The driver cannot be opened by any other client.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_SPI_ReadTransferAdd</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00416.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">pReceiveData</span></strong>, 
-    size_t <strong><span style="color: #000000">rxSize</span></strong>, 
-    <a href="00693.html" target="topic">DRV_SPI_TRANSFER_HANDLE</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">transferHandle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">DRV_SPI_Open</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01391.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="00502.html" target="topic">DRV_IO_INTENT</a> <strong><span style="color: #000000">ioIntent</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600"><a href="00682.html" target="topic">DRV_SPI_Open</a> must have been called to obtain a valid opened device handle.</li>
-<li class="Element600"><a href="00703.html" target="topic">DRV_SPI_TransferSetup</a> must have been called if GPIO pin has to be used for chip select or any of the setup parameters has to be changed dynamically.</li>
-</ul></div>
+<p class="Element10">
+Function <a href="00683.html" target="topic">DRV_SPI_Initialize</a> must have been called before calling this function.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -96,24 +81,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Handle of the communication channel as returned by the <a href="00682.html" target="topic">DRV_SPI_Open</a> function.&nbsp;</div></td></tr><tr>
+Identifier for the object instance to be opened<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-*pReceiveData&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+intent&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to the location where received data has to be stored. It is user's responsibility to ensure pointed location has sufficient memory to store the read data. For 9 to 15bit mode, received data will be right aligned in the 16 bit memory location.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-rxSize&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Number of bytes to be received. Always, size should be given in terms of bytes. For example, if 10 15-bit data are to be received, the receive size should be 20 bytes.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-transferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Handle which is returned by transfer add function.&nbsp;</div></td></tr></table></div></div>
+Zero or more of the values from the enumeration <a href="00502.html" target="topic">DRV_IO_INTENT</a> &quot;ORed&quot; together to indicate the intended use of the driver. See function description for details.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -121,7 +96,16 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+If successful, the routine returns a valid open-instance handle (a number identifying both the caller and the module instance).&nbsp;</p>
+<p class="Element10">
+If an error occurs, the return value is <a href="00418.html" target="topic">DRV_HANDLE_INVALID</a>. Error can occur</p>
+<ul class="Element630">
+<li class="Element600">if the number of client objects allocated via DRV_SPI_CLIENTS_NUMBER is insufficient.</li>
+<li class="Element600">if the client is trying to open the driver but driver has been opened exclusively by another client.</li>
+<li class="Element600">if the driver peripheral instance being opened is not initialized or is invalid.</li>
+<li class="Element600">if the client is trying to open the driver exclusively, but has already been opened in a non exclusive mode by another client.</li>
+<li class="Element600">if the driver is not ready to be opened, typically when the initialize routine has not completed execution.</li>
+</ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -129,30 +113,23 @@ Remarks</div>
 <div class="Element10">
 
 <ul class="Element630">
-<li class="Element600">This function can be called from within the SPI Driver Transfer Event Handler that is registered by the client.</li>
-<li class="Element600">It should not be called in the event handler associated with another SPI driver instance or event handler of any other peripheral.</li>
-<li class="Element600">It should not be called directly in any ISR.</li>
+<li class="Element600">The handle returned is valid until the <a href="00669.html" target="topic">DRV_SPI_Close</a> routine is called.</li>
+<li class="Element600">This routine will NEVER block waiting for hardware.</li>
 </ul></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-MY_APP_OBJ myAppObj;
-uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
-<a href="00693.html" target="topic">DRV_SPI_TRANSFER_HANDLE</a> transferHandle;
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="00417.html" target="topic">DRV_HANDLE</a> handle;
 
-<i><span style="color: #008000">// mySPIHandle is the handle returned by the DRV_SPI_Open function.</span></i>
-
-DRV_SPI_ReadTransferAdd(mySPIhandle, myRxBuffer, MY_RX_BUFFER_SIZE, &amp;transferHandle);
-
-<strong><span style="color: #000080">if</span></strong>(transferHandle == <a href="00694.html" target="topic">DRV_SPI_TRANSFER_HANDLE_INVALID</a>)
+handle = DRV_SPI_Open(DRV_SPI_INDEX_0, DRV_IO_INTENT_EXCLUSIVE);
+<strong><span style="color: #000080">if</span></strong> (handle == <a href="00418.html" target="topic">DRV_HANDLE_INVALID</a>)
 {
-    <i><span style="color: #008000">// Error handling here</span></i>
-}
-
-<i><span style="color: #008000">// Event is received when the transfer is processed.</span></i></pre></div></div>
+    <i><span style="color: #008000">// Unable to open the driver</span></i>
+    <i><span style="color: #008000">// May be the driver is not initialized or the initialization</span></i>
+    <i><span style="color: #008000">// is not complete.</span></i>
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -160,7 +137,7 @@ DRV_SPI_ReadTransferAdd(mySPIhandle, myRxBuffer, MY_RX_BUFFER_SIZE, &amp;transfe
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00251.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00252.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00684.html" target="topic">DRV_SPI_ReadTransferAdd Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; b) Client Setup Functions &gt; <a href="00684.html" target="topic">DRV_SPI_Open Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -168,13 +145,13 @@ DRV_SPI_ReadTransferAdd(mySPIhandle, myRxBuffer, MY_RX_BUFFER_SIZE, &amp;transfe
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00705.html" target="topic">Previous</a> | <a href="00252.html" target="topic">Up</a> | <a href="00708.html" target="topic">Next</a></div>
+<a href="00687.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00669.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_ReadTransferAdd@DRV_HANDLE@void*@size_t@DRV_SPI_TRANSFER_HANDLE * const Topic Title: DRV_SPI_ReadTransferAdd Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_SPI_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

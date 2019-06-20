@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_I2C_WriteTransferAdd Function</title>
+<title>DRV_I2C_WriteTransfer Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00097.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00098.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00439.html" target="topic">DRV_I2C_WriteTransferAdd Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00098.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00099.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00439.html" target="topic">DRV_I2C_WriteTransfer Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00438.html" target="topic">Previous</a> | <a href="00098.html" target="topic">Up</a> | <a href="00436.html" target="topic">Next</a></div>
+<a href="00424.html" target="topic">Previous</a> | <a href="00099.html" target="topic">Up</a> | <a href="00440.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2C_WriteTransferAdd@DRV_HANDLE@uint16_t@void * const@size_t@DRV_I2C_TRANSFER_HANDLE * const Topic Title: DRV_I2C_WriteTransferAdd Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2C_WriteTransfer@DRV_HANDLE@uint16_t@void* const@size_t Topic Title: DRV_I2C_WriteTransfer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_I2C_WriteTransferAdd Function</div>
+DRV_I2C_WriteTransfer Function</div>
 </div>
 </div>
 
@@ -49,31 +49,25 @@ DRV_I2C_WriteTransferAdd Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function schedules a non-blocking write operation. The function returns with a valid transfer handle in the transferHandle argument if the write request was scheduled successfully. The function adds the request to the driver instance transfer queue and returns immediately. While the request is in the queue, the application buffer is owned by the driver and should not be modified. On returning, the transferHandle parameter may be <a href="00433.html" target="topic">DRV_I2C_TRANSFER_HANDLE_INVALID</a> for the following reasons:</p>
+This function does a blocking write operation. The function blocks till the write is complete or error has occurred during write. Function will return false to report failure. The failure will occur for the following reasons:</p>
 <ul class="Element630">
-<li class="Element600">if a transfer buffer could not be allocated to the request</li>
-<li class="Element600">if the input buffer pointer is NULL</li>
-<li class="Element600">if the buffer size is 0</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-If the requesting client registered an event callback with the driver, the driver will issue a DRV_I2C_TRANSFER_EVENT_COMPLETE event if the buffer was processed successfully or a DRV_I2C_TRANSFER_EVENT_ERROR event if the buffer was not processed successfully.</p></div>
+<li class="Element600">Invalid input parameters</li>
+</ul></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_I2C_WriteTransferAdd</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00416.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> uint16_t <strong><span style="color: #000000">address</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">buffer</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> size_t <strong><span style="color: #000000">size</span></strong>, 
-    <a href="00432.html" target="topic">DRV_I2C_TRANSFER_HANDLE</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">transferHandle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_I2C_WriteTransfer</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    uint16_t <strong><span style="color: #000000">address</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">buffer</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> size_t <strong><span style="color: #000000">size</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="00421.html" target="topic">DRV_I2C_Open</a> must have been called to obtain a valid opened device handle.</p></div>
+<a href="00422.html" target="topic">DRV_I2C_Open</a> must have been called to obtain a valid opened device handle.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -92,27 +86,22 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open routine <a href="00421.html" target="topic">DRV_I2C_Open</a> function.<br>&nbsp;</div></td></tr><tr>
+A valid open-instance handle, returned from the driver's open routine <a href="00422.html" target="topic">DRV_I2C_Open</a> function.<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
 address&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Slave address<br>&nbsp;</div></td></tr><tr>
+Slave Address<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
 buffer&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Data to be written.<br>&nbsp;</div></td></tr><tr>
+Source buffer containing data to be written.<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
 size&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Transfer size in bytes.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-transferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to an argument that will contain the return transfer handle. This will be <a href="00433.html" target="topic">DRV_I2C_TRANSFER_HANDLE_INVALID</a> if the function was not successful.&nbsp;</div></td></tr></table></div></div>
+Size in bytes of data to be written.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -120,21 +109,20 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+true - write is successful false - error has occurred</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function is thread safe in a RTOS application. It can be called from within the I2C Driver Transfer Event Handler that is registered by this client. It should not be called in the event handler associated with another I2C driver instance. It should not otherwise be called directly in an ISR. This function is available only in the asynchronous mode.</p></div>
+This function is thread safe in a RTOS application. This function should not be called from an interrupt context. This function is available only in the synchronous mode.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">uint8_t myBuffer[MY_BUFFER_SIZE];
-<a href="00432.html" target="topic">DRV_I2C_TRANSFER_HANDLE</a> transferHandle;
+<div class="Element13"><div class="Element12"><pre class="Element12">uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
 
 <i><span style="color: #008000">// myI2CHandle is the handle returned</span></i>
 <i><span style="color: #008000">// by the DRV_I2C_Open function.</span></i>
@@ -142,14 +130,11 @@ Example</div>
 <i><span style="color: #008000">// slaveAddress is address of I2C slave device</span></i>
 <i><span style="color: #008000">// to which data is to be written</span></i>
 
-DRV_I2C_WriteTransferAdd(myI2CHandle, slaveAddress, myBuffer, MY_BUFFER_SIZE, &amp;transferHandle);
-
-<strong><span style="color: #000080">if</span></strong>(transferHandle == <a href="00433.html" target="topic">DRV_I2C_TRANSFER_HANDLE_INVALID</a>)
+<strong><span style="color: #000080">if</span></strong> (DRV_I2C_WriteTransfer(myI2CHandle, slaveAddress, myTxBuffer, MY_TX_BUFFER_SIZE) == <strong><span style="color: #000080">false</span></strong>)
 {
     <i><span style="color: #008000">// Error handling here</span></i>
 }
-
-<i><span style="color: #008000">// Event is received when the buffer is processed.</span></i></pre></div></div>
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -157,7 +142,7 @@ DRV_I2C_WriteTransferAdd(myI2CHandle, slaveAddress, myBuffer, MY_BUFFER_SIZE, &a
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00097.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00098.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00439.html" target="topic">DRV_I2C_WriteTransferAdd Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00098.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00099.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00439.html" target="topic">DRV_I2C_WriteTransfer Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -165,13 +150,13 @@ DRV_I2C_WriteTransferAdd(myI2CHandle, slaveAddress, myBuffer, MY_BUFFER_SIZE, &a
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00438.html" target="topic">Previous</a> | <a href="00098.html" target="topic">Up</a> | <a href="00436.html" target="topic">Next</a></div>
+<a href="00424.html" target="topic">Previous</a> | <a href="00099.html" target="topic">Up</a> | <a href="00440.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2C_WriteTransferAdd@DRV_HANDLE@uint16_t@void * const@size_t@DRV_I2C_TRANSFER_HANDLE * const Topic Title: DRV_I2C_WriteTransferAdd Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2C_WriteTransfer@DRV_HANDLE@uint16_t@void* const@size_t Topic Title: DRV_I2C_WriteTransfer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

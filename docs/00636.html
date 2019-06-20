@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SDSPI_Close Function</title>
+<title>DRV_SDSPI_AsyncRead Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00211.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00212.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00636.html" target="topic">DRV_SDSPI_Close Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00212.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00213.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00636.html" target="topic">DRV_SDSPI_AsyncRead Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00654.html" target="topic">Previous</a> | <a href="00212.html" target="topic">Up</a> | <a href="00649.html" target="topic">Next</a></div>
+<a href="00651.html" target="topic">Previous</a> | <a href="00213.html" target="topic">Up</a> | <a href="00659.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDSPI_Close@DRV_HANDLE Topic Title: DRV_SDSPI_Close Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDSPI_AsyncRead@DRV_HANDLE@DRV_SDSPI_COMMAND_HANDLE*@void*@uint32_t@uint32_t Topic Title: DRV_SDSPI_AsyncRead Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SDSPI_Close Function</div>
+DRV_SDSPI_AsyncRead Function</div>
 </div>
 </div>
 
@@ -49,21 +49,31 @@ DRV_SDSPI_Close Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This routine closes an opened-instance of the SD Card driver, invalidating the handle.</p></div>
+This function schedules a non-blocking read operation for reading blocks of data from the SD Card. The function returns with a valid buffer handle in the commandHandle argument if the read request was scheduled successfully. The function adds the request to the hardware instance queue and returns immediately. While the request is in the queue, the application buffer is owned by the driver and should not be modified. The function returns <a href="00640.html" target="topic">DRV_SDSPI_COMMAND_HANDLE_INVALID</a> in the commandHandle argument under the following circumstances:</p>
+<ul class="Element630">
+<li class="Element600">if the driver handle is invalid</li>
+<li class="Element600">if the target buffer pointer is NULL</li>
+<li class="Element600">if the number of blocks to be read is zero or more than the actual number of blocks available.</li>
+<li class="Element600">Error during the read operation</li>
+</ul></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_SDSPI_Close</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00416.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_SDSPI_AsyncRead</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <a href="00639.html" target="topic">DRV_SDSPI_COMMAND_HANDLE</a>* <strong><span style="color: #000000">commandHandle</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">targetBuffer</span></strong>, 
+    uint32_t <strong><span style="color: #000000">blockStart</span></strong>, 
+    uint32_t <strong><span style="color: #000000">nBlocks</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="00651.html" target="topic">DRV_SDSPI_Initialize</a> routine must have been called for the specified SD Card driver instance.&nbsp;</p>
+The <a href="00653.html" target="topic">DRV_SDSPI_Initialize</a> routine must have been called for the specified SDSPI driver instance.&nbsp;</p>
 <p class="Element10">
-<a href="00654.html" target="topic">DRV_SDSPI_Open</a> must have been called to obtain a valid opened device handle.&nbsp;</p></div>
+<a href="00656.html" target="topic">DRV_SDSPI_Open</a> must have been called to obtain a valid opened device handle.&nbsp;</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -82,7 +92,27 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr></table></div></div>
+A valid open-instance handle, returned from the driver's open function<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+commandHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to an argument that will contain the return buffer handle<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+targetBuffer&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Buffer into which the data read from the SD Card will be placed<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+blockStart&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Starting block address of the SD Card from where the read should begin.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+nBlock&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Total number of blocks to be read.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -90,24 +120,72 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None</p></div>
+The buffer handle is returned in the commandHandle argument. It will be <a href="00640.html" target="topic">DRV_SDSPI_COMMAND_HANDLE_INVALID</a> if the request was not successful.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-After calling this routine, the handle passed in &quot;handle&quot; must not be used with any of the remaining driver routines. A new handle must be obtained by calling <a href="00654.html" target="topic">DRV_SDSPI_Open</a> before the caller may use the driver again. This routine may block for other client-level operations to complete.&nbsp;</p>
-<p class="Element10">
-Usually there is no need for the driver client to verify that the Close operation has completed.</p></div>
+None.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><a href="00416.html" target="topic">DRV_HANDLE</a> handle;  <i><span style="color: #008000">// Returned from DRV_SDSPI_Open</span></i>
+<div class="Element13"><div class="Element12"><pre class="Element12">uint8_t myBuffer[MY_BUFFER_SIZE];
 
-DRV_SDSPI_Close (handle);</pre></div></div>
+<i><span style="color: #008000">// address should be block aligned.</span></i>
+uint32_t blockStart = 0x00;
+uint32_t nBlock = 2;
+<a href="00639.html" target="topic">DRV_SDSPI_COMMAND_HANDLE</a> commandHandle;
+MY_APP_OBJ myAppObj;
+
+<i><span style="color: #008000">// mySDSPIHandle is the handle returned</span></i>
+<i><span style="color: #008000">// by the DRV_SDSPI_Open function.</span></i>
+
+<i><span style="color: #008000">// Client registers an event handler with driver</span></i>
+<a href="00651.html" target="topic">DRV_SDSPI_EventHandlerSet</a>(mySDSPIHandle, APP_SDSPIEventHandler, (uintptr_t)&amp;myAppObj);
+
+DRV_SDSPI_AsyncRead(mySDSPIHandle, &amp;commandHandle, &amp;myBuffer[0], blockStart, nBlock);
+
+<strong><span style="color: #000080">if</span></strong>(commandHandle == <a href="00612.html" target="topic">DRV_SDMMC_COMMAND_HANDLE_INVALID</a>)
+{
+    <i><span style="color: #008000">// Error handling here</span></i>
+}
+<strong><span style="color: #000080">else</span></strong>
+{
+    <i><span style="color: #008000">// Read Successfully queued</span></i>
+}
+
+<i><span style="color: #008000">// Event is received when</span></i>
+<i><span style="color: #008000">// the buffer is processed.</span></i>
+
+<strong><span style="color: #000080">void</span></strong> APP_SDSPIEventHandler(
+    <a href="00647.html" target="topic">DRV_SDSPI_EVENT</a> event,
+    <a href="00639.html" target="topic">DRV_SDSPI_COMMAND_HANDLE</a> commandHandle,
+    uintptr_t contextHandle
+)
+{
+    <i><span style="color: #008000">// contextHandle points to myAppObj.</span></i>
+
+    <strong><span style="color: #000080">switch</span></strong>(event)
+    {
+        <strong><span style="color: #000080">case</span></strong> DRV_SDSPI_EVENT_COMMAND_COMPLETE:
+
+            <i><span style="color: #008000">// This means the data was transferred successfully</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> DRV_SDSPI_EVENT_COMMAND_ERROR:
+
+            <i><span style="color: #008000">// Error handling here</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">default</span></strong>:
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+}
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -115,7 +193,7 @@ DRV_SDSPI_Close (handle);</pre></div></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00211.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00212.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00636.html" target="topic">DRV_SDSPI_Close Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00212.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00213.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00636.html" target="topic">DRV_SDSPI_AsyncRead Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -123,13 +201,13 @@ DRV_SDSPI_Close (handle);</pre></div></div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00654.html" target="topic">Previous</a> | <a href="00212.html" target="topic">Up</a> | <a href="00649.html" target="topic">Next</a></div>
+<a href="00651.html" target="topic">Previous</a> | <a href="00213.html" target="topic">Up</a> | <a href="00659.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDSPI_Close@DRV_HANDLE Topic Title: DRV_SDSPI_Close Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDSPI_AsyncRead@DRV_HANDLE@DRV_SDSPI_COMMAND_HANDLE*@void*@uint32_t@uint32_t Topic Title: DRV_SDSPI_AsyncRead Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

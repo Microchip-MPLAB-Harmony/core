@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_CurrentWorkingDirectoryGet Function</title>
+<title>SYS_CONSOLE_Read Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01063.html" target="topic">SYS_FS_CurrentWorkingDirectoryGet Function</a></div>
+<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00933.html" target="topic">Console System Service Library Help</a> &gt; <a href="00934.html" target="topic">Library Interface</a> &gt; b) Core Functions &gt; <a href="01063.html" target="topic">SYS_CONSOLE_Read Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01065.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01134.html" target="topic">Next</a></div>
+<a href="01066.html" target="topic">Previous</a> | <a href="00934.html" target="topic">Up</a> | <a href="01067.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_CurrentWorkingDirectoryGet@char *@uint32_t Topic Title: SYS_FS_CurrentWorkingDirectoryGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_Read@SYS_MODULE_INDEX@int@void*@size_t Topic Title: SYS_CONSOLE_Read Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_CurrentWorkingDirectoryGet Function</div>
+SYS_CONSOLE_Read Function</div>
 </div>
 </div>
 
@@ -49,20 +49,22 @@ SYS_FS_CurrentWorkingDirectoryGet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function gets the current working directory path along with the working drive.</p></div>
+This function reads the data from the console device.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01275.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_CurrentWorkingDirectoryGet</span></strong>(
-    <strong><span style="color: #000080">char</span></strong> * <strong><span style="color: #000000">buff</span></strong>, 
-    uint32_t <strong><span style="color: #000000">len</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100">ssize_t <strong><span style="color: #000000">SYS_CONSOLE_Read</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01391.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
+    <strong><span style="color: #000080">int</span></strong> <strong><span style="color: #000000">fd</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">buf</span></strong>, 
+    size_t <strong><span style="color: #000000">count</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-At least one disk must be mounted.</p></div>
+The <a href="01060.html" target="topic">SYS_CONSOLE_Initialize</a> function should have been called before calling this function.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -79,14 +81,24 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-buff&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to a buffer which will contain the name of the current working directory and drive, once the function completes.&nbsp;</div></td></tr><tr>
+Console instance index&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-len&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+fd&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Size of the buffer.&nbsp;</div></td></tr></table></div></div>
+I/O stream handle. Maintained for backward compatibility. NULL value can be passed as a parameter.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+buf&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Buffer to hold the read data.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+count&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Number of bytes to read.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -94,7 +106,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS_FS_RES_SUCCESS - Get current working directory operation was successful. SYS_FS_RES_FAILURE - Get current working directory operation was unsucessful. The reason for the failure can be retrieved with <a href="01076.html" target="topic">SYS_FS_Error</a>.</p></div>
+The requested number of bytes to read is returned back if the request is accepted successfully. In case of error, the returned value is less than the requested number of bytes to read.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -107,63 +119,13 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01275.html" target="topic">SYS_FS_RESULT</a> res;
-  <strong><span style="color: #000080">char</span></strong> buffer[16];
-
-  <strong><span style="color: #000080">switch</span></strong>(appState)
-  {
-      <strong><span style="color: #000080">case</span></strong> TRY_MOUNT:
-          <strong><span style="color: #000080">if</span></strong>(<a href="01271.html" target="topic">SYS_FS_Mount</a>(&quot;/dev/mmcblka1&quot;, &quot;/mnt/myDrive&quot;, FAT, 0, NULL) != SYS_FS_RES_SUCCESS)
-          {
-              <i><span style="color: #008000">// Failure, try mounting again</span></i>
-          }
-          <strong><span style="color: #000080">else</span></strong>
-          {
-              <i><span style="color: #008000">// Mount was successful. Create a directory.</span></i>
-              appState = CREATE_DIR;
-          }
-          <strong><span style="color: #000080">break</span></strong>;
-
-      <strong><span style="color: #000080">case</span></strong> CREATE_DIR:
-          res = <a href="01066.html" target="topic">SYS_FS_DirectoryMake</a>(&quot;Dir1&quot;);
-          <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
-          {
-              <i><span style="color: #008000">// Directory creation failed</span></i>
-              appState = ERROR;
-          }
-          <strong><span style="color: #000080">else</span></strong>
-          {
-              <i><span style="color: #008000">// Directory creation was successful. Change to the new</span></i>
-              <i><span style="color: #008000">// directory.</span></i>
-              appState = CHANGE_DIR;
-          }
-          <strong><span style="color: #000080">break</span></strong>;
-
-      <strong><span style="color: #000080">case</span></strong> CHANGE_DIR:
-          res = <a href="01065.html" target="topic">SYS_FS_DirectoryChange</a>(&quot;Dir1&quot;);
-          <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
-          {
-              <i><span style="color: #008000">// Directory change failed</span></i>
-              appState = ERROR;
-          }
-          <strong><span style="color: #000080">else</span></strong>
-          {
-              <i><span style="color: #008000">// Directory change was successful. Get current working</span></i>
-              <i><span style="color: #008000">// directory</span></i>
-              appState = GET_CWD;
-          }
-          <strong><span style="color: #000080">break</span></strong>;
-
-      <strong><span style="color: #000080">case</span></strong> GET_CWD:
-          res = SYS_FS_CurrentWorkingDirectoryGet(buffer, 15);
-          <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
-          {
-              <i><span style="color: #008000">// Get current directory operation failed</span></i>
-              appState = ERROR;
-          }
-          <strong><span style="color: #000080">break</span></strong>;
-  }
-</pre></div></div>
+<div class="Element13"><div class="Element12"><pre class="Element12">ssize_t nr;
+<strong><span style="color: #000080">char</span></strong> myBuffer[MY_BUFFER_SIZE];
+nr = SYS_CONSOLE_Read( <a href="01056.html" target="topic">SYS_CONSOLE_INDEX_0</a>, 0, myBuffer, MY_BUFFER_SIZE );
+<strong><span style="color: #000080">if</span></strong> (nr != MY_BUFFER_SIZE)
+{
+    <i><span style="color: #008000">// handle error</span></i>
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -171,7 +133,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01063.html" target="topic">SYS_FS_CurrentWorkingDirectoryGet Function</a></div>
+<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00933.html" target="topic">Console System Service Library Help</a> &gt; <a href="00934.html" target="topic">Library Interface</a> &gt; b) Core Functions &gt; <a href="01063.html" target="topic">SYS_CONSOLE_Read Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -179,13 +141,13 @@ Example</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01065.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01134.html" target="topic">Next</a></div>
+<a href="01066.html" target="topic">Previous</a> | <a href="00934.html" target="topic">Up</a> | <a href="01067.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_CurrentWorkingDirectoryGet@char *@uint32_t Topic Title: SYS_FS_CurrentWorkingDirectoryGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_Read@SYS_MODULE_INDEX@int@void*@size_t Topic Title: SYS_CONSOLE_Read Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

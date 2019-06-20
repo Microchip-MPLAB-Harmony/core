@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_USART_BUFFER_HANDLE_INVALID Macro</title>
+<title>DRV_USART_BUFFER_EVENT_HANDLER Type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00313.html" target="topic">USART Driver Library Help</a> &gt; <a href="00314.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="00745.html" target="topic">DRV_USART_BUFFER_HANDLE_INVALID Macro</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00314.html" target="topic">USART Driver Library Help</a> &gt; <a href="00315.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="00745.html" target="topic">DRV_USART_BUFFER_EVENT_HANDLER Type</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00750.html" target="topic">Previous</a> | <a href="00314.html" target="topic">Up</a> | <a href="00758.html" target="topic">Next</a></div>
+<a href="00739.html" target="topic">Previous</a> | <a href="00315.html" target="topic">Up</a> | <a href="00752.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_BUFFER_HANDLE_INVALID Topic Title: DRV_USART_BUFFER_HANDLE_INVALID Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_BUFFER_EVENT_HANDLER Topic Title: DRV_USART_BUFFER_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_USART_BUFFER_HANDLE_INVALID Macro</div>
+DRV_USART_BUFFER_EVENT_HANDLER Type</div>
 </div>
 </div>
 
@@ -49,26 +49,103 @@ DRV_USART_BUFFER_HANDLE_INVALID Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USART Driver Invalid Buffer Handle&nbsp;</p>
+USART Driver Buffer Event Handler Function Pointer&nbsp;</p>
 <p class="Element10">
-This is the definition of an invalid buffer handle. An invalid buffer handle is returned by <a href="00756.html" target="topic">DRV_USART_ReadBufferAdd</a> and <a href="00762.html" target="topic">DRV_USART_WriteBufferAdd</a> functions if the buffer add request was not successful.</p></div>
+This data type defines the required function signature for the USART driver buffer event handling callback function. A client must register a pointer using the buffer event handling function whose function signature (parameter and return value types) match the types specified by this function pointer in order to receive buffer related event calls back from the driver.&nbsp;</p>
+<p class="Element10">
+The parameters and return values are described here and a partial example implementation is provided.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">DRV_USART_BUFFER_HANDLE_INVALID</span></strong> </pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">DRV_USART_BUFFER_EVENT_HANDLER</span></strong>)(<a href="00739.html" target="topic">DRV_USART_BUFFER_EVENT</a> event, <a href="00746.html" target="topic">DRV_USART_BUFFER_HANDLE</a> bufferHandle, uintptr_t context);</pre></div></div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+event&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Identifies the type of event<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+bufferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Handle identifying the buffer to which the vent relates<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Value identifying the context of the application that registered the event handling function.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None</p></div>
+If the event is DRV_USART_BUFFER_EVENT_COMPLETE, it means that the data was transferred successfully.&nbsp;</p>
+<p class="Element10">
+If the event is DRV_USART_BUFFER_EVENT_ERROR, it means that the data was not transferred successfully. The <a href="00748.html" target="topic">DRV_USART_BufferCompletedBytesGet</a> function can be called to find out how many bytes were processed.&nbsp;</p>
+<p class="Element10">
+The bufferHandle parameter contains the buffer handle of the buffer that associated with the event. And bufferHandle will be valid while the buffer request is in the queue and during callback, unless an error occurred. After callback returns, the driver will retire the buffer handle.&nbsp;</p>
+<p class="Element10">
+The context parameter contains the a handle to the client context, provided at the time the event handling function was registered using the <a href="00749.html" target="topic">DRV_USART_BufferEventHandlerSet</a> function. This context handle value is passed back to the client as the &quot;context&quot; parameter. It can be any value necessary to identify the client context or instance (such as a pointer to the client's data) instance of the client that made the buffer add request.&nbsp;</p>
+<p class="Element10">
+The event handler function executes in the peripheral's interrupt context. It is recommended of the application to not perform process intensive or blocking operations within this function.&nbsp;</p>
+<p class="Element10">
+The <a href="00758.html" target="topic">DRV_USART_ReadBufferAdd</a> and <a href="00764.html" target="topic">DRV_USART_WriteBufferAdd</a> functions can be called in the event handler to add a buffer to the driver queue. These functions can only be called to add buffers to the driver whose event handler is running. For example, USART2 driver buffers cannot be added in USART1 driver event handler.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> APP_MyBufferEventHandler(
+    <a href="00739.html" target="topic">DRV_USART_BUFFER_EVENT</a> event,
+    <a href="00746.html" target="topic">DRV_USART_BUFFER_HANDLE</a> bufferHandle,
+    uintptr_t context
+)
+{
+    MY_APP_DATA_STRUCT* pAppData = (MY_APP_DATA_STRUCT* ) context;
+
+    <strong><span style="color: #000080">switch</span></strong>(event)
+    {
+        <strong><span style="color: #000080">case</span></strong> DRV_USART_BUFFER_EVENT_COMPLETE:
+
+            <i><span style="color: #008000">// Handle the completed buffer.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> DRV_USART_BUFFER_EVENT_ERROR:
+        <strong><span style="color: #000080">default</span></strong>:
+
+            <i><span style="color: #008000">// Handle error.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+}</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00313.html" target="topic">USART Driver Library Help</a> &gt; <a href="00314.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="00745.html" target="topic">DRV_USART_BUFFER_HANDLE_INVALID Macro</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00314.html" target="topic">USART Driver Library Help</a> &gt; <a href="00315.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="00745.html" target="topic">DRV_USART_BUFFER_EVENT_HANDLER Type</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -76,13 +153,13 @@ None</p></div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00750.html" target="topic">Previous</a> | <a href="00314.html" target="topic">Up</a> | <a href="00758.html" target="topic">Next</a></div>
+<a href="00739.html" target="topic">Previous</a> | <a href="00315.html" target="topic">Up</a> | <a href="00752.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_BUFFER_HANDLE_INVALID Topic Title: DRV_USART_BUFFER_HANDLE_INVALID Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_BUFFER_EVENT_HANDLER Topic Title: DRV_USART_BUFFER_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

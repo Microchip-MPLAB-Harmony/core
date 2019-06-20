@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>sys_time_multiclient</title>
+<title>SYS_TIME_DelayIsComplete Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00012.html" target="topic">System Services Applications</a> &gt; <a href="01433.html" target="topic">Time System Service Applications</a> &gt; <a href="01434.html" target="topic">sys_time_multiclient</a></div>
+<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00985.html" target="topic">Time System Service Library Help</a> &gt; <a href="00986.html" target="topic">Library Interface</a> &gt; c) Callback and Delay Functions &gt; <a href="01434.html" target="topic">SYS_TIME_DelayIsComplete Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01433.html" target="topic">Previous</a> | <a href="01433.html" target="topic">Up</a> | <a href="01435.html" target="topic">Next</a></div>
+<a href="01436.html" target="topic">Previous</a> | <a href="00986.html" target="topic">Up</a> | <a href="01428.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Time System Service sys_time_multiclient Topic Title: sys_time_multiclient)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_DelayIsComplete@SYS_TIME_HANDLE Topic Title: SYS_TIME_DelayIsComplete Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-sys_time_multiclient</div>
+SYS_TIME_DelayIsComplete Function</div>
 </div>
 </div>
 
@@ -48,50 +48,68 @@ sys_time_multiclient</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10" style="text-align: justify;">
-This application demonstrates timer functionality (with two clients to the Time System Service) by periodically printing a message on console every two seconds and blinking an LED every one second.&nbsp;</p>
-<p class="Element10" style="text-align: justify;">
-Delay, counter and single shot timer functionality is demonstrated on a switch press.&nbsp;</p>
-<p class="Element10" style="text-align: justify;">
-On a switch press, the application reads the current value of the 64 bit counter (say, count 1). It then starts a delay of 500 milliseconds and waits for the delay to expire. Once the delay has expired, the application again reads the current value of the 64 bit counter (say, count 2) and calculates the difference between the two counter values.&nbsp;</p>
-<p class="Element10" style="text-align: justify;">
-The difference count indicates the time spent for the delay and is printed on the console as, &quot;Delay time = x ms&quot;, where x is the delay value and is equal to 500 milliseconds in the given example.&nbsp;</p>
-<p class="Element10" style="text-align: justify;">
-The application then starts a single shot timer of 100 milliseconds. When the single shot timer expires, a message is printed on the console that says &quot;Single shot timer of 100 ms expired&quot;. This message is printed only once on every switch press.</p></div>
+<p class="Element10">
+This function determines if the requested delay is completed or is still in progress.</p></div>
 </div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">SYS_TIME_DelayIsComplete</span></strong>(
+    <a href="01438.html" target="topic">SYS_TIME_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
+<p class="Element10">
+A delay request must have been created using either the <a href="01435.html" target="topic">SYS_TIME_DelayMS</a> or <a href="01436.html" target="topic">SYS_TIME_DelayUS</a> functions.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table2">
 <tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="01435.html" target="topic">Building the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to build an application.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="01437.html" target="topic">MPLAB Harmony Configuration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="01436.html" target="topic">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="01438.html" target="topic">Running the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to run an application.&nbsp;</div></td></tr></table></div></div>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A <a href="01438.html" target="topic">SYS_TIME_HANDLE</a> value provided by either <a href="01435.html" target="topic">SYS_TIME_DelayMS</a> or <a href="01436.html" target="topic">SYS_TIME_DelayUS</a> functions.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+true - If the delay has completed.&nbsp;</p>
+<p class="Element10">
+false - If the delay has not completed.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+SYS_TIME_DelayIsComplete must be called to poll the status of the delay requested through <a href="01435.html" target="topic">SYS_TIME_DelayMS</a> or <a href="01436.html" target="topic">SYS_TIME_DelayUS</a>.&nbsp;</p>
+<p class="Element10">
+SYS_TIME_DelayIsComplete must not be used to poll the status of a periodic timer. Status of a periodic timer may be polled using the <a href="01466.html" target="topic">SYS_TIME_TimerPeriodHasExpired</a> routine.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// Check if the delay has expired.</span></i>
+<strong><span style="color: #000080">if</span></strong> (SYS_TIME_DelayIsComplete(timer) != <strong><span style="color: #000080">true</span></strong>)
+{
+    <i><span style="color: #008000">// Delay has not expired</span></i>
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -99,7 +117,7 @@ This section provides information on how to run an application.&nbsp;</div></td>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00012.html" target="topic">System Services Applications</a> &gt; <a href="01433.html" target="topic">Time System Service Applications</a> &gt; <a href="01434.html" target="topic">sys_time_multiclient</a></div>
+<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00985.html" target="topic">Time System Service Library Help</a> &gt; <a href="00986.html" target="topic">Library Interface</a> &gt; c) Callback and Delay Functions &gt; <a href="01434.html" target="topic">SYS_TIME_DelayIsComplete Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -107,13 +125,13 @@ This section provides information on how to run an application.&nbsp;</div></td>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01433.html" target="topic">Previous</a> | <a href="01433.html" target="topic">Up</a> | <a href="01435.html" target="topic">Next</a></div>
+<a href="01436.html" target="topic">Previous</a> | <a href="00986.html" target="topic">Up</a> | <a href="01428.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Time System Service sys_time_multiclient Topic Title: sys_time_multiclient)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_DelayIsComplete@SYS_TIME_HANDLE Topic Title: SYS_TIME_DelayIsComplete Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

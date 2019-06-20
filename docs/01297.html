@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_INT_SourceDisable Function</title>
+<title>SYS_FS_MEDIA_MANAGER_VolumePropertyGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00967.html" target="topic">Interrupt System Service Library Help</a> &gt; <a href="00968.html" target="topic">Library Interface</a> &gt; b) Interrupt Source Management Functions &gt; <a href="01297.html" target="topic">SYS_INT_SourceDisable Function</a></div>
+<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00965.html" target="topic">File System Service Library Help</a> &gt; <a href="00966.html" target="topic">Library Interface</a> &gt; c) Media Manager Functions &gt; <a href="01297.html" target="topic">SYS_FS_MEDIA_MANAGER_VolumePropertyGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01300.html" target="topic">Previous</a> | <a href="00968.html" target="topic">Up</a> | <a href="01298.html" target="topic">Next</a></div>
+<a href="01289.html" target="topic">Previous</a> | <a href="00966.html" target="topic">Up</a> | <a href="01285.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_INT_SourceDisable@INT_SOURCE Topic Title: SYS_INT_SourceDisable Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_MEDIA_MANAGER_VolumePropertyGet@char *@SYS_FS_VOLUME_PROPERTY * Topic Title: SYS_FS_MEDIA_MANAGER_VolumePropertyGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_INT_SourceDisable Function</div>
+SYS_FS_MEDIA_MANAGER_VolumePropertyGet Function</div>
 </div>
 </div>
 
@@ -49,12 +49,13 @@ SYS_INT_SourceDisable Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function returns the current interrupt enable/disable status and disables the specified interrupt source/line at the interrupt controller level.</p></div>
+This function gets the property of the volume. This function is used by higher layers (sys_fs layer) to know the property of the volume as specified in the <a href="01346.html" target="topic">SYS_FS_VOLUME_PROPERTY</a> structure.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">SYS_INT_SourceDisable</span></strong>(
-    <a href="00825.html" target="topic">INT_SOURCE</a> <strong><span style="color: #000000">source</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">SYS_FS_MEDIA_MANAGER_VolumePropertyGet</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong> * <strong><span style="color: #000000">devName</span></strong>, 
+    <a href="01346.html" target="topic">SYS_FS_VOLUME_PROPERTY</a> * <strong><span style="color: #000000">str</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
@@ -78,42 +79,29 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-source&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+*devName&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Interrupt source/line available at interrupt controller.&nbsp;</div></td></tr></table></div></div>
+String name of the media&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+*str&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to structure of type <a href="01346.html" target="topic">SYS_FS_VOLUME_PROPERTY</a>&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
 Returns</div>
 <div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600">true - Interrupt line was enabled.</li>
-<li class="Element600">false - Interrupt line was disabled.</li>
-</ul></div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
 <p class="Element10">
-If the corresponding module level interrupts are enabled and triggered, the triggers will be ignored at interrupt controller. For example, USART0 doesn't cause interrupt unless both the interrupt controller source/line and USART0 module level interrupt for TX or RX or Error are enabled.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">    <strong><span style="color: #000080">bool</span></strong> usart0Int = <strong><span style="color: #000080">false</span></strong>;
-    usart0Int = SYS_INT_SourceDisable(USART0_IRQn);</pre></div></div>
-</div>
+True or false.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00967.html" target="topic">Interrupt System Service Library Help</a> &gt; <a href="00968.html" target="topic">Library Interface</a> &gt; b) Interrupt Source Management Functions &gt; <a href="01297.html" target="topic">SYS_INT_SourceDisable Function</a></div>
+<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00965.html" target="topic">File System Service Library Help</a> &gt; <a href="00966.html" target="topic">Library Interface</a> &gt; c) Media Manager Functions &gt; <a href="01297.html" target="topic">SYS_FS_MEDIA_MANAGER_VolumePropertyGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -121,13 +109,13 @@ Example</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01300.html" target="topic">Previous</a> | <a href="00968.html" target="topic">Up</a> | <a href="01298.html" target="topic">Next</a></div>
+<a href="01289.html" target="topic">Previous</a> | <a href="00966.html" target="topic">Up</a> | <a href="01285.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_INT_SourceDisable@INT_SOURCE Topic Title: SYS_INT_SourceDisable Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_MEDIA_MANAGER_VolumePropertyGet@char *@SYS_FS_VOLUME_PROPERTY * Topic Title: SYS_FS_MEDIA_MANAGER_VolumePropertyGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Configuring the Library</title>
+<title>Library Interface</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00916.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00913.html" target="topic">Configuring the Library</a></div>
+<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00912.html" target="topic">Cache System Service Library Help</a> &gt; <a href="00913.html" target="topic">Library Interface</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00914.html" target="topic">Previous</a> | <a href="00916.html" target="topic">Up</a> | <a href="00912.html" target="topic">Next</a></div>
+<a href="00909.html" target="topic">Previous</a> | <a href="00912.html" target="topic">Up</a> | <a href="00991.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS COMMAND Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS Cache Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Configuring the Library</div>
+Library Interface</div>
 </div>
 </div>
 
@@ -49,54 +49,124 @@ Configuring the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The Command Processor System Service library should be configured via MHC. Below is the snapshot of the MHC configuration window and a brief description of various configuration options.&nbsp;</p>
+This section describes the APIs of the DMA System Service Library.&nbsp;</p>
 <p class="Element10">
-In MHC, the Command Processor System Service configuration options are available under the Console System Service component. </p><p class="Element10" style="text-align: center;">
-<img src="sys_command_configuration.png" border="0" alt="" title=""></p><div class="Element15">
-Configuration Options:</div>
-
-<ul class="Element630">
-<li class="Element600"><strong>Device Used:</strong>
-<ul class="Element631">
-<li class="Element601">Indicates the hardware UART Peripheral Library instance used by the Console System Service</li>
-</ul></li>
-<li class="Element600"><strong>Transmit Buffer Queue Size (1-128):</strong>
-<ul class="Element631">
-<li class="Element601">Indicates the maximum number of data transmit requests that can be queued</li>
-</ul></li>
-<li class="Element600"><strong>Receive Buffer Queue Size (1-128):</strong>
-<ul class="Element631">
-<li class="Element601">Indicates the maximum number of data reception requests that can be queued</li>
-</ul></li>
-<li class="Element600"><strong>Enable Debug?:</strong>
-<ul class="Element631">
-<li class="Element601">Enable Debug System Service. Refer the Debug System Service for the Debug service configuration options</li>
-</ul></li>
-<li class="Element600"><strong>Enable Command Processor?:</strong>
-<ul class="Element631">
-<li class="Element601">Enable Command Processor System Service</li>
-<li class="Element601"><strong>Command Print Buffer Size (512-8192):</strong>
-<ul class="Element632">
-<li class="Element602">Size of the command print buffer in bytes</li>
-</ul></li>
-<li class="Element601"><strong>Re-route Console Message/Print through Command Service?:</strong>
-<ul class="Element632">
-<li class="Element602">Re-routes the <a href="01336.html" target="topic">SYS_MESSAGE</a>, <a href="01010.html" target="topic">SYS_CONSOLE_MESSAGE</a>, <a href="01360.html" target="topic">SYS_PRINT</a> and <a href="01011.html" target="topic">SYS_CONSOLE_PRINT</a> macros through the Command Service</li>
-</ul></li>
-<li class="Element601"><strong>Re-route Debug Message/Print through Command Service?:</strong>
-<ul class="Element632">
-<li class="Element602">Re-routes the <a href="01022.html" target="topic">SYS_DEBUG_MESSAGE</a>, <a href="01024.html" target="topic">SYS_DEBUG_PRINT</a>, SYS_ERROR_PRINT, SYS_DEBUG and SYS_ERROR macros through the Command Service</li>
-<li class="Element602">For re-routing debug messages through command service, the debug system service must be enabled in MHC configuration</li>
-</ul></li>
-</ul></li>
-</ul></div>
+Refer to each section for a detailed description.</p></div>
+</div>
+<a name="46756E6374696F6E73"></a><div class="Element14">
+Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00991.html" target="topic">SYS_CACHE_CleanDCache</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Clean Data Cache.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00992.html" target="topic">SYS_CACHE_CleanDCache_by_Addr</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Data Cache Clean by address.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00993.html" target="topic">SYS_CACHE_CleanInvalidateDCache</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Clean and Invalidate Data Cache.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00994.html" target="topic">SYS_CACHE_CleanInvalidateDCache_by_Addr</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Data Cache Clean and Invalidate by address.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00995.html" target="topic">SYS_CACHE_DisableCaches</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Disables both Instruction and Data Caches.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00996.html" target="topic">SYS_CACHE_DisableDCache</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Disable Data Cache.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00997.html" target="topic">SYS_CACHE_DisableICache</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Disable Instruction Cache.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00998.html" target="topic">SYS_CACHE_EnableCaches</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Enables both Instruction and Data Caches.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00999.html" target="topic">SYS_CACHE_EnableDCache</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Enable Instruction Cache.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01000.html" target="topic">SYS_CACHE_EnableICache</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Enable Instruction Cache.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01001.html" target="topic">SYS_CACHE_InvalidateDCache</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Invalidate Data Cache.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01002.html" target="topic">SYS_CACHE_InvalidateDCache_by_Addr</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Data Cache Invalidate by address.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01003.html" target="topic">SYS_CACHE_InvalidateICache</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Invalidate Instruction Cache.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00916.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00913.html" target="topic">Configuring the Library</a></div>
+<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00912.html" target="topic">Cache System Service Library Help</a> &gt; <a href="00913.html" target="topic">Library Interface</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -104,13 +174,13 @@ Configuration Options:</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00914.html" target="topic">Previous</a> | <a href="00916.html" target="topic">Up</a> | <a href="00912.html" target="topic">Next</a></div>
+<a href="00909.html" target="topic">Previous</a> | <a href="00912.html" target="topic">Up</a> | <a href="00991.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS COMMAND Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS Cache Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

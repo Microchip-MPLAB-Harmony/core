@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_Unmount Function</title>
+<title>SYS_FS_MEDIA_MANAGER_Register Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; b) General Operation Functions &gt; <a href="01291.html" target="topic">SYS_FS_Unmount Function</a></div>
+<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00965.html" target="topic">File System Service Library Help</a> &gt; <a href="00966.html" target="topic">Library Interface</a> &gt; c) Media Manager Functions &gt; <a href="01291.html" target="topic">SYS_FS_MEDIA_MANAGER_Register Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01271.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01061.html" target="topic">Next</a></div>
+<a href="01294.html" target="topic">Previous</a> | <a href="00966.html" target="topic">Up</a> | <a href="01292.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_Unmount@char * Topic Title: SYS_FS_Unmount Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_MEDIA_MANAGER_Register@SYS_MODULE_OBJ@SYS_MODULE_INDEX@SYS_FS_MEDIA_FUNCTIONS *@SYS_FS_MEDIA_TYPE Topic Title: SYS_FS_MEDIA_MANAGER_Register Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_Unmount Function</div>
+SYS_FS_MEDIA_MANAGER_Register Function</div>
 </div>
 </div>
 
@@ -49,19 +49,22 @@ SYS_FS_Unmount Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function removes (unmounts) the attachment of the volume from the file system.</p></div>
+This function is called by the media driver to register the functionalities with the media manager. For static media, such as NVM or a SD card, the media drivers register with this function at the time of initialization. For dynamic media, such as MSD, this register function is called dynamically, once the MSD media is connected.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01275.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_Unmount</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong> * <strong><span style="color: #000000">mountName</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01282.html" target="topic">SYS_FS_MEDIA_HANDLE</a> <strong><span style="color: #000000">SYS_FS_MEDIA_MANAGER_Register</span></strong>(
+    <a href="01396.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">obj</span></strong>, 
+    <a href="01391.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="01268.html" target="topic">SYS_FS_MEDIA_FUNCTIONS</a> * <strong><span style="color: #000000">mediaFunctions</span></strong>, 
+    <a href="01319.html" target="topic">SYS_FS_MEDIA_TYPE</a> <strong><span style="color: #000000">mediaType</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The volume name has to be know in order to pass as input to Unmount. The specified volume name to be unmounted should have been already mounted.</p></div>
+None.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -78,9 +81,24 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-mountName&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+obj&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Mount name for the volume to be unmounted. The mount name has to be preceded by the string &quot;/mnt/&quot;.&nbsp;</div></td></tr></table></div></div>
+driver object (of type <a href="01396.html" target="topic">SYS_MODULE_OBJ</a>, value returned when driver is initialized)&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+driver index (of type <a href="01391.html" target="topic">SYS_MODULE_INDEX</a>, value passed during driver initialization and opening)&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+mediaFunctions&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+List of media driver functions&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+mediaType&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Type of media&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,28 +106,21 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS_FS_RES_SUCCESS - Unmount was successful. SYS_FS_RES_FAILURE - Unmount was unsuccessful. The reason for the failure can be retrieved with <a href="01076.html" target="topic">SYS_FS_Error</a>.</p></div>
+Valid handle of type <a href="01282.html" target="topic">SYS_FS_MEDIA_HANDLE</a> on successful registration of the media driver. Invalid handle of type <a href="01283.html" target="topic">SYS_FS_MEDIA_HANDLE_INVALID</a> on unsuccessful registration of the media driver.</p></div>
 </div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  <strong><span style="color: #000080">if</span></strong>(SYS_FS_Unmount(&quot;/mnt/myDrive&quot;) != SYS_FS_RES_SUCCESS)
-  {
-      <i><span style="color: #008000">// Failure, try unmounting again</span></i>
-  }
-  <strong><span style="color: #000080">else</span></strong>
-  {
-      <i><span style="color: #008000">// Unmount was successful.</span></i>
-  }</pre></div></div>
-</div>
+<p class="Element10">
+None</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; b) General Operation Functions &gt; <a href="01291.html" target="topic">SYS_FS_Unmount Function</a></div>
+<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00965.html" target="topic">File System Service Library Help</a> &gt; <a href="00966.html" target="topic">Library Interface</a> &gt; c) Media Manager Functions &gt; <a href="01291.html" target="topic">SYS_FS_MEDIA_MANAGER_Register Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -117,13 +128,13 @@ Example</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01271.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="01061.html" target="topic">Next</a></div>
+<a href="01294.html" target="topic">Previous</a> | <a href="00966.html" target="topic">Up</a> | <a href="01292.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_Unmount@char * Topic Title: SYS_FS_Unmount Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_MEDIA_MANAGER_Register@SYS_MODULE_OBJ@SYS_MODULE_INDEX@SYS_FS_MEDIA_FUNCTIONS *@SYS_FS_MEDIA_TYPE Topic Title: SYS_FS_MEDIA_MANAGER_Register Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

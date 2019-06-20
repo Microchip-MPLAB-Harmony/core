@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Introduction</title>
+<title>Driver Libraries Help</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00019.html" target="topic">Introduction</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00018.html" target="topic">Previous</a> | <a href="00018.html" target="topic">Up</a> | <a href="00097.html" target="topic">Next</a></div>
+<a href="00020.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Driver Libraries Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Driver Libraries Help Topic Title: Driver Libraries Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Introduction</div>
+Driver Libraries Help</div>
 </div>
 </div>
 
@@ -46,63 +46,92 @@ Introduction</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
 <div class="Element10">
-<p class="Element10">
-MPLAB Harmony device drivers (usually referred to as &quot;drivers&quot;) provide simple, highly abstracted C-language interfaces to peripherals and other resources. A driver's interface allows applications and other client modules to easily interact with the peripheral it controls using consistent usage models.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><p class="Element10" style="text-align: center;">
-<img src="Harmony_Driver_Execution_flow.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<strong>Harmony Driver Execution Flow</strong>&nbsp;</p><p class="Element10">
-&nbsp;</p>
-<div class="Element15">
-Harmony drivers provide:</div>
-
-<ul class="Element630">
-<li class="Element600">Same API for all the instances of a peripheral - This allows the application to remain the same when the peripheral instance is changed and across different platforms</li>
-</ul><p class="Element10" style="text-align: center;">
-<img src="Harmony_Driver_Api_Table.png" border="0" alt="" title=""></p><p class="Element10">
-&nbsp;</p>
-
-<ul class="Element630">
-<li class="Element600">Support for multiple clients - Seamlessly handle client specific differences. Drivers allow multiple clients to a driver instance. For example, there can be multiple application clients to a SPI driver instance having multiple SPI slaves. The SPI slave specific information such as clock phase, clock polarity, clock speed and chip select are all handled by the SPI driver based on the client that submitted the request</li>
-</ul><p class="Element10">
-&nbsp;</p>
-
-<ul class="Element630">
-<li class="Element600">Queue support - Drivers allow queuing of multiple requests. Each instance of a driver has a dedicated queue. The requests submitted by all the clients of the driver instance are queued in the driver instance queue. Queuing allows the application to submit requests before waiting for the driver to finish the previous requests. For each submitted request, the application can choose to get notified or poll the status of the submitted request using the handle provided by the driver for the submitted request</li>
-</ul><p class="Element10">
-&nbsp;</p>
-
-<ul class="Element630">
-<li class="Element600">Cache management - Drivers manage cache related operations on parts that have cache, thereby simplifying application development</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<div class="Element15">
-Driver Usage Models:</div>
-<p class="Element10" style="text-align: center;">
-<img src="Harmony_Driver_Usage_Model.png" border="0" alt="" title=""></p>
-<ul class="Element630">
-<li class="Element600">Single instance, single client - The driver manages a single instance of the peripheral and there is a single client (application) accessing the driver instance</li>
-</ul><p class="Element10">
-&nbsp;</p>
-
-<ul class="Element630">
-<li class="Element600">Multiple instances, single client (one client per driver instance) - The driver manages multiple instances of the peripheral and there is a single client to each instance of the driver. For example, the SPI driver instance 0 manages SPI peripheral instance 3 and SPI driver instance 1 manages SPI peripheral instance 5</li>
-</ul><p class="Element10">
-&nbsp;</p>
-
-<ul class="Element630">
-<li class="Element600">Single instance, multiple clients - Multiple clients to an instance of the driver. For example, there can be two application clients; one client interacting with SPI EEPROM and the second client interacting with SPI based temperature sensor, both interfaced to the same instance of SPI peripheral.</li>
-</ul></div>
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00020.html" target="topic">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides descriptions of the Driver libraries that are available in MPLAB Harmony.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00098.html" target="topic">I2C Driver Library Help</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the I<sup>2</sup>C driver library.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00095.html" target="topic">I2C EEPROM Driver Libraries Help</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the I<sup>2</sup>C EEPROM based driver libraries.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00123.html" target="topic">I2S Driver Library Help</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the I2S Driver Library.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00153.html" target="topic">Memory Driver Library Help</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the Memory driver library.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00196.html" target="topic">SDMMC Driver Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the SD Card driver library.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00212.html" target="topic">SD Card (SPI) Driver Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the SD (Secure Digital) Card driver (SDSPI) library.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00248.html" target="topic">SPI EEPROM Driver Libraries Help</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the SPI EEPROM based driver libraries.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00252.html" target="topic">SPI Driver Library Help</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the SPI driver library.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00250.html" target="topic">SPI Flash Driver Libraries Help</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the SPI flash based driver libraries.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the SQI flash based driver libraries.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00314.html" target="topic">USART Driver Library Help</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the USART driver library.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00131.html" target="topic">Common Driver Library Help</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information that is common to all drivers.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00019.html" target="topic">Introduction</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -110,13 +139,13 @@ Driver Usage Models:</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00018.html" target="topic">Previous</a> | <a href="00018.html" target="topic">Up</a> | <a href="00097.html" target="topic">Next</a></div>
+<a href="00020.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Driver Libraries Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Driver Libraries Help Topic Title: Driver Libraries Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

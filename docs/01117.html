@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_FILE_OPEN_ATTRIBUTES Enumeration</title>
+<title>SYS_FS_CurrentWorkingDirectoryGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01117.html" target="topic">SYS_FS_FILE_OPEN_ATTRIBUTES Enumeration</a></div>
+<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00965.html" target="topic">File System Service Library Help</a> &gt; <a href="00966.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01117.html" target="topic">SYS_FS_CurrentWorkingDirectoryGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01275.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="00764.html" target="topic">Next</a></div>
+<a href="01119.html" target="topic">Previous</a> | <a href="00966.html" target="topic">Up</a> | <a href="01188.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FILE_OPEN_ATTRIBUTES Topic Title: SYS_FS_FILE_OPEN_ATTRIBUTES Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_CurrentWorkingDirectoryGet@char *@uint32_t Topic Title: SYS_FS_CurrentWorkingDirectoryGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_FILE_OPEN_ATTRIBUTES Enumeration</div>
+SYS_FS_CurrentWorkingDirectoryGet Function</div>
 </div>
 </div>
 
@@ -49,64 +49,52 @@ SYS_FS_FILE_OPEN_ATTRIBUTES Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-File open attributes&nbsp;</p>
-<p class="Element10">
-This enumeration lists the various attributes (modes) in which a file can be opened.</p></div>
+This function gets the current working directory path along with the working drive.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">SYS_FS_FILE_OPEN_READ</span></strong> = 0,
-  <strong><span style="color: #000000">SYS_FS_FILE_OPEN_WRITE</span></strong>,
-  <strong><span style="color: #000000">SYS_FS_FILE_OPEN_APPEND</span></strong>,
-  <strong><span style="color: #000000">SYS_FS_FILE_OPEN_READ_PLUS</span></strong>,
-  <strong><span style="color: #000000">SYS_FS_FILE_OPEN_WRITE_PLUS</span></strong>,
-  <strong><span style="color: #000000">SYS_FS_FILE_OPEN_APPEND_PLUS</span></strong>
-} SYS_FS_FILE_OPEN_ATTRIBUTES;</pre></div></div>
-<a name="4D656D62657273"></a><div class="Element14">
-Members</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01329.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_CurrentWorkingDirectoryGet</span></strong>(
+    <strong><span style="color: #000080">char</span></strong> * <strong><span style="color: #000000">buff</span></strong>, 
+    uint32_t <strong><span style="color: #000000">len</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element272">
-<div class="TableDiv">
-<table cellspacing="0" class="Table3">
-<tr>
-<td class="Element260" valign="top" width="35%">
-<div class="Element261">
-Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
-<div class="Element265">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_FS_FILE_OPEN_READ = 0&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-reading the file = possible, if file exists. reading the file = file open returns error, if file does not exist. writing to the file = not possible. Write operation returns error&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_FS_FILE_OPEN_WRITE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-reading the file = not possible. Read operation returns error. writing to the file = possible. If file exists, write happens from the beginning of the file, overwriting the existing content of the file. writing to the file = If file does not exist, a new file will be created and data will be written into the newly created file.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_FS_FILE_OPEN_APPEND&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-reading the file = not possible. Read operation returns error writing to the file = possible. If file exists, write happens from the end of the file, preserving the existing content of the file. writing to the file = If file does not exist, a new file will be created and data will be written into the newly created file.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_FS_FILE_OPEN_READ_PLUS&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-reading the file = possible, if file exists. reading the file = file open returns error, if file does not exist. writing to the file = possible, if file exists, staring from the beginning of the file (overwriting). writing to the file = file open returns error, if file does not exist.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_FS_FILE_OPEN_WRITE_PLUS&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-reading the file = possible, if file exists. reading the file = If file does not exist, a new file will be created. writing to the file = possible. If file exists, write happens from the beginning of the file, overwriting the existing content of the file. writing to the file = If file does not exist, a new file will be created and data will be written into the newly created file.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_FS_FILE_OPEN_APPEND_PLUS&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-reading the file = possible, if file exists. File read pointer will be moved to end of the file in this mode. reading the file = If file does not exist, a new file will be created. writing to the file = possible. If file exists, write happens from the end of the file, preserving the existing content of the file. writing to the file = If file does not exist, a new file will be created and data will be written into the newly created file.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+At least one disk must be mounted.</p></div>
 </div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+buff&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to a buffer which will contain the name of the current working directory and drive, once the function completes.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+len&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Size of the buffer.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+SYS_FS_RES_SUCCESS - Get current working directory operation was successful. SYS_FS_RES_FAILURE - Get current working directory operation was unsucessful. The reason for the failure can be retrieved with <a href="01130.html" target="topic">SYS_FS_Error</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -115,12 +103,75 @@ Remarks</div>
 <p class="Element10">
 None.</p></div>
 </div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01329.html" target="topic">SYS_FS_RESULT</a> res;
+  <strong><span style="color: #000080">char</span></strong> buffer[16];
+
+  <strong><span style="color: #000080">switch</span></strong>(appState)
+  {
+      <strong><span style="color: #000080">case</span></strong> TRY_MOUNT:
+          <strong><span style="color: #000080">if</span></strong>(<a href="01325.html" target="topic">SYS_FS_Mount</a>(&quot;/dev/mmcblka1&quot;, &quot;/mnt/myDrive&quot;, FAT, 0, NULL) != SYS_FS_RES_SUCCESS)
+          {
+              <i><span style="color: #008000">// Failure, try mounting again</span></i>
+          }
+          <strong><span style="color: #000080">else</span></strong>
+          {
+              <i><span style="color: #008000">// Mount was successful. Create a directory.</span></i>
+              appState = CREATE_DIR;
+          }
+          <strong><span style="color: #000080">break</span></strong>;
+
+      <strong><span style="color: #000080">case</span></strong> CREATE_DIR:
+          res = <a href="01120.html" target="topic">SYS_FS_DirectoryMake</a>(&quot;Dir1&quot;);
+          <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
+          {
+              <i><span style="color: #008000">// Directory creation failed</span></i>
+              appState = ERROR;
+          }
+          <strong><span style="color: #000080">else</span></strong>
+          {
+              <i><span style="color: #008000">// Directory creation was successful. Change to the new</span></i>
+              <i><span style="color: #008000">// directory.</span></i>
+              appState = CHANGE_DIR;
+          }
+          <strong><span style="color: #000080">break</span></strong>;
+
+      <strong><span style="color: #000080">case</span></strong> CHANGE_DIR:
+          res = <a href="01119.html" target="topic">SYS_FS_DirectoryChange</a>(&quot;Dir1&quot;);
+          <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
+          {
+              <i><span style="color: #008000">// Directory change failed</span></i>
+              appState = ERROR;
+          }
+          <strong><span style="color: #000080">else</span></strong>
+          {
+              <i><span style="color: #008000">// Directory change was successful. Get current working</span></i>
+              <i><span style="color: #008000">// directory</span></i>
+              appState = GET_CWD;
+          }
+          <strong><span style="color: #000080">break</span></strong>;
+
+      <strong><span style="color: #000080">case</span></strong> GET_CWD:
+          res = SYS_FS_CurrentWorkingDirectoryGet(buffer, 15);
+          <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
+          {
+              <i><span style="color: #008000">// Get current directory operation failed</span></i>
+              appState = ERROR;
+          }
+          <strong><span style="color: #000080">break</span></strong>;
+  }
+</pre></div></div>
+</div>
+</div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01424.html" target="topic">System Service Libraries Help</a> &gt; <a href="00961.html" target="topic">File System Service Library Help</a> &gt; <a href="00962.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01117.html" target="topic">SYS_FS_FILE_OPEN_ATTRIBUTES Enumeration</a></div>
+<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00965.html" target="topic">File System Service Library Help</a> &gt; <a href="00966.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01117.html" target="topic">SYS_FS_CurrentWorkingDirectoryGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -128,13 +179,13 @@ None.</p></div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01275.html" target="topic">Previous</a> | <a href="00962.html" target="topic">Up</a> | <a href="00764.html" target="topic">Next</a></div>
+<a href="01119.html" target="topic">Previous</a> | <a href="00966.html" target="topic">Up</a> | <a href="01188.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FILE_OPEN_ATTRIBUTES Topic Title: SYS_FS_FILE_OPEN_ATTRIBUTES Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_CurrentWorkingDirectoryGet@char *@uint32_t Topic Title: SYS_FS_CurrentWorkingDirectoryGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SPI_WriteReadTransferAdd Function</title>
+<title>DRV_SPI_TransferStatusGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00251.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00252.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00706.html" target="topic">DRV_SPI_WriteReadTransferAdd Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; d) Transfer Status Functions &gt; <a href="00706.html" target="topic">DRV_SPI_TransferStatusGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00708.html" target="topic">Previous</a> | <a href="00252.html" target="topic">Up</a> | <a href="00704.html" target="topic">Next</a></div>
+<a href="00708.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00663.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_WriteReadTransferAdd@DRV_HANDLE@void*@size_t@void*@size_t@DRV_SPI_TRANSFER_HANDLE * const Topic Title: DRV_SPI_WriteReadTransferAdd Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_TransferStatusGet@DRV_SPI_TRANSFER_HANDLE Topic Title: DRV_SPI_TransferStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SPI_WriteReadTransferAdd Function</div>
+DRV_SPI_TransferStatusGet Function</div>
 </div>
 </div>
 
@@ -49,39 +49,19 @@ DRV_SPI_WriteReadTransferAdd Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function schedules a non-blocking write-read operation. The function returns with a valid transfer handle in the transferHandle argument if the request was scheduled successfully. The function adds the request to the instance specific software queue and returns immediately. While the request is in the queue, the application buffer is owned by the driver and should not be modified. This API will write txSize and at the same time counting of rxSize to be read will start. If user wants 'n' bytes to be read after txSize has been written, then he should keep rxSize value as 'txSize + n'.&nbsp;</p>
-<p class="Element10">
-The function returns <a href="00694.html" target="topic">DRV_SPI_TRANSFER_HANDLE_INVALID</a> in the transferHandle argument:</p>
-<ul class="Element630">
-<li class="Element600">if neither of the transmit or receive arguments are valid.</li>
-<li class="Element600">if the transfer handle is NULL.</li>
-<li class="Element600">if the queue size is full or queue depth is insufficient.</li>
-<li class="Element600">if the driver handle is invalid.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-If the requesting client registered an event callback with the driver, the driver will issue a DRV_SPI_TRANSFER_EVENT_COMPLETE event if the transfer was processed successfully or DRV_SPI_TRANSFER_EVENT_ERROR event if the transfer was not processed successfully.</p></div>
+This function can be used to poll the status of the queued transfer request if the application doesn't prefer to use the event handler (callback) function to get notified.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_SPI_WriteReadTransferAdd</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00416.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">pTransmitData</span></strong>, 
-    size_t <strong><span style="color: #000000">txSize</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">pReceiveData</span></strong>, 
-    size_t <strong><span style="color: #000000">rxSize</span></strong>, 
-    <a href="00693.html" target="topic">DRV_SPI_TRANSFER_HANDLE</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">transferHandle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00688.html" target="topic">DRV_SPI_TRANSFER_EVENT</a> <strong><span style="color: #000000">DRV_SPI_TransferStatusGet</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00695.html" target="topic">DRV_SPI_TRANSFER_HANDLE</a> <strong><span style="color: #000000">transferHandle</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600"><a href="00682.html" target="topic">DRV_SPI_Open</a> must have been called to obtain a valid opened device handle.</li>
-<li class="Element600"><a href="00703.html" target="topic">DRV_SPI_TransferSetup</a> must have been called if GPIO pin has to be used for</li>
-</ul><p class="Element10">
-chip select or any of the setup parameters has to be changed dynamically.</p></div>
+<p class="Element10">
+Either <a href="00686.html" target="topic">DRV_SPI_ReadTransferAdd</a> or <a href="00710.html" target="topic">DRV_SPI_WriteTransferAdd</a> or <a href="00708.html" target="topic">DRV_SPI_WriteReadTransferAdd</a> function must have been called and a valid transfer handle must have been returned.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -98,34 +78,9 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Handle of the communication channel as returned by the <a href="00682.html" target="topic">DRV_SPI_Open</a> function.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-*pTransmitData&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to the data which has to be transmitted. if it is NULL, that means only data receiving is expected. For 9 to 15bit mode, data should be right aligned in the 16 bit memory location.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-txSize&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Number of bytes to be transmitted. Always, size should be given in terms of bytes. For example, if 10 15-bit data are to be transmitted, the transmit size should be 20 bytes.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-*pReceiveData&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to the location where received data has to be stored. It is user's responsibility to ensure pointed location has sufficient memory to store the read data. if it is NULL, that means only data transmission is expected. For 9 to 15bit mode, received data will be right aligned in the 16 bit memory location.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-rxSize&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Number of bytes to be received. Always, size should be given in terms of bytes. For example, if 10 15-bit data are to be received, the receive size should be 20 bytes. If &quot;n&quot; number of bytes has to be received AFTER transmitting &quot;m&quot; number of bytes, then &quot;txSize&quot; should be set as &quot;m&quot; and &quot;rxSize&quot; should be set as &quot;m+n&quot;.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
 transferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Handle which is returned by transfer add function.&nbsp;</div></td></tr></table></div></div>
+Handle of the transfer request of which status has to be obtained.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -133,40 +88,38 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+One of the elements of the enum &quot;<a href="00688.html" target="topic">DRV_SPI_TRANSFER_EVENT</a>&quot;.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600">This function can be called from within the SPI Driver Transfer Event Handler that is registered by the client.</li>
-<li class="Element600">It should not be called in the event handler associated with another SPI driver instance or event handler of any other peripheral.</li>
-<li class="Element600">It should not be called directly in any ISR.</li>
-</ul></div>
+<p class="Element10">
+None.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-MY_APP_OBJ myAppObj;
-uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
-uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
-<a href="00693.html" target="topic">DRV_SPI_TRANSFER_HANDLE</a> transferHandle;
+<div class="Element13"><div class="Element12"><pre class="Element12">  <i><span style="color: #008000">// myAppObj is an application specific object.</span></i>
+  MY_APP_OBJ myAppObj;
 
-<i><span style="color: #008000">// mySPIHandle is the handle returned by the DRV_SPI_Open function.</span></i>
+  uint8_t mybuffer[MY_BUFFER_SIZE];
+  <a href="00695.html" target="topic">DRV_SPI_TRANSFER_HANDLE</a> transferHandle;
+  <a href="00688.html" target="topic">DRV_SPI_TRANSFER_EVENT</a> event;
 
-DRV_SPI_WriteReadTransferAdd(mySPIhandle, myTxBuffer, MY_TX_BUFFER_SIZE,
-                                myRxBuffer, MY_RX_BUFFER_SIZE, &amp;transferHandle);
+  <i><span style="color: #008000">// mySPIHandle is the handle returned by the DRV_SPI_Open function.</span></i>
 
-<strong><span style="color: #000080">if</span></strong>(transferHandle == <a href="00694.html" target="topic">DRV_SPI_TRANSFER_HANDLE_INVALID</a>)
-{
-    <i><span style="color: #008000">// Error handling here</span></i>
-}
+  <a href="00686.html" target="topic">DRV_SPI_ReadTransferAdd</a>( mySPIhandle, myBuffer, MY_RECEIVE_SIZE, &amp;transferHandle);
 
-<i><span style="color: #008000">// Event is received when the transfer is processed.</span></i></pre></div></div>
+  <strong><span style="color: #000080">if</span></strong>(transferHandle == <a href="00696.html" target="topic">DRV_SPI_TRANSFER_HANDLE_INVALID</a>)
+  {
+      <i><span style="color: #008000">// Error handling here</span></i>
+  }
+
+  <i><span style="color: #008000">//Check the status of the transfer request</span></i>
+  <i><span style="color: #008000">//This call can be used to wait until the transfer is completed.</span></i>
+  event  = DRV_SPI_TransferStatusGet(transferHandle);</pre></div></div>
 </div>
 </div>
 </div>
@@ -174,7 +127,7 @@ DRV_SPI_WriteReadTransferAdd(mySPIhandle, myTxBuffer, MY_TX_BUFFER_SIZE,
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00251.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00252.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00706.html" target="topic">DRV_SPI_WriteReadTransferAdd Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; d) Transfer Status Functions &gt; <a href="00706.html" target="topic">DRV_SPI_TransferStatusGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -182,13 +135,13 @@ DRV_SPI_WriteReadTransferAdd(mySPIhandle, myTxBuffer, MY_TX_BUFFER_SIZE,
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00708.html" target="topic">Previous</a> | <a href="00252.html" target="topic">Up</a> | <a href="00704.html" target="topic">Next</a></div>
+<a href="00708.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00663.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_WriteReadTransferAdd@DRV_HANDLE@void*@size_t@void*@size_t@DRV_SPI_TRANSFER_HANDLE * const Topic Title: DRV_SPI_WriteReadTransferAdd Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_TransferStatusGet@DRV_SPI_TRANSFER_HANDLE Topic Title: DRV_SPI_TransferStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

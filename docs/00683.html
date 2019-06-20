@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SPI_ReadTransfer Function</title>
+<title>DRV_SPI_Initialize Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00251.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00252.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00683.html" target="topic">DRV_SPI_ReadTransfer Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00683.html" target="topic">DRV_SPI_Initialize Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00702.html" target="topic">Previous</a> | <a href="00252.html" target="topic">Up</a> | <a href="00707.html" target="topic">Next</a></div>
+<a href="00253.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00687.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_ReadTransfer@DRV_HANDLE@void*@size_t Topic Title: DRV_SPI_ReadTransfer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: DRV_SPI_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SPI_ReadTransfer Function</div>
+DRV_SPI_Initialize Function</div>
 </div>
 </div>
 
@@ -49,29 +49,20 @@ DRV_SPI_ReadTransfer Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function does a blocking read operation. The function blocks till the data receive is complete. Function will return true if the receive is successful or false in case of an error. The failure will occur for the following reasons:</p>
-<ul class="Element630">
-<li class="Element600">if the handle is invalid</li>
-<li class="Element600">if the pointer to the receive buffer is NULL</li>
-<li class="Element600">if the receive size is 0</li>
-</ul></div>
+This routine initializes the SPI driver instance for the specified driver index, making it ready for clients to open and use it. The initialization data is specified by the init parameter. The initialization may fail if the number of driver objects allocated are insufficient or if the specified driver instance is already initialized. The driver instance index is independent of the SPI module ID. For example, driver instance 0 can be assigned to SPI2.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_SPI_ReadTransfer</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00416.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">pReceiveData</span></strong>, 
-    size_t <strong><span style="color: #000000">rxSize</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01396.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_SPI_Initialize</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01391.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="01392.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600"><a href="00682.html" target="topic">DRV_SPI_Open</a> must have been called to obtain a valid opened device handle.</li>
-<li class="Element600"><a href="00703.html" target="topic">DRV_SPI_TransferSetup</a> must have been called if GPIO pin has to be used for chip select or any of the setup parameters has to be changed dynamically.</li>
-</ul></div>
+<p class="Element10">
+None.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -88,30 +79,22 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Handle of the communication channel as returned by the <a href="00682.html" target="topic">DRV_SPI_Open</a> function.<br>&nbsp;</div></td></tr><tr>
+Identifier for the instance to be initialized<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-*pReceiveData&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to the buffer where the data is to be received. For 9 to 15bit mode, data should be right aligned in the 16 bit memory location.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-rxSize&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Number of bytes to be received. Always, size should be given in terms of bytes. For example, if 10 15-bit data are to be received, the receive size should be 20 bytes.&nbsp;</div></td></tr></table></div></div>
+Pointer to the init data structure containing any data necessary to initialize the driver.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
 Returns</div>
 <div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600">true - receive is successful</li>
-<li class="Element600">false - error has occurred</li>
-</ul></div>
+<p class="Element10">
+If successful, returns a valid handle to a driver instance object. Otherwise, returns <a href="01397.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -119,23 +102,78 @@ Remarks</div>
 <div class="Element10">
 
 <ul class="Element630">
-<li class="Element600">This function is thread safe in a RTOS application.</li>
-<li class="Element600">This function should not be called from an interrupt context.</li>
+<li class="Element600">This routine must be called before any other SPI routine is called.</li>
+<li class="Element600">This routine must only be called once during system initialization.</li>
+<li class="Element600">This routine will NEVER block for hardware access.</li>
 </ul></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-MY_APP_OBJ myAppObj;
-uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// The following code snippet shows an example SPI driver initialization.</span></i>
 
-<i><span style="color: #008000">// mySPIHandle is the handle returned by the DRV_SPI_Open function.</span></i>
+<a href="01396.html" target="topic">SYS_MODULE_OBJ</a>   objectHandle;
 
-<strong><span style="color: #000080">if</span></strong> (DRV_SPI_ReadTransfer(mySPIhandle, myRxBuffer, MY_RX_BUFFER_SIZE) == <strong><span style="color: #000080">false</span></strong>)
+<strong><span style="color: #000080">const</span></strong> DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
+
+    <i><span style="color: #008000">// SPI PLIB Setup</span></i>
+    .setup = (DRV_SPI_PLIB_SETUP)SPI0_TransferSetup,
+
+    <i><span style="color: #008000">// SPI PLIB WriteRead function</span></i>
+    .writeRead = (DRV_SPI_PLIB_WRITE_READ)SPI0_WriteRead,
+
+    <i><span style="color: #008000">// SPI PLIB Transfer Status function</span></i>
+    .isBusy = (DRV_SPI_PLIB_IS_BUSY)SPI0_IsBusy,
+
+    <i><span style="color: #008000">// SPI PLIB Callback Register</span></i>
+    .callbackRegister = (DRV_SPI_PLIB_CALLBACK_REGISTER)SPI0_CallbackRegister,
+};
+
+<strong><span style="color: #000080">const</span></strong> DRV_SPI_INIT drvSPI0InitData = {
+
+    <i><span style="color: #008000">// SPI PLIB API</span></i>
+    .spiPlib = &amp;drvSPI0PlibAPI,
+
+    .remapDataBits = drvSPI0remapDataBits,
+    .remapClockPolarity = drvSPI0remapClockPolarity,
+    .remapClockPhase = drvSPI0remapClockPhase,
+
+
+    <i><span style="color: #008000">/// SPI Number of clients</span></i>
+    .numClients = DRV_SPI_CLIENTS_NUMBER_IDX0,
+
+    <i><span style="color: #008000">// SPI Client Objects Pool</span></i>
+    .clientObjPool = (uintptr_t)&amp;drvSPI0ClientObjPool[0],
+
+    <i><span style="color: #008000">// DMA Channel for Transmit</span></i>
+    .dmaChannelTransmit = DRV_SPI_XMIT_DMA_CH_IDX0,
+
+    <i><span style="color: #008000">// DMA Channel for Receive</span></i>
+    .dmaChannelReceive  = DRV_SPI_RCV_DMA_CH_IDX0,
+
+    <i><span style="color: #008000">// SPI Transmit Register</span></i>
+    .spiTransmitAddress =  (<strong><span style="color: #000080">void</span></strong> *)&amp;(SPI0_REGS-&gt;SPI_TDR),
+
+    <i><span style="color: #008000">// SPI Receive Register</span></i>
+    .spiReceiveAddress  = (<strong><span style="color: #000080">void</span></strong> *)&amp;(SPI0_REGS-&gt;SPI_RDR),
+
+    <i><span style="color: #008000">// Interrupt source is DMA</span></i>
+
+   .interruptSource = XDMAC_IRQn,
+
+
+    <i><span style="color: #008000">// SPI Queue Size</span></i>
+    .queueSize = DRV_SPI_QUEUE_SIZE_IDX0,
+
+    <i><span style="color: #008000">// SPI Transfer Objects Pool</span></i>
+    .transferObjPool = (uintptr_t)&amp;drvSPI0TransferObjPool[0],
+};
+
+objectHandle = DRV_SPI_Initialize(DRV_SPI_INDEX_0,(<a href="01392.html" target="topic">SYS_MODULE_INIT</a>*)&amp;drvSPI0InitData);
+<strong><span style="color: #000080">if</span></strong> (objectHandle == <a href="01397.html" target="topic">SYS_MODULE_OBJ_INVALID</a>)
 {
-    <i><span style="color: #008000">// Handle error here</span></i>
+    <i><span style="color: #008000">// Handle error</span></i>
 }</pre></div></div>
 </div>
 </div>
@@ -144,7 +182,7 @@ uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00251.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00252.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00683.html" target="topic">DRV_SPI_ReadTransfer Function</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00683.html" target="topic">DRV_SPI_Initialize Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -152,13 +190,13 @@ uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00702.html" target="topic">Previous</a> | <a href="00252.html" target="topic">Up</a> | <a href="00707.html" target="topic">Next</a></div>
+<a href="00253.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00687.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_ReadTransfer@DRV_HANDLE@void*@size_t Topic Title: DRV_SPI_ReadTransfer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: DRV_SPI_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

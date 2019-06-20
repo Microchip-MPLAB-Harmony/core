@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>DRV_IO_INTENT Enumeration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00502.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00131.html" target="topic">Common Driver Library Help</a> &gt; a) Common Driver Services &gt; <a href="00502.html" target="topic">DRV_IO_INTENT Enumeration</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Core Help</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00418.html" target="topic">Previous</a> | <a href="00131.html" target="topic">Up</a> | <a href="00510.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_IO_INTENT Topic Title: DRV_IO_INTENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+DRV_IO_INTENT Enumeration</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Device Driver I/O Intent&nbsp;</p>
+<p class="Element10">
+This enumeration identifies the intended usage of the device when the caller opens the device. It identifies the desired behavior of the device driver for the following:&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600">Blocking or non-blocking I/O behavior (do I/O calls such as read and write block until the operation is finished or do they return immediately and require the caller to call another routine to check the status of the operation)</li>
+</ul><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600">Support reading and/or writing of data from/to the device</li>
+</ul><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600">Identify the buffering behavior (sometimes called &quot;double buffering&quot; of the driver. Indicates if the driver should maintain its own read/write buffers and copy data to/from these buffers to/from the caller's buffers.</li>
+</ul><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600">Identify the DMA behavior of the peripheral</li>
+</ul></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000">DRV_IO_INTENT_READ</span></strong>,
+  <strong><span style="color: #000000">DRV_IO_INTENT_WRITE</span></strong>,
+  <strong><span style="color: #000000">DRV_IO_INTENT_READWRITE</span></strong>,
+  <strong><span style="color: #000000">DRV_IO_INTENT_BLOCKING</span></strong>,
+  <strong><span style="color: #000000">DRV_IO_INTENT_NONBLOCKING</span></strong>,
+  <strong><span style="color: #000000">DRV_IO_INTENT_EXCLUSIVE</span></strong>,
+  <strong><span style="color: #000000">DRV_IO_INTENT_SHARED</span></strong>
+} DRV_IO_INTENT;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element272">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_IO_INTENT_READ&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Read&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_IO_INTENT_WRITE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Write&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_IO_INTENT_READWRITE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Read and Write&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_IO_INTENT_BLOCKING&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+The driver will block and will return when the operation is complete&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_IO_INTENT_NONBLOCKING&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+The driver will return immediately&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_IO_INTENT_EXCLUSIVE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+The driver will support only one client at a time&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+DRV_IO_INTENT_SHARED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+The driver will support multiple clients at a time&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The buffer allocation method is not identified by this enumeration. Buffers can be allocated statically at build time, dynamically at run-time, or even allocated by the caller and passed to the driver for its own usage if a driver-specific routine is provided for such. This choice is left to the design of the individual driver and is considered part of its interface.&nbsp;</p>
+<p class="Element10">
+These values can be considered &quot;flags&quot;. One selection from each of the groups below can be ORed together to create the complete value passed to the driver's open routine.</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00131.html" target="topic">Common Driver Library Help</a> &gt; a) Common Driver Services &gt; <a href="00502.html" target="topic">DRV_IO_INTENT Enumeration</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Core Help</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00418.html" target="topic">Previous</a> | <a href="00131.html" target="topic">Up</a> | <a href="00510.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_IO_INTENT Topic Title: DRV_IO_INTENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

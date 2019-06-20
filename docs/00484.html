@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_I2S_RCV_DMA_CH_IDXx Macro</title>
+<title>DRV_I2S_QUEUE_SIZE_IDXx Macro</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00122.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00117.html" target="topic">Configuring the Library</a> &gt; <a href="00127.html" target="topic">System Configuration</a> &gt; <a href="00484.html" target="topic">DRV_I2S_RCV_DMA_CH_IDXx Macro</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00123.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00118.html" target="topic">Configuring the Library</a> &gt; <a href="00128.html" target="topic">System Configuration</a> &gt; <a href="00484.html" target="topic">DRV_I2S_QUEUE_SIZE_IDXx Macro</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00495.html" target="topic">Previous</a> | <a href="00127.html" target="topic">Up</a> | <a href="00824.html" target="topic">Next</a></div>
+<a href="00483.html" target="topic">Previous</a> | <a href="00128.html" target="topic">Up</a> | <a href="00453.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_RCV_DMA_CH_IDXx Topic Title: DRV_I2S_RCV_DMA_CH_IDXx Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_QUEUE_SIZE_IDXx Topic Title: DRV_I2S_QUEUE_SIZE_IDXx Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_I2S_RCV_DMA_CH_IDXx Macro</div>
+DRV_I2S_QUEUE_SIZE_IDXx Macro</div>
 </div>
 </div>
 
@@ -49,26 +49,21 @@ DRV_I2S_RCV_DMA_CH_IDXx Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-I2S Driver Receive DMA Channel&nbsp;</p>
+I2S Driver Buffer Queue Size&nbsp;</p>
 <p class="Element10">
-Macro to define the I2S Receive DMA Channel. The DMA channel defined by this macro will override the dmaChannelReceive member of the <a href="00461.html" target="topic">DRV_I2S_INIT</a> initialization data structure in the driver initialization routine. This value should be set to the DMA channel in the DMA PLIB for the microcontroller.</p></div>
+This macro defined the number of entries for either the transmit or receive queues.&nbsp;</p>
+<p class="Element10">
+The transmit buffer queue will queue transmit buffers submitted by the DRV_I2S_BufferAddWrite() function. The receive buffer queue will queue receive buffers submitted by the DRV_I2S_BufferAddRead() function.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">DRV_I2S_RCV_DMA_CH_IDXx</span></strong> </pre></div></div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
-</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">DRV_I2S_QUEUE_SIZE_IDXx</span></strong> </pre></div></div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00018.html" target="topic">Driver Libraries Help</a> &gt; <a href="00122.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00117.html" target="topic">Configuring the Library</a> &gt; <a href="00127.html" target="topic">System Configuration</a> &gt; <a href="00484.html" target="topic">DRV_I2S_RCV_DMA_CH_IDXx Macro</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00123.html" target="topic">I2S Driver Library Help</a> &gt; <a href="00118.html" target="topic">Configuring the Library</a> &gt; <a href="00128.html" target="topic">System Configuration</a> &gt; <a href="00484.html" target="topic">DRV_I2S_QUEUE_SIZE_IDXx Macro</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -76,13 +71,13 @@ None.</p></div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00018.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00495.html" target="topic">Previous</a> | <a href="00127.html" target="topic">Up</a> | <a href="00824.html" target="topic">Next</a></div>
+<a href="00483.html" target="topic">Previous</a> | <a href="00128.html" target="topic">Up</a> | <a href="00453.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_RCV_DMA_CH_IDXx Topic Title: DRV_I2S_RCV_DMA_CH_IDXx Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2S_QUEUE_SIZE_IDXx Topic Title: DRV_I2S_QUEUE_SIZE_IDXx Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
