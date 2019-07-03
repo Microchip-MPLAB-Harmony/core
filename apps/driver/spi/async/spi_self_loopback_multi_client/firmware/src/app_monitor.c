@@ -52,6 +52,9 @@
 // *****************************************************************************
 
 #include "app_monitor.h"
+#include "app_client1.h"
+#include "app_client2.h"
+#include "user.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -126,7 +129,7 @@ void APP_MONITOR_Initialize ( void )
 
 void APP_MONITOR_Tasks ( void )
 {
-    if((Client1TransferSuccessStatus() == true) && (Client2TransferSuccessStatus() == true))
+    if((APP_CLIENT1_TransferSuccessStatus() == true) && (APP_CLIENT2_TransferSuccessStatus() == true))
     {
         LED_ON();
     }
@@ -134,7 +137,6 @@ void APP_MONITOR_Tasks ( void )
     {
         LED_OFF();
     }
-
 }
 
 

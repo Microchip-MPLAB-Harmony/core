@@ -5,15 +5,15 @@
     Microchip Technology Inc.
   
   File Name:
-    app.c
+    app_client2.c
 
   Summary:
-    This file contains the source code for client 2 of the MPLAB Harmony
+    This file contains the source code for client 1 of the MPLAB Harmony
     application.
 
   Description:
-    This file has the source code for client 2 which transfers the data on SPI
-    line at a particular baud rate.
+    This file has the source code for client 1 which transfers the data on SPI
+    line at two different baud rates.
  *******************************************************************************/
 
 /*******************************************************************************
@@ -72,9 +72,12 @@
 
 APP_CLIENT2_DATA app_client2Data;
 
-uint8_t __attribute__ ((aligned (32))) txDataB[]  = "SECOND CLIENT TRANSMITTING ITS DATA AT FREQ 5MHZ";
+uint8_t __attribute__ ((aligned (32))) txBufferC[]  = "Second client transmitting its txBufferC buffer at frequency 5MHZ";
+uint8_t __attribute__ ((aligned (32))) txBufferD[]  = "Second client transmitting its txBufferD buffer at frequency 5MHZ";
 
-uint8_t __attribute__ ((aligned (32))) rxDataB[sizeof(txDataB)];
+uint8_t __attribute__ ((aligned (32))) rxBufferC[sizeof(txBufferC)];
+uint8_t __attribute__ ((aligned (32))) rxBufferD[sizeof(txBufferD)];
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -82,20 +85,48 @@ uint8_t __attribute__ ((aligned (32))) rxDataB[sizeof(txDataB)];
 // *****************************************************************************
 // *****************************************************************************
 
+static void APP_CLIENT2_SPIEventHandler (
+    DRV_SPI_TRANSFER_EVENT event,
+    DRV_SPI_TRANSFER_HANDLE transferHandle, 
+    uintptr_t context 
+)
+{
+    if (event == DRV_SPI_TRANSFER_EVENT_COMPLETE)
+    {
+        if(transferHandle == app_client2Data.transferHandle1)
+        {
+            /* Do nothing */
+        }
+        else if(transferHandle == app_client2Data.transferHandle2)
+        {
+            /* Both the transfers are complete. Set a flag to indicate the same to the state machine */
+            app_client2Data.transferStatus = true;
+        }  
+    }
+    else
+    {
+        app_client2Data.transferStatus = false;
+        
+        /* Move the state machine into Error state */
+        app_client2Data.state = APP_CLIENT2_STATE_ERROR;
+    }
+}
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Local Functions
 // *****************************************************************************
 // *****************************************************************************
-bool Client2TransferSuccessStatus(void)
+bool APP_CLIENT2_TransferSuccessStatus(void)
 {
-    return app_client2Data.clientTransferSuccess;
-}
-
-bool Client2TransferQueuedStatus(void)
-{
-    return app_client2Data.clientTransferAdded;
+    if (app_client2Data.state == APP_CLIENT2_STATE_IDLE)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 // *****************************************************************************
@@ -115,14 +146,15 @@ bool Client2TransferQueuedStatus(void)
 void APP_CLIENT2_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
-    app_client2Data.state = APP_CLIENT2_STATE_DATA_INIT;
+    app_client2Data.state = APP_CLIENT2_STATE_INIT;
     app_client2Data.drvSPIHandle = DRV_HANDLE_INVALID;
-    app_client2Data.clientTransferSuccess = false;
-    app_client2Data.clientTransferAdded = false;
+    app_client2Data.transferStatus = false;
     
-    /* Clear the receive data array */
-    memset(&rxDataB, 0, sizeof(rxDataB));
+    /* Clear the receive buffers */
+    memset(&rxBufferC, 0, sizeof(rxBufferC));
+    memset(&rxBufferD, 0, sizeof(rxBufferD));
 }
+
 
 /******************************************************************************
   Function:
@@ -133,95 +165,107 @@ void APP_CLIENT2_Initialize ( void )
  */
 
 void APP_CLIENT2_Tasks ( void )
-{
+{   
     /* Check the application's current state. */
     switch ( app_client2Data.state )
     {
         /* Application's initial state. */
-        case APP_CLIENT2_STATE_DATA_INIT:
-        {          
-            /* Setup SPI for client 2 */
+        case APP_CLIENT2_STATE_INIT:
+        
+            /* Setup SPI for client 1 */
             app_client2Data.setup.baudRateInHz = 5000000;
             app_client2Data.setup.clockPhase = DRV_SPI_CLOCK_PHASE_VALID_TRAILING_EDGE;
             app_client2Data.setup.clockPolarity = DRV_SPI_CLOCK_POLARITY_IDLE_LOW;
             app_client2Data.setup.dataBits = DRV_SPI_DATA_BITS_8;
-            app_client2Data.setup.chipSelect = (SYS_PORT_PIN)CHIP_SELECT1_PIN;
+            app_client2Data.setup.chipSelect = (SYS_PORT_PIN)CLIENT2_CS_PIN;
             app_client2Data.setup.csPolarity = DRV_SPI_CS_POLARITY_ACTIVE_LOW;
         
-            app_client2Data.state = APP_CLIENT2_STATE_SPI_OPEN_CLIENT;
+            app_client2Data.state = APP_CLIENT2_STATE_OPEN_DRIVER;
             break;
-        }
-
-        case APP_CLIENT2_STATE_SPI_OPEN_CLIENT:
-        {
-            /* Open the SPI Driver for client 2 */
-            if(app_client2Data.drvSPIHandle == DRV_HANDLE_INVALID)
-            {
-                app_client2Data.drvSPIHandle = DRV_SPI_Open( DRV_SPI_INDEX_0, DRV_IO_INTENT_READWRITE );
-            }
+        
+        case APP_CLIENT2_STATE_OPEN_DRIVER:
+            
+            /* Open the SPI Driver for client 1 */
+            app_client2Data.drvSPIHandle = DRV_SPI_Open( DRV_SPI_INDEX_0, DRV_IO_INTENT_READWRITE );
+            
             if(app_client2Data.drvSPIHandle != DRV_HANDLE_INVALID)
             {
-                if(DRV_SPI_TransferSetup(app_client2Data.drvSPIHandle, &app_client2Data.setup) == false)
+                if(DRV_SPI_TransferSetup(app_client2Data.drvSPIHandle, &app_client2Data.setup) == true)
                 {
-                   app_client2Data.state = APP_CLIENT2_STATE_IDLE; 
+                    /* Register an event handler with the SPI driver */
+                    DRV_SPI_TransferEventHandlerSet(app_client2Data.drvSPIHandle, APP_CLIENT2_SPIEventHandler, (uintptr_t)NULL);
+                    
+                    app_client2Data.state = APP_CLIENT2_STATE_QUEUE_SPI_REQUEST;
                 }
-                
-                app_client2Data.state = APP_CLIENT2_STATE_SPI_TRANSFER_START;
+                else
+                {
+                    app_client2Data.state = APP_CLIENT2_STATE_ERROR; 
+                }                              
             }
-            break;
-        }
-        case APP_CLIENT2_STATE_SPI_TRANSFER_START:
-        {               
-            DRV_SPI_WriteReadTransferAdd(app_client2Data.drvSPIHandle, &txDataB, sizeof(txDataB), &rxDataB, sizeof(rxDataB), &app_client2Data.transferHandle1);
+            else
+            {
+                app_client2Data.state = APP_CLIENT2_STATE_ERROR; 
+            }    
+            break;        
+
+        case APP_CLIENT2_STATE_QUEUE_SPI_REQUEST:
+        
+            app_client2Data.state = APP_CLIENT2_STATE_CHECK_TRANSFER_STATUS;
+        
+            DRV_SPI_WriteReadTransferAdd(app_client2Data.drvSPIHandle, txBufferC, sizeof(txBufferC), rxBufferC, sizeof(rxBufferC), &app_client2Data.transferHandle1 );
+                                                                 
             if(app_client2Data.transferHandle1 == DRV_SPI_TRANSFER_HANDLE_INVALID)
             {
-                /* Remain in the same state */
-                app_client2Data.state = APP_CLIENT2_STATE_SPI_TRANSFER_START;
+                /* Maybe the driver could not queue in the request. Try increasing the SPI driver transfer queue size from MHC */
+                app_client2Data.state = APP_CLIENT2_STATE_ERROR;
             }
             else
             {
-                /* Transfer request is queued successfully, go to next state */
-                app_client2Data.clientTransferAdded = true;
-                app_client2Data.state = APP_CLIENT2_STATE_SPI_DATA_COMPARISON;
-            }
-            break;
-        }
-        case APP_CLIENT2_STATE_SPI_DATA_COMPARISON:
-        {
-            /* Transfer Status polling is needed here as we didn't register any callback function */
-            if(DRV_SPI_TransferStatusGet(app_client2Data.transferHandle1) <= DRV_SPI_TRANSFER_EVENT_ERROR)
-            {
-                app_client2Data.clientTransferSuccess = false;
-                app_client2Data.state = APP_CLIENT2_STATE_IDLE;
-            }
-            else if(DRV_SPI_TransferStatusGet(app_client2Data.transferHandle1) >= DRV_SPI_TRANSFER_EVENT_COMPLETE)
-            {
-                if(memcmp(txDataB, rxDataB, sizeof(txDataB)) != 0)
+                /* First request is queued in successfully. Use the queueing feature of the SPI driver to queue up another SPI request. 
+                   Make sure the SPI driver queue size is large enough to queue in multiple requests.
+                */
+                DRV_SPI_WriteReadTransferAdd(app_client2Data.drvSPIHandle, txBufferD, sizeof(txBufferD), rxBufferD, sizeof(rxBufferD), &app_client2Data.transferHandle2 );  
+                
+                if(app_client2Data.transferHandle2 == DRV_SPI_TRANSFER_HANDLE_INVALID)
                 {
-                    app_client2Data.clientTransferSuccess = false;
+                    /* Maybe the driver could not queue in the request. Try increasing the SPI driver transfer queue size from MHC */
+                    app_client2Data.state = APP_CLIENT2_STATE_ERROR;
                 }
-                else   
-                {
-                    app_client2Data.clientTransferSuccess = true;
-                }
-                app_client2Data.state = APP_CLIENT2_STATE_IDLE;
             }
-            else
+            break;
+        
+        case APP_CLIENT2_STATE_CHECK_TRANSFER_STATUS:
+           
+            if(app_client2Data.transferStatus == true)
             {
-                /* It means transfer is still pending, wait in the same state */
+                /* Both the queued SPI requests are complete. Now, validate the loopbacked data in the receive buffer */
+                app_client2Data.state = APP_CLIENT2_STATE_LOOPBACK_DATA_VERIFY;                
             }
             break;
-        }
-        case APP_CLIENT2_STATE_IDLE:
-        {
+        
+        case APP_CLIENT2_STATE_LOOPBACK_DATA_VERIFY:
+                    
+            if ((memcmp(txBufferC, rxBufferC, sizeof(txBufferC)) != 0) || (memcmp(txBufferD, rxBufferD, sizeof(txBufferD)) != 0))            
+            {
+                app_client2Data.state = APP_CLIENT2_STATE_ERROR;
+            }
+            else   
+            {
+                app_client2Data.state = APP_CLIENT2_STATE_IDLE;
+            }            
+ 
             break;
-        }
+        
+        case APP_CLIENT2_STATE_IDLE:        
+            break;
+            
+        case APP_CLIENT2_STATE_ERROR:
+            break;
+               
         default:
-            while (1);
+            break;
     }
 }
-
- 
 
 /*******************************************************************************
  End of File

@@ -55,8 +55,6 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
-#include "app_client1.h"
-#include "app_client2.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

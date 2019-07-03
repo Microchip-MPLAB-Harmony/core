@@ -87,10 +87,12 @@ extern "C" {
 typedef enum
 {
 	/* Application's state machine's initial state. */
-	APP_CLIENT2_STATE_DATA_INIT,
-    APP_CLIENT2_STATE_SPI_OPEN_CLIENT,
-	APP_CLIENT2_STATE_SPI_TRANSFER_START,
-    APP_CLIENT2_STATE_SPI_DATA_COMPARISON,            
+	APP_CLIENT2_STATE_INIT,
+    APP_CLIENT2_STATE_OPEN_DRIVER,
+	APP_CLIENT2_STATE_QUEUE_SPI_REQUEST,
+    APP_CLIENT2_STATE_CHECK_TRANSFER_STATUS,
+    APP_CLIENT2_STATE_LOOPBACK_DATA_VERIFY,   
+    APP_CLIENT2_STATE_ERROR,
     APP_CLIENT2_STATE_IDLE
        
 } APP_CLIENT2_STATES;
@@ -112,12 +114,12 @@ typedef enum
 typedef struct
 {
     /* The application's current state */
-    APP_CLIENT2_STATES state;
-    DRV_HANDLE drvSPIHandle;
-    DRV_SPI_TRANSFER_HANDLE transferHandle1;
-    DRV_SPI_TRANSFER_SETUP  setup;
-    bool clientTransferSuccess;
-    bool clientTransferAdded;
+    APP_CLIENT2_STATES              state;
+    DRV_HANDLE                      drvSPIHandle;
+    DRV_SPI_TRANSFER_HANDLE         transferHandle1;
+    DRV_SPI_TRANSFER_HANDLE         transferHandle2;
+    DRV_SPI_TRANSFER_SETUP          setup;
+    volatile bool                   transferStatus;
 
 } APP_CLIENT2_DATA;
 
@@ -202,8 +204,7 @@ void APP_CLIENT2_Initialize ( void );
 
 void APP_CLIENT2_Tasks( void );
 
-bool Client2TransferSuccessStatus(void);
-bool Client2TransferQueuedStatus(void);
+bool APP_CLIENT2_TransferSuccessStatus(void);
 
 #endif /* APP_CLIENT2_H */
 
