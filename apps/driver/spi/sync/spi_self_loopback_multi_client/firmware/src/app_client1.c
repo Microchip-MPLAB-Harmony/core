@@ -62,7 +62,7 @@
 /* Make sure the size of the loop-back string is smaller than the buffer size
  * defined in app_client1.h file. */
 
-#define APP_CLIENT1_STR                 "APP-Task1-Loopback-String"
+#define APP_CLIENT1_STR                 "APP-Client1-Loopback-String"
 
 #define APP_CLIENT1_NUM_BYTES           sizeof(APP_CLIENT1_STR)
 

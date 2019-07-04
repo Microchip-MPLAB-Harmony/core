@@ -127,11 +127,15 @@ void APP_MONITOR_Initialize ( void )
 
 void APP_MONITOR_Tasks ( void )
 {
-    /* Monitor the status of task1 and task2 and blink LED if success */
+    /* Monitor the status of task1 and task2 and turn on LED if success */
     if ((APP_CLIENT1_GetStatus() == APP_SUCCESS) && \
             (APP_CLIENT2_GetStatus() == APP_SUCCESS))
     {
-        LED_TOGGLE();
+        LED_ON();
+    }
+    else
+    {
+        LED_OFF();
     }
 }
 
