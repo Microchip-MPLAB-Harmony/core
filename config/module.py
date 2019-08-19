@@ -53,8 +53,6 @@ def loadModule():
 
         {"name":"spi", "label": "SPI", "type":"driver", "display_path":"", "actual_path":"", "instance":"multi", "capability":["DRV_SPI"], "dependency":["SPI"], "condition":"True"},
 
-        {"name":"i2s", "label": "I2S", "type":"driver", "display_path":"", "actual_path":"", "instance":"multi", "capability":["DRV_I2S"], "dependency":["I2S"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "SAMD5", "SAME5", "PIC32MZ", "SAMD21"])'},
-
         {"name":"at24", "label": "AT24", "type":"driver", "display_path":"I2C EEPROM", "actual_path":"i2c_eeprom", "instance":"single", "capability":["MEMORY"], "dependency":["I2C"], "condition":"True"},
 
         {"name":"at25", "label": "AT25", "type":"driver", "display_path":"SPI EEPROM", "actual_path":"spi_eeprom", "instance":"single", "capability":["MEMORY"], "dependency":["SPI"], "condition":"True"},
