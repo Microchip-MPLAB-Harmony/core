@@ -62,23 +62,23 @@
 // *****************************************************************************
 
 
-/*** Macros for CHIP_SELECT1 pin ***/
-#define CHIP_SELECT1_Set()               (PIOD_REGS->PIO_SODR = (1<<27))
-#define CHIP_SELECT1_Clear()             (PIOD_REGS->PIO_CODR = (1<<27))
-#define CHIP_SELECT1_Toggle()            (PIOD_REGS->PIO_ODSR ^= (1<<27))
-#define CHIP_SELECT1_Get()               ((PIOD_REGS->PIO_PDSR >> 27) & 0x1)
-#define CHIP_SELECT1_OutputEnable()      (PIOD_REGS->PIO_OER = (1<<27))
-#define CHIP_SELECT1_InputEnable()       (PIOD_REGS->PIO_ODR = (1<<27))
-#define CHIP_SELECT1_PIN                  PIO_PIN_PD27
+/*** Macros for CLIENT2_CS pin ***/
+#define CLIENT2_CS_Set()               (PIOD_REGS->PIO_SODR = (1<<27))
+#define CLIENT2_CS_Clear()             (PIOD_REGS->PIO_CODR = (1<<27))
+#define CLIENT2_CS_Toggle()            (PIOD_REGS->PIO_ODSR ^= (1<<27))
+#define CLIENT2_CS_Get()               ((PIOD_REGS->PIO_PDSR >> 27) & 0x1)
+#define CLIENT2_CS_OutputEnable()      (PIOD_REGS->PIO_OER = (1<<27))
+#define CLIENT2_CS_InputEnable()       (PIOD_REGS->PIO_ODR = (1<<27))
+#define CLIENT2_CS_PIN                  PIO_PIN_PD27
 
-/*** Macros for CHIP_SELECT0 pin ***/
-#define CHIP_SELECT0_Set()               (PIOD_REGS->PIO_SODR = (1<<25))
-#define CHIP_SELECT0_Clear()             (PIOD_REGS->PIO_CODR = (1<<25))
-#define CHIP_SELECT0_Toggle()            (PIOD_REGS->PIO_ODSR ^= (1<<25))
-#define CHIP_SELECT0_Get()               ((PIOD_REGS->PIO_PDSR >> 25) & 0x1)
-#define CHIP_SELECT0_OutputEnable()      (PIOD_REGS->PIO_OER = (1<<25))
-#define CHIP_SELECT0_InputEnable()       (PIOD_REGS->PIO_ODR = (1<<25))
-#define CHIP_SELECT0_PIN                  PIO_PIN_PD25
+/*** Macros for CLIENT1_CS pin ***/
+#define CLIENT1_CS_Set()               (PIOD_REGS->PIO_SODR = (1<<25))
+#define CLIENT1_CS_Clear()             (PIOD_REGS->PIO_CODR = (1<<25))
+#define CLIENT1_CS_Toggle()            (PIOD_REGS->PIO_ODSR ^= (1<<25))
+#define CLIENT1_CS_Get()               ((PIOD_REGS->PIO_PDSR >> 25) & 0x1)
+#define CLIENT1_CS_OutputEnable()      (PIOD_REGS->PIO_OER = (1<<25))
+#define CLIENT1_CS_InputEnable()       (PIOD_REGS->PIO_ODR = (1<<25))
+#define CLIENT1_CS_PIN                  PIO_PIN_PD25
 
 
 // *****************************************************************************

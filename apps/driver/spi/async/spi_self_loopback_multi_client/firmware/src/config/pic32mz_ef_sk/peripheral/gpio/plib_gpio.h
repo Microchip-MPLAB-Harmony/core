@@ -61,22 +61,22 @@
 // *****************************************************************************
 // *****************************************************************************
 
-/*** Macros for CHIP_SELECT0 pin ***/
-#define CHIP_SELECT0_Set()               (LATKSET = (1<<5))
-#define CHIP_SELECT0_Clear()             (LATKCLR = (1<<5))
-#define CHIP_SELECT0_Toggle()            (LATKINV= (1<<5))
-#define CHIP_SELECT0_Get()               ((PORTK >> 5) & 0x1)
-#define CHIP_SELECT0_OutputEnable()      (TRISKCLR = (1<<5))
-#define CHIP_SELECT0_InputEnable()       (TRISKSET = (1<<5))
-#define CHIP_SELECT0_PIN                  GPIO_PIN_RK5
-/*** Macros for CHIP_SELECT1 pin ***/
-#define CHIP_SELECT1_Set()               (LATKSET = (1<<6))
-#define CHIP_SELECT1_Clear()             (LATKCLR = (1<<6))
-#define CHIP_SELECT1_Toggle()            (LATKINV= (1<<6))
-#define CHIP_SELECT1_Get()               ((PORTK >> 6) & 0x1)
-#define CHIP_SELECT1_OutputEnable()      (TRISKCLR = (1<<6))
-#define CHIP_SELECT1_InputEnable()       (TRISKSET = (1<<6))
-#define CHIP_SELECT1_PIN                  GPIO_PIN_RK6
+/*** Macros for CLIENT1_CS pin ***/
+#define CLIENT1_CS_Set()               (LATKSET = (1<<5))
+#define CLIENT1_CS_Clear()             (LATKCLR = (1<<5))
+#define CLIENT1_CS_Toggle()            (LATKINV= (1<<5))
+#define CLIENT1_CS_Get()               ((PORTK >> 5) & 0x1)
+#define CLIENT1_CS_OutputEnable()      (TRISKCLR = (1<<5))
+#define CLIENT1_CS_InputEnable()       (TRISKSET = (1<<5))
+#define CLIENT1_CS_PIN                  GPIO_PIN_RK5
+/*** Macros for CLIENT2_CS pin ***/
+#define CLIENT2_CS_Set()               (LATKSET = (1<<6))
+#define CLIENT2_CS_Clear()             (LATKCLR = (1<<6))
+#define CLIENT2_CS_Toggle()            (LATKINV= (1<<6))
+#define CLIENT2_CS_Get()               ((PORTK >> 6) & 0x1)
+#define CLIENT2_CS_OutputEnable()      (TRISKCLR = (1<<6))
+#define CLIENT2_CS_InputEnable()       (TRISKSET = (1<<6))
+#define CLIENT2_CS_PIN                  GPIO_PIN_RK6
 
 
 // *****************************************************************************

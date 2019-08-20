@@ -11,16 +11,12 @@
         </String>
         <String dnOrder="1" id="BSP_PIN_100_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="2" id="BSP_PIN_100_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="3" id="BSP_PIN_101_FUNCTION_TYPE">
@@ -35,21 +31,17 @@
         </String>
         <String dnOrder="5" id="BSP_PIN_101_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="K"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="K"/>
           </Values>
         </String>
         <Integer dnOrder="6" id="BSP_PIN_101_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="4"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="4"/>
           </Values>
         </Integer>
         <String dnOrder="7" id="BSP_PIN_102_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="CHIP_SELECT1"/>
+            <User dnOrder="0" value="CLIENT2_CS"/>
           </Values>
         </String>
         <String dnOrder="8" id="BSP_PIN_102_FUNCTION_TYPE">
@@ -64,16 +56,12 @@
         </String>
         <String dnOrder="10" id="BSP_PIN_102_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="K"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="K"/>
           </Values>
         </String>
         <Integer dnOrder="11" id="BSP_PIN_102_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="2"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="2"/>
           </Values>
         </Integer>
         <String dnOrder="12" id="BSP_PIN_103_CN">
@@ -108,16 +96,12 @@
         </String>
         <String dnOrder="18" id="BSP_PIN_103_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="H"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="H"/>
           </Values>
         </String>
         <Integer dnOrder="19" id="BSP_PIN_103_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="2"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="2"/>
           </Values>
         </Integer>
         <String dnOrder="20" id="BSP_PIN_103_PU">
@@ -137,16 +121,12 @@
         </String>
         <String dnOrder="23" id="BSP_PIN_104_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="J"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="J"/>
           </Values>
         </String>
         <Integer dnOrder="24" id="BSP_PIN_104_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="15"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="15"/>
           </Values>
         </Integer>
         <String dnOrder="25" id="BSP_PIN_105_FUNCTION_TYPE">
@@ -161,16 +141,12 @@
         </String>
         <String dnOrder="27" id="BSP_PIN_105_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="D"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="D"/>
           </Values>
         </String>
         <Integer dnOrder="28" id="BSP_PIN_105_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="12"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="12"/>
           </Values>
         </Integer>
         <String dnOrder="29" id="BSP_PIN_106_FUNCTION_TYPE">
@@ -185,16 +161,12 @@
         </String>
         <String dnOrder="31" id="BSP_PIN_106_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="D"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="D"/>
           </Values>
         </String>
         <Integer dnOrder="32" id="BSP_PIN_106_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="13"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="13"/>
           </Values>
         </Integer>
         <String dnOrder="33" id="BSP_PIN_107_FUNCTION_TYPE">
@@ -209,16 +181,12 @@
         </String>
         <String dnOrder="35" id="BSP_PIN_107_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="F"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="F"/>
           </Values>
         </String>
         <Integer dnOrder="36" id="BSP_PIN_107_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="8"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="8"/>
           </Values>
         </Integer>
         <String dnOrder="37" id="BSP_PIN_108_FUNCTION_TYPE">
@@ -228,16 +196,12 @@
         </String>
         <String dnOrder="38" id="BSP_PIN_108_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="39" id="BSP_PIN_108_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="40" id="BSP_PIN_109_FUNCTION_TYPE">
@@ -247,16 +211,12 @@
         </String>
         <String dnOrder="41" id="BSP_PIN_109_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="42" id="BSP_PIN_109_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="43" id="BSP_PIN_10_FUNCTION_TYPE">
@@ -266,16 +226,12 @@
         </String>
         <String dnOrder="44" id="BSP_PIN_10_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="B"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="B"/>
           </Values>
         </String>
         <Integer dnOrder="45" id="BSP_PIN_10_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="3"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="3"/>
           </Values>
         </Integer>
         <String dnOrder="46" id="BSP_PIN_110_FUNCTION_TYPE">
@@ -285,16 +241,12 @@
         </String>
         <String dnOrder="47" id="BSP_PIN_110_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="48" id="BSP_PIN_110_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="49" id="BSP_PIN_111_FUNCTION_TYPE">
@@ -304,16 +256,12 @@
         </String>
         <String dnOrder="50" id="BSP_PIN_111_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="51" id="BSP_PIN_111_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="52" id="BSP_PIN_112_FUNCTION_TYPE">
@@ -323,16 +271,12 @@
         </String>
         <String dnOrder="53" id="BSP_PIN_112_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="54" id="BSP_PIN_112_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="55" id="BSP_PIN_113_FUNCTION_TYPE">
@@ -342,16 +286,12 @@
         </String>
         <String dnOrder="56" id="BSP_PIN_113_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="57" id="BSP_PIN_113_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="58" id="BSP_PIN_114_FUNCTION_TYPE">
@@ -366,21 +306,17 @@
         </String>
         <String dnOrder="60" id="BSP_PIN_114_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="K"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="K"/>
           </Values>
         </String>
         <Integer dnOrder="61" id="BSP_PIN_114_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="5"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="5"/>
           </Values>
         </Integer>
         <String dnOrder="62" id="BSP_PIN_115_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="CHIP_SELECT0"/>
+            <User dnOrder="0" value="CLIENT1_CS"/>
           </Values>
         </String>
         <String dnOrder="63" id="BSP_PIN_115_FUNCTION_TYPE">
@@ -395,16 +331,12 @@
         </String>
         <String dnOrder="65" id="BSP_PIN_115_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="K"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="K"/>
           </Values>
         </String>
         <Integer dnOrder="66" id="BSP_PIN_115_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="1"/>
           </Values>
         </Integer>
         <String dnOrder="67" id="BSP_PIN_116_FUNCTION_TYPE">
@@ -414,16 +346,12 @@
         </String>
         <String dnOrder="68" id="BSP_PIN_116_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="H"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="H"/>
           </Values>
         </String>
         <Integer dnOrder="69" id="BSP_PIN_116_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="7"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="7"/>
           </Values>
         </Integer>
         <String dnOrder="70" id="BSP_PIN_117_FUNCTION_TYPE">
@@ -433,16 +361,12 @@
         </String>
         <String dnOrder="71" id="BSP_PIN_117_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="H"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="H"/>
           </Values>
         </String>
         <Integer dnOrder="72" id="BSP_PIN_117_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="3"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="3"/>
           </Values>
         </Integer>
         <String dnOrder="73" id="BSP_PIN_118_FUNCTION_TYPE">
@@ -452,16 +376,12 @@
         </String>
         <String dnOrder="74" id="BSP_PIN_118_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="75" id="BSP_PIN_118_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="76" id="BSP_PIN_119_FUNCTION_TYPE">
@@ -476,16 +396,12 @@
         </String>
         <String dnOrder="78" id="BSP_PIN_119_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="F"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="F"/>
           </Values>
         </String>
         <Integer dnOrder="79" id="BSP_PIN_119_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="5"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="5"/>
           </Values>
         </Integer>
         <String dnOrder="80" id="BSP_PIN_11_FUNCTION_TYPE">
@@ -495,16 +411,12 @@
         </String>
         <String dnOrder="81" id="BSP_PIN_11_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="A"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="A"/>
           </Values>
         </String>
         <Integer dnOrder="82" id="BSP_PIN_11_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="5"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="5"/>
           </Values>
         </Integer>
         <String dnOrder="83" id="BSP_PIN_120_FUNCTION_TYPE">
@@ -519,16 +431,12 @@
         </String>
         <String dnOrder="85" id="BSP_PIN_120_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="F"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="F"/>
           </Values>
         </String>
         <Integer dnOrder="86" id="BSP_PIN_120_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="1"/>
           </Values>
         </Integer>
         <String dnOrder="87" id="BSP_PIN_121_FUNCTION_TYPE">
@@ -538,16 +446,12 @@
         </String>
         <String dnOrder="88" id="BSP_PIN_121_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="89" id="BSP_PIN_121_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="90" id="BSP_PIN_122_FUNCTION_TYPE">
@@ -557,16 +461,12 @@
         </String>
         <String dnOrder="91" id="BSP_PIN_122_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="92" id="BSP_PIN_122_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="93" id="BSP_PIN_123_FUNCTION_TYPE">
@@ -576,16 +476,12 @@
         </String>
         <String dnOrder="94" id="BSP_PIN_123_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="95" id="BSP_PIN_123_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="96" id="BSP_PIN_124_FUNCTION_TYPE">
@@ -595,16 +491,12 @@
         </String>
         <String dnOrder="97" id="BSP_PIN_124_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="98" id="BSP_PIN_124_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="99" id="BSP_PIN_125_FUNCTION_TYPE">
@@ -614,16 +506,12 @@
         </String>
         <String dnOrder="100" id="BSP_PIN_125_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="101" id="BSP_PIN_125_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="102" id="BSP_PIN_126_FUNCTION_TYPE">
@@ -633,16 +521,12 @@
         </String>
         <String dnOrder="103" id="BSP_PIN_126_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="104" id="BSP_PIN_126_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="105" id="BSP_PIN_127_FUNCTION_TYPE">
@@ -657,16 +541,12 @@
         </String>
         <String dnOrder="107" id="BSP_PIN_127_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="J"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="J"/>
           </Values>
         </String>
         <Integer dnOrder="108" id="BSP_PIN_127_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="1"/>
           </Values>
         </Integer>
         <String dnOrder="109" id="BSP_PIN_128_FUNCTION_TYPE">
@@ -681,16 +561,12 @@
         </String>
         <String dnOrder="111" id="BSP_PIN_128_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="D"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="D"/>
           </Values>
         </String>
         <Integer dnOrder="112" id="BSP_PIN_128_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="6"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="6"/>
           </Values>
         </Integer>
         <String dnOrder="113" id="BSP_PIN_129_FUNCTION_TYPE">
@@ -705,16 +581,12 @@
         </String>
         <String dnOrder="115" id="BSP_PIN_129_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="K"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="K"/>
           </Values>
         </String>
         <Integer dnOrder="116" id="BSP_PIN_129_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
         <String dnOrder="117" id="BSP_PIN_12_FUNCTION_TYPE">
@@ -724,16 +596,12 @@
         </String>
         <String dnOrder="118" id="BSP_PIN_12_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="B"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="B"/>
           </Values>
         </String>
         <Integer dnOrder="119" id="BSP_PIN_12_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="4"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="4"/>
           </Values>
         </Integer>
         <String dnOrder="120" id="BSP_PIN_130_FUNCTION_TYPE">
@@ -743,16 +611,12 @@
         </String>
         <String dnOrder="121" id="BSP_PIN_130_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="H"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="H"/>
           </Values>
         </String>
         <Integer dnOrder="122" id="BSP_PIN_130_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="11"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="11"/>
           </Values>
         </Integer>
         <String dnOrder="123" id="BSP_PIN_131_FUNCTION_TYPE">
@@ -767,16 +631,12 @@
         </String>
         <String dnOrder="125" id="BSP_PIN_131_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="F"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="F"/>
           </Values>
         </String>
         <Integer dnOrder="126" id="BSP_PIN_131_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
         <String dnOrder="127" id="BSP_PIN_132_FUNCTION_TYPE">
@@ -791,16 +651,12 @@
         </String>
         <String dnOrder="129" id="BSP_PIN_132_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="H"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="H"/>
           </Values>
         </String>
         <Integer dnOrder="130" id="BSP_PIN_132_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="15"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="15"/>
           </Values>
         </Integer>
         <String dnOrder="131" id="BSP_PIN_133_FUNCTION_TYPE">
@@ -815,16 +671,12 @@
         </String>
         <String dnOrder="133" id="BSP_PIN_133_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="F"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="F"/>
           </Values>
         </String>
         <Integer dnOrder="134" id="BSP_PIN_133_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="4"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="4"/>
           </Values>
         </Integer>
         <String dnOrder="135" id="BSP_PIN_134_FUNCTION_TYPE">
@@ -834,16 +686,12 @@
         </String>
         <String dnOrder="136" id="BSP_PIN_134_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="137" id="BSP_PIN_134_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="138" id="BSP_PIN_135_FUNCTION_TYPE">
@@ -853,16 +701,12 @@
         </String>
         <String dnOrder="139" id="BSP_PIN_135_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="140" id="BSP_PIN_135_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="141" id="BSP_PIN_136_FUNCTION_TYPE">
@@ -872,16 +716,12 @@
         </String>
         <String dnOrder="142" id="BSP_PIN_136_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="143" id="BSP_PIN_136_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="144" id="BSP_PIN_137_FUNCTION_TYPE">
@@ -891,16 +731,12 @@
         </String>
         <String dnOrder="145" id="BSP_PIN_137_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="146" id="BSP_PIN_137_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="147" id="BSP_PIN_138_FUNCTION_TYPE">
@@ -910,16 +746,12 @@
         </String>
         <String dnOrder="148" id="BSP_PIN_138_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="149" id="BSP_PIN_138_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="150" id="BSP_PIN_139_FUNCTION_TYPE">
@@ -929,16 +761,12 @@
         </String>
         <String dnOrder="151" id="BSP_PIN_139_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="152" id="BSP_PIN_139_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="153" id="BSP_PIN_13_FUNCTION_TYPE">
@@ -948,16 +776,12 @@
         </String>
         <String dnOrder="154" id="BSP_PIN_13_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="B"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="B"/>
           </Values>
         </String>
         <Integer dnOrder="155" id="BSP_PIN_13_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="2"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="2"/>
           </Values>
         </Integer>
         <String dnOrder="156" id="BSP_PIN_140_FUNCTION_TYPE">
@@ -972,16 +796,12 @@
         </String>
         <String dnOrder="158" id="BSP_PIN_140_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="J"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="J"/>
           </Values>
         </String>
         <Integer dnOrder="159" id="BSP_PIN_140_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
         <String dnOrder="160" id="BSP_PIN_141_FUNCTION_TYPE">
@@ -996,16 +816,12 @@
         </String>
         <String dnOrder="162" id="BSP_PIN_141_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="A"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="A"/>
           </Values>
         </String>
         <Integer dnOrder="163" id="BSP_PIN_141_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="4"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="4"/>
           </Values>
         </Integer>
         <String dnOrder="164" id="BSP_PIN_142_FUNCTION_TYPE">
@@ -1020,16 +836,12 @@
         </String>
         <String dnOrder="166" id="BSP_PIN_142_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="A"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="A"/>
           </Values>
         </String>
         <Integer dnOrder="167" id="BSP_PIN_142_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="2"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="2"/>
           </Values>
         </Integer>
         <String dnOrder="168" id="BSP_PIN_143_FUNCTION_TYPE">
@@ -1044,16 +856,12 @@
         </String>
         <String dnOrder="170" id="BSP_PIN_143_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="K"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="K"/>
           </Values>
         </String>
         <Integer dnOrder="171" id="BSP_PIN_143_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="3"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="3"/>
           </Values>
         </Integer>
         <String dnOrder="172" id="BSP_PIN_144_FUNCTION_TYPE">
@@ -1068,16 +876,12 @@
         </String>
         <String dnOrder="174" id="BSP_PIN_144_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="F"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="F"/>
           </Values>
         </String>
         <Integer dnOrder="175" id="BSP_PIN_144_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="3"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="3"/>
           </Values>
         </Integer>
         <String dnOrder="176" id="BSP_PIN_145_FUNCTION_TYPE">
@@ -1092,16 +896,12 @@
         </String>
         <String dnOrder="178" id="BSP_PIN_145_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="G"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="G"/>
           </Values>
         </String>
         <Integer dnOrder="179" id="BSP_PIN_145_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="1"/>
           </Values>
         </Integer>
         <String dnOrder="180" id="BSP_PIN_146_FUNCTION_TYPE">
@@ -1116,16 +916,12 @@
         </String>
         <String dnOrder="182" id="BSP_PIN_146_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="E"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="E"/>
           </Values>
         </String>
         <Integer dnOrder="183" id="BSP_PIN_146_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="3"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="3"/>
           </Values>
         </Integer>
         <String dnOrder="184" id="BSP_PIN_147_FUNCTION_TYPE">
@@ -1140,16 +936,12 @@
         </String>
         <String dnOrder="186" id="BSP_PIN_147_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="H"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="H"/>
           </Values>
         </String>
         <Integer dnOrder="187" id="BSP_PIN_147_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="5"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="5"/>
           </Values>
         </Integer>
         <String dnOrder="188" id="BSP_PIN_148_FUNCTION_TYPE">
@@ -1164,16 +956,12 @@
         </String>
         <String dnOrder="190" id="BSP_PIN_148_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="H"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="H"/>
           </Values>
         </String>
         <Integer dnOrder="191" id="BSP_PIN_148_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="13"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="13"/>
           </Values>
         </Integer>
         <String dnOrder="192" id="BSP_PIN_149_FUNCTION_TYPE">
@@ -1188,16 +976,12 @@
         </String>
         <String dnOrder="194" id="BSP_PIN_149_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="H"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="H"/>
           </Values>
         </String>
         <Integer dnOrder="195" id="BSP_PIN_149_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="10"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="10"/>
           </Values>
         </Integer>
         <String dnOrder="196" id="BSP_PIN_14_FUNCTION_TYPE">
@@ -1207,16 +991,12 @@
         </String>
         <String dnOrder="197" id="BSP_PIN_14_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="198" id="BSP_PIN_14_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="199" id="BSP_PIN_150_CN">
@@ -1251,16 +1031,12 @@
         </String>
         <String dnOrder="205" id="BSP_PIN_150_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="H"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="H"/>
           </Values>
         </String>
         <Integer dnOrder="206" id="BSP_PIN_150_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="1"/>
           </Values>
         </Integer>
         <String dnOrder="207" id="BSP_PIN_150_PU">
@@ -1300,16 +1076,12 @@
         </String>
         <String dnOrder="214" id="BSP_PIN_151_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="H"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="H"/>
           </Values>
         </String>
         <Integer dnOrder="215" id="BSP_PIN_151_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
         <String dnOrder="216" id="BSP_PIN_151_PU">
@@ -1329,16 +1101,12 @@
         </String>
         <String dnOrder="219" id="BSP_PIN_152_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="J"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="J"/>
           </Values>
         </String>
         <Integer dnOrder="220" id="BSP_PIN_152_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="9"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="9"/>
           </Values>
         </Integer>
         <String dnOrder="221" id="BSP_PIN_153_FUNCTION_NAME">
@@ -1358,16 +1126,12 @@
         </String>
         <String dnOrder="224" id="BSP_PIN_153_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="D"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="D"/>
           </Values>
         </String>
         <Integer dnOrder="225" id="BSP_PIN_153_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="7"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="7"/>
           </Values>
         </Integer>
         <String dnOrder="226" id="BSP_PIN_154_FUNCTION_TYPE">
@@ -1382,16 +1146,12 @@
         </String>
         <String dnOrder="228" id="BSP_PIN_154_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="A"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="A"/>
           </Values>
         </String>
         <Integer dnOrder="229" id="BSP_PIN_154_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="14"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="14"/>
           </Values>
         </Integer>
         <String dnOrder="230" id="BSP_PIN_155_FUNCTION_TYPE">
@@ -1406,16 +1166,12 @@
         </String>
         <String dnOrder="232" id="BSP_PIN_155_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="K"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="K"/>
           </Values>
         </String>
         <Integer dnOrder="233" id="BSP_PIN_155_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="7"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="7"/>
           </Values>
         </Integer>
         <String dnOrder="234" id="BSP_PIN_156_FUNCTION_TYPE">
@@ -1430,16 +1186,12 @@
         </String>
         <String dnOrder="236" id="BSP_PIN_156_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="K"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="K"/>
           </Values>
         </String>
         <Integer dnOrder="237" id="BSP_PIN_156_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="6"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="6"/>
           </Values>
         </Integer>
         <String dnOrder="238" id="BSP_PIN_157_FUNCTION_TYPE">
@@ -1449,16 +1201,12 @@
         </String>
         <String dnOrder="239" id="BSP_PIN_157_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="240" id="BSP_PIN_157_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="241" id="BSP_PIN_158_FUNCTION_TYPE">
@@ -1473,16 +1221,12 @@
         </String>
         <String dnOrder="243" id="BSP_PIN_158_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="G"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="G"/>
           </Values>
         </String>
         <Integer dnOrder="244" id="BSP_PIN_158_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
         <String dnOrder="245" id="BSP_PIN_159_FUNCTION_TYPE">
@@ -1497,16 +1241,12 @@
         </String>
         <String dnOrder="247" id="BSP_PIN_159_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="E"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="E"/>
           </Values>
         </String>
         <Integer dnOrder="248" id="BSP_PIN_159_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="2"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="2"/>
           </Values>
         </Integer>
         <String dnOrder="249" id="BSP_PIN_15_FUNCTION_TYPE">
@@ -1516,16 +1256,12 @@
         </String>
         <String dnOrder="250" id="BSP_PIN_15_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="251" id="BSP_PIN_15_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="252" id="BSP_PIN_160_FUNCTION_TYPE">
@@ -1540,16 +1276,12 @@
         </String>
         <String dnOrder="254" id="BSP_PIN_160_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="H"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="H"/>
           </Values>
         </String>
         <Integer dnOrder="255" id="BSP_PIN_160_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="6"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="6"/>
           </Values>
         </Integer>
         <String dnOrder="256" id="BSP_PIN_161_FUNCTION_TYPE">
@@ -1564,16 +1296,12 @@
         </String>
         <String dnOrder="258" id="BSP_PIN_161_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="H"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="H"/>
           </Values>
         </String>
         <Integer dnOrder="259" id="BSP_PIN_161_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="12"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="12"/>
           </Values>
         </Integer>
         <String dnOrder="260" id="BSP_PIN_162_FUNCTION_TYPE">
@@ -1588,16 +1316,12 @@
         </String>
         <String dnOrder="262" id="BSP_PIN_162_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="H"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="H"/>
           </Values>
         </String>
         <Integer dnOrder="263" id="BSP_PIN_162_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="9"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="9"/>
           </Values>
         </Integer>
         <String dnOrder="264" id="BSP_PIN_163_FUNCTION_TYPE">
@@ -1612,16 +1336,12 @@
         </String>
         <String dnOrder="266" id="BSP_PIN_163_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="H"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="H"/>
           </Values>
         </String>
         <Integer dnOrder="267" id="BSP_PIN_163_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="8"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="8"/>
           </Values>
         </Integer>
         <String dnOrder="268" id="BSP_PIN_164_FUNCTION_TYPE">
@@ -1636,16 +1356,12 @@
         </String>
         <String dnOrder="270" id="BSP_PIN_164_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="J"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="J"/>
           </Values>
         </String>
         <Integer dnOrder="271" id="BSP_PIN_164_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="11"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="11"/>
           </Values>
         </Integer>
         <String dnOrder="272" id="BSP_PIN_165_FUNCTION_TYPE">
@@ -1660,16 +1376,12 @@
         </String>
         <String dnOrder="274" id="BSP_PIN_165_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="J"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="J"/>
           </Values>
         </String>
         <Integer dnOrder="275" id="BSP_PIN_165_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="8"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="8"/>
           </Values>
         </Integer>
         <String dnOrder="276" id="BSP_PIN_166_FUNCTION_TYPE">
@@ -1684,16 +1396,12 @@
         </String>
         <String dnOrder="278" id="BSP_PIN_166_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="D"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="D"/>
           </Values>
         </String>
         <Integer dnOrder="279" id="BSP_PIN_166_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="11"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="11"/>
           </Values>
         </Integer>
         <String dnOrder="280" id="BSP_PIN_167_FUNCTION_TYPE">
@@ -1708,16 +1416,12 @@
         </String>
         <String dnOrder="282" id="BSP_PIN_167_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="A"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="A"/>
           </Values>
         </String>
         <Integer dnOrder="283" id="BSP_PIN_167_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="15"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="15"/>
           </Values>
         </Integer>
         <String dnOrder="284" id="BSP_PIN_168_FUNCTION_TYPE">
@@ -1732,16 +1436,12 @@
         </String>
         <String dnOrder="286" id="BSP_PIN_168_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="A"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="A"/>
           </Values>
         </String>
         <Integer dnOrder="287" id="BSP_PIN_168_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="3"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="3"/>
           </Values>
         </Integer>
         <String dnOrder="288" id="BSP_PIN_169_FUNCTION_TYPE">
@@ -1751,16 +1451,12 @@
         </String>
         <String dnOrder="289" id="BSP_PIN_169_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="290" id="BSP_PIN_169_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="291" id="BSP_PIN_16_FUNCTION_TYPE">
@@ -1770,16 +1466,12 @@
         </String>
         <String dnOrder="292" id="BSP_PIN_16_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="E"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="E"/>
           </Values>
         </String>
         <Integer dnOrder="293" id="BSP_PIN_16_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="4"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="4"/>
           </Values>
         </Integer>
         <String dnOrder="294" id="BSP_PIN_17_FUNCTION_TYPE">
@@ -1789,16 +1481,12 @@
         </String>
         <String dnOrder="295" id="BSP_PIN_17_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="296" id="BSP_PIN_17_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="297" id="BSP_PIN_18_FUNCTION_NAME">
@@ -1818,16 +1506,12 @@
         </String>
         <String dnOrder="300" id="BSP_PIN_18_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="G"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="G"/>
           </Values>
         </String>
         <Integer dnOrder="301" id="BSP_PIN_18_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="8"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="8"/>
           </Values>
         </Integer>
         <String dnOrder="302" id="BSP_PIN_19_FUNCTION_TYPE">
@@ -1837,16 +1521,12 @@
         </String>
         <String dnOrder="303" id="BSP_PIN_19_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="304" id="BSP_PIN_19_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="305" id="BSP_PIN_1_FUNCTION_TYPE">
@@ -1856,16 +1536,12 @@
         </String>
         <String dnOrder="306" id="BSP_PIN_1_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="307" id="BSP_PIN_1_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="308" id="BSP_PIN_20_FUNCTION_TYPE">
@@ -1875,16 +1551,12 @@
         </String>
         <String dnOrder="309" id="BSP_PIN_20_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="C"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="C"/>
           </Values>
         </String>
         <Integer dnOrder="310" id="BSP_PIN_20_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="1"/>
           </Values>
         </Integer>
         <String dnOrder="311" id="BSP_PIN_21_FUNCTION_TYPE">
@@ -1894,16 +1566,12 @@
         </String>
         <String dnOrder="312" id="BSP_PIN_21_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="C"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="C"/>
           </Values>
         </String>
         <Integer dnOrder="313" id="BSP_PIN_21_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="4"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="4"/>
           </Values>
         </Integer>
         <String dnOrder="314" id="BSP_PIN_22_FUNCTION_TYPE">
@@ -1913,16 +1581,12 @@
         </String>
         <String dnOrder="315" id="BSP_PIN_22_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="B"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="B"/>
           </Values>
         </String>
         <Integer dnOrder="316" id="BSP_PIN_22_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="1"/>
           </Values>
         </Integer>
         <String dnOrder="317" id="BSP_PIN_23_FUNCTION_TYPE">
@@ -1932,16 +1596,12 @@
         </String>
         <String dnOrder="318" id="BSP_PIN_23_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="B"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="B"/>
           </Values>
         </String>
         <Integer dnOrder="319" id="BSP_PIN_23_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="15"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="15"/>
           </Values>
         </Integer>
         <String dnOrder="320" id="BSP_PIN_24_FUNCTION_TYPE">
@@ -1951,16 +1611,12 @@
         </String>
         <String dnOrder="321" id="BSP_PIN_24_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="A"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="A"/>
           </Values>
         </String>
         <Integer dnOrder="322" id="BSP_PIN_24_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="9"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="9"/>
           </Values>
         </Integer>
         <String dnOrder="323" id="BSP_PIN_25_FUNCTION_TYPE">
@@ -1970,16 +1626,12 @@
         </String>
         <String dnOrder="324" id="BSP_PIN_25_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="B"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="B"/>
           </Values>
         </String>
         <Integer dnOrder="325" id="BSP_PIN_25_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="9"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="9"/>
           </Values>
         </Integer>
         <String dnOrder="326" id="BSP_PIN_26_CN">
@@ -2014,16 +1666,12 @@
         </String>
         <String dnOrder="332" id="BSP_PIN_26_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="B"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="B"/>
           </Values>
         </String>
         <Integer dnOrder="333" id="BSP_PIN_26_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="12"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="12"/>
           </Values>
         </Integer>
         <String dnOrder="334" id="BSP_PIN_27_FUNCTION_TYPE">
@@ -2033,16 +1681,12 @@
         </String>
         <String dnOrder="335" id="BSP_PIN_27_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="336" id="BSP_PIN_27_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="337" id="BSP_PIN_28_FUNCTION_TYPE">
@@ -2052,16 +1696,12 @@
         </String>
         <String dnOrder="338" id="BSP_PIN_28_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="339" id="BSP_PIN_28_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="340" id="BSP_PIN_29_FUNCTION_TYPE">
@@ -2076,16 +1716,12 @@
         </String>
         <String dnOrder="342" id="BSP_PIN_29_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="H"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="H"/>
           </Values>
         </String>
         <Integer dnOrder="343" id="BSP_PIN_29_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="14"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="14"/>
           </Values>
         </Integer>
         <String dnOrder="344" id="BSP_PIN_2_FUNCTION_TYPE">
@@ -2095,16 +1731,12 @@
         </String>
         <String dnOrder="345" id="BSP_PIN_2_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="346" id="BSP_PIN_2_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="347" id="BSP_PIN_30_FUNCTION_TYPE">
@@ -2119,16 +1751,12 @@
         </String>
         <String dnOrder="349" id="BSP_PIN_30_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="E"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="E"/>
           </Values>
         </String>
         <Integer dnOrder="350" id="BSP_PIN_30_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
         <String dnOrder="351" id="BSP_PIN_31_FUNCTION_TYPE">
@@ -2138,16 +1766,12 @@
         </String>
         <String dnOrder="352" id="BSP_PIN_31_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="G"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="G"/>
           </Values>
         </String>
         <Integer dnOrder="353" id="BSP_PIN_31_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="9"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="9"/>
           </Values>
         </Integer>
         <String dnOrder="354" id="BSP_PIN_32_FUNCTION_TYPE">
@@ -2157,16 +1781,12 @@
         </String>
         <String dnOrder="355" id="BSP_PIN_32_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="F"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="F"/>
           </Values>
         </String>
         <Integer dnOrder="356" id="BSP_PIN_32_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="12"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="12"/>
           </Values>
         </Integer>
         <String dnOrder="357" id="BSP_PIN_33_FUNCTION_TYPE">
@@ -2176,16 +1796,12 @@
         </String>
         <String dnOrder="358" id="BSP_PIN_33_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="E"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="E"/>
           </Values>
         </String>
         <Integer dnOrder="359" id="BSP_PIN_33_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="7"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="7"/>
           </Values>
         </Integer>
         <String dnOrder="360" id="BSP_PIN_34_FUNCTION_TYPE">
@@ -2195,16 +1811,12 @@
         </String>
         <String dnOrder="361" id="BSP_PIN_34_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="362" id="BSP_PIN_34_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="363" id="BSP_PIN_35_FUNCTION_TYPE">
@@ -2214,16 +1826,12 @@
         </String>
         <String dnOrder="364" id="BSP_PIN_35_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="365" id="BSP_PIN_35_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="366" id="BSP_PIN_36_FUNCTION_TYPE">
@@ -2233,16 +1841,12 @@
         </String>
         <String dnOrder="367" id="BSP_PIN_36_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="A"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="A"/>
           </Values>
         </String>
         <Integer dnOrder="368" id="BSP_PIN_36_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="10"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="10"/>
           </Values>
         </Integer>
         <String dnOrder="369" id="BSP_PIN_37_FUNCTION_TYPE">
@@ -2252,16 +1856,12 @@
         </String>
         <String dnOrder="370" id="BSP_PIN_37_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="B"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="B"/>
           </Values>
         </String>
         <Integer dnOrder="371" id="BSP_PIN_37_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="10"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="10"/>
           </Values>
         </Integer>
         <String dnOrder="372" id="BSP_PIN_38_FUNCTION_TYPE">
@@ -2271,16 +1871,12 @@
         </String>
         <String dnOrder="373" id="BSP_PIN_38_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="B"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="B"/>
           </Values>
         </String>
         <Integer dnOrder="374" id="BSP_PIN_38_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
         <String dnOrder="375" id="BSP_PIN_39_FUNCTION_TYPE">
@@ -2290,16 +1886,12 @@
         </String>
         <String dnOrder="376" id="BSP_PIN_39_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="C"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="C"/>
           </Values>
         </String>
         <Integer dnOrder="377" id="BSP_PIN_39_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="13"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="13"/>
           </Values>
         </Integer>
         <String dnOrder="378" id="BSP_PIN_3_FUNCTION_TYPE">
@@ -2314,16 +1906,12 @@
         </String>
         <String dnOrder="380" id="BSP_PIN_3_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="F"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="F"/>
           </Values>
         </String>
         <Integer dnOrder="381" id="BSP_PIN_3_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="2"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="2"/>
           </Values>
         </Integer>
         <String dnOrder="382" id="BSP_PIN_40_FUNCTION_TYPE">
@@ -2338,16 +1926,12 @@
         </String>
         <String dnOrder="384" id="BSP_PIN_40_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="A"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="A"/>
           </Values>
         </String>
         <Integer dnOrder="385" id="BSP_PIN_40_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="7"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="7"/>
           </Values>
         </Integer>
         <String dnOrder="386" id="BSP_PIN_41_FUNCTION_TYPE">
@@ -2362,16 +1946,12 @@
         </String>
         <String dnOrder="388" id="BSP_PIN_41_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="A"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="A"/>
           </Values>
         </String>
         <Integer dnOrder="389" id="BSP_PIN_41_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
         <String dnOrder="390" id="BSP_PIN_42_FUNCTION_TYPE">
@@ -2381,16 +1961,12 @@
         </String>
         <String dnOrder="391" id="BSP_PIN_42_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="392" id="BSP_PIN_42_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="393" id="BSP_PIN_43_FUNCTION_TYPE">
@@ -2400,16 +1976,12 @@
         </String>
         <String dnOrder="394" id="BSP_PIN_43_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="H"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="H"/>
           </Values>
         </String>
         <Integer dnOrder="395" id="BSP_PIN_43_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="4"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="4"/>
           </Values>
         </Integer>
         <String dnOrder="396" id="BSP_PIN_44_FUNCTION_TYPE">
@@ -2419,16 +1991,12 @@
         </String>
         <String dnOrder="397" id="BSP_PIN_44_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="G"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="G"/>
           </Values>
         </String>
         <Integer dnOrder="398" id="BSP_PIN_44_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="7"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="7"/>
           </Values>
         </Integer>
         <String dnOrder="399" id="BSP_PIN_45_FUNCTION_TYPE">
@@ -2438,16 +2006,12 @@
         </String>
         <String dnOrder="400" id="BSP_PIN_45_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="E"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="E"/>
           </Values>
         </String>
         <Integer dnOrder="401" id="BSP_PIN_45_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="9"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="9"/>
           </Values>
         </Integer>
         <String dnOrder="402" id="BSP_PIN_46_FUNCTION_TYPE">
@@ -2462,16 +2026,12 @@
         </String>
         <String dnOrder="404" id="BSP_PIN_46_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="B"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="B"/>
           </Values>
         </String>
         <Integer dnOrder="405" id="BSP_PIN_46_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="6"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="6"/>
           </Values>
         </Integer>
         <String dnOrder="406" id="BSP_PIN_47_FUNCTION_TYPE">
@@ -2481,16 +2041,12 @@
         </String>
         <String dnOrder="407" id="BSP_PIN_47_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="408" id="BSP_PIN_47_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="409" id="BSP_PIN_48_FUNCTION_TYPE">
@@ -2500,16 +2056,12 @@
         </String>
         <String dnOrder="410" id="BSP_PIN_48_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="411" id="BSP_PIN_48_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="412" id="BSP_PIN_49_FUNCTION_TYPE">
@@ -2519,16 +2071,12 @@
         </String>
         <String dnOrder="413" id="BSP_PIN_49_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="414" id="BSP_PIN_49_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="415" id="BSP_PIN_4_FUNCTION_TYPE">
@@ -2538,16 +2086,12 @@
         </String>
         <String dnOrder="416" id="BSP_PIN_4_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="E"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="E"/>
           </Values>
         </String>
         <Integer dnOrder="417" id="BSP_PIN_4_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="1"/>
           </Values>
         </Integer>
         <String dnOrder="418" id="BSP_PIN_50_FUNCTION_TYPE">
@@ -2557,16 +2101,12 @@
         </String>
         <String dnOrder="419" id="BSP_PIN_50_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="B"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="B"/>
           </Values>
         </String>
         <Integer dnOrder="420" id="BSP_PIN_50_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="5"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="5"/>
           </Values>
         </Integer>
         <String dnOrder="421" id="BSP_PIN_51_FUNCTION_TYPE">
@@ -2576,16 +2116,12 @@
         </String>
         <String dnOrder="422" id="BSP_PIN_51_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="B"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="B"/>
           </Values>
         </String>
         <Integer dnOrder="423" id="BSP_PIN_51_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="7"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="7"/>
           </Values>
         </Integer>
         <String dnOrder="424" id="BSP_PIN_52_FUNCTION_TYPE">
@@ -2595,16 +2131,12 @@
         </String>
         <String dnOrder="425" id="BSP_PIN_52_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="C"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="C"/>
           </Values>
         </String>
         <Integer dnOrder="426" id="BSP_PIN_52_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="14"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="14"/>
           </Values>
         </Integer>
         <String dnOrder="427" id="BSP_PIN_53_FUNCTION_TYPE">
@@ -2619,16 +2151,12 @@
         </String>
         <String dnOrder="429" id="BSP_PIN_53_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="G"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="G"/>
           </Values>
         </String>
         <Integer dnOrder="430" id="BSP_PIN_53_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="14"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="14"/>
           </Values>
         </Integer>
         <String dnOrder="431" id="BSP_PIN_54_FUNCTION_TYPE">
@@ -2643,16 +2171,12 @@
         </String>
         <String dnOrder="433" id="BSP_PIN_54_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="G"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="G"/>
           </Values>
         </String>
         <Integer dnOrder="434" id="BSP_PIN_54_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="13"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="13"/>
           </Values>
         </Integer>
         <String dnOrder="435" id="BSP_PIN_55_FUNCTION_TYPE">
@@ -2667,16 +2191,12 @@
         </String>
         <String dnOrder="437" id="BSP_PIN_55_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="G"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="G"/>
           </Values>
         </String>
         <Integer dnOrder="438" id="BSP_PIN_55_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="12"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="12"/>
           </Values>
         </Integer>
         <String dnOrder="439" id="BSP_PIN_56_FUNCTION_TYPE">
@@ -2691,16 +2211,12 @@
         </String>
         <String dnOrder="441" id="BSP_PIN_56_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="A"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="A"/>
           </Values>
         </String>
         <Integer dnOrder="442" id="BSP_PIN_56_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="6"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="6"/>
           </Values>
         </Integer>
         <String dnOrder="443" id="BSP_PIN_57_FUNCTION_NAME">
@@ -2720,16 +2236,12 @@
         </String>
         <String dnOrder="446" id="BSP_PIN_57_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="G"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="G"/>
           </Values>
         </String>
         <Integer dnOrder="447" id="BSP_PIN_57_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="6"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="6"/>
           </Values>
         </Integer>
         <String dnOrder="448" id="BSP_PIN_58_FUNCTION_TYPE">
@@ -2739,16 +2251,12 @@
         </String>
         <String dnOrder="449" id="BSP_PIN_58_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="E"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="E"/>
           </Values>
         </String>
         <Integer dnOrder="450" id="BSP_PIN_58_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="8"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="8"/>
           </Values>
         </Integer>
         <String dnOrder="451" id="BSP_PIN_59_FUNCTION_TYPE">
@@ -2758,16 +2266,12 @@
         </String>
         <String dnOrder="452" id="BSP_PIN_59_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="B"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="B"/>
           </Values>
         </String>
         <Integer dnOrder="453" id="BSP_PIN_59_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="11"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="11"/>
           </Values>
         </Integer>
         <String dnOrder="454" id="BSP_PIN_5_FUNCTION_TYPE">
@@ -2777,16 +2281,12 @@
         </String>
         <String dnOrder="455" id="BSP_PIN_5_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="G"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="G"/>
           </Values>
         </String>
         <Integer dnOrder="456" id="BSP_PIN_5_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="15"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="15"/>
           </Values>
         </Integer>
         <String dnOrder="457" id="BSP_PIN_60_FUNCTION_TYPE">
@@ -2801,16 +2301,12 @@
         </String>
         <String dnOrder="459" id="BSP_PIN_60_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="J"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="J"/>
           </Values>
         </String>
         <Integer dnOrder="460" id="BSP_PIN_60_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="3"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="3"/>
           </Values>
         </Integer>
         <String dnOrder="461" id="BSP_PIN_61_FUNCTION_TYPE">
@@ -2820,16 +2316,12 @@
         </String>
         <String dnOrder="462" id="BSP_PIN_61_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="D"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="D"/>
           </Values>
         </String>
         <Integer dnOrder="463" id="BSP_PIN_61_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="14"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="14"/>
           </Values>
         </Integer>
         <String dnOrder="464" id="BSP_PIN_62_CN">
@@ -2864,16 +2356,12 @@
         </String>
         <String dnOrder="470" id="BSP_PIN_62_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="B"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="B"/>
           </Values>
         </String>
         <Integer dnOrder="471" id="BSP_PIN_62_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="14"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="14"/>
           </Values>
         </Integer>
         <String dnOrder="472" id="BSP_PIN_63_FUNCTION_TYPE">
@@ -2883,16 +2371,12 @@
         </String>
         <String dnOrder="473" id="BSP_PIN_63_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="A"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="A"/>
           </Values>
         </String>
         <Integer dnOrder="474" id="BSP_PIN_63_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="1"/>
           </Values>
         </Integer>
         <String dnOrder="475" id="BSP_PIN_64_FUNCTION_TYPE">
@@ -2902,16 +2386,12 @@
         </String>
         <String dnOrder="476" id="BSP_PIN_64_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="C"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="C"/>
           </Values>
         </String>
         <Integer dnOrder="477" id="BSP_PIN_64_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="12"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="12"/>
           </Values>
         </Integer>
         <String dnOrder="478" id="BSP_PIN_65_FUNCTION_TYPE">
@@ -2921,16 +2401,12 @@
         </String>
         <String dnOrder="479" id="BSP_PIN_65_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="C"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="C"/>
           </Values>
         </String>
         <Integer dnOrder="480" id="BSP_PIN_65_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="15"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="15"/>
           </Values>
         </Integer>
         <String dnOrder="481" id="BSP_PIN_66_FUNCTION_TYPE">
@@ -2945,16 +2421,12 @@
         </String>
         <String dnOrder="483" id="BSP_PIN_66_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="D"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="D"/>
           </Values>
         </String>
         <Integer dnOrder="484" id="BSP_PIN_66_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="4"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="4"/>
           </Values>
         </Integer>
         <String dnOrder="485" id="BSP_PIN_67_FUNCTION_TYPE">
@@ -2969,16 +2441,12 @@
         </String>
         <String dnOrder="487" id="BSP_PIN_67_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="D"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="D"/>
           </Values>
         </String>
         <Integer dnOrder="488" id="BSP_PIN_67_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="5"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="5"/>
           </Values>
         </Integer>
         <String dnOrder="489" id="BSP_PIN_68_FUNCTION_TYPE">
@@ -2993,16 +2461,12 @@
         </String>
         <String dnOrder="491" id="BSP_PIN_68_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="E"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="E"/>
           </Values>
         </String>
         <Integer dnOrder="492" id="BSP_PIN_68_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="5"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="5"/>
           </Values>
         </Integer>
         <String dnOrder="493" id="BSP_PIN_69_FUNCTION_TYPE">
@@ -3012,16 +2476,12 @@
         </String>
         <String dnOrder="494" id="BSP_PIN_69_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="495" id="BSP_PIN_69_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="496" id="BSP_PIN_6_FUNCTION_TYPE">
@@ -3031,16 +2491,12 @@
         </String>
         <String dnOrder="497" id="BSP_PIN_6_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="F"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="F"/>
           </Values>
         </String>
         <Integer dnOrder="498" id="BSP_PIN_6_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="13"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="13"/>
           </Values>
         </Integer>
         <String dnOrder="499" id="BSP_PIN_70_FUNCTION_TYPE">
@@ -3050,16 +2506,12 @@
         </String>
         <String dnOrder="500" id="BSP_PIN_70_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="501" id="BSP_PIN_70_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="502" id="BSP_PIN_71_FUNCTION_TYPE">
@@ -3069,16 +2521,12 @@
         </String>
         <String dnOrder="503" id="BSP_PIN_71_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="E"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="E"/>
           </Values>
         </String>
         <Integer dnOrder="504" id="BSP_PIN_71_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="6"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="6"/>
           </Values>
         </Integer>
         <String dnOrder="505" id="BSP_PIN_72_CN">
@@ -3113,16 +2561,12 @@
         </String>
         <String dnOrder="511" id="BSP_PIN_72_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="B"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="B"/>
           </Values>
         </String>
         <Integer dnOrder="512" id="BSP_PIN_72_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="13"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="13"/>
           </Values>
         </Integer>
         <String dnOrder="513" id="BSP_PIN_73_FUNCTION_TYPE">
@@ -3137,16 +2581,12 @@
         </String>
         <String dnOrder="515" id="BSP_PIN_73_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="J"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="J"/>
           </Values>
         </String>
         <Integer dnOrder="516" id="BSP_PIN_73_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="10"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="10"/>
           </Values>
         </Integer>
         <String dnOrder="517" id="BSP_PIN_74_FUNCTION_TYPE">
@@ -3161,16 +2601,12 @@
         </String>
         <String dnOrder="519" id="BSP_PIN_74_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="J"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="J"/>
           </Values>
         </String>
         <Integer dnOrder="520" id="BSP_PIN_74_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="12"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="12"/>
           </Values>
         </Integer>
         <String dnOrder="521" id="BSP_PIN_75_FUNCTION_TYPE">
@@ -3180,16 +2616,12 @@
         </String>
         <String dnOrder="522" id="BSP_PIN_75_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="J"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="J"/>
           </Values>
         </String>
         <Integer dnOrder="523" id="BSP_PIN_75_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="2"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="2"/>
           </Values>
         </Integer>
         <String dnOrder="524" id="BSP_PIN_76_FUNCTION_TYPE">
@@ -3199,16 +2631,12 @@
         </String>
         <String dnOrder="525" id="BSP_PIN_76_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="D"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="D"/>
           </Values>
         </String>
         <Integer dnOrder="526" id="BSP_PIN_76_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="15"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="15"/>
           </Values>
         </Integer>
         <String dnOrder="527" id="BSP_PIN_77_FUNCTION_TYPE">
@@ -3223,16 +2651,12 @@
         </String>
         <String dnOrder="529" id="BSP_PIN_77_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="J"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="J"/>
           </Values>
         </String>
         <Integer dnOrder="530" id="BSP_PIN_77_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="5"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="5"/>
           </Values>
         </Integer>
         <String dnOrder="531" id="BSP_PIN_78_FUNCTION_TYPE">
@@ -3247,16 +2671,12 @@
         </String>
         <String dnOrder="533" id="BSP_PIN_78_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="J"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="J"/>
           </Values>
         </String>
         <Integer dnOrder="534" id="BSP_PIN_78_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="4"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="4"/>
           </Values>
         </Integer>
         <String dnOrder="535" id="BSP_PIN_79_FUNCTION_TYPE">
@@ -3271,16 +2691,12 @@
         </String>
         <String dnOrder="537" id="BSP_PIN_79_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="D"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="D"/>
           </Values>
         </String>
         <Integer dnOrder="538" id="BSP_PIN_79_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="1"/>
           </Values>
         </Integer>
         <String dnOrder="539" id="BSP_PIN_7_FUNCTION_TYPE">
@@ -3290,16 +2706,12 @@
         </String>
         <String dnOrder="540" id="BSP_PIN_7_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="C"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="C"/>
           </Values>
         </String>
         <Integer dnOrder="541" id="BSP_PIN_7_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="3"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="3"/>
           </Values>
         </Integer>
         <String dnOrder="542" id="BSP_PIN_80_FUNCTION_TYPE">
@@ -3314,16 +2726,12 @@
         </String>
         <String dnOrder="544" id="BSP_PIN_80_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="D"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="D"/>
           </Values>
         </String>
         <Integer dnOrder="545" id="BSP_PIN_80_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="2"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="2"/>
           </Values>
         </Integer>
         <String dnOrder="546" id="BSP_PIN_81_FUNCTION_TYPE">
@@ -3338,16 +2746,12 @@
         </String>
         <String dnOrder="548" id="BSP_PIN_81_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="D"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="D"/>
           </Values>
         </String>
         <Integer dnOrder="549" id="BSP_PIN_81_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="3"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="3"/>
           </Values>
         </Integer>
         <String dnOrder="550" id="BSP_PIN_82_FUNCTION_TYPE">
@@ -3357,16 +2761,12 @@
         </String>
         <String dnOrder="551" id="BSP_PIN_82_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="552" id="BSP_PIN_82_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="553" id="BSP_PIN_83_FUNCTION_TYPE">
@@ -3376,16 +2776,12 @@
         </String>
         <String dnOrder="554" id="BSP_PIN_83_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="555" id="BSP_PIN_83_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="556" id="BSP_PIN_84_FUNCTION_TYPE">
@@ -3395,16 +2791,12 @@
         </String>
         <String dnOrder="557" id="BSP_PIN_84_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="558" id="BSP_PIN_84_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="559" id="BSP_PIN_85_FUNCTION_TYPE">
@@ -3414,16 +2806,12 @@
         </String>
         <String dnOrder="560" id="BSP_PIN_85_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="561" id="BSP_PIN_85_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="562" id="BSP_PIN_86_FUNCTION_TYPE">
@@ -3433,16 +2821,12 @@
         </String>
         <String dnOrder="563" id="BSP_PIN_86_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="564" id="BSP_PIN_86_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="565" id="BSP_PIN_87_FUNCTION_TYPE">
@@ -3452,16 +2836,12 @@
         </String>
         <String dnOrder="566" id="BSP_PIN_87_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="567" id="BSP_PIN_87_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="568" id="BSP_PIN_88_FUNCTION_TYPE">
@@ -3476,16 +2856,12 @@
         </String>
         <String dnOrder="570" id="BSP_PIN_88_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="J"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="J"/>
           </Values>
         </String>
         <Integer dnOrder="571" id="BSP_PIN_88_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="14"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="14"/>
           </Values>
         </Integer>
         <String dnOrder="572" id="BSP_PIN_89_FUNCTION_TYPE">
@@ -3500,16 +2876,12 @@
         </String>
         <String dnOrder="574" id="BSP_PIN_89_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="J"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="J"/>
           </Values>
         </String>
         <Integer dnOrder="575" id="BSP_PIN_89_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="6"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="6"/>
           </Values>
         </Integer>
         <String dnOrder="576" id="BSP_PIN_8_FUNCTION_TYPE">
@@ -3519,16 +2891,12 @@
         </String>
         <String dnOrder="577" id="BSP_PIN_8_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="C"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="C"/>
           </Values>
         </String>
         <Integer dnOrder="578" id="BSP_PIN_8_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="2"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="2"/>
           </Values>
         </Integer>
         <String dnOrder="579" id="BSP_PIN_90_FUNCTION_TYPE">
@@ -3543,16 +2911,12 @@
         </String>
         <String dnOrder="581" id="BSP_PIN_90_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="J"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="J"/>
           </Values>
         </String>
         <Integer dnOrder="582" id="BSP_PIN_90_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="13"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="13"/>
           </Values>
         </Integer>
         <String dnOrder="583" id="BSP_PIN_91_FUNCTION_TYPE">
@@ -3567,16 +2931,12 @@
         </String>
         <String dnOrder="585" id="BSP_PIN_91_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="J"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="J"/>
           </Values>
         </String>
         <Integer dnOrder="586" id="BSP_PIN_91_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="7"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="7"/>
           </Values>
         </Integer>
         <String dnOrder="587" id="BSP_PIN_92_FUNCTION_TYPE">
@@ -3591,16 +2951,12 @@
         </String>
         <String dnOrder="589" id="BSP_PIN_92_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="D"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="D"/>
           </Values>
         </String>
         <Integer dnOrder="590" id="BSP_PIN_92_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="9"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="9"/>
           </Values>
         </Integer>
         <String dnOrder="591" id="BSP_PIN_93_FUNCTION_TYPE">
@@ -3615,16 +2971,12 @@
         </String>
         <String dnOrder="593" id="BSP_PIN_93_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="D"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="D"/>
           </Values>
         </String>
         <Integer dnOrder="594" id="BSP_PIN_93_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="10"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="10"/>
           </Values>
         </Integer>
         <String dnOrder="595" id="BSP_PIN_94_FUNCTION_TYPE">
@@ -3639,16 +2991,12 @@
         </String>
         <String dnOrder="597" id="BSP_PIN_94_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="D"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="D"/>
           </Values>
         </String>
         <Integer dnOrder="598" id="BSP_PIN_94_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
         <String dnOrder="599" id="BSP_PIN_95_FUNCTION_TYPE">
@@ -3658,16 +3006,12 @@
         </String>
         <String dnOrder="600" id="BSP_PIN_95_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="601" id="BSP_PIN_95_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="602" id="BSP_PIN_96_FUNCTION_TYPE">
@@ -3677,16 +3021,12 @@
         </String>
         <String dnOrder="603" id="BSP_PIN_96_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="604" id="BSP_PIN_96_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="605" id="BSP_PIN_97_FUNCTION_TYPE">
@@ -3696,16 +3036,12 @@
         </String>
         <String dnOrder="606" id="BSP_PIN_97_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="607" id="BSP_PIN_97_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="608" id="BSP_PIN_98_FUNCTION_TYPE">
@@ -3715,16 +3051,12 @@
         </String>
         <String dnOrder="609" id="BSP_PIN_98_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="610" id="BSP_PIN_98_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="611" id="BSP_PIN_99_FUNCTION_TYPE">
@@ -3734,16 +3066,12 @@
         </String>
         <String dnOrder="612" id="BSP_PIN_99_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value=""/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value=""/>
           </Values>
         </String>
         <Integer dnOrder="613" id="BSP_PIN_99_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="-1"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="-1"/>
           </Values>
         </Integer>
         <String dnOrder="614" id="BSP_PIN_9_FUNCTION_TYPE">
@@ -3753,79 +3081,57 @@
         </String>
         <String dnOrder="615" id="BSP_PIN_9_PORT_CHANNEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="B"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="B"/>
           </Values>
         </String>
         <Integer dnOrder="616" id="BSP_PIN_9_PORT_PIN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="8"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="8"/>
           </Values>
         </Integer>
         <Boolean dnOrder="617" id="CHANGE_NOTICE_B_INTERRUPT_ENABLE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="618" id="CHANGE_NOTICE_B_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
         <String dnOrder="619" id="CHANGE_NOTICE_B_INTERRUPT_HANDLER">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="CHANGE_NOTICE_B_Handler"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="CHANGE_NOTICE_B_Handler"/>
           </Values>
         </String>
         <Boolean dnOrder="620" id="CHANGE_NOTICE_B_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="621" id="CHANGE_NOTICE_H_INTERRUPT_ENABLE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="622" id="CHANGE_NOTICE_H_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
         <String dnOrder="623" id="CHANGE_NOTICE_H_INTERRUPT_HANDLER">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="CHANGE_NOTICE_H_Handler"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="CHANGE_NOTICE_H_Handler"/>
           </Values>
         </String>
         <Boolean dnOrder="624" id="CHANGE_NOTICE_H_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <KeyValueSet dnOrder="625" id="COMPILER_CHOICE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </KeyValueSet>
         <Combo dnOrder="626" id="COMPONENT_PACKAGE">
@@ -3840,212 +3146,152 @@
         </Combo>
         <Boolean dnOrder="628" id="CORE_SOFTWARE_0_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="629" id="DMA_CH_NEEDED_FOR_SPI2_Receive">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="drv_spi_0" priority="2" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="drv_spi_0" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="630" id="DMA_CH_NEEDED_FOR_SPI2_Transmit">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="drv_spi_0" priority="2" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="drv_spi_0" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="631" id="EVIC_119_ENABLE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="632" id="EVIC_119_HANDLER_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <String dnOrder="633" id="EVIC_119_INTERRUPT_HANDLER">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="CHANGE_NOTICE_B_Handler"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="CHANGE_NOTICE_B_Handler"/>
           </Values>
         </String>
         <Boolean dnOrder="634" id="EVIC_125_ENABLE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="635" id="EVIC_125_HANDLER_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <String dnOrder="636" id="EVIC_125_INTERRUPT_HANDLER">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="CHANGE_NOTICE_H_Handler"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="CHANGE_NOTICE_H_Handler"/>
           </Values>
         </String>
         <Boolean dnOrder="637" id="EVIC_143_ENABLE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="638" id="EVIC_143_HANDLER_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
         <String dnOrder="639" id="EVIC_143_INTERRUPT_HANDLER">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="SPI2_RX_InterruptHandler"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="SPI2_RX_InterruptHandler"/>
           </Values>
         </String>
         <Boolean dnOrder="640" id="EVIC_144_ENABLE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="641" id="EVIC_144_HANDLER_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
         <String dnOrder="642" id="EVIC_144_INTERRUPT_HANDLER">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="SPI2_TX_InterruptHandler"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="SPI2_TX_InterruptHandler"/>
           </Values>
         </String>
         <Boolean dnOrder="643" id="EVIC_1_ENABLE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="644" id="EVIC_1_ENABLE_GENERATE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="645" id="EVIC_1_ENABLE_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="646" id="EVIC_1_HANDLER_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="647" id="EVIC_1_PRIORITY_GENERATE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="648" id="EVIC_1_PRIORITY_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="649" id="EVIC_1_SUBPRIORITY_GENERATE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="650" id="EVIC_1_SUBPRIORITY_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="651" id="EVIC_4_ENABLE_GENERATE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="652" id="EVIC_4_ENABLE_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="653" id="EVIC_4_HANDLER_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="654" id="EVIC_4_PRIORITY_GENERATE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="655" id="EVIC_4_PRIORITY_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="656" id="EVIC_4_SUBPRIORITY_GENERATE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="657" id="EVIC_4_SUBPRIORITY_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
         <Menu dnOrder="658" id="GPIO_PIN_CONFIGURATION0">
@@ -5231,182 +4477,157 @@
             </String>
           </Attributes>
         </Menu>
-        <Boolean dnOrder="827" id="SPI2_RX_INTERRUPT_ENABLE">
+        <Hex dnOrder="827" id="PMD5_REG_VALUE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="spi2" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="807353663"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="828" id="PMD6_REG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="278986752"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="829" id="PMD7_REG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="273678336"/>
+          </Values>
+        </Hex>
+        <Boolean dnOrder="830" id="SPI2_CLOCK_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="spi2" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="828" id="SPI2_RX_INTERRUPT_ENABLE_UPDATE">
+        <Integer dnOrder="831" id="SPI2_CLOCK_FREQUENCY">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="100000000"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="832" id="SPI2_RX_INTERRUPT_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="spi2" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="829" id="SPI2_RX_INTERRUPT_HANDLER">
+        <Boolean dnOrder="833" id="SPI2_RX_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="spi2" priority="1" value="SPI2_RX_InterruptHandler"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="834" id="SPI2_RX_INTERRUPT_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="spi2" value="SPI2_RX_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="830" id="SPI2_RX_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="835" id="SPI2_RX_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="spi2" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="spi2" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="831" id="SPI2_TX_INTERRUPT_ENABLE">
+        <Boolean dnOrder="836" id="SPI2_TX_INTERRUPT_ENABLE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="spi2" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="spi2" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="832" id="SPI2_TX_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="837" id="SPI2_TX_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="833" id="SPI2_TX_INTERRUPT_HANDLER">
+        <String dnOrder="838" id="SPI2_TX_INTERRUPT_HANDLER">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="spi2" priority="1" value="SPI2_TX_InterruptHandler"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="spi2" value="SPI2_TX_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="834" id="SPI2_TX_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="839" id="SPI2_TX_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="spi2" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="spi2" value="true"/>
           </Values>
         </Boolean>
-        <Hex dnOrder="835" id="SYS_PORT_B_ANSEL">
+        <Hex dnOrder="840" id="SYS_PORT_B_ANSEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="28672"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="28672"/>
           </Values>
         </Hex>
-        <Hex dnOrder="836" id="SYS_PORT_B_CNEN">
+        <Hex dnOrder="841" id="SYS_PORT_B_CNEN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Hex dnOrder="837" id="SYS_PORT_B_CNPD">
+        <Hex dnOrder="842" id="SYS_PORT_B_CNPD">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Hex dnOrder="838" id="SYS_PORT_B_CNPU">
+        <Hex dnOrder="843" id="SYS_PORT_B_CNPU">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="28672"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="28672"/>
           </Values>
         </Hex>
-        <Boolean dnOrder="839" id="SYS_PORT_B_CN_USED">
+        <Boolean dnOrder="844" id="SYS_PORT_B_CN_USED">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Hex dnOrder="840" id="SYS_PORT_B_LAT">
+        <Hex dnOrder="845" id="SYS_PORT_B_LAT">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Hex dnOrder="841" id="SYS_PORT_B_ODC">
+        <Hex dnOrder="846" id="SYS_PORT_B_ODC">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Hex dnOrder="842" id="SYS_PORT_B_TRIS">
+        <Hex dnOrder="847" id="SYS_PORT_B_TRIS">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Hex dnOrder="843" id="SYS_PORT_G_ANSEL">
+        <Hex dnOrder="848" id="SYS_PORT_G_ANSEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="320"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="320"/>
           </Values>
         </Hex>
-        <Hex dnOrder="844" id="SYS_PORT_H_CNEN">
+        <Hex dnOrder="849" id="SYS_PORT_H_CNEN">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Hex dnOrder="845" id="SYS_PORT_H_CNPD">
+        <Hex dnOrder="850" id="SYS_PORT_H_CNPD">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Hex dnOrder="846" id="SYS_PORT_H_CNPU">
+        <Hex dnOrder="851" id="SYS_PORT_H_CNPU">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Boolean dnOrder="847" id="SYS_PORT_H_CN_USED">
+        <Boolean dnOrder="852" id="SYS_PORT_H_CN_USED">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Hex dnOrder="848" id="SYS_PORT_H_LAT">
+        <Hex dnOrder="853" id="SYS_PORT_H_LAT">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Hex dnOrder="849" id="SYS_PORT_H_ODC">
+        <Hex dnOrder="854" id="SYS_PORT_H_ODC">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Hex dnOrder="850" id="SYS_PORT_H_TRIS">
+        <Hex dnOrder="855" id="SYS_PORT_H_TRIS">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="7"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="7"/>
           </Values>
         </Hex>
-        <Hex dnOrder="851" id="SYS_PORT_K_ANSEL">
+        <Hex dnOrder="856" id="SYS_PORT_K_ANSEL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="6"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="6"/>
           </Values>
         </Hex>
-        <Combo dnOrder="852" id="SYS_PORT_PPS_INPUT_FUNCTION_0">
+        <Combo dnOrder="857" id="SYS_PORT_PPS_INPUT_FUNCTION_0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -5416,7 +4637,7 @@
             <User dnOrder="0" value="SDI2"/>
           </Values>
         </Combo>
-        <KeyValueSet dnOrder="853" id="SYS_PORT_PPS_INPUT_PIN_0">
+        <KeyValueSet dnOrder="858" id="SYS_PORT_PPS_INPUT_PIN_0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -5426,7 +4647,7 @@
             <User dnOrder="0" value="33"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="854" id="SYS_PORT_PPS_OUTPUT_FUNCTION_0">
+        <KeyValueSet dnOrder="859" id="SYS_PORT_PPS_OUTPUT_FUNCTION_0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -5436,7 +4657,7 @@
             <User dnOrder="0" value="32"/>
           </Values>
         </KeyValueSet>
-        <Combo dnOrder="855" id="SYS_PORT_PPS_OUTPUT_PIN_0">
+        <Combo dnOrder="860" id="SYS_PORT_PPS_OUTPUT_PIN_0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -5446,21 +4667,19 @@
             <User dnOrder="0" value="RPG8"/>
           </Values>
         </Combo>
-        <Boolean dnOrder="856" id="USE_PPS_INPUT_0">
+        <Boolean dnOrder="861" id="USE_PPS_INPUT_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="857" id="USE_PPS_OUTPUT_0">
+        <Boolean dnOrder="862" id="USE_PPS_OUTPUT_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <KeyValueSet dnOrder="858" id="clkSvcMode">
+        <KeyValueSet dnOrder="863" id="clkSvcMode">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="1" value="0"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </KeyValueSet>
       </Symbols>
@@ -5470,48 +4689,52 @@
       <Symbols dnOrder="0">
         <Combo dnOrder="0" id="DRV_SPI_COMMON_MODE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="drv_spi" priority="1" value="Asynchronous"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="drv_spi" value="Asynchronous"/>
           </Values>
         </Combo>
       </Symbols>
       <Instances dnOrder="1">
         <InstanceComponent dnOrder="0" id="drv_spi" instance="0">
           <Symbols dnOrder="0">
-            <String dnOrder="0" id="DRV_SPI_MODE">
+            <Comment dnOrder="0" id="DRV_SPI_DEPENDENCY_DMA_COMMENT">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </Comment>
+            <String dnOrder="1" id="DRV_SPI_MODE">
               <Values dnOrder="0">
-                <Dynamic dnOrder="0">
-                  <Value dnOrder="0" id="drv_spi_0" priority="1" value="Asynchronous"/>
-                </Dynamic>
+                <Dynamic dnOrder="0" id="drv_spi_0" value="Asynchronous"/>
               </Values>
             </String>
-            <Integer dnOrder="1" id="DRV_SPI_NUM_CLIENTS">
+            <Integer dnOrder="2" id="DRV_SPI_NUM_CLIENTS">
               <Values dnOrder="0">
                 <User dnOrder="0" value="2"/>
               </Values>
             </Integer>
-            <String dnOrder="2" id="DRV_SPI_PLIB">
+            <String dnOrder="3" id="DRV_SPI_PLIB">
               <Values dnOrder="0">
-                <Dynamic dnOrder="0">
-                  <Value dnOrder="0" id="drv_spi_0" priority="1" value="SPI2"/>
-                </Dynamic>
+                <Dynamic dnOrder="0" id="drv_spi_0" value="SPI2"/>
               </Values>
             </String>
-            <Integer dnOrder="3" id="DRV_SPI_RX_DMA_CHANNEL">
+            <Integer dnOrder="4" id="DRV_SPI_RX_DMA_CHANNEL">
               <Values dnOrder="0">
-                <Dynamic dnOrder="0">
-                  <Value dnOrder="0" id="drv_spi_0" priority="2" value="-1"/>
-                </Dynamic>
+                <Dynamic dnOrder="0" id="drv_spi_0" value="-1"/>
               </Values>
             </Integer>
-            <Integer dnOrder="4" id="DRV_SPI_TX_DMA_CHANNEL">
+            <Integer dnOrder="5" id="DRV_SPI_TX_DMA_CHANNEL">
               <Values dnOrder="0">
-                <Dynamic dnOrder="0">
-                  <Value dnOrder="0" id="drv_spi_0" priority="2" value="-1"/>
-                </Dynamic>
+                <Dynamic dnOrder="0" id="drv_spi_0" value="-1"/>
               </Values>
             </Integer>
+            <Boolean dnOrder="6" id="DRV_SPI_TX_RX_DMA">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="readOnly">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </Boolean>
           </Symbols>
           <Attachments dnOrder="1">
             <DirectDependency dnOrder="0" id="drv_spi_SPI_dependency">
@@ -5641,208 +4864,198 @@
         </File>
         <Boolean dnOrder="13" id="ENABLE_APP_FILE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="HarmonyCore" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="14" id="ENABLE_DRV_COMMON">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="drv_spi_0" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="drv_spi_0" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="15" id="ENABLE_OSAL">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="HarmonyCore" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="16" id="ENABLE_SYS_CACHE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="HarmonyCore" priority="1" value="false"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="HarmonyCore" value="false"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="17" id="ENABLE_SYS_COMMON">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="HarmonyCore" priority="1" value="true"/>
-              <Value dnOrder="1" id="drv_spi_0" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="18" id="ENABLE_SYS_DMA">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="drv_spi_0" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="drv_spi_0" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="19" id="ENABLE_SYS_INT">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="HarmonyCore" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="20" id="ENABLE_SYS_PORTS">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="drv_spi_0" priority="1" value="true"/>
-            </Dynamic>
+            <Dynamic dnOrder="0" id="drv_spi_0" value="true"/>
           </Values>
         </Boolean>
-        <Menu dnOrder="21" id="GEN_APP_TASK_CONF_MENU1">
+        <Menu dnOrder="21" id="GEN_APP_TASK_CONF_MENU0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <Menu dnOrder="22" id="GEN_APP_TASK_CONF_MENU2">
+        <Menu dnOrder="22" id="GEN_APP_TASK_CONF_MENU1">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <Integer dnOrder="23" id="GEN_APP_TASK_COUNT">
+        <Menu dnOrder="23" id="GEN_APP_TASK_CONF_MENU2">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Menu>
+        <Integer dnOrder="24" id="GEN_APP_TASK_COUNT">
           <Values dnOrder="0">
             <User dnOrder="0" value="3"/>
           </Values>
         </Integer>
-        <Menu dnOrder="24" id="GEN_APP_TASK_MENU">
+        <Menu dnOrder="25" id="GEN_APP_TASK_MENU">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <String dnOrder="25" id="GEN_APP_TASK_NAME_0">
+        <String dnOrder="26" id="GEN_APP_TASK_NAME_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="app_monitor"/>
           </Values>
         </String>
-        <String dnOrder="26" id="GEN_APP_TASK_NAME_1">
+        <String dnOrder="27" id="GEN_APP_TASK_NAME_1">
           <Values dnOrder="0">
             <User dnOrder="0" value="app_client1"/>
           </Values>
         </String>
-        <String dnOrder="27" id="GEN_APP_TASK_NAME_2">
+        <String dnOrder="28" id="GEN_APP_TASK_NAME_2">
           <Values dnOrder="0">
             <User dnOrder="0" value="app_client2"/>
           </Values>
         </String>
-        <File dnOrder="28" id="INT_DEF">
+        <File dnOrder="29" id="INT_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="29" id="INT_HEADER">
+        <File dnOrder="30" id="INT_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="30" id="INT_MAPPING">
+        <File dnOrder="31" id="INT_MAPPING">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="31" id="INT_SOURCE">
+        <File dnOrder="32" id="INT_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="32" id="OSAL_DEFINITIONS_H">
+        <File dnOrder="33" id="OSAL_DEFINITIONS_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="33" id="OSAL_H">
+        <File dnOrder="34" id="OSAL_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="34" id="OSAL_IMPL_BASIC_H">
+        <File dnOrder="35" id="OSAL_IMPL_BASIC_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="35" id="OSAL_SYSDEF_H">
+        <File dnOrder="36" id="OSAL_SYSDEF_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="36" id="PORTS_DEF">
+        <File dnOrder="37" id="PORTS_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="37" id="PORTS_HEADER">
+        <File dnOrder="38" id="PORTS_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="38" id="PORTS_MAPPING">
+        <File dnOrder="39" id="PORTS_MAPPING">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="39" id="SYSTEM_COMMON">
+        <File dnOrder="40" id="SYSTEM_COMMON">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="40" id="SYSTEM_MODULE">
+        <File dnOrder="41" id="SYSTEM_MODULE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="41" id="SYSTEM_ROOT">
+        <File dnOrder="42" id="SYSTEM_ROOT">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="42" id="TASKS_C">
+        <File dnOrder="43" id="TASKS_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="43" id="USER_H">
+        <File dnOrder="44" id="USER_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
@@ -5852,7 +5065,14 @@
       </Symbols>
     </UniqueComponent>
     <UniqueComponent dnOrder="5" id="spi2">
-      <Attachments dnOrder="0">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="SPI_BRG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="spi2" value="49"/>
+          </Values>
+        </Integer>
+      </Symbols>
+      <Attachments dnOrder="1">
         <DirectCapability dnOrder="0" id="SPI2_SPI">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="targetComponentID">

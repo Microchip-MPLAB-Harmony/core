@@ -334,7 +334,7 @@
         </String>
         <String dnOrder="65" id="PIN_28_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="CHIP_SELECT0"/>
+            <User dnOrder="0" value="CLIENT1_CS"/>
           </Values>
         </String>
         <String dnOrder="66" id="PIN_28_FUNCTION_TYPE">
@@ -374,7 +374,7 @@
         </String>
         <String dnOrder="73" id="PIN_29_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="CHIP_SELECT1"/>
+            <User dnOrder="0" value="CLIENT2_CS"/>
           </Values>
         </String>
         <String dnOrder="74" id="PIN_29_FUNCTION_TYPE">
@@ -614,7 +614,7 @@
         </String>
         <String dnOrder="121" id="PIN_67_INEN">
           <Values dnOrder="0">
-            <User dnOrder="0" value=""/>
+            <User dnOrder="0" value="True"/>
           </Values>
         </String>
         <String dnOrder="122" id="PIN_67_LAT">
@@ -929,7 +929,7 @@
         </String>
         <String dnOrder="184" id="PORT_GROUP_1_PINCFG19">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0x4"/>
+            <Dynamic dnOrder="0" id="core" value="0x6"/>
           </Values>
         </String>
         <String dnOrder="185" id="PORT_GROUP_1_PINCFG2">
@@ -1101,31 +1101,45 @@
       <Instances dnOrder="1">
         <InstanceComponent dnOrder="0" id="drv_spi" instance="0">
           <Symbols dnOrder="0">
-            <String dnOrder="0" id="DRV_SPI_MODE">
+            <Comment dnOrder="0" id="DRV_SPI_DEPENDENCY_DMA_COMMENT">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </Comment>
+            <String dnOrder="1" id="DRV_SPI_MODE">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="drv_spi_0" value="Asynchronous"/>
               </Values>
             </String>
-            <Integer dnOrder="1" id="DRV_SPI_NUM_CLIENTS">
+            <Integer dnOrder="2" id="DRV_SPI_NUM_CLIENTS">
               <Values dnOrder="0">
                 <User dnOrder="0" value="2"/>
               </Values>
             </Integer>
-            <String dnOrder="2" id="DRV_SPI_PLIB">
+            <String dnOrder="3" id="DRV_SPI_PLIB">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="drv_spi_0" value="SERCOM5"/>
               </Values>
             </String>
-            <Integer dnOrder="3" id="DRV_SPI_RX_DMA_CHANNEL">
+            <Integer dnOrder="4" id="DRV_SPI_RX_DMA_CHANNEL">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="drv_spi_0" value="-1"/>
               </Values>
             </Integer>
-            <Integer dnOrder="4" id="DRV_SPI_TX_DMA_CHANNEL">
+            <Integer dnOrder="5" id="DRV_SPI_TX_DMA_CHANNEL">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="drv_spi_0" value="-1"/>
               </Values>
             </Integer>
+            <Boolean dnOrder="6" id="DRV_SPI_TX_RX_DMA">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="readOnly">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </Boolean>
           </Symbols>
           <Attachments dnOrder="1">
             <DirectDependency dnOrder="0" id="drv_spi_SPI_dependency">
@@ -1519,7 +1533,15 @@
         </File>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent dnOrder="7" id="nvmctrl"/>
+    <UniqueComponent dnOrder="7" id="nvmctrl">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="NVM_RWS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="nvmctrl" value="2"/>
+          </Values>
+        </Integer>
+      </Symbols>
+    </UniqueComponent>
     <UniqueComponent dnOrder="8" id="sercom5">
       <Symbols dnOrder="0">
         <Integer dnOrder="0" id="I2CM_BAUD">
@@ -1533,7 +1555,12 @@
           </Values>
         </String>
         <KeyValueSet dnOrder="2" id="SERCOM_MODE">
-          <Values dnOrder="0">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="readOnly">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="sercom5" value="1"/>
           </Values>
         </KeyValueSet>
@@ -1558,39 +1585,219 @@
             </Boolean>
           </Attributes>
         </File>
-        <Integer dnOrder="6" id="SPI_BAUD_REG_VALUE">
+        <File dnOrder="6" id="SERCOM_USART_COMMON_HEADER">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="7" id="SERCOM_USART_HEADER">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="8" id="SERCOM_USART_SOURCE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Integer dnOrder="9" id="SPI_BAUD_RATE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Integer>
+        <Integer dnOrder="10" id="SPI_BAUD_REG_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom5" value="23"/>
           </Values>
         </Integer>
-        <KeyValueSet dnOrder="7" id="SPI_DOPO">
-          <Values dnOrder="0">
+        <KeyValueSet dnOrder="11" id="SPI_CHARSIZE_BITS">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <Comment dnOrder="12" id="SPI_CLOCK_MODE_COMMENT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Comment>
+        <KeyValueSet dnOrder="13" id="SPI_CLOCK_PHASE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="14" id="SPI_CLOCK_POLARITY">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="15" id="SPI_DATA_ORDER">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="16" id="SPI_DIPO">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="17" id="SPI_DOPO">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <String dnOrder="8" id="TRANSMIT_DATA_REGISTER">
+        <Boolean dnOrder="18" id="SPI_INTERRUPT_MODE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <Boolean dnOrder="19" id="SPI_MSSEN">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <Boolean dnOrder="20" id="SPI_RECIEVER_ENABLE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <Boolean dnOrder="21" id="SPI_RUNSTDBY">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <String dnOrder="22" id="TRANSMIT_DATA_REGISTER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom5" value="&amp;(SERCOM5_REGS-&gt;SPIM.SERCOM_DATA)"/>
           </Values>
         </String>
-        <Integer dnOrder="9" id="USART_BAUD_VALUE">
+        <Integer dnOrder="23" id="USART_BAUD_RATE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Integer>
+        <Integer dnOrder="24" id="USART_BAUD_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom5" value="63019"/>
           </Values>
         </Integer>
-        <Integer dnOrder="10" id="USART_SAMPLE_COUNT">
+        <KeyValueSet dnOrder="25" id="USART_CHARSIZE_BITS">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <Boolean dnOrder="26" id="USART_INTERRUPT_MODE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <KeyValueSet dnOrder="27" id="USART_PARITY_MODE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <Boolean dnOrder="28" id="USART_RUNSTDBY">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <KeyValueSet dnOrder="29" id="USART_RXPO">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <Boolean dnOrder="30" id="USART_RX_ENABLE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <Integer dnOrder="31" id="USART_SAMPLE_COUNT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom5" value="16"/>
           </Values>
         </Integer>
-        <Integer dnOrder="11" id="USART_SAMPLE_RATE">
+        <Integer dnOrder="32" id="USART_SAMPLE_RATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom5" value="0"/>
           </Values>
         </Integer>
+        <KeyValueSet dnOrder="33" id="USART_STOP_BIT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="34" id="USART_TXPO">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <Boolean dnOrder="35" id="USART_TX_ENABLE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
       </Symbols>
       <Attachments dnOrder="1">
-        <DirectCapability dnOrder="0" id="SERCOM5_SPI">
+        <DirectCapability dnOrder="0" id="SERCOM5_I2C">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </DirectCapability>
+        <DirectCapability dnOrder="1" id="SERCOM5_SPI">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="targetComponentID">
               <Value dnOrder="0">drv_spi_0</Value>
@@ -1600,11 +1807,19 @@
             </String>
           </Attributes>
         </DirectCapability>
+        <DirectCapability dnOrder="2" id="SERCOM5_UART">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </DirectCapability>
       </Attachments>
     </UniqueComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_C21N_Xplained_Pro" x="18" y="71"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="20" y="115"/>
@@ -1617,6 +1832,5 @@
         <ElementPosition dnOrder="8" id="sercom5" x="22" y="219"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

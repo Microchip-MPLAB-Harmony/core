@@ -121,8 +121,7 @@ void PIO_Initialize ( void )
     ((pio_registers_t*)PIO_PORT_D)->PIO_PER = 0xFFFFFFFF;
     ((pio_registers_t*)PIO_PORT_D)->PIO_MDDR = 0xFFFFFFFF;
     /* PORTD Pull Up Enable/Disable as per MHC selection */
-    ((pio_registers_t*)PIO_PORT_D)->PIO_PUDR = ~0x40000;
-    ((pio_registers_t*)PIO_PORT_D)->PIO_PUER = 0x40000;
+    ((pio_registers_t*)PIO_PORT_D)->PIO_PUDR = 0xFFFFFFFF;
     /* PORTD Pull Down Enable/Disable as per MHC selection */
     ((pio_registers_t*)PIO_PORT_D)->PIO_PPDDR = 0xFFFFFFFF;
     /* PORTD Output Write Enable */

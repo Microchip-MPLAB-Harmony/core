@@ -63,45 +63,45 @@
 
 
 
-/*** Macros for CHIP_SELECT0 pin ***/
-#define CHIP_SELECT0_Set()               (PIOD_REGS->PIO_SODR = (1<<28))
-#define CHIP_SELECT0_Clear()             (PIOD_REGS->PIO_CODR = (1<<28))
-#define CHIP_SELECT0_Toggle()            do {\
+/*** Macros for CLIENT1_CS pin ***/
+#define CLIENT1_CS_Set()               (PIOD_REGS->PIO_SODR = (1<<28))
+#define CLIENT1_CS_Clear()             (PIOD_REGS->PIO_CODR = (1<<28))
+#define CLIENT1_CS_Toggle()            do {\
                                             PIOD_REGS->PIO_MSKR = (1<<28); \
                                             PIOD_REGS->PIO_ODSR ^= (1<<28);\
                                         } while (0)
-#define CHIP_SELECT0_Get()               ((PIOD_REGS->PIO_PDSR >> 28) & 0x1)
-#define CHIP_SELECT0_OutputEnable()      do {\
+#define CLIENT1_CS_Get()               ((PIOD_REGS->PIO_PDSR >> 28) & 0x1)
+#define CLIENT1_CS_OutputEnable()      do {\
                                             PIOD_REGS->PIO_MSKR = (1<<28); \
 										     PIOD_REGS->PIO_CFGR |=(1 << PIO_CFGR_DIR_Pos);\
                                         }while(0)
-#define CHIP_SELECT0_InputEnable()       do { \
+#define CLIENT1_CS_InputEnable()       do { \
                                             PIOD_REGS->PIO_MSKR = (1<<28); \
 										     PIOD_REGS->PIO_CFGR &= ~(1 << PIO_CFGR_DIR_Pos);\
                                         } while (0)
-#define CHIP_SELECT0_InterruptEnable()   (PIOD_REGS->PIO_IER = (1<<28))
-#define CHIP_SELECT0_InterruptDisable()  (PIOD_REGS->PIO_IDR = (1<<28))
-#define CHIP_SELECT0_PIN                  PIO_PIN_PD28
+#define CLIENT1_CS_InterruptEnable()   (PIOD_REGS->PIO_IER = (1<<28))
+#define CLIENT1_CS_InterruptDisable()  (PIOD_REGS->PIO_IDR = (1<<28))
+#define CLIENT1_CS_PIN                  PIO_PIN_PD28
 
-/*** Macros for CHIP_SELECT1 pin ***/
-#define CHIP_SELECT1_Set()               (PIOD_REGS->PIO_SODR = (1<<29))
-#define CHIP_SELECT1_Clear()             (PIOD_REGS->PIO_CODR = (1<<29))
-#define CHIP_SELECT1_Toggle()            do {\
+/*** Macros for CLIENT2_CS pin ***/
+#define CLIENT2_CS_Set()               (PIOD_REGS->PIO_SODR = (1<<29))
+#define CLIENT2_CS_Clear()             (PIOD_REGS->PIO_CODR = (1<<29))
+#define CLIENT2_CS_Toggle()            do {\
                                             PIOD_REGS->PIO_MSKR = (1<<29); \
                                             PIOD_REGS->PIO_ODSR ^= (1<<29);\
                                         } while (0)
-#define CHIP_SELECT1_Get()               ((PIOD_REGS->PIO_PDSR >> 29) & 0x1)
-#define CHIP_SELECT1_OutputEnable()      do {\
+#define CLIENT2_CS_Get()               ((PIOD_REGS->PIO_PDSR >> 29) & 0x1)
+#define CLIENT2_CS_OutputEnable()      do {\
                                             PIOD_REGS->PIO_MSKR = (1<<29); \
 										     PIOD_REGS->PIO_CFGR |=(1 << PIO_CFGR_DIR_Pos);\
                                         }while(0)
-#define CHIP_SELECT1_InputEnable()       do { \
+#define CLIENT2_CS_InputEnable()       do { \
                                             PIOD_REGS->PIO_MSKR = (1<<29); \
 										     PIOD_REGS->PIO_CFGR &= ~(1 << PIO_CFGR_DIR_Pos);\
                                         } while (0)
-#define CHIP_SELECT1_InterruptEnable()   (PIOD_REGS->PIO_IER = (1<<29))
-#define CHIP_SELECT1_InterruptDisable()  (PIOD_REGS->PIO_IDR = (1<<29))
-#define CHIP_SELECT1_PIN                  PIO_PIN_PD29
+#define CLIENT2_CS_InterruptEnable()   (PIOD_REGS->PIO_IER = (1<<29))
+#define CLIENT2_CS_InterruptDisable()  (PIOD_REGS->PIO_IDR = (1<<29))
+#define CLIENT2_CS_PIN                  PIO_PIN_PD29
 
 
 // *****************************************************************************
@@ -134,6 +134,8 @@ typedef enum
 
     /* Port D Pins */
     PIO_PORT_D = PIOD_BASE_ADDRESS,
+
+
 
 
 } PIO_PORT;

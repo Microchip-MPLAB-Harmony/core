@@ -91,8 +91,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D3D99451F790025616F69842FB28A8C1</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D3D99451F790025616F69842FB28A8C1</UserChecksum>
+          <GeneratedChecksum dnOrder="4">824B446BB3C6FBD501218EE5BA72A108</GeneratedChecksum>
+          <UserChecksum dnOrder="5">824B446BB3C6FBD501218EE5BA72A108</UserChecksum>
         </File>
         <File dnOrder="11">
           <Type dnOrder="0">SOURCE</Type>
@@ -115,8 +115,8 @@
           <Name dnOrder="1">plib_spi3.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/peripheral/spi/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/spi/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F2A23CC06F6447169CDBD9734D6E4753</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F2A23CC06F6447169CDBD9734D6E4753</UserChecksum>
+          <GeneratedChecksum dnOrder="4">80F089D5EF8A63376FEB4B516E45FFE4</GeneratedChecksum>
+          <UserChecksum dnOrder="5">80F089D5EF8A63376FEB4B516E45FFE4</UserChecksum>
         </File>
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
@@ -283,8 +283,8 @@
           <Name dnOrder="1">plib_gpio.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/peripheral/gpio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/gpio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">66ECE189816E2B941C732CE5323C9BA5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">66ECE189816E2B941C732CE5323C9BA5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C8255A736816D6A47CFDC00ADE086208</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C8255A736816D6A47CFDC00ADE086208</UserChecksum>
         </File>
         <File dnOrder="35">
           <Type dnOrder="0">HEADER</Type>
@@ -393,14 +393,14 @@
       </Files>
       <Settings dnOrder="1">
         <Setting append="true" category="C32" delimiter=";" dnOrder="0" key="extra-include-directories" value="../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP;;../src/mips"/>
-        <Setting category="C32-LD" dnOrder="1" key="heap-size" value="0"/>
+        <Setting category="C32-LD" dnOrder="1" key="heap-size" value="512"/>
         <Setting category="C32-LD" dnOrder="2" key="no-device-startup-code" value="true"/>
         <Setting category="C32-LD" dnOrder="3" key="preprocessor-macros" value=""/>
       </Settings>
     </Manifest>
     <Settings dnOrder="4">
-      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.4.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.0.28\atdf\PIC32MZ2048EFH144.atdf"/>
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.0.34\atdf\PIC32MZ2048EFH144.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>

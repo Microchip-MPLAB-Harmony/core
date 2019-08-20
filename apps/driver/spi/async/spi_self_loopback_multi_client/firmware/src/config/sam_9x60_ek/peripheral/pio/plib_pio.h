@@ -62,23 +62,23 @@
 // *****************************************************************************
 
 
-/*** Macros for CHIP_SELECT0 pin ***/
-#define CHIP_SELECT0_Set()               (PIOA_REGS->PIO_SODR = (1<<14))
-#define CHIP_SELECT0_Clear()             (PIOA_REGS->PIO_CODR = (1<<14))
-#define CHIP_SELECT0_Toggle()            (PIOA_REGS->PIO_ODSR ^= (1<<14))
-#define CHIP_SELECT0_Get()               ((PIOA_REGS->PIO_PDSR >> 14) & 0x1)
-#define CHIP_SELECT0_OutputEnable()      (PIOA_REGS->PIO_OER = (1<<14))
-#define CHIP_SELECT0_InputEnable()       (PIOA_REGS->PIO_ODR = (1<<14))
-#define CHIP_SELECT0_PIN                  PIO_PIN_PA14
+/*** Macros for CLIENT1_CS pin ***/
+#define CLIENT1_CS_Set()               (PIOA_REGS->PIO_SODR = (1<<14))
+#define CLIENT1_CS_Clear()             (PIOA_REGS->PIO_CODR = (1<<14))
+#define CLIENT1_CS_Toggle()            (PIOA_REGS->PIO_ODSR ^= (1<<14))
+#define CLIENT1_CS_Get()               ((PIOA_REGS->PIO_PDSR >> 14) & 0x1)
+#define CLIENT1_CS_OutputEnable()      (PIOA_REGS->PIO_OER = (1<<14))
+#define CLIENT1_CS_InputEnable()       (PIOA_REGS->PIO_ODR = (1<<14))
+#define CLIENT1_CS_PIN                  PIO_PIN_PA14
 
-/*** Macros for CHIP_SELECT1 pin ***/
-#define CHIP_SELECT1_Set()               (PIOA_REGS->PIO_SODR = (1<<8))
-#define CHIP_SELECT1_Clear()             (PIOA_REGS->PIO_CODR = (1<<8))
-#define CHIP_SELECT1_Toggle()            (PIOA_REGS->PIO_ODSR ^= (1<<8))
-#define CHIP_SELECT1_Get()               ((PIOA_REGS->PIO_PDSR >> 8) & 0x1)
-#define CHIP_SELECT1_OutputEnable()      (PIOA_REGS->PIO_OER = (1<<8))
-#define CHIP_SELECT1_InputEnable()       (PIOA_REGS->PIO_ODR = (1<<8))
-#define CHIP_SELECT1_PIN                  PIO_PIN_PA8
+/*** Macros for CLIENT2_CS pin ***/
+#define CLIENT2_CS_Set()               (PIOA_REGS->PIO_SODR = (1<<8))
+#define CLIENT2_CS_Clear()             (PIOA_REGS->PIO_CODR = (1<<8))
+#define CLIENT2_CS_Toggle()            (PIOA_REGS->PIO_ODSR ^= (1<<8))
+#define CLIENT2_CS_Get()               ((PIOA_REGS->PIO_PDSR >> 8) & 0x1)
+#define CLIENT2_CS_OutputEnable()      (PIOA_REGS->PIO_OER = (1<<8))
+#define CLIENT2_CS_InputEnable()       (PIOA_REGS->PIO_ODR = (1<<8))
+#define CLIENT2_CS_PIN                  PIO_PIN_PA8
 
 
 // *****************************************************************************

@@ -62,8 +62,7 @@ void PIO_Initialize ( void )
     ((pio_registers_t*)PIO_PORT_A)->PIO_PER = 0xFFFFFFFF;
     ((pio_registers_t*)PIO_PORT_A)->PIO_MDDR = 0xFFFFFFFF;
     /* PORTA Pull Up Enable/Disable as per MHC selection */
-    ((pio_registers_t*)PIO_PORT_A)->PIO_PUDR = ~0x800;
-    ((pio_registers_t*)PIO_PORT_A)->PIO_PUER = 0x800;
+    ((pio_registers_t*)PIO_PORT_A)->PIO_PUDR = 0xFFFFFFFF;
     /* PORTA Pull Down Enable/Disable as per MHC selection */
     ((pio_registers_t*)PIO_PORT_A)->PIO_PPDDR = 0xFFFFFFFF;
     /* PORTA Output Write Enable */
@@ -72,7 +71,7 @@ void PIO_Initialize ( void )
     ((pio_registers_t*)PIO_PORT_A)->PIO_OER = 0x1000020;
     ((pio_registers_t*)PIO_PORT_A)->PIO_ODR = ~0x1000020;
     /* PORTA Initial state High */
-    ((pio_registers_t*)PIO_PORT_A)->PIO_ODSR = 0x1000020;
+    ((pio_registers_t*)PIO_PORT_A)->PIO_ODSR = 0x1000000;
     /* PORTA drive control */
     ((pio_registers_t*)PIO_PORT_A)->PIO_DRIVER = 0x0;
 
@@ -89,7 +88,7 @@ void PIO_Initialize ( void )
     ((pio_registers_t*)PIO_PORT_B)->PIO_OER = 0x100;
     ((pio_registers_t*)PIO_PORT_B)->PIO_ODR = ~0x100;
     /* PORTB Initial state High */
-    ((pio_registers_t*)PIO_PORT_B)->PIO_ODSR = 0x100;
+    ((pio_registers_t*)PIO_PORT_B)->PIO_ODSR = 0x0;
     /* PORTB drive control */
     ((pio_registers_t*)PIO_PORT_B)->PIO_DRIVER = 0x0;
 

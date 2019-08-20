@@ -66,23 +66,23 @@
 // *****************************************************************************
 
 
-/*** Macros for CHIP_SELECT1 pin ***/
-#define CHIP_SELECT1_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 6)
-#define CHIP_SELECT1_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 6)
-#define CHIP_SELECT1_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 6)
-#define CHIP_SELECT1_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 6)) & 0x01)
-#define CHIP_SELECT1_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 6)
-#define CHIP_SELECT1_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 6)
-#define CHIP_SELECT1_PIN                  PORT_PIN_PB06
+/*** Macros for CLIENT2_CS pin ***/
+#define CLIENT2_CS_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 6)
+#define CLIENT2_CS_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 6)
+#define CLIENT2_CS_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 6)
+#define CLIENT2_CS_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 6)) & 0x01)
+#define CLIENT2_CS_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 6)
+#define CLIENT2_CS_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 6)
+#define CLIENT2_CS_PIN                  PORT_PIN_PB06
 
-/*** Macros for CHIP_SELECT0 pin ***/
-#define CHIP_SELECT0_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 1)
-#define CHIP_SELECT0_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 1)
-#define CHIP_SELECT0_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 1)
-#define CHIP_SELECT0_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 1)) & 0x01)
-#define CHIP_SELECT0_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 1)
-#define CHIP_SELECT0_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 1)
-#define CHIP_SELECT0_PIN                  PORT_PIN_PB01
+/*** Macros for CLIENT1_CS pin ***/
+#define CLIENT1_CS_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 1)
+#define CLIENT1_CS_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 1)
+#define CLIENT1_CS_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 1)
+#define CLIENT1_CS_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 1)) & 0x01)
+#define CLIENT1_CS_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 1)
+#define CLIENT1_CS_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 1)
+#define CLIENT1_CS_PIN                  PORT_PIN_PB01
 
 
 

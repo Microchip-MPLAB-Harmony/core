@@ -97,6 +97,7 @@ void GPIO_Initialize ( void )
     /* PPS Output Remapping */
     RPB0R = 17;
     RPA1R = 17;
+    RPA1R = 17;
 
     /* Lock back the system after PPS configuration */
     SYSKEY = 0x00000000;

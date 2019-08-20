@@ -91,8 +91,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_mcj_curiosity_pro/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0E8B7AFD9B6B2D6F6F6ACDC398B442A8</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0E8B7AFD9B6B2D6F6F6ACDC398B442A8</UserChecksum>
+          <GeneratedChecksum dnOrder="4">098B9BD36F08DB7B76D6D6AD6621F589</GeneratedChecksum>
+          <UserChecksum dnOrder="5">098B9BD36F08DB7B76D6D6AD6621F589</UserChecksum>
         </File>
         <File dnOrder="11">
           <Type dnOrder="0">SOURCE</Type>
@@ -400,7 +400,7 @@
     </Manifest>
     <Settings dnOrder="4">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MK-MC_DFP\1.0.45\atdf\PIC32MK0512MCJ064.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MK-MC_DFP\1.1.57\atdf\PIC32MK0512MCJ064.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
