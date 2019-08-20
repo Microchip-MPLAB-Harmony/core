@@ -22,6 +22,18 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
+def handleMessage(messageID, args):
+    global i2cForcedWriteAPIGenerateCntr
+
+    dummy_dict = {}
+
+    if (messageID == "DRV_FORCE_WRITE_API_COUNTER_INC"):
+        i2cForcedWriteAPIGenerateCntr.setValue(i2cForcedWriteAPIGenerateCntr.getValue() + 1)
+    elif (messageID == "DRV_FORCE_WRITE_API_COUNTER_DEC"):
+        i2cForcedWriteAPIGenerateCntr.setValue(i2cForcedWriteAPIGenerateCntr.getValue() - 1)
+
+    return dummy_dict
+
 def syncFileGen(symbol, event):
     if event["value"] == "Synchronous":
        symbol.setEnabled(True)
@@ -44,6 +56,8 @@ def setCommonMode(symbol, event):
             symbol.setValue("Synchronous")
 
 def instantiateComponent(i2cComponentCommon):
+    global i2cForcedWriteAPIGenerateCntr
+
     res = Database.activateComponents(["HarmonyCore"])
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
@@ -61,6 +75,10 @@ def instantiateComponent(i2cComponentCommon):
     if ((rtos_mode != "BareMetal") and (rtos_mode != None)):
         i2c_default_mode = "Synchronous"
 
+    i2cForcedWriteAPIGenerateCntr = i2cComponentCommon.createIntegerSymbol("DRV_I2C_FORCED_WRITE_API_GENERATE", None)
+    i2cForcedWriteAPIGenerateCntr.setDefaultValue(0)
+    i2cForcedWriteAPIGenerateCntr.setVisible(False)
+
     i2cMode = i2cComponentCommon.createComboSymbol("DRV_I2C_MODE", None, ["Asynchronous", "Synchronous"])
     i2cMode.setLabel("Driver Mode")
     i2cMode.setDefaultValue(i2c_default_mode)
@@ -77,7 +95,7 @@ def instantiateComponent(i2cComponentCommon):
     i2cSymSystemDefIncFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
     i2cSymSystemDefIncFile.setSourcePath("driver/i2c/templates/system/system_definitions.h.ftl")
     i2cSymSystemDefIncFile.setMarkup(True)
-    
+
     configName = Variables.get("__CONFIGURATION_NAME")
 
     # Global Header Files
@@ -100,12 +118,13 @@ def instantiateComponent(i2cComponentCommon):
 
     # Async Source Files
     i2cAsyncSymSourceFile = i2cComponentCommon.createFileSymbol("DRV_I2C_ASYNC_SRC", None)
-    i2cAsyncSymSourceFile.setSourcePath("driver/i2c/src/async/drv_i2c.c")
+    i2cAsyncSymSourceFile.setSourcePath("driver/i2c/src/async/drv_i2c.c.ftl")
     i2cAsyncSymSourceFile.setOutputName("drv_i2c.c")
     i2cAsyncSymSourceFile.setDestPath("driver/i2c/src")
     i2cAsyncSymSourceFile.setProjectPath("config/" + configName + "/driver/i2c/")
     i2cAsyncSymSourceFile.setType("SOURCE")
     i2cAsyncSymSourceFile.setOverwrite(True)
+    i2cAsyncSymSourceFile.setMarkup(True)
     i2cAsyncSymSourceFile.setEnabled((i2cMode.getValue() == "Asynchronous"))
     i2cAsyncSymSourceFile.setDependencies(asyncFileGen, ["DRV_I2C_MODE"])
 
@@ -121,12 +140,13 @@ def instantiateComponent(i2cComponentCommon):
 
     # Sync Source Files
     i2cSyncSymSourceFile = i2cComponentCommon.createFileSymbol("DRV_I2C_SYNC_SRC", None)
-    i2cSyncSymSourceFile.setSourcePath("driver/i2c/src/sync/drv_i2c.c")
+    i2cSyncSymSourceFile.setSourcePath("driver/i2c/src/sync/drv_i2c.c.ftl")
     i2cSyncSymSourceFile.setOutputName("drv_i2c.c")
     i2cSyncSymSourceFile.setDestPath("driver/i2c/src")
     i2cSyncSymSourceFile.setProjectPath("config/" + configName + "/driver/i2c/")
     i2cSyncSymSourceFile.setType("SOURCE")
     i2cSyncSymSourceFile.setOverwrite(True)
+    i2cSyncSymSourceFile.setMarkup(True)
     i2cSyncSymSourceFile.setEnabled((i2cMode.getValue() == "Synchronous"))
     i2cSyncSymSourceFile.setDependencies(syncFileGen, ["DRV_I2C_MODE"])
 

@@ -17,6 +17,18 @@ const DRV_I2C_PLIB_INTERFACE drvI2C${INDEX?string}PLibAPI = {
     /* I2C PLib Transfer Write Add function */
     .write = (DRV_I2C_PLIB_WRITE)${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_Write,
 
+    <#if drv_i2c.DRV_I2C_FORCED_WRITE_API_GENERATE != 0>
+    <#assign I2C_PLIB_NAMESPACE = "DRV_I2C_PLIB?lower_case">
+    <#assign I2C_PLIB_FORCE_WRITE_ENABLED = I2C_PLIB_NAMESPACE?eval + ".I2C_INCLUDE_FORCED_WRITE_API">
+    <#if I2C_PLIB_FORCE_WRITE_ENABLED?eval?? && I2C_PLIB_FORCE_WRITE_ENABLED?eval>
+    /* I2C PLib Transfer Forced Write Add function */
+    .writeForced = (DRV_I2C_PLIB_WRITE)${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_WriteForced,
+    <#else>
+    /* I2C PLib Transfer Forced Write Add function */
+    .writeForced = (DRV_I2C_PLIB_WRITE)NULL,
+    </#if>
+    </#if>
+
     /* I2C PLib Transfer Write Read Add function */
     .writeRead = (DRV_I2C_PLIB_WRITE_READ)${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_WriteRead,
 

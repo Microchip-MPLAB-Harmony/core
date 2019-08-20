@@ -102,7 +102,7 @@ typedef enum
 
     /* Indicates this buffer was submitted by a write followed by read function */
     DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_READ = 1 << 2,
-    
+
     /* Indicates this buffer was submitted by a force write function */
     DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_FORCED = 1 << 3,
 

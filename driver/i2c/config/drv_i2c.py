@@ -22,6 +22,15 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
+def incrementCommonForcedWriteCounter(symbol, event):
+    dummyDict = {}
+    if (event["value"] == True) and (symbol.getValue() == False):
+        symbol.setValue(True)
+        dummyDict = Database.sendMessage("drv_i2c", "DRV_FORCE_WRITE_API_COUNTER_INC", dummyDict)
+    elif (event["value"] == False) and (symbol.getValue() == True):
+        symbol.setValue(False)
+        dummyDict = Database.sendMessage("drv_i2c", "DRV_FORCE_WRITE_API_COUNTER_DEC", dummyDict)
+
 def instantiateComponent(i2cComponent, index):
     i2cSymIndex = i2cComponent.createIntegerSymbol("INDEX", None)
     i2cSymIndex.setVisible(False)
@@ -43,6 +52,11 @@ def instantiateComponent(i2cComponent, index):
     i2cSymQueueSize.setVisible((Database.getSymbolValue("drv_i2c", "DRV_I2C_MODE") == "Asynchronous"))
     i2cSymQueueSize.setDefaultValue(2)
     i2cSymQueueSize.setDependencies(asyncModeOptions, ["drv_i2c.DRV_I2C_MODE"])
+
+    i2cSymForcedWriteAPIGen = i2cComponent.createBooleanSymbol("DRV_I2C_INCLUDE_FORCED_WRITE_API", None)
+    i2cSymForcedWriteAPIGen.setDefaultValue(False)
+    i2cSymForcedWriteAPIGen.setVisible(False)
+    i2cSymForcedWriteAPIGen.setDependencies(incrementCommonForcedWriteCounter, ["drv_i2c_I2C_dependency:I2C_INCLUDE_FORCED_WRITE_API"])
 
     configName = Variables.get("__CONFIGURATION_NAME")
 
@@ -78,6 +92,7 @@ def asyncModeOptions(symbol, event):
         symbol.setVisible(False)
 
 def onAttachmentConnected(source, target):
+    dummyDict = {}
     localComponent = source["component"]
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
@@ -89,7 +104,21 @@ def onAttachmentConnected(source, target):
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper())
 
+        # Check if the PLIB has the "I2C_INCLUDE_FORCED_WRITE_API" symbol or not
+        plibForcedWriteAPISymVal = Database.getSymbolValue(remoteID, "I2C_INCLUDE_FORCED_WRITE_API")
+        if plibForcedWriteAPISymVal != None:
+            # PLIB symbol is present, now read the value
+            drvForceWriteAPISym = localComponent.getSymbolByID("DRV_I2C_INCLUDE_FORCED_WRITE_API")
+            # If the PLIB symbol value is not same as the driver symbol value, update it
+            if plibForcedWriteAPISymVal == True and drvForceWriteAPISym.getValue() == False:
+                drvForceWriteAPISym.setValue(True)
+                dummyDict = Database.sendMessage("drv_i2c", "DRV_FORCE_WRITE_API_COUNTER_INC", dummyDict)
+            elif plibForcedWriteAPISymVal == False and drvForceWriteAPISym.getValue() == True:
+                drvForceWriteAPISym.setValue(False)
+                dummyDict = Database.sendMessage("drv_i2c", "DRV_FORCE_WRITE_API_COUNTER_DEC", dummyDict)
+
 def onAttachmentDisconnected(source, target):
+    dummyDict = {}
     localComponent = source["component"]
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
@@ -99,3 +128,13 @@ def onAttachmentDisconnected(source, target):
     if connectID == "drv_i2c_I2C_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_I2C_PLIB")
         plibUsed.clearValue()
+
+        # Check if the PLIB has the "I2C_INCLUDE_FORCED_WRITE_API" symbol or not
+        plibForcedWriteAPISymVal = Database.getSymbolValue(remoteID, "I2C_INCLUDE_FORCED_WRITE_API")
+        if plibForcedWriteAPISymVal != None:
+            # PLIB symbol is present, now read the value
+            drvForceWriteAPISym = localComponent.getSymbolByID("DRV_I2C_INCLUDE_FORCED_WRITE_API")
+            # Clear the driver symbol value if PLIB symbol value was true
+            if plibForcedWriteAPISymVal == True:
+                drvForceWriteAPISym.setValue(False)
+                dummyDict = Database.sendMessage("drv_i2c", "DRV_FORCE_WRITE_API_COUNTER_DEC", dummyDict)
