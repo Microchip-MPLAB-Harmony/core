@@ -35,8 +35,8 @@
           <Name dnOrder="1">drv_sdmmc.c</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek/driver/sdmmc/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdmmc/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FF46471FCEA4EDAD13F4680CD820810F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FF46471FCEA4EDAD13F4680CD820810F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1D80B9D1A71941441BB04E4A413A97A0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1D80B9D1A71941441BB04E4A413A97A0</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -75,8 +75,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0EB00369A18C70405CE8E770EC8BA8D6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0EB00369A18C70405CE8E770EC8BA8D6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BA1CA17783ED2D8E2659AB146DE08585</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BA1CA17783ED2D8E2659AB146DE08585</UserChecksum>
         </File>
         <File dnOrder="9">
           <Type dnOrder="0">SOURCE</Type>
@@ -107,8 +107,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">04C9A21633109BB6AB97D29A8253DF0E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">04C9A21633109BB6AB97D29A8253DF0E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F28BC7D1DAEBC8D2C5608CE3C8BF5E2F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F28BC7D1DAEBC8D2C5608CE3C8BF5E2F</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
@@ -259,8 +259,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3942E1528ED9E8DDC91E20EEFEC492EE</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3942E1528ED9E8DDC91E20EEFEC492EE</UserChecksum>
+          <GeneratedChecksum dnOrder="4">08A193ECCFD2ABD5B55C844E360612CA</GeneratedChecksum>
+          <UserChecksum dnOrder="5">08A193ECCFD2ABD5B55C844E360612CA</UserChecksum>
         </File>
         <File dnOrder="32">
           <Type dnOrder="0">HEADER</Type>
@@ -347,8 +347,8 @@
           <Name dnOrder="1">drv_sdmmc_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek/driver/sdmmc/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sdmmc/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FB64A830A95AF9FC3B70B7BB28DDD1AD</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FB64A830A95AF9FC3B70B7BB28DDD1AD</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C68C5E6C3C693E5EE6D2DE184028F3A8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C68C5E6C3C693E5EE6D2DE184028F3A8</UserChecksum>
         </File>
         <File dnOrder="43">
           <Type dnOrder="0">HEADER</Type>

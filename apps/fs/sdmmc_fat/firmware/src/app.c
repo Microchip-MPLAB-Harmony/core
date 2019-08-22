@@ -51,7 +51,7 @@
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
+#include <string.h>
 #include "app.h"
 #include "user.h"
 
@@ -61,8 +61,8 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#define SDCARD_MOUNT_NAME    "/mnt/mydrive"
-#define SDCARD_DEV_NAME      "/dev/mmcblka1"
+#define SDCARD_MOUNT_NAME    SYS_FS_MEDIA_IDX0_MOUNT_NAME_VOLUME_IDX0
+#define SDCARD_DEV_NAME      SYS_FS_MEDIA_IDX0_DEVICE_NAME_VOLUME_IDX0
 #define SDCARD_FILE_NAME     "FILE_TOO_LONG_NAME_EXAMPLE_123.JPG"
 #define SDCARD_DIR_NAME      "Dir1"
 
@@ -92,8 +92,35 @@ uint8_t BUFFER_ATTRIBUTES dataBuffer[APP_DATA_LEN];
 // *****************************************************************************
 // *****************************************************************************
 
-/* TODO:  Add any necessary callback functions.
-*/
+static void APP_SysFSEventHandler(SYS_FS_EVENT event,void* eventData,uintptr_t context)
+{
+    switch(event)
+    {
+        /* If the event is mount then check if SDCARD media has been mounted */
+        case SYS_FS_EVENT_MOUNT:
+            if(strcmp((const char *)eventData, SDCARD_MOUNT_NAME) == 0)
+            {
+                appData.sdCardMountFlag = true;
+            }
+            break;
+
+        /* If the event is unmount then check if SDCARD media has been unmount */
+        case SYS_FS_EVENT_UNMOUNT:
+            if(strcmp((const char *)eventData, SDCARD_MOUNT_NAME) == 0)
+            {
+                appData.sdCardMountFlag = false;
+
+                appData.state = APP_MOUNT_WAIT;
+
+                LED_OFF();
+            }
+
+            break;
+
+        case SYS_FS_EVENT_ERROR:
+            break;
+    }
+}
 
 // *****************************************************************************
 // *****************************************************************************
@@ -123,7 +150,10 @@ uint8_t BUFFER_ATTRIBUTES dataBuffer[APP_DATA_LEN];
 void APP_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
-    appData.state = APP_MOUNT_DISK;
+    appData.state = APP_MOUNT_WAIT;
+
+    /* Register the File System Event handler */
+    SYS_FS_EventHandlerSet((void const*)APP_SysFSEventHandler,(uintptr_t)NULL);
 }
 
 
@@ -141,49 +171,10 @@ void APP_Tasks ( void )
     /* Check the application's current state. */
     switch ( appData.state )
     {
-        case APP_MOUNT_DISK:
-            if(SYS_FS_Mount(SDCARD_DEV_NAME, SDCARD_MOUNT_NAME, FAT, 0, NULL) != 0)
+        case APP_MOUNT_WAIT:
+            /* Wait for SDCARD to be Auto Mounted */
+            if(appData.sdCardMountFlag == true)
             {
-                /* The disk could not be mounted. Try
-                 * mounting again until success. */
-                appData.state = APP_MOUNT_DISK;
-            }
-            else
-            {
-                /* Mount was successful. Unmount the disk, for testing. */
-
-                appData.state = APP_UNMOUNT_DISK;
-            }
-            break;
-
-        case APP_UNMOUNT_DISK:
-            if(SYS_FS_Unmount(SDCARD_MOUNT_NAME) != 0)
-            {
-                /* The disk could not be un mounted. Try
-                 * un mounting again untill success. */
-
-                appData.state = APP_UNMOUNT_DISK;
-            }
-            else
-            {
-                /* UnMount was successful. Mount the disk again */
-
-                appData.state = APP_MOUNT_DISK_AGAIN;
-            }
-            break;
-
-        case APP_MOUNT_DISK_AGAIN:
-            if(SYS_FS_Mount(SDCARD_DEV_NAME, SDCARD_MOUNT_NAME, FAT, 0, NULL) != 0)
-            {
-                /* The disk could not be mounted. Try
-                 * mounting again until success. */
-
-                appData.state = APP_MOUNT_DISK_AGAIN;
-            }
-            else
-            {
-                /* Mount was successful. Set current drive so that we do not have to use absolute path. */
-
                 appData.state = APP_SET_CURRENT_DRIVE;
             }
             break;
@@ -276,7 +267,7 @@ void APP_Tasks ( void )
                 }
                 else if(SYS_FS_FileEOF(appData.fileHandle) == 1)    /* Test for end of file */
                 {
-                    /* Continue the read and write process, untill the end of file is reached */
+                    /* Continue the read and write process, until the end of file is reached */
 
                     appData.state = APP_CLOSE_FILE;
                 }
@@ -293,8 +284,7 @@ void APP_Tasks ( void )
             break;
 
         case APP_IDLE:
-            /* The application comes here when the demo has completed
-             * successfully. Glow LED1. */
+            /* The application comes here when the demo has completed successfully.*/
             LED_ON();
             break;
 

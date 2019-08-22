@@ -88,16 +88,10 @@ extern "C" {
 typedef enum
 {
     /* Application's state machine's initial state. */
-    /* The app mounts the disk */
-    APP_MOUNT_DISK = 0,
+    /* The app waits for sdcard to be mounted */
+    APP_MOUNT_WAIT = 0,
 
-    /* The app unmounts the disk */
-    APP_UNMOUNT_DISK,
-
-    /* The app mounts the disk again */
-    APP_MOUNT_DISK_AGAIN,
-
-        /* Set the current drive */
+    /* Set the current drive */
     APP_SET_CURRENT_DRIVE,
 
     /* The app opens the file to read */
@@ -149,6 +143,9 @@ typedef struct
     APP_STATES         state;
 
     int32_t            nBytesRead;
+
+    /* Flag to indicate SDCARD mount status */
+    volatile bool      sdCardMountFlag;
 } APP_DATA;
 
 

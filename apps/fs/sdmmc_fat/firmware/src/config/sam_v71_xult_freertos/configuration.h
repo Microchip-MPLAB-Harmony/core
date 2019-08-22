@@ -93,9 +93,10 @@ extern "C" {
 
 #define SYS_FS_MEDIA_NUMBER               1
 
-#define SYS_FS_VOLUME_NUMBER              1
+#define SYS_FS_VOLUME_NUMBER              (1)
 
-#define SYS_FS_AUTOMOUNT_ENABLE           false
+#define SYS_FS_AUTOMOUNT_ENABLE           true
+#define SYS_FS_CLIENT_NUMBER              1
 #define SYS_FS_MAX_FILES                  2
 #define SYS_FS_MAX_FILE_SYSTEM_TYPE       1
 #define SYS_FS_MEDIA_MAX_BLOCK_SIZE       512
@@ -109,6 +110,12 @@ extern "C" {
 
 
 
+#define SYS_FS_MEDIA_TYPE_IDX0 				SYS_FS_MEDIA_TYPE_SD_CARD
+#define SYS_FS_TYPE_IDX0 					FAT
+					
+#define SYS_FS_MEDIA_IDX0_MOUNT_NAME_VOLUME_IDX0 			"/mnt/myDrive1"
+#define SYS_FS_MEDIA_IDX0_DEVICE_NAME_VOLUME_IDX0			"/dev/mmcblka1"
+								
 
 
 
