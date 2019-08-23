@@ -82,30 +82,26 @@ const I2C_BB_INIT i2cBBInitData =
     .i2cbbTmrPlib        = &i2cTimerPlibAPI,
     .i2cbbSDAPin         = I2C_BB_DATA_PIN,
     .i2cbbSCLPin         = I2C_BB_CLK_PIN,
-    .i2cbbBaudRate       = ${I2C_CLOCK_SPEED}
+    .i2cClockSpeed       = ${I2C_CLOCK_SPEED}
 
 };
 
 static void ${I2CBB_INSTANCE_NAME}_InitiateTransfer(void)
 {
-#if (TIME_HW_COUNTER_WIDTH == 16)
-    uint16_t timerPeriod;
-#else
     uint32_t timerPeriod;
-#endif
-    I2C_BB_INIT* dObj =(I2C_BB_INIT*)&i2cBBInitData;
+    I2C_BB_INIT* pInitData =(I2C_BB_INIT*)&i2cBBInitData;
 
-    timerPeriod = ${I2CBB_INSTANCE_NAME}_TMR_CLOCK_FREQUENCY/((dObj->i2cbbBaudRate)<<2);
+    timerPeriod = ${I2CBB_INSTANCE_NAME?lower_case}Obj.timerSrcClkFreq/((${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cClockSpeed)<<2);
 
     ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeCount = 0;
     ${I2CBB_INSTANCE_NAME?lower_case}Obj.readCount = 0;
     /* send START command only if SCL and SDA are pulled high */
-    if ((SYS_PORT_PinRead(dObj->i2cbbSCLPin) == HIGH) && (SYS_PORT_PinRead(dObj->i2cbbSDAPin) == HIGH))
+    if ((SYS_PORT_PinRead(pInitData->i2cbbSCLPin) == HIGH) && (SYS_PORT_PinRead(pInitData->i2cbbSDAPin) == HIGH))
     {
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SDA_LOW_START;
-        dObj->i2cbbTmrPlib->timerStop();
-        dObj->i2cbbTmrPlib->timerPeriodset(timerPeriod);
-        dObj->i2cbbTmrPlib->timerStart();
+        pInitData->i2cbbTmrPlib->timerStop();
+        pInitData->i2cbbTmrPlib->timerPeriodset(timerPeriod);
+        pInitData->i2cbbTmrPlib->timerStart();
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CNACKOut = false;
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CACKStatus = false;
 
@@ -115,12 +111,12 @@ static void ${I2CBB_INSTANCE_NAME}_InitiateTransfer(void)
 
 static void ${I2CBB_INSTANCE_NAME}_tasks(void)
 {
-    I2C_BB_INIT* dObj =(I2C_BB_INIT*)&i2cBBInitData;
+    I2C_BB_INIT* pInitData =(I2C_BB_INIT*)&i2cBBInitData;
 
     switch(${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState)
     {
       case I2CBB_BUS_STATE_SDA_LOW_START:
-        SYS_PORT_PinOutputEnable(dObj->i2cbbSDAPin);
+        SYS_PORT_PinOutputEnable(pInitData->i2cbbSDAPin);
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SDA_LOW_START_CHECK;
         break;
 
@@ -129,7 +125,7 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
         break;
 
       case I2CBB_BUS_STATE_SCL_LOW_START:
-        SYS_PORT_PinOutputEnable(dObj->i2cbbSCLPin);
+        SYS_PORT_PinOutputEnable(pInitData->i2cbbSCLPin);
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SCL_LOW_START_CHECK;
         break;
 
@@ -147,58 +143,58 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
         break;
 
       case I2CBB_BUS_STATE_SDA_HIGH_RESTART:
-        SYS_PORT_PinInputEnable(dObj->i2cbbSDAPin);
+        SYS_PORT_PinInputEnable(pInitData->i2cbbSDAPin);
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut = ERROR_TIMEOUT_COUNT;
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SDA_HIGH_RESTART_CHECK;
         break;
 
       case I2CBB_BUS_STATE_SDA_HIGH_RESTART_CHECK:
-        if (SYS_PORT_PinRead(dObj->i2cbbSDAPin) == INPUT) {
+        if (SYS_PORT_PinRead(pInitData->i2cbbSDAPin) == INPUT) {
           ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SCL_HIGH_RESTART;
         } else {
           if (!(${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut--)) {
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_BUS;
-            dObj->i2cbbTmrPlib->timerStop();
-             dObj->i2cbbTmrPlib->timerPeriodset(0);
+            pInitData->i2cbbTmrPlib->timerStop();
+             pInitData->i2cbbTmrPlib->timerPeriodset(0);
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut = ERROR_TIMEOUT_COUNT;
           } else {
-            SYS_PORT_PinInputEnable(dObj->i2cbbSDAPin);
+            SYS_PORT_PinInputEnable(pInitData->i2cbbSDAPin);
           }
         }
         break;
 
       case I2CBB_BUS_STATE_SCL_HIGH_RESTART:
-        SYS_PORT_PinInputEnable(dObj->i2cbbSCLPin);
+        SYS_PORT_PinInputEnable(pInitData->i2cbbSCLPin);
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut = ERROR_TIMEOUT_COUNT;
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SCL_HIGH_RESTART_CHECK;
         break;
 
       case I2CBB_BUS_STATE_SCL_HIGH_RESTART_CHECK:
-        if (SYS_PORT_PinRead(dObj->i2cbbSCLPin) == INPUT) {
+        if (SYS_PORT_PinRead(pInitData->i2cbbSCLPin) == INPUT) {
           ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SDA_LOW_START;
         } else {
           if (!(${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut--)) {
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_BUS;
-            dObj->i2cbbTmrPlib->timerStop();
-             dObj->i2cbbTmrPlib->timerPeriodset(0);
+            pInitData->i2cbbTmrPlib->timerStop();
+             pInitData->i2cbbTmrPlib->timerPeriodset(0);
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut = ERROR_TIMEOUT_COUNT;
           } else {
-            SYS_PORT_PinInputEnable(dObj->i2cbbSCLPin);
+            SYS_PORT_PinInputEnable(pInitData->i2cbbSCLPin);
           }
         }
         break;
 
       case I2CBB_BUS_STATE_SCL_LOW_DATA_CHECK:
-        SYS_PORT_PinOutputEnable(dObj->i2cbbSCLPin);
+        SYS_PORT_PinOutputEnable(pInitData->i2cbbSCLPin);
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SCL_LOW_DATA;
         break;
 
       case I2CBB_BUS_STATE_SCL_LOW_DATA:
         if (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter > 1) {
           if ((bool)(${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWData & 0x80)) {
-            SYS_PORT_PinInputEnable(dObj->i2cbbSDAPin);
+            SYS_PORT_PinInputEnable(pInitData->i2cbbSDAPin);
           } else {
-            SYS_PORT_PinOutputEnable(dObj->i2cbbSDAPin);
+            SYS_PORT_PinOutputEnable(pInitData->i2cbbSDAPin);
           }
         }
         // just before the 9th clock prepare for an acknowledge.
@@ -208,9 +204,9 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
             ((${I2CBB_INSTANCE_NAME?lower_case}Obj.readCount != ${I2CBB_INSTANCE_NAME?lower_case}Obj.readSize)
               &&
               (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWData == 0xFF00))) {
-            SYS_PORT_PinOutputEnable(dObj->i2cbbSDAPin);
+            SYS_PORT_PinOutputEnable(pInitData->i2cbbSDAPin);
           } else {
-            SYS_PORT_PinInputEnable(dObj->i2cbbSDAPin);
+            SYS_PORT_PinInputEnable(pInitData->i2cbbSDAPin);
           }
         }
         // After the 9th clock
@@ -258,32 +254,32 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
       case I2CBB_BUS_STATE_SCL_HIGH_DATA:
         if ((${I2CBB_INSTANCE_NAME?lower_case}Obj._i2c_bit_written == 1)) {
           /* check the value of bit that is just written onto the bus */
-          if ((bool)(SYS_PORT_PinRead(dObj->i2cbbSDAPin)) == (bool) ${I2CBB_INSTANCE_NAME?lower_case}Obj._i2c_bit_written) {
-            SYS_PORT_PinInputEnable(dObj->i2cbbSCLPin);
+          if ((bool)(SYS_PORT_PinRead(pInitData->i2cbbSDAPin)) == (bool) ${I2CBB_INSTANCE_NAME?lower_case}Obj._i2c_bit_written) {
+            SYS_PORT_PinInputEnable(pInitData->i2cbbSCLPin);
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SCL_HIGH_DATA_CHECK;
           } else {
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_BUS;
-            dObj->i2cbbTmrPlib->timerStop();
-            dObj->i2cbbTmrPlib->timerPeriodset(0);
+            pInitData->i2cbbTmrPlib->timerStop();
+            pInitData->i2cbbTmrPlib->timerPeriodset(0);
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut = ERROR_TIMEOUT_COUNT;
-            SYS_PORT_PinInputEnable(dObj->i2cbbSCLPin);
+            SYS_PORT_PinInputEnable(pInitData->i2cbbSCLPin);
           }
         } else {
-          SYS_PORT_PinInputEnable(dObj->i2cbbSCLPin);
+          SYS_PORT_PinInputEnable(pInitData->i2cbbSCLPin);
           ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SCL_HIGH_DATA_CHECK;
         }
         break;
 
       case I2CBB_BUS_STATE_SCL_HIGH_DATA_CHECK:
-        if (SYS_PORT_PinRead(dObj->i2cbbSCLPin) == INPUT) {
+        if (SYS_PORT_PinRead(pInitData->i2cbbSCLPin) == INPUT) {
           if ((${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState == I2CBB_TRANSFER_STATE_READ) &&
             (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter > 0) &&
             (${I2CBB_INSTANCE_NAME?lower_case}Obj.readSize > 0)) {
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CReadData <<= 1;
-            ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CReadData |= SYS_PORT_PinRead(dObj->i2cbbSDAPin);
+            ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CReadData |= SYS_PORT_PinRead(pInitData->i2cbbSDAPin);
           }
           if (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter == 0) {
-            ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CACKStatus = SYS_PORT_PinRead(dObj->i2cbbSDAPin);
+            ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CACKStatus = SYS_PORT_PinRead(pInitData->i2cbbSDAPin);
             if ((${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState == I2CBB_TRANSFER_STATE_READ) &&
               (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWData == 0xFE00)) {
               * ${I2CBB_INSTANCE_NAME?lower_case}Obj.readBuffer++ = ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CReadData;
@@ -294,44 +290,44 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
         } else {
           if (!(${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut--)) {
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_BUS;
-            dObj->i2cbbTmrPlib->timerStop(); //stop and clear Timer
-            dObj->i2cbbTmrPlib->timerPeriodset(0);
+            pInitData->i2cbbTmrPlib->timerStop(); //stop and clear Timer
+            pInitData->i2cbbTmrPlib->timerPeriodset(0);
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut = ERROR_TIMEOUT_COUNT;
           }
         }
         break;
 
       case I2CBB_BUS_STATE_SCL_SDA_LOW_STOP:
-        SYS_PORT_PinOutputEnable(dObj->i2cbbSCLPin);
-        SYS_PORT_PinOutputEnable(dObj->i2cbbSDAPin);
+        SYS_PORT_PinOutputEnable(pInitData->i2cbbSCLPin);
+        SYS_PORT_PinOutputEnable(pInitData->i2cbbSDAPin);
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SCL_SDA_LOW_STOP_CHECK;
         break;
       case I2CBB_BUS_STATE_SCL_SDA_LOW_STOP_CHECK:
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SCL_HIGH_STOP;
         break;
       case I2CBB_BUS_STATE_SCL_HIGH_STOP:
-        SYS_PORT_PinInputEnable(dObj->i2cbbSCLPin);
+        SYS_PORT_PinInputEnable(pInitData->i2cbbSCLPin);
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SCL_HIGH_STOP_CHECK;
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut = ERROR_TIMEOUT_COUNT;
         break;
 
       case I2CBB_BUS_STATE_SCL_HIGH_STOP_CHECK:
-        if (SYS_PORT_PinRead(dObj->i2cbbSCLPin) == INPUT) {
+        if (SYS_PORT_PinRead(pInitData->i2cbbSCLPin) == INPUT) {
           ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SDA_HIGH_STOP;
         } else {
           if (!(${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut--)) //decrement error counter
           {
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_BUS;
-            dObj->i2cbbTmrPlib->timerStop(); //stop and clear Timer
-             dObj->i2cbbTmrPlib->timerPeriodset(0);
+            pInitData->i2cbbTmrPlib->timerStop(); //stop and clear Timer
+             pInitData->i2cbbTmrPlib->timerPeriodset(0);
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut = ERROR_TIMEOUT_COUNT; //reset error counter
           } else {
-            SYS_PORT_PinInputEnable(dObj->i2cbbSCLPin);
+            SYS_PORT_PinInputEnable(pInitData->i2cbbSCLPin);
           }
         }
         break;
       case I2CBB_BUS_STATE_SDA_HIGH_STOP:
-        SYS_PORT_PinInputEnable(dObj->i2cbbSDAPin);
+        SYS_PORT_PinInputEnable(pInitData->i2cbbSDAPin);
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SDA_HIGH_STOP_CHECK;
         break;
       case I2CBB_BUS_STATE_SDA_HIGH_STOP_CHECK:
@@ -340,8 +336,8 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
         }else if(${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CACKStatus != M_ACK)
         {
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_NAK;
-            dObj->i2cbbTmrPlib->timerStop(); //stop and clear Timer
-            dObj->i2cbbTmrPlib->timerPeriodset(0);
+            pInitData->i2cbbTmrPlib->timerStop(); //stop and clear Timer
+            pInitData->i2cbbTmrPlib->timerPeriodset(0);
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_NULL_STATE;
             if (${I2CBB_INSTANCE_NAME?lower_case}Obj.callback != NULL) {
               ${I2CBB_INSTANCE_NAME?lower_case}Obj.callback(${I2CBB_INSTANCE_NAME?lower_case}Obj.context);
@@ -351,8 +347,8 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
 
 
         if ((${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState == I2CBB_TRANSFER_STATE_DONE) || (${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus == I2CBB_ERROR_BUS)) {
-          dObj->i2cbbTmrPlib->timerStop(); //stop and clear Timer
-          dObj->i2cbbTmrPlib->timerPeriodset(0);
+          pInitData->i2cbbTmrPlib->timerStop(); //stop and clear Timer
+          pInitData->i2cbbTmrPlib->timerPeriodset(0);
           ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_NULL_STATE;
 
            if (${I2CBB_INSTANCE_NAME?lower_case}Obj.callback != NULL) {
@@ -374,9 +370,15 @@ static void ${I2CBB_INSTANCE_NAME}_eventHandler(uint32_t status, uintptr_t conte
 
 void ${I2CBB_INSTANCE_NAME}_Initialize(void)
 {
-    I2C_BB_INIT* dObj =(I2C_BB_INIT*)&i2cBBInitData;
+    I2C_BB_INIT* pInitData =(I2C_BB_INIT*)&i2cBBInitData;
 
-    dObj->i2cbbTmrPlib->timerCallbackRegister(I2C_BB_eventHandler,(uintptr_t)0);
+    /* Save the timer clock frequency at the time of configuration */
+    ${I2CBB_INSTANCE_NAME?lower_case}Obj.timerSrcClkFreq = ${I2CBB_INSTANCE_NAME}_TMR_CLOCK_FREQUENCY;
+
+    /* Save the initial configured I2C clock speed */
+    ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cClockSpeed = pInitData->i2cClockSpeed;
+
+    pInitData->i2cbbTmrPlib->timerCallbackRegister(I2C_BB_eventHandler,(uintptr_t)0);
 }
 
 bool ${I2CBB_INSTANCE_NAME}_Read(uint16_t address, uint8_t *pdata, size_t length)
@@ -468,3 +470,23 @@ I2CBB_ERROR ${I2CBB_INSTANCE_NAME}_ErrorGet(void)
     return error;
 }
 
+bool ${I2CBB_INSTANCE_NAME}_TransferSetup(I2CBB_TRANSFER_SETUP* setup, uint32_t tmrSrcClkFreq )
+{
+    if (setup == NULL)
+    {
+        return false;
+    }
+
+    /* Save the tmrSrcClkFreq if it is non-zero */
+    if( tmrSrcClkFreq != 0)
+    {
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.timerSrcClkFreq = tmrSrcClkFreq;
+    }
+
+    /* Save the new I2C clock speed value */
+    ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cClockSpeed = setup->clkSpeed;
+
+    /* Note: The timer period will be changed based on the new I2C clock speed, when an I2C request is submitted */
+
+    return true;
+}
