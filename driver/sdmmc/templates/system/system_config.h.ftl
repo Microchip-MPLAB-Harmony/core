@@ -60,9 +60,13 @@
     <#lt>#define DRV_SDMMC_CARD_DETECTION_METHOD_IDX${INDEX?string}             DRV_SDMMC_CONFIG_CD_METHOD_USE_SDCD_PIN
 </#if>
 
-<#if HarmonyCore.SELECT_RTOS != "BareMetal">
+<#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS != "BareMetal">
     <#lt>/* SDMMC Driver Instance ${INDEX?string} RTOS Configurations*/
-    <#lt>#define DRV_SDMMC_STACK_SIZE_IDX${INDEX?string}                         ${DRV_SDMMC_RTOS_STACK_SIZE}
+    <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "FreeRTOS">
+        <#lt>#define DRV_SDMMC_STACK_SIZE_IDX${INDEX?string}                         ${DRV_SDMMC_RTOS_STACK_SIZE / 4}
+    <#else>
+        <#lt>#define DRV_SDMMC_STACK_SIZE_IDX${INDEX?string}                         ${DRV_SDMMC_RTOS_STACK_SIZE}
+    </#if>
     <#lt>#define DRV_SDMMC_PRIORITY_IDX${INDEX?string}                           ${DRV_SDMMC_RTOS_TASK_PRIORITY}
     <#lt>#define DRV_SDMMC_RTOS_DELAY_IDX${INDEX?string}                         ${DRV_SDMMC_RTOS_DELAY}
 </#if>

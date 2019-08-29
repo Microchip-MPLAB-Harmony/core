@@ -291,8 +291,8 @@ def instantiateComponent(sdmmcComponent, index):
     sdmmcRTOSTask.setVisible(False)
 
     sdmmcRTOSTaskSize = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_RTOS_STACK_SIZE", sdmmcRTOSMenu)
-    sdmmcRTOSTaskSize.setLabel("Stack Size")
-    sdmmcRTOSTaskSize.setDefaultValue(1024)
+    sdmmcRTOSTaskSize.setLabel("Stack Size (in bytes)")
+    sdmmcRTOSTaskSize.setDefaultValue(4096)
 
     sdmmcRTOSTaskPriority = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_RTOS_TASK_PRIORITY", sdmmcRTOSMenu)
     sdmmcRTOSTaskPriority.setLabel("Task Priority")

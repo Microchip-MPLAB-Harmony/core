@@ -33,4 +33,7 @@
 <#if SELECT_RTOS == "MicriumOSIII">
 #include "osal/osal_ucos3.h"
 </#if>
+<#if SELECT_RTOS == "ThreadX">
+#include "osal/osal_threadx.h"
+</#if>
 #endif//__OSAL_DEFINITIONS_H

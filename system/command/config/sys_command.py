@@ -99,8 +99,8 @@ def instantiateComponent(commandComponent):
     commandRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS"])
 
     commandRTOSStackSize = commandComponent.createIntegerSymbol("SYS_COMMAND_RTOS_STACK_SIZE", commandRTOSMenu)
-    commandRTOSStackSize.setLabel("Stack Size")
-    commandRTOSStackSize.setDefaultValue(256)
+    commandRTOSStackSize.setLabel("Stack Size (in bytes)")
+    commandRTOSStackSize.setDefaultValue(1024)
 
     commandRTOSTaskPriority = commandComponent.createIntegerSymbol("SYS_COMMAND_RTOS_TASK_PRIORITY", commandRTOSMenu)
     commandRTOSTaskPriority.setLabel("Task Priority")

@@ -31,6 +31,8 @@ global osalHeaderFreeRtosFile
 global osalSourceFreeRtosFile
 global osalSelectRTOS
 
+rtosIdTable = ["FreeRTOS", "ThreadX", "MicriumOSIII"]
+
 def enableAppFile(symbol, event):
     component = symbol.getComponent()
 
@@ -55,6 +57,15 @@ def genHarmonyFiles(symbol, event):
     else:
         symbol.setEnabled(False)
 
+def checkActiveRtos():
+    activeComponents = Database.getActiveComponentIDs()
+
+    for i in range(0, len(activeComponents)):
+        for j in range(0, len(rtosIdTable)):
+            if (activeComponents[i] == rtosIdTable[j]):
+                return True
+    return False
+
 ################################################################################
 #### Component ####
 ################################################################################
@@ -64,8 +75,9 @@ def instantiateComponent(harmonyCoreComponent):
     global osalSourceFreeRtosFile
     global osalSelectRTOS
 
-    autoComponentIDTable = ["FreeRTOS"]
-    res = Database.activateComponents(autoComponentIDTable)
+    if (checkActiveRtos() == False):
+        autoComponentIDTable = ["FreeRTOS"]
+        res = Database.activateComponents(autoComponentIDTable)
 
     harmonyAppFile = harmonyCoreComponent.createBooleanSymbol("ENABLE_APP_FILE", None)
     harmonyAppFile.setLabel("Generate Harmony Application Files")
@@ -152,6 +164,9 @@ def onAttachmentConnected(source, target):
     elif targetID == "MicriumOSIII":
         localComponent.clearSymbolValue("SELECT_RTOS")
         localComponent.setSymbolValue("SELECT_RTOS", "MicriumOSIII")
+    elif targetID == "ThreadX":
+        localComponent.clearSymbolValue("SELECT_RTOS")
+        localComponent.setSymbolValue("SELECT_RTOS", "ThreadX")
 
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]
@@ -162,6 +177,6 @@ def onAttachmentDisconnected(source, target):
 
     print("unsatisfied: " + connectID + ", " + targetID)
 
-    if targetID == "FreeRTOS" or targetID == "MicriumOSIII":
+    if targetID == "FreeRTOS" or targetID == "MicriumOSIII" or targetID == "ThreadX":
         localComponent.clearSymbolValue("SELECT_RTOS")
         localComponent.setSymbolValue("SELECT_RTOS", "BareMetal")

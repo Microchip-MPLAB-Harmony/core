@@ -176,12 +176,13 @@ def deactivateActiveRtos():
     for i in range(0, len(activeComponents)):
         if (activeComponents[i] == "MicriumOSIII"):
             res = Database.deactivateComponents(["MicriumOSIII"])
+        if (activeComponents[i] == "ThreadX"):
+            res = Database.deactivateComponents(["ThreadX"])
 
 def freeRtosIntConfig():
     if (coreArch == "MIPS"):
-        Timer1InterruptHandlerIndex     = Interrupt.getInterruptIndex("TIMER_1")
-
-        Timer1InterruptEnable           = "EVIC_"+ str(Timer1InterruptHandlerIndex) +"_ENABLE"
+        Timer1InterruptEnable   = "TIMER_1_INTERRUPT_ENABLE"
+        SWI0InterruptEnable     = "CORE_SOFTWARE_0_INTERRUPT_ENABLE"
 
         if (Database.getSymbolValue("core", Timer1InterruptEnable) == False):
             Database.clearSymbolValue("core", Timer1InterruptEnable)
@@ -191,6 +192,10 @@ def freeRtosIntConfig():
         if (Database.getSymbolValue("core", "TMR1_CLOCK_ENABLE") == False):
             Database.clearSymbolValue("core", "TMR1_CLOCK_ENABLE")
             Database.setSymbolValue("core", "TMR1_CLOCK_ENABLE", True)
+
+        if (Database.getSymbolValue("core", SWI0InterruptEnable) == False):
+            Database.clearSymbolValue("core", SWI0InterruptEnable)
+            Database.setSymbolValue("core", SWI0InterruptEnable, True)
 
     else:
         SysTickInterruptEnable      = "SysTick_INTERRUPT_ENABLE"

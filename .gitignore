@@ -14,3 +14,4 @@
 **/*.IAR/*.dep
 **/*.IAR/*.custom_argvars
 **/*third_party/rtos/MicriumOSIII/
+**/*third_party/rtos/ThreadX/

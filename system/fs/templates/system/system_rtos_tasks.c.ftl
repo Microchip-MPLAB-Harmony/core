@@ -23,7 +23,7 @@
  *******************************************************************************/
 -->
 
-<#if HarmonyCore.SELECT_RTOS == "FreeRTOS">
+<#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "FreeRTOS">
     <#lt>void _SYS_FS_Tasks(  void *pvParameters  )
     <#lt>{
     <#lt>    while(1)
@@ -31,6 +31,20 @@
     <#lt>        SYS_FS_Tasks();
              <#if SYS_FS_RTOS_USE_DELAY >
     <#lt>        vTaskDelay(${SYS_FS_RTOS_DELAY} / portTICK_PERIOD_MS);
+             </#if>
+    <#lt>    }
+    <#lt>}
+<#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "ThreadX">
+    <#lt>TX_THREAD      _SYS_FS_Task_TCB;
+    <#lt>uint8_t*       _SYS_FS_Task_Stk_Ptr;
+
+    <#lt>static void _SYS_FS_Tasks( ULONG thread_input )
+    <#lt>{
+    <#lt>    while(1)
+    <#lt>    {
+    <#lt>        SYS_FS_Tasks();
+             <#if SYS_FS_RTOS_USE_DELAY >
+    <#lt>        tx_thread_sleep((ULONG)(${SYS_FS_RTOS_DELAY} / (TX_TICK_PERIOD_MS)));
              </#if>
     <#lt>    }
     <#lt>}

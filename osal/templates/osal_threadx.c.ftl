@@ -17,7 +17,7 @@
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -104,7 +104,11 @@
     disabled.  FreeRTOS will handle nesting of this function is scheduler is
     running.
  */
+<#if core.CoreArchitecture == "MIPS" >
 OSAL_CRITSECT_DATA_TYPE __attribute__((nomips16,nomicromips)) OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity)
+<#else>
+OSAL_CRITSECT_DATA_TYPE OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity)
+</#if>
 {
   TX_INTERRUPT_SAVE_AREA;
 
@@ -168,7 +172,11 @@ OSAL_CRITSECT_DATA_TYPE __attribute__((nomips16,nomicromips)) OSAL_CRIT_Enter(OS
     perform task locking or completely disable all interrupts.
 
  */
+<#if core.CoreArchitecture == "MIPS" >
 void __attribute__((nomips16,nomicromips)) OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
+<#else>
+void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
+</#if>
 {
   TX_INTERRUPT_SAVE_AREA;
   switch (severity)
@@ -699,6 +707,7 @@ OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID)
   return OSAL_RESULT_FALSE;
 }
 
+<#if core.CoreArchitecture == "MIPS" >
 // *****************************************************************************
 /* Function: const char* OSAL_Name()
 
@@ -734,7 +743,7 @@ const char* __attribute__ ((always_inline)) OSAL_Name(void)
 {
     return "ThreadX";
 }
-
+</#if>
 // *****************************************************************************
 /* Function: OSAL_RESULT OSAL_Initialize()
 

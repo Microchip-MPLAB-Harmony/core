@@ -55,6 +55,14 @@
 </#if>
 #include "definitions.h"
 
+<#if SELECT_RTOS == "ThreadX">
+
+/* ThreadX byte memory pool from which to allocate the thread stacks. */
+#define TX_BYTE_POOL_SIZE   (${ThreadX.THREADX_TX_BYTE_POOL_SIZE} + 512)
+
+TX_BYTE_POOL   byte_pool_0;
+</#if>
+
 <#if SELECT_RTOS != "BareMetal">
 // *****************************************************************************
 // *****************************************************************************
@@ -64,6 +72,25 @@
 ${core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS}
 </#if>
 
+<#if SELECT_RTOS == "ThreadX">
+void tx_application_define(void* first_unused_memory)
+{
+    /* Create a byte memory pool from which to allocate the thread stacks. */
+    tx_byte_pool_create(&byte_pool_0, "byte pool 0", first_unused_memory, TX_BYTE_POOL_SIZE);
+
+    /* Maintain system services */
+    ${core.LIST_SYSTEM_TASKS_C_CALL_SYSTEM_TASKS}
+
+    /* Maintain Device Drivers */
+    ${core.LIST_SYSTEM_TASKS_C_CALL_DRIVER_TASKS}
+
+    /* Maintain Middleware & Other Libraries */
+    ${core.LIST_SYSTEM_TASKS_C_CALL_LIB_TASKS}
+
+    /* Maintain the application's state machine. */
+    ${core.LIST_SYSTEM_RTOS_TASKS_C_GEN_APP}
+}
+</#if>
 // *****************************************************************************
 // *****************************************************************************
 // Section: System "Tasks" Routine
@@ -77,7 +104,12 @@ ${core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS}
   Remarks:
     See prototype in system/common/sys_module.h.
 */
-
+<#if SELECT_RTOS == "ThreadX">
+void SYS_Tasks ( void )
+{
+    ${core.LIST_SYSTEM_RTOS_TASKS_C_CALL_SCHEDULAR}
+}
+<#else>
 void SYS_Tasks ( void )
 {
 <#if SELECT_RTOS == "MicriumOSIII">
@@ -103,7 +135,7 @@ void SYS_Tasks ( void )
     ${core.LIST_SYSTEM_RTOS_TASKS_C_CALL_SCHEDULAR}
 </#if>
 }
-
+</#if>
 
 /*******************************************************************************
  End of File

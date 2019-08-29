@@ -9,8 +9,12 @@
 <#if SYS_COMMAND_DEBUG_ENABLE == true>
     <#lt>#define SYS_CMD_REMAP_SYS_DEBUG_MESSAGE
 </#if>
-<#if HarmonyCore.SELECT_RTOS != "BareMetal">
+<#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS != "BareMetal">
     <#lt>/* Command System Service RTOS Configurations*/
-    <#lt>#define SYS_CMD_RTOS_STACK_SIZE                ${SYS_COMMAND_RTOS_STACK_SIZE}
+    <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "FreeRTOS">
+        <#lt>#define SYS_CMD_RTOS_STACK_SIZE                ${SYS_COMMAND_RTOS_STACK_SIZE / 4}
+    <#else>
+        <#lt>#define SYS_CMD_RTOS_STACK_SIZE                ${SYS_COMMAND_RTOS_STACK_SIZE}
+    </#if>
     <#lt>#define SYS_CMD_RTOS_TASK_PRIORITY             ${SYS_COMMAND_RTOS_TASK_PRIORITY}
 </#if>

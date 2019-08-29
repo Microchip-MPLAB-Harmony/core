@@ -240,12 +240,12 @@ for count in range(0, genAppTaskMaxCount):
 
     genAppRtosTaskSize.append(count)
     genAppRtosTaskSize[count] = harmonyCoreComponent.createIntegerSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_SIZE", genAppRtosTaskConfMenu[count])
-    genAppRtosTaskSize[count].setLabel("Stack Size")
-    genAppRtosTaskSize[count].setDescription("Stack Size")
+    genAppRtosTaskSize[count].setLabel("Stack Size (in bytes)")
+    genAppRtosTaskSize[count].setDescription("Stack Size (in bytes)")
     if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23"):
-        genAppRtosTaskSize[count].setDefaultValue(128)
+        genAppRtosTaskSize[count].setDefaultValue(512)
     else:
-        genAppRtosTaskSize[count].setDefaultValue(1024)
+        genAppRtosTaskSize[count].setDefaultValue(4096)
 
     genAppRtosMsgQSize.append(count)
     genAppRtosMsgQSize[count] = harmonyCoreComponent.createIntegerSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_MSG_QTY", genAppRtosTaskConfMenu[count])

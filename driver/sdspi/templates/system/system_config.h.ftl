@@ -19,8 +19,12 @@
 #define DRV_SDSPI_WRITE_PROTECT_PIN_IDX${INDEX?string}        ${DRV_SDSPI_WRITE_PROTECT_PIN?string}
 </#if>
 
-<#if HarmonyCore.SELECT_RTOS != "BareMetal">
+<#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS != "BareMetal">
     <#lt>/* SDSPI Driver Instance ${INDEX?string} RTOS Configurations*/
-    <#lt>#define DRV_SDSPI_STACK_SIZE_IDX${INDEX?string}               ${DRV_SDSPI_RTOS_STACK_SIZE}
+    <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "FreeRTOS">
+        <#lt>#define DRV_SDSPI_STACK_SIZE_IDX${INDEX?string}               ${DRV_SDSPI_RTOS_STACK_SIZE / 4}
+    <#else>
+        <#lt>#define DRV_SDSPI_STACK_SIZE_IDX${INDEX?string}               ${DRV_SDSPI_RTOS_STACK_SIZE}
+    </#if>
     <#lt>#define DRV_SDSPI_PRIORITY_IDX${INDEX?string}                 ${DRV_SDSPI_RTOS_TASK_PRIORITY}
 </#if>

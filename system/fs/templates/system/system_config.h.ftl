@@ -70,9 +70,13 @@
     <#lt>#define SYS_FS_CWD_STRING_LEN             ${SYS_FS_CWD_STRING_LEN}
 </#if>
 
-<#if HarmonyCore.SELECT_RTOS != "BareMetal">
+<#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS != "BareMetal">
     <#lt>/* File System RTOS Configurations*/
-    <#lt>#define SYS_FS_STACK_SIZE                 ${SYS_FS_RTOS_STACK_SIZE}
+    <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "FreeRTOS">
+        <#lt>#define SYS_FS_STACK_SIZE                 ${SYS_FS_RTOS_STACK_SIZE / 4}
+    <#else>
+        <#lt>#define SYS_FS_STACK_SIZE                 ${SYS_FS_RTOS_STACK_SIZE}
+    </#if>
     <#lt>#define SYS_FS_PRIORITY                   ${SYS_FS_RTOS_TASK_PRIORITY}
 </#if>
 

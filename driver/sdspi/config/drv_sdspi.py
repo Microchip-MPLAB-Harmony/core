@@ -256,8 +256,8 @@ def instantiateComponent(sdspiComponent, index):
     sdspiRTOSTask.setVisible(False)
 
     sdspiRTOSStackSize = sdspiComponent.createIntegerSymbol("DRV_SDSPI_RTOS_STACK_SIZE", sdspiRTOSMenu)
-    sdspiRTOSStackSize.setLabel("Stack Size")
-    sdspiRTOSStackSize.setDefaultValue(256)
+    sdspiRTOSStackSize.setLabel("Stack Size (in bytes)")
+    sdspiRTOSStackSize.setDefaultValue(1024)
 
     sdspiRTOSTaskPriority = sdspiComponent.createIntegerSymbol("DRV_SDSPI_RTOS_TASK_PRIORITY", sdspiRTOSMenu)
     sdspiRTOSTaskPriority.setLabel("Task Priority")

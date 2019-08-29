@@ -63,8 +63,8 @@ def instantiateComponent(sysFSComponent):
     sysFSRTOSTask.setVisible(False)
 
     sysFSRTOSStackSize = sysFSComponent.createIntegerSymbol("SYS_FS_RTOS_STACK_SIZE", sysFSRTOSMenu)
-    sysFSRTOSStackSize.setLabel("Stack Size")
-    sysFSRTOSStackSize.setDefaultValue(1024)
+    sysFSRTOSStackSize.setLabel("Stack Size (in bytes)")
+    sysFSRTOSStackSize.setDefaultValue(4096)
 
     sysFSRTOSTaskPriority = sysFSComponent.createIntegerSymbol("SYS_FS_RTOS_TASK_PRIORITY", sysFSRTOSMenu)
     sysFSRTOSTaskPriority.setLabel("Task Priority")

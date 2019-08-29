@@ -210,8 +210,8 @@ def instantiateComponent(memoryComponent, index):
     memoryRTOSTask.setVisible(False)
 
     memoryRTOSStackSize = memoryComponent.createIntegerSymbol("DRV_MEMORY_RTOS_STACK_SIZE", memoryRTOSMenu)
-    memoryRTOSStackSize.setLabel("Stack Size")
-    memoryRTOSStackSize.setDefaultValue(1024)
+    memoryRTOSStackSize.setLabel("Stack Size (in bytes)")
+    memoryRTOSStackSize.setDefaultValue(4096)
     memoryRTOSStackSize.setReadOnly(True)
 
     memoryRTOSTaskPriority = memoryComponent.createIntegerSymbol("DRV_MEMORY_RTOS_TASK_PRIORITY", memoryRTOSMenu)
