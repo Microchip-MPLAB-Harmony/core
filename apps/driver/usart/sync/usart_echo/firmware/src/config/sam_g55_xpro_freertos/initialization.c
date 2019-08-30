@@ -164,7 +164,6 @@ void SYS_Initialize ( void* data )
 
 
 
-    APP_Initialize();
     APP_USART_ECHO_Initialize();
 
 
