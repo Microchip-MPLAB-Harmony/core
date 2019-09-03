@@ -1,68 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configurationDescriptor version="65">
-  <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="HeaderFiles" displayName="Header Files" projectFiles="true">
-      <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <logicalFolder name="f1" displayName="sam_a5d2_xult_xc32_freertos" projectFiles="true">
-          <logicalFolder name="f4" displayName="bsp" projectFiles="true">
-            <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/bsp/bsp.h</itemPath>
-          </logicalFolder>
-          <logicalFolder name="f1" displayName="driver" projectFiles="true">
-            <logicalFolder name="f2" displayName="memory" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/memory/src/drv_memory_local.h</itemPath>
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/memory/drv_memory.h</itemPath>
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/memory/drv_memory_definitions.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f1" displayName="mx25l" projectFiles="true">
+  <logicalFolder displayName="root" name="root" projectFiles="true">
+    <logicalFolder displayName="Header Files" name="f1" projectFiles="true">
+      <logicalFolder displayName="config" name="f1" projectFiles="true">
+        <logicalFolder displayName="sam_a5d2_xult_xc32_freertos" name="f1" projectFiles="true">
+          <logicalFolder displayName="driver" name="f1" projectFiles="true">
+            <logicalFolder displayName="mx25l" name="f1" projectFiles="true">
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/mx25l/drv_mx25l.h</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/mx25l/src/drv_mx25l_local.h</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/mx25l/drv_mx25l_definitions.h</itemPath>
             </logicalFolder>
+            <logicalFolder displayName="memory" name="f2" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/memory/src/drv_memory_local.h</itemPath>
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/memory/drv_memory.h</itemPath>
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/memory/drv_memory_definitions.h</itemPath>
+            </logicalFolder>
             <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/driver.h</itemPath>
             <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/driver_common.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f6" displayName="aic" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/aic/plib_aic.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f4" displayName="clk" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/clk/plib_clk.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f3" displayName="matrix" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/matrix/plib_matrix.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f2" displayName="mmu" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/mmu/plib_mmu.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f5" displayName="pio" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/pio/plib_pio.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f1" displayName="pit" projectFiles="true">
+          <logicalFolder displayName="peripheral" name="f2" projectFiles="true">
+            <logicalFolder displayName="pit" name="f1" projectFiles="true">
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/pit/plib_pit.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f8" displayName="qspi" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/qspi/plib_qspi_common.h</itemPath>
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/qspi/plib_qspi0.h</itemPath>
+            <logicalFolder displayName="mmu" name="f2" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/mmu/plib_mmu.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f7" displayName="tc" projectFiles="true">
+            <logicalFolder displayName="matrix" name="f3" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/matrix/plib_matrix.h</itemPath>
+            </logicalFolder>
+            <logicalFolder displayName="clk" name="f4" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/clk/plib_clk.h</itemPath>
+            </logicalFolder>
+            <logicalFolder displayName="pio" name="f5" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/pio/plib_pio.h</itemPath>
+            </logicalFolder>
+            <logicalFolder displayName="aic" name="f6" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/aic/plib_aic.h</itemPath>
+            </logicalFolder>
+            <logicalFolder displayName="tc" name="f7" projectFiles="true">
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/tc/plib_tc0.h</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/tc/plib_tc_common.h</itemPath>
             </logicalFolder>
-          </logicalFolder>
-          <logicalFolder name="f3" displayName="system" projectFiles="true">
-            <logicalFolder name="f4" displayName="cache" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/cache/sys_cache.h</itemPath>
+            <logicalFolder displayName="qspi" name="f8" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/qspi/plib_qspi_common.h</itemPath>
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/qspi/plib_qspi0.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="fs" projectFiles="true">
-              <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
-                <logicalFolder name="f1" displayName="file_system" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder displayName="system" name="f3" projectFiles="true">
+            <logicalFolder displayName="time" name="f1" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/time/sys_time.h</itemPath>
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/time/sys_time_definitions.h</itemPath>
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/time/src/sys_time_local.h</itemPath>
+            </logicalFolder>
+            <logicalFolder displayName="fs" name="f2" projectFiles="true">
+              <logicalFolder displayName="fat_fs" name="f1" projectFiles="true">
+                <logicalFolder displayName="file_system" name="f1" projectFiles="true">
                   <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/fs/fat_fs/src/file_system/ff.h</itemPath>
                   <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/fs/fat_fs/src/file_system/ffconf.h</itemPath>
                 </logicalFolder>
-                <logicalFolder name="f2" displayName="hardware_access" projectFiles="true">
+                <logicalFolder displayName="hardware_access" name="f2" projectFiles="true">
                   <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/fs/fat_fs/src/hardware_access/diskio.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
+              <logicalFolder displayName="mpfs" name="f2" projectFiles="true">
                 <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/fs/mpfs/mpfs.h</itemPath>
                 <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/fs/mpfs/src/mpfs_local.h</itemPath>
               </logicalFolder>
@@ -71,19 +71,20 @@
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/fs/sys_fs_media_manager.h</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/fs/src/sys_fs_media_manager_local.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="int" projectFiles="true">
+            <logicalFolder displayName="int" name="f3" projectFiles="true">
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="time" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/time/sys_time.h</itemPath>
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/time/sys_time_definitions.h</itemPath>
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/time/src/sys_time_local.h</itemPath>
+            <logicalFolder displayName="cache" name="f4" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/cache/sys_cache.h</itemPath>
             </logicalFolder>
             <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/system.h</itemPath>
             <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/system_common.h</itemPath>
             <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/system_module.h</itemPath>
             <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/system_media.h</itemPath>
+          </logicalFolder>
+          <logicalFolder displayName="bsp" name="f4" projectFiles="true">
+            <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/bsp/bsp.h</itemPath>
           </logicalFolder>
           <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/device_cache.h</itemPath>
           <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/toolchain_specifics.h</itemPath>
@@ -93,45 +94,9 @@
           <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="FreeRTOS" projectFiles="true">
-        <logicalFolder name="f1" displayName="Source" projectFiles="true">
-          <logicalFolder name="f1" displayName="include" projectFiles="true">
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/croutine.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/event_groups.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/FreeRTOS.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/list.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/mpu_wrappers.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/portable.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/projdefs.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/queue.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/semphr.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/stack_macros.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/deprecated_definitions.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/task.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/timers.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/mpu_prototypes.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/stream_buffer.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/message_buffer.h</itemPath>
-          </logicalFolder>
-          <logicalFolder name="f2" displayName="portable" projectFiles="true">
-            <logicalFolder name="f1" displayName="XC32" projectFiles="true">
-              <logicalFolder name="f1" displayName="SAM" projectFiles="true">
-                <logicalFolder name="f1" displayName="CA5" projectFiles="true">
-                  <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/XC32/SAM/CA5/portmacro.h</itemPath>
-                </logicalFolder>
-              </logicalFolder>
-            </logicalFolder>
-          </logicalFolder>
-        </logicalFolder>
-      </logicalFolder>
-      <logicalFolder name="f4" displayName="osal" projectFiles="true">
-        <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/osal/osal.h</itemPath>
-        <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/osal/osal_definitions.h</itemPath>
-        <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/osal/osal_freertos.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f2" displayName="packs" projectFiles="true">
-        <logicalFolder name="f1" displayName="ATSAMA5D27_DFP" projectFiles="true">
-          <logicalFolder name="f1" displayName="component" projectFiles="true">
+      <logicalFolder displayName="packs" name="f2" projectFiles="true">
+        <logicalFolder displayName="ATSAMA5D27_DFP" name="f1" projectFiles="true">
+          <logicalFolder displayName="component" name="f1" projectFiles="true">
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/acc.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/adc.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/aes.h</itemPath>
@@ -182,16 +147,16 @@
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/wdt.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/xdmac.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="pio" projectFiles="true">
+          <logicalFolder displayName="pio" name="f2" projectFiles="true">
             <itemPath>../src/packs/ATSAMA5D27_DFP/pio/sama5d27.h</itemPath>
           </logicalFolder>
           <itemPath>../src/packs/ATSAMA5D27_DFP/device.h</itemPath>
           <itemPath>../src/packs/ATSAMA5D27_DFP/atsama5d27.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
-          <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
-            <logicalFolder name="f1" displayName="Core_A" projectFiles="true">
-              <logicalFolder name="f1" displayName="Include" projectFiles="true">
+        <logicalFolder displayName="CMSIS" name="f2" projectFiles="true">
+          <logicalFolder displayName="CMSIS" name="f1" projectFiles="true">
+            <logicalFolder displayName="Core_A" name="f1" projectFiles="true">
+              <logicalFolder displayName="Include" name="f1" projectFiles="true">
                 <itemPath>../src/packs/CMSIS/CMSIS/Core_A/Include/cmsis_compiler.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core_A/Include/cmsis_gcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core_A/Include/cmsis_iccarm.h</itemPath>
@@ -199,8 +164,8 @@
                 <itemPath>../src/packs/CMSIS/CMSIS/Core_A/Include/core_ca.h</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="DSP" projectFiles="true">
-              <logicalFolder name="f1" displayName="Include" projectFiles="true">
+            <logicalFolder displayName="DSP" name="f2" projectFiles="true">
+              <logicalFolder displayName="Include" name="f1" projectFiles="true">
                 <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_common_tables.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_const_structs.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_math.h</itemPath>
@@ -209,80 +174,116 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
+      <logicalFolder displayName="FreeRTOS" name="f3" projectFiles="true">
+        <logicalFolder displayName="Source" name="f1" projectFiles="true">
+          <logicalFolder displayName="include" name="f1" projectFiles="true">
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/croutine.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/event_groups.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/FreeRTOS.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/list.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/mpu_wrappers.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/portable.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/projdefs.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/queue.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/semphr.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/stack_macros.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/deprecated_definitions.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/task.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/timers.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/mpu_prototypes.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/stream_buffer.h</itemPath>
+            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/message_buffer.h</itemPath>
+          </logicalFolder>
+          <logicalFolder displayName="portable" name="f2" projectFiles="true">
+            <logicalFolder displayName="XC32" name="f1" projectFiles="true">
+              <logicalFolder displayName="SAM" name="f1" projectFiles="true">
+                <logicalFolder displayName="CA5" name="f1" projectFiles="true">
+                  <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/XC32/SAM/CA5/portmacro.h</itemPath>
+                </logicalFolder>
+              </logicalFolder>
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder displayName="osal" name="f4" projectFiles="true">
+        <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/osal/osal.h</itemPath>
+        <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/osal/osal_definitions.h</itemPath>
+        <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/osal/osal_freertos.h</itemPath>
+      </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="LinkerScript" displayName="Linker Files" projectFiles="true">
-      <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <logicalFolder name="f1" displayName="sam_a5d2_xult_xc32_freertos" projectFiles="true">
+    <logicalFolder displayName="Linker Files" name="f2" projectFiles="true">
+      <logicalFolder displayName="config" name="f1" projectFiles="true">
+        <logicalFolder displayName="sam_a5d2_xult_xc32_freertos" name="f1" projectFiles="true">
           <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/ddr.ld</itemPath>
         </logicalFolder>
       </logicalFolder>
     </logicalFolder>
-    <logicalFolder name="SourceFiles" displayName="Source Files" projectFiles="true">
-      <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <logicalFolder name="f1" displayName="sam_a5d2_xult_xc32_freertos" projectFiles="true">
-          <logicalFolder name="f5" displayName="bsp" projectFiles="true">
-            <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/bsp/bsp.c</itemPath>
-          </logicalFolder>
-          <logicalFolder name="f1" displayName="driver" projectFiles="true">
-            <logicalFolder name="f2" displayName="memory" projectFiles="true">
+    <logicalFolder displayName="Source Files" name="f3" projectFiles="true">
+      <logicalFolder displayName="config" name="f1" projectFiles="true">
+        <logicalFolder displayName="sam_a5d2_xult_xc32_freertos" name="f1" projectFiles="true">
+          <logicalFolder displayName="driver" name="f1" projectFiles="true">
+            <logicalFolder displayName="mx25l" name="f1" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/mx25l/src/drv_mx25l.c</itemPath>
+            </logicalFolder>
+            <logicalFolder displayName="memory" name="f2" projectFiles="true">
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/memory/src/drv_memory.c</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/memory/src/drv_memory_file_system.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="mx25l" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/mx25l/src/drv_mx25l.c</itemPath>
-            </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f6" displayName="aic" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/aic/plib_aic.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f4" displayName="clk" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/clk/plib_clk.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f3" displayName="matrix" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/matrix/plib_matrix.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f2" displayName="mmu" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/mmu/plib_mmu.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f5" displayName="pio" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/pio/plib_pio.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f1" displayName="pit" projectFiles="true">
+          <logicalFolder displayName="peripheral" name="f2" projectFiles="true">
+            <logicalFolder displayName="pit" name="f1" projectFiles="true">
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/pit/plib_pit.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f8" displayName="qspi" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/qspi/plib_qspi0.c</itemPath>
+            <logicalFolder displayName="mmu" name="f2" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/mmu/plib_mmu.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f7" displayName="tc" projectFiles="true">
+            <logicalFolder displayName="matrix" name="f3" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/matrix/plib_matrix.c</itemPath>
+            </logicalFolder>
+            <logicalFolder displayName="clk" name="f4" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/clk/plib_clk.c</itemPath>
+            </logicalFolder>
+            <logicalFolder displayName="pio" name="f5" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/pio/plib_pio.c</itemPath>
+            </logicalFolder>
+            <logicalFolder displayName="aic" name="f6" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/aic/plib_aic.c</itemPath>
+            </logicalFolder>
+            <logicalFolder displayName="tc" name="f7" projectFiles="true">
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/tc/plib_tc0.c</itemPath>
             </logicalFolder>
+            <logicalFolder displayName="qspi" name="f8" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/qspi/plib_qspi0.c</itemPath>
+            </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="stdio" projectFiles="true">
+          <logicalFolder displayName="stdio" name="f3" projectFiles="true">
             <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f4" displayName="system" projectFiles="true">
-            <logicalFolder name="f4" displayName="cache" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/cache/sys_cache.c</itemPath>
+          <logicalFolder displayName="system" name="f4" projectFiles="true">
+            <logicalFolder displayName="time" name="f1" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/time/src/sys_time.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="fs" projectFiles="true">
-              <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
+            <logicalFolder displayName="fs" name="f2" projectFiles="true">
+              <logicalFolder displayName="fat_fs" name="f1" projectFiles="true">
                 <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/fs/fat_fs/src/ff.c</itemPath>
                 <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/fs/fat_fs/src/diskio.c</itemPath>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
+              <logicalFolder displayName="mpfs" name="f2" projectFiles="true">
                 <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/fs/mpfs/src/mpfs.c</itemPath>
               </logicalFolder>
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/fs/src/sys_fs.c</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/fs/src/sys_fs_media_manager.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="int" projectFiles="true">
+            <logicalFolder displayName="int" name="f3" projectFiles="true">
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="time" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/time/src/sys_time.c</itemPath>
+            <logicalFolder displayName="cache" name="f4" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/cache/sys_cache.c</itemPath>
             </logicalFolder>
+          </logicalFolder>
+          <logicalFolder displayName="bsp" name="f5" projectFiles="true">
+            <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/bsp/bsp.c</itemPath>
           </logicalFolder>
           <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/initialization.c</itemPath>
           <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/interrupts.c</itemPath>
@@ -293,15 +294,15 @@
           <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f2" displayName="FreeRTOS" projectFiles="true">
-        <logicalFolder name="f1" displayName="Source" projectFiles="true">
-          <logicalFolder name="f1" displayName="portable" projectFiles="true">
-            <logicalFolder name="f1" displayName="MemMang" projectFiles="true">
+      <logicalFolder displayName="FreeRTOS" name="f2" projectFiles="true">
+        <logicalFolder displayName="Source" name="f1" projectFiles="true">
+          <logicalFolder displayName="portable" name="f1" projectFiles="true">
+            <logicalFolder displayName="MemMang" name="f1" projectFiles="true">
               <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/MemMang/heap_1.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="XC32" projectFiles="true">
-              <logicalFolder name="f1" displayName="SAM" projectFiles="true">
-                <logicalFolder name="f1" displayName="CA5" projectFiles="true">
+            <logicalFolder displayName="XC32" name="f2" projectFiles="true">
+              <logicalFolder displayName="SAM" name="f1" projectFiles="true">
+                <logicalFolder displayName="CA5" name="f1" projectFiles="true">
                   <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/XC32/SAM/CA5/port.c</itemPath>
                   <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/XC32/SAM/CA5/portASM.S</itemPath>
                   <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/XC32/SAM/CA5/FreeRTOS_tick_config.c</itemPath>
@@ -318,13 +319,13 @@
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/stream_buffer.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="osal" projectFiles="true">
+      <logicalFolder displayName="osal" name="f3" projectFiles="true">
         <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/osal/osal_freertos.c</itemPath>
       </logicalFolder>
       <itemPath>../src/main.c</itemPath>
       <itemPath>../src/app.c</itemPath>
     </logicalFolder>
-    <logicalFolder name="ExternalFiles" displayName="Important Files" projectFiles="false">
+    <logicalFolder displayName="Important Files" name="f4" projectFiles="true">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
@@ -487,7 +488,8 @@
         <property key="symbol-stripping" value=""/>
         <property key="trace-symbols" value=""/>
         <property key="warn-section-align" value="false"/>
-      <appendMe value="-T../../firmware/src/config/sam_a5d2_xult_xc32_freertos/ddr.ld"/></C32-LD>
+      <appendMe value="-T../../firmware/src/config/sam_a5d2_xult_xc32_freertos/ddr.ld"/>
+      </C32-LD>
       <C32CPP>
         <property key="additional-warnings" value="false"/>
         <property key="addresss-attribute-use" value="false"/>
