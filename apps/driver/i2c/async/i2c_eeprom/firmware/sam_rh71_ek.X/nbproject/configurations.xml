@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="HeaderFiles"
-                   displayName="Header Files"
-                   projectFiles="true">
-      <logicalFolder name="f2" displayName="config" projectFiles="true">
+    <logicalFolder name="f1" displayName="Header Files" projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_rh71_ek" projectFiles="true">
           <logicalFolder name="f4" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_rh71_ek/bsp/bsp.h</itemPath>
@@ -58,7 +56,7 @@
         <itemPath>../src/config/sam_rh71_ek/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/sam_rh71_ek/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f1" displayName="packs" projectFiles="true">
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAMRH71F20B_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAMRH71F20B_DFP/component/chipid.h</itemPath>
@@ -125,19 +123,18 @@
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="LinkerScript"
-                   displayName="Linker Files"
-                   projectFiles="true">
+    <logicalFolder name="f4" displayName="Important Files" projectFiles="true">
+      <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder name="SourceFiles"
-                   displayName="Source Files"
-                   projectFiles="true">
+    <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="f3" displayName="Source Files" projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_rh71_ek" projectFiles="true">
           <logicalFolder name="f5" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_rh71_ek/bsp/bsp.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f4" displayName="driver" projectFiles="true">
+          <logicalFolder name="f3" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="i2c" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/driver/i2c/src/drv_i2c.c</itemPath>
               <itemPath>../src/config/sam_rh71_ek/driver/i2c/src/drv_i2c_local.h</itemPath>
@@ -162,7 +159,7 @@
           <logicalFolder name="f1" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/sam_rh71_ek/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="system" projectFiles="true">
+          <logicalFolder name="f4" displayName="system" projectFiles="true">
             <logicalFolder name="f2" displayName="cache" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/system/cache/sys_cache.c</itemPath>
             </logicalFolder>
@@ -180,11 +177,6 @@
       </logicalFolder>
       <itemPath>../src/main.c</itemPath>
       <itemPath>../src/app.c</itemPath>
-    </logicalFolder>
-    <logicalFolder name="ExternalFiles"
-                   displayName="Important Files"
-                   projectFiles="false">
-      <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -204,8 +196,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
+        <pack name="SAMRH71_DFP" vendor="Microchip" version="0.1.25"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
-        <pack name="SAMRH71_DFP" vendor="Microchip" version="0.1.24"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -876,9 +868,9 @@
       </Simulator>
       <samice>
         <property key="AutoSelectMemRanges" value="auto"/>
-        <property key="jtagcommunication.autoselectspeed" value="false"/>
-        <property key="jtagcommunication.method" value="swd"/>
-        <property key="jtagcommunication.speed" value="4000"/>
+        <property key="communication.autoselectspeed" value="true"/>
+        <property key="communication.interface" value="swd"/>
+        <property key="communication.speed" value="4"/>
         <property key="memories.bootflash" value="true"/>
         <property key="memories.configurationmemory" value="true"/>
         <property key="memories.eeprom" value="true"/>
