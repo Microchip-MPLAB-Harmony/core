@@ -79,7 +79,34 @@
 #define DRV_I2C_TOKEN_MASK                      (0xFFFF0000)
 #define DRV_I2C_TOKEN_MAX                       (DRV_I2C_TOKEN_MASK >> 16)
 
+// *****************************************************************************
+/* I2C Transfer Object Flags
 
+  Summary:
+    Defines the I2C Transfer Object Flags.
+
+  Description:
+    This enumeration defines transfer type (read/write) of the I2C Buffer Object.
+
+  Remarks:
+    None.
+*/
+
+typedef enum
+{
+    /* Indicates this buffer was submitted by a read function */
+    DRV_I2C_TRANSFER_OBJ_FLAG_READ = 1 << 0,
+
+    /* Indicates this buffer was submitted by a write function */
+    DRV_I2C_TRANSFER_OBJ_FLAG_WRITE = 1 << 1,
+
+    /* Indicates this buffer was submitted by a write followed by read function */
+    DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_READ = 1 << 2,
+
+    /* Indicates this buffer was submitted by a force write function */
+    DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_FORCED = 1 << 3,
+
+} DRV_I2C_TRANSFER_OBJ_FLAGS;
 
 // *****************************************************************************
 /* I2C Transfer Status
@@ -120,33 +147,39 @@ typedef enum
 typedef struct
 {
     /* Flag to indicate that driver has been opened Exclusively*/
-    bool isExclusive;
+    bool                            isExclusive;
 
     /* Keep track of the number of clients
       that have opened this driver */
-    size_t nClients;
+    size_t                          nClients;
 
     /* Maximum number of clients */
-    size_t nClientsMax;
+    size_t                          nClientsMax;
 
-    bool inUse;
+    bool                            inUse;
 
     /* The status of the driver */
-    SYS_STATUS status;
+    SYS_STATUS                      status;
 
     /* PLIB API list that will be used by the driver to access the hardware */
-    const DRV_I2C_PLIB_INTERFACE* i2cPlib;
+    const DRV_I2C_PLIB_INTERFACE*   i2cPlib;
+
+    /* Saves the initial value of the I2C clock speed which is assigned to a client when it opens the I2C driver */
+    uint32_t                        initI2CClockSpeed;
+
+    /* Current transfer setup will be used to verify change in the transfer setup by client */
+    DRV_I2C_TRANSFER_SETUP          currentTransferSetup;
 
     /* Memory pool for Client Objects */
-    uintptr_t clientObjPool;
+    uintptr_t                       clientObjPool;
 
     /* This is an instance specific token counter used to generate unique client
      * handles
      */
-    uint16_t i2cTokenCount;
+    uint16_t                        i2cTokenCount;
 
     /* The client of the active transfer on this driver instance */
-    uintptr_t activeClient;
+    uintptr_t                       activeClient;
 
     /* Status of the active transfer */
     volatile DRV_I2C_TRANSFER_STATUS transferStatus;
@@ -179,20 +212,23 @@ typedef struct
 typedef struct
 {
     /* The hardware instance object associated with the client */
-    DRV_I2C_OBJ* hDriver;
+    DRV_I2C_OBJ*                    hDriver;
 
     /* The IO intent with which the client was opened */
-    DRV_IO_INTENT ioIntent;
+    DRV_IO_INTENT                   ioIntent;
 
     /* Errors associated with the I2C transfer */
-    volatile DRV_I2C_ERROR errors;
+    volatile DRV_I2C_ERROR          errors;
 
     /* This flags indicates if the object is in use or is
      * available */
-    bool inUse;
+    bool                            inUse;
 
     /* Client handle assigned to this client object when it was opened */
-    DRV_HANDLE clientHandle;
+    DRV_HANDLE                      clientHandle;
+
+    /* Client specific transfer setup */
+    DRV_I2C_TRANSFER_SETUP          transferSetup;
 
 } DRV_I2C_CLIENT_OBJ;
 

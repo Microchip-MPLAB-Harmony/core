@@ -53,6 +53,7 @@
 #include "configuration.h"
 #include "definitions.h"
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: RTOS "Tasks" Routine
@@ -94,7 +95,6 @@ void _APP_I2C_TEMP_SENSOR_Tasks(  void *pvParameters  )
   Remarks:
     See prototype in system/common/sys_module.h.
 */
-
 void SYS_Tasks ( void )
 {
     /* Maintain system services */
@@ -110,7 +110,7 @@ void SYS_Tasks ( void )
         /* Create OS Thread for APP_I2C_EEPROM_Tasks. */
     xTaskCreate((TaskFunction_t) _APP_I2C_EEPROM_Tasks,
                 "APP_I2C_EEPROM_Tasks",
-                256,
+                1024,
                 NULL,
                 1,
                 &xAPP_I2C_EEPROM_Tasks);
@@ -118,7 +118,7 @@ void SYS_Tasks ( void )
     /* Create OS Thread for APP_I2C_TEMP_SENSOR_Tasks. */
     xTaskCreate((TaskFunction_t) _APP_I2C_TEMP_SENSOR_Tasks,
                 "APP_I2C_TEMP_SENSOR_Tasks",
-                256,
+                1024,
                 NULL,
                 1,
                 &xAPP_I2C_TEMP_SENSOR_Tasks);
@@ -133,7 +133,6 @@ void SYS_Tasks ( void )
     vTaskStartScheduler(); /* This function never returns. */
 
 }
-
 
 /*******************************************************************************
  End of File
