@@ -467,6 +467,50 @@ DRV_HANDLE DRV_I2C_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
 void DRV_I2C_Close( const DRV_HANDLE handle );
 
 // *****************************************************************************
+/*
+  Function:
+    bool DRV_I2C_TransferSetup ( DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP* setup )
+
+  Summary:
+    Sets the dynamic transfer setup of the driver.
+
+  Description:
+    This function should be used to update any of the DRV_I2C_TRANSFER_SETUP
+    parameters for the selected client of the driver dynamically. It is mainly
+    helpful for multi client scenario where different clients need different
+    setup like clock speed. The DRV_I2C_TransferSetup function must be called
+    before submitting any I2C driver read/write requests.
+
+  Preconditions:
+    DRV_I2C_Open must have been called to obtain a valid opened device handle.
+    In case of asynchronous driver, all transfer requests from the queue must
+    have been processed.
+
+  Parameters:
+    handle      - A valid open-instance handle, returned from the driver's
+                   open routine
+    setup       - Pointer to the structure containing the new configuration settings
+
+  Returns:
+    None.
+
+  Example:
+    <code>
+        // myI2CHandle is the handle returned by the DRV_I2C_Open function.
+        DRV_I2C_TRANSFER_SETUP setup;
+
+        setup.clockSpeed = 400000;
+
+        DRV_I2C_TransferSetup ( myI2CHandle, &setup );
+    </code>
+
+  Remarks:
+    None.
+*/
+
+bool DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP* setup);
+
+// *****************************************************************************
 /* Function:
     DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_HANDLE handle )
 
@@ -592,6 +636,106 @@ DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_HANDLE handle );
 */
 
 void DRV_I2C_WriteTransferAdd(
+    const DRV_HANDLE handle,
+    const uint16_t address,
+    void * const buffer,
+    const size_t size,
+    DRV_I2C_TRANSFER_HANDLE * const transferHandle
+);
+
+// *****************************************************************************
+/* Function:
+    void DRV_I2C_ForcedWriteTransferAdd(
+        const DRV_HANDLE handle,
+        const uint16_t address,
+        void * const buffer,
+        const size_t size,
+        DRV_I2C_TRANSFER_HANDLE * const transferHandle
+    )
+
+  Summary:
+    Queues a write operation.
+
+  Description:
+    I2C Master calls this function to transmit the entire buffer to the slave even
+    if the slave ACKs or NACKs the address or any of the data bytes. This is
+    typically used for slaves that have to initiate a reset sequence by sending
+    a dummy I2C transaction. Since the slave is still in reset, any or all the
+    bytes can be NACKed. In the normal operation of the driver if the address
+    or data byte is NACKed, then the transmission is aborted and a STOP condition
+    is asserted on the bus.
+
+    This function schedules a non-blocking write operation. The function returns
+    with a valid transfer handle in the transferHandle argument if the write
+    request was scheduled successfully. The function adds the request to the
+    driver instance transfer queue and returns immediately. While the request is
+    in the queue, the application buffer is owned by the driver and should not be
+    modified.  On returning, the transferHandle parameter may be
+    DRV_I2C_TRANSFER_HANDLE_INVALID for the following reasons:
+    - if a transfer buffer could not be allocated to the request
+    - if the input buffer pointer is NULL
+    - if the buffer size is 0
+
+    If the requesting client registered an event callback with the driver, the
+    driver will issue a DRV_I2C_TRANSFER_EVENT_COMPLETE event if the buffer was
+    processed successfully or a DRV_I2C_TRANSFER_EVENT_ERROR event if the buffer
+    was not processed successfully.
+
+  Precondition:
+    DRV_I2C_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle - A valid open-instance handle, returned from the driver's open routine
+    DRV_I2C_Open function.
+
+    address - Slave address
+
+    buffer - Data to be written.
+
+    size - Transfer size in bytes.
+
+    transferHandle - Pointer to an argument that will contain the return
+    transfer handle. This will be DRV_I2C_TRANSFER_HANDLE_INVALID if the
+    function was not successful.
+
+  Returns:
+    None.
+
+  Example:
+    <code>
+    uint8_t myBuffer[MY_BUFFER_SIZE];
+    DRV_I2C_TRANSFER_HANDLE transferHandle;
+
+    // myI2CHandle is the handle returned
+    // by the DRV_I2C_Open function.
+
+    // slaveAddress is address of I2C slave device
+    // to which data is to be written
+
+    DRV_I2C_ForcedWriteTransferAdd(myI2CHandle, slaveAddress, myBuffer, MY_BUFFER_SIZE, &transferHandle);
+
+    if(transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID)
+    {
+        // Error handling here
+    }
+
+    // Event is received when the buffer is processed.
+    </code>
+
+  Remarks:
+    This API must be used only if the underlying PLIB is enabled to generate the
+    Forced write API. If the PLIB is not enabled to generate the Forced Write API,
+    the API will return an invalid transfer handle (DRV_I2C_TRANSFER_HANDLE_INVALID).
+
+    This function is thread safe in a RTOS application. It can be called from
+    within the I2C Driver Transfer Event Handler that is registered by this
+    client. It should not be called in the event handler associated with another
+    I2C driver instance. It should not otherwise be called directly in an ISR.
+    This function is available only in the asynchronous mode.
+
+*/
+
+void DRV_I2C_ForcedWriteTransferAdd(
     const DRV_HANDLE handle,
     const uint16_t address,
     void * const buffer,
@@ -1010,6 +1154,84 @@ DRV_I2C_TRANSFER_EVENT DRV_I2C_TransferStatusGet( const DRV_I2C_TRANSFER_HANDLE 
 */
 
 bool DRV_I2C_WriteTransfer(
+    const DRV_HANDLE handle,
+    uint16_t address,
+    void* const buffer,
+    const size_t size
+);
+
+// *****************************************************************************
+/* Function:
+    bool DRV_I2C_ForcedWriteTransfer(
+        const DRV_HANDLE handle,
+        uint16_t address,
+        void* const buffer,
+        const size_t size
+    )
+
+  Summary:
+    This is a blocking function that performs a I2C write operation.
+
+  Description:
+    I2C Master calls this function to transmit the entire buffer to the slave even
+    if the slave ACKs or NACKs the address or any of the data bytes. This is
+    typically used for slaves that have to initiate a reset sequence by sending
+    a dummy I2C transaction. Since the slave is still in reset, any or all the
+    bytes can be NACKed. In the normal operation of the driver if the address
+    or data byte is NACKed, then the transmission is aborted and a STOP condition
+    is asserted on the bus.
+
+    This function does a blocking write operation. The function blocks till
+    the write is complete or error has occurred during write. Function will
+    return false to report failure. The failure will occur for the following
+    reasons:
+    - Invalid input parameters
+
+  Precondition:
+    DRV_I2C_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle - A valid open-instance handle, returned from the driver's open routine
+    DRV_I2C_Open function.
+
+    address - Slave Address
+
+    buffer - Source buffer containing data to be written.
+
+    size - Size in bytes of data to be written.
+
+  Returns:
+    true - write is successful
+    false - error has occurred
+
+  Example:
+    <code>
+    uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
+
+    // myI2CHandle is the handle returned
+    // by the DRV_I2C_Open function.
+
+    // slaveAddress is address of I2C slave device
+    // to which data is to be written
+
+    if (DRV_I2C_ForcedWriteTransfer(myI2CHandle, slaveAddress, myTxBuffer, MY_TX_BUFFER_SIZE) == false)
+    {
+        // Error handling here
+    }
+
+    </code>
+
+  Remarks:
+    This API must be used only if the underlying PLIB is enabled to generate the
+    Forced write API. If the PLIB is not enabled to generate the Forced Write API,
+    the API will return false.
+
+    This function is thread safe in a RTOS application.
+    This function should not be called from an interrupt context.
+    This function is available only in the synchronous mode.
+*/
+
+bool DRV_I2C_ForcedWriteTransfer(
     const DRV_HANDLE handle,
     uint16_t address,
     void* const buffer,
