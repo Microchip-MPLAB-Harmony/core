@@ -195,8 +195,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">077DA841A7628162AD3E122CB0093EB0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">077DA841A7628162AD3E122CB0093EB0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E9030F94C6487F04D06EF9FBDCB1B43A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E9030F94C6487F04D06EF9FBDCB1B43A</UserChecksum>
         </File>
         <File dnOrder="24">
           <Type dnOrder="0">SOURCE</Type>
@@ -227,8 +227,8 @@
           <Name dnOrder="1">plib_nvm.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/nvm/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/nvm/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">86983E5037598AB3B7DC03C947CE1249</GeneratedChecksum>
-          <UserChecksum dnOrder="5">86983E5037598AB3B7DC03C947CE1249</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3353BF9FF553C01289CF39BC649527C9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3353BF9FF553C01289CF39BC649527C9</UserChecksum>
         </File>
         <File dnOrder="28">
           <Type dnOrder="0">SOURCE</Type>
@@ -611,8 +611,8 @@
           <Name dnOrder="1">plib_coretimer.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/coretimer/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/coretimer/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B56E73929AA8C9899F0BA761F7053A87</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B56E73929AA8C9899F0BA761F7053A87</UserChecksum>
+          <GeneratedChecksum dnOrder="4">77E2C83A700CD1F724CFD90ED3AA2B71</GeneratedChecksum>
+          <UserChecksum dnOrder="5">77E2C83A700CD1F724CFD90ED3AA2B71</UserChecksum>
         </File>
         <File dnOrder="76">
           <Type dnOrder="0">HEADER</Type>
@@ -635,8 +635,8 @@
           <Name dnOrder="1">plib_nvm.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/peripheral/nvm/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/nvm/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AF906E8AE940B14FDD036A1D7FF58A53</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AF906E8AE940B14FDD036A1D7FF58A53</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A9F454F7DCC362E6C24EDAE86127E945</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A9F454F7DCC362E6C24EDAE86127E945</UserChecksum>
         </File>
         <File dnOrder="79">
           <Type dnOrder="0">HEADER</Type>
@@ -852,14 +852,14 @@
         <Setting append="true" category="C32" delimiter=";" dnOrder="1" key="extra-include-directories" value="../src;../src/config/pic32mz_ef_sk_freertos;../src/packs/PIC32MZ2048EFH144_DFP;;../src/mips"/>
         <Setting append="true" category="C32-AS" delimiter=";" dnOrder="2" key="extra-include-directories-for-assembler" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MZ;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mz_ef_sk_freertos;"/>
         <Setting append="true" category="C32-AS" delimiter=";" dnOrder="3" key="extra-include-directories-for-preprocessor" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MZ;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mz_ef_sk_freertos;"/>
-        <Setting category="C32-LD" dnOrder="4" key="heap-size" value="0"/>
+        <Setting category="C32-LD" dnOrder="4" key="heap-size" value="512"/>
         <Setting category="C32-LD" dnOrder="5" key="no-device-startup-code" value="true"/>
         <Setting category="C32-LD" dnOrder="6" key="preprocessor-macros" value=""/>
       </Settings>
     </Manifest>
     <Settings dnOrder="4">
-      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.4.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.0.28\atdf\PIC32MZ2048EFH144.atdf"/>
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.0.39\atdf\PIC32MZ2048EFH144.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
