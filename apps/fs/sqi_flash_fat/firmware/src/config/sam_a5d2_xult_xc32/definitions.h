@@ -48,8 +48,8 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "bsp/bsp.h"
 #include "peripheral/qspi/plib_qspi0.h"
+#include "bsp/bsp.h"
 #include "driver/mx25l/drv_mx25l.h"
 #include "system/fs/sys_fs.h"
 #include "system/fs/sys_fs_media_manager.h"
