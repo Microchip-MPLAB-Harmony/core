@@ -79,11 +79,15 @@ const DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
     /* I2C PLib Transfer Write Add function */
     .write = (DRV_I2C_PLIB_WRITE)FLEXCOM0_TWI_Write,
 
+
     /* I2C PLib Transfer Write Read Add function */
     .writeRead = (DRV_I2C_PLIB_WRITE_READ)FLEXCOM0_TWI_WriteRead,
 
     /* I2C PLib Transfer Status function */
     .errorGet = (DRV_I2C_PLIB_ERROR_GET)FLEXCOM0_TWI_ErrorGet,
+
+    /* I2C PLib Transfer Setup function */
+    .transferSetup = (DRV_I2C_PLIB_TRANSFER_SETUP)FLEXCOM0_TWI_TransferSetup,
 
     /* I2C PLib Callback Register */
     .callbackRegister = (DRV_I2C_PLIB_CALLBACK_REGISTER)FLEXCOM0_TWI_CallbackRegister,
@@ -169,9 +173,13 @@ void SYS_Initialize ( void* data )
 	PIO_Initialize();
 
 	BSP_Initialize();
-MMU_Initialize();
+    MMU_Initialize();
 
     INT_Initialize();
+    
+    /* Disable WDT   */
+    WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk;
+
     FLEXCOM0_TWI_Initialize();
 
 
