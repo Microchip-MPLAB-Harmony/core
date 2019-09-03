@@ -136,7 +136,7 @@ const SYS_TIME_INIT sysTimeInitData =
 
 void SYS_Initialize ( void* data )
 {
-    NVMCTRL_Initialize( );
+    NVMCTRL_REGS->NVMCTRL_CTRLB = NVMCTRL_CTRLB_RWS(3);
 
   
     PORT_Initialize();
@@ -146,11 +146,13 @@ void SYS_Initialize ( void* data )
 
     SERCOM3_USART_Initialize();
 
+    NVMCTRL_Initialize( );
+
     EVSYS_Initialize();
 
-	BSP_Initialize();
     TC3_TimerInitialize();
 
+	BSP_Initialize();
 
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
