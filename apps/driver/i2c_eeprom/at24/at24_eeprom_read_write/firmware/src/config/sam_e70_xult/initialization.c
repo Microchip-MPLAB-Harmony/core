@@ -152,7 +152,7 @@ void SYS_Initialize ( void* data )
 
     EFC_Initialize();
   
-    CLK_Initialize();
+    CLOCK_Initialize();
 	PIO_Initialize();
 
 	BSP_Initialize();
