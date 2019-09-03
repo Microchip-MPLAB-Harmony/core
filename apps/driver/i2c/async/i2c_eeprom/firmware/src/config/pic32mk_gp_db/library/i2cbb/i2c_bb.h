@@ -91,6 +91,8 @@ bool I2C_BB_WriteRead(uint16_t address, uint8_t *wdata, size_t wlength, uint8_t 
 
 I2CBB_ERROR I2C_BB_ErrorGet(void);
 
+bool I2C_BB_TransferSetup(I2CBB_TRANSFER_SETUP* setup, uint32_t tmrSrcClkFreq );
+
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

@@ -203,16 +203,24 @@ typedef struct
     SYS_PORT_PIN                           i2cbbSDAPin;
 
     SYS_PORT_PIN                           i2cbbSCLPin;
-#if (TIME_HW_COUNTER_WIDTH == 16)
-    uint16_t                               i2cbbBaudRate;
-#else
-    uint32_t                               i2cbbBaudRate;
-#endif
+
+    uint32_t                               i2cClockSpeed;
 }I2C_BB_INIT;
+
+typedef struct
+{
+    /* I2C Clock Speed */
+    uint32_t clkSpeed;
+
+} I2CBB_TRANSFER_SETUP;
 
 typedef struct _I2CBB_OBJ
 {
     I2CBB_BUS_STATE        i2cState;
+
+    uint32_t               i2cClockSpeed;
+
+    uint32_t               timerSrcClkFreq;
 
     uint16_t               I2CSWCounter;
 
