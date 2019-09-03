@@ -5,249 +5,271 @@
     <UniqueComponent dnOrder="1" id="cmsis"/>
     <UniqueComponent dnOrder="2" id="core">
       <Symbols dnOrder="0">
-        <KeyValueSet dnOrder="0" id="COMPILER_CHOICE">
+        <String dnOrder="0" id="CMCC_INSTANCE_NAME">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="CMCC"/>
+          </Values>
+        </String>
+        <KeyValueSet dnOrder="1" id="COMPILER_CHOICE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="1" id="DEVICE_BOOT">
+        <Menu dnOrder="2" id="CoreIARMenu">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Menu>
+        <KeyValueSet dnOrder="3" id="DEVICE_BOOT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="2" id="DEVICE_SECURITY">
+        <KeyValueSet dnOrder="4" id="DEVICE_SECURITY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="3" id="DEVICE_TCM_SIZE">
+        <KeyValueSet dnOrder="5" id="DEVICE_TCM_SIZE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </KeyValueSet>
-        <Boolean dnOrder="4" id="NVIC_-1_0_ENABLE">
+        <Boolean dnOrder="6" id="NVIC_-1_0_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="5" id="NVIC_-1_0_HANDLER">
+        <String dnOrder="7" id="NVIC_-1_0_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="xPortSysTickHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="6" id="NVIC_-1_0_HANDLER_LOCK">
+        <Boolean dnOrder="8" id="NVIC_-1_0_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Combo dnOrder="7" id="NVIC_-1_0_PRIORITY">
+        <Combo dnOrder="9" id="NVIC_-1_0_PRIORITY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="7"/>
           </Values>
         </Combo>
-        <Boolean dnOrder="8" id="NVIC_-1_0_PRIORITY_LOCK">
+        <Boolean dnOrder="10" id="NVIC_-1_0_PRIORITY_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="9" id="NVIC_-2_0_ENABLE">
+        <Boolean dnOrder="11" id="NVIC_-2_0_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="10" id="NVIC_-2_0_HANDLER">
+        <String dnOrder="12" id="NVIC_-2_0_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="xPortPendSVHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="11" id="NVIC_-2_0_HANDLER_LOCK">
+        <Boolean dnOrder="13" id="NVIC_-2_0_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="12" id="NVIC_-5_0_ENABLE">
+        <Boolean dnOrder="14" id="NVIC_-5_0_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="13" id="NVIC_-5_0_HANDLER">
+        <String dnOrder="15" id="NVIC_-5_0_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="vPortSVCHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="14" id="NVIC_-5_0_HANDLER_LOCK">
+        <Boolean dnOrder="16" id="NVIC_-5_0_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="15" id="NVIC_-5_0_PRIORITY_LOCK">
+        <Boolean dnOrder="17" id="NVIC_-5_0_PRIORITY_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="16" id="NVIC_4_0_ENABLE">
+        <Boolean dnOrder="18" id="NVIC_4_0_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="17" id="NVIC_4_0_HANDLER">
+        <String dnOrder="19" id="NVIC_4_0_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="WDT_Handler"/>
           </Values>
         </String>
-        <Boolean dnOrder="18" id="NVIC_4_0_HANDLER_LOCK">
+        <Boolean dnOrder="20" id="NVIC_4_0_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="19" id="PIN_17_PERIPHERAL_FUNCTION">
+        <String dnOrder="21" id="PIN_17_PERIPHERAL_FUNCTION">
           <Values dnOrder="0">
             <User dnOrder="0" value="LED_AL"/>
           </Values>
         </String>
-        <String dnOrder="20" id="PIN_61_PERIPHERAL_FUNCTION">
+        <String dnOrder="22" id="PIN_61_PERIPHERAL_FUNCTION">
           <Values dnOrder="0">
             <User dnOrder="0" value="SWITCH_AL"/>
           </Values>
         </String>
-        <Hex dnOrder="21" id="PIOA_ABCDSR1_VALUE">
+        <Hex dnOrder="23" id="PIOA_ABCDSR1_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Hex dnOrder="22" id="PIOA_ABCDSR2_VALUE">
+        <Hex dnOrder="24" id="PIOA_ABCDSR2_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Boolean dnOrder="23" id="PIOA_CLOCK_ENABLE">
+        <Boolean dnOrder="25" id="PIOA_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="24" id="PIOA_CLOCK_FREQUENCY">
+        <Integer dnOrder="26" id="PIOA_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="119996416"/>
           </Values>
         </Integer>
-        <Hex dnOrder="25" id="PIOA_OER_VALUE">
+        <Hex dnOrder="27" id="PIOA_OER_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="64"/>
           </Values>
         </Hex>
-        <Hex dnOrder="26" id="PIOA_PDR_VALUE">
+        <Hex dnOrder="28" id="PIOA_PDR_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Hex dnOrder="27" id="PIOA_SODR_VALUE">
+        <Hex dnOrder="29" id="PIOA_PUER_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="4"/>
+          </Values>
+        </Hex>
+        <Hex dnOrder="30" id="PIOA_SODR_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="68"/>
           </Values>
         </Hex>
-        <Boolean dnOrder="28" id="PIOB_CLOCK_ENABLE">
+        <Boolean dnOrder="31" id="PIOB_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="29" id="PIOB_CLOCK_FREQUENCY">
+        <Integer dnOrder="32" id="PIOB_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="119996416"/>
           </Values>
         </Integer>
-        <Hex dnOrder="30" id="PMC_PCER0">
+        <Hex dnOrder="33" id="PMC_PCER0">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="6144"/>
           </Values>
         </Hex>
-        <Boolean dnOrder="31" id="PendSV_INTERRUPT_ENABLE">
+        <Boolean dnOrder="34" id="PendSV_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="32" id="PendSV_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="35" id="PendSV_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="33" id="PendSV_INTERRUPT_HANDLER">
+        <String dnOrder="36" id="PendSV_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="xPortPendSVHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="34" id="PendSV_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="37" id="PendSV_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="35" id="SVCall_INTERRUPT_ENABLE">
+        <KeyValueSet dnOrder="38" id="SUPC_CR_MDXTALSEL">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="1"/>
+          </Values>
+        </KeyValueSet>
+        <Boolean dnOrder="39" id="SVCall_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="36" id="SVCall_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="40" id="SVCall_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="37" id="SVCall_INTERRUPT_HANDLER">
+        <String dnOrder="41" id="SVCall_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="vPortSVCHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="38" id="SVCall_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="42" id="SVCall_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
           </Values>
         </Boolean>
-        <Comment dnOrder="39" id="SYSTICK_COMMENT">
+        <Comment dnOrder="43" id="SYSTICK_COMMENT">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Comment>
-        <Boolean dnOrder="40" id="SysTick_INTERRUPT_ENABLE">
+        <Boolean dnOrder="44" id="SysTick_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="41" id="SysTick_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="45" id="SysTick_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="42" id="SysTick_INTERRUPT_HANDLER">
+        <String dnOrder="46" id="SysTick_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="xPortSysTickHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="43" id="SysTick_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="47" id="SysTick_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="44" id="WDT_INTERRUPT_ENABLE">
+        <Boolean dnOrder="48" id="WDT_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="45" id="WDT_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="49" id="WDT_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="46" id="WDT_INTERRUPT_HANDLER">
+        <String dnOrder="50" id="WDT_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="WDT_Handler"/>
           </Values>
         </String>
-        <Boolean dnOrder="47" id="WDT_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="51" id="WDT_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="48" id="systickEnable">
+        <Boolean dnOrder="52" id="systickEnable">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">false</Value>
