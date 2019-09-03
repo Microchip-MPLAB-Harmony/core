@@ -61,6 +61,30 @@
 // *****************************************************************************
 // *****************************************************************************
 
+/*** Macros for APP_EEPROM1_WP pin ***/
+#define APP_EEPROM1_WP_Set()               (LATASET = (1<<7))
+#define APP_EEPROM1_WP_Clear()             (LATACLR = (1<<7))
+#define APP_EEPROM1_WP_Toggle()            (LATAINV= (1<<7))
+#define APP_EEPROM1_WP_Get()               ((PORTA >> 7) & 0x1)
+#define APP_EEPROM1_WP_OutputEnable()      (TRISACLR = (1<<7))
+#define APP_EEPROM1_WP_InputEnable()       (TRISASET = (1<<7))
+#define APP_EEPROM1_WP_PIN                  GPIO_PIN_RA7
+/*** Macros for APP_EEPROM1_HOLD pin ***/
+#define APP_EEPROM1_HOLD_Set()               (LATBSET = (1<<14))
+#define APP_EEPROM1_HOLD_Clear()             (LATBCLR = (1<<14))
+#define APP_EEPROM1_HOLD_Toggle()            (LATBINV= (1<<14))
+#define APP_EEPROM1_HOLD_Get()               ((PORTB >> 14) & 0x1)
+#define APP_EEPROM1_HOLD_OutputEnable()      (TRISBCLR = (1<<14))
+#define APP_EEPROM1_HOLD_InputEnable()       (TRISBSET = (1<<14))
+#define APP_EEPROM1_HOLD_PIN                  GPIO_PIN_RB14
+/*** Macros for APP_EEPROM2_WP pin ***/
+#define APP_EEPROM2_WP_Set()               (LATASET = (1<<11))
+#define APP_EEPROM2_WP_Clear()             (LATACLR = (1<<11))
+#define APP_EEPROM2_WP_Toggle()            (LATAINV= (1<<11))
+#define APP_EEPROM2_WP_Get()               ((PORTA >> 11) & 0x1)
+#define APP_EEPROM2_WP_OutputEnable()      (TRISACLR = (1<<11))
+#define APP_EEPROM2_WP_InputEnable()       (TRISASET = (1<<11))
+#define APP_EEPROM2_WP_PIN                  GPIO_PIN_RA11
 /*** Macros for APP_EEPROM1_CS pin ***/
 #define APP_EEPROM1_CS_Set()               (LATDSET = (1<<8))
 #define APP_EEPROM1_CS_Clear()             (LATDCLR = (1<<8))
@@ -77,6 +101,14 @@
 #define APP_EEPROM2_CS_OutputEnable()      (TRISCCLR = (1<<6))
 #define APP_EEPROM2_CS_InputEnable()       (TRISCSET = (1<<6))
 #define APP_EEPROM2_CS_PIN                  GPIO_PIN_RC6
+/*** Macros for APP_EEPROM2_HOLD pin ***/
+#define APP_EEPROM2_HOLD_Set()               (LATBSET = (1<<12))
+#define APP_EEPROM2_HOLD_Clear()             (LATBCLR = (1<<12))
+#define APP_EEPROM2_HOLD_Toggle()            (LATBINV= (1<<12))
+#define APP_EEPROM2_HOLD_Get()               ((PORTB >> 12) & 0x1)
+#define APP_EEPROM2_HOLD_OutputEnable()      (TRISBCLR = (1<<12))
+#define APP_EEPROM2_HOLD_InputEnable()       (TRISBSET = (1<<12))
+#define APP_EEPROM2_HOLD_PIN                  GPIO_PIN_RB12
 
 
 // *****************************************************************************

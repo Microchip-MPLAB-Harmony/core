@@ -91,8 +91,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_mcj_curiosity_pro/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0E8B7AFD9B6B2D6F6F6ACDC398B442A8</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0E8B7AFD9B6B2D6F6F6ACDC398B442A8</UserChecksum>
+          <GeneratedChecksum dnOrder="4">098B9BD36F08DB7B76D6D6AD6621F589</GeneratedChecksum>
+          <UserChecksum dnOrder="5">098B9BD36F08DB7B76D6D6AD6621F589</UserChecksum>
         </File>
         <File dnOrder="11">
           <Type dnOrder="0">SOURCE</Type>
@@ -115,8 +115,8 @@
           <Name dnOrder="1">plib_gpio.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_mcj_curiosity_pro/peripheral/gpio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/gpio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">890BCAE5149F2037BDBAA318A49BCF12</GeneratedChecksum>
-          <UserChecksum dnOrder="5">890BCAE5149F2037BDBAA318A49BCF12</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6AD3AA2C98C25C88D484223C369FBBF0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6AD3AA2C98C25C88D484223C369FBBF0</UserChecksum>
         </File>
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
@@ -299,8 +299,8 @@
           <Name dnOrder="1">plib_gpio.h</Name>
           <LogicalPath dnOrder="2">config/pic32mk_mcj_curiosity_pro/peripheral/gpio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/gpio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A10E86DE0DFA1236F72796E695E02531</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A10E86DE0DFA1236F72796E695E02531</UserChecksum>
+          <GeneratedChecksum dnOrder="4">734AD742043F8D97FAE4EFB093F5B18F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">734AD742043F8D97FAE4EFB093F5B18F</UserChecksum>
         </File>
         <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>
@@ -416,7 +416,7 @@
     </Manifest>
     <Settings dnOrder="4">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MK-MC_DFP\1.0.45\atdf\PIC32MK0512MCJ064.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MK-MC_DFP\1.1.68\atdf\PIC32MK0512MCJ064.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
