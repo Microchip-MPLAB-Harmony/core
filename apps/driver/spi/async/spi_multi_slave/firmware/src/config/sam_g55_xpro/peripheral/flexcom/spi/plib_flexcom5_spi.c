@@ -53,10 +53,8 @@
 // *****************************************************************************
 // *****************************************************************************
 
-
 /* Global object to save FLEXCOM SPI Exchange related data */
 FLEXCOM_SPI_OBJECT flexcom5SpiObj;
-
 
 void FLEXCOM5_SPI_Initialize( void )
 {
