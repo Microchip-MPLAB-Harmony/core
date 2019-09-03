@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="HeaderFiles"
-                   displayName="Header Files"
-                   projectFiles="true">
+    <logicalFolder name="f1" displayName="Header Files" projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_rh71_ek" projectFiles="true">
           <logicalFolder name="f4" displayName="bsp" projectFiles="true">
@@ -135,13 +133,12 @@
       <itemPath>../src/app_client2.h</itemPath>
       <itemPath>../src/app_monitor.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="LinkerScript"
-                   displayName="Linker Files"
-                   projectFiles="true">
+    <logicalFolder name="f4" displayName="Important Files" projectFiles="true">
+      <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder name="SourceFiles"
-                   displayName="Source Files"
-                   projectFiles="true">
+    <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="f3" displayName="Source Files" projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_rh71_ek" projectFiles="true">
           <logicalFolder name="f5" displayName="bsp" projectFiles="true">
@@ -196,11 +193,6 @@
       <itemPath>../src/app_client2.c</itemPath>
       <itemPath>../src/app_monitor.c</itemPath>
     </logicalFolder>
-    <logicalFolder name="ExternalFiles"
-                   displayName="Important Files"
-                   projectFiles="false">
-      <itemPath>Makefile</itemPath>
-    </logicalFolder>
   </logicalFolder>
   <sourceRootList>
     <Elem>../src</Elem>
@@ -220,7 +212,7 @@
       </toolsSet>
       <packs>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
-        <pack name="SAMRH71_DFP" vendor="Microchip" version="0.1.24"/>
+        <pack name="SAMRH71_DFP" vendor="Microchip" version="0.1.25"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -891,9 +883,9 @@
       </Simulator>
       <samice>
         <property key="AutoSelectMemRanges" value="auto"/>
-        <property key="jtagcommunication.autoselectspeed" value="false"/>
-        <property key="jtagcommunication.method" value="swd"/>
-        <property key="jtagcommunication.speed" value="4000"/>
+        <property key="communication.autoselectspeed" value="true"/>
+        <property key="communication.interface" value="swd"/>
+        <property key="communication.speed" value="4"/>
         <property key="memories.bootflash" value="true"/>
         <property key="memories.configurationmemory" value="true"/>
         <property key="memories.eeprom" value="true"/>
