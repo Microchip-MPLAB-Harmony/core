@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-07-29T09:06:01Z */
+/* file generated from device description version 2019-08-23T08:32:38Z */
 #ifndef _SAMDA1_RTC_COMPONENT_H_
 #define _SAMDA1_RTC_COMPONENT_H_
 
