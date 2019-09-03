@@ -67,28 +67,36 @@ void PIO_Initialize ( void )
 	PIOA_REGS->PIO_MSKR = 0xfc00000;
 	PIOA_REGS->PIO_CFGR = 0x6;
 	
+ /* Port A Peripheral function GPIO configuration */
+	PIOA_REGS->PIO_MSKR = 0x20000;
+	PIOA_REGS->PIO_CFGR = 0x0;
+	
  /* Port A Pin 17 configuration */
 	PIOA_REGS->PIO_MSKR = 0x20000;
-	PIOA_REGS->PIO_CFGR |= 0x100;
+	PIOA_REGS->PIO_CFGR = (PIOA_REGS->PIO_CFGR & (PIO_CFGR_FUNC_Msk)) | 0x100;
 	
  /* Port A Latch configuration */
 	PIOA_REGS->PIO_SODR = 0x20000;
 	
+ /* Port B Peripheral function GPIO configuration */
+	PIOB_REGS->PIO_MSKR = 0x261;
+	PIOB_REGS->PIO_CFGR = 0x0;
+	
  /* Port B Pin 0 configuration */
 	PIOB_REGS->PIO_MSKR = 0x1;
-	PIOB_REGS->PIO_CFGR |= 0x100;
+	PIOB_REGS->PIO_CFGR = (PIOB_REGS->PIO_CFGR & (PIO_CFGR_FUNC_Msk)) | 0x100;
 	
  /* Port B Pin 5 configuration */
 	PIOB_REGS->PIO_MSKR = 0x20;
-	PIOB_REGS->PIO_CFGR |= 0x100;
+	PIOB_REGS->PIO_CFGR = (PIOB_REGS->PIO_CFGR & (PIO_CFGR_FUNC_Msk)) | 0x100;
 	
  /* Port B Pin 6 configuration */
 	PIOB_REGS->PIO_MSKR = 0x40;
-	PIOB_REGS->PIO_CFGR |= 0x100;
+	PIOB_REGS->PIO_CFGR = (PIOB_REGS->PIO_CFGR & (PIO_CFGR_FUNC_Msk)) | 0x100;
 	
  /* Port B Pin 9 configuration */
 	PIOB_REGS->PIO_MSKR = 0x200;
-	PIOB_REGS->PIO_CFGR |= 0x200;
+	PIOB_REGS->PIO_CFGR = (PIOB_REGS->PIO_CFGR & (PIO_CFGR_FUNC_Msk)) | 0x200;
 	
  /* Port B Latch configuration */
 	PIOB_REGS->PIO_SODR = 0x61;
