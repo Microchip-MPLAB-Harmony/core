@@ -172,9 +172,13 @@ void SYS_Initialize ( void* data )
 	PIO_Initialize();
 
 	BSP_Initialize();
-MMU_Initialize();
+    MMU_Initialize();
 
     INT_Initialize();
+    
+    /* Disable WDT   */
+    WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk;
+
 	SDMMC0_Initialize();
 
  
