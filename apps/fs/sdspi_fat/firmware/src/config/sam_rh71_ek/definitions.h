@@ -59,14 +59,14 @@
 #include "peripheral/xdmac/plib_xdmac.h"
 #include "peripheral/tc/plib_tc0.h"
 #include "driver/sdspi/drv_sdspi.h"
-#include "bsp/bsp.h"
+#include "peripheral/flexcom/spi/plib_flexcom2_spi.h"
 #include "system/int/sys_int.h"
 #include "system/ports/sys_ports.h"
 #include "system/cache/sys_cache.h"
 #include "system/dma/sys_dma.h"
 #include "osal/osal.h"
 #include "system/time/sys_time.h"
-#include "peripheral/flexcom/spi/plib_flexcom2_spi.h"
+#include "bsp/bsp.h"
 #include "app.h"
 
 

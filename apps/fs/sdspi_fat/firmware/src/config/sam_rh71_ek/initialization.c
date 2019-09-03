@@ -234,9 +234,9 @@ void SYS_Initialize ( void* data )
     TC0_CH0_TimerInitialize(); 
      
     
-	BSP_Initialize();
     FLEXCOM2_SPI_Initialize();
 
+	BSP_Initialize();
 
     /* Initialize SDSPI0 Driver Instance */
     sysObj.drvSDSPI0 = DRV_SDSPI_Initialize(DRV_SDSPI_INDEX_0, (SYS_MODULE_INIT *)&drvSDSPI0InitData);
