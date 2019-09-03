@@ -88,6 +88,9 @@ typedef enum
     /* Indicates this buffer was submitted by a write followed by read function */
     DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_READ = 1 << 2,
 
+    /* Indicates this buffer was submitted by a force write function */
+    DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_FORCED = 1 << 3,
+
 } DRV_I2C_TRANSFER_OBJ_FLAGS;
 
 // *****************************************************************************
@@ -200,6 +203,12 @@ typedef struct
     /* PLIB API list that will be used by the driver to access the hardware */
     const DRV_I2C_PLIB_INTERFACE* i2cPlib;
 
+    /* Saves the initial value of the I2C clock speed which is assigned to a client when it opens the I2C driver */
+    uint32_t                    initI2CClockSpeed;
+
+    /* Current transfer setup will be used to verify change in the transfer setup by client */
+    DRV_I2C_TRANSFER_SETUP      currentTransferSetup;
+
     /* Interrupt Sources of I2C */
     const DRV_I2C_INTERRUPT_SOURCES* interruptSources;
 
@@ -275,6 +284,9 @@ typedef struct
 
     /* Client handle assigned to this client object when it was opened */
     DRV_HANDLE                      clientHandle;
+
+    /* Client specific transfer setup */
+    DRV_I2C_TRANSFER_SETUP          transferSetup;
 
 } DRV_I2C_CLIENT_OBJ;
 
