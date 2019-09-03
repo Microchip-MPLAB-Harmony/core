@@ -73,6 +73,28 @@
 // *****************************************************************************
 
 // *****************************************************************************
+/* I2C Driver Transfer Setup Data
+
+  Summary:
+    Defines the data required to setup the I2C transfer
+
+  Description:
+    This data type defines the data required to setup the I2C transfer. The
+    data is passed to the DRV_I2C_TransferSetup API to setup the I2C peripheral
+    settings dynamically.
+
+  Remarks:
+    None.
+*/
+
+typedef struct
+{
+    /* clock speed */
+    uint32_t clockSpeed;
+
+} DRV_I2C_TRANSFER_SETUP;
+
+// *****************************************************************************
 /* I2C Driver Error
 
   Summary:
@@ -102,9 +124,12 @@ typedef bool (* DRV_I2C_PLIB_READ)( uint16_t, uint8_t *, uint32_t );
 
 typedef bool (* DRV_I2C_PLIB_WRITE)( uint16_t, uint8_t *, uint32_t );
 
+
 typedef bool (* DRV_I2C_PLIB_WRITE_READ)( uint16_t, uint8_t *, uint32_t, uint8_t *, uint32_t );
 
 typedef DRV_I2C_ERROR (* DRV_I2C_PLIB_ERROR_GET)( void );
+
+typedef bool (* DRV_I2C_PLIB_TRANSFER_SETUP)(DRV_I2C_TRANSFER_SETUP* setup, uint32_t srcClkFreq);
 
 typedef void (* DRV_I2C_PLIB_CALLBACK_REGISTER)(DRV_I2C_PLIB_CALLBACK, uintptr_t);
 
@@ -152,11 +177,15 @@ typedef struct
     /* I2C PLib write API */
     DRV_I2C_PLIB_WRITE                          write;
 
+
     /* I2C PLib writeRead API */
     DRV_I2C_PLIB_WRITE_READ                     writeRead;
 
     /* I2C PLib transfer */
     DRV_I2C_PLIB_ERROR_GET                      errorGet;
+
+    /* I2C PLib Transfer Setup function */
+    DRV_I2C_PLIB_TRANSFER_SETUP                 transferSetup;
 
     /* I2C PLib callback register API */
     DRV_I2C_PLIB_CALLBACK_REGISTER              callbackRegister;

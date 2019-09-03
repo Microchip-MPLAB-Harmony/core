@@ -59,10 +59,10 @@
 #include "peripheral/twihs/plib_twihs1.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "driver/i2c/drv_i2c.h"
 #include "system/int/sys_int.h"
 #include "system/cache/sys_cache.h"
 #include "osal/osal.h"
-#include "driver/i2c/drv_i2c.h"
 #include "app.h"
 
 
