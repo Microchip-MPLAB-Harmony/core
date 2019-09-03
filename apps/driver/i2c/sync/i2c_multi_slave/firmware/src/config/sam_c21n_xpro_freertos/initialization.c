@@ -93,11 +93,15 @@ const DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
     /* I2C PLib Transfer Write Add function */
     .write = (DRV_I2C_PLIB_WRITE)SERCOM1_I2C_Write,
 
+
     /* I2C PLib Transfer Write Read Add function */
     .writeRead = (DRV_I2C_PLIB_WRITE_READ)SERCOM1_I2C_WriteRead,
 
     /* I2C PLib Transfer Status function */
     .errorGet = (DRV_I2C_PLIB_ERROR_GET)SERCOM1_I2C_ErrorGet,
+
+    /* I2C PLib Transfer Setup function */
+    .transferSetup = (DRV_I2C_PLIB_TRANSFER_SETUP)SERCOM1_I2C_TransferSetup,
 
     /* I2C PLib Callback Register */
     .callbackRegister = (DRV_I2C_PLIB_CALLBACK_REGISTER)SERCOM1_I2C_CallbackRegister,
@@ -214,13 +218,15 @@ const SYS_CONSOLE_INIT sysConsole0Init =
 
 void SYS_Initialize ( void* data )
 {
-    NVMCTRL_Initialize( );
+    NVMCTRL_REGS->NVMCTRL_CTRLB = NVMCTRL_CTRLB_RWS(3);
 
   
     PORT_Initialize();
 
     CLOCK_Initialize();
 
+
+    NVMCTRL_Initialize( );
 
     SERCOM1_I2C_Initialize();
 
