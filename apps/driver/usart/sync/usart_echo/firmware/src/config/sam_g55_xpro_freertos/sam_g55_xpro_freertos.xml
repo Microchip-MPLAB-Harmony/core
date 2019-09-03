@@ -262,65 +262,84 @@
             <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="51" id="SVCall_INTERRUPT_ENABLE">
+        <KeyValueSet dnOrder="51" id="SUPC_CR_MDXTALSEL">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="1"/>
+          </Values>
+        </KeyValueSet>
+        <Boolean dnOrder="52" id="SVCall_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="52" id="SVCall_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="53" id="SVCall_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="53" id="SVCall_INTERRUPT_HANDLER">
+        <String dnOrder="54" id="SVCall_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="vPortSVCHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="54" id="SVCall_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="55" id="SVCall_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="55" id="SysTick_INTERRUPT_ENABLE">
+        <Comment dnOrder="56" id="SYSTICK_COMMENT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Comment>
+        <Boolean dnOrder="57" id="SysTick_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="56" id="SysTick_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="58" id="SysTick_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="57" id="SysTick_INTERRUPT_HANDLER">
+        <String dnOrder="59" id="SysTick_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="xPortSysTickHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="58" id="SysTick_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="60" id="SysTick_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="59" id="WDT_INTERRUPT_ENABLE">
+        <Boolean dnOrder="61" id="WDT_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="60" id="WDT_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="62" id="WDT_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="61" id="WDT_INTERRUPT_HANDLER">
+        <String dnOrder="63" id="WDT_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="WDT_Handler"/>
           </Values>
         </String>
-        <Boolean dnOrder="62" id="WDT_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="64" id="WDT_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
+        </Boolean>
+        <Boolean dnOrder="65" id="systickEnable">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
         </Boolean>
       </Symbols>
     </UniqueComponent>
@@ -332,34 +351,6 @@
             <Dynamic dnOrder="0" id="drv_usart" value="Synchronous"/>
           </Values>
         </Combo>
-        <File dnOrder="1" id="USART_ASYNC_LOCAL">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="2" id="USART_ASYNC_SOURCE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="3" id="USART_SYNC_LOCAL">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="4" id="USART_SYNC_SOURCE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
       </Symbols>
       <Instances dnOrder="1">
         <InstanceComponent dnOrder="0" id="drv_usart" instance="0">
@@ -369,13 +360,6 @@
                 <Dynamic dnOrder="0" id="drv_usart_0" value="FLEXCOM7"/>
               </Values>
             </String>
-            <Integer dnOrder="1" id="DRV_USART_QUEUE_SIZE">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="visible">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
-            </Integer>
           </Symbols>
           <Attachments dnOrder="1">
             <DirectDependency dnOrder="0" id="drv_usart_UART_dependency">
@@ -403,12 +387,19 @@
     </UniqueComponent>
     <UniqueComponent dnOrder="6" id="flexcom7">
       <Symbols dnOrder="0">
-        <Integer dnOrder="0" id="BRG_VALUE">
+        <Integer dnOrder="0" id="BAUD_RATE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Integer>
+        <Integer dnOrder="1" id="BRG_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="flexcom7" value="65"/>
           </Values>
         </Integer>
-        <File dnOrder="1" id="FLEXCOM7_COMMON_HEADER">
+        <File dnOrder="2" id="FLEXCOM7_COMMON_HEADER">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">/peripheral/flexcom/usart/</Value>
@@ -427,130 +418,215 @@
             </String>
           </Attributes>
         </File>
-        <File dnOrder="2" id="FLEXCOM7_HEADER">
+        <File dnOrder="3" id="FLEXCOM7_HEADER">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">/peripheral/flexcom/usart/</Value>
             </String>
-            <String dnOrder="1" id="name">
+            <Boolean dnOrder="1" id="markup">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+            <String dnOrder="2" id="name">
               <Value dnOrder="0">plib_flexcom7_usart.h</Value>
             </String>
-            <String dnOrder="2" id="project">
+            <String dnOrder="3" id="project">
               <Value dnOrder="0">config/sam_g55_xpro_freertos/peripheral/flexcom/usart/</Value>
             </String>
-            <String dnOrder="3" id="source">
+            <String dnOrder="4" id="source">
               <Value dnOrder="0">../peripheral/flexcom_11277/templates/plib_flexcom_usart.h.ftl</Value>
             </String>
-            <String dnOrder="4" id="type">
+            <String dnOrder="5" id="type">
               <Value dnOrder="0">HEADER</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="3" id="FLEXCOM7_SOURCE">
+        <File dnOrder="4" id="FLEXCOM7_SOURCE">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="dest">
               <Value dnOrder="0">/peripheral/flexcom/usart/</Value>
             </String>
-            <String dnOrder="1" id="name">
+            <Boolean dnOrder="1" id="markup">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+            <String dnOrder="2" id="name">
               <Value dnOrder="0">plib_flexcom7_usart.c</Value>
             </String>
-            <String dnOrder="2" id="project">
+            <String dnOrder="3" id="project">
               <Value dnOrder="0">config/sam_g55_xpro_freertos/peripheral/flexcom/usart/</Value>
             </String>
-            <String dnOrder="3" id="source">
+            <String dnOrder="4" id="source">
               <Value dnOrder="0">../peripheral/flexcom_11277/templates/plib_flexcom_usart.c.ftl</Value>
             </String>
           </Attributes>
         </File>
-        <KeyValueSet dnOrder="4" id="FLEXCOM_MODE">
-          <Values dnOrder="0">
+        <KeyValueSet dnOrder="5" id="FLEXCOM_MODE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="readOnly">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="flexcom7" value="1"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="5" id="FLEXCOM_SPI_CSR_SCBR_VALUE">
+        <Integer dnOrder="6" id="FLEXCOM_SPI_CSR_SCBR_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="flexcom7" value="119"/>
           </Values>
         </Integer>
-        <Integer dnOrder="6" id="FLEXCOM_SPI_PERIPHERAL_CLOCK">
+        <Integer dnOrder="7" id="FLEXCOM_SPI_PERIPHERAL_CLOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="flexcom7" value="119996416"/>
           </Values>
         </Integer>
-        <File dnOrder="7" id="FLEXCOM_SYS_DEF">
+        <File dnOrder="8" id="FLEXCOM_SYS_DEF">
           <Attributes dnOrder="0">
-            <String dnOrder="0" id="name">
+            <Boolean dnOrder="0" id="markup">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+            <String dnOrder="1" id="name">
               <Value dnOrder="0">core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES</Value>
             </String>
-            <String dnOrder="1" id="source">
+            <String dnOrder="2" id="source">
               <Value dnOrder="0">../peripheral/flexcom_11277/templates/system/definitions.h.ftl</Value>
             </String>
-            <String dnOrder="2" id="type">
+            <String dnOrder="3" id="type">
               <Value dnOrder="0">STRING</Value>
             </String>
           </Attributes>
         </File>
-        <File dnOrder="8" id="FLEXCOM_SYS_INIT">
+        <File dnOrder="9" id="FLEXCOM_SYS_INIT">
           <Attributes dnOrder="0">
-            <String dnOrder="0" id="name">
+            <Boolean dnOrder="0" id="markup">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+            <String dnOrder="1" id="name">
               <Value dnOrder="0">core.LIST_SYSTEM_INIT_C_SYS_INITIALIZE_PERIPHERALS</Value>
             </String>
-            <String dnOrder="1" id="source">
+            <String dnOrder="2" id="source">
               <Value dnOrder="0">../peripheral/flexcom_11277/templates/system/initialization.c.ftl</Value>
             </String>
-            <String dnOrder="2" id="type">
+            <String dnOrder="3" id="type">
               <Value dnOrder="0">STRING</Value>
             </String>
           </Attributes>
         </File>
-        <Integer dnOrder="9" id="FLEXCOM_TWI_CLK_SRC_FREQ">
+        <Integer dnOrder="10" id="FLEXCOM_TWI_CLK_SRC_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="flexcom7" value="119996416"/>
           </Values>
         </Integer>
-        <Integer dnOrder="10" id="FLEXCOM_TWI_CWGR_CHDIV">
+        <Integer dnOrder="11" id="FLEXCOM_TWI_CWGR_CHDIV">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="flexcom7" value="146"/>
           </Values>
         </Integer>
-        <Integer dnOrder="11" id="FLEXCOM_TWI_CWGR_CKDIV">
+        <Integer dnOrder="12" id="FLEXCOM_TWI_CWGR_CKDIV">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="flexcom7" value="0"/>
           </Values>
         </Integer>
-        <Integer dnOrder="12" id="FLEXCOM_TWI_CWGR_CLDIV">
+        <Integer dnOrder="13" id="FLEXCOM_TWI_CWGR_CLDIV">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="flexcom7" value="146"/>
           </Values>
         </Integer>
-        <Integer dnOrder="13" id="FLEXCOM_USART_MR_OVER">
+        <Integer dnOrder="14" id="FLEXCOM_USART_MR_OVER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="flexcom7" value="0"/>
           </Values>
         </Integer>
-        <Integer dnOrder="14" id="FLEX_USART_CLOCK_FREQ">
-          <Values dnOrder="0">
+        <KeyValueSet dnOrder="15" id="FLEXCOM_USART_MR_USCLKS">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <Integer dnOrder="16" id="FLEX_USART_CLOCK_FREQ">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="flexcom7" value="119996416"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="15" id="FLEX_USART_MR_MODE9">
+        <KeyValueSet dnOrder="17" id="FLEX_USART_MR_CHRL">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <Boolean dnOrder="18" id="FLEX_USART_MR_MODE9">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="flexcom7" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="16" id="RECEIVE_DATA_REGISTER">
+        <KeyValueSet dnOrder="19" id="FLEX_USART_MR_NBSTOP">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="20" id="FLEX_USART_MR_PAR">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
+        <String dnOrder="21" id="RECEIVE_DATA_REGISTER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="flexcom7" value="&amp;(FLEXCOM7_REGS-&gt;FLEX_US_RHR)"/>
           </Values>
         </String>
-        <String dnOrder="17" id="TRANSMIT_DATA_REGISTER">
+        <String dnOrder="22" id="TRANSMIT_DATA_REGISTER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="flexcom7" value="&amp;(FLEXCOM7_REGS-&gt;FLEX_US_THR)"/>
           </Values>
         </String>
+        <Boolean dnOrder="23" id="USART_INTERRUPT_MODE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <Boolean dnOrder="24" id="USE_USART_RX_DMA">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <Boolean dnOrder="25" id="USE_USART_TX_DMA">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
       </Symbols>
       <Attachments dnOrder="1">
-        <DirectCapability dnOrder="0" id="FLEXCOM7_UART">
+        <DirectCapability dnOrder="0" id="FLEXCOM7_I2C">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </DirectCapability>
+        <DirectCapability dnOrder="1" id="FLEXCOM7_SPI">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </DirectCapability>
+        <DirectCapability dnOrder="2" id="FLEXCOM7_UART">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="targetComponentID">
               <Value dnOrder="0">drv_usart_0</Value>
@@ -587,20 +663,14 @@
         </File>
         <File dnOrder="2" id="APP1_C">
           <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-            <String dnOrder="1" id="name">
+            <String dnOrder="0" id="name">
               <Value dnOrder="0">app_usart_echo.c</Value>
             </String>
           </Attributes>
         </File>
         <File dnOrder="3" id="APP1_H">
           <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-            <String dnOrder="1" id="name">
+            <String dnOrder="0" id="name">
               <Value dnOrder="0">app_usart_echo.h</Value>
             </String>
           </Attributes>
@@ -663,13 +733,13 @@
             </Boolean>
           </Attributes>
         </Menu>
-        <Menu dnOrder="14" id="GEN_APP_RTOS_TASK_CONF_MENU1">
+        <File dnOrder="14" id="GEN_APP_TASKS">
           <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
+            <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
-        </Menu>
+        </File>
         <Menu dnOrder="15" id="GEN_APP_TASK_CONF_MENU0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
@@ -677,153 +747,160 @@
             </Boolean>
           </Attributes>
         </Menu>
-        <Menu dnOrder="16" id="GEN_APP_TASK_CONF_MENU1">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </Menu>
-        <Integer dnOrder="17" id="GEN_APP_TASK_COUNT">
+        <Integer dnOrder="16" id="GEN_APP_TASK_COUNT">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </Integer>
-        <Menu dnOrder="18" id="GEN_APP_TASK_MENU">
+        <Menu dnOrder="17" id="GEN_APP_TASK_MENU">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <String dnOrder="19" id="GEN_APP_TASK_NAME_0">
+        <String dnOrder="18" id="GEN_APP_TASK_NAME_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="app_usart_echo"/>
           </Values>
         </String>
-        <String dnOrder="20" id="GEN_APP_TASK_NAME_1">
+        <String dnOrder="19" id="GEN_APP_TASK_NAME_1">
           <Values dnOrder="0">
             <User dnOrder="0" value="app_usart_echo"/>
           </Values>
         </String>
-        <File dnOrder="21" id="INT_DEF">
+        <File dnOrder="20" id="GEN_RTOS_APP_TASKS">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="22" id="INT_HEADER">
+        <File dnOrder="21" id="GEN_RTOS_APP_TASKS_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="23" id="INT_MAPPING">
+        <File dnOrder="22" id="INT_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="24" id="INT_SOURCE">
+        <File dnOrder="23" id="INT_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="25" id="OSAL_DEFINITIONS_H">
+        <File dnOrder="24" id="INT_MAPPING">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="26" id="OSAL_FREERTOS_C">
+        <File dnOrder="25" id="INT_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="27" id="OSAL_FREERTOS_H">
+        <File dnOrder="26" id="OSAL_DEFINITIONS_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="28" id="OSAL_H">
+        <File dnOrder="27" id="OSAL_FREERTOS_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="29" id="OSAL_SYSDEF_H">
+        <File dnOrder="28" id="OSAL_FREERTOS_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <Combo dnOrder="30" id="SELECT_RTOS">
+        <File dnOrder="29" id="OSAL_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="30" id="OSAL_SYSDEF_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Combo dnOrder="31" id="SELECT_RTOS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="FreeRTOS"/>
           </Values>
         </Combo>
-        <File dnOrder="31" id="SYSTEM_COMMON">
+        <File dnOrder="32" id="SYSTEM_COMMON">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="32" id="SYSTEM_MODULE">
+        <File dnOrder="33" id="SYSTEM_MODULE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="33" id="SYSTEM_ROOT">
+        <File dnOrder="34" id="SYSTEM_ROOT">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="34" id="SYS_CACHE_DEF">
+        <File dnOrder="35" id="SYS_CACHE_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="35" id="SYS_CACHE_HEADER">
+        <File dnOrder="36" id="SYS_CACHE_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="36" id="SYS_CACHE_SOURCE">
+        <File dnOrder="37" id="SYS_CACHE_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="37" id="TASKS_C">
+        <File dnOrder="38" id="TASKS_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="38" id="USER_H">
+        <File dnOrder="39" id="USER_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
@@ -834,7 +911,8 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_G55_Xplained_Pro" x="30" y="160"/>
         <ElementPosition dnOrder="1" id="FreeRTOS" x="30" y="60"/>
@@ -844,9 +922,8 @@
         <ElementPosition dnOrder="5" id="dfp" x="20" y="20"/>
         <ElementPosition dnOrder="6" id="drv_usart" x="370" y="100"/>
         <ElementPosition dnOrder="7" id="efc" x="480" y="20"/>
-        <ElementPosition dnOrder="8" id="flexcom7" x="530" y="100"/>
+        <ElementPosition dnOrder="8" id="flexcom7" x="210" y="193"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
