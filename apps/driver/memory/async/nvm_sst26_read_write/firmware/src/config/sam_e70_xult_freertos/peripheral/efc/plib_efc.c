@@ -155,7 +155,7 @@ bool EFC_IsBusy(void)
 EFC_ERROR EFC_ErrorGet( void )
 {
     status |= EFC_REGS->EEFC_FSR;
-    return status;
+    return (EFC_ERROR)status;
 }
 
 void EFC_CallbackRegister( EFC_CALLBACK callback, uintptr_t context )
