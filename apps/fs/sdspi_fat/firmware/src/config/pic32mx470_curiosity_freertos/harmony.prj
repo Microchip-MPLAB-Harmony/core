@@ -171,8 +171,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FBD3D2A9612620734B305A396E19A642</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FBD3D2A9612620734B305A396E19A642</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4C94737515DC2B1EB3BA872AA3653884</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4C94737515DC2B1EB3BA872AA3653884</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
@@ -555,8 +555,8 @@
           <Name dnOrder="1">plib_coretimer.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/coretimer/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/coretimer/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">703A4222E2EE7A178846266EB036CA45</GeneratedChecksum>
-          <UserChecksum dnOrder="5">703A4222E2EE7A178846266EB036CA45</UserChecksum>
+          <GeneratedChecksum dnOrder="4">84C4DBB98A34064F6199CAE65561FF20</GeneratedChecksum>
+          <UserChecksum dnOrder="5">84C4DBB98A34064F6199CAE65561FF20</UserChecksum>
         </File>
         <File dnOrder="69">
           <Type dnOrder="0">HEADER</Type>
@@ -828,14 +828,14 @@
         <Setting append="true" category="C32" delimiter=";" dnOrder="1" key="extra-include-directories" value="../src;../src/config/pic32mx470_curiosity_freertos;../src/packs/PIC32MX470F512H_DFP;;../src/mips"/>
         <Setting append="true" category="C32-AS" delimiter=";" dnOrder="2" key="extra-include-directories-for-assembler" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos;"/>
         <Setting append="true" category="C32-AS" delimiter=";" dnOrder="3" key="extra-include-directories-for-preprocessor" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos;"/>
-        <Setting category="C32-LD" dnOrder="4" key="heap-size" value="0"/>
+        <Setting category="C32-LD" dnOrder="4" key="heap-size" value="512"/>
         <Setting category="C32-LD" dnOrder="5" key="no-device-startup-code" value="true"/>
         <Setting category="C32-LD" dnOrder="6" key="preprocessor-macros" value=""/>
       </Settings>
     </Manifest>
     <Settings dnOrder="4">
-      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.4.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MX_DFP\1.0.49\atdf\PIC32MX470F512H.atdf"/>
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MX_DFP\1.0.208\atdf\PIC32MX470F512H.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
