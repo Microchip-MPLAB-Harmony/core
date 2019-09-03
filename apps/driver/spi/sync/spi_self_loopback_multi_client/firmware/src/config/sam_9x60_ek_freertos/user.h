@@ -58,7 +58,7 @@ extern "C" {
 // Section: User Configuration macros
 // *****************************************************************************
 // *****************************************************************************
-#define LED_TOGGLE() LED_GREEN_Toggle()
+#define LED_ON()     LED_GREEN_On()
 #define LED_OFF()    LED_GREEN_Off()
 
 //DOM-IGNORE-BEGIN
