@@ -201,6 +201,66 @@
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f4" displayName="Important Files" projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1"
+                       displayName="sam_v71_xult_freertos"
+                       projectFiles="true">
+          <logicalFolder name="f4" displayName="bsp" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="f1" displayName="driver" projectFiles="true">
+            <logicalFolder name="f1" displayName="sdmmc" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f3" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f1" displayName="clk" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="efc" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f7" displayName="hsmci" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="nvic" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="pio" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="tc" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="xdmac" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="stdio" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="f5" displayName="system" projectFiles="true">
+            <logicalFolder name="f4" displayName="cache" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="fs" projectFiles="true">
+              <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
+              </logicalFolder>
+              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
+              </logicalFolder>
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="int" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="time" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="FreeRTOS" projectFiles="true">
+        <logicalFolder name="f1" displayName="Source" projectFiles="true">
+          <logicalFolder name="f1" displayName="portable" projectFiles="true">
+            <logicalFolder name="f2" displayName="GCC" projectFiles="true">
+              <logicalFolder name="f1" displayName="SAM" projectFiles="true">
+                <logicalFolder name="f1" displayName="CM7" projectFiles="true">
+                </logicalFolder>
+              </logicalFolder>
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="MemMang" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="osal" projectFiles="true">
+      </logicalFolder>
       <itemPath>Makefile</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
@@ -526,6 +586,8 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="400000-5fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="E:/projects/harmony_3/core/apps/fs/sdmmc_fat/firmware/sam_v71_xult_freertos.X/debug/sam_v71_xult_freertos/sam_v71_xult_freertos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
