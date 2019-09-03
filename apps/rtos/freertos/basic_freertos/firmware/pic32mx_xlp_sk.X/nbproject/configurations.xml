@@ -1,24 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configurationDescriptor version="65">
-  <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="HeaderFiles"
-                   displayName="Header Files"
-                   projectFiles="true">
-      <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <logicalFolder name="f1" displayName="pic32mx_xlp_sk" projectFiles="true">
-          <logicalFolder name="f2" displayName="bsp" projectFiles="true">
-            <itemPath>../src/config/pic32mx_xlp_sk/bsp/bsp.h</itemPath>
-          </logicalFolder>
-          <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f1" displayName="clk" projectFiles="true">
+  <logicalFolder displayName="root" name="root" projectFiles="true">
+    <logicalFolder displayName="Header Files" name="f1" projectFiles="true">
+      <logicalFolder displayName="config" name="f1" projectFiles="true">
+        <logicalFolder displayName="pic32mx_xlp_sk" name="f1" projectFiles="true">
+          <logicalFolder displayName="peripheral" name="f1" projectFiles="true">
+            <logicalFolder displayName="clk" name="f1" projectFiles="true">
               <itemPath>../src/config/pic32mx_xlp_sk/peripheral/clk/plib_clk.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="evic" projectFiles="true">
-              <itemPath>../src/config/pic32mx_xlp_sk/peripheral/evic/plib_evic.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f2" displayName="gpio" projectFiles="true">
+            <logicalFolder displayName="gpio" name="f2" projectFiles="true">
               <itemPath>../src/config/pic32mx_xlp_sk/peripheral/gpio/plib_gpio.h</itemPath>
             </logicalFolder>
+            <logicalFolder displayName="evic" name="f3" projectFiles="true">
+              <itemPath>../src/config/pic32mx_xlp_sk/peripheral/evic/plib_evic.h</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder displayName="bsp" name="f2" projectFiles="true">
+            <itemPath>../src/config/pic32mx_xlp_sk/bsp/bsp.h</itemPath>
           </logicalFolder>
           <itemPath>../src/config/pic32mx_xlp_sk/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/pic32mx_xlp_sk/definitions.h</itemPath>
@@ -27,9 +25,14 @@
           <itemPath>../src/config/pic32mx_xlp_sk/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="FreeRTOS" projectFiles="true">
-        <logicalFolder name="f1" displayName="Source" projectFiles="true">
-          <logicalFolder name="f1" displayName="include" projectFiles="true">
+      <logicalFolder displayName="packs" name="f2" projectFiles="true">
+        <logicalFolder displayName="PIC32MX274F256D_DFP" name="f1" projectFiles="true">
+          <itemPath>../src/packs/PIC32MX274F256D_DFP/device.h</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder displayName="FreeRTOS" name="f3" projectFiles="true">
+        <logicalFolder displayName="Source" name="f1" projectFiles="true">
+          <logicalFolder displayName="include" name="f1" projectFiles="true">
             <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/croutine.h</itemPath>
             <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/event_groups.h</itemPath>
             <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/FreeRTOS.h</itemPath>
@@ -47,9 +50,9 @@
             <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/stream_buffer.h</itemPath>
             <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/message_buffer.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="portable" projectFiles="true">
-            <logicalFolder name="f1" displayName="MPLAB" projectFiles="true">
-              <logicalFolder name="f1" displayName="PIC32MX" projectFiles="true">
+          <logicalFolder displayName="portable" name="f2" projectFiles="true">
+            <logicalFolder displayName="MPLAB" name="f1" projectFiles="true">
+              <logicalFolder displayName="PIC32MX" name="f1" projectFiles="true">
                 <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX/portmacro.h</itemPath>
                 <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX/ISR_Support.h</itemPath>
               </logicalFolder>
@@ -57,45 +60,35 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f4" displayName="osal" projectFiles="true">
+      <logicalFolder displayName="osal" name="f4" projectFiles="true">
         <itemPath>../src/config/pic32mx_xlp_sk/osal/osal.h</itemPath>
         <itemPath>../src/config/pic32mx_xlp_sk/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/pic32mx_xlp_sk/osal/osal_freertos.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f2" displayName="packs" projectFiles="true">
-        <logicalFolder name="f1" displayName="PIC32MX274F256D_DFP" projectFiles="true">
-          <itemPath>../src/packs/PIC32MX274F256D_DFP/device.h</itemPath>
-        </logicalFolder>
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
       <itemPath>../src/app1.h</itemPath>
       <itemPath>../src/app2.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="LinkerScript"
-                   displayName="Linker Files"
-                   projectFiles="true">
-    </logicalFolder>
-    <logicalFolder name="SourceFiles"
-                   displayName="Source Files"
-                   projectFiles="true">
-      <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <logicalFolder name="f1" displayName="pic32mx_xlp_sk" projectFiles="true">
-          <logicalFolder name="f3" displayName="bsp" projectFiles="true">
-            <itemPath>../src/config/pic32mx_xlp_sk/bsp/bsp.c</itemPath>
+    <logicalFolder displayName="Linker Files" name="f2" projectFiles="true"/>
+    <logicalFolder displayName="Source Files" name="f3" projectFiles="true">
+      <logicalFolder displayName="config" name="f1" projectFiles="true">
+        <logicalFolder displayName="pic32mx_xlp_sk" name="f1" projectFiles="true">
+          <logicalFolder displayName="stdio" name="f1" projectFiles="true">
+            <itemPath>../src/config/pic32mx_xlp_sk/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f1" displayName="clk" projectFiles="true">
+          <logicalFolder displayName="peripheral" name="f2" projectFiles="true">
+            <logicalFolder displayName="clk" name="f1" projectFiles="true">
               <itemPath>../src/config/pic32mx_xlp_sk/peripheral/clk/plib_clk.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="evic" projectFiles="true">
-              <itemPath>../src/config/pic32mx_xlp_sk/peripheral/evic/plib_evic.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f2" displayName="gpio" projectFiles="true">
+            <logicalFolder displayName="gpio" name="f2" projectFiles="true">
               <itemPath>../src/config/pic32mx_xlp_sk/peripheral/gpio/plib_gpio.c</itemPath>
             </logicalFolder>
+            <logicalFolder displayName="evic" name="f3" projectFiles="true">
+              <itemPath>../src/config/pic32mx_xlp_sk/peripheral/evic/plib_evic.c</itemPath>
+            </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f1" displayName="stdio" projectFiles="true">
-            <itemPath>../src/config/pic32mx_xlp_sk/stdio/xc32_monitor.c</itemPath>
+          <logicalFolder displayName="bsp" name="f3" projectFiles="true">
+            <itemPath>../src/config/pic32mx_xlp_sk/bsp/bsp.c</itemPath>
           </logicalFolder>
           <itemPath>../src/config/pic32mx_xlp_sk/initialization.c</itemPath>
           <itemPath>../src/config/pic32mx_xlp_sk/interrupts.c</itemPath>
@@ -105,14 +98,14 @@
           <itemPath>../src/config/pic32mx_xlp_sk/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f2" displayName="FreeRTOS" projectFiles="true">
-        <logicalFolder name="f1" displayName="Source" projectFiles="true">
-          <logicalFolder name="f1" displayName="portable" projectFiles="true">
-            <logicalFolder name="f1" displayName="MemMang" projectFiles="true">
+      <logicalFolder displayName="FreeRTOS" name="f2" projectFiles="true">
+        <logicalFolder displayName="Source" name="f1" projectFiles="true">
+          <logicalFolder displayName="portable" name="f1" projectFiles="true">
+            <logicalFolder displayName="MemMang" name="f1" projectFiles="true">
               <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/MemMang/heap_1.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="MPLAB" projectFiles="true">
-              <logicalFolder name="f1" displayName="PIC32MX" projectFiles="true">
+            <logicalFolder displayName="MPLAB" name="f2" projectFiles="true">
+              <logicalFolder displayName="PIC32MX" name="f1" projectFiles="true">
                 <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX/port.c</itemPath>
                 <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX/port_asm.S</itemPath>
               </logicalFolder>
@@ -127,7 +120,7 @@
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/stream_buffer.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="osal" projectFiles="true">
+      <logicalFolder displayName="osal" name="f3" projectFiles="true">
         <itemPath>../src/config/pic32mx_xlp_sk/osal/osal_freertos.c</itemPath>
       </logicalFolder>
       <itemPath>../src/main.c</itemPath>
@@ -135,9 +128,7 @@
       <itemPath>../src/app1.c</itemPath>
       <itemPath>../src/app2.c</itemPath>
     </logicalFolder>
-    <logicalFolder name="ExternalFiles"
-                   displayName="Important Files"
-                   projectFiles="false">
+    <logicalFolder displayName="Important Files" name="f4" projectFiles="true">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
@@ -150,8 +141,8 @@
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <targetDevice>PIC32MX274F256D</targetDevice>
-        <targetHeader></targetHeader>
-        <targetPluginBoard></targetPluginBoard>
+        <targetHeader/>
+        <targetPluginBoard/>
         <platformTool>PKOBSKDEPlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.20</languageToolchainVersion>
@@ -170,16 +161,16 @@
         <loading>
           <useAlternateLoadableFile>false</useAlternateLoadableFile>
           <parseOnProdLoad>false</parseOnProdLoad>
-          <alternateLoadableFile></alternateLoadableFile>
+          <alternateLoadableFile/>
         </loading>
         <subordinates>
         </subordinates>
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
-        <makeCustomizationPreStep></makeCustomizationPreStep>
+        <makeCustomizationPreStep/>
         <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep></makeCustomizationPostStep>
+        <makeCustomizationPostStep/>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
@@ -192,8 +183,7 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories"
-                  value="../src;../src/config/pic32mx_xlp_sk;../src/packs/PIC32MX274F256D_DFP;../src/mips;../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include"/>
+        <property key="extra-include-directories" value="../src;../src/config/pic32mx_xlp_sk;../src/packs/PIC32MX274F256D_DFP;../src/mips;../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -219,10 +209,8 @@
         <property key="enable-symbols" value="true"/>
         <property key="exclude-floating-point-library" value="false"/>
         <property key="expand-macros" value="false"/>
-        <property key="extra-include-directories-for-assembler"
-                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx_xlp_sk"/>
-        <property key="extra-include-directories-for-preprocessor"
-                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx_xlp_sk"/>
+        <property key="extra-include-directories-for-assembler" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx_xlp_sk"/>
+        <property key="extra-include-directories-for-preprocessor" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx_xlp_sk"/>
         <property key="false-conditionals" value="false"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
@@ -347,8 +335,7 @@
         <property key="TIMER3" value="true"/>
         <property key="TIMER4" value="true"/>
         <property key="TIMER5" value="true"/>
-        <property key="ToolFirmwareFilePath"
-                  value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareFilePath" value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
         <property key="UART1" value="true"/>
         <property key="UART2" value="true"/>
@@ -380,8 +367,7 @@
       <PKOBSKDEPlatformTool>
         <property key="AutoSelectMemRanges" value="auto"/>
         <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
-        <property key="ToolFirmwareFilePath"
-                  value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareFilePath" value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
         <property key="firmware.download.all" value="false"/>
         <property key="memories.configurationmemory" value="true"/>
@@ -396,8 +382,7 @@
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges" value=""/>
         <property key="programoptions.preserveeeprom" value="false"/>
-        <property key="programoptions.preserveeeprom.ranges"
-                  value="${memories.eedata.default}"/>
+        <property key="programoptions.preserveeeprom.ranges" value="${memories.eedata.default}"/>
         <property key="programoptions.preserveprogram.ranges" value=""/>
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.usehighvoltageonmclr" value="false"/>
