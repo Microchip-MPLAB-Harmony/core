@@ -212,9 +212,12 @@ void SYS_Initialize ( void* data )
     PLIB_L2CC_Initialize();
 
     INT_Initialize();
+    
     XDMAC0_Initialize();
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
+
+	SPI1_Initialize();
 
   
 
@@ -222,8 +225,6 @@ void SYS_Initialize ( void* data )
     TC0_CH0_TimerInitialize(); 
      
     
-	SPI1_Initialize();
-
 
     /* Initialize SDSPI0 Driver Instance */
     sysObj.drvSDSPI0 = DRV_SDSPI_Initialize(DRV_SDSPI_INDEX_0, (SYS_MODULE_INIT *)&drvSDSPI0InitData);
