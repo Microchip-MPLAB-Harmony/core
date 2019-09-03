@@ -58,7 +58,7 @@
 /*** DEVCFG0 ***/
 #pragma config DEBUG =      OFF
 #pragma config JTAGEN =     OFF
-#pragma config ICESEL =     ICS_PGx1
+#pragma config ICESEL =     ICS_PGx2
 #pragma config PWP =        OFF
 #pragma config BWP =        OFF
 #pragma config CP =         OFF
@@ -105,9 +105,6 @@
 
 
 
-
-
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Driver Initialization Data
@@ -130,11 +127,15 @@ const DRV_I2C_PLIB_INTERFACE drvI2C0PLibAPI = {
     /* I2C PLib Transfer Write Add function */
     .write = (DRV_I2C_PLIB_WRITE)I2C1_Write,
 
+
     /* I2C PLib Transfer Write Read Add function */
     .writeRead = (DRV_I2C_PLIB_WRITE_READ)I2C1_WriteRead,
 
     /* I2C PLib Transfer Status function */
     .errorGet = (DRV_I2C_PLIB_ERROR_GET)I2C1_ErrorGet,
+
+    /* I2C PLib Transfer Setup function */
+    .transferSetup = (DRV_I2C_PLIB_TRANSFER_SETUP)I2C1_TransferSetup,
 
     /* I2C PLib Callback Register */
     .callbackRegister = (DRV_I2C_PLIB_CALLBACK_REGISTER)I2C1_CallbackRegister,
