@@ -176,9 +176,15 @@
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm0plus.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
@@ -263,6 +269,68 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1"
+                       displayName="sam_l21_xpro_freertos"
+                       projectFiles="true">
+          <logicalFolder name="f1" displayName="bsp" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="driver" projectFiles="true">
+            <logicalFolder name="f1" displayName="sdspi" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f3" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f1" displayName="clock" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="evsys" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="nvic" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="nvmctrl" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="pm" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="port" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f7" displayName="sercom" projectFiles="true">
+              <logicalFolder name="f1" displayName="spim" projectFiles="true">
+              </logicalFolder>
+            </logicalFolder>
+            <logicalFolder name="f8" displayName="tc" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f4" displayName="stdio" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="f5" displayName="system" projectFiles="true">
+            <logicalFolder name="f1" displayName="dma" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="fs" projectFiles="true">
+              <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
+              </logicalFolder>
+              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
+              </logicalFolder>
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="int" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="time" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="FreeRTOS" projectFiles="true">
+        <logicalFolder name="f1" displayName="Source" projectFiles="true">
+          <logicalFolder name="f1" displayName="portable" projectFiles="true">
+            <logicalFolder name="f1" displayName="GCC" projectFiles="true">
+              <logicalFolder name="f1" displayName="ARM_CM0" projectFiles="true">
+              </logicalFolder>
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="MemMang" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="osal" projectFiles="true">
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="f3" displayName="Source Files" projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
@@ -387,7 +455,7 @@
       </toolsSet>
       <packs>
         <pack name="SAML21_DFP" vendor="Microchip" version="3.0.26"/>
-        <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
+        <pack name="SAML21_DFP" vendor="Microchip" version="3.0.26"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -487,6 +555,9 @@
         <property key="preprocessor-macros" value=""/>
         <property key="warning-level" value=""/>
       </C32-AS>
+      <C32-CO>
+        <property key="coverage-enable" value=""/>
+      </C32-CO>
       <C32-LD>
         <property key="additional-options-use-response-files" value="false"/>
         <property key="additional-options-write-sla" value="false"/>
