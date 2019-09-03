@@ -160,13 +160,13 @@
         <targetDevice>PIC32MX795F512L</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>PKOBSKDEPlatformTool</platformTool>
+        <platformTool>SKDEPIC32PlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.20</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.0.28"/>
+        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.0.53"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -200,7 +200,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/pic32mx_eth_sk2;../src/packs/PIC32MX795F512L_DFP;;../src/mips"/>
+                  value="../src;../src/config/pic32mx_eth_sk2;../src/packs/PIC32MX795F512L_DFP;../src/mips"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
