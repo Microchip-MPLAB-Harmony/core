@@ -57,6 +57,8 @@
 */
 void PIO_Initialize ( void )
 {
+    /* Selected System IO pins are configured as GPIO */
+    MATRIX_REGS->CCFG_SYSIO |= 0x1000;
 
     /************************ PIO A Initialization ************************/
     ((pio_registers_t*)PIO_PORT_A)->PIO_PER = 0xFFFFFFFF;
