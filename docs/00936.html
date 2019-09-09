@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>UART Console Device</title>
+<title>SYS_CMD_API Structure</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00933.html" target="topic">Console System Service Library Help</a> &gt; <a href="00938.html" target="topic">Using the Library</a> &gt; <a href="00930.html" target="topic">How the Library Works</a> &gt; <a href="00936.html" target="topic">UART Console Device</a></div>
+<a href="01409.html" target="topic">System Service Libraries Help</a> &gt; <a href="00851.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00852.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00936.html" target="topic">SYS_CMD_API Structure</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00930.html" target="topic">Previous</a> | <a href="00930.html" target="topic">Up</a> | <a href="00928.html" target="topic">Next</a></div>
+<a href="00953.html" target="topic">Previous</a> | <a href="00852.html" target="topic">Up</a> | <a href="00946.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE UART Console Device Topic Title: UART Console Device)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CMD_API Topic Title: SYS_CMD_API Structure)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-UART Console Device</div>
+SYS_CMD_API Structure</div>
 </div>
 </div>
 
@@ -49,36 +49,72 @@ UART Console Device</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<strong>Read</strong>&nbsp;</p>
+SYS CMD API structure&nbsp;</p>
 <p class="Element10">
-While the user may request multiple bytes of data per read, a typical terminal emulator program sends only one byte per transaction. When multiple bytes are requested, the UART Console Device layer will queue individual byte reads until all bytes are read. The bytes are sent to the user-supplied read buffer as they are read, and the read callback is triggered when all bytes have been read. Only one read operation can be active at a time. The size of the read queue is a configuration option. The size of the read queue determines the number of read requests (not the number of bytes) that can be queued. Each read request in turn can request for multiple bytes to be read. A call to the console read API with the read queue full returns 0.&nbsp;</p>
+This structure identifies the Command API structure.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong> {
+  <a href="00970.html" target="topic">SYS_CMD_MSG_FNC</a> <strong><span style="color: #000000">msg</span></strong>;
+  <a href="00973.html" target="topic">SYS_CMD_PRINT_FNC</a> <strong><span style="color: #000000">print</span></strong>;
+  <a href="00974.html" target="topic">SYS_CMD_PUTC_FNC</a> <strong><span style="color: #000000">putc</span></strong>;
+  <a href="00946.html" target="topic">SYS_CMD_DATA_RDY_FNC</a> <strong><span style="color: #000000">isRdy</span></strong>;
+  <a href="00960.html" target="topic">SYS_CMD_GETC_FNC</a> <strong><span style="color: #000000">getc</span></strong>;
+} SYS_CMD_API;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element272">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_CMD_MSG_FNC msg;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Message function API&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_CMD_PRINT_FNC print;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Print function API&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_CMD_PUTC_FNC putc;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Put single char function API&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_CMD_DATA_RDY_FNC isRdy;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Data available API&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_CMD_GETC_FNC getc;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Get single data API&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
 <p class="Element10">
-The read function accepts a pointer to a read buffer as one of the arguments. It is the responsibility of the application programmer to properly allocate the read buffer.&nbsp;</p>
-<p class="Element10">
-<strong>Write</strong>&nbsp;</p>
-<p class="Element10">
-The UART console device is capable of writing multiple data bytes per transaction, and queuing multiple write transactions. The size of the write queue is a configuration option. If the user tries to queue more write transactions than the write queue can accommodate, the write function will return 0.&nbsp;</p>
-<p class="Element10">
-The write function accepts a pointer to a write buffer as one of the arguments. It is the responsibility of the application programmer to properly allocate the write buffer.&nbsp;</p>
-<p class="Element10">
-<strong>State Machine</strong>&nbsp;</p>
-<p class="Element10">
-The read and write state machines are run from the interrupt context (from the callback called by the underlying UART PLIB). The underlying PLIB calls the UART console device event handler when the requested number of bytes are transmitted or received (or in case of an error condition). The read/write state machine dispatches application/middleware callback functions and initiates a data transfer if the read/write queue has any request to service.&nbsp;</p>
-<p class="Element10">
-<strong>Register Callback</strong>&nbsp;</p>
-<p class="Element10">
-The callback registration mechanism associates a user function with a read or write completion event. The callback function includes an argument containing a pointer to the read or write buffer associated with the transfer that initiated the callback. Separate callback functions must be registered for read and write events. If there is no callback function registered, the event will complete as normal, with no callback executed.&nbsp;</p>
-<p class="Element10">
-<strong>Flush</strong>&nbsp;</p>
-<p class="Element10">
-The flush routine in the UART implementation resets the read and write queues. A flush operation is typically triggered in response to an error condition.</p></div>
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00933.html" target="topic">Console System Service Library Help</a> &gt; <a href="00938.html" target="topic">Using the Library</a> &gt; <a href="00930.html" target="topic">How the Library Works</a> &gt; <a href="00936.html" target="topic">UART Console Device</a></div>
+<a href="01409.html" target="topic">System Service Libraries Help</a> &gt; <a href="00851.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00852.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00936.html" target="topic">SYS_CMD_API Structure</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -89,10 +125,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00930.html" target="topic">Previous</a> | <a href="00930.html" target="topic">Up</a> | <a href="00928.html" target="topic">Next</a></div>
+<a href="00953.html" target="topic">Previous</a> | <a href="00852.html" target="topic">Up</a> | <a href="00946.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE UART Console Device Topic Title: UART Console Device)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CMD_API Topic Title: SYS_CMD_API Structure)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

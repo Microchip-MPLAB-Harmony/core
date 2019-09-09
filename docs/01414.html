@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_PRINT Macro</title>
+<title>Micrium OS III Library Help</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00946.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00947.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="01414.html" target="topic">SYS_PRINT Macro</a></div>
+<a href="01412.html" target="topic">Third-Party Products</a> &gt; <a href="01414.html" target="topic">Micrium OS III Library Help</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01074.html" target="topic">Previous</a> | <a href="00947.html" target="topic">Up</a> | <a href="01068.html" target="topic">Next</a></div>
+<a href="01411.html" target="topic">Previous</a> | <a href="01412.html" target="topic">Up</a> | <a href="01415.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_PRINT Topic Title: SYS_PRINT Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Third-Party Products Micrium OS III Topic Title: Micrium OS III Library Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_PRINT Macro</div>
+Micrium OS III Library Help</div>
 </div>
 </div>
 
@@ -46,80 +46,24 @@ SYS_PRINT Macro</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
-<div class="Element10">
-<p class="Element10">
-This function formats and prints an error message with a variable number of arguments regardless of the system error level.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">SYS_PRINT</span></strong>(fmt, ...) </pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-If mapped to the <a href="01077.html" target="topic">SYS_DEBUG_Print</a> function, then the system debug service must be initialized and running.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
+<div class="Element212">
 <div class="TableDiv">
-<table cellspacing="0" class="Table2">
+<table cellspacing="0" class="Table0">
 <tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-format&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to a buffer containing the format string for the message to be displayed.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-...&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Zero or more optional parameters to be formated as defined by the format string.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-The format string and arguments follow the printf convention.&nbsp;</p>
-<p class="Element10">
-By default, this macro is defined as nothing, effectively removing all code generated by calls to it. To process SYS_PRINT calls, this macro must be defined in a way that maps calls to it to the desired implementation (see example, above).&nbsp;</p>
-<p class="Element10">
-This macro can be mapped to the system console service (along with other system debug macros) by defining SYS_DEBUG_USE_CONSOLE in the system configuration (configuration.h) instead of defining it individually.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// In configuration.h file: #define SYS_DEBUG_USE_CONSOLE</span></i>
-<i><span style="color: #008000">// In sys_debug.h file: #define SYS_PRINT(fmt, ...) SYS_DEBUG_Print(fmt, ##__VA_ARGS__)</span></i>
-
-<i><span style="color: #008000">// In source code</span></i>
-<strong><span style="color: #000080">int</span></strong> result;
-
-result = SomeOperation();
-<strong><span style="color: #000080">if</span></strong> (result &gt; MAX_VALUE)
-{
-    SYS_PRINT(&quot;Result of %d exceeds max valuern&quot;, result);
-    <i><span style="color: #008000">// Take appropriate action</span></i>
-}</pre></div></div>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="01415.html" target="topic">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This topic provides an overview of the Micriµm µC/OS-III Library in MPLAB Harmony.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -127,7 +71,7 @@ result = SomeOperation();
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01478.html" target="topic">System Service Libraries Help</a> &gt; <a href="00946.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00947.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="01414.html" target="topic">SYS_PRINT Macro</a></div>
+<a href="01412.html" target="topic">Third-Party Products</a> &gt; <a href="01414.html" target="topic">Micrium OS III Library Help</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -138,10 +82,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01074.html" target="topic">Previous</a> | <a href="00947.html" target="topic">Up</a> | <a href="01068.html" target="topic">Next</a></div>
+<a href="01411.html" target="topic">Previous</a> | <a href="01412.html" target="topic">Up</a> | <a href="01415.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_PRINT Topic Title: SYS_PRINT Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Third-Party Products Micrium OS III Topic Title: Micrium OS III Library Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

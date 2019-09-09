@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SST26_Read Function</title>
+<title>Running The Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00285.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00286.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00729.html" target="topic">DRV_SST26_Read Function</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00712.html" target="topic">File System Applications</a> &gt; <a href="00713.html" target="topic">nvm_fat</a> &gt; <a href="00729.html" target="topic">Running The Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00728.html" target="topic">Previous</a> | <a href="00286.html" target="topic">Up</a> | <a href="00732.html" target="topic">Next</a></div>
+<a href="00727.html" target="topic">Previous</a> | <a href="00713.html" target="topic">Up</a> | <a href="00714.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_Read@DRV_HANDLE@void *@uint32_t@uint32_t Topic Title: DRV_SST26_Read Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS nvm_fat Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SST26_Read Function</div>
+Running The Application</div>
 </div>
 </div>
 
@@ -48,100 +48,152 @@ DRV_SST26_Read Function</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-This function schedules a blocking operation for reading requested number of data bytes from the flash memory.&nbsp;</p>
-<p class="Element10">
-The request is sent in QUAD_MODE to flash device.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_SST26_Read</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">rx_data</span></strong>, 
-    uint32_t <strong><span style="color: #000000">rx_data_length</span></strong>, 
-    uint32_t <strong><span style="color: #000000">address</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-The <a href="00727.html" target="topic">DRV_SST26_Open</a>() routine must have been called for the specified SST26 driver instance.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
-<div class="TableDiv">
-<table cellspacing="0" class="Table2">
-<tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-A valid open-instance handle, returned from the driver's open routine<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-*rx_data&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Buffer pointer into which the data read from the SST26 Flash memory will be placed.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-rx_data_length&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Total number of bytes to be read.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-address&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Read memory start address from where the data should be read.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-false</p>
-<ul class="Element630">
-<li class="Element600">if read command itself fails</li>
-</ul><p class="Element10">
+
+<ol class="Element630">
+<li value="1" class="Element600">Connect a micro/mini USB cable to the DEBUG port.</li>
+<li value="2" class="Element600">Build and Program the application using the MPLAB X IDE.</li>
+<li value="3" class="Element600">Press Switch to start the file operations</li>
+<li value="4" class="Element600">The LED is turned ON when the File &quot;<span style="color: #000000"><strong>FILE.TXT</strong></span>&quot; has the app data <span style="color: #000000"><strong>&quot;Hello World&quot;</span> </strong>written in it</li>
+</ol><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-true</p>
-<ul class="Element630">
-<li class="Element600">if number of bytes requested are read from flash memory</li>
-</ul></div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-<strong><span style="color: #000080">#define</span></strong> BUFFER_SIZE  1024
-<strong><span style="color: #000080">#define</span></strong> MEM_ADDRESS  0x0
-
-<a href="00417.html" target="topic">DRV_HANDLE</a> handle;  <i><span style="color: #008000">// Returned from DRV_SST26_Open</span></i>
-uint8_t readBuffer[BUFFER_SIZE];
-
-<strong><span style="color: #000080">if</span></strong> (<strong><span style="color: #000080">true</span></strong> != DRV_SST26_Read(handle, (<strong><span style="color: #000080">void</span></strong> *)&amp;readBuffer, BUFFER_SIZE, MEM_ADDRESS))
-{
-    <i><span style="color: #008000">// Error handling here</span></i>
-}
-</pre></div></div>
+The following table provides the LED name: </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="80%">
+<div class="Element66">
+Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="12%">
+<div class="Element66">
+LED Name&nbsp;</div></td><td class="Element65" valign="top" width="8%">
+<div class="Element66">
+Switch Name&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+PIC32MK GP Development Kit&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 3&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+PIC32MK GPL Curiosity Pro Development Board&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 2&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+PIC32MX Curiosity Development Board&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 1&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+PIC32MX Ethernet Starter Kit II&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 1&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 3&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 3&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+SAM C21N Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 0&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+SAM DA1 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 0&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+SAM D20 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 0&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+SAM D21 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 0&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+SAM E54 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 0&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+SAM E70 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 1&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+SAM G55 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 0&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+SAM L10 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 0&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+SAM L21 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 0&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+SAM L22 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 0&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+SAM RH71 Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 1&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+PB0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="80%">
+<div class="Element68">
+SAM V71 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="12%">
+<div class="Element68">
+LED 0&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+SW0&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -149,7 +201,7 @@ uint8_t readBuffer[BUFFER_SIZE];
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00285.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00286.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00729.html" target="topic">DRV_SST26_Read Function</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00712.html" target="topic">File System Applications</a> &gt; <a href="00713.html" target="topic">nvm_fat</a> &gt; <a href="00729.html" target="topic">Running The Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -160,10 +212,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00728.html" target="topic">Previous</a> | <a href="00286.html" target="topic">Up</a> | <a href="00732.html" target="topic">Next</a></div>
+<a href="00727.html" target="topic">Previous</a> | <a href="00713.html" target="topic">Up</a> | <a href="00714.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_Read@DRV_HANDLE@void *@uint32_t@uint32_t Topic Title: DRV_SST26_Read Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS nvm_fat Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

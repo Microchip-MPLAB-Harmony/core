@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_USART_Initialize Function</title>
+<title>Hardware Setup</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00314.html" target="topic">USART Driver Library Help</a> &gt; <a href="00315.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00755.html" target="topic">DRV_USART_Initialize Function</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00712.html" target="topic">File System Applications</a> &gt; <a href="00725.html" target="topic">sqi_flash_fat</a> &gt; <a href="00755.html" target="topic">Hardware Setup</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00315.html" target="topic">Previous</a> | <a href="00315.html" target="topic">Up</a> | <a href="00762.html" target="topic">Next</a></div>
+<a href="00756.html" target="topic">Previous</a> | <a href="00725.html" target="topic">Up</a> | <a href="00757.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT* const Topic Title: DRV_USART_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS sqi_flash_fat Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_USART_Initialize Function</div>
+Hardware Setup</div>
 </div>
 </div>
 
@@ -48,116 +48,83 @@ DRV_USART_Initialize Function</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-This routine initializes the USART driver instance for the specified driver index, making it ready for clients to open and use it. The initialization data is specified by the init parameter. The initialization may fail if the number of driver objects allocated are insufficient or if the specified driver instance is already initialized. The driver instance index is independent of the USART module ID. For example, driver instance 0 can be assigned to USART2.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01396.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_USART_Initialize</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01391.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="01392.html" target="topic">SYS_MODULE_INIT</a>* <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
-<div class="TableDiv">
-<table cellspacing="0" class="Table2">
-<tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Identifier for the instance to be initialized<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to the init data structure containing any data necessary to initialize the driver.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-If successful, returns a valid handle to a driver instance object. Otherwise, returns <a href="01397.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-This routine must be called before any other USART routine is called.&nbsp;</p>
-<p class="Element10">
-This routine should only be called once during system initialization. This routine will NEVER block for hardware access.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// The following code snippet shows an example USART driver initialization.</span></i>
 
-<a href="01396.html" target="topic">SYS_MODULE_OBJ</a>              objectHandle;
+<ol class="Element630">
+<li value="1" class="Element600"><strong>Project pic32mz_das_sk.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/DM320010-C');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit</a></li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup</strong>
+<ul class="Element632">
+<li class="Element602">No Special hardware Setup Required</li>
+</ul></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
 
-<strong><span style="color: #000080">const</span></strong> DRV_USART_PLIB_INTERFACE drvUsart0PlibAPI = {
-    .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)USART1_ReadCallbackRegister,
-    .read = (DRV_USART_PLIB_READ)USART1_Read,
-    .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)USART1_ReadIsBusy,
-    .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)USART1_ReadCountGet,
-    .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)USART1_WriteCallbackRegister,
-    .write = (DRV_USART_PLIB_WRITE)USART1_Write,
-    .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)USART1_WriteIsBusy,
-    .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)USART1_WriteCountGet,
-    .errorGet = (DRV_USART_PLIB_ERROR_GET)USART1_ErrorGet,
-    .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)USART1_SerialSetup
-};
+<ol class="Element630">
+<li value="2" class="Element600"><strong>Project pic32mz_ef_sk.X.</strong></li>
+<li value="3" class="Element600"><strong>Project pic32mz_ef_sk_freertos.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/DM320007');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit</a></li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup</strong>
+<ul class="Element632">
+<li class="Element602">No Special hardware Setup Required</li>
+</ul></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
 
-<strong><span style="color: #000080">const</span></strong> <a href="00754.html" target="topic">DRV_USART_INIT</a> drvUsart0InitData = {
-    .usartPlib = &amp;drvUsart0PlibAPI,
-    .numClients = DRV_USART_CLIENTS_NUMBER_IDX0,
-    .clientObjPool = (uintptr_t)&amp;drvUSART0ClientObjPool[0],
-    .dmaChannelTransmit = DRV_USART_XMIT_DMA_CH_IDX0,
-    .usartTransmitAddress = (<strong><span style="color: #000080">void</span></strong> *)&amp;(USART1_REGS-&gt;US_THR),
-    .dmaChannelReceive = DRV_USART_RCV_DMA_CH_IDX0,
-    .usartReceiveAddress = (<strong><span style="color: #000080">void</span></strong> *)&amp;(USART1_REGS-&gt;US_RHR),
-    .bufferObjPoolSize = DRV_USART_QUEUE_SIZE_IDX0,
-    .bufferObjPool = (uintptr_t)&amp;drvUSART0BufferObjPool[0],
-    .interruptUSART = USART1_IRQn,
-    .interruptDMA = XDMAC_IRQn,
-    .remapDataWidth = drvUsart0remapDataWidth,
-    .remapParity = drvUsart0remapParity,
-    .remapStopBits = drvUsart0remapStopBits,
-    .remapError = drvUsart0remapError,
-};
+<ol class="Element630">
+<li value="4" class="Element600"><strong>Project sam_e70_xult.X.</strong></li>
+<li value="5" class="Element600"><strong>Project sam_e70_xult_freertos.X.</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM320113');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM E70 Xplained Ultra Evaluation Kit</a></li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup</strong>
+<ul class="Element632">
+<li class="Element602">No Special hardware Setup Required</li>
+</ul></li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
 
-objectHandle = DRV_USART_Initialize(DRV_USART_INDEX_1, (<a href="01392.html" target="topic">SYS_MODULE_INIT</a>*)&amp;drvUsart0InitData);
-
-<strong><span style="color: #000080">if</span></strong> (objectHandle == <a href="01397.html" target="topic">SYS_MODULE_OBJ_INVALID</a>)
-{
-    <i><span style="color: #008000">// Handle error</span></i>
-}</pre></div></div>
-</div>
+<ol class="Element630">
+<li value="6" class="Element600"><strong>Project sam_a5d2_xult_freertos.IAR OR sam_a5d2_xult_xc32_freertos.X</strong></li>
+<li value="7" class="Element600"><strong>Project sam_a5d2_xult.IAR OR sam_a5d2_xult_xc32.X</strong>
+<ul class="Element631">
+<li class="Element601"><strong>Hardware Used</strong>
+<ul class="Element632">
+<li class="Element602"><a href="#" onclick="openExternalLink('http://www.microchip.com/DevelopmentTools/ProductDetails/ATSAMA5D2C-XULT');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM A5D2 Xplained Ultra board</a></li>
+<li class="Element602">SD Card with FAT32 file system</li>
+</ul></li>
+<li class="Element601"><strong>Hardware Setup</strong>
+<ul class="Element632">
+<li class="Element602">Setup the SD card
+<ul class="Element633">
+<li class="Element603">Download harmony MPU bootstrap loader from this <a href="#" onclick="openExternalLink('http://github.com/Microchip-MPLAB-Harmony/at91bootstrap/blob/master/boot.bin');"><img src="indicator_external_link.gif" border="0" alt="" title="">location</a></li>
+<li class="Element603">Copy the downloaded boot loader binary( boot.bin) and generated application binary (harmony.bin)into the SD card</li>
+<li class="Element603">Insert the SD card into the SDMMC1 slot on the board</li>
+</ul></li>
+<li class="Element602">Connect the Debug USB port on the board to the computer using a micro USB cable</li>
+<li class="Element602">Make sure that the jumper JP9 is removed (jumper pins are not shorted)</li>
+</ul></li>
+</ul></li>
+</ol></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00314.html" target="topic">USART Driver Library Help</a> &gt; <a href="00315.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00755.html" target="topic">DRV_USART_Initialize Function</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00712.html" target="topic">File System Applications</a> &gt; <a href="00725.html" target="topic">sqi_flash_fat</a> &gt; <a href="00755.html" target="topic">Hardware Setup</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -168,10 +135,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00315.html" target="topic">Previous</a> | <a href="00315.html" target="topic">Up</a> | <a href="00762.html" target="topic">Next</a></div>
+<a href="00756.html" target="topic">Previous</a> | <a href="00725.html" target="topic">Up</a> | <a href="00757.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT* const Topic Title: DRV_USART_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS sqi_flash_fat Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

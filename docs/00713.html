@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SST26_Close Function</title>
+<title>nvm_fat</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00285.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00286.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00713.html" target="topic">DRV_SST26_Close Function</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00712.html" target="topic">File System Applications</a> &gt; <a href="00713.html" target="topic">nvm_fat</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00727.html" target="topic">Previous</a> | <a href="00286.html" target="topic">Up</a> | <a href="00738.html" target="topic">Next</a></div>
+<a href="00712.html" target="topic">Previous</a> | <a href="00712.html" target="topic">Up</a> | <a href="00726.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_Close@DRV_HANDLE Topic Title: DRV_SST26_Close Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications nvm_fat Topic Title: nvm_fat)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SST26_Close Function</div>
+nvm_fat</div>
 </div>
 </div>
 
@@ -48,64 +48,62 @@ DRV_SST26_Close Function</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-This routine closes an opened-instance of the SST26 driver, invalidating the handle.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_SST26_Close</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00417.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-<a href="00727.html" target="topic">DRV_SST26_Open</a> must have been called to obtain a valid opened device handle.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
-<div class="TableDiv">
-<table cellspacing="0" class="Table2">
-<tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None</p></div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-After calling this routine, the handle passed in &quot;handle&quot; must not be used with any of the remaining driver routines. A new handle must be obtained by calling <a href="00727.html" target="topic">DRV_SST26_Open</a> before the caller may use the driver again.&nbsp;</p>
-<p class="Element10">
-Usually there is no need for the driver client to verify that the Close operation has completed.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><a href="00417.html" target="topic">DRV_HANDLE</a> handle;  <i><span style="color: #008000">// Returned from DRV_SST26_Open</span></i>
+<div class="Element15">
+File System Operations on NVM:</div>
 
-DRV_SST26_Close(handle);</pre></div></div>
+<ul class="Element630">
+<li class="Element600"><span style="color: #000000">The application contains a FAT disk image consisting of a Master Boot Record (MBR) sector, Logical Boot Sector, File Allocation Table, and Root Directory Area, placed in the internal Flash memory (NVM)</span></li>
+<li class="Element600"><span style="color: #000000">The application opens an existing file named <strong>FILE.TXT</strong> and performs following file system related operations:</span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000"><a href="01131.html" target="topic">SYS_FS_FileStat</a></span></li>
+<li class="Element601"><span style="color: #000000"><a href="01130.html" target="topic">SYS_FS_FileSize</a></span></li>
+<li class="Element601"><span style="color: #000000"><a href="01129.html" target="topic">SYS_FS_FileSeek</a></span></li>
+<li class="Element601"><span style="color: #000000"><a href="01123.html" target="topic">SYS_FS_FileEOF</a></span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000">Performs read on the file and checks if string <strong>&quot;Data&quot;</strong> is present. If present it continues to next step or it fails the application</span></li>
+<li class="Element600"><span style="color: #000000">Finally, the string <strong>&quot;Hello World&quot;</strong> is written to this file. The string is then read and compared with the string that was written to the file. If the string compare is successful, An LED indication is provided.</span></li>
+</ul><p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+File system layer uses:</div>
+
+<ul class="Element630">
+<li class="Element600"><span style="color: #000000">Memory driver to communicate with underlying NVM media.</span></li>
+</ul></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00726.html" target="topic">Building The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how to build an application using the MPLAB X IDE.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00728.html" target="topic">MPLAB Harmony Configuration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00727.html" target="topic">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00729.html" target="topic">Running The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how to run the application using the MPLAB X IDE.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -113,7 +111,7 @@ DRV_SST26_Close(handle);</pre></div></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00274.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00285.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00286.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00713.html" target="topic">DRV_SST26_Close Function</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00712.html" target="topic">File System Applications</a> &gt; <a href="00713.html" target="topic">nvm_fat</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -124,10 +122,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00727.html" target="topic">Previous</a> | <a href="00286.html" target="topic">Up</a> | <a href="00738.html" target="topic">Next</a></div>
+<a href="00712.html" target="topic">Previous</a> | <a href="00712.html" target="topic">Up</a> | <a href="00726.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_Close@DRV_HANDLE Topic Title: DRV_SST26_Close Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications nvm_fat Topic Title: nvm_fat)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

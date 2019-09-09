@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Common Driver Library Help</title>
+<title>Running The Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00131.html" target="topic">Common Driver Library Help</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00009.html" target="topic">Driver Applications</a> &gt; <a href="00120.html" target="topic">Memory Driver Applications</a> &gt; Async &gt; <a href="00127.html" target="topic">nvm_sst26_read_write</a> &gt; <a href="00131.html" target="topic">Running The Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00760.html" target="topic">Previous</a> | <a href="00019.html" target="topic">Up</a> | <a href="00417.html" target="topic">Next</a></div>
+<a href="00129.html" target="topic">Previous</a> | <a href="00127.html" target="topic">Up</a> | <a href="00122.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Library Common Topic Title: Common Driver Library Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV MEMORY Async nvm_sst26_read_write Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Common Driver Library Help</div>
+Running The Application</div>
 </div>
 </div>
 
@@ -49,79 +49,42 @@ Common Driver Library Help</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This section provides information that is common to all drivers.</p></div>
-</div>
-<a name="612920436F6D6D6F6E20447269766572205365727669636573"></a><div class="Element14">
-a) Common Driver Services</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
+<strong><u>Running project with MPLAB X IDE</u></strong>&nbsp;</p>
+
+<ol class="Element630">
+<li value="1" class="Element600">Connect a micro/mini USB cable to the DEBUG port.</li>
+<li value="2" class="Element600">Build and program the application using the MPLAB X IDE.</li>
+<li value="3" class="Element600">The LED indicates the success or failure.
+<ul class="Element631">
+<li class="Element601">The LED is turned ON when the data read from each media matches with the data written in them</li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+The following table provides the LED name: </p><div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table4">
 <tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00417.html" target="topic">DRV_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Handle to an opened device driver.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00418.html" target="topic">DRV_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Invalid device handle.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00502.html" target="topic">DRV_IO_INTENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies the intended usage of the device when it is opened.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00510.html" target="topic">DRV_IO_ISBLOCKING</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns if the I/O intent provided is blocking&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00512.html" target="topic">DRV_IO_ISNONBLOCKING</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns if the I/O intent provided is non-blocking.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00511.html" target="topic">DRV_IO_ISEXCLUSIVE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns if the I/O intent provided is non-blocking.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00497.html" target="topic">DRV_IO_BUFFER_TYPES</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies to which buffer a device operation will apply.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00410.html" target="topic">DRV_CLIENT_STATUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Identifies the current status/state of a client's connection to a driver.&nbsp;</div></td></tr></table></div></div>
+<td class="Element65" valign="top" width="87%">
+<div class="Element66">
+Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="13%">
+<div class="Element66">
+LED Name&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 3&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 3&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM E70 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -129,7 +92,7 @@ Identifies the current status/state of a client's connection to a driver.&nbsp;<
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00131.html" target="topic">Common Driver Library Help</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00009.html" target="topic">Driver Applications</a> &gt; <a href="00120.html" target="topic">Memory Driver Applications</a> &gt; Async &gt; <a href="00127.html" target="topic">nvm_sst26_read_write</a> &gt; <a href="00131.html" target="topic">Running The Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -140,10 +103,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00760.html" target="topic">Previous</a> | <a href="00019.html" target="topic">Up</a> | <a href="00417.html" target="topic">Next</a></div>
+<a href="00129.html" target="topic">Previous</a> | <a href="00127.html" target="topic">Up</a> | <a href="00122.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Library Common Topic Title: Common Driver Library Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV MEMORY Async nvm_sst26_read_write Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

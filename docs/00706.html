@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SPI_TransferStatusGet Function</title>
+<title>Running the Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; d) Transfer Status Functions &gt; <a href="00706.html" target="topic">DRV_SPI_TransferStatusGet Function</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00011.html" target="topic">RTOS Applications</a> &gt; <a href="00701.html" target="topic">FreeRTOS Applications</a> &gt; <a href="00702.html" target="topic">basic_freertos</a> &gt; <a href="00706.html" target="topic">Running the Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00708.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00663.html" target="topic">Next</a></div>
+<a href="00704.html" target="topic">Previous</a> | <a href="00702.html" target="topic">Up</a> | <a href="00707.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_TransferStatusGet@DRV_SPI_TRANSFER_HANDLE Topic Title: DRV_SPI_TransferStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FreeRTOS basic_freertos Running the Application Topic Title: Running the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SPI_TransferStatusGet Function</div>
+Running the Application</div>
 </div>
 </div>
 
@@ -49,77 +49,156 @@ DRV_SPI_TransferStatusGet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function can be used to poll the status of the queued transfer request if the application doesn't prefer to use the event handler (callback) function to get notified.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00688.html" target="topic">DRV_SPI_TRANSFER_EVENT</a> <strong><span style="color: #000000">DRV_SPI_TransferStatusGet</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00695.html" target="topic">DRV_SPI_TRANSFER_HANDLE</a> <strong><span style="color: #000000">transferHandle</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
+<strong><u>MCU Devices</u></strong>&nbsp;</p>
+
+<ol class="Element630">
+<li value="1" class="Element600">Connect a micro/mini USB to the DEBUG port.</li>
+<li value="2" class="Element600">Build and program the application using the MPLAB X IDE.</li>
+<li value="3" class="Element600">The LED indicates the success or failure.
+<ul class="Element631">
+<li class="Element601">The LED toggles on success i.e. each time when the Task2 or Task3 receives a valid message</li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
 <p class="Element10">
-Either <a href="00686.html" target="topic">DRV_SPI_ReadTransferAdd</a> or <a href="00710.html" target="topic">DRV_SPI_WriteTransferAdd</a> or <a href="00708.html" target="topic">DRV_SPI_WriteReadTransferAdd</a> function must have been called and a valid transfer handle must have been returned.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
+The following table provides the LED name: </p><div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table2">
+<table cellspacing="0" class="Table4">
 <tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-transferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Handle of the transfer request of which status has to be obtained.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
+<td class="Element65" valign="top" width="87%">
+<div class="Element66">
+Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="13%">
+<div class="Element66">
+LED Name&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MK MCJ Curiosity Pro Development Board&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 2&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MK General Purpose (GP) Development Board&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MK GPL Curiosity Pro Development Board&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 2&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MX Curiosity Development Board&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MX Ethernet Starter Kit II&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MX XLP Starter Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1 (Red)&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM C21N Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM D20 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM D21 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM DA1 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM E54 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM E70 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM G55 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM L10 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM L21 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM L22 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM V71 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
-One of the elements of the enum &quot;<a href="00688.html" target="topic">DRV_SPI_TRANSFER_EVENT</a>&quot;.</p></div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
+&nbsp;</p>
 <p class="Element10">
-None.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  <i><span style="color: #008000">// myAppObj is an application specific object.</span></i>
-  MY_APP_OBJ myAppObj;
+<strong><u>MPU Devices</u></strong>&nbsp;</p>
 
-  uint8_t mybuffer[MY_BUFFER_SIZE];
-  <a href="00695.html" target="topic">DRV_SPI_TRANSFER_HANDLE</a> transferHandle;
-  <a href="00688.html" target="topic">DRV_SPI_TRANSFER_EVENT</a> event;
-
-  <i><span style="color: #008000">// mySPIHandle is the handle returned by the DRV_SPI_Open function.</span></i>
-
-  <a href="00686.html" target="topic">DRV_SPI_ReadTransferAdd</a>( mySPIhandle, myBuffer, MY_RECEIVE_SIZE, &amp;transferHandle);
-
-  <strong><span style="color: #000080">if</span></strong>(transferHandle == <a href="00696.html" target="topic">DRV_SPI_TRANSFER_HANDLE_INVALID</a>)
-  {
-      <i><span style="color: #008000">// Error handling here</span></i>
-  }
-
-  <i><span style="color: #008000">//Check the status of the transfer request</span></i>
-  <i><span style="color: #008000">//This call can be used to wait until the transfer is completed.</span></i>
-  event  = DRV_SPI_TransferStatusGet(transferHandle);</pre></div></div>
+<ol class="Element630">
+<li value="1" class="Element600">Build the IAR or MPLAB X project using IAR Embedded Workbench or MPLAB X IDE respectively</li>
+<li value="2" class="Element600">Use the output binary file (harmony.bin) to setup the board as detailed in <a href="00704.html" target="topic">hardware setup</a></li>
+<li value="3" class="Element600">Reset the board to run the application</li>
+<li value="4" class="Element600">The LED indicates the success or failure.
+<ul class="Element631">
+<li class="Element601">The LED toggles on success i.e. each time when the Task2 or Task3 receives a valid message</li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+<div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="64%">
+<div class="Element66">
+Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="36%">
+<div class="Element66">
+LED Name&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="64%">
+<div class="Element68">
+SAMA5D2 Xplained Ultra evaluation kit&nbsp;</div></td><td class="Element67" valign="top" width="36%">
+<div class="Element68">
+RGB_LED (Blue)&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="64%">
+<div class="Element68">
+SAM9X60 evaluation kit&nbsp;</div></td><td class="Element67" valign="top" width="36%">
+<div class="Element68">
+RGB_LED (Green)&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -127,7 +206,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00252.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00253.html" target="topic">Library Interface</a> &gt; d) Transfer Status Functions &gt; <a href="00706.html" target="topic">DRV_SPI_TransferStatusGet Function</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00011.html" target="topic">RTOS Applications</a> &gt; <a href="00701.html" target="topic">FreeRTOS Applications</a> &gt; <a href="00702.html" target="topic">basic_freertos</a> &gt; <a href="00706.html" target="topic">Running the Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -138,10 +217,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00708.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00663.html" target="topic">Next</a></div>
+<a href="00704.html" target="topic">Previous</a> | <a href="00702.html" target="topic">Up</a> | <a href="00707.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_TransferStatusGet@DRV_SPI_TRANSFER_HANDLE Topic Title: DRV_SPI_TransferStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FreeRTOS basic_freertos Running the Application Topic Title: Running the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

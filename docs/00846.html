@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>basic</title>
+<title>Abstraction Model</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00011.html" target="topic">RTOS Applications</a> &gt; <a href="00845.html" target="topic">Micrium OS III Applications</a> &gt; <a href="00846.html" target="topic">basic</a></div>
+<a href="01409.html" target="topic">System Service Libraries Help</a> &gt; <a href="00851.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00853.html" target="topic">Using the Library</a> &gt; <a href="00846.html" target="topic">Abstraction Model</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00845.html" target="topic">Previous</a> | <a href="00845.html" target="topic">Up</a> | <a href="00847.html" target="topic">Next</a></div>
+<a href="00853.html" target="topic">Previous</a> | <a href="00853.html" target="topic">Up</a> | <a href="00849.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Micrium OS III basic Topic Title: basic)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS COMMAND Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-basic</div>
+Abstraction Model</div>
 </div>
 </div>
 
@@ -49,66 +49,17 @@ basic</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<span style="color: #000000">This demonstration creates a tasks which toggle an LED for every 500ms.</span>&nbsp;</p>
-<div class="Element15">
-Legal Disclaimer</div>
+The Command Processor System Service Library is a collection of operations specific to supporting user input commands. The commands can be uniquely native to each client service and can be dynamically added. The library can support multiple client services at once.&nbsp;</p>
 <p class="Element10">
-<span style="color: #000000">The source code for this demonstration is not freely distributed. To obtain the proper licensing agreement go to the Micriµm website: </span><a href="#" onclick="openExternalLink('http://www.micrium.com');"><img src="indicator_external_link.gif" border="0" alt="" title="">http://www.micrium.com</a><span style="color: #000000">.</span>&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">The Micriµm µC/OS-III source has to be installed in the following location</span> for<span style="color: #000000"> the demonstrations to work.</span> </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table4">
-<tr>
-<td class="Element65" valign="top" width="39%">
-<div class="Element66">
-Micrium OS III Source Path&nbsp;</div></td><td class="Element65" valign="top" width="61%">
-<div class="Element66">
-thirdparty_micrium/MicriumOSIII/Software&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00847.html" target="topic">Building the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to build an application using the MPLAB X IDE.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00849.html" target="topic">MPLAB Harmony Configurations</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00848.html" target="topic">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00850.html" target="topic">Running the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on how to run an application using the MPLAB X IDE.&nbsp;</div></td></tr></table></div></div>
-</div>
+The Command Processor System Service is a module that works closely with the Console System Service to present a user interface command prompt. </p><p class="Element10" style="text-align: center;">
+<img src="sys_command_block_diagram.png" border="0" alt="" title=""></p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00011.html" target="topic">RTOS Applications</a> &gt; <a href="00845.html" target="topic">Micrium OS III Applications</a> &gt; <a href="00846.html" target="topic">basic</a></div>
+<a href="01409.html" target="topic">System Service Libraries Help</a> &gt; <a href="00851.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00853.html" target="topic">Using the Library</a> &gt; <a href="00846.html" target="topic">Abstraction Model</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -119,10 +70,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00845.html" target="topic">Previous</a> | <a href="00845.html" target="topic">Up</a> | <a href="00847.html" target="topic">Next</a></div>
+<a href="00853.html" target="topic">Previous</a> | <a href="00853.html" target="topic">Up</a> | <a href="00849.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Micrium OS III basic Topic Title: basic)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS COMMAND Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
