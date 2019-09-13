@@ -2,6 +2,67 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB® Harmony 3 Release Notes
+## Core Release v3.5.0
+### New Features
+
+- **New part support** - This release introduces initial support for following products
+[SAM DA1](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-l-mcus), [SAM D09/D10/D11](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-g-mcus), [PIC32MX5XX/6XX/7XX](https://www.microchip.com/design-centers/32-bit/pic-32-bit-mcus/pic32mx-family), PIC32MK GPH/GPG/MCJ, PIC32MK GPK/GPL/MCM, and SAM RH71
+families of 32-bit microcontrollers.
+
+- **Development kit and demo application support** - The following table provides number of demo application available for different development kits newly added in this release.
+
+    | Development kits | Bare-metal applications | RTOS applications |
+    | --- | --- | --- |
+    | [SAM C21N Xplained Pro Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ATSAMC21-XPRO) | 9 | 11 |
+    | [SAM D20 Xplained Pro Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ATSAMD20-XPRO) | 7 | 1 |
+    | [SAM D21 Xplained Pro Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ATSAMD21-XPRO) | 9 | 1 |
+    | [SAM DA1 Xplained Pro Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/ATSAMDA1-XPRO) | 4 | 2 |
+    | [SAM G55 Xplained Pro Evaluation Kit](https://www.microchip.com/developmenttools/ProductDetails/atsamg55-xpro) | 8 | 6 |
+    | [SAM L10 Xplained Pro Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/dm320204) | 7 | 1 |
+    | [SAM L21 Xplained Pro Evaluation Kit](https://www.microchip.com/developmenttools/ProductDetails/ATSAML21-XPRO-B) | 6 | 2 |
+    | [SAM L22 Xplained Pro Evaluation Kit](https://www.microchip.com/developmenttools/ProductDetails/ATSAML22-XPRO-B) | 5 | 2 |
+    | [SAM E54 Xplained Pro Evaluation Kit](https://www.microchip.com/developmenttools/ProductDetails/ATSAME54-XPRO) | 15 | 17 |
+    | [SAM E70 Xplained Ultra Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ATSAME70-XULT) | 18 | 30 |
+    | SAMRH71 Evaluation Kit | 6 | 4 |
+    | [SAM V71 Xplained Ultra Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ATSAMV71-XULT) | 10 | 19 |
+    | [PIC32 Ethernet Starter Kit II](https://www.microchip.com/DevelopmentTools/ProductDetails/dm320004-2) | 2 | 1 |
+    | [PIC32MX XLP Starter Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/DM320105) | 5 | 1 |
+    | [PIC32MX Curiosity Development Board](https://www.microchip.com/Developmenttools/ProductDetails/dm320103) | 8 | 6 |
+    | [PIC32MK GP Development Kit](https://www.microchip.com/developmenttools/ProductDetails/dm320106) | 8 | 2 |
+    | PIC32MK MCJ Curiosity Pro | 9 | 4 |
+    | PIC32MK GPL Curiosity Pro | 6 | 4 |
+    | [PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit ](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM320010)     | 5 | 3 |
+    | [PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit (Crypto) ](https://www.microchip.com/DevelopmentTools/ProductDetails/DM320010-C) | 8 | 6 |
+    | [PIC32MZ Embedded Graphics with External DRAM (DA) Starter Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM320008)     | 1 | 0 |
+    | [PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit](https://www.microchip.com/Developmenttools/ProductDetails/Dm320007) | 9 | 11 |
+    | [ATSAMA5D2C-XULT](https://www.microchip.com/Developmenttools/ProductDetails/ATSAMA5D2C-XULT) | 13 | 23 |
+    | [ATSAM9X60-EK](https://www.microchip.com/design-centers/32-bit-mpus/microprocessors/sam9) | 10 | 16 |
+
+### Known Issues
+
+The current known issues are as follows:
+
+- Configuration fuse macros are not generated for SAM D09/D11/D12 devices. 
+
+- PIC32MK GPK/GPL/MCM and SAM RH71 will be supported in the next version of MPLAB X IDE release.
+
+- Interactive help using the Show User Manual Entry in the Right-click menu for configuration options provided by this module is not yet available from within the MPLAB Harmony Configurator (MHC).
+  Please see the *Configuring the Library* section in the help documentation in the doc folder for this Harmony 3 module instead. Help is available in CHM format.
+
+- ATSAMA5D2C and SAM9X60 example applications build with a warning message: ```Warning[Pe111]: statement is unreachable for return ( EXIT_FAILURE ); statement of main() in IAR```
+
+- For FreeRTOS projects the task's stack size configuration has been changed to Bytes from words. All applications using FreeRTOS need to verify the stack size of RTOS tasks are as expected.
+
+- Timer System Services is only supported with Coretimer PLIB on PIC32M devices.
+
+### Development Tools
+
+* [MPLAB® X IDE v5.25](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB® XC32 C/C++ Compiler v2.30](https://www.microchip.com/mplab/compilers)
+* [IAR Embedded Workbench® for ARM® v8.4](https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
+* MPLAB® X IDE plug-ins:
+  * MPLAB® Harmony Configurator (MHC) v3.3.0.0 and above.
+
 ## Core Release v3.4.0
 ### New Features
 
