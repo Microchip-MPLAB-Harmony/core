@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Library Interface</title>
+<title>Micrium OS III Applications</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00788.html" target="topic">OSAL Library Help</a> &gt; <a href="00797.html" target="topic">Library Interface</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00011.html" target="topic">RTOS Applications</a> &gt; <a href="00797.html" target="topic">Micrium OS III Applications</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00790.html" target="topic">Previous</a> | <a href="00788.html" target="topic">Up</a> | <a href="00826.html" target="topic">Next</a></div>
+<a href="00711.html" target="topic">Previous</a> | <a href="00011.html" target="topic">Up</a> | <a href="00798.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Micrium OS III Applications Help Topic Title: Micrium OS III Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Library Interface</div>
+Micrium OS III Applications</div>
 </div>
 </div>
 
@@ -49,262 +49,44 @@ Library Interface</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This section describes the APIs of the OSAL Library. Refer to each section for a description.</p></div>
+This section provides descriptions of the Micrium OS III RTOS demonstrations which are located in <strong>&quot;micrium_ucos3&quot;</strong> repository.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element15">
+Legal Disclaimer</div>
+<p class="Element10">
+<span style="color: #000000">The source code for this demonstration is not freely distributed. To obtain the proper licensing agreement go to the Micriµm website: </span><a href="#" onclick="openExternalLink('http://www.micrium.com');"><img src="indicator_external_link.gif" border="0" alt="" title="">http://www.micrium.com</a><span style="color: #000000">.</span>&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">The Micriµm µC/OS-III source has to be installed in the following location</span> for<span style="color: #000000"> the demonstrations to work.</span> </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="39%">
+<div class="Element66">
+Micrium OS III Source Path&nbsp;</div></td><td class="Element65" valign="top" width="61%">
+<div class="Element66">
+thirdparty_micrium/MicriumOSIII/Software&nbsp;</div></td></tr></table></div></div>
 </div>
-<a name="61292053656D6170686F72652046756E6374696F6E73"></a><div class="Element14">
-a) Semaphore Functions</div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
 <div class="Element11">
 <div class="Element10">
 <div class="Element212">
 <div class="TableDiv">
 <table cellspacing="0" class="Table0">
 <tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<td class="Element200" valign="top" width="35%">
 <div class="Element201">
 Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
 <div class="Element205">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00826.html" target="topic">OSAL_SEM_Create</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00798.html" target="topic">basic</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Creates an OSAL Semaphore.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00828.html" target="topic">OSAL_SEM_Delete</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Deletes an OSAL Semaphore.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00830.html" target="topic">OSAL_SEM_Pend</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Waits on a semaphore. Returns true if the semaphore was obtained within the time limit.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00831.html" target="topic">OSAL_SEM_Post</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Posts a semaphore or increments a counting semaphore.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00832.html" target="topic">OSAL_SEM_PostISR</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Posts a semaphore or increments a counting semaphore from within an Interrupt Service Routine (ISR).&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00829.html" target="topic">OSAL_SEM_GetCount</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the current value of a counting semaphore.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="6229204D757465782046756E6374696F6E73"></a><div class="Element14">
-b) Mutex Functions</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00816.html" target="topic">OSAL_MUTEX_Create</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Creates a mutex.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00818.html" target="topic">OSAL_MUTEX_Delete</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Deletes a mutex.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00819.html" target="topic">OSAL_MUTEX_Lock</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Locks a mutex.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00820.html" target="topic">OSAL_MUTEX_Unlock</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Unlocks a mutex.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="632920437269746963616C2053656374696F6E2046756E6374696F6E73"></a><div class="Element14">
-c) Critical Section Functions</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00808.html" target="topic">OSAL_CRIT_Enter</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enters a critical section with the specified severity level.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00809.html" target="topic">OSAL_CRIT_Leave</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Leaves a critical section with the specified severity level.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="6429204D656D6F727920416C6C6F636174696F6E2046756E6374696F6E73"></a><div class="Element14">
-d) Memory Allocation Functions</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00815.html" target="topic">OSAL_Malloc</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Allocates memory using the OSAL default allocator.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00813.html" target="topic">OSAL_Free</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Deallocates a block of memory and return to the default pool.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="6529204F53414C20436F6E74726F6C2046756E6374696F6E73"></a><div class="Element14">
-e) OSAL Control Functions</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00814.html" target="topic">OSAL_Initialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Performs OSAL initialization.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00821.html" target="topic">OSAL_Name</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Obtains the name of the underlying RTOS.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="6629204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
-f) Data Types and Constants</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_enum.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00810.html" target="topic">OSAL_CRIT_TYPE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enumerated type representing the possible types of critical section.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_enum.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00822.html" target="topic">OSAL_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enumerated type representing the general return value from OSAL functions.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_enum.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00833.html" target="topic">OSAL_SEM_TYPE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enumerated type representing the possible types of semaphore.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00827.html" target="topic">OSAL_SEM_DECLARE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Declares an OSAL semaphore.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00817.html" target="topic">OSAL_MUTEX_DECLARE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Declares an OSAL mutex.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00000.html" target="topic">_OSAL_H</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro _OSAL_H.&nbsp;</div></td></tr></table></div></div>
+<span style="color: #000000">This example application blinks an LED on a starter kit to show the Micrium OS III threads that are running and to indicate status.</span>&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -312,7 +94,7 @@ This is macro _OSAL_H.&nbsp;</div></td></tr></table></div></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00788.html" target="topic">OSAL Library Help</a> &gt; <a href="00797.html" target="topic">Library Interface</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00011.html" target="topic">RTOS Applications</a> &gt; <a href="00797.html" target="topic">Micrium OS III Applications</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -323,10 +105,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00790.html" target="topic">Previous</a> | <a href="00788.html" target="topic">Up</a> | <a href="00826.html" target="topic">Next</a></div>
+<a href="00711.html" target="topic">Previous</a> | <a href="00011.html" target="topic">Up</a> | <a href="00798.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Micrium OS III Applications Help Topic Title: Micrium OS III Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

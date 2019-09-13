@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_FILE_SYSTEM_TYPE Enumeration</title>
+<title>SYS_FS_EVENT_HANDLER Type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01409.html" target="topic">System Service Libraries Help</a> &gt; <a href="00896.html" target="topic">File System Service Library Help</a> &gt; <a href="00897.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01113.html" target="topic">SYS_FS_FILE_SYSTEM_TYPE Enumeration</a></div>
+<a href="01431.html" target="topic">System Service Libraries Help</a> &gt; <a href="00918.html" target="topic">File System Service Library Help</a> &gt; <a href="00919.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01113.html" target="topic">SYS_FS_EVENT_HANDLER Type</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00700.html" target="topic">Previous</a> | <a href="00897.html" target="topic">Up</a> | <a href="01185.html" target="topic">Next</a></div>
+<a href="01109.html" target="topic">Previous</a> | <a href="00919.html" target="topic">Up</a> | <a href="01211.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FILE_SYSTEM_TYPE Topic Title: SYS_FS_FILE_SYSTEM_TYPE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_EVENT_HANDLER Topic Title: SYS_FS_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_FILE_SYSTEM_TYPE Enumeration</div>
+SYS_FS_EVENT_HANDLER Type</div>
 </div>
 </div>
 
@@ -49,46 +49,49 @@ SYS_FS_FILE_SYSTEM_TYPE Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-File System type&nbsp;</p>
+File System Event Handler function pointer&nbsp;</p>
 <p class="Element10">
-These enumerated values identify the native file system supported by the SYS FS.</p></div>
+This data type defines the required function signature for the file system event handling callback function. A client must register a pointer to an event handling function whose function signature (parameter and return value types) match the types specified by this function pointer in order to receive event call backs from the file system.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">UNSUPPORTED_FS</span></strong> = 0,
-  <strong><span style="color: #000000">FAT</span></strong>,
-  <strong><span style="color: #000000">MPFS2</span></strong>
-} SYS_FS_FILE_SYSTEM_TYPE;</pre></div></div>
-<a name="4D656D62657273"></a><div class="Element14">
-Members</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">SYS_FS_EVENT_HANDLER</span></strong>)(<a href="01109.html" target="topic">SYS_FS_EVENT</a> event, <strong><span style="color: #000080">void</span></strong>* eventData, uintptr_t context);</pre></div></div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element272">
+<div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table3">
+<table cellspacing="0" class="Table2">
 <tr>
-<td class="Element260" valign="top" width="35%">
-<div class="Element261">
-Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
-<div class="Element265">
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-UNSUPPORTED_FS = 0&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Unsupported File System&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-FAT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-FAT FS native File system&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-MPFS2&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-MPFS2 native File system&nbsp;</div></td></tr></table></div></div>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+event&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Identifies the type of event&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+eventData&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Handle returned from the media operation requests&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Value identifying the context of the application that registered the event handling function&nbsp;</div></td></tr></table></div></div>
 </div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -102,7 +105,7 @@ None.</p></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01409.html" target="topic">System Service Libraries Help</a> &gt; <a href="00896.html" target="topic">File System Service Library Help</a> &gt; <a href="00897.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01113.html" target="topic">SYS_FS_FILE_SYSTEM_TYPE Enumeration</a></div>
+<a href="01431.html" target="topic">System Service Libraries Help</a> &gt; <a href="00918.html" target="topic">File System Service Library Help</a> &gt; <a href="00919.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="01113.html" target="topic">SYS_FS_EVENT_HANDLER Type</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -113,10 +116,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00700.html" target="topic">Previous</a> | <a href="00897.html" target="topic">Up</a> | <a href="01185.html" target="topic">Next</a></div>
+<a href="01109.html" target="topic">Previous</a> | <a href="00919.html" target="topic">Up</a> | <a href="01211.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FILE_SYSTEM_TYPE Topic Title: SYS_FS_FILE_SYSTEM_TYPE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_EVENT_HANDLER Topic Title: SYS_FS_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

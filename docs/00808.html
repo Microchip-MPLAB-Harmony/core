@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>OSAL_CRIT_Enter Function</title>
+<title>Running The Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00788.html" target="topic">OSAL Library Help</a> &gt; <a href="00797.html" target="topic">Library Interface</a> &gt; c) Critical Section Functions &gt; <a href="00808.html" target="topic">OSAL_CRIT_Enter Function</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00009.html" target="topic">Driver Applications</a> &gt; <a href="00259.html" target="topic">SQI Flash Driver Applications</a> &gt; <a href="00803.html" target="topic">MX25L Applications</a> &gt; <a href="00804.html" target="topic">mx25l_flash_read_write</a> &gt; <a href="00808.html" target="topic">Running The Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00820.html" target="topic">Previous</a> | <a href="00797.html" target="topic">Up</a> | <a href="00809.html" target="topic">Next</a></div>
+<a href="00806.html" target="topic">Previous</a> | <a href="00804.html" target="topic">Up</a> | <a href="00262.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_CRIT_Enter@OSAL_CRIT_TYPE Topic Title: OSAL_CRIT_Enter Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: MX25L mx25l_flash_read_write Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-OSAL_CRIT_Enter Function</div>
+Running The Application</div>
 </div>
 </div>
 
@@ -49,64 +49,33 @@ OSAL_CRIT_Enter Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function enters a critical section of code. It is assumed that the sequence of operations bounded by the enter and leave critical section operations is treated as one atomic sequence that will not be disturbed. This function should be paired with <a href="00809.html" target="topic">OSAL_CRIT_Leave</a>().</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100">OSAL_CRITSECT_DATA_TYPE <strong><span style="color: #000000">OSAL_CRIT_Enter</span></strong>(
-    <a href="00810.html" target="topic">OSAL_CRIT_TYPE</a> <strong><span style="color: #000000">severity</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
+<strong><u>MPU Devices</u></strong></p>
+<ol class="Element630">
+<li value="1" class="Element600">Build the IAR or MPLAB X project using IAR Embedded Workbench or MPLAB X IDE respectively</li>
+<li value="2" class="Element600">Use the output binary file (harmony.bin) to setup the board as detailed in <a href="00806.html" target="topic">hardware setup</a></li>
+<li value="3" class="Element600">Reset the board to run the application</li>
+<li value="4" class="Element600">The LED indicates the success or failure.
+<ul class="Element631">
+<li class="Element601">The LED toggles with 1 second delay if the demo executes successfully.</li>
+<li class="Element601">LED turns on and stays on if the demo executes with error.</li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
 <p class="Element10">
-None.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
+The following table provides the LED name: </p><div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table2">
+<table cellspacing="0" class="Table4">
 <tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-severity&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-OSAL_CRIT_TYPE_LOW, The RTOS should disable all other running tasks effectively locking the scheduling mechanism.<br>OSAL_CRIT_TYPE_HIGH, The RTOS should disable all possible interrupts sources including the scheduler ensuring that the sequence of code operates without interruption. The state of interrupts are returned to the user before they are disabled.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-A data type of OSAL_CRITSECT_DATA_TYPE, this value represents the state of interrupts before entering the critical section.</p></div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-The sequence of operations bounded by the OSAL_CRIT_Enter and <a href="00809.html" target="topic">OSAL_CRIT_Leave</a> form a critical section. The severity level defines whether the RTOS should perform task locking or completely disable all interrupts.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"> OSAL_CRITSECT_DATA_TYPE IntState;
- <i><span style="color: #008000">// prevent other tasks preempting this sequence of code</span></i>
- IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
- <i><span style="color: #008000">// modify the peripheral</span></i>
- DRV_USART_Reinitialize( objUSART,  &amp;initData);
- <a href="00809.html" target="topic">OSAL_CRIT_Leave</a>(OSAL_CRIT_TYPE_HIGH, IntState);</pre></div></div>
+<td class="Element65" valign="top" width="67%">
+<div class="Element66">
+Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="33%">
+<div class="Element66">
+LED Name&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="67%">
+<div class="Element68">
+SAMA5D2 Xplained Ultra Evaluation kit&nbsp;</div></td><td class="Element67" valign="top" width="33%">
+<div class="Element68">
+RGB_LED(Green)&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -114,7 +83,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00788.html" target="topic">OSAL Library Help</a> &gt; <a href="00797.html" target="topic">Library Interface</a> &gt; c) Critical Section Functions &gt; <a href="00808.html" target="topic">OSAL_CRIT_Enter Function</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00009.html" target="topic">Driver Applications</a> &gt; <a href="00259.html" target="topic">SQI Flash Driver Applications</a> &gt; <a href="00803.html" target="topic">MX25L Applications</a> &gt; <a href="00804.html" target="topic">mx25l_flash_read_write</a> &gt; <a href="00808.html" target="topic">Running The Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -125,10 +94,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00820.html" target="topic">Previous</a> | <a href="00797.html" target="topic">Up</a> | <a href="00809.html" target="topic">Next</a></div>
+<a href="00806.html" target="topic">Previous</a> | <a href="00804.html" target="topic">Up</a> | <a href="00262.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL_CRIT_Enter@OSAL_CRIT_TYPE Topic Title: OSAL_CRIT_Enter Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: MX25L mx25l_flash_read_write Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
