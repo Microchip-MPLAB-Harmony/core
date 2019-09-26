@@ -36,7 +36,7 @@ extern "C" {
 ------------------------------------------------------------------------------------------------------------------------
 */
 
-#include <xc.h>
+#include "device.h"
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>

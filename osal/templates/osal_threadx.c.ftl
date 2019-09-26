@@ -48,7 +48,6 @@
 /*  This section lists the other files that are included in this file.
  */
 
-#include <xc.h>
 #include "osal/osal_threadx.h"
 #include "tx_thread.h"
 
