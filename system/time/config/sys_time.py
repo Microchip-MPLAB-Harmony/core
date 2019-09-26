@@ -29,14 +29,135 @@
 ################################################################################
 #### Business Logic ####
 ################################################################################
+global sysTimeRemoteComponentId
+global sysTimeOperatingMode
+global sysTimePLIB
+
+sysTimeOperatingModeList = ["TICKLESS", "TICK BASED"]
+
+def handleMessage(messageID, args):
+    global sysTimePlibCapability
+    global sysTimeAchievableTickRateHz
+    global sysTimeOperatingMode
+    global sysTimeTickRateMs
+    global sysTimeRemoteComponentId
+    global sysTimeAchievableTickRateMsComment
+    global sysTimePLIBErrorComment
+
+    sysTickRate = {"sys_time_tick_ms" : 0.0}
+    sysTimePLIBConfig = dict()
+    dummy_dict = dict()
+
+    if messageID == "SYS_TIME_PLIB_CAPABILITY":
+        if args["plib_mode"] == "PERIOD_MODE":
+            sysTimeOperatingMode.setValue("TICK BASED")
+            sysTimeOperatingMode.setReadOnly(True)
+        elif args["plib_mode"] == "COMPARE_MODE":
+            sysTimeOperatingMode.setValue("TICKLESS")
+            sysTimeOperatingMode.setReadOnly(True)
+        else:
+            sysTimeOperatingMode.setReadOnly(False)
+
+        sysTimeOperatingMode.setVisible(True)
+
+        if sysTimeOperatingMode.getValue() == "TICKLESS":
+            sysTimePLIBConfig["plib_mode"] = "SYS_TIME_PLIB_MODE_COMPARE"
+            return sysTimePLIBConfig
+        else:
+            sysTimeTickRateMs.setVisible(True)
+            sysTimeAchievableTickRateMsComment.setVisible(True)
+            sysTimePLIBConfig["plib_mode"] = "SYS_TIME_PLIB_MODE_PERIOD"
+            sysTimePLIBConfig["sys_time_tick_ms"] = float(sysTimeTickRateMs.getValue())
+            return sysTimePLIBConfig
+
+    elif messageID == "SYS_TIME_ACHIEVABLE_TICK_RATE_HZ":
+        sysTimeAchievableTickRateHz.setValue(args["tick_rate_hz"])
+
+    elif messageID == "SYS_TIME_NOT_SUPPORTED":
+        if args["isVisible"] == "True":
+            sysTimePLIBErrorComment.setLabel(args["message"])
+            sysTimePLIBErrorComment.setVisible(True)
+        else:
+            sysTimePLIBErrorComment.setVisible(False)
+
+    return dummy_dict
+
+def tickbasedFileGen(symbol, event):
+    if event["value"] == "TICK BASED":
+       symbol.setEnabled(True)
+    else:
+       symbol.setEnabled(False)
+
+def ticklessFileGen(symbol, event):
+    if event["value"] == "TICKLESS":
+       symbol.setEnabled(True)
+    else:
+       symbol.setEnabled(False)
+
 def sysTimeFrequencyCalculate(symbol, event):
     timeFreq = 1000000/event["value"]
     symbol.setLabel("**** Timer Frequency is " + str(timeFreq) + " Hz ****")
+
+def sysTimeOperatingModeCallback(symbol, event):
+    global sysTimeTickRateMs
+    dummyDict = {}
+    sysTickRate = {"sys_time_tick_ms" : 0.0}
+
+    if sysTimeRemoteComponentId != "":
+        if event["value"] == "TICKLESS":
+            dummyDict = Database.sendMessage(sysTimeRemoteComponentId.getValue(), "SYS_TIME_PLIB_MODE_COMPARE", dummyDict)
+        else:
+            dummyDict = Database.sendMessage(sysTimeRemoteComponentId.getValue(), "SYS_TIME_PLIB_MODE_PERIOD", dummyDict)
+            sysTickRate["sys_time_tick_ms"] = float(sysTimeTickRateMs.getValue())
+            dummyDict = Database.sendMessage(sysTimeRemoteComponentId.getValue(), "SYS_TIME_TICK_RATE_CHANGED", sysTickRate)
+
+def sysTimeTickRateCallback(symbol, event):
+    global sysTimeRemoteComponentId
+
+    dummyDict = {}
+    sysTickRate = {"sys_time_tick_ms" : 0.0}
+
+    if (event["id"] == "SYS_TIME_OPERATING_MODE"):
+        if event["value"] == "TICK BASED":
+            symbol.setVisible(True)
+        else:
+            symbol.setVisible(False)
+
+    elif (event["id"] == "SYS_TIME_TICK_RATE_MS"):
+        if sysTimeRemoteComponentId != "" :
+            sysTickRate["sys_time_tick_ms"] = float(symbol.getValue())
+            dummyDict = Database.sendMessage(sysTimeRemoteComponentId.getValue(), "SYS_TIME_TICK_RATE_CHANGED", sysTickRate)
+
+def sysTimeAchievableTickRateMsCallback(symbol, event):
+    global sysTimeOperatingMode
+    global sysTimePLIB
+
+    if (event["id"] == "SYS_TIME_ACHIEVABLE_TICK_RATE_HZ"):
+        if event["value"] != 0:
+            achievableRateMs =  100000.0 / event["value"]
+        else:
+            achievableRateMs = 0
+        achievableRateMs = achievableRateMs * 1000.0
+        symbol.setLabel("Achievable Tick Rate Resolution (ms):" + str(achievableRateMs) + "ms")
+
+    elif (event["id"] == "SYS_TIME_OPERATING_MODE"):
+        if event["value"]  == "TICK BASED":
+            symbol.setVisible(True)
+        else:
+            symbol.setVisible(False)
 
 ################################################################################
 #### Component ####
 ################################################################################
 def instantiateComponent(sysTimeComponent):
+    global sysTimeRemoteComponentId
+    global sysTimeOperatingMode
+    global sysTimePLIB
+    global sysTimeAchievableTickRateHz
+    global sysTimePlibCapability
+    global sysTimeTickRateMs
+    global sysTimeAchievableTickRateMsComment
+    global sysTimePLIBErrorComment
 
     res = Database.activateComponents(["HarmonyCore"])
 
@@ -59,8 +180,37 @@ def instantiateComponent(sysTimeComponent):
     sysTimeObjects.setMin(1)
     sysTimeObjects.setDefaultValue(5)
 
-    #sysTimeUnitResolutionComment = sysTimeComponent.createCommentSymbol("SYS_TIME_RESOLUTION_COMMENT", None)
-    #sysTimeUnitResolutionComment.setLabel("**** Check The H/W Timer Connected For The Possible Timer Resolution ****")
+    sysTimeRemoteComponentId = sysTimeComponent.createStringSymbol("SYS_TIME_REMOTE_COMPONENT_ID", None)
+    sysTimeRemoteComponentId.setLabel("Remote component id")
+    sysTimeRemoteComponentId.setVisible(False)
+    sysTimeRemoteComponentId.setDefaultValue("")
+
+    sysTimeOperatingMode = sysTimeComponent.createComboSymbol("SYS_TIME_OPERATING_MODE", None, sysTimeOperatingModeList)
+    sysTimeOperatingMode.setLabel("Operating Mode")
+    sysTimeOperatingMode.setDefaultValue(sysTimeOperatingModeList[0])
+    sysTimeOperatingMode.setVisible(False)
+    sysTimeOperatingMode.setDependencies(sysTimeOperatingModeCallback, ["SYS_TIME_OPERATING_MODE"])
+
+    sysTimeTickRateMs = sysTimeComponent.createFloatSymbol("SYS_TIME_TICK_RATE_MS", None)
+    sysTimeTickRateMs.setLabel("Tick Rate (ms)")
+    sysTimeTickRateMs.setMax(5000)          #5 seconds
+    sysTimeTickRateMs.setMin(0.1)           #100 usec
+    sysTimeTickRateMs.setDefaultValue(1)
+    sysTimeTickRateMs.setVisible(False)
+    sysTimeTickRateMs.setDependencies(sysTimeTickRateCallback, ["SYS_TIME_OPERATING_MODE", "SYS_TIME_TICK_RATE_MS"])
+
+    sysTimeAchievableTickRateHz = sysTimeComponent.createLongSymbol("SYS_TIME_ACHIEVABLE_TICK_RATE_HZ", None)
+    sysTimeAchievableTickRateHz.setDefaultValue(1)
+    sysTimeAchievableTickRateHz.setVisible(False)
+
+    sysTimeAchievableTickRateMsComment = sysTimeComponent.createCommentSymbol("SYS_TIME_ACHIEVABLEE_TICK_RATE_COMMENT", None)
+    sysTimeAchievableTickRateMsComment.setLabel("Achievable Tick Rate Resolution (ms):" + str(sysTimeAchievableTickRateHz.getValue()) + "ms")
+    sysTimeAchievableTickRateMsComment.setVisible(False)
+    sysTimeAchievableTickRateMsComment.setDependencies(sysTimeAchievableTickRateMsCallback, ["SYS_TIME_OPERATING_MODE" ,"SYS_TIME_ACHIEVABLE_TICK_RATE_HZ"])
+
+    sysTimePLIBErrorComment = sysTimeComponent.createCommentSymbol("SYS_TIME_PLIB_ERROR", None)
+    sysTimePLIBErrorComment.setLabel("")
+    sysTimePLIBErrorComment.setVisible(False)
 
     ############################################################################
     #### Code Generation ####
@@ -76,28 +226,53 @@ def instantiateComponent(sysTimeComponent):
     sysTimeHeaderFile.setOverwrite(True)
 
     sysTimeHeaderDefFile = sysTimeComponent.createFileSymbol("SYS_TIME_HEADER_DEF", None)
-    sysTimeHeaderDefFile.setSourcePath("system/time/sys_time_definitions.h")
+    sysTimeHeaderDefFile.setSourcePath("system/time/templates/sys_time_definitions.h.ftl")
     sysTimeHeaderDefFile.setOutputName("sys_time_definitions.h")
     sysTimeHeaderDefFile.setDestPath("system/time/")
     sysTimeHeaderDefFile.setProjectPath("config/" + configName + "/system/time/")
     sysTimeHeaderDefFile.setType("HEADER")
+    sysTimeHeaderDefFile.setMarkup(True)
     sysTimeHeaderDefFile.setOverwrite(True)
 
-    sysTimeSourceFile = sysTimeComponent.createFileSymbol("SYS_TIME_SOURCE", None)
-    sysTimeSourceFile.setSourcePath("system/time/src/sys_time.c")
-    sysTimeSourceFile.setOutputName("sys_time.c")
-    sysTimeSourceFile.setDestPath("system/time/src")
-    sysTimeSourceFile.setProjectPath("config/" + configName + "/system/time/")
-    sysTimeSourceFile.setType("SOURCE")
-    sysTimeSourceFile.setOverwrite(True)
+    sysTimeTickbasedSourceFile = sysTimeComponent.createFileSymbol("SYS_TIME_TICK_BASED_SOURCE", None)
+    sysTimeTickbasedSourceFile.setSourcePath("system/time/src/tickbased/sys_time.c")
+    sysTimeTickbasedSourceFile.setOutputName("sys_time.c")
+    sysTimeTickbasedSourceFile.setDestPath("system/time/src")
+    sysTimeTickbasedSourceFile.setProjectPath("config/" + configName + "/system/time/")
+    sysTimeTickbasedSourceFile.setType("SOURCE")
+    sysTimeTickbasedSourceFile.setOverwrite(True)
+    sysTimeTickbasedSourceFile.setEnabled((sysTimeOperatingMode.getValue() == "TICK BASED"))
+    sysTimeTickbasedSourceFile.setDependencies(tickbasedFileGen, ["SYS_TIME_OPERATING_MODE"])
 
-    sysTimeHeaderLocalFile = sysTimeComponent.createFileSymbol("SYS_TIME_LOCAL", None)
-    sysTimeHeaderLocalFile.setSourcePath("system/time/src/sys_time_local.h")
-    sysTimeHeaderLocalFile.setOutputName("sys_time_local.h")
-    sysTimeHeaderLocalFile.setDestPath("system/time/src")
-    sysTimeHeaderLocalFile.setProjectPath("config/" + configName + "/system/time/")
-    sysTimeHeaderLocalFile.setType("HEADER")
-    sysTimeHeaderLocalFile.setOverwrite(True)
+    sysTimeTicklessSourceFile = sysTimeComponent.createFileSymbol("SYS_TIME_TICKLESS_SOURCE", None)
+    sysTimeTicklessSourceFile.setSourcePath("system/time/src/tickless/sys_time.c")
+    sysTimeTicklessSourceFile.setOutputName("sys_time.c")
+    sysTimeTicklessSourceFile.setDestPath("system/time/src")
+    sysTimeTicklessSourceFile.setProjectPath("config/" + configName + "/system/time/")
+    sysTimeTicklessSourceFile.setType("SOURCE")
+    sysTimeTicklessSourceFile.setOverwrite(True)
+    sysTimeTicklessSourceFile.setEnabled((sysTimeOperatingMode.getValue() == "TICKLESS"))
+    sysTimeTicklessSourceFile.setDependencies(ticklessFileGen, ["SYS_TIME_OPERATING_MODE"])
+
+    sysTimeTickbasedHeaderLocalFile = sysTimeComponent.createFileSymbol("SYS_TIME_TICK_BASED_LOCAL", None)
+    sysTimeTickbasedHeaderLocalFile.setSourcePath("system/time/src/tickbased/sys_time_local.h")
+    sysTimeTickbasedHeaderLocalFile.setOutputName("sys_time_local.h")
+    sysTimeTickbasedHeaderLocalFile.setDestPath("system/time/src")
+    sysTimeTickbasedHeaderLocalFile.setProjectPath("config/" + configName + "/system/time/")
+    sysTimeTickbasedHeaderLocalFile.setType("HEADER")
+    sysTimeTickbasedHeaderLocalFile.setOverwrite(True)
+    sysTimeTickbasedHeaderLocalFile.setEnabled((sysTimeOperatingMode.getValue() == "TICK BASED"))
+    sysTimeTickbasedHeaderLocalFile.setDependencies(tickbasedFileGen, ["SYS_TIME_OPERATING_MODE"])
+
+    sysTimeTicklessHeaderLocalFile = sysTimeComponent.createFileSymbol("SYS_TIME_TICKLESS_LOCAL", None)
+    sysTimeTicklessHeaderLocalFile.setSourcePath("system/time/src/tickless/sys_time_local.h")
+    sysTimeTicklessHeaderLocalFile.setOutputName("sys_time_local.h")
+    sysTimeTicklessHeaderLocalFile.setDestPath("system/time/src")
+    sysTimeTicklessHeaderLocalFile.setProjectPath("config/" + configName + "/system/time/")
+    sysTimeTicklessHeaderLocalFile.setType("HEADER")
+    sysTimeTicklessHeaderLocalFile.setOverwrite(True)
+    sysTimeTicklessHeaderLocalFile.setEnabled((sysTimeOperatingMode.getValue() == "TICKLESS"))
+    sysTimeTicklessHeaderLocalFile.setDependencies(ticklessFileGen, ["SYS_TIME_OPERATING_MODE"])
 
     sysTimeSystemDefFile = sysTimeComponent.createFileSymbol("SYS_TIME_DEF", None)
     sysTimeSystemDefFile.setType("STRING")
@@ -139,13 +314,23 @@ def onAttachmentConnected(source, target):
     remoteID = remoteComponent.getID()
     connectID = source["id"]
     targetID = target["id"]
+    sysTimeDict = {"ID":"sys_time"}
 
     if (connectID == "sys_time_TMR_dependency"):
+        localComponent.getSymbolByID("SYS_TIME_REMOTE_COMPONENT_ID").setValue(remoteID)
         plibUsed = localComponent.getSymbolByID("SYS_TIME_PLIB")
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper())
+        #Request PLIB to publish it's capabilities
+        sysTimeDict = Database.sendMessage(remoteID, "SYS_TIME_PUBLISH_CAPABILITIES", sysTimeDict)
+        print "RemoteComponentID = " + remoteID
 
 def onAttachmentDisconnected(source, target):
+    global sysTimeAchievableTickRateMsComment
+    global sysTimeOperatingMode
+    global sysTimeTickRateMs
+    global sysTimePLIBErrorComment
+
     localComponent = source["component"]
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
@@ -153,5 +338,12 @@ def onAttachmentDisconnected(source, target):
     targetID = target["id"]
 
     if (connectID == "sys_time_TMR_dependency"):
+        localComponent.getSymbolByID("SYS_TIME_REMOTE_COMPONENT_ID").setValue("")
         plibUsed = localComponent.getSymbolByID("SYS_TIME_PLIB")
         plibUsed.clearValue()
+        plibUsed.setValue("")
+        sysTimeOperatingMode.setVisible(False)
+        sysTimeTickRateMs.setVisible(False)
+        sysTimeAchievableTickRateMsComment.setVisible(False)
+        sysTimePLIBErrorComment.setVisible(False)
+        print "RemoteComponentID = None"

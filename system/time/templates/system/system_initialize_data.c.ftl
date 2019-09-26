@@ -2,14 +2,18 @@
 
 const SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
     .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)${.vars["${SYS_TIME_PLIB?lower_case}"].CALLBACK_API_NAME},
-    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)${.vars["${SYS_TIME_PLIB?lower_case}"].COUNTER_GET_API_NAME},
+    .timerStart = (SYS_TIME_PLIB_START)${.vars["${SYS_TIME_PLIB?lower_case}"].TIMER_START_API_NAME},
+    .timerStop = (SYS_TIME_PLIB_STOP)${.vars["${SYS_TIME_PLIB?lower_case}"].TIMER_STOP_API_NAME},
+    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)${.vars["${SYS_TIME_PLIB?lower_case}"].FREQUENCY_GET_API_NAME},
     <#if .vars["${SYS_TIME_PLIB?lower_case}"].PERIOD_SET_API_NAME?has_content>
     .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)${.vars["${SYS_TIME_PLIB?lower_case}"].PERIOD_SET_API_NAME},
+    <#else>
+    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)NULL,
     </#if>
-    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)${.vars["${SYS_TIME_PLIB?lower_case}"].FREQUENCY_GET_API_NAME},
+    <#if SYS_TIME_OPERATING_MODE == "TICKLESS">
     .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)${.vars["${SYS_TIME_PLIB?lower_case}"].COMPARE_SET_API_NAME},
-    .timerStart = (SYS_TIME_PLIB_START)${.vars["${SYS_TIME_PLIB?lower_case}"].TIMER_START_API_NAME},
-    .timerStop = (SYS_TIME_PLIB_STOP)${.vars["${SYS_TIME_PLIB?lower_case}"].TIMER_STOP_API_NAME}
+    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)${.vars["${SYS_TIME_PLIB?lower_case}"].COUNTER_GET_API_NAME},
+    </#if>
 };
 
 const SYS_TIME_INIT sysTimeInitData =
