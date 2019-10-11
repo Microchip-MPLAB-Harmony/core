@@ -2,6 +2,19 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB® Harmony 3 Release Notes
+## Core Release v3.5.1
+### New Features
+- N/A
+
+### Bug fixes
+- Fixing ThreadX support
+
+### Known Issues
+- No changes from v3.5.0
+
+### Development Tools
+- No changes from v3.5.0
+
 ## Core Release v3.5.0
 ### New Features
 
