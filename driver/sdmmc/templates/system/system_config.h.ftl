@@ -44,20 +44,29 @@
 #define DRV_SDMMC_INDEX_${INDEX?string}                                ${INDEX?string}
 #define DRV_SDMMC_CLIENTS_NUMBER_IDX${INDEX?string}                    ${DRV_SDMMC_CLIENTS_NUMBER}
 #define DRV_SDMMC_QUEUE_SIZE_IDX${INDEX?string}                        ${DRV_SDMMC_BUFFER_OBJECT_NUMBER}
-<#if DRV_SDMMC_BUS_SPEED == "DEFAULT_SPEED">
-    <#lt>#define DRV_SDMMC_CONFIG_SPEED_MODE_IDX${INDEX?string}                 DRV_SDMMC_CONFIG_SPEED_MODE_DEFAULT
+<#if DRV_SDMMC_PROTOCOL_SUPPORT == "SD">
+    <#lt>#define DRV_SDMMC_PROTOCOL_SUPPORT_IDX${INDEX?string}                  DRV_SDMMC_PROTOCOL_SD
 <#else>
-    <#lt>#define DRV_SDMMC_CONFIG_SPEED_MODE_IDX${INDEX?string}                 DRV_SDMMC_CONFIG_SPEED_MODE_HIGH
+    <#lt>#define DRV_SDMMC_PROTOCOL_SUPPORT_IDX${INDEX?string}                  DRV_SDMMC_PROTOCOL_EMMC
+</#if>
+<#if DRV_SDMMC_BUS_SPEED == "DEFAULT_SPEED">
+    <#lt>#define DRV_SDMMC_CONFIG_SPEED_MODE_IDX${INDEX?string}                 DRV_SDMMC_SPEED_MODE_DEFAULT
+<#else>
+    <#lt>#define DRV_SDMMC_CONFIG_SPEED_MODE_IDX${INDEX?string}                 DRV_SDMMC_SPEED_MODE_HIGH
 </#if>
 <#if DRV_SDMMC_TRANSFER_BUS_WIDTH == "1-bit">
-    <#lt>#define DRV_SDMMC_CONFIG_BUS_WIDTH_IDX${INDEX?string}                  DRV_SDMMC_CONFIG_BUS_WIDTH_1_BIT
+    <#lt>#define DRV_SDMMC_CONFIG_BUS_WIDTH_IDX${INDEX?string}                  DRV_SDMMC_BUS_WIDTH_1_BIT
+<#elseif DRV_SDMMC_TRANSFER_BUS_WIDTH == "4-bit">
+    <#lt>#define DRV_SDMMC_CONFIG_BUS_WIDTH_IDX${INDEX?string}                  DRV_SDMMC_BUS_WIDTH_4_BIT
 <#else>
-    <#lt>#define DRV_SDMMC_CONFIG_BUS_WIDTH_IDX${INDEX?string}                  DRV_SDMMC_CONFIG_BUS_WIDTH_4_BIT
+    <#lt>#define DRV_SDMMC_CONFIG_BUS_WIDTH_IDX${INDEX?string}                  DRV_SDMMC_BUS_WIDTH_8_BIT
 </#if>
 <#if DRV_SDMMC_CARD_DETECTION_METHOD == "Use Polling">
-    <#lt>#define DRV_SDMMC_CARD_DETECTION_METHOD_IDX${INDEX?string}             DRV_SDMMC_CONFIG_CD_METHOD_USE_POLLING
+    <#lt>#define DRV_SDMMC_CARD_DETECTION_METHOD_IDX${INDEX?string}             DRV_SDMMC_CD_METHOD_POLLING
+<#elseif DRV_SDMMC_CARD_DETECTION_METHOD == "Use SDCD Pin">
+    <#lt>#define DRV_SDMMC_CARD_DETECTION_METHOD_IDX${INDEX?string}             DRV_SDMMC_CD_METHOD_USE_SDCD
 <#else>
-    <#lt>#define DRV_SDMMC_CARD_DETECTION_METHOD_IDX${INDEX?string}             DRV_SDMMC_CONFIG_CD_METHOD_USE_SDCD_PIN
+    <#lt>#define DRV_SDMMC_CARD_DETECTION_METHOD_IDX${INDEX?string}             DRV_SDMMC_CD_METHOD_NONE
 </#if>
 
 <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS != "BareMetal">

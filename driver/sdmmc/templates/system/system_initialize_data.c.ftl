@@ -53,13 +53,13 @@ const DRV_SDMMC_PLIB_API drvSDMMC${INDEX?string}PlibAPI = {
     .sdhostClockEnable = (DRV_SDMMC_PLIB_CLOCK_ENABLE)${DRV_SDMMC_PLIB}_ClockEnable,
     .sdhostResetError = (DRV_SDMMC_PLIB_RESET_ERROR)${DRV_SDMMC_PLIB}_ErrorReset,
 </#if>
-<#if DRV_SDMMC_PLIB_SDCD_SUPPORT == true>
+<#if DRV_SDMMC_CARD_DETECTION_METHOD == "Use SDCD Pin">
     .sdhostIsCardAttached = (DRV_SDMMC_PLIB_IS_CARD_ATTACHED)${DRV_SDMMC_PLIB}_IsCardAttached,
 <#else>
     .sdhostIsCardAttached = (DRV_SDMMC_PLIB_IS_CARD_ATTACHED)NULL,
 </#if>
-<#if DRV_SDMMC_PLIB_SDWP_SUPPORT == true>
-    .sdhostIsWriteProtected = (DRV_SDMMC_PLIB_IS_WRITE_PROTECTED)${DRV_SDMMC_PLIB}_IsWriteProtected,
+<#if DRV_SDMMC_WP_CHECK_ENABLE == true>
+    .sdhostIsWriteProtected = (DRV_SDMMC_PLIB_IS_WRITE_PROTECTED)${DRV_SDMMC_PLIB_SDHC}_IsWriteProtected,
 <#else>
     .sdhostIsWriteProtected = (DRV_SDMMC_PLIB_IS_WRITE_PROTECTED)NULL,
 </#if>
@@ -73,15 +73,16 @@ const DRV_SDMMC_INIT drvSDMMC${INDEX?string}InitData =
     .bufferObjPoolSize              = DRV_SDMMC_QUEUE_SIZE_IDX${INDEX?string},
     .clientObjPool                  = (uintptr_t)&drvSDMMC${INDEX?string}ClientObjPool[0],
     .numClients                     = DRV_SDMMC_CLIENTS_NUMBER_IDX${INDEX?string},
-    .cardDetectionMethod            = (DRV_SDMMC_CD_METHOD)DRV_SDMMC_CARD_DETECTION_METHOD_IDX${INDEX?string},
+    .protocol                       = DRV_SDMMC_PROTOCOL_SUPPORT_IDX${INDEX?string},
+    .cardDetectionMethod            = DRV_SDMMC_CARD_DETECTION_METHOD_IDX${INDEX?string},
 <#if DRV_SDMMC_CARD_DETECTION_METHOD == "Use Polling">
     .cardDetectionPollingIntervalMs = ${DRV_SDMMC_POLLING_INTERVAL},
 <#else>
     .cardDetectionPollingIntervalMs = 0,
 </#if>
     .isWriteProtectCheckEnabled     = ${DRV_SDMMC_WP_CHECK_ENABLE?c},
-    .speedMode                      = (DRV_SDMMC_SPEED_MODE)DRV_SDMMC_CONFIG_SPEED_MODE_IDX${INDEX?string},
-    .busWidth                       = (DRV_SDMMC_BUS_WIDTH)DRV_SDMMC_CONFIG_BUS_WIDTH_IDX${INDEX?string},
+    .speedMode                      = DRV_SDMMC_CONFIG_SPEED_MODE_IDX${INDEX?string},
+    .busWidth                       = DRV_SDMMC_CONFIG_BUS_WIDTH_IDX${INDEX?string},
 <#if DRV_SDMMC_FS_ENABLE == true>
     <#lt>    .isFsEnabled                    = true,
 <#else>
