@@ -71,7 +71,7 @@ extern "C" {
 // *****************************************************************************
 
 /* Erase-Write-Read One Sector of Data 4096 Bytes*/
-#define BUFFER_SIZE     4096
+#define BUFFER_SIZE     8192
 #define MEM_ADDRESS     0x0
 
 // *****************************************************************************

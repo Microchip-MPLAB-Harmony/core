@@ -27,8 +27,8 @@
           <Name dnOrder="1">drv_sst26.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/driver/sst26/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/sst26/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">360A8A432BC785D4690FB197A25AB6C2</GeneratedChecksum>
-          <UserChecksum dnOrder="5">360A8A432BC785D4690FB197A25AB6C2</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D403BFC0991C98BA9EE63763DC32A2AA</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D403BFC0991C98BA9EE63763DC32A2AA</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
@@ -67,8 +67,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EF5BEA811AD6142E116B5C791D9145D8</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EF5BEA811AD6142E116B5C791D9145D8</UserChecksum>
+          <GeneratedChecksum dnOrder="4">731B902A6A51C21A1231B2726BDD8108</GeneratedChecksum>
+          <UserChecksum dnOrder="5">731B902A6A51C21A1231B2726BDD8108</UserChecksum>
         </File>
         <File dnOrder="8">
           <Type dnOrder="0">SOURCE</Type>
@@ -139,8 +139,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A1211ED8D0E91DFCE92C2757F87F0E95</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A1211ED8D0E91DFCE92C2757F87F0E95</UserChecksum>
+          <GeneratedChecksum dnOrder="4">67C8145EA555B661582B4977B7D51C1B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">67C8145EA555B661582B4977B7D51C1B</UserChecksum>
         </File>
         <File dnOrder="17">
           <Type dnOrder="0">HEADER</Type>
@@ -321,14 +321,14 @@
       </Files>
       <Settings dnOrder="1">
         <Setting append="true" category="C32" delimiter=";" dnOrder="0" key="extra-include-directories" value="../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP;;../src/mips"/>
-        <Setting category="C32-LD" dnOrder="1" key="heap-size" value="0"/>
+        <Setting category="C32-LD" dnOrder="1" key="heap-size" value="512"/>
         <Setting category="C32-LD" dnOrder="2" key="no-device-startup-code" value="true"/>
         <Setting category="C32-LD" dnOrder="3" key="preprocessor-macros" value=""/>
       </Settings>
     </Manifest>
     <Settings dnOrder="4">
-      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.4.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.0.28\atdf\PIC32MZ2048EFH144.atdf"/>
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.0.39\atdf\PIC32MZ2048EFH144.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>

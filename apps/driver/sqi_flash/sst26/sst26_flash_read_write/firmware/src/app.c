@@ -78,6 +78,7 @@
 
 APP_DATA CACHE_ALIGN appData;
 
+static uint32_t erase_index = 0;
 static uint32_t write_index = 0;
 
 // *****************************************************************************
@@ -169,6 +170,8 @@ void APP_Tasks ( void )
                 break;
             }
 
+            erase_index = 0;
+            write_index = 0;
             appData.state = APP_STATE_ERASE_FLASH;
 
             break;
@@ -176,7 +179,7 @@ void APP_Tasks ( void )
 
         case APP_STATE_ERASE_FLASH:
         {
-            if (DRV_SST26_SectorErase(appData.handle, MEM_ADDRESS) != true)
+            if (DRV_SST26_SectorErase(appData.handle, (MEM_ADDRESS + erase_index) != true))
             {
                 appData.state = APP_STATE_ERROR;
             }
@@ -192,7 +195,16 @@ void APP_Tasks ( void )
 
             if(transferStatus == DRV_SST26_TRANSFER_COMPLETED)
             {
-                appData.state = APP_STATE_WRITE_MEMORY;
+                erase_index += appData.geometry.erase_blockSize;
+
+                if (erase_index < BUFFER_SIZE)
+                {
+                    appData.state = APP_STATE_ERASE_FLASH;
+                }
+                else
+                {
+                    appData.state = APP_STATE_WRITE_MEMORY;
+                }
             }
             else if (transferStatus == DRV_SST26_TRANSFER_ERROR_UNKNOWN)
             {
