@@ -26,6 +26,8 @@
 #### Component ####
 ################################################################################
 
+ChipSelect     =  ["Chip Select 0", "Chip Select 1"]
+
 def sst26SetMemoryDependency(symbol, event):
     if (event["value"] == True):
         symbol.setVisible(True)
@@ -53,8 +55,10 @@ def sst26SourceFileGen(symbol, event):
     else:
         if ("QSPI" in plib_used):
             symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_qspi.c")
+            symbol.setMarkup(False)
         elif ("SQI" in plib_used):
-            symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_sqi.c")
+            symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_sqi.c.ftl")
+            symbol.setMarkup(True)
 
         symbol.setEnabled(True)
 
@@ -95,7 +99,15 @@ def instantiateComponent(sst26Component):
     sst26NumBufDesc.setDefaultValue(10)
     sst26NumBufDesc.setVisible(False)
     sst26NumBufDesc.setDependencies(setBuffDescriptor, ["DRV_SST26_PLIB"])
-    
+
+    sst26ChipSelect = sst26Component.createComboSymbol("CHIP_SELECT", None, ChipSelect)
+    sst26ChipSelect.setLabel("SQI Chip Select")
+    sst26ChipSelect.setVisible(False)
+    sst26ChipSelect.setDefaultValue("Chip Select 1")
+
+    sst26ChipSelectComment = sst26Component.createCommentSymbol("CHIP_SELECT_COMMENT", None)
+    sst26ChipSelectComment.setVisible(False)
+    sst26ChipSelectComment.setLabel("*** Configure Chip Select in SQI PLIB Configurations ***")
 
     ##### Do not modify below symbol names as they are used by Memory Driver #####
     sst26MemoryDriver = sst26Component.createBooleanSymbol("DRV_MEMORY_CONNECTED", None)
@@ -215,6 +227,8 @@ def onAttachmentConnected(source, target):
 
         if ("sqi" in remoteID):
             remoteComponent.getSymbolByID("SQI_FLASH_STATUS_CHECK").setReadOnly(True)
+            localComponent.getSymbolByID("CHIP_SELECT").setVisible(True)
+            localComponent.getSymbolByID("CHIP_SELECT_COMMENT").setVisible(True)
 
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]
@@ -226,6 +240,8 @@ def onAttachmentDisconnected(source, target):
     if connectID == "drv_sst26_SQI_dependency" :
         if ("sqi" in remoteID):
             remoteComponent.getSymbolByID("SQI_FLASH_STATUS_CHECK").setReadOnly(False)
+            localComponent.getSymbolByID("CHIP_SELECT").setVisible(False)
+            localComponent.getSymbolByID("CHIP_SELECT_COMMENT").setVisible(False)
 
         plibUsed = localComponent.getSymbolByID("DRV_SST26_PLIB")
         plibUsed.clearValue()
