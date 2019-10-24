@@ -22,6 +22,9 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
+def sysFsFileGen(symbol, event):
+    symbol.setEnabled(event["value"])
+
 def instantiateComponent(sysFSComponent):
     fsTypes = ["FAT","MPFS2"]
     mediaTypes =  ["SYS_FS_MEDIA_TYPE_NVM",
@@ -235,104 +238,110 @@ def instantiateComponent(sysFSComponent):
 
     configName = Variables.get("__CONFIGURATION_NAME")
 
-    sysFSHeaderFile = sysFSComponent.createFileSymbol(None, None)
+    sysFSHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_HEADER", None)
     sysFSHeaderFile.setSourcePath("/system/fs/sys_fs.h")
     sysFSHeaderFile.setOutputName("sys_fs.h")
     sysFSHeaderFile.setDestPath("/system/fs/")
     sysFSHeaderFile.setProjectPath("config/" + configName + "/system/fs/")
     sysFSHeaderFile.setType("HEADER")
 
-    sysFSLocalHeaderFile = sysFSComponent.createFileSymbol(None, None)
+    sysFSLocalHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_LOCAL_HEADER", None)
     sysFSLocalHeaderFile.setSourcePath("/system/fs/src/sys_fs_local.h")
     sysFSLocalHeaderFile.setOutputName("sys_fs_local.h")
     sysFSLocalHeaderFile.setDestPath("/system/fs/src/")
     sysFSLocalHeaderFile.setProjectPath("config/" + configName + "/system/fs/")
     sysFSLocalHeaderFile.setType("HEADER")
 
-    sysFSMedManHeaderFile = sysFSComponent.createFileSymbol(None, None)
+    sysFSMedManHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_MEDIA_MANAGER_HEADER", None)
     sysFSMedManHeaderFile.setSourcePath("/system/fs/sys_fs_media_manager.h")
     sysFSMedManHeaderFile.setOutputName("sys_fs_media_manager.h")
     sysFSMedManHeaderFile.setDestPath("/system/fs/")
     sysFSMedManHeaderFile.setProjectPath("config/" + configName + "/system/fs/")
     sysFSMedManHeaderFile.setType("HEADER")
 
-    sysFSMedLocalHeaderFile = sysFSComponent.createFileSymbol(None, None)
+    sysFSMedLocalHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_MEDIA_MANAGER_LOCAL_HEADER", None)
     sysFSMedLocalHeaderFile.setSourcePath("/system/fs/src/sys_fs_media_manager_local.h")
     sysFSMedLocalHeaderFile.setOutputName("sys_fs_media_manager_local.h")
     sysFSMedLocalHeaderFile.setDestPath("/system/fs/src/")
     sysFSMedLocalHeaderFile.setProjectPath("config/" + configName + "/system/fs/")
     sysFSMedLocalHeaderFile.setType("HEADER")
 
-    sysFSffHeaderFile = sysFSComponent.createFileSymbol(None, None)
+    sysFSffHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_FAT_HEADER", None)
     sysFSffHeaderFile.setSourcePath("/system/fs/fat_fs/src/file_system/ff.h")
     sysFSffHeaderFile.setOutputName("ff.h")
     sysFSffHeaderFile.setDestPath("/system/fs/fat_fs/src/file_system")
     sysFSffHeaderFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/file_system")
     sysFSffHeaderFile.setType("HEADER")
 
-    sysFSFFConfHeaderFile = sysFSComponent.createFileSymbol(None, None)
+    sysFSFFConfHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_FAT_CONF_HEADER", None)
     sysFSFFConfHeaderFile.setSourcePath("/system/fs/fat_fs/src/file_system/ffconf.h")
     sysFSFFConfHeaderFile.setOutputName("ffconf.h")
     sysFSFFConfHeaderFile.setDestPath("/system/fs/fat_fs/src/file_system/")
     sysFSFFConfHeaderFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/file_system/")
     sysFSFFConfHeaderFile.setType("HEADER")
 
-    sysFSDiskIOHeaderFile = sysFSComponent.createFileSymbol(None, None)
+    sysFSDiskIOHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_DISKIO_HEADER", None)
     sysFSDiskIOHeaderFile.setSourcePath("/system/fs/fat_fs/src/hardware_access/diskio.h")
     sysFSDiskIOHeaderFile.setOutputName("diskio.h")
     sysFSDiskIOHeaderFile.setDestPath("/system/fs/fat_fs/src/hardware_access/")
     sysFSDiskIOHeaderFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/hardware_access/")
     sysFSDiskIOHeaderFile.setType("HEADER")
 
-    sysFSMPFSHeaderFile = sysFSComponent.createFileSymbol(None, None)
+    sysFSMPFSHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_MPFS_HEADER", None)
     sysFSMPFSHeaderFile.setSourcePath("/system/fs/mpfs/mpfs.h")
     sysFSMPFSHeaderFile.setOutputName("mpfs.h")
     sysFSMPFSHeaderFile.setDestPath("/system/fs/mpfs/")
     sysFSMPFSHeaderFile.setProjectPath("config/" + configName + "/system/fs/mpfs/")
+    sysFSMPFSHeaderFile.setEnabled(sysFSMpfs.getValue())
     sysFSMPFSHeaderFile.setType("HEADER")
+    sysFSMPFSHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_MPFS"])
 
-    sysFSMPFSLocHeaderFile = sysFSComponent.createFileSymbol(None, None)
+    sysFSMPFSLocHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_MPFS_LOCAL_HEADER", None)
     sysFSMPFSLocHeaderFile.setSourcePath("/system/fs/mpfs/src/mpfs_local.h")
     sysFSMPFSLocHeaderFile.setOutputName("mpfs_local.h")
     sysFSMPFSLocHeaderFile.setDestPath("/system/fs/mpfs/src/")
     sysFSMPFSLocHeaderFile.setProjectPath("config/" + configName + "/system/fs/mpfs/")
+    sysFSMPFSLocHeaderFile.setEnabled(sysFSMpfs.getValue())
     sysFSMPFSLocHeaderFile.setType("HEADER")
+    sysFSMPFSLocHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_MPFS"])
 
 
-    sysFSSourceFile = sysFSComponent.createFileSymbol(None, None)
+    sysFSSourceFile = sysFSComponent.createFileSymbol("SYS_FS_SOURCE", None)
     sysFSSourceFile.setSourcePath("/system/fs/src/sys_fs.c")
     sysFSSourceFile.setOutputName("sys_fs.c")
     sysFSSourceFile.setDestPath("/system/fs/src/")
     sysFSSourceFile.setProjectPath("config/" + configName + "/system/fs/")
     sysFSSourceFile.setType("SOURCE")
 
-    sysFSMedManSourceFile = sysFSComponent.createFileSymbol(None, None)
+    sysFSMedManSourceFile = sysFSComponent.createFileSymbol("SYS_FS_MEDIA_MANAGER_SOURCE", None)
     sysFSMedManSourceFile.setSourcePath("/system/fs/src/sys_fs_media_manager.c")
     sysFSMedManSourceFile.setOutputName("sys_fs_media_manager.c")
     sysFSMedManSourceFile.setDestPath("/system/fs/src/")
     sysFSMedManSourceFile.setProjectPath("config/" + configName + "/system/fs/")
     sysFSMedManSourceFile.setType("SOURCE")
 
-    sysFSffSourceFile = sysFSComponent.createFileSymbol(None, None)
+    sysFSffSourceFile = sysFSComponent.createFileSymbol("SYS_FS_FAT_SOURCE", None)
     sysFSffSourceFile.setSourcePath("system/fs/fat_fs/src/file_system/ff.c")
     sysFSffSourceFile.setOutputName("ff.c")
     sysFSffSourceFile.setDestPath("system/fs/fat_fs/src/")
     sysFSffSourceFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/")
     sysFSffSourceFile.setType("SOURCE")
 
-    sysFSDiskIOFile = sysFSComponent.createFileSymbol(None, None)
+    sysFSDiskIOFile = sysFSComponent.createFileSymbol("SYS_FS_DISKIO_SOURCE", None)
     sysFSDiskIOFile.setSourcePath("/system/fs/fat_fs/src/hardware_access/diskio.c")
     sysFSDiskIOFile.setOutputName("diskio.c")
     sysFSDiskIOFile.setDestPath("/system/fs/fat_fs/src/")
     sysFSDiskIOFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/")
     sysFSDiskIOFile.setType("SOURCE")
 
-    sysFSMPFSSourceFile = sysFSComponent.createFileSymbol(None, None)
+    sysFSMPFSSourceFile = sysFSComponent.createFileSymbol("SYS_FS_MPFS_SOURCE", None)
     sysFSMPFSSourceFile.setSourcePath("/system/fs/mpfs/src/mpfs.c")
     sysFSMPFSSourceFile.setOutputName("mpfs.c")
     sysFSMPFSSourceFile.setDestPath("/system/fs/mpfs/src/")
     sysFSMPFSSourceFile.setProjectPath("config/" + configName + "/system/fs/mpfs/")
+    sysFSMPFSSourceFile.setEnabled(sysFSMpfs.getValue())
     sysFSMPFSSourceFile.setType("SOURCE")
+    sysFSMPFSSourceFile.setDependencies(sysFsFileGen, ["SYS_FS_MPFS"])
 
     sysFSSystemInitdataFile = sysFSComponent.createFileSymbol("sysFSSystemInitFile", None)
     sysFSSystemInitdataFile.setType("STRING")
