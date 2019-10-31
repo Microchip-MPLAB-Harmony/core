@@ -107,7 +107,7 @@ def UpdateProtocol(symbol, event):
     plibName = drvComp.getSymbolValue("DRV_SDMMC_PLIB")
     if plibName != "None":
         updateUI(drvComp)
-        
+
         #Enable the plib emmc feature 
         plibComp = Database.getComponentByID(plibName.lower())
         if(plibComp.getSymbolValue("SDCARD_EMMC_SUPPORT")):
@@ -115,7 +115,6 @@ def UpdateProtocol(symbol, event):
         
         # Remove write protection if enabled 
         event["source"].getSymbolByID("DRV_SDMMC_WP_CHECK_ENABLE").setReadOnly(event["value"] == "eMMC")
-        
 
 def UpdateBusWidth(symbol, event):
     plibName = event["source"].getSymbolValue("DRV_SDMMC_PLIB")
@@ -152,6 +151,25 @@ def updateUI(drvComp):
 
     drvComp.getSymbolByID("DRV_SDMMC_WP_CHECK_ENABLE").setVisible(sdProtocol and wpSupport)
 
+def sdmmcRtosMicriumOSIIIAppTaskVisibility(symbol, event):
+    if (event["value"] == "MicriumOSIII"):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
+
+def sdmmcRtosMicriumOSIIITaskOptVisibility(symbol, event):
+    symbol.setVisible(event["value"])
+
+def getActiveRtos():
+    activeComponents = Database.getActiveComponentIDs()
+
+    for i in range(0, len(activeComponents)):
+        if (activeComponents[i] == "FreeRTOS"):
+            return "FreeRTOS"
+        elif (activeComponents[i] == "ThreadX"):
+            return "ThreadX"
+        elif (activeComponents[i] == "MicriumOSIII"):
+            return "MicriumOSIII"
 
 def instantiateComponent(sdmmcComponent, index):
     global sdmmcFsEnable
@@ -285,6 +303,7 @@ def instantiateComponent(sdmmcComponent, index):
     sdmmcBufferObjects.setReadOnly((sdmmcFsEnable.getValue() == True))
     sdmmcBufferObjects.setDependencies(setBufferSize, ["DRV_SDMMC_FS_ENABLE"])
 
+    # RTOS Settings
     sdmmcRTOSMenu = sdmmcComponent.createMenuSymbol("DRV_SDMMC_RTOS_MENU", None)
     sdmmcRTOSMenu.setLabel("RTOS Configuration")
     sdmmcRTOSMenu.setDescription("RTOS Configuration")
@@ -300,6 +319,20 @@ def instantiateComponent(sdmmcComponent, index):
     sdmmcRTOSTaskSize.setLabel("Stack Size (in bytes)")
     sdmmcRTOSTaskSize.setDefaultValue(4096)
 
+    sdmmcRTOSMsgQSize = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_RTOS_TASK_MSG_QTY", sdmmcRTOSMenu)
+    sdmmcRTOSMsgQSize.setLabel("Maximum Message Queue Size")
+    sdmmcRTOSMsgQSize.setDescription("A µC/OS-III task contains an optional internal message queue (if OS_CFG_TASK_Q_EN is set to DEF_ENABLED in os_cfg.h). This argument specifies the maximum number of messages that the task can receive through this message queue. The user may specify that the task is unable to receive messages by setting this argument to 0")
+    sdmmcRTOSMsgQSize.setDefaultValue(0)
+    sdmmcRTOSMsgQSize.setVisible(getActiveRtos() == "MicriumOSIII")
+    sdmmcRTOSMsgQSize.setDependencies(sdmmcRtosMicriumOSIIIAppTaskVisibility, ["HarmonyCore.SELECT_RTOS"])
+
+    sdmmcRTOSTaskTimeQuanta = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_RTOS_TASK_TIME_QUANTA", sdmmcRTOSMenu)
+    sdmmcRTOSTaskTimeQuanta.setLabel("Task Time Quanta")
+    sdmmcRTOSTaskTimeQuanta.setDescription("The amount of time (in clock ticks) for the time quanta when Round Robin is enabled. If you specify 0, then the default time quanta will be used which is the tick rate divided by 10.")
+    sdmmcRTOSTaskTimeQuanta.setDefaultValue(0)
+    sdmmcRTOSTaskTimeQuanta.setVisible(getActiveRtos() == "MicriumOSIII")
+    sdmmcRTOSTaskTimeQuanta.setDependencies(sdmmcRtosMicriumOSIIIAppTaskVisibility, ["HarmonyCore.SELECT_RTOS"])
+
     sdmmcRTOSTaskPriority = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_RTOS_TASK_PRIORITY", sdmmcRTOSMenu)
     sdmmcRTOSTaskPriority.setLabel("Task Priority")
     sdmmcRTOSTaskPriority.setDefaultValue(1)
@@ -313,6 +346,37 @@ def instantiateComponent(sdmmcComponent, index):
     sdmmcRTOSTaskDelayVal.setDefaultValue(10)
     sdmmcRTOSTaskDelayVal.setVisible(sdmmcRTOSTaskDelay.getValue())
     sdmmcRTOSTaskDelayVal.setDependencies(setVisible, ["DRV_SDMMC_RTOS_USE_DELAY"])
+
+    sdmmcRTOSTaskSpecificOpt = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_RTOS_TASK_OPT_NONE", sdmmcRTOSMenu)
+    sdmmcRTOSTaskSpecificOpt.setLabel("Task Specific Options")
+    sdmmcRTOSTaskSpecificOpt.setDescription("Contains task-specific options. Each option consists of one bit. The option is selected when the bit is set. The current version of µC/OS-III supports the following options:")
+    sdmmcRTOSTaskSpecificOpt.setDefaultValue(True)
+    sdmmcRTOSTaskSpecificOpt.setVisible(getActiveRtos() == "MicriumOSIII")
+    sdmmcRTOSTaskSpecificOpt.setDependencies(sdmmcRtosMicriumOSIIIAppTaskVisibility, ["HarmonyCore.SELECT_RTOS"])
+
+    sdmmcRTOSTaskStkChk = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_RTOS_TASK_OPT_STK_CHK", sdmmcRTOSTaskSpecificOpt)
+    sdmmcRTOSTaskStkChk.setLabel("Stack checking is allowed for the task")
+    sdmmcRTOSTaskStkChk.setDescription("Specifies whether stack checking is allowed for the task")
+    sdmmcRTOSTaskStkChk.setDefaultValue(True)
+    sdmmcRTOSTaskStkChk.setDependencies(sdmmcRtosMicriumOSIIITaskOptVisibility, ["DRV_SDMMC_RTOS_TASK_OPT_NONE"])
+
+    sdmmcRTOSTaskStkClr = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_RTOS_TASK_OPT_STK_CLR", sdmmcRTOSTaskSpecificOpt)
+    sdmmcRTOSTaskStkClr.setLabel("Stack needs to be cleared")
+    sdmmcRTOSTaskStkClr.setDescription("Specifies whether the stack needs to be cleared")
+    sdmmcRTOSTaskStkClr.setDefaultValue(True)
+    sdmmcRTOSTaskStkClr.setDependencies(sdmmcRtosMicriumOSIIITaskOptVisibility, ["DRV_SDMMC_RTOS_TASK_OPT_NONE"])
+
+    sdmmcRTOSTaskSaveFp = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_RTOS_TASK_OPT_SAVE_FP", sdmmcRTOSTaskSpecificOpt)
+    sdmmcRTOSTaskSaveFp.setLabel("Floating-point registers needs to be saved")
+    sdmmcRTOSTaskSaveFp.setDescription("Specifies whether floating-point registers are saved. This option is only valid if the processor has floating-point hardware and the processor-specific code saves the floating-point registers")
+    sdmmcRTOSTaskSaveFp.setDefaultValue(False)
+    sdmmcRTOSTaskSaveFp.setDependencies(sdmmcRtosMicriumOSIIITaskOptVisibility, ["DRV_SDMMC_RTOS_TASK_OPT_NONE"])
+
+    sdmmcRTOSTaskNoTls = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_RTOS_TASK_OPT_NO_TLS", sdmmcRTOSTaskSpecificOpt)
+    sdmmcRTOSTaskNoTls.setLabel("TLS (Thread Local Storage) support needed for the task")
+    sdmmcRTOSTaskNoTls.setDescription("If the caller doesn’t want or need TLS (Thread Local Storage) support for the task being created. If you do not include this option, TLS will be supported by default. TLS support was added in V3.03.00")
+    sdmmcRTOSTaskNoTls.setDefaultValue(False)
+    sdmmcRTOSTaskNoTls.setDependencies(sdmmcRtosMicriumOSIIITaskOptVisibility, ["DRV_SDMMC_RTOS_TASK_OPT_NONE"])
 
     configName = Variables.get("__CONFIGURATION_NAME")
 

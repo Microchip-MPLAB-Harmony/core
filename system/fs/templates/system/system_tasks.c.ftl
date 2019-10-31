@@ -51,6 +51,29 @@
     <#lt>        TX_NO_TIME_SLICE,
     <#lt>        TX_AUTO_START
     <#lt>    );
+<#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "MicriumOSIII">
+    <#assign SYS_FS_RTOS_TASK_OPTIONS = "OS_OPT_TASK_NONE" + SYS_FS_RTOS_TASK_OPT_STK_CHK?then(' | OS_OPT_TASK_STK_CHK', '') + SYS_FS_RTOS_TASK_OPT_STK_CLR?then(' | OS_OPT_TASK_STK_CLR', '') + SYS_FS_RTOS_TASK_OPT_SAVE_FP?then(' | OS_OPT_TASK_SAVE_FP', '') + SYS_FS_RTOS_TASK_OPT_NO_TLS?then(' | OS_OPT_TASK_NO_TLS', '')>
+    <#lt>    OSTaskCreate((OS_TCB      *)&_SYS_FS_Tasks_TCB,
+    <#lt>                 (CPU_CHAR    *)"SYS_FS_TASKS",
+    <#lt>                 (OS_TASK_PTR  )_SYS_FS_Tasks,
+    <#lt>                 (void        *)0,
+    <#lt>                 (OS_PRIO      )SYS_FS_PRIORITY,
+    <#lt>                 (CPU_STK     *)&_SYS_FS_TasksStk[0],
+    <#lt>                 (CPU_STK_SIZE )0u,
+    <#lt>                 (CPU_STK_SIZE )SYS_FS_STACK_SIZE,
+    <#if MicriumOSIII.UCOSIII_CFG_TASK_Q_EN == true>
+    <#lt>                 (OS_MSG_QTY   )SYS_FS_RTOS_TASK_MSG_QTY,
+    <#else>
+    <#lt>                 (OS_MSG_QTY   )0u,
+    </#if>
+    <#if MicriumOSIII.UCOSIII_CFG_SCHED_ROUND_ROBIN_EN == true>
+    <#lt>                 (OS_TICK      )SYS_FS_RTOS_TASK_TIME_QUANTA,
+    <#else>
+    <#lt>                 (OS_TICK      )0u,
+    </#if>
+    <#lt>                 (void        *)0,
+    <#lt>                 (OS_OPT       )(${SYS_FS_RTOS_TASK_OPTIONS}),
+    <#lt>                 (OS_ERR      *)&os_err);
 </#if>
 <#--
 /*******************************************************************************

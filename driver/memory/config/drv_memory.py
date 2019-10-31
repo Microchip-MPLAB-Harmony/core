@@ -96,6 +96,26 @@ def setMemoryBuffer(symbol, event):
         else:
             symbol.setReadOnly(False)
 
+def memoryRtosMicriumOSIIIAppTaskVisibility(symbol, event):
+    if (event["value"] == "MicriumOSIII"):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
+
+def memoryRtosMicriumOSIIITaskOptVisibility(symbol, event):
+    symbol.setVisible(event["value"])
+
+def getActiveRtos():
+    activeComponents = Database.getActiveComponentIDs()
+
+    for i in range(0, len(activeComponents)):
+        if (activeComponents[i] == "FreeRTOS"):
+            return "FreeRTOS"
+        elif (activeComponents[i] == "ThreadX"):
+            return "ThreadX"
+        elif (activeComponents[i] == "MicriumOSIII"):
+            return "MicriumOSIII"
+
 def instantiateComponent(memoryComponent, index):
     global memoryDeviceUsed
     global memoryDeviceComment
@@ -214,6 +234,20 @@ def instantiateComponent(memoryComponent, index):
     memoryRTOSStackSize.setDefaultValue(4096)
     memoryRTOSStackSize.setReadOnly(True)
 
+    memoryRTOSMsgQSize = memoryComponent.createIntegerSymbol("DRV_MEMORY_RTOS_TASK_MSG_QTY", memoryRTOSMenu)
+    memoryRTOSMsgQSize.setLabel("Maximum Message Queue Size")
+    memoryRTOSMsgQSize.setDescription("A µC/OS-III task contains an optional internal message queue (if OS_CFG_TASK_Q_EN is set to DEF_ENABLED in os_cfg.h). This argument specifies the maximum number of messages that the task can receive through this message queue. The user may specify that the task is unable to receive messages by setting this argument to 0")
+    memoryRTOSMsgQSize.setDefaultValue(0)
+    memoryRTOSMsgQSize.setVisible(getActiveRtos() == "MicriumOSIII")
+    memoryRTOSMsgQSize.setDependencies(memoryRtosMicriumOSIIIAppTaskVisibility, ["HarmonyCore.SELECT_RTOS"])
+
+    memoryRTOSTaskTimeQuanta = memoryComponent.createIntegerSymbol("DRV_MEMORY_RTOS_TASK_TIME_QUANTA", memoryRTOSMenu)
+    memoryRTOSTaskTimeQuanta.setLabel("Task Time Quanta")
+    memoryRTOSTaskTimeQuanta.setDescription("The amount of time (in clock ticks) for the time quanta when Round Robin is enabled. If you specify 0, then the default time quanta will be used which is the tick rate divided by 10.")
+    memoryRTOSTaskTimeQuanta.setDefaultValue(0)
+    memoryRTOSTaskTimeQuanta.setVisible(getActiveRtos() == "MicriumOSIII")
+    memoryRTOSTaskTimeQuanta.setDependencies(memoryRtosMicriumOSIIIAppTaskVisibility, ["HarmonyCore.SELECT_RTOS"])
+
     memoryRTOSTaskPriority = memoryComponent.createIntegerSymbol("DRV_MEMORY_RTOS_TASK_PRIORITY", memoryRTOSMenu)
     memoryRTOSTaskPriority.setLabel("Task Priority")
     memoryRTOSTaskPriority.setDefaultValue(1)
@@ -228,6 +262,36 @@ def instantiateComponent(memoryComponent, index):
     memoryRTOSTaskDelayVal.setVisible((memoryRTOSTaskDelay.getValue() == True))
     memoryRTOSTaskDelayVal.setDependencies(setVisible, ["DRV_MEMORY_RTOS_USE_DELAY"])
 
+    memoryRTOSTaskSpecificOpt = memoryComponent.createBooleanSymbol("DRV_MEMORY_RTOS_TASK_OPT_NONE", memoryRTOSMenu)
+    memoryRTOSTaskSpecificOpt.setLabel("Task Specific Options")
+    memoryRTOSTaskSpecificOpt.setDescription("Contains task-specific options. Each option consists of one bit. The option is selected when the bit is set. The current version of µC/OS-III supports the following options:")
+    memoryRTOSTaskSpecificOpt.setDefaultValue(True)
+    memoryRTOSTaskSpecificOpt.setVisible(getActiveRtos() == "MicriumOSIII")
+    memoryRTOSTaskSpecificOpt.setDependencies(memoryRtosMicriumOSIIIAppTaskVisibility, ["HarmonyCore.SELECT_RTOS"])
+
+    memoryRTOSTaskStkChk = memoryComponent.createBooleanSymbol("DRV_MEMORY_RTOS_TASK_OPT_STK_CHK", memoryRTOSTaskSpecificOpt)
+    memoryRTOSTaskStkChk.setLabel("Stack checking is allowed for the task")
+    memoryRTOSTaskStkChk.setDescription("Specifies whether stack checking is allowed for the task")
+    memoryRTOSTaskStkChk.setDefaultValue(True)
+    memoryRTOSTaskStkChk.setDependencies(memoryRtosMicriumOSIIITaskOptVisibility, ["DRV_MEMORY_RTOS_TASK_OPT_NONE"])
+
+    memoryRTOSTaskStkClr = memoryComponent.createBooleanSymbol("DRV_MEMORY_RTOS_TASK_OPT_STK_CLR", memoryRTOSTaskSpecificOpt)
+    memoryRTOSTaskStkClr.setLabel("Stack needs to be cleared")
+    memoryRTOSTaskStkClr.setDescription("Specifies whether the stack needs to be cleared")
+    memoryRTOSTaskStkClr.setDefaultValue(True)
+    memoryRTOSTaskStkClr.setDependencies(memoryRtosMicriumOSIIITaskOptVisibility, ["DRV_MEMORY_RTOS_TASK_OPT_NONE"])
+
+    memoryRTOSTaskSaveFp = memoryComponent.createBooleanSymbol("DRV_MEMORY_RTOS_TASK_OPT_SAVE_FP", memoryRTOSTaskSpecificOpt)
+    memoryRTOSTaskSaveFp.setLabel("Floating-point registers needs to be saved")
+    memoryRTOSTaskSaveFp.setDescription("Specifies whether floating-point registers are saved. This option is only valid if the processor has floating-point hardware and the processor-specific code saves the floating-point registers")
+    memoryRTOSTaskSaveFp.setDefaultValue(False)
+    memoryRTOSTaskSaveFp.setDependencies(memoryRtosMicriumOSIIITaskOptVisibility, ["DRV_MEMORY_RTOS_TASK_OPT_NONE"])
+
+    memoryRTOSTaskNoTls = memoryComponent.createBooleanSymbol("DRV_MEMORY_RTOS_TASK_OPT_NO_TLS", memoryRTOSTaskSpecificOpt)
+    memoryRTOSTaskNoTls.setLabel("TLS (Thread Local Storage) support needed for the task")
+    memoryRTOSTaskNoTls.setDescription("If the caller doesn’t want or need TLS (Thread Local Storage) support for the task being created. If you do not include this option, TLS will be supported by default. TLS support was added in V3.03.00")
+    memoryRTOSTaskNoTls.setDefaultValue(False)
+    memoryRTOSTaskNoTls.setDependencies(memoryRtosMicriumOSIIITaskOptVisibility, ["DRV_MEMORY_RTOS_TASK_OPT_NONE"])
 
     ############################################################################
     #### Code Generation ####

@@ -78,6 +78,10 @@
         <#lt>#define SYS_FS_STACK_SIZE                 ${SYS_FS_RTOS_STACK_SIZE}
     </#if>
     <#lt>#define SYS_FS_PRIORITY                   ${SYS_FS_RTOS_TASK_PRIORITY}
+    <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "MicriumOSIII">
+        <#lt>#define SYS_FS_RTOS_TASK_MSG_QTY          ${SYS_FS_RTOS_TASK_MSG_QTY}u
+        <#lt>#define SYS_FS_RTOS_TASK_TIME_QUANTA      ${SYS_FS_RTOS_TASK_TIME_QUANTA}u
+    </#if>
 </#if>
 
 <#--

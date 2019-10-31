@@ -48,6 +48,23 @@
              </#if>
     <#lt>    }
     <#lt>}
+<#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "MicriumOSIII">
+    <#lt>OS_TCB  _SYS_FS_Tasks_TCB;
+    <#lt>CPU_STK _SYS_FS_TasksStk[SYS_FS_STACK_SIZE];
+
+    <#lt>void _SYS_FS_Tasks(  void *pvParameters  )
+    <#lt>{
+    <#if SYS_FS_RTOS_USE_DELAY == true>
+    <#lt>    OS_ERR os_err;
+    </#if>
+    <#lt>    while(1)
+    <#lt>    {
+    <#lt>        SYS_FS_Tasks();
+    <#if SYS_FS_RTOS_USE_DELAY == true>
+    <#lt>        OSTimeDly(${SYS_FS_RTOS_DELAY} , OS_OPT_TIME_DLY, &os_err);
+    </#if>
+    <#lt>    }
+    <#lt>}
 </#if>
 
 <#--

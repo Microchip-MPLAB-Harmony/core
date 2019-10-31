@@ -47,9 +47,29 @@ def genRtosTask(symbol, event):
 
     symbol.setEnabled(gen_rtos_task)
 
+def commandRtosMicriumOSIIIAppTaskVisibility(symbol, event):
+    if (event["value"] == "MicriumOSIII"):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
+
+def commandRtosMicriumOSIIITaskOptVisibility(symbol, event):
+    symbol.setVisible(event["value"])
+
 ################################################################################
 #### Component ####
 ################################################################################
+
+def getActiveRtos():
+    activeComponents = Database.getActiveComponentIDs()
+
+    for i in range(0, len(activeComponents)):
+        if (activeComponents[i] == "FreeRTOS"):
+            return "FreeRTOS"
+        elif (activeComponents[i] == "ThreadX"):
+            return "ThreadX"
+        elif (activeComponents[i] == "MicriumOSIII"):
+            return "MicriumOSIII"
 
 def instantiateComponent(commandComponent):
 
@@ -102,6 +122,20 @@ def instantiateComponent(commandComponent):
     commandRTOSStackSize.setLabel("Stack Size (in bytes)")
     commandRTOSStackSize.setDefaultValue(1024)
 
+    commandRTOSMsgQSize = commandComponent.createIntegerSymbol("SYS_COMMAND_RTOS_TASK_MSG_QTY", commandRTOSMenu)
+    commandRTOSMsgQSize.setLabel("Maximum Message Queue Size")
+    commandRTOSMsgQSize.setDescription("A µC/OS-III task contains an optional internal message queue (if OS_CFG_TASK_Q_EN is set to DEF_ENABLED in os_cfg.h). This argument specifies the maximum number of messages that the task can receive through this message queue. The user may specify that the task is unable to receive messages by setting this argument to 0")
+    commandRTOSMsgQSize.setDefaultValue(0)
+    commandRTOSMsgQSize.setVisible(getActiveRtos() == "MicriumOSIII")
+    commandRTOSMsgQSize.setDependencies(commandRtosMicriumOSIIIAppTaskVisibility, ["HarmonyCore.SELECT_RTOS"])
+
+    commandRTOSTaskTimeQuanta = commandComponent.createIntegerSymbol("SYS_COMMAND_RTOS_TASK_TIME_QUANTA", commandRTOSMenu)
+    commandRTOSTaskTimeQuanta.setLabel("Task Time Quanta")
+    commandRTOSTaskTimeQuanta.setDescription("The amount of time (in clock ticks) for the time quanta when Round Robin is enabled. If you specify 0, then the default time quanta will be used which is the tick rate divided by 10.")
+    commandRTOSTaskTimeQuanta.setDefaultValue(0)
+    commandRTOSTaskTimeQuanta.setVisible(getActiveRtos() == "MicriumOSIII")
+    commandRTOSTaskTimeQuanta.setDependencies(commandRtosMicriumOSIIIAppTaskVisibility, ["HarmonyCore.SELECT_RTOS"])
+
     commandRTOSTaskPriority = commandComponent.createIntegerSymbol("SYS_COMMAND_RTOS_TASK_PRIORITY", commandRTOSMenu)
     commandRTOSTaskPriority.setLabel("Task Priority")
     commandRTOSTaskPriority.setDefaultValue(1)
@@ -115,6 +149,37 @@ def instantiateComponent(commandComponent):
     commandRTOSTaskDelayVal.setDefaultValue(10)
     commandRTOSTaskDelayVal.setVisible((commandRTOSTaskDelay.getValue() == True))
     commandRTOSTaskDelayVal.setDependencies(updateTaskDelayVisiblity, ["SYS_COMMAND_RTOS_USE_DELAY"])
+
+    commandRTOSTaskSpecificOpt = commandComponent.createBooleanSymbol("SYS_COMMAND_RTOS_TASK_OPT_NONE", commandRTOSMenu)
+    commandRTOSTaskSpecificOpt.setLabel("Task Specific Options")
+    commandRTOSTaskSpecificOpt.setDescription("Contains task-specific options. Each option consists of one bit. The option is selected when the bit is set. The current version of µC/OS-III supports the following options:")
+    commandRTOSTaskSpecificOpt.setDefaultValue(True)
+    commandRTOSTaskSpecificOpt.setVisible(getActiveRtos() == "MicriumOSIII")
+    commandRTOSTaskSpecificOpt.setDependencies(commandRtosMicriumOSIIIAppTaskVisibility, ["HarmonyCore.SELECT_RTOS"])
+
+    commandRTOSTaskStkChk = commandComponent.createBooleanSymbol("SYS_COMMAND_RTOS_TASK_OPT_STK_CHK", commandRTOSTaskSpecificOpt)
+    commandRTOSTaskStkChk.setLabel("Stack checking is allowed for the task")
+    commandRTOSTaskStkChk.setDescription("Specifies whether stack checking is allowed for the task")
+    commandRTOSTaskStkChk.setDefaultValue(True)
+    commandRTOSTaskStkChk.setDependencies(commandRtosMicriumOSIIITaskOptVisibility, ["SYS_COMMAND_RTOS_TASK_OPT_NONE"])
+
+    commandRTOSTaskStkClr = commandComponent.createBooleanSymbol("SYS_COMMAND_RTOS_TASK_OPT_STK_CLR", commandRTOSTaskSpecificOpt)
+    commandRTOSTaskStkClr.setLabel("Stack needs to be cleared")
+    commandRTOSTaskStkClr.setDescription("Specifies whether the stack needs to be cleared")
+    commandRTOSTaskStkClr.setDefaultValue(True)
+    commandRTOSTaskStkClr.setDependencies(commandRtosMicriumOSIIITaskOptVisibility, ["SYS_COMMAND_RTOS_TASK_OPT_NONE"])
+
+    commandRTOSTaskSaveFp = commandComponent.createBooleanSymbol("SYS_COMMAND_RTOS_TASK_OPT_SAVE_FP", commandRTOSTaskSpecificOpt)
+    commandRTOSTaskSaveFp.setLabel("Floating-point registers needs to be saved")
+    commandRTOSTaskSaveFp.setDescription("Specifies whether floating-point registers are saved. This option is only valid if the processor has floating-point hardware and the processor-specific code saves the floating-point registers")
+    commandRTOSTaskSaveFp.setDefaultValue(False)
+    commandRTOSTaskSaveFp.setDependencies(commandRtosMicriumOSIIITaskOptVisibility, ["SYS_COMMAND_RTOS_TASK_OPT_NONE"])
+
+    commandRTOSTaskNoTls = commandComponent.createBooleanSymbol("SYS_COMMAND_RTOS_TASK_OPT_NO_TLS", commandRTOSTaskSpecificOpt)
+    commandRTOSTaskNoTls.setLabel("TLS (Thread Local Storage) support needed for the task")
+    commandRTOSTaskNoTls.setDescription("If the caller doesn’t want or need TLS (Thread Local Storage) support for the task being created. If you do not include this option, TLS will be supported by default. TLS support was added in V3.03.00")
+    commandRTOSTaskNoTls.setDefaultValue(False)
+    commandRTOSTaskNoTls.setDependencies(commandRtosMicriumOSIIITaskOptVisibility, ["SYS_COMMAND_RTOS_TASK_OPT_NONE"])
 
     ############################################################################
     #### Code Generation ####

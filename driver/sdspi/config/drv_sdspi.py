@@ -97,6 +97,26 @@ def requestAndAssignDMAChannel(symbol, event):
     if channel != None:
         symbol.setValue(channel)
 
+def sdspiRtosMicriumOSIIIAppTaskVisibility(symbol, event):
+    if (event["value"] == "MicriumOSIII"):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
+
+def sdspiRtosMicriumOSIIITaskOptVisibility(symbol, event):
+    symbol.setVisible(event["value"])
+
+def getActiveRtos():
+    activeComponents = Database.getActiveComponentIDs()
+
+    for i in range(0, len(activeComponents)):
+        if (activeComponents[i] == "FreeRTOS"):
+            return "FreeRTOS"
+        elif (activeComponents[i] == "ThreadX"):
+            return "ThreadX"
+        elif (activeComponents[i] == "MicriumOSIII"):
+            return "MicriumOSIII"
+
 def instantiateComponent(sdspiComponent, index):
     global drvSdspiInstanceSpace
     global sdspiFsEnable
@@ -259,6 +279,20 @@ def instantiateComponent(sdspiComponent, index):
     sdspiRTOSStackSize.setLabel("Stack Size (in bytes)")
     sdspiRTOSStackSize.setDefaultValue(1024)
 
+    sdspiRTOSMsgQSize = sdspiComponent.createIntegerSymbol("DRV_SDSPI_RTOS_TASK_MSG_QTY", sdspiRTOSMenu)
+    sdspiRTOSMsgQSize.setLabel("Maximum Message Queue Size")
+    sdspiRTOSMsgQSize.setDescription("A µC/OS-III task contains an optional internal message queue (if OS_CFG_TASK_Q_EN is set to DEF_ENABLED in os_cfg.h). This argument specifies the maximum number of messages that the task can receive through this message queue. The user may specify that the task is unable to receive messages by setting this argument to 0")
+    sdspiRTOSMsgQSize.setDefaultValue(0)
+    sdspiRTOSMsgQSize.setVisible(getActiveRtos() == "MicriumOSIII")
+    sdspiRTOSMsgQSize.setDependencies(sdspiRtosMicriumOSIIIAppTaskVisibility, ["HarmonyCore.SELECT_RTOS"])
+
+    sdspiRTOSTaskTimeQuanta = sdspiComponent.createIntegerSymbol("DRV_SDSPI_RTOS_TASK_TIME_QUANTA", sdspiRTOSMenu)
+    sdspiRTOSTaskTimeQuanta.setLabel("Task Time Quanta")
+    sdspiRTOSTaskTimeQuanta.setDescription("The amount of time (in clock ticks) for the time quanta when Round Robin is enabled. If you specify 0, then the default time quanta will be used which is the tick rate divided by 10.")
+    sdspiRTOSTaskTimeQuanta.setDefaultValue(0)
+    sdspiRTOSTaskTimeQuanta.setVisible(getActiveRtos() == "MicriumOSIII")
+    sdspiRTOSTaskTimeQuanta.setDependencies(sdspiRtosMicriumOSIIIAppTaskVisibility, ["HarmonyCore.SELECT_RTOS"])
+
     sdspiRTOSTaskPriority = sdspiComponent.createIntegerSymbol("DRV_SDSPI_RTOS_TASK_PRIORITY", sdspiRTOSMenu)
     sdspiRTOSTaskPriority.setLabel("Task Priority")
     sdspiRTOSTaskPriority.setDefaultValue(1)
@@ -276,6 +310,37 @@ def instantiateComponent(sdspiComponent, index):
     sdspiRTOSTaskDelayVal.setDefaultValue(10)
     sdspiRTOSTaskDelayVal.setVisible((sdspiRTOSTaskDelay.getValue() == True))
     sdspiRTOSTaskDelayVal.setDependencies(setVisible, ["DRV_SDSPI_RTOS_USE_DELAY"])
+
+    sdspiRTOSTaskSpecificOpt = sdspiComponent.createBooleanSymbol("DRV_SDSPI_RTOS_TASK_OPT_NONE", sdspiRTOSMenu)
+    sdspiRTOSTaskSpecificOpt.setLabel("Task Specific Options")
+    sdspiRTOSTaskSpecificOpt.setDescription("Contains task-specific options. Each option consists of one bit. The option is selected when the bit is set. The current version of µC/OS-III supports the following options:")
+    sdspiRTOSTaskSpecificOpt.setDefaultValue(True)
+    sdspiRTOSTaskSpecificOpt.setVisible(getActiveRtos() == "MicriumOSIII")
+    sdspiRTOSTaskSpecificOpt.setDependencies(sdspiRtosMicriumOSIIIAppTaskVisibility, ["HarmonyCore.SELECT_RTOS"])
+
+    sdspiRTOSTaskStkChk = sdspiComponent.createBooleanSymbol("DRV_SDSPI_RTOS_TASK_OPT_STK_CHK", sdspiRTOSTaskSpecificOpt)
+    sdspiRTOSTaskStkChk.setLabel("Stack checking is allowed for the task")
+    sdspiRTOSTaskStkChk.setDescription("Specifies whether stack checking is allowed for the task")
+    sdspiRTOSTaskStkChk.setDefaultValue(True)
+    sdspiRTOSTaskStkChk.setDependencies(sdspiRtosMicriumOSIIITaskOptVisibility, ["DRV_SDSPI_RTOS_TASK_OPT_NONE"])
+
+    sdspiRTOSTaskStkClr = sdspiComponent.createBooleanSymbol("DRV_SDSPI_RTOS_TASK_OPT_STK_CLR", sdspiRTOSTaskSpecificOpt)
+    sdspiRTOSTaskStkClr.setLabel("Stack needs to be cleared")
+    sdspiRTOSTaskStkClr.setDescription("Specifies whether the stack needs to be cleared")
+    sdspiRTOSTaskStkClr.setDefaultValue(True)
+    sdspiRTOSTaskStkClr.setDependencies(sdspiRtosMicriumOSIIITaskOptVisibility, ["DRV_SDSPI_RTOS_TASK_OPT_NONE"])
+
+    sdspiRTOSTaskSaveFp = sdspiComponent.createBooleanSymbol("DRV_SDSPI_RTOS_TASK_OPT_SAVE_FP", sdspiRTOSTaskSpecificOpt)
+    sdspiRTOSTaskSaveFp.setLabel("Floating-point registers needs to be saved")
+    sdspiRTOSTaskSaveFp.setDescription("Specifies whether floating-point registers are saved. This option is only valid if the processor has floating-point hardware and the processor-specific code saves the floating-point registers")
+    sdspiRTOSTaskSaveFp.setDefaultValue(False)
+    sdspiRTOSTaskSaveFp.setDependencies(sdspiRtosMicriumOSIIITaskOptVisibility, ["DRV_SDSPI_RTOS_TASK_OPT_NONE"])
+
+    sdspiRTOSTaskNoTls = sdspiComponent.createBooleanSymbol("DRV_SDSPI_RTOS_TASK_OPT_NO_TLS", sdspiRTOSTaskSpecificOpt)
+    sdspiRTOSTaskNoTls.setLabel("TLS (Thread Local Storage) support needed for the task")
+    sdspiRTOSTaskNoTls.setDescription("If the caller doesn’t want or need TLS (Thread Local Storage) support for the task being created. If you do not include this option, TLS will be supported by default. TLS support was added in V3.03.00")
+    sdspiRTOSTaskNoTls.setDefaultValue(False)
+    sdspiRTOSTaskNoTls.setDependencies(sdspiRtosMicriumOSIIITaskOptVisibility, ["DRV_SDSPI_RTOS_TASK_OPT_NONE"])
 
     availablePinDictionary = {}
 

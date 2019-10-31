@@ -26,5 +26,9 @@
     <#else>
         <#lt>#define DRV_SDSPI_STACK_SIZE_IDX${INDEX?string}               ${DRV_SDSPI_RTOS_STACK_SIZE}
     </#if>
-    <#lt>#define DRV_SDSPI_PRIORITY_IDX${INDEX?string}                 ${DRV_SDSPI_RTOS_TASK_PRIORITY}
+    <#lt>#define DRV_SDSPI_PRIORITY_IDX${INDEX?string}                     ${DRV_SDSPI_RTOS_TASK_PRIORITY}
+    <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "MicriumOSIII">
+        <#lt>#define DRV_SDSPI_RTOS_TASK_MSG_QTY_IDX${INDEX?string}        ${DRV_SDSPI_RTOS_TASK_MSG_QTY}u
+        <#lt>#define DRV_SDSPI_RTOS_TASK_TIME_QUANTA_IDX${INDEX?string}    ${DRV_SDSPI_RTOS_TASK_TIME_QUANTA}u
+    </#if>
 </#if>

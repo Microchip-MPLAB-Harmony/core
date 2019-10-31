@@ -54,6 +54,7 @@ def instantiateComponent(sysFSComponent):
     sysFSMenu.setDescription("File System settings")
     sysFSMenu.setVisible(True)
 
+    # RTOS Settings
     sysFSRTOSMenu = sysFSComponent.createMenuSymbol("SYS_FS_RTOS_MENU", None)
     sysFSRTOSMenu.setLabel("RTOS settings")
     sysFSRTOSMenu.setDescription("RTOS settings")
@@ -69,6 +70,20 @@ def instantiateComponent(sysFSComponent):
     sysFSRTOSStackSize.setLabel("Stack Size (in bytes)")
     sysFSRTOSStackSize.setDefaultValue(4096)
 
+    sysFSRTOSMsgQSize = sysFSComponent.createIntegerSymbol("SYS_FS_RTOS_TASK_MSG_QTY", sysFSRTOSMenu)
+    sysFSRTOSMsgQSize.setLabel("Maximum Message Queue Size")
+    sysFSRTOSMsgQSize.setDescription("A µC/OS-III task contains an optional internal message queue (if OS_CFG_TASK_Q_EN is set to DEF_ENABLED in os_cfg.h). This argument specifies the maximum number of messages that the task can receive through this message queue. The user may specify that the task is unable to receive messages by setting this argument to 0")
+    sysFSRTOSMsgQSize.setDefaultValue(0)
+    sysFSRTOSMsgQSize.setVisible(getActiveRtos() == "MicriumOSIII")
+    sysFSRTOSMsgQSize.setDependencies(sysFsRtosMicriumOSIIIAppTaskVisibility, ["HarmonyCore.SELECT_RTOS"])
+
+    sysFSRTOSTaskTimeQuanta = sysFSComponent.createIntegerSymbol("SYS_FS_RTOS_TASK_TIME_QUANTA", sysFSRTOSMenu)
+    sysFSRTOSTaskTimeQuanta.setLabel("Task Time Quanta")
+    sysFSRTOSTaskTimeQuanta.setDescription("The amount of time (in clock ticks) for the time quanta when Round Robin is enabled. If you specify 0, then the default time quanta will be used which is the tick rate divided by 10.")
+    sysFSRTOSTaskTimeQuanta.setDefaultValue(0)
+    sysFSRTOSTaskTimeQuanta.setVisible(getActiveRtos() == "MicriumOSIII")
+    sysFSRTOSTaskTimeQuanta.setDependencies(sysFsRtosMicriumOSIIIAppTaskVisibility, ["HarmonyCore.SELECT_RTOS"])
+
     sysFSRTOSTaskPriority = sysFSComponent.createIntegerSymbol("SYS_FS_RTOS_TASK_PRIORITY", sysFSRTOSMenu)
     sysFSRTOSTaskPriority.setLabel("Task Priority")
     sysFSRTOSTaskPriority.setDefaultValue(1)
@@ -81,6 +96,37 @@ def instantiateComponent(sysFSComponent):
     sysFSRTOSTaskDelayVal.setLabel("Task Delay")
     sysFSRTOSTaskDelayVal.setDefaultValue(10)
     sysFSRTOSTaskDelayVal.setDependencies(showRTOSTaskDel, ["SYS_FS_RTOS_USE_DELAY"])
+
+    sysFSRTOSTaskSpecificOpt = sysFSComponent.createBooleanSymbol("SYS_FS_RTOS_TASK_OPT_NONE", sysFSRTOSMenu)
+    sysFSRTOSTaskSpecificOpt.setLabel("Task Specific Options")
+    sysFSRTOSTaskSpecificOpt.setDescription("Contains task-specific options. Each option consists of one bit. The option is selected when the bit is set. The current version of µC/OS-III supports the following options:")
+    sysFSRTOSTaskSpecificOpt.setDefaultValue(True)
+    sysFSRTOSTaskSpecificOpt.setVisible(getActiveRtos() == "MicriumOSIII")
+    sysFSRTOSTaskSpecificOpt.setDependencies(sysFsRtosMicriumOSIIIAppTaskVisibility, ["HarmonyCore.SELECT_RTOS"])
+
+    sysFSRTOSTaskStkChk = sysFSComponent.createBooleanSymbol("SYS_FS_RTOS_TASK_OPT_STK_CHK", sysFSRTOSTaskSpecificOpt)
+    sysFSRTOSTaskStkChk.setLabel("Stack checking is allowed for the task")
+    sysFSRTOSTaskStkChk.setDescription("Specifies whether stack checking is allowed for the task")
+    sysFSRTOSTaskStkChk.setDefaultValue(True)
+    sysFSRTOSTaskStkChk.setDependencies(sysFsRtosMicriumOSIIITaskOptVisibility, ["SYS_FS_RTOS_TASK_OPT_NONE"])
+
+    sysFSRTOSTaskStkClr = sysFSComponent.createBooleanSymbol("SYS_FS_RTOS_TASK_OPT_STK_CLR", sysFSRTOSTaskSpecificOpt)
+    sysFSRTOSTaskStkClr.setLabel("Stack needs to be cleared")
+    sysFSRTOSTaskStkClr.setDescription("Specifies whether the stack needs to be cleared")
+    sysFSRTOSTaskStkClr.setDefaultValue(True)
+    sysFSRTOSTaskStkClr.setDependencies(sysFsRtosMicriumOSIIITaskOptVisibility, ["SYS_FS_RTOS_TASK_OPT_NONE"])
+
+    sysFSRTOSTaskSaveFp = sysFSComponent.createBooleanSymbol("SYS_FS_RTOS_TASK_OPT_SAVE_FP", sysFSRTOSTaskSpecificOpt)
+    sysFSRTOSTaskSaveFp.setLabel("Floating-point registers needs to be saved")
+    sysFSRTOSTaskSaveFp.setDescription("Specifies whether floating-point registers are saved. This option is only valid if the processor has floating-point hardware and the processor-specific code saves the floating-point registers")
+    sysFSRTOSTaskSaveFp.setDefaultValue(False)
+    sysFSRTOSTaskSaveFp.setDependencies(sysFsRtosMicriumOSIIITaskOptVisibility, ["SYS_FS_RTOS_TASK_OPT_NONE"])
+
+    sysFSRTOSTaskNoTls = sysFSComponent.createBooleanSymbol("SYS_FS_RTOS_TASK_OPT_NO_TLS", sysFSRTOSTaskSpecificOpt)
+    sysFSRTOSTaskNoTls.setLabel("TLS (Thread Local Storage) support needed for the task")
+    sysFSRTOSTaskNoTls.setDescription("If the caller doesn’t want or need TLS (Thread Local Storage) support for the task being created. If you do not include this option, TLS will be supported by default. TLS support was added in V3.03.00")
+    sysFSRTOSTaskNoTls.setDefaultValue(False)
+    sysFSRTOSTaskNoTls.setDependencies(sysFsRtosMicriumOSIIITaskOptVisibility, ["SYS_FS_RTOS_TASK_OPT_NONE"])
 
     sysFSMaxFiles = sysFSComponent.createIntegerSymbol("SYS_FS_MAX_FILES", sysFSMenu)
     sysFSMaxFiles.setLabel("Maximum Simultaneous File Access")
@@ -494,3 +540,22 @@ def mediaDeviceName3(sysFSMedia0VOL0DeviceName, name):
         component.getSymbolByID("SYS_FS_MEDIA_DEVICE_" + str(i + 1) + "_NAME_IDX3").clearValue()
         component.getSymbolByID("SYS_FS_MEDIA_DEVICE_" + str(i + 1) + "_NAME_IDX3").setValue(deviceNames.get(name["value"])  + str(i + 1))
 
+def sysFsRtosMicriumOSIIIAppTaskVisibility(symbol, event):
+    if (event["value"] == "MicriumOSIII"):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
+
+def sysFsRtosMicriumOSIIITaskOptVisibility(symbol, event):
+    symbol.setVisible(event["value"])
+
+def getActiveRtos():
+    activeComponents = Database.getActiveComponentIDs()
+
+    for i in range(0, len(activeComponents)):
+        if (activeComponents[i] == "FreeRTOS"):
+            return "FreeRTOS"
+        elif (activeComponents[i] == "ThreadX"):
+            return "ThreadX"
+        elif (activeComponents[i] == "MicriumOSIII"):
+            return "MicriumOSIII"
