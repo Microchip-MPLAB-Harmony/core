@@ -55,7 +55,7 @@ The example has three RTOS threads for the purpose:</p>
 <ol class="Element630">
 <li value="1" class="Element600"><strong>APP_CLIENT1_Tasks</strong>: This thread opens the SPI driver instance and performs a continuous loop back transfer. If the loop back is successful, the loop back is repeated every 100 ms. In case of an error, the thread closes the driver and suspends itself.</li>
 <li value="2" class="Element600"><strong>APP_CLIENT2_Tasks</strong>: This thread opens the SPI driver instance and performs a continuous loop back transfer. If the loop back is successful, the loop back is repeated every 100 ms. In case of an error, the thread closes the driver and suspends itself.</li>
-<li value="3" class="Element600"><strong>APP_MONITOR_Tasks: </strong>This thread checks the status of loop back done by the two client tasks and toggles LED if the loop back transfer status reported by both the clients is successful.</li>
+<li value="3" class="Element600"><strong>APP_MONITOR_Tasks: </strong>This thread checks the status of loop back done by the two client tasks and turns on the LED if the loop back transfer status reported by both the clients is successful.</li>
 </ol></div>
 </div>
 <a name="546F70696373"></a><div class="Element14">

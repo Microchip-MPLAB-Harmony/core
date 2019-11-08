@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Building the Application</title>
+<title>MEMORY_DEVICE_TRANSFER_STATUS Enumeration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00011.html" target="topic">RTOS Applications</a> &gt; <a href="00797.html" target="topic">Micrium OS III Applications</a> &gt; <a href="00798.html" target="topic">basic</a> &gt; <a href="00799.html" target="topic">Building the Application</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00139.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00140.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00799.html" target="topic">MEMORY_DEVICE_TRANSFER_STATUS Enumeration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00798.html" target="topic">Previous</a> | <a href="00798.html" target="topic">Up</a> | <a href="00801.html" target="topic">Next</a></div>
+<a href="00788.html" target="topic">Previous</a> | <a href="00140.html" target="topic">Up</a> | <a href="00182.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Micrium OS III basic Building the Application Topic Title: Building the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: MEMORY_DEVICE_TRANSFER_STATUS Topic Title: MEMORY_DEVICE_TRANSFER_STATUS Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Building the Application</div>
+MEMORY_DEVICE_TRANSFER_STATUS Enumeration</div>
 </div>
 </div>
 
@@ -49,50 +49,58 @@ Building the Application</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The parent folder for all the MPLAB X projects for this application is given below: </p><div class="Element63">
+This Data structure is used to indicate the current transfer status of the attached media.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000">MEMORY_DEVICE_TRANSFER_BUSY</span></strong>,
+  <strong><span style="color: #000000">MEMORY_DEVICE_TRANSFER_COMPLETED</span></strong>,
+  <strong><span style="color: #000000">MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN</span></strong>
+} MEMORY_DEVICE_TRANSFER_STATUS;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element272">
 <div class="TableDiv">
-<table cellspacing="0" class="Table4">
+<table cellspacing="0" class="Table3">
 <tr>
-<td class="Element65" valign="top" width="31%">
-<div class="Element66">
-Application Path&nbsp;</div></td><td class="Element65" valign="top" width="69%">
-<div class="Element66">
-micrium_ucos3\apps\basic\firmware&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">To build the application, refer to the following table and open the appropriate project file in </span>the <span style="color: #000000">MPLAB X IDE.</span> </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table4">
-<tr>
-<td class="Element65" valign="top" width="32%">
-<div class="Element66">
-Project Name&nbsp;</div></td><td class="Element65" valign="top" width="68%">
-<div class="Element66">
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="32%">
-<div class="Element68">
-sam_e54_xpro.X&nbsp;</div></td><td class="Element67" valign="top" width="68%">
-<div class="Element68">
-SAM E54 Xplained Pro Evaluation Kit&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="32%">
-<div class="Element68">
-sam_e70_xult.X&nbsp;</div></td><td class="Element67" valign="top" width="68%">
-<div class="Element68">
-SAM E70 Xplained Ultra Evaluation Kit&nbsp;</div></td></tr></table></div></div>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+MEMORY_DEVICE_TRANSFER_BUSY&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Transfer being processed&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+MEMORY_DEVICE_TRANSFER_COMPLETED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Transfer is successfully completed&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Transfer had error&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
 <p class="Element10">
-&nbsp;</p>
-<div class="Element15">
-Note:</div>
-<p class="Element10">
-Make sure the <span style="color: #000000">Micriµm µC/OS-III source code is installed in &lt;Harmony3_Path&gt;/</span>thirdparty_micrium/MicriumOSIII/Software and then regenerate the code for demonstration to work.</p></div>
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00011.html" target="topic">RTOS Applications</a> &gt; <a href="00797.html" target="topic">Micrium OS III Applications</a> &gt; <a href="00798.html" target="topic">basic</a> &gt; <a href="00799.html" target="topic">Building the Application</a></div>
+<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00139.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00140.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00799.html" target="topic">MEMORY_DEVICE_TRANSFER_STATUS Enumeration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -103,10 +111,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00798.html" target="topic">Previous</a> | <a href="00798.html" target="topic">Up</a> | <a href="00801.html" target="topic">Next</a></div>
+<a href="00788.html" target="topic">Previous</a> | <a href="00140.html" target="topic">Up</a> | <a href="00182.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Micrium OS III basic Building the Application Topic Title: Building the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: MEMORY_DEVICE_TRANSFER_STATUS Topic Title: MEMORY_DEVICE_TRANSFER_STATUS Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

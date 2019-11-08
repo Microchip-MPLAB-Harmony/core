@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_FileSeek Function</title>
+<title>SYS_FS_FileEOF Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01431.html" target="topic">System Service Libraries Help</a> &gt; <a href="00918.html" target="topic">File System Service Library Help</a> &gt; <a href="00919.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01151.html" target="topic">SYS_FS_FileSeek Function</a></div>
+<a href="01437.html" target="topic">System Service Libraries Help</a> &gt; <a href="00924.html" target="topic">File System Service Library Help</a> &gt; <a href="00925.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01151.html" target="topic">SYS_FS_FileEOF Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01150.html" target="topic">Previous</a> | <a href="00919.html" target="topic">Up</a> | <a href="01152.html" target="topic">Next</a></div>
+<a href="01145.html" target="topic">Previous</a> | <a href="00925.html" target="topic">Up</a> | <a href="01152.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileSeek@SYS_FS_HANDLE@int32_t@SYS_FS_FILE_SEEK_CONTROL Topic Title: SYS_FS_FileSeek Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileEOF@SYS_FS_HANDLE Topic Title: SYS_FS_FileEOF Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_FileSeek Function</div>
+SYS_FS_FileEOF Function</div>
 </div>
 </div>
 
@@ -49,23 +49,19 @@ SYS_FS_FileSeek Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function sets the file pointer for a open file associated with the file handle, as follows: whence = SYS_FS_SEEK_SET - File offset is set to offset bytes from the beginning. whence = SYS_FS_SEEK_CUR - File offset is set to its current location plus offset. whence = SYS_FS_SEEK_END - File offset is set to the size of the file plus offset. The offset specified for this option should be negative for the file pointer to be valid.&nbsp;</p>
-<p class="Element10">
-Trying to move the file pointer using SYS_FS_FileSeek, beyond the range of file will only cause the pointer to be moved to the last location of the file.</p></div>
+Checks whether or not the file position indicator is at the end of the file.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100">int32_t <strong><span style="color: #000000">SYS_FS_FileSeek</span></strong>(
-    <a href="01207.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">fildes</span></strong>, 
-    int32_t <strong><span style="color: #000000">offset</span></strong>, 
-    <a href="01131.html" target="topic">SYS_FS_FILE_SEEK_CONTROL</a> <strong><span style="color: #000000">whence</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">SYS_FS_FileEOF</span></strong>(
+    <a href="01213.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-A valid file handle must be obtained before seeking a file.</p></div>
+A valid file handle must be obtained before knowing a EOF.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -84,17 +80,7 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid file handle obtained during file open.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-offset&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-The number of bytes which act as file offset. This value could be a positive or negative value.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-whence&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Type of File Seek operation as specified in <a href="01131.html" target="topic">SYS_FS_FILE_SEEK_CONTROL</a>.&nbsp;</div></td></tr></table></div></div>
+file handle obtained during file Open.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -102,7 +88,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-On success - The number of bytes by which file pointer is moved (0 or positive number) On Failure - (-1) If the chosen offset value was (-1), the success or failure can be determined with <a href="01083.html" target="topic">SYS_FS_Error</a>.</p></div>
+On success returns true indicating that the file pointer has reached the end of the file. On failure returns false. This could be due to file pointer having not reached the end of the file. Or due to an invalid file handle. The reason for the failure can be retrieved with <a href="01089.html" target="topic">SYS_FS_Error</a> or <a href="01152.html" target="topic">SYS_FS_FileError</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -115,24 +101,24 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01207.html" target="topic">SYS_FS_HANDLE</a> fileHandle;
-  <strong><span style="color: #000080">int</span></strong> status;
+<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01213.html" target="topic">SYS_FS_HANDLE</a> fileHandle;
+  <strong><span style="color: #000080">bool</span></strong> eof;
 
-  fileHandle = <a href="01148.html" target="topic">SYS_FS_FileOpen</a>(&quot;/mnt/myDrive/FILE.JPG&quot;,
+  fileHandle = <a href="01154.html" target="topic">SYS_FS_FileOpen</a>(&quot;/mnt/myDrive/FILE.JPG&quot;,
           (SYS_FS_FILE_OPEN_READ));
 
-  <strong><span style="color: #000080">if</span></strong>(fileHandle != <a href="01208.html" target="topic">SYS_FS_HANDLE_INVALID</a>)
+  <strong><span style="color: #000080">if</span></strong>(fileHandle != <a href="01214.html" target="topic">SYS_FS_HANDLE_INVALID</a>)
   {
       <i><span style="color: #008000">// File open is successful</span></i>
   }
   ...
   ...
 
-  status = SYS_FS_FileSeek(fileHandle, 5, SYS_FS_SEEK_CUR);
+  eof = SYS_FS_FileEOF(fileHandle);
 
-  <strong><span style="color: #000080">if</span></strong>((status != -1) &amp;&amp; (status == 5))
+  <strong><span style="color: #000080">if</span></strong>(eof == <strong><span style="color: #000080">false</span></strong>)
   {
-      <i><span style="color: #008000">// Success</span></i>
+      <i><span style="color: #008000">// Check the error state using SYS_FS_FileError</span></i>
   }</pre></div></div>
 </div>
 </div>
@@ -141,7 +127,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01431.html" target="topic">System Service Libraries Help</a> &gt; <a href="00918.html" target="topic">File System Service Library Help</a> &gt; <a href="00919.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01151.html" target="topic">SYS_FS_FileSeek Function</a></div>
+<a href="01437.html" target="topic">System Service Libraries Help</a> &gt; <a href="00924.html" target="topic">File System Service Library Help</a> &gt; <a href="00925.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01151.html" target="topic">SYS_FS_FileEOF Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -152,10 +138,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01150.html" target="topic">Previous</a> | <a href="00919.html" target="topic">Up</a> | <a href="01152.html" target="topic">Next</a></div>
+<a href="01145.html" target="topic">Previous</a> | <a href="00925.html" target="topic">Up</a> | <a href="01152.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileSeek@SYS_FS_HANDLE@int32_t@SYS_FS_FILE_SEEK_CONTROL Topic Title: SYS_FS_FileSeek Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileEOF@SYS_FS_HANDLE Topic Title: SYS_FS_FileEOF Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

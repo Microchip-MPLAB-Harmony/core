@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_ERROR_LEVEL Enumeration</title>
+<title>SYS_DMA_WIDTH Enumeration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01431.html" target="topic">System Service Libraries Help</a> &gt; <a href="00899.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00900.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="01061.html" target="topic">SYS_ERROR_LEVEL Enumeration</a></div>
+<a href="01437.html" target="topic">System Service Libraries Help</a> &gt; <a href="00911.html" target="topic">Direct Memory Access (DMA) System Service Library Help</a> &gt; <a href="00912.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="01061.html" target="topic">SYS_DMA_WIDTH Enumeration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01024.html" target="topic">Previous</a> | <a href="00900.html" target="topic">Up</a> | <a href="01025.html" target="topic">Next</a></div>
+<a href="01054.html" target="topic">Previous</a> | <a href="00912.html" target="topic">Up</a> | <a href="00924.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_ERROR_LEVEL Topic Title: SYS_ERROR_LEVEL Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_DMA_WIDTH Topic Title: SYS_DMA_WIDTH Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_ERROR_LEVEL Enumeration</div>
+SYS_DMA_WIDTH Enumeration</div>
 </div>
 </div>
 
@@ -49,19 +49,18 @@ SYS_ERROR_LEVEL Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS_ERROR_LEVEL enumeration&nbsp;</p>
+DMA data width&nbsp;</p>
 <p class="Element10">
-This enumeration defines the supported system error message priority values.</p></div>
+This data type provides an enumeration of all possible DMA data width.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
 <div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">SYS_ERROR_FATAL</span></strong> = 0,
-  <strong><span style="color: #000000">SYS_ERROR_ERROR</span></strong> = 1,
-  <strong><span style="color: #000000">SYS_ERROR_WARNING</span></strong> = 2,
-  <strong><span style="color: #000000">SYS_ERROR_INFO</span></strong> = 3,
-  <strong><span style="color: #000000">SYS_ERROR_DEBUG</span></strong> = 4
-} SYS_ERROR_LEVEL;</pre></div></div>
+  <strong><span style="color: #000000">SYS_DMA_WIDTH_8_BIT</span></strong>,
+  <strong><span style="color: #000000">SYS_DMA_WIDTH_16_BIT</span></strong>,
+  <strong><span style="color: #000000">SYS_DMA_WIDTH_32_BIT</span></strong>,
+  <strong><span style="color: #000000">SYS_DMA_WIDTH_NONE</span></strong> = -1
+} SYS_DMA_WIDTH;</pre></div></div>
 <a name="4D656D62657273"></a><div class="Element14">
 Members</div>
 <div class="Element11">
@@ -77,29 +76,24 @@ Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
 <div class="Element263">
-SYS_ERROR_FATAL = 0&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+SYS_DMA_WIDTH_8_BIT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
 <div class="Element267">
-Errors that have the potential to cause a system crash.&nbsp;</div></td></tr><tr>
+DMA data width 8 bit&nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
 <div class="Element263">
-SYS_ERROR_ERROR = 1&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+SYS_DMA_WIDTH_16_BIT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
 <div class="Element267">
-Errors that have the potential to cause incorrect behavior.&nbsp;</div></td></tr><tr>
+DMA data width 16 bit&nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
 <div class="Element263">
-SYS_ERROR_WARNING = 2&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+SYS_DMA_WIDTH_32_BIT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
 <div class="Element267">
-Warnings about potentially unexpected behavior or side effects.&nbsp;</div></td></tr><tr>
+DMA data width 32 bit&nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
 <div class="Element263">
-SYS_ERROR_INFO = 3&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+SYS_DMA_WIDTH_NONE = -1&nbsp;</div></td><td class="Element266" valign="top" width="65%">
 <div class="Element267">
-Information helpful to understanding potential errors and warnings.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_ERROR_DEBUG = 4&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Verbose information helpful during debugging and testing.&nbsp;</div></td></tr></table></div></div>
+USed when DMA Width is not supported&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
@@ -107,14 +101,14 @@ Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Used by debug message macros to compare individual message priority against a global system-wide error message priority level to determine if an individual message should be displayed.</p></div>
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01431.html" target="topic">System Service Libraries Help</a> &gt; <a href="00899.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00900.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="01061.html" target="topic">SYS_ERROR_LEVEL Enumeration</a></div>
+<a href="01437.html" target="topic">System Service Libraries Help</a> &gt; <a href="00911.html" target="topic">Direct Memory Access (DMA) System Service Library Help</a> &gt; <a href="00912.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="01061.html" target="topic">SYS_DMA_WIDTH Enumeration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -125,10 +119,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01024.html" target="topic">Previous</a> | <a href="00900.html" target="topic">Up</a> | <a href="01025.html" target="topic">Next</a></div>
+<a href="01054.html" target="topic">Previous</a> | <a href="00912.html" target="topic">Up</a> | <a href="00924.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_ERROR_LEVEL Topic Title: SYS_ERROR_LEVEL Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_DMA_WIDTH Topic Title: SYS_DMA_WIDTH Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

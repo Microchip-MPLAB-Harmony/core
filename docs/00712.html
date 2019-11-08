@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>File System Applications</title>
+<title>Running the Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00712.html" target="topic">File System Applications</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00011.html" target="topic">RTOS Applications</a> &gt; <a href="00707.html" target="topic">FreeRTOS Applications</a> &gt; <a href="00708.html" target="topic">basic_freertos</a> &gt; <a href="00712.html" target="topic">Running the Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00311.html" target="topic">Previous</a> | <a href="00010.html" target="topic">Up</a> | <a href="00713.html" target="topic">Next</a></div>
+<a href="00710.html" target="topic">Previous</a> | <a href="00708.html" target="topic">Up</a> | <a href="00713.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications Help Topic Title: File System Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FreeRTOS basic_freertos Running the Application Topic Title: Running the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-File System Applications</div>
+Running the Application</div>
 </div>
 </div>
 
@@ -49,66 +49,166 @@ File System Applications</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<span style="color: #000000">This section provides help for the File System applications.</span></p></div>
-</div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
+<strong><u>MCU Devices</u></strong>&nbsp;</p>
+
+<ol class="Element630">
+<li value="1" class="Element600">Connect a micro/mini USB to the DEBUG port.</li>
+<li value="2" class="Element600">Build and program the application using the MPLAB X IDE.</li>
+<li value="3" class="Element600">The LED indicates the success or failure.
+<ul class="Element631">
+<li class="Element601">The LED toggles on success i.e. each time when the Task2 or Task3 receives a valid message</li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+The following table provides the LED name: </p><div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table4">
 <tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00713.html" target="topic">nvm_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of implementing a FAT disk in the device internal Flash memory.</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00714.html" target="topic">nvm_mpfs</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of implementing a MPFS disk in device Internal Flash memory.</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00715.html" target="topic">nvm_sdmmc_fat_multi_disk</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access files across multiple media (NVM, SDMMC).</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00716.html" target="topic">nvm_sdspi_fat_multi_disk</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access files across multiple media (NVM, SDSPI).</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00721.html" target="topic">nvm_sqi_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access multiple files across multiple media (NVM, SQI FLASH).</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00722.html" target="topic">sdmmc_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access and modify the contents of a SD card using the SDMMC driver.</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00723.html" target="topic">sdspi_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access and modify the contents of a SD card using the SDSPI driver.</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00724.html" target="topic">spi_flash_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access and modify the contents of a flash memory using SPI Flash driver.</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00725.html" target="topic">sqi_flash_fat</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This application shows an example of using the MPLAB Harmony File System to access SQI based flash media.</span>&nbsp;</div></td></tr></table></div></div>
+<td class="Element65" valign="top" width="87%">
+<div class="Element66">
+Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="13%">
+<div class="Element66">
+LED Name&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MK MCJ Curiosity Pro Development Board&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 2&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MK General Purpose (GP) Development Board&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MK GPL Curiosity Pro Development Board&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 2&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MX Curiosity Development Board&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MX Ethernet Starter Kit II&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MX XLP Starter Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1 (Red)&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit (Crypto)&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+PIC32MZ W1 Curiosity Development Board&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+RED LED&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM C21N Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM D20 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM D21 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM DA1 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM E54 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM E70 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 1&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM G55 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM L10 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM L21 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM L22 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="87%">
+<div class="Element68">
+SAM V71 Xplained Ultra Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="13%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong><u>MPU Devices</u></strong>&nbsp;</p>
+
+<ol class="Element630">
+<li value="1" class="Element600">Build the IAR or MPLAB X project using IAR Embedded Workbench or MPLAB X IDE respectively</li>
+<li value="2" class="Element600">Use the output binary file (harmony.bin) to setup the board as detailed in <a href="00710.html" target="topic">hardware setup</a></li>
+<li value="3" class="Element600">Reset the board to run the application</li>
+<li value="4" class="Element600">The LED indicates the success or failure.
+<ul class="Element631">
+<li class="Element601">The LED toggles on success i.e. each time when the Task2 or Task3 receives a valid message</li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+<div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="64%">
+<div class="Element66">
+Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="36%">
+<div class="Element66">
+LED Name&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="64%">
+<div class="Element68">
+SAMA5D2 Xplained Ultra evaluation kit&nbsp;</div></td><td class="Element67" valign="top" width="36%">
+<div class="Element68">
+RGB_LED (Blue)&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="64%">
+<div class="Element68">
+SAM9X60 evaluation kit&nbsp;</div></td><td class="Element67" valign="top" width="36%">
+<div class="Element68">
+RGB_LED (Green)&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -116,7 +216,7 @@ Description&nbsp;</div></td></tr><tr>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00712.html" target="topic">File System Applications</a></div>
+<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00011.html" target="topic">RTOS Applications</a> &gt; <a href="00707.html" target="topic">FreeRTOS Applications</a> &gt; <a href="00708.html" target="topic">basic_freertos</a> &gt; <a href="00712.html" target="topic">Running the Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -127,10 +227,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00311.html" target="topic">Previous</a> | <a href="00010.html" target="topic">Up</a> | <a href="00713.html" target="topic">Next</a></div>
+<a href="00710.html" target="topic">Previous</a> | <a href="00708.html" target="topic">Up</a> | <a href="00713.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS Applications Help Topic Title: File System Applications)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FreeRTOS basic_freertos Running the Application Topic Title: Running the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
