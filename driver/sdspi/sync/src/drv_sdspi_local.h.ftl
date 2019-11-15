@@ -50,7 +50,7 @@
 
 #include "configuration.h"
 <#if core.DMA_ENABLE?has_content>
-	<#lt>#include "system/dma/sys_dma.h"
+    <#lt>#include "system/dma/sys_dma.h"
 </#if>
 #include "driver/sdspi/drv_sdspi.h"
 #include "osal/osal.h"
@@ -90,6 +90,9 @@
 
 /* No of bytes to be read for SD card CSD. */
 #define _DRV_SDSPI_CSD_READ_SIZE                                (20)
+
+/* No of bytes to be read for SD card CSD. */
+#define _DRV_SDSPI_CID_READ_SIZE                                (20)
 
 /* SD card V2 device type Check. */
 #define _DRV_SDSPI_CHECK_V2_DEVICE                              (0xC0)
@@ -384,12 +387,6 @@ typedef enum
     /* Check the card's interface condition */
     DRV_SDSPI_INIT_CHK_IFACE_CONDITION,
 
-    /* Send OCR to expand the ACMD41 */
-    DRV_SDSPI_INIT_READ_OCR_REGISTER,
-
-    /* Send APP CMD */
-    DRV_SDSPI_INIT_SEND_APP_CMD,
-
     /* Send APP CMD ACMD41 to check if the card's internal init is done */
     DRV_SDSPI_INIT_SEND_ACMD41,
 
@@ -399,24 +396,11 @@ typedef enum
     /* Card's internal init is complete. Increase the SPI frequency. */
     DRV_SDSPI_INIT_INCR_CLOCK_SPEED,
 
-    /* Wait for the dummy read done in the INCR_CLOCK_SPEED state to
-    complete. */
-    DRV_SDSPI_INIT_INCR_CLOCK_SPEED_STATUS,
-
     /* Issue command to read the card's Card Specific Data register */
     DRV_SDSPI_INIT_READ_CSD,
 
-    /* Read the CSD data */
-    DRV_SDSPI_INIT_READ_CSD_DATA,
-
-    /* Read the CSD data token */
-    DRV_SDSPI_INIT_READ_CSD_DATA_TOKEN,
-
-    /* Read the CSD data token */
-    DRV_SDSPI_INIT_READ_CSD_DATA_TOKEN_STATUS,
-
-    /* Process the CSD register data */
-    DRV_SDSPI_INIT_PROCESS_CSD,
+    /* Read card identification data */
+    DRV_SDSPI_INIT_READ_CID,
 
     /* Issue command to turn off the CRC */
     DRV_SDSPI_INIT_TURN_OFF_CRC,
@@ -738,6 +722,8 @@ typedef struct
     DRV_SDSPI_TYPE                      sdCardType;
 
     uint8_t                             csdData[_DRV_SDSPI_CSD_READ_SIZE];
+
+    uint8_t                             cidData[_DRV_SDSPI_CID_READ_SIZE];
 
     uint8_t                             cmdResponse[5];
 
