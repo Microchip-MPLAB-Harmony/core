@@ -48,10 +48,10 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "bsp/bsp.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/gpio/plib_gpio.h"
 #include "peripheral/evic/plib_evic.h"
-#include "bsp/bsp.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "osal/osal.h"
