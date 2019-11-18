@@ -49,6 +49,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "peripheral/coretimer/plib_coretimer.h"
+#include "bsp/bsp.h"
 #include "system/fs/sys_fs.h"
 #include "system/fs/sys_fs_media_manager.h"
 #include "system/fs/fat_fs/src/file_system/ff.h"
@@ -59,7 +60,6 @@
 #include "peripheral/evic/plib_evic.h"
 #include "peripheral/dmac/plib_dmac.h"
 #include "peripheral/spi/plib_spi6.h"
-#include "bsp/bsp.h"
 #include "driver/sdspi/drv_sdspi.h"
 #include "system/int/sys_int.h"
 #include "system/ports/sys_ports.h"

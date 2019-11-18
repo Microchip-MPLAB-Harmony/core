@@ -109,6 +109,7 @@
 #pragma config IOL1WAY =    ON
 #pragma config FUSBIDIO1 =   ON
 #pragma config FVBUSIO1 =  ON
+#pragma config PWMLOCK =  OFF
 
 /*** BF1SEQ ***/
 #pragma config TSEQ =       0x0
@@ -295,11 +296,11 @@ void SYS_Initialize ( void* data )
 
 
     CORETIMER_Initialize();
+	BSP_Initialize();
     DMAC_Initialize();
 
 	SPI6_Initialize();
 
-	BSP_Initialize();
 
     /* Initialize SDSPI0 Driver Instance */
     sysObj.drvSDSPI0 = DRV_SDSPI_Initialize(DRV_SDSPI_INDEX_0, (SYS_MODULE_INIT *)&drvSDSPI0InitData);
