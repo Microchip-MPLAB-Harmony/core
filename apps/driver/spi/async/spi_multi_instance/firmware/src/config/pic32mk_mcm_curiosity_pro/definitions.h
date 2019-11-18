@@ -48,11 +48,11 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "bsp/bsp.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/gpio/plib_gpio.h"
 #include "peripheral/evic/plib_evic.h"
 #include "peripheral/spi/plib_spi6.h"
-#include "bsp/bsp.h"
 #include "peripheral/spi/plib_spi2.h"
 #include "driver/spi/drv_spi.h"
 #include "system/int/sys_int.h"
