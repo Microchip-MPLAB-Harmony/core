@@ -109,6 +109,7 @@
 #pragma config IOL1WAY =    ON
 #pragma config FUSBIDIO1 =   ON
 #pragma config FVBUSIO1 =  ON
+#pragma config PWMLOCK =  OFF
 
 /*** BF1SEQ ***/
 #pragma config TSEQ =       0x0
@@ -246,9 +247,9 @@ void SYS_Initialize ( void* data )
     CHECONbits.PREFEN = 1;
 
 
+	BSP_Initialize();
     I2C4_Initialize();
 
-	BSP_Initialize();
 
     /* Initialize I2C0 Driver Instance */
     sysObj.drvI2C0 = DRV_I2C_Initialize(DRV_I2C_INDEX_0, (SYS_MODULE_INIT *)&drvI2C0InitData);
