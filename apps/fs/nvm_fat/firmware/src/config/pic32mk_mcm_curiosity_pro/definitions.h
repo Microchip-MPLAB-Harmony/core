@@ -49,6 +49,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "driver/memory/drv_memory_nvm.h"
+#include "bsp/bsp.h"
 #include "system/fs/sys_fs.h"
 #include "system/fs/sys_fs_media_manager.h"
 #include "system/fs/fat_fs/src/file_system/ff.h"
@@ -58,7 +59,6 @@
 #include "peripheral/gpio/plib_gpio.h"
 #include "peripheral/evic/plib_evic.h"
 #include "driver/memory/drv_memory.h"
-#include "bsp/bsp.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
 #include "peripheral/nvm/plib_nvm.h"
