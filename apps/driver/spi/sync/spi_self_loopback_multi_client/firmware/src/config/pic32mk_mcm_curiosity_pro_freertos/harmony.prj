@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Configuration>
   <Configurator>
-    <Name dnOrder="0" value="pic32mk_gpl_curiosity_pro_freertos"/>
-    <Processor dnOrder="1" value="PIC32MK1024GPL100"/>
+    <Name dnOrder="0" value="pic32mk_mcm_curiosity_pro_freertos"/>
+    <Processor dnOrder="1" value="PIC32MK1024MCM100"/>
     <Harmony dnOrder="2" path="../../../../../.."/>
     <Manifest dnOrder="3">
       <Files dnOrder="0">
@@ -41,7 +41,7 @@
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">bsp.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/bsp/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/bsp/</LogicalPath>
           <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">D26088F21E3A03BD0AF1C72C387BDD81</GeneratedChecksum>
           <UserChecksum dnOrder="5">D26088F21E3A03BD0AF1C72C387BDD81</UserChecksum>
@@ -57,7 +57,7 @@
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_spi.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/driver/spi/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/driver/spi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/spi/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">9909D8F9B13A65C044C888ED363543E3</GeneratedChecksum>
           <UserChecksum dnOrder="5">9909D8F9B13A65C044C888ED363543E3</UserChecksum>
@@ -65,7 +65,7 @@
         <File dnOrder="7">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_spi_local.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/driver/spi/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/driver/spi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/spi/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">11AC3E11CA4DC5B804F098EAA46B4CB4</GeneratedChecksum>
           <UserChecksum dnOrder="5">11AC3E11CA4DC5B804F098EAA46B4CB4</UserChecksum>
@@ -81,7 +81,7 @@
         <File dnOrder="9">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">exceptions.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">322976BB28859B437B0D6D3B8E2AFE42</GeneratedChecksum>
           <UserChecksum dnOrder="5">322976BB28859B437B0D6D3B8E2AFE42</UserChecksum>
@@ -89,7 +89,7 @@
         <File dnOrder="10">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">freertos_hooks.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">B7DBFD6F500AAD4713403E985EB18EAE</GeneratedChecksum>
           <UserChecksum dnOrder="5">B7DBFD6F500AAD4713403E985EB18EAE</UserChecksum>
@@ -105,15 +105,15 @@
         <File dnOrder="12">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">initialization.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D3E395E3CB57E1CC6CAE08073340F53E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D3E395E3CB57E1CC6CAE08073340F53E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F5C1901EF31F7F0EF89C6E34FFCD9466</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F5C1901EF31F7F0EF89C6E34FFCD9466</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">interrupts.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">773BF22A25DC3B85C0A034577DE6B3A2</GeneratedChecksum>
           <UserChecksum dnOrder="5">773BF22A25DC3B85C0A034577DE6B3A2</UserChecksum>
@@ -121,7 +121,7 @@
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">interrupts_a.S</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">CB0411B9B1FD9E7564DCE72F3F820A1E</GeneratedChecksum>
           <UserChecksum dnOrder="5">CB0411B9B1FD9E7564DCE72F3F820A1E</UserChecksum>
@@ -153,7 +153,7 @@
         <File dnOrder="18">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_clk.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/peripheral/clk/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">0FFBD7A6DDF91C73632A1E473BEC3B45</GeneratedChecksum>
           <UserChecksum dnOrder="5">0FFBD7A6DDF91C73632A1E473BEC3B45</UserChecksum>
@@ -161,7 +161,7 @@
         <File dnOrder="19">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_dmac.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/peripheral/dmac/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/peripheral/dmac/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/dmac/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">69E82D2DC71B39759543067D32394CDF</GeneratedChecksum>
           <UserChecksum dnOrder="5">69E82D2DC71B39759543067D32394CDF</UserChecksum>
@@ -169,7 +169,7 @@
         <File dnOrder="20">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_evic.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/peripheral/evic/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/peripheral/evic/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/evic/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">86F0B5D605D11155A7C30E3FA958DBBA</GeneratedChecksum>
           <UserChecksum dnOrder="5">86F0B5D605D11155A7C30E3FA958DBBA</UserChecksum>
@@ -177,15 +177,15 @@
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_gpio.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/peripheral/gpio/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/peripheral/gpio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/gpio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">15EE6BF8F086945B4BD3A6D211C5CCE5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">15EE6BF8F086945B4BD3A6D211C5CCE5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0DD7555D789A4B36D5F9D9F84D89CD77</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0DD7555D789A4B36D5F9D9F84D89CD77</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_spi6.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/peripheral/spi/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/peripheral/spi/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/spi/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">41EE592A339985B46AD8AADC8E0521F3</GeneratedChecksum>
           <UserChecksum dnOrder="5">41EE592A339985B46AD8AADC8E0521F3</UserChecksum>
@@ -225,7 +225,7 @@
         <File dnOrder="27">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">sys_dma.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/system/dma/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/system/dma/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/dma/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">2E02308556447B0510575953A9E9DF6E</GeneratedChecksum>
           <UserChecksum dnOrder="5">2E02308556447B0510575953A9E9DF6E</UserChecksum>
@@ -233,7 +233,7 @@
         <File dnOrder="28">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">sys_int.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/system/int/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/system/int/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/int/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">640A4B35B8CDB53BD8EA5077D81386BE</GeneratedChecksum>
           <UserChecksum dnOrder="5">640A4B35B8CDB53BD8EA5077D81386BE</UserChecksum>
@@ -241,7 +241,7 @@
         <File dnOrder="29">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">tasks.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">D40F372270AAFBDF261380D5F0BB7397</GeneratedChecksum>
           <UserChecksum dnOrder="5">D40F372270AAFBDF261380D5F0BB7397</UserChecksum>
@@ -257,7 +257,7 @@
         <File dnOrder="31">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">xc32_monitor.c</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/stdio/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/stdio/</LogicalPath>
           <PhysicalPath dnOrder="3">/stdio/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">0CDCE9B6891797FCD2AEA243F841353F</GeneratedChecksum>
           <UserChecksum dnOrder="5">0CDCE9B6891797FCD2AEA243F841353F</UserChecksum>
@@ -273,7 +273,7 @@
         <File dnOrder="33">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">FreeRTOSConfig.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">8A25887BE78E11C817597026F153E0E8</GeneratedChecksum>
           <UserChecksum dnOrder="5">8A25887BE78E11C817597026F153E0E8</UserChecksum>
@@ -313,7 +313,7 @@
         <File dnOrder="38">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">bsp.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/bsp/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/bsp/</LogicalPath>
           <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">60CCF2FCB84A0FA9AA8C1607725D47A4</GeneratedChecksum>
           <UserChecksum dnOrder="5">60CCF2FCB84A0FA9AA8C1607725D47A4</UserChecksum>
@@ -321,7 +321,7 @@
         <File dnOrder="39">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">configuration.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">9D20F8E591678F711A8558C7E00EDF8E</GeneratedChecksum>
           <UserChecksum dnOrder="5">9D20F8E591678F711A8558C7E00EDF8E</UserChecksum>
@@ -337,10 +337,10 @@
         <File dnOrder="41">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">definitions.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">68CC35BAB59E8081CFBC51F96CDEA375</GeneratedChecksum>
-          <UserChecksum dnOrder="5">68CC35BAB59E8081CFBC51F96CDEA375</UserChecksum>
+          <GeneratedChecksum dnOrder="4">01A3BCBA21247B41E64B8161081EB0BA</GeneratedChecksum>
+          <UserChecksum dnOrder="5">01A3BCBA21247B41E64B8161081EB0BA</UserChecksum>
         </File>
         <File dnOrder="42">
           <Type dnOrder="0">HEADER</Type>
@@ -353,15 +353,15 @@
         <File dnOrder="43">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">device.h</Name>
-          <LogicalPath dnOrder="2">packs/PIC32MK1024GPL100_DFP/</LogicalPath>
-          <PhysicalPath dnOrder="3">/../../packs/PIC32MK1024GPL100_DFP/</PhysicalPath>
+          <LogicalPath dnOrder="2">packs/PIC32MK1024MCM100_DFP/</LogicalPath>
+          <PhysicalPath dnOrder="3">/../../packs/PIC32MK1024MCM100_DFP/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">5D5C52527AB1435153DB9B50ADE6B79D</GeneratedChecksum>
           <UserChecksum dnOrder="5">5D5C52527AB1435153DB9B50ADE6B79D</UserChecksum>
         </File>
         <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">driver.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/driver/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/driver/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">1D2094DFA60F847FFD4E8153B6E78027</GeneratedChecksum>
           <UserChecksum dnOrder="5">1D2094DFA60F847FFD4E8153B6E78027</UserChecksum>
@@ -369,7 +369,7 @@
         <File dnOrder="45">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">driver_common.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/driver/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/driver/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">CC7DFCC51CD25171A3E400E18969354F</GeneratedChecksum>
           <UserChecksum dnOrder="5">CC7DFCC51CD25171A3E400E18969354F</UserChecksum>
@@ -377,7 +377,7 @@
         <File dnOrder="46">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_spi.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/driver/spi/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/driver/spi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/spi/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">53AD078A2F507226A6BDA2DBFEA03430</GeneratedChecksum>
           <UserChecksum dnOrder="5">53AD078A2F507226A6BDA2DBFEA03430</UserChecksum>
@@ -385,7 +385,7 @@
         <File dnOrder="47">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_spi_definitions.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/driver/spi/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/driver/spi/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/spi/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">4D1CC10EA98EB4F80CD4D44BC31845BC</GeneratedChecksum>
           <UserChecksum dnOrder="5">4D1CC10EA98EB4F80CD4D44BC31845BC</UserChecksum>
@@ -457,7 +457,7 @@
         <File dnOrder="56">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_clk.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/peripheral/clk/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">7066CC390335CF75126E2A50C46E3BDD</GeneratedChecksum>
           <UserChecksum dnOrder="5">7066CC390335CF75126E2A50C46E3BDD</UserChecksum>
@@ -465,7 +465,7 @@
         <File dnOrder="57">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_dmac.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/peripheral/dmac/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/peripheral/dmac/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/dmac/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">010E7C6872724F56A94D25C46D528ECA</GeneratedChecksum>
           <UserChecksum dnOrder="5">010E7C6872724F56A94D25C46D528ECA</UserChecksum>
@@ -473,15 +473,15 @@
         <File dnOrder="58">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_evic.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/peripheral/evic/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/peripheral/evic/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/evic/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B4113475882919FF86E43710835A3D46</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B4113475882919FF86E43710835A3D46</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D270E1FFFF82CBEE613690DC9636B8F9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D270E1FFFF82CBEE613690DC9636B8F9</UserChecksum>
         </File>
         <File dnOrder="59">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_gpio.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/peripheral/gpio/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/peripheral/gpio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/gpio/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">4093BD69F216642587F8D278FB04583F</GeneratedChecksum>
           <UserChecksum dnOrder="5">4093BD69F216642587F8D278FB04583F</UserChecksum>
@@ -489,7 +489,7 @@
         <File dnOrder="60">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_spi6.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/peripheral/spi/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/peripheral/spi/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/spi/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">74EB4798F66E2ADDD2BF2D88A8DF0E95</GeneratedChecksum>
           <UserChecksum dnOrder="5">74EB4798F66E2ADDD2BF2D88A8DF0E95</UserChecksum>
@@ -497,7 +497,7 @@
         <File dnOrder="61">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_spi_common.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/peripheral/spi/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/peripheral/spi/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/spi/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">4247D7FA1CFBCADA8B8446FDC0E12559</GeneratedChecksum>
           <UserChecksum dnOrder="5">4247D7FA1CFBCADA8B8446FDC0E12559</UserChecksum>
@@ -561,7 +561,7 @@
         <File dnOrder="69">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_dma.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/system/dma/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/system/dma/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/dma/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">4A7FFAD7ACF8378CEC16FBF2BC2368BE</GeneratedChecksum>
           <UserChecksum dnOrder="5">4A7FFAD7ACF8378CEC16FBF2BC2368BE</UserChecksum>
@@ -569,7 +569,7 @@
         <File dnOrder="70">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_dma_mapping.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/system/dma/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/system/dma/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/dma/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">FF2FADFBBFB94FF4B4A57085D719E7C8</GeneratedChecksum>
           <UserChecksum dnOrder="5">FF2FADFBBFB94FF4B4A57085D719E7C8</UserChecksum>
@@ -577,7 +577,7 @@
         <File dnOrder="71">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_int.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/system/int/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/system/int/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/int/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">47330C2D8F204B2B69F8A86240A564B6</GeneratedChecksum>
           <UserChecksum dnOrder="5">47330C2D8F204B2B69F8A86240A564B6</UserChecksum>
@@ -585,7 +585,7 @@
         <File dnOrder="72">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_int_mapping.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/system/int/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/system/int/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/int/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">FC7B55936A09E0CA1395AE4DFB1A188F</GeneratedChecksum>
           <UserChecksum dnOrder="5">FC7B55936A09E0CA1395AE4DFB1A188F</UserChecksum>
@@ -593,7 +593,7 @@
         <File dnOrder="73">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_ports.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/system/ports/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/system/ports/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/ports/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">C75CD157EB269B3A43A07A714AF413D1</GeneratedChecksum>
           <UserChecksum dnOrder="5">C75CD157EB269B3A43A07A714AF413D1</UserChecksum>
@@ -601,7 +601,7 @@
         <File dnOrder="74">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_ports_mapping.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/system/ports/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/system/ports/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/ports/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">BC6E1661BF4CAC21B70F5F56A0D7BBDB</GeneratedChecksum>
           <UserChecksum dnOrder="5">BC6E1661BF4CAC21B70F5F56A0D7BBDB</UserChecksum>
@@ -609,7 +609,7 @@
         <File dnOrder="75">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/system/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/system/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">BE95B4F134C5C929787B9DA6FDBF3501</GeneratedChecksum>
           <UserChecksum dnOrder="5">BE95B4F134C5C929787B9DA6FDBF3501</UserChecksum>
@@ -617,7 +617,7 @@
         <File dnOrder="76">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_common.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/system/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/system/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">C3F5136D520DAC4416512EBFCCA023C3</GeneratedChecksum>
           <UserChecksum dnOrder="5">C3F5136D520DAC4416512EBFCCA023C3</UserChecksum>
@@ -625,7 +625,7 @@
         <File dnOrder="77">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_module.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/system/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/system/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">1C75A8A6B60598A2FD0D533F57839B72</GeneratedChecksum>
           <UserChecksum dnOrder="5">1C75A8A6B60598A2FD0D533F57839B72</UserChecksum>
@@ -649,7 +649,7 @@
         <File dnOrder="80">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">toolchain_specifics.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">5F0B87C955FBF569CBD67F4861B6B7AD</GeneratedChecksum>
           <UserChecksum dnOrder="5">5F0B87C955FBF569CBD67F4861B6B7AD</UserChecksum>
@@ -657,25 +657,25 @@
         <File dnOrder="81">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">user.h</Name>
-          <LogicalPath dnOrder="2">config/pic32mk_gpl_curiosity_pro_freertos/</LogicalPath>
+          <LogicalPath dnOrder="2">config/pic32mk_mcm_curiosity_pro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4B3C3EF8A318908A22B78500515C3288</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4B3C3EF8A318908A22B78500515C3288</UserChecksum>
+          <GeneratedChecksum dnOrder="4"/>
+          <UserChecksum dnOrder="5"/>
         </File>
       </Files>
       <Settings dnOrder="1">
         <Setting append="true" category="C32" delimiter=";" dnOrder="0" key="extra-include-directories" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MK;../src/third_party/rtos/FreeRTOS/Source/include;"/>
-        <Setting append="true" category="C32" delimiter=";" dnOrder="1" key="extra-include-directories" value="../src;../src/config/pic32mk_gpl_curiosity_pro_freertos;../src/packs/PIC32MK1024GPL100_DFP;;../src/mips"/>
-        <Setting append="true" category="C32-AS" delimiter=";" dnOrder="2" key="extra-include-directories-for-assembler" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MK;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mk_gpl_curiosity_pro_freertos;"/>
-        <Setting append="true" category="C32-AS" delimiter=";" dnOrder="3" key="extra-include-directories-for-preprocessor" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MK;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mk_gpl_curiosity_pro_freertos;"/>
+        <Setting append="true" category="C32" delimiter=";" dnOrder="1" key="extra-include-directories" value="../src;../src/config/pic32mk_mcm_curiosity_pro_freertos;../src/packs/PIC32MK1024MCM100_DFP;;../src/mips"/>
+        <Setting append="true" category="C32-AS" delimiter=";" dnOrder="2" key="extra-include-directories-for-assembler" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MK;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mk_mcm_curiosity_pro_freertos;"/>
+        <Setting append="true" category="C32-AS" delimiter=";" dnOrder="3" key="extra-include-directories-for-preprocessor" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MK;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mk_mcm_curiosity_pro_freertos;"/>
         <Setting category="C32-LD" dnOrder="4" key="heap-size" value="512"/>
         <Setting category="C32-LD" dnOrder="5" key="no-device-startup-code" value="true"/>
         <Setting category="C32-LD" dnOrder="6" key="preprocessor-macros" value=""/>
       </Settings>
     </Manifest>
     <Settings dnOrder="4">
-      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MK-GP_DFP\1.1.66\atdf\PIC32MK1024GPL100.atdf"/>
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MK-MC_DFP\1.1.68\atdf\PIC32MK1024MCM100.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>

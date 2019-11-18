@@ -109,6 +109,7 @@
 #pragma config IOL1WAY =    ON
 #pragma config FUSBIDIO1 =   ON
 #pragma config FVBUSIO1 =  ON
+#pragma config PWMLOCK =  OFF
 
 /*** BF1SEQ ***/
 #pragma config TSEQ =       0x0
@@ -233,11 +234,11 @@ void SYS_Initialize ( void* data )
     CHECONbits.PREFEN = 1;
 
 
+	BSP_Initialize();
     DMAC_Initialize();
 
 	SPI6_Initialize();
 
-	BSP_Initialize();
 
     /* Initialize SPI0 Driver Instance */
     sysObj.drvSPI0 = DRV_SPI_Initialize(DRV_SPI_INDEX_0, (SYS_MODULE_INIT *)&drvSPI0InitData);
