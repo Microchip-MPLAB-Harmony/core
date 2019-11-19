@@ -3494,7 +3494,7 @@ FRESULT f_findnext (
     FILINFO *fno = (FILINFO *)fileInfo;
 
 	for (;;) {
-		res = f_readdir(handle, fno);		/* Get a directory item */
+		res = (FRESULT)f_readdir(handle, (uintptr_t)fno);		/* Get a directory item */
 		if (res != FR_OK || !fno || !fno->fname[0]) break;	/* Terminate if any error or end of directory */
 #if FAT_FS_USE_LFN
 		if (fno->lfname && pattern_matching(dp->pat, fno->lfname, 0, 0)) break;	/* Test for LFN if exist */
@@ -3528,7 +3528,7 @@ int f_findfirst (
 	dp->pat = pattern;		/* Save pointer to pattern string */
 	res = f_opendir(handle, path);		/* Open the target directory */
 	if (res == FR_OK)
-		res = f_findnext(handle, fno);	/* Find the first item */
+		res = f_findnext(handle, (uintptr_t)fno);	/* Find the first item */
 	return res;
 }
 
