@@ -4781,10 +4781,10 @@ int f_puts (
 int f_printf (
 	uintptr_t handle,			/* Pointer to the file object */
 	const TCHAR* fmt,	/* Pointer to the format string */
-	...					/* Optional arguments... */
+	va_list argList					/* Optional arguments... */
 )
 {
-	va_list arp = (va_list){0};
+	va_list arp = (va_list)argList;
 	uint8_t f = 0, r = 0;
 	uint32_t nw = 0, i = 0, j = 0, w = 0;
 	uint32_t v = 0;
@@ -4794,8 +4794,6 @@ int f_printf (
 
 	pb.handle = handle;				/* Initialize output buffer */
 	pb.nchr = pb.idx = 0;
-
-	va_start(arp, fmt);
 
 	for (;;) {
 		c = *fmt++;
@@ -4867,7 +4865,6 @@ int f_printf (
 		while (j++ < w) putc_bfd(&pb, d);
 	}
 
-	va_end(arp);
 
 	if (   pb.idx >= 0		/* Flush buffered characters to the file */
 		&& f_write(pb.handle, pb.buf, (uint32_t)pb.idx, &nw) == FR_OK
