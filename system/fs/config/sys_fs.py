@@ -262,6 +262,8 @@ def instantiateComponent(sysFSComponent):
     sysFSMpfs = sysFSComponent.createBooleanSymbol("SYS_FS_MPFS", sysFSMenu)
     sysFSMpfs.setLabel("Microchip File System")
     sysFSMpfs.setDefaultValue(False)
+    sysFSMpfs.setDependencies(enableSystemCache, ["SYS_FS_MPFS"])
+    Database.setSymbolValue("core", "USE_CACHE_MAINTENANCE", sysFSMpfs.getValue())
 
     sysFSNameLen = sysFSComponent.createIntegerSymbol("SYS_FS_FILE_NAME_LEN", sysFSMenu)
     sysFSNameLen.setLabel("File name length in bytes")
@@ -381,12 +383,14 @@ def instantiateComponent(sysFSComponent):
     sysFSDiskIOFile.setType("SOURCE")
 
     sysFSMPFSSourceFile = sysFSComponent.createFileSymbol("SYS_FS_MPFS_SOURCE", None)
-    sysFSMPFSSourceFile.setSourcePath("/system/fs/mpfs/src/mpfs.c")
+    sysFSMPFSSourceFile.setSourcePath("/system/fs/mpfs/src/mpfs.c.ftl")
     sysFSMPFSSourceFile.setOutputName("mpfs.c")
     sysFSMPFSSourceFile.setDestPath("/system/fs/mpfs/src/")
     sysFSMPFSSourceFile.setProjectPath("config/" + configName + "/system/fs/mpfs/")
     sysFSMPFSSourceFile.setEnabled(sysFSMpfs.getValue())
     sysFSMPFSSourceFile.setType("SOURCE")
+    sysFSMPFSSourceFile.setMarkup(True)
+    sysFSMPFSSourceFile.setOverwrite(True)
     sysFSMPFSSourceFile.setDependencies(sysFsFileGen, ["SYS_FS_MPFS"])
 
     sysFSSystemInitdataFile = sysFSComponent.createFileSymbol("sysFSSystemInitFile", None)
@@ -440,6 +444,12 @@ deviceNames = { 'SYS_FS_MEDIA_TYPE_NVM' : '/dev/nvma',
     'SYS_FS_MEDIA_TYPE_RAM' : '/dev/rama',
     'SYS_FS_MEDIA_TYPE_SPIFLASH' : '/dev/mtda'
     }
+
+def enableSystemCache(symbol, event):
+    if (event["value"] == True):
+        Database.setSymbolValue("core", "USE_CACHE_MAINTENANCE", True)
+    else:
+        Database.setSymbolValue("core", "USE_CACHE_MAINTENANCE", False)
 
 def genRtosTask(symbol, event):
     if (event["value"] != "BareMetal"):
