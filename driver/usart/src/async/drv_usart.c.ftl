@@ -635,7 +635,8 @@ static void _DRV_USART_ReadSubmit( DRV_USART_OBJ* dObj )
 static void _DRV_USART_BufferQueueTask(
     DRV_USART_OBJ* dObj,
     DRV_USART_DIRECTION direction,
-    DRV_USART_BUFFER_EVENT event
+    DRV_USART_BUFFER_EVENT event,
+	uint32_t plibErrorMask
 )
 {
     DRV_USART_CLIENT_OBJ* clientObj = NULL;
@@ -680,13 +681,13 @@ static void _DRV_USART_BufferQueueTask(
             {
                 // Save the error in client object. This will be valid until it is
                 // over-written by the next transfer.
-                clientObj->errors = _DRV_USART_GetErrorType(dObj->remapError, dObj->usartPlib->errorGet());
+                clientObj->errors = _DRV_USART_GetErrorType(dObj->remapError, plibErrorMask);
                 bufferObj->nCount = dObj->usartPlib->readCountGet();
             }
 <#else>
             // Save the error in client object. This will be valid until it is
             // over-written by the next transfer.
-            clientObj->errors = _DRV_USART_GetErrorType(dObj->remapError, dObj->usartPlib->errorGet());
+            clientObj->errors = _DRV_USART_GetErrorType(dObj->remapError, plibErrorMask);
             bufferObj->nCount = dObj->usartPlib->readCountGet();
 </#if>
         }
@@ -737,8 +738,9 @@ static void _DRV_USART_BufferQueueTask(
 static void _DRV_USART_TX_PLIB_CallbackHandler( uintptr_t context )
 {
     DRV_USART_OBJ* dObj = (DRV_USART_OBJ* )context;
+	uint32_t errorMask = (uint32_t) DRV_USART_ERROR_NONE;
 
-    _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_TX, DRV_USART_BUFFER_EVENT_COMPLETE);
+    _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_TX, DRV_USART_BUFFER_EVENT_COMPLETE, errorMask);
 
     return;
 }
@@ -752,11 +754,11 @@ static void _DRV_USART_RX_PLIB_CallbackHandler( uintptr_t context )
 
     if(errorMask == (uint32_t) DRV_USART_ERROR_NONE)
     {
-        _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_RX, DRV_USART_BUFFER_EVENT_COMPLETE);
+        _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_RX, DRV_USART_BUFFER_EVENT_COMPLETE, errorMask);
     }
     else
     {
-        _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_RX, DRV_USART_BUFFER_EVENT_ERROR);
+        _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_RX, DRV_USART_BUFFER_EVENT_ERROR, errorMask);
     }
 
     return;
@@ -769,14 +771,15 @@ static void _DRV_USART_TX_DMA_CallbackHandler(
 )
 {
     DRV_USART_OBJ* dObj = (DRV_USART_OBJ* )context;
+	uint32_t errorMask = (uint32_t) DRV_USART_ERROR_NONE;
 
     if(event == SYS_DMA_TRANSFER_COMPLETE)
     {
-        _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_TX, DRV_USART_BUFFER_EVENT_COMPLETE);
+        _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_TX, DRV_USART_BUFFER_EVENT_COMPLETE, errorMask);
     }
     else if(event == SYS_DMA_TRANSFER_ERROR)
     {
-        _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_TX, DRV_USART_BUFFER_EVENT_ERROR);
+        _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_TX, DRV_USART_BUFFER_EVENT_ERROR, errorMask);
     }
 }
 
@@ -786,14 +789,15 @@ static void _DRV_USART_RX_DMA_CallbackHandler(
 )
 {
     DRV_USART_OBJ* dObj = (DRV_USART_OBJ* )context;
+	uint32_t errorMask = (uint32_t) DRV_USART_ERROR_NONE;
 
     if(event == SYS_DMA_TRANSFER_COMPLETE)
     {
-        _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_RX, DRV_USART_BUFFER_EVENT_COMPLETE);
+        _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_RX, DRV_USART_BUFFER_EVENT_COMPLETE, errorMask);
     }
     else if(event == SYS_DMA_TRANSFER_ERROR)
     {
-        _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_RX, DRV_USART_BUFFER_EVENT_ERROR);
+        _DRV_USART_BufferQueueTask(dObj, DRV_USART_DIRECTION_RX, DRV_USART_BUFFER_EVENT_ERROR, errorMask);
     }
 }
 </#if>
