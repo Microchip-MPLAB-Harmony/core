@@ -379,33 +379,40 @@ static uint32_t SYS_TIME_GetTotalElapsedCount(SYS_TIME_TIMER_OBJ* tmr)
     uint32_t elapsedCount = 0;
     uint32_t hwTimerCurrentValue;
 
-    /* Add time from all timers in the front */
-    while ((tmrActive != NULL) && (tmrActive != tmr))
-    {
-        pendingCount += tmrActive->relativeTimePending;
-        tmrActive = tmrActive->tmrNext;
-    }
-    /* Add the pending time of the requested timer */
-    pendingCount += tmrActive->relativeTimePending;
-    hwTimerCurrentValue = counterObj->timePlib->timerCounterGet();
-    elapsedCount = SYS_TIME_GetElapsedCount(hwTimerCurrentValue);
-
-    if (pendingCount >= elapsedCount)
-    {
-        pendingCount -= elapsedCount;
-    }
-    else
-    {
-        pendingCount = 0;
-    }
-
-    if (tmrActive->requestedTime >= pendingCount)
-    {
-        elapsedCount = tmrActive->requestedTime - pendingCount;
-    }
-    else
+    if (tmr->active == false)
     {
         elapsedCount = 0;
+    }
+    else
+    {
+        /* Add time from all timers in the front */
+        while ((tmrActive != NULL) && (tmrActive != tmr))
+        {
+            pendingCount += tmrActive->relativeTimePending;
+            tmrActive = tmrActive->tmrNext;
+        }
+        /* Add the pending time of the requested timer */
+        pendingCount += tmrActive->relativeTimePending;
+        hwTimerCurrentValue = counterObj->timePlib->timerCounterGet();
+        elapsedCount = SYS_TIME_GetElapsedCount(hwTimerCurrentValue);
+
+        if (pendingCount >= elapsedCount)
+        {
+            pendingCount -= elapsedCount;
+        }
+        else
+        {
+            pendingCount = 0;
+        }
+
+        if (tmrActive->requestedTime >= pendingCount)
+        {
+            elapsedCount = tmrActive->requestedTime - pendingCount;
+        }
+        else
+        {
+            elapsedCount = 0;
+        }
     }
 
     return elapsedCount;
@@ -508,7 +515,7 @@ static void SYS_TIME_ClientNotify(void)
 static void SYS_TIME_UpdateTime(uint32_t elapsedCounts)
 {
     uint8_t i;
-    
+
     SYS_TIME_UpdateTimerList(elapsedCounts);
 
     SYS_TIME_ClientNotify();

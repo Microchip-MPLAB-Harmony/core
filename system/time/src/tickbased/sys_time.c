@@ -296,23 +296,30 @@ static uint32_t SYS_TIME_GetTotalElapsedCount(SYS_TIME_TIMER_OBJ* tmr)
     uint32_t pendingCount = 0;
     uint32_t elapsedCount = 0;
 
-    /* Add time from all timers in the front */
-    while ((tmrActive != NULL) && (tmrActive != tmr))
+    if (tmr->active == false)
     {
-        pendingCount += tmrActive->relativeTimePending;
-        tmrActive = tmrActive->tmrNext;
-    }
-
-    /* Add the pending time of the requested timer */
-    pendingCount += tmrActive->relativeTimePending;
-
-    if (tmrActive->requestedTime >= pendingCount)
-    {
-        elapsedCount = tmrActive->requestedTime - pendingCount;
+        elapsedCount = 0;
     }
     else
     {
-        elapsedCount = 0;
+        /* Add time from all timers in the front */
+        while ((tmrActive != NULL) && (tmrActive != tmr))
+        {
+            pendingCount += tmrActive->relativeTimePending;
+            tmrActive = tmrActive->tmrNext;
+        }
+
+        /* Add the pending time of the requested timer */
+        pendingCount += tmrActive->relativeTimePending;
+
+        if (tmrActive->requestedTime >= pendingCount)
+        {
+            elapsedCount = tmrActive->requestedTime - pendingCount;
+        }
+        else
+        {
+            elapsedCount = 0;
+        }
     }
 
     return elapsedCount;
