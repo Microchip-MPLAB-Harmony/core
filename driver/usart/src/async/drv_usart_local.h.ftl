@@ -174,6 +174,9 @@ typedef struct _DRV_USART_BUFFER_OBJ
 
     /* Current status of the buffer */
     volatile DRV_USART_BUFFER_EVENT status;
+	
+    /* Errors associated with the USART hardware instance */
+    volatile DRV_USART_ERROR        errors;
 
     DRV_USART_BUFFER_HANDLE         bufferHandle;
 
@@ -290,10 +293,7 @@ typedef struct _DRV_USART_CLIENT_OBJ
     DRV_IO_INTENT                       ioIntent;
 
     /* This flags indicates if the object is in use or is available */
-    bool                                inUse;
-
-    /* Errors associated with the USART hardware instance */
-    DRV_USART_ERROR                     errors;
+    bool                                inUse;   
 
     /* Event handler for this function */
     DRV_USART_BUFFER_EVENT_HANDLER      eventHandler;

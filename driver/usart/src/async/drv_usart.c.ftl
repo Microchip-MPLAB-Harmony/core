@@ -674,27 +674,26 @@ static void _DRV_USART_BufferQueueTask(
                 /* DMA mode doesn't return number of bytes completed in case of error
                  * Setting the completed bytes count to 0
                  */
-                clientObj->errors = DRV_USART_ERROR_NONE;
                 bufferObj->nCount = 0;
             }
             else
             {
-                // Save the error in client object. This will be valid until it is
-                // over-written by the next transfer.
-                clientObj->errors = _DRV_USART_GetErrorType(dObj->remapError, plibErrorMask);
+                // Save the error in buffer object. This will be valid until it is
+                // read by the application or the buffer object is assigned to a new request,
+				// whichever happens first.
+                bufferObj->errors = _DRV_USART_GetErrorType(dObj->remapError, plibErrorMask);
                 bufferObj->nCount = dObj->usartPlib->readCountGet();
             }
 <#else>
-            // Save the error in client object. This will be valid until it is
-            // over-written by the next transfer.
-            clientObj->errors = _DRV_USART_GetErrorType(dObj->remapError, plibErrorMask);
+            // Save the error in buffer object. This will be valid until it is
+			// read by the application or the buffer object is assigned to a new request,
+			// whichever happens first.
+            bufferObj->errors = _DRV_USART_GetErrorType(dObj->remapError, plibErrorMask);
             bufferObj->nCount = dObj->usartPlib->readCountGet();
 </#if>
         }
         else
         {
-            clientObj->errors = DRV_USART_ERROR_NONE;
-
             /* Buffer transfer was successful, hence set completed bytes to
              * requested buffer size */
             bufferObj->nCount = bufferObj->size;
@@ -1009,7 +1008,6 @@ DRV_HANDLE DRV_USART_Open(
             clientObj->ioIntent = (DRV_IO_INTENT)(ioIntent | DRV_IO_INTENT_NONBLOCKING);
 
             /* Initialize other elements in Client Object */
-            clientObj->errors        = DRV_USART_ERROR_NONE;
             clientObj->eventHandler  = NULL;
             clientObj->context       = (uintptr_t)NULL;
             clientObj->drvIndex      = drvIndex;
@@ -1072,33 +1070,38 @@ void DRV_USART_Close( DRV_HANDLE handle )
     OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
 }
 
-DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
+DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_USART_BUFFER_HANDLE bufferHandle )
 {
     DRV_USART_OBJ* dObj = NULL;
-    DRV_USART_CLIENT_OBJ* clientObj = NULL;
+    DRV_USART_BUFFER_OBJ* bufferObj = NULL;
     DRV_USART_ERROR errors = DRV_USART_ERROR_NONE;
+	
+	/* Get USART driver object from bufferHandle */
+	dObj = _DRV_USART_GetDriverObj(bufferHandle);
 
-    /* Validate the driver handle */
-    clientObj = _DRV_USART_DriverHandleValidate(handle);
-
-    if (clientObj == NULL)
+    if (dObj == NULL)
     {
         return errors;
     }
-
-    dObj = (DRV_USART_OBJ* )&gDrvUSARTObj[clientObj->drvIndex];
-
-    if (_DRV_USART_ResourceLock(dObj) == false)
+	
+	if (_DRV_USART_ResourceLock(dObj) == false)
     {
         return errors;
     }
+	
+	/* Get buffer object from bufferHandle */
+    bufferObj = _DRV_USART_GetTransferObj(bufferHandle);
 
-    errors = clientObj->errors;
-    clientObj->errors = DRV_USART_ERROR_NONE;
-
-    _DRV_USART_ResourceUnlock(dObj);
-
-    return errors;
+    if (bufferObj != NULL)
+    {
+        errors = bufferObj->errors;
+		/* Clear the errors */
+		bufferObj->errors = DRV_USART_ERROR_NONE;
+    }		 
+	
+	_DRV_USART_ResourceUnlock(dObj);
+	
+	return errors;	   
 }
 
 bool DRV_USART_SerialSetup(
@@ -1236,6 +1239,7 @@ static void _DRV_USART_BufferAdd(
     bufferObj->size         = size;
     bufferObj->nCount       = 0;
     bufferObj->clientHandle = handle;
+    bufferObj->errors		= DRV_USART_ERROR_NONE;
     bufferObj->currentState = DRV_USART_BUFFER_IS_IN_QUEUE;
     bufferObj->status       = DRV_USART_BUFFER_EVENT_PENDING;
 
