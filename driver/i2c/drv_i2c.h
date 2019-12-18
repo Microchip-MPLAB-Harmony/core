@@ -533,8 +533,8 @@ bool DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP* set
 
   Example:
     <code>
-    // 'bufferHandle', returned by any of the I2C transfer APIs 
-	// (Example: DRV_I2C_WriteTransferAdd / DRV_I2C_ReadTransferAdd etc.)
+    // 'bufferHandle', returned by any of the I2C transfer APIs
+    // (Example: DRV_I2C_WriteTransferAdd / DRV_I2C_ReadTransferAdd etc.)
 
     if (DRV_I2C_ErrorGet(bufferHandle) == DRV_I2C_ERROR_NACK)
     {
