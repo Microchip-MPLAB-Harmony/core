@@ -164,6 +164,9 @@ typedef struct _DRV_I2C_TRANSFER_OBJ
     /* Buffer Handle object that was assigned to this buffer when it was added to the
      * queue. */
     DRV_I2C_TRANSFER_HANDLE         transferHandle;
+	
+	/* Errors associated with the I2C transfer */
+    volatile DRV_I2C_ERROR          errors;
 
     /* Next buffer pointer */
     struct _DRV_I2C_TRANSFER_OBJ*   next;
@@ -268,10 +271,7 @@ typedef struct
     uint32_t                        drvIndex;
 
     /* The IO intent with which the client was opened */
-    DRV_IO_INTENT                   ioIntent;
-
-    /* Errors associated with the I2C transfer */
-    volatile DRV_I2C_ERROR          errors;
+    DRV_IO_INTENT                   ioIntent;    
 
     /* This flags indicates if the object is in use or is available */
     bool                            inUse;

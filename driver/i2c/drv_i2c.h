@@ -512,21 +512,20 @@ bool DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP* set
 
 // *****************************************************************************
 /* Function:
-    DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_HANDLE handle )
+    DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_I2C_TRANSFER_HANDLE transferHandle )
 
    Summary:
-    Gets the I2C hardware errors associated with the client.
+    Gets the I2C hardware errors associated with the the transfer request.
 
    Description:
-    This function returns the errors associated with the given client.
+    This function returns the errors associated with the given bufferHandle.
     The call to this function also clears all the associated error flags.
 
    Precondition:
     DRV_I2C_Open must have been called to obtain a valid opened device handle.
 
    Parameters:
-    handle - A valid open-instance handle, returned from the driver's open routine
-    DRV_I2C_Open function.
+    transferHandle - A valid handle to the transfer request.
 
    Returns:
     Errors occurred as listed by DRV_I2C_ERROR.
@@ -534,9 +533,10 @@ bool DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP* set
 
   Example:
     <code>
-    // 'handle', returned from the DRV_I2C_Open
+    // 'bufferHandle', returned by any of the I2C transfer APIs 
+	// (Example: DRV_I2C_WriteTransferAdd / DRV_I2C_ReadTransferAdd etc.)
 
-    if (DRV_I2C_ErrorGet(handle) == DRV_I2C_ERROR_NACK)
+    if (DRV_I2C_ErrorGet(bufferHandle) == DRV_I2C_ERROR_NACK)
     {
         //Errors are cleared by the driver, take respective action
         //for the error case.
@@ -547,7 +547,7 @@ bool DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP* set
     The driver clears all the errors internally.
 */
 
-DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_HANDLE handle );
+DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_I2C_TRANSFER_HANDLE transferHandle );
 
 // *****************************************************************************
 // *****************************************************************************
