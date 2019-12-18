@@ -409,6 +409,8 @@ static void SYS_TIME_PLIBCallback(uint32_t status, uintptr_t context)
 {
     SYS_TIME_COUNTER_OBJ* counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
     SYS_TIME_TIMER_OBJ* tmrActive = counterObj->tmrActive;
+	
+	SYS_TIME_Counter64Update();
 
     if (tmrActive != NULL)
     {
@@ -418,7 +420,7 @@ static void SYS_TIME_PLIBCallback(uint32_t status, uintptr_t context)
 
         counterObj->interruptNestingCount--;
     }
-    SYS_TIME_Counter64Update();
+    
 }
 
 static SYS_TIME_HANDLE SYS_TIME_TimerObjectCreate(

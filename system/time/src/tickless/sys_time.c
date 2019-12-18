@@ -556,6 +556,8 @@ static void SYS_TIME_PLIBCallback(uint32_t status, uintptr_t context)
     counterObj->hwTimerCurrentValue = counterObj->timePlib->timerCounterGet();
 
     elapsedCount = SYS_TIME_GetElapsedCount(counterObj->hwTimerCurrentValue);
+	
+	SYS_TIME_Counter64Update(elapsedCount);
 
     if (tmrActive != NULL)
     {
@@ -565,8 +567,7 @@ static void SYS_TIME_PLIBCallback(uint32_t status, uintptr_t context)
 
         counterObj->interruptNestingCount--;
     }
-    SYS_TIME_Counter64Update(elapsedCount);
-
+    
     interruptState = SYS_INT_Disable();
     SYS_TIME_HwTimerCompareUpdate();
     SYS_INT_Restore(interruptState);
