@@ -723,6 +723,10 @@ void DRV_I2C_WriteTransferAdd(
     </code>
 
   Remarks:
+    This API is generated only if the underlying peripheral and the peripheral library supports
+    forced write feature that ignore the NACK from a slave during transfer and
+    the forced write feature is enabled in one of the connected periphreal library.
+
     This API must be used only if the underlying PLIB is enabled to generate the
     Forced write API. If the PLIB is not enabled to generate the Forced Write API,
     the API will return an invalid transfer handle (DRV_I2C_TRANSFER_HANDLE_INVALID).
