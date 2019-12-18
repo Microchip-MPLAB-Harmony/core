@@ -574,14 +574,14 @@ void DRV_USART_Close( const DRV_HANDLE handle);
     </code>
 
   Remarks:
-    USART errors are normally associated with the receiver.    
-	Once the DRV_USART_ErrorGet API is called by the application, the errors
-	are cleared (set to DRV_USART_ERROR_NONE) by the driver.
-    The errors remain valid only until the buffer object associated with the 
-	bufferHandle is not assigned to another transfer request; in which case the
-	API returns the error status as DRV_USART_ERROR_NONE. Hence, application may 
-	want to call this routine from the callback routine itself, in case where an
-	error is reported by the driver in the callback.
+    USART errors are normally associated with the receiver.
+    Once the DRV_USART_ErrorGet API is called by the application, the errors
+    are cleared (set to DRV_USART_ERROR_NONE) by the driver.
+    The errors remain valid only until the buffer object associated with the
+    bufferHandle is not assigned to another transfer request; in which case the
+    API returns the error status as DRV_USART_ERROR_NONE. Hence, application may
+    want to call this routine from the callback routine itself, in case where an
+    error is reported by the driver in the callback.
     This function is expected to work in non-DMA mode only.
 */
 
