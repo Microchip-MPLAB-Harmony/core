@@ -134,10 +134,7 @@ void APP_INSTANCE1_Initialize ( void )
     /* Place the App state machine in its initial state. */
     app_instance1Data.state             = APP_INSTANCE1_STATE_DATA_INIT;
     app_instance1Data.drvSPIHandle      = DRV_HANDLE_INVALID;
-    app_instance1Data.transferStatus    = APP_ERROR;
-
-    app_instance1Data.wrEnableCmd       = EEPROM1_CMD_WREN;
-    app_instance1Data.rdStatusCmd       = EEPROM1_CMD_RDSR;
+    app_instance1Data.transferStatus    = APP_ERROR;    
 
     memset(eeprom1TxData, 0, sizeof(eeprom1TxData) );
     memset(eeprom1RxData, 0, sizeof(eeprom1RxData) );
@@ -203,10 +200,12 @@ void APP_INSTANCE1_Tasks ( void )
 
             /* Set the next state first as callback may be fired before the state
              * is changed; potentially over-writing error state set from the callback */
+            
+            eeprom1TxData[0] = EEPROM1_CMD_WREN;
 
             app_instance1Data.state = APP_INSTANCE1_STATE_WRITE;
 
-            DRV_SPI_WriteTransferAdd(app_instance1Data.drvSPIHandle, &app_instance1Data.wrEnableCmd, 1, &app_instance1Data.transferHandle );
+            DRV_SPI_WriteTransferAdd(app_instance1Data.drvSPIHandle, eeprom1TxData, 1, &app_instance1Data.transferHandle );
 
             if(app_instance1Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
             {
@@ -244,10 +243,12 @@ void APP_INSTANCE1_Tasks ( void )
             if (app_instance1Data.isTransferComplete == true)
             {
                 app_instance1Data.isTransferComplete = false;
+                
+                eeprom1TxData[0] = EEPROM1_CMD_RDSR;
 
                 app_instance1Data.state = APP_INSTANCE1_STATE_CHECK_STATUS;
 
-                DRV_SPI_WriteReadTransferAdd(app_instance1Data.drvSPIHandle, &app_instance1Data.rdStatusCmd, 1, eeprom1RxData, 2, &app_instance1Data.transferHandle );
+                DRV_SPI_WriteReadTransferAdd(app_instance1Data.drvSPIHandle, eeprom1TxData, 1, eeprom1RxData, 2, &app_instance1Data.transferHandle );
 
                 if(app_instance1Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
                 {
@@ -268,7 +269,7 @@ void APP_INSTANCE1_Tasks ( void )
                 else
                 {
                     /* EEPROM is still busy. Keep checking the status. */
-                    DRV_SPI_WriteReadTransferAdd(app_instance1Data.drvSPIHandle, &app_instance1Data.rdStatusCmd, 1, eeprom1RxData, 2, &app_instance1Data.transferHandle );
+                    DRV_SPI_WriteReadTransferAdd(app_instance1Data.drvSPIHandle, eeprom1TxData, 1, eeprom1RxData, 2, &app_instance1Data.transferHandle );
 
                     if(app_instance1Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
                     {
