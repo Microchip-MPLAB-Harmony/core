@@ -34,9 +34,9 @@
               <itemPath>../src/config/sam_c21n_xpro_freertos/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="sercom" projectFiles="true">
-              <logicalFolder name="f1" displayName="i2cm" projectFiles="true">
-                <itemPath>../src/config/sam_c21n_xpro_freertos/peripheral/sercom/i2cm/plib_sercom_i2c_master.h</itemPath>
-                <itemPath>../src/config/sam_c21n_xpro_freertos/peripheral/sercom/i2cm/plib_sercom1_i2c.h</itemPath>
+              <logicalFolder name="f1" displayName="i2c_master" projectFiles="true">
+                <itemPath>../src/config/sam_c21n_xpro_freertos/peripheral/sercom/i2c_master/plib_sercom_i2c_master_common.h</itemPath>
+                <itemPath>../src/config/sam_c21n_xpro_freertos/peripheral/sercom/i2c_master/plib_sercom1_i2c_master.h</itemPath>
               </logicalFolder>
               <logicalFolder name="f2" displayName="usart" projectFiles="true">
                 <itemPath>../src/config/sam_c21n_xpro_freertos/peripheral/sercom/usart/plib_sercom4_usart.h</itemPath>
@@ -146,26 +146,15 @@
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm0plus.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
-              </logicalFolder>
-            </logicalFolder>
-            <logicalFolder name="f2" displayName="DSP" projectFiles="true">
-              <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_common_tables.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_const_structs.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_math.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
@@ -210,8 +199,8 @@
               <itemPath>../src/config/sam_c21n_xpro_freertos/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="sercom" projectFiles="true">
-              <logicalFolder name="f1" displayName="i2cm" projectFiles="true">
-                <itemPath>../src/config/sam_c21n_xpro_freertos/peripheral/sercom/i2cm/plib_sercom1_i2c.c</itemPath>
+              <logicalFolder name="f1" displayName="i2c_master" projectFiles="true">
+                <itemPath>../src/config/sam_c21n_xpro_freertos/peripheral/sercom/i2c_master/plib_sercom1_i2c_master.c</itemPath>
               </logicalFolder>
               <logicalFolder name="f2" displayName="usart" projectFiles="true">
                 <itemPath>../src/config/sam_c21n_xpro_freertos/peripheral/sercom/usart/plib_sercom4_usart.c</itemPath>
