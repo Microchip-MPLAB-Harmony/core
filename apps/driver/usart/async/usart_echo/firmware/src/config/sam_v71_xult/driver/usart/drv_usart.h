@@ -541,13 +541,13 @@ void DRV_USART_Close( const DRV_HANDLE handle);
 
 // *****************************************************************************
 /* Function:
-    DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
+    DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_USART_BUFFER_HANDLE bufferHandle )
 
    Summary:
-    Gets the USART hardware errors associated with the client.
+    Gets the USART hardware errors associated with the transfer request.
 
    Description:
-    This function returns the errors associated with the given client.
+    This function returns the errors associated with the given bufferHandle.
     The call to this function also clears all the associated error flags.
     This function can be used for non-DMA buffer transfers only. It cannot be
     used when the USART driver is configured to use DMA.
@@ -556,8 +556,7 @@ void DRV_USART_Close( const DRV_HANDLE handle);
     DRV_USART_Open must have been called to obtain a valid opened device handle.
 
    Parameters:
-    handle - A valid open-instance handle, returned from the driver's
-    open routine
+    bufferHandle - A valid handle to the transfer request
 
    Returns:
     Errors occurred as listed by DRV_USART_ERROR.
@@ -565,9 +564,9 @@ void DRV_USART_Close( const DRV_HANDLE handle);
 
   Example:
     <code>
-    // 'handle', returned from the DRV_USART_Open
+    // 'bufferHandle', returned from the DRV_USART_ReadBufferAdd
 
-    if (DRV_USART_ErrorGet(handle) & DRV_USART_ERROR_OVERRUN)
+    if (DRV_USART_ErrorGet(bufferHandle) & DRV_USART_ERROR_OVERRUN)
     {
         //Errors are cleared by the driver, take respective action
         //for the overrun error case.
@@ -576,15 +575,17 @@ void DRV_USART_Close( const DRV_HANDLE handle);
 
   Remarks:
     USART errors are normally associated with the receiver.
-    The driver clears all the errors internally and only returns the
-    occurred error information for the client.
-    The errors are valid only until it is over written by the error status of
-    the next transfer. Hence, application may want to call this routine from
-    the callback itself, in case error is reported by the driver in the callback.
+    Once the DRV_USART_ErrorGet API is called by the application, the errors
+    are cleared (set to DRV_USART_ERROR_NONE) by the driver.
+    The errors remain valid only until the buffer object associated with the
+    bufferHandle is not assigned to another transfer request; in which case the
+    API returns the error status as DRV_USART_ERROR_NONE. Hence, application may
+    want to call this routine from the callback routine itself, in case where an
+    error is reported by the driver in the callback.
     This function is expected to work in non-DMA mode only.
 */
 
-DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle );
+DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_USART_BUFFER_HANDLE bufferHandle );
 
 // *****************************************************************************
 /* Function:
