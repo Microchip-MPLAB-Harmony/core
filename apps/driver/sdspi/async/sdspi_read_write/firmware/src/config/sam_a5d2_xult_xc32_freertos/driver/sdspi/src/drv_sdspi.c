@@ -59,11 +59,13 @@
 static CACHE_ALIGN uint8_t gDrvSDSPICmdResponseBuffer [DRV_SDSPI_INSTANCES_NUMBER][32] ;
 static CACHE_ALIGN uint8_t gDrvSDSPIClkPulseData [DRV_SDSPI_INSTANCES_NUMBER][32];
 static CACHE_ALIGN uint8_t gDrvSDSPICsdData [DRV_SDSPI_INSTANCES_NUMBER][32];
-
-static DRV_SDSPI_OBJ gDrvSDSPIObj[DRV_SDSPI_INSTANCES_NUMBER];
+static CACHE_ALIGN uint8_t gDrvSDSPICidData [DRV_SDSPI_INSTANCES_NUMBER][32];
+static CACHE_ALIGN uint8_t gDrvSDSPITempCidData [DRV_SDSPI_INSTANCES_NUMBER][32];
 
 /* Dummy data transmitted by TX DMA, common to all driver instances. */
 static CACHE_ALIGN uint8_t  txCommonDummyData[32];
+
+static DRV_SDSPI_OBJ gDrvSDSPIObj[DRV_SDSPI_INSTANCES_NUMBER];
 
 // *****************************************************************************
 /* SD Card command table
@@ -806,6 +808,7 @@ static DRV_SDSPI_ATTACH _DRV_SDSPI_MediaCommandDetect
     SYS_MODULE_OBJ object
 )
 {
+    DRV_SDSPI_ATTACH cardStatus = DRV_SDSPI_IS_DETACHED;
     DRV_SDSPI_OBJ* dObj = (DRV_SDSPI_OBJ*)&gDrvSDSPIObj[object];
 
     switch (dObj->cmdDetectState)
@@ -881,13 +884,13 @@ static DRV_SDSPI_ATTACH _DRV_SDSPI_MediaCommandDetect
                 else
                 {
                     dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_IDLE_STATE;
-                    return DRV_SDSPI_IS_ATTACHED;
+                    cardStatus = DRV_SDSPI_IS_ATTACHED;
                 }
             }
             else if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_ERROR)
             {
-                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
                 dObj->sdState = TASK_STATE_IDLE;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
             }
             break;
 
@@ -895,34 +898,86 @@ static DRV_SDSPI_ATTACH _DRV_SDSPI_MediaCommandDetect
 
             if (dObj->sdState == TASK_STATE_CARD_COMMAND)
             {
-                return DRV_SDSPI_IS_ATTACHED;
+                cardStatus = DRV_SDSPI_IS_ATTACHED;
             }
-
-            dObj->sdState = TASK_STATE_CARD_STATUS;
-
-            _DRV_SDSPI_CommandSend (object, DRV_SDSPI_SEND_STATUS, 0x00);
-            if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_IS_COMPLETE)
+            else
             {
-                /* For read status command SD card will respond with R2 type packet */
-                dObj->sdState = TASK_STATE_IDLE;
+                /* Here the default state of the card is attached */
+                cardStatus = DRV_SDSPI_IS_ATTACHED;
+                dObj->sdState = TASK_STATE_CARD_STATUS;
 
-                if ((dObj->cmdResponse.response2.word & 0xEC0C) != 0x0000)
+                /* CMD10: Read CID data structure */
+                _DRV_SDSPI_CommandSend (object, DRV_SDSPI_SEND_CID, 0x00);
+
+                /* Change from this state only on completion of command execution */
+                if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_IS_COMPLETE)
                 {
-                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
-                    return DRV_SDSPI_IS_DETACHED;
+                    if (dObj->cmdResponse.response1.byte == 0x00)
+                    {
+                        dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_READ_CID_DATA;
+                    }
+                    else
+                    {
+                        dObj->sdState = TASK_STATE_IDLE;
+                        dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+                        cardStatus = DRV_SDSPI_IS_DETACHED;
+                    }
                 }
-                else
+                else if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_ERROR)
                 {
-                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH;
+                    dObj->sdState = TASK_STATE_IDLE;
+                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+                    cardStatus = DRV_SDSPI_IS_DETACHED;
                 }
             }
-            else if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_ERROR)
+            break;
+
+        case DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_READ_CID_DATA:
+
+            /* Here the default state of the card is attached */
+            cardStatus = DRV_SDSPI_IS_ATTACHED;
+
+            /* According to the simplified spec, section 7.2.6, the card will respond
+               with a standard response token, followed by a data block of 16 bytes
+               suffixed with a 16-bit CRC.
+             */
+            if (_DRV_SDSPI_SPIRead(dObj, &gDrvSDSPITempCidData[object], _DRV_SDSPI_CID_READ_SIZE) == true)
+            {
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_PROCESS_CID_DATA;
+            }
+            else
             {
                 dObj->sdState = TASK_STATE_IDLE;
                 dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
-                return DRV_SDSPI_IS_DETACHED;
+                cardStatus = DRV_SDSPI_IS_DETACHED;
             }
-            return DRV_SDSPI_IS_ATTACHED;
+            break;
+
+        case DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_PROCESS_CID_DATA:
+
+            /* Here the default state of the card is attached */
+            cardStatus = DRV_SDSPI_IS_ATTACHED;
+
+            if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE)
+            {
+                dObj->sdState = TASK_STATE_IDLE;
+                if (memcmp(dObj->pCidData, &gDrvSDSPITempCidData[object], _DRV_SDSPI_CID_READ_SIZE - 1) == 0)
+                {
+                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH;
+                }
+                else
+                {
+                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+                    cardStatus = DRV_SDSPI_IS_DETACHED;
+                }
+            }
+            else if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR)
+            {
+                dObj->sdState = TASK_STATE_IDLE;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+                cardStatus = DRV_SDSPI_IS_DETACHED;
+            }
+            break;
 
         case DRV_SDSPI_CMD_DETECT_IDLE_STATE:
 
@@ -931,7 +986,7 @@ static DRV_SDSPI_ATTACH _DRV_SDSPI_MediaCommandDetect
             break;
     }
 
-    return DRV_SDSPI_IS_DETACHED;
+    return cardStatus;
 }
 
 static void _DRV_SDSPI_MediaInitialize ( SYS_MODULE_OBJ object )
@@ -1260,6 +1315,60 @@ static void _DRV_SDSPI_MediaInitialize ( SYS_MODULE_OBJ object )
             if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE)
             {
                 dObj->discCapacity = _DRV_SDSPI_ProcessCSD(dObj->pCsdData);
+                dObj->mediaInitState = DRV_SDSPI_INIT_READ_CID;
+            }
+            else if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR)
+            {
+                dObj->mediaInitState = DRV_SDSPI_INIT_ERROR;
+            }
+
+            break;
+
+        case DRV_SDSPI_INIT_READ_CID:
+
+            /* CMD10: Read CID data structure */
+            _DRV_SDSPI_CommandSend (object, DRV_SDSPI_SEND_CID, 0x00);
+
+            /* Change from this state only on completion of command execution */
+            if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_IS_COMPLETE)
+            {
+                if (dObj->cmdResponse.response1.byte == 0x00)
+                {
+                    dObj->mediaInitState = DRV_SDSPI_INIT_READ_CID_DATA;
+                }
+                else
+                {
+                    dObj->mediaInitState = DRV_SDSPI_INIT_ERROR;
+                }
+            }
+            else if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_ERROR)
+            {
+                dObj->mediaInitState = DRV_SDSPI_INIT_ERROR;
+            }
+
+            break;
+
+        case DRV_SDSPI_INIT_READ_CID_DATA:
+
+            /* According to the simplified spec, section 7.2.6, the card will respond
+               with a standard response token, followed by a data block of 16 bytes
+               suffixed with a 16-bit CRC.
+             */
+            if (_DRV_SDSPI_SPIRead(dObj, dObj->pCidData, _DRV_SDSPI_CID_READ_SIZE) == true)
+            {
+                dObj->mediaInitState = DRV_SDSPI_INIT_PROCESS_CID;
+            }
+            else
+            {
+                dObj->mediaInitState = DRV_SDSPI_INIT_ERROR;
+            }
+
+            break;
+
+        case DRV_SDSPI_INIT_PROCESS_CID:
+
+            if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE)
+            {
                 dObj->mediaInitState = DRV_SDSPI_INIT_TURN_OFF_CRC;
             }
             else if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR)
@@ -2069,6 +2178,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
     /* Set up the pointers */
     dObj->pCmdResp              = &gDrvSDSPICmdResponseBuffer[drvIndex][0];
     dObj->pCsdData              = &gDrvSDSPICsdData[drvIndex][0];
+    dObj->pCidData              = &gDrvSDSPICidData[drvIndex][0];
     dObj->pClkPulseData         = &gDrvSDSPIClkPulseData[drvIndex][0];
 
     for (i = 0; i < MEDIA_INIT_ARRAY_SIZE; i++)
