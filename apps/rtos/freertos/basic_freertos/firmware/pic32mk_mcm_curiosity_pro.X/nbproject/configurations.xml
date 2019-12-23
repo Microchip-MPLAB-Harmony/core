@@ -164,7 +164,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MK-MC_DFP" vendor="Microchip" version="1.2.84"/>
+        <pack name="PIC32MK-MC_DFP" vendor="Microchip" version="1.2.80"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -198,7 +198,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/pic32mk_mcm_curiosity_pro;../src/packs/PIC32MK1024MCM100_DFP;;../src/mips;../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MK;../src/third_party/rtos/FreeRTOS/Source/include"/>
+                  value="../src;../src/config/pic32mk_mcm_curiosity_pro;../src/packs/PIC32MK1024MCM100_DFP;../src/mips;../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MK;../src/third_party/rtos/FreeRTOS/Source/include"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -219,9 +219,9 @@
       </C32-AR>
       <C32-AS>
         <property key="extra-include-directories-for-assembler"
-                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MK;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mk_mcm_curiosity_pro;"/>
+                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MK;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mk_mcm_curiosity_pro"/>
         <property key="extra-include-directories-for-preprocessor"
-                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MK;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mk_mcm_curiosity_pro;"/>
+                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MK;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mk_mcm_curiosity_pro"/>
       </C32-AS>
       <C32-CO>
         <property key="coverage-enable" value=""/>
