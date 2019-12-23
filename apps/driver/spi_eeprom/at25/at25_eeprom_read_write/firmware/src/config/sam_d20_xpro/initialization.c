@@ -171,6 +171,8 @@ void SYS_Initialize ( void* data )
     CLOCK_Initialize();
 
 
+
+
     NVMCTRL_Initialize( );
 
     SERCOM1_SPI_Initialize();
