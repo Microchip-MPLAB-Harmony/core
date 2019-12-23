@@ -27,10 +27,6 @@
                   <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/fat_fs/src/hardware_access/diskio.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
-              <logicalFolder displayName="mpfs" name="f2" projectFiles="true">
-                <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/mpfs/mpfs.h</itemPath>
-                <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/mpfs/src/mpfs_local.h</itemPath>
-              </logicalFolder>
               <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/sys_fs.h</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/src/sys_fs_local.h</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/sys_fs_media_manager.h</itemPath>
@@ -158,13 +154,6 @@
                 <itemPath>../src/packs/CMSIS/CMSIS/Core_A/Include/core_ca.h</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder displayName="DSP" name="f2" projectFiles="true">
-              <logicalFolder displayName="Include" name="f1" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_common_tables.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_const_structs.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_math.h</itemPath>
-              </logicalFolder>
-            </logicalFolder>
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
@@ -199,9 +188,6 @@
               <logicalFolder displayName="fat_fs" name="f1" projectFiles="true">
                 <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/fat_fs/src/ff.c</itemPath>
                 <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/fat_fs/src/diskio.c</itemPath>
-              </logicalFolder>
-              <logicalFolder displayName="mpfs" name="f2" projectFiles="true">
-                <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/mpfs/src/mpfs.c</itemPath>
               </logicalFolder>
               <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/src/sys_fs.c</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/src/sys_fs_media_manager.c</itemPath>
@@ -247,7 +233,6 @@
           </logicalFolder>
           <itemPath>../src/config/sam_a5d2_xult_xc32/initialization.c</itemPath>
           <itemPath>../src/config/sam_a5d2_xult_xc32/interrupts.c</itemPath>
-          <itemPath>../src/config/sam_a5d2_xult_xc32/exceptions.c</itemPath>
           <itemPath>../src/config/sam_a5d2_xult_xc32/cstartup.S</itemPath>
           <itemPath>../src/config/sam_a5d2_xult_xc32/fault_handlers.c</itemPath>
           <itemPath>../src/config/sam_a5d2_xult_xc32/tasks.c</itemPath>
