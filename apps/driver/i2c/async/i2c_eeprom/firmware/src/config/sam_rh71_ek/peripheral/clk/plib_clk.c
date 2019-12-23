@@ -54,7 +54,7 @@ static void CLK_MainClockInitialize(void)
 
     /* Enable the RC Oscillator */
     PMC_REGS->CKGR_MOR|= CKGR_MOR_KEY_PASSWD | CKGR_MOR_MOSCRCEN_Msk;
-    
+
     /* Wait until the RC oscillator clock is ready. */
     while( (PMC_REGS->PMC_SR & PMC_SR_MOSCRCS_Msk) != PMC_SR_MOSCRCS_Msk);
 
@@ -109,7 +109,7 @@ Initialize Peripheral Clock
 *********************************************************************************/
 static void CLK_PeripheralClockInitialize(void)
 {
-    PMC_REGS->PMC_PCR = PMC_PCR_EN_Msk | PMC_PCR_CMD_Msk | PMC_PCR_PID(10); /* PIOA */
+    PMC_REGS->PMC_PCR = PMC_PCR_EN_Msk | PMC_PCR_CMD_Msk | PMC_PCR_PID(10); /* PIO */
     PMC_REGS->PMC_PCR = PMC_PCR_EN_Msk | PMC_PCR_CMD_Msk | PMC_PCR_PID(46); /* FLEXCOM9 */
 }
 
@@ -118,6 +118,9 @@ Clock Initialize
 *********************************************************************************/
 void CLK_Initialize( void )
 {
+    SCB_DisableDCache();
+    SCB_DisableICache();
+
     /* Initialize Slow Clock */
     CLK_SlowClockInitialize();
 
@@ -133,4 +136,7 @@ void CLK_Initialize( void )
     /* Initialize Peripheral Clock */
     CLK_PeripheralClockInitialize();
 
+
+    SCB_EnableDCache();
+    SCB_EnableICache();
 }
