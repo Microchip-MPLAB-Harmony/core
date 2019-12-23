@@ -55,6 +55,7 @@
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
+#include "peripheral/cmcc/plib_cmcc.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "driver/spi/drv_spi.h"
