@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="HeaderFiles"
-                   displayName="Header Files"
-                   projectFiles="true">
+    <logicalFolder name="f1" displayName="Header Files" projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_ha1_xpro" projectFiles="true">
           <logicalFolder name="f3" displayName="bsp" projectFiles="true">
@@ -34,9 +32,9 @@
               <itemPath>../src/config/sam_ha1_xpro/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="sercom" projectFiles="true">
-              <logicalFolder name="f1" displayName="i2cm" projectFiles="true">
-                <itemPath>../src/config/sam_ha1_xpro/peripheral/sercom/i2cm/plib_sercom_i2c_master.h</itemPath>
-                <itemPath>../src/config/sam_ha1_xpro/peripheral/sercom/i2cm/plib_sercom2_i2c.h</itemPath>
+              <logicalFolder name="f1" displayName="i2c_master" projectFiles="true">
+                <itemPath>../src/config/sam_ha1_xpro/peripheral/sercom/i2c_master/plib_sercom_i2c_master_common.h</itemPath>
+                <itemPath>../src/config/sam_ha1_xpro/peripheral/sercom/i2c_master/plib_sercom2_i2c_master.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
@@ -116,13 +114,12 @@
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="LinkerScript"
-                   displayName="Linker Files"
-                   projectFiles="true">
+    <logicalFolder name="f4" displayName="Important Files" projectFiles="true">
+      <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder name="SourceFiles"
-                   displayName="Source Files"
-                   projectFiles="true">
+    <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="f3" displayName="Source Files" projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_ha1_xpro" projectFiles="true">
           <logicalFolder name="f4" displayName="bsp" projectFiles="true">
@@ -151,8 +148,8 @@
               <itemPath>../src/config/sam_ha1_xpro/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="sercom" projectFiles="true">
-              <logicalFolder name="f1" displayName="i2cm" projectFiles="true">
-                <itemPath>../src/config/sam_ha1_xpro/peripheral/sercom/i2cm/plib_sercom2_i2c.c</itemPath>
+              <logicalFolder name="f1" displayName="i2c_master" projectFiles="true">
+                <itemPath>../src/config/sam_ha1_xpro/peripheral/sercom/i2c_master/plib_sercom2_i2c_master.c</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
@@ -175,11 +172,6 @@
       <itemPath>../src/main.c</itemPath>
       <itemPath>../src/app.c</itemPath>
     </logicalFolder>
-    <logicalFolder name="ExternalFiles"
-                   displayName="Important Files"
-                   projectFiles="false">
-      <itemPath>Makefile</itemPath>
-    </logicalFolder>
   </logicalFolder>
   <sourceRootList>
     <Elem>../src</Elem>
@@ -198,8 +190,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
+        <pack name="SAMHA1_DFP" vendor="Microchip" version="2.0.40"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
-        <pack name="SAMHA1_DFP" vendor="Microchip" version="2.0.34"/>
       </packs>
       <compileType>
         <linkerTool>
