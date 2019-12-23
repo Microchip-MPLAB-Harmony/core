@@ -60,6 +60,17 @@
 // Section: BSP Macros
 // *****************************************************************************
 // *****************************************************************************
+
+#define PIOA_REGS       ((pio_group_registers_t*)(&(PIO_REGS->PIO_GROUP[0])))
+#define PIOB_REGS       ((pio_group_registers_t*)(&(PIO_REGS->PIO_GROUP[1])))
+#define PIOC_REGS       ((pio_group_registers_t*)(&(PIO_REGS->PIO_GROUP[2])))
+#define PIOD_REGS       ((pio_group_registers_t*)(&(PIO_REGS->PIO_GROUP[3])))
+#define PIOE_REGS       ((pio_group_registers_t*)(&(PIO_REGS->PIO_GROUP[4])))
+
+#define PIOF_REGS       ((pio_group_registers_t*)(&(PIO_REGS->PIO_GROUP[5])))
+
+#define PIOG_REGS       ((pio_group_registers_t*)(&(PIO_REGS->PIO_GROUP[6])))
+
 /*** LED Macros for LED0 ***/
 #define LED0_Toggle() do { PIOB_REGS->PIO_MSKR = (1<<19); (PIOB_REGS->PIO_ODSR ^= (1<<19)); } while (0)
 #define LED0_Get() ((PIOB_REGS->PIO_PDSR >> 19) & 0x1)
