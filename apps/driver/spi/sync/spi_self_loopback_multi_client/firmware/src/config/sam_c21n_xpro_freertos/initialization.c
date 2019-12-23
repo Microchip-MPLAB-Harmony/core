@@ -182,6 +182,8 @@ void SYS_Initialize ( void* data )
     CLOCK_Initialize();
 
 
+
+
     NVMCTRL_Initialize( );
 
     EVSYS_Initialize();
