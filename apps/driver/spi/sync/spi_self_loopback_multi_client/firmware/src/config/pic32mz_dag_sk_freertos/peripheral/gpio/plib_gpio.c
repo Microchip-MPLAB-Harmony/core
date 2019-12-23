@@ -86,7 +86,7 @@ void GPIO_Initialize ( void )
     ANSELKCLR = 0x6; /* Digital Mode Enable */
 
 
-    /* unlock system for PPS configuration */
+    /* Unlock system for PPS configuration */
     SYSKEY = 0x00000000;
     SYSKEY = 0xAA996655;
     SYSKEY = 0x556699AA;
