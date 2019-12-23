@@ -213,7 +213,6 @@ void SYS_Initialize ( void* data )
 
   
     CLK_Initialize();
-	GPIO_Initialize();
 
     /* Configure CP0.K0 for optimal performance (cached instruction pre-fetch) */
     __builtin_mtc0(16, 0,(__builtin_mfc0(16, 0) | 0x3));
@@ -222,6 +221,9 @@ void SYS_Initialize ( void* data )
     CHECONbits.PFMWS = 3;
     CHECONbits.PREFEN = 1;
 
+
+
+	GPIO_Initialize();
 
 	BSP_Initialize();
     I2C4_Initialize();
