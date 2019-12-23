@@ -190,7 +190,6 @@ void SYS_Initialize ( void* data )
 
   
     CLK_Initialize();
-	GPIO_Initialize();
 
     /* Configure KSEG0 as cacheable memory. This is needed for Prefetch Buffer */
     __builtin_mtc0(16, 0,(__builtin_mfc0(16, 0) | 0x3));
@@ -204,6 +203,9 @@ void SYS_Initialize ( void* data )
 
 
 
+
+
+	GPIO_Initialize();
 
     I2C1_Initialize();
 	BSP_Initialize();
