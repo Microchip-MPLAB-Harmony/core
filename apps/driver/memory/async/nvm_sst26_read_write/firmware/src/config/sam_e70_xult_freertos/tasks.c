@@ -64,7 +64,7 @@ void _DRV_MEMORY_1_Tasks(  void *pvParameters  )
     while(1)
     {
         DRV_MEMORY_Tasks(sysObj.drvMemory1);
-        vTaskDelay(10 / portTICK_PERIOD_MS);
+        vTaskDelay(DRV_MEMORY_RTOS_DELAY_IDX1 / portTICK_PERIOD_MS);
     }
 }
 
@@ -73,7 +73,7 @@ void _DRV_MEMORY_0_Tasks(  void *pvParameters  )
     while(1)
     {
         DRV_MEMORY_Tasks(sysObj.drvMemory0);
-        vTaskDelay(10 / portTICK_PERIOD_MS);
+        vTaskDelay(DRV_MEMORY_RTOS_DELAY_IDX0 / portTICK_PERIOD_MS);
     }
 }
 

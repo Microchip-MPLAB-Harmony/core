@@ -99,6 +99,7 @@ extern "C" {
 /* Memory Driver Instance 1 RTOS Configurations*/
 #define DRV_MEMORY_STACK_SIZE_IDX1           1024
 #define DRV_MEMORY_PRIORITY_IDX1             1
+#define DRV_MEMORY_RTOS_DELAY_IDX1                         10
 
 
 /* Memory Driver Instance 0 Configuration */
@@ -109,6 +110,7 @@ extern "C" {
 /* Memory Driver Instance 0 RTOS Configurations*/
 #define DRV_MEMORY_STACK_SIZE_IDX0           1024
 #define DRV_MEMORY_PRIORITY_IDX0             1
+#define DRV_MEMORY_RTOS_DELAY_IDX0                         10
 
 /* Memory Driver Global Configuration Options */
 #define DRV_MEMORY_INSTANCES_NUMBER          2
