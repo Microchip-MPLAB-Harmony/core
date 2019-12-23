@@ -56,6 +56,7 @@
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/dmac/plib_dmac.h"
+#include "peripheral/cmcc/plib_cmcc.h"
 #include "bsp/bsp.h"
 #include "driver/usart/drv_usart.h"
 #include "FreeRTOS.h"
