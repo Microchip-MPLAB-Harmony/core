@@ -240,10 +240,12 @@ void SYS_Initialize ( void* data )
   
     SYS_PMU_MLDO_TRIM();
     CLK_Initialize();
-	GPIO_Initialize();
     /* Configure Wait States */
     PRECONbits.PFMWS = 5;
 
+
+
+	GPIO_Initialize();
 
 	BSP_Initialize();
 	SPI2_Initialize();
