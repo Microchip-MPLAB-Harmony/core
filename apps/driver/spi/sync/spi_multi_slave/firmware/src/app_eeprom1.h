@@ -130,9 +130,9 @@ typedef struct
      /* The DMA buffers must be aligned to 32 byte boundary and the size must be
      * a multiple of 32 bytes (cache line size)
      */
-     __attribute__ ((aligned (32))) uint8_t rdBuffer[APP_EEPROM1_DMA_TX_RX_BUFFER_SIZE];
+     CACHE_ALIGN uint8_t rdBuffer[APP_EEPROM1_DMA_TX_RX_BUFFER_SIZE];
 
-     __attribute__ ((aligned (32))) uint8_t wrBuffer[APP_EEPROM1_DMA_TX_RX_BUFFER_SIZE];
+     CACHE_ALIGN uint8_t wrBuffer[APP_EEPROM1_DMA_TX_RX_BUFFER_SIZE];
 
 } APP_EEPROM1_DATA;
 
