@@ -83,10 +83,11 @@
 */
 
 static APP_EEPROM1_DATA app_eeprom1Data;
-static const uint8_t EEPROM1_MSG_STR[] = "WRITING AND READING DATA ON FIRST INSTANCE EEPROM 1";
-/* Array size has to be of multiple of 32 because of cache alignment */
-static uint8_t __attribute__ ((aligned (32))) eeprom1TxData[64];
-static uint8_t __attribute__ ((aligned (32))) eeprom1RxData[64];
+static const uint8_t EEPROM1_MSG_STR[] = "WRITING AND READING DATA ON EEPROM 1 SLAVE";
+/* On devices with cache, the array size has to be of multiple of cache line size and aligned to 
+ * cache line boundary */
+static uint8_t CACHE_ALIGN eeprom1TxData[64];
+static uint8_t CACHE_ALIGN eeprom1RxData[64];
 
 // *****************************************************************************
 // *****************************************************************************
@@ -138,12 +139,10 @@ bool APP_EEPROM1_TransferStatus(void)
 void APP_EEPROM1_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
-    app_eeprom1Data.state           = APP_EEPROM1_STATE_DATA_INIT;
-    app_eeprom1Data.drvSPIHandle    = DRV_HANDLE_INVALID;
-    app_eeprom1Data.transferStatus  = APP_ERROR;
-
-    app_eeprom1Data.wrEnableCmd     = EEPROM1_CMD_WREN;
-    app_eeprom1Data.rdStatusCmd     = EEPROM1_CMD_RDSR;
+    app_eeprom1Data.state               = APP_EEPROM1_STATE_DATA_INIT;
+    app_eeprom1Data.drvSPIHandle        = DRV_HANDLE_INVALID;
+    app_eeprom1Data.transferStatus      = APP_ERROR;
+    app_eeprom1Data.isTransferComplete  = false;        
 
     memset(eeprom1TxData, 0, sizeof(eeprom1TxData));
     memset(eeprom1RxData, 0, sizeof(eeprom1RxData));
@@ -212,8 +211,10 @@ void APP_EEPROM1_Tasks ( void )
              * is changed; potentially over-writing error state set from the callback */
             
             app_eeprom1Data.state = APP_EEPROM1_STATE_WRITE;
+            
+            eeprom1TxData[0] = EEPROM1_CMD_WREN;
 
-            DRV_SPI_WriteTransferAdd(app_eeprom1Data.drvSPIHandle, &app_eeprom1Data.wrEnableCmd, 1, &app_eeprom1Data.transferHandle);
+            DRV_SPI_WriteTransferAdd(app_eeprom1Data.drvSPIHandle, eeprom1TxData, 1, &app_eeprom1Data.transferHandle);
 
             if(app_eeprom1Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
             {
@@ -250,10 +251,12 @@ void APP_EEPROM1_Tasks ( void )
             if (app_eeprom1Data.isTransferComplete == true)
             {
                 app_eeprom1Data.isTransferComplete = false;
+                
+                eeprom1TxData[0] = EEPROM1_CMD_RDSR;
 
                 app_eeprom1Data.state = APP_EEPROM1_STATE_CHECK_STATUS;
 
-                DRV_SPI_WriteReadTransferAdd(app_eeprom1Data.drvSPIHandle, &app_eeprom1Data.rdStatusCmd, 1, eeprom1RxData, 2, &app_eeprom1Data.transferHandle);
+                DRV_SPI_WriteReadTransferAdd(app_eeprom1Data.drvSPIHandle, eeprom1TxData, 1, eeprom1RxData, 2, &app_eeprom1Data.transferHandle);
 
                 if(app_eeprom1Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
                 {
@@ -273,7 +276,7 @@ void APP_EEPROM1_Tasks ( void )
                 else
                 {
                     /* EEPROM is still busy. Keep checking the status. */
-                    DRV_SPI_WriteReadTransferAdd(app_eeprom1Data.drvSPIHandle, &app_eeprom1Data.rdStatusCmd, 1, eeprom1RxData, 2, &app_eeprom1Data.transferHandle);
+                    DRV_SPI_WriteReadTransferAdd(app_eeprom1Data.drvSPIHandle, eeprom1TxData, 1, eeprom1RxData, 2, &app_eeprom1Data.transferHandle);
                     if(app_eeprom1Data.transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
                     {
                         app_eeprom1Data.state = APP_EEPROM1_STATE_ERROR;

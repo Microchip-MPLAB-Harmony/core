@@ -120,9 +120,7 @@ typedef struct
     APP_EEPROM2_STATES state;
     DRV_HANDLE drvSPIHandle;
     DRV_SPI_TRANSFER_SETUP  setup;
-    DRV_SPI_TRANSFER_HANDLE transferHandle;
-    uint8_t wrEnableCmd;
-    uint8_t rdStatusCmd;
+    DRV_SPI_TRANSFER_HANDLE transferHandle;    
     volatile bool isTransferComplete;
     volatile bool transferStatus;
 
