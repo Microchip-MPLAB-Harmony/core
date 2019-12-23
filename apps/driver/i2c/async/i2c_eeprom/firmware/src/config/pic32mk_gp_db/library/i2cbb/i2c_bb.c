@@ -381,6 +381,18 @@ void I2C_BB_Initialize(void)
     pInitData->i2cbbTmrPlib->timerCallbackRegister(I2C_BB_eventHandler,(uintptr_t)0);
 }
 
+bool I2C_BB_IsBusy(void)
+{
+    if( i2c_bbObj.i2cState != I2CBB_BUS_STATE_NULL_STATE )
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 bool I2C_BB_Read(uint16_t address, uint8_t *pdata, size_t length)
 {
     // Check for ongoing transfer
