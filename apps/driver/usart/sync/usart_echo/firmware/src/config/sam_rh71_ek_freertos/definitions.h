@@ -51,6 +51,7 @@
 #include "driver/usart/drv_usart.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
+#include "peripheral/matrix/plib_matrix.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "FreeRTOS.h"
 #include "task.h"
