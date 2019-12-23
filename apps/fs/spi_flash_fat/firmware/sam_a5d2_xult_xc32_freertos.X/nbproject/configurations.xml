@@ -206,14 +206,17 @@
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Linker Files" name="f2" projectFiles="true">
+    <logicalFolder displayName="Important Files" name="f2" projectFiles="true">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+    <logicalFolder displayName="Linker Files" name="f3" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_a5d2_xult_xc32_freertos" name="f1" projectFiles="true">
           <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/ddr.ld</itemPath>
         </logicalFolder>
       </logicalFolder>
     </logicalFolder>
-    <logicalFolder displayName="Source Files" name="f3" projectFiles="true">
+    <logicalFolder displayName="Source Files" name="f4" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_a5d2_xult_xc32_freertos" name="f1" projectFiles="true">
           <logicalFolder displayName="peripheral" name="f1" projectFiles="true">
@@ -318,9 +321,6 @@
       <itemPath>../src/main.c</itemPath>
       <itemPath>../src/app.c</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Important Files" name="f4" projectFiles="true">
-      <itemPath>Makefile</itemPath>
-    </logicalFolder>
   </logicalFolder>
   <sourceRootList>
     <Elem>../src</Elem>
@@ -340,7 +340,7 @@
       </toolsSet>
       <packs>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
-        <pack name="SAMA5D2_DFP" vendor="Microchip" version="0.1.20"/>
+        <pack name="SAMA5D2_DFP" vendor="Microchip" version="1.1.11"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -481,7 +481,7 @@
         <property key="symbol-stripping" value=""/>
         <property key="trace-symbols" value=""/>
         <property key="warn-section-align" value="false"/>
-      <appendMe value="-T../../firmware/src/config/sam_a5d2_xult_xc32_freertos/ddr.ld"/>
+        <appendMe value="-T../../firmware/src/config/sam_a5d2_xult_xc32_freertos/ddr.ld"/>
       </C32-LD>
       <C32CPP>
         <property key="additional-warnings" value="false"/>
