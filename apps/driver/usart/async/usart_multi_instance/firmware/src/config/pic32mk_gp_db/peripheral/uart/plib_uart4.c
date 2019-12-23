@@ -93,7 +93,7 @@ void UART4_Initialize( void )
     /* Set up UxMODE bits */
     /* STSEL  = 0*/
     /* PDSEL = 0 */
-    /* BRGH = 1 */
+    /* BRGH = 0 */
     /* RXINV = 0 */
     /* ABAUD = 0 */
     /* LPBACK = 0 */
@@ -102,13 +102,13 @@ void UART4_Initialize( void )
     /* RUNOVF = 0 */
     /* CLKSEL = 0 */
     /* SLPEN = 0 */
-    U4MODE = 0x8;
+    U4MODE = 0x0;
 
     /* Enable UART4 Receiver, Transmitter and TX Interrupt selection */
     U4STASET = (_U4STA_UTXEN_MASK | _U4STA_URXEN_MASK | _U4STA_UTXISEL0_MASK);
 
     /* BAUD Rate register Setup */
-    U4BRG = 129;
+    U4BRG = 32;
 
     /* Disable Interrupts */
     IEC2CLR = _IEC2_U4EIE_MASK;
