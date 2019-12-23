@@ -3345,6 +3345,13 @@
             <Dynamic dnOrder="0" id="qspi" value="0"/>
           </Values>
         </KeyValueSet>
+        <KeyValueSet dnOrder="1" id="QSPI_SMM">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="readOnly">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </KeyValueSet>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectCapability dnOrder="0" id="QSPI_SQI">
@@ -3370,7 +3377,7 @@
         <ElementPosition dnOrder="3" id="core" x="20" y="20"/>
         <ElementPosition dnOrder="4" id="dfp" x="260" y="20"/>
         <ElementPosition dnOrder="5" id="drv_sst26" x="273" y="113"/>
-        <ElementPosition dnOrder="6" id="efc" x="37" y="219"/>
+        <ElementPosition dnOrder="6" id="efc" x="36" y="241"/>
         <ElementPosition dnOrder="7" id="qspi" x="39" y="135"/>
       </ElementPositions>
     </ComponentGraph>

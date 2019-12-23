@@ -3,8 +3,18 @@
   <logicalFolder name="root" displayName="root" projectFiles="true">
     <logicalFolder name="f1" displayName="Header Files" projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f2" displayName="ATSAME70Q21B_DFP" projectFiles="true">
+          <logicalFolder name="f1" displayName="component" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="pio" projectFiles="true">
+          </logicalFolder>
+        </logicalFolder>
         <logicalFolder name="f1" displayName="sam_e70_xult" projectFiles="true">
           <logicalFolder name="f1" displayName="bsp" projectFiles="true">
+            <logicalFolder name="f1" displayName="Core" projectFiles="true">
+              <logicalFolder name="f1" displayName="Include" projectFiles="true">
+              </logicalFolder>
+            </logicalFolder>
             <itemPath>../src/config/sam_e70_xult/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="driver" projectFiles="true">
@@ -102,8 +112,30 @@
             <itemPath>../src/packs/ATSAME70Q21B_DFP/component/wdt.h</itemPath>
             <itemPath>../src/packs/ATSAME70Q21B_DFP/component/xdmac.h</itemPath>
           </logicalFolder>
+          <logicalFolder name="f3" displayName="driver" projectFiles="true">
+            <logicalFolder name="f1" displayName="sst26" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
           <logicalFolder name="f2" displayName="pio" projectFiles="true">
+            <logicalFolder name="f2" displayName="clk" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="efc" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="mpu" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="nvic" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="pio" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="qspi" projectFiles="true">
+            </logicalFolder>
             <itemPath>../src/packs/ATSAME70Q21B_DFP/pio/same70q21b.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f4" displayName="system" projectFiles="true">
+            <logicalFolder name="f2" displayName="cache" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="int" projectFiles="true">
+            </logicalFolder>
           </logicalFolder>
           <itemPath>../src/packs/ATSAME70Q21B_DFP/device.h</itemPath>
           <itemPath>../src/packs/ATSAME70Q21B_DFP/atsame70q21b.h</itemPath>
@@ -112,9 +144,6 @@
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
@@ -132,6 +161,38 @@
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f4" displayName="Important Files" projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1" displayName="sam_e70_xult" projectFiles="true">
+          <logicalFolder name="f1" displayName="bsp" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="f4" displayName="driver" projectFiles="true">
+            <logicalFolder name="f1" displayName="sst26" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f2" displayName="clk" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="efc" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="mpu" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="nvic" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="pio" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="qspi" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f3" displayName="stdio" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="f5" displayName="system" projectFiles="true">
+            <logicalFolder name="f2" displayName="cache" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="int" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
       <itemPath>Makefile</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
