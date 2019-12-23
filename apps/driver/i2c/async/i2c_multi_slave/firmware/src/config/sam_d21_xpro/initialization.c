@@ -183,12 +183,12 @@ const SYS_DEBUG_INIT debugInit =
 
 const SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
     .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)TC3_TimerCallbackRegister,
-    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC3_Timer16bitCounterGet,
-    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC3_Timer16bitPeriodSet,
-    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC3_TimerFrequencyGet,
-    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC3_Timer16bitCompareSet,
     .timerStart = (SYS_TIME_PLIB_START)TC3_TimerStart,
-    .timerStop = (SYS_TIME_PLIB_STOP)TC3_TimerStop
+    .timerStop = (SYS_TIME_PLIB_STOP)TC3_TimerStop,
+    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC3_TimerFrequencyGet,
+    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC3_Timer16bitPeriodSet,
+    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC3_Timer16bitCompareSet,
+    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC3_Timer16bitCounterGet,
 };
 
 const SYS_TIME_INIT sysTimeInitData =
@@ -265,6 +265,8 @@ void SYS_Initialize ( void* data )
     PORT_Initialize();
 
     CLOCK_Initialize();
+
+
 
 
     SERCOM3_USART_Initialize();
