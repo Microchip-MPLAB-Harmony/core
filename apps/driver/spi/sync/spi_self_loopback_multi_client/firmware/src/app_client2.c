@@ -85,6 +85,13 @@
 
 static APP_CLIENT2_DATA app_client2Data;
 
+/* The DMA buffers must be aligned to 32 byte boundary and the size must be
+ * a multiple of 32 bytes (cache line size) on MCUs that have data cache and use 
+ * DMA */
+static uint8_t CACHE_ALIGN app_client2_rdBuffer[APP_CLIENT2_TX_RX_BUFFER_SIZE];
+
+static uint8_t CACHE_ALIGN app_client2_wrBuffer[APP_CLIENT2_TX_RX_BUFFER_SIZE];
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
@@ -161,19 +168,19 @@ void APP_CLIENT2_Tasks ( void )
         case APP_CLIENT2_STATE_SELF_LOOPBACK:
 
             // Clear the read buffer
-            memset(app_client2Data.rdBuffer, 0, APP_CLIENT2_TX_RX_BUFFER_SIZE);
+            memset(app_client2_rdBuffer, 0, APP_CLIENT2_TX_RX_BUFFER_SIZE);
 
             // Copy the loop-back data into the write buffer
-            memcpy(app_client2Data.wrBuffer, APP_CLIENT2_STR, APP_CLIENT2_NUM_BYTES);
+            memcpy(app_client2_wrBuffer, APP_CLIENT2_STR, APP_CLIENT2_NUM_BYTES);
 
-            if (DRV_SPI_WriteReadTransfer(app_client2Data.spi_handle, app_client2Data.wrBuffer, APP_CLIENT2_NUM_BYTES, app_client2Data.rdBuffer, APP_CLIENT2_NUM_BYTES) == false)
+            if (DRV_SPI_WriteReadTransfer(app_client2Data.spi_handle, app_client2_wrBuffer, APP_CLIENT2_NUM_BYTES, app_client2_rdBuffer, APP_CLIENT2_NUM_BYTES) == false)
             {
                 app_client2Data.state = APP_CLIENT2_STATE_ERROR;
             }
             else
             {
                 /* Compare the received data */
-                if (memcmp(app_client2Data.rdBuffer, app_client2Data.wrBuffer, APP_CLIENT2_NUM_BYTES) != 0)
+                if (memcmp(app_client2_rdBuffer, app_client2_wrBuffer, APP_CLIENT2_NUM_BYTES) != 0)
                 {
                     /* Received data does not match the transmitted data */
                     app_client2Data.state = APP_CLIENT2_STATE_ERROR;

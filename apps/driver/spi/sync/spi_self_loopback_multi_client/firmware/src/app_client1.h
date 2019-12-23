@@ -119,15 +119,7 @@ typedef struct
 
      DRV_SPI_TRANSFER_SETUP spi_setup;
 
-     volatile bool status;
-
-     /* The DMA buffers must be aligned to 32 byte boundary and the size must be
-      * a multiple of 32 bytes (cache line size)
-      */
-     __attribute__ ((aligned (32))) uint8_t rdBuffer[APP_CLIENT1_TX_RX_BUFFER_SIZE];
-
-     __attribute__ ((aligned (32))) uint8_t wrBuffer[APP_CLIENT1_TX_RX_BUFFER_SIZE];
-
+     volatile bool status;    
 } APP_CLIENT1_DATA;
 
 
