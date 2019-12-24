@@ -181,6 +181,8 @@ void SYS_Initialize ( void* data )
     CLOCK_Initialize();
 	PIO_Initialize();
 
+
+
 	BSP_Initialize();
     QSPI_Initialize();
 
