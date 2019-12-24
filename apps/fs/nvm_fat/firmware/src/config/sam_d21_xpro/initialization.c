@@ -180,6 +180,8 @@ void SYS_Initialize ( void* data )
     CLOCK_Initialize();
 
 
+
+
 	BSP_Initialize();
     NVMCTRL_Initialize( );
 
