@@ -198,7 +198,6 @@ void SYS_Initialize ( void* data )
 
   
     CLK_Initialize();
-	GPIO_Initialize();
 
     /* Configure KSEG0 as cacheable memory. This is needed for Prefetch Buffer */
     __builtin_mtc0(16, 0,(__builtin_mfc0(16, 0) | 0x3));
@@ -213,7 +212,12 @@ void SYS_Initialize ( void* data )
 
 
 
+
+	GPIO_Initialize();
+
 	BSP_Initialize();
+    NVM_Initialize();
+
 
     sysObj.drvMemory0 = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_0, (SYS_MODULE_INIT *)&drvMemory0InitData);
 
