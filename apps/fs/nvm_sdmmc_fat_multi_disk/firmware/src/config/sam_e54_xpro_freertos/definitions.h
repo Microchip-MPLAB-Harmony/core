@@ -55,6 +55,7 @@
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/mpu/plib_mpu.h"
+#include "peripheral/cmcc/plib_cmcc.h"
 #include "driver/memory/drv_memory.h"
 #include "peripheral/tc/plib_tc0.h"
 #include "peripheral/sdhc/plib_sdhc1.h"
