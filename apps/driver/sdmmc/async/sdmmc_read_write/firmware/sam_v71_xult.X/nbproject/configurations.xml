@@ -3,12 +3,20 @@
   <logicalFolder name="root" displayName="root" projectFiles="true">
     <logicalFolder name="f1" displayName="Header Files" projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f2" displayName="ATSAMV71Q21B_DFP" projectFiles="true">
+          <logicalFolder name="f1" displayName="component" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="pio" projectFiles="true">
+          </logicalFolder>
+        </logicalFolder>
         <logicalFolder name="f1" displayName="sam_v71_xult" projectFiles="true">
           <logicalFolder name="f3" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_v71_xult/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="sdmmc" projectFiles="true">
+              <logicalFolder name="f1" displayName="Include" projectFiles="true">
+              </logicalFolder>
               <itemPath>../src/config/sam_v71_xult/driver/sdmmc/drv_sdmmc.h</itemPath>
               <itemPath>../src/config/sam_v71_xult/driver/sdmmc/src/drv_sdmmc_local.h</itemPath>
               <itemPath>../src/config/sam_v71_xult/driver/sdmmc/drv_sdmmc_definitions.h</itemPath>
@@ -74,7 +82,11 @@
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAMV71Q21B_DFP" projectFiles="true">
+          <logicalFolder name="f3" displayName="bsp" projectFiles="true">
+          </logicalFolder>
           <logicalFolder name="f1" displayName="component" projectFiles="true">
+            <logicalFolder name="f1" displayName="sdmmc" projectFiles="true">
+            </logicalFolder>
             <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/acc.h</itemPath>
             <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/aes.h</itemPath>
             <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/afec.h</itemPath>
@@ -114,7 +126,29 @@
             <itemPath>../src/packs/ATSAMV71Q21B_DFP/component/xdmac.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="pio" projectFiles="true">
+            <logicalFolder name="f1" displayName="clk" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="efc" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f7" displayName="hsmci" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="nvic" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="pio" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="tc" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="xdmac" projectFiles="true">
+            </logicalFolder>
             <itemPath>../src/packs/ATSAMV71Q21B_DFP/pio/samv71q21b.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f4" displayName="system" projectFiles="true">
+            <logicalFolder name="f2" displayName="cache" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="int" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="time" projectFiles="true">
+            </logicalFolder>
           </logicalFolder>
           <itemPath>../src/packs/ATSAMV71Q21B_DFP/device.h</itemPath>
           <itemPath>../src/packs/ATSAMV71Q21B_DFP/atsamv71q21b.h</itemPath>
@@ -148,6 +182,42 @@
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f4" displayName="Important Files" projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1" displayName="sam_v71_xult" projectFiles="true">
+          <logicalFolder name="f4" displayName="bsp" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="f3" displayName="driver" projectFiles="true">
+            <logicalFolder name="f1" displayName="sdmmc" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f1" displayName="clk" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="efc" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f7" displayName="hsmci" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="nvic" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="pio" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="tc" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="xdmac" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f1" displayName="stdio" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="f5" displayName="system" projectFiles="true">
+            <logicalFolder name="f2" displayName="cache" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="int" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="time" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
       <itemPath>Makefile</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
