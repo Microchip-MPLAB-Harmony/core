@@ -191,6 +191,62 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1"
+                       displayName="pic32mx470_curiosity_freertos"
+                       projectFiles="true">
+          <logicalFolder name="f1" displayName="bsp" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="driver" projectFiles="true">
+            <logicalFolder name="f1" displayName="sdspi" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f3" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f1" displayName="clk" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="coretimer" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="dmac" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="evic" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="gpio" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="spi" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f4" displayName="stdio" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="f5" displayName="system" projectFiles="true">
+            <logicalFolder name="f1" displayName="dma" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="fs" projectFiles="true">
+              <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
+              </logicalFolder>
+              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
+              </logicalFolder>
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="int" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="time" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="FreeRTOS" projectFiles="true">
+        <logicalFolder name="f1" displayName="Source" projectFiles="true">
+          <logicalFolder name="f1" displayName="portable" projectFiles="true">
+            <logicalFolder name="f1" displayName="MemMang" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="MPLAB" projectFiles="true">
+              <logicalFolder name="f1" displayName="PIC32MX" projectFiles="true">
+              </logicalFolder>
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="osal" projectFiles="true">
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="f3" displayName="Source Files" projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
@@ -306,7 +362,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.0.53"/>
+        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.1.215"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -341,7 +397,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/pic32mx470_curiosity_freertos;../src/packs/PIC32MX470F512H_DFP;;../src/mips;../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include"/>
+                  value="../src;../src/config/pic32mx470_curiosity_freertos;../src/packs/PIC32MX470F512H_DFP;../src/mips;../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -368,9 +424,9 @@
         <property key="exclude-floating-point-library" value="false"/>
         <property key="expand-macros" value="false"/>
         <property key="extra-include-directories-for-assembler"
-                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos;"/>
+                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos"/>
         <property key="extra-include-directories-for-preprocessor"
-                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos;"/>
+                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos"/>
         <property key="false-conditionals" value="false"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
