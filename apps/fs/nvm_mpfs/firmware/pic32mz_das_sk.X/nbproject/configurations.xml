@@ -18,20 +18,27 @@
             <itemPath>../src/config/pic32mz_das_sk/driver/driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f3" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/pic32mz_das_sk/peripheral/cache/plib_cache.h</itemPath>
+              <itemPath>../src/config/pic32mz_das_sk/peripheral/cache/plib_cache_pic32mz.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
               <itemPath>../src/config/pic32mz_das_sk/peripheral/clk/plib_clk.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="evic" projectFiles="true">
+            <logicalFolder name="f4" displayName="evic" projectFiles="true">
               <itemPath>../src/config/pic32mz_das_sk/peripheral/evic/plib_evic.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="gpio" projectFiles="true">
               <itemPath>../src/config/pic32mz_das_sk/peripheral/gpio/plib_gpio.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="nvm" projectFiles="true">
+            <logicalFolder name="f5" displayName="nvm" projectFiles="true">
               <itemPath>../src/config/pic32mz_das_sk/peripheral/nvm/plib_nvm.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="system" projectFiles="true">
+            <logicalFolder name="f3" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/pic32mz_das_sk/system/cache/sys_cache.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f1" displayName="fs" projectFiles="true">
               <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
                 <logicalFolder name="f1" displayName="file_system" projectFiles="true">
@@ -60,6 +67,7 @@
             <itemPath>../src/config/pic32mz_das_sk/system/system_module.h</itemPath>
             <itemPath>../src/config/pic32mz_das_sk/system/system_media.h</itemPath>
           </logicalFolder>
+          <itemPath>../src/config/pic32mz_das_sk/device_cache.h</itemPath>
           <itemPath>../src/config/pic32mz_das_sk/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/pic32mz_das_sk/definitions.h</itemPath>
           <itemPath>../src/config/pic32mz_das_sk/user.h</itemPath>
@@ -99,16 +107,21 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f3" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/pic32mz_das_sk/peripheral/cache/plib_cache_local.h</itemPath>
+              <itemPath>../src/config/pic32mz_das_sk/peripheral/cache/plib_cache.c</itemPath>
+              <itemPath>../src/config/pic32mz_das_sk/peripheral/cache/plib_cache_pic32mz.S</itemPath>
+            </logicalFolder>
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
               <itemPath>../src/config/pic32mz_das_sk/peripheral/clk/plib_clk.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="evic" projectFiles="true">
+            <logicalFolder name="f4" displayName="evic" projectFiles="true">
               <itemPath>../src/config/pic32mz_das_sk/peripheral/evic/plib_evic.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="gpio" projectFiles="true">
               <itemPath>../src/config/pic32mz_das_sk/peripheral/gpio/plib_gpio.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="nvm" projectFiles="true">
+            <logicalFolder name="f5" displayName="nvm" projectFiles="true">
               <itemPath>../src/config/pic32mz_das_sk/peripheral/nvm/plib_nvm.c</itemPath>
             </logicalFolder>
           </logicalFolder>
@@ -116,6 +129,9 @@
             <itemPath>../src/config/pic32mz_das_sk/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="system" projectFiles="true">
+            <logicalFolder name="f3" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/pic32mz_das_sk/system/cache/sys_cache.c</itemPath>
+            </logicalFolder>
             <logicalFolder name="f1" displayName="fs" projectFiles="true">
               <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
                 <itemPath>../src/config/pic32mz_das_sk/system/fs/fat_fs/src/ff.c</itemPath>
