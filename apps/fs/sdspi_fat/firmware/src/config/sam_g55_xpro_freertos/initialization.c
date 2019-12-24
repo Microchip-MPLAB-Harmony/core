@@ -174,11 +174,12 @@ const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
 
 const SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
     .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)RTT_CallbackRegister,
-    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)RTT_TimerValueGet,
-    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)RTT_FrequencyGet,
-    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)RTT_AlarmValueSet,
     .timerStart = (SYS_TIME_PLIB_START)RTT_Enable,
-    .timerStop = (SYS_TIME_PLIB_STOP)RTT_Disable
+    .timerStop = (SYS_TIME_PLIB_STOP)RTT_Disable,
+    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)RTT_FrequencyGet,
+    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)NULL,
+    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)RTT_AlarmValueSet,
+    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)RTT_TimerValueGet,
 };
 
 const SYS_TIME_INIT sysTimeInitData =
@@ -209,6 +210,8 @@ void SYS_Initialize ( void* data )
 	PIO_Initialize();
 
     CLOCK_Initialize();
+
+
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
 
