@@ -21,23 +21,26 @@
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/peripheral/clk/plib_clk.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="flexcom" projectFiles="true">
+            <logicalFolder name="f7" displayName="flexcom" projectFiles="true">
               <logicalFolder name="f1" displayName="spi" projectFiles="true">
                 <itemPath>../src/config/sam_rh71_ek/peripheral/flexcom/spi/plib_flexcom2_spi.h</itemPath>
                 <itemPath>../src/config/sam_rh71_ek/peripheral/flexcom/spi/plib_flexcom_spi_local.h</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f3" displayName="matrix" projectFiles="true">
+              <itemPath>../src/config/sam_rh71_ek/peripheral/matrix/plib_matrix.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="pio" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/peripheral/pio/plib_pio.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="tc" projectFiles="true">
+            <logicalFolder name="f6" displayName="tc" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/peripheral/tc/plib_tc0.h</itemPath>
               <itemPath>../src/config/sam_rh71_ek/peripheral/tc/plib_tc_common.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="xdmac" projectFiles="true">
+            <logicalFolder name="f5" displayName="xdmac" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/peripheral/xdmac/plib_xdmac_common.h</itemPath>
               <itemPath>../src/config/sam_rh71_ek/peripheral/xdmac/plib_xdmac.h</itemPath>
             </logicalFolder>
@@ -59,10 +62,6 @@
                 <logicalFolder name="f2" displayName="hardware_access" projectFiles="true">
                   <itemPath>../src/config/sam_rh71_ek/system/fs/fat_fs/src/hardware_access/diskio.h</itemPath>
                 </logicalFolder>
-              </logicalFolder>
-              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
-                <itemPath>../src/config/sam_rh71_ek/system/fs/mpfs/mpfs.h</itemPath>
-                <itemPath>../src/config/sam_rh71_ek/system/fs/mpfs/src/mpfs_local.h</itemPath>
               </logicalFolder>
               <itemPath>../src/config/sam_rh71_ek/system/fs/sys_fs.h</itemPath>
               <itemPath>../src/config/sam_rh71_ek/system/fs/src/sys_fs_local.h</itemPath>
@@ -142,23 +141,15 @@
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm7.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
-              </logicalFolder>
-            </logicalFolder>
-            <logicalFolder name="f2" displayName="DSP" projectFiles="true">
-              <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_common_tables.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_const_structs.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_math.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
@@ -166,12 +157,12 @@
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f4" displayName="Important Files" projectFiles="true">
+    <logicalFolder name="f2" displayName="Important Files" projectFiles="true">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
+    <logicalFolder name="f3" displayName="Linker Files" projectFiles="true">
     </logicalFolder>
-    <logicalFolder name="f3" displayName="Source Files" projectFiles="true">
+    <logicalFolder name="f4" displayName="Source Files" projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_rh71_ek" projectFiles="true">
           <logicalFolder name="f5" displayName="bsp" projectFiles="true">
@@ -188,21 +179,24 @@
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/peripheral/clk/plib_clk.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="flexcom" projectFiles="true">
+            <logicalFolder name="f7" displayName="flexcom" projectFiles="true">
               <logicalFolder name="f1" displayName="spi" projectFiles="true">
                 <itemPath>../src/config/sam_rh71_ek/peripheral/flexcom/spi/plib_flexcom2_spi.c</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f3" displayName="matrix" projectFiles="true">
+              <itemPath>../src/config/sam_rh71_ek/peripheral/matrix/plib_matrix.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/peripheral/nvic/plib_nvic.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="pio" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/peripheral/pio/plib_pio.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="tc" projectFiles="true">
+            <logicalFolder name="f6" displayName="tc" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/peripheral/tc/plib_tc0.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="xdmac" projectFiles="true">
+            <logicalFolder name="f5" displayName="xdmac" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/peripheral/xdmac/plib_xdmac.c</itemPath>
             </logicalFolder>
           </logicalFolder>
@@ -220,9 +214,6 @@
               <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
                 <itemPath>../src/config/sam_rh71_ek/system/fs/fat_fs/src/ff.c</itemPath>
                 <itemPath>../src/config/sam_rh71_ek/system/fs/fat_fs/src/diskio.c</itemPath>
-              </logicalFolder>
-              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
-                <itemPath>../src/config/sam_rh71_ek/system/fs/mpfs/src/mpfs.c</itemPath>
               </logicalFolder>
               <itemPath>../src/config/sam_rh71_ek/system/fs/src/sys_fs.c</itemPath>
               <itemPath>../src/config/sam_rh71_ek/system/fs/src/sys_fs_media_manager.c</itemPath>
@@ -264,7 +255,7 @@
       </toolsSet>
       <packs>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
-        <pack name="SAMRH71_DFP" vendor="Microchip" version="0.1.25"/>
+        <pack name="SAMRH71_DFP" vendor="Microchip" version="1.1.65"/>
       </packs>
       <compileType>
         <linkerTool>
