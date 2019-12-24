@@ -216,14 +216,19 @@ void SYS_Initialize ( void* data )
 
   
     CLK_Initialize();
-	GPIO_Initialize();
+    
     /* Configure Prefetch, Wait States and ECC */
     PRECONbits.PREFEN = 3;
     PRECONbits.PFMWS = 2;
     CFGCONbits.ECCCON = 3;
 
 
+
+	GPIO_Initialize();
+
 	BSP_Initialize();
+    NVM_Initialize();
+
 
     sysObj.drvMemory0 = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_0, (SYS_MODULE_INIT *)&drvMemory0InitData);
 
