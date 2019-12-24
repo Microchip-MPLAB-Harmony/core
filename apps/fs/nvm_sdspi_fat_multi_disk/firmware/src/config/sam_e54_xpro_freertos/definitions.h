@@ -55,6 +55,7 @@
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/mpu/plib_mpu.h"
 #include "peripheral/dmac/plib_dmac.h"
+#include "peripheral/cmcc/plib_cmcc.h"
 #include "driver/memory/drv_memory.h"
 #include "peripheral/sercom/spim/plib_sercom4_spi.h"
 #include "peripheral/tc/plib_tc0.h"
