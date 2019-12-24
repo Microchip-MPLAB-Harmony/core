@@ -154,8 +154,22 @@
     None.
 */
 
-#define _DRV_SDSPI_CSD_READ_SIZE                                            19
+#define _DRV_SDSPI_CSD_READ_SIZE                                            20
 
+// *****************************************************************************
+/* No of bytes to be read for SD card CID.
+
+  Summary:
+    Number of bytes to be read to get the SD card CID.
+
+  Description:
+    This macro holds number of bytes to be read to get the SD card CID.
+
+
+  Remarks:
+    None.
+*/
+#define _DRV_SDSPI_CID_READ_SIZE                                            20
 
 // *****************************************************************************
 /* SD card V2 device type.
@@ -728,6 +742,10 @@ typedef enum
     /* Check whether the card has been detached. */
     DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH,
 
+    DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_READ_CID_DATA,
+
+    DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_PROCESS_CID_DATA,
+
     DRV_SDSPI_CMD_DETECT_IDLE_STATE,
 
 } DRV_SDSPI_CMD_DETECT_STATES;
@@ -824,6 +842,15 @@ typedef enum
 
     /* Process the CSD register data */
     DRV_SDSPI_INIT_PROCESS_CSD,
+
+    /* Issue command to read the card's Card Identification Data register */
+    DRV_SDSPI_INIT_READ_CID,
+
+    /* Read the CID data */
+    DRV_SDSPI_INIT_READ_CID_DATA,
+
+    /* Process the CID register data */
+    DRV_SDSPI_INIT_PROCESS_CID,
 
     /* Issue command to turn off the CRC */
     DRV_SDSPI_INIT_TURN_OFF_CRC,
@@ -1401,6 +1428,9 @@ typedef struct
 
     /* Pointer to the CSD data of the SD Card */
     uint8_t*                                        pCsdData;
+
+    /* Pointer to the CID data of the SD Card */
+    uint8_t*                                        pCidData;
 
     /* Speed at which SD card communication should happen */
     uint32_t                                        sdcardSpeedHz;
