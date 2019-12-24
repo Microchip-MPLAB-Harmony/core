@@ -57,6 +57,7 @@
 #include "system/fs/fat_fs/src/hardware_access/diskio.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
+#include "peripheral/matrix/plib_matrix.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/mpu/plib_mpu.h"
 #include "driver/memory/drv_memory.h"
