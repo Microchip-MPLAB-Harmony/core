@@ -56,6 +56,8 @@
 // *****************************************************************************
 // *****************************************************************************
 
+#define SQI_CHIP_SELECT         SQI_BDCTRL_SQICS_CS1
+
 #define CMD_DESC_NUMBER         5
 #define DUMMY_BYTE              0x0
 
@@ -131,7 +133,7 @@ static void DRV_SST26_ResetFlash(void)
 
     sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(1) | SQI_BDCTRL_PKTINTEN |
                                     SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
-                                    SQI_BDCTRL_SQICS_CS1 | SQI_BDCTRL_DEASSERT |
+                                    SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
                                     SQI_BDCTRL_DESCEN);
 
     sqiCmdDesc[0].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_rsten);
@@ -146,7 +148,7 @@ static void DRV_SST26_ResetFlash(void)
 
     sqiCmdDesc[1].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(1) | SQI_BDCTRL_PKTINTEN |
                                     SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
-                                    SQI_BDCTRL_SQICS_CS1 | SQI_BDCTRL_DEASSERT |
+                                    SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
                                     SQI_BDCTRL_DESCEN);
 
     sqiCmdDesc[1].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_rst);
@@ -164,7 +166,7 @@ static void DRV_SST26_EnableQuadIO(void)
 
     sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(1) | SQI_BDCTRL_PKTINTEN |
                                     SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
-                                    SQI_BDCTRL_SQICS_CS1 | SQI_BDCTRL_DEASSERT |
+                                    SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
                                     SQI_BDCTRL_DESCEN);
 
     sqiCmdDesc[0].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_eqio);
@@ -181,7 +183,7 @@ static void DRV_SST26_EnableQuadIO(void)
 static void DRV_SST26_WriteEnable(void)
 {
     sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(1) | SQI_BDCTRL_MODE_QUAD_LANE |
-                                    SQI_BDCTRL_SQICS_CS1 | SQI_BDCTRL_DEASSERT |
+                                    SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
                                     SQI_BDCTRL_DESCEN);
 
     sqiCmdDesc[0].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_wren);
@@ -220,7 +222,7 @@ bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle )
 
     sqiCmdDesc[1].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(1) | SQI_BDCTRL_PKTINTEN |
                                     SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
-                                    SQI_BDCTRL_MODE_QUAD_LANE | SQI_BDCTRL_SQICS_CS1 |
+                                    SQI_BDCTRL_MODE_QUAD_LANE | SQI_CHIP_SELECT |
                                     SQI_BDCTRL_DEASSERT | SQI_BDCTRL_DESCEN);
 
     sqiCmdDesc[1].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_ULBPR);
@@ -248,7 +250,7 @@ bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id)
     sqi_cmd_jedec[1] = DUMMY_BYTE;
 
     sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(2) | SQI_BDCTRL_MODE_QUAD_LANE |
-                                    SQI_BDCTRL_SQICS_CS1 | SQI_BDCTRL_DESCEN);
+                                    SQI_CHIP_SELECT | SQI_BDCTRL_DESCEN);
 
     sqiCmdDesc[0].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_jedec);
     sqiCmdDesc[0].bd_stat       = 0;
@@ -257,7 +259,7 @@ bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id)
     sqiBufDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(4) | SQI_BDCTRL_PKTINTEN |
                                     SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
                                     SQI_BDCTRL_MODE_QUAD_LANE | SQI_BDCTRL_DIR_READ |
-                                    SQI_BDCTRL_SQICS_CS1 | SQI_BDCTRL_DEASSERT |
+                                    SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
                                     SQI_BDCTRL_DESCEN);
 
     sqiBufDesc[0].bd_bufaddr    = (uint32_t *)KVA_TO_PA(jedec_id);
@@ -288,7 +290,7 @@ bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_d
     sqi_cmd_rdsr[1] = DUMMY_BYTE;
 
     sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(2) | SQI_BDCTRL_MODE_QUAD_LANE |
-                                    SQI_BDCTRL_SQICS_CS1 | SQI_BDCTRL_DESCEN);
+                                    SQI_CHIP_SELECT | SQI_BDCTRL_DESCEN);
 
     sqiCmdDesc[0].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_rdsr);
     sqiCmdDesc[0].bd_stat       = 0;
@@ -297,7 +299,7 @@ bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_d
     sqiBufDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(rx_data_length) | SQI_BDCTRL_PKTINTEN |
                                     SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
                                     SQI_BDCTRL_MODE_QUAD_LANE | SQI_BDCTRL_DIR_READ |
-                                    SQI_BDCTRL_SQICS_CS1 | SQI_BDCTRL_DEASSERT |
+                                    SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
                                     SQI_BDCTRL_DESCEN);
 
     sqiBufDesc[0].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&statusRegVal);
@@ -363,14 +365,14 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     sqi_cmd_hsr[4] = 0;
 
     sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(5) | SQI_BDCTRL_MODE_QUAD_LANE |
-                                    SQI_BDCTRL_SQICS_CS1 | SQI_BDCTRL_DESCEN);
+                                    SQI_CHIP_SELECT | SQI_BDCTRL_DESCEN);
 
     sqiCmdDesc[0].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_hsr);
     sqiCmdDesc[0].bd_stat       = 0;
     sqiCmdDesc[0].bd_nxtptr     = (sqi_dma_desc_t *)KVA_TO_PA(&sqiCmdDesc[1]);
 
     sqiCmdDesc[1].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(2) | SQI_BDCTRL_MODE_QUAD_LANE |
-                                    SQI_BDCTRL_SQICS_CS1 | SQI_BDCTRL_DESCEN);
+                                    SQI_CHIP_SELECT | SQI_BDCTRL_DESCEN);
 
     sqiCmdDesc[1].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_dummy);
     sqiCmdDesc[1].bd_stat       = 0;
@@ -389,7 +391,7 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
 
         sqiBufDesc[i].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(numBytes) | SQI_BDCTRL_PKTINTEN |
                                         SQI_BDCTRL_MODE_QUAD_LANE | SQI_BDCTRL_DIR_READ |
-                                        SQI_BDCTRL_SQICS_CS1 | SQI_BDCTRL_DESCEN);
+                                        SQI_CHIP_SELECT | SQI_BDCTRL_DESCEN);
 
         sqiBufDesc[i].bd_bufaddr    = (uint32_t *)KVA_TO_PA(readBuffer);
         sqiBufDesc[i].bd_stat       = 0;
@@ -430,7 +432,7 @@ bool DRV_SST26_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
     sqi_cmd_pp[3] = (0xff & (address>>0));
 
     sqiCmdDesc[1].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(4) | SQI_BDCTRL_MODE_QUAD_LANE |
-                                    SQI_BDCTRL_SQICS_CS1 | SQI_BDCTRL_DESCEN);
+                                    SQI_CHIP_SELECT | SQI_BDCTRL_DESCEN);
 
     sqiCmdDesc[1].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_pp);
     sqiCmdDesc[1].bd_stat       = 0;
@@ -439,7 +441,7 @@ bool DRV_SST26_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
     sqiBufDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(DRV_SST26_PAGE_SIZE) | SQI_BDCTRL_PKTINTEN |
                                     SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
                                     SQI_BDCTRL_MODE_QUAD_LANE | SQI_BDCTRL_SCHECK |
-                                    SQI_BDCTRL_SQICS_CS1 | SQI_BDCTRL_DEASSERT |
+                                    SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
                                     SQI_BDCTRL_DESCEN);
 
     sqiBufDesc[0].bd_bufaddr    = (uint32_t *)KVA_TO_PA(tx_data);
@@ -463,7 +465,7 @@ static bool DRV_SST26_Erase( uint8_t *instruction, uint32_t length )
     sqiCmdDesc[1].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(length) | SQI_BDCTRL_PKTINTEN |
                                     SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
                                     SQI_BDCTRL_MODE_QUAD_LANE | SQI_BDCTRL_SCHECK |
-                                    SQI_BDCTRL_SQICS_CS1 | SQI_BDCTRL_DEASSERT |
+                                    SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
                                     SQI_BDCTRL_DESCEN);
 
     sqiCmdDesc[1].bd_bufaddr    = (uint32_t *)KVA_TO_PA(instruction);
