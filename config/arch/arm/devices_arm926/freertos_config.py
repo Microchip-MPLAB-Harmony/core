@@ -72,13 +72,14 @@ Database.setSymbolValue("pit", "ENABLE_COUNTER", False)
 configName  = Variables.get("__CONFIGURATION_NAME")
 
 compiler_choice = Database.getComponentByID("core").getSymbolByID("COMPILER_CHOICE")
-freeRtosdefSym = thirdPartyFreeRTOS.createSettingSymbol(None, None)
+
+freeRtosdefSym = thirdPartyFreeRTOS.createSettingSymbol("FREERTOS_INCLUDE_DIRS", None)
 freeRtosdefSym.setCategory("C32")
 freeRtosdefSym.setKey("extra-include-directories")
 freeRtosdefSym.setValue("../src/third_party/rtos/FreeRTOS/Source/portable/"+compiler_choice.getSelectedKey()+"/SAM/ARM926;../src/third_party/rtos/FreeRTOS/Source/include;")
 freeRtosdefSym.setAppend(True, ";")
 
-freeRtosPortSource = thirdPartyFreeRTOS.createFileSymbol(None, None)
+freeRtosPortSource = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SAM_PORT_C", None)
 freeRtosPortSource.setSourcePath("config/arch/arm/devices_arm926/src/port.c")
 freeRtosPortSource.setOutputName("port.c")
 freeRtosPortSource.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/"+compiler_choice.getSelectedKey()+"/SAM/ARM926")
@@ -86,7 +87,7 @@ freeRtosPortSource.setProjectPath("FreeRTOS/Source/portable/"+compiler_choice.ge
 freeRtosPortSource.setType("SOURCE")
 freeRtosPortSource.setMarkup(False)
 
-freeRtosPortASMSource = thirdPartyFreeRTOS.createFileSymbol(None, None)
+freeRtosPortASMSource = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SAM_PORT_ASM_IAR", None)
 freeRtosPortASMSource.setSourcePath("config/arch/arm/devices_arm926/src/IAR/portASM.s")
 freeRtosPortASMSource.setOutputName("portASM.s")
 freeRtosPortASMSource.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/"+compiler_choice.getSelectedKey()+"/SAM/ARM926")
@@ -94,9 +95,9 @@ freeRtosPortASMSource.setProjectPath("FreeRTOS/Source/portable/"+compiler_choice
 freeRtosPortASMSource.setType("SOURCE")
 freeRtosPortASMSource.setMarkup(False)
 freeRtosPortASMSource.setEnabled(compiler_choice.getSelectedKey() == "IAR")
-freeRtosPortASMSource.setDependencies(lambda symbol, event: symbol.setEnabled(event["symbol"].getSelectedKey() == "IAR"), ["COMPILER_CHOICE"])
+freeRtosPortASMSource.setDependencies(lambda symbol, event: symbol.setEnabled(event["symbol"].getSelectedKey() == "IAR"), ["core.COMPILER_CHOICE"])
 
-freeRtosPortASMSource = thirdPartyFreeRTOS.createFileSymbol(None, None)
+freeRtosPortASMSource = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SAM_PORT_ASM_XC32", None)
 freeRtosPortASMSource.setSourcePath("config/arch/arm/devices_arm926/src/GCC/portASM.S")
 freeRtosPortASMSource.setOutputName("portASM.S")
 freeRtosPortASMSource.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/"+compiler_choice.getSelectedKey()+"/SAM/ARM926")
@@ -104,9 +105,9 @@ freeRtosPortASMSource.setProjectPath("FreeRTOS/Source/portable/"+compiler_choice
 freeRtosPortASMSource.setType("SOURCE")
 freeRtosPortASMSource.setMarkup(False)
 freeRtosPortASMSource.setEnabled(compiler_choice.getSelectedKey() == "XC32")
-freeRtosPortASMSource.setDependencies(lambda symbol, event: symbol.setEnabled(event["symbol"].getSelectedKey() == "XC32"), ["COMPILER_CHOICE"])
+freeRtosPortASMSource.setDependencies(lambda symbol, event: symbol.setEnabled(event["symbol"].getSelectedKey() == "XC32"), ["core.COMPILER_CHOICE"])
 
-freeRtosPortHeader = thirdPartyFreeRTOS.createFileSymbol(None, None)
+freeRtosPortHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SAM_PORT_MACRO_H", None)
 freeRtosPortHeader.setSourcePath("config/arch/arm/devices_arm926/src/portmacro.h")
 freeRtosPortHeader.setOutputName("portmacro.h")
 freeRtosPortHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/"+compiler_choice.getSelectedKey()+"/SAM/ARM926")
@@ -114,7 +115,7 @@ freeRtosPortHeader.setProjectPath("FreeRTOS/Source/portable/"+compiler_choice.ge
 freeRtosPortHeader.setType("HEADER")
 freeRtosPortHeader.setMarkup(False)
 
-freeRtosPortTickSource = thirdPartyFreeRTOS.createFileSymbol(None, None)
+freeRtosPortTickSource = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SAM_PORT_TICK_CONFIG_C", None)
 freeRtosPortTickSource.setSourcePath("config/arch/arm/devices_arm926/src/FreeRTOS_tick_config.c")
 freeRtosPortTickSource.setOutputName("FreeRTOS_tick_config.c")
 freeRtosPortTickSource.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/"+compiler_choice.getSelectedKey()+"/SAM/ARM926")
