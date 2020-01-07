@@ -38,8 +38,6 @@
             <path>\system\fs\fat_fs\src\file_system\ff.h</path>
             <path>\system\fs\fat_fs\src\file_system\ffconf.h</path>
             <path>\system\fs\fat_fs\src\hardware_access\diskio.h</path>
-            <path>\system\fs\mpfs\mpfs.h</path>
-            <path>\system\fs\mpfs\src\mpfs_local.h</path>
             <path>\device_cache.h</path>
             <path>\toolchain_specifics.h</path>
             <path>\definitions.h</path>
@@ -123,11 +121,9 @@
             <path>\system\fs\src\sys_fs_media_manager.c</path>
             <path>\system\fs\fat_fs\src\ff.c</path>
             <path>\system\fs\fat_fs\src\diskio.c</path>
-            <path>\system\fs\mpfs\src\mpfs.c</path>
             <path>\..\..\main.c</path>
             <path>\initialization.c</path>
             <path>\interrupts.c</path>
-            <path>\exceptions.c</path>
             <path>\stdio\iar_monitor.c</path>
             <path>\peripheral\mmu\plib_mmu.c</path>
             <path>\peripheral\clk\plib_clk.c</path>
