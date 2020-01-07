@@ -140,7 +140,7 @@ void SDRAMC_Handler( void )              __attribute__((weak, alias("DefaultInte
 void MPDDRC_Handler( void )              __attribute__((weak, alias("DefaultInterruptHandler")));
 void SMC_Handler( void )                 __attribute__((weak, alias("DefaultInterruptHandler")));
 
-void FLEXCOM0_InterruptHandler(          void );
+void FLEXCOM6_InterruptHandler(          void );
 
 /* Handlers for vectors that are shared by multiple interrupts */
 void SYSC_SharedHandler( void )
@@ -155,7 +155,7 @@ void MC_SharedHandler( void )
 
 /* data for irq register initialization */
 IrqData irqData[] = {
-    { 5,   (uint32_t) AIC_REGS,    FLEXCOM0_InterruptHandler,  AIC_SMR_SRCTYPE_INT_LEVEL_SENSITIVE_Val,  0x0 },
+    { 9,   (uint32_t) AIC_REGS,    FLEXCOM6_InterruptHandler,  AIC_SMR_SRCTYPE_INT_LEVEL_SENSITIVE_Val,  0x0 },
 };
 
 uint32_t irqDataEntryCount = sizeof( irqData ) / sizeof( irqData[ 0 ]);

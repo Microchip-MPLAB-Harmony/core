@@ -2236,7 +2236,7 @@
                 <name>$PROJ_DIR$\..\src\config\sam_9x60_ek\peripheral\clk\plib_clk.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_9x60_ek\peripheral\flexcom\twi\plib_flexcom0_twi.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_9x60_ek\peripheral\flexcom\twi\plib_flexcom6_twi.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_9x60_ek\peripheral\flexcom\twi\plib_flexcom_twi_master.h</name>
@@ -2377,9 +2377,6 @@
                 <name>$PROJ_DIR$\..\src\config\sam_9x60_ek\driver\at24\src\drv_at24_local.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_9x60_ek\exceptions.c</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_9x60_ek\stdio\iar_monitor.c</name>
             </file>
             <file>
@@ -2398,7 +2395,7 @@
                 <name>$PROJ_DIR$\..\src\config\sam_9x60_ek\peripheral\clk\plib_clk.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_9x60_ek\peripheral\flexcom\twi\plib_flexcom0_twi.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_9x60_ek\peripheral\flexcom\twi\plib_flexcom6_twi.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_9x60_ek\peripheral\mmu\plib_mmu.c</name>

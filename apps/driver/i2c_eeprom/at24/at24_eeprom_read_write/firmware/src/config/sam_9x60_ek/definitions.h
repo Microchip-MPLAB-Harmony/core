@@ -54,7 +54,7 @@
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/aic/plib_aic.h"
-#include "peripheral/flexcom/twi/plib_flexcom0_twi.h"
+#include "peripheral/flexcom/twi/plib_flexcom6_twi.h"
 #include "system/int/sys_int.h"
 #include "system/ports/sys_ports.h"
 #include "system/cache/sys_cache.h"

@@ -85,7 +85,7 @@
             <path>\..\..\packs\SAM9X60_DFP\component\xdmac.h</path>
             <path>\..\..\packs\SAM9X60_DFP\sam9x60.h</path>
             <path>\..\..\packs\SAM9X60_DFP\pio\sam9x60.h</path>
-            <path>\peripheral\flexcom\twi\plib_flexcom0_twi.h</path>
+            <path>\peripheral\flexcom\twi\plib_flexcom6_twi.h</path>
             <path>\peripheral\flexcom\twi\plib_flexcom_twi_master.h</path>
             <path>\driver\driver.h</path>
             <path>\driver\driver_common.h</path>
@@ -111,7 +111,6 @@
             <path>\..\..\main.c</path>
             <path>\initialization.c</path>
             <path>\interrupts.c</path>
-            <path>\exceptions.c</path>
             <path>\stdio\iar_monitor.c</path>
             <path>\peripheral\mmu\plib_mmu.c</path>
             <path>\peripheral\clk\plib_clk.c</path>
@@ -119,7 +118,7 @@
             <path>\peripheral\aic\plib_aic.c</path>
             <path>\cstartup.s</path>
             <path>\vectortrap.s</path>
-            <path>\peripheral\flexcom\twi\plib_flexcom0_twi.c</path>
+            <path>\peripheral\flexcom\twi\plib_flexcom6_twi.c</path>
             <path>\system\int\src\sys_int.c</path>
             <path>\system\cache\sys_cache.c</path>
             <path>\..\..\app.c</path>

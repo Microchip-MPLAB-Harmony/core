@@ -68,22 +68,22 @@
 const DRV_AT24_PLIB_INTERFACE drvAT24PlibAPI = {
 
     /* I2C PLIB WriteRead function */
-    .writeRead = (DRV_AT24_PLIB_WRITE_READ)FLEXCOM0_TWI_WriteRead,
+    .writeRead = (DRV_AT24_PLIB_WRITE_READ)FLEXCOM6_TWI_WriteRead,
 
     /* I2C PLIB Write function */
-    .write = (DRV_AT24_PLIB_WRITE)FLEXCOM0_TWI_Write,
+    .write = (DRV_AT24_PLIB_WRITE)FLEXCOM6_TWI_Write,
 
     /* I2C PLIB Read function */
-    .read = (DRV_AT24_PLIB_READ)FLEXCOM0_TWI_Read,
+    .read = (DRV_AT24_PLIB_READ)FLEXCOM6_TWI_Read,
 
     /* I2C PLIB Transfer Status function */
-    .isBusy = (DRV_AT24_PLIB_IS_BUSY)FLEXCOM0_TWI_IsBusy,
+    .isBusy = (DRV_AT24_PLIB_IS_BUSY)FLEXCOM6_TWI_IsBusy,
 
     /* I2C PLIB Error Status function */
-    .errorGet = (DRV_AT24_PLIB_ERROR_GET)FLEXCOM0_TWI_ErrorGet,
+    .errorGet = (DRV_AT24_PLIB_ERROR_GET)FLEXCOM6_TWI_ErrorGet,
 
     /* I2C PLIB Callback Register */
-    .callbackRegister = (DRV_AT24_PLIB_CALLBACK_REGISTER)FLEXCOM0_TWI_CallbackRegister,
+    .callbackRegister = (DRV_AT24_PLIB_CALLBACK_REGISTER)FLEXCOM6_TWI_CallbackRegister,
 };
 
 /* AT24 Driver Initialization Data */
@@ -150,6 +150,8 @@ void SYS_Initialize ( void* data )
 
 	PIO_Initialize();
 
+
+
 	BSP_Initialize();
     MMU_Initialize();
 
@@ -158,7 +160,7 @@ void SYS_Initialize ( void* data )
     /* Disable WDT   */
     WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk;
 
-    FLEXCOM0_TWI_Initialize();
+    FLEXCOM6_TWI_Initialize();
 
 
     sysObj.drvAT24 = DRV_AT24_Initialize(DRV_AT24_INDEX, (SYS_MODULE_INIT *)&drvAT24InitData);
