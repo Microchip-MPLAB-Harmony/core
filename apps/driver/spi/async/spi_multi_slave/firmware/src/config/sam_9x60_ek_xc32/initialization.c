@@ -184,6 +184,8 @@ void SYS_Initialize ( void* data )
 
 	PIO_Initialize();
 
+
+
 	BSP_Initialize();
     MMU_Initialize();
 
