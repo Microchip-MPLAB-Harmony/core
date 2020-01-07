@@ -176,6 +176,8 @@ void SYS_Initialize ( void* data )
 
 	PIO_Initialize();
 
+
+
     QSPI_Initialize();
 
 	BSP_Initialize();
