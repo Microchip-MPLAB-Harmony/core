@@ -172,6 +172,8 @@ void SYS_Initialize ( void* data )
 
 	PIO_Initialize();
 
+
+
 	BSP_Initialize();
 	PIT_TimerInitialize();
 
