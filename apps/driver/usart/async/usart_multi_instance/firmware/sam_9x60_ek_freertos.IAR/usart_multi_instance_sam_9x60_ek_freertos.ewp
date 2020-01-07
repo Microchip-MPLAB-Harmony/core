@@ -842,7 +842,7 @@
                 </option>
                 <option>
                     <name>IlinkProgramEntryLabel</name>
-                    <state></state>
+                    <state>__iar_program_start</state>
                 </option>
                 <option>
                     <name>DoFill</name>
@@ -1015,7 +1015,7 @@
                 </option>
                 <option>
                     <name>IlinkTrustzoneImportLibraryOut</name>
-                    <state>###Unitialized###</state>
+                    <state>usart_multi_instance_sam_9x60_ek_freertos_import_lib.o</state>
                 </option>
                 <option>
                     <name>OILinkExtraOption</name>
@@ -2458,9 +2458,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\event_groups.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_9x60_ek_freertos\exceptions.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_9x60_ek_freertos\freertos_hooks.c</name>
