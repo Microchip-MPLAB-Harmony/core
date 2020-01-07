@@ -92,7 +92,7 @@ extern "C" {
 #define DRV_AT24_INSTANCES_NUMBER              1
 #define DRV_AT24_INDEX                         0
 #define DRV_AT24_CLIENTS_NUMBER_IDX            1
-#define DRV_AT24_INT_SRC_IDX                   FLEXCOM0_IRQn
+#define DRV_AT24_INT_SRC_IDX                   FLEXCOM6_IRQn
 #define DRV_AT24_EEPROM_FLASH_SIZE             262144
 #define DRV_AT24_EEPROM_PAGE_SIZE              256
 #define DRV_AT24_WRITE_BUFFER_SIZE             258
