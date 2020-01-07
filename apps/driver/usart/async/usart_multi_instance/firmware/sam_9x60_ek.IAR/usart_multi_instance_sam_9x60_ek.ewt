@@ -2635,9 +2635,6 @@
                 <name>$PROJ_DIR$\..\src\config\sam_9x60_ek\driver\usart\src\drv_usart_local.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_9x60_ek\exceptions.c</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_9x60_ek\stdio\iar_monitor.c</name>
             </file>
             <file>
