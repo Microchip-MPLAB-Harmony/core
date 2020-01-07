@@ -2704,9 +2704,6 @@
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\event_groups.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_9x60_ek_freertos\exceptions.c</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_9x60_ek_freertos\freertos_hooks.c</name>
             </file>
             <file>

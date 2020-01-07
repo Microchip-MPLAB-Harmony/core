@@ -62,6 +62,15 @@
 // *****************************************************************************
 
 
+/*** Macros for WILC_ENABLE pin ***/
+#define WILC_ENABLE_Set()               (PIOA_REGS->PIO_SODR = (1<<29))
+#define WILC_ENABLE_Clear()             (PIOA_REGS->PIO_CODR = (1<<29))
+#define WILC_ENABLE_Toggle()            (PIOA_REGS->PIO_ODSR ^= (1<<29))
+#define WILC_ENABLE_Get()               ((PIOA_REGS->PIO_PDSR >> 29) & 0x1)
+#define WILC_ENABLE_OutputEnable()      (PIOA_REGS->PIO_OER = (1<<29))
+#define WILC_ENABLE_InputEnable()       (PIOA_REGS->PIO_ODR = (1<<29))
+#define WILC_ENABLE_PIN                  PIO_PIN_PA29
+
 
 // *****************************************************************************
 /* PIO Port

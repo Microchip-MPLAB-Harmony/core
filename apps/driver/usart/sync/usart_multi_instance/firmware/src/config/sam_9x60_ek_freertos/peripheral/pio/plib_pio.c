@@ -73,8 +73,8 @@ void PIO_Initialize ( void )
     /* PORTA Output Write Enable */
     ((pio_registers_t*)PIO_PORT_A)->PIO_OWER = PIO_OWER_Msk;
     /* PORTA Output Direction Enable */
-    ((pio_registers_t*)PIO_PORT_A)->PIO_OER = 0x0;
-    ((pio_registers_t*)PIO_PORT_A)->PIO_ODR = ~0x0;
+    ((pio_registers_t*)PIO_PORT_A)->PIO_OER = 0x20000000;
+    ((pio_registers_t*)PIO_PORT_A)->PIO_ODR = ~0x20000000;
     /* PORTA Initial state High */
     ((pio_registers_t*)PIO_PORT_A)->PIO_ODSR = 0x0;
     /* PORTA Slew rate control */
@@ -124,8 +124,7 @@ void PIO_Initialize ( void )
     ((pio_registers_t*)PIO_PORT_D)->PIO_PER = 0xFFFFFFFF;
     ((pio_registers_t*)PIO_PORT_D)->PIO_MDDR = 0xFFFFFFFF;
     /* PORTD Pull Up Enable/Disable as per MHC selection */
-    ((pio_registers_t*)PIO_PORT_D)->PIO_PUDR = ~0x40000;
-    ((pio_registers_t*)PIO_PORT_D)->PIO_PUER = 0x40000;
+    ((pio_registers_t*)PIO_PORT_D)->PIO_PUDR = 0xFFFFFFFF;
     /* PORTD Pull Down Enable/Disable as per MHC selection */
     ((pio_registers_t*)PIO_PORT_D)->PIO_PPDDR = 0xFFFFFFFF;
     /* PORTD Output Write Enable */

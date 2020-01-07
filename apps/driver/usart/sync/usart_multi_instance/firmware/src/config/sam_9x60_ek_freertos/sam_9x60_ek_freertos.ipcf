@@ -12,7 +12,7 @@
         <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</path>
         <path>$PROJ_DIR$\..\..\firmware\src\arm</path>
         <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\ARM926</path>
-        <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\Include</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\include</path>
     </includePath>
     <asmIncludePath>
         <path>$PROJ_DIR$\..\..\firmware\src</path>
@@ -22,7 +22,7 @@
         <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</path>
         <path>$PROJ_DIR$\..\..\firmware\src\arm</path>
         <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\ARM926</path>
-        <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\Include</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\include</path>
     </asmIncludePath>
     <linkerFile>
         <override>true</override>
@@ -140,7 +140,6 @@
             <path>\..\..\main.c</path>
             <path>\initialization.c</path>
             <path>\interrupts.c</path>
-            <path>\exceptions.c</path>
             <path>\stdio\iar_monitor.c</path>
             <path>\peripheral\mmu\plib_mmu.c</path>
             <path>\peripheral\clk\plib_clk.c</path>
