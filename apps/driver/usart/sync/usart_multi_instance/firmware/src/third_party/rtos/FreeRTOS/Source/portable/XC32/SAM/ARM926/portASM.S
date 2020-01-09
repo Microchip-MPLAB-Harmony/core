@@ -54,7 +54,12 @@
 
 #define AIC         0xFFFFF100
 #define AIC_IVR     0x010
+#define AIC_SMR     0x004
 #define AIC_EOICR   0x038
+
+#define I_BIT       0x80
+#define F_BIT       0x40
+	
 
 	.text
 	.arm
@@ -180,10 +185,31 @@ FreeRTOS_IRQ_Handler:
 			LDR 	lr, =AIC
 			LDR 	r0, [r14, #AIC_IVR]
 			STR 	lr, [r14, #AIC_IVR]
+			
+			// Dummy read to force AIC_IVR write completion
+			LDR         lr, [r14, #AIC_SMR]
+
+			// Branch to interrupt handler in Supervisor mode
+
+			MSR         CPSR_c, #SVC_MODE
+			STMFD       sp!, { r1-r3, r4, r12, lr}
+
+			// Check for 8-byte alignment and save lr plus a
+			// word to indicate the stack adjustment used (0 or 4)
+
+			AND         r1, sp, #4
+			SUB         sp, sp, r1
+			STMFD       sp!, {r1, lr}
 	
 			/* Branch to C portion of the interrupt handler */
 			MOV 	lr, pc
 			BX		r0
+			
+			LDMIA       sp!, {r1, lr}
+			ADD         sp, sp, r1
+
+			LDMIA       sp!, { r1-r3, r4, r12, lr}
+			MSR         CPSR_c, #IRQ_MODE | I_BIT | F_BIT
 	
 			/* Acknowledge interrupt */
 			LDR 	lr, =AIC
