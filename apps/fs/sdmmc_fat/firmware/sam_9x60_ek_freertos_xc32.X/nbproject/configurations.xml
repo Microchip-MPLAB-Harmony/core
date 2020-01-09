@@ -60,10 +60,6 @@
                   <itemPath>../src/config/sam_9x60_ek_freertos_xc32/system/fs/fat_fs/src/hardware_access/diskio.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
-                <itemPath>../src/config/sam_9x60_ek_freertos_xc32/system/fs/mpfs/mpfs.h</itemPath>
-                <itemPath>../src/config/sam_9x60_ek_freertos_xc32/system/fs/mpfs/src/mpfs_local.h</itemPath>
-              </logicalFolder>
               <itemPath>../src/config/sam_9x60_ek_freertos_xc32/system/fs/sys_fs.h</itemPath>
               <itemPath>../src/config/sam_9x60_ek_freertos_xc32/system/fs/src/sys_fs_local.h</itemPath>
               <itemPath>../src/config/sam_9x60_ek_freertos_xc32/system/fs/sys_fs_media_manager.h</itemPath>
@@ -130,51 +126,51 @@
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="SAM9X60_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
-            <itemPath>../src/packs/SAM9X60_DFP/component/sdramc.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/sdmmc.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/adc.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/aes.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/aic.h</itemPath>
             <itemPath>../src/packs/SAM9X60_DFP/component/bsc.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/sckc.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/shdwc.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/tdes.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/isi.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/trng.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/can.h</itemPath>
             <itemPath>../src/packs/SAM9X60_DFP/component/classd.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/pit64b.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/dbgu.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/emac.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/flexcom.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/gfx2d.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/gpbr.h</itemPath>
             <itemPath>../src/packs/SAM9X60_DFP/component/i2smcc.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/isi.h</itemPath>
             <itemPath>../src/packs/SAM9X60_DFP/component/lcdc.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/xdmac.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/matrix.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/mpddrc.h</itemPath>
             <itemPath>../src/packs/SAM9X60_DFP/component/otpc.h</itemPath>
             <itemPath>../src/packs/SAM9X60_DFP/component/pio.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/can.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/udphs.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/flexcom.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/uhphs.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/qspi.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/ssc.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/mpddrc.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/uhpfs.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/emac.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/sfr.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/pmerrloc.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/pmecc.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/wdt.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/matrix.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/aes.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/pwm.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/pit.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/pit64b.h</itemPath>
             <itemPath>../src/packs/SAM9X60_DFP/component/pmc.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/syscwp.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/tc.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/adc.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/pmecc.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/pmerrloc.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/pwm.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/qspi.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/rstc.h</itemPath>
             <itemPath>../src/packs/SAM9X60_DFP/component/rtc.h</itemPath>
             <itemPath>../src/packs/SAM9X60_DFP/component/rtt.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/gfx2d.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/aic.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/rstc.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/gpbr.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/sckc.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/sdmmc.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/sdramc.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/sfr.h</itemPath>
             <itemPath>../src/packs/SAM9X60_DFP/component/sha.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/dbgu.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/shdwc.h</itemPath>
             <itemPath>../src/packs/SAM9X60_DFP/component/smc.h</itemPath>
-            <itemPath>../src/packs/SAM9X60_DFP/component/pit.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/ssc.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/syscwp.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/tc.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/tdes.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/trng.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/udphs.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/uhpfs.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/uhphs.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/wdt.h</itemPath>
+            <itemPath>../src/packs/SAM9X60_DFP/component/xdmac.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="pio" projectFiles="true">
             <itemPath>../src/packs/SAM9X60_DFP/pio/sam9x60.h</itemPath>
@@ -247,9 +243,6 @@
                 <itemPath>../src/config/sam_9x60_ek_freertos_xc32/system/fs/fat_fs/src/ff.c</itemPath>
                 <itemPath>../src/config/sam_9x60_ek_freertos_xc32/system/fs/fat_fs/src/diskio.c</itemPath>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
-                <itemPath>../src/config/sam_9x60_ek_freertos_xc32/system/fs/mpfs/src/mpfs.c</itemPath>
-              </logicalFolder>
               <itemPath>../src/config/sam_9x60_ek_freertos_xc32/system/fs/src/sys_fs.c</itemPath>
               <itemPath>../src/config/sam_9x60_ek_freertos_xc32/system/fs/src/sys_fs_media_manager.c</itemPath>
             </logicalFolder>
@@ -262,7 +255,6 @@
           </logicalFolder>
           <itemPath>../src/config/sam_9x60_ek_freertos_xc32/initialization.c</itemPath>
           <itemPath>../src/config/sam_9x60_ek_freertos_xc32/interrupts.c</itemPath>
-          <itemPath>../src/config/sam_9x60_ek_freertos_xc32/exceptions.c</itemPath>
           <itemPath>../src/config/sam_9x60_ek_freertos_xc32/cstartup.S</itemPath>
           <itemPath>../src/config/sam_9x60_ek_freertos_xc32/vectortrap.s</itemPath>
           <itemPath>../src/config/sam_9x60_ek_freertos_xc32/freertos_hooks.c</itemPath>
@@ -320,7 +312,7 @@
         <platformTool>Simulator</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.30</languageToolchainVersion>
-        <platform>2</platform>
+        <platform>3</platform>
       </toolsSet>
       <packs>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
