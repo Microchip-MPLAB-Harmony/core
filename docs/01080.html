@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_DirOpen Function</title>
+<title>SYS_FS_DirectoryChange Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01437.html" target="topic">System Service Libraries Help</a> &gt; <a href="00924.html" target="topic">File System Service Library Help</a> &gt; <a href="00925.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01080.html" target="topic">SYS_FS_DirOpen Function</a></div>
+<a href="01423.html" target="topic">System Service Libraries Help</a> &gt; <a href="00926.html" target="topic">File System Service Library Help</a> &gt; <a href="00927.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01080.html" target="topic">SYS_FS_DirectoryChange Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01079.html" target="topic">Previous</a> | <a href="00925.html" target="topic">Up</a> | <a href="01077.html" target="topic">Next</a></div>
+<a href="01085.html" target="topic">Previous</a> | <a href="00927.html" target="topic">Up</a> | <a href="01078.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_DirOpen@char* Topic Title: SYS_FS_DirOpen Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_DirectoryChange@char* Topic Title: SYS_FS_DirectoryChange Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_DirOpen Function</div>
+SYS_FS_DirectoryChange Function</div>
 </div>
 </div>
 
@@ -49,11 +49,11 @@ SYS_FS_DirOpen Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function opens the requested directory.</p></div>
+This function changes the present directory to a new directory.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01213.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">SYS_FS_DirOpen</span></strong>(
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01290.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_DirectoryChange</span></strong>(
     <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong>* <strong><span style="color: #000000">path</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
@@ -61,7 +61,7 @@ Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The volume on which the directory is present should be mounted.</p></div>
+The disk has to be mounted and the directory to be changed must exist.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -80,7 +80,7 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 path&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Path to the directory along with the volume name. The string of volume and directory name has to be preceded by &quot;/mnt/&quot;. Also, the volume name and directory name has to be separated by a slash &quot;/&quot;. If the directory specified is only the root directory, the path has to be ended with &quot;/&quot;.&nbsp;</div></td></tr></table></div></div>
+Path of the directory to be changed to.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,29 +88,28 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-On success a valid handle to the directory will be returned. On failure <a href="01214.html" target="topic">SYS_FS_HANDLE_INVALID</a> will be returned. The reason for the failure can be retrieved with <a href="01089.html" target="topic">SYS_FS_Error</a>.</p></div>
+SYS_FS_RES_SUCCESS - Indicates that the directory change operation was successful. SYS_FS_RES_FAILURE - Indicates that the directory change operation was unsuccessful. The reason for the failure can be retrieved with <a href="01091.html" target="topic">SYS_FS_Error</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None</p></div>
+None.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01213.html" target="topic">SYS_FS_HANDLE</a> dirHandle;
+<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01290.html" target="topic">SYS_FS_RESULT</a> res;
 
-  dirHandle = SYS_FS_DirOpen(&quot;/mnt/myDrive/Dir1&quot;);
-  <i><span style="color: #008000">// For root directory, end with a &quot;/&quot;</span></i>
-  <i><span style="color: #008000">// dirHandle = SYS_FS_DirOpen(&quot;/mnt/myDrive/&quot;);</span></i>
+  res = SYS_FS_DirectoryChange(&quot;Dir1&quot;);
 
-  <strong><span style="color: #000080">if</span></strong>(dirHandle != <a href="01214.html" target="topic">SYS_FS_HANDLE_INVALID</a>)
+  <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
   {
-      <i><span style="color: #008000">// Directory open is successful</span></i>
-  }</pre></div></div>
+      <i><span style="color: #008000">// Directory change failed</span></i>
+  }
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -118,7 +117,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01437.html" target="topic">System Service Libraries Help</a> &gt; <a href="00924.html" target="topic">File System Service Library Help</a> &gt; <a href="00925.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01080.html" target="topic">SYS_FS_DirOpen Function</a></div>
+<a href="01423.html" target="topic">System Service Libraries Help</a> &gt; <a href="00926.html" target="topic">File System Service Library Help</a> &gt; <a href="00927.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01080.html" target="topic">SYS_FS_DirectoryChange Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -126,13 +125,13 @@ Example</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01079.html" target="topic">Previous</a> | <a href="00925.html" target="topic">Up</a> | <a href="01077.html" target="topic">Next</a></div>
+<a href="01085.html" target="topic">Previous</a> | <a href="00927.html" target="topic">Up</a> | <a href="01078.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_DirOpen@char* Topic Title: SYS_FS_DirOpen Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_DirectoryChange@char* Topic Title: SYS_FS_DirectoryChange Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

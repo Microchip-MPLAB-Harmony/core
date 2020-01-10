@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_USART_WriteQueuePurge Function</title>
+<title>Building the Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00300.html" target="topic">USART Driver Library Help</a> &gt; <a href="00301.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00697.html" target="topic">DRV_USART_WriteQueuePurge Function</a></div>
+<a href="00007.html" target="topic">Applications Help</a> &gt; <a href="00008.html" target="topic">RTOS Applications</a> &gt; <a href="00695.html" target="topic">Express Logic ThreadX Applications</a> &gt; <a href="00696.html" target="topic">basic</a> &gt; <a href="00697.html" target="topic">Building the Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00691.html" target="topic">Previous</a> | <a href="00301.html" target="topic">Up</a> | <a href="00685.html" target="topic">Next</a></div>
+<a href="00696.html" target="topic">Previous</a> | <a href="00696.html" target="topic">Up</a> | <a href="00699.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_WriteQueuePurge@DRV_HANDLE Topic Title: DRV_USART_WriteQueuePurge Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Express Logic ThreadX basic Building the Application Topic Title: Building the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_USART_WriteQueuePurge Function</div>
+Building the Application</div>
 </div>
 </div>
 
@@ -49,83 +49,109 @@ DRV_USART_WriteQueuePurge Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function removes all the buffer requests from the queue. The client can use this function to purge the queue on timeout or to remove unwanted stalled buffer requests or in any other use case.</p></div>
-</div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_USART_WriteQueuePurge</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00402.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-<a href="00688.html" target="topic">DRV_USART_Open</a> must have been called to obtain a valid opened device handle.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
+The parent folder for all the projects for this application is given below: </p><div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table2">
+<table cellspacing="0" class="Table4">
 <tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
+<td class="Element65" valign="top" width="27%">
+<div class="Element66">
+Application Path&nbsp;</div></td><td class="Element65" valign="top" width="73%">
+<div class="Element66">
+expresslogic_threadx\apps\basic\firmware&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">To build the application, refer to the following table and open the appropriate project file.</span>&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>MPLAB X IDE Projects</strong> </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="29%">
+<div class="Element66">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="71%">
+<div class="Element66">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Handle of the communication channel as returned by the <a href="00688.html" target="topic">DRV_USART_Open</a> function.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
+<td class="Element67" valign="top" width="29%">
+<div class="Element68">
+pic32mk_mcj_curiosity_pro.X&nbsp;</div></td><td class="Element67" valign="top" width="71%">
+<div class="Element68">
+PIC32MK MCJ Curiosity Pro Development Board&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="29%">
+<div class="Element68">
+pic32mz_das_sk.X&nbsp;</div></td><td class="Element67" valign="top" width="71%">
+<div class="Element68">
+PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit (Crypto)&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="29%">
+<div class="Element68">
+pic32mz_ef_sk.X&nbsp;</div></td><td class="Element67" valign="top" width="71%">
+<div class="Element68">
+PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="29%">
+<div class="Element68">
+sam_c21n_xpro.X&nbsp;</div></td><td class="Element67" valign="top" width="71%">
+<div class="Element68">
+SAM C21N Xplained Pro Evaluation Kit&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="29%">
+<div class="Element68">
+sam_e54_xpro.X&nbsp;</div></td><td class="Element67" valign="top" width="71%">
+<div class="Element68">
+SAM E54 Xplained Pro Evaluation Kit&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="29%">
+<div class="Element68">
+sam_e70_xult.X&nbsp;</div></td><td class="Element67" valign="top" width="71%">
+<div class="Element68">
+SAM E70 Xplained Ultra Evaluation Kit&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="29%">
+<div class="Element68">
+sam_a5d2_xult_xc32.X&nbsp;</div></td><td class="Element67" valign="top" width="71%">
+<div class="Element68">
+SAMA5D2 Xplained Ultra evaluation kit&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
-true - Write queue purge is successful.&nbsp;</p>
+&nbsp;</p>
+<div class="Element15">
+IAR Embedded Workbench Projects</div>
+<div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="25%">
+<div class="Element66">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="75%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="25%">
+<div class="Element68">
+sam_a5d2_xult.IAR&nbsp;</div></td><td class="Element67" valign="top" width="75%">
+<div class="Element68">
+SAMA5D2 Xplained Ultra evaluation kit&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="25%">
+<div class="Element68">
+sam_9x60_ek.IAR&nbsp;</div></td><td class="Element67" valign="top" width="75%">
+<div class="Element68">
+SAM9X60 evaluation kit&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
-false - Write queue purge has failed.</p></div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-This function is thread safe when used in an RTOS environment. Avoid this function call from within the callback.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// myUSARTHandle is the handle returned by the DRV_USART_Open function.</span></i>
-<i><span style="color: #008000">// Use DRV_USART_WriteBufferAdd to queue write requests</span></i>
+&nbsp;</p>
+<div class="Element15">
+Note:</div>
 
-<i><span style="color: #008000">// Application timeout function, where remove queued buffers.</span></i>
-<strong><span style="color: #000080">void</span></strong> APP_TimeOut(<strong><span style="color: #000080">void</span></strong>)
-{
-    <strong><span style="color: #000080">if</span></strong>(DRV_USART_WriteQueuePurge(myUSARThandle) == <strong><span style="color: #000080">false</span></strong>)
-    {
-        <i><span style="color: #008000">//Couldn't purge the write queue, try again.</span></i>
-    }
-    <strong><span style="color: #000080">else</span></strong>
-    {
-        <i><span style="color: #008000">//Queue purge successful.</span></i>
-    }
-}</pre></div></div>
-</div>
+<ol class="Element630">
+<li value="1" class="Element600">Make sure the <span style="color: #000000">Express Logic ThreadX source code is installed in <strong>&lt;Harmony3_Path&gt;/</span>thirdparty_expresslogic/tx58&lt;core_name&gt;_&lt;ide_name&gt;</strong> then regenerate the code for demonstration to work. <strong>Ex:</strong> Express Logic ThreadX Source Code for Cortex-M7 based device is located at <span style="color: #000000"><strong>&lt;Harmony3_Path&gt;/</span>thirdparty_expresslogic/tx58cortex-m7_mplabx</strong></li>
+<li value="2" class="Element600">The following IAR EW Project configurations must be performed before building the IAR EW Project.
+<ul class="Element631">
+<li class="Element601">Go to IAR EW IDE <strong>Project -&gt; Options... -&gt; C/C++ Compiler -&gt; Code -&gt; Processor Mode</strong>, and Select <strong>Arm</strong> Processor mode.</li>
+<li class="Element601">Go to IAR EW IDE <strong>Project -&gt; Options... -&gt; C/C++ Compiler -&gt; Preprocessor -&gt;Defined symbols: (one per line)</strong>, and add <strong>TX_INCLUDE_USER_DEFINE_FILE</strong> in the text box.</li>
+</ul></li>
+</ol></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00300.html" target="topic">USART Driver Library Help</a> &gt; <a href="00301.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00697.html" target="topic">DRV_USART_WriteQueuePurge Function</a></div>
+<a href="00007.html" target="topic">Applications Help</a> &gt; <a href="00008.html" target="topic">RTOS Applications</a> &gt; <a href="00695.html" target="topic">Express Logic ThreadX Applications</a> &gt; <a href="00696.html" target="topic">basic</a> &gt; <a href="00697.html" target="topic">Building the Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -133,13 +159,13 @@ Example</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00691.html" target="topic">Previous</a> | <a href="00301.html" target="topic">Up</a> | <a href="00685.html" target="topic">Next</a></div>
+<a href="00696.html" target="topic">Previous</a> | <a href="00696.html" target="topic">Up</a> | <a href="00699.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_WriteQueuePurge@DRV_HANDLE Topic Title: DRV_USART_WriteQueuePurge Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Express Logic ThreadX basic Building the Application Topic Title: Building the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

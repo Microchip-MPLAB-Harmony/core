@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>MPLAB Harmony Configuration</title>
+<title>Building the Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00009.html" target="topic">Driver Applications</a> &gt; <a href="00210.html" target="topic">SPI Driver Applications</a> &gt; Sync &gt; <a href="00246.html" target="topic">spi_multi_slave</a> &gt; <a href="00249.html" target="topic">MPLAB Harmony Configuration</a></div>
+<a href="00007.html" target="topic">Applications Help</a> &gt; <a href="00006.html" target="topic">Driver Applications</a> &gt; <a href="00207.html" target="topic">SPI Driver Applications</a> &gt; Sync &gt; <a href="00248.html" target="topic">spi_self_loopback_multi_client</a> &gt; <a href="00249.html" target="topic">Building the Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00247.html" target="topic">Previous</a> | <a href="00246.html" target="topic">Up</a> | <a href="00248.html" target="topic">Next</a></div>
+<a href="00248.html" target="topic">Previous</a> | <a href="00248.html" target="topic">Up</a> | <a href="00251.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SPI Sync spi_multi_slave_freertos MPLAB Harmony Configuration Topic Title: MPLAB Harmony Configuration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SPI Sync spi_self_loopback_multi_client_freertos Building the Application Topic Title: Building the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-MPLAB Harmony Configuration</div>
+Building the Application</div>
 </div>
 </div>
 
@@ -48,39 +48,128 @@ MPLAB Harmony Configuration</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element15">
-Components used:</div>
-
-<ul class="Element630">
-<li class="Element600">SPI Driver (Synchronous mode)</li>
-</ul><p class="Element10">
+<p class="Element10">
+The parent folder for all the projects for this application is given below: </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="21%">
+<div class="Element66">
+Application Path&nbsp;</div></td><td class="Element65" valign="top" width="79%">
+<div class="Element66">
+core/apps/driver/spi/sync/spi_self_loopback_multi_client/firmware&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-The following components used may vary based on the project configuration selected:</p>
-<ul class="Element630">
-<li class="Element600">SERCOM or SPI or FLEXCOM peripheral library</li>
-<li class="Element600">Board Support Package (BSP)</li>
-<li class="Element600">FreeRTOS</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<div class="Element15">
-Other MHC settings:</div>
-
-<ul class="Element630">
-<li class="Element600">Configure the Pins for the SPI peripheral in the Pin Settings</li>
-<li class="Element600">Configure the SPI Chip Select, Hold and Write Protect Pins of both the EEPROMs</li>
-<li class="Element600">Enable DMA for Transmit and Receive (DMA Channels for transmit and receive automatically gets allocated by MHC)</li>
-</ul><p class="Element10">
+The following tables provide the project name to be used with the different development kits. Open the required project in their respective IDEs.&nbsp;</p>
+<p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-<strong>Note</strong>: For projects that use IAR Embedded work bench as IDE, the harmony project file should be opened using MHC plugin (standalone mode) to access the project graph.</p></div>
+<strong>MPLAB X IDE Projects</strong> &nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="34%">
+<div class="Element66">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="66%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="34%">
+<div class="Element68">
+pic32mk_gp_db_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+<div class="Element68">
+PIC32MK General Purpose Development Kit + FreeRTOS&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="34%">
+<div class="Element68">
+pic32mk_mcm_curiosity_pro_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+<div class="Element68">
+PIC32MK MCM Curiosity Pro Development Board + FreeRTOS&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="34%">
+<div class="Element68">
+pic32mk_mcj_curiosity_pro_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+<div class="Element68">
+PIC32MK MCJ Curiosity Pro Development Board + FreeRTOS&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="34%">
+<div class="Element68">
+pic32mz_dag_sk_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+<div class="Element68">
+PIC32MZ Embedded Graphics with Stacked DRAM (DAG) Starter Kit + FreeRTOS&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="34%">
+<div class="Element68">
+pic32mz_das_sk_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+<div class="Element68">
+PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit (Crypto) + FreeRTOS&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="34%">
+<div class="Element68">
+pic32mz_ef_sk_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+<div class="Element68">
+PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit + FreeRTOS&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="34%">
+<div class="Element68">
+pic32mz_w1_curiosity_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+<div class="Element68">
+PIC32MZ W1 Curiosity Development Board + FreeRTOS&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="34%">
+<div class="Element68">
+sam_c21n_xpro_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+<div class="Element68">
+SAM C21N Xplained Pro Evaluation Kit + FreeRTOS&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="34%">
+<div class="Element68">
+sam_e54_xpro_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+<div class="Element68">
+SAM E54 Xplained Pro Evaluation Kit + FreeRTOS&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="34%">
+<div class="Element68">
+sam_e70_xult_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+<div class="Element68">
+SAM E70 Xplained Ultra Evaluation Kit + FreeRTOS&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="34%">
+<div class="Element68">
+sam_rh71_ek_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+<div class="Element68">
+SAM RH71 Evaluation Kit + FreeRTOS&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="34%">
+<div class="Element68">
+sam_a5d2_xult_xc32_freertos.X&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+<div class="Element68">
+SAMA5D2 Xplained Ultra Evaluation Kit + FreeRTOS&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="34%">
+<div class="Element68">
+sam_9x60_ek_freertos_xc32.X&nbsp;</div></td><td class="Element67" valign="top" width="66%">
+<div class="Element68">
+SAM9X60 Evaluation Kit + FreeRTOS&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+IAR Embedded Workbench Projects</div>
+<div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="25%">
+<div class="Element66">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="75%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="25%">
+<div class="Element68">
+sam_a5d2_xult_freertos.IAR&nbsp;</div></td><td class="Element67" valign="top" width="75%">
+<div class="Element68">
+SAMA5D2 Xplained Ultra Evaluation Kit + FreeRTOS&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="25%">
+<div class="Element68">
+sam_9x60_ek_freertos.IAR&nbsp;</div></td><td class="Element67" valign="top" width="75%">
+<div class="Element68">
+SAM9X60 Evaluation Kit + FreeRTOS&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00009.html" target="topic">Driver Applications</a> &gt; <a href="00210.html" target="topic">SPI Driver Applications</a> &gt; Sync &gt; <a href="00246.html" target="topic">spi_multi_slave</a> &gt; <a href="00249.html" target="topic">MPLAB Harmony Configuration</a></div>
+<a href="00007.html" target="topic">Applications Help</a> &gt; <a href="00006.html" target="topic">Driver Applications</a> &gt; <a href="00207.html" target="topic">SPI Driver Applications</a> &gt; Sync &gt; <a href="00248.html" target="topic">spi_self_loopback_multi_client</a> &gt; <a href="00249.html" target="topic">Building the Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -88,13 +177,13 @@ Other MHC settings:</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00247.html" target="topic">Previous</a> | <a href="00246.html" target="topic">Up</a> | <a href="00248.html" target="topic">Next</a></div>
+<a href="00248.html" target="topic">Previous</a> | <a href="00248.html" target="topic">Up</a> | <a href="00251.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SPI Sync spi_multi_slave_freertos MPLAB Harmony Configuration Topic Title: MPLAB Harmony Configuration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SPI Sync spi_self_loopback_multi_client_freertos Building the Application Topic Title: Building the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

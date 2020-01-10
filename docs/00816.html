@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Abstraction Model</title>
+<title>Running The Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00815.html" target="topic">OSAL Library Help</a> &gt; <a href="00834.html" target="topic">Using the Library</a> &gt; <a href="00816.html" target="topic">Abstraction Model</a></div>
+<a href="00007.html" target="topic">Applications Help</a> &gt; <a href="00006.html" target="topic">Driver Applications</a> &gt; <a href="00256.html" target="topic">SQI Flash Driver Applications</a> &gt; <a href="00811.html" target="topic">MX25L Applications</a> &gt; <a href="00812.html" target="topic">mx25l_flash_read_write</a> &gt; <a href="00816.html" target="topic">Running The Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00834.html" target="topic">Previous</a> | <a href="00834.html" target="topic">Up</a> | <a href="00825.html" target="topic">Next</a></div>
+<a href="00814.html" target="topic">Previous</a> | <a href="00812.html" target="topic">Up</a> | <a href="00259.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: MX25L mx25l_flash_read_write Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Abstraction Model</div>
+Running The Application</div>
 </div>
 </div>
 
@@ -48,19 +48,42 @@ Abstraction Model</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10" style="text-align: justify;">
-The common interface can easily be ported to many host Real-Time Operating Systems (RTOS) by third parties and the set of functions provides a basic level of RTOS compatibility. Where a specific RTOS does not implement a given architectural feature (e.g., events), the OSAL port for that RTOS should endeavor to imitate that feature using the constructs that are available. Although it is recognized that this may have a detrimental effect on the performance of that system it does allow MPLAB Harmony developers the broadest scope for using RTOS features in their designs.</p><p class="Element10">
+<p class="Element10">
+<strong><u>MPU Devices</u></strong></p>
+<ol class="Element630">
+<li value="1" class="Element600">Build the IAR or MPLAB X project using IAR Embedded Workbench or MPLAB X IDE respectively</li>
+<li value="2" class="Element600">Use the output binary file (harmony.bin) to setup the board as detailed in <a href="00814.html" target="topic">hardware setup</a></li>
+<li value="3" class="Element600">Reset the board to run the application</li>
+<li value="4" class="Element600">The LED indicates the success or failure.
+<ul class="Element631">
+<li class="Element601">The LED toggles with 1 second delay if the demo executes successfully.</li>
+<li class="Element601">LED turns on and stays on if the demo executes with error.</li>
+</ul></li>
+</ol><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-The following diagram illustrates the OSAL Abstraction model. </p><p class="Element10" style="text-align: center;">
-<img src="osal_abstraction.png" border="0" alt="" title=""></p></div>
+The following table provides the LED name: </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="67%">
+<div class="Element66">
+Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="33%">
+<div class="Element66">
+LED Name&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="67%">
+<div class="Element68">
+SAMA5D2 Xplained Ultra Evaluation kit&nbsp;</div></td><td class="Element67" valign="top" width="33%">
+<div class="Element68">
+RGB_LED(Green)&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00815.html" target="topic">OSAL Library Help</a> &gt; <a href="00834.html" target="topic">Using the Library</a> &gt; <a href="00816.html" target="topic">Abstraction Model</a></div>
+<a href="00007.html" target="topic">Applications Help</a> &gt; <a href="00006.html" target="topic">Driver Applications</a> &gt; <a href="00256.html" target="topic">SQI Flash Driver Applications</a> &gt; <a href="00811.html" target="topic">MX25L Applications</a> &gt; <a href="00812.html" target="topic">mx25l_flash_read_write</a> &gt; <a href="00816.html" target="topic">Running The Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -68,13 +91,13 @@ The following diagram illustrates the OSAL Abstraction model. </p><p class="Elem
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00834.html" target="topic">Previous</a> | <a href="00834.html" target="topic">Up</a> | <a href="00825.html" target="topic">Next</a></div>
+<a href="00814.html" target="topic">Previous</a> | <a href="00812.html" target="topic">Up</a> | <a href="00259.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: MX25L mx25l_flash_read_write Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

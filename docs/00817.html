@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Building the Library</title>
+<title>OSAL Library Help</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00815.html" target="topic">OSAL Library Help</a> &gt; <a href="00817.html" target="topic">Building the Library</a></div>
+<a href="00817.html" target="topic">OSAL Library Help</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00818.html" target="topic">Previous</a> | <a href="00815.html" target="topic">Up</a> | <a href="00824.html" target="topic">Next</a></div>
+<a href="00783.html" target="topic">Previous</a> | <a href="00825.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Operating System Abstraction Layer (OSAL) Library Topic Title: OSAL Library Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Building the Library</div>
+OSAL Library Help</div>
 </div>
 </div>
 
@@ -46,73 +46,54 @@ Building the Library</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The following three tables list and describe the header (<span class="Element146">.h</span>) and source (<span class="Element146">.c</span>) files that implement this library. The parent folder for these files is <span class="Element146">&lt;install-dir&gt;/osal</span>.</p><div class="Element15">
-Interface File(s)</div>
-<p class="Element10">
-This table lists and describes the header files that must be included (i.e., using <span class="Element146">#include</span>) by any code that uses this library for the selected RTOS. </p><div class="Element63">
+<div class="Element212">
 <div class="TableDiv">
-<table cellspacing="0" class="Table4">
+<table cellspacing="0" class="Table0">
 <tr>
-<td class="Element65" valign="top" width="28%">
-<div class="Element66">
-Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="72%">
-<div class="Element66">
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="28%">
-<div class="Element68">
-<span class="Element146">/osal.h</span>&nbsp;</div></td><td class="Element67" valign="top" width="72%">
-<div class="Element68">
-This file provides the interface definitions of the OSAL Library.&nbsp;</div></td></tr></table></div></div>
-<div class="Element15">
-Required File(s)</div>
-<div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element67" valign="top" width="10%" style="border:none;">
-<div class="Element68">
-<img src="MHC_Logo_Medium.png" border="0" alt="" title="">&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
-<div class="Element68">
-<span style="color: #008000"><strong><i>All of the required files are automatically added into the MPLAB X IDE project by the MHC when the library is selected for use.</i></strong></span>&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-This table lists and describes the source and header files that must be included in the MPLAB X IDE project to build this library. </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table4">
-<tr>
-<td class="Element65" valign="top" width="26%">
-<div class="Element66">
-Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="74%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="26%">
-<div class="Element68">
-<span class="Element146">/src/osal.c</span><br><span class="Element146">/src/osal_impl_basic.h</span>&nbsp;</div></td><td class="Element67" valign="top" width="74%">
-<div class="Element68">
-Source files added to the project if using the &quot;BareMetal&quot; OSAL basic implementation used when no RTOS is present.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="26%">
-<div class="Element68">
-<span class="Element146">/src/osal_freertos.c</span><br><span class="Element146">/src/osal_freertos.h</span>&nbsp;</div></td><td class="Element67" valign="top" width="74%">
-<div class="Element68">
-Source files added to the project if using the FreeRTOS implementation for compatibility with the current version 10.0.1 of the FreeRTOS operating system from Amazon.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="26%">
-<div class="Element68">
-/src/osal_ucos3.c<br>/src/osal/ucos3.h&nbsp;</div></td><td class="Element67" valign="top" width="74%">
-<div class="Element68">
-Source files added to the project if using the µC/OS-III implementation for compatibility with the µC/OS-III operating system from Micriµm.&nbsp;</div></td></tr></table></div></div>
-<div class="Element15">
-Optional File(s)</div>
-<p class="Element10">
-There are no optional files for the OSAL Library.</p></div>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00825.html" target="topic">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+</p><p class="Element207" style="text-align: justify;">
+The Operating System Abstraction Layer (OSAL) provides a consistent interface to allow MPLAB Harmony-compliant libraries to take advantage of Operating System constructs when running in an OS environment or when operating without one. It is designed to take care of the underlying differences between the available OS Kernels or when no kernel is present.</p><p class="Element207">
+&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00836.html" target="topic">Using the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the basic architecture of the OSAL Library and provides information and examples on its use.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00820.html" target="topic">Configuring the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+<span style="color: #000000">This section provides information on how to configure the OSAL component.</span>&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00819.html" target="topic">Building the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section lists the files that are available in the OSAL Library.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00826.html" target="topic">Library Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the APIs of the OSAL Library. Refer to each section for a description.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00815.html" target="topic">OSAL Library Help</a> &gt; <a href="00817.html" target="topic">Building the Library</a></div>
+<a href="00817.html" target="topic">OSAL Library Help</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -120,13 +101,13 @@ There are no optional files for the OSAL Library.</p></div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00818.html" target="topic">Previous</a> | <a href="00815.html" target="topic">Up</a> | <a href="00824.html" target="topic">Next</a></div>
+<a href="00783.html" target="topic">Previous</a> | <a href="00825.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Operating System Abstraction Layer (OSAL) Library Topic Title: OSAL Library Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

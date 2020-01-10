@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Configuring the Library</title>
+<title>Application Interaction</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01437.html" target="topic">System Service Libraries Help</a> &gt; <a href="00924.html" target="topic">File System Service Library Help</a> &gt; <a href="00918.html" target="topic">Configuring the Library</a></div>
+<a href="01423.html" target="topic">System Service Libraries Help</a> &gt; <a href="00926.html" target="topic">File System Service Library Help</a> &gt; <a href="00930.html" target="topic">Using the Library</a> &gt; <a href="00924.html" target="topic">How the Library Works</a> &gt; <a href="00918.html" target="topic">Application Interaction</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00927.html" target="topic">Previous</a> | <a href="00924.html" target="topic">Up</a> | <a href="00917.html" target="topic">Next</a></div>
+<a href="00924.html" target="topic">Previous</a> | <a href="00924.html" target="topic">Up</a> | <a href="00929.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS FS Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS FS Application Interaction Topic Title: Application Interaction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Configuring the Library</div>
+Application Interaction</div>
 </div>
 </div>
 
@@ -49,82 +49,32 @@ Configuring the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-File System Service Library <span style="color: #000000">should be configured via MHC. The following figures show the MHC configuration window for File System Service and brief description.</span>&nbsp;</p>
+The interaction of various layers is shown in the following figure. </p><p class="Element10" style="text-align: center;">
+<img src="FS_figure_1.png" border="0" alt="" title="">&nbsp;</p>
 <p class="Element10" style="text-align: center;">
-<img src="FS_figure_4_NoAutoMount_Config.png" border="0" alt="" title="">&nbsp;</p>
+<strong>Application Interaction with FS Framework</strong></p><p class="Element10">
+In the process of using the FS Framework, the application must first <strong>mount</strong> the media drive for the FS Framework to access the media. Unless the mounting process returns successfully, the application should continue trying to mount the drive. If the drive is not attached, the mounting process will fail. In such a situation, the application should not proceed further unless the mounting is success. </p><p class="Element10" style="text-align: center;">
+<img src="FS_figure_2.png" border="0" alt="" title="">&nbsp;</p>
 <p class="Element10" style="text-align: center;">
-<strong>File System Configuration with Auto Mount Disabled</strong>&nbsp;</p>
+<strong>Application Mounts a Drive</strong>&nbsp;</p>
 <p class="Element10" style="text-align: center;">
 &nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="FS_figure_5_AutoMount_Config.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<strong>File System Configuration with Auto Mount Enabled</strong></p><p class="Element10">
+<p class="Element10">
+Once the drive is mounted, the application code can then <strong>open the file</strong> from the drive with different attributes (such as read-only or write). If the file open returns a valid handle, the application can proceed further. Otherwise, the application will enter an error state. The reason for an invalid handle could be that the application was trying to read a file from the drive that does not exist. Another reason for an invalid handle is when the application tries to write to a drive that is write-protected.&nbsp;</p>
+<p class="Element10">
+Once the file is opened, the valid file handle is further used to <strong>read/write</strong> data to the file. Once the required operation is performed on the file, the file can then be <strong>closed</strong> by the application by passing the file handle. The following figure illustrates the process. </p><p class="Element10" style="text-align: center;">
 &nbsp;</p>
-<div class="Element15">
-Configuration Options:</div>
-
-<ul class="Element630">
-<li class="Element600"><strong>Maximum Simultaneous File Access:</strong>
-<ul class="Element631">
-<li class="Element601">Maximum Number of files which can be accesses by application</li>
-</ul></li>
-<li class="Element600"><strong>Size Of Block:</strong>
-<ul class="Element631">
-<li class="Element601">Block Size used by File System layer to chunk the application data and to send to attached media</li>
-</ul></li>
-<li class="Element600"><strong>Size Of Media Manager Buffer:</strong>
-<ul class="Element631">
-<li class="Element601">Media Manager Buffer size to store Block Data</li>
-</ul></li>
-<li class="Element600"><strong>Use File System Auto Mount Feature:</strong>
-<ul class="Element631">
-<li class="Element601">Enables auto mount feature for all the media's</li>
-</ul></li>
-<li class="Element600"><strong>Total Number Of Media:</strong>
-<ul class="Element631">
-<li class="Element601">Number of media to be attached to file system</li>
-</ul></li>
-<li class="Element600"><strong>Total Number Of Volumes:</strong>
-<ul class="Element631">
-<li class="Element601">Number of volumes to be created for each media</li>
-</ul></li>
-<li class="Element600"><strong>MediaX:</strong>
-<ul class="Element631">
-<li class="Element601">Media details to be configured when Auto mount feature is enabled.</li>
-</ul></li>
-<li class="Element600"><strong>File System Types:</strong>
-<ul class="Element631">
-<li class="Element601"> Number of file systems used</li>
-</ul></li>
-<li class="Element600"><strong>FAT File System:</strong>
-<ul class="Element631">
-<li class="Element601">When Selected Specifies FAT File system will be used</li>
-</ul></li>
-<li class="Element600"><strong>Microchip File System:</strong>
-<ul class="Element631">
-<li class="Element601">When Selected Specifies MPFS File system will be used</li>
-</ul></li>
-<li class="Element600"><strong>File Name Length:</strong>
-<ul class="Element631">
-<li class="Element601">Max file name length to be supported</li>
-</ul></li>
-<li class="Element600"><strong>Current Working Directory Scratch buffer length in Bytes:</strong>
-<ul class="Element631">
-<li class="Element601">Buffer size to store the current directory path</li>
-</ul></li>
-<li class="Element600"><strong>Use MBR:</strong>
-<ul class="Element631">
-<li class="Element601">Use Master Boot Record.</li>
-</ul></li>
-</ul></div>
+<p class="Element10" style="text-align: center;">
+<img src="FS_figure_3.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<strong>Further File System Operations</strong>&nbsp;</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01437.html" target="topic">System Service Libraries Help</a> &gt; <a href="00924.html" target="topic">File System Service Library Help</a> &gt; <a href="00918.html" target="topic">Configuring the Library</a></div>
+<a href="01423.html" target="topic">System Service Libraries Help</a> &gt; <a href="00926.html" target="topic">File System Service Library Help</a> &gt; <a href="00930.html" target="topic">Using the Library</a> &gt; <a href="00924.html" target="topic">How the Library Works</a> &gt; <a href="00918.html" target="topic">Application Interaction</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -132,13 +82,13 @@ Configuration Options:</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00927.html" target="topic">Previous</a> | <a href="00924.html" target="topic">Up</a> | <a href="00917.html" target="topic">Next</a></div>
+<a href="00924.html" target="topic">Previous</a> | <a href="00924.html" target="topic">Up</a> | <a href="00929.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS FS Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS FS Application Interaction Topic Title: Application Interaction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

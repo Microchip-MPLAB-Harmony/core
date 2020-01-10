@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_USART_ReadQueuePurge Function</title>
+<title>DRV_USART_Status Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00300.html" target="topic">USART Driver Library Help</a> &gt; <a href="00301.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00691.html" target="topic">DRV_USART_ReadQueuePurge Function</a></div>
+<a href="00016.html" target="topic">Driver Libraries Help</a> &gt; <a href="00297.html" target="topic">USART Driver Library Help</a> &gt; <a href="00298.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00691.html" target="topic">DRV_USART_Status Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00682.html" target="topic">Previous</a> | <a href="00301.html" target="topic">Up</a> | <a href="00697.html" target="topic">Next</a></div>
+<a href="00684.html" target="topic">Previous</a> | <a href="00298.html" target="topic">Up</a> | <a href="00685.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_ReadQueuePurge@DRV_HANDLE Topic Title: DRV_USART_ReadQueuePurge Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_Status@SYS_MODULE_OBJ Topic Title: DRV_USART_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_USART_ReadQueuePurge Function</div>
+DRV_USART_Status Function</div>
 </div>
 </div>
 
@@ -49,19 +49,19 @@ DRV_USART_ReadQueuePurge Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function removes all the buffer requests from the queue. The client can use this function to purge the queue on timeout or to remove unwanted stalled buffer requests or in any other use case.</p></div>
+This routine provides the current status of the USART driver module.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_USART_ReadQueuePurge</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00402.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01376.html" target="topic">SYS_STATUS</a> <strong><span style="color: #000000">DRV_USART_Status</span></strong>(
+    <a href="01357.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">object</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="00688.html" target="topic">DRV_USART_Open</a> must have been called to obtain a valid opened device handle.</p></div>
+Function <a href="00684.html" target="topic">DRV_USART_Initialize</a> should have been called before calling this function.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -78,9 +78,9 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+object&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Handle of the communication channel as returned by the <a href="00688.html" target="topic">DRV_USART_Open</a> function.&nbsp;</div></td></tr></table></div></div>
+Driver object handle, returned from the <a href="00684.html" target="topic">DRV_USART_Initialize</a> routine&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,35 +88,29 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-true - Read queue purge is successful.&nbsp;</p>
+SYS_STATUS_READY - Initialization have succeeded and the USART is ready for additional operations&nbsp;</p>
 <p class="Element10">
-false - Read queue purge has failed.</p></div>
+SYS_STATUS_UNINITIALIZED - Indicates that the driver has not been initialized</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function is thread safe when used in an RTOS environment. Avoid this function call from within the callback.</p></div>
+A driver can opened only when its status is SYS_STATUS_READY.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// myUSARTHandle is the handle returned by the DRV_USART_Open function.</span></i>
-<i><span style="color: #008000">// Use DRV_USART_ReadBufferAdd to queue read requests</span></i>
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01357.html" target="topic">SYS_MODULE_OBJ</a>      object;     <i><span style="color: #008000">// Returned from DRV_USART_Initialize</span></i>
+<a href="01376.html" target="topic">SYS_STATUS</a>          usartStatus;
 
-<i><span style="color: #008000">// Application timeout function, where remove queued buffers.</span></i>
-<strong><span style="color: #000080">void</span></strong> APP_TimeOut(<strong><span style="color: #000080">void</span></strong>)
+usartStatus = DRV_USART _Status(object);
+<strong><span style="color: #000080">if</span></strong> (usartStatus == SYS_STATUS_READY)
 {
-    <strong><span style="color: #000080">if</span></strong>(DRV_USART_ReadQueuePurge(myUSARThandle) == <strong><span style="color: #000080">false</span></strong>)
-    {
-        <i><span style="color: #008000">//Couldn't purge the read queue, try again.</span></i>
-    }
-    <strong><span style="color: #000080">else</span></strong>
-    {
-        <i><span style="color: #008000">//Queue purge successful.</span></i>
-    }
+    <i><span style="color: #008000">// This means the driver can be opened using the</span></i>
+    <i><span style="color: #008000">// DRV_USART_Open() function.</span></i>
 }</pre></div></div>
 </div>
 </div>
@@ -125,7 +119,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00019.html" target="topic">Driver Libraries Help</a> &gt; <a href="00300.html" target="topic">USART Driver Library Help</a> &gt; <a href="00301.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00691.html" target="topic">DRV_USART_ReadQueuePurge Function</a></div>
+<a href="00016.html" target="topic">Driver Libraries Help</a> &gt; <a href="00297.html" target="topic">USART Driver Library Help</a> &gt; <a href="00298.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00691.html" target="topic">DRV_USART_Status Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -133,13 +127,13 @@ Example</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00019.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00682.html" target="topic">Previous</a> | <a href="00301.html" target="topic">Up</a> | <a href="00697.html" target="topic">Next</a></div>
+<a href="00684.html" target="topic">Previous</a> | <a href="00298.html" target="topic">Up</a> | <a href="00685.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_ReadQueuePurge@DRV_HANDLE Topic Title: DRV_USART_ReadQueuePurge Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_Status@SYS_MODULE_OBJ Topic Title: DRV_USART_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
