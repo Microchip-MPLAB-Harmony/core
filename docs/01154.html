@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_FileError Function</title>
+<title>SYS_FS_FileTestError Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01423.html" target="topic">System Service Libraries Help</a> &gt; <a href="00926.html" target="topic">File System Service Library Help</a> &gt; <a href="00927.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01154.html" target="topic">SYS_FS_FileError Function</a></div>
+<a href="01411.html" target="topic">System Service Libraries Help</a> &gt; <a href="00914.html" target="topic">File System Service Library Help</a> &gt; <a href="00915.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01154.html" target="topic">SYS_FS_FileTestError Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01153.html" target="topic">Previous</a> | <a href="00927.html" target="topic">Up</a> | <a href="01155.html" target="topic">Next</a></div>
+<a href="01153.html" target="topic">Previous</a> | <a href="00915.html" target="topic">Up</a> | <a href="01155.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileError@SYS_FS_HANDLE Topic Title: SYS_FS_FileError Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileTestError@SYS_FS_HANDLE Topic Title: SYS_FS_FileTestError Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_FileError Function</div>
+SYS_FS_FileTestError Function</div>
 </div>
 </div>
 
@@ -49,21 +49,19 @@ SYS_FS_FileError Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-For file system functions which accepts valid handle, any error happening in those functions could be retrieved with SYS_FS_FileError. This function returns errors which are file specific.&nbsp;</p>
-<p class="Element10">
-Please note that if an invalid handle is passed to a file system function, in such a case, SYS_FS_FileError will not return the correct type of error, as the handle was invalid. Therefore, it would be prudent to check the errors using the <a href="01091.html" target="topic">SYS_FS_Error</a> function.</p></div>
+This function checks whether or not file has any errors.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01092.html" target="topic">SYS_FS_ERROR</a> <strong><span style="color: #000000">SYS_FS_FileError</span></strong>(
-    <a href="01215.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">SYS_FS_FileTestError</span></strong>(
+    <a href="01203.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function has to be called immediately after a failure is observed while doing a file operation. Any subsequent failure will overwrite the cause of previous failure.</p></div>
+A valid file handle must be obtained before passing to the function</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -82,7 +80,7 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid file handle&nbsp;</div></td></tr></table></div></div>
+file handle obtained during file Open.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -90,7 +88,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Error code of type <a href="01092.html" target="topic">SYS_FS_ERROR</a>.</p></div>
+On success returns false indicating that the file has no errors. On failure returns true. The reason for the failure can be retrieved with <a href="01079.html" target="topic">SYS_FS_Error</a> or <a href="01142.html" target="topic">SYS_FS_FileError</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -103,22 +101,25 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">   ...
-  <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong> *buf = &quot;Hello World&quot;;
-  size_t nbytes;
-  size_t bytes_written;
-  <a href="01215.html" target="topic">SYS_FS_HANDLE</a> fd;
-  <a href="01092.html" target="topic">SYS_FS_ERROR</a> err;
+<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01203.html" target="topic">SYS_FS_HANDLE</a> fileHandle;
+  <strong><span style="color: #000080">bool</span></strong> err;
+
+  fileHandle = <a href="01144.html" target="topic">SYS_FS_FileOpen</a>(&quot;/mnt/myDrive/FILE.JPG&quot;, (SYS_FS_FILE_OPEN_READ));
+
+  <strong><span style="color: #000080">if</span></strong>(fileHandle != <a href="01204.html" target="topic">SYS_FS_HANDLE_INVALID</a>)
+  {
+      <i><span style="color: #008000">// File open is successful</span></i>
+  }
+  ...
   ...
 
-  bytes_written = <a href="01168.html" target="topic">SYS_FS_FileWrite</a>((<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">void</span></strong> *)buf, nbytes, fd);
-
-  <strong><span style="color: #000080">if</span></strong>(bytes_written == -1)
+  err = SYS_FS_FileTestError(fileHandle);
+  <strong><span style="color: #000080">if</span></strong>(err == <strong><span style="color: #000080">true</span></strong>)
   {
-      <i><span style="color: #008000">// error while writing file</span></i>
-      <i><span style="color: #008000">// find the type (reason) of error</span></i>
-      err = SYS_FS_FileError(fd);
-  }</pre></div></div>
+      <i><span style="color: #008000">// either file has error, or there</span></i>
+      <i><span style="color: #008000">// was an error in working with the &quot;SYS_FS_FileTestError&quot; function</span></i>
+  }
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -126,7 +127,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01423.html" target="topic">System Service Libraries Help</a> &gt; <a href="00926.html" target="topic">File System Service Library Help</a> &gt; <a href="00927.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01154.html" target="topic">SYS_FS_FileError Function</a></div>
+<a href="01411.html" target="topic">System Service Libraries Help</a> &gt; <a href="00914.html" target="topic">File System Service Library Help</a> &gt; <a href="00915.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01154.html" target="topic">SYS_FS_FileTestError Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -137,10 +138,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01153.html" target="topic">Previous</a> | <a href="00927.html" target="topic">Up</a> | <a href="01155.html" target="topic">Next</a></div>
+<a href="01153.html" target="topic">Previous</a> | <a href="00915.html" target="topic">Up</a> | <a href="01155.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileError@SYS_FS_HANDLE Topic Title: SYS_FS_FileError Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileTestError@SYS_FS_HANDLE Topic Title: SYS_FS_FileTestError Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_MEDIA_MANAGER_CommandStatusGet Function</title>
+<title>SYS_FS_MEDIA_MANAGER_VolumePropertyGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01423.html" target="topic">System Service Libraries Help</a> &gt; <a href="00926.html" target="topic">File System Service Library Help</a> &gt; <a href="00927.html" target="topic">Library Interface</a> &gt; c) Media Manager Functions &gt; <a href="01246.html" target="topic">SYS_FS_MEDIA_MANAGER_CommandStatusGet Function</a></div>
+<a href="01411.html" target="topic">System Service Libraries Help</a> &gt; <a href="00914.html" target="topic">File System Service Library Help</a> &gt; <a href="00915.html" target="topic">Library Interface</a> &gt; c) Media Manager Functions &gt; <a href="01246.html" target="topic">SYS_FS_MEDIA_MANAGER_VolumePropertyGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01258.html" target="topic">Previous</a> | <a href="00927.html" target="topic">Up</a> | <a href="01249.html" target="topic">Next</a></div>
+<a href="01238.html" target="topic">Previous</a> | <a href="00915.html" target="topic">Up</a> | <a href="01234.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_MEDIA_MANAGER_CommandStatusGet@uint16_t@SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE Topic Title: SYS_FS_MEDIA_MANAGER_CommandStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_MEDIA_MANAGER_VolumePropertyGet@char *@SYS_FS_VOLUME_PROPERTY * Topic Title: SYS_FS_MEDIA_MANAGER_VolumePropertyGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_MEDIA_MANAGER_CommandStatusGet Function</div>
+SYS_FS_MEDIA_MANAGER_VolumePropertyGet Function</div>
 </div>
 </div>
 
@@ -49,13 +49,13 @@ SYS_FS_MEDIA_MANAGER_CommandStatusGet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function gets the command status. The sector read and sector write are non-blocking functions. Therefore, this interface is provided where the code should periodically poll for the buffer status. If status is completed, the read/write operation is considered to be complete.</p></div>
+This function gets the property of the volume. This function is used by higher layers (sys_fs layer) to know the property of the volume as specified in the <a href="01295.html" target="topic">SYS_FS_VOLUME_PROPERTY</a> structure.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01223.html" target="topic">SYS_FS_MEDIA_COMMAND_STATUS</a> <strong><span style="color: #000000">SYS_FS_MEDIA_MANAGER_CommandStatusGet</span></strong>(
-    uint16_t <strong><span style="color: #000000">diskNo</span></strong>, 
-    <a href="01218.html" target="topic">SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE</a> <strong><span style="color: #000000">commandHandle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">SYS_FS_MEDIA_MANAGER_VolumePropertyGet</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong> * <strong><span style="color: #000000">devName</span></strong>, 
+    <a href="01295.html" target="topic">SYS_FS_VOLUME_PROPERTY</a> * <strong><span style="color: #000000">str</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
@@ -79,14 +79,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-diskNo&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+*devName&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-media number&nbsp;</div></td></tr><tr>
+String name of the media&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-bufferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+*str&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-the command handle which was obtained during sector read/ write&nbsp;</div></td></tr></table></div></div>
+Pointer to structure of type <a href="01295.html" target="topic">SYS_FS_VOLUME_PROPERTY</a>&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -94,14 +94,14 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Command status of type <a href="01223.html" target="topic">SYS_FS_MEDIA_COMMAND_STATUS</a>.</p></div>
+True or false.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01423.html" target="topic">System Service Libraries Help</a> &gt; <a href="00926.html" target="topic">File System Service Library Help</a> &gt; <a href="00927.html" target="topic">Library Interface</a> &gt; c) Media Manager Functions &gt; <a href="01246.html" target="topic">SYS_FS_MEDIA_MANAGER_CommandStatusGet Function</a></div>
+<a href="01411.html" target="topic">System Service Libraries Help</a> &gt; <a href="00914.html" target="topic">File System Service Library Help</a> &gt; <a href="00915.html" target="topic">Library Interface</a> &gt; c) Media Manager Functions &gt; <a href="01246.html" target="topic">SYS_FS_MEDIA_MANAGER_VolumePropertyGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -112,10 +112,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01258.html" target="topic">Previous</a> | <a href="00927.html" target="topic">Up</a> | <a href="01249.html" target="topic">Next</a></div>
+<a href="01238.html" target="topic">Previous</a> | <a href="00915.html" target="topic">Up</a> | <a href="01234.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_MEDIA_MANAGER_CommandStatusGet@uint16_t@SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE Topic Title: SYS_FS_MEDIA_MANAGER_CommandStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_MEDIA_MANAGER_VolumePropertyGet@char *@SYS_FS_VOLUME_PROPERTY * Topic Title: SYS_FS_MEDIA_MANAGER_VolumePropertyGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

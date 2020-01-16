@@ -53,8 +53,8 @@ This routine provides the current status of the I2C driver module.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01376.html" target="topic">SYS_STATUS</a> <strong><span style="color: #000000">DRV_I2C_Status</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01357.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">object</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01364.html" target="topic">SYS_STATUS</a> <strong><span style="color: #000000">DRV_I2C_Status</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01345.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">object</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
@@ -103,8 +103,8 @@ A driver can be opened only when its status is SYS_STATUS_READY.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01357.html" target="topic">SYS_MODULE_OBJ</a>      object;     <i><span style="color: #008000">// Returned from DRV_I2C_Initialize</span></i>
-<a href="01376.html" target="topic">SYS_STATUS</a>          i2cStatus;
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01345.html" target="topic">SYS_MODULE_OBJ</a>      object;     <i><span style="color: #008000">// Returned from DRV_I2C_Initialize</span></i>
+<a href="01364.html" target="topic">SYS_STATUS</a>          i2cStatus;
 
 i2cStatus = DRV_I2C_Status(object);
 <strong><span style="color: #000080">if</span></strong> (i2cStatus == SYS_STATUS_READY)
