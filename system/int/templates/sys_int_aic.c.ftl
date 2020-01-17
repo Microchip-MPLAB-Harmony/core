@@ -80,7 +80,7 @@
 <#if core.CoreArchitecture == "ARM926EJS">
 static inline unsigned int __get_CPSR( void )
 {
-    unsigned int value;
+    unsigned int value = 0;
     asm volatile( "MRS %0, cpsr" : "=r"(value) );
     return value;
 }
