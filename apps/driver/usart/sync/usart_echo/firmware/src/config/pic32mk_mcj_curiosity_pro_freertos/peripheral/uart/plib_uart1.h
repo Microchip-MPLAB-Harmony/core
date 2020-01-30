@@ -1,14 +1,14 @@
 /*******************************************************************************
-  UART2 PLIB
+  UART1 PLIB
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    plib_uart2.h
+    plib_uart1.h
 
   Summary:
-    UART2 PLIB Header File
+    UART1 PLIB Header File
 
   Description:
     None
@@ -38,8 +38,8 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-#ifndef PLIB_UART2_H
-#define PLIB_UART2_H
+#ifndef PLIB_UART1_H
+#define PLIB_UART1_H
 
 #include <stddef.h>
 #include <stdbool.h>
@@ -61,29 +61,31 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#define UART2_FrequencyGet()    (uint32_t)(60000000UL)
+#define UART1_FrequencyGet()    (uint32_t)(60000000UL)
 
-/****************************** UART2 API *********************************/
+/****************************** UART1 API *********************************/
 
-void UART2_Initialize( void );
+void UART1_Initialize( void );
 
-bool UART2_SerialSetup( UART_SERIAL_SETUP *setup, uint32_t srcClkFreq );
+bool UART1_SerialSetup( UART_SERIAL_SETUP *setup, uint32_t srcClkFreq );
 
-bool UART2_Write( void *buffer, const size_t size );
+bool UART1_Write( void *buffer, const size_t size );
 
-bool UART2_Read( void *buffer, const size_t size );
+bool UART1_Read( void *buffer, const size_t size );
 
-UART_ERROR UART2_ErrorGet( void );
+UART_ERROR UART1_ErrorGet( void );
 
-int UART2_ReadByte( void );
+bool UART1_ReadIsBusy( void );
 
-bool UART2_ReceiverIsReady( void );
+size_t UART1_ReadCountGet( void );
 
-void UART2_WriteByte( int data );
+bool UART1_WriteIsBusy( void );
 
-bool UART2_TransmitterIsReady( void );
+size_t UART1_WriteCountGet( void );
 
-bool UART2_TransmitComplete( void );
+void UART1_WriteCallbackRegister( UART_CALLBACK callback, uintptr_t context );
+
+void UART1_ReadCallbackRegister( UART_CALLBACK callback, uintptr_t context );
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -93,4 +95,4 @@ bool UART2_TransmitComplete( void );
 #endif
 // DOM-IGNORE-END
 
-#endif // PLIB_UART2_H
+#endif // PLIB_UART1_H

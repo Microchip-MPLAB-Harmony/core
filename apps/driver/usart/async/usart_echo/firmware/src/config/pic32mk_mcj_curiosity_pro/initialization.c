@@ -122,16 +122,16 @@ static DRV_USART_CLIENT_OBJ drvUSART0ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX0
 static DRV_USART_BUFFER_OBJ drvUSART0BufferObjPool[DRV_USART_QUEUE_SIZE_IDX0];
 
 const DRV_USART_PLIB_INTERFACE drvUsart0PlibAPI = {
-    .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)UART2_ReadCallbackRegister,
-    .read = (DRV_USART_PLIB_READ)UART2_Read,
-    .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)UART2_ReadIsBusy,
-    .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)UART2_ReadCountGet,
-    .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)UART2_WriteCallbackRegister,
-    .write = (DRV_USART_PLIB_WRITE)UART2_Write,
-    .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)UART2_WriteIsBusy,
-    .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)UART2_WriteCountGet,
-    .errorGet = (DRV_USART_PLIB_ERROR_GET)UART2_ErrorGet,
-    .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)UART2_SerialSetup
+    .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)UART1_ReadCallbackRegister,
+    .read = (DRV_USART_PLIB_READ)UART1_Read,
+    .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)UART1_ReadIsBusy,
+    .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)UART1_ReadCountGet,
+    .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)UART1_WriteCallbackRegister,
+    .write = (DRV_USART_PLIB_WRITE)UART1_Write,
+    .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)UART1_WriteIsBusy,
+    .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)UART1_WriteCountGet,
+    .errorGet = (DRV_USART_PLIB_ERROR_GET)UART1_ErrorGet,
+    .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)UART1_SerialSetup
 };
 
 const uint32_t drvUsart0remapDataWidth[] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0, 0x6 };
@@ -145,10 +145,10 @@ const DRV_USART_INTERRUPT_SOURCES drvUSART0InterruptSources =
     .isSingleIntSrc                        = false,
 
     /* Peripheral interrupt lines */
-    .intSources.multi.usartTxCompleteInt   = _UART2_TX_VECTOR,
+    .intSources.multi.usartTxCompleteInt   = _UART1_TX_VECTOR,
     .intSources.multi.usartTxReadyInt      = -1,
-    .intSources.multi.usartRxCompleteInt   = _UART2_RX_VECTOR,
-    .intSources.multi.usartErrorInt        = _UART2_FAULT_VECTOR,
+    .intSources.multi.usartRxCompleteInt   = _UART1_RX_VECTOR,
+    .intSources.multi.usartErrorInt        = _UART1_FAULT_VECTOR,
 };
 
 const DRV_USART_INIT drvUsart0InitData =
@@ -237,7 +237,7 @@ void SYS_Initialize ( void* data )
 
 	GPIO_Initialize();
 
-	UART2_Initialize();
+	UART1_Initialize();
 
 	BSP_Initialize();
 

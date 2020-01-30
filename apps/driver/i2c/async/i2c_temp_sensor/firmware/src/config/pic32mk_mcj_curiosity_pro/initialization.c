@@ -241,7 +241,7 @@ void SYS_Initialize ( void* data )
 
     I2C2_Initialize();
 
-	UART2_Initialize();
+	UART1_Initialize();
 
 	BSP_Initialize();
 
