@@ -177,11 +177,11 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>pkob4hybrid</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.20</languageToolchainVersion>
+        <languageToolchainVersion>2.30</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MK-MC_DFP" vendor="Microchip" version="1.1.53"/>
+        <pack name="PIC32MK-MC_DFP" vendor="Microchip" version="1.2.80"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -496,6 +496,7 @@
         <property key="UART1" value="true"/>
         <property key="UART2" value="true"/>
         <property key="communication.interface" value=""/>
+        <property key="communication.interface.jtag" value="2wire"/>
         <property key="communication.speed" value="${communication.speed.default}"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
         <property key="memories.aux" value="false"/>
@@ -511,11 +512,15 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="1d000000-1d07ffff"/>
+        <property key="programmerToGoFilePath"
+                  value="D:/H3/core/apps/fs/sdspi_fat/firmware/pic32mk_mcj_curiosity_pro.X/debug/pic32mk_mcj_curiosity_pro/pic32mk_mcj_curiosity_pro_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.pgmentry.voltage" value="low"/>
         <property key="programoptions.pgmspeed" value="Med"/>
         <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${memories.dataflash.default}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value=""/>
         <property key="programoptions.preserveprogram.ranges" value="1d000000-1d07ffff"/>

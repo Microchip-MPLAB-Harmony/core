@@ -75,8 +75,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_mcj_curiosity_pro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">987C25CED4A2A110F097C7232AA62428</GeneratedChecksum>
-          <UserChecksum dnOrder="5">987C25CED4A2A110F097C7232AA62428</UserChecksum>
+          <GeneratedChecksum dnOrder="4">ECC6A9F1491BB974495CEBCBA93A83D0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">ECC6A9F1491BB974495CEBCBA93A83D0</UserChecksum>
         </File>
         <File dnOrder="9">
           <Type dnOrder="0">SOURCE</Type>
@@ -203,8 +203,8 @@
           <Name dnOrder="1">bsp.h</Name>
           <LogicalPath dnOrder="2">config/pic32mk_mcj_curiosity_pro/bsp/</LogicalPath>
           <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">30B44351EA8230F4099E8AAC25C4F792</GeneratedChecksum>
-          <UserChecksum dnOrder="5">30B44351EA8230F4099E8AAC25C4F792</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3FD0074B778A52137F33FC2786257D32</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3FD0074B778A52137F33FC2786257D32</UserChecksum>
         </File>
         <File dnOrder="25">
           <Type dnOrder="0">HEADER</Type>
@@ -540,7 +540,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bootloader;bsp;core;csp;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;expresslogic_threadx;micrium_ucos3;"/>
     </Settings>
   </Configurator>
 </Configuration>
