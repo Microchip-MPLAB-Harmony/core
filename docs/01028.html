@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_DEBUG_Tasks Function</title>
+<title>SYS_CONSOLE_Write Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01411.html" target="topic">System Service Libraries Help</a> &gt; <a href="00895.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00896.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="01028.html" target="topic">SYS_DEBUG_Tasks Function</a></div>
+<a href="01429.html" target="topic">System Service Libraries Help</a> &gt; <a href="00894.html" target="topic">Console System Service Library Help</a> &gt; <a href="00895.html" target="topic">Library Interface</a> &gt; b) Core Functions &gt; <a href="01028.html" target="topic">SYS_CONSOLE_Write Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01027.html" target="topic">Previous</a> | <a href="00896.html" target="topic">Up</a> | <a href="01024.html" target="topic">Next</a></div>
+<a href="01024.html" target="topic">Previous</a> | <a href="00895.html" target="topic">Up</a> | <a href="01025.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_DEBUG_Tasks@SYS_MODULE_OBJ Topic Title: SYS_DEBUG_Tasks Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_Write@SYS_MODULE_INDEX@int@void*@size_t Topic Title: SYS_CONSOLE_Write Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_DEBUG_Tasks Function</div>
+SYS_CONSOLE_Write Function</div>
 </div>
 </div>
 
@@ -49,19 +49,22 @@ SYS_DEBUG_Tasks Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function is used to maintain the debug module's internal state machine.</p></div>
+This function writes data to the console device.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">SYS_DEBUG_Tasks</span></strong>(
-    <a href="01345.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">object</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100">ssize_t <strong><span style="color: #000000">SYS_CONSOLE_Write</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01353.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
+    <strong><span style="color: #000080">int</span></strong> <strong><span style="color: #000000">fd</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">buf</span></strong>, 
+    size_t <strong><span style="color: #000000">count</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="01022.html" target="topic">SYS_DEBUG_Initialize</a> function must have been called.</p></div>
+The <a href="01021.html" target="topic">SYS_CONSOLE_Initialize</a> function should have been called before calling this function.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -78,9 +81,24 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-object&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-SYS DEBUG object handle, returned from <a href="01022.html" target="topic">SYS_DEBUG_Initialize</a>&nbsp;</div></td></tr></table></div></div>
+Console instance index&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+fd&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+I/O stream handle. Maintained for backward compatibility. NULL value can be passed as a parameter.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+buf&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Buffer holding the data to be written.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+count&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Number of bytes to write.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,26 +106,25 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+The requested number of bytes to write is returned back if the request is accepted successfully. In case of error, the returned value is less than the requested number of bytes to write.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function is normally not called directly by an application. The task routine may not be called if the debug service does not require maintaining an internal state machine.</p></div>
+None.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01345.html" target="topic">SYS_MODULE_OBJ</a>      object;     <i><span style="color: #008000">// Returned from SYS_DEBUG_Initialize</span></i>
-
-<strong><span style="color: #000080">while</span></strong> (<strong><span style="color: #000080">true</span></strong>)
+<div class="Element13"><div class="Element12"><pre class="Element12">ssize_t nr;
+<strong><span style="color: #000080">char</span></strong> myBuffer[] = &quot;message&quot;;
+nr = SYS_CONSOLE_Write( <a href="01017.html" target="topic">SYS_CONSOLE_INDEX_0</a>, 0, myBuffer, strlen(myBuffer) );
+<strong><span style="color: #000080">if</span></strong> (nr != strlen(myBuffer))
 {
-    SYS_DEBUG_Tasks (object);
-
-    <i><span style="color: #008000">// Do other tasks</span></i>
+    <i><span style="color: #008000">// Handle error</span></i>
 }</pre></div></div>
 </div>
 </div>
@@ -116,7 +133,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01411.html" target="topic">System Service Libraries Help</a> &gt; <a href="00895.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00896.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="01028.html" target="topic">SYS_DEBUG_Tasks Function</a></div>
+<a href="01429.html" target="topic">System Service Libraries Help</a> &gt; <a href="00894.html" target="topic">Console System Service Library Help</a> &gt; <a href="00895.html" target="topic">Library Interface</a> &gt; b) Core Functions &gt; <a href="01028.html" target="topic">SYS_CONSOLE_Write Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -127,10 +144,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01027.html" target="topic">Previous</a> | <a href="00896.html" target="topic">Up</a> | <a href="01024.html" target="topic">Next</a></div>
+<a href="01024.html" target="topic">Previous</a> | <a href="00895.html" target="topic">Up</a> | <a href="01025.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_DEBUG_Tasks@SYS_MODULE_OBJ Topic Title: SYS_DEBUG_Tasks Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_Write@SYS_MODULE_INDEX@int@void*@size_t Topic Title: SYS_CONSOLE_Write Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

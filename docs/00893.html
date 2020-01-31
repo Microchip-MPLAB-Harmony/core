@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>How the Library Works</title>
+<title>Introduction</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01411.html" target="topic">System Service Libraries Help</a> &gt; <a href="00895.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00898.html" target="topic">Using the Library</a> &gt; <a href="00893.html" target="topic">How the Library Works</a></div>
+<a href="01429.html" target="topic">System Service Libraries Help</a> &gt; <a href="00894.html" target="topic">Console System Service Library Help</a> &gt; <a href="00893.html" target="topic">Introduction</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00888.html" target="topic">Previous</a> | <a href="00898.html" target="topic">Up</a> | <a href="00891.html" target="topic">Next</a></div>
+<a href="00894.html" target="topic">Previous</a> | <a href="00894.html" target="topic">Up</a> | <a href="00899.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS DEBUG How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-How the Library Works</div>
+Introduction</div>
 </div>
 </div>
 
@@ -49,31 +49,20 @@ How the Library Works</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
- &nbsp;</p>
+The Console System Service consists of a core<span style="color: #FFFFFF">_</span>layer and a console device<span style="color: #FFFFFF">_</span>layer. The core<span style="color: #FFFFFF">_</span>layer handles module initialization and system functions. It provides a common API for use by applications and middleware libraries to send and receive data to and from one or more console devices. The Console System core layer<span style="color: #FFFFFF">_</span>maintains the status and device descriptor information for each console instance that has been initialized. Currently, a single instance of console is supported.&nbsp;</p>
 <p class="Element10">
-<strong>Debug Messages and Error Reporting</strong>&nbsp;</p>
+The console device layer<span style="color: #FFFFFF">_</span>contains the functional implementation of the core layer<span style="color: #FFFFFF">_</span>APIs. Each console device may have a different implementation, but the behavior of the API should be uniform across different devices. The console device layer<span style="color: #FFFFFF">_</span>interacts with the peripheral libraries (PLIBs) to send and receive data to and from the hardware peripheral. The details of the data transaction are abstracted by the console device layer.&nbsp;</p>
 <p class="Element10">
-The following macros are available to output debug and error messages. The default implementation of these macros resolves to nothing by the preprocessor. This is to allow the developer to leave debug messaging in the released code without impacting code size or performance. Typically, the developer would define SYS_DEBUG_USE_CONSOLE macro through MHC configuration for debug builds, to map these macros to appropriate debug service implementation.</p>
-<ul class="Element630">
-<li class="Element600"><a href="01339.html" target="topic">SYS_MESSAGE</a>(message) prints a simple message string to the output device irrespective of the value of the global error level</li>
-<li class="Element600"><a href="01023.html" target="topic">SYS_DEBUG_MESSAGE</a>(level, message) prints a debug message to the console device if the global error level is equal to or lower than that specified by the &quot;level&quot; argument</li>
-<li class="Element600"><a href="01363.html" target="topic">SYS_PRINT</a>(fmt, ...) prints formatted messages to the console. The message formatting is the same as printf</li>
-<li class="Element600"><a href="01025.html" target="topic">SYS_DEBUG_PRINT</a>(level, fmt, ...) prints formatted messages to the console if the global error level is equal to or lower than that specified by the &quot;level&quot; argument. The message formatting is the same as printf</li>
-</ul><p class="Element10">
-<strong>Changing the System Error Level</strong>&nbsp;</p>
+The implementation is non-blocking in nature. The request from the middleware or application return immediately and the data transfer is controlled by a state machine implemented in the console device<span style="color: #FFFFFF">_</span>layer. The calling program is notified of the data transfer completion by a callback mechanism, or can optionally poll the status of the console device<span style="color: #FFFFFF">_</span>layer to see if it is busy (one or more requests are pending) or ready for more data (no request is pending).&nbsp;</p>
 <p class="Element10">
-Two functions are provided to manipulate the global system error level at runtime. This may be useful when you want to increase the debug verbosity for a particular section of code, but not for the entire program</p>
-<ul class="Element630">
-<li class="Element600"><a href="01019.html" target="topic">SYS_DEBUG_ErrorLevelGet</a>() returns the current global system error level</li>
-<li class="Element600"><a href="01020.html" target="topic">SYS_DEBUG_ErrorLevelSet</a>(level) sets the current global system error level</li>
-</ul></div>
+The console device layer<span style="color: #FFFFFF">_</span>provides the ability to queue data buffers written to the console. The size of the queue is defined by a configuration option.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01411.html" target="topic">System Service Libraries Help</a> &gt; <a href="00895.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00898.html" target="topic">Using the Library</a> &gt; <a href="00893.html" target="topic">How the Library Works</a></div>
+<a href="01429.html" target="topic">System Service Libraries Help</a> &gt; <a href="00894.html" target="topic">Console System Service Library Help</a> &gt; <a href="00893.html" target="topic">Introduction</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -84,10 +73,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00888.html" target="topic">Previous</a> | <a href="00898.html" target="topic">Up</a> | <a href="00891.html" target="topic">Next</a></div>
+<a href="00894.html" target="topic">Previous</a> | <a href="00894.html" target="topic">Up</a> | <a href="00899.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS DEBUG How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_FileWrite Function</title>
+<title>SYS_FS_FileOpen Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01411.html" target="topic">System Service Libraries Help</a> &gt; <a href="00914.html" target="topic">File System Service Library Help</a> &gt; <a href="00915.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01156.html" target="topic">SYS_FS_FileWrite Function</a></div>
+<a href="01429.html" target="topic">System Service Libraries Help</a> &gt; <a href="00926.html" target="topic">File System Service Library Help</a> &gt; <a href="00927.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01156.html" target="topic">SYS_FS_FileOpen Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01155.html" target="topic">Previous</a> | <a href="00915.html" target="topic">Up</a> | <a href="01069.html" target="topic">Next</a></div>
+<a href="00927.html" target="topic">Previous</a> | <a href="00927.html" target="topic">Up</a> | <a href="01148.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileWrite@SYS_FS_HANDLE@void *@size_t Topic Title: SYS_FS_FileWrite Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileOpen@char*@SYS_FS_FILE_OPEN_ATTRIBUTES Topic Title: SYS_FS_FileOpen Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_FileWrite Function</div>
+SYS_FS_FileOpen Function</div>
 </div>
 </div>
 
@@ -49,21 +49,20 @@ SYS_FS_FileWrite Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function attempts to write nbyte bytes from the buffer pointed to by buf to the file associated with the file handle.</p></div>
+This function opens a file with the requested attributes.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100">size_t <strong><span style="color: #000000">SYS_FS_FileWrite</span></strong>(
-    <a href="01203.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">buf</span></strong>, 
-    size_t <strong><span style="color: #000000">nbyte</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01215.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">SYS_FS_FileOpen</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong>* <strong><span style="color: #000000">fname</span></strong>, 
+    <a href="01132.html" target="topic">SYS_FS_FILE_OPEN_ATTRIBUTES</a> <strong><span style="color: #000000">attributes</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-A valid file handle must be obtained before writing a file.</p></div>
+Prior to opening a file, the name of the volume on which the file resides should be known and the volume should be mounted.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -80,19 +79,19 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+fname&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-File handle obtained during file open.&nbsp;</div></td></tr><tr>
+The name of the file to be opened along with the path. The fname&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-buf&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+format is as follows&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to buffer from which data is to be written&nbsp;</div></td></tr><tr>
+&quot;/mnt/volumeName/dirName/fileName&quot;. volumeName is the name of the volume/drive. dirName is the name of the directory under which the file is located. fileName is the name of the file to be opened. The &quot;/mnt/volumeName&quot; portion from the fName can be omitted if the <a href="01077.html" target="topic">SYS_FS_CurrentDriveSet</a> () has been invoked to set the current drive/volume.<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-nbyte&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+attributes&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Number of bytes to be written&nbsp;</div></td></tr></table></div></div>
+Access mode of the file, of type <a href="01132.html" target="topic">SYS_FS_FILE_OPEN_ATTRIBUTES</a>&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -100,7 +99,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-On success returns the number of bytes written successfully(0 or positive number). On failure returns -1. The reason for the failure can be retrieved with <a href="01079.html" target="topic">SYS_FS_Error</a> or <a href="01142.html" target="topic">SYS_FS_FileError</a>.</p></div>
+On success - A valid file handle will be returned On failure - <a href="01216.html" target="topic">SYS_FS_HANDLE_INVALID</a>. The reason for the failure can be retrieved with <a href="01091.html" target="topic">SYS_FS_Error</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -113,15 +112,35 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  ...
-  <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong> *buf = &quot;Hello World&quot;;
-  size_t nbytes;
-  size_t bytes_written;
-  <a href="01203.html" target="topic">SYS_FS_HANDLE</a> fd;
-  ...
+<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01215.html" target="topic">SYS_FS_HANDLE</a> fileHandle;
 
-  bytes_written = SYS_FS_FileWrite(fd, (<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">void</span></strong> *)buf, nbytes);
-  ...</pre></div></div>
+  fileHandle = SYS_FS_FileOpen(&quot;/mnt/myDrive/FILE.JPG&quot;,
+          (SYS_FS_FILE_OPEN_READ));
+
+  <strong><span style="color: #000080">if</span></strong>(fileHandle != <a href="01216.html" target="topic">SYS_FS_HANDLE_INVALID</a>)
+  {
+      <i><span style="color: #008000">// File open succeeded.</span></i>
+  }
+  <strong><span style="color: #000080">else</span></strong>
+  {
+      <i><span style="color: #008000">// File open failed.</span></i>
+  }
+
+  <i><span style="color: #008000">// Using SYS_FS_CurrentDriveSet () function.</span></i>
+
+  <a href="01215.html" target="topic">SYS_FS_HANDLE</a> fileHandle;
+
+  <a href="01077.html" target="topic">SYS_FS_CurrentDriveSet</a>(&quot;/mnt/myDrive&quot;);
+
+  fileHandle = SYS_FS_FileOpen(&quot;FILE.JPG&quot;, (SYS_FS_FILE_OPEN_READ));
+  <strong><span style="color: #000080">if</span></strong>(fileHandle != <a href="01216.html" target="topic">SYS_FS_HANDLE_INVALID</a>)
+  {
+      <i><span style="color: #008000">// File open succeeded.</span></i>
+  }
+  <strong><span style="color: #000080">else</span></strong>
+  {
+      <i><span style="color: #008000">// File open failed.</span></i>
+  }</pre></div></div>
 </div>
 </div>
 </div>
@@ -129,7 +148,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01411.html" target="topic">System Service Libraries Help</a> &gt; <a href="00914.html" target="topic">File System Service Library Help</a> &gt; <a href="00915.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01156.html" target="topic">SYS_FS_FileWrite Function</a></div>
+<a href="01429.html" target="topic">System Service Libraries Help</a> &gt; <a href="00926.html" target="topic">File System Service Library Help</a> &gt; <a href="00927.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01156.html" target="topic">SYS_FS_FileOpen Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -140,10 +159,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01155.html" target="topic">Previous</a> | <a href="00915.html" target="topic">Up</a> | <a href="01069.html" target="topic">Next</a></div>
+<a href="00927.html" target="topic">Previous</a> | <a href="00927.html" target="topic">Up</a> | <a href="01148.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileWrite@SYS_FS_HANDLE@void *@size_t Topic Title: SYS_FS_FileWrite Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileOpen@char*@SYS_FS_FILE_OPEN_ATTRIBUTES Topic Title: SYS_FS_FileOpen Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

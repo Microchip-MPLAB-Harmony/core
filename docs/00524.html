@@ -58,9 +58,9 @@ This routine initializes the MX25L driver making it ready for client to use.</p>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01345.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_MX25L_Initialize</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01340.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="01341.html" target="topic">SYS_MODULE_INIT</a> *<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01359.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_MX25L_Initialize</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01353.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="01354.html" target="topic">SYS_MODULE_INIT</a> *<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
@@ -99,7 +99,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If successful, returns a valid handle to a driver instance object. Otherwise it returns <a href="01346.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
+If successful, returns a valid handle to a driver instance object. Otherwise it returns <a href="01360.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -119,7 +119,7 @@ Example</div>
 <div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// This code snippet shows an example of initializing the MX25L Driver</span></i>
 <i><span style="color: #008000">// with MX25L QSPI flash device attached.</span></i>
 
-<a href="01345.html" target="topic">SYS_MODULE_OBJ</a>  objectHandle;
+<a href="01359.html" target="topic">SYS_MODULE_OBJ</a>  objectHandle;
 
 <strong><span style="color: #000080">const</span></strong> DRV_MX25L_PLIB_INTERFACE drvMX25LPlibAPI = {
     .CommandWrite  = QSPI_CommandWrite,
@@ -134,9 +134,9 @@ Example</div>
     .mx25lPlib         = &amp;drvMX25LPlibAPI,
 };
 
-objectHandle = DRV_MX25L_Initialize((<a href="01340.html" target="topic">SYS_MODULE_INDEX</a>)DRV_MX25L_INDEX, (<a href="01341.html" target="topic">SYS_MODULE_INIT</a> *)&amp;drvMX25LInitData);
+objectHandle = DRV_MX25L_Initialize((<a href="01353.html" target="topic">SYS_MODULE_INDEX</a>)DRV_MX25L_INDEX, (<a href="01354.html" target="topic">SYS_MODULE_INIT</a> *)&amp;drvMX25LInitData);
 
-<strong><span style="color: #000080">if</span></strong> (<a href="01346.html" target="topic">SYS_MODULE_OBJ_INVALID</a> == objectHandle)
+<strong><span style="color: #000080">if</span></strong> (<a href="01360.html" target="topic">SYS_MODULE_OBJ_INVALID</a> == objectHandle)
 {
     <i><span style="color: #008000">// Handle error</span></i>
 }</pre></div></div>
