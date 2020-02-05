@@ -25,6 +25,10 @@
 coreArch     = Database.getSymbolValue("core", "CoreArchitecture")
 coreFamily   = ATDF.getNode( "/avr-tools-device-file/devices/device" ).getAttribute( "family" )
 
+#Fetch the current compiler
+compilerList = ["XC32", "IAR", "KEIL"]
+selectedCompiler = compilerList[Database.getSymbolValue("core", "COMPILER_CHOICE")]
+
 ###############################################################################
 ########################## FreeRTOS Configurations ############################
 ###############################################################################
@@ -37,6 +41,13 @@ ComboVal_Scheduler_Type     = ["Preemptive", "Co_Operative"]
 ComboVal_Tick_Mode          = ["Tickless_Idle", "Tick_Interrupt"]
 ComboVal_Mem_Mgmt_Type      = ["Heap_1", "Heap_2", "Heap_3", "Heap_4", "Heap_5"]
 ComboVal_Stack_Overflow     = ["No_Check", "Method_1", "Method_2"]
+
+
+def activateCompilerSymbol(symbol, event):
+    global compilerList
+    currentCompiler = compilerList[event["value"]]
+    symbolCompiler = symbol.getID().split("_")[1]
+    symbol.setEnabled(currentCompiler == symbolCompiler)
 
 def freeRtosExpIdleTimeVisibility(symbol, event):
     id = symbol.getID()[-1]
