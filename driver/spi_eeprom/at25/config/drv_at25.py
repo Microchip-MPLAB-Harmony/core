@@ -105,6 +105,9 @@ def instantiateComponent(at25Component):
     # Send message to core to get available pins
     availablePinDictionary = Database.sendMessage("core", "PIN_LIST", availablePinDictionary)
 
+    at25SymHoldPin.addKey("SYS_PORT_PIN_NONE", "-1", "None")
+    at25SymWriteProtectPin.addKey("SYS_PORT_PIN_NONE", "-1", "None")
+
     for pad in sort_alphanumeric(availablePinDictionary.values()):
         key = "SYS_PORT_PIN_" + pad
         value = list(availablePinDictionary.keys())[list(availablePinDictionary.values()).index(pad)]
