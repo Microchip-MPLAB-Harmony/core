@@ -3,6 +3,19 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.6.1
+### New Features
+- Regenerated PIC32MK MCJ Family Applications to work with updated BSP
+
+### Bug fixes
+- None
+
+### Known Issues
+- No changes from v3.6.0
+
+### Development Tools
+- No changes from v3.6.0
+
 ## Core Release v3.6.0
 ### New Features
 
@@ -79,7 +92,6 @@ The current known issues are as follows:
 ### Development Tools
 - No changes from v3.5.1
 
-# Microchip MPLAB® Harmony 3 Release Notes
 ## Core Release v3.5.1
 ### New Features
 - N/A
