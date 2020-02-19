@@ -74,6 +74,9 @@
 #define configENABLE_TRUSTZONE                  <#if FREERTOS_ENABLE_TRUSTZONE == true>1<#else>0</#if>
 #define configENABLE_MPU                        <#if FREERTOS_ENABLE_MPU == true>1<#else>0</#if>
 #define configRUN_FREERTOS_SECURE_ONLY          <#if FREERTOS_RUN_FREERTOS_SECURE_ONLY == true>1<#else>0</#if>
+<#if __TRUSTZONE_ENABLED?? && __TRUSTZONE_ENABLED == "true">
+#define configMINIMAL_SECURE_STACK_SIZE         ( (uint32_t) ${FREERTOS_MINIMAL_SECURE_STACK_SIZE} )
+</#if>
 </#if>
 
 /* Hook function related definitions. */

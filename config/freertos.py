@@ -327,6 +327,15 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_StackSize.setDescription("FreeRTOS - Minimal stack size. The size of the stack (in words) used by the idle task.")
     freeRtosSym_StackSize.setDefaultValue(128)
 
+    if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+        freeRtosSym_SecureStackSize = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_MINIMAL_SECURE_STACK_SIZE", freeRtosSymMenu)
+        freeRtosSym_SecureStackSize.setLabel("Minimal Secure Stack Size")
+        freeRtosSym_SecureStackSize.setDescription("FreeRTOS - Minimal Secure stack size. The size of the stack in words")
+
+        freeRtosSym_SecureTotalHeapSize = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_SECURE_TOTAL_HEAP_SIZE", freeRtosSymMenu)
+        freeRtosSym_SecureTotalHeapSize.setLabel("Total secure heap size")
+        freeRtosSym_SecureTotalHeapSize.setDescription("FreeRTOS - Total secure heap size")
+
     if (coreArch == "MIPS"):
         freeRtosSym_IsrStackSize = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_ISR_STACK_SIZE", freeRtosSymMenu)
         freeRtosSym_IsrStackSize.setLabel("ISR Stack Size")
