@@ -315,6 +315,7 @@ int MPFS_Mount
 )
 {
     uint32_t index = 0;
+    uint8_t diskNum;
 
     if (diskNo > SYS_FS_VOLUME_NUMBER)
     {
@@ -327,12 +328,14 @@ int MPFS_Mount
         return MPFS_OK;
     }
 
+    diskNum = MPFS_VolToPart[diskNo].pd;
+
     /* Initialize the MPFS Object members. */
     gSysMpfsObj.numFiles = 0;
     gSysMpfsObj.currentHandle = MPFS_INVALID_HANDLE;
 
     /* Find the base address of the MPFS2 Image. */
-    gSysMpfsObj.baseAddress = SYS_FS_MEDIA_MANAGER_AddressGet(diskNo);
+    gSysMpfsObj.baseAddress = SYS_FS_MEDIA_MANAGER_AddressGet(diskNum);
 
     for (index = 0; index < SYS_FS_MAX_FILES; index++)
     {
@@ -341,7 +344,7 @@ int MPFS_Mount
     }
 
     /* Read the MPFS2 Image signature and the version information. */
-    if (MPFSGetArray(diskNo, 0, 6, (uint8_t*)&gSysMpfsFileRecord) == false)
+    if (MPFSGetArray(diskNum, 0, 6, (uint8_t*)&gSysMpfsFileRecord) == false)
     {
         return MPFS_DISK_ERR;
     }
@@ -351,13 +354,13 @@ int MPFS_Mount
         return MPFS_DISK_ERR;
     }
 
-    if (MPFSGetArray(diskNo, 6, 2, (uint8_t*)&gSysMpfsObj.numFiles) == false)
+    if (MPFSGetArray(diskNum, 6, 2, (uint8_t*)&gSysMpfsObj.numFiles) == false)
     {
         return MPFS_DISK_ERR;
     }
 
     /* Store the disk number. */
-    gSysMpfsObj.diskNum = diskNo;
+    gSysMpfsObj.diskNum = diskNum;
 
     return MPFS_OK;
 }
@@ -368,7 +371,9 @@ int MPFS_Unmount
     uint8_t diskNo
 )
 {
-    if ((diskNo > SYS_FS_VOLUME_NUMBER) || (diskNo != gSysMpfsObj.diskNum))
+    uint8_t diskNum = MPFS_VolToPart[diskNo].pd;
+
+    if ((diskNo > SYS_FS_VOLUME_NUMBER) || (diskNum != gSysMpfsObj.diskNum))
     {
         return MPFS_DISK_ERR;
     }
@@ -391,9 +396,12 @@ int MPFS_Open
     int32_t index = 0;
     int32_t hashIndex = 0;
     uint8_t diskNum = 0;
-    diskNum = filewithDisk[0] - '0';
+    uint8_t volumeNum = 0;
 
-    if ((diskNum > SYS_FS_VOLUME_NUMBER) || (diskNum != gSysMpfsObj.diskNum))
+    volumeNum = filewithDisk[0] - '0';
+    diskNum = MPFS_VolToPart[volumeNum].pd;
+
+    if ((volumeNum > SYS_FS_VOLUME_NUMBER) || (diskNum != gSysMpfsObj.diskNum))
     {
         return MPFS_INVALID_PARAMETER;
     }

@@ -41,6 +41,7 @@
 
 #include "system/fs/src/sys_fs_media_manager_local.h"
 #include "system/fs/src/sys_fs_local.h"
+#include "system/fs/mpfs/mpfs.h"
 
 const char *gSYSFSVolumeName [] = {
     "nvm",
@@ -171,6 +172,8 @@ SYS_FS_MEDIA_MANAGER_OBJ gSYSFSMediaManagerObj =
     false
 };
 
+/* Defines the volume to partition translation table, used by MPFS */
+MPFS_PARTITION MPFS_VolToPart[SYS_FS_VOLUME_NUMBER];
 //*****************************************************************************
 /* Function:
     static void _SYS_FS_MEDIA_MANAGER_UpdateVolToPart
@@ -408,6 +411,8 @@ static void _SYS_FS_MEDIA_MANAGER_PopulateVolume
             /* MPFS File System */
             volumeObj->numSectors = 0;
             volumeObj->startSector = 0;
+            MPFS_VolToPart[volumeIndex].pd = mediaObj->mediaIndex;
+            MPFS_VolToPart[volumeIndex].pt = 0;
         }
         else
         {
