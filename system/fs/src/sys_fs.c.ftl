@@ -39,11 +39,14 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
+#include <stdarg.h>
+#include <string.h>
 
 #include "system/fs/src/sys_fs_local.h"
 #include "system/fs/sys_fs_media_manager.h"
-#include <stdarg.h>
-#include <string.h>
+<#if SYS_FS_FAT == true>
+    <#lt>#include "system/fs/fat_fs/src/file_system/ff.h"
+</#if>
 
 // *****************************************************************************
 /* Registration table for each native file system
@@ -339,7 +342,7 @@ SYS_FS_RESULT SYS_FS_Initialize
         gSYSFSFileObj[index].inUse = false;
         gSYSFSFileObj[index].mountPoint = NULL;
         gSYSFSFileObj[index].nativeFSFileObj = (uintptr_t)NULL;
-        memset(gSYSFSFileObj[index].fileName, 0, FAT_FS_MAX_LFN);
+        memset(gSYSFSFileObj[index].fileName, 0, SYS_FS_FILE_NAME_LEN);
         gSYSFSFileObj[index].errorValue = SYS_FS_ERROR_OK;
 
         gSYSFSDirObj[index].inUse = false;
@@ -395,40 +398,39 @@ void SYS_FS_Tasks ( void )
     SYS_FS_MEDIA_MANAGER_Tasks();
 }
 
-#if (SYS_FS_AUTOMOUNT_ENABLE == true)
-//******************************************************************************
-/*Function:
-    void SYS_FS_EventHandlerSet
-    (
-        const void* eventHandler, 
-        const uintptr_t context
-    )
+<#if SYS_FS_AUTO_MOUNT == true>
+    <#lt>//******************************************************************************
+    <#lt>/*Function:
+    <#lt>    void SYS_FS_EventHandlerSet
+    <#lt>    (
+    <#lt>        const void* eventHandler, 
+    <#lt>        const uintptr_t context
+    <#lt>    )
 
-  Summary:
-    Allows a client to identify an event handling function for the file system
-    to call back when mount/unmount operation has completed.
+    <#lt>  Summary:
+    <#lt>    Allows a client to identify an event handling function for the file system
+    <#lt>    to call back when mount/unmount operation has completed.
 
-  Description:
-    This function allows a client to identify an event handling function for
-    the File System to call back when mount/unmount operation has completed.
-    The file system will pass mount name back to the client by calling
-    "eventHandler".
+    <#lt>  Description:
+    <#lt>    This function allows a client to identify an event handling function for
+    <#lt>    the File System to call back when mount/unmount operation has completed.
+    <#lt>    The file system will pass mount name back to the client by calling
+    <#lt>    "eventHandler".
 
-  Returns:
-    None
+    <#lt>  Returns:
+    <#lt>    None
 
-    See sys_fs.h for usage information.
-***************************************************************************/
-void SYS_FS_EventHandlerSet
-(
-    const void * eventHandler,
-    const uintptr_t context
-)
-{
-    SYS_FS_MEDIA_MANAGER_EventHandlerSet(eventHandler, context);
-}
-
-#endif // SYS_FS_AUTOMOUNT_ENABLE == true
+    <#lt>    See sys_fs.h for usage information.
+    <#lt>***************************************************************************/
+    <#lt>void SYS_FS_EventHandlerSet
+    <#lt>(
+    <#lt>    const void * eventHandler,
+    <#lt>    const uintptr_t context
+    <#lt>)
+    <#lt>{
+    <#lt>    SYS_FS_MEDIA_MANAGER_EventHandlerSet(eventHandler, context);
+    <#lt>}
+</#if>
 
 //******************************************************************************
 /*Function:
@@ -852,7 +854,7 @@ SYS_FS_HANDLE SYS_FS_FileOpen
         ptr = &pathWithDiskNo[2];
     }
 
-    for (index = 0; index < FAT_FS_MAX_LFN; index ++)
+    for (index = 0; index < SYS_FS_FILE_NAME_LEN; index ++)
     {
         fileObj->fileName[index] = *ptr;
         if(*ptr++ == '\0')
@@ -861,6 +863,7 @@ SYS_FS_HANDLE SYS_FS_FileOpen
         }
     }
 
+<#if SYS_FS_FAT == true>
     /* Convert the SYS_FS file open attributes to FAT FS attributes */
     switch(attributes)
     {
@@ -887,6 +890,7 @@ SYS_FS_HANDLE SYS_FS_FileOpen
             //mode = FA__ERROR;
             break;
     }
+</#if>
 
     /* Acquire the mutex. */
     osalResult = OSAL_MUTEX_Lock(&(disk->mutexDiskVolume), OSAL_WAIT_FOREVER);
@@ -904,7 +908,6 @@ SYS_FS_HANDLE SYS_FS_FileOpen
         fileStatus = disk->fsFunctions->open((uintptr_t)&fileObj->nativeFSFileObj, (const char *)pathWithDiskNo, mode);
         if ((fileStatus == 0) && ((SYS_FS_FILE_OPEN_APPEND == attributes) || (SYS_FS_FILE_OPEN_APPEND_PLUS == attributes)))
         {
-            //fileStatus = SYS_FS_FileSeek((SYS_FS_HANDLE)fileObj, 0, SYS_FS_SEEK_END);
             uint32_t size = 0;
             size = fileObj->mountPoint->fsFunctions->size(fileObj->nativeFSFileObj);
             fileStatus = fileObj->mountPoint->fsFunctions->seek(fileObj->nativeFSFileObj, size);
@@ -1047,9 +1050,9 @@ bool SYS_FS_FileNameGet
         return false;
     }
 
-    if(wLen > FAT_FS_MAX_LFN)
+    if(wLen > SYS_FS_FILE_NAME_LEN)
     {
-        wLen = FAT_FS_MAX_LFN;
+        wLen = SYS_FS_FILE_NAME_LEN;
     }
 
     for(index = 0;  index < wLen; index ++)

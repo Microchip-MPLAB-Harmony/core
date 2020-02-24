@@ -8,10 +8,10 @@
     sys_fs_media_manager.c
 
   Summary:
-    This file contains implementation of SYS FS Media Manager functions. 
+    This file contains implementation of SYS FS Media Manager functions.
 
   Description:
-    This file contains implementation of SYS FS Media Manager functions. 
+    This file contains implementation of SYS FS Media Manager functions.
 *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -41,7 +41,12 @@
 
 #include "system/fs/src/sys_fs_media_manager_local.h"
 #include "system/fs/src/sys_fs_local.h"
-#include "system/fs/mpfs/mpfs.h"
+<#if SYS_FS_FAT == true>
+    <#lt>#include "system/fs/fat_fs/src/file_system/ff.h"
+</#if>
+<#if SYS_FS_MPFS == true>
+    <#lt>#include "system/fs/mpfs/mpfs.h"
+</#if>
 
 const char *gSYSFSVolumeName [] = {
     "nvm",
@@ -89,29 +94,28 @@ SYS_FS_MEDIA gSYSFSMediaObject[SYS_FS_MEDIA_NUMBER];
 */
 SYS_FS_VOLUME gSYSFSVolumeObject[SYS_FS_VOLUME_NUMBER];
 
-#if (SYS_FS_AUTOMOUNT_ENABLE == true)
-// *****************************************************************************
-/* Media Event Handler
+<#if SYS_FS_AUTO_MOUNT == true>
+    <#lt>// *****************************************************************************
+    <#lt>/* Media Event Handler
 
-  Summary:
-    Defines the media Event handler that stores the application event handler.
+    <#lt>  Summary:
+    <#lt>    Defines the media Event handler that stores the application event handler.
 
-  Description:
-    This data type defines the media event handler
-    the part.
-  Remarks:
-    None
-*/
-typedef struct
-{
-    SYS_FS_EVENT_HANDLER eventHandler;
-    uintptr_t context;
-} _SYS_FS_EVENT_HANDLER;
+    <#lt>  Description:
+    <#lt>    This data type defines the media event handler
+    <#lt>    the part.
+    <#lt>  Remarks:
+    <#lt>    None
+    <#lt>*/
+    <#lt>typedef struct
+    <#lt>{
+    <#lt>    SYS_FS_EVENT_HANDLER eventHandler;
+    <#lt>    uintptr_t context;
+    <#lt>} _SYS_FS_EVENT_HANDLER;
 
-static _SYS_FS_EVENT_HANDLER gSYSFSEventHandler[SYS_FS_CLIENT_NUMBER];
-static uint8_t gNumOfFSClients = 0;
-
-#endif // SYS_FS_AUTOMOUNT_ENABLE == true
+    <#lt>static _SYS_FS_EVENT_HANDLER gSYSFSEventHandler[SYS_FS_CLIENT_NUMBER];
+    <#lt>static uint8_t gNumOfFSClients = 0;
+</#if>
 
 // *****************************************************************************
 /* Media Page Buffer
@@ -139,24 +143,6 @@ uint8_t CACHE_ALIGN gSYSFSMediaBlockBuffer[SYS_FS_MEDIA_MANAGER_BUFFER_SIZE] = {
 */
 extern const SYS_FS_MEDIA_MOUNT_DATA sysfsMountTable[];
 
-// *****************************************************************************
-/* Volume to Partition translation
-
-  Summary:
-    Defines the volume to partition translation table, used by FAT FS.
-
-  Description:
-    The following array was added to enable the "multipartition" feature of FAT
-    FS. This array is already declared in ff.h and the intention was to make as
-    little change on ff.h. Also, type of this array is non-standard since, it
-    is defined in ff.c. The implementation is kept unchanged to maintain
-    compatibility with future releases of FAT FS
-
-  Remarks:
-    None
-*/
-PARTITION VolToPart[SYS_FS_VOLUME_NUMBER];
-
 uint8_t CACHE_ALIGN gSYSFSMediaBuffer[SYS_FS_MEDIA_MAX_BLOCK_SIZE];
 
 /* Following structure holds the variables for media manager, including the task states */
@@ -172,42 +158,78 @@ SYS_FS_MEDIA_MANAGER_OBJ gSYSFSMediaManagerObj =
     false
 };
 
-/* Defines the volume to partition translation table, used by MPFS */
-MPFS_PARTITION MPFS_VolToPart[SYS_FS_VOLUME_NUMBER];
-//*****************************************************************************
-/* Function:
-    static void _SYS_FS_MEDIA_MANAGER_UpdateVolToPart
-    (
-        uint8_t volNumber,
-        uint8_t pd,
-        uint8_t pt
-    );
+<#if SYS_FS_MPFS == true>
+    <#lt>/* Defines the volume to partition translation table, used by MPFS */
+    <#lt>MPFS_PARTITION MPFS_VolToPart[SYS_FS_VOLUME_NUMBER];
+</#if>
 
-  Summary:
-    Update the volume to partition number information.
-    
-  Description:
-    This function is present to enable the multipartition operation of FAT FS.
-    FAT FS uses the structure VolToPart to know the physical drive media number
-    and partition number of that media, using this structure. This function is
-    used to populate the structure.
- 
-  Remarks:
-    None
-*/
-static void _SYS_FS_MEDIA_MANAGER_UpdateVolToPart
-(
-    uint8_t volNumber,
-    uint8_t pd,
-    uint8_t pt
-)
-{
-    /* Update the "VolToPart" table for multipartition support on FAT FS */
-    /* pd = Physical drive, starting from "zero". This is to be compatible with FAT FS code */
-    VolToPart[volNumber].pd = pd;
-    /* pt = partition, starting from "one". This is to be compatible with FAT FS code */
-    VolToPart[volNumber].pt = pt;
-}
+<#if SYS_FS_FAT == true>
+    <#lt>// *****************************************************************************
+    <#lt>/* Volume to Partition translation
+
+    <#lt>Summary:
+    <#lt>    Defines the volume to partition translation table, used by FAT FS.
+
+    <#lt>Description:
+    <#lt>    The following structure was added to enable the "multipartition"
+    <#lt>    feature of FAT FS. This strucre is already declared in ff.h and
+    <#lt>    the intention was to make as little change on ff.h
+    <#lt>    To use multipartition on FAT FS, we need to enable "_MULTI_PARTITION".
+    <#lt>    And, when we do that, the FAT FS code expects an array named "VolToPart".
+    <#lt>    The explanation for each element of the array is given below, and
+    <#lt>    this function places the elements of this array.
+
+    <#lt>    Lets consider a case where 2 media are attached = SD card with 4 partitions
+    <#lt>    and NVM with 1 partition.
+
+    <#lt>    PARTITION VolToPart[SYS_FS_VOLUME_NUMBER] = {
+    <#lt>        {0, 1},    // 0th volume # assigned by sys_fs_media_manager (mmcblka1), media # = 0 (SD card), partition # = 1
+    <#lt>        {0, 2},    // 1st volume # assigned by sys_fs_media_manager (mmcblka2), media # = 0 (SD card), partition # = 2
+    <#lt>        {0, 3},    // 2nd volume # assigned by sys_fs_media_manager (mmcblka3), media # = 0 (SD card), partition # = 3
+    <#lt>        {0, 4},    // 3rd volume # assigned by sys_fs_media_manager (mmcblka4), media # = 0 (SD card), partition # = 4
+    <#lt>        {1, 1}     // 4th volume # assigned by sys_fs_media_manager (nvma1), media # = 1 (NVM), partition # = 1
+    <#lt>    };
+
+    <#lt>Remarks:
+    <#lt>    None
+    <#lt>*/
+    <#lt>PARTITION VolToPart[SYS_FS_VOLUME_NUMBER];
+
+    <#lt>//*****************************************************************************
+    <#lt>/* Function:
+    <#lt>    static void _SYS_FS_MEDIA_MANAGER_UpdateVolToPart
+    <#lt>    (
+    <#lt>        uint8_t volNumber,
+    <#lt>        uint8_t pd,
+    <#lt>        uint8_t pt
+    <#lt>    );
+
+    <#lt>Summary:
+    <#lt>    Update the volume to partition number information.
+
+    <#lt>Description:
+    <#lt>    This function is present to enable the multipartition operation of FAT FS.
+    <#lt>    FAT FS uses the structure VolToPart to know the physical drive media number
+    <#lt>    and partition number of that media, using this structure. This function is
+    <#lt>    used to populate the structure.
+
+    <#lt>Remarks:
+    <#lt>    None
+    <#lt>*/
+    <#lt>static void _SYS_FS_MEDIA_MANAGER_UpdateVolToPart
+    <#lt>(
+    <#lt>    uint8_t volNumber,
+    <#lt>    uint8_t pd,
+    <#lt>    uint8_t pt
+    <#lt>)
+    <#lt>{
+    <#lt>    /* Update the "VolToPart" table for multipartition support on FAT FS */
+    <#lt>    /* pd = Physical drive, starting from "zero". This is to be compatible with FAT FS code */
+    <#lt>    VolToPart[volNumber].pd = pd;
+    <#lt>    /* pt = partition, starting from "one". This is to be compatible with FAT FS code */
+    <#lt>    VolToPart[volNumber].pt = pt;
+    <#lt>}
+</#if>
 
 //*****************************************************************************
 /* Function:
@@ -218,12 +240,12 @@ static void _SYS_FS_MEDIA_MANAGER_UpdateVolToPart
 
   Summary:
     Handles the media detach condition.
-    
+
   Description:
     This function updates the structure members tracking the media attach
     status and also invokes the registered callback function to propagate the
     media detach event.
- 
+
   Remarks:
     None
 */
@@ -245,7 +267,7 @@ static void _SYS_FS_MEDIA_MANAGER_HandleMediaDetach
 
         volumeObj->inUse = false;
 
-#if (SYS_FS_AUTOMOUNT_ENABLE == true)
+<#if SYS_FS_AUTO_MOUNT == true>
         uint8_t index = 0;
         uint8_t handlerIndex = 0;
         const SYS_FS_MEDIA_MOUNT_DATA *fsMount = (const SYS_FS_MEDIA_MOUNT_DATA *)&gSYSFSMediaManagerObj.fsMountTable[0];
@@ -283,67 +305,67 @@ static void _SYS_FS_MEDIA_MANAGER_HandleMediaDetach
 
             break;
         }
-#endif // SYS_FS_AUTOMOUNT_ENABLE == true
+</#if>
     }
 }
 
-#if (SYS_FS_AUTOMOUNT_ENABLE == true)
-// *****************************************************************************
-/* Function:
-    static void _SYS_FS_MountVolume 
-    (
-        SYS_FS_MEDIA_TYPE mediaType,
-        const uint8_t *volumeName
-    );
+<#if SYS_FS_AUTO_MOUNT == true>
+    <#lt>// *****************************************************************************
+    <#lt>/* Function:
+    <#lt>    static void _SYS_FS_MountVolume
+    <#lt>    (
+    <#lt>        SYS_FS_MEDIA_TYPE mediaType,
+    <#lt>        const uint8_t *volumeName
+    <#lt>    );
 
-  Summary:
-    Mount the volume when AUTOMOUNT feature is enabled.
-  
-  Description:
-    Mount the volume when AUTOMOUNT feature is enabled.
+    <#lt>  Summary:
+    <#lt>    Mount the volume when AUTOMOUNT feature is enabled.
 
-  Remarks:
-    None.
-***************************************************************************/
-static void _SYS_FS_MountVolume 
-(
-    SYS_FS_MEDIA_TYPE mediaType,
-    const uint8_t *volumeName
-)
-{
-    uint8_t volumeIndex = 0;
-    uint8_t handlerIndex = 0;
-    const SYS_FS_MEDIA_MOUNT_DATA *fsMount = (const SYS_FS_MEDIA_MOUNT_DATA *)&gSYSFSMediaManagerObj.fsMountTable[0];
+    <#lt>  Description:
+    <#lt>    Mount the volume when AUTOMOUNT feature is enabled.
 
-    for (volumeIndex = 0; volumeIndex < SYS_FS_VOLUME_NUMBER; volumeIndex++)
-    {
-        if (mediaType != fsMount[volumeIndex].mediaType)
-        {
-            continue;
-        }
+    <#lt>  Remarks:
+    <#lt>    None.
+    <#lt>***************************************************************************/
+    <#lt>static void _SYS_FS_MountVolume
+    <#lt>(
+    <#lt>    SYS_FS_MEDIA_TYPE mediaType,
+    <#lt>    const uint8_t *volumeName
+    <#lt>)
+    <#lt>{
+    <#lt>    uint8_t volumeIndex = 0;
+    <#lt>    uint8_t handlerIndex = 0;
+    <#lt>    const SYS_FS_MEDIA_MOUNT_DATA *fsMount = (const SYS_FS_MEDIA_MOUNT_DATA *)&gSYSFSMediaManagerObj.fsMountTable[0];
 
-        if (strcmp((const char *)volumeName, (const char *)(fsMount[volumeIndex].devName + 5)) != 0)
-        {
-            continue;
-        }
+    <#lt>    for (volumeIndex = 0; volumeIndex < SYS_FS_VOLUME_NUMBER; volumeIndex++)
+    <#lt>    {
+    <#lt>        if (mediaType != fsMount[volumeIndex].mediaType)
+    <#lt>        {
+    <#lt>            continue;
+    <#lt>        }
 
-        if (SYS_FS_RES_SUCCESS == SYS_FS_Mount(fsMount[volumeIndex].devName, fsMount[volumeIndex].mountName, fsMount[volumeIndex].fsType, 0, NULL))
-        {
-            for (handlerIndex = 0; handlerIndex < SYS_FS_CLIENT_NUMBER; handlerIndex++)
-            {
-                if (gSYSFSEventHandler[handlerIndex].eventHandler)
-                {
-                    gSYSFSEventHandler[handlerIndex].eventHandler(SYS_FS_EVENT_MOUNT,
-                            (void*)fsMount[volumeIndex].mountName,
-                            gSYSFSEventHandler[handlerIndex].context);
-                }
-            }
-        }
+    <#lt>        if (strcmp((const char *)volumeName, (const char *)(fsMount[volumeIndex].devName + 5)) != 0)
+    <#lt>        {
+    <#lt>            continue;
+    <#lt>        }
 
-        break;
-    }
-}
-#endif // SYS_FS_AUTOMOUNT_ENABLE == true
+    <#lt>        if (SYS_FS_RES_SUCCESS == SYS_FS_Mount(fsMount[volumeIndex].devName, fsMount[volumeIndex].mountName, fsMount[volumeIndex].fsType, 0, NULL))
+    <#lt>        {
+    <#lt>            for (handlerIndex = 0; handlerIndex < SYS_FS_CLIENT_NUMBER; handlerIndex++)
+    <#lt>            {
+    <#lt>                if (gSYSFSEventHandler[handlerIndex].eventHandler)
+    <#lt>                {
+    <#lt>                    gSYSFSEventHandler[handlerIndex].eventHandler(SYS_FS_EVENT_MOUNT,
+    <#lt>                            (void*)fsMount[volumeIndex].mountName,
+    <#lt>                            gSYSFSEventHandler[handlerIndex].context);
+    <#lt>                }
+    <#lt>            }
+    <#lt>        }
+
+    <#lt>        break;
+    <#lt>    }
+    <#lt>}
+</#if>
 
 // *****************************************************************************
 /* Function:
@@ -357,7 +379,7 @@ static void _SYS_FS_MountVolume
 
   Summary:
     Allocate a volume and populate with the FS details.
-  
+
   Description:
     After finding a valid file system, a volume is allocated and populated with
     the details of the file system.
@@ -375,18 +397,17 @@ static void _SYS_FS_MEDIA_MANAGER_PopulateVolume
 {
     uint8_t volumeIndex = 0;
     uint8_t volumeNameLen = 0;
-    uint8_t partitionNum = 0;
+    SYS_FS_VOLUME *volumeObj = &gSYSFSMediaManagerObj.volumeObj[0];
+
+<#if SYS_FS_FAT == true>
+    uint8_t  partitionNum = 0;
     uint16_t offset = 0;
-
-    SYS_FS_VOLUME *volumeObj = NULL;
-    uint8_t *readBuffer = NULL;
-
-    volumeObj = &gSYSFSMediaManagerObj.volumeObj[0];
-    readBuffer = gSYSFSMediaManagerObj.mediaBuffer;
+    uint8_t  *readBuffer = gSYSFSMediaManagerObj.mediaBuffer;
+</#if>
 
     for (volumeIndex = 0; volumeIndex < SYS_FS_VOLUME_NUMBER; volumeIndex++)
     {
-        if (volumeObj->inUse == true) 
+        if (volumeObj->inUse == true)
         {
             volumeObj++;
             continue;
@@ -406,15 +427,21 @@ static void _SYS_FS_MEDIA_MANAGER_PopulateVolume
         volumeObj->obj = mediaObj;
         volumeObj->fsType = fsType;
 
+<#if SYS_FS_MPFS == true>
         if ('M' == volumeObj->fsType)
         {
             /* MPFS File System */
             volumeObj->numSectors = 0;
             volumeObj->startSector = 0;
+
             MPFS_VolToPart[volumeIndex].pd = mediaObj->mediaIndex;
             MPFS_VolToPart[volumeIndex].pt = 0;
         }
+</#if>
+<#if SYS_FS_MPFS == true && SYS_FS_FAT == true>
         else
+</#if>
+<#if SYS_FS_FAT == true>
         {
             /* Register Media and Volume mapping with FAT File System */
             /* Register the volumes to partition table only if this device has
@@ -462,19 +489,20 @@ static void _SYS_FS_MEDIA_MANAGER_PopulateVolume
             }
             else
             {
-                _SYS_FS_MEDIA_MANAGER_UpdateVolToPart (volumeIndex, mediaObj->mediaIndex, 0);                        
+                _SYS_FS_MEDIA_MANAGER_UpdateVolToPart (volumeIndex, mediaObj->mediaIndex, 0);
             }
         }
+</#if>
         /* Update the inUse flag to indicate that the volume is now in use.*/
         volumeObj->inUse = true;
 
-#if (SYS_FS_AUTOMOUNT_ENABLE == true)
+<#if SYS_FS_AUTO_MOUNT == true>
         /* Mount the Media */
         if (fsType != 0xFF)
         {
             _SYS_FS_MountVolume (mediaObj->mediaType, (const uint8_t *)(volumeObj->volumeName));
         }
-#endif // SYS_FS_AUTOMOUNT_ENABLE == true
+</#if>
 
         /* Continue if there is more than one partition on media */
         if (!partitionMap)
@@ -497,7 +525,7 @@ static void _SYS_FS_MEDIA_MANAGER_PopulateVolume
 
   Summary:
     Returns the index of the media that needs to be processed.
-  
+
   Description:
     This function returns the index of the media that will be processed next by
     the media manager task routine.
@@ -512,7 +540,7 @@ static uint8_t _SYS_FS_MEDIA_MANAGER_FindNextMedia
 )
 {
     uint8_t indexLow = 0;
-    
+
     indexLow = *index;
     while (*index < SYS_FS_MEDIA_NUMBER)
     {
@@ -554,47 +582,49 @@ static uint8_t _SYS_FS_MEDIA_MANAGER_FindNextMedia
     return 0xFF;
 }
 
-// *****************************************************************************
-/* Function:
-    static bool SYS_FS_MEDIA_MANAGER_IsFSFat
-    (
-        uint8_t fsType
-    );
+<#if SYS_FS_FAT == true>
+    <#lt>// *****************************************************************************
+    <#lt>/* Function:
+    <#lt>    static bool SYS_FS_MEDIA_MANAGER_IsFSFat
+    <#lt>    (
+    <#lt>        uint8_t fsType
+    <#lt>    );
 
-  Summary:
-    Function to identify if file system type is FAT FS.
-  
-  Description:
-    This function identifies if the file system located on the media/partition
-    is FAT FS.
+    <#lt>Summary:
+    <#lt>    Function to identify if file system type is FAT FS.
 
-  Remarks:
-    None.
-***************************************************************************/
-static bool SYS_FS_MEDIA_MANAGER_IsFSFat
-(
-    uint8_t fsType
-)
-{
-    switch (fsType)
-    {
-        case 0x01: // FAT12
-        case 0x04: // FAT16
-        case 0x05: // Extended partition
-        case 0x06: // FAT16
-        case 0x0B: // FAT32
-        case 0x0C: // FAT32
-        case 0x0E: // FAT16
-        case 0x0F: // FAT16
-            {
-                return true;
-            }
-        default:
-            {
-                return false;
-            }
-    }
-}
+    <#lt>Description:
+    <#lt>    This function identifies if the file system located on the media/partition
+    <#lt>    is FAT FS.
+
+    <#lt>Remarks:
+    <#lt>    None.
+    <#lt>***************************************************************************/
+    <#lt>static bool SYS_FS_MEDIA_MANAGER_IsFSFat
+    <#lt>(
+    <#lt>    uint8_t fsType
+    <#lt>)
+    <#lt>{
+    <#lt>    switch (fsType)
+    <#lt>    {
+    <#lt>        case 0x01: // FAT12
+    <#lt>        case 0x04: // FAT16
+    <#lt>        case 0x05: // Extended partition
+    <#lt>        case 0x06: // FAT16
+    <#lt>        case 0x0B: // FAT32
+    <#lt>        case 0x0C: // FAT32
+    <#lt>        case 0x0E: // FAT16
+    <#lt>        case 0x0F: // FAT16
+    <#lt>            {
+    <#lt>                return true;
+    <#lt>            }
+    <#lt>        default:
+    <#lt>            {
+    <#lt>                return false;
+    <#lt>            }
+    <#lt>    }
+    <#lt>}
+</#if>
 
 // *****************************************************************************
 /* Function:
@@ -608,10 +638,10 @@ static bool SYS_FS_MEDIA_MANAGER_IsFSFat
 
   Summary:
     Analyzes the MBR/VBR and identifies the type of filesystem present.
-  
+
   Description:
     This function analyzes the contents of the MBR or the VBR to find the type
-    of file system present on the media/partition. 
+    of file system present on the media/partition.
 
   Remarks:
     None.
@@ -630,6 +660,7 @@ static uint8_t _SYS_FS_MEDIA_MANAGER_AnalyzeFileSystem
     *numPartition = 0;
 
     /* Check for the Boot Signature */
+<#if SYS_FS_FAT == true>
     if((firstSector[510] == 0x55) && (firstSector[511] == 0xAA))
     {
         /* Check if the first sector of the media is Volume Boot Record or the
@@ -656,7 +687,7 @@ static uint8_t _SYS_FS_MEDIA_MANAGER_AnalyzeFileSystem
             }
         }
         else
-        {     
+        {
             /* The partition table in the MBR sector has room for four 16-byte
              * entries that each specify the sectors that belong to a
              * partition. The table is in bytes 446 through 509. An entry can
@@ -694,7 +725,14 @@ static uint8_t _SYS_FS_MEDIA_MANAGER_AnalyzeFileSystem
             }
         }
     }
+</#if>
+<#if SYS_FS_FAT == true && SYS_FS_MPFS == true>
     else if (0 == memcmp(firstSector, "MPFS", 4))
+</#if>
+<#if SYS_FS_FAT == false && SYS_FS_MPFS == true>
+    if (0 == memcmp(firstSector, "MPFS", 4))
+</#if>
+<#if SYS_FS_MPFS == true>
     {
         /* No partitions in MPFS, hence, go to other state */
         /* allocate a new volume to each partition */
@@ -703,6 +741,7 @@ static uint8_t _SYS_FS_MEDIA_MANAGER_AnalyzeFileSystem
         /* Need to find an unused value from the partition type*/
         fsType = 'M';
     }
+</#if>
     else /* If MBR is not detected, make media as unsupported */
     {
         /* File system either not present or not supported */
@@ -724,7 +763,7 @@ static uint8_t _SYS_FS_MEDIA_MANAGER_AnalyzeFileSystem
 
   Summary:
     Function to register media drivers with the media manager.
-  
+
   Description:
     This function is called by the media driver to register the functionalities
     with the media manager. For static media, such as NVM or a SD card, the
@@ -832,10 +871,10 @@ void SYS_FS_MEDIA_MANAGER_DeRegister
         uint32_t sector,
         uint32_t noSectors
     );
- 
+
   Summary:
     Reads a specified media sector.
-    
+
   Description:
     This function reads a specified media (disk) sector. This is the function
     in the media manager layer. This function in turn calls the specific sector
@@ -876,8 +915,8 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_SectorRead
         /* Find the number of blocks per sector */
         blocksPerSector = 512 / mediaReadBlockSize;
         /* Perform sector to block translation */
-        sector *= blocksPerSector; 
-        numSectors *= blocksPerSector; 
+        sector *= blocksPerSector;
+        numSectors *= blocksPerSector;
     }
     else
     {
@@ -903,7 +942,7 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_SectorRead
 
    Summary:
      Gets data from a specific media address.
-   
+
    Description:
      This function gets data from a specific address of media. This function is
      intended to work with NVM media only, which can have byte level
@@ -957,10 +996,10 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_Read
         uint8_t * dataBuffer,
         uint32_t noSectors
     );
- 
+
     Summary:
       Writes a sector to the specified media.
-    
+
     Description:
       This function writes to a sector of the specified media (disk). This is
       the function in the media manager layer. This function in turn calls the
@@ -1129,7 +1168,7 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_SectorWrite
     (
         uint16_t diskNo
     );
- 
+
   Summary:
     Gets the starting media address based on a disk number.
 
@@ -1168,13 +1207,13 @@ uintptr_t SYS_FS_MEDIA_MANAGER_AddressGet
 
   Summary:
     Gets the command status.
-   
+
   Description:
     This function gets the command status. The sector read and sector write are
     non-blocking functions. Therefore, this interface is provided where the
     code should periodically poll for the buffer status. If status is
     completed, the read/write operation is considered to be complete.
- 
+
   Remarks:
     See sys_fs_media_manager.h for usage information.
 ***************************************************************************/
@@ -1208,15 +1247,15 @@ SYS_FS_MEDIA_COMMAND_STATUS SYS_FS_MEDIA_MANAGER_CommandStatusGet
     (
         const char *devName
     );
- 
+
   Summary:
     Gets the media status.
-    
+
   Description:
     This function gets the media status. This function is used by higher layers
     (sys_fs layer) to know the status of the media(whether the media is attached
     or detached).
- 
+
   Remarks:
     See sys_fs_media_manager.h for usage information.
 ***************************************************************************/
@@ -1244,7 +1283,7 @@ bool SYS_FS_MEDIA_MANAGER_MediaStatusGet
             {
                 if (strcmp((const char*)(volumeName + 5), (const char *)volumeObj->volumeName) == 0)
                 {
-                    return (volumeObj->obj->driverFunctions->mediaStatusGet(volumeObj->obj->driverHandle));                    
+                    return (volumeObj->obj->driverFunctions->mediaStatusGet(volumeObj->obj->driverHandle));
                 }
             }
         }
@@ -1260,10 +1299,10 @@ bool SYS_FS_MEDIA_MANAGER_MediaStatusGet
         const char *volumeName,
         SYS_FS_VOLUME_PROPERTY *property
     );
- 
+
   Summary:
     Gets the volume property.
-    
+
   Description:
     This function gets the property of the volume. This function is used by
     higher layers (sys_fs layer) to know the property of the volume as
@@ -1289,16 +1328,25 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
         {
             if (strcmp((const char*)(volumeName + 5), (const char *)volumeObj->volumeName) == 0)
             {
-                if (volumeObj->fsType == 'M')
-                {
-                    /* MPFS File System */
-                    property->fsType = MPFS2;
-                }
-                else if (SYS_FS_MEDIA_MANAGER_IsFSFat (volumeObj->fsType))
+<#if SYS_FS_FAT == true>
+                if (SYS_FS_MEDIA_MANAGER_IsFSFat (volumeObj->fsType))
                 {
                     /* FAT File System */
                     property->fsType = FAT;
                 }
+</#if>
+<#if SYS_FS_FAT == true && SYS_FS_MPFS == true>
+                else if (volumeObj->fsType == 'M')
+</#if>
+<#if SYS_FS_FAT == false && SYS_FS_MPFS == true>
+                if (volumeObj->fsType == 'M')
+</#if>
+<#if SYS_FS_MPFS == true>
+                {
+                    /* MPFS File System */
+                    property->fsType = MPFS2;
+                }
+</#if>
                 else
                 {
                     /* Unsupported file system or no file system */
@@ -1314,38 +1362,38 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
     return false;
 }
 
-#if (SYS_FS_AUTOMOUNT_ENABLE == true)
-//*****************************************************************************
-/* Function:
-    void SYS_FS_MEDIA_MANAGER_EventHandlerSet
-    (
-        const void * eventHandler,
-        const uintptr_t context
-    );
- 
-  Summary:
-    Register the event handler for Mount/Un-Mount events .
-    
-  Description:
-    This function is used to register a FS client event handler for notifying the
-    Mount/Un-Mount events when AutoMount feature is enabled for File system.
+<#if SYS_FS_AUTO_MOUNT == true>
+    <#lt>//*****************************************************************************
+    <#lt>/* Function:
+    <#lt>    void SYS_FS_MEDIA_MANAGER_EventHandlerSet
+    <#lt>    (
+    <#lt>        const void * eventHandler,
+    <#lt>        const uintptr_t context
+    <#lt>    );
 
-***************************************************************************/
-void SYS_FS_MEDIA_MANAGER_EventHandlerSet
-(
-    const void * eventHandler,
-    const uintptr_t context
-)
-{
-    if (gNumOfFSClients == SYS_FS_CLIENT_NUMBER)
-    {
-        return;
-    }
-    gSYSFSEventHandler[gNumOfFSClients].eventHandler = (SYS_FS_EVENT_HANDLER)eventHandler;
-    gSYSFSEventHandler[gNumOfFSClients].context = context;
-    gNumOfFSClients++;    
-}
-#endif // SYS_FS_AUTOMOUNT_ENABLE == true
+    <#lt>  Summary:
+    <#lt>    Register the event handler for Mount/Un-Mount events .
+
+    <#lt>  Description:
+    <#lt>    This function is used to register a FS client event handler for notifying the
+    <#lt>    Mount/Un-Mount events when AutoMount feature is enabled for File system.
+
+    <#lt>***************************************************************************/
+    <#lt>void SYS_FS_MEDIA_MANAGER_EventHandlerSet
+    <#lt>(
+    <#lt>    const void * eventHandler,
+    <#lt>    const uintptr_t context
+    <#lt>)
+    <#lt>{
+    <#lt>    if (gNumOfFSClients == SYS_FS_CLIENT_NUMBER)
+    <#lt>    {
+    <#lt>        return;
+    <#lt>    }
+    <#lt>    gSYSFSEventHandler[gNumOfFSClients].eventHandler = (SYS_FS_EVENT_HANDLER)eventHandler;
+    <#lt>    gSYSFSEventHandler[gNumOfFSClients].context = context;
+    <#lt>    gNumOfFSClients++;
+    <#lt>}
+</#if>
 
 //*****************************************************************************
 /* Function:
@@ -1353,10 +1401,10 @@ void SYS_FS_MEDIA_MANAGER_EventHandlerSet
     (
         const void *eventHandler
     );
- 
+
   Summary:
     Register the event handler for data transfer events.
-    
+
   Description:
     This function is used to send the command status for the disk operation.
 
@@ -1377,15 +1425,15 @@ void SYS_FS_MEDIA_MANAGER_RegisterTransferHandler
         SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE commandHandle,
         uintptr_t context
     );
- 
+
   Summary:
     Registers the event handler with media drivers.
-    
+
   Description:
     This function registers the event handler with media drivers. The event
     handler will be called by media drivers whenever a media command has
     executed successfully or if it resulted in an error.
- 
+
   Remarks:
     None.
 */
@@ -1420,10 +1468,10 @@ void SYS_FS_MEDIA_MANAGER_EventHandler
     (
         uint16_t diskNum
     );
- 
+
   Summary:
     Gets the media geometry information.
-    
+
   Description:
     This function gets the media geometry information.
 
@@ -1459,15 +1507,15 @@ SYS_FS_MEDIA_GEOMETRY * SYS_FS_MEDIA_MANAGER_GetMediaGeometry
     (
         uint8_t mediaIndex
     );
- 
+
   Summary:
     Media manager transfer task function.
-     
+
   Description:
     This is the media manager transfer task function. This task is repeatedly
     called by the disk io layer of the native file system for driving the
     current disk read/write operation to completion.
- 
+
   Remarks:
     See sys_fs_media_manager.h for usage information.
 ***************************************************************************/
@@ -1482,7 +1530,7 @@ void SYS_FS_MEDIA_MANAGER_TransferTask
     {
         return;
     }
-    
+
     mediaObj = &gSYSFSMediaManagerObj.mediaObj[mediaIndex];
 
     if (mediaObj->inUse == false)
@@ -1499,14 +1547,14 @@ void SYS_FS_MEDIA_MANAGER_TransferTask
 //*****************************************************************************
 /* Function:
     void SYS_FS_MEDIA_MANAGER_Tasks(void)
- 
+
   Summary:
     Media manager task function.
-     
+
   Description:
     This is the media manager task function. This task must be called
     repeatedly from the main loop.
- 
+
   Remarks:
     See sys_fs_media_manager.h for usage information.
 ***************************************************************************/

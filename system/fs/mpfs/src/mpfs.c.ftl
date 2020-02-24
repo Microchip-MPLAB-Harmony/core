@@ -47,6 +47,7 @@
 // *****************************************************************************
 
 #include "system/fs/mpfs/src/mpfs_local.h"
+#include "system/fs/sys_fs_media_manager.h"
 <#if __PROCESSOR?matches("PIC32MZ.*") == true>
 #include "system/cache/sys_cache.h"
 </#if>
@@ -80,46 +81,6 @@ static SYS_MPFS_OBJECT CACHE_ALIGN gSysMpfsObj =
 
 /* MPFS Handle Token. */
 uint8_t gSysMpfsHandleToken = 0;
-/****************************************************************************
- Function pointers
-*****************************************************************************/
-const SYS_FS_FUNCTIONS MPFSFunctions =
-{
-    .mount  = MPFS_Mount,
-    .unmount = MPFS_Unmount,
-    .open   = MPFS_Open,
-    .read   = MPFS_Read,
-    .write  = NULL,
-    .close  = MPFS_Close,
-    .seek   = MPFS_Seek,
-    .tell   = MPFS_GetPosition,
-    .eof    = MPFS_EOF,
-    .size   = MPFS_GetSize,
-    .fstat   = MPFS_Stat,
-    .mkdir = NULL,
-    .chdir = NULL,
-    .remove = NULL,
-    .getlabel = NULL,
-    .setlabel = NULL,
-    .truncate = NULL,
-    .currWD = NULL,
-    .chdrive = NULL,
-    .chmode = NULL,
-    .chtime = NULL,
-    .rename = NULL,
-    .sync = NULL,
-    .getstrn = NULL,
-    .putchr = NULL,
-    .putstrn = NULL,
-    .formattedprint = NULL,
-    .testerror = NULL,
-    .formatDisk = NULL,
-    .openDir = MPFS_DirOpen,
-    .readDir = MPFS_DirRead,
-    .closeDir = MPFS_DirClose,
-    .partitionDisk = NULL,
-    .getCluster = NULL
-};
 
 /****************************************************************************
   Section:Handle Management Functions
@@ -204,7 +165,7 @@ static int MPFSFindFile
     int32_t index = 0;
     uint16_t hash = 0;
     uint16_t __ALIGNED(CACHE_LINE_SIZE) hashBuffer[CACHE_LINE_SIZE] = {0};
-    uint8_t __ALIGNED(CACHE_LINE_SIZE) fileName[(FAT_FS_MAX_LFN + ((FAT_FS_MAX_LFN%CACHE_LINE_SIZE)? (CACHE_LINE_SIZE - (FAT_FS_MAX_LFN%CACHE_LINE_SIZE)) : 0))];
+    uint8_t __ALIGNED(CACHE_LINE_SIZE) fileName[(SYS_FS_FILE_NAME_LEN + ((SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)? (CACHE_LINE_SIZE - (SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)) : 0))];
 
     /* Calculate the hash value for the file name. */
     ptr = file;
@@ -612,7 +573,7 @@ int MPFS_Stat
     {
         fileLen = strlen (file);
 
-#if FAT_FS_USE_LFN
+#if SYS_FS_USE_LFN
         if (stat->lfname && stat->lfsize)
         {
             if (fileLen > stat->lfsize)
@@ -742,7 +703,7 @@ int MPFS_DirRead
     uint32_t address = 0;
 
     MPFS_FILE_RECORD __ALIGNED(CACHE_LINE_SIZE) fileRecord;
-    uint8_t __ALIGNED(CACHE_LINE_SIZE) fileName[(FAT_FS_MAX_LFN + ((FAT_FS_MAX_LFN%CACHE_LINE_SIZE)? (CACHE_LINE_SIZE - (FAT_FS_MAX_LFN%CACHE_LINE_SIZE)) : 0))];
+    uint8_t __ALIGNED(CACHE_LINE_SIZE) fileName[(SYS_FS_FILE_NAME_LEN + ((SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)? (CACHE_LINE_SIZE - (SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)) : 0))];
 
     MPFS_STATUS *stat = (MPFS_STATUS *)statPtr;
 
@@ -778,12 +739,12 @@ int MPFS_DirRead
             return MPFS_DISK_ERR;
         }
 
-        /* Since the length of the file is not known, fetch FAT_FS_MAX_LFN
+        /* Since the length of the file is not known, fetch SYS_FS_FILE_NAME_LEN
          * number of bytes starting the from the file name offset. */
 <#if __PROCESSOR?matches("PIC32MZ.*") == true>
-        SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)fileName, FAT_FS_MAX_LFN);
+        SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)fileName, SYS_FS_FILE_NAME_LEN);
 </#if>
-        if (MPFSGetArray (diskNum, fileRecord.fileNameOffset, FAT_FS_MAX_LFN, (uint8_t *)fileName) == false)
+        if (MPFSGetArray (diskNum, fileRecord.fileNameOffset, SYS_FS_FILE_NAME_LEN, (uint8_t *)fileName) == false)
         {
             /* Failed to fetch the file name. */
             return MPFS_DISK_ERR;
@@ -791,7 +752,7 @@ int MPFS_DirRead
 
         fileLen = strlen ((const char *)fileName);
 
-#if FAT_FS_USE_LFN
+#if SYS_FS_USE_LFN
         if (stat->lfname && stat->lfsize)
         {
             if ((fileLen + 1) > stat->lfsize)
@@ -832,7 +793,7 @@ int MPFS_DirRead
         /* Set fname[0] and lfname[0](if LFN is enabled) to '\0' to indicate
          * the end of the directory condition. */
         stat->fname[0] = '\0';
-#if FAT_FS_USE_LFN
+#if SYS_FS_USE_LFN
         if (stat->lfname && stat->lfsize)
         {
             stat->lfname[0] = '\0';

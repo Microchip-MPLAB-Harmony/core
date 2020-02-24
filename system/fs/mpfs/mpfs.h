@@ -51,10 +51,8 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include "configuration.h"
-#include "system/fs/sys_fs.h"
-
 #include <stdint.h>
+#include "configuration.h"
 
 typedef struct {
     uint8_t pd; /* Physical drive number */
@@ -64,9 +62,8 @@ typedef struct {
 /* Volume - Partition resolution table */
 extern MPFS_PARTITION MPFS_VolToPart[SYS_FS_VOLUME_NUMBER];
 
-extern const SYS_FS_FUNCTIONS MPFSFunctions;
+typedef uint32_t MPFS_HANDLE;    // MPFS Handles are currently stored as BYTEs
 
-typedef uint32_t MPFS_HANDLE;   // MPFS Handles are currently stored as BYTEs
 // *****************************************************************************
 // *****************************************************************************
 // Section: Enumerations

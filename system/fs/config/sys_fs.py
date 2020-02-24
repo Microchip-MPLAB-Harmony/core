@@ -268,6 +268,7 @@ def instantiateComponent(sysFSComponent):
     sysFSNameLen = sysFSComponent.createIntegerSymbol("SYS_FS_FILE_NAME_LEN", sysFSMenu)
     sysFSNameLen.setLabel("File name length in bytes")
     sysFSNameLen.setDefaultValue(255)
+    sysFSNameLen.setMin(12)
     sysFSNameLen.setMax(255)
 
     sysFSPathLen = sysFSComponent.createIntegerSymbol("SYS_FS_CWD_STRING_LEN", sysFSMenu)
@@ -320,6 +321,8 @@ def instantiateComponent(sysFSComponent):
     sysFSffHeaderFile.setDestPath("/system/fs/fat_fs/src/file_system")
     sysFSffHeaderFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/file_system")
     sysFSffHeaderFile.setType("HEADER")
+    sysFSffHeaderFile.setEnabled(sysFSFat.getValue())
+    sysFSffHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
     sysFSFFConfHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_FAT_CONF_HEADER", None)
     sysFSFFConfHeaderFile.setSourcePath("/system/fs/fat_fs/src/file_system/ffconf.h")
@@ -327,6 +330,8 @@ def instantiateComponent(sysFSComponent):
     sysFSFFConfHeaderFile.setDestPath("/system/fs/fat_fs/src/file_system/")
     sysFSFFConfHeaderFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/file_system/")
     sysFSFFConfHeaderFile.setType("HEADER")
+    sysFSFFConfHeaderFile.setEnabled(sysFSFat.getValue())
+    sysFSFFConfHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
     sysFSDiskIOHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_DISKIO_HEADER", None)
     sysFSDiskIOHeaderFile.setSourcePath("/system/fs/fat_fs/src/hardware_access/diskio.h")
@@ -334,6 +339,8 @@ def instantiateComponent(sysFSComponent):
     sysFSDiskIOHeaderFile.setDestPath("/system/fs/fat_fs/src/hardware_access/")
     sysFSDiskIOHeaderFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/hardware_access/")
     sysFSDiskIOHeaderFile.setType("HEADER")
+    sysFSDiskIOHeaderFile.setEnabled(sysFSFat.getValue())
+    sysFSDiskIOHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
     sysFSMPFSHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_MPFS_HEADER", None)
     sysFSMPFSHeaderFile.setSourcePath("/system/fs/mpfs/mpfs.h")
@@ -355,18 +362,22 @@ def instantiateComponent(sysFSComponent):
 
 
     sysFSSourceFile = sysFSComponent.createFileSymbol("SYS_FS_SOURCE", None)
-    sysFSSourceFile.setSourcePath("/system/fs/src/sys_fs.c")
+    sysFSSourceFile.setSourcePath("/system/fs/src/sys_fs.c.ftl")
     sysFSSourceFile.setOutputName("sys_fs.c")
     sysFSSourceFile.setDestPath("/system/fs/src/")
     sysFSSourceFile.setProjectPath("config/" + configName + "/system/fs/")
     sysFSSourceFile.setType("SOURCE")
+    sysFSSourceFile.setMarkup(True)
+    sysFSSourceFile.setOverwrite(True)
 
     sysFSMedManSourceFile = sysFSComponent.createFileSymbol("SYS_FS_MEDIA_MANAGER_SOURCE", None)
-    sysFSMedManSourceFile.setSourcePath("/system/fs/src/sys_fs_media_manager.c")
+    sysFSMedManSourceFile.setSourcePath("/system/fs/src/sys_fs_media_manager.c.ftl")
     sysFSMedManSourceFile.setOutputName("sys_fs_media_manager.c")
     sysFSMedManSourceFile.setDestPath("/system/fs/src/")
     sysFSMedManSourceFile.setProjectPath("config/" + configName + "/system/fs/")
     sysFSMedManSourceFile.setType("SOURCE")
+    sysFSMedManSourceFile.setMarkup(True)
+    sysFSMedManSourceFile.setOverwrite(True)
 
     sysFSffSourceFile = sysFSComponent.createFileSymbol("SYS_FS_FAT_SOURCE", None)
     sysFSffSourceFile.setSourcePath("system/fs/fat_fs/src/file_system/ff.c")
@@ -374,6 +385,8 @@ def instantiateComponent(sysFSComponent):
     sysFSffSourceFile.setDestPath("system/fs/fat_fs/src/")
     sysFSffSourceFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/")
     sysFSffSourceFile.setType("SOURCE")
+    sysFSffSourceFile.setEnabled(sysFSFat.getValue())
+    sysFSffSourceFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
     sysFSDiskIOFile = sysFSComponent.createFileSymbol("SYS_FS_DISKIO_SOURCE", None)
     sysFSDiskIOFile.setSourcePath("/system/fs/fat_fs/src/hardware_access/diskio.c")
@@ -381,6 +394,8 @@ def instantiateComponent(sysFSComponent):
     sysFSDiskIOFile.setDestPath("/system/fs/fat_fs/src/")
     sysFSDiskIOFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/")
     sysFSDiskIOFile.setType("SOURCE")
+    sysFSDiskIOFile.setEnabled(sysFSFat.getValue())
+    sysFSDiskIOFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
     sysFSMPFSSourceFile = sysFSComponent.createFileSymbol("SYS_FS_MPFS_SOURCE", None)
     sysFSMPFSSourceFile.setSourcePath("/system/fs/mpfs/src/mpfs.c.ftl")

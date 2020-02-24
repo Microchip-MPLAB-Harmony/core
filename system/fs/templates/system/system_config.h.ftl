@@ -61,13 +61,18 @@
 <#else>
     <#lt>#define SYS_FS_AUTOMOUNT_ENABLE           false
 </#if>
-    <#lt>#define SYS_FS_MAX_FILES                  ${SYS_FS_MAX_FILES}
-    <#lt>#define SYS_FS_MAX_FILE_SYSTEM_TYPE       ${SYS_FS_MAX_FILE_SYSTEM_TYPE}
-<#if SYS_FS_MEDIA_MAX_BLOCK_SIZE?has_content>
-    <#lt>#define SYS_FS_MEDIA_MAX_BLOCK_SIZE       ${SYS_FS_MEDIA_MAX_BLOCK_SIZE}
-    <#lt>#define SYS_FS_MEDIA_MANAGER_BUFFER_SIZE  ${SYS_FS_MEDIA_MANAGER_BUFFER_SIZE}
-    <#lt>#define SYS_FS_FILE_NAME_LEN              ${SYS_FS_FILE_NAME_LEN}
-    <#lt>#define SYS_FS_CWD_STRING_LEN             ${SYS_FS_CWD_STRING_LEN}
+#define SYS_FS_MAX_FILES                  ${SYS_FS_MAX_FILES}
+#define SYS_FS_MAX_FILE_SYSTEM_TYPE       ${SYS_FS_MAX_FILE_SYSTEM_TYPE}
+#define SYS_FS_MEDIA_MAX_BLOCK_SIZE       ${SYS_FS_MEDIA_MAX_BLOCK_SIZE}
+#define SYS_FS_MEDIA_MANAGER_BUFFER_SIZE  ${SYS_FS_MEDIA_MANAGER_BUFFER_SIZE}
+#define SYS_FS_USE_LFN                    1
+#define SYS_FS_FILE_NAME_LEN              ${SYS_FS_FILE_NAME_LEN}
+#define SYS_FS_CWD_STRING_LEN             ${SYS_FS_CWD_STRING_LEN}
+
+<#if SYS_FS_FAT == true>
+    <#lt>#define FAT_FS_USE_LFN                    SYS_FS_USE_LFN
+    <#lt>#define FAT_FS_MAX_LFN                    SYS_FS_FILE_NAME_LEN
+    <#lt>#define FAT_FS_MAX_SS                     SYS_FS_MEDIA_MAX_BLOCK_SIZE
 </#if>
 
 <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS != "BareMetal">

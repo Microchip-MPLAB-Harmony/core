@@ -484,47 +484,6 @@ static const uint8_t ExCvt[] = _EXCVT;	/* Upper conversion table for SBCS extend
 
 #define ff_convert(wc, x) ((char)wc)
 
-/****************************************************************************
- Function pointers
-*****************************************************************************/
-const SYS_FS_FUNCTIONS FatFsFunctions =
-{
-    .mount  = f_mount,
-    .unmount = f_unmount,
-    .open   = f_open,
-    .read   = f_read,
-    .write  = f_write,
-    .close  = f_close,
-    .seek   = f_lseek,
-    .tell   = f_tell,
-    .eof    = f_eof,
-    .size   = f_size,
-    .fstat   = f_stat,
-    .mkdir = f_mkdir,
-    .chdir = f_chdir,
-    .remove = f_unlink,
-    .getlabel = f_getlabel,
-    .setlabel = f_setlabel,
-    .truncate = f_truncate,
-    .currWD = f_getcwd,
-    .chdrive = f_chdrive,
-    .chmode = f_chmod,
-    .chtime = f_utime,
-    .rename = f_rename,
-    .sync = f_sync,
-    .getstrn = f_gets,
-    .putchr = f_putc,
-    .putstrn = f_puts,
-    .formattedprint = f_printf,
-    .testerror = f_error,
-    .formatDisk = f_mkfs,
-    .openDir = f_opendir,
-    .readDir = f_readdir,
-    .closeDir = f_closedir,
-    .partitionDisk = f_fdisk,
-    .getCluster = f_getclusters
-};
-
 
 /*--------------------------------------------------------------------------
 

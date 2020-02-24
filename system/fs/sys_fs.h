@@ -55,6 +55,8 @@ File System Service Library Interface Declarations and Types
 #include <stddef.h>
 #include <stdarg.h>
 
+#include "configuration.h"
+
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 
@@ -413,57 +415,6 @@ typedef enum
 } SYS_FS_EVENT;
 
 // *****************************************************************************
-/* FAT File System Sector size
-
-  Summary:
-    Lists the definitions for FAT file system sector size.
-
-  Description:
-    Maximum sector size to be handled. Always set the value of sector size to
-    512
-
-  Remarks:
-    None.
-*/
-
-#define FAT_FS_MAX_SS    512
-
-// *****************************************************************************
-/* FAT File System LFN (long file name) selection
-
-  Summary:
-    Lists the definitions for FAT file system LFN selection.
-
-  Description:
-    The FAT_FS_USE_LFN option switches the LFN support. Set the value to 1.
-
-  Remarks:
-    None.
-*/
-
-#define FAT_FS_USE_LFN    1
-
-// *****************************************************************************
-/* FAT File System LFN (Long File Name) max length
-
-  Summary:
-    Maximum length of the Long File Name.
-
-  Description:
-    Defines the maximum length of file name during LFN selection. Set the value
-    to 255.
-
-  Remarks:
-    None.
-*/
-
-#if defined (SYS_FS_FILE_NAME_LEN)
-#define FAT_FS_MAX_LFN (SYS_FS_FILE_NAME_LEN)
-#else
-#define FAT_FS_MAX_LFN 255
-#endif
-
-// *****************************************************************************
 /* SYS FS Function signature structure for native file systems
 
   Summary:
@@ -655,7 +606,7 @@ typedef struct
     uint8_t     fattrib;
     /* Short file name (8.3 format) */
     char        fname[13];
-#if FAT_FS_USE_LFN
+#if SYS_FS_USE_LFN
     /* Pointer to the LFN buffer */
     char       *lfname;
     /* Size of LFN buffer in TCHAR */

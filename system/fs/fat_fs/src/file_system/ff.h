@@ -26,13 +26,13 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdarg.h>
 
+#include "device.h"
 #include "configuration.h"
 
 #include "ffconf.h"		/* FatFs configuration options */
-#include "system/fs/src/sys_fs_media_manager_local.h"
-    
-extern const SYS_FS_FUNCTIONS FatFsFunctions;
+
 #if _FATFS != _FFCONF
 #error Wrong configuration file (ffconf.h).
 #endif
