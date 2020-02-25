@@ -277,11 +277,15 @@ DRESULT disk_ioctl (
 #endif
 
 /****************************************************************************
- The get_fattime function is used to know the present time, which is used by
- FAT FS code. The present time should ideally be updated by a Real time clock
- hardware module. Since this module is not integrated with Harmony FS framework,
- a fixed time is set as given by the implementation of the function below   */
-uint32_t get_fattime(void)
+ * The get_fattime function is used to know the present time, which is used by
+ * FAT FS code. The present time should ideally be updated by a Real time clock
+ * hardware module. Since this module is not integrated with Harmony FS framework,
+ * a fixed time is set as given by the implementation of the function below.
+ 
+ * This Function is implemented as WEAK so that it can be overriden with
+ * implementation to get time from RTC and populate the SYS_FS_TIME structure.
+ */
+uint32_t __WEAK get_fattime(void)
 {
     /* RTC should return time here */
     /* For now, just a value */
