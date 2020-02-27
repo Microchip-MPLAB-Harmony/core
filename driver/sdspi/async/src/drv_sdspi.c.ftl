@@ -496,7 +496,7 @@ static void _DRV_SDSPI_CommandSend
             dObj->cmdRespTmrFlag = false;
 
             /* SD card follows big-endian format */
-            *((uint32_t*)endianArray) = *((uint32_t*)&address);
+            memcpy((void *)endianArray, (const void *)&address, sizeof(endianArray));
 
             /* Form the packet */
             dObj->pCmdResp[0] = (gDrvSDSPICmdTable[command].commandCode | DRV_SDSPI_TRANSMIT_SET);
