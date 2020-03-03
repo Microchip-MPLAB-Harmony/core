@@ -8,8 +8,11 @@
 /*---------------------------------------------------------------------------/
 / Function Configurations
 /---------------------------------------------------------------------------*/
-
-#define _FS_READONLY	0
+<#if SYS_FS_FAT_READONLY == true>
+    <#lt>#define _FS_READONLY	1
+<#else>
+    <#lt>#define _FS_READONLY	0
+</#if>
 /* This option switches read-only configuration. (0:Read/Write or 1:Read-only)
 /  Read-only configuration removes writing API functions, f_write(), f_sync(),
 /  f_unlink(), f_mkdir(), f_chmod(), f_rename(), f_truncate(), f_getfree()
@@ -39,8 +42,11 @@
 /* This option switches filtered directory read feature and related functions,
 /  f_findfirst() and f_findnext(). (0:Disable or 1:Enable) */
 
-
-#define	_USE_MKFS		1
+<#if SYS_FS_FAT_READONLY == true>
+    <#lt>#define	_USE_MKFS		0
+<#else>
+    <#lt>#define	_USE_MKFS		1
+</#if>
 /* This option switches f_mkfs() function. (0:Disable or 1:Enable) */
 
 
@@ -62,7 +68,7 @@
 / Locale and Namespace Configurations
 /---------------------------------------------------------------------------*/
 
-#define _CODE_PAGE	932
+#define _CODE_PAGE	${SYS_FS_FAT_CODE_PAGE}
 /* This option specifies the OEM code page to be used on the target system.
 /  Incorrect setting of the code page can cause a file open failure.
 /
@@ -91,8 +97,8 @@
 */
 
 
-#define	_USE_LFN	0
-#define	_MAX_LFN	255
+#define	_USE_LFN	1
+#define	_MAX_LFN	${SYS_FS_FILE_NAME_LEN}
 /* The _USE_LFN option switches the LFN feature.
 /
 /   0: Disable LFN feature. _MAX_LFN has no effect.
@@ -139,7 +145,7 @@
 / Drive/Volume Configurations
 /---------------------------------------------------------------------------*/
 
-#define _VOLUMES	1
+#define _VOLUMES	${SYS_FS_TOTAL_VOLUMES}
 /* Number of volumes (logical drives) to be used. */
 
 
@@ -161,7 +167,7 @@
 
 
 #define	_MIN_SS		512
-#define	_MAX_SS		512
+#define	_MAX_SS		${SYS_FS_MEDIA_MAX_BLOCK_SIZE}
 /* These options configure the range of sector size to be supported. (512, 1024,
 /  2048 or 4096) Always set both 512 for most systems, all type of memory cards and
 /  harddisk. But a larger value may be required for on-board flash memory and some
@@ -214,8 +220,14 @@
 /  _NORTC_MDAY and _NORTC_YEAR have no effect. 
 /  These options have no effect at read-only configuration (_FS_READONLY == 1). */
 
+#define	_FS_MAX_FILES	${SYS_FS_MAX_FILES}
+/* The _FS_MAX_FILES option is added to control file/directory related data structures */
 
-#define	_FS_LOCK	SYS_FS_MAX_FILES
+<#if SYS_FS_FAT_READONLY == true>
+    <#lt>#define	_FS_LOCK	0
+<#else>
+    <#lt>#define	_FS_LOCK	${SYS_FS_MAX_FILES}
+</#if>
 /* The _FS_LOCK option switches file lock feature to control duplicated file open
 /  and illegal operation to open objects. This option must be 0 when _FS_READONLY
 /  is 1.

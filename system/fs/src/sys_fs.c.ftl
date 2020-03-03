@@ -870,8 +870,9 @@ SYS_FS_HANDLE SYS_FS_FileOpen
         case SYS_FS_FILE_OPEN_READ:
             mode = FA_READ;
             break;
+    <#if SYS_FS_FAT_READONLY == false>
         case SYS_FS_FILE_OPEN_WRITE:
-             mode = FA_WRITE | FA_CREATE_ALWAYS;
+             mode = FA_WRITE | FA_OPEN_ALWAYS | FA_CREATE_ALWAYS;
             break;
         case SYS_FS_FILE_OPEN_APPEND:
             mode = FA_WRITE | FA_OPEN_ALWAYS;
@@ -885,6 +886,7 @@ SYS_FS_HANDLE SYS_FS_FileOpen
         case SYS_FS_FILE_OPEN_APPEND_PLUS:
             mode = FA_READ | FA_WRITE | FA_OPEN_ALWAYS;
             break;
+    </#if>
         default:
             /** TODO */
             //mode = FA__ERROR;
@@ -906,6 +908,7 @@ SYS_FS_HANDLE SYS_FS_FileOpen
     if (disk->fsFunctions->open != NULL)
     {
         fileStatus = disk->fsFunctions->open((uintptr_t)&fileObj->nativeFSFileObj, (const char *)pathWithDiskNo, mode);
+<#if SYS_FS_FAT == true && SYS_FS_FAT_READONLY == false>
         if ((fileStatus == 0) && ((SYS_FS_FILE_OPEN_APPEND == attributes) || (SYS_FS_FILE_OPEN_APPEND_PLUS == attributes)))
         {
             uint32_t size = 0;
@@ -918,6 +921,7 @@ SYS_FS_HANDLE SYS_FS_FileOpen
                 fileObj->mountPoint->fsFunctions->close(fileObj->nativeFSFileObj);
             }
         }
+</#if>
         errorValue = (SYS_FS_ERROR)fileStatus;
     }
     else
@@ -1150,91 +1154,6 @@ size_t SYS_FS_FileRead
 
 //******************************************************************************
 /* Function:
-    size_t SYS_FS_FileWrite
-    (
-        SYS_FS_HANDLE handle,
-        const void *buf,
-        size_t nbyte
-    );
-
-  Summary:
-    Writes data to the file.
-
-  Description:
-    This function attempts to write nbyte bytes from the buffer pointed to by
-    buf to the file associated with the file handle.
-
-  Remarks:
-    See sys_fs.h for usage information.
-***************************************************************************/
-
-size_t SYS_FS_FileWrite
-(
-    SYS_FS_HANDLE handle,
-    const void *buffer,
-    size_t nbyte
-)
-{
-    int fileStatus = -1;
-    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
-    uint32_t bytesWritten = -1;
-    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
-
-    /* Check if the handle is valid. */
-    if (handle == SYS_FS_HANDLE_INVALID)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
-        return bytesWritten;
-    }
-
-    /* Check if the fil object is in use. */
-    if (fileObj->inUse == false)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
-        return bytesWritten;
-    }
-
-    if (fileObj->mountPoint->fsFunctions->write == NULL)
-    {
-        /* The write operation is not supported by the Native FS. */
-        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
-        return bytesWritten;
-    }
-
-    /* Clear out the error. */
-    fileObj->errorValue = SYS_FS_ERROR_OK;
-
-    /* Acquire the volume mutex. */
-    osalResult = OSAL_MUTEX_Lock(&(fileObj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER);
-    if (osalResult != OSAL_RESULT_TRUE)
-    {
-        fileObj->errorValue = SYS_FS_ERROR_DENIED;
-    }
-    else
-    {
-        fileStatus = fileObj->mountPoint->fsFunctions->write(
-                fileObj->nativeFSFileObj,
-                buffer, 
-                nbyte, 
-                &bytesWritten);
-
-        /* Release the acquired mutex. */
-        OSAL_MUTEX_Unlock(&(fileObj->mountPoint->mutexDiskVolume));
-
-        if (fileStatus != 0)
-        {
-            /* There was an error while writing to the file. Update the error
-             * value. */
-            fileObj->errorValue = (SYS_FS_ERROR)fileStatus;
-            bytesWritten = -1;
-        }
-    }
-
-    return bytesWritten;
-}
-
-//******************************************************************************
-/* Function:
     int SYS_FS_FileSeek
     (
         SYS_FS_HANDLE handle,
@@ -1274,8 +1193,10 @@ int32_t SYS_FS_FileSeek
 {
     int fileStatus = -1;
     SYS_FS_OBJ *obj = (SYS_FS_OBJ *)handle;
+<#if SYS_FS_FAT_READONLY == false>
     long tell = 0;
     uint32_t size = 0;
+</#if>
     int temp = 0;
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
 
@@ -1293,14 +1214,18 @@ int32_t SYS_FS_FileSeek
         return -1;
     }
 
+<#if SYS_FS_FAT_READONLY == false>
     if ((obj->mountPoint->fsFunctions->seek == NULL) || 
         (obj->mountPoint->fsFunctions->tell == NULL) ||
         (obj->mountPoint->fsFunctions->size == NULL))
+<#else>
+    if (obj->mountPoint->fsFunctions->seek == NULL)
     {
         /* The function is not supported in the native file system. */
         obj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
         return -1;
     }
+</#if>
 
     /* Clear out the error. */
     obj->errorValue = SYS_FS_ERROR_OK;
@@ -1312,6 +1237,7 @@ int32_t SYS_FS_FileSeek
         /* SYS_FS_SEEK_SET case. */
         temp = offset;
 
+<#if SYS_FS_FAT_READONLY == false>
         if (whence == SYS_FS_SEEK_CUR)
         {
             tell = obj->mountPoint->fsFunctions->tell(obj->nativeFSFileObj);
@@ -1322,6 +1248,7 @@ int32_t SYS_FS_FileSeek
             size = obj->mountPoint->fsFunctions->size(obj->nativeFSFileObj);
             temp = (offset + size);
         }
+</#if>
 
         fileStatus = obj->mountPoint->fsFunctions->seek(obj->nativeFSFileObj, temp);
 
@@ -1343,6 +1270,7 @@ int32_t SYS_FS_FileSeek
     return offset;
 }
 
+<#if SYS_FS_FAT_READONLY == false>
 //******************************************************************************
 /*Function:
     int32_t SYS_FS_FileTell
@@ -1549,6 +1477,7 @@ bool SYS_FS_FileEOF
 
     return status;
 }
+</#if>
 
 //******************************************************************************
 /* Function:
@@ -1693,718 +1622,6 @@ SYS_FS_ERROR SYS_FS_FileError
     }
 
     return fileObj->errorValue;
-}
-
-//******************************************************************************
-/*Function:
-    SYS_FS_RESULT SYS_FS_FileSync
-    (
-        SYS_FS_HANDLE handle
-    );
-
-  Summary:
-    Flushes the cached information when writing to a file.
-
-  Description:
-    This function flushes the cached information when writing to a file. The
-    SYS_FS_FileSync function performs the same process as SYS_FS_FileClose
-    function; however, the file is left open and can continue read/write/seek
-    operations to the file.
-
-  Remarks:
-    See sys_fs.h for usage information.
-***************************************************************************/
-
-SYS_FS_RESULT SYS_FS_FileSync
-(
-    SYS_FS_HANDLE handle
-)
-{
-    int fileStatus = -1;
-    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
-    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
-
-    /* Check if the handle is valid. */
-    if (handle == SYS_FS_HANDLE_INVALID)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    /* Check if the file object is in use. */
-    if (fileObj->inUse == 0)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    if (fileObj->mountPoint->fsFunctions->sync == NULL)
-    {
-        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    /* Clear the error */
-    fileObj->errorValue = SYS_FS_ERROR_OK;
-
-    /* Acquire the volume mutex. */
-    osalResult = OSAL_MUTEX_Lock(&(fileObj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER);
-    if (osalResult == OSAL_RESULT_TRUE)
-    {
-        fileStatus = fileObj->mountPoint->fsFunctions->sync(fileObj->nativeFSFileObj);
-
-        /* Release the acquired mutex. */
-        OSAL_MUTEX_Unlock(&(fileObj->mountPoint->mutexDiskVolume));
-
-        fileObj->errorValue = (SYS_FS_ERROR)fileStatus;
-    }
-    else
-    {
-        fileObj->errorValue = SYS_FS_ERROR_DENIED;
-    }
-
-    return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
-}
-
-//******************************************************************************
-/*Function:
-    SYS_FS_RESULT SYS_FS_FileTruncate
-    (
-        SYS_FS_HANDLE handle
-    );
-
-  Summary:
-    Truncates a file
-
-  Description:
-    This function truncates the file size to the current file read/write
-    pointer. This function has no effect if the file read/write pointer is
-    already pointing to end of the file.
-
-  Remarks:
-    See sys_fs.h for usage information.
-***************************************************************************/
-SYS_FS_RESULT SYS_FS_FileTruncate
-(
-    SYS_FS_HANDLE handle
-)
-{
-    int fileStatus = -1;
-    SYS_FS_OBJ *obj = (SYS_FS_OBJ *)handle;
-
-    if(handle == SYS_FS_HANDLE_INVALID)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    if(obj->inUse == false)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    /* Now, call the real file open function */
-    if(obj->mountPoint->fsFunctions->truncate == NULL)
-    {
-        obj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
-        return SYS_FS_RES_FAILURE;
-    }
-    if(OSAL_MUTEX_Lock(&(obj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER)
-                                                        == OSAL_RESULT_TRUE)
-    {
-        fileStatus = obj->mountPoint->fsFunctions->truncate(obj->nativeFSFileObj);
-
-        OSAL_MUTEX_Unlock(&(obj->mountPoint->mutexDiskVolume));
-    }
-
-    if(fileStatus == 0)
-    {
-        return SYS_FS_RES_SUCCESS;
-    }
-    else
-    {
-        obj->errorValue = (SYS_FS_ERROR)fileStatus;
-        return SYS_FS_RES_FAILURE;
-    }
-}
-
-//******************************************************************************
-/*Function:
-    SYS_FS_RESULT SYS_FS_FileStringGet
-    (
-        SYS_FS_HANDLE handle, 
-        char* buff,
-        uint32_t len
-    );
-
-  Summary:
-    Reads a string from the file into a buffer.
-
-  Description:
-    This function reads a string of specified length from the file into a
-    buffer. The read operation continues until:
-      1. '\n' is stored 
-      2. reached end of the file or 
-      3. the buffer is filled with len - 1 characters.
-      The read string is terminated with a '\0'.
-
-  Remarks:
-    See sys_fs.h for usage information.
-***************************************************************************/
-SYS_FS_RESULT SYS_FS_FileStringGet
-(
-    SYS_FS_HANDLE handle, 
-    char* buff, 
-    uint32_t len
-)
-{
-    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
-    char *ptr = NULL;
-    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
-
-    /* Check if the parameters are valid. */
-    if ((handle == SYS_FS_HANDLE_INVALID) || (buff == NULL) || (len == 0))
-    {
-        errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
-        return SYS_FS_RES_FAILURE;
-    }
-    
-    /* Check if the file object is in use. */
-    if (fileObj->inUse == 0)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    if (fileObj->mountPoint->fsFunctions->getstrn == NULL)
-    {
-        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    /* Clear the error. */
-    fileObj->errorValue = SYS_FS_ERROR_OK;
-
-    /* Acquire the volume mutex. */
-    osalResult = OSAL_MUTEX_Lock(&(fileObj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER);
-    if (osalResult == OSAL_RESULT_TRUE)
-    {
-        ptr = fileObj->mountPoint->fsFunctions->getstrn(buff, len, fileObj->nativeFSFileObj);
-
-        /* Release the acquired mutex. */
-        OSAL_MUTEX_Unlock(&(fileObj->mountPoint->mutexDiskVolume));
-
-        if (ptr != NULL) //(buff == ptr)
-        {
-            return SYS_FS_RES_SUCCESS;
-        }
-        else
-        {
-            fileObj->errorValue = SYS_FS_ERROR_DISK_ERR;
-        }
-    }
-    else
-    {
-        fileObj->errorValue = SYS_FS_ERROR_DENIED;
-    }
-
-    return SYS_FS_RES_FAILURE;
-}
-
-//******************************************************************************
-/*Function:
-    SYS_FS_RESULT SYS_FS_FileCharacterPut
-    (
-        SYS_FS_HANDLE handle,
-        char data
-    );
-
-  Summary:
-    Writes a character to a file.
-
-  Description:
-    This function writes a character to a file.
-
-  Remarks:
-    See sys_fs.h for usage information.
-***************************************************************************/
-SYS_FS_RESULT SYS_FS_FileCharacterPut
-(
-    SYS_FS_HANDLE handle, 
-    char data
-)
-{
-    int fileStatus = -1;
-    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
-    int res = 0;
-
-    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
-
-    /* Check if the handle is valid. */
-    if (handle == SYS_FS_HANDLE_INVALID)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    if (fileObj->inUse == 0)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    if (fileObj->mountPoint->fsFunctions->putchr == NULL)
-    {
-        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    /* Clear the error. */
-    fileObj->errorValue = SYS_FS_ERROR_OK;
-
-    /* Acquire the volume mutex. */
-    osalResult = OSAL_MUTEX_Lock(&(fileObj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER);
-    if (osalResult == OSAL_RESULT_TRUE)
-    {
-        res = fileObj->mountPoint->fsFunctions->putchr(data, fileObj->nativeFSFileObj);
-
-        /* Release the acquired mutex. */
-        OSAL_MUTEX_Unlock(&(fileObj->mountPoint->mutexDiskVolume));
-
-        if (res == 1)
-        {
-            return SYS_FS_RES_SUCCESS;
-        }
-        else
-        {
-            fileObj->errorValue = (SYS_FS_ERROR)fileStatus;
-        }
-    }
-    else
-    {
-        fileObj->errorValue = SYS_FS_ERROR_DENIED;
-    }
-
-    return SYS_FS_RES_FAILURE;
-}
-
-//******************************************************************************
-/*Function:
-    SYS_FS_RESULT SYS_FS_FileStringPut
-    (
-        SYS_FS_HANDLE handle,
-        const char *string
-    );
-
-  Summary:
-    Writes a string to a file.
-
-  Description:
-    This function writes a string into a file. The string to be written should
-    be NULL terminated. The terminator character will not be written.
-
-  Remarks:
-    See sys_fs.h for usage information.
-***************************************************************************/
-SYS_FS_RESULT SYS_FS_FileStringPut
-(
-    SYS_FS_HANDLE handle, 
-    const char *string
-)
-{
-    int fileStatus = -1;
-    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
-    int res = 0;
-
-    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
-
-    /* Validate the input parameters. */
-    if ((handle == SYS_FS_HANDLE_INVALID) || (string == NULL))
-    {
-        errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    if (fileObj->inUse == 0)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    if (fileObj->mountPoint->fsFunctions->putstrn == NULL)
-    {
-        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    /* Clear the error. */
-    fileObj->errorValue = SYS_FS_ERROR_OK;
-
-    /* Acquire the volume mutex. */
-    osalResult = OSAL_MUTEX_Lock(&(fileObj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER);
-    if (osalResult == OSAL_RESULT_TRUE)
-    {
-        res = fileObj->mountPoint->fsFunctions->putstrn(string, fileObj->nativeFSFileObj);
-
-        /* Release the acquired mutex. */
-        OSAL_MUTEX_Unlock(&(fileObj->mountPoint->mutexDiskVolume));
-
-        if (res == EOF)
-        {
-            fileObj->errorValue = (SYS_FS_ERROR)fileStatus;
-        }
-        else
-        {
-            return SYS_FS_RES_SUCCESS;
-        }
-    }
-    else
-    {
-        fileObj->errorValue = SYS_FS_ERROR_DENIED;
-    }
-
-    return SYS_FS_RES_FAILURE;
-}
-
-//******************************************************************************
-/*Function:
-    SYS_FS_RESULT SYS_FS_FilePrintf
-    (
-        SYS_FS_HANDLE handle,
-        const char *string,
-        ...
-    );
-
-  Summary:
-    Writes a formatted string into a file.
-
-  Description:
-    This function writes a formatted string into a file.
-
-  Remarks:
-    See sys_fs.h for usage information.
-***************************************************************************/
-SYS_FS_RESULT SYS_FS_FilePrintf
-(
-    SYS_FS_HANDLE handle, 
-    const char *string, 
-    ...
-)
-{
-    int fileStatus = SYS_FS_ERROR_NOT_READY;
-    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
-    int res = 0;
-    va_list ap = (va_list){0};    
-    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
-
-    /* Validate the parameters. */
-    if ((handle == SYS_FS_HANDLE_INVALID) || (string == NULL))
-    {
-        errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    if (fileObj->inUse == 0)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    if (fileObj->mountPoint->fsFunctions->formattedprint == NULL)
-    {
-        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    /* Clear the error. */
-    fileObj->errorValue = SYS_FS_ERROR_OK;
-
-    /* Acquire the volume mutex. */
-    osalResult = OSAL_MUTEX_Lock(&(fileObj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER);
-    if (osalResult == OSAL_RESULT_TRUE)
-    {
-        va_start (ap, string);        
-        res = fileObj->mountPoint->fsFunctions->formattedprint(fileObj->nativeFSFileObj, string, ap);
-        va_end (ap);
-
-        /* Release the acquired mutex. */
-        OSAL_MUTEX_Unlock(&(fileObj->mountPoint->mutexDiskVolume));
-
-        if (res == EOF)
-        {
-            fileObj->errorValue = (SYS_FS_ERROR)fileStatus;
-        }
-        else
-        {
-            return SYS_FS_RES_SUCCESS;
-        }
-    }
-    else
-    {
-        fileObj->errorValue = SYS_FS_ERROR_DENIED;
-    }
-
-    return SYS_FS_RES_FAILURE;
-}
-
-//******************************************************************************
-/*Function:
-    bool SYS_FS_FileTestError
-    (
-        SYS_FS_HANDLE handle
-    );
-
-  Summary:
-    Checks for errors in the file.
-
-  Description:
-    This function checks whether or not file has any errors.
-
-  Remarks:
-    See sys_fs.h for usage information.
-***************************************************************************/
-bool SYS_FS_FileTestError
-(
-    SYS_FS_HANDLE handle
-)
-{
-    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
-    bool status = false;
-    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
-
-    if (handle == SYS_FS_HANDLE_INVALID)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
-        return true;
-    }
-
-    if (fileObj->inUse == 0)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
-        return true;
-    }
-
-    if (fileObj->mountPoint->fsFunctions->testerror == NULL)
-    {
-        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
-        return true;
-    }
-
-    /* Clear the error. */
-    fileObj->errorValue = SYS_FS_ERROR_OK;
-
-    /* Acquire the volume mutex. */
-    osalResult = OSAL_MUTEX_Lock(&(fileObj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER);
-    if (osalResult == OSAL_RESULT_TRUE)
-    {
-        status = fileObj->mountPoint->fsFunctions->testerror(fileObj->nativeFSFileObj);
-
-        /* Release the acquired mutex. */
-        OSAL_MUTEX_Unlock(&(fileObj->mountPoint->mutexDiskVolume));
-    }
-    else
-    {
-        fileObj->errorValue = SYS_FS_ERROR_DENIED;
-    }
-
-    return status;
-}
-
-//******************************************************************************
-/*Function:
-    SYS_FS_RESULT SYS_FS_DirectoryMake
-    (
-        const char* path
-    );
-
-  Summary:
-    Makes a directory.
-
-  Description:
-    This function makes a new directory as per the specified path.
-
-  Remarks:
-    See sys_fs.h for usage information.
-***************************************************************************/
-SYS_FS_RESULT SYS_FS_DirectoryMake
-(
-    const char* path
-)
-{
-    int fileStatus = -1;
-    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
-    SYS_FS_MOUNT_POINT *disk = NULL;
-    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
-
-    if (path == NULL)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    /* Get disk number */
-    if (SYS_FS_GetDisk(path, &disk, pathWithDiskNo) == false)
-    {
-        /* "errorValue" contains the reason for failure. */
-        return SYS_FS_RES_FAILURE;
-    }
-
-    if (disk->fsFunctions->mkdir == NULL)
-    {
-        errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    errorValue = SYS_FS_ERROR_OK;
-
-    /* Acquire the volume mutex. */
-    osalResult = OSAL_MUTEX_Lock(&(disk->mutexDiskVolume), OSAL_WAIT_FOREVER);
-    if (osalResult == OSAL_RESULT_TRUE)
-    {
-        fileStatus = disk->fsFunctions->mkdir((const char *)pathWithDiskNo);
-
-        /* Release the acquired mutex. */
-        OSAL_MUTEX_Unlock(&(disk->mutexDiskVolume));
-
-        errorValue = (SYS_FS_ERROR)fileStatus;
-    }
-    else
-    {
-        errorValue = SYS_FS_ERROR_DENIED;
-    }
-
-    return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
-}
-
-//******************************************************************************
-/*Function:
-    SYS_FS_RESULT SYS_FS_DirectoryChange
-    (
-        const char* path
-    );
-
-  Summary:
-    Changes to a the directory specified.
-
-  Description:
-    This function changes the present directory to a new directory.
-
-  Remarks:
-    See sys_fs.h for usage information.
-***************************************************************************/
-SYS_FS_RESULT SYS_FS_DirectoryChange
-(
-    const char* path
-)
-{
-    int fileStatus = -1;
-    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
-    SYS_FS_MOUNT_POINT *disk = (SYS_FS_MOUNT_POINT *) NULL;
-    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
-
-    if (path == NULL)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    /* Get disk number */
-    if (SYS_FS_GetDisk(path, &disk, pathWithDiskNo) == false)
-    {
-        /* "errorValue" contains the reason for failure. */
-        return SYS_FS_RES_FAILURE;
-    }
-
-    if (disk->fsFunctions->chdir == NULL)
-    {
-        errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    errorValue = SYS_FS_ERROR_OK;
-
-    /* Acquire the volume mutex. */
-    osalResult = OSAL_MUTEX_Lock(&(disk->mutexDiskVolume), OSAL_WAIT_FOREVER);
-    if (osalResult == OSAL_RESULT_TRUE)
-    {
-        fileStatus = disk->fsFunctions->chdir((const char *)pathWithDiskNo);
-
-        /* Release the acquired mutex. */
-        OSAL_MUTEX_Unlock(&(disk->mutexDiskVolume));
-        errorValue = (SYS_FS_ERROR)fileStatus;
-    }
-    else
-    {
-        errorValue = SYS_FS_ERROR_DENIED;
-    }
-
-    return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
-}
-
-//******************************************************************************
-/*Function:
-    SYS_FS_RESULT SYS_FS_FileDirectoryRemove
-    (
-        const char* path
-    );
-
-  Summary:
-    Removes a file or directory.
-
-  Description:
-    This function removes a file or directory as specified by the path.
-
-  Remarks:
-    See sys_fs.h for usage information.
-***************************************************************************/
-SYS_FS_RESULT SYS_FS_FileDirectoryRemove
-(
-    const char* path
-)
-{
-    int fileStatus = -1;
-    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
-    SYS_FS_MOUNT_POINT *disk = (SYS_FS_MOUNT_POINT *) NULL;
-    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
-
-    if (path == NULL)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    /* Get disk number */
-    if (SYS_FS_GetDisk(path, &disk, pathWithDiskNo) == false)
-    {
-        /* "errorValue" contains the reason for failure. */
-        return SYS_FS_RES_FAILURE;
-    }
-
-    if (disk->fsFunctions->remove == NULL)
-    {
-        errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    errorValue = SYS_FS_ERROR_OK;
-
-    /* Acquire the volume mutex. */
-    osalResult = OSAL_MUTEX_Lock(&(disk->mutexDiskVolume), OSAL_WAIT_FOREVER);
-    if (osalResult == OSAL_RESULT_TRUE)
-    {
-        fileStatus = disk->fsFunctions->remove((const char *)pathWithDiskNo);
-
-        /* Release the acquired mutex. */
-        OSAL_MUTEX_Unlock(&(disk->mutexDiskVolume));
-        errorValue = (SYS_FS_ERROR)fileStatus;
-    }
-    else
-    {
-        errorValue = SYS_FS_ERROR_DENIED;
-    }
-
-    return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
 }
 
 //******************************************************************************
@@ -2813,6 +2030,155 @@ SYS_FS_RESULT SYS_FS_DirSearch
     return SYS_FS_RES_FAILURE;
 }
 
+<#if SYS_FS_FAT == true>
+//******************************************************************************
+/*Function:
+    SYS_FS_RESULT SYS_FS_FileStringGet
+    (
+        SYS_FS_HANDLE handle, 
+        char* buff,
+        uint32_t len
+    );
+
+  Summary:
+    Reads a string from the file into a buffer.
+
+  Description:
+    This function reads a string of specified length from the file into a
+    buffer. The read operation continues until:
+      1. '\n' is stored 
+      2. reached end of the file or 
+      3. the buffer is filled with len - 1 characters.
+      The read string is terminated with a '\0'.
+
+  Remarks:
+    See sys_fs.h for usage information.
+***************************************************************************/
+SYS_FS_RESULT SYS_FS_FileStringGet
+(
+    SYS_FS_HANDLE handle, 
+    char* buff, 
+    uint32_t len
+)
+{
+    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
+    char *ptr = NULL;
+    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
+
+    /* Check if the parameters are valid. */
+    if ((handle == SYS_FS_HANDLE_INVALID) || (buff == NULL) || (len == 0))
+    {
+        errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
+        return SYS_FS_RES_FAILURE;
+    }
+    
+    /* Check if the file object is in use. */
+    if (fileObj->inUse == 0)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    if (fileObj->mountPoint->fsFunctions->getstrn == NULL)
+    {
+        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    /* Clear the error. */
+    fileObj->errorValue = SYS_FS_ERROR_OK;
+
+    /* Acquire the volume mutex. */
+    osalResult = OSAL_MUTEX_Lock(&(fileObj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER);
+    if (osalResult == OSAL_RESULT_TRUE)
+    {
+        ptr = fileObj->mountPoint->fsFunctions->getstrn(buff, len, fileObj->nativeFSFileObj);
+
+        /* Release the acquired mutex. */
+        OSAL_MUTEX_Unlock(&(fileObj->mountPoint->mutexDiskVolume));
+
+        if (ptr != NULL) //(buff == ptr)
+        {
+            return SYS_FS_RES_SUCCESS;
+        }
+        else
+        {
+            fileObj->errorValue = SYS_FS_ERROR_DISK_ERR;
+        }
+    }
+    else
+    {
+        fileObj->errorValue = SYS_FS_ERROR_DENIED;
+    }
+
+    return SYS_FS_RES_FAILURE;
+}
+
+//******************************************************************************
+/*Function:
+    SYS_FS_RESULT SYS_FS_DirectoryChange
+    (
+        const char* path
+    );
+
+  Summary:
+    Changes to a the directory specified.
+
+  Description:
+    This function changes the present directory to a new directory.
+
+  Remarks:
+    See sys_fs.h for usage information.
+***************************************************************************/
+SYS_FS_RESULT SYS_FS_DirectoryChange
+(
+    const char* path
+)
+{
+    int fileStatus = -1;
+    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
+    SYS_FS_MOUNT_POINT *disk = (SYS_FS_MOUNT_POINT *) NULL;
+    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
+
+    if (path == NULL)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    /* Get disk number */
+    if (SYS_FS_GetDisk(path, &disk, pathWithDiskNo) == false)
+    {
+        /* "errorValue" contains the reason for failure. */
+        return SYS_FS_RES_FAILURE;
+    }
+
+    if (disk->fsFunctions->chdir == NULL)
+    {
+        errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    errorValue = SYS_FS_ERROR_OK;
+
+    /* Acquire the volume mutex. */
+    osalResult = OSAL_MUTEX_Lock(&(disk->mutexDiskVolume), OSAL_WAIT_FOREVER);
+    if (osalResult == OSAL_RESULT_TRUE)
+    {
+        fileStatus = disk->fsFunctions->chdir((const char *)pathWithDiskNo);
+
+        /* Release the acquired mutex. */
+        OSAL_MUTEX_Unlock(&(disk->mutexDiskVolume));
+        errorValue = (SYS_FS_ERROR)fileStatus;
+    }
+    else
+    {
+        errorValue = SYS_FS_ERROR_DENIED;
+    }
+
+    return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
+}
+
 //******************************************************************************
 /*Function:
     SYS_FS_RESULT SYS_FS_CurrentWorkingDirectoryGet
@@ -2923,6 +2289,775 @@ SYS_FS_RESULT SYS_FS_CurrentWorkingDirectoryGet
     {
         return SYS_FS_RES_FAILURE;
     }
+}
+
+//******************************************************************************
+/*Function:
+    SYS_FS_RESULT SYS_FS_CurrentDriveGet
+    (
+        char* buffer
+    );
+
+  Summary:
+    Gets the current drive
+
+  Description:
+    This function gets the present drive being used. The drive information is
+    populated in the buffer.
+
+  Remarks:
+    See sys_fs.h for usage information.
+***************************************************************************/
+SYS_FS_RESULT SYS_FS_CurrentDriveGet
+(
+    char* buffer
+)
+{
+    if (buffer == NULL)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    if(gSYSFSCurrentMountPoint.inUse == false)
+    {
+        errorValue = SYS_FS_ERROR_NO_FILESYSTEM;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    strcpy(buffer, "/mnt/");
+    strncpy(buffer + 5, gSYSFSCurrentMountPoint.currentDisk->mountName, gSYSFSCurrentMountPoint.currentDisk->mountNameLength);
+
+    return SYS_FS_RES_SUCCESS;
+}
+
+//******************************************************************************
+/*Function:
+    SYS_FS_RESULT SYS_FS_DriveLabelGet
+    (
+        const char* drive,
+        char *buff,
+        uint32_t *sn
+    );
+
+  Summary:
+    Gets the drive label.
+
+  Description:
+    This function gets the label for the drive specified. If no drive is
+    specified, the label for the current drive is obtained.
+
+  Remarks:
+    See sys_fs.h for usage information.
+***************************************************************************/
+SYS_FS_RESULT SYS_FS_DriveLabelGet
+(
+    const char* drive, 
+    char *buff, 
+    uint32_t *sn
+)
+{
+    int fileStatus = -1;
+    SYS_FS_MOUNT_POINT *disk = NULL;
+    uint8_t pathWithDiskNo[3] = { 0 };
+    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
+
+    if (drive != NULL)
+    {
+        /* Get disk number */
+        if (SYS_FS_GetDisk(drive, &disk, NULL) == false)
+        {
+            /* "errorValue" contains the reason for failure. */
+            return SYS_FS_RES_FAILURE;
+        }
+    }
+    else
+    {
+        if (gSYSFSCurrentMountPoint.inUse == false)
+        {
+            errorValue = SYS_FS_ERROR_NO_FILESYSTEM;
+            return SYS_FS_RES_FAILURE;
+        }
+
+        disk = gSYSFSCurrentMountPoint.currentDisk;
+    }
+
+    if (disk->fsFunctions->getlabel == NULL)
+    {
+        errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    /* Append "0:" before the file name. This is required for different disks
+     * */
+    pathWithDiskNo[0] = (uint8_t)disk->diskNumber + '0';
+    pathWithDiskNo[1] = ':';
+    pathWithDiskNo[2] = '\0';
+
+    osalResult = OSAL_MUTEX_Lock(&(disk->mutexDiskVolume), OSAL_WAIT_FOREVER);
+    if (osalResult == OSAL_RESULT_TRUE)
+    {
+        fileStatus = disk->fsFunctions->getlabel((const char *)pathWithDiskNo, buff, sn);
+        OSAL_MUTEX_Unlock(&(disk->mutexDiskVolume));
+        errorValue = (SYS_FS_ERROR)fileStatus;
+    }
+    else
+    {
+        errorValue = SYS_FS_ERROR_DENIED;
+    }
+
+    return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
+}
+</#if>
+
+<#if SYS_FS_FAT == true  && SYS_FS_FAT_READONLY == false>
+//******************************************************************************
+/* Function:
+    size_t SYS_FS_FileWrite
+    (
+        SYS_FS_HANDLE handle,
+        const void *buf,
+        size_t nbyte
+    );
+
+  Summary:
+    Writes data to the file.
+
+  Description:
+    This function attempts to write nbyte bytes from the buffer pointed to by
+    buf to the file associated with the file handle.
+
+  Remarks:
+    See sys_fs.h for usage information.
+***************************************************************************/
+
+size_t SYS_FS_FileWrite
+(
+    SYS_FS_HANDLE handle,
+    const void *buffer,
+    size_t nbyte
+)
+{
+    int fileStatus = -1;
+    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
+    uint32_t bytesWritten = -1;
+    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
+
+    /* Check if the handle is valid. */
+    if (handle == SYS_FS_HANDLE_INVALID)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+        return bytesWritten;
+    }
+
+    /* Check if the fil object is in use. */
+    if (fileObj->inUse == false)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+        return bytesWritten;
+    }
+
+    if (fileObj->mountPoint->fsFunctions->write == NULL)
+    {
+        /* The write operation is not supported by the Native FS. */
+        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+        return bytesWritten;
+    }
+
+    /* Clear out the error. */
+    fileObj->errorValue = SYS_FS_ERROR_OK;
+
+    /* Acquire the volume mutex. */
+    osalResult = OSAL_MUTEX_Lock(&(fileObj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER);
+    if (osalResult != OSAL_RESULT_TRUE)
+    {
+        fileObj->errorValue = SYS_FS_ERROR_DENIED;
+    }
+    else
+    {
+        fileStatus = fileObj->mountPoint->fsFunctions->write(
+                fileObj->nativeFSFileObj,
+                buffer, 
+                nbyte, 
+                &bytesWritten);
+
+        /* Release the acquired mutex. */
+        OSAL_MUTEX_Unlock(&(fileObj->mountPoint->mutexDiskVolume));
+
+        if (fileStatus != 0)
+        {
+            /* There was an error while writing to the file. Update the error
+             * value. */
+            fileObj->errorValue = (SYS_FS_ERROR)fileStatus;
+            bytesWritten = -1;
+        }
+    }
+
+    return bytesWritten;
+}
+
+//******************************************************************************
+/*Function:
+    SYS_FS_RESULT SYS_FS_FileSync
+    (
+        SYS_FS_HANDLE handle
+    );
+
+  Summary:
+    Flushes the cached information when writing to a file.
+
+  Description:
+    This function flushes the cached information when writing to a file. The
+    SYS_FS_FileSync function performs the same process as SYS_FS_FileClose
+    function; however, the file is left open and can continue read/write/seek
+    operations to the file.
+
+  Remarks:
+    See sys_fs.h for usage information.
+***************************************************************************/
+
+SYS_FS_RESULT SYS_FS_FileSync
+(
+    SYS_FS_HANDLE handle
+)
+{
+    int fileStatus = -1;
+    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
+    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
+
+    /* Check if the handle is valid. */
+    if (handle == SYS_FS_HANDLE_INVALID)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    /* Check if the file object is in use. */
+    if (fileObj->inUse == 0)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    if (fileObj->mountPoint->fsFunctions->sync == NULL)
+    {
+        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    /* Clear the error */
+    fileObj->errorValue = SYS_FS_ERROR_OK;
+
+    /* Acquire the volume mutex. */
+    osalResult = OSAL_MUTEX_Lock(&(fileObj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER);
+    if (osalResult == OSAL_RESULT_TRUE)
+    {
+        fileStatus = fileObj->mountPoint->fsFunctions->sync(fileObj->nativeFSFileObj);
+
+        /* Release the acquired mutex. */
+        OSAL_MUTEX_Unlock(&(fileObj->mountPoint->mutexDiskVolume));
+
+        fileObj->errorValue = (SYS_FS_ERROR)fileStatus;
+    }
+    else
+    {
+        fileObj->errorValue = SYS_FS_ERROR_DENIED;
+    }
+
+    return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
+}
+
+//******************************************************************************
+/*Function:
+    SYS_FS_RESULT SYS_FS_FileTruncate
+    (
+        SYS_FS_HANDLE handle
+    );
+
+  Summary:
+    Truncates a file
+
+  Description:
+    This function truncates the file size to the current file read/write
+    pointer. This function has no effect if the file read/write pointer is
+    already pointing to end of the file.
+
+  Remarks:
+    See sys_fs.h for usage information.
+***************************************************************************/
+SYS_FS_RESULT SYS_FS_FileTruncate
+(
+    SYS_FS_HANDLE handle
+)
+{
+    int fileStatus = -1;
+    SYS_FS_OBJ *obj = (SYS_FS_OBJ *)handle;
+
+    if(handle == SYS_FS_HANDLE_INVALID)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    if(obj->inUse == false)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    /* Now, call the real file open function */
+    if(obj->mountPoint->fsFunctions->truncate == NULL)
+    {
+        obj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+        return SYS_FS_RES_FAILURE;
+    }
+    if(OSAL_MUTEX_Lock(&(obj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER)
+                                                        == OSAL_RESULT_TRUE)
+    {
+        fileStatus = obj->mountPoint->fsFunctions->truncate(obj->nativeFSFileObj);
+
+        OSAL_MUTEX_Unlock(&(obj->mountPoint->mutexDiskVolume));
+    }
+
+    if(fileStatus == 0)
+    {
+        return SYS_FS_RES_SUCCESS;
+    }
+    else
+    {
+        obj->errorValue = (SYS_FS_ERROR)fileStatus;
+        return SYS_FS_RES_FAILURE;
+    }
+}
+
+//******************************************************************************
+/*Function:
+    SYS_FS_RESULT SYS_FS_FileCharacterPut
+    (
+        SYS_FS_HANDLE handle,
+        char data
+    );
+
+  Summary:
+    Writes a character to a file.
+
+  Description:
+    This function writes a character to a file.
+
+  Remarks:
+    See sys_fs.h for usage information.
+***************************************************************************/
+SYS_FS_RESULT SYS_FS_FileCharacterPut
+(
+    SYS_FS_HANDLE handle, 
+    char data
+)
+{
+    int fileStatus = -1;
+    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
+    int res = 0;
+
+    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
+
+    /* Check if the handle is valid. */
+    if (handle == SYS_FS_HANDLE_INVALID)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    if (fileObj->inUse == 0)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    if (fileObj->mountPoint->fsFunctions->putchr == NULL)
+    {
+        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    /* Clear the error. */
+    fileObj->errorValue = SYS_FS_ERROR_OK;
+
+    /* Acquire the volume mutex. */
+    osalResult = OSAL_MUTEX_Lock(&(fileObj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER);
+    if (osalResult == OSAL_RESULT_TRUE)
+    {
+        res = fileObj->mountPoint->fsFunctions->putchr(data, fileObj->nativeFSFileObj);
+
+        /* Release the acquired mutex. */
+        OSAL_MUTEX_Unlock(&(fileObj->mountPoint->mutexDiskVolume));
+
+        if (res == 1)
+        {
+            return SYS_FS_RES_SUCCESS;
+        }
+        else
+        {
+            fileObj->errorValue = (SYS_FS_ERROR)fileStatus;
+        }
+    }
+    else
+    {
+        fileObj->errorValue = SYS_FS_ERROR_DENIED;
+    }
+
+    return SYS_FS_RES_FAILURE;
+}
+
+//******************************************************************************
+/*Function:
+    SYS_FS_RESULT SYS_FS_FileStringPut
+    (
+        SYS_FS_HANDLE handle,
+        const char *string
+    );
+
+  Summary:
+    Writes a string to a file.
+
+  Description:
+    This function writes a string into a file. The string to be written should
+    be NULL terminated. The terminator character will not be written.
+
+  Remarks:
+    See sys_fs.h for usage information.
+***************************************************************************/
+SYS_FS_RESULT SYS_FS_FileStringPut
+(
+    SYS_FS_HANDLE handle, 
+    const char *string
+)
+{
+    int fileStatus = -1;
+    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
+    int res = 0;
+
+    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
+
+    /* Validate the input parameters. */
+    if ((handle == SYS_FS_HANDLE_INVALID) || (string == NULL))
+    {
+        errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    if (fileObj->inUse == 0)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    if (fileObj->mountPoint->fsFunctions->putstrn == NULL)
+    {
+        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    /* Clear the error. */
+    fileObj->errorValue = SYS_FS_ERROR_OK;
+
+    /* Acquire the volume mutex. */
+    osalResult = OSAL_MUTEX_Lock(&(fileObj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER);
+    if (osalResult == OSAL_RESULT_TRUE)
+    {
+        res = fileObj->mountPoint->fsFunctions->putstrn(string, fileObj->nativeFSFileObj);
+
+        /* Release the acquired mutex. */
+        OSAL_MUTEX_Unlock(&(fileObj->mountPoint->mutexDiskVolume));
+
+        if (res == EOF)
+        {
+            fileObj->errorValue = (SYS_FS_ERROR)fileStatus;
+        }
+        else
+        {
+            return SYS_FS_RES_SUCCESS;
+        }
+    }
+    else
+    {
+        fileObj->errorValue = SYS_FS_ERROR_DENIED;
+    }
+
+    return SYS_FS_RES_FAILURE;
+}
+
+//******************************************************************************
+/*Function:
+    SYS_FS_RESULT SYS_FS_FilePrintf
+    (
+        SYS_FS_HANDLE handle,
+        const char *string,
+        ...
+    );
+
+  Summary:
+    Writes a formatted string into a file.
+
+  Description:
+    This function writes a formatted string into a file.
+
+  Remarks:
+    See sys_fs.h for usage information.
+***************************************************************************/
+SYS_FS_RESULT SYS_FS_FilePrintf
+(
+    SYS_FS_HANDLE handle, 
+    const char *string, 
+    ...
+)
+{
+    int fileStatus = SYS_FS_ERROR_NOT_READY;
+    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
+    int res = 0;
+    va_list ap = (va_list){0};    
+    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
+
+    /* Validate the parameters. */
+    if ((handle == SYS_FS_HANDLE_INVALID) || (string == NULL))
+    {
+        errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    if (fileObj->inUse == 0)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    if (fileObj->mountPoint->fsFunctions->formattedprint == NULL)
+    {
+        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    /* Clear the error. */
+    fileObj->errorValue = SYS_FS_ERROR_OK;
+
+    /* Acquire the volume mutex. */
+    osalResult = OSAL_MUTEX_Lock(&(fileObj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER);
+    if (osalResult == OSAL_RESULT_TRUE)
+    {
+        va_start (ap, string);        
+        res = fileObj->mountPoint->fsFunctions->formattedprint(fileObj->nativeFSFileObj, string, ap);
+        va_end (ap);
+
+        /* Release the acquired mutex. */
+        OSAL_MUTEX_Unlock(&(fileObj->mountPoint->mutexDiskVolume));
+
+        if (res == EOF)
+        {
+            fileObj->errorValue = (SYS_FS_ERROR)fileStatus;
+        }
+        else
+        {
+            return SYS_FS_RES_SUCCESS;
+        }
+    }
+    else
+    {
+        fileObj->errorValue = SYS_FS_ERROR_DENIED;
+    }
+
+    return SYS_FS_RES_FAILURE;
+}
+
+//******************************************************************************
+/*Function:
+    bool SYS_FS_FileTestError
+    (
+        SYS_FS_HANDLE handle
+    );
+
+  Summary:
+    Checks for errors in the file.
+
+  Description:
+    This function checks whether or not file has any errors.
+
+  Remarks:
+    See sys_fs.h for usage information.
+***************************************************************************/
+bool SYS_FS_FileTestError
+(
+    SYS_FS_HANDLE handle
+)
+{
+    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
+    bool status = false;
+    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
+
+    if (handle == SYS_FS_HANDLE_INVALID)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+        return true;
+    }
+
+    if (fileObj->inUse == 0)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+        return true;
+    }
+
+    if (fileObj->mountPoint->fsFunctions->testerror == NULL)
+    {
+        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+        return true;
+    }
+
+    /* Clear the error. */
+    fileObj->errorValue = SYS_FS_ERROR_OK;
+
+    /* Acquire the volume mutex. */
+    osalResult = OSAL_MUTEX_Lock(&(fileObj->mountPoint->mutexDiskVolume), OSAL_WAIT_FOREVER);
+    if (osalResult == OSAL_RESULT_TRUE)
+    {
+        status = fileObj->mountPoint->fsFunctions->testerror(fileObj->nativeFSFileObj);
+
+        /* Release the acquired mutex. */
+        OSAL_MUTEX_Unlock(&(fileObj->mountPoint->mutexDiskVolume));
+    }
+    else
+    {
+        fileObj->errorValue = SYS_FS_ERROR_DENIED;
+    }
+
+    return status;
+}
+
+//******************************************************************************
+/*Function:
+    SYS_FS_RESULT SYS_FS_DirectoryMake
+    (
+        const char* path
+    );
+
+  Summary:
+    Makes a directory.
+
+  Description:
+    This function makes a new directory as per the specified path.
+
+  Remarks:
+    See sys_fs.h for usage information.
+***************************************************************************/
+SYS_FS_RESULT SYS_FS_DirectoryMake
+(
+    const char* path
+)
+{
+    int fileStatus = -1;
+    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
+    SYS_FS_MOUNT_POINT *disk = NULL;
+    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
+
+    if (path == NULL)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    /* Get disk number */
+    if (SYS_FS_GetDisk(path, &disk, pathWithDiskNo) == false)
+    {
+        /* "errorValue" contains the reason for failure. */
+        return SYS_FS_RES_FAILURE;
+    }
+
+    if (disk->fsFunctions->mkdir == NULL)
+    {
+        errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    errorValue = SYS_FS_ERROR_OK;
+
+    /* Acquire the volume mutex. */
+    osalResult = OSAL_MUTEX_Lock(&(disk->mutexDiskVolume), OSAL_WAIT_FOREVER);
+    if (osalResult == OSAL_RESULT_TRUE)
+    {
+        fileStatus = disk->fsFunctions->mkdir((const char *)pathWithDiskNo);
+
+        /* Release the acquired mutex. */
+        OSAL_MUTEX_Unlock(&(disk->mutexDiskVolume));
+
+        errorValue = (SYS_FS_ERROR)fileStatus;
+    }
+    else
+    {
+        errorValue = SYS_FS_ERROR_DENIED;
+    }
+
+    return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
+}
+
+//******************************************************************************
+/*Function:
+    SYS_FS_RESULT SYS_FS_FileDirectoryRemove
+    (
+        const char* path
+    );
+
+  Summary:
+    Removes a file or directory.
+
+  Description:
+    This function removes a file or directory as specified by the path.
+
+  Remarks:
+    See sys_fs.h for usage information.
+***************************************************************************/
+SYS_FS_RESULT SYS_FS_FileDirectoryRemove
+(
+    const char* path
+)
+{
+    int fileStatus = -1;
+    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
+    SYS_FS_MOUNT_POINT *disk = (SYS_FS_MOUNT_POINT *) NULL;
+    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
+
+    if (path == NULL)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    /* Get disk number */
+    if (SYS_FS_GetDisk(path, &disk, pathWithDiskNo) == false)
+    {
+        /* "errorValue" contains the reason for failure. */
+        return SYS_FS_RES_FAILURE;
+    }
+
+    if (disk->fsFunctions->remove == NULL)
+    {
+        errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+        return SYS_FS_RES_FAILURE;
+    }
+
+    errorValue = SYS_FS_ERROR_OK;
+
+    /* Acquire the volume mutex. */
+    osalResult = OSAL_MUTEX_Lock(&(disk->mutexDiskVolume), OSAL_WAIT_FOREVER);
+    if (osalResult == OSAL_RESULT_TRUE)
+    {
+        fileStatus = disk->fsFunctions->remove((const char *)pathWithDiskNo);
+
+        /* Release the acquired mutex. */
+        OSAL_MUTEX_Unlock(&(disk->mutexDiskVolume));
+        errorValue = (SYS_FS_ERROR)fileStatus;
+    }
+    else
+    {
+        errorValue = SYS_FS_ERROR_DENIED;
+    }
+
+    return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
 }
 
 //******************************************************************************
@@ -3131,46 +3266,6 @@ SYS_FS_RESULT SYS_FS_FileDirectoryRenameMove
 
 //******************************************************************************
 /*Function:
-    SYS_FS_RESULT SYS_FS_CurrentDriveGet
-    (
-        char* buffer
-    );
-
-  Summary:
-    Gets the current drive
-
-  Description:
-    This function gets the present drive being used. The drive information is
-    populated in the buffer.
-
-  Remarks:
-    See sys_fs.h for usage information.
-***************************************************************************/
-SYS_FS_RESULT SYS_FS_CurrentDriveGet
-(
-    char* buffer
-)
-{
-    if (buffer == NULL)
-    {
-        errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    if(gSYSFSCurrentMountPoint.inUse == false)
-    {
-        errorValue = SYS_FS_ERROR_NO_FILESYSTEM;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    strcpy(buffer, "/mnt/");
-    strncpy(buffer + 5, gSYSFSCurrentMountPoint.currentDisk->mountName, gSYSFSCurrentMountPoint.currentDisk->mountNameLength);
-
-    return SYS_FS_RES_SUCCESS;
-}
-
-//******************************************************************************
-/*Function:
     SYS_FS_RESULT SYS_FS_CurrentDriveSet
     (
         const char* path
@@ -3254,84 +3349,6 @@ SYS_FS_RESULT SYS_FS_CurrentDriveSet
     {
         return SYS_FS_RES_FAILURE;
     }
-}
-
-//******************************************************************************
-/*Function:
-    SYS_FS_RESULT SYS_FS_DriveLabelGet
-    (
-        const char* drive,
-        char *buff,
-        uint32_t *sn
-    );
-
-  Summary:
-    Gets the drive label.
-
-  Description:
-    This function gets the label for the drive specified. If no drive is
-    specified, the label for the current drive is obtained.
-
-  Remarks:
-    See sys_fs.h for usage information.
-***************************************************************************/
-SYS_FS_RESULT SYS_FS_DriveLabelGet
-(
-    const char* drive, 
-    char *buff, 
-    uint32_t *sn
-)
-{
-    int fileStatus = -1;
-    SYS_FS_MOUNT_POINT *disk = NULL;
-    uint8_t pathWithDiskNo[3] = { 0 };
-    OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
-
-    if (drive != NULL)
-    {
-        /* Get disk number */
-        if (SYS_FS_GetDisk(drive, &disk, NULL) == false)
-        {
-            /* "errorValue" contains the reason for failure. */
-            return SYS_FS_RES_FAILURE;
-        }
-    }
-    else
-    {
-        if (gSYSFSCurrentMountPoint.inUse == false)
-        {
-            errorValue = SYS_FS_ERROR_NO_FILESYSTEM;
-            return SYS_FS_RES_FAILURE;
-        }
-
-        disk = gSYSFSCurrentMountPoint.currentDisk;
-    }
-
-    if (disk->fsFunctions->getlabel == NULL)
-    {
-        errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
-        return SYS_FS_RES_FAILURE;
-    }
-
-    /* Append "0:" before the file name. This is required for different disks
-     * */
-    pathWithDiskNo[0] = (uint8_t)disk->diskNumber + '0';
-    pathWithDiskNo[1] = ':';
-    pathWithDiskNo[2] = '\0';
-
-    osalResult = OSAL_MUTEX_Lock(&(disk->mutexDiskVolume), OSAL_WAIT_FOREVER);
-    if (osalResult == OSAL_RESULT_TRUE)
-    {
-        fileStatus = disk->fsFunctions->getlabel((const char *)pathWithDiskNo, buff, sn);
-        OSAL_MUTEX_Unlock(&(disk->mutexDiskVolume));
-        errorValue = (SYS_FS_ERROR)fileStatus;
-    }
-    else
-    {
-        errorValue = SYS_FS_ERROR_DENIED;
-    }
-
-    return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
 }
 
 //******************************************************************************
@@ -3629,6 +3646,7 @@ SYS_FS_RESULT SYS_FS_DriveSectorGet
     return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
 }
 
+</#if>
 /*************************************************************************
 * END OF sys_fs.c
 ***************************************************************************/

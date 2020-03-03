@@ -29,9 +29,8 @@ extern "C" {
 #include <stdarg.h>
 
 #include "device.h"
-#include "configuration.h"
 
-#include "ffconf.h"		/* FatFs configuration options */
+#include "system/fs/fat_fs/src/file_system/ffconf.h"		/* FatFs configuration options */
 
 #if _FATFS != _FFCONF
 #error Wrong configuration file (ffconf.h).
@@ -47,11 +46,11 @@ typedef struct {
 	uint8_t pt;	/* Partition: 0:Auto detect, 1-4:Forced partition) */
 } PARTITION;
 
-#if !defined(SYS_FS_VOLUME_NUMBER)
-#define SYS_FS_VOLUME_NUMBER 5
+#if !defined(_VOLUMES)
+#define _VOLUMES 5
 #endif
 
-extern PARTITION VolToPart[SYS_FS_VOLUME_NUMBER];	/* Volume - Partition resolution table */
+extern PARTITION VolToPart[_VOLUMES];	/* Volume - Partition resolution table */
 
 #define LD2PD(vol) (VolToPart[vol].pd)	/* Get physical drive number */
 #define LD2PT(vol) (VolToPart[vol].pt)	/* Get partition index */
@@ -67,7 +66,7 @@ extern PARTITION VolToPart[SYS_FS_VOLUME_NUMBER];	/* Volume - Partition resoluti
 /* Type of path name strings on FatFs API */
 
 #if _LFN_UNICODE			/* Unicode string */
-#if !FAT_FS_USE_LFN
+#if !_USE_LFN
 #error _LFN_UNICODE must be 0 at non-LFN cfg.
 #endif
 #ifndef _INC_TCHAR
@@ -98,7 +97,7 @@ typedef struct {
 	uint8_t	fsi_flag;		/* FSINFO flags (b7:disabled, b0:dirty) */
 	uint16_t	id;				/* File system mount ID */
 	uint16_t	n_rootdir;		/* Number of root directory entries (FAT12/16) */
-#if FAT_FS_MAX_SS != _MIN_SS
+#if _MAX_SS != _MIN_SS
 	uint16_t	ssize;			/* Bytes per sector (512, 1024, 2048 or 4096) */
 #endif
 #if _FS_REENTRANT
@@ -118,7 +117,7 @@ typedef struct {
 	uint32_t	dirbase;		/* Root directory start sector (FAT32:Cluster#) */
 	uint32_t	database;		/* Data start sector */
 	uint32_t	winsect;		/* Current sector appearing in the win[] */
-	uint8_t CACHE_ALIGN win[FAT_FS_MAX_SS];	/* Disk access window for Directory, FAT (and file data at tiny cfg) */
+	uint8_t CACHE_ALIGN win[_MAX_SS];	/* Disk access window for Directory, FAT (and file data at tiny cfg) */
 } FATFS;
 
 
@@ -146,7 +145,7 @@ typedef struct {
 	uint32_t	lockid;			/* File lock ID origin from 1 (index of file semaphore table Files[]) */
 #endif
 #if !_FS_TINY
-	uint8_t	CACHE_ALIGN buf[FAT_FS_MAX_SS];	/* File private data read/write window */
+	uint8_t	CACHE_ALIGN buf[_MAX_SS];	/* File private data read/write window */
 #endif
 } FIL;
 
@@ -166,7 +165,7 @@ typedef struct {
 #if _FS_LOCK
 	uint32_t	lockid;			/* File lock ID (index of file semaphore table Files[]) */
 #endif
-#if FAT_FS_USE_LFN
+#if _USE_LFN
 	uint16_t*	lfn;			/* Pointer to the LFN working buffer */
 	uint16_t	lfn_idx;		/* Last matched LFN index number (0xFFFF:No LFN) */
 #endif
@@ -185,7 +184,7 @@ typedef struct {
 	uint16_t	ftime;			/* Last modified time */
 	uint8_t	fattrib;		/* Attribute */
 	TCHAR	fname[13];		/* Short file name (8.3 format) */
-#if FAT_FS_USE_LFN
+#if _USE_LFN
 	TCHAR*	lfname;			/* Pointer to the LFN buffer */
 	uint32_t 	lfsize;			/* Size of LFN buffer in TCHAR */
 #endif
@@ -287,10 +286,10 @@ uint32_t get_fattime (void);
 #endif
 
 /* Unicode support functions */
-#if FAT_FS_USE_LFN							/* Unicode - OEM code conversion */
+#if _USE_LFN							/* Unicode - OEM code conversion */
 uint16_t ff_convert (uint16_t chr, uint32_t dir);	/* OEM-Unicode bidirectional conversion */
 uint16_t ff_wtoupper (uint16_t chr);			/* Unicode upper-case conversion */
-#if FAT_FS_USE_LFN == 3						/* Memory functions */
+#if _USE_LFN == 3						/* Memory functions */
 void* ff_memalloc (uint32_t msize);			/* Allocate memory block */
 void ff_memfree (void* mblock);			/* Free memory block */
 #endif

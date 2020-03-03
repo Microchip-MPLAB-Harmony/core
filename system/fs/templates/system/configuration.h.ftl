@@ -42,18 +42,7 @@
 /* File System Service Configuration */
 
 #define SYS_FS_MEDIA_NUMBER               ${SYS_FS_INSTANCES_NUMBER}
-
-<#if SYS_FS_AUTO_MOUNT != true>
-    <#lt>#define SYS_FS_VOLUME_NUMBER              ${SYS_FS_VOLUME_NUMBER}
-<#elseif SYS_FS_IDX0 == true && SYS_FS_IDX1 == true && SYS_FS_IDX2 == true && SYS_FS_IDX3 == true>
-    <#lt>#define SYS_FS_VOLUME_NUMBER            (${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX0} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX1} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX2} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX3})
-<#elseif SYS_FS_IDX0 == true && SYS_FS_IDX1 == true && SYS_FS_IDX2 == true>
-    <#lt>#define SYS_FS_VOLUME_NUMBER             (${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX0} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX1} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX2})
-<#elseif SYS_FS_IDX0 == true && SYS_FS_IDX1 == true>
-    <#lt>#define SYS_FS_VOLUME_NUMBER              (${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX0} + ${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX1})
-<#elseif SYS_FS_IDX0 == true>
-    <#lt>#define SYS_FS_VOLUME_NUMBER              (${SYS_FS_VOLUME_INSTANCES_NUMBER_IDX0})
-</#if>
+#define SYS_FS_VOLUME_NUMBER              ${SYS_FS_TOTAL_VOLUMES}
 
 <#if SYS_FS_AUTO_MOUNT == true>
     <#lt>#define SYS_FS_AUTOMOUNT_ENABLE           true
@@ -69,12 +58,6 @@
 #define SYS_FS_FILE_NAME_LEN              ${SYS_FS_FILE_NAME_LEN}
 #define SYS_FS_CWD_STRING_LEN             ${SYS_FS_CWD_STRING_LEN}
 
-<#if SYS_FS_FAT == true>
-    <#lt>#define FAT_FS_USE_LFN                    SYS_FS_USE_LFN
-    <#lt>#define FAT_FS_MAX_LFN                    SYS_FS_FILE_NAME_LEN
-    <#lt>#define FAT_FS_MAX_SS                     SYS_FS_MEDIA_MAX_BLOCK_SIZE
-</#if>
-
 <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS != "BareMetal">
     <#lt>/* File System RTOS Configurations*/
     <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "FreeRTOS">
@@ -87,6 +70,12 @@
         <#lt>#define SYS_FS_RTOS_TASK_MSG_QTY          ${SYS_FS_RTOS_TASK_MSG_QTY}u
         <#lt>#define SYS_FS_RTOS_TASK_TIME_QUANTA      ${SYS_FS_RTOS_TASK_TIME_QUANTA}u
     </#if>
+</#if>
+
+<#if SYS_FS_FAT == true>
+    <#lt>#define SYS_FS_FAT_READONLY               ${SYS_FS_FAT_READONLY?c}
+    <#lt>#define SYS_FS_FAT_CODE_PAGE              ${SYS_FS_FAT_CODE_PAGE}
+    <#lt>#define SYS_FS_FAT_MAX_SS                 SYS_FS_MEDIA_MAX_BLOCK_SIZE
 </#if>
 
 <#--

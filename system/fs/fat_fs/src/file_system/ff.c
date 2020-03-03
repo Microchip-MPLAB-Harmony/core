@@ -30,17 +30,17 @@
 #endif
 
 /* Definitions of sector size */
-#if (FAT_FS_MAX_SS < _MIN_SS) || (FAT_FS_MAX_SS != 512 && FAT_FS_MAX_SS != 1024 && FAT_FS_MAX_SS != 2048 && FAT_FS_MAX_SS != 4096) || (_MIN_SS != 512 && _MIN_SS != 1024 && _MIN_SS != 2048 && _MIN_SS != 4096)
+#if (_MAX_SS < _MIN_SS) || (_MAX_SS != 512 && _MAX_SS != 1024 && _MAX_SS != 2048 && _MAX_SS != 4096) || (_MIN_SS != 512 && _MIN_SS != 1024 && _MIN_SS != 2048 && _MIN_SS != 4096)
 #error Wrong sector size configuration
 #endif
-#if FAT_FS_MAX_SS == _MIN_SS
-#define	SS(fs)	((uint32_t)FAT_FS_MAX_SS)	/* Fixed sector size */
+#if _MAX_SS == _MIN_SS
+#define	SS(fs)	((uint32_t)_MAX_SS)	/* Fixed sector size */
 #else
 #define	SS(fs)	((fs)->ssize)	/* Variable sector size */
 #endif
 /* Reentrancy related */
 #if _FS_REENTRANT
-#if FAT_FS_USE_LFN == 1
+#if _USE_LFN == 1
 #error Static LFN work area cannot be used at thread-safe configuration
 #endif
 #define	ENTER_FF(fs)		{ if (!lock_fs(fs)) return FR_TIMEOUT; }
@@ -302,7 +302,7 @@ typedef struct {
 				0xF0,0xF1,0xD1,0xD2,0xD3,0xF5,0xD4,0xF7,0xF8,0xF9,0xD5,0x96,0x95,0x98,0xFE,0xFF}
 
 #elif _CODE_PAGE == 1	/* ASCII (for only non-LFN cfg) */
-#if FAT_FS_USE_LFN
+#if _USE_LFN
 #error Cannot use LFN feature without valid code page.
 #endif
 #define _DF1S	0
@@ -431,19 +431,19 @@ typedef struct {
 /  being used is not compliance with ANSI-C standard.
 */
 
-#if SYS_FS_VOLUME_NUMBER < 1 || SYS_FS_VOLUME_NUMBER > 9
-#error Wrong SYS_FS_VOLUME_NUMBER setting
+#if _VOLUMES < 1 || _VOLUMES > 9
+#error Wrong _VOLUMES setting
 #endif
-static FATFS *FatFs[SYS_FS_VOLUME_NUMBER];	/* Pointer to the file system objects (logical drives) */
+static FATFS *FatFs[_VOLUMES];	/* Pointer to the file system objects (logical drives) */
 static uint16_t Fsid;				/* File system mount ID */
 
 /* Added. */
-static FATFS_VOLUME_OBJECT CACHE_ALIGN FAFFSVolume[SYS_FS_VOLUME_NUMBER];
-static FATFS_FILE_OBJECT CACHE_ALIGN FATFSFileObject[SYS_FS_MAX_FILES];
-static FATFS_DIR_OBJECT FATFSDirObject[SYS_FS_MAX_FILES];
+static FATFS_VOLUME_OBJECT CACHE_ALIGN FAFFSVolume[_VOLUMES];
+static FATFS_FILE_OBJECT CACHE_ALIGN FATFSFileObject[_FS_MAX_FILES];
+static FATFS_DIR_OBJECT FATFSDirObject[_FS_MAX_FILES];
 static uint8_t startupflag = 0;
 
-//#if _FS_RPATH && SYS_FS_VOLUME_NUMBER >= 2
+//#if _FS_RPATH && _VOLUMES >= 2
 #if _FS_RPATH
 static uint8_t CurrVol;			/* Current drive */
 #endif
@@ -452,29 +452,29 @@ static uint8_t CurrVol;			/* Current drive */
 static FILESEM Files[_FS_LOCK];	/* Open object lock semaphores */
 #endif
 
-#if FAT_FS_USE_LFN == 0			/* Non LFN feature */
+#if _USE_LFN == 0			/* Non LFN feature */
 #define	DEFINE_NAMEBUF		uint8_t sfn[12]
 #define INIT_BUF(dobj)		(dobj).fn = sfn
 #define	FREE_BUF()
 #else
-#if FAT_FS_MAX_LFN < 12 || FAT_FS_MAX_LFN > 255
-#error Wrong FAT_FS_MAX_LFN setting
+#if _MAX_LFN < 12 || _MAX_LFN > 255
+#error Wrong _MAX_LFN setting
 #endif
-#if FAT_FS_USE_LFN == 1			/* LFN feature with static working buffer */
-static uint16_t LfnBuf[FAT_FS_MAX_LFN + 1];
+#if _USE_LFN == 1			/* LFN feature with static working buffer */
+static uint16_t LfnBuf[_MAX_LFN + 1];
 #define	DEFINE_NAMEBUF		uint8_t sfn[12]
 #define INIT_BUF(dobj)		{ (dobj).fn = sfn; (dobj).lfn = LfnBuf; }
 #define	FREE_BUF()
-#elif FAT_FS_USE_LFN == 2 		/* LFN feature with dynamic working buffer on the stack */
-#define	DEFINE_NAMEBUF		uint8_t sfn[12]; uint16_t lbuf[FAT_FS_MAX_LFN + 1]
+#elif _USE_LFN == 2 		/* LFN feature with dynamic working buffer on the stack */
+#define	DEFINE_NAMEBUF		uint8_t sfn[12]; uint16_t lbuf[_MAX_LFN + 1]
 #define INIT_BUF(dobj)		{ (dobj).fn = sfn; (dobj).lfn = lbuf; }
 #define	FREE_BUF()
-#elif FAT_FS_USE_LFN == 3 		/* LFN feature with dynamic working buffer on the heap */
+#elif _USE_LFN == 3 		/* LFN feature with dynamic working buffer on the heap */
 #define	DEFINE_NAMEBUF		uint8_t sfn[12]; uint16_t *lfn
-#define INIT_BUF(dobj)		{ lfn = ff_memalloc((FAT_FS_MAX_LFN + 1) * 2); if (!lfn) LEAVE_FF((dobj).fs, FR_NOT_ENOUGH_CORE); (dobj).lfn = lfn; (dobj).fn = sfn; }
+#define INIT_BUF(dobj)		{ lfn = ff_memalloc((_MAX_LFN + 1) * 2); if (!lfn) LEAVE_FF((dobj).fs, FR_NOT_ENOUGH_CORE); (dobj).lfn = lfn; (dobj).fn = sfn; }
 #define	FREE_BUF()			ff_memfree(lfn)
 #else
-#error Wrong FAT_FS_USE_LFN setting
+#error Wrong _USE_LFN setting
 #endif
 #endif
 
@@ -1221,7 +1221,7 @@ void st_clust (
 /*-----------------------------------------------------------------------*/
 /* LFN handling - Test/Pick/Fit an LFN segment from/to directory entry   */
 /*-----------------------------------------------------------------------*/
-#if FAT_FS_USE_LFN
+#if _USE_LFN
 static
 const uint8_t LfnOfs[] = {1,3,5,7,9,14,16,18,20,22,24,28,30};	/* Offset of LFN characters in the directory entry */
 
@@ -1243,7 +1243,7 @@ int cmp_lfn (			/* 1:matched, 0:not matched */
 	for (wc = 1, s = 0; s < 13; s++) {		/* Process all characters in the entry */
 		uc = LD_WORD(dir + LfnOfs[s]);		/* Pick an LFN character */
 		if (wc) {
-			if (i >= FAT_FS_MAX_LFN || ff_wtoupper(uc) != ff_wtoupper(lfnbuf[i++]))	/* Compare it */
+			if (i >= _MAX_LFN || ff_wtoupper(uc) != ff_wtoupper(lfnbuf[i++]))	/* Compare it */
 				return 0;					/* Not matched */
 			wc = uc;
 		} else {
@@ -1276,7 +1276,7 @@ int pick_lfn (			/* 1:succeeded, 0:buffer overflow or invalid LFN entry */
 	for (wc = 1, s = 0; s < 13; s++) {		/* Process all characters in the entry */
 		uc = LD_WORD(dir + LfnOfs[s]);		/* Pick an LFN character */
 		if (wc) {
-			if (i >= FAT_FS_MAX_LFN) return 0;	/* Buffer overflow? */
+			if (i >= _MAX_LFN) return 0;	/* Buffer overflow? */
 			lfnbuf[i++] = wc = uc;			/* Store it */
 		} else {
 			if (uc != 0xFFFF) return 0;		/* Check filler */
@@ -1284,7 +1284,7 @@ int pick_lfn (			/* 1:succeeded, 0:buffer overflow or invalid LFN entry */
 	}
 
 	if (dir[LDIR_Ord] & LLEF) {				/* Put terminator if it is the last LFN part */
-		if (i >= FAT_FS_MAX_LFN) return 0;		/* Buffer overflow? */
+		if (i >= _MAX_LFN) return 0;		/* Buffer overflow? */
 		lfnbuf[i] = 0;
 	}
 
@@ -1329,8 +1329,7 @@ void fit_lfn (
 /*-----------------------------------------------------------------------*/
 /* Create numbered name                                                  */
 /*-----------------------------------------------------------------------*/
-#if FAT_FS_USE_LFN
-static
+#if _USE_LFN
 void gen_numname (
 	uint8_t* dst,			/* Pointer to the buffer to store numbered SFN */
 	const uint8_t* src,	/* Pointer to SFN */
@@ -1388,7 +1387,7 @@ void gen_numname (
 /*-----------------------------------------------------------------------*/
 /* Calculate checksum of an SFN entry                                    */
 /*-----------------------------------------------------------------------*/
-#if FAT_FS_USE_LFN
+#if _USE_LFN
 static
 uint8_t sum_sfn (
 	const uint8_t* dir		/* Pointer to the SFN entry */
@@ -1416,14 +1415,14 @@ FRESULT dir_find (	/* FR_OK(0):succeeded, !=0:error */
 {
 	FRESULT res = FR_INT_ERR;
 	uint8_t c = 0, *dir = NULL;
-#if FAT_FS_USE_LFN
+#if _USE_LFN
 	uint8_t a = 0, ord = 0, sum = 0;
 #endif
 
 	res = dir_sdi(dp, 0);			/* Rewind directory object */
 	if (res != FR_OK) return res;
 
-#if FAT_FS_USE_LFN
+#if _USE_LFN
 	ord = sum = 0xFF; dp->lfn_idx = 0xFFFF;	/* Reset LFN sequence */
 #endif
 	do {
@@ -1432,7 +1431,7 @@ FRESULT dir_find (	/* FR_OK(0):succeeded, !=0:error */
 		dir = dp->dir;					/* Ptr to the directory entry of current index */
 		c = dir[DIR_Name];
 		if (c == 0) { res = FR_NO_FILE; break; }	/* Reached to end of table */
-#if FAT_FS_USE_LFN	/* LFN configuration */
+#if _USE_LFN	/* LFN configuration */
 		a = dir[DIR_Attr] & AM_MASK;
 		if (c == DDEM || ((a & AM_VOL) && a != AM_LFN)) {	/* An entry without valid data */
 			ord = 0xFF; dp->lfn_idx = 0xFFFF;	/* Reset LFN sequence */
@@ -1478,7 +1477,7 @@ FRESULT dir_read (
 {
 	FRESULT res = FR_INT_ERR;
 	uint8_t a = 0, c = 0, *dir = NULL;
-#if FAT_FS_USE_LFN
+#if _USE_LFN
 	uint8_t ord = 0xFF, sum = 0xFF;
 #endif
 
@@ -1490,7 +1489,7 @@ FRESULT dir_read (
 		c = dir[DIR_Name];
 		if (c == 0) { res = FR_NO_FILE; break; }	/* Reached to end of table */
 		a = dir[DIR_Attr] & AM_MASK;
-#if FAT_FS_USE_LFN	/* LFN configuration */
+#if _USE_LFN	/* LFN configuration */
 		if (c == DDEM || (!_FS_RPATH && c == '.') || (int)((a & ~AM_ARC) == AM_VOL) != vol) {	/* An entry without valid data */
 			ord = 0xFF;
 		} else {
@@ -1535,7 +1534,7 @@ FRESULT dir_register (	/* FR_OK:succeeded, FR_DENIED:no free entry or too many S
 )
 {
 	FRESULT res = FR_INT_ERR;
-#if FAT_FS_USE_LFN	/* LFN configuration */
+#if _USE_LFN	/* LFN configuration */
 	uint32_t n = 0, nent = 0;
 	uint8_t sn[12], *fn = NULL, sum = 0;
 	uint16_t *lfn = NULL;
@@ -1589,7 +1588,7 @@ FRESULT dir_register (	/* FR_OK:succeeded, FR_DENIED:no free entry or too many S
 		if (res == FR_OK) {
 			mem_set(dp->dir, 0, SZ_DIRE);	/* Clean the entry */
 			mem_cpy(dp->dir, dp->fn, 11);	/* Put SFN */
-#if FAT_FS_USE_LFN
+#if _USE_LFN
 			dp->dir[DIR_NTres] = dp->fn[NSFLAG] & (NS_BODY | NS_EXT);	/* Put NT flag */
 #endif
 			dp->fs->wflag = 1;
@@ -1613,7 +1612,7 @@ FRESULT dir_remove (	/* FR_OK:Succeeded, FR_DISK_ERR:A disk error */
 )
 {
 	FRESULT res = FR_INT_ERR;
-#if FAT_FS_USE_LFN	/* LFN configuration */
+#if _USE_LFN	/* LFN configuration */
 	uint32_t i = 0;
 
 	i = dp->index;	/* SFN index */
@@ -1663,7 +1662,7 @@ void get_fileinfo (		/* No return code */
 	uint32_t i = 0;
 	TCHAR *p = NULL, c = 0;
 	uint8_t *dir = NULL;
-#if FAT_FS_USE_LFN
+#if _USE_LFN
 	uint16_t w = 0, *lfn = NULL;
 #endif
 
@@ -1676,7 +1675,7 @@ void get_fileinfo (		/* No return code */
 			if (c == ' ') continue;				/* Skip padding spaces */
 			if (c == RDDEM) c = (TCHAR)DDEM;	/* Restore replaced DDEM character */
 			if (i == 9) *p++ = '.';				/* Insert a . if extension is exist */
-#if FAT_FS_USE_LFN
+#if _USE_LFN
 			if (IsUpper(c) && (dir[DIR_NTres] & (i >= 9 ? NS_EXT : NS_BODY)))
 				c += 0x20;			/* To lower */
 #if _LFN_UNICODE
@@ -1695,7 +1694,7 @@ void get_fileinfo (		/* No return code */
 	}
 	*p = 0;		/* Terminate SFN string by a \0 */
 
-#if FAT_FS_USE_LFN
+#if _USE_LFN
 	if (fno->lfname) {
 		i = 0; p = fno->lfname;
 		if (dp->sect && fno->lfsize && dp->lfn_idx != 0xFFFF) {	/* Get LFN if available */
@@ -1800,7 +1799,7 @@ FRESULT create_name (	/* FR_OK: successful, FR_INVALID_NAME: could not create */
 	const TCHAR** path	/* Pointer to pointer to the segment in the path string */
 )
 {
-#if FAT_FS_USE_LFN	/* LFN configuration */
+#if _USE_LFN	/* LFN configuration */
 	uint8_t b = 0, cf = 0;
 	uint16_t w = 0, *lfn = NULL;
 	uint32_t i = 0, ni = 0, si = 0, di = 0;
@@ -1813,7 +1812,7 @@ FRESULT create_name (	/* FR_OK: successful, FR_INVALID_NAME: could not create */
 	for (;;) {
 		w = p[si++];					/* Get a character */
 		if (w < ' ' || w == '/' || w == '\\') break;	/* Break on end of segment */
-		if (di >= FAT_FS_MAX_LFN)				/* Reject too long name */
+		if (di >= _MAX_LFN)				/* Reject too long name */
 			return FR_INVALID_NAME;
 #if !_LFN_UNICODE
 		w &= 0xFF;
@@ -2079,12 +2078,12 @@ int get_ldnumber (		/* Returns logical drive number (-1:invalid drive) */
 
 
 	if (*path) {	/* If the pointer is not a null */
-		for (tt = *path; (uint32_t)*tt >= (FAT_FS_USE_LFN ? ' ' : '!') && *tt != ':'; tt++) ;	/* Find ':' in the path */
+		for (tt = *path; (uint32_t)*tt >= (_USE_LFN ? ' ' : '!') && *tt != ':'; tt++) ;	/* Find ':' in the path */
 		if (*tt == ':') {	/* If a ':' is exist in the path name */
 			tp = *path;
 			i = *tp++ - '0'; 
 			if (i < 10 && tp == tt) {	/* Is there a numeric drive id? */
-				if (i < SYS_FS_VOLUME_NUMBER) {	/* If a drive id is found, get the value and strip it */
+				if (i < _VOLUMES) {	/* If a drive id is found, get the value and strip it */
 					vol = (int)i;
 					*path = ++tt;
 				}
@@ -2098,8 +2097,8 @@ int get_ldnumber (		/* Returns logical drive number (-1:invalid drive) */
 						c = *sp++; tc = *tp++;
 						if (IsLower(tc)) tc -= 0x20;
 					} while (c && (TCHAR)c == tc);
-				} while ((c || tp != tt) && ++i < SYS_FS_VOLUME_NUMBER);	/* Repeat for each id until pattern match */
-				if (i < SYS_FS_VOLUME_NUMBER) {	/* If a drive id is found, get the value and strip it */
+				} while ((c || tp != tt) && ++i < _VOLUMES);	/* Repeat for each id until pattern match */
+				if (i < _VOLUMES) {	/* If a drive id is found, get the value and strip it */
 					vol = (int)i;
 					*path = tt;
 				}
@@ -2107,7 +2106,7 @@ int get_ldnumber (		/* Returns logical drive number (-1:invalid drive) */
 #endif
 			return vol;
 		}
-#if _FS_RPATH && SYS_FS_VOLUME_NUMBER >= 2
+#if _FS_RPATH && _VOLUMES >= 2
 		vol = CurrVol;	/* Current drive */
 #else
 		vol = 0;		/* Drive 0 */
@@ -2198,9 +2197,9 @@ FRESULT find_volume (	/* FR_OK(0): successful, !=0: any error occurred */
 		return FR_NOT_READY;			/* Failed to initialize due to no medium or hard error */
 	if (!_FS_READONLY && wmode && (stat & STA_PROTECT))	/* Check disk write protection if needed */
 		return FR_WRITE_PROTECTED;
-#if FAT_FS_MAX_SS != _MIN_SS						/* Get sector size (multiple sector size cfg only) */
+#if _MAX_SS != _MIN_SS						/* Get sector size (multiple sector size cfg only) */
 	if (disk_ioctl(fs->drv, GET_SECTOR_SIZE, &SS(fs)) != RES_OK
-		|| SS(fs) < _MIN_SS || SS(fs) > FAT_FS_MAX_SS) return FR_DISK_ERR;
+		|| SS(fs) < _MIN_SS || SS(fs) > _MAX_SS) return FR_DISK_ERR;
 #endif
 	/* Find an FAT partition on the drive. Supports only generic partitioning, FDISK and SFD. */
 	bsect = 0;
@@ -2367,11 +2366,11 @@ int f_mount (
     if(0 == startupflag)
     {
         startupflag = 1;
-        for(index = 0; index != SYS_FS_VOLUME_NUMBER ; index++ )
+        for(index = 0; index != _VOLUMES ; index++ )
         {
             FAFFSVolume[index].inUse = false;
         }
-        for(index = 0; index != SYS_FS_MAX_FILES ; index++ )
+        for(index = 0; index != _FS_MAX_FILES ; index++ )
         {
             FATFSFileObject[index].inUse = false;
         }
@@ -2379,7 +2378,7 @@ int f_mount (
 	
 	//vol = get_ldnumber(&rp);
 	//if (vol < 0) return FR_INVALID_DRIVE;
-	if (vol >= SYS_FS_VOLUME_NUMBER)		/* Check if the drive number is valid */
+	if (vol >= _VOLUMES)		/* Check if the drive number is valid */
 		return FR_INVALID_DRIVE;
 
         /* If the volume specified is already in use, then return failure, as we cannot mount it again */
@@ -2439,7 +2438,7 @@ int f_unmount (
     uint32_t hFATfs =0;
     FATFS *fs = (FATFS *)0;
 
-    if (vol >= SYS_FS_VOLUME_NUMBER)		/* Check if the drive number is valid */
+    if (vol >= _VOLUMES)		/* Check if the drive number is valid */
         return FR_INVALID_DRIVE;
 
     /* If the volume specified not in use, then return failure, as we cannot unmount mount a free volume */
@@ -2455,7 +2454,8 @@ int f_unmount (
     if (rfs) {
 #if _FS_LOCK
         clear_lock(rfs);
-        for(hFATfs = 0; hFATfs < SYS_FS_MAX_FILES; hFATfs++)
+#endif
+        for(hFATfs = 0; hFATfs < _FS_MAX_FILES; hFATfs++)
         {
             if(FATFSFileObject[hFATfs].inUse)
             {
@@ -2481,7 +2481,6 @@ int f_unmount (
             }
         }
 
-#endif
 #if _FS_REENTRANT				/* Discard sync object of the current volume */
         if (!ff_del_syncobj(rfs->sobj)) return FR_INT_ERR;
 #endif
@@ -2521,7 +2520,7 @@ int f_open (
     uint32_t index = 0;
     FIL *fp = NULL;
 
-    for (index = 0; index < SYS_FS_MAX_FILES; index++)
+    for (index = 0; index < _FS_MAX_FILES; index++)
     {
         if(FATFSFileObject[index].inUse == false)
         {
@@ -2976,7 +2975,7 @@ int f_close (
 /*-----------------------------------------------------------------------*/
 
 #if _FS_RPATH >= 1
-//#if SYS_FS_VOLUME_NUMBER >= 2
+//#if _VOLUMES >= 2
 int f_chdrive (
 	uint8_t drv		/* Drive number */
 )
@@ -2984,7 +2983,7 @@ int f_chdrive (
 	//int vol;
 	//vol = get_ldnumber(&path);
 	//if (vol < 0) return FR_INVALID_DRIVE;
-	if (drv >= SYS_FS_VOLUME_NUMBER) return FR_INVALID_DRIVE;
+	if (drv >= _VOLUMES) return FR_INVALID_DRIVE;
 
 	CurrVol = (uint8_t)drv;
 
@@ -3061,13 +3060,13 @@ int f_getcwd (
 			} while (res == FR_OK);
 			if (res == FR_NO_FILE) res = FR_INT_ERR;/* It cannot be 'not found'. */
 			if (res != FR_OK) break;
-#if FAT_FS_USE_LFN
+#if _USE_LFN
 			fno.lfname = buff;
 			fno.lfsize = i;
 #endif
 			get_fileinfo(&dj, &fno);		/* Get the directory name and push it to the buffer */
 			tp = fno.fname;
-#if FAT_FS_USE_LFN
+#if _USE_LFN
 			if (*buff) tp = buff;
 #endif
 			for (n = 0; tp[n]; n++) ;
@@ -3079,7 +3078,7 @@ int f_getcwd (
 		}
 		tp = buff;
 		if (res == FR_OK) {
-#if SYS_FS_VOLUME_NUMBER >= 2
+#if _VOLUMES >= 2
 			*tp++ = '0' + CurrVol;			/* Put drive number */
 			*tp++ = ':';
 #endif
@@ -3279,7 +3278,7 @@ int f_opendir (
     uint32_t index = 0;
     DIR *dp = NULL;
 
-    for(index = 0; index < SYS_FS_MAX_FILES; index++)
+    for(index = 0; index < _FS_MAX_FILES; index++)
     {
         if(FATFSDirObject[index].inUse == 0)
         {
@@ -3290,7 +3289,7 @@ int f_opendir (
         }
     }
 
-    if(index >= SYS_FS_MAX_FILES)
+    if(index >= _FS_MAX_FILES)
     {
         return FR_INVALID_OBJECT;
     }
@@ -3455,7 +3454,7 @@ FRESULT f_findnext (
 	for (;;) {
 		res = (FRESULT)f_readdir(handle, (uintptr_t)fno);		/* Get a directory item */
 		if (res != FR_OK || !fno || !fno->fname[0]) break;	/* Terminate if any error or end of directory */
-#if FAT_FS_USE_LFN
+#if _USE_LFN
 		if (fno->lfname && pattern_matching(dp->pat, fno->lfname, 0, 0)) break;	/* Test for LFN if exist */
 #endif
 		if (pattern_matching(dp->pat, fno->fname, 0, 0)) break;	/* Test for SFN */
@@ -4005,7 +4004,7 @@ int f_getlabel (
 	FRESULT res = FR_INT_ERR;
 	DIR dj;
 	uint32_t i = 0, j = 0;
-#if FAT_FS_USE_LFN && _LFN_UNICODE
+#if _USE_LFN && _LFN_UNICODE
 	uint16_t w = 0;
 #endif
 
@@ -4020,7 +4019,7 @@ int f_getlabel (
 		if (res == FR_OK) {
 			res = dir_read(&dj, 1);		/* Get an entry with AM_VOL */
 			if (res == FR_OK) {			/* A volume label is exist */
-#if FAT_FS_USE_LFN && _LFN_UNICODE
+#if _USE_LFN && _LFN_UNICODE
 				i = j = 0;
 				do {
 					w = (i < 11) ? dj.dir[i++] : ' ';
@@ -4085,13 +4084,13 @@ int f_setlabel (
 	if (sl) {	/* Create volume label in directory form */
 		i = j = 0;
 		do {
-#if FAT_FS_USE_LFN && _LFN_UNICODE
+#if _USE_LFN && _LFN_UNICODE
 			w = ff_convert(ff_wtoupper(label[i++]), 0);
 #else
 			w = (uint8_t)label[i++];
 			if (IsDBCS1(w))
 				w = (j < 10 && i < sl && IsDBCS2(label[i])) ? w << 8 | (uint8_t)label[i++] : 0;
-#if FAT_FS_USE_LFN
+#if _USE_LFN
 			w = ff_convert(ff_wtoupper(ff_convert(w, 1)), 0);
 #else
 			if (IsLower(w)) w -= 0x20;			/* To upper ASCII characters */
@@ -4246,7 +4245,7 @@ int f_mkfs (
 	if (sfd > 1) return FR_INVALID_PARAMETER;
 	//vol = get_ldnumber(&path);
 	//if (vol < 0) return FR_INVALID_DRIVE;
-	if (vol > SYS_FS_VOLUME_NUMBER) return FR_INVALID_DRIVE;
+	if (vol > _VOLUMES) return FR_INVALID_DRIVE;
 	fs = FatFs[vol];
 	if (!fs) return FR_NOT_ENABLED;
 	fs->fs_type = 0;
@@ -4257,8 +4256,8 @@ int f_mkfs (
 	stat = disk_initialize(pdrv);
 	if (stat & STA_NOINIT) return FR_NOT_READY;
 	if (stat & STA_PROTECT) return FR_WRITE_PROTECTED;
-#if FAT_FS_MAX_SS != _MIN_SS		/* Get disk sector size */
-	if (disk_ioctl(pdrv, GET_SECTOR_SIZE, &SS(fs)) != RES_OK || SS(fs) > FAT_FS_MAX_SS || SS(fs) < _MIN_SS)
+#if _MAX_SS != _MIN_SS		/* Get disk sector size */
+	if (disk_ioctl(pdrv, GET_SECTOR_SIZE, &SS(fs)) != RES_OK || SS(fs) > _MAX_SS || SS(fs) < _MIN_SS)
 		return FR_DISK_ERR;
 #endif
 	if (_MULTI_PARTITION && part) {
@@ -4493,7 +4492,7 @@ int f_fdisk (
 	tot_cyl = sz_disk / sz_cyl;
 
 	/* Create partition table */
-	mem_set(buf, 0, FAT_FS_MAX_SS);
+	mem_set(buf, 0, _MAX_SS);
 	p = buf + MBR_Table; b_cyl = 0;
 	for (i = 0; i < 4; i++, p += SZ_PTE) {
 		p_cyl = (szt[i] <= 100U) ? (uint32_t)tot_cyl * szt[i] / 100 : szt[i] / sz_cyl;
@@ -4554,7 +4553,7 @@ TCHAR* f_gets (
 
 
 	while (n < len - 1) {	/* Read characters until buffer gets filled */
-#if FAT_FS_USE_LFN && _LFN_UNICODE
+#if _USE_LFN && _LFN_UNICODE
 #if _STRF_ENCODE == 3		/* Read a character in UTF-8 */
 		f_read(handle, s, 1, &rc);
 		if (rc != 1) break;
@@ -4643,7 +4642,7 @@ void putc_bfd (
 	i = pb->idx;	/* Buffer write index (-1:error) */
 	if (i < 0) return;
 
-#if FAT_FS_USE_LFN && _LFN_UNICODE
+#if _USE_LFN && _LFN_UNICODE
 #if _STRF_ENCODE == 3			/* Write a character in UTF-8 */
 	if (c < 0x80) {				/* 7-bit */
 		pb->buf[i++] = (uint8_t)c;

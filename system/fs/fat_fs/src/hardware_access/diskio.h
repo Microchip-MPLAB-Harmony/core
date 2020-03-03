@@ -13,7 +13,6 @@ extern "C" {
 #define _USE_IOCTL	1	/* 1: Enable disk_ioctl fucntion */
 
 #include "system/fs/fat_fs/src/file_system/ff.h"
-//#include "integer.h"
 
 
 /* Status of Disk Functions */

@@ -155,6 +155,10 @@ def instantiateComponent(sysFSComponent):
     sysFSVol.setDefaultValue(1)
     sysFSVol.setDependencies(showFSVol, ["SYS_FS_AUTO_MOUNT"])
 
+    sysFSTotalVol = sysFSComponent.createIntegerSymbol("SYS_FS_TOTAL_VOLUMES", sysFSMenu)
+    sysFSTotalVol.setDefaultValue(sysFSVol.getValue())
+    sysFSTotalVol.setVisible(False)
+
     sysFSClientNum = sysFSComponent.createIntegerSymbol("SYS_FS_CLIENT_NUMBER", sysFSMenu)
     sysFSClientNum.setLabel("Total Number File System Clients")
     sysFSClientNum.setDescription("Indicates Number of clients who want to receive events on Mount or Unmount of volumes")
@@ -220,6 +224,7 @@ def instantiateComponent(sysFSComponent):
         sysFSMediaVol[i].setLabel("Number Of Volumes")
         sysFSMediaVol[i].setDefaultValue(1)
         sysFSMediaVol[i].setMax(4)
+        sysFSMediaVol[i].setDependencies(totalNumberOfVolumes, ["SYS_FS_VOLUME_INSTANCES_NUMBER_IDX" + str(i), "SYS_FS_IDX" + str(i), "SYS_FS_AUTO_MOUNT", "SYS_FS_VOLUME_NUMBER"])
 
         for j in range(0,4):
             pos = (i*4) + j
@@ -259,6 +264,42 @@ def instantiateComponent(sysFSComponent):
     sysFSFat.setLabel("FAT File System")
     sysFSFat.setDefaultValue(True)
 
+    sysFSFatReadonly = sysFSComponent.createBooleanSymbol("SYS_FS_FAT_READONLY", sysFSFat)
+    sysFSFatReadonly.setLabel("Make FAT File System Read-only")
+    sysFSFatReadonly.setDefaultValue(False)
+    sysFSFatReadonly.setVisible(sysFSFat.getValue())
+    sysFSFatReadonly.setDependencies(sysFsFatSymbolShow, ["SYS_FS_FAT"])
+
+    sysFSFatCodePage = sysFSComponent.createKeyValueSetSymbol("SYS_FS_FAT_CODE_PAGE", sysFSFat)
+    sysFSFatCodePage.setLabel("OEM code page to be used")
+    sysFSFatCodePage.addKey("CODE_PAGE_1"  , "1"  , "ASCII (No extended character. Non-LFN cfg only)")
+    sysFSFatCodePage.addKey("CODE_PAGE_437", "437", "U.S.")
+    sysFSFatCodePage.addKey("CODE_PAGE_720", "720", "Arabic")
+    sysFSFatCodePage.addKey("CODE_PAGE_737", "737", "Greek")
+    sysFSFatCodePage.addKey("CODE_PAGE_771", "771", "KBL")
+    sysFSFatCodePage.addKey("CODE_PAGE_775", "775", "Baltic")
+    sysFSFatCodePage.addKey("CODE_PAGE_850", "850", "Latin 1")
+    sysFSFatCodePage.addKey("CODE_PAGE_852", "852", "Latin 2")
+    sysFSFatCodePage.addKey("CODE_PAGE_855", "855", "Cyrillic")
+    sysFSFatCodePage.addKey("CODE_PAGE_857", "857", "Turkish")
+    sysFSFatCodePage.addKey("CODE_PAGE_860", "860", "Portuguese")
+    sysFSFatCodePage.addKey("CODE_PAGE_861", "861", "Icelandic")
+    sysFSFatCodePage.addKey("CODE_PAGE_862", "862", "Hebrew")
+    sysFSFatCodePage.addKey("CODE_PAGE_863", "863", "Canadian French")
+    sysFSFatCodePage.addKey("CODE_PAGE_864", "864", "Arabic")
+    sysFSFatCodePage.addKey("CODE_PAGE_865", "865", "Nordic")
+    sysFSFatCodePage.addKey("CODE_PAGE_866", "866", "Russian")
+    sysFSFatCodePage.addKey("CODE_PAGE_869", "869", "Greek 2")
+    sysFSFatCodePage.addKey("CODE_PAGE_932", "932", "Japanese (DBCS)")
+    sysFSFatCodePage.addKey("CODE_PAGE_936", "936", "Simplified Chinese (DBCS)")
+    sysFSFatCodePage.addKey("CODE_PAGE_949", "949", "Korean (DBCS)")
+    sysFSFatCodePage.addKey("CODE_PAGE_950", "950", "Traditional Chinese (DBCS)")
+    sysFSFatCodePage.setOutputMode("Value")
+    sysFSFatCodePage.setDisplayMode("Description")
+    sysFSFatCodePage.setDefaultValue(1)
+    sysFSFatCodePage.setVisible(sysFSFat.getValue())
+    sysFSFatCodePage.setDependencies(sysFsFatSymbolShow, ["SYS_FS_FAT"])
+
     sysFSMpfs = sysFSComponent.createBooleanSymbol("SYS_FS_MPFS", sysFSMenu)
     sysFSMpfs.setLabel("Microchip File System")
     sysFSMpfs.setDefaultValue(False)
@@ -288,10 +329,12 @@ def instantiateComponent(sysFSComponent):
     configName = Variables.get("__CONFIGURATION_NAME")
 
     sysFSHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_HEADER", None)
-    sysFSHeaderFile.setSourcePath("/system/fs/sys_fs.h")
+    sysFSHeaderFile.setSourcePath("/system/fs/templates/sys_fs.h.ftl")
     sysFSHeaderFile.setOutputName("sys_fs.h")
     sysFSHeaderFile.setDestPath("/system/fs/")
     sysFSHeaderFile.setProjectPath("config/" + configName + "/system/fs/")
+    sysFSHeaderFile.setMarkup(True)
+    sysFSHeaderFile.setOverwrite(True)
     sysFSHeaderFile.setType("HEADER")
 
     sysFSLocalHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_LOCAL_HEADER", None)
@@ -325,12 +368,14 @@ def instantiateComponent(sysFSComponent):
     sysFSffHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
     sysFSFFConfHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_FAT_CONF_HEADER", None)
-    sysFSFFConfHeaderFile.setSourcePath("/system/fs/fat_fs/src/file_system/ffconf.h")
+    sysFSFFConfHeaderFile.setSourcePath("/system/fs/fat_fs/src/file_system/ffconf.h.ftl")
     sysFSFFConfHeaderFile.setOutputName("ffconf.h")
     sysFSFFConfHeaderFile.setDestPath("/system/fs/fat_fs/src/file_system/")
     sysFSFFConfHeaderFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/file_system/")
     sysFSFFConfHeaderFile.setType("HEADER")
     sysFSFFConfHeaderFile.setEnabled(sysFSFat.getValue())
+    sysFSFFConfHeaderFile.setMarkup(True)
+    sysFSFFConfHeaderFile.setOverwrite(True)
     sysFSFFConfHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
     sysFSDiskIOHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_DISKIO_HEADER", None)
@@ -408,22 +453,22 @@ def instantiateComponent(sysFSComponent):
     sysFSMPFSSourceFile.setOverwrite(True)
     sysFSMPFSSourceFile.setDependencies(sysFsFileGen, ["SYS_FS_MPFS"])
 
-    sysFSSystemInitdataFile = sysFSComponent.createFileSymbol("sysFSSystemInitFile", None)
+    sysFSSystemInitdataFile = sysFSComponent.createFileSymbol("sysFSInitDataFile", None)
     sysFSSystemInitdataFile.setType("STRING")
     sysFSSystemInitdataFile.setOutputName("core.LIST_SYSTEM_INIT_C_LIBRARY_INITIALIZATION_DATA")
-    sysFSSystemInitdataFile.setSourcePath("/system/fs/templates/system/system_initialize_data.c.ftl")
+    sysFSSystemInitdataFile.setSourcePath("/system/fs/templates/system/initialization_data.c.ftl")
     sysFSSystemInitdataFile.setMarkup(True)
 
-    sysFSSystemInitFile = sysFSComponent.createFileSymbol("sysFSInitDataFile", None)
+    sysFSSystemInitFile = sysFSComponent.createFileSymbol("sysFSInitFile", None)
     sysFSSystemInitFile.setType("STRING")
     sysFSSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_INITIALIZE_MIDDLEWARE")
-    sysFSSystemInitFile.setSourcePath("/system/fs/templates/system/system_initialize.c.ftl")
+    sysFSSystemInitFile.setSourcePath("/system/fs/templates/system/initialization.c.ftl")
     sysFSSystemInitFile.setMarkup(True)
 
     sysFSConfigFile = sysFSComponent.createFileSymbol("sysFSConfigFile", None)
     sysFSConfigFile.setType("STRING")
     sysFSConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_SYSTEM_SERVICE_CONFIGURATION")
-    sysFSConfigFile.setSourcePath("/system/fs/templates/system/system_config.h.ftl")
+    sysFSConfigFile.setSourcePath("/system/fs/templates/system/configuration.h.ftl")
     sysFSConfigFile.setMarkup(True)
 
     sysFSConfig2File = sysFSComponent.createFileSymbol("sysFSConfig2File", None)
@@ -435,19 +480,19 @@ def instantiateComponent(sysFSComponent):
     sysFSSystemDefFile = sysFSComponent.createFileSymbol("sysFSSystemDefFile", None)
     sysFSSystemDefFile.setType("STRING")
     sysFSSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-    sysFSSystemDefFile.setSourcePath("/system/fs/templates/system/system_definitions.h.ftl")
+    sysFSSystemDefFile.setSourcePath("/system/fs/templates/system/definitions.h.ftl")
     sysFSSystemDefFile.setMarkup(True)
 
     sysFSSystemTaskFile = sysFSComponent.createFileSymbol("sysFSSystemTaskFile", None)
     sysFSSystemTaskFile.setType("STRING")
     sysFSSystemTaskFile.setOutputName("core.LIST_SYSTEM_TASKS_C_CALL_SYSTEM_TASKS")
-    sysFSSystemTaskFile.setSourcePath("/system/fs/templates/system/system_tasks.c.ftl")
+    sysFSSystemTaskFile.setSourcePath("/system/fs/templates/system/tasks.c.ftl")
     sysFSSystemTaskFile.setMarkup(True)
 
     sysFSSystemRtosTaskFile = sysFSComponent.createFileSymbol("sysFSSystemRtosTaskFile", None)
     sysFSSystemRtosTaskFile.setType("STRING")
     sysFSSystemRtosTaskFile.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
-    sysFSSystemRtosTaskFile.setSourcePath("/system/fs/templates/system/system_rtos_tasks.c.ftl")
+    sysFSSystemRtosTaskFile.setSourcePath("/system/fs/templates/system/rtos_tasks.c.ftl")
     sysFSSystemRtosTaskFile.setMarkup(True)
     sysFSSystemRtosTaskFile.setEnabled((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"))
     sysFSSystemRtosTaskFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS"])
@@ -459,6 +504,11 @@ deviceNames = { 'SYS_FS_MEDIA_TYPE_NVM' : '/dev/nvma',
     'SYS_FS_MEDIA_TYPE_RAM' : '/dev/rama',
     'SYS_FS_MEDIA_TYPE_SPIFLASH' : '/dev/mtda'
     }
+
+
+def sysFsFatSymbolShow(symbol, event):
+    if (event["id"] == "SYS_FS_FAT"):
+        symbol.setVisible(event["value"])
 
 def enableSystemCache(symbol, event):
     if (event["value"] == True):
@@ -483,6 +533,26 @@ def showRTOSTaskDel(sysFSRTOSTaskDelayVal, enable):
 
 def showFSVol(sysFSVol,enable):
     sysFSVol.setVisible(not enable["value"])
+
+global volumeValues
+
+volumeValues = [0, 0, 0, 0]
+
+def totalNumberOfVolumes(symbol, event):
+    component = symbol.getComponent()
+
+    if (component.getSymbolByID("SYS_FS_AUTO_MOUNT").getValue() == True):
+        for i in range(0,4):
+            if (component.getSymbolByID("SYS_FS_IDX" + str(i)).getVisible() == True):
+                volumeValues[i] = component.getSymbolByID("SYS_FS_VOLUME_INSTANCES_NUMBER_IDX" + str(i)).getValue()
+            else:
+                volumeValues[i] = 0
+
+        totalNumVolumes = volumeValues[0] + volumeValues[1] + volumeValues[2] + volumeValues[3]
+    else:
+        totalNumVolumes = component.getSymbolByID("SYS_FS_VOLUME_NUMBER").getValue()
+
+    component.getSymbolByID("SYS_FS_TOTAL_VOLUMES").setValue(totalNumVolumes)
 
 def showFSClientNum(sysFSClientNum,enable):
     sysFSClientNum.setVisible(enable["value"])
