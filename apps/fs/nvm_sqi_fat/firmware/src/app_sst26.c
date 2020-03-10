@@ -83,6 +83,9 @@
 
 APP_SST26_DATA CACHE_ALIGN appSST26Data;
 
+/* Work buffer used by FAT FS during Format */
+uint8_t CACHE_ALIGN work[SYS_FS_FAT_MAX_SS];
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
@@ -140,6 +143,7 @@ void APP_SST26_Initialize ( void )
 
 void APP_SST26_Tasks ( void )
 {
+    SYS_FS_FORMAT_PARAM opt = { 0 };
 
     /* Check the application's current state. */
     switch ( appSST26Data.state )
@@ -163,7 +167,10 @@ void APP_SST26_Tasks ( void )
 
         case APP_SST26_FORMAT_DISK:
         {
-            if (SYS_FS_DriveFormat (APP_SST26_MOUNT_NAME, SYS_FS_FORMAT_FDISK, 0) != 0)
+            opt.fmt = SYS_FS_FORMAT_FAT;
+            opt.au_size = 0;
+
+            if (SYS_FS_DriveFormat (APP_SST26_MOUNT_NAME, &opt, (void *)work, SYS_FS_FAT_MAX_SS) != SYS_FS_RES_SUCCESS)
             {
                 /* Format of the disk failed. */
                 appSST26Data.state = APP_SST26_ERROR;
@@ -178,7 +185,8 @@ void APP_SST26_Tasks ( void )
 
         case APP_SST26_OPEN_FILE:
         {
-            appSST26Data.fileHandle = SYS_FS_FileOpen(APP_SST26_MOUNT_NAME"/"APP_SST26_FILE_NAME, (SYS_FS_FILE_OPEN_APPEND_PLUS));
+            appSST26Data.fileHandle = SYS_FS_FileOpen(APP_SST26_MOUNT_NAME"/"APP_SST26_FILE_NAME, (SYS_FS_FILE_OPEN_WRITE_PLUS));
+
             if(appSST26Data.fileHandle == SYS_FS_HANDLE_INVALID)
             {
                 /* File open unsuccessful */

@@ -83,6 +83,9 @@
 
 APP_DATA appData;
 
+/* Work buffer used by FAT FS during Format */
+uint8_t CACHE_ALIGN work[SYS_FS_FAT_MAX_SS];
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
@@ -140,6 +143,7 @@ void APP_Initialize ( void )
 
 void APP_Tasks ( void )
 {
+    SYS_FS_FORMAT_PARAM opt = { 0 };
 
     /* Check the application's current state. */
     switch ( appData.state )
@@ -164,7 +168,10 @@ void APP_Tasks ( void )
 
         case APP_FORMAT_DISK:
         {
-            if (SYS_FS_DriveFormat (APP_MOUNT_NAME, SYS_FS_FORMAT_FDISK, 0) != 0)
+            opt.fmt = SYS_FS_FORMAT_FAT;
+            opt.au_size = 0;
+
+            if (SYS_FS_DriveFormat (APP_MOUNT_NAME, &opt, (void *)work, SYS_FS_FAT_MAX_SS) != SYS_FS_RES_SUCCESS)
             {
                 /* Format of the disk failed. */
                 appData.state = APP_ERROR;
@@ -179,7 +186,7 @@ void APP_Tasks ( void )
 
         case APP_OPEN_FILE:
         {
-            appData.fileHandle = SYS_FS_FileOpen(APP_MOUNT_NAME"/"APP_FILE_NAME, (SYS_FS_FILE_OPEN_APPEND_PLUS));
+            appData.fileHandle = SYS_FS_FileOpen(APP_MOUNT_NAME"/"APP_FILE_NAME, (SYS_FS_FILE_OPEN_WRITE_PLUS));
             if(appData.fileHandle == SYS_FS_HANDLE_INVALID)
             {
                 /* File open unsuccessful */
