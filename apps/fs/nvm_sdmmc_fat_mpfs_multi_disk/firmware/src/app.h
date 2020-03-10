@@ -155,6 +155,10 @@ typedef enum
     /* Write to file on SD Card*/
     APP_WRITE_TO_FILE_ON_SDCARD,
 
+    /* Force Sync the data to get timestamp */
+    APP_FLUSH_FILE_FOR_TIMESTAMP,
+
+    /* Write the retrieved timestamp to the file*/
     APP_WRITE_TIMESTAMP_TO_FILE_ON_SDCARD,
 
     /* The app closes the file and idles */

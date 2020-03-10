@@ -258,7 +258,7 @@ void APP_Tasks ( void )
                 break;
             }
 
-            appData.fileHandle2 = SYS_FS_FileOpen(SDCARD_MOUNT_NAME"/"SDCARD_FILE_NAME, (SYS_FS_FILE_OPEN_WRITE));
+            appData.fileHandle2 = SYS_FS_FileOpen(SDCARD_MOUNT_NAME"/"SDCARD_FILE_NAME, (SYS_FS_FILE_OPEN_APPEND));
 
             if(appData.fileHandle2 == SYS_FS_HANDLE_INVALID)
             {
@@ -300,10 +300,26 @@ void APP_Tasks ( void )
             }
             else
             {
-                /* Write the Timestamp to file. */
-                appData.state = APP_WRITE_TIMESTAMP_TO_FILE_ON_SDCARD;
+                /* Flush the written Data to file. */
+                appData.state = APP_FLUSH_FILE_FOR_TIMESTAMP;
             }
 
+            break;
+        }
+
+        case APP_FLUSH_FILE_FOR_TIMESTAMP:
+        {
+            /* Force write data to file to get the latest timestamp from get_fattime()*/
+            if (SYS_FS_FileSync(appData.fileHandle2) != 0)
+            {
+                /* Could not flush the contents of the file. Error out. */
+                appData.state = APP_ERROR;
+            }
+            else
+            {
+                /* Write the Timestamp to file */
+                appData.state = APP_WRITE_TIMESTAMP_TO_FILE_ON_SDCARD;
+            }
             break;
         }
 

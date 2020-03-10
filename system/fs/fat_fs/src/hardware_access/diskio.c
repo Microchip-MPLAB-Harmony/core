@@ -285,7 +285,7 @@ DRESULT disk_ioctl (
  * This Function is implemented as WEAK so that it can be overriden with
  * implementation to get time from RTC and populate the SYS_FS_TIME structure.
  */
-uint32_t __WEAK get_fattime(void)
+__WEAK uint32_t get_fattime(void)
 {
     /* RTC should return time here */
     /* For now, just a value */
