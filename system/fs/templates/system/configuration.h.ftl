@@ -73,6 +73,7 @@
 </#if>
 
 <#if SYS_FS_FAT == true>
+    <#lt>#define SYS_FS_FAT_VERSION                "${SYS_FS_FAT_VERSION}"
     <#lt>#define SYS_FS_FAT_READONLY               ${SYS_FS_FAT_READONLY?c}
     <#lt>#define SYS_FS_FAT_CODE_PAGE              ${SYS_FS_FAT_CODE_PAGE}
     <#lt>#define SYS_FS_FAT_MAX_SS                 SYS_FS_MEDIA_MAX_BLOCK_SIZE

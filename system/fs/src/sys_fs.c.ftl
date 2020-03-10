@@ -865,33 +865,63 @@ SYS_FS_HANDLE SYS_FS_FileOpen
 
 <#if SYS_FS_FAT == true>
     /* Convert the SYS_FS file open attributes to FAT FS attributes */
-    switch(attributes)
-    {
-        case SYS_FS_FILE_OPEN_READ:
-            mode = FA_READ;
-            break;
-    <#if SYS_FS_FAT_READONLY == false>
-        case SYS_FS_FILE_OPEN_WRITE:
-             mode = FA_WRITE | FA_OPEN_ALWAYS | FA_CREATE_ALWAYS;
-            break;
-        case SYS_FS_FILE_OPEN_APPEND:
-            mode = FA_WRITE | FA_OPEN_ALWAYS;
-            break;
-        case SYS_FS_FILE_OPEN_READ_PLUS:
-            mode = FA_READ | FA_WRITE;
-            break;
-        case SYS_FS_FILE_OPEN_WRITE_PLUS:
-            mode = FA_READ | FA_WRITE | FA_OPEN_ALWAYS;
-            break;
-        case SYS_FS_FILE_OPEN_APPEND_PLUS:
-            mode = FA_READ | FA_WRITE | FA_OPEN_ALWAYS;
-            break;
+    <#if SYS_FS_FAT_VERSION == "v0.11a">
+        <#lt>    switch(attributes)
+        <#lt>    {
+        <#lt>        case SYS_FS_FILE_OPEN_READ:
+        <#lt>            mode = FA_READ;
+        <#lt>            break;
+        <#if SYS_FS_FAT_READONLY == false>
+            <#lt>        case SYS_FS_FILE_OPEN_WRITE:
+            <#lt>            mode = FA_WRITE | FA_OPEN_ALWAYS | FA_CREATE_ALWAYS;
+            <#lt>            break;
+            <#lt>        case SYS_FS_FILE_OPEN_APPEND:
+            <#lt>            mode = FA_WRITE | FA_OPEN_ALWAYS;
+            <#lt>            break;
+            <#lt>        case SYS_FS_FILE_OPEN_READ_PLUS:
+            <#lt>            mode = FA_READ | FA_WRITE;
+            <#lt>            break;
+            <#lt>        case SYS_FS_FILE_OPEN_WRITE_PLUS:
+            <#lt>            mode = FA_READ | FA_WRITE | FA_OPEN_ALWAYS;
+            <#lt>            break;
+            <#lt>        case SYS_FS_FILE_OPEN_APPEND_PLUS:
+            <#lt>            mode = FA_READ | FA_WRITE | FA_OPEN_ALWAYS;
+            <#lt>            break;
+        </#if>
+        <#lt>        default:
+        <#lt>            /** TODO */
+        <#lt>            //mode = FA__ERROR;
+        <#lt>            break;
+        <#lt>    }
+    <#else>
+        <#lt>    switch(attributes)
+        <#lt>    {
+        <#lt>        case SYS_FS_FILE_OPEN_READ:
+        <#lt>            mode = FA_READ;
+        <#lt>            break;
+        <#if SYS_FS_FAT_READONLY == false>
+            <#lt>        case SYS_FS_FILE_OPEN_WRITE:
+            <#lt>            mode = FA_WRITE | FA_CREATE_ALWAYS;
+            <#lt>            break;
+            <#lt>        case SYS_FS_FILE_OPEN_APPEND:
+            <#lt>            mode = FA_WRITE | FA_OPEN_APPEND;
+            <#lt>            break;
+            <#lt>        case SYS_FS_FILE_OPEN_READ_PLUS:
+            <#lt>            mode = FA_READ | FA_WRITE;
+            <#lt>            break;
+            <#lt>        case SYS_FS_FILE_OPEN_WRITE_PLUS:
+            <#lt>            mode = FA_READ | FA_WRITE | FA_CREATE_ALWAYS;
+            <#lt>            break;
+            <#lt>        case SYS_FS_FILE_OPEN_APPEND_PLUS:
+            <#lt>            mode = FA_READ | FA_WRITE | FA_OPEN_APPEND;
+            <#lt>            break;
+        </#if>
+        <#lt>        default:
+        <#lt>            /** TODO */
+        <#lt>            //mode = FA__ERROR;
+        <#lt>            break;
+        <#lt>    }
     </#if>
-        default:
-            /** TODO */
-            //mode = FA__ERROR;
-            break;
-    }
 </#if>
 
     /* Acquire the mutex. */
@@ -908,7 +938,7 @@ SYS_FS_HANDLE SYS_FS_FileOpen
     if (disk->fsFunctions->open != NULL)
     {
         fileStatus = disk->fsFunctions->open((uintptr_t)&fileObj->nativeFSFileObj, (const char *)pathWithDiskNo, mode);
-<#if SYS_FS_FAT == true && SYS_FS_FAT_READONLY == false>
+<#if SYS_FS_FAT == true && SYS_FS_FAT_READONLY == false && SYS_FS_FAT_VERSION == "v0.11a">
         if ((fileStatus == 0) && ((SYS_FS_FILE_OPEN_APPEND == attributes) || (SYS_FS_FILE_OPEN_APPEND_PLUS == attributes)))
         {
             uint32_t size = 0;
@@ -3434,36 +3464,70 @@ SYS_FS_RESULT SYS_FS_DriveLabelSet
 }
 
 //******************************************************************************
-/*Function:
-    SYS_FS_RESULT SYS_FS_DriveFormat
-    (
-        const char* drive,
-        SYS_FS_FORMAT fmt,
-        uint32_t clusterSize
-    );
+<#if SYS_FS_FAT_VERSION != "v0.11a">
+    <#lt>/* Function:
+    <#lt>    SYS_FS_RESULT SYS_FS_DriveFormat
+    <#lt>    (
+    <#lt>        const char* drive,
+    <#lt>        const SYS_FS_FORMAT_PARAM* opt,
+    <#lt>        void* work,
+    <#lt>        uint32_t len
+    <#lt>    );
 
-  Summary:
-    Formats a drive.
+    <#lt>    Summary:
+    <#lt>      Formats a drive.
 
-  Description:
-    This function formats a logic drive (create a FAT file system on the
-    logical drive), as per the format specified.
+    <#lt>    Description:
+    <#lt>      This function formats a logic drive (create a FAT file system on the
+    <#lt>      logical drive), as per the format specified.
 
-    If the logical drive that has to be formatted has been bound to any
-    partition (1-4) by multiple partition feature, the FAT volume is created
-    into the specified partition. In this case, the second argument fmt is
-    ignored. The physical drive must have been partitioned prior to using this
-    function.
+    <#lt>      If the logical drive that has to be formatted has been bound to any
+    <#lt>      partition (1-4) by multiple partition feature, the FAT volume is created
+    <#lt>      into the specified partition. The physical drive must have been partitioned
+    <#lt>      prior to using this function.
 
-  Remarks:
-    See sys_fs.h for usage information.
-***************************************************************************/
-SYS_FS_RESULT SYS_FS_DriveFormat
-(
-    const char* drive, 
-    SYS_FS_FORMAT fmt, 
-    uint32_t clusterSize
-)
+    <#lt>    Remarks:
+    <#lt>      See sys_fs.h for usage information.
+    <#lt>***************************************************************************/
+    <#lt>SYS_FS_RESULT SYS_FS_DriveFormat
+    <#lt>(
+    <#lt>    const char* drive,
+    <#lt>    const SYS_FS_FORMAT_PARAM* opt,
+    <#lt>    void* work,
+    <#lt>    uint32_t len
+    <#lt>)
+<#else>
+    <#lt>/*Function:
+    <#lt>    SYS_FS_RESULT SYS_FS_DriveFormat
+    <#lt>    (
+    <#lt>        const char* drive,
+    <#lt>        SYS_FS_FORMAT fmt,
+    <#lt>        uint32_t clusterSize
+    <#lt>    );
+
+    <#lt>Summary:
+    <#lt>    Formats a drive.
+
+    <#lt>Description:
+    <#lt>    This function formats a logic drive (create a FAT file system on the
+    <#lt>    logical drive), as per the format specified.
+
+    <#lt>    If the logical drive that has to be formatted has been bound to any
+    <#lt>    partition (1-4) by multiple partition feature, the FAT volume is created
+    <#lt>    into the specified partition. In this case, the second argument fmt is
+    <#lt>    ignored. The physical drive must have been partitioned prior to using this
+    <#lt>    function.
+
+    <#lt>Remarks:
+    <#lt>    See sys_fs.h for usage information.
+    <#lt>***************************************************************************/
+    <#lt>SYS_FS_RESULT SYS_FS_DriveFormat
+    <#lt>(
+    <#lt>    const char* drive, 
+    <#lt>    SYS_FS_FORMAT fmt, 
+    <#lt>    uint32_t clusterSize
+    <#lt>)
+</#if>
 {
     int fileStatus = SYS_FS_ERROR_NOT_READY;
     SYS_FS_MOUNT_POINT *disk = (SYS_FS_MOUNT_POINT *) NULL;
@@ -3491,7 +3555,11 @@ SYS_FS_RESULT SYS_FS_DriveFormat
     osalResult = OSAL_MUTEX_Lock(&(disk->mutexDiskVolume), OSAL_WAIT_FOREVER);
     if (osalResult == OSAL_RESULT_TRUE)
     {
+<#if SYS_FS_FAT_VERSION != "v0.11a">
+        fileStatus = disk->fsFunctions->formatDisk((uint8_t)disk->diskNumber, opt, work, len);
+<#else>
         fileStatus = disk->fsFunctions->formatDisk((uint8_t)disk->diskNumber, fmt, clusterSize);
+</#if>
         OSAL_MUTEX_Unlock(&(disk->mutexDiskVolume));
 
         errorValue = (SYS_FS_ERROR)fileStatus;

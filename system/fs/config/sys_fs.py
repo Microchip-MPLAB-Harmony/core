@@ -22,10 +22,8 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
-def sysFsFileGen(symbol, event):
-    symbol.setEnabled(event["value"])
-
 def instantiateComponent(sysFSComponent):
+    fatFsVersion = ["v0.14", "v0.11a"]
     fsTypes = ["FAT","MPFS2"]
     mediaTypes =  ["SYS_FS_MEDIA_TYPE_NVM",
                     "SYS_FS_MEDIA_TYPE_MSD",
@@ -264,6 +262,12 @@ def instantiateComponent(sysFSComponent):
     sysFSFat.setLabel("FAT File System")
     sysFSFat.setDefaultValue(True)
 
+    sysFSFatVersion = sysFSComponent.createComboSymbol("SYS_FS_FAT_VERSION", sysFSFat, fatFsVersion)
+    sysFSFatVersion.setLabel("FAT File System Version")
+    sysFSFatVersion.setDefaultValue("v0.14")
+    sysFSFatVersion.setVisible(sysFSFat.getValue())
+    sysFSFatVersion.setDependencies(sysFsFatSymbolShow, ["SYS_FS_FAT", "SYS_FS_FAT_VERSION"])
+
     sysFSFatReadonly = sysFSComponent.createBooleanSymbol("SYS_FS_FAT_READONLY", sysFSFat)
     sysFSFatReadonly.setLabel("Make FAT File System Read-only")
     sysFSFatReadonly.setDefaultValue(False)
@@ -272,7 +276,10 @@ def instantiateComponent(sysFSComponent):
 
     sysFSFatCodePage = sysFSComponent.createKeyValueSetSymbol("SYS_FS_FAT_CODE_PAGE", sysFSFat)
     sysFSFatCodePage.setLabel("OEM code page to be used")
-    sysFSFatCodePage.addKey("CODE_PAGE_1"  , "1"  , "ASCII (No extended character. Non-LFN cfg only)")
+    if (sysFSFatVersion.getValue() == "v0.14"):
+        sysFSFatCodePage.addKey("CODE_PAGE_0"  , "0"  , "All")
+    else:
+        sysFSFatCodePage.addKey("CODE_PAGE_1"  , "1"  , "ASCII (No extended character. Non-LFN cfg only)")
     sysFSFatCodePage.addKey("CODE_PAGE_437", "437", "U.S.")
     sysFSFatCodePage.addKey("CODE_PAGE_720", "720", "Arabic")
     sysFSFatCodePage.addKey("CODE_PAGE_737", "737", "Greek")
@@ -298,7 +305,7 @@ def instantiateComponent(sysFSComponent):
     sysFSFatCodePage.setDisplayMode("Description")
     sysFSFatCodePage.setDefaultValue(1)
     sysFSFatCodePage.setVisible(sysFSFat.getValue())
-    sysFSFatCodePage.setDependencies(sysFsFatSymbolShow, ["SYS_FS_FAT"])
+    sysFSFatCodePage.setDependencies(sysFsFatCodePageShow, ["SYS_FS_FAT", "SYS_FS_FAT_VERSION"])
 
     sysFSMpfs = sysFSComponent.createBooleanSymbol("SYS_FS_MPFS", sysFSMenu)
     sysFSMpfs.setLabel("Microchip File System")
@@ -359,7 +366,7 @@ def instantiateComponent(sysFSComponent):
     sysFSMedLocalHeaderFile.setType("HEADER")
 
     sysFSffHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_FAT_HEADER", None)
-    sysFSffHeaderFile.setSourcePath("/system/fs/fat_fs/src/file_system/ff.h")
+    sysFSffHeaderFile.setSourcePath("/system/fs/fat_fs/" + sysFSFatVersion.getValue() + "/file_system/ff.h")
     sysFSffHeaderFile.setOutputName("ff.h")
     sysFSffHeaderFile.setDestPath("/system/fs/fat_fs/src/file_system")
     sysFSffHeaderFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/file_system")
@@ -368,7 +375,7 @@ def instantiateComponent(sysFSComponent):
     sysFSffHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
     sysFSFFConfHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_FAT_CONF_HEADER", None)
-    sysFSFFConfHeaderFile.setSourcePath("/system/fs/fat_fs/src/file_system/ffconf.h.ftl")
+    sysFSFFConfHeaderFile.setSourcePath("/system/fs/fat_fs/" + sysFSFatVersion.getValue() + "/file_system/ffconf.h.ftl")
     sysFSFFConfHeaderFile.setOutputName("ffconf.h")
     sysFSFFConfHeaderFile.setDestPath("/system/fs/fat_fs/src/file_system/")
     sysFSFFConfHeaderFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/file_system/")
@@ -379,7 +386,7 @@ def instantiateComponent(sysFSComponent):
     sysFSFFConfHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
     sysFSDiskIOHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_DISKIO_HEADER", None)
-    sysFSDiskIOHeaderFile.setSourcePath("/system/fs/fat_fs/src/hardware_access/diskio.h")
+    sysFSDiskIOHeaderFile.setSourcePath("/system/fs/fat_fs/" + sysFSFatVersion.getValue() + "/hardware_access/diskio.h")
     sysFSDiskIOHeaderFile.setOutputName("diskio.h")
     sysFSDiskIOHeaderFile.setDestPath("/system/fs/fat_fs/src/hardware_access/")
     sysFSDiskIOHeaderFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/hardware_access/")
@@ -425,7 +432,7 @@ def instantiateComponent(sysFSComponent):
     sysFSMedManSourceFile.setOverwrite(True)
 
     sysFSffSourceFile = sysFSComponent.createFileSymbol("SYS_FS_FAT_SOURCE", None)
-    sysFSffSourceFile.setSourcePath("system/fs/fat_fs/src/file_system/ff.c")
+    sysFSffSourceFile.setSourcePath("system/fs/fat_fs/" + sysFSFatVersion.getValue() + "/file_system/ff.c")
     sysFSffSourceFile.setOutputName("ff.c")
     sysFSffSourceFile.setDestPath("system/fs/fat_fs/src/")
     sysFSffSourceFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/")
@@ -433,8 +440,17 @@ def instantiateComponent(sysFSComponent):
     sysFSffSourceFile.setEnabled(sysFSFat.getValue())
     sysFSffSourceFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
+    sysFSUnicodeSourceFile = sysFSComponent.createFileSymbol("SYS_FS_FAT_UNICODE_SOURCE", None)
+    sysFSUnicodeSourceFile.setSourcePath("system/fs/fat_fs/" + sysFSFatVersion.getValue() + "/file_system/ffunicode.c")
+    sysFSUnicodeSourceFile.setOutputName("ffunicode.c")
+    sysFSUnicodeSourceFile.setDestPath("system/fs/fat_fs/src/")
+    sysFSUnicodeSourceFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/")
+    sysFSUnicodeSourceFile.setType("SOURCE")
+    sysFSUnicodeSourceFile.setEnabled((sysFSFat.getValue() == True) and (sysFSFatVersion.getValue() != "v0.11a"))
+    sysFSUnicodeSourceFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
+
     sysFSDiskIOFile = sysFSComponent.createFileSymbol("SYS_FS_DISKIO_SOURCE", None)
-    sysFSDiskIOFile.setSourcePath("/system/fs/fat_fs/src/hardware_access/diskio.c")
+    sysFSDiskIOFile.setSourcePath("/system/fs/fat_fs/" + sysFSFatVersion.getValue() + "/hardware_access/diskio.c")
     sysFSDiskIOFile.setOutputName("diskio.c")
     sysFSDiskIOFile.setDestPath("/system/fs/fat_fs/src/")
     sysFSDiskIOFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/")
@@ -505,9 +521,42 @@ deviceNames = { 'SYS_FS_MEDIA_TYPE_NVM' : '/dev/nvma',
     'SYS_FS_MEDIA_TYPE_SPIFLASH' : '/dev/mtda'
     }
 
+def sysFsFileGen(symbol, event):
+    component = symbol.getComponent()
+
+    symbol.setEnabled(event["value"])
+
+    if (event["id"] == "SYS_FS_FAT"):
+        if (component.getSymbolByID("SYS_FS_FAT_VERSION").getValue() == "v0.11a"):
+            component.getSymbolByID("SYS_FS_FAT_UNICODE_SOURCE").setEnabled(False)
 
 def sysFsFatSymbolShow(symbol, event):
-    if (event["id"] == "SYS_FS_FAT"):
+    component = symbol.getComponent()
+
+    if (event["id"] == "SYS_FS_FAT_VERSION"):
+        component.getSymbolByID("SYS_FS_FAT_SOURCE").setSourcePath("system/fs/fat_fs/" + event["value"] + "/file_system/ff.c")
+        component.getSymbolByID("SYS_FS_FAT_HEADER").setSourcePath("/system/fs/fat_fs/" + event["value"] + "/file_system/ff.h")
+        component.getSymbolByID("SYS_FS_FAT_CONF_HEADER").setSourcePath("/system/fs/fat_fs/" + event["value"] + "/file_system/ffconf.h.ftl")
+        component.getSymbolByID("SYS_FS_DISKIO_SOURCE").setSourcePath("/system/fs/fat_fs/" + event["value"] + "/hardware_access/diskio.c")
+        component.getSymbolByID("SYS_FS_DISKIO_HEADER").setSourcePath("/system/fs/fat_fs/" + event["value"] + "/hardware_access/diskio.h")
+        if (event["value"] != "v0.11a"):
+            component.getSymbolByID("SYS_FS_FAT_UNICODE_SOURCE").setSourcePath("system/fs/fat_fs/" + event["value"] + "/file_system/ffunicode.c")
+
+    elif (event["id"] == "SYS_FS_FAT"):
+        symbol.setVisible(event["value"])
+
+def sysFsFatCodePageShow(symbol, event):
+    component = symbol.getComponent()
+
+    if (event["id"] == "SYS_FS_FAT_VERSION"):
+        if (event["value"] == "v0.11a"):
+            component.getSymbolByID("SYS_FS_FAT_CODE_PAGE").setKeyValue("CODE_PAGE_0"  , "1")
+            component.getSymbolByID("SYS_FS_FAT_CODE_PAGE").setKeyDescription("CODE_PAGE_0", "ASCII (No extended character. Non-LFN cfg only)")
+        else:
+            component.getSymbolByID("SYS_FS_FAT_CODE_PAGE").setKeyValue("CODE_PAGE_0"  , "0")
+            component.getSymbolByID("SYS_FS_FAT_CODE_PAGE").setKeyDescription("CODE_PAGE_0", "All")
+
+    elif (event["id"] == "SYS_FS_FAT"):
         symbol.setVisible(event["value"])
 
 def enableSystemCache(symbol, event):

@@ -92,7 +92,7 @@
         <#lt>    .putstrn           = f_puts,
         <#lt>    .formattedprint    = f_printf,
         <#lt>    .testerror         = f_error,
-        <#lt>    .formatDisk        = f_mkfs,
+        <#lt>    .formatDisk        = (FORMAT_DISK)f_mkfs,
         <#lt>    .partitionDisk     = f_fdisk,
         <#lt>    .getCluster        = f_getclusters
     </#if>
