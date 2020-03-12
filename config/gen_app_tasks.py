@@ -36,7 +36,7 @@ global appSourceFile
 # Get the default selected OSAL
 global osalSelectRTOS
 
-genAppTaskMaxCount          = 10
+genAppTaskMaxCount          = 20
 genAppRtosTaskConfMenu      = []
 genAppTaskConfMenu          = []
 genAppTaskName              = []
@@ -93,8 +93,6 @@ def genAppRtosTaskConfMenuVisible(symbol, event):
             genAppRtosTaskConfMenu[count].setVisible(True)
 
 def genBareMetalAppTask(symbol, event):
-    component = symbol.getComponent()
-
     component = symbol.getComponent()
 
     appEnable    = component.getSymbolValue("ENABLE_APP_FILE")
