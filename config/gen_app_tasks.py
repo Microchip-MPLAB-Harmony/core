@@ -93,14 +93,26 @@ def genAppRtosTaskConfMenuVisible(symbol, event):
             genAppRtosTaskConfMenu[count].setVisible(True)
 
 def genBareMetalAppTask(symbol, event):
-    if (event["value"] == "BareMetal"):
-        symbol.setEnabled(True)
+    component = symbol.getComponent()
+
+    component = symbol.getComponent()
+
+    appEnable    = component.getSymbolValue("ENABLE_APP_FILE")
+    selectRTOS  = component.getSymbolValue("SELECT_RTOS")
+
+    if ((appEnable == True) and (selectRTOS == "BareMetal")):
+            symbol.setEnabled(True)
     else:
         symbol.setEnabled(False)
 
 def genRtosAppTask(symbol, event):
-    if (event["value"] != "BareMetal"):
-        symbol.setEnabled(True)
+    component = symbol.getComponent()
+
+    appEnable    = component.getSymbolValue("ENABLE_APP_FILE")
+    selectRTOS  = component.getSymbolValue("SELECT_RTOS")
+
+    if ((appEnable == True) and (selectRTOS != "BareMetal")):
+            symbol.setEnabled(True)
     else:
         symbol.setEnabled(False)
 
@@ -332,8 +344,8 @@ genAppTasks.setType("STRING")
 genAppTasks.setOutputName("core.LIST_SYSTEM_TASKS_C_GEN_APP")
 genAppTasks.setSourcePath("templates/gen_app_tasks_macros.ftl")
 genAppTasks.setMarkup(True)
-genAppTasks.setEnabled(True)
-genAppTasks.setDependencies(genBareMetalAppTask, ["SELECT_RTOS"])
+genAppTasks.setEnabled(harmonyAppFile.getValue())
+genAppTasks.setDependencies(genBareMetalAppTask, ["SELECT_RTOS", "ENABLE_APP_FILE"])
 
 genAppRtosTasks = harmonyCoreComponent.createFileSymbol("GEN_RTOS_APP_TASKS", None)
 genAppRtosTasks.setType("STRING")
@@ -341,7 +353,7 @@ genAppRtosTasks.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_GEN_APP")
 genAppRtosTasks.setSourcePath("templates/gen_rtos_tasks_macros.ftl")
 genAppRtosTasks.setMarkup(True)
 genAppRtosTasks.setEnabled(False)
-genAppRtosTasks.setDependencies(genRtosAppTask, ["SELECT_RTOS"])
+genAppRtosTasks.setDependencies(genRtosAppTask, ["SELECT_RTOS", "ENABLE_APP_FILE"])
 
 genAppRtosTasksDef = harmonyCoreComponent.createFileSymbol("GEN_RTOS_APP_TASKS_DEF", None)
 genAppRtosTasksDef.setType("STRING")
@@ -349,7 +361,7 @@ genAppRtosTasksDef.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
 genAppRtosTasksDef.setSourcePath("/templates/gen_rtos_tasks.c.ftl")
 genAppRtosTasksDef.setMarkup(True)
 genAppRtosTasksDef.setEnabled(False)
-genAppRtosTasksDef.setDependencies(genRtosAppTask, ["SELECT_RTOS"])
+genAppRtosTasksDef.setDependencies(genRtosAppTask, ["SELECT_RTOS", "ENABLE_APP_FILE"])
 
 genappSystemInitFile = harmonyCoreComponent.createFileSymbol("APP_SYS_INIT", None)
 genappSystemInitFile.setType("STRING")

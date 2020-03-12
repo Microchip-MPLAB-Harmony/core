@@ -34,10 +34,6 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
-<#if SELECT_RTOS == "FreeRTOS">
-#include "FreeRTOS.h"
-#include "task.h"
-</#if>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

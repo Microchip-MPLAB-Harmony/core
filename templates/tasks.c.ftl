@@ -50,47 +50,51 @@
 // *****************************************************************************
 // *****************************************************************************
 
-<#if ENABLE_APP_FILE == true >
-#include "configuration.h"
+<#if ENABLE_DRV_COMMON == true ||
+     ENABLE_SYS_COMMON == true ||
+     ENABLE_APP_FILE == true >
+    <#lt>#include "configuration.h"
 </#if>
 #include "definitions.h"
 
 <#if SELECT_RTOS == "ThreadX">
+    <#lt>/* ThreadX byte memory pool from which to allocate the thread stacks. */
+    <#lt>#define TX_BYTE_POOL_SIZE   (${ThreadX.THREADX_TX_BYTE_POOL_SIZE} + 512)
 
-/* ThreadX byte memory pool from which to allocate the thread stacks. */
-#define TX_BYTE_POOL_SIZE   (${ThreadX.THREADX_TX_BYTE_POOL_SIZE} + 512)
-
-TX_BYTE_POOL   byte_pool_0;
+    <#lt>TX_BYTE_POOL   byte_pool_0;
 </#if>
 
 <#if SELECT_RTOS != "BareMetal">
-// *****************************************************************************
-// *****************************************************************************
-// Section: RTOS "Tasks" Routine
-// *****************************************************************************
-// *****************************************************************************
-${core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS}
+    <#lt>// *****************************************************************************
+    <#lt>// *****************************************************************************
+    <#lt>// Section: RTOS "Tasks" Routine
+    <#lt>// *****************************************************************************
+    <#lt>// *****************************************************************************
+    <#lt>${core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS}
 </#if>
 
 <#if SELECT_RTOS == "ThreadX">
-void tx_application_define(void* first_unused_memory)
-{
-    /* Create a byte memory pool from which to allocate the thread stacks. */
-    tx_byte_pool_create(&byte_pool_0, "byte pool 0", first_unused_memory, TX_BYTE_POOL_SIZE);
+    <#lt>void tx_application_define(void* first_unused_memory)
+    <#lt>{
+    <#lt>    /* Create a byte memory pool from which to allocate the thread stacks. */
+    <#lt>    tx_byte_pool_create(&byte_pool_0, "byte pool 0", first_unused_memory, TX_BYTE_POOL_SIZE);
 
-    /* Maintain system services */
-    ${core.LIST_SYSTEM_TASKS_C_CALL_SYSTEM_TASKS}
+    <#lt>    /* Maintain system services */
+    <#lt>    ${core.LIST_SYSTEM_TASKS_C_CALL_SYSTEM_TASKS}
 
-    /* Maintain Device Drivers */
-    ${core.LIST_SYSTEM_TASKS_C_CALL_DRIVER_TASKS}
+    <#lt>    /* Maintain Device Drivers */
+    <#lt>    ${core.LIST_SYSTEM_TASKS_C_CALL_DRIVER_TASKS}
 
-    /* Maintain Middleware & Other Libraries */
-    ${core.LIST_SYSTEM_TASKS_C_CALL_LIB_TASKS}
+    <#lt>    /* Maintain Middleware & Other Libraries */
+    <#lt>    ${core.LIST_SYSTEM_TASKS_C_CALL_LIB_TASKS}
 
-    /* Maintain the application's state machine. */
-    ${core.LIST_SYSTEM_RTOS_TASKS_C_GEN_APP}
-}
+    <#if ENABLE_APP_FILE == true >
+        <#lt>    /* Maintain the application's state machine. */
+        <#lt>    ${core.LIST_SYSTEM_RTOS_TASKS_C_GEN_APP}
+    </#if>
+    <#lt>}
 </#if>
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: System "Tasks" Routine
@@ -105,36 +109,39 @@ void tx_application_define(void* first_unused_memory)
     See prototype in system/common/sys_module.h.
 */
 <#if SELECT_RTOS == "ThreadX">
-void SYS_Tasks ( void )
-{
-    ${core.LIST_SYSTEM_RTOS_TASKS_C_CALL_SCHEDULAR}
-}
+    <#lt>void SYS_Tasks ( void )
+    <#lt>{
+    <#lt>    ${core.LIST_SYSTEM_RTOS_TASKS_C_CALL_SCHEDULAR}
+    <#lt>}
 <#else>
-void SYS_Tasks ( void )
-{
-<#if SELECT_RTOS == "MicriumOSIII">
-    OS_ERR os_err;
-</#if>
-    /* Maintain system services */
-    ${core.LIST_SYSTEM_TASKS_C_CALL_SYSTEM_TASKS}
+    <#lt>void SYS_Tasks ( void )
+    <#lt>{
+    <#if SELECT_RTOS == "MicriumOSIII">
+        <#lt>    OS_ERR os_err;
+    </#if>
+    <#lt>    /* Maintain system services */
+    <#lt>    ${core.LIST_SYSTEM_TASKS_C_CALL_SYSTEM_TASKS}
 
-    /* Maintain Device Drivers */
-    ${core.LIST_SYSTEM_TASKS_C_CALL_DRIVER_TASKS}
+    <#lt>    /* Maintain Device Drivers */
+    <#lt>    ${core.LIST_SYSTEM_TASKS_C_CALL_DRIVER_TASKS}
 
-    /* Maintain Middleware & Other Libraries */
-    ${core.LIST_SYSTEM_TASKS_C_CALL_LIB_TASKS}
+    <#lt>    /* Maintain Middleware & Other Libraries */
+    <#lt>    ${core.LIST_SYSTEM_TASKS_C_CALL_LIB_TASKS}
 
-    /* Maintain the application's state machine. */
-<#if SELECT_RTOS == "BareMetal">
-    ${core.LIST_SYSTEM_TASKS_C_GEN_APP}
-<#else>
-    ${core.LIST_SYSTEM_RTOS_TASKS_C_GEN_APP}
-</#if>
-<#if SELECT_RTOS != "BareMetal">
-    /* Start RTOS Scheduler. */
-    ${core.LIST_SYSTEM_RTOS_TASKS_C_CALL_SCHEDULAR}
-</#if>
-}
+    <#if ENABLE_APP_FILE == true >
+        <#lt>    /* Maintain the application's state machine. */
+        <#if SELECT_RTOS == "BareMetal">
+            <#lt>    ${core.LIST_SYSTEM_TASKS_C_GEN_APP}
+        <#else>
+            <#lt>    ${core.LIST_SYSTEM_RTOS_TASKS_C_GEN_APP}
+        </#if>
+    </#if>
+
+    <#if SELECT_RTOS != "BareMetal">
+        <#lt>    /* Start RTOS Scheduler. */
+        <#lt>    ${core.LIST_SYSTEM_RTOS_TASKS_C_CALL_SCHEDULAR}
+    </#if>
+    <#lt>}
 </#if>
 
 /*******************************************************************************
