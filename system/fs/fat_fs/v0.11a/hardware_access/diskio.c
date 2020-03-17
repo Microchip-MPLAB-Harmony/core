@@ -7,7 +7,7 @@
 /* storage control modules to the FatFs module with a defined API.       */
 /*-----------------------------------------------------------------------*/
 
-#include "system/fs/fat_fs/src/hardware_access/diskio.h"        /* FatFs lower layer API */
+#include "diskio.h"
 #include "system/fs/sys_fs_media_manager.h"
 #include <string.h>
 
@@ -285,7 +285,7 @@ DRESULT disk_ioctl (
  * This Function is implemented as WEAK so that it can be overriden with
  * implementation to get time from RTC and populate the SYS_FS_TIME structure.
  */
-__WEAK uint32_t get_fattime(void)
+__WEAK DWORD get_fattime(void)
 {
     /* RTC should return time here */
     /* For now, just a value */

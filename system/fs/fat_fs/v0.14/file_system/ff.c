@@ -18,8 +18,9 @@
 /
 /----------------------------------------------------------------------------*/
 
-#include "system/fs/fat_fs/src/file_system/ff.h"			/* FatFs configurations and declarations */
-#include "system/fs/fat_fs/src/hardware_access/diskio.h"		/* Declarations of low level disk I/O functions */
+
+#include "ff.h"			/* Declarations of FatFs API */
+#include "diskio.h"		/* Declarations of device I/O functions */
 
 
 /*--------------------------------------------------------------------------
@@ -458,12 +459,6 @@ typedef struct {
 #endif
 static FATFS* FatFs[FF_VOLUMES];	/* Pointer to the filesystem objects (logical drives) */
 static WORD Fsid;					/* Filesystem mount ID */
-
-/* Added. */
-static FATFS_VOLUME_OBJECT CACHE_ALIGN FATFSVolume[FF_VOLUMES];
-static FATFS_FILE_OBJECT CACHE_ALIGN FATFSFileObject[FF_FS_MAX_FILES];
-static FATFS_DIR_OBJECT FATFSDirObject[FF_FS_MAX_FILES];
-static uint8_t startupflag = 0;
 
 #if FF_FS_RPATH != 0
 static BYTE CurrVol;				/* Current drive */
@@ -3645,53 +3640,21 @@ static FRESULT validate (	/* Returns FR_OK or FR_INVALID_OBJECT */
 /* Mount/Unmount a Logical Drive                                         */
 /*-----------------------------------------------------------------------*/
 
-int f_mount (
-        uint8_t vol /* Logical drive number. */
-	//FATFS* fs,			/* Pointer to the file system object (NULL:unmount)*/
-	//const TCHAR* path,	/* Logical drive number to be mounted/unmounted */
+FRESULT f_mount (
+	FATFS* fs,			/* Pointer to the filesystem object (NULL:unmount)*/
+	const TCHAR* path,	/* Logical drive number to be mounted/unmounted */
+	BYTE opt			/* Mode option 0:Do not mount (delayed mount), 1:Mount immediately */
 )
 {
-	FATFS *cfs = NULL;
-	FRESULT res = FR_INT_ERR;
-	//const TCHAR *rp = path;
-	uint8_t opt = 1; /* 0:Do not mount (delayed mount), 1:Mount immediately */
-    uint8_t path[3];
-    uint8_t *ptr = NULL;
-    
+	FATFS *cfs;
+	int vol;
+	FRESULT res;
+	const TCHAR *rp = path;
 
-    FATFS *fs = (FATFS *)0;
-    uint8_t index = 0;
 
-    if(0 == startupflag)
-    {
-        startupflag = 1;
-        for(index = 0; index != FF_VOLUMES ; index++ )
-        {
-            FATFSVolume[index].inUse = false;
-        }
-        for(index = 0; index != FF_FS_MAX_FILES ; index++ )
-        {
-            FATFSFileObject[index].inUse = false;
-        }
-    }
-	
-	//vol = get_ldnumber(&rp);
-	//if (vol < 0) return FR_INVALID_DRIVE;
-	if (vol >= FF_VOLUMES)		/* Check if the drive number is valid */
-		return FR_INVALID_DRIVE;
-
-        /* If the volume specified is already in use, then return failure, as we cannot mount it again */
-        if(FATFSVolume[vol].inUse == 1)
-        {
-            return FR_INVALID_DRIVE;
-        }
-        else
-        {
-            FATFSVolume[vol].inUse = 1;  // take the volume
-            fs = &FATFSVolume[vol].volObj;
-        }
-
-        /* Get current fs object */
+	/* Get logical drive number */
+	vol = get_ldnumber(&rp);
+	if (vol < 0) return FR_INVALID_DRIVE;
 	cfs = FatFs[vol];					/* Pointer to fs object */
 
 	if (cfs) {
@@ -3712,100 +3675,23 @@ int f_mount (
 	}
 	FatFs[vol] = fs;					/* Register new fs object */
 
-	if (!fs || opt != 1) return FR_OK;	/* Do not mount now, it will be mounted later */
+	if (opt == 0) return FR_OK;			/* Do not mount now, it will be mounted later */
 
-    /* TODO: Update this logic if more than 10 volumes need to be supported. */
-    //snprintf ((char*)path, 1, "%d", vol);
-    path[0] = '0' + vol;
-    path[1] = ':';
-    path[2] = '\0';
-
-    ptr = path;
-	res = mount_volume((const TCHAR **)&ptr, &fs, 0);	/* Force mounted the volume */
+	res = mount_volume(&path, &fs, 0);	/* Force mounted the volume */
 	LEAVE_FF(fs, res);
 }
 
-/*-----------------------------------------------------------------------*/
-/* Unmount a Logical Drive                                                 */
-/*-----------------------------------------------------------------------*/
 
-int f_unmount (
-	uint8_t vol		/* Logical drive number to be unmounted */
-)
-{
-    FATFS *rfs = NULL;
-    uint32_t hFATfs =0;
-    FATFS *fs = (FATFS *)0;
 
-    if (vol >= FF_VOLUMES)		/* Check if the drive number is valid */
-        return FR_INVALID_DRIVE;
-
-    /* If the volume specified not in use, then return failure, as we cannot unmount mount a free volume */
-    if(FATFSVolume[vol].inUse == false)
-    {
-        return FR_INVALID_DRIVE;
-    }
-    
-    // free the volume
-    FATFSVolume[vol].inUse = false;
-
-    rfs = FatFs[vol];			/* Get current fs object */
-    if (rfs) {
-#if FF_FS_LOCK
-        clear_lock(rfs);
-#endif
-        for(hFATfs = 0; hFATfs < FF_FS_MAX_FILES; hFATfs++)
-        {
-            if(FATFSFileObject[hFATfs].inUse)
-            {
-                if (FATFSFileObject[hFATfs].fileObj.obj.fs == NULL)
-                {
-                    FATFSFileObject[hFATfs].inUse = 0;
-                }
-                else if(LD2PD(vol) == FATFSFileObject[hFATfs].fileObj.obj.fs->pdrv)
-                {
-                    FATFSFileObject[hFATfs].inUse = 0;
-                }
-            }
-            if(FATFSDirObject[hFATfs].inUse)
-            {
-                if (FATFSDirObject[hFATfs].dirObj.obj.fs == NULL)
-                {
-                    FATFSDirObject[hFATfs].inUse = 0;
-                }
-                else if(LD2PD(vol) == FATFSDirObject[hFATfs].dirObj.obj.fs->pdrv)
-                {
-                    FATFSDirObject[hFATfs].inUse = 0;
-                }
-            }
-        }
-
-#if FF_FS_REENTRANT				/* Discard sync object of the current volume */
-        if (!ff_del_syncobj(rfs->sobj)) return FR_INT_ERR;
-#endif
-        rfs->fs_type = 0;		/* Clear old fs object */
-    }
-
-    if (fs) {
-        fs->fs_type = 0;		/* Clear new fs object */
-#if FF_FS_REENTRANT				/* Create sync object for the new volume */
-        if (!ff_cre_syncobj(vol, &fs->sobj)) return FR_INT_ERR;
-#endif
-    }
-
-    FatFs[vol] = fs;			/* Register new fs object */
-
-    return FR_OK;
-}
 
 /*-----------------------------------------------------------------------*/
 /* Open or Create a File                                                 */
 /*-----------------------------------------------------------------------*/
 
-int f_open (
-	uintptr_t handle,	/* Pointer to the blank file object */
-	const char * path,	/* Pointer to the file name */
-	uint8_t mode		/* Access mode and file open mode flags */
+FRESULT f_open (
+	FIL* fp,			/* Pointer to the blank file object */
+	const TCHAR* path,	/* Pointer to the file name */
+	BYTE mode			/* Access mode and file open mode flags */
 )
 {
 	FRESULT res;
@@ -3817,22 +3703,9 @@ int f_open (
 	FSIZE_t ofs;
 #endif
 	DEF_NAMBUF
-    uint32_t index = 0;
-    FIL *fp = NULL;
 
-    for (index = 0; index < FF_FS_MAX_FILES; index++)
-    {
-        if(FATFSFileObject[index].inUse == false)
-        {
-            FATFSFileObject[index].inUse = 1;
-            fp = &FATFSFileObject[index].fileObj;
-            *(uintptr_t *)handle = (uintptr_t)&FATFSFileObject[index];
-            break;
-        }
-    }
 
-    if (!fp) return FR_INVALID_OBJECT;
-	fp->obj.fs = 0;			/* Clear file object */
+	if (!fp) return FR_INVALID_OBJECT;
 
 	/* Get logical drive number */
 	mode &= FF_FS_READONLY ? FA_READ : FA_READ | FA_WRITE | FA_CREATE_ALWAYS | FA_CREATE_NEW | FA_OPEN_ALWAYS | FA_OPEN_APPEND;
@@ -4007,11 +3880,11 @@ int f_open (
 /* Read File                                                             */
 /*-----------------------------------------------------------------------*/
 
-int f_read (
-	uintptr_t handle, /* Pointer to the file object */
-	void* buff,		  /* Pointer to data buffer */
-	uint32_t btr,	  /* Number of bytes to read */
-	uint32_t* br	  /* Pointer to number of bytes read */
+FRESULT f_read (
+	FIL* fp, 	/* Pointer to the file object */
+	void* buff,	/* Pointer to data buffer */
+	UINT btr,	/* Number of bytes to read */
+	UINT* br	/* Pointer to number of bytes read */
 )
 {
 	FRESULT res;
@@ -4021,8 +3894,6 @@ int f_read (
 	FSIZE_t remain;
 	UINT rcnt, cc, csect;
 	BYTE *rbuff = (BYTE*)buff;
-    FATFS_FILE_OBJECT *ptr = (FATFS_FILE_OBJECT *)handle;
-    FIL *fp = &ptr->fileObj;
 
 
 	*br = 0;	/* Clear read byte counter */
@@ -4110,11 +3981,11 @@ int f_read (
 /* Write File                                                            */
 /*-----------------------------------------------------------------------*/
 
-int f_write (
-	uintptr_t handle,   /* Pointer to the file object */
-	const void *buff,	/* Pointer to the data to be written */
-	uint32_t btw,		/* Number of bytes to write */
-	uint32_t* bw		/* Pointer to number of bytes written */
+FRESULT f_write (
+	FIL* fp,			/* Pointer to the file object */
+	const void* buff,	/* Pointer to the data to be written */
+	UINT btw,			/* Number of bytes to write */
+	UINT* bw			/* Pointer to number of bytes written */
 )
 {
 	FRESULT res;
@@ -4123,9 +3994,6 @@ int f_write (
 	LBA_t sect;
 	UINT wcnt, cc, csect;
 	const BYTE *wbuff = (const BYTE*)buff;
-
-    FATFS_FILE_OBJECT *ptr = (FATFS_FILE_OBJECT *)handle;
-    FIL *fp = &ptr->fileObj;
 
 
 	*bw = 0;	/* Clear write byte counter */
@@ -4235,8 +4103,8 @@ int f_write (
 /* Synchronize the File                                                  */
 /*-----------------------------------------------------------------------*/
 
-int f_sync (
-	uintptr_t handle /* Pointer to the file object */
+FRESULT f_sync (
+	FIL* fp		/* Pointer to the file object */
 )
 {
 	FRESULT res;
@@ -4244,8 +4112,6 @@ int f_sync (
 	DWORD tm;
 	BYTE *dir;
 
-    FATFS_FILE_OBJECT *ptr = (FATFS_FILE_OBJECT *)handle;
-    FIL *fp = &ptr->fileObj;
 
 	res = validate(&fp->obj, &fs);	/* Check validity of the file object */
 	if (res == FR_OK) {
@@ -4318,17 +4184,15 @@ int f_sync (
 /* Close File                                                            */
 /*-----------------------------------------------------------------------*/
 
-int f_close (
-	uintptr_t handle /* Pointer to the file object to be closed */
+FRESULT f_close (
+	FIL* fp		/* Pointer to the file object to be closed */
 )
 {
 	FRESULT res;
 	FATFS *fs;
-    FATFS_FILE_OBJECT *ptr = (FATFS_FILE_OBJECT *)handle;
-    FIL *fp = &ptr->fileObj;
 
 #if !FF_FS_READONLY
-	res = (FRESULT)f_sync(handle);					/* Flush cached data */
+	res = f_sync(fp);					/* Flush cached data */
 	if (res == FR_OK)
 #endif
 	{
@@ -4356,20 +4220,24 @@ int f_close (
 /* Change Current Directory or Current Drive, Get Current Directory      */
 /*-----------------------------------------------------------------------*/
 
-int f_chdrive (
-	uint8_t drv		/* Drive number */
+FRESULT f_chdrive (
+	const TCHAR* path		/* Drive number to set */
 )
 {
-	if (drv >= FF_VOLUMES) return FR_INVALID_DRIVE;
+	int vol;
 
-	CurrVol = (BYTE)drv;	/* Set it as current volume */
+
+	/* Get logical drive number */
+	vol = get_ldnumber(&path);
+	if (vol < 0) return FR_INVALID_DRIVE;
+	CurrVol = (BYTE)vol;	/* Set it as current volume */
 
 	return FR_OK;
 }
 
 
 
-int f_chdir (
+FRESULT f_chdir (
 	const TCHAR* path	/* Pointer to the directory path */
 )
 {
@@ -4431,9 +4299,9 @@ int f_chdir (
 
 
 #if FF_FS_RPATH >= 2
-int f_getcwd (
+FRESULT f_getcwd (
 	TCHAR* buff,	/* Pointer to the directory path */
-	uint32_t len		/* Size of path */
+	UINT len		/* Size of buff in unit of TCHAR */
 )
 {
 	FRESULT res;
@@ -4531,9 +4399,9 @@ int f_getcwd (
 /* Seek File Read/Write Pointer                                          */
 /*-----------------------------------------------------------------------*/
 
-int f_lseek (
-	uintptr_t handle,	/* Pointer to the file object */
-	uint32_t ofs		/* File pointer from top of file */
+FRESULT f_lseek (
+	FIL* fp,		/* Pointer to the file object */
+	FSIZE_t ofs		/* File pointer from top of file */
 )
 {
 	FRESULT res;
@@ -4545,9 +4413,6 @@ int f_lseek (
 	DWORD cl, pcl, ncl, tcl, tlen, ulen, *tbl;
 	LBA_t dsc;
 #endif
-
-    FATFS_FILE_OBJECT *ptr = (FATFS_FILE_OBJECT *)handle;
-    FIL *fp = &ptr->fileObj;
 
 	res = validate(&fp->obj, &fs);		/* Check validity of the file object */
 	if (res == FR_OK) res = (FRESULT)fp->err;
@@ -4697,8 +4562,8 @@ int f_lseek (
 /* Create a Directory Object                                             */
 /*-----------------------------------------------------------------------*/
 
-int f_opendir (
-	uintptr_t handle,			/* Pointer to directory object to create */
+FRESULT f_opendir (
+	DIR* dp,			/* Pointer to directory object to create */
 	const TCHAR* path	/* Pointer to the directory path */
 )
 {
@@ -4706,30 +4571,8 @@ int f_opendir (
 	FATFS *fs;
 	DEF_NAMBUF
 
-    uint32_t index = 0;
-    DIR *dp = NULL;
 
-    for(index = 0; index < FF_FS_MAX_FILES; index++)
-    {
-        if(FATFSDirObject[index].inUse == 0)
-        {
-            FATFSDirObject[index].inUse = true;
-            dp = &FATFSDirObject[index].dirObj;
-            *(uintptr_t *)handle = (uintptr_t)&FATFSDirObject[index];
-            break;
-        }
-    }
-
-    if(index >= FF_FS_MAX_FILES)
-    {
-        return FR_INVALID_OBJECT;
-    }
-
-    if (!dp) 
-    {
-        FATFSDirObject[index].inUse = false;
-        return FR_INVALID_OBJECT;
-    }
+	if (!dp) return FR_INVALID_OBJECT;
 
 	/* Get logical drive */
 	res = mount_volume(&path, &fs, 0);
@@ -4773,11 +4616,7 @@ int f_opendir (
 		FREE_NAMBUF();
 		if (res == FR_NO_FILE) res = FR_NO_PATH;
 	}
-	if (res != FR_OK)
-    {
-        dp->obj.fs = 0;		/* Invalidate the directory object if function failed */
-        FATFSDirObject[index].inUse = false;
-    }
+	if (res != FR_OK) dp->obj.fs = 0;		/* Invalidate the directory object if function faild */
 
 	LEAVE_FF(fs, res);
 }
@@ -4789,19 +4628,13 @@ int f_opendir (
 /* Close Directory                                                       */
 /*-----------------------------------------------------------------------*/
 
-int f_closedir (
-	uintptr_t handle /* Pointer to the directory object to be closed */
+FRESULT f_closedir (
+	DIR *dp		/* Pointer to the directory object to be closed */
 )
 {
 	FRESULT res;
 	FATFS *fs;
-    FATFS_DIR_OBJECT *ptr = (FATFS_DIR_OBJECT *)handle;
-    DIR *dp = &ptr->dirObj;
 
-    if(ptr->inUse != 1)
-    {
-        return FR_INVALID_OBJECT;
-    }
 
 	res = validate(&dp->obj, &fs);	/* Check validity of the file object */
 	if (res == FR_OK) {
@@ -4815,12 +4648,6 @@ int f_closedir (
 		unlock_fs(fs, FR_OK);		/* Unlock volume */
 #endif
 	}
-
-    if (res == FR_OK)
-    {
-        ptr->inUse = false;
-    }
-
 	return res;
 }
 
@@ -4831,19 +4658,15 @@ int f_closedir (
 /* Read Directory Entries in Sequence                                    */
 /*-----------------------------------------------------------------------*/
 
-int f_readdir (
-	uintptr_t handle,	/* Pointer to the open directory object */
-	uintptr_t fileInfo	/* Pointer to file information to return */
+FRESULT f_readdir (
+	DIR* dp,			/* Pointer to the open directory object */
+	FILINFO* fno		/* Pointer to file information to return */
 )
 {
 	FRESULT res;
 	FATFS *fs;
 	DEF_NAMBUF
 
-    FATFS_DIR_OBJECT *ptr = (FATFS_DIR_OBJECT *)handle;
-    DIR *dp = &ptr->dirObj;
-
-    FILINFO *fno = (FILINFO *)fileInfo;
 
 	res = validate(&dp->obj, &fs);	/* Check validity of the directory object */
 	if (res == FR_OK) {
@@ -4872,19 +4695,15 @@ int f_readdir (
 /*-----------------------------------------------------------------------*/
 
 FRESULT f_findnext (
-	uintptr_t handle,		/* Pointer to the open directory object */
-	uintptr_t fileInfo	/* Pointer to the file information structure */
+	DIR* dp,		/* Pointer to the open directory object */
+	FILINFO* fno	/* Pointer to the file information structure */
 )
 {
 	FRESULT res;
 
-    FATFS_DIR_OBJECT *ptr = (FATFS_DIR_OBJECT *)handle;
-    DIR *dp = &ptr->dirObj;
-
-    FILINFO *fno = (FILINFO *)fileInfo;
 
 	for (;;) {
-		res = f_readdir(handle, fileInfo);		/* Get a directory item */
+		res = f_readdir(dp, fno);		/* Get a directory item */
 		if (res != FR_OK || !fno || !fno->fname[0]) break;	/* Terminate if any error or end of directory */
 		if (pattern_matching(dp->pat, fno->fname, 0, 0)) break;		/* Test for the file name */
 #if FF_USE_LFN && FF_USE_FIND == 2
@@ -4900,24 +4719,21 @@ FRESULT f_findnext (
 /* Find First File                                                       */
 /*-----------------------------------------------------------------------*/
 
-int f_findfirst (
-	uintptr_t handle,		/* Pointer to the blank directory object */
-	uintptr_t fileInfo,		/* Pointer to the file information structure */
+FRESULT f_findfirst (
+	DIR* dp,				/* Pointer to the blank directory object */
+	FILINFO* fno,			/* Pointer to the file information structure */
 	const TCHAR* path,		/* Pointer to the directory to open */
 	const TCHAR* pattern	/* Pointer to the matching pattern */
 )
 {
 	FRESULT res;
 
-    FATFS_DIR_OBJECT *ptr = (FATFS_DIR_OBJECT *)handle;
-    DIR *dp = &ptr->dirObj;
-
-    FILINFO *fno = (FILINFO *)fileInfo;
 
 	dp->pat = pattern;		/* Save pointer to pattern string */
-	res = f_opendir(handle, path);		/* Open the target directory */
-	if (res == FR_OK)
-		res = f_findnext(handle, (uintptr_t)fno);	/* Find the first item */
+	res = f_opendir(dp, path);		/* Open the target directory */
+	if (res == FR_OK) {
+		res = f_findnext(dp, fno);	/* Find the first item */
+	}
 	return res;
 }
 
@@ -4930,16 +4746,15 @@ int f_findfirst (
 /* Get File Status                                                       */
 /*-----------------------------------------------------------------------*/
 
-int f_stat (
-	const char* path,	/* Pointer to the file path */
-	uintptr_t ptr		/* Pointer to file information to return */
+FRESULT f_stat (
+	const TCHAR* path,	/* Pointer to the file path */
+	FILINFO* fno		/* Pointer to file information to return */
 )
 {
 	FRESULT res;
 	DIR dj;
 	DEF_NAMBUF
 
-    FILINFO *fno = (FILINFO *)ptr;
 
 	/* Get logical drive */
 	res = mount_volume(&path, &dj.obj.fs, 0);
@@ -4966,10 +4781,10 @@ int f_stat (
 /* Get Number of Free Clusters                                           */
 /*-----------------------------------------------------------------------*/
 
-int f_getfree (
-	const TCHAR* path,	/* Path name of the logical drive number */
-	uint32_t* nclst,		/* Pointer to a variable to return number of free clusters */
-	FATFS** fatfs		/* Pointer to return pointer to corresponding file system object */
+FRESULT f_getfree (
+	const TCHAR* path,	/* Logical drive number */
+	DWORD* nclst,		/* Pointer to a variable to return number of free clusters */
+	FATFS** fatfs		/* Pointer to return pointer to corresponding filesystem object */
 )
 {
 	FRESULT res;
@@ -5049,49 +4864,21 @@ int f_getfree (
 	LEAVE_FF(fs, res);
 }
 
-/*-----------------------------------------------------------------------*/
-/* Function below written separately.                                    */
-/* Not from standard FAT FS code. It is added to allow compatibility with*/
-/* other FS, as this function does not need "FATFS **fatfs"              */
-/*-----------------------------------------------------------------------*/
 
-int f_getclusters (const char *path, uint32_t *tot_sec, uint32_t *free_sec)
-{
-    FATFS *ptr = (FATFS *)NULL;
-    uint32_t clst = 0;
-    FRESULT res = FR_OK;
-
-    res = (FRESULT)f_getfree(path, &clst, &ptr);
-
-    if(res != FR_OK)
-    {
-        *tot_sec = 0;
-        *free_sec = 0;
-        return (int)res;
-    }
-
-    /* Get total sectors and free sectors */
-    *tot_sec = (ptr->n_fatent - 2) * ptr->csize;
-    *free_sec = clst * ptr->csize;
-
-    return (int)res;
-}
 
 
 /*-----------------------------------------------------------------------*/
 /* Truncate File                                                         */
 /*-----------------------------------------------------------------------*/
 
-int f_truncate (
-	uintptr_t handle /* Pointer to the file object */
+FRESULT f_truncate (
+	FIL* fp		/* Pointer to the file object */
 )
 {
 	FRESULT res;
 	FATFS *fs;
 	DWORD ncl;
 
-    FATFS_FILE_OBJECT *ptr = (FATFS_FILE_OBJECT *)handle;
-    FIL *fp = &ptr->fileObj;
 
 	res = validate(&fp->obj, &fs);	/* Check validity of the file object */
 	if (res != FR_OK || (res = (FRESULT)fp->err) != FR_OK) LEAVE_FF(fs, res);
@@ -5134,7 +4921,7 @@ int f_truncate (
 /* Delete a File/Directory                                               */
 /*-----------------------------------------------------------------------*/
 
-int f_unlink (
+FRESULT f_unlink (
 	const TCHAR* path		/* Pointer to the file or directory path */
 )
 {
@@ -5228,7 +5015,7 @@ int f_unlink (
 /* Create a Directory                                                    */
 /*-----------------------------------------------------------------------*/
 
-int f_mkdir (
+FRESULT f_mkdir (
 	const TCHAR* path		/* Pointer to the directory path */
 )
 {
@@ -5312,8 +5099,8 @@ int f_mkdir (
 /* Rename a File/Directory                                               */
 /*-----------------------------------------------------------------------*/
 
-int f_rename (
-	const TCHAR* path_old,	/* Pointer to the object to be renamed */
+FRESULT f_rename (
+	const TCHAR* path_old,	/* Pointer to the object name to be renamed */
 	const TCHAR* path_new	/* Pointer to the new name */
 )
 {
@@ -5422,10 +5209,10 @@ int f_rename (
 /* Change Attribute                                                      */
 /*-----------------------------------------------------------------------*/
 
-int f_chmod (
+FRESULT f_chmod (
 	const TCHAR* path,	/* Pointer to the file path */
-	uint8_t attr,			/* Attribute bits */
-	uint8_t mask			/* Attribute mask to change */
+	BYTE attr,			/* Attribute bits */
+	BYTE mask			/* Attribute mask to change */
 )
 {
 	FRESULT res;
@@ -5469,9 +5256,9 @@ int f_chmod (
 /* Change Timestamp                                                      */
 /*-----------------------------------------------------------------------*/
 
-int f_utime (
+FRESULT f_utime (
 	const TCHAR* path,	/* Pointer to the file/directory name */
-	const uintptr_t ptr	/* Pointer to the time stamp to be set */
+	const FILINFO* fno	/* Pointer to the timestamp to be set */
 )
 {
 	FRESULT res;
@@ -5479,7 +5266,6 @@ int f_utime (
 	FATFS *fs;
 	DEF_NAMBUF
 
-    FILINFO *fno = (FILINFO *)ptr;
 
 	res = mount_volume(&path, &fs, FA_WRITE);	/* Get logical drive */
 	if (res == FR_OK) {
@@ -5517,10 +5303,10 @@ int f_utime (
 /* Get Volume Label                                                      */
 /*-----------------------------------------------------------------------*/
 
-int f_getlabel (
-	const TCHAR* path,	/* Path name of the logical drive number */
-	TCHAR* label,		/* Pointer to a buffer to return the volume label */
-	uint32_t* vsn			/* Pointer to a variable to return the volume serial number */
+FRESULT f_getlabel (
+	const TCHAR* path,	/* Logical drive number */
+	TCHAR* label,		/* Buffer to store the volume label */
+	DWORD* vsn			/* Variable to store the volume serial number */
 )
 {
 	FRESULT res;
@@ -5612,8 +5398,8 @@ int f_getlabel (
 /* Set Volume Label                                                      */
 /*-----------------------------------------------------------------------*/
 
-int f_setlabel (
-	const TCHAR* label	/* Pointer to the volume label to set */
+FRESULT f_setlabel (
+	const TCHAR* label	/* Volume label to set with heading logical drive number */
 )
 {
 	FRESULT res;
@@ -5898,6 +5684,7 @@ FRESULT f_forward (
 #define	GPT_ALIGN	0x100000	/* Alignment of partitions in GPT [byte] (>=128KB) */
 #define GPT_ITEMS	128			/* Number of GPT table size (>=128, sector aligned) */
 
+
 /* Create partitions on the physical drive */
 
 static FRESULT create_partition (
@@ -6040,11 +5827,13 @@ static FRESULT create_partition (
 	return FR_OK;
 }
 
-int f_mkfs (
-	uint8_t vol,	/* Logical drive number */
+
+
+FRESULT f_mkfs (
+	const TCHAR* path,		/* Logical drive number */
 	const MKFS_PARM* opt,	/* Format options */
 	void* work,				/* Pointer to working buffer (null: use heap memory) */
-	uint32_t len			/* Size of working buffer [byte] */
+	UINT len				/* Size of working buffer [byte] */
 )
 {
 	static const WORD cst[] = {1, 4, 16, 64, 256, 512, 0};	/* Cluster size boundary for FAT volume (4Ks unit) */
@@ -6057,12 +5846,14 @@ int f_mkfs (
 	LBA_t sect, lba[2];
 	DWORD sz_rsv, sz_fat, sz_dir, sz_au;	/* Size of reserved, fat, dir, data, cluster */
 	UINT n_fat, n_root, i;					/* Index, Number of FATs and Number of roor dir entries */
+	int vol;
 	DSTATUS ds;
 	FRESULT fr;
 
 
 	/* Check mounted drive and clear work area */
-	if (vol > FF_VOLUMES) return FR_INVALID_DRIVE;
+	vol = get_ldnumber(&path);					/* Get target logical drive */
+	if (vol < 0) return FR_INVALID_DRIVE;
 	if (FatFs[vol]) FatFs[vol]->fs_type = 0;	/* Clear the fs object if mounted */
 	pdrv = LD2PD(vol);			/* Physical drive */
 	ipart = LD2PT(vol);			/* Partition (0:create as new, 1..:get from partition table) */
@@ -6539,10 +6330,10 @@ int f_mkfs (
 /* Create Partition Table on the Physical Drive                          */
 /*-----------------------------------------------------------------------*/
 
-int f_fdisk (
-	uint8_t pdrv,			/* Physical drive number */
-	const uint32_t ptbl[],	/* Pointer to the size table for each partitions */
-	void* work			/* Pointer to the working buffer */
+FRESULT f_fdisk (
+	BYTE pdrv,			/* Physical drive number */
+	const LBA_t ptbl[],	/* Pointer to the size table for each partitions */
+	void* work			/* Pointer to the working buffer (null: use heap memory) */
 )
 {
 	BYTE *buf = (BYTE*)work;
@@ -6557,7 +6348,7 @@ int f_fdisk (
 #endif
 	if (!buf) return FR_NOT_ENOUGH_CORE;
 
-	LEAVE_MKFS(create_partition(pdrv, (const LBA_t *)ptbl, 0x06, buf));
+	LEAVE_MKFS(create_partition(pdrv, ptbl, 0x07, buf));
 }
 
 #endif /* FF_MULTI_PARTITION */
@@ -6571,19 +6362,19 @@ int f_fdisk (
 #error Wrong FF_STRF_ENCODE setting
 #endif
 /*-----------------------------------------------------------------------*/
-/* Get a string from the file                                            */
+/* Get a String from the File                                            */
 /*-----------------------------------------------------------------------*/
 
 TCHAR* f_gets (
-	TCHAR* buff,	/* Pointer to the string buffer to read */
-	int len,		/* Size of string buffer (characters) */
-	uintptr_t handle/* Pointer to the file object */
+	TCHAR* buff,	/* Pointer to the buffer to store read string */
+	int len,		/* Size of string buffer (items) */
+	FIL* fp			/* Pointer to the file object */
 )
 {
 	int nc = 0;
 	TCHAR *p = buff;
 	BYTE s[4];
-	uint32_t rc;
+	UINT rc;
 	DWORD dc;
 #if FF_USE_LFN && FF_LFN_UNICODE && FF_STRF_ENCODE <= 2
 	WCHAR wc;
@@ -6599,30 +6390,30 @@ TCHAR* f_gets (
 	if (FF_LFN_UNICODE == 3) len -= 1;
 	while (nc < len) {
 #if FF_STRF_ENCODE == 0				/* Read a character in ANSI/OEM */
-		f_read(handle, s, 1, &rc);
+		f_read(fp, s, 1, &rc);		/* Get a code unit */
 		if (rc != 1) break;			/* EOF? */
 		wc = s[0];
 		if (dbc_1st((BYTE)wc)) {	/* DBC 1st byte? */
-				f_read(handle, s, 1, &rc);
+			f_read(fp, s, 1, &rc);	/* Get DBC 2nd byte */
 			if (rc != 1 || !dbc_2nd(s[0])) continue;	/* Wrong code? */
 			wc = wc << 8 | s[0];
 		}
 		dc = ff_oem2uni(wc, CODEPAGE);	/* OEM --> */
 		if (dc == 0) continue;
 #elif FF_STRF_ENCODE == 1 || FF_STRF_ENCODE == 2 	/* Read a character in UTF-16LE/BE */
-		f_read(handle, s, 2, &rc);
+		f_read(fp, s, 2, &rc);		/* Get a code unit */
 		if (rc != 2) break;			/* EOF? */
 		dc = (FF_STRF_ENCODE == 1) ? ld_word(s) : s[0] << 8 | s[1];
 		if (IsSurrogateL(dc)) continue;	/* Broken surrogate pair? */
 		if (IsSurrogateH(dc)) {		/* High surrogate? */
-		f_read(handle, s, 2, &rc);
+			f_read(fp, s, 2, &rc);	/* Get low surrogate */
 			if (rc != 2) break;		/* EOF? */
 			wc = (FF_STRF_ENCODE == 1) ? ld_word(s) : s[0] << 8 | s[1];
 			if (!IsSurrogateL(wc)) continue;	/* Broken surrogate pair? */
 			dc = ((dc & 0x3FF) + 0x40) << 10 | (wc & 0x3FF);	/* Merge surrogate pair */
 		}
 #else	/* Read a character in UTF-8 */
-		f_read(handle, s, 1, &rc);
+		f_read(fp, s, 1, &rc);		/* Get a code unit */
 		if (rc != 1) break;			/* EOF? */
 		dc = s[0];
 		if (dc >= 0x80) {			/* Multi-byte sequence? */
@@ -6631,7 +6422,7 @@ TCHAR* f_gets (
 			if ((dc & 0xF0) == 0xE0) { dc &= 0x0F; ct = 2; }	/* 3-byte sequence? */
 			if ((dc & 0xF8) == 0xF0) { dc &= 0x07; ct = 3; }	/* 4-byte sequence? */
 			if (ct == 0) continue;
-			f_read(handle, s, 1, &rc);
+			f_read(fp, s, ct, &rc);		/* Get trailing bytes */
 			if (rc != ct) break;
 			rc = 0;
 			do {	/* Merge the byte sequence */
@@ -6682,7 +6473,7 @@ TCHAR* f_gets (
 #else			/* Byte-by-byte read without any conversion (ANSI/OEM API) */
 	len -= 1;	/* Make a room for the terminator */
 	while (nc < len) {
-		f_read(handle, s, 1, &rc);
+		f_read(fp, s, 1, &rc);	/* Get a byte */
 		if (rc != 1) break;		/* EOF? */
 		dc = s[0];
 		if (FF_USE_STRFUNC == 2 && dc == '\r') continue;
@@ -6707,7 +6498,7 @@ TCHAR* f_gets (
 /* Putchar output buffer and work area */
 
 typedef struct {
-	uintptr_t handle;
+	FIL *fp;		/* Ptr to the writing file */
 	int idx, nchr;	/* Write index of buf[] (-1:error), number of encoding units written */
 #if FF_USE_LFN && FF_LFN_UNICODE == 1
 	WCHAR hs;
@@ -6723,7 +6514,7 @@ typedef struct {
 
 static void putc_bfd (putbuff* pb, TCHAR c)
 {
-	uint32_t n;
+	UINT n;
 	int i, nc;
 #if FF_USE_LFN && FF_LFN_UNICODE
 	WCHAR hs, wc;
@@ -6842,7 +6633,7 @@ static void putc_bfd (putbuff* pb, TCHAR c)
 #endif
 
 	if (i >= (int)(sizeof pb->buf) - 4) {	/* Write buffered characters to the file */
-		f_write(pb->handle, pb->buf, (uint32_t)i, &n);
+		f_write(pb->fp, pb->buf, (UINT)i, &n);
 		i = (n == (UINT)i) ? 0 : -1;
 	}
 	pb->idx = i;
@@ -6854,10 +6645,10 @@ static void putc_bfd (putbuff* pb, TCHAR c)
 
 static int putc_flush (putbuff* pb)
 {
-	uint32_t nw;
+	UINT nw;
 
 	if (   pb->idx >= 0	/* Flush buffered characters to the file */
-		&& f_write(pb->handle, pb->buf, (UINT)pb->idx, &nw) == FR_OK
+		&& f_write(pb->fp, pb->buf, (UINT)pb->idx, &nw) == FR_OK
 		&& (UINT)pb->idx == nw) return pb->nchr;
 	return EOF;
 }
@@ -6865,23 +6656,23 @@ static int putc_flush (putbuff* pb)
 
 /* Initialize write buffer */
 
-static void putc_init (putbuff* pb, uintptr_t handle)
+static void putc_init (putbuff* pb, FIL* fp)
 {
 	mem_set(pb, 0, sizeof (putbuff));
-	pb->handle = handle;
+	pb->fp = fp;
 }
 
 
 
 int f_putc (
 	TCHAR c,	/* A character to be output */
-	uintptr_t handle/* Pointer to the file object */
+	FIL* fp		/* Pointer to the file object */
 )
 {
 	putbuff pb;
 
 
-	putc_init(&pb, handle);
+	putc_init(&pb, fp);
 	putc_bfd(&pb, c);	/* Put the character */
 	return putc_flush(&pb);
 }
@@ -6895,13 +6686,13 @@ int f_putc (
 
 int f_puts (
 	const TCHAR* str,	/* Pointer to the string to be output */
-	uintptr_t handle    /* Pointer to the file object */
+	FIL* fp				/* Pointer to the file object */
 )
 {
 	putbuff pb;
 
 
-	putc_init(&pb, handle);
+	putc_init(&pb, fp);
 	while (*str) putc_bfd(&pb, *str++);		/* Put the string */
 	return putc_flush(&pb);
 }
@@ -6914,7 +6705,7 @@ int f_puts (
 /*-----------------------------------------------------------------------*/
 
 int f_printf (
-	uintptr_t handle,			/* Pointer to the file object */
+	FIL* fp,			/* Pointer to the file object */
 	const TCHAR* fmt,	/* Pointer to the format string */
 	va_list argList					/* Optional arguments... */
 )
@@ -6927,7 +6718,7 @@ int f_printf (
 	TCHAR c, d, str[32], *p;
 
 
-	putc_init(&pb, handle);
+	putc_init(&pb, fp);
 
 	for (;;) {
 		c = *fmt++;
@@ -7017,50 +6808,9 @@ int f_printf (
 	return putc_flush(&pb);
 }
 
-/*********************************************************
- * Converted from macro to function
- *
- *********************************************************/
-uint32_t f_tell(uintptr_t handle)
-{
-    FATFS_FILE_OBJECT *ptr = (FATFS_FILE_OBJECT *)handle;
-    FIL *fp = &ptr->fileObj;
-    return(fp->fptr);
-}
-
-/*********************************************************
- * Converted from macro to function
- *
- *********************************************************/
-bool f_eof(uintptr_t handle)
-{
-    FATFS_FILE_OBJECT *ptr = (FATFS_FILE_OBJECT *)handle;
-    FIL *fp = &ptr->fileObj;
-    return (((fp)->fptr == (fp)->obj.objsize) ? 1 : 0);
-}
-/*********************************************************
- * Converted from macro to function
- *
- *********************************************************/
-uint32_t f_size(uintptr_t handle)
-{
-    FATFS_FILE_OBJECT *ptr = (FATFS_FILE_OBJECT *)handle;
-    FIL *fp = &ptr->fileObj;
-    return (fp->obj.objsize);
-}
-/*********************************************************
- * Converted from macro to function
- *
- *********************************************************/
-bool f_error(uintptr_t handle)
-{
-    FATFS_FILE_OBJECT *ptr = (FATFS_FILE_OBJECT *)handle;
-    FIL *fp = &ptr->fileObj;
-    return (((fp)->err) ? 1 : 0);
-}
-
 #endif /* !FF_FS_READONLY */
 #endif /* FF_USE_STRFUNC */
+
 
 
 #if FF_CODE_PAGE == 0

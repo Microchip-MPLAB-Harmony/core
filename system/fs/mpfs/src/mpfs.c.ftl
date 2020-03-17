@@ -46,7 +46,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include "system/fs/mpfs/src/mpfs_local.h"
+#include "system/fs/mpfs/mpfs_local.h"
 #include "system/fs/sys_fs_media_manager.h"
 <#if __PROCESSOR?matches("PIC32MZ.*") == true>
 #include "system/cache/sys_cache.h"

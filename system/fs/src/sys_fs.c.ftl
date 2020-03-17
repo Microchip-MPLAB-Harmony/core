@@ -44,9 +44,6 @@
 
 #include "system/fs/src/sys_fs_local.h"
 #include "system/fs/sys_fs_media_manager.h"
-<#if SYS_FS_FAT == true>
-    <#lt>#include "system/fs/fat_fs/src/file_system/ff.h"
-</#if>
 
 // *****************************************************************************
 /* Registration table for each native file system
@@ -863,67 +860,6 @@ SYS_FS_HANDLE SYS_FS_FileOpen
         }
     }
 
-<#if SYS_FS_FAT == true>
-    /* Convert the SYS_FS file open attributes to FAT FS attributes */
-    <#if SYS_FS_FAT_VERSION == "v0.11a">
-        <#lt>    switch(attributes)
-        <#lt>    {
-        <#lt>        case SYS_FS_FILE_OPEN_READ:
-        <#lt>            mode = FA_READ;
-        <#lt>            break;
-        <#if SYS_FS_FAT_READONLY == false>
-            <#lt>        case SYS_FS_FILE_OPEN_WRITE:
-            <#lt>            mode = FA_WRITE | FA_OPEN_ALWAYS | FA_CREATE_ALWAYS;
-            <#lt>            break;
-            <#lt>        case SYS_FS_FILE_OPEN_APPEND:
-            <#lt>            mode = FA_WRITE | FA_OPEN_ALWAYS;
-            <#lt>            break;
-            <#lt>        case SYS_FS_FILE_OPEN_READ_PLUS:
-            <#lt>            mode = FA_READ | FA_WRITE;
-            <#lt>            break;
-            <#lt>        case SYS_FS_FILE_OPEN_WRITE_PLUS:
-            <#lt>            mode = FA_READ | FA_WRITE | FA_OPEN_ALWAYS;
-            <#lt>            break;
-            <#lt>        case SYS_FS_FILE_OPEN_APPEND_PLUS:
-            <#lt>            mode = FA_READ | FA_WRITE | FA_OPEN_ALWAYS;
-            <#lt>            break;
-        </#if>
-        <#lt>        default:
-        <#lt>            /** TODO */
-        <#lt>            //mode = FA__ERROR;
-        <#lt>            break;
-        <#lt>    }
-    <#else>
-        <#lt>    switch(attributes)
-        <#lt>    {
-        <#lt>        case SYS_FS_FILE_OPEN_READ:
-        <#lt>            mode = FA_READ;
-        <#lt>            break;
-        <#if SYS_FS_FAT_READONLY == false>
-            <#lt>        case SYS_FS_FILE_OPEN_WRITE:
-            <#lt>            mode = FA_WRITE | FA_CREATE_ALWAYS;
-            <#lt>            break;
-            <#lt>        case SYS_FS_FILE_OPEN_APPEND:
-            <#lt>            mode = FA_WRITE | FA_OPEN_APPEND;
-            <#lt>            break;
-            <#lt>        case SYS_FS_FILE_OPEN_READ_PLUS:
-            <#lt>            mode = FA_READ | FA_WRITE;
-            <#lt>            break;
-            <#lt>        case SYS_FS_FILE_OPEN_WRITE_PLUS:
-            <#lt>            mode = FA_READ | FA_WRITE | FA_CREATE_ALWAYS;
-            <#lt>            break;
-            <#lt>        case SYS_FS_FILE_OPEN_APPEND_PLUS:
-            <#lt>            mode = FA_READ | FA_WRITE | FA_OPEN_APPEND;
-            <#lt>            break;
-        </#if>
-        <#lt>        default:
-        <#lt>            /** TODO */
-        <#lt>            //mode = FA__ERROR;
-        <#lt>            break;
-        <#lt>    }
-    </#if>
-</#if>
-
     /* Acquire the mutex. */
     osalResult = OSAL_MUTEX_Lock(&(disk->mutexDiskVolume), OSAL_WAIT_FOREVER);
     if (osalResult != OSAL_RESULT_TRUE)
@@ -933,6 +869,8 @@ SYS_FS_HANDLE SYS_FS_FileOpen
         fileObj->inUse = false;
         return SYS_FS_HANDLE_INVALID;
     }
+
+    mode = (uint8_t)attributes;
 
     errorValue = SYS_FS_ERROR_OK;
     if (disk->fsFunctions->open != NULL)
@@ -2798,7 +2736,8 @@ SYS_FS_RESULT SYS_FS_FileStringPut
         /* Release the acquired mutex. */
         OSAL_MUTEX_Unlock(&(fileObj->mountPoint->mutexDiskVolume));
 
-        if (res == EOF)
+        /* If it is End OF File(EOF) */
+        if (res == -1)
         {
             fileObj->errorValue = (SYS_FS_ERROR)fileStatus;
         }
@@ -2879,7 +2818,8 @@ SYS_FS_RESULT SYS_FS_FilePrintf
         /* Release the acquired mutex. */
         OSAL_MUTEX_Unlock(&(fileObj->mountPoint->mutexDiskVolume));
 
-        if (res == EOF)
+        /* If it is End OF File(EOF) */
+        if (res == -1)
         {
             fileObj->errorValue = (SYS_FS_ERROR)fileStatus;
         }

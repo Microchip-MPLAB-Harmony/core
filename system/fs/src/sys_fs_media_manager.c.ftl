@@ -42,7 +42,7 @@
 #include "system/fs/src/sys_fs_media_manager_local.h"
 #include "system/fs/src/sys_fs_local.h"
 <#if SYS_FS_FAT == true>
-    <#lt>#include "system/fs/fat_fs/src/file_system/ff.h"
+    <#lt>#include "system/fs/fat_fs/file_system/ff.h"
 </#if>
 <#if SYS_FS_MPFS == true>
     <#lt>#include "system/fs/mpfs/mpfs.h"
@@ -611,6 +611,7 @@ static uint8_t _SYS_FS_MEDIA_MANAGER_FindNextMedia
     <#lt>        case 0x04: // FAT16
     <#lt>        case 0x05: // Extended partition
     <#lt>        case 0x06: // FAT16
+    <#lt>        case 0x07: // exFAT for future enhancement
     <#lt>        case 0x0B: // FAT32
     <#lt>        case 0x0C: // FAT32
     <#lt>        case 0x0E: // FAT16
