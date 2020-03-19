@@ -22,6 +22,7 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 global fsCounter
+global drv_spi_counter
 
 fsCounter = 0
 
@@ -29,8 +30,26 @@ def enableFileSystemIntegration(symbol, event):
     print(event["value"])
     symbol.setEnabled(event["value"])
 
+def handleSPIDrvInstanceChange(symbol, event):
+
+    result_dict = {}
+    sdspiCommonMode = Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE")
+
+    if (symbol.getValue() == 0):
+        msg = "DRV_SDSPI_DISCONNECTED"
+    else:
+        if (sdspiCommonMode == "Asynchronous"):
+            msg = "DRV_SDSPI_SET_COMMON_MODE_TO_ASYNC"
+        else:
+            msg = "DRV_SDSPI_SET_COMMON_MODE_TO_SYNC"
+
+    Database.sendMessage("drv_spi", msg, result_dict)
+
+    return result_dict
+
 def handleMessage(messageID, args):
     global fsCounter
+    global sdspiCommonSPIDrvInstancesCnt
 
     result_dict = {}
 
@@ -40,9 +59,13 @@ def handleMessage(messageID, args):
     if (messageID == "DRV_SDSPI_FS_CONNECTION_COUNTER_DEC"):
         if (fsCounter != 0):
             fsCounter = fsCounter - 1
-
-    if (fsCounter == 0):
-        Database.setSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_FS_ENABLE", False)
+        if (fsCounter == 0):
+            Database.setSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_FS_ENABLE", False)
+    if (messageID == "DRV_SDSPI_SPI_DRIVER_CONNECTION_COUNTER_INC"):
+        sdspiCommonSPIDrvInstancesCnt.setValue(sdspiCommonSPIDrvInstancesCnt.getValue() + 1)
+    if (messageID == "DRV_SDSPI_SPI_DRIVER_CONNECTION_COUNTER_DEC"):
+        if (sdspiCommonSPIDrvInstancesCnt.getValue() != 0):
+            sdspiCommonSPIDrvInstancesCnt.setValue(sdspiCommonSPIDrvInstancesCnt.getValue() - 1)
 
     return result_dict
 
@@ -67,8 +90,10 @@ def setCommonMode(symbol, event):
         else:
             symbol.setValue("Synchronous")
 
+
 def instantiateComponent(sdspiComponentCommon):
     global sdspiCommonFsEnable
+    global sdspiCommonSPIDrvInstancesCnt
 
     res = Database.activateComponents(["HarmonyCore"])
     res = Database.activateComponents(["sys_time"])
@@ -90,6 +115,12 @@ def instantiateComponent(sdspiComponentCommon):
     sdspiCommonFsEnable.setLabel("Enable Common File system for SD Card Driver")
     sdspiCommonFsEnable.setVisible(False)
 
+    sdspiCommonSPIDrvInstancesCnt = sdspiComponentCommon.createIntegerSymbol("DRV_SDSPI_COMMON_SPI_DRV_INSTANCE_CNT", None)
+    sdspiCommonSPIDrvInstancesCnt.setLabel("SPI Driver Instances Counter")
+    sdspiCommonSPIDrvInstancesCnt.setDefaultValue(0)
+    sdspiCommonSPIDrvInstancesCnt.setVisible(False)
+    sdspiCommonSPIDrvInstancesCnt.setDependencies(handleSPIDrvInstanceChange, ["DRV_SDSPI_COMMON_SPI_DRV_INSTANCE_CNT", "DRV_SDSPI_COMMON_MODE"])
+
     ############################################################################
     #### Code Generation ####
     ############################################################################
@@ -105,104 +136,7 @@ def instantiateComponent(sdspiComponentCommon):
     sdspiSymHeaderFile.setType("HEADER")
     sdspiSymHeaderFile.setOverwrite(True)
 
-    sdspiSymHeaderDefFile = sdspiComponentCommon.createFileSymbol("DRV_SDSPI_DEF", None)
-    sdspiSymHeaderDefFile.setSourcePath("driver/sdspi/templates/drv_sdspi_definitions.h.ftl")
-    sdspiSymHeaderDefFile.setOutputName("drv_sdspi_definitions.h")
-    sdspiSymHeaderDefFile.setDestPath("driver/sdspi")
-    sdspiSymHeaderDefFile.setProjectPath("config/" + configName + "/driver/sdspi/")
-    sdspiSymHeaderDefFile.setType("HEADER")
-    sdspiSymHeaderDefFile.setMarkup(True)
-    sdspiSymHeaderDefFile.setOverwrite(True)
-
-    # Async Source Files
-    sdspiAsyncSymSourceFile = sdspiComponentCommon.createFileSymbol("DRV_SDSPI_ASYNC_SOURCE", None)
-    sdspiAsyncSymSourceFile.setSourcePath("driver/sdspi/async/src/drv_sdspi.c.ftl")
-    sdspiAsyncSymSourceFile.setOutputName("drv_sdspi.c")
-    sdspiAsyncSymSourceFile.setDestPath("driver/sdspi/src")
-    sdspiAsyncSymSourceFile.setProjectPath("config/" + configName + "/driver/sdspi/")
-    sdspiAsyncSymSourceFile.setType("SOURCE")
-    sdspiAsyncSymSourceFile.setOverwrite(True)
-    sdspiAsyncSymSourceFile.setMarkup(True)
-    sdspiAsyncSymSourceFile.setEnabled((sdspiCommonMode.getValue() == "Asynchronous"))
-    sdspiAsyncSymSourceFile.setDependencies(aSyncFileGen, ["DRV_SDSPI_COMMON_MODE"])
-
-    sdspiAsyncSymHeaderLocalFile = sdspiComponentCommon.createFileSymbol("DRV_SDSPI_ASYNC_HEADER_LOCAL", None)
-    sdspiAsyncSymHeaderLocalFile.setSourcePath("driver/sdspi/async/src/drv_sdspi_local.h.ftl")
-    sdspiAsyncSymHeaderLocalFile.setOutputName("drv_sdspi_local.h")
-    sdspiAsyncSymHeaderLocalFile.setDestPath("driver/sdspi/src")
-    sdspiAsyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/sdspi/")
-    sdspiAsyncSymHeaderLocalFile.setType("HEADER")
-    sdspiAsyncSymHeaderLocalFile.setOverwrite(True)
-    sdspiAsyncSymHeaderLocalFile.setMarkup(True)
-    sdspiAsyncSymHeaderLocalFile.setEnabled((sdspiCommonMode.getValue() == "Asynchronous"))
-    sdspiAsyncSymHeaderLocalFile.setDependencies(aSyncFileGen, ["DRV_SDSPI_COMMON_MODE"])
-
-    sdspiAsyncSymInterfaceSourceFile = sdspiComponentCommon.createFileSymbol("DRV_SDSPI_ASYNC_INTERFACE_SOURCE", None)
-    sdspiAsyncSymInterfaceSourceFile.setSourcePath("driver/sdspi/async/src/drv_sdspi_plib_interface.c.ftl")
-    sdspiAsyncSymInterfaceSourceFile.setOutputName("drv_sdspi_plib_interface.c")
-    sdspiAsyncSymInterfaceSourceFile.setDestPath("driver/sdspi/src")
-    sdspiAsyncSymInterfaceSourceFile.setProjectPath("config/" + configName + "/driver/sdspi/")
-    sdspiAsyncSymInterfaceSourceFile.setType("SOURCE")
-    sdspiAsyncSymInterfaceSourceFile.setOverwrite(True)
-    sdspiAsyncSymInterfaceSourceFile.setMarkup(True)
-    sdspiAsyncSymInterfaceSourceFile.setEnabled((sdspiCommonMode.getValue() == "Asynchronous"))
-    sdspiAsyncSymInterfaceSourceFile.setDependencies(aSyncFileGen, ["DRV_SDSPI_COMMON_MODE"])
-
-    sdspiAsyncSymInterfaceHeaderFile = sdspiComponentCommon.createFileSymbol("DRV_SDSPI_ASYNC_INTERFACE_HEADER", None)
-    sdspiAsyncSymInterfaceHeaderFile.setSourcePath("driver/sdspi/async/src/drv_sdspi_plib_interface.h.ftl")
-    sdspiAsyncSymInterfaceHeaderFile.setOutputName("drv_sdspi_plib_interface.h")
-    sdspiAsyncSymInterfaceHeaderFile.setDestPath("driver/sdspi/src")
-    sdspiAsyncSymInterfaceHeaderFile.setProjectPath("config/" + configName + "/driver/sdspi/")
-    sdspiAsyncSymInterfaceHeaderFile.setType("HEADER")
-    sdspiAsyncSymInterfaceHeaderFile.setOverwrite(True)
-    sdspiAsyncSymInterfaceHeaderFile.setMarkup(True)
-    sdspiAsyncSymInterfaceHeaderFile.setEnabled((sdspiCommonMode.getValue() == "Asynchronous"))
-    sdspiAsyncSymInterfaceHeaderFile.setDependencies(aSyncFileGen, ["DRV_SDSPI_COMMON_MODE"])
-
-    # Sync Source Files
-    sdspiSyncSymSourceFile = sdspiComponentCommon.createFileSymbol("DRV_SDSPI_SYNC_SOURCE", None)
-    sdspiSyncSymSourceFile.setSourcePath("driver/sdspi/sync/src/drv_sdspi.c.ftl")
-    sdspiSyncSymSourceFile.setOutputName("drv_sdspi.c")
-    sdspiSyncSymSourceFile.setDestPath("driver/sdspi/src")
-    sdspiSyncSymSourceFile.setProjectPath("config/" + configName + "/driver/sdspi/")
-    sdspiSyncSymSourceFile.setType("SOURCE")
-    sdspiSyncSymSourceFile.setOverwrite(True)
-    sdspiSyncSymSourceFile.setMarkup(True)
-    sdspiSyncSymSourceFile.setEnabled((sdspiCommonMode.getValue() == "Synchronous"))
-    sdspiSyncSymSourceFile.setDependencies(syncFileGen, ["DRV_SDSPI_COMMON_MODE"])
-
-    sdspiSyncSymHeaderLocalFile = sdspiComponentCommon.createFileSymbol("DRV_SDSPI_SYNC_HEADER_LOCAL", None)
-    sdspiSyncSymHeaderLocalFile.setSourcePath("driver/sdspi/sync/src/drv_sdspi_local.h.ftl")
-    sdspiSyncSymHeaderLocalFile.setOutputName("drv_sdspi_local.h")
-    sdspiSyncSymHeaderLocalFile.setDestPath("driver/sdspi/src")
-    sdspiSyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/sdspi/")
-    sdspiSyncSymHeaderLocalFile.setType("HEADER")
-    sdspiSyncSymHeaderLocalFile.setOverwrite(True)
-    sdspiSyncSymHeaderLocalFile.setMarkup(True)
-    sdspiSyncSymHeaderLocalFile.setEnabled((sdspiCommonMode.getValue() == "Synchronous"))
-    sdspiSyncSymHeaderLocalFile.setDependencies(syncFileGen, ["DRV_SDSPI_COMMON_MODE"])
-
-    sdspiSyncSymPlibInterfaceSourceFile = sdspiComponentCommon.createFileSymbol("DRV_SDSPI_SYNC_PLIB_INTERFACE_SOURCE", None)
-    sdspiSyncSymPlibInterfaceSourceFile.setSourcePath("driver/sdspi/sync/src/drv_sdspi_plib_interface.c.ftl")
-    sdspiSyncSymPlibInterfaceSourceFile.setOutputName("drv_sdspi_plib_interface.c")
-    sdspiSyncSymPlibInterfaceSourceFile.setDestPath("driver/sdspi/src")
-    sdspiSyncSymPlibInterfaceSourceFile.setProjectPath("config/" + configName + "/driver/sdspi/")
-    sdspiSyncSymPlibInterfaceSourceFile.setType("SOURCE")
-    sdspiSyncSymPlibInterfaceSourceFile.setOverwrite(True)
-    sdspiSyncSymPlibInterfaceSourceFile.setMarkup(True)
-    sdspiSyncSymPlibInterfaceSourceFile.setEnabled((sdspiCommonMode.getValue() == "Synchronous"))
-    sdspiSyncSymPlibInterfaceSourceFile.setDependencies(syncFileGen, ["DRV_SDSPI_COMMON_MODE"])
-
-    sdspiSyncSymPlibInterfaceHeaderFile = sdspiComponentCommon.createFileSymbol("DRV_SDSPI_SYNC_PLIB_INTERFACE_HEADER", None)
-    sdspiSyncSymPlibInterfaceHeaderFile.setSourcePath("driver/sdspi/sync/src/drv_sdspi_plib_interface.h.ftl")
-    sdspiSyncSymPlibInterfaceHeaderFile.setOutputName("drv_sdspi_plib_interface.h")
-    sdspiSyncSymPlibInterfaceHeaderFile.setDestPath("driver/sdspi/src")
-    sdspiSyncSymPlibInterfaceHeaderFile.setProjectPath("config/" + configName + "/driver/sdspi/")
-    sdspiSyncSymPlibInterfaceHeaderFile.setType("HEADER")
-    sdspiSyncSymPlibInterfaceHeaderFile.setOverwrite(True)
-    sdspiSyncSymPlibInterfaceHeaderFile.setMarkup(True)
-    sdspiSyncSymPlibInterfaceHeaderFile.setEnabled((sdspiCommonMode.getValue() == "Synchronous"))
-    sdspiSyncSymPlibInterfaceHeaderFile.setDependencies(syncFileGen, ["DRV_SDSPI_COMMON_MODE"])
+    # Common System Files
 
     sdspiCommonFsSourceFile = sdspiComponentCommon.createFileSymbol("DRV_SDSPI_FS_SOURCE", None)
     sdspiCommonFsSourceFile.setSourcePath("driver/sdspi/templates/drv_sdspi_file_system.c.ftl")

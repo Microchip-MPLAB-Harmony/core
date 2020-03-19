@@ -207,6 +207,7 @@ typedef struct
 
 typedef struct
 {
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
     /* Identifies the PLIB API set to be used by the driver to access the
      * peripheral. */
     const DRV_SDSPI_PLIB_INTERFACE*       spiPlib;
@@ -231,6 +232,11 @@ typedef struct
     void*                           rxAddress;
 </#if>
 
+<#else>
+    /* SPI Driver Instance used by the SDSPI driver */
+    uint32_t                        spiDrvIndex;
+</#if>
+
     bool                            isFsEnabled;
 
     /* Number of clients */
@@ -250,7 +256,7 @@ typedef struct
 
     uint32_t                        pollingIntervalMs;
 
-<#if DRV_SDSPI_COMMON_MODE == "Asynchronous" >
+<#if drv_sdspi.DRV_SDSPI_COMMON_MODE == "Asynchronous" >
     /* Size of buffer objects queue */
     uint32_t                        bufferObjPoolSize;
 

@@ -22,6 +22,22 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
+def handleMessage(messageID, args):
+    global spiMode
+
+    result_dict = {}
+
+    if (messageID == "DRV_SDSPI_SET_COMMON_MODE_TO_ASYNC"):
+        spiMode.setValue("Asynchronous")
+        spiMode.setReadOnly(True)
+    if (messageID == "DRV_SDSPI_SET_COMMON_MODE_TO_SYNC"):
+        spiMode.setValue("Synchronous")
+        spiMode.setReadOnly(True)
+    if (messageID == "DRV_SDSPI_DISCONNECTED"):
+        spiMode.setReadOnly(False)
+
+    return result_dict
+
 def syncFileGen(symbol, event):
     if event["value"] == "Synchronous":
        symbol.setEnabled(True)
@@ -44,6 +60,7 @@ def setCommonMode(symbol, event):
             symbol.setValue("Synchronous")
 
 def instantiateComponent(spiComponentCommon):
+    global spiMode
 
     res = Database.activateComponents(["HarmonyCore"])
 

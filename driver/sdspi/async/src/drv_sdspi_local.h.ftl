@@ -457,6 +457,11 @@ typedef enum
 
 typedef enum
 {
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">	
+	/* Open the SPI Driver instance */
+	DRV_SDSPI_TASK_OPEN_SPI,
+</#if>
+
     DRV_SDSPI_TASK_START_POLLING_TIMER,
 
     DRV_SDSPI_TASK_WAIT_POLLING_TIMER_EXPIRE,
@@ -1466,6 +1471,8 @@ typedef struct
     /* Linked list of buffer objects */
     uintptr_t                                       bufferObjList;
 
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
+
     /* PLIB API list that will be used by the driver to access the hardware */
     const DRV_SDSPI_PLIB_INTERFACE*                 spiPlib;
 
@@ -1474,36 +1481,14 @@ typedef struct
     const uint32_t*                                 remapClockPolarity;
 
     const uint32_t*                                 remapClockPhase;
+<#else>
+    /* SPI Driver Instance used by the SDSPI driver */
+    uint32_t                                        spiDrvIndex;
 
-    SYS_PORT_PIN                                    chipSelectPin;
+    DRV_HANDLE                                      spiDrvHandle;
+</#if>
 
-    SYS_PORT_PIN                                    writeProtectPin;
-
-    volatile DRV_SDSPI_SPI_TRANSFER_STATUS          spiTransferStatus;
-
-    /* This variable holds the current state of the DRV_SDSPI_Task */
-    DRV_SDSPI_TASK_STATES                           taskState;
-
-    DRV_SDSPI_BUFFER_IO_TASK_STATES                 nextTaskState;
-
-    /* This variable holds the current state of the DRV_SDSPI_Task */
-    DRV_SDSPI_BUFFER_IO_TASK_STATES                 taskBufferIOState;
-
-    /* Different stages of initialization */
-    DRV_SDSPI_CMD_DETECT_STATES                     cmdDetectState;
-
-    /* Different states in sending a command */
-    DRV_SDSPI_CMD_STATES                            cmdState;
-
-    /* Different stages in media initialization */
-    DRV_SDSPI_INIT_STATE                            mediaInitState;
-
-    /* SDCARD driver state: Command/status/idle states */
-    _DRV_SDSPI_TASK_STATE                           sdState;
-
-    /* Tracks the command response */
-    DRV_SDSPI_RESPONSE_PACKETS                      cmdResponse;
-
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
 <#if core.DMA_ENABLE?has_content>
     /* Transmit DMA Channel */
     SYS_DMA_CHANNEL                                 txDMAChannel;
@@ -1544,6 +1529,36 @@ typedef struct
     uint32_t                                        rxDummyData;
 </#if>
 </#if>
+</#if>
+
+    SYS_PORT_PIN                                    chipSelectPin;
+
+    SYS_PORT_PIN                                    writeProtectPin;
+
+    volatile DRV_SDSPI_SPI_TRANSFER_STATUS          spiTransferStatus;
+
+    /* This variable holds the current state of the DRV_SDSPI_Task */
+    DRV_SDSPI_TASK_STATES                           taskState;
+
+    DRV_SDSPI_BUFFER_IO_TASK_STATES                 nextTaskState;
+
+    /* This variable holds the current state of the DRV_SDSPI_Task */
+    DRV_SDSPI_BUFFER_IO_TASK_STATES                 taskBufferIOState;
+
+    /* Different stages of initialization */
+    DRV_SDSPI_CMD_DETECT_STATES                     cmdDetectState;
+
+    /* Different states in sending a command */
+    DRV_SDSPI_CMD_STATES                            cmdState;
+
+    /* Different stages in media initialization */
+    DRV_SDSPI_INIT_STATE                            mediaInitState;
+
+    /* SDCARD driver state: Command/status/idle states */
+    _DRV_SDSPI_TASK_STATE                           sdState;
+
+    /* Tracks the command response */
+    DRV_SDSPI_RESPONSE_PACKETS                      cmdResponse;
 
     /* Mutex to protect access to SDCard */
     OSAL_MUTEX_DECLARE(transferMutex);

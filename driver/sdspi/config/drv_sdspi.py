@@ -72,6 +72,18 @@ def asyncModeOptions(symbol, event):
     else:
         symbol.setVisible(False)
 
+def setPLIBOptionsVisibility(symbol, event):
+    global isDMAPresent
+
+    if (symbol.getID() == "DRV_SDSPI_TX_RX_DMA"):
+        if (isDMAPresent == True):
+            symbol.setVisible(event["value"] == "SPI_PLIB")
+    else:
+        symbol.setVisible(event["value"] == "SPI_PLIB")
+
+def setDriverOptionsVisibility(symbol, event):
+    symbol.setVisible(event["value"] == "SPI_DRV")
+
 def requestAndAssignDMAChannel(symbol, event):
     global drvSdspiInstanceSpace
 
@@ -117,11 +129,78 @@ def getActiveRtos():
         elif (activeComponents[i] == "MicriumOSIII"):
             return "MicriumOSIII"
 
+def asyncFileGenration(symbol, event):
+    global sdspiInterfaceType
+
+    commonMode = Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE")
+    interfaceType = sdspiInterfaceType.getValue()
+
+    if(commonMode== "Synchronous"):
+        symbol.setEnabled(False)
+    else:
+        if (symbol.getID() == "DRV_SDSPI_ASYNC_PLIB_INTERFACE_SOURCE"):
+            if (interfaceType == "SPI_PLIB"):
+                symbol.setEnabled(True)
+            else:
+                symbol.setEnabled(False)
+        elif (symbol.getID() == "DRV_SDSPI_ASYNC_DRIVER_INTERFACE_SOURCE"):
+            if (interfaceType == "SPI_DRV"):
+                symbol.setEnabled(True)
+            else:
+                symbol.setEnabled(False)
+        elif (symbol.getID() == "DRV_SDSPI_ASYNC_PLIB_INTERFACE_HEADER"):
+            if (interfaceType == "SPI_PLIB"):
+                symbol.setEnabled(True)
+            else:
+                symbol.setEnabled(False)
+        elif (symbol.getID() == "DRV_SDSPI_ASYNC_DRIVER_INTERFACE_HEADER"):
+            if (interfaceType == "SPI_DRV"):
+                symbol.setEnabled(True)
+            else:
+                symbol.setEnabled(False)
+        else:
+            symbol.setEnabled(True)
+
+def syncFileGenration(symbol, event):
+    global sdspiInterfaceType
+
+    commonMode = Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE")
+    interfaceType = sdspiInterfaceType.getValue()
+
+    if(commonMode == "Asynchronous"):
+        symbol.setEnabled(False)
+    else:
+        if (symbol.getID() == "DRV_SDSPI_SYNC_PLIB_INTERFACE_SOURCE"):
+            if (interfaceType == "SPI_PLIB"):
+                symbol.setEnabled(True)
+            else:
+                symbol.setEnabled(False)
+        elif (symbol.getID() == "DRV_SDSPI_SYNC_DRIVER_INTERFACE_SOURCE"):
+            if (interfaceType == "SPI_DRV"):
+                symbol.setEnabled(True)
+            else:
+                symbol.setEnabled(False)
+        elif (symbol.getID() == "DRV_SDSPI_SYNC_PLIB_INTERFACE_HEADER"):
+            if (interfaceType == "SPI_PLIB"):
+                symbol.setEnabled(True)
+            else:
+                symbol.setEnabled(False)
+        elif (symbol.getID() == "DRV_SDSPI_SYNC_DRIVER_INTERFACE_HEADER"):
+            if (interfaceType == "SPI_DRV"):
+                symbol.setEnabled(True)
+            else:
+                symbol.setEnabled(False)
+        else:
+            symbol.setEnabled(True)
+
 def instantiateComponent(sdspiComponent, index):
     global drvSdspiInstanceSpace
     global sdspiFsEnable
     global sdspiTXRXDMA
     global isDMAPresent
+    global sdspiInterfaceType
+
+    print "sdspiComponent = " + str(sdspiComponent.getID())
 
     drvSdspiInstanceSpace = "drv_sdspi_" + str(index)
 
@@ -166,10 +245,24 @@ def instantiateComponent(sdspiComponent, index):
     sdspiSymIndex.setVisible(False)
     sdspiSymIndex.setDefaultValue(index)
 
+    sdspiInterfaceType = sdspiComponent.createStringSymbol("DRV_SDSPI_INTERFACE_TYPE", None)
+    sdspiInterfaceType.setLabel("SDSPI Interface Type")
+    sdspiInterfaceType.setVisible(False)
+    sdspiInterfaceType.setDefaultValue("")
+
     sdspiSymPLIB = sdspiComponent.createStringSymbol("DRV_SDSPI_PLIB", None)
     sdspiSymPLIB.setLabel("PLIB Used")
     sdspiSymPLIB.setReadOnly(True)
     sdspiSymPLIB.setDefaultValue("")
+    sdspiSymPLIB.setVisible(False)
+    sdspiSymPLIB.setDependencies(setPLIBOptionsVisibility, ["DRV_SDSPI_INTERFACE_TYPE"])
+
+    sdspiSymDrvInstance = sdspiComponent.createStringSymbol("DRV_SDSPI_SPI_DRIVER_INSTANCE", None)
+    sdspiSymDrvInstance.setLabel("SPI Driver Instance Used")
+    sdspiSymDrvInstance.setReadOnly(True)
+    sdspiSymDrvInstance.setDefaultValue("")
+    sdspiSymDrvInstance.setVisible(False)
+    sdspiSymDrvInstance.setDependencies(setDriverOptionsVisibility, ["DRV_SDSPI_INTERFACE_TYPE"])
 
     sdspiSymNumClients = sdspiComponent.createIntegerSymbol("DRV_SDSPI_NUM_CLIENTS", None)
     sdspiSymNumClients.setLabel("Number of Clients")
@@ -232,8 +325,9 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiTXRXDMA = sdspiComponent.createBooleanSymbol("DRV_SDSPI_TX_RX_DMA", None)
     sdspiTXRXDMA.setLabel("Use DMA for Transmit and Receive ?")
-    sdspiTXRXDMA.setVisible(isDMAPresent)
+    sdspiTXRXDMA.setVisible(isDMAPresent and sdspiInterfaceType.getValue() == "SPI_PLIB")
     sdspiTXRXDMA.setReadOnly(True)
+    sdspiTXRXDMA.setDependencies(setPLIBOptionsVisibility, ["DRV_SDSPI_INTERFACE_TYPE"])
 
     sdspiTXDMAChannel = sdspiComponent.createIntegerSymbol("DRV_SDSPI_TX_DMA_CHANNEL", None)
     sdspiTXDMAChannel.setLabel("DMA Channel For Transmit")
@@ -261,7 +355,7 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiDependencyDMAComment = sdspiComponent.createCommentSymbol("DRV_SDSPI_DEPENDENCY_DMA_COMMENT", None)
     sdspiDependencyDMAComment.setLabel("!!! Satisfy PLIB Dependency to Allocate DMA Channel !!!")
-    sdspiDependencyDMAComment.setVisible(isDMAPresent)
+    sdspiDependencyDMAComment.setVisible(False)
 
     # RTOS Settings
     sdspiRTOSMenu = sdspiComponent.createMenuSymbol("DRV_SDSPI_RTOS_MENU", None)
@@ -341,6 +435,9 @@ def instantiateComponent(sdspiComponent, index):
     sdspiRTOSTaskNoTls.setDescription("If the caller doesn’t want or need TLS (Thread Local Storage) support for the task being created. If you do not include this option, TLS will be supported by default. TLS support was added in V3.03.00")
     sdspiRTOSTaskNoTls.setDefaultValue(False)
     sdspiRTOSTaskNoTls.setDependencies(sdspiRtosMicriumOSIIITaskOptVisibility, ["DRV_SDSPI_RTOS_TASK_OPT_NONE"])
+    
+    sdspiDependencyComment = sdspiComponent.createCommentSymbol("DRV_SDSPI_DEPENDENCY_COMMENT", None)
+    sdspiDependencyComment.setLabel("!!! Note: For each instance of SDSPI, connect either SPI PLIB or SPI Driver !!! ")
 
     availablePinDictionary = {}
 
@@ -399,6 +496,155 @@ def instantiateComponent(sdspiComponent, index):
     sdspiSystemRtosTasksFile.setEnabled((Database.getSymbolValue("Harmony", "SELECT_RTOS") != "BareMetal"))
     sdspiSystemRtosTasksFile.setDependencies(genRtosTask, ["Harmony.SELECT_RTOS"])
 
+    # Global Header Files
+
+    sdspiSymHeaderDefFile = sdspiComponent.createFileSymbol("DRV_SDSPI_DEF", None)
+    sdspiSymHeaderDefFile.setSourcePath("driver/sdspi/templates/drv_sdspi_definitions.h.ftl")
+    sdspiSymHeaderDefFile.setOutputName("drv_sdspi_definitions.h")
+    sdspiSymHeaderDefFile.setDestPath("driver/sdspi")
+    sdspiSymHeaderDefFile.setProjectPath("config/" + configName + "/driver/sdspi/")
+    sdspiSymHeaderDefFile.setType("HEADER")
+    sdspiSymHeaderDefFile.setMarkup(True)
+    sdspiSymHeaderDefFile.setOverwrite(True)
+
+    # Async Source Files
+    sdspiAsyncSymSourceFile = sdspiComponent.createFileSymbol("DRV_SDSPI_ASYNC_SOURCE", None)
+    sdspiAsyncSymSourceFile.setSourcePath("driver/sdspi/async/src/drv_sdspi.c.ftl")
+    sdspiAsyncSymSourceFile.setOutputName("drv_sdspi.c")
+    sdspiAsyncSymSourceFile.setDestPath("driver/sdspi/src")
+    sdspiAsyncSymSourceFile.setProjectPath("config/" + configName + "/driver/sdspi/")
+    sdspiAsyncSymSourceFile.setType("SOURCE")
+    sdspiAsyncSymSourceFile.setOverwrite(True)
+    sdspiAsyncSymSourceFile.setMarkup(True)
+    sdspiAsyncSymSourceFile.setEnabled((Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE") == "Asynchronous"))
+    sdspiAsyncSymSourceFile.setDependencies(asyncFileGenration, ["drv_sdspi.DRV_SDSPI_COMMON_MODE"])
+
+    sdspiAsyncSymHeaderLocalFile = sdspiComponent.createFileSymbol("DRV_SDSPI_ASYNC_HEADER_LOCAL", None)
+    sdspiAsyncSymHeaderLocalFile.setSourcePath("driver/sdspi/async/src/drv_sdspi_local.h.ftl")
+    sdspiAsyncSymHeaderLocalFile.setOutputName("drv_sdspi_local.h")
+    sdspiAsyncSymHeaderLocalFile.setDestPath("driver/sdspi/src")
+    sdspiAsyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/sdspi/")
+    sdspiAsyncSymHeaderLocalFile.setType("HEADER")
+    sdspiAsyncSymHeaderLocalFile.setOverwrite(True)
+    sdspiAsyncSymHeaderLocalFile.setMarkup(True)
+    sdspiAsyncSymHeaderLocalFile.setEnabled((Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE") == "Asynchronous"))
+    sdspiAsyncSymHeaderLocalFile.setDependencies(asyncFileGenration, ["drv_sdspi.DRV_SDSPI_COMMON_MODE"])
+
+    sdspiAsyncSymPlibInterfaceSourceFile = sdspiComponent.createFileSymbol("DRV_SDSPI_ASYNC_PLIB_INTERFACE_SOURCE", None)
+    sdspiAsyncSymPlibInterfaceSourceFile.setSourcePath("driver/sdspi/async/src/drv_sdspi_plib_interface.c.ftl")
+    sdspiAsyncSymPlibInterfaceSourceFile.setOutputName("drv_sdspi_plib_interface.c")
+    sdspiAsyncSymPlibInterfaceSourceFile.setDestPath("driver/sdspi/src")
+    sdspiAsyncSymPlibInterfaceSourceFile.setProjectPath("config/" + configName + "/driver/sdspi/")
+    sdspiAsyncSymPlibInterfaceSourceFile.setType("SOURCE")
+    sdspiAsyncSymPlibInterfaceSourceFile.setOverwrite(True)
+    sdspiAsyncSymPlibInterfaceSourceFile.setMarkup(True)
+    sdspiAsyncSymPlibInterfaceSourceFile.setEnabled((Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE") == "Asynchronous") and (sdspiInterfaceType.getValue() == "SPI_PLIB"))
+    sdspiAsyncSymPlibInterfaceSourceFile.setDependencies(asyncFileGenration, ["drv_sdspi.DRV_SDSPI_COMMON_MODE", "DRV_SDSPI_INTERFACE_TYPE"])
+
+    sdspiAsyncSymDriverInterfaceSourceFile = sdspiComponent.createFileSymbol("DRV_SDSPI_ASYNC_DRIVER_INTERFACE_SOURCE", None)
+    sdspiAsyncSymDriverInterfaceSourceFile.setSourcePath("driver/sdspi/async/src/drv_sdspi_driver_interface.c.ftl")
+    sdspiAsyncSymDriverInterfaceSourceFile.setOutputName("drv_sdspi_driver_interface.c")
+    sdspiAsyncSymDriverInterfaceSourceFile.setDestPath("driver/sdspi/src")
+    sdspiAsyncSymDriverInterfaceSourceFile.setProjectPath("config/" + configName + "/driver/sdspi/")
+    sdspiAsyncSymDriverInterfaceSourceFile.setType("SOURCE")
+    sdspiAsyncSymDriverInterfaceSourceFile.setOverwrite(True)
+    sdspiAsyncSymDriverInterfaceSourceFile.setMarkup(True)
+    sdspiAsyncSymDriverInterfaceSourceFile.setEnabled((Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE") == "Asynchronous") and (sdspiInterfaceType.getValue() == "SPI_DRV"))
+    sdspiAsyncSymDriverInterfaceSourceFile.setDependencies(asyncFileGenration, ["drv_sdspi.DRV_SDSPI_COMMON_MODE", "DRV_SDSPI_INTERFACE_TYPE"])
+
+    sdspiAsyncSymPlibInterfaceHeaderFile = sdspiComponent.createFileSymbol("DRV_SDSPI_ASYNC_PLIB_INTERFACE_HEADER", None)
+    sdspiAsyncSymPlibInterfaceHeaderFile.setSourcePath("driver/sdspi/async/src/drv_sdspi_plib_interface.h.ftl")
+    sdspiAsyncSymPlibInterfaceHeaderFile.setOutputName("drv_sdspi_plib_interface.h")
+    sdspiAsyncSymPlibInterfaceHeaderFile.setDestPath("driver/sdspi/src")
+    sdspiAsyncSymPlibInterfaceHeaderFile.setProjectPath("config/" + configName + "/driver/sdspi/")
+    sdspiAsyncSymPlibInterfaceHeaderFile.setType("HEADER")
+    sdspiAsyncSymPlibInterfaceHeaderFile.setOverwrite(True)
+    sdspiAsyncSymPlibInterfaceHeaderFile.setMarkup(True)
+    sdspiAsyncSymPlibInterfaceHeaderFile.setEnabled((Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE") == "Asynchronous") and (sdspiInterfaceType.getValue() == "SPI_PLIB"))
+    sdspiAsyncSymPlibInterfaceHeaderFile.setDependencies(asyncFileGenration, ["drv_sdspi.DRV_SDSPI_COMMON_MODE", "DRV_SDSPI_INTERFACE_TYPE"])
+
+    sdspiAsyncSymDriverInterfaceHeaderFile = sdspiComponent.createFileSymbol("DRV_SDSPI_ASYNC_DRIVER_INTERFACE_HEADER", None)
+    sdspiAsyncSymDriverInterfaceHeaderFile.setSourcePath("driver/sdspi/async/src/drv_sdspi_driver_interface.h.ftl")
+    sdspiAsyncSymDriverInterfaceHeaderFile.setOutputName("drv_sdspi_driver_interface.h")
+    sdspiAsyncSymDriverInterfaceHeaderFile.setDestPath("driver/sdspi/src")
+    sdspiAsyncSymDriverInterfaceHeaderFile.setProjectPath("config/" + configName + "/driver/sdspi/")
+    sdspiAsyncSymDriverInterfaceHeaderFile.setType("HEADER")
+    sdspiAsyncSymDriverInterfaceHeaderFile.setOverwrite(True)
+    sdspiAsyncSymDriverInterfaceHeaderFile.setMarkup(True)
+    sdspiAsyncSymDriverInterfaceHeaderFile.setEnabled((Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE") == "Asynchronous") and (sdspiInterfaceType.getValue() == "SPI_DRV"))
+    sdspiAsyncSymDriverInterfaceHeaderFile.setDependencies(asyncFileGenration, ["drv_sdspi.DRV_SDSPI_COMMON_MODE", "DRV_SDSPI_INTERFACE_TYPE"])
+
+    # Sync file generation
+
+    sdspiSyncSymSourceFile = sdspiComponent.createFileSymbol("DRV_SDSPI_SYNC_SOURCE", None)
+    sdspiSyncSymSourceFile.setSourcePath("driver/sdspi/sync/src/drv_sdspi.c.ftl")
+    sdspiSyncSymSourceFile.setOutputName("drv_sdspi.c")
+    sdspiSyncSymSourceFile.setDestPath("driver/sdspi/src")
+    sdspiSyncSymSourceFile.setProjectPath("config/" + configName + "/driver/sdspi/")
+    sdspiSyncSymSourceFile.setType("SOURCE")
+    sdspiSyncSymSourceFile.setOverwrite(True)
+    sdspiSyncSymSourceFile.setMarkup(True)
+    sdspiSyncSymSourceFile.setEnabled((Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE") == "Synchronous"))
+    sdspiSyncSymSourceFile.setDependencies(syncFileGenration, ["drv_sdspi.DRV_SDSPI_COMMON_MODE"])
+
+    sdspiSyncSymHeaderLocalFile = sdspiComponent.createFileSymbol("DRV_SDSPI_SYNC_HEADER_LOCAL", None)
+    sdspiSyncSymHeaderLocalFile.setSourcePath("driver/sdspi/sync/src/drv_sdspi_local.h.ftl")
+    sdspiSyncSymHeaderLocalFile.setOutputName("drv_sdspi_local.h")
+    sdspiSyncSymHeaderLocalFile.setDestPath("driver/sdspi/src")
+    sdspiSyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/sdspi/")
+    sdspiSyncSymHeaderLocalFile.setType("HEADER")
+    sdspiSyncSymHeaderLocalFile.setOverwrite(True)
+    sdspiSyncSymHeaderLocalFile.setMarkup(True)
+    sdspiSyncSymHeaderLocalFile.setEnabled((Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE") == "Synchronous"))
+    sdspiSyncSymHeaderLocalFile.setDependencies(syncFileGenration, ["drv_sdspi.DRV_SDSPI_COMMON_MODE"])
+
+    sdspiSyncSymPlibInterfaceSourceFile = sdspiComponent.createFileSymbol("DRV_SDSPI_SYNC_PLIB_INTERFACE_SOURCE", None)
+    sdspiSyncSymPlibInterfaceSourceFile.setSourcePath("driver/sdspi/sync/src/drv_sdspi_plib_interface.c.ftl")
+    sdspiSyncSymPlibInterfaceSourceFile.setOutputName("drv_sdspi_plib_interface.c")
+    sdspiSyncSymPlibInterfaceSourceFile.setDestPath("driver/sdspi/src")
+    sdspiSyncSymPlibInterfaceSourceFile.setProjectPath("config/" + configName + "/driver/sdspi/")
+    sdspiSyncSymPlibInterfaceSourceFile.setType("SOURCE")
+    sdspiSyncSymPlibInterfaceSourceFile.setOverwrite(True)
+    sdspiSyncSymPlibInterfaceSourceFile.setMarkup(True)
+    sdspiSyncSymPlibInterfaceSourceFile.setEnabled((Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE") == "Synchronous") and (sdspiInterfaceType.getValue() == "SPI_PLIB"))
+    sdspiSyncSymPlibInterfaceSourceFile.setDependencies(syncFileGenration, ["drv_sdspi.DRV_SDSPI_COMMON_MODE", "DRV_SDSPI_INTERFACE_TYPE"])
+
+    sdspiSyncSymDriverInterfaceSourceFile = sdspiComponent.createFileSymbol("DRV_SDSPI_SYNC_DRIVER_INTERFACE_SOURCE", None)
+    sdspiSyncSymDriverInterfaceSourceFile.setSourcePath("driver/sdspi/sync/src/drv_sdspi_driver_interface.c.ftl")
+    sdspiSyncSymDriverInterfaceSourceFile.setOutputName("drv_sdspi_driver_interface.c")
+    sdspiSyncSymDriverInterfaceSourceFile.setDestPath("driver/sdspi/src")
+    sdspiSyncSymDriverInterfaceSourceFile.setProjectPath("config/" + configName + "/driver/sdspi/")
+    sdspiSyncSymDriverInterfaceSourceFile.setType("SOURCE")
+    sdspiSyncSymDriverInterfaceSourceFile.setOverwrite(True)
+    sdspiSyncSymDriverInterfaceSourceFile.setMarkup(True)
+    sdspiSyncSymDriverInterfaceSourceFile.setEnabled((Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE") == "Synchronous") and (sdspiInterfaceType.getValue() == "SPI_DRV"))
+    sdspiSyncSymDriverInterfaceSourceFile.setDependencies(syncFileGenration, ["drv_sdspi.DRV_SDSPI_COMMON_MODE", "DRV_SDSPI_INTERFACE_TYPE"])
+
+    sdspiSyncSymPlibInterfaceHeaderFile = sdspiComponent.createFileSymbol("DRV_SDSPI_SYNC_PLIB_INTERFACE_HEADER", None)
+    sdspiSyncSymPlibInterfaceHeaderFile.setSourcePath("driver/sdspi/sync/src/drv_sdspi_plib_interface.h.ftl")
+    sdspiSyncSymPlibInterfaceHeaderFile.setOutputName("drv_sdspi_plib_interface.h")
+    sdspiSyncSymPlibInterfaceHeaderFile.setDestPath("driver/sdspi/src")
+    sdspiSyncSymPlibInterfaceHeaderFile.setProjectPath("config/" + configName + "/driver/sdspi/")
+    sdspiSyncSymPlibInterfaceHeaderFile.setType("HEADER")
+    sdspiSyncSymPlibInterfaceHeaderFile.setOverwrite(True)
+    sdspiSyncSymPlibInterfaceHeaderFile.setMarkup(True)
+    sdspiSyncSymPlibInterfaceHeaderFile.setEnabled((Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE") == "Synchronous") and (sdspiInterfaceType.getValue() == "SPI_PLIB"))
+    sdspiSyncSymPlibInterfaceHeaderFile.setDependencies(syncFileGenration, ["drv_sdspi.DRV_SDSPI_COMMON_MODE", "DRV_SDSPI_INTERFACE_TYPE"])
+
+    sdspiSyncSymDriverInterfaceHeaderFile = sdspiComponent.createFileSymbol("DRV_SDSPI_SYNC_DRIVER_INTERFACE_HEADER", None)
+    sdspiSyncSymDriverInterfaceHeaderFile.setSourcePath("driver/sdspi/sync/src/drv_sdspi_driver_interface.h.ftl")
+    sdspiSyncSymDriverInterfaceHeaderFile.setOutputName("drv_sdspi_driver_interface.h")
+    sdspiSyncSymDriverInterfaceHeaderFile.setDestPath("driver/sdspi/src")
+    sdspiSyncSymDriverInterfaceHeaderFile.setProjectPath("config/" + configName + "/driver/sdspi/")
+    sdspiSyncSymDriverInterfaceHeaderFile.setType("HEADER")
+    sdspiSyncSymDriverInterfaceHeaderFile.setOverwrite(True)
+    sdspiSyncSymDriverInterfaceHeaderFile.setMarkup(True)
+    sdspiSyncSymDriverInterfaceHeaderFile.setEnabled((Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE") == "Synchronous") and (sdspiInterfaceType.getValue() == "SPI_DRV"))
+    sdspiSyncSymDriverInterfaceHeaderFile.setDependencies(syncFileGenration, ["drv_sdspi.DRV_SDSPI_COMMON_MODE", "DRV_SDSPI_INTERFACE_TYPE"])
+
+
+
+
 def destroyComponent(sdspiComponent):
     global drvSdspiInstanceSpace
     spiPeripheral = Database.getSymbolValue(drvSdspiInstanceSpace, "DRV_SPI_PLIB")
@@ -433,13 +679,27 @@ def onAttachmentConnected(source, target):
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper())
 
+        localComponent.setSymbolValue("DRV_SDSPI_INTERFACE_TYPE", "SPI_PLIB")
+
         Database.setSymbolValue(remoteID.upper(), "SPI_DRIVER_CONTROLLED", True)
 
         # Do not change the order as DMA Channels needs to be allocated
         # after setting the plibUsed symbol
         if isDMAPresent == True:
             localComponent.getSymbolByID("DRV_SDSPI_TX_RX_DMA").setReadOnly(False)
-            localComponent.getSymbolByID("DRV_SDSPI_DEPENDENCY_DMA_COMMENT").setVisible(False)
+            # Enable "Enable System DMA" option in MHC
+            if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_DMA") == False):
+                Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True)
+            #localComponent.getSymbolByID("DRV_SDSPI_DEPENDENCY_DMA_COMMENT").setVisible(False)
+
+    elif (connectID == "drv_sdspi_DRV_SPI_dependency"):
+        localComponent.setSymbolValue("DRV_SDSPI_INTERFACE_TYPE", "SPI_DRV")
+        drvInstance = localComponent.getSymbolByID("DRV_SDSPI_SPI_DRIVER_INSTANCE")
+        drvInstance.clearValue()
+        index = Database.getSymbolValue(remoteID, "INDEX")
+        drvInstance.setValue(str(index))
+        result_dict = {}
+        result_dict = Database.sendMessage("drv_sdspi", "DRV_SDSPI_SPI_DRIVER_CONNECTION_COUNTER_INC", result_dict)
 
 def onAttachmentDisconnected(source, target):
     global sdcardFsEnable
@@ -458,6 +718,8 @@ def onAttachmentDisconnected(source, target):
             sdspiFsConnectionCounterDict = {}
             sdspiFsConnectionCounterDict = Database.sendMessage("drv_sdspi", "DRV_SDSPI_FS_CONNECTION_COUNTER_DEC", sdspiFsConnectionCounterDict)
 
+    localComponent.setSymbolValue("DRV_SDSPI_INTERFACE_TYPE", "")
+
     # For Dependency Disonnected (SPI)
     if (connectID == "drv_sdspi_SPI_dependency"):
         # Do not change the order as DMA Channels needs to be cleared
@@ -465,8 +727,14 @@ def onAttachmentDisconnected(source, target):
         if isDMAPresent == True:
             localComponent.getSymbolByID("DRV_SDSPI_TX_RX_DMA").clearValue()
             localComponent.getSymbolByID("DRV_SDSPI_TX_RX_DMA").setReadOnly(True)
-            localComponent.getSymbolByID("DRV_SDSPI_DEPENDENCY_DMA_COMMENT").setVisible(True)
+            #localComponent.getSymbolByID("DRV_SDSPI_DEPENDENCY_DMA_COMMENT").setVisible(True)
 
         plibUsed = localComponent.getSymbolByID("DRV_SDSPI_PLIB")
         plibUsed.clearValue()
         Database.setSymbolValue(remoteID.upper(), "SPI_DRIVER_CONTROLLED", False)
+    elif (connectID == "drv_sdspi_DRV_SPI_dependency"):
+
+        drvInstance = localComponent.getSymbolByID("DRV_SDSPI_SPI_DRIVER_INSTANCE")
+        drvInstance.clearValue()
+        result_dict = {}
+        result_dict = Database.sendMessage("drv_sdspi", "DRV_SDSPI_SPI_DRIVER_CONNECTION_COUNTER_DEC", result_dict)

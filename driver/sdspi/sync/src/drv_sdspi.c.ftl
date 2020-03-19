@@ -45,13 +45,19 @@
 // Section: Include Files
 // *****************************************************************************
 // *****************************************************************************
+#include <string.h>
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
 #include "drv_sdspi_plib_interface.h"
+<#else>
+#include "drv_sdspi_driver_interface.h"
+#include "driver/spi/drv_spi.h"
+</#if>
 <#if __PROCESSOR?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
 #include "system/cache/sys_cache.h"
 </#if>
 </#if>
-#include <string.h>
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -91,10 +97,12 @@ static CACHE_ALIGN DRV_SDSPI_OBJ gDrvSDSPIObj[DRV_SDSPI_INSTANCES_NUMBER];
 static DRV_SDSPI_OBJ gDrvSDSPIObj[DRV_SDSPI_INSTANCES_NUMBER];
 </#if>
 
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
 <#if __PROCESSOR?matches("PIC32M.*") == false>
 <#if core.DMA_ENABLE?has_content>
 /* Dummy data transmitted by TX DMA, common to all driver instances. */
 static CACHE_ALIGN uint8_t  txCommonDummyData[32];
+</#if>
 </#if>
 </#if>
 
@@ -1059,7 +1067,10 @@ static void _DRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
     switch(dObj->mediaInitState)
     {
         case DRV_SDSPI_INIT_SPI:
+
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
             _DRV_SDSPI_SPISpeedSetup(dObj, _DRV_SDSPI_SPI_INITIAL_SPEED);
+</#if>
             dObj->sdCardType = DRV_SDSPI_MODE_NORMAL;
             dObj->mediaInitState = DRV_SDSPI_INIT_RAMP_TIME;
             /* Fall through */
@@ -1129,7 +1140,12 @@ static void _DRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
 
         case DRV_SDSPI_INIT_INCR_CLOCK_SPEED:
             /* Initialization complete. We can now operate at higher SPI speeds. */
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
             _DRV_SDSPI_SPISpeedSetup(dObj, dObj->sdcardSpeedHz);
+<#else>
+            _DRV_SDSPI_SPISpeedSetup(dObj, dObj->sdcardSpeedHz, dObj->chipSelectPin);
+</#if>
+
             dObj->mediaInitState = DRV_SDSPI_INIT_READ_CSD;
             /* Fall through */
 
@@ -1206,7 +1222,9 @@ static DRV_SDSPI_ATTACH _DRV_SDSPI_MediaCommandDetect ( SYS_MODULE_OBJ object )
     {
         case DRV_SDSPI_CMD_DETECT_START_INIT:
             /* Reset to the initial SPI speed*/
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
             _DRV_SDSPI_SPISpeedSetup(dObj, _DRV_SDSPI_SPI_INITIAL_SPEED);
+</#if>
             dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
             /* Fall through */
         case DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD:
@@ -1253,6 +1271,16 @@ static void _DRV_SDSPI_AttachDetachTasks ( SYS_MODULE_OBJ object )
 
     switch ( dObj->taskState )
     {
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">	
+		case DRV_SDSPI_TASK_OPEN_SPI:
+			/* Open the SPI driver */			
+			dObj->spiDrvHandle = DRV_SPI_Open(dObj->spiDrvIndex, DRV_IO_INTENT_READWRITE);
+			if (dObj->spiDrvHandle != DRV_HANDLE_INVALID)
+			{
+				dObj->taskState = DRV_SDSPI_TASK_START_POLLING_TIMER;
+			}			
+			break;
+</#if>			
         case DRV_SDSPI_TASK_START_POLLING_TIMER:
             if (_DRV_SDSPI_CardDetectPollingTimerStart(dObj, dObj->pollingIntervalMs) == true)
             {
@@ -1347,9 +1375,11 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     const SYS_MODULE_INIT * const init
 )
 {
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
 <#if __PROCESSOR?matches("PIC32M.*") == false>
 <#if core.DMA_ENABLE?has_content>
     uint32_t i;
+</#if>
 </#if>
 </#if>
     const DRV_SDSPI_INIT* sdSPIInit = (const DRV_SDSPI_INIT *)init;
@@ -1394,6 +1424,11 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     dObj->nClients              = 0;
     dObj->nClientsMax           = sdSPIInit->numClients;
     dObj->clientObjPool         = sdSPIInit->clientObjPool;
+
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
+    dObj->spiDrvIndex           = sdSPIInit->spiDrvIndex;
+    dObj->spiDrvHandle          = DRV_HANDLE_INVALID;
+<#else>
     dObj->spiPlib               = sdSPIInit->spiPlib;
     dObj->remapClockPhase       = sdSPIInit->remapClockPhase;
     dObj->remapClockPolarity    = sdSPIInit->remapClockPolarity;
@@ -1404,6 +1439,8 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     dObj->txAddress             = sdSPIInit->txAddress;
     dObj->rxAddress             = sdSPIInit->rxAddress;
 </#if>
+</#if>
+
     dObj->isFsEnabled           = sdSPIInit->isFsEnabled;
     dObj->writeProtectPin       = sdSPIInit->writeProtectPin;
     dObj->chipSelectPin         = sdSPIInit->chipSelectPin;
@@ -1418,7 +1455,11 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     dObj->isAttachedLastStatus  = DRV_SDSPI_IS_DETACHED;
     dObj->mediaState            = DRV_SDSPI_IS_DETACHED;
 
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">	
     dObj->taskState             = DRV_SDSPI_TASK_START_POLLING_TIMER;
+<#else>
+	dObj->taskState             = DRV_SDSPI_TASK_OPEN_SPI;
+</#if>	
     dObj->cmdDetectState        = DRV_SDSPI_CMD_DETECT_START_INIT;
     dObj->mediaInitState        = DRV_SDSPI_INIT_SPI;
     dObj->spiTransferStatus     = DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE;
@@ -1426,6 +1467,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     /* De-assert Chip Select pin to begin with */
     SYS_PORT_PinSet(dObj->chipSelectPin);
 
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
 <#if __PROCESSOR?matches("PIC32M.*") == false>
 <#if core.DMA_ENABLE?has_content>
     /* Each driver instance points to the common dummy data array. */
@@ -1480,6 +1522,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
 <#else>
     /* Register call-back with the SPI PLIB */
     dObj->spiPlib->callbackRegister(_DRV_SDSPI_SPIPlibCallbackHandler, (uintptr_t)dObj);
+</#if>
 </#if>
 
     /* Register with file system*/

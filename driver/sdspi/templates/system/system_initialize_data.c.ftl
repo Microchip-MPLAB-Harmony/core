@@ -8,6 +8,7 @@ static DRV_SDSPI_CLIENT_OBJ drvSDSPI${INDEX}ClientObjPool[DRV_SDSPI_CLIENTS_NUMB
 static DRV_SDSPI_BUFFER_OBJ drvSDSPI${INDEX}TransferObjPool[DRV_SDSPI_QUEUE_SIZE_IDX${INDEX?string}];
 </#if>
 
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
 /* SPI PLIB Interface Initialization for SDSPI Driver */
 const DRV_SDSPI_PLIB_INTERFACE drvSDSPI${INDEX?string}PlibAPI = {
 
@@ -104,9 +105,12 @@ const uint32_t drvSDSPI${INDEX?string}remapClockPhase[] =
 };
 </@compress>
 
+</#if>
+
 /* SDSPI Driver Initialization Data */
 const DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
 {
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
     /* SD Card SPI PLIB API interface*/
     .spiPlib                = &drvSDSPI${INDEX?string}PlibAPI,
 
@@ -115,6 +119,10 @@ const DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
     .remapClockPolarity     = drvSDSPI${INDEX?string}remapClockPolarity,
 
     .remapClockPhase        = drvSDSPI${INDEX?string}remapClockPhase,
+
+<#else>
+    .spiDrvIndex            = ${DRV_SDSPI_SPI_DRIVER_INSTANCE},
+</#if>
 
     /* SDSPI Number of clients */
     .numClients             = DRV_SDSPI_CLIENTS_NUMBER_IDX${INDEX?string},
@@ -133,7 +141,7 @@ const DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
     .chipSelectPin          = DRV_SDSPI_CHIP_SELECT_PIN_IDX${INDEX?string},
 
     .sdcardSpeedHz          = DRV_SDSPI_SPEED_HZ_IDX${INDEX?string},
-    
+
     .pollingIntervalMs      = DRV_SDSPI_POLLING_INTERVAL_MS_IDX${INDEX?string},
 
 <#if DRV_SDSPI_ENABLE_WRITE_PROTECT_CHECKING == true>
@@ -144,6 +152,7 @@ const DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
 
     .isFsEnabled            = ${DRV_SDSPI_FS_ENABLE?c},
 
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
 <#if core.DMA_ENABLE?has_content>
     <#if DRV_SDSPI_TX_RX_DMA == true>
         <#lt>    /* DMA Channel for Transmit */
@@ -164,6 +173,7 @@ const DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
         <#lt>    /* DMA Channel for Receive */
         <#lt>    .rxDMAChannel           = SYS_DMA_CHANNEL_NONE,
     </#if>
+</#if>
 </#if>
 };
 

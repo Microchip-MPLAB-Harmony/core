@@ -114,7 +114,10 @@ for coreComponent in coreComponents:
                             else:
                                 Component.addDependency("drv_" + Name + "_" + dep + "_dependency", dep, False, True)
                         else:
-                            Component.addDependency("drv_" + Name + "_" + dep + "_dependency", dep, False, True)
+                            if "is_dependency_required" in coreComponent:
+                                Component.addDependency("drv_" + Name + "_" + dep + "_dependency", dep, False, eval(coreComponent['is_dependency_required']))
+                            else:
+                                Component.addDependency("drv_" + Name + "_" + dep + "_dependency", dep, False, True)
 
             Component.setDisplayType("Driver")
 

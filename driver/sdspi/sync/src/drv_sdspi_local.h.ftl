@@ -166,6 +166,11 @@ typedef enum
 /* SD Card Driver read task Status. */
 typedef enum
 {
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">	
+	/* Open the SPI Driver instance */
+	DRV_SDSPI_TASK_OPEN_SPI,
+</#if>
+
     /* Initial state of the task, check for SD card attach/detach */
     DRV_SDSPI_TASK_START_POLLING_TIMER,
 
@@ -683,6 +688,7 @@ typedef struct
     /* Flag to indicate if the device is Standard Speed or High Speed */
     uint8_t                             sdHcHost;
 
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
     /* PLIB API list that will be used by the driver to access the hardware */
     const DRV_SDSPI_PLIB_INTERFACE*     spiPlib;
 
@@ -691,6 +697,12 @@ typedef struct
     const uint32_t*                     remapClockPolarity;
 
     const uint32_t*                     remapClockPhase;
+<#else>
+	/* SPI Driver Instance used by the SDSPI driver */
+	uint32_t							spiDrvIndex;
+	
+	DRV_HANDLE							spiDrvHandle;
+</#if>
 
     SYS_PORT_PIN                        chipSelectPin;
 
@@ -733,6 +745,7 @@ typedef struct
     /* SDSPI driver media geometry table. */
     SYS_MEDIA_REGION_GEOMETRY           mediaGeometryTable[3];
 
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
 <#if core.DMA_ENABLE?has_content>
     /* Transmit DMA Channel */
     SYS_DMA_CHANNEL                     txDMAChannel;
@@ -771,6 +784,7 @@ typedef struct
 
     /* Dummy data is read into this variable by RX DMA */
     uint32_t                            rxDummyData;
+</#if>
 </#if>
 </#if>
 
