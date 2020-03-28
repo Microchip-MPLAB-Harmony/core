@@ -57,7 +57,7 @@ Initialize Generic clock
 static void CLK_GenericClockInitialize(void)
 {
     /* Enable GCLK for peripheral ID 32 */
-    PMC_REGS->PMC_PCR = PMC_PCR_PID(32) | PMC_PCR_GCKCSS(0x5) | PMC_PCR_CMD_Msk | PMC_PCR_GCKDIV(0) | PMC_PCR_EN_Msk | PMC_PCR_GCKEN_Msk; 
+    PMC_REGS->PMC_PCR = PMC_PCR_PID(32) | PMC_PCR_GCKCSS(0x5) | PMC_PCR_CMD_Msk | PMC_PCR_GCKDIV(0) | PMC_PCR_EN_Msk | PMC_PCR_GCKEN_Msk;
 }
 
 
@@ -83,7 +83,7 @@ Clock Initialize
 *********************************************************************************/
 
 void CLK_Initialize( void )
-{ 
+{
     /* Initialize Audio PLL */
     CLK_AudioPLLInitialize();
 
