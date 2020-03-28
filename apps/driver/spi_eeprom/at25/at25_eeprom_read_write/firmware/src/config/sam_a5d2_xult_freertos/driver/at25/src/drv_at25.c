@@ -386,8 +386,15 @@ SYS_MODULE_OBJ DRV_AT25_Initialize(
 
     /* De-assert Chip Select, Hold and Write protect pin to begin with. */
     SYS_PORT_PinSet(gDrvAT25Obj.chipSelectPin);
-    SYS_PORT_PinSet(gDrvAT25Obj.holdPin);
-    SYS_PORT_PinSet(gDrvAT25Obj.writeProtectPin);
+
+    if (gDrvAT25Obj.holdPin != SYS_PORT_PIN_NONE)
+    {
+        SYS_PORT_PinSet(gDrvAT25Obj.holdPin);
+    }
+    if (gDrvAT25Obj.writeProtectPin != SYS_PORT_PIN_NONE)
+    {
+        SYS_PORT_PinSet(gDrvAT25Obj.writeProtectPin);
+    }
 
     /* Update the status */
     gDrvAT25Obj.status                = SYS_STATUS_READY;
