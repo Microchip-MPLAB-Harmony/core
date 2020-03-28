@@ -62,7 +62,7 @@
                 </option>
                 <option>
                     <name>OGProductVersion</name>
-                    <state>8.30.1.17146</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
@@ -207,7 +207,7 @@
                 <option>
                     <name>TrustZoneModes</name>
                     <version>0</version>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
             </data>
         </settings>
@@ -220,8 +220,8 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state></state>
-                </option>
+                    <state>__FPU_PRESENT=1</state>
+                    </option>
                 <option>
                     <name>CCPreprocFile</name>
                     <state>0</state>
@@ -345,15 +345,16 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$\..\..\firmware\src</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\config\sam_a5d2_xult_freertos</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\packs\ATSAMA5D27_DFP</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS\CMSIS\Core_A\Include</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\arm</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\Include</state>
-                </option>
+                    <state>$PROJ_DIR$\..\src</state>
+                    <state>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos</state>
+                    <state>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP</state>
+                    <state>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core_A\Include</state>
+                    <state>$PROJ_DIR$\..\src\packs\CMSIS</state>
+                    <state>$PROJ_DIR$\..\src\arm</state>
+                    <state>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5</state>
+                    <state>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include</state>
+                    <state>$PROJ_DIR$\.</state>
+                    </option>
                 <option>
                     <name>CCStdIncCheck</name>
                     <state>0</state>
@@ -364,7 +365,7 @@
                 </option>
                 <option>
                     <name>IProcessorMode2</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCOptLevel</name>
@@ -530,8 +531,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state></state>
-                </option>
+                    </option>
                 <option>
                     <name>AList</name>
                     <state>0</state>
@@ -606,7 +606,7 @@
                 </option>
                 <option>
                     <name>AOutputFile</name>
-                    <state>$FILE_BNAME$.o</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>ALimitErrorsCheck</name>
@@ -622,15 +622,10 @@
                 </option>
                 <option>
                     <name>AUserIncludes</name>
-                    <state>$PROJ_DIR$/../../firmware/src</state>
-                    <state>$PROJ_DIR$/../../firmware/src/config/sam_a5d2_xult_freertos</state>
-                    <state>$PROJ_DIR$/../../firmware/src/packs/ATSAMA5D27_DFP</state>
-                    <state>$PROJ_DIR$/../../firmware/src/packs/CMSIS/CMSIS/Core_A/Include</state>
-                    <state>$PROJ_DIR$/../../firmware/src/packs/CMSIS</state>
-                    <state>$PROJ_DIR$/../../firmware/src/arm</state>
-                    <state>$PROJ_DIR$/../../firmware/src/third_party/rtos/FreeRTOS/Source/portable/IAR/SAM/CA5</state>
-                    <state>$PROJ_DIR$/../../firmware/src/third_party/rtos/FreeRTOS/Source/Include</state>
-                </option>
+                    <state>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5</state>
+                    <state>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos</state>
+                    <state>$PROJ_DIR$\.</state>
+                    </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
                     <state>0</state>
@@ -718,7 +713,7 @@
                 </option>
                 <option>
                     <name>IlinkOutputFile</name>
-                    <state>sys_time_multiclient_sam_a5d2_xult_freertos.IAR.out</state>
+                    <state>sam_a5d2_xult_freertos.out</state>
                 </option>
                 <option>
                     <name>IlinkDebugInfoEnable</name>
@@ -782,7 +777,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\..\..\firmware\src\config\sam_a5d2_xult_freertos\ddr.icf</state>
+                    <state>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\ddr.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -830,7 +825,7 @@
                 </option>
                 <option>
                     <name>IlinkAdditionalLibs</name>
-                    <state></state>
+                    
                 </option>
                 <option>
                     <name>IlinkOverrideProgramEntryLabel</name>
@@ -842,7 +837,7 @@
                 </option>
                 <option>
                     <name>IlinkProgramEntryLabel</name>
-                    <state></state>
+                    <state>__iar_program_start</state>
                 </option>
                 <option>
                     <name>DoFill</name>
@@ -1065,6 +1060,11 @@
             <archiveVersion>0</archiveVersion>
             <data />
         </settings>
+        <settings>
+            <name>Coder</name>
+            <archiveVersion>0</archiveVersion>
+            <data />
+        </settings>
     </configuration>
     <configuration>
         <name>Release</name>
@@ -1097,11 +1097,11 @@
                 </option>
                 <option>
                     <name>Input description</name>
-                    <state></state>
+                    <state>Automatic choice of formatter, without multibyte support.</state>
                 </option>
                 <option>
                     <name>Output description</name>
-                    <state></state>
+                    <state>Automatic choice of formatter, without multibyte support.</state>
                 </option>
                 <option>
                     <name>GOutputBinary</name>
@@ -1123,15 +1123,15 @@
                 </option>
                 <option>
                     <name>RTDescription</name>
-                    <state></state>
+                    <state>Use the normal configuration of the C/C++ runtime library. No locale interface, C locale, no file descriptor support, no multibytes in printf and scanf, and no hex floats in strtod.</state>
                 </option>
                 <option>
                     <name>OGProductVersion</name>
-                    <state>8.30.1.17146</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state></state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -1151,7 +1151,7 @@
                 </option>
                 <option>
                     <name>GEndianModeBE</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>OGBufferedTerminalOutput</name>
@@ -1177,12 +1177,12 @@
                 </option>
                 <option>
                     <name>RTConfigPath2</name>
-                    <state></state>
+                    <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
                     <version>27</version>
-                    <state>38</state>
+                    <state>50</state>
                 </option>
                 <option>
                     <name>OGUseCmsis</name>
@@ -1199,30 +1199,30 @@
                 <option>
                     <name>CoreVariant</name>
                     <version>27</version>
-                    <state>38</state>
+                    <state>50</state>
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state>-</state>
+                    <state>ATSAMA5D27	Microchip ATSAMA5D27</state>
                 </option>
                 <option>
                     <name>FPU2</name>
                     <version>0</version>
-                    <state>0</state>
+                    <state>5</state>
                 </option>
                 <option>
                     <name>NrRegs</name>
                     <version>0</version>
-                    <state>0</state>
+                    <state>2</state>
                 </option>
                 <option>
                     <name>NEON</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
                     <version>27</version>
-                    <state>38</state>
+                    <state>50</state>
                 </option>
                 <option>
                     <name>OGCMSISPackSelectDevice</name>
@@ -1267,12 +1267,12 @@
                 </option>
                 <option>
                     <name>TrustZone</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>TrustZoneModes</name>
                     <version>0</version>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
             </data>
         </settings>
@@ -1286,7 +1286,8 @@
                 <option>
                     <name>CCDefines</name>
                     <state>NDEBUG</state>
-                </option>
+                    <state>__FPU_PRESENT=1</state>
+                    </option>
                 <option>
                     <name>CCPreprocFile</name>
                     <state>0</state>
@@ -1394,7 +1395,7 @@
                 </option>
                 <option>
                     <name>OutputFile</name>
-                    <state></state>
+                    <state>$FILE_BNAME$.o</state>
                 </option>
                 <option>
                     <name>CCLibConfigHeader</name>
@@ -1410,15 +1411,16 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$\..\..\firmware\src</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\config\sam_a5d2_xult_freertos</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\packs\ATSAMA5D27_DFP</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS\CMSIS\Core_A\Include</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\arm</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\Include</state>
-                </option>
+                    <state>$PROJ_DIR$\..\src</state>
+                    <state>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos</state>
+                    <state>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP</state>
+                    <state>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core_A\Include</state>
+                    <state>$PROJ_DIR$\..\src\packs\CMSIS</state>
+                    <state>$PROJ_DIR$\..\src\arm</state>
+                    <state>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5</state>
+                    <state>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include</state>
+                    <state>$PROJ_DIR$\.</state>
+                    </option>
                 <option>
                     <name>CCStdIncCheck</name>
                     <state>0</state>
@@ -1442,7 +1444,7 @@
                 </option>
                 <option>
                     <name>CCOptLevelSlave</name>
-                    <state>1</state>
+                    <state>3</state>
                 </option>
                 <option>
                     <name>CompilerMisraRules98</name>
@@ -1595,8 +1597,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state></state>
-                </option>
+                    </option>
                 <option>
                     <name>AList</name>
                     <state>0</state>
@@ -1687,15 +1688,10 @@
                 </option>
                 <option>
                     <name>AUserIncludes</name>
-                    <state>$PROJ_DIR$/../../firmware/src</state>
-                    <state>$PROJ_DIR$/../../firmware/src/config/sam_a5d2_xult_freertos</state>
-                    <state>$PROJ_DIR$/../../firmware/src/packs/ATSAMA5D27_DFP</state>
-                    <state>$PROJ_DIR$/../../firmware/src/packs/CMSIS/CMSIS/Core_A/Include</state>
-                    <state>$PROJ_DIR$/../../firmware/src/packs/CMSIS</state>
-                    <state>$PROJ_DIR$/../../firmware/src/arm</state>
-                    <state>$PROJ_DIR$/../../firmware/src/third_party/rtos/FreeRTOS/Source/portable/IAR/SAM/CA5</state>
-                    <state>$PROJ_DIR$/../../firmware/src/third_party/rtos/FreeRTOS/Source/Include</state>
-                </option>
+                    <state>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5</state>
+                    <state>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos</state>
+                    <state>$PROJ_DIR$\.</state>
+                    </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
                     <state>0</state>
@@ -1720,15 +1716,15 @@
                 <option>
                     <name>OOCOutputFormat</name>
                     <version>3</version>
-                    <state>0</state>
+                    <state>3</state>
                 </option>
                 <option>
                     <name>OCOutputOverride</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state></state>
+                    <state>harmony.bin</state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -1736,7 +1732,7 @@
                 </option>
                 <option>
                     <name>OOCObjCopyEnable</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
             </data>
         </settings>
@@ -1783,7 +1779,7 @@
                 </option>
                 <option>
                     <name>IlinkOutputFile</name>
-                    <state>###Unitialized###</state>
+                    <state>sam_a5d2_xult_freertos.out</state>
                 </option>
                 <option>
                     <name>IlinkDebugInfoEnable</name>
@@ -1847,7 +1843,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\..\..\firmware\src\config\sam_a5d2_xult_freertos\ddr.icf</state>
+                    <state>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\ddr.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -1907,7 +1903,7 @@
                 </option>
                 <option>
                     <name>IlinkProgramEntryLabel</name>
-                    <state></state>
+                    <state>__iar_program_start</state>
                 </option>
                 <option>
                     <name>DoFill</name>
@@ -2130,128 +2126,409 @@
             <archiveVersion>0</archiveVersion>
             <data />
         </settings>
+        <settings>
+            <name>Coder</name>
+            <archiveVersion>0</archiveVersion>
+            <data />
+        </settings>
     </configuration>
     <group>
-        <name>IAR Project Connection File</name>
+        <name>Harmony3</name>
         <group>
             <name>Header Files</name>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\acc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\adc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\aes.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\aesb.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\aic.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\app.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\atsama5d27.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\aximx.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\bsp\bsp.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\chipid.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\classd.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core_A\Include\cmsis_compiler.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core_A\Include\cmsis_cp15.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core_A\Include\cmsis_gcc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core_A\Include\cmsis_iccarm.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\configuration.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core_A\Include\core_ca.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\croutine.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\definitions.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\deprecated_definitions.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\device.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\device_cache.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\event_groups.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\flexcom.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\FreeRTOS.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\FreeRTOSConfig.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\gmac.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\i2sc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\icm.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\isc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\l2cc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\lcdc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\list.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\matrix.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\mcan.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\message_buffer.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\mpddrc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\mpu_prototypes.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\mpu_wrappers.h</name>
-            </file>
+            <group>
+                <name>config</name>
+                <group>
+                    <name>sam_a5d2_xult_freertos</name>
+                    <group>
+                        <name>bsp</name>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\bsp\bsp.h</name>
+                        </file>
+                    </group>
+                    <group>
+                        <name>peripheral</name>
+                        <group>
+                            <name>uart</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\uart\plib_uart_common.h</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\uart\plib_uart1.h</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>pit</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\pit\plib_pit.h</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>mmu</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\mmu\plib_mmu.h</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>matrix</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\matrix\plib_matrix.h</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>clk</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\clk\plib_clk.h</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>pio</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\pio\plib_pio.h</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>aic</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\aic\plib_aic.h</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>tc</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\tc\plib_tc0.h</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\tc\plib_tc_common.h</name>
+                            </file>
+                        </group>
+                    </group>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\device_cache.h</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\toolchain_specifics.h</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\definitions.h</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\FreeRTOSConfig.h</name>
+                    </file>
+                    <group>
+                        <name>system</name>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\system.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\system_common.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\system_module.h</name>
+                        </file>
+                        <group>
+                            <name>int</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\int\sys_int.h</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\int\sys_int_mapping.h</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>cache</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\cache\sys_cache.h</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>time</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\time\sys_time.h</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\time\sys_time_definitions.h</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\time\src\sys_time_local.h</name>
+                            </file>
+                        </group>
+                    </group>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\user.h</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\configuration.h</name>
+                    </file>
+                </group>
+            </group>
+            <group>
+                <name>packs</name>
+                <group>
+                    <name>ATSAMA5D27_DFP</name>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\device.h</name>
+                    </file>
+                    <group>
+                        <name>component</name>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\acc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\adc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\aes.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\aesb.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\aic.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\aximx.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\chipid.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\classd.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\flexcom.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\gmac.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\i2sc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\icm.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\isc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\l2cc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\lcdc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\matrix.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\mcan.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\mpddrc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\pdmic.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\pio.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\pit.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\pmc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\ptc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\pwm.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\qspi.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\rstc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\rtc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\rxlp.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\sckc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\sdmmc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\secumod.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\sfc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\sfr.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\sfrbu.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\sha.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\shdwc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\smc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\spi.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\ssc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\tc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\tdes.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\trng.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\twihs.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\uart.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\udphs.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\uhphs.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\wdt.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\xdmac.h</name>
+                        </file>
+                    </group>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\atsama5d27.h</name>
+                    </file>
+                    <group>
+                        <name>pio</name>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\pio\sama5d27.h</name>
+                        </file>
+                    </group>
+                </group>
+                <group>
+                    <name>CMSIS</name>
+                    <group>
+                        <name>CMSIS</name>
+                        <group>
+                            <name>Core_A</name>
+                            <group>
+                                <name>Include</name>
+                                <file>
+                                    <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core_A\Include\cmsis_compiler.h</name>
+                                </file>
+                                <file>
+                                    <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core_A\Include\cmsis_gcc.h</name>
+                                </file>
+                                <file>
+                                    <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core_A\Include\cmsis_iccarm.h</name>
+                                </file>
+                                <file>
+                                    <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core_A\Include\cmsis_cp15.h</name>
+                                </file>
+                                <file>
+                                    <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core_A\Include\core_ca.h</name>
+                                </file>
+                            </group>
+                        </group>
+                    </group>
+                </group>
+            </group>
+            <group>
+                <name>FreeRTOS</name>
+                <group>
+                    <name>Source</name>
+                    <group>
+                        <name>include</name>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\croutine.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\event_groups.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\FreeRTOS.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\list.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\mpu_wrappers.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\portable.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\projdefs.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\queue.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\semphr.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\stack_macros.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\deprecated_definitions.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\task.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\timers.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\mpu_prototypes.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\stream_buffer.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\message_buffer.h</name>
+                        </file>
+                    </group>
+                    <group>
+                        <name>portable</name>
+                        <group>
+                            <name>IAR</name>
+                            <group>
+                                <name>SAM</name>
+                                <group>
+                                    <name>CA5</name>
+                                    <file>
+                                        <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portASM.h</name>
+                                    </file>
+                                    <file>
+                                        <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portmacro.h</name>
+                                    </file>
+                                </group>
+                            </group>
+                        </group>
+                    </group>
+                </group>
+            </group>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\osal\osal.h</name>
             </file>
@@ -2262,299 +2539,189 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\osal\osal_freertos.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\pdmic.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\pio.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\pio_ctrl.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\pit.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\aic\plib_aic.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\clk\plib_clk.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\matrix\plib_matrix.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\mmu\plib_mmu.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\pio\plib_pio.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\pit\plib_pit.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\tc\plib_tc0.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\tc\plib_tc_common.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\uart\plib_uart1.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\uart\plib_uart_common.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\pmc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\portable.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portASM.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portmacro.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\projdefs.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\ptc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\pwm.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\qspi.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\queue.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\rstc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\rtc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\rxlp.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\pio\sama5d27.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\sckc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\sdmmc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\secumod.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\semphr.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\sfc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\sfr.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\sfrbu.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\sha.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\shdwc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\smc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\spi.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\ssc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\stack_macros.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\stream_buffer.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\cache\sys_cache.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\int\sys_int.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\int\sys_int_mapping.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\time\sys_time.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\time\sys_time_definitions.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\time\src\sys_time_local.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\system.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\system_common.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\system_module.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\task.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\tc.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\tdes.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\timers.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\toolchain_specifics.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\trng.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\twihs.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\uart.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\udphs.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\uhphs.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\user.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\wdt.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\xdmac.h</name>
+                <name>$PROJ_DIR$\..\src\app.h</name>
             </file>
         </group>
         <group>
             <name>Source Files</name>
-            <file>
-                <name>$PROJ_DIR$\..\src\app.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\bsp\bsp.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\croutine.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\cstartup.s</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\event_groups.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\fault_handlers.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\freertos_hooks.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\FreeRTOS_tasks.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\FreeRTOS_tick_config.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\MemMang\heap_1.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\stdio\iar_monitor.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\initialization.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\interrupts.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\list.c</name>
-            </file>
+            <group>
+                <name>config</name>
+                <group>
+                    <name>sam_a5d2_xult_freertos</name>
+                    <group>
+                        <name>bsp</name>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\bsp\bsp.c</name>
+                        </file>
+                    </group>
+                    <group>
+                        <name>peripheral</name>
+                        <group>
+                            <name>uart</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\uart\plib_uart1.c</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>pit</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\pit\plib_pit.c</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>mmu</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\mmu\plib_mmu.c</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>matrix</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\matrix\plib_matrix.c</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>clk</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\clk\plib_clk.c</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>pio</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\pio\plib_pio.c</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>aic</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\aic\plib_aic.c</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>tc</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\tc\plib_tc0.c</name>
+                            </file>
+                        </group>
+                    </group>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\initialization.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\interrupts.c</name>
+                    </file>
+                    <group>
+                        <name>stdio</name>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\stdio\iar_monitor.c</name>
+                        </file>
+                    </group>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\cstartup.s</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\fault_handlers.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\freertos_hooks.c</name>
+                    </file>
+                    <group>
+                        <name>system</name>
+                        <group>
+                            <name>int</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\int\src\sys_int.c</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>cache</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\cache\sys_cache.c</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>time</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\time\src\sys_time.c</name>
+                            </file>
+                        </group>
+                    </group>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\tasks.c</name>
+                    </file>
+                </group>
+            </group>
             <file>
                 <name>$PROJ_DIR$\..\src\main.c</name>
             </file>
+            <group>
+                <name>FreeRTOS</name>
+                <group>
+                    <name>Source</name>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\croutine.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\list.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\queue.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\FreeRTOS_tasks.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\timers.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\event_groups.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\stream_buffer.c</name>
+                    </file>
+                    <group>
+                        <name>portable</name>
+                        <group>
+                            <name>MemMang</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\MemMang\heap_1.c</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>IAR</name>
+                            <group>
+                                <name>SAM</name>
+                                <group>
+                                    <name>CA5</name>
+                                    <file>
+                                        <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\port.c</name>
+                                    </file>
+                                    <file>
+                                        <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portASM.s</name>
+                                    </file>
+                                    <file>
+                                        <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\FreeRTOS_tick_config.c</name>
+                                    </file>
+                                </group>
+                            </group>
+                        </group>
+                    </group>
+                </group>
+            </group>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\osal\osal_freertos.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\aic\plib_aic.c</name>
+                <name>$PROJ_DIR$\..\src\app.c</name>
             </file>
+        </group>
+        <group>
+            <name>Linker File</name>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\clk\plib_clk.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\matrix\plib_matrix.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\mmu\plib_mmu.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\pio\plib_pio.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\pit\plib_pit.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\tc\plib_tc0.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\uart\plib_uart1.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\port.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portASM.s</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\queue.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\stream_buffer.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\cache\sys_cache.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\int\src\sys_int.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\time\src\sys_time.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\tasks.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\timers.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\ddr.icf</name>
             </file>
         </group>
     </group>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\sam_a5d2_xult_freertos.ipcf</name>
-    </file>
+    
 </project>
