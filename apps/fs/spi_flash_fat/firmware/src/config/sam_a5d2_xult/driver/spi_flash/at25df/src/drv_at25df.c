@@ -714,11 +714,10 @@ bool DRV_AT25DF_Read(
     gDrvAT25DFObj.bufferAddr = rxData;
     gDrvAT25DFObj.memoryAddr = address;
 
-    gDrvAT25DFObj.state = DRV_AT25DF_STATE_READ_CMD_ADDR;
+    gDrvAT25DFObj.state = DRV_AT25DF_STATE_READ_DATA;
 
     if (_DRV_AT25DF_WriteMemoryAddress(DRV_AT25DF_CMD_READ, address) == true)
     {
-        gDrvAT25DFObj.state = DRV_AT25DF_STATE_READ_DATA;
         isRequestAccepted = true;
     }
     else
