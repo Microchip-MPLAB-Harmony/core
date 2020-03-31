@@ -111,7 +111,11 @@ typedef struct{
     SYS_STATUS status;
     const SYS_TIME_PLIB_INTERFACE*  timePlib;
     INT_SOURCE                      hwTimerIntNum;
+<#if SYS_TIME_USE_FLOATING_POINT_CALCULATIONS == true>	
     float                           hwTimerTickFreq;
+<#else>
+	uint32_t                        hwTimerTickFreq;
+</#if>	
     uint32_t                        hwTimerPeriodValue;   
     volatile uint32_t               swCounter64Low;           /* Software counter */
     volatile uint32_t               swCounter64High;          /* Software 64-bit counter */

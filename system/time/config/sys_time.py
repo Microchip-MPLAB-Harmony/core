@@ -146,6 +146,11 @@ def sysTimeAchievableTickRateMsCallback(symbol, event):
         else:
             symbol.setVisible(False)
 
+def setVisibility(symbol, event):
+    if event["value"]  == "TICK BASED":
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
 ################################################################################
 #### Component ####
 ################################################################################
@@ -202,6 +207,12 @@ def instantiateComponent(sysTimeComponent):
     sysTimeAchievableTickRateHz = sysTimeComponent.createLongSymbol("SYS_TIME_ACHIEVABLE_TICK_RATE_HZ", None)
     sysTimeAchievableTickRateHz.setDefaultValue(1)
     sysTimeAchievableTickRateHz.setVisible(False)
+    
+    sysTimeUseFloatingPtCalculations = sysTimeComponent.createBooleanSymbol("SYS_TIME_USE_FLOATING_POINT_CALCULATIONS", None)
+    sysTimeUseFloatingPtCalculations.setLabel("Use Floating Point Calculations?")
+    sysTimeUseFloatingPtCalculations.setDefaultValue(False)
+    sysTimeUseFloatingPtCalculations.setVisible(False)
+    sysTimeUseFloatingPtCalculations.setDependencies(setVisibility, ["SYS_TIME_OPERATING_MODE"])
 
     sysTimeAchievableTickRateMsComment = sysTimeComponent.createCommentSymbol("SYS_TIME_ACHIEVABLEE_TICK_RATE_COMMENT", None)
     sysTimeAchievableTickRateMsComment.setLabel("Achievable Tick Rate Resolution (ms):" + str(sysTimeAchievableTickRateHz.getValue()) + "ms")
@@ -235,12 +246,13 @@ def instantiateComponent(sysTimeComponent):
     sysTimeHeaderDefFile.setOverwrite(True)
 
     sysTimeTickbasedSourceFile = sysTimeComponent.createFileSymbol("SYS_TIME_TICK_BASED_SOURCE", None)
-    sysTimeTickbasedSourceFile.setSourcePath("system/time/src/tickbased/sys_time.c")
+    sysTimeTickbasedSourceFile.setSourcePath("system/time/src/tickbased/sys_time.c.ftl")
     sysTimeTickbasedSourceFile.setOutputName("sys_time.c")
     sysTimeTickbasedSourceFile.setDestPath("system/time/src")
     sysTimeTickbasedSourceFile.setProjectPath("config/" + configName + "/system/time/")
     sysTimeTickbasedSourceFile.setType("SOURCE")
     sysTimeTickbasedSourceFile.setOverwrite(True)
+    sysTimeTickbasedSourceFile.setMarkup(True)
     sysTimeTickbasedSourceFile.setEnabled((sysTimeOperatingMode.getValue() == "TICK BASED"))
     sysTimeTickbasedSourceFile.setDependencies(tickbasedFileGen, ["SYS_TIME_OPERATING_MODE"])
 
@@ -255,12 +267,13 @@ def instantiateComponent(sysTimeComponent):
     sysTimeTicklessSourceFile.setDependencies(ticklessFileGen, ["SYS_TIME_OPERATING_MODE"])
 
     sysTimeTickbasedHeaderLocalFile = sysTimeComponent.createFileSymbol("SYS_TIME_TICK_BASED_LOCAL", None)
-    sysTimeTickbasedHeaderLocalFile.setSourcePath("system/time/src/tickbased/sys_time_local.h")
+    sysTimeTickbasedHeaderLocalFile.setSourcePath("system/time/src/tickbased/sys_time_local.h.ftl")
     sysTimeTickbasedHeaderLocalFile.setOutputName("sys_time_local.h")
     sysTimeTickbasedHeaderLocalFile.setDestPath("system/time/src")
     sysTimeTickbasedHeaderLocalFile.setProjectPath("config/" + configName + "/system/time/")
     sysTimeTickbasedHeaderLocalFile.setType("HEADER")
     sysTimeTickbasedHeaderLocalFile.setOverwrite(True)
+    sysTimeTickbasedHeaderLocalFile.setMarkup(True)
     sysTimeTickbasedHeaderLocalFile.setEnabled((sysTimeOperatingMode.getValue() == "TICK BASED"))
     sysTimeTickbasedHeaderLocalFile.setDependencies(tickbasedFileGen, ["SYS_TIME_OPERATING_MODE"])
 

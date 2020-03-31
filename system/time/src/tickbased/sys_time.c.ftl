@@ -477,8 +477,11 @@ static void SYS_TIME_CounterInit(SYS_MODULE_INIT* init)
     SYS_TIME_INIT* initData = (SYS_TIME_INIT *)init;
 
     counterObj->timePlib = initData->timePlib;
+<#if SYS_TIME_USE_FLOATING_POINT_CALCULATIONS == true>		
     counterObj->hwTimerTickFreq = SYS_TIME_TICK_FREQ_IN_HZ;
-
+<#else>
+	counterObj->hwTimerTickFreq = (uint32_t)SYS_TIME_TICK_FREQ_IN_HZ;
+</#if>	
     counterObj->hwTimerIntNum = initData->hwTimerIntNum;
     counterObj->hwTimerPeriodValue = counterObj->timePlib->timerFrequencyGet()/SYS_TIME_TICK_FREQ_IN_HZ;
 
@@ -607,28 +610,39 @@ void SYS_TIME_CounterSet ( uint32_t count )
 
 uint32_t  SYS_TIME_CountToUS ( uint32_t count )
 {
-    return (uint32_t) ((count * 1000000.0) / gSystemCounterObj.hwTimerTickFreq);
+    return (uint32_t) (((uint64_t)count * 1000000) / gSystemCounterObj.hwTimerTickFreq);
 }
 
 uint32_t  SYS_TIME_CountToMS ( uint32_t count )
 {
-    return (uint32_t) ((count * 1000.0) / gSystemCounterObj.hwTimerTickFreq);
+    return (uint32_t) (((uint64_t)count * 1000) / gSystemCounterObj.hwTimerTickFreq);
 }
 
 uint32_t SYS_TIME_USToCount ( uint32_t us )
 {
-    float count = (((float) us * (float) gSystemCounterObj.hwTimerTickFreq) / 1000000.0);
+<#if SYS_TIME_USE_FLOATING_POINT_CALCULATIONS == true>		
+    float count = ((us * gSystemCounterObj.hwTimerTickFreq) / 1000000);
 
     return (uint32_t) ((uint32_t)count + ((count - (uint32_t)count) > 0));
+<#else>
+	uint32_t count = (((uint64_t)us * gSystemCounterObj.hwTimerTickFreq) / 1000000);   
+		
+	return count;
+</#if>	
 }
 
 uint32_t SYS_TIME_MSToCount ( uint32_t ms )
 {
-    float count = (((float) ms * (float) gSystemCounterObj.hwTimerTickFreq) / 1000.0);
+<#if SYS_TIME_USE_FLOATING_POINT_CALCULATIONS == true>		
+    float count = ((ms * gSystemCounterObj.hwTimerTickFreq) / 1000);
 
     return (uint32_t) ((uint32_t)count + ((count - (uint32_t)count) > 0));
+<#else>	
+	uint32_t count = (((uint64_t)ms * gSystemCounterObj.hwTimerTickFreq) / 1000);
+	
+	return count;
+</#if>		
 }
-
 
 // *****************************************************************************
 // *****************************************************************************
