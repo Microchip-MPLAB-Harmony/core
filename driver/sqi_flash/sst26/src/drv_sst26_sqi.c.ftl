@@ -566,8 +566,6 @@ DRV_HANDLE DRV_SST26_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
         return DRV_HANDLE_INVALID;
     }
 
-    dObj->nClients++;
-
     /* Reset SST26 Flash device */
     DRV_SST26_ResetFlash();
 
@@ -583,6 +581,8 @@ DRV_HANDLE DRV_SST26_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
         }
     }
 
+    dObj->nClients++;
+
     dObj->ioIntent = ioIntent;
 
     return ((DRV_HANDLE)drvIndex);
@@ -590,7 +590,8 @@ DRV_HANDLE DRV_SST26_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
 
 void DRV_SST26_Close( const DRV_HANDLE handle )
 {
-    if(handle != DRV_HANDLE_INVALID)
+    if ( (handle != DRV_HANDLE_INVALID) &&
+         (dObj->nClients > 0))
     {
         dObj->nClients--;
     }

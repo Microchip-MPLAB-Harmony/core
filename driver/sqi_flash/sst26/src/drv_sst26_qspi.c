@@ -55,9 +55,6 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#define DRV_SST26_PAGE_SIZE   256
-#define DRV_SST26_ERASE_SIZE  4096
-
 static DRV_SST26_OBJECT gDrvSST26Obj;
 static DRV_SST26_OBJECT *dObj = &gDrvSST26Obj;
 
@@ -370,8 +367,8 @@ bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometr
     geometry->write_numBlocks = (flash_size / DRV_SST26_PAGE_SIZE);
 
     /* Erase block size and number of blocks */
-    geometry->erase_blockSize = DRV_SST26_ERASE_SIZE;
-    geometry->erase_numBlocks = (flash_size / DRV_SST26_ERASE_SIZE);
+    geometry->erase_blockSize = DRV_SST26_ERASE_BUFFER_SIZE;
+    geometry->erase_numBlocks = (flash_size / DRV_SST26_ERASE_BUFFER_SIZE);
 
     geometry->numReadRegions = 1;
     geometry->numWriteRegions = 1;
@@ -389,8 +386,6 @@ DRV_HANDLE DRV_SST26_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
     {
         return DRV_HANDLE_INVALID;
     }
-
-    dObj->nClients++;
 
     /* Reset SST26 Flash device */
     if (DRV_SST26_ResetFlash() == false)
@@ -413,6 +408,8 @@ DRV_HANDLE DRV_SST26_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
         }
     }
 
+    dObj->nClients++;
+
     dObj->ioIntent = ioIntent;
 
     return ((DRV_HANDLE)drvIndex);
@@ -420,7 +417,8 @@ DRV_HANDLE DRV_SST26_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
 
 void DRV_SST26_Close( const DRV_HANDLE handle )
 {
-    if(handle != DRV_HANDLE_INVALID)
+    if ( (handle != DRV_HANDLE_INVALID) &&
+         (dObj->nClients > 0))
     {
         dObj->nClients--;
     }
