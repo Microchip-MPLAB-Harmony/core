@@ -99,10 +99,12 @@ def requestAndAssignDMAChannel(symbol, event):
     # Control visibility
     symbol.setVisible(event["value"])
 
+    dummyDict = {}
+
     if event["value"] == False:
-        Database.setSymbolValue("core", dmaRequestID, False)
+        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_DISABLE", {"dma_channel":dmaRequestID})
     else:
-        Database.setSymbolValue("core", dmaRequestID, True)
+        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_ENABLE", {"dma_channel":dmaRequestID})
 
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
@@ -435,7 +437,7 @@ def instantiateComponent(sdspiComponent, index):
     sdspiRTOSTaskNoTls.setDescription("If the caller doesn’t want or need TLS (Thread Local Storage) support for the task being created. If you do not include this option, TLS will be supported by default. TLS support was added in V3.03.00")
     sdspiRTOSTaskNoTls.setDefaultValue(False)
     sdspiRTOSTaskNoTls.setDependencies(sdspiRtosMicriumOSIIITaskOptVisibility, ["DRV_SDSPI_RTOS_TASK_OPT_NONE"])
-    
+
     sdspiDependencyComment = sdspiComponent.createCommentSymbol("DRV_SDSPI_DEPENDENCY_COMMENT", None)
     sdspiDependencyComment.setLabel("!!! Note: For each instance of SDSPI, connect either SPI PLIB or SPI Driver !!! ")
 
@@ -653,8 +655,9 @@ def destroyComponent(sdspiComponent):
         dmaTxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
         dmaRxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
 
-        Database.setSymbolValue("core", dmaTxID, False)
-        Database.setSymbolValue("core", dmaRxID, False)
+        dummyDict = {}
+        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_DISABLE", {"dma_channel":dmaTxID})
+        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_DISABLE", {"dma_channel":dmaRxID})
 
 def onAttachmentConnected(source, target):
     global sdcardFsEnable
