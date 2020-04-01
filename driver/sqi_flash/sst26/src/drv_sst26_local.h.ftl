@@ -117,61 +117,133 @@ typedef enum
 
 } SST26_CMD;
 
-// *****************************************************************************
-/* SST26 Driver operations.
+<#if DRV_SST26_PROTOCOL == "SQI">
+    <#lt>// *****************************************************************************
+    <#lt>/* SST26 Driver operations.
 
-  Summary:
-    Enumeration listing the SST26 driver operations.
+    <#lt>  Summary:
+    <#lt>    Enumeration listing the SST26 driver operations.
 
-  Description:
-    This enumeration defines the possible SST26 driver operations.
+    <#lt>  Description:
+    <#lt>    This enumeration defines the possible SST26 driver operations.
 
-  Remarks:
-    None
-*/
+    <#lt>  Remarks:
+    <#lt>    None
+    <#lt>*/
 
-typedef enum
-{
-    /* Request is a command operation */
-    DRV_SST26_OPERATION_TYPE_CMD = 0,
+    <#lt>typedef enum
+    <#lt>{
+    <#lt>    /* Request is a command operation */
+    <#lt>    DRV_SST26_OPERATION_TYPE_CMD = 0,
 
-    /* Request is read operation. */
-    DRV_SST26_OPERATION_TYPE_READ,
+    <#lt>    /* Request is read operation. */
+    <#lt>    DRV_SST26_OPERATION_TYPE_READ,
 
-    /* Request is write operation. */
-    DRV_SST26_OPERATION_TYPE_WRITE,
+    <#lt>    /* Request is write operation. */
+    <#lt>    DRV_SST26_OPERATION_TYPE_WRITE,
 
-    /* Request is erase operation. */
-    DRV_SST26_OPERATION_TYPE_ERASE,
+    <#lt>    /* Request is erase operation. */
+    <#lt>    DRV_SST26_OPERATION_TYPE_ERASE,
 
-} DRV_SST26_OPERATION_TYPE;
+    <#lt>} DRV_SST26_OPERATION_TYPE;
 
-/**************************************
- * SST26 Driver Hardware Instance Object
- **************************************/
-typedef struct
-{
-    /* Flag to indicate in use  */
-    bool inUse;
+    <#lt>/**************************************
+    <#lt> * SST26 Driver Hardware Instance Object
+    <#lt> **************************************/
+    <#lt>typedef struct
+    <#lt>{
+    <#lt>    /* Flag to indicate in use  */
+    <#lt>    bool inUse;
 
-    /* Flag to indicate status of transfer */
-    volatile bool isTransferDone;
+    <#lt>    /* Flag to indicate status of transfer */
+    <#lt>    volatile bool isTransferDone;
 
-    /* The status of the driver */
-    SYS_STATUS status;
+    <#lt>    /* The status of the driver */
+    <#lt>    SYS_STATUS status;
 
-    /* Intent of opening the driver */
-    DRV_IO_INTENT ioIntent;
+    <#lt>    /* Intent of opening the driver */
+    <#lt>    DRV_IO_INTENT ioIntent;
 
-    /* Indicates the number of clients that have opened this driver */
-    size_t nClients;
+    <#lt>    /* Indicates the number of clients that have opened this driver */
+    <#lt>    size_t nClients;
 
-    /* Current Operation */
-    DRV_SST26_OPERATION_TYPE curOpType;
+    <#lt>    /* Current Operation */
+    <#lt>    DRV_SST26_OPERATION_TYPE curOpType;
 
-    /* PLIB API list that will be used by the driver to access the hardware */
-    const DRV_SST26_PLIB_INTERFACE *sst26Plib;
-} DRV_SST26_OBJECT;
+    <#lt>    /* PLIB API list that will be used by the driver to access the hardware */
+    <#lt>    const DRV_SST26_PLIB_INTERFACE *sst26Plib;
+    <#lt>} DRV_SST26_OBJECT;
+
+<#elseif DRV_SST26_PROTOCOL == "SPI">
+    <#lt>typedef enum
+    <#lt>{
+    <#lt>    DRV_SST26_STATE_READ_DATA,
+    <#lt>    DRV_SST26_STATE_WAIT_READ_COMPLETE,
+    <#lt>    DRV_SST26_STATE_WRITE_CMD_ADDR,
+    <#lt>    DRV_SST26_STATE_WRITE_DATA,
+    <#lt>    DRV_SST26_STATE_CHECK_ERASE_WRITE_STATUS,
+    <#lt>    DRV_SST26_STATE_WAIT_ERASE_WRITE_COMPLETE,
+    <#lt>    DRV_SST26_STATE_ERASE,
+    <#lt>    DRV_SST26_STATE_UNLOCK_FLASH,
+    <#lt>    DRV_SST26_STATE_WAIT_UNLOCK_FLASH_COMPLETE,
+    <#lt>    DRV_SST26_STATE_WAIT_RESET_FLASH_COMPLETE,
+    <#lt>    DRV_SST26_STATE_WAIT_JEDEC_ID_READ_COMPLETE
+    <#lt>} DRV_SST26_STATE;
+
+    <#lt>/**************************************
+    <#lt> * SST26 Driver Hardware Instance Object
+    <#lt> **************************************/
+    <#lt>typedef struct
+    <#lt>{
+    <#lt>    /* Flag to indicate in use  */
+    <#lt>    bool inUse;
+
+    <#lt>    /* Flag to indicate state  */
+    <#lt>    DRV_SST26_STATE state;
+
+    <#lt>    /* Flag to indicate status of transfer */
+    <#lt>    volatile DRV_SST26_TRANSFER_STATUS transferStatus;
+
+    <#lt>    /* The status of the driver */
+    <#lt>    SYS_STATUS status;
+
+    <#lt>    /* Intent of opening the driver */
+    <#lt>    DRV_IO_INTENT ioIntent;
+
+    <#lt>    /* Indicates the number of clients that have opened this driver */
+    <#lt>    size_t nClients;
+
+    <#lt>    /* Stores Status Register value ([0]Dummy Byte, [1]Register value)*/
+    <#lt>    uint8_t regStatus[2];
+
+    <#lt>    /* Points to the FLASH memory address */
+    <#lt>    uint32_t memoryAddr;
+
+    <#lt>    /* Pointer to the buffer */
+    <#lt>    uint8_t* bufferAddr;
+
+    <#lt>    /* Number of bytes pending to read/write */
+    <#lt>    uint32_t nPendingBytes;
+
+    <#lt>    /* Stores the command to be sent */
+    <#lt>    uint8_t currentCommand;
+
+    <#lt>    /* Chip Select pin used */
+    <#lt>    SYS_PORT_PIN chipSelectPin;
+
+    <#lt>    /* Application event handler */
+    <#lt>    DRV_SST26_EVENT_HANDLER eventHandler;
+
+    <#lt>    /* Application context */
+    <#lt>    uintptr_t context;
+
+    <#lt>    /* PLIB API list that will be used by the driver to access the hardware */
+    <#lt>    const DRV_SST26_PLIB_INTERFACE *sst26Plib;
+
+    <#lt>    /* Array to hold the commands to be sent  */
+    <#lt>    uint8_t sst26Command[8];
+    <#lt>} DRV_SST26_OBJECT;
+</#if>
 
 #endif //#ifndef _DRV_SST26_LOCAL_H
 

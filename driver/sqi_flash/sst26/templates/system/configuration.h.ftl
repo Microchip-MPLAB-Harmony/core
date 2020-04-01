@@ -7,3 +7,6 @@
 <#if DRV_SST26_PLIB?contains("SQI") >
     <#lt>#define DRV_SST26_BUFF_DESC_NUMBER      ${DRV_SST26_NUM_BUFFER_DESC}
 </#if>
+<#if DRV_SST26_PROTOCOL == "SPI" >
+    <#lt>#define DRV_SST26_CHIP_SELECT_PIN       ${SPI_CHIP_SELECT_PIN?string}
+</#if>

@@ -26,7 +26,16 @@
 #### Component ####
 ################################################################################
 
-ChipSelect     =  ["Chip Select 0", "Chip Select 1"]
+ChipSelect      = ["Chip Select 0", "Chip Select 1"]
+protocolUsed    = ["SQI", "SPI"]
+
+global sort_alphanumeric
+
+def sort_alphanumeric(l):
+    import re
+    convert = lambda text: int(text) if text.isdigit() else text.lower()
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
+    return sorted(l, key = alphanum_key)
 
 def sst26SetMemoryDependency(symbol, event):
     if (event["value"] == True):
@@ -35,30 +44,43 @@ def sst26SetMemoryDependency(symbol, event):
         symbol.setVisible(False)
 
 def sst26HeaderFileGen(symbol, event):
+    component = symbol.getComponent()
+
+    protocolUsed = component.getSymbolByID("DRV_SST26_PROTOCOL").getValue()
     plib_used = event["value"]
 
     if (plib_used == ""):
         symbol.setEnabled(False)
     else:
-        if ("QSPI" in plib_used):
-            symbol.setSourcePath("driver/sqi_flash/sst26/templates/drv_sst26_qspi_definitions.h.ftl")
-        elif ("SQI" in plib_used):
-            symbol.setSourcePath("driver/sqi_flash/sst26/templates/drv_sst26_sqi_definitions.h.ftl")
+        if (protocolUsed == "SQI"):
+            if ("QSPI" in plib_used):
+                symbol.setSourcePath("driver/sqi_flash/sst26/templates/drv_sst26_qspi_definitions.h.ftl")
+            elif ("SQI" in plib_used):
+                symbol.setSourcePath("driver/sqi_flash/sst26/templates/drv_sst26_sqi_definitions.h.ftl")
+        elif (protocolUsed == "SPI"):
+            symbol.setSourcePath("driver/sqi_flash/sst26/templates/drv_sst26_qspi_spi_definitions.h.ftl")
 
         symbol.setEnabled(True)
 
 def sst26SourceFileGen(symbol, event):
+    component = symbol.getComponent()
+
+    protocolUsed = component.getSymbolByID("DRV_SST26_PROTOCOL").getValue()
     plib_used = event["value"]
 
     if (plib_used == ""):
         symbol.setEnabled(False)
     else:
-        if ("QSPI" in plib_used):
-            symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_qspi.c")
+        if (protocolUsed == "SQI"):
+            if ("QSPI" in plib_used):
+                symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_qspi.c")
+                symbol.setMarkup(False)
+            elif ("SQI" in plib_used):
+                symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_sqi.c.ftl")
+                symbol.setMarkup(True)
+        elif (protocolUsed == "SPI"):
+            symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_qspi_spi.c")
             symbol.setMarkup(False)
-        elif ("SQI" in plib_used):
-            symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_sqi.c.ftl")
-            symbol.setMarkup(True)
 
         symbol.setEnabled(True)
 
@@ -86,6 +108,11 @@ def instantiateComponent(sst26Component):
     sst26PLIB.setLabel("PLIB Used")
     sst26PLIB.setReadOnly(True)
 
+    sst26Protocol = sst26Component.createComboSymbol("DRV_SST26_PROTOCOL", None, protocolUsed)
+    sst26Protocol.setLabel("SST26 Protocol Used")
+    sst26Protocol.setVisible(False)
+    sst26Protocol.setDefaultValue("SQI")
+
     sst26NumClients = sst26Component.createIntegerSymbol("DRV_SST26_NUM_CLIENTS", None)
     sst26NumClients.setLabel("Number of Clients")
     sst26NumClients.setReadOnly(True)
@@ -108,6 +135,27 @@ def instantiateComponent(sst26Component):
     sst26ChipSelectComment = sst26Component.createCommentSymbol("CHIP_SELECT_COMMENT", None)
     sst26ChipSelectComment.setVisible(False)
     sst26ChipSelectComment.setLabel("*** Configure Chip Select in SQI PLIB Configurations ***")
+
+    sst26spiChipSelectPin = sst26Component.createKeyValueSetSymbol("SPI_CHIP_SELECT_PIN", None)
+    sst26spiChipSelectPin.setLabel("Chip Select Pin")
+    sst26spiChipSelectPin.setOutputMode("Key")
+    sst26spiChipSelectPin.setDisplayMode("Description")
+    sst26spiChipSelectPin.setVisible(False)
+
+    availablePinDictionary = {}
+
+    # Send message to core to get available pins
+    availablePinDictionary = Database.sendMessage("core", "PIN_LIST", availablePinDictionary)
+
+    for pad in sort_alphanumeric(availablePinDictionary.values()):
+        key = "SYS_PORT_PIN_" + pad
+        value = list(availablePinDictionary.keys())[list(availablePinDictionary.values()).index(pad)]
+        description = pad
+        sst26spiChipSelectPin.addKey(key, value, description)
+
+    sst26spiChipSelectPinComment = sst26Component.createCommentSymbol("SPI_CHIP_SELECT_PIN_COMMENT", None)
+    sst26spiChipSelectPinComment.setLabel("***Above selected pin must be configured as GPIO Output in Pin Manager***")
+    sst26spiChipSelectPinComment.setVisible(False)
 
     ##### Do not modify below symbol names as they are used by Memory Driver #####
     sst26MemoryDriver = sst26Component.createBooleanSymbol("DRV_MEMORY_CONNECTED", None)
@@ -157,13 +205,15 @@ def instantiateComponent(sst26Component):
     sst26HeaderFile.setType("HEADER")
     sst26HeaderFile.setOverwrite(True)
 
-    sst26AsyncHeaderLocalFile = sst26Component.createFileSymbol("DRV_SST26_HEADER_LOCAL", None)
-    sst26AsyncHeaderLocalFile.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_local.h")
-    sst26AsyncHeaderLocalFile.setOutputName("drv_sst26_local.h")
-    sst26AsyncHeaderLocalFile.setDestPath("driver/sst26/src")
-    sst26AsyncHeaderLocalFile.setProjectPath("config/" + configName + "/driver/sst26/")
-    sst26AsyncHeaderLocalFile.setType("HEADER")
-    sst26AsyncHeaderLocalFile.setOverwrite(True)
+    sst26HeaderLocalFile = sst26Component.createFileSymbol("DRV_SST26_HEADER_LOCAL", None)
+    sst26HeaderLocalFile.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_local.h.ftl")
+    sst26HeaderLocalFile.setOutputName("drv_sst26_local.h")
+    sst26HeaderLocalFile.setDestPath("driver/sst26/src")
+    sst26HeaderLocalFile.setProjectPath("config/" + configName + "/driver/sst26/")
+    sst26HeaderLocalFile.setType("HEADER")
+    sst26HeaderLocalFile.setOverwrite(True)
+    sst26HeaderLocalFile.setMarkup(True)
+    sst26HeaderLocalFile.setOverwrite(True)
 
     sst26HeaderDefFile = sst26Component.createFileSymbol("DRV_SST26_HEADER_DEF", None)
     sst26HeaderDefFile.setOutputName("drv_sst26_definitions.h")
@@ -220,15 +270,40 @@ def onAttachmentConnected(source, target):
     connectID = source["id"]
     targetID = target["id"]
 
-    if connectID == "drv_sst26_SQI_dependency" :
-        plibUsed = localComponent.getSymbolByID("DRV_SST26_PLIB")
-        plibUsed.clearValue()
-        plibUsed.setValue(remoteID.upper())
+    sqiCapabilityId = "drv_sst26_SQI_dependency"
+    spiCapabilityId = "drv_sst26_SPI_dependency"
+
+    sst26PlibID = remoteID.upper()
+
+    if connectID == sqiCapabilityId :
+        localComponent.getSymbolByID("DRV_SST26_PROTOCOL").setValue("SQI")
+
+        localComponent.getSymbolByID("DRV_SST26_PLIB").setValue(sst26PlibID)
 
         if ("sqi" in remoteID):
             remoteComponent.getSymbolByID("SQI_FLASH_STATUS_CHECK").setReadOnly(True)
             localComponent.getSymbolByID("CHIP_SELECT").setVisible(True)
             localComponent.getSymbolByID("CHIP_SELECT_COMMENT").setVisible(True)
+
+        localComponent.setCapabilityEnabled(spiCapabilityId, False)
+
+    if connectID == spiCapabilityId :
+        localComponent.getSymbolByID("DRV_SST26_PROTOCOL").setValue("SPI")
+
+        localComponent.getSymbolByID("DRV_SST26_PLIB").setValue(sst26PlibID)
+
+        Database.setSymbolValue(sst26PlibID, "SPI_DRIVER_CONTROLLED", True)
+
+        localComponent.getSymbolByID("INTERRUPT_ENABLE").setValue(True)
+
+        localComponent.getSymbolByID("SPI_CHIP_SELECT_PIN").setVisible(True)
+        localComponent.getSymbolByID("SPI_CHIP_SELECT_PIN_COMMENT").setVisible(True)
+
+        localComponent.setCapabilityEnabled(sqiCapabilityId, False)
+
+        # Enable "Enable System Ports" option in MHC
+        if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS") == False):
+            Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True)
 
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]
@@ -237,11 +312,30 @@ def onAttachmentDisconnected(source, target):
     connectID = source["id"]
     targetID = target["id"]
 
+    sqiCapabilityId = "drv_sst26_SQI_dependency"
+    spiCapabilityId = "drv_sst26_SPI_dependency"
+
+    sst26PlibID = remoteID.upper()
+
     if connectID == "drv_sst26_SQI_dependency" :
         if ("sqi" in remoteID):
             remoteComponent.getSymbolByID("SQI_FLASH_STATUS_CHECK").setReadOnly(False)
             localComponent.getSymbolByID("CHIP_SELECT").setVisible(False)
             localComponent.getSymbolByID("CHIP_SELECT_COMMENT").setVisible(False)
 
-        plibUsed = localComponent.getSymbolByID("DRV_SST26_PLIB")
-        plibUsed.clearValue()
+        localComponent.getSymbolByID("DRV_SST26_PLIB").clearValue()
+
+        localComponent.setCapabilityEnabled(spiCapabilityId, True)
+
+    if connectID == "drv_sst26_SPI_dependency" :
+        localComponent.getSymbolByID("SPI_CHIP_SELECT_PIN").setVisible(False)
+        localComponent.getSymbolByID("SPI_CHIP_SELECT_PIN_COMMENT").setVisible(False)
+
+        localComponent.getSymbolByID("DRV_SST26_PLIB").clearValue()
+
+        Database.setSymbolValue(sst26PlibID, "SPI_DRIVER_CONTROLLED", False)
+
+        localComponent.getSymbolByID("INTERRUPT_ENABLE").setValue(False)
+
+        localComponent.setCapabilityEnabled(sqiCapabilityId, True)
+
