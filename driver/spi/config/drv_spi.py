@@ -234,14 +234,15 @@ def requestAndAssignTxDMAChannel(symbol, event):
 
     dmaChannelID = "DMA_CH_FOR_" + str(spiPeripheral) + "_Transmit"
     dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
+    dummyDict = {}
 
     if event["value"] == False:
-        Database.setSymbolValue("core", dmaRequestID, False)
+        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_DISABLE", {"dma_channel":dmaRequestID})
         spiTXDMAChannelComment.setVisible(False)
         symbol.setVisible(False)
     else:
         symbol.setVisible(True)
-        Database.setSymbolValue("core", dmaRequestID, True)
+        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_ENABLE", {"dma_channel":dmaRequestID})
 
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
@@ -255,14 +256,15 @@ def requestAndAssignRxDMAChannel(symbol, event):
 
     dmaChannelID = "DMA_CH_FOR_" + str(spiPeripheral) + "_Receive"
     dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
+    dummyDict = {}
 
     if event["value"] == False:
-        Database.setSymbolValue("core", dmaRequestID, False)
+        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_DISABLE", {"dma_channel":dmaRequestID})
         spiRXDMAChannelComment.setVisible(False)
         symbol.setVisible(False)
     else:
         symbol.setVisible(True)
-        Database.setSymbolValue("core", dmaRequestID, True)
+        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_ENABLE", {"dma_channel":dmaRequestID})
 
     # Get the allocated channel and assign it
     channel = Database.getSymbolValue("core", dmaChannelID)
@@ -286,8 +288,9 @@ def destroyComponent(spiComponent):
         dmaTxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
         dmaRxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
 
-        Database.setSymbolValue("core", dmaTxID, False)
-        Database.setSymbolValue("core", dmaRxID, False)
+        dummyDict = {}
+        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_DISABLE", {"dma_channel":dmaTxID})
+        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_DISABLE", {"dma_channel":dmaRxID})
 
 def asyncModeOptions(symbol, event):
     if (event["value"] == "Asynchronous"):
