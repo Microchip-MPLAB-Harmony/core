@@ -260,7 +260,7 @@ int FATFS_open (
         }
     }
 
-    res = f_open(fp, path, mode);
+    res = f_open(fp, (const TCHAR *)path, mode);
 
     if (res != FR_OK)
     {
@@ -789,7 +789,7 @@ int FATFS_getclusters (
     DWORD clst = 0;
     FRESULT res = FR_OK;
 
-    res = f_getfree(path, &clst, &fs);
+    res = f_getfree((const TCHAR *)path, &clst, &fs);
 
     if(res != FR_OK)
     {
