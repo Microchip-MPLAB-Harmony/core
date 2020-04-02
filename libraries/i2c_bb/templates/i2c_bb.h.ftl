@@ -87,6 +87,10 @@ bool ${I2CBB_INSTANCE_NAME}_Read(uint16_t address, uint8_t *pdata, size_t length
 
 bool ${I2CBB_INSTANCE_NAME}_Write(uint16_t address, uint8_t *pdata, size_t length);
 
+<#if I2C_INCLUDE_FORCED_WRITE_API == true>
+bool ${I2CBB_INSTANCE_NAME}_WriteForced(uint16_t address, uint8_t *pdata, size_t length);
+</#if>
+
 bool ${I2CBB_INSTANCE_NAME}_WriteRead(uint16_t address, uint8_t *wdata, size_t wlength, uint8_t *rdata, size_t rlength);
 
 I2CBB_ERROR ${I2CBB_INSTANCE_NAME}_ErrorGet(void);

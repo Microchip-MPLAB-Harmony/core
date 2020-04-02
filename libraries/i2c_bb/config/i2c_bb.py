@@ -83,9 +83,9 @@ def instantiateComponent(i2cbbComponent):
     i2cbbOpMode.setLabel("I2CBB Operation Mode")
     i2cbbOpMode.setDefaultValue("MASTER")
     i2cbbOpMode.setReadOnly(True)
-    
+
     res = Database.activateComponents(["HarmonyCore"])
-    
+
     # Enable "Enable System Ports" option in MHC
     if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS") == False):
         Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True)
@@ -112,6 +112,12 @@ def instantiateComponent(i2cbbComponent):
     i2cbbSymClockPin.setDefaultValue(0)
     i2cbbSymClockPin.setOutputMode("Key")
     i2cbbSymClockPin.setDisplayMode("Description")
+
+    #I2C Forced Write API Inclusion
+    i2cbbSymForcedWriteAPIGen = i2cbbComponent.createBooleanSymbol("I2C_INCLUDE_FORCED_WRITE_API", None)
+    i2cbbSymForcedWriteAPIGen.setLabel("Include Force Write I2C Function (Master Mode Only - Ignore NACK from Slave)")
+    i2cbbSymForcedWriteAPIGen.setDefaultValue(False)
+    i2cbbSymForcedWriteAPIGen.setVisible(True)
 
     availablePinDictionary = {}
 
@@ -147,7 +153,7 @@ def instantiateComponent(i2cbbComponent):
     i2cbbHeaderFile.setProjectPath("config/" + configName + "/library/i2cbb/")
     i2cbbHeaderFile.setType("HEADER")
     i2cbbHeaderFile.setMarkup(True)
-    
+
     #Source File
     i2cbbMainSourceFile = i2cbbComponent.createFileSymbol("I2CBB_FILE_SRC_MAIN", None)
 

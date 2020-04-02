@@ -279,7 +279,18 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CReadData |= SYS_PORT_PinRead(pInitData->i2cbbSDAPin);
           }
           if (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter == 0) {
+<#if I2C_INCLUDE_FORCED_WRITE_API == false>
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CACKStatus = SYS_PORT_PinRead(pInitData->i2cbbSDAPin);
+<#else>
+            if (${I2CBB_INSTANCE_NAME?lower_case}Obj.forcedWrite == true)
+            {
+                ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CACKStatus = M_ACK;
+            }
+            else
+            {
+                ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CACKStatus = SYS_PORT_PinRead(pInitData->i2cbbSDAPin);
+            }
+</#if>
             if ((${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState == I2CBB_TRANSFER_STATE_READ) &&
               (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWData == 0xFE00)) {
               * ${I2CBB_INSTANCE_NAME?lower_case}Obj.readBuffer++ = ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CReadData;
@@ -368,6 +379,30 @@ static void ${I2CBB_INSTANCE_NAME}_eventHandler(uint32_t status, uintptr_t conte
     ${I2CBB_INSTANCE_NAME}_tasks();
 }
 
+<#if I2C_INCLUDE_FORCED_WRITE_API == true>
+static bool _${I2CBB_INSTANCE_NAME}_Write(uint16_t address, uint8_t *pdata, size_t length, bool isForceWrite)
+{
+    // Check for ongoing transfer
+    if( ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState != I2CBB_BUS_STATE_NULL_STATE )
+    {
+        return false;
+    }
+
+    ${I2CBB_INSTANCE_NAME?lower_case}Obj.address=address << 1;
+    ${I2CBB_INSTANCE_NAME?lower_case}Obj.readBuffer=NULL;
+    ${I2CBB_INSTANCE_NAME?lower_case}Obj.readSize=0;
+    ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeBuffer=pdata;
+    ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeSize=length;
+    ${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState= I2CBB_TRANSFER_STATE_WRITE;
+    ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_NONE;
+    ${I2CBB_INSTANCE_NAME?lower_case}Obj.forcedWrite = isForceWrite;
+
+    ${I2CBB_INSTANCE_NAME}_InitiateTransfer();
+    ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter = 9;
+    return true;
+}
+</#if>
+
 void ${I2CBB_INSTANCE_NAME}_Initialize(void)
 {
     I2C_BB_INIT* pInitData =(I2C_BB_INIT*)&i2cBBInitData;
@@ -408,6 +443,9 @@ bool ${I2CBB_INSTANCE_NAME}_Read(uint16_t address, uint8_t *pdata, size_t length
     ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeSize=0;
     ${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState= I2CBB_TRANSFER_STATE_READ;
     ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_NONE;
+<#if I2C_INCLUDE_FORCED_WRITE_API == true>
+    ${I2CBB_INSTANCE_NAME?lower_case}Obj.forcedWrite = false;
+</#if>
 
     ${I2CBB_INSTANCE_NAME}_InitiateTransfer();
     ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter = 9;
@@ -417,6 +455,9 @@ bool ${I2CBB_INSTANCE_NAME}_Read(uint16_t address, uint8_t *pdata, size_t length
 
 bool ${I2CBB_INSTANCE_NAME}_Write(uint16_t address, uint8_t *pdata, size_t length)
 {
+    <#if I2C_INCLUDE_FORCED_WRITE_API == true>
+    return _${I2CBB_INSTANCE_NAME}_Write(address, pdata, length, false);
+    <#else>
     // Check for ongoing transfer
     if( ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState != I2CBB_BUS_STATE_NULL_STATE )
     {
@@ -434,7 +475,15 @@ bool ${I2CBB_INSTANCE_NAME}_Write(uint16_t address, uint8_t *pdata, size_t lengt
     ${I2CBB_INSTANCE_NAME}_InitiateTransfer();
     ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter = 9;
     return true;
+    </#if>
 }
+
+<#if I2C_INCLUDE_FORCED_WRITE_API == true>
+bool ${I2CBB_INSTANCE_NAME}_WriteForced(uint16_t address, uint8_t *pdata, size_t length)
+{
+    return _${I2CBB_INSTANCE_NAME}_Write(address, pdata, length, true);
+}
+</#if>
 
 bool ${I2CBB_INSTANCE_NAME}_WriteRead(uint16_t address, uint8_t *wdata, size_t wlength, uint8_t *rdata, size_t rlength)
 {
@@ -452,6 +501,9 @@ bool ${I2CBB_INSTANCE_NAME}_WriteRead(uint16_t address, uint8_t *wdata, size_t w
     ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeSize=wlength;
     ${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState= I2CBB_TRANSFER_STATE_WRITE_READ;
     ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_NONE;
+<#if I2C_INCLUDE_FORCED_WRITE_API == true>
+    ${I2CBB_INSTANCE_NAME?lower_case}Obj.forcedWrite = false;
+</#if>
 
     ${I2CBB_INSTANCE_NAME}_InitiateTransfer();
     ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter = 9;

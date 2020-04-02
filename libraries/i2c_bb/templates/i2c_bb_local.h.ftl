@@ -257,6 +257,10 @@ typedef struct _I2CBB_OBJ
 
     volatile              I2CBB_ERROR errorStatus;
 
+<#if I2C_INCLUDE_FORCED_WRITE_API == true>
+    bool                  forcedWrite;
+</#if>
+
     I2CBB_CALLBACK        callback;
 
     uintptr_t context;
