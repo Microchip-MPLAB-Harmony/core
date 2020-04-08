@@ -1,0 +1,28 @@
+{
+    "linker": {
+        "script": "..\\src\\config\\sam_e54_xpro_freertos_keil\\sam_e54_xpro_freertos_keil.sct"
+    }, 
+    "assembler": {
+        "macros": [], 
+        "includes": []
+    }, 
+    "general": {
+        "name": "sam_e54_xpro_freertos_keil", 
+        "device": "ATSAME54P20A"
+    }, 
+    "compiler": {
+        "macros": [], 
+        "includes": [
+            "..\\src", 
+            "..\\src\\config\\sam_e54_xpro_freertos_keil", 
+            "..\\src\\packs\\ATSAME54P20A_DFP", 
+            "..\\src\\packs\\CMSIS\\CMSIS\\Core\\Include", 
+            "..\\src\\packs\\CMSIS", 
+            ".", 
+            "..\\src\\config\\sam_e54_xpro_freertos_keil\\system\\fs\\fat_fs\\file_system", 
+            "..\\src\\config\\sam_e54_xpro_freertos_keil\\system\\fs\\fat_fs\\hardware_access", 
+            "..\\src\\third_party\\rtos\\FreeRTOS\\Source\\include", 
+            "..\\src\\third_party\\rtos\\FreeRTOS\\Source\\portable\\KEIL\\ARM_CM4F"
+        ]
+    }
+}

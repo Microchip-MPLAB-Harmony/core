@@ -1,0 +1,1354 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Configuration>
+  <Configurator>
+    <Name dnOrder="0" value="sam_e54_xpro_freertos_keil"/>
+    <Processor dnOrder="1" value="ATSAME54P20A"/>
+    <Harmony dnOrder="2" path="D:\Projects\h3"/>
+    <Project_Name dnOrder="3" value="sdmmc_fat_sam_e54_xpro_freertos_keil"/>
+    <Manifest dnOrder="4">
+      <Files dnOrder="0">
+        <File dnOrder="0">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">FreeRTOS_tasks.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">BD5E3766B27BA7E6172187AB755B4EEE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">BD5E3766B27BA7E6172187AB755B4EEE</UserChecksum>
+        </File>
+        <File dnOrder="1">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">bsp.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/bsp/</LogicalPath>
+          <PhysicalPath dnOrder="4">/bsp/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">1A81761E8B71DEB8D8FBEA31DBFD4738</GeneratedChecksum>
+          <UserChecksum dnOrder="6">1A81761E8B71DEB8D8FBEA31DBFD4738</UserChecksum>
+        </File>
+        <File dnOrder="2">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">croutine.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">3CE697947D04324AF92C0742ADB99409</GeneratedChecksum>
+          <UserChecksum dnOrder="6">3CE697947D04324AF92C0742ADB99409</UserChecksum>
+        </File>
+        <File dnOrder="3">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">diskio.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/fs/fat_fs/hardware_access/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/fs/fat_fs/hardware_access/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">755E6C5E0A73AAAA81D7C74B7EC14669</GeneratedChecksum>
+          <UserChecksum dnOrder="6">755E6C5E0A73AAAA81D7C74B7EC14669</UserChecksum>
+        </File>
+        <File dnOrder="4">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">drv_sdmmc.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/driver/sdmmc/</LogicalPath>
+          <PhysicalPath dnOrder="4">/driver/sdmmc/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">58ED3A08157962FF9F5A4A680BA5F851</GeneratedChecksum>
+          <UserChecksum dnOrder="6">58ED3A08157962FF9F5A4A680BA5F851</UserChecksum>
+        </File>
+        <File dnOrder="5">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">drv_sdmmc_file_system.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/driver/sdmmc/</LogicalPath>
+          <PhysicalPath dnOrder="4">/driver/sdmmc/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">F0A072D602FF8E337A8405478DA60AB0</GeneratedChecksum>
+          <UserChecksum dnOrder="6">F0A072D602FF8E337A8405478DA60AB0</UserChecksum>
+        </File>
+        <File dnOrder="6">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">event_groups.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">2C34EB6E5B6B6AB8C7A31C2194889466</GeneratedChecksum>
+          <UserChecksum dnOrder="6">2C34EB6E5B6B6AB8C7A31C2194889466</UserChecksum>
+        </File>
+        <File dnOrder="7">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">exceptions.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">AC89AA0F2AF07C0733678D30AE1A5E02</GeneratedChecksum>
+          <UserChecksum dnOrder="6">AC89AA0F2AF07C0733678D30AE1A5E02</UserChecksum>
+        </File>
+        <File dnOrder="8">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">ff.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/fs/fat_fs/file_system/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/fs/fat_fs/file_system/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">D76793338318EDAA924B78F23050562C</GeneratedChecksum>
+          <UserChecksum dnOrder="6">D76793338318EDAA924B78F23050562C</UserChecksum>
+        </File>
+        <File dnOrder="9">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">ffunicode.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/fs/fat_fs/file_system/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/fs/fat_fs/file_system/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">9E153A6D4F8E0EA1F6901BAED7DD80FD</GeneratedChecksum>
+          <UserChecksum dnOrder="6">9E153A6D4F8E0EA1F6901BAED7DD80FD</UserChecksum>
+        </File>
+        <File dnOrder="10">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">freertos_hooks.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">B7DBFD6F500AAD4713403E985EB18EAE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B7DBFD6F500AAD4713403E985EB18EAE</UserChecksum>
+        </File>
+        <File dnOrder="11">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">heap_1.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/portable/MemMang/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/portable/MemMang/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">052E29F208E27B9384BB5F41C94AB25E</GeneratedChecksum>
+          <UserChecksum dnOrder="6">052E29F208E27B9384BB5F41C94AB25E</UserChecksum>
+        </File>
+        <File dnOrder="12">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">initialization.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">D9B84573C025747A203BB7551E16D1ED</GeneratedChecksum>
+          <UserChecksum dnOrder="6">D9B84573C025747A203BB7551E16D1ED</UserChecksum>
+        </File>
+        <File dnOrder="13">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">interrupts.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">9A082F079FD8C336BFBE9D92236AD5A7</GeneratedChecksum>
+          <UserChecksum dnOrder="6">9A082F079FD8C336BFBE9D92236AD5A7</UserChecksum>
+        </File>
+        <File dnOrder="14">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">keil_monitor.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/stdio/</LogicalPath>
+          <PhysicalPath dnOrder="4">/stdio/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">6613BABE5D074271D8E11431720268BF</GeneratedChecksum>
+          <UserChecksum dnOrder="6">6613BABE5D074271D8E11431720268BF</UserChecksum>
+        </File>
+        <File dnOrder="15">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">list.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">37C62E5948FBE65AF85C213106DA4CDA</GeneratedChecksum>
+          <UserChecksum dnOrder="6">37C62E5948FBE65AF85C213106DA4CDA</UserChecksum>
+        </File>
+        <File dnOrder="16">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">osal_freertos.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">/osal/</LogicalPath>
+          <PhysicalPath dnOrder="4">/osal/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">13F747CBE45AD5A7C4DF007FEA796CC9</GeneratedChecksum>
+          <UserChecksum dnOrder="6">13F747CBE45AD5A7C4DF007FEA796CC9</UserChecksum>
+        </File>
+        <File dnOrder="17">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_clock.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/clock/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/clock/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">FA35E26E57FC96646732B9386BC54E5D</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FA35E26E57FC96646732B9386BC54E5D</UserChecksum>
+        </File>
+        <File dnOrder="18">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_cmcc.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/cmcc/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/cmcc/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">FD8CCFC86D63BF1AC9F15EBA909D181D</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FD8CCFC86D63BF1AC9F15EBA909D181D</UserChecksum>
+        </File>
+        <File dnOrder="19">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_evsys.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/evsys</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/evsys/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">C99E6D9B9BA371EA749B7DC16BC2C209</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C99E6D9B9BA371EA749B7DC16BC2C209</UserChecksum>
+        </File>
+        <File dnOrder="20">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_nvic.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/nvic/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/nvic/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">D927262C7B6C0EB8E285545A86A6C31E</GeneratedChecksum>
+          <UserChecksum dnOrder="6">D927262C7B6C0EB8E285545A86A6C31E</UserChecksum>
+        </File>
+        <File dnOrder="21">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_nvmctrl.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/nvmctrl/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/nvmctrl/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">8AA3681EED55E354B4F2764AAECA5347</GeneratedChecksum>
+          <UserChecksum dnOrder="6">8AA3681EED55E354B4F2764AAECA5347</UserChecksum>
+        </File>
+        <File dnOrder="22">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_port.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/port/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/port/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">789ED5C3E559A3D8D38B258D78845491</GeneratedChecksum>
+          <UserChecksum dnOrder="6">789ED5C3E559A3D8D38B258D78845491</UserChecksum>
+        </File>
+        <File dnOrder="23">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_sdhc1.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/sdhc/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/sdhc/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">5104E4AEED58D69D8C1B621D57AE1F19</GeneratedChecksum>
+          <UserChecksum dnOrder="6">5104E4AEED58D69D8C1B621D57AE1F19</UserChecksum>
+        </File>
+        <File dnOrder="24">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_tc0.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/tc/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/tc/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">960FBC5A550DCC9B9C30639746E96BE8</GeneratedChecksum>
+          <UserChecksum dnOrder="6">960FBC5A550DCC9B9C30639746E96BE8</UserChecksum>
+        </File>
+        <File dnOrder="25">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">port.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/portable/KEIL/ARM_CM4F</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/portable/KEIL/ARM_CM4F/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">C0AF965FF33D9E4EF283A3C0D3F2CB2A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C0AF965FF33D9E4EF283A3C0D3F2CB2A</UserChecksum>
+        </File>
+        <File dnOrder="26">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">queue.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">36E66DF7A9E3D95A0B79558D6EB93210</GeneratedChecksum>
+          <UserChecksum dnOrder="6">36E66DF7A9E3D95A0B79558D6EB93210</UserChecksum>
+        </File>
+        <File dnOrder="27">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">startup_keil.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">DA515D5C10A2DAFAB1DBC8C3D40E0612</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DA515D5C10A2DAFAB1DBC8C3D40E0612</UserChecksum>
+        </File>
+        <File dnOrder="28">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">stream_buffer.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">162BBB1DB328D27F935CE22203D6A5BA</GeneratedChecksum>
+          <UserChecksum dnOrder="6">162BBB1DB328D27F935CE22203D6A5BA</UserChecksum>
+        </File>
+        <File dnOrder="29">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">sys_cache.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/cache/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/cache/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">92901E4C07604DD5EC594B58CEC2720B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">92901E4C07604DD5EC594B58CEC2720B</UserChecksum>
+        </File>
+        <File dnOrder="30">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">sys_fs.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/fs/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/fs/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">B05CD3B4DF804DCD6DF33C28C3FA8952</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B05CD3B4DF804DCD6DF33C28C3FA8952</UserChecksum>
+        </File>
+        <File dnOrder="31">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">sys_fs_fat_interface.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/fs/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/fs/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">1DFFE14BA142A7474026B7D42EC5BFD1</GeneratedChecksum>
+          <UserChecksum dnOrder="6">1DFFE14BA142A7474026B7D42EC5BFD1</UserChecksum>
+        </File>
+        <File dnOrder="32">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">sys_fs_media_manager.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/fs/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/fs/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">6D3CED95ACA137FBB079980E7A2D81B5</GeneratedChecksum>
+          <UserChecksum dnOrder="6">6D3CED95ACA137FBB079980E7A2D81B5</UserChecksum>
+        </File>
+        <File dnOrder="33">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">sys_int.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/int/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/int/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">AC4D91625233534A323364884F492CC6</GeneratedChecksum>
+          <UserChecksum dnOrder="6">AC4D91625233534A323364884F492CC6</UserChecksum>
+        </File>
+        <File dnOrder="34">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">sys_time.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/time/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/time/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">40A99C84F50EB7DFAA579B8675F140DD</GeneratedChecksum>
+          <UserChecksum dnOrder="6">40A99C84F50EB7DFAA579B8675F140DD</UserChecksum>
+        </File>
+        <File dnOrder="35">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">tasks.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">8717498043747D759C2FD08C6A54D1B5</GeneratedChecksum>
+          <UserChecksum dnOrder="6">8717498043747D759C2FD08C6A54D1B5</UserChecksum>
+        </File>
+        <File dnOrder="36">
+          <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">timers.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">BFF63C63E613200CFC9D0E9593031787</GeneratedChecksum>
+          <UserChecksum dnOrder="6">BFF63C63E613200CFC9D0E9593031787</UserChecksum>
+        </File>
+        <File dnOrder="37">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">FreeRTOS.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">BCDC1865B923B79D6B4BB4A6606CB111</GeneratedChecksum>
+          <UserChecksum dnOrder="6">BCDC1865B923B79D6B4BB4A6606CB111</UserChecksum>
+        </File>
+        <File dnOrder="38">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">FreeRTOSConfig.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">DC967ECCF5920B7E4A174A8DCF398149</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DC967ECCF5920B7E4A174A8DCF398149</UserChecksum>
+        </File>
+        <File dnOrder="39">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">ac.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">B4951ACE738DFA1F3A2C1B38B3726205</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B4951ACE738DFA1F3A2C1B38B3726205</UserChecksum>
+        </File>
+        <File dnOrder="40">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">adc.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">C5FAB4E05DC36C551A0F3274325EEBD9</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C5FAB4E05DC36C551A0F3274325EEBD9</UserChecksum>
+        </File>
+        <File dnOrder="41">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">aes.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">E29C57EC35AEE0F49474AB97A9DC91E2</GeneratedChecksum>
+          <UserChecksum dnOrder="6">E29C57EC35AEE0F49474AB97A9DC91E2</UserChecksum>
+        </File>
+        <File dnOrder="42">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">atsame54p20a.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">B558A4D48591B159212DE3B8CC49D2CB</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B558A4D48591B159212DE3B8CC49D2CB</UserChecksum>
+        </File>
+        <File dnOrder="43">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">bsp.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/bsp/</LogicalPath>
+          <PhysicalPath dnOrder="4">/bsp/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">BEB9A13A97519CF2A5F78A99E0318FB5</GeneratedChecksum>
+          <UserChecksum dnOrder="6">BEB9A13A97519CF2A5F78A99E0318FB5</UserChecksum>
+        </File>
+        <File dnOrder="44">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">can.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">F116682C6DC85E38966EF957B45A8053</GeneratedChecksum>
+          <UserChecksum dnOrder="6">F116682C6DC85E38966EF957B45A8053</UserChecksum>
+        </File>
+        <File dnOrder="45">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">ccl.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">08AE76DF2792F16BD764AD0E987816BD</GeneratedChecksum>
+          <UserChecksum dnOrder="6">08AE76DF2792F16BD764AD0E987816BD</UserChecksum>
+        </File>
+        <File dnOrder="46">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">cmcc.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">7B48C40D160333DB288A27EA70579E5D</GeneratedChecksum>
+          <UserChecksum dnOrder="6">7B48C40D160333DB288A27EA70579E5D</UserChecksum>
+        </File>
+        <File dnOrder="47">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">cmsis_armcc.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">D0A91713174AE0A9464105CD4157DEC1</GeneratedChecksum>
+          <UserChecksum dnOrder="6">D0A91713174AE0A9464105CD4157DEC1</UserChecksum>
+        </File>
+        <File dnOrder="48">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">cmsis_armclang.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">FB9082D52CC87C29BABCEC7CDA5DA8CD</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FB9082D52CC87C29BABCEC7CDA5DA8CD</UserChecksum>
+        </File>
+        <File dnOrder="49">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">cmsis_armclang_ltm.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">787D64C13CE3DCD1082EA06108F51EC6</GeneratedChecksum>
+          <UserChecksum dnOrder="6">787D64C13CE3DCD1082EA06108F51EC6</UserChecksum>
+        </File>
+        <File dnOrder="50">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">cmsis_compiler.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">60385A5C6C9882B5D30709A1F6EAEC35</GeneratedChecksum>
+          <UserChecksum dnOrder="6">60385A5C6C9882B5D30709A1F6EAEC35</UserChecksum>
+        </File>
+        <File dnOrder="51">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">cmsis_gcc.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">B2E4B79E96D9481B139252F7F1C5924F</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B2E4B79E96D9481B139252F7F1C5924F</UserChecksum>
+        </File>
+        <File dnOrder="52">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">cmsis_iccarm.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">AF3CC89090034E070238E8A7BE343262</GeneratedChecksum>
+          <UserChecksum dnOrder="6">AF3CC89090034E070238E8A7BE343262</UserChecksum>
+        </File>
+        <File dnOrder="53">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">cmsis_version.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">8D06BEF47A08B8A7A91DE48D1C5DFDAB</GeneratedChecksum>
+          <UserChecksum dnOrder="6">8D06BEF47A08B8A7A91DE48D1C5DFDAB</UserChecksum>
+        </File>
+        <File dnOrder="54">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">configuration.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">68BF2C9E0F475DD9F04355510EDF913B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">68BF2C9E0F475DD9F04355510EDF913B</UserChecksum>
+        </File>
+        <File dnOrder="55">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">core_cm4.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">CD5F1A2F242BE3D7B766157EEBF09823</GeneratedChecksum>
+          <UserChecksum dnOrder="6">CD5F1A2F242BE3D7B766157EEBF09823</UserChecksum>
+        </File>
+        <File dnOrder="56">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">croutine.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">799499D320508B137A1F38041909EE57</GeneratedChecksum>
+          <UserChecksum dnOrder="6">799499D320508B137A1F38041909EE57</UserChecksum>
+        </File>
+        <File dnOrder="57">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">dac.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">CF140471FD3349AD9D2A9F2994809CCC</GeneratedChecksum>
+          <UserChecksum dnOrder="6">CF140471FD3349AD9D2A9F2994809CCC</UserChecksum>
+        </File>
+        <File dnOrder="58">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">definitions.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">1A0960B17DE543FC601BD36F64EB67F3</GeneratedChecksum>
+          <UserChecksum dnOrder="6">1A0960B17DE543FC601BD36F64EB67F3</UserChecksum>
+        </File>
+        <File dnOrder="59">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">deprecated_definitions.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">A87B8720A7388B92787B15BFE92911FB</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A87B8720A7388B92787B15BFE92911FB</UserChecksum>
+        </File>
+        <File dnOrder="60">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">device.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">21F486E52CA55F38E7CEF72A10139F09</GeneratedChecksum>
+          <UserChecksum dnOrder="6">21F486E52CA55F38E7CEF72A10139F09</UserChecksum>
+        </File>
+        <File dnOrder="61">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">device_cache.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">85D3482D395C59BDFF268B01940CDDDE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">85D3482D395C59BDFF268B01940CDDDE</UserChecksum>
+        </File>
+        <File dnOrder="62">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">diskio.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/fs/fat_fs/hardware_access/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/fs/fat_fs/hardware_access/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">630DFA1824A5279838B4330DA2FF3E5E</GeneratedChecksum>
+          <UserChecksum dnOrder="6">630DFA1824A5279838B4330DA2FF3E5E</UserChecksum>
+        </File>
+        <File dnOrder="63">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">dmac.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">87864F8E86B84298231DA42203F26294</GeneratedChecksum>
+          <UserChecksum dnOrder="6">87864F8E86B84298231DA42203F26294</UserChecksum>
+        </File>
+        <File dnOrder="64">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">driver.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/driver/</LogicalPath>
+          <PhysicalPath dnOrder="4">/driver/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">1D2094DFA60F847FFD4E8153B6E78027</GeneratedChecksum>
+          <UserChecksum dnOrder="6">1D2094DFA60F847FFD4E8153B6E78027</UserChecksum>
+        </File>
+        <File dnOrder="65">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">driver_common.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/driver/</LogicalPath>
+          <PhysicalPath dnOrder="4">/driver/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">CC7DFCC51CD25171A3E400E18969354F</GeneratedChecksum>
+          <UserChecksum dnOrder="6">CC7DFCC51CD25171A3E400E18969354F</UserChecksum>
+        </File>
+        <File dnOrder="66">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">drv_sdmmc.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/driver/sdmmc/</LogicalPath>
+          <PhysicalPath dnOrder="4">/driver/sdmmc/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">2F323452475EE14CA257ACD2EDF3C493</GeneratedChecksum>
+          <UserChecksum dnOrder="6">2F323452475EE14CA257ACD2EDF3C493</UserChecksum>
+        </File>
+        <File dnOrder="67">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">drv_sdmmc_definitions.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/driver/sdmmc/</LogicalPath>
+          <PhysicalPath dnOrder="4">/driver/sdmmc/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">52AE40773CF8E03208C346FE813C4B33</GeneratedChecksum>
+          <UserChecksum dnOrder="6">52AE40773CF8E03208C346FE813C4B33</UserChecksum>
+        </File>
+        <File dnOrder="68">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">drv_sdmmc_local.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/driver/sdmmc/</LogicalPath>
+          <PhysicalPath dnOrder="4">/driver/sdmmc/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">90694278F71A8B1BA7AEF18AC67758E1</GeneratedChecksum>
+          <UserChecksum dnOrder="6">90694278F71A8B1BA7AEF18AC67758E1</UserChecksum>
+        </File>
+        <File dnOrder="69">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">dsu.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">4CB2BD68A07CBC337922F5492CA2DE27</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4CB2BD68A07CBC337922F5492CA2DE27</UserChecksum>
+        </File>
+        <File dnOrder="70">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">eic.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">2EBD4928D329E7F858F4FAEAED0E8465</GeneratedChecksum>
+          <UserChecksum dnOrder="6">2EBD4928D329E7F858F4FAEAED0E8465</UserChecksum>
+        </File>
+        <File dnOrder="71">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">event_groups.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">1A294D6AFEFA402C2F50C385FCA54D85</GeneratedChecksum>
+          <UserChecksum dnOrder="6">1A294D6AFEFA402C2F50C385FCA54D85</UserChecksum>
+        </File>
+        <File dnOrder="72">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">evsys.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">242DB37DF89C3D84BB8CC7BAC48F0419</GeneratedChecksum>
+          <UserChecksum dnOrder="6">242DB37DF89C3D84BB8CC7BAC48F0419</UserChecksum>
+        </File>
+        <File dnOrder="73">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">ff.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/fs/fat_fs/file_system</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/fs/fat_fs/file_system/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">FD5F600EA8957BBC8E0325408BE3C811</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FD5F600EA8957BBC8E0325408BE3C811</UserChecksum>
+        </File>
+        <File dnOrder="74">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">ffconf.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/fs/fat_fs/file_system/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/fs/fat_fs/file_system/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">29057D02D1CABAFACC5F73181C0D42D3</GeneratedChecksum>
+          <UserChecksum dnOrder="6">29057D02D1CABAFACC5F73181C0D42D3</UserChecksum>
+        </File>
+        <File dnOrder="75">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">freqm.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">0338A8DB1B2D13B43E28BA1AEB279283</GeneratedChecksum>
+          <UserChecksum dnOrder="6">0338A8DB1B2D13B43E28BA1AEB279283</UserChecksum>
+        </File>
+        <File dnOrder="76">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">gclk.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">A02CB465D67A757269E86FAB8E555673</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A02CB465D67A757269E86FAB8E555673</UserChecksum>
+        </File>
+        <File dnOrder="77">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">gmac.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">1B3C76490B05A029ECD82082237F35DD</GeneratedChecksum>
+          <UserChecksum dnOrder="6">1B3C76490B05A029ECD82082237F35DD</UserChecksum>
+        </File>
+        <File dnOrder="78">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">hmatrixb.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">2BC4A5CDBB10742B4DE9A0CE13852013</GeneratedChecksum>
+          <UserChecksum dnOrder="6">2BC4A5CDBB10742B4DE9A0CE13852013</UserChecksum>
+        </File>
+        <File dnOrder="79">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">i2s.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">45A373DED4D9E8D4E8934F284C555D7C</GeneratedChecksum>
+          <UserChecksum dnOrder="6">45A373DED4D9E8D4E8934F284C555D7C</UserChecksum>
+        </File>
+        <File dnOrder="80">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">icm.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">A59A10FA26FC00E4E07CEF0C0C0E3E9C</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A59A10FA26FC00E4E07CEF0C0C0E3E9C</UserChecksum>
+        </File>
+        <File dnOrder="81">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">list.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">633C0BE7E6B4A86A0BC5A5A06C37F994</GeneratedChecksum>
+          <UserChecksum dnOrder="6">633C0BE7E6B4A86A0BC5A5A06C37F994</UserChecksum>
+        </File>
+        <File dnOrder="82">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">mclk.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">0ED06295BF961157D0145F5CC8246FEF</GeneratedChecksum>
+          <UserChecksum dnOrder="6">0ED06295BF961157D0145F5CC8246FEF</UserChecksum>
+        </File>
+        <File dnOrder="83">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">message_buffer.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">5B3C83614640F65D96BFD11A151F946A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">5B3C83614640F65D96BFD11A151F946A</UserChecksum>
+        </File>
+        <File dnOrder="84">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">mpu_armv7.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">A0246C3B848A6A45D54CE5DA8DF3B9C8</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A0246C3B848A6A45D54CE5DA8DF3B9C8</UserChecksum>
+        </File>
+        <File dnOrder="85">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">mpu_prototypes.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">7A1E563262A12E3B0C3B6A7F1EF4F0A6</GeneratedChecksum>
+          <UserChecksum dnOrder="6">7A1E563262A12E3B0C3B6A7F1EF4F0A6</UserChecksum>
+        </File>
+        <File dnOrder="86">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">mpu_wrappers.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">B82455588D928776C2071B57DEBBC29C</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B82455588D928776C2071B57DEBBC29C</UserChecksum>
+        </File>
+        <File dnOrder="87">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">nvmctrl.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">70E7AA001229D2A9965220C6AD1D4D20</GeneratedChecksum>
+          <UserChecksum dnOrder="6">70E7AA001229D2A9965220C6AD1D4D20</UserChecksum>
+        </File>
+        <File dnOrder="88">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">osal.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">/osal/</LogicalPath>
+          <PhysicalPath dnOrder="4">/osal/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">F0AD88762263B7CB89B02AB4F5876059</GeneratedChecksum>
+          <UserChecksum dnOrder="6">F0AD88762263B7CB89B02AB4F5876059</UserChecksum>
+        </File>
+        <File dnOrder="89">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">osal_definitions.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">/osal/</LogicalPath>
+          <PhysicalPath dnOrder="4">/osal/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">167A43EFF8A31441EBF85AC77958A30B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">167A43EFF8A31441EBF85AC77958A30B</UserChecksum>
+        </File>
+        <File dnOrder="90">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">osal_freertos.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">/osal/</LogicalPath>
+          <PhysicalPath dnOrder="4">/osal/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">0E6C60DFF74D4A0EC993971475F2CEAC</GeneratedChecksum>
+          <UserChecksum dnOrder="6">0E6C60DFF74D4A0EC993971475F2CEAC</UserChecksum>
+        </File>
+        <File dnOrder="91">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">osc32kctrl.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">DB21EDF2AD93CE9F7C0EF6EF4DA36587</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DB21EDF2AD93CE9F7C0EF6EF4DA36587</UserChecksum>
+        </File>
+        <File dnOrder="92">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">oscctrl.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">11ED79E44C5FF994B0AFE7E57EF11356</GeneratedChecksum>
+          <UserChecksum dnOrder="6">11ED79E44C5FF994B0AFE7E57EF11356</UserChecksum>
+        </File>
+        <File dnOrder="93">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">pac.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">A583DDF84C7AE69D81CE46D7BB58CE1D</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A583DDF84C7AE69D81CE46D7BB58CE1D</UserChecksum>
+        </File>
+        <File dnOrder="94">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">pcc.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">D61D8DD5DD7EB1FF050C59A7657506B5</GeneratedChecksum>
+          <UserChecksum dnOrder="6">D61D8DD5DD7EB1FF050C59A7657506B5</UserChecksum>
+        </File>
+        <File dnOrder="95">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">pdec.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">DAAC696C679B8770628968823DD63937</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DAAC696C679B8770628968823DD63937</UserChecksum>
+        </File>
+        <File dnOrder="96">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_clock.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/clock/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/clock/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">0416F129713FDF989ACC1FC57065125C</GeneratedChecksum>
+          <UserChecksum dnOrder="6">0416F129713FDF989ACC1FC57065125C</UserChecksum>
+        </File>
+        <File dnOrder="97">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_cmcc.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/cmcc/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/cmcc/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">4209AA8D29CCA5F4F705D4A6C8722DDB</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4209AA8D29CCA5F4F705D4A6C8722DDB</UserChecksum>
+        </File>
+        <File dnOrder="98">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_evsys.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/evsys</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/evsys/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">CCAEF942C66AF995876DFD85CEFF611F</GeneratedChecksum>
+          <UserChecksum dnOrder="6">CCAEF942C66AF995876DFD85CEFF611F</UserChecksum>
+        </File>
+        <File dnOrder="99">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_nvic.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/nvic/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/nvic/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">E95AB23B866AA0CE6F0ABF637E9E2C83</GeneratedChecksum>
+          <UserChecksum dnOrder="6">E95AB23B866AA0CE6F0ABF637E9E2C83</UserChecksum>
+        </File>
+        <File dnOrder="100">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_nvmctrl.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/nvmctrl/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/nvmctrl/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">979C4115BB3514CB386D0B6C8F6E1525</GeneratedChecksum>
+          <UserChecksum dnOrder="6">979C4115BB3514CB386D0B6C8F6E1525</UserChecksum>
+        </File>
+        <File dnOrder="101">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_port.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/port/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/port/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">1E8109E76E8CBD6030140221509CA28D</GeneratedChecksum>
+          <UserChecksum dnOrder="6">1E8109E76E8CBD6030140221509CA28D</UserChecksum>
+        </File>
+        <File dnOrder="102">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_sdhc1.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/sdhc/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/sdhc/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">9CCA5D457464E79BB8E58724020DAE00</GeneratedChecksum>
+          <UserChecksum dnOrder="6">9CCA5D457464E79BB8E58724020DAE00</UserChecksum>
+        </File>
+        <File dnOrder="103">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_sdhc_common.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/sdhc/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/sdhc/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">C0F7EB23FF4F60483CDE2A7317B57497</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C0F7EB23FF4F60483CDE2A7317B57497</UserChecksum>
+        </File>
+        <File dnOrder="104">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_tc0.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/tc/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/tc/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">C85A8376FD41753F5CDFDA9B336C47C7</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C85A8376FD41753F5CDFDA9B336C47C7</UserChecksum>
+        </File>
+        <File dnOrder="105">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_tc_common.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/peripheral/tc/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/tc/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">9123F379ED6F3FD032D954CC559D102A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">9123F379ED6F3FD032D954CC559D102A</UserChecksum>
+        </File>
+        <File dnOrder="106">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">pm.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">230DC8C90F67B535E066B42DC9E75432</GeneratedChecksum>
+          <UserChecksum dnOrder="6">230DC8C90F67B535E066B42DC9E75432</UserChecksum>
+        </File>
+        <File dnOrder="107">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">port.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">7994B8EDC87FE3CDD8AAE549DD928297</GeneratedChecksum>
+          <UserChecksum dnOrder="6">7994B8EDC87FE3CDD8AAE549DD928297</UserChecksum>
+        </File>
+        <File dnOrder="108">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">portable.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">7E2FB0BA62F053F69CBB8F47A5D53D4D</GeneratedChecksum>
+          <UserChecksum dnOrder="6">7E2FB0BA62F053F69CBB8F47A5D53D4D</UserChecksum>
+        </File>
+        <File dnOrder="109">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">portmacro.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/portable/KEIL/SAM/ARM_CM4F</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/portable/KEIL/ARM_CM4F/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">9175E88A49970E8CA21083D4C34452CD</GeneratedChecksum>
+          <UserChecksum dnOrder="6">9175E88A49970E8CA21083D4C34452CD</UserChecksum>
+        </File>
+        <File dnOrder="110">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">projdefs.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">CC6A75BAE7BCC8E118B1ABA27E561393</GeneratedChecksum>
+          <UserChecksum dnOrder="6">CC6A75BAE7BCC8E118B1ABA27E561393</UserChecksum>
+        </File>
+        <File dnOrder="111">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">pukcc.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">37F677DB1CCF8EFEDDD0CE96179802D9</GeneratedChecksum>
+          <UserChecksum dnOrder="6">37F677DB1CCF8EFEDDD0CE96179802D9</UserChecksum>
+        </File>
+        <File dnOrder="112">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">qspi.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">2DC3BF1A3EAA994600A766EA97C7A55A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">2DC3BF1A3EAA994600A766EA97C7A55A</UserChecksum>
+        </File>
+        <File dnOrder="113">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">queue.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">7013F827349D83B61B1A101DF2673C97</GeneratedChecksum>
+          <UserChecksum dnOrder="6">7013F827349D83B61B1A101DF2673C97</UserChecksum>
+        </File>
+        <File dnOrder="114">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">ramecc.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">16B67C70F45690FEAE3DC77349EC6EA1</GeneratedChecksum>
+          <UserChecksum dnOrder="6">16B67C70F45690FEAE3DC77349EC6EA1</UserChecksum>
+        </File>
+        <File dnOrder="115">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">rstc.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">8631BC8778695E373B39AA4E7669FE05</GeneratedChecksum>
+          <UserChecksum dnOrder="6">8631BC8778695E373B39AA4E7669FE05</UserChecksum>
+        </File>
+        <File dnOrder="116">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">rtc.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">D4D1F9AB294DFD9C0051A6D01319599D</GeneratedChecksum>
+          <UserChecksum dnOrder="6">D4D1F9AB294DFD9C0051A6D01319599D</UserChecksum>
+        </File>
+        <File dnOrder="117">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">same54p20a.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/pio/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/pio/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">F1A18FEFE4084523AEC62CA6D4C38A4F</GeneratedChecksum>
+          <UserChecksum dnOrder="6">F1A18FEFE4084523AEC62CA6D4C38A4F</UserChecksum>
+        </File>
+        <File dnOrder="118">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sdhc.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">4FD3D37EE8C0AFBD796DB30C369EF48A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4FD3D37EE8C0AFBD796DB30C369EF48A</UserChecksum>
+        </File>
+        <File dnOrder="119">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">semphr.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">D3BFDCE21257586A7AF265AEC7BB0549</GeneratedChecksum>
+          <UserChecksum dnOrder="6">D3BFDCE21257586A7AF265AEC7BB0549</UserChecksum>
+        </File>
+        <File dnOrder="120">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sercom.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">63C3E79DF83E6E3D76E037BF87CD1A40</GeneratedChecksum>
+          <UserChecksum dnOrder="6">63C3E79DF83E6E3D76E037BF87CD1A40</UserChecksum>
+        </File>
+        <File dnOrder="121">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">stack_macros.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">E293DD24B919127AEB21635287F63255</GeneratedChecksum>
+          <UserChecksum dnOrder="6">E293DD24B919127AEB21635287F63255</UserChecksum>
+        </File>
+        <File dnOrder="122">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">stream_buffer.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">B016FD7AB019D16F55470D987054A878</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B016FD7AB019D16F55470D987054A878</UserChecksum>
+        </File>
+        <File dnOrder="123">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">supc.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">C6909FCEFBCE7984798EC680891990AC</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C6909FCEFBCE7984798EC680891990AC</UserChecksum>
+        </File>
+        <File dnOrder="124">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_cache.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/cache/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/cache/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">AFAAF7D896D57569CA4CF73BB3339481</GeneratedChecksum>
+          <UserChecksum dnOrder="6">AFAAF7D896D57569CA4CF73BB3339481</UserChecksum>
+        </File>
+        <File dnOrder="125">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_fs.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/fs/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/fs/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">CC2BF0A3F3D0939323090DC8ECD51A03</GeneratedChecksum>
+          <UserChecksum dnOrder="6">CC2BF0A3F3D0939323090DC8ECD51A03</UserChecksum>
+        </File>
+        <File dnOrder="126">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_fs_fat_interface.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/fs/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/fs/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">142A5A13F2BF34D4AB4AFCA60961D312</GeneratedChecksum>
+          <UserChecksum dnOrder="6">142A5A13F2BF34D4AB4AFCA60961D312</UserChecksum>
+        </File>
+        <File dnOrder="127">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_fs_local.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/fs/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/fs/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">0D162D1868A187FDC092657020E668D8</GeneratedChecksum>
+          <UserChecksum dnOrder="6">0D162D1868A187FDC092657020E668D8</UserChecksum>
+        </File>
+        <File dnOrder="128">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_fs_media_manager.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/fs/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/fs/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">D0DEC824B933722219A05F00A4CD5BB4</GeneratedChecksum>
+          <UserChecksum dnOrder="6">D0DEC824B933722219A05F00A4CD5BB4</UserChecksum>
+        </File>
+        <File dnOrder="129">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_fs_media_manager_local.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/fs/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/fs/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">E50782BD59B15F2EAAF53AAD818793EE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">E50782BD59B15F2EAAF53AAD818793EE</UserChecksum>
+        </File>
+        <File dnOrder="130">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_int.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/int/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/int/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">1329D2DEB6E5AC9515AD4D165C60DC74</GeneratedChecksum>
+          <UserChecksum dnOrder="6">1329D2DEB6E5AC9515AD4D165C60DC74</UserChecksum>
+        </File>
+        <File dnOrder="131">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_int_mapping.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/int/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/int/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">00278F169FFB0CBBAB3A68B5D647F093</GeneratedChecksum>
+          <UserChecksum dnOrder="6">00278F169FFB0CBBAB3A68B5D647F093</UserChecksum>
+        </File>
+        <File dnOrder="132">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_time.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/time/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/time/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">466D676839280C0E7FC2CC6F78BA6EE9</GeneratedChecksum>
+          <UserChecksum dnOrder="6">466D676839280C0E7FC2CC6F78BA6EE9</UserChecksum>
+        </File>
+        <File dnOrder="133">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_time_definitions.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/time/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/time/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">82C87C4CF49EE4D859363C15E9073333</GeneratedChecksum>
+          <UserChecksum dnOrder="6">82C87C4CF49EE4D859363C15E9073333</UserChecksum>
+        </File>
+        <File dnOrder="134">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_time_local.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/time/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/time/src/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">62F39464265EC34979649F761FB4FE57</GeneratedChecksum>
+          <UserChecksum dnOrder="6">62F39464265EC34979649F761FB4FE57</UserChecksum>
+        </File>
+        <File dnOrder="135">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">system.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">BE95B4F134C5C929787B9DA6FDBF3501</GeneratedChecksum>
+          <UserChecksum dnOrder="6">BE95B4F134C5C929787B9DA6FDBF3501</UserChecksum>
+        </File>
+        <File dnOrder="136">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">system_common.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">C3F5136D520DAC4416512EBFCCA023C3</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C3F5136D520DAC4416512EBFCCA023C3</UserChecksum>
+        </File>
+        <File dnOrder="137">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">system_media.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">A1CB3454D5A9393479E09211BEEDDD49</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A1CB3454D5A9393479E09211BEEDDD49</UserChecksum>
+        </File>
+        <File dnOrder="138">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">system_module.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/system/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">1C75A8A6B60598A2FD0D533F57839B72</GeneratedChecksum>
+          <UserChecksum dnOrder="6">1C75A8A6B60598A2FD0D533F57839B72</UserChecksum>
+        </File>
+        <File dnOrder="139">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">task.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">35732C76A4084A1B16C5F00B7728F645</GeneratedChecksum>
+          <UserChecksum dnOrder="6">35732C76A4084A1B16C5F00B7728F645</UserChecksum>
+        </File>
+        <File dnOrder="140">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">tc.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">18326E7C08CC5DA5A3325CB5F6AAB1A0</GeneratedChecksum>
+          <UserChecksum dnOrder="6">18326E7C08CC5DA5A3325CB5F6AAB1A0</UserChecksum>
+        </File>
+        <File dnOrder="141">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">tcc.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">344C5DFE34260730CE561C89728C940D</GeneratedChecksum>
+          <UserChecksum dnOrder="6">344C5DFE34260730CE561C89728C940D</UserChecksum>
+        </File>
+        <File dnOrder="142">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">timers.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../third_party/rtos/FreeRTOS/Source/include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">EE770378EC56991F295EF9771AEBE6DA</GeneratedChecksum>
+          <UserChecksum dnOrder="6">EE770378EC56991F295EF9771AEBE6DA</UserChecksum>
+        </File>
+        <File dnOrder="143">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">toolchain_specifics.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">52E17DB732D3B99A3EF682DE4CF94132</GeneratedChecksum>
+          <UserChecksum dnOrder="6">52E17DB732D3B99A3EF682DE4CF94132</UserChecksum>
+        </File>
+        <File dnOrder="144">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">trng.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">5971A48DEF5BDB15CAC7A6A31089D545</GeneratedChecksum>
+          <UserChecksum dnOrder="6">5971A48DEF5BDB15CAC7A6A31089D545</UserChecksum>
+        </File>
+        <File dnOrder="145">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">usb.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">FD65331E37E88B337F1037B5929F0ADE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FD65331E37E88B337F1037B5929F0ADE</UserChecksum>
+        </File>
+        <File dnOrder="146">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">wdt.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAME54P20A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAME54P20A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">DA544209151D7F38765E260E11E3CB12</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DA544209151D7F38765E260E11E3CB12</UserChecksum>
+        </File>
+        <File dnOrder="147">
+          <Type dnOrder="0">LINKER</Type>
+          <Name dnOrder="1">sam_e54_xpro_freertos_keil.sct</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_freertos_keil/</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">4B19007E76AEC2E99330719732946ABC</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4B19007E76AEC2E99330719732946ABC</UserChecksum>
+        </File>
+      </Files>
+    </Manifest>
+    <Settings dnOrder="5">
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAME54_DFP\3.2.53\atdf\ATSAME54P20A.atdf"/>
+      <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
+      <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
+      <Setting dnOrder="6" key="TRUSTZONE" value="false"/>
+    </Settings>
+  </Configurator>
+</Configuration>
