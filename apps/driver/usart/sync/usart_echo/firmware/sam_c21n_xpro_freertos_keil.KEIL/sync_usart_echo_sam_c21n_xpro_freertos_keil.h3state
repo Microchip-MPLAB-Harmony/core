@@ -1,0 +1,26 @@
+{
+    "linker": {
+        "script": "..\\src\\config\\sam_c21n_xpro_freertos_keil\\sam_c21n_xpro_freertos_keil.sct"
+    }, 
+    "assembler": {
+        "macros": [], 
+        "includes": []
+    }, 
+    "general": {
+        "name": "sam_c21n_xpro_freertos_keil", 
+        "device": "ATSAMC21N18A"
+    }, 
+    "compiler": {
+        "macros": [], 
+        "includes": [
+            "..\\src", 
+            "..\\src\\config\\sam_c21n_xpro_freertos_keil", 
+            "..\\src\\packs\\ATSAMC21N18A_DFP", 
+            "..\\src\\packs\\CMSIS\\CMSIS\\Core\\Include", 
+            "..\\src\\packs\\CMSIS", 
+            "..\\src\\third_party\\rtos\\FreeRTOS\\Source\\include", 
+            ".", 
+            "..\\src\\third_party\\rtos\\FreeRTOS\\Source\\portable\\KEIL\\ARM_CM0"
+        ]
+    }
+}
