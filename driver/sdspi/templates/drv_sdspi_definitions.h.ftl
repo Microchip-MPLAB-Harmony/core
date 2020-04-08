@@ -67,7 +67,7 @@
 // Section: Data Types
 // *****************************************************************************
 // *****************************************************************************
-
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
 typedef enum
 {
     DRV_SDSPI_CLOCK_PHASE_VALID_TRAILING_EDGE = 0,
@@ -191,6 +191,8 @@ typedef struct
     DRV_SDSPI_PLIB_CALLBACK_REGISTER       callbackRegister;
 
 } DRV_SDSPI_PLIB_INTERFACE;
+
+</#if>
 
 // *****************************************************************************
 /* SDSPI Driver Initialization Data
