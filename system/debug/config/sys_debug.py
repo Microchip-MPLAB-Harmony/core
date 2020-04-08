@@ -66,16 +66,7 @@ def instantiateComponent(debugComponent):
     #### Code Generation ####
     ############################################################################
 
-    configName = Variables.get("__CONFIGURATION_NAME")
-
-    debugHeaderFile = debugComponent.createFileSymbol("SYS_DEBUG_HEADER", None)
-    debugHeaderFile.setSourcePath("system/debug/templates/sys_debug.h.ftl")
-    debugHeaderFile.setOutputName("sys_debug.h")
-    debugHeaderFile.setDestPath("system/debug/")
-    debugHeaderFile.setProjectPath("config/" + configName + "/system/debug/")
-    debugHeaderFile.setType("HEADER")
-    debugHeaderFile.setOverwrite(True)
-    debugHeaderFile.setMarkup(True)
+    configName = Variables.get("__CONFIGURATION_NAME")    
 
     debugHeaderLocalFile = debugComponent.createFileSymbol("SYS_DEBUG_LOCAL", None)
     debugHeaderLocalFile.setSourcePath("system/debug/src/sys_debug_local.h")

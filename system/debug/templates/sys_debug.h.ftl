@@ -52,6 +52,7 @@
 // *****************************************************************************
 
 #include "system/system.h"
+#include "configuration.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -550,9 +551,10 @@ bool SYS_DEBUG_Remap(const SYS_MODULE_INDEX index);
     define the SYS_DEBUG_USE_CONSOLE macro or override the definition of the
     SYS_DEBUG_MESSAGE macro.
 */
-
+#ifdef SYS_DEBUG_USE_CONSOLE
 #ifndef _SYS_DEBUG_MESSAGE
     #define _SYS_DEBUG_MESSAGE(level, message)  do { if((level) <= SYS_DEBUG_ErrorLevelGet()) SYS_DEBUG_Message(message); }while(0)
+#endif
 #endif
 
 // *****************************************************************************
@@ -605,9 +607,10 @@ bool SYS_DEBUG_Remap(const SYS_MODULE_INDEX index);
     define the SYS_DEBUG_USE_CONSOLE macro or override the definition of the
     SYS_DEBUG_PRINT macro.
 */
-
+#ifdef SYS_DEBUG_USE_CONSOLE
 #ifndef _SYS_DEBUG_PRINT
     #define _SYS_DEBUG_PRINT(level, format, ...)    do { if((level) <= SYS_DEBUG_ErrorLevelGet()) SYS_DEBUG_Print(format, ##__VA_ARGS__); } while (0)
+#endif
 #endif
 
 // DOM-IGNORE-BEGIN
@@ -893,11 +896,11 @@ bool SYS_DEBUG_Remap(const SYS_MODULE_INDEX index);
 
 
 #if defined(__DEBUG)
-    <#if __PROCESSOR?matches("PIC32M.*") == true>
-        <#lt>#define SYS_DEBUG_BreakPoint()  __asm__ volatile (" sdbbp 0")
-    <#else>
-        <#lt>#define SYS_DEBUG_BreakPoint()  __asm__ __volatile__ ("bkpt #0");
-    </#if>
+<#if __PROCESSOR?matches("PIC32M.*") == true>
+#define SYS_DEBUG_BreakPoint()  __asm__ volatile (" sdbbp 0")
+<#else>
+#define SYS_DEBUG_BreakPoint()  __asm__ __volatile__ ("bkpt #0");
+</#if>
 #else
     #define SYS_DEBUG_BreakPoint()
 #endif
