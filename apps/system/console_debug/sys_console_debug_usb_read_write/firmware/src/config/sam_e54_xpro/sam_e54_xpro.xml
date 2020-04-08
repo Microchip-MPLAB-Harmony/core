@@ -1,0 +1,1251 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Configuration>
+  <Components>
+    <UniqueComponent bsp="true" dnOrder="0" id="BSP_SAM_E54_Xplained_Pro"/>
+    <UniqueComponent dnOrder="1" id="cmsis"/>
+    <UniqueComponent dnOrder="2" id="core">
+      <Symbols dnOrder="0">
+        <KeyValueSet dnOrder="0" id="COMPILER_CHOICE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <Boolean dnOrder="1" id="CONFIG_CLOCK_DPLL0_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="2" id="CONFIG_CLOCK_DPLL0_LDR_INTEGER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="119"/>
+          </Values>
+        </Integer>
+        <Float dnOrder="3" id="CONFIG_CLOCK_DPLL0_MULTIPLIER_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="120.0"/>
+          </Values>
+        </Float>
+        <KeyValueSet dnOrder="4" id="CONFIG_CLOCK_DPLL0_REF_CLOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="3"/>
+          </Values>
+        </KeyValueSet>
+        <Integer dnOrder="5" id="CONFIG_CLOCK_DPLL1_DIVIDER">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="0"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="6" id="CONFIG_CLOCK_DPLL1_DIVIDER_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="2"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="7" id="CONFIG_CLOCK_DPLL1_ENABLE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="8" id="CONFIG_CLOCK_DPLL1_LDRFRAC_FRACTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="0"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="9" id="CONFIG_CLOCK_DPLL1_LDR_INTEGER">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="95"/>
+          </Values>
+        </Integer>
+        <Float dnOrder="10" id="CONFIG_CLOCK_DPLL1_MULTIPLIER_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="96.0"/>
+          </Values>
+        </Float>
+        <KeyValueSet dnOrder="11" id="CONFIG_CLOCK_DPLL1_REF_CLOCK">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="3"/>
+          </Values>
+        </KeyValueSet>
+        <Boolean dnOrder="12" id="CONFIG_CLOCK_XOSC1_ENABLE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="13" id="CONFIG_CLOCK_XOSC1_FREQUENCY">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="12000000"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="14" id="CPU_CLOCK_FREQUENCY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="120000000"/>
+          </Values>
+        </Integer>
+        <Menu dnOrder="15" id="CoreIARMenu">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Menu>
+        <Menu dnOrder="16" id="CoreKEILMenu">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Menu>
+        <KeyValueSet dnOrder="17" id="DEVICE_SECURITY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="18" id="DEVICE_TCM_SIZE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <Integer dnOrder="19" id="DPLL0_CLOCK_FREQ">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="120000000"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="20" id="DPLL1_CLOCK_FREQ">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="96000000"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="21" id="GCLK_0_FREQ">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="120000000"/>
+          </Values>
+        </Integer>
+        <KeyValueSet dnOrder="22" id="GCLK_0_SRC">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="7"/>
+          </Values>
+        </KeyValueSet>
+        <Integer dnOrder="23" id="GCLK_1_DIV">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="2"/>
+            <User dnOrder="1" value="12"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="24" id="GCLK_1_DIVIDER_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="12"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="25" id="GCLK_1_FREQ">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="1000000"/>
+          </Values>
+        </Integer>
+        <KeyValueSet dnOrder="26" id="GCLK_1_SRC">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="6"/>
+            <User dnOrder="1" value="1"/>
+          </Values>
+        </KeyValueSet>
+        <Integer dnOrder="27" id="GCLK_2_DIV">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="48"/>
+            <User dnOrder="1" value="2"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="28" id="GCLK_2_DIVIDER_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="2"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="29" id="GCLK_2_FREQ">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="48000000"/>
+          </Values>
+        </Integer>
+        <KeyValueSet dnOrder="30" id="GCLK_2_SRC">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="6"/>
+            <User dnOrder="1" value="8"/>
+          </Values>
+        </KeyValueSet>
+        <ListEntry dnOrder="31" id="GCLK_CODE">
+          <Attributes dnOrder="0">
+            <StringArray dnOrder="0" id="values">
+              <Values dnOrder="0">
+                <Value dnOrder="0">&amp;#160;&amp;#160;&amp;#160;&amp;#160;DFLL_Initialize();</Value>
+                <Value dnOrder="1">&amp;#160;&amp;#160;&amp;#160;&amp;#160;GCLK1_Initialize();</Value>
+                <Value dnOrder="2">&amp;#160;&amp;#160;&amp;#160;&amp;#160;FDPLL0_Initialize();</Value>
+                <Value dnOrder="3">&amp;#160;&amp;#160;&amp;#160;&amp;#160;FDPLL1_Initialize();</Value>
+                <Value dnOrder="4">&amp;#160;&amp;#160;&amp;#160;&amp;#160;GCLK0_Initialize();</Value>
+                <Value dnOrder="5">&amp;#160;&amp;#160;&amp;#160;&amp;#160;GCLK2_Initialize();</Value>
+              </Values>
+            </StringArray>
+          </Attributes>
+        </ListEntry>
+        <Boolean dnOrder="32" id="GCLK_CYCLE_FORMED">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="33" id="GCLK_ID_10_CHEN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="34" id="GCLK_ID_10_FREQ">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="48000000"/>
+          </Values>
+        </Integer>
+        <KeyValueSet dnOrder="35" id="GCLK_ID_10_GENSEL">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="2"/>
+          </Values>
+        </KeyValueSet>
+        <Boolean dnOrder="36" id="GCLK_ID_1_CHEN">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="37" id="GCLK_ID_1_FREQ">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="1000000"/>
+          </Values>
+        </Integer>
+        <KeyValueSet dnOrder="38" id="GCLK_ID_1_GENSEL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="2"/>
+            <User dnOrder="1" value="1"/>
+          </Values>
+        </KeyValueSet>
+        <Boolean dnOrder="39" id="GCLK_ID_2_CHEN">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="40" id="GCLK_ID_2_FREQ">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="1000000"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="41" id="GCLK_INST_NUM1">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+            <User dnOrder="1" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="42" id="GCLK_INST_NUM2">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="43" id="KEIL_STACK_HEAP_SIZE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x1200"/>
+          </Values>
+        </String>
+        <Integer dnOrder="44" id="MAIN_CLOCK_FREQUENCY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="120000000"/>
+          </Values>
+        </Integer>
+        <String dnOrder="45" id="MCLK_APBB_INITIAL_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x18057"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="46" id="NVIC_80_0_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="47" id="NVIC_80_0_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="DRV_USBFSV1_OTHER_Handler"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="48" id="NVIC_80_0_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="49" id="NVIC_81_0_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="50" id="NVIC_81_0_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="DRV_USBFSV1_SOF_HSOF_Handler"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="51" id="NVIC_81_0_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="52" id="NVIC_82_0_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="53" id="NVIC_82_0_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="DRV_USBFSV1_TRCPT0_Handler"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="54" id="NVIC_82_0_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="55" id="NVIC_83_0_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="56" id="NVIC_83_0_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="DRV_USBFSV1_TRCPT1_Handler"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="57" id="NVIC_83_0_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="58" id="PIN_122_DIR">
+          <Values dnOrder="0">
+            <User dnOrder="0" value=""/>
+          </Values>
+        </String>
+        <String dnOrder="59" id="PIN_122_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="SWITCH_AL"/>
+          </Values>
+        </String>
+        <String dnOrder="60" id="PIN_3_DIR">
+          <Values dnOrder="0">
+            <User dnOrder="0" value=""/>
+          </Values>
+        </String>
+        <String dnOrder="61" id="PIN_3_FUNCTION_NAME">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="USB_VBUS_SENSE"/>
+          </Values>
+        </String>
+        <String dnOrder="62" id="PIN_3_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="GPIO"/>
+          </Values>
+        </String>
+        <String dnOrder="63" id="PIN_3_INEN">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="True"/>
+          </Values>
+        </String>
+        <String dnOrder="64" id="PIN_3_LAT">
+          <Values dnOrder="0">
+            <User dnOrder="0" value=""/>
+          </Values>
+        </String>
+        <String dnOrder="65" id="PIN_3_MODE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value=""/>
+          </Values>
+        </String>
+        <String dnOrder="66" id="PIN_3_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="GPIO"/>
+          </Values>
+        </String>
+        <String dnOrder="67" id="PIN_3_PULLEN">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="True"/>
+          </Values>
+        </String>
+        <String dnOrder="68" id="PIN_72_INEN">
+          <Values dnOrder="0">
+            <User dnOrder="0" value=""/>
+          </Values>
+        </String>
+        <String dnOrder="69" id="PIN_72_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="LED_AL"/>
+          </Values>
+        </String>
+        <String dnOrder="70" id="PIN_72_PULLEN">
+          <Values dnOrder="0">
+            <User dnOrder="0" value=""/>
+          </Values>
+        </String>
+        <String dnOrder="71" id="PIN_94_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="USB_DM"/>
+          </Values>
+        </String>
+        <String dnOrder="72" id="PIN_94_MODE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value=""/>
+          </Values>
+        </String>
+        <String dnOrder="73" id="PIN_94_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="H"/>
+          </Values>
+        </String>
+        <String dnOrder="74" id="PIN_95_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="USB_DP"/>
+          </Values>
+        </String>
+        <String dnOrder="75" id="PIN_95_MODE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value=""/>
+          </Values>
+        </String>
+        <String dnOrder="76" id="PIN_95_PERIPHERAL_FUNCTION">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="H"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="77" id="PORT_GROUP_0">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="78" id="PORT_GROUP_0_PINCFG24">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x1"/>
+          </Values>
+        </String>
+        <String dnOrder="79" id="PORT_GROUP_0_PINCFG25">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x1"/>
+          </Values>
+        </String>
+        <String dnOrder="80" id="PORT_GROUP_0_PMUX12">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x77"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="81" id="PORT_GROUP_1">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="82" id="PORT_GROUP_1_DIR">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x0"/>
+          </Values>
+        </String>
+        <String dnOrder="83" id="PORT_GROUP_1_OUT">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x80000000"/>
+          </Values>
+        </String>
+        <String dnOrder="84" id="PORT_GROUP_1_PAD_31">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="PB31"/>
+          </Values>
+        </String>
+        <String dnOrder="85" id="PORT_GROUP_1_PINCFG31">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x6"/>
+          </Values>
+        </String>
+        <String dnOrder="86" id="PORT_GROUP_1_PMUX15">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x0"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="87" id="PORT_GROUP_2">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="88" id="PORT_GROUP_2_DIR">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x40000"/>
+          </Values>
+        </String>
+        <String dnOrder="89" id="PORT_GROUP_2_OUT">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x40000"/>
+          </Values>
+        </String>
+        <String dnOrder="90" id="PORT_GROUP_2_PAD_0">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="PC00"/>
+          </Values>
+        </String>
+        <String dnOrder="91" id="PORT_GROUP_2_PAD_18">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="PC18"/>
+          </Values>
+        </String>
+        <String dnOrder="92" id="PORT_GROUP_2_PINCFG0">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x6"/>
+          </Values>
+        </String>
+        <String dnOrder="93" id="PORT_GROUP_2_PINCFG18">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x0"/>
+          </Values>
+        </String>
+        <String dnOrder="94" id="PORT_GROUP_2_PMUX0">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x0"/>
+          </Values>
+        </String>
+        <String dnOrder="95" id="PORT_GROUP_2_PMUX9">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x0"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="96" id="PORT_GROUP_3">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="true"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="97" id="PORT_REG_NAME">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="PORT"/>
+          </Values>
+        </String>
+        <Integer dnOrder="98" id="QSPI_CLOCK_FREQUENCY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </Integer>
+        <String dnOrder="99" id="SYSTICK_PERIOD">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x1d4c0"/>
+          </Values>
+        </String>
+        <Float dnOrder="100" id="SYSTICK_PERIOD_MS">
+          <Attributes dnOrder="0">
+            <Float dnOrder="0" id="max">
+              <Value dnOrder="0">139.81012</Value>
+            </Float>
+          </Attributes>
+        </Float>
+        <Integer dnOrder="101" id="SYSTICK_PERIOD_US">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="1000"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="102" id="USB_CLOCK_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="103" id="USB_CLOCK_FREQUENCY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="48000000"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="104" id="USB_OTHER_INTERRUPT_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="105" id="USB_OTHER_INTERRUPT_ENABLE_UPDATE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="false"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="106" id="USB_OTHER_INTERRUPT_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbfs_v1" value="DRV_USBFSV1_OTHER_Handler"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="107" id="USB_OTHER_INTERRUPT_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="108" id="USB_SOF_HSOF_INTERRUPT_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="109" id="USB_SOF_HSOF_INTERRUPT_ENABLE_UPDATE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="false"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="110" id="USB_SOF_HSOF_INTERRUPT_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbfs_v1" value="DRV_USBFSV1_SOF_HSOF_Handler"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="111" id="USB_SOF_HSOF_INTERRUPT_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="112" id="USB_TRCPT0_INTERRUPT_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="113" id="USB_TRCPT0_INTERRUPT_ENABLE_UPDATE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="false"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="114" id="USB_TRCPT0_INTERRUPT_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbfs_v1" value="DRV_USBFSV1_TRCPT0_Handler"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="115" id="USB_TRCPT0_INTERRUPT_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="116" id="USB_TRCPT1_INTERRUPT_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="117" id="USB_TRCPT1_INTERRUPT_ENABLE_UPDATE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="false"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="118" id="USB_TRCPT1_INTERRUPT_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbfs_v1" value="DRV_USBFSV1_TRCPT1_Handler"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="119" id="USB_TRCPT1_INTERRUPT_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="120" id="XOSC1_FREQ">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="12000000"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="121" id="XOSC1_IMULT">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="4"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="122" id="XOSC1_IPTAT">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="3"/>
+          </Values>
+        </Integer>
+      </Symbols>
+    </UniqueComponent>
+    <UniqueComponent dnOrder="3" id="dfp"/>
+    <UniqueComponent dnOrder="4" id="drv_usbfs_v1"/>
+    <UniqueComponent dnOrder="5" id="evsys">
+      <Symbols dnOrder="0">
+        <Boolean dnOrder="0" id="EVSYS_CHANNEL_0_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="1" id="EVSYS_CHANNEL_10_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="2" id="EVSYS_CHANNEL_11_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="3" id="EVSYS_CHANNEL_12_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="4" id="EVSYS_CHANNEL_13_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="5" id="EVSYS_CHANNEL_14_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="6" id="EVSYS_CHANNEL_15_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="7" id="EVSYS_CHANNEL_16_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="8" id="EVSYS_CHANNEL_17_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="9" id="EVSYS_CHANNEL_18_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="10" id="EVSYS_CHANNEL_19_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="11" id="EVSYS_CHANNEL_1_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="12" id="EVSYS_CHANNEL_20_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="13" id="EVSYS_CHANNEL_21_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="14" id="EVSYS_CHANNEL_22_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="15" id="EVSYS_CHANNEL_23_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="16" id="EVSYS_CHANNEL_24_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="17" id="EVSYS_CHANNEL_25_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="18" id="EVSYS_CHANNEL_26_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="19" id="EVSYS_CHANNEL_27_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="20" id="EVSYS_CHANNEL_28_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="21" id="EVSYS_CHANNEL_29_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="22" id="EVSYS_CHANNEL_2_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="23" id="EVSYS_CHANNEL_30_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="24" id="EVSYS_CHANNEL_31_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="25" id="EVSYS_CHANNEL_3_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="26" id="EVSYS_CHANNEL_4_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="27" id="EVSYS_CHANNEL_5_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="28" id="EVSYS_CHANNEL_6_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="29" id="EVSYS_CHANNEL_7_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="30" id="EVSYS_CHANNEL_8_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="31" id="EVSYS_CHANNEL_9_USER_READY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="evsys" value="false"/>
+          </Values>
+        </Boolean>
+      </Symbols>
+    </UniqueComponent>
+    <UniqueComponent dnOrder="6" id="HarmonyCore">
+      <Symbols dnOrder="0">
+        <File dnOrder="0" id="APP0_C">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="1" id="APP0_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Boolean dnOrder="2" id="ENABLE_APP_FILE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="3" id="ENABLE_DRV_COMMON">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="4" id="ENABLE_OSAL">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="5" id="ENABLE_SYS_CACHE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="6" id="ENABLE_SYS_COMMON">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="7" id="ENABLE_SYS_INT">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
+          </Values>
+        </Boolean>
+        <File dnOrder="8" id="SYS_CACHE_DEF">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="9" id="SYS_CACHE_HEADER">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="10" id="SYS_CACHE_SOURCE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+      </Symbols>
+    </UniqueComponent>
+    <UniqueComponent dnOrder="7" id="nvmctrl">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="NVM_RWS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="nvmctrl" value="5"/>
+          </Values>
+        </Integer>
+      </Symbols>
+    </UniqueComponent>
+    <GeneratorComponent dnOrder="8" id="sys_console">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="SYS_CONSOLE_USB_CONNECTION_COUNTER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="sys_console" value="2"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="1" id="SYS_CONSOLE_USB_READ_WRITE_BUFFER_SIZE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="sys_console" value="64"/>
+          </Values>
+        </Integer>
+      </Symbols>
+      <Instances dnOrder="1">
+        <InstanceComponent dnOrder="0" id="sys_console" instance="0">
+          <Symbols dnOrder="0">
+            <String dnOrder="0" id="SYS_CONSOLE_DEVICE">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="sys_console_0" value="USB_DEVICE_CDC_0"/>
+              </Values>
+            </String>
+            <Integer dnOrder="1" id="SYS_CONSOLE_DEVICE_INDEX">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="sys_console_0" value="0"/>
+              </Values>
+            </Integer>
+            <String dnOrder="2" id="SYS_CONSOLE_DEVICE_SET">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="sys_console_0" value="USB_CDC"/>
+              </Values>
+            </String>
+            <Integer dnOrder="3" id="SYS_CONSOLE_DEVICE_USB_INDEX">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="sys_console" value="0"/>
+              </Values>
+            </Integer>
+            <Integer dnOrder="4" id="SYS_CONSOLE_RX_BUFFER_SIZE">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </Integer>
+            <Integer dnOrder="5" id="SYS_CONSOLE_TX_BUFFER_SIZE">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </Integer>
+            <File dnOrder="6" id="SYS_CONSOLE_USB_CDC_SOURCE">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+            <File dnOrder="7" id="SYS_CONSOLE_USB_DEFINITIONS_HEADER">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+            <String dnOrder="8" id="SYS_CONSOLE_USB_DEVICE_SPEED">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="sys_console_0" value="Full Speed"/>
+              </Values>
+            </String>
+            <File dnOrder="9" id="SYS_CONSOLE_USB_HEADER">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+          </Symbols>
+          <Attachments dnOrder="1">
+            <DirectDependency dnOrder="0" id="sys_console_USB_DEVICE_CDC_dependency">
+              <Attributes dnOrder="0">
+                <String dnOrder="0" id="targetComponentID">
+                  <Value dnOrder="0">usb_device_cdc_0</Value>
+                </String>
+                <String dnOrder="1" id="targetAttachmentID">
+                  <Value dnOrder="0">USB&amp;#160;Device</Value>
+                </String>
+              </Attributes>
+            </DirectDependency>
+          </Attachments>
+        </InstanceComponent>
+        <InstanceComponent dnOrder="1" id="sys_console" instance="1">
+          <Symbols dnOrder="0">
+            <String dnOrder="0" id="SYS_CONSOLE_DEVICE">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="sys_console_1" value="USB_DEVICE_CDC_1"/>
+              </Values>
+            </String>
+            <Integer dnOrder="1" id="SYS_CONSOLE_DEVICE_INDEX">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="sys_console_1" value="1"/>
+              </Values>
+            </Integer>
+            <String dnOrder="2" id="SYS_CONSOLE_DEVICE_SET">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="sys_console_1" value="USB_CDC"/>
+              </Values>
+            </String>
+            <Integer dnOrder="3" id="SYS_CONSOLE_DEVICE_USB_INDEX">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="sys_console" value="1"/>
+              </Values>
+            </Integer>
+            <Integer dnOrder="4" id="SYS_CONSOLE_RX_BUFFER_SIZE">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </Integer>
+            <Integer dnOrder="5" id="SYS_CONSOLE_TX_BUFFER_SIZE">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </Integer>
+            <File dnOrder="6" id="SYS_CONSOLE_USB_CDC_SOURCE">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+            <File dnOrder="7" id="SYS_CONSOLE_USB_DEFINITIONS_HEADER">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+            <String dnOrder="8" id="SYS_CONSOLE_USB_DEVICE_SPEED">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="sys_console_1" value="Full Speed"/>
+              </Values>
+            </String>
+            <File dnOrder="9" id="SYS_CONSOLE_USB_HEADER">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+          </Symbols>
+          <Attachments dnOrder="1">
+            <DirectDependency dnOrder="0" id="sys_console_USB_DEVICE_CDC_dependency">
+              <Attributes dnOrder="0">
+                <String dnOrder="0" id="targetComponentID">
+                  <Value dnOrder="0">usb_device_cdc_1</Value>
+                </String>
+                <String dnOrder="1" id="targetAttachmentID">
+                  <Value dnOrder="0">USB&amp;#160;Device</Value>
+                </String>
+              </Attributes>
+            </DirectDependency>
+          </Attachments>
+        </InstanceComponent>
+      </Instances>
+    </GeneratorComponent>
+    <UniqueComponent dnOrder="9" id="sys_debug">
+      <Symbols dnOrder="0">
+        <String dnOrder="0" id="SYS_CONSOLE_DEVICE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="sys_debug" value="SYS_CONSOLE_0"/>
+          </Values>
+        </String>
+        <String dnOrder="1" id="SYS_CONSOLE_INDEX">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="sys_debug" value="0"/>
+          </Values>
+        </String>
+      </Symbols>
+      <Attachments dnOrder="1">
+        <DirectDependency dnOrder="0" id="sys_debug_SYS_CONSOLE_dependency">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="targetComponentID">
+              <Value dnOrder="0">sys_console_0</Value>
+            </String>
+            <String dnOrder="1" id="targetAttachmentID">
+              <Value dnOrder="0">sys_console</Value>
+            </String>
+          </Attributes>
+        </DirectDependency>
+      </Attachments>
+    </UniqueComponent>
+    <UniqueComponent dnOrder="10" id="usb_device">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_device" value="141"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="1" id="CONFIG_USB_DEVICE_DESCRIPTOR_IAD_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_device" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="2" id="CONFIG_USB_DEVICE_ENDPOINTS_NUMBER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_device" value="4"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="3" id="CONFIG_USB_DEVICE_FUNCTIONS_NUMBER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_device" value="2"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="4" id="CONFIG_USB_DEVICE_INTERFACES_NUMBER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_device" value="4"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="5" id="CONFIG_USB_DEVICE_MSD_DISK_IMAGE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_device" value="false"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="6" id="CONFIG_USB_DEVICE_PRODUCT_ID_IDX0">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_device" value="0x0208"/>
+          </Values>
+        </String>
+        <Combo dnOrder="7" id="CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="cdc_com_port_dual_demo"/>
+          </Values>
+        </Combo>
+        <String dnOrder="8" id="CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_device" value="CDC Dual COM Port Demo"/>
+          </Values>
+        </String>
+      </Symbols>
+    </UniqueComponent>
+    <GeneratorComponent dnOrder="11" id="usb_device_cdc">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="CONFIG_USB_DEVICE_CDC_INSTANCES">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_device_cdc" value="2"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="1" id="CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_device_cdc" value="6"/>
+          </Values>
+        </Integer>
+      </Symbols>
+      <Instances dnOrder="1">
+        <InstanceComponent dnOrder="0" id="usb_device_cdc" instance="0">
+          <Symbols dnOrder="0">
+            <Integer dnOrder="0" id="CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="usb_device_cdc_0" value="2"/>
+              </Values>
+            </Integer>
+            <Integer dnOrder="1" id="CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="usb_device_cdc_0" value="2"/>
+              </Values>
+            </Integer>
+            <Integer dnOrder="2" id="CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="usb_device_cdc_0" value="0"/>
+              </Values>
+            </Integer>
+            <Integer dnOrder="3" id="CONFIG_USB_DEVICE_FUNCTION_INT_ENDPOINT_NUMBER">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="usb_device_cdc_0" value="1"/>
+              </Values>
+            </Integer>
+            <Boolean dnOrder="4" id="CONFIG_USB_DEVICE_FUNCTION_USE_IAD">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="usb_device_cdc_0" value="true"/>
+              </Values>
+            </Boolean>
+          </Symbols>
+          <Attachments dnOrder="1">
+            <DirectCapability dnOrder="0" id="USB Device">
+              <Attributes dnOrder="0">
+                <String dnOrder="0" id="targetComponentID">
+                  <Value dnOrder="0">sys_console_0</Value>
+                </String>
+                <String dnOrder="1" id="targetAttachmentID">
+                  <Value dnOrder="0">sys_console_USB_DEVICE_CDC_dependency</Value>
+                </String>
+              </Attributes>
+            </DirectCapability>
+          </Attachments>
+        </InstanceComponent>
+        <InstanceComponent dnOrder="1" id="usb_device_cdc" instance="1">
+          <Symbols dnOrder="0">
+            <Integer dnOrder="0" id="CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="usb_device_cdc_1" value="4"/>
+              </Values>
+            </Integer>
+            <Integer dnOrder="1" id="CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="usb_device_cdc_1" value="4"/>
+              </Values>
+            </Integer>
+            <Integer dnOrder="2" id="CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="usb_device_cdc_1" value="2"/>
+              </Values>
+            </Integer>
+            <Integer dnOrder="3" id="CONFIG_USB_DEVICE_FUNCTION_INT_ENDPOINT_NUMBER">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="usb_device_cdc_1" value="3"/>
+              </Values>
+            </Integer>
+            <Boolean dnOrder="4" id="CONFIG_USB_DEVICE_FUNCTION_USE_IAD">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="usb_device_cdc_1" value="true"/>
+              </Values>
+            </Boolean>
+          </Symbols>
+          <Attachments dnOrder="1">
+            <DirectCapability dnOrder="0" id="USB Device">
+              <Attributes dnOrder="0">
+                <String dnOrder="0" id="targetComponentID">
+                  <Value dnOrder="0">sys_console_1</Value>
+                </String>
+                <String dnOrder="1" id="targetAttachmentID">
+                  <Value dnOrder="0">sys_console_USB_DEVICE_CDC_dependency</Value>
+                </String>
+              </Attributes>
+            </DirectCapability>
+          </Attachments>
+        </InstanceComponent>
+      </Instances>
+    </GeneratorComponent>
+  </Components>
+  <UserData>
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+      <ElementPositions dnOrder="0">
+        <ElementPosition dnOrder="0" id="BSP_SAM_E54_Xplained_Pro" x="800" y="20"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="8" y="102"/>
+        <ElementPosition dnOrder="2" id="cmsis" x="660" y="20"/>
+        <ElementPosition dnOrder="3" id="core" x="560" y="20"/>
+        <ElementPosition dnOrder="4" id="dfp" x="340" y="20"/>
+        <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="4" y="204"/>
+        <ElementPosition dnOrder="6" id="evsys" x="180" y="20"/>
+        <ElementPosition dnOrder="7" id="nvmctrl" x="20" y="20"/>
+        <ElementPosition dnOrder="8" id="sys_console" x="494" y="99"/>
+        <ElementPosition dnOrder="9" id="sys_debug" x="670" y="157"/>
+        <ElementPosition dnOrder="10" id="usb_device" x="162" y="205"/>
+        <ElementPosition dnOrder="11" id="usb_device_cdc" x="302" y="155"/>
+      </ElementPositions>
+    </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
+  </UserData>
+</Configuration>
