@@ -57,6 +57,8 @@
 
 static SYS_CONSOLE_OBJECT_INSTANCE consoleDeviceInstance[SYS_CONSOLE_DEVICE_MAX_INSTANCES];
 
+#define SYS_CONSOLE_GET_INSTANCE(index)    (index >= SYS_CONSOLE_DEVICE_MAX_INSTANCES)? NULL : &consoleDeviceInstance[index]
+
 SYS_MODULE_OBJ SYS_CONSOLE_Initialize(
     const SYS_MODULE_INDEX index,
     const SYS_MODULE_INIT* const init
@@ -128,6 +130,44 @@ SYS_STATUS SYS_CONSOLE_Status ( SYS_MODULE_OBJ object )
     return ret;
 }
 
+SYS_MODULE_INDEX SYS_CONSOLE_IndexGet( SYS_CONSOLE_DEVICE devType)
+{
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj;
+    uint32_t index;
+
+    for (index = 0; index < SYS_CONSOLE_DEVICE_MAX_INSTANCES; index++)
+    {
+        pConsoleObj = &consoleDeviceInstance[index];
+
+        if (pConsoleObj->devDesc != NULL)
+        {
+            if (pConsoleObj->devDesc->consoleDevice == devType)
+            {
+                /* Found first console supporting the requested devType */
+                return index;
+            }
+        }
+    }
+
+    return SYS_CONSOLE_DEVICE_MAX_INSTANCES;
+}
+
+SYS_CONSOLE_DEVICE SYS_CONSOLE_DeviceGet( SYS_MODULE_INDEX index)
+{
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
+
+    if (pConsoleObj)
+    {
+        if (pConsoleObj->devDesc != NULL)
+        {
+            return pConsoleObj->devDesc->consoleDevice;
+        }
+    }
+
+    return SYS_CONSOLE_DEV_MAX;
+
+}
+
 void SYS_CONSOLE_Tasks ( SYS_MODULE_OBJ object )
 {
     SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[(SYS_MODULE_INDEX)object];
@@ -142,72 +182,144 @@ void SYS_CONSOLE_Tasks ( SYS_MODULE_OBJ object )
 
 ssize_t SYS_CONSOLE_Read(
     const SYS_MODULE_INDEX index,
-    int fd,
     void* buf,
     size_t count
 )
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[index];
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
 
-    if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED
-            || pConsoleObj->devDesc == NULL)
+    if (pConsoleObj)
     {
-        return 0;
+        if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED || pConsoleObj->devDesc == NULL)
+        {
+            return -1;
+        }
+
+        return pConsoleObj->devDesc->read(pConsoleObj->devIndex, buf, count);
+    }
+    else
+    {
+        return -1;
     }
 
-    return pConsoleObj->devDesc->read(pConsoleObj->devIndex, fd, buf, count);
+}
+
+ssize_t SYS_CONSOLE_ReadFreeBufferCountGet(const SYS_MODULE_INDEX index)
+{
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
+
+    if (pConsoleObj)
+    {
+        if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED || pConsoleObj->devDesc == NULL)
+        {
+            return -1;
+        }
+
+        return pConsoleObj->devDesc->readFreeBufferCountGet(pConsoleObj->devIndex);
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+ssize_t SYS_CONSOLE_ReadCountGet(const SYS_MODULE_INDEX index)
+{
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
+
+    if (pConsoleObj)
+    {
+        if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED || pConsoleObj->devDesc == NULL)
+        {
+            return -1;
+        }
+
+        return pConsoleObj->devDesc->readCountGet(pConsoleObj->devIndex);
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 ssize_t SYS_CONSOLE_Write(
     const SYS_MODULE_INDEX index,
-    int fd,
     const void* buf,
     size_t count
 )
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj;
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
 
-    if (index >= SYS_CONSOLE_DEVICE_MAX_INSTANCES)
+    if (pConsoleObj)
     {
-        return 0;
+        if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED || pConsoleObj->devDesc == NULL)
+        {
+            return -1;
+        }
+
+        return pConsoleObj->devDesc->write(pConsoleObj->devIndex, buf, count);
     }
-
-    pConsoleObj = &consoleDeviceInstance[index];
-
-    if ((pConsoleObj->status == SYS_STATUS_UNINITIALIZED) || (pConsoleObj->devDesc == NULL))
+    else
     {
-        return 0;
+        return -1;
     }
-
-    return pConsoleObj->devDesc->write(pConsoleObj->devIndex, fd, buf, count);
 }
 
-void SYS_CONSOLE_RegisterCallback(
-    const SYS_MODULE_INDEX index,
-    SYS_CONSOLE_CALLBACK cbFunc,
-    SYS_CONSOLE_EVENT event
-)
+ssize_t SYS_CONSOLE_WriteFreeBufferCountGet(const SYS_MODULE_INDEX index)
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[index];
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
 
-    if (pConsoleObj->devDesc == NULL)
+    if (pConsoleObj)
     {
-        return;
-    }
+        if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED || pConsoleObj->devDesc == NULL)
+        {
+            return -1;
+        }
 
-    pConsoleObj->devDesc->callbackRegister(pConsoleObj->devIndex, cbFunc, event);
+        return pConsoleObj->devDesc->writeFreeBufferCountGet(pConsoleObj->devIndex);
+    }
+    else
+    {
+        return -1;
+    }
 }
 
-void SYS_CONSOLE_Flush(const SYS_MODULE_INDEX index)
+ssize_t SYS_CONSOLE_WriteCountGet(const SYS_MODULE_INDEX index)
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[index];
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
 
-    if (pConsoleObj->devDesc == NULL)
+    if (pConsoleObj)
     {
-        return;
-    }
+        if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED || pConsoleObj->devDesc == NULL)
+        {
+            return -1;
+        }
 
-    pConsoleObj->devDesc->flush(pConsoleObj->devIndex);
+        return pConsoleObj->devDesc->writeCountGet(pConsoleObj->devIndex);
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+bool SYS_CONSOLE_Flush(const SYS_MODULE_INDEX index)
+{
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
+
+    if (pConsoleObj)
+    {
+        if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED || pConsoleObj->devDesc == NULL)
+        {
+            return false;
+        }
+
+        return pConsoleObj->devDesc->flush(pConsoleObj->devIndex);
+    }
+    else
+    {
+        return false;
+    }
 }
 
 

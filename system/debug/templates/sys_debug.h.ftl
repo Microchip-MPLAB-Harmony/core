@@ -470,6 +470,40 @@ void SYS_DEBUG_ErrorLevelSet(SYS_ERROR_LEVEL level);
 
 SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 
+// *****************************************************************************
+/* Function:
+   bool SYS_DEBUG_Remap(const SYS_MODULE_INDEX index)
+
+  Summary:
+    Allows re-mapping of debug system service to another console instance
+
+  Description:
+    This function re-maps calls to the Debug Service APIs to a different console
+    instance.
+
+  Precondition:
+    None.
+
+  Parameters:
+    index - The index of the console to remap the debug system service calls to
+
+  Returns:
+    True - If operation is successful
+    False - In case of failure
+
+  Example:
+    <code>
+    // Re-map debug system service calls to console index 1
+    if (SYS_DEBUG_Remap(SYS_CONSOLE_INDEX_1) == true)
+    {
+        // SYS Debug re-mapped to SYS Console Instance - 1
+    }
+    </code>
+
+  Remarks:
+    None.
+*/
+bool SYS_DEBUG_Remap(const SYS_MODULE_INDEX index);
 
 // *****************************************************************************
 // *****************************************************************************

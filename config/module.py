@@ -33,7 +33,7 @@ def loadModule():
     coreComponents = [
         {"name":"time", "label": "TIME", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_TIME"], "capability_type":"generic", "dependency":[  "TMR"], "condition": "True"},
 
-        {"name":"console", "label": "CONSOLE", "type":"system", "display_path":"", "actual_path":"", "instance":"multi", "capability":["SYS_CONSOLE"], "capability_type":"multi", "dependency":["UART"], "condition":"True"},
+        {"name":"console", "label": "CONSOLE", "type":"system", "display_path":"", "actual_path":"", "instance":"multi", "capability":["SYS_CONSOLE"], "capability_type":"multi", "dependency":["UART", "USB_DEVICE_CDC"], "condition":"True", "is_dependency_required": "False"},
 
         {"name":"command", "label": "COMMAND", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_COMMAND"], "capability_type":"generic", "dependency":["SYS_CONSOLE"], "condition":"True"},
 

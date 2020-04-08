@@ -1,7 +1,6 @@
 // <editor-fold defaultstate="collapsed" desc="SYS_CONSOLE Instance ${INDEX?string} Initialization Data">
 
-static QElement sysConsole${INDEX?string}UARTRdQueueElements[SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX${INDEX?string}];
-static QElement sysConsole${INDEX?string}UARTWrQueueElements[SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX${INDEX?string}];
+<#if SYS_CONSOLE_DEVICE_SET == "UART">
 
 /* Declared in console device implementation (sys_console_uart.c) */
 extern const SYS_CONSOLE_DEV_DESC sysConsoleUARTDevDesc;
@@ -9,70 +8,16 @@ extern const SYS_CONSOLE_DEV_DESC sysConsoleUARTDevDesc;
 const SYS_CONSOLE_UART_PLIB_INTERFACE sysConsole${INDEX?string}UARTPlibAPI =
 {
     .read = (SYS_CONSOLE_UART_PLIB_READ)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_Read,
+	.readCountGet = (SYS_CONSOLE_UART_PLIB_READ_COUNT_GET)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_ReadCountGet,
+	.readFreeBufferCountGet = (SYS_CONSOLE_UART_PLIB_READ_FREE_BUFFFER_COUNT_GET)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_ReadFreeBufferCountGet,
     .write = (SYS_CONSOLE_UART_PLIB_WRITE)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_Write,
-    .readCallbackRegister = (SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_READ)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_ReadCallbackRegister,
-    .writeCallbackRegister = (SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_WRITE)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_WriteCallbackRegister,
-    .errorGet = (SYS_CONSOLE_UART_PLIB_ERROR_GET)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_ErrorGet,
-};
-
-<#assign USART_PLIB = "SYS_CONSOLE_DEVICE">
-<#assign USART_PLIB_MULTI_IRQn = "core." + USART_PLIB?eval + "_MULTI_IRQn">
-<#assign USART_PLIB_SINGLE_IRQn = "core." + USART_PLIB?eval + "_SINGLE_IRQn">
-<#if USART_PLIB_MULTI_IRQn?eval??>
-    <#assign USART_PLIB_TX_COMPLETE_INDEX = "core." + USART_PLIB?eval + "_USART_TX_COMPLETE_INT_SRC">
-    <#assign USART_PLIB_TX_READY_INDEX = "core." + USART_PLIB?eval + "_USART_TX_READY_INT_SRC">
-    <#assign USART_PLIB_RX_INDEX = "core." + USART_PLIB?eval + "_USART_RX_INT_SRC">
-    <#assign USART_PLIB_ERROR_INDEX = "core." + USART_PLIB?eval + "_USART_ERROR_INT_SRC">
-</#if>
-
-const SYS_CONSOLE_UART_INTERRUPT_SOURCES sysConsole${INDEX?string}UARTInterruptSources =
-{
-    <#if USART_PLIB_MULTI_IRQn?eval??>
-        <#lt>    /* Peripheral has more than one interrupt vector */
-        <#lt>    .isSingleIntSrc                        = false,
-
-        <#lt>    /* Peripheral interrupt lines */
-        <#if USART_PLIB_TX_COMPLETE_INDEX?eval??>
-            <#lt>    .intSources.multi.usartTxCompleteInt   = ${USART_PLIB_TX_COMPLETE_INDEX?eval},
-        <#else>
-            <#lt>    .intSources.multi.usartTxCompleteInt   = -1,
-        </#if>
-        <#if USART_PLIB_TX_READY_INDEX?eval??>
-            <#lt>    .intSources.multi.usartTxReadyInt      = ${USART_PLIB_TX_READY_INDEX?eval},
-        <#else>
-            <#lt>    .intSources.multi.usartTxReadyInt      = -1,
-        </#if>
-        <#if USART_PLIB_RX_INDEX?eval??>
-            <#lt>    .intSources.multi.usartRxCompleteInt   = ${USART_PLIB_RX_INDEX?eval},
-        <#else>
-            <#lt>    .intSources.multi.usartTxReadyInt      = -1,
-        </#if>
-        <#if USART_PLIB_ERROR_INDEX?eval??>
-            <#lt>    .intSources.multi.usartErrorInt        = ${USART_PLIB_ERROR_INDEX?eval},
-        <#else>
-            <#lt>    .intSources.multi.usartErrorInt        = -1,
-        </#if>
-    <#else>
-        <#lt>    /* Peripheral has single interrupt vector */
-        <#lt>    .isSingleIntSrc                        = true,
-
-        <#lt>    /* Peripheral interrupt line */
-        <#if USART_PLIB_SINGLE_IRQn?eval??>
-            <#lt>    .intSources.usartInterrupt             = ${USART_PLIB_SINGLE_IRQn?eval},
-        <#else>
-            <#lt>    .intSources.usartInterrupt             = ${SYS_CONSOLE_DEVICE}_IRQn,
-        </#if>
-    </#if>
+	.writeCountGet = (SYS_CONSOLE_UART_PLIB_WRITE_COUNT_GET)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_WriteCountGet,
+	.writeFreeBufferCountGet = (SYS_CONSOLE_UART_PLIB_WRITE_FREE_BUFFER_COUNT_GET)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_WriteFreeBufferCountGet,
 };
 
 const SYS_CONSOLE_UART_INIT_DATA sysConsole${INDEX?string}UARTInitData =
 {
-    .uartPLIB = &sysConsole${INDEX?string}UARTPlibAPI,
-    .readQueueElementsArr = sysConsole${INDEX?string}UARTRdQueueElements,
-    .writeQueueElementsArr = sysConsole${INDEX?string}UARTWrQueueElements,
-    .readQueueDepth = SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX${INDEX?string},
-    .writeQueueDepth = SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX${INDEX?string},
-    .interruptSources = &sysConsole${INDEX?string}UARTInterruptSources,
+    .uartPLIB = &sysConsole${INDEX?string}UARTPlibAPI,    
 };
 
 const SYS_CONSOLE_INIT sysConsole${INDEX?string}Init =
@@ -81,5 +26,39 @@ const SYS_CONSOLE_INIT sysConsole${INDEX?string}Init =
     .consDevDesc = &sysConsoleUARTDevDesc,
     .deviceIndex = ${SYS_CONSOLE_DEVICE_UART_INDEX},
 };
+
+</#if>
+
+<#if SYS_CONSOLE_DEVICE_SET == "USB_CDC">
+/* These buffers are passed to the USB CDC Function Driver */
+static uint8_t CACHE_ALIGN sysConsole${INDEX?string}USBCdcRdBuffer[SYS_CONSOLE_USB_CDC_READ_WRITE_BUFFER_SIZE];
+static uint8_t CACHE_ALIGN sysConsole${INDEX?string}USBCdcWrBuffer[SYS_CONSOLE_USB_CDC_READ_WRITE_BUFFER_SIZE];
+
+/* These are the USB CDC Ring Buffers. Data received from USB layer are copied to these ring buffer. */
+static uint8_t sysConsole${INDEX?string}USBCdcRdRingBuffer[SYS_CONSOLE_USB_CDC_RD_BUFFER_SIZE_IDX${INDEX?string}];
+static uint8_t sysConsole${INDEX?string}USBCdcWrRingBuffer[SYS_CONSOLE_USB_CDC_WR_BUFFER_SIZE_IDX${INDEX?string}];
+
+/* Declared in console device implementation (sys_console_usb_cdc.c) */
+extern const SYS_CONSOLE_DEV_DESC sysConsoleUSBCdcDevDesc;
+
+const SYS_CONSOLE_USB_CDC_INIT_DATA sysConsole${INDEX?string}USBCdcInitData =
+{
+	.cdcInstanceIndex			= ${SYS_CONSOLE_DEVICE_INDEX},
+	.cdcReadBuffer				= sysConsole${INDEX?string}USBCdcRdBuffer,
+	.cdcWriteBuffer				= sysConsole${INDEX?string}USBCdcWrBuffer,
+    .consoleReadBuffer 			= sysConsole${INDEX?string}USBCdcRdRingBuffer,
+    .consoleWriteBuffer 		= sysConsole${INDEX?string}USBCdcWrRingBuffer,
+    .consoleReadBufferSize 		= SYS_CONSOLE_USB_CDC_RD_BUFFER_SIZE_IDX${INDEX?string},
+    .consoleWriteBufferSize 	= SYS_CONSOLE_USB_CDC_WR_BUFFER_SIZE_IDX${INDEX?string},
+};
+
+const SYS_CONSOLE_INIT sysConsole${INDEX?string}Init =
+{
+    .deviceInitData = (const void*)&sysConsole${INDEX?string}USBCdcInitData,
+    .consDevDesc = &sysConsoleUSBCdcDevDesc,
+    .deviceIndex = ${SYS_CONSOLE_DEVICE_USB_INDEX},
+};
+
+</#if>
 
 // </editor-fold>
