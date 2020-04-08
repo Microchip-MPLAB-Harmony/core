@@ -486,6 +486,20 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_StatsFormatFunc.setVisible(False)
     freeRtosSym_StatsFormatFunc.setDependencies(freeRtosStatsFormatFuncVisibility, ["FREERTOS_USE_TRACE_FACILITY"])
 
+    freeRtosSym_TraceMallocFnc = thirdPartyFreeRTOS.createStringSymbol("FREERTOS_TRACE_MALLOC_FNC", freeRtosSym_TraceFacility)
+    freeRtosSym_TraceMallocFnc.setLabel("Use Malloc trace function")
+    freeRtosSym_TraceMallocFnc.setDescription("Use memory allocation trace function")
+    freeRtosSym_TraceMallocFnc.setDefaultValue("")
+    freeRtosSym_TraceMallocFnc.setVisible(False)
+    freeRtosSym_TraceMallocFnc.setDependencies(freeRtosStatsFormatFuncVisibility, ["FREERTOS_USE_TRACE_FACILITY"])
+
+    freeRtosSym_TraceFreeFnc = thirdPartyFreeRTOS.createStringSymbol("FREERTOS_TRACE_FREE_FNC", freeRtosSym_TraceFacility)
+    freeRtosSym_TraceFreeFnc.setLabel("Use Free trace function")
+    freeRtosSym_TraceFreeFnc.setDescription("Use memory free trace function")
+    freeRtosSym_TraceFreeFnc.setDefaultValue("")
+    freeRtosSym_TraceFreeFnc.setVisible(False)
+    freeRtosSym_TraceFreeFnc.setDependencies(freeRtosStatsFormatFuncVisibility, ["FREERTOS_USE_TRACE_FACILITY"])
+
     freeRtosSym_CoRoutines = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_USE_CO_ROUTINES", freeRtosSymMenu)
     freeRtosSym_CoRoutines.setLabel("Use Co-Routines")
     freeRtosSym_CoRoutines.setDescription("FreeRTOS - Use Co-Routines")
@@ -653,11 +667,11 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosConfHeaderFile.setMarkup(True)
 
     freeRtosHooksSourceFile = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_HOOKS_C", None)
-    freeRtosHooksSourceFile.setSourcePath("templates/freertos_hooks.c")
+    freeRtosHooksSourceFile.setSourcePath("templates/freertos_hooks.c.ftl")
     freeRtosHooksSourceFile.setOutputName("freertos_hooks.c")
     freeRtosHooksSourceFile.setProjectPath("config/" + configName + "")
     freeRtosHooksSourceFile.setType("SOURCE")
-    freeRtosHooksSourceFile.setMarkup(False)
+    freeRtosHooksSourceFile.setMarkup(True)
 
     freeRtosCoRoutine = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_CROUTINE_C", None)
     freeRtosCoRoutine.setSourcePath("../CMSIS-FreeRTOS/Source/croutine.c")

@@ -172,4 +172,24 @@
     <#lt>#define configCLEAR_TICK_INTERRUPT ${FREERTOS_CONFIG_TICK_INTERRUPT}
 </#if>
 
+<#if FREERTOS_USE_TRACE_FACILITY == true && FREERTOS_TRACE_MALLOC_FNC?has_content>
+#define traceMALLOC( pvAddress, uiSize )      ${FREERTOS_TRACE_MALLOC_FNC}( pvAddress, uiSize )
+<#if core.COMPILER_CHOICE == "XC32">
+#ifndef __LANGUAGE_ASSEMBLY__
+<#elseif core.COMPILER_CHOICE == "IAR">
+#ifdef __ICCARM__
+</#if>
+void ${FREERTOS_TRACE_MALLOC_FNC}(void *pAddr, size_t size);
+#endif
+</#if>
+<#if FREERTOS_USE_TRACE_FACILITY == true && FREERTOS_TRACE_FREE_FNC?has_content>
+#define traceFREE( pvAddress, uiSize )        ${FREERTOS_TRACE_FREE_FNC}( pvAddress, uiSize )
+<#if core.COMPILER_CHOICE == "XC32">
+#ifndef __LANGUAGE_ASSEMBLY__
+<#elseif core.COMPILER_CHOICE == "IAR">
+#ifdef __ICCARM__
+</#if>
+void ${FREERTOS_TRACE_FREE_FNC}(void *pAddr, size_t size);
+#endif
+</#if>
 #endif /* FREERTOS_H */
