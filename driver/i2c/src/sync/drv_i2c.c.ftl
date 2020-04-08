@@ -46,8 +46,8 @@
 // *****************************************************************************
 // *****************************************************************************
 #include "configuration.h"
-//#include "system/debug/sys_debug.h"
 #include "driver/i2c/drv_i2c.h"
+#include "system/debug/sys_debug.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -144,13 +144,13 @@ SYS_MODULE_OBJ DRV_I2C_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     /* Validate the request */
     if(drvIndex >= DRV_I2C_INSTANCES_NUMBER)
     {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Invalid driver instance");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_ERROR, "Invalid driver instance");
         return SYS_MODULE_OBJ_INVALID;
     }
 
     if(gDrvI2CObj[drvIndex].status == SYS_STATUS_READY)
     {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Instance already initialized");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_ERROR, "Instance already initialized");
         return SYS_MODULE_OBJ_INVALID;
     }
 
@@ -206,7 +206,7 @@ SYS_STATUS DRV_I2C_Status( const SYS_MODULE_OBJ object)
     /* Validate the request */
     if((object == SYS_MODULE_OBJ_INVALID) || (object >= DRV_I2C_INSTANCES_NUMBER))
     {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Invalid system object handle");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_ERROR, "Invalid system object handle");
         return SYS_STATUS_UNINITIALIZED;
     }
 
@@ -261,7 +261,7 @@ DRV_HANDLE DRV_I2C_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
     /* Validate the request */
     if (drvIndex >= DRV_I2C_INSTANCES_NUMBER)
     {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Instance");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_ERROR, "Invalid Driver Instance");
         return DRV_HANDLE_INVALID;
     }
 
@@ -269,7 +269,7 @@ DRV_HANDLE DRV_I2C_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
 
     if((dObj->status != SYS_STATUS_READY) || (dObj->inUse == false))
     {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Was the driver initialized?");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_ERROR, "Was the driver initialized?");
         return DRV_HANDLE_INVALID;
     }
 
