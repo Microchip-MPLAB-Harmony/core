@@ -62,12 +62,6 @@ int FATFS_readdir (uintptr_t handle, uintptr_t fno);
 
 int FATFS_closedir (uintptr_t handle);
 
-int FATFS_findnext (uintptr_t handle, uintptr_t fno);
-
-int FATFS_findfirst (uintptr_t handle, uintptr_t fno, const char* path, const char* pattern);
-
-int FATFS_forward (uintptr_t handle, uint32_t(*func)(const uint8_t*, uint32_t), uint32_t btf, uint32_t* bf);
-
 <#if SYS_FS_FAT_READONLY == false>
     <#lt>int FATFS_write (uintptr_t handle, const void* buff, uint32_t btw, uint32_t* bw);
 
@@ -118,8 +112,6 @@ int FATFS_forward (uintptr_t handle, uint32_t(*func)(const uint8_t*, uint32_t), 
     <#lt>int FATFS_fdisk (uint8_t pdrv, const uint32_t szt[], void* work);
 
     <#lt>int FATFS_getclusters (const char *path, uint32_t *tot_sec, uint32_t *free_sec);
-
-    <#lt>int FATFS_getfree (const char* path, uint32_t* nclst, FATFS** fatfs);
 
 </#if>
 
