@@ -532,7 +532,16 @@ bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometr
 
     flash_size = DRV_SST26_GetFlashSize(jedecID[2]);
 
-    if (flash_size == 0)
+    if ((flash_size == 0) ||
+        (DRV_SST26_START_ADDRESS >= flash_size))
+    {
+        return false;
+    }
+
+    flash_size = flash_size - DRV_SST26_START_ADDRESS;
+
+    /* Flash size should be at-least of a Erase Block size */
+    if (flash_size < DRV_SST26_ERASE_BUFFER_SIZE)
     {
         return false;
     }
