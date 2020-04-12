@@ -96,17 +96,15 @@ extern "C" {
 #define SYS_TIME_CPU_CLOCK_FREQUENCY         120000000
 #define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (188)
 
-/* Console System Service Configuration Options */
-#define SYS_CONSOLE_DEVICE_MAX_INSTANCES   1
-#define SYS_CONSOLE_UART_MAX_INSTANCES     1
+#define SYS_CONSOLE_DEVICE_MAX_INSTANCES   			1
+#define SYS_CONSOLE_UART_MAX_INSTANCES 	   			1
+#define SYS_CONSOLE_USB_CDC_MAX_INSTANCES 	   		0
 
 
-/* RX queue size has one additional element for the empty spot needed in circular queue */
-#define SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX0    11
+#define SYS_CONSOLE_INDEX_0                       0
 
-/* TX queue size has one additional element for the empty spot needed in circular queue */
-#define SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX0    65
-#define SYS_CONSOLE_BUFFER_DMA_READY
+
+
 
 
 

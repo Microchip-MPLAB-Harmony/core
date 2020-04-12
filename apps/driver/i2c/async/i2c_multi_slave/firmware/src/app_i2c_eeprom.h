@@ -157,10 +157,7 @@ typedef struct
 
     /* Flag to indicate whether temperature is read from the temperature sensor */
     volatile bool isTemperatureReady;
-
-    /* Flag to indicate if user requested to read the temperature values from EEPROM */
-    volatile bool isTemperatureReadRequest;
-
+      
     uint32_t currentWriteIndex;
 
     uint8_t dummyData;

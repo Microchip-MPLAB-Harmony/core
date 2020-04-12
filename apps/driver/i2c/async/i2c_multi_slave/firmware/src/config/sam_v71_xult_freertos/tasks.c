@@ -84,6 +84,7 @@ void _APP_I2C_TEMP_SENSOR_Tasks(  void *pvParameters  )
 
 
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: System "Tasks" Routine
@@ -101,6 +102,7 @@ void SYS_Tasks ( void )
 {
     /* Maintain system services */
     
+
 
     /* Maintain Device Drivers */
     
@@ -124,6 +126,7 @@ void SYS_Tasks ( void )
                 NULL,
                 1,
                 &xAPP_I2C_TEMP_SENSOR_Tasks);
+
 
 
 

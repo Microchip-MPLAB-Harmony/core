@@ -2,7 +2,7 @@
 <configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
     <logicalFolder name="f1" displayName="Header Files" projectFiles="true">
-      <logicalFolder name="f2" displayName="config" projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_g55_xpro" projectFiles="true">
           <logicalFolder name="f4" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_g55_xpro/bsp/bsp.h</itemPath>
@@ -47,20 +47,20 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f3" displayName="system" projectFiles="true">
-            <logicalFolder name="f5" displayName="cache" projectFiles="true">
+            <logicalFolder name="f4" displayName="cache" projectFiles="true">
               <itemPath>../src/config/sam_g55_xpro/system/cache/sys_cache.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="console" projectFiles="true">
+            <logicalFolder name="f2" displayName="console" projectFiles="true">
               <itemPath>../src/config/sam_g55_xpro/system/console/sys_console.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="debug" projectFiles="true">
+            <logicalFolder name="f5" displayName="debug" projectFiles="true">
               <itemPath>../src/config/sam_g55_xpro/system/debug/sys_debug.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="int" projectFiles="true">
+            <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_g55_xpro/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/sam_g55_xpro/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="time" projectFiles="true">
+            <logicalFolder name="f1" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_g55_xpro/system/time/sys_time.h</itemPath>
               <itemPath>../src/config/sam_g55_xpro/system/time/sys_time_definitions.h</itemPath>
               <itemPath>../src/config/sam_g55_xpro/system/time/src/sys_time_local.h</itemPath>
@@ -81,8 +81,8 @@
         <itemPath>../src/config/sam_g55_xpro/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/sam_g55_xpro/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f1" displayName="packs" projectFiles="true">
-        <logicalFolder name="f2" displayName="ATSAMG55J19_DFP" projectFiles="true">
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
+        <logicalFolder name="f1" displayName="ATSAMG55J19_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAMG55J19_DFP/component/adc.h</itemPath>
             <itemPath>../src/packs/ATSAMG55J19_DFP/component/chipid.h</itemPath>
@@ -116,17 +116,17 @@
           <itemPath>../src/packs/ATSAMG55J19_DFP/device.h</itemPath>
           <itemPath>../src/packs/ATSAMG55J19_DFP/atsamg55j19.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
+        <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm4.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
               </logicalFolder>
@@ -190,8 +190,8 @@
               <itemPath>../src/config/sam_g55_xpro/system/cache/sys_cache.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="console" projectFiles="true">
-              <itemPath>../src/config/sam_g55_xpro/system/console/src/sys_console_local.h</itemPath>
               <itemPath>../src/config/sam_g55_xpro/system/console/src/sys_console.c</itemPath>
+              <itemPath>../src/config/sam_g55_xpro/system/console/src/sys_console_local.h</itemPath>
               <itemPath>../src/config/sam_g55_xpro/system/console/src/sys_console_uart.h</itemPath>
               <itemPath>../src/config/sam_g55_xpro/system/console/src/sys_console_uart_definitions.h</itemPath>
               <itemPath>../src/config/sam_g55_xpro/system/console/src/sys_console_uart.c</itemPath>
@@ -238,7 +238,7 @@
       </toolsSet>
       <packs>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
-        <pack name="SAMG_DFP" vendor="Microchip" version="3.0.9"/>
+        <pack name="SAMG_DFP" vendor="Microchip" version="3.1.27"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -297,7 +297,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/sam_g55_xpro;../src/packs/ATSAMG55J19_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
+                  value="../src;../src/config/sam_g55_xpro;../src/packs/ATSAMG55J19_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>

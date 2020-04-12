@@ -155,7 +155,21 @@ ssize_t SYS_CONSOLE_Read(
         return 0;
     }
 
-    return pConsoleObj->devDesc->read(pConsoleObj->devIndex, fd, buf, count);
+    return pConsoleObj->devDesc->read(pConsoleObj->devIndex, buf, count);
+}
+
+ssize_t SYS_CONSOLE_ReadFreeBufferCountGet(const SYS_MODULE_INDEX index)
+{
+	SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[index];
+	
+	return pConsoleObj->devDesc->readFreeBufferCountGet(pConsoleObj->devIndex);
+}
+
+ssize_t SYS_CONSOLE_ReadCountGet(const SYS_MODULE_INDEX index)
+{
+	SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[index];
+	
+	return pConsoleObj->devDesc->readCountGet(pConsoleObj->devIndex);
 }
 
 ssize_t SYS_CONSOLE_Write(
@@ -179,23 +193,21 @@ ssize_t SYS_CONSOLE_Write(
         return 0;
     }
 
-    return pConsoleObj->devDesc->write(pConsoleObj->devIndex, fd, buf, count);
+    return pConsoleObj->devDesc->write(pConsoleObj->devIndex, buf, count);
 }
 
-void SYS_CONSOLE_RegisterCallback(
-    const SYS_MODULE_INDEX index,
-    SYS_CONSOLE_CALLBACK cbFunc,
-    SYS_CONSOLE_EVENT event
-)
+ssize_t SYS_CONSOLE_WriteFreeBufferCountGet(const SYS_MODULE_INDEX index)
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[index];
+	SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[index];
+	
+	return pConsoleObj->devDesc->writeFreeBufferCountGet(pConsoleObj->devIndex);
+}
 
-    if (pConsoleObj->devDesc == NULL)
-    {
-        return;
-    }
-
-    pConsoleObj->devDesc->callbackRegister(pConsoleObj->devIndex, cbFunc, event);
+ssize_t SYS_CONSOLE_WriteCountGet(const SYS_MODULE_INDEX index)
+{
+	SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[index];
+	
+	return pConsoleObj->devDesc->writeCountGet(pConsoleObj->devIndex);
 }
 
 void SYS_CONSOLE_Flush(const SYS_MODULE_INDEX index)

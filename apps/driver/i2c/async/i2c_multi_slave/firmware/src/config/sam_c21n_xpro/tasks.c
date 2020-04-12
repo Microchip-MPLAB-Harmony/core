@@ -55,6 +55,7 @@
 
 
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: System "Tasks" Routine
@@ -73,6 +74,7 @@ void SYS_Tasks ( void )
     /* Maintain system services */
     
 
+
     /* Maintain Device Drivers */
     
 
@@ -85,6 +87,7 @@ void SYS_Tasks ( void )
 
     /* Call Application task APP_I2C_TEMP_SENSOR. */
     APP_I2C_TEMP_SENSOR_Tasks();
+
 
 
 

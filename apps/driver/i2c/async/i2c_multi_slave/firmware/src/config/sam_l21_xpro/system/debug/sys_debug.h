@@ -52,6 +52,7 @@
 // *****************************************************************************
 
 #include "system/system.h"
+#include "configuration.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -516,9 +517,10 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
     define the SYS_DEBUG_USE_CONSOLE macro or override the definition of the
     SYS_DEBUG_MESSAGE macro.
 */
-
+#ifdef SYS_DEBUG_USE_CONSOLE
 #ifndef _SYS_DEBUG_MESSAGE
     #define _SYS_DEBUG_MESSAGE(level, message)  do { if((level) <= SYS_DEBUG_ErrorLevelGet()) SYS_DEBUG_Message(message); }while(0)
+#endif
 #endif
 
 // *****************************************************************************
@@ -571,9 +573,10 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
     define the SYS_DEBUG_USE_CONSOLE macro or override the definition of the
     SYS_DEBUG_PRINT macro.
 */
-
+#ifdef SYS_DEBUG_USE_CONSOLE
 #ifndef _SYS_DEBUG_PRINT
     #define _SYS_DEBUG_PRINT(level, format, ...)    do { if((level) <= SYS_DEBUG_ErrorLevelGet()) SYS_DEBUG_Print(format, ##__VA_ARGS__); } while (0)
+#endif
 #endif
 
 // DOM-IGNORE-BEGIN
@@ -859,7 +862,7 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 
 
 #if defined(__DEBUG)
-    #define SYS_DEBUG_BreakPoint()  __asm__ __volatile__ ("bkpt #0");
+#define SYS_DEBUG_BreakPoint()  __asm__ __volatile__ ("bkpt #0");
 #else
     #define SYS_DEBUG_BreakPoint()
 #endif
