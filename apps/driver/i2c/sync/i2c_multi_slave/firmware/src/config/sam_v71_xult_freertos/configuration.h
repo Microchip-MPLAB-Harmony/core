@@ -87,17 +87,15 @@ extern "C" {
 #define SYS_DEBUG_USE_CONSOLE
 
 
-/* Console System Service Configuration Options */
-#define SYS_CONSOLE_DEVICE_MAX_INSTANCES   1
-#define SYS_CONSOLE_UART_MAX_INSTANCES     1
+#define SYS_CONSOLE_DEVICE_MAX_INSTANCES   			1
+#define SYS_CONSOLE_UART_MAX_INSTANCES 	   			1
+#define SYS_CONSOLE_USB_CDC_MAX_INSTANCES 	   		0
 
 
-/* RX queue size has one additional element for the empty spot needed in circular queue */
-#define SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX0    11
+#define SYS_CONSOLE_INDEX_0                       0
 
-/* TX queue size has one additional element for the empty spot needed in circular queue */
-#define SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX0    65
-#define SYS_CONSOLE_BUFFER_DMA_READY
+
+
 
 
 

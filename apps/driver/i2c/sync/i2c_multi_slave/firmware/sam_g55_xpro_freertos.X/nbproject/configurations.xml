@@ -2,11 +2,11 @@
 <configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
     <logicalFolder name="f1" displayName="Header Files" projectFiles="true">
-      <logicalFolder name="f2" displayName="config" projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1"
                        displayName="sam_g55_xpro_freertos"
                        projectFiles="true">
-          <logicalFolder name="f4" displayName="bsp" projectFiles="true">
+          <logicalFolder name="f3" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_g55_xpro_freertos/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="driver" projectFiles="true">
@@ -44,17 +44,17 @@
               <itemPath>../src/config/sam_g55_xpro_freertos/peripheral/pio/plib_pio.h</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="system" projectFiles="true">
-            <logicalFolder name="f4" displayName="cache" projectFiles="true">
+          <logicalFolder name="f4" displayName="system" projectFiles="true">
+            <logicalFolder name="f3" displayName="cache" projectFiles="true">
               <itemPath>../src/config/sam_g55_xpro_freertos/system/cache/sys_cache.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="console" projectFiles="true">
+            <logicalFolder name="f1" displayName="console" projectFiles="true">
               <itemPath>../src/config/sam_g55_xpro_freertos/system/console/sys_console.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="debug" projectFiles="true">
+            <logicalFolder name="f4" displayName="debug" projectFiles="true">
               <itemPath>../src/config/sam_g55_xpro_freertos/system/debug/sys_debug.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="int" projectFiles="true">
+            <logicalFolder name="f2" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_g55_xpro_freertos/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/sam_g55_xpro_freertos/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
@@ -106,8 +106,8 @@
         <itemPath>../src/config/sam_g55_xpro_freertos/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/sam_g55_xpro_freertos/osal/osal_freertos.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f1" displayName="packs" projectFiles="true">
-        <logicalFolder name="f2" displayName="ATSAMG55J19_DFP" projectFiles="true">
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
+        <logicalFolder name="f1" displayName="ATSAMG55J19_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAMG55J19_DFP/component/adc.h</itemPath>
             <itemPath>../src/packs/ATSAMG55J19_DFP/component/chipid.h</itemPath>
@@ -141,17 +141,17 @@
           <itemPath>../src/packs/ATSAMG55J19_DFP/device.h</itemPath>
           <itemPath>../src/packs/ATSAMG55J19_DFP/atsamg55j19.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
+        <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm4.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
               </logicalFolder>
@@ -214,8 +214,8 @@
               <itemPath>../src/config/sam_g55_xpro_freertos/system/cache/sys_cache.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="console" projectFiles="true">
-              <itemPath>../src/config/sam_g55_xpro_freertos/system/console/src/sys_console_local.h</itemPath>
               <itemPath>../src/config/sam_g55_xpro_freertos/system/console/src/sys_console.c</itemPath>
+              <itemPath>../src/config/sam_g55_xpro_freertos/system/console/src/sys_console_local.h</itemPath>
               <itemPath>../src/config/sam_g55_xpro_freertos/system/console/src/sys_console_uart.h</itemPath>
               <itemPath>../src/config/sam_g55_xpro_freertos/system/console/src/sys_console_uart_definitions.h</itemPath>
               <itemPath>../src/config/sam_g55_xpro_freertos/system/console/src/sys_console_uart.c</itemPath>
@@ -279,14 +279,14 @@
         <targetDevice>ATSAMG55J19</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>EdbgTool</platformTool>
+        <platformTool>noID</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.30</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
-        <pack name="SAMG_DFP" vendor="Microchip" version="3.0.9"/>
+        <pack name="SAMG_DFP" vendor="Microchip" version="3.2.38"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -345,7 +345,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/sam_g55_xpro_freertos;../src/packs/ATSAMG55J19_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm;../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/ARM_CM4F;../src/third_party/rtos/FreeRTOS/Source/include"/>
+                  value="../src;../src/config/sam_g55_xpro_freertos;../src/packs/ATSAMG55J19_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/third_party/rtos/FreeRTOS/Source/include;../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/ARM_CM4F"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -465,6 +465,7 @@
         <property key="mdtcm" value=""/>
         <property key="mitcm" value=""/>
         <property key="mstacktcm" value="false"/>
+        <property key="omit-pack-options" value="1"/>
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
@@ -477,6 +478,8 @@
         <property key="debugoptions.useswbreakpoints" value="false"/>
         <property key="firmware.path"
                   value="Press to browse for a specific firmware version"/>
+        <property key="firmware.toolpack"
+                  value="Press to select which tool pack to use"/>
         <property key="firmware.update.action" value="firmware.update.use.latest"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>
@@ -502,6 +505,10 @@
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.preserveuserid" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>
+        <property key="toolpack.updateoptions"
+                  value="toolpack.updateoptions.uselatestoolpack"/>
+        <property key="toolpack.updateoptions.packversion"
+                  value="Press to select which tool pack to use"/>
         <property key="voltagevalue" value=""/>
       </EdbgTool>
       <PICkit3PlatformTool>

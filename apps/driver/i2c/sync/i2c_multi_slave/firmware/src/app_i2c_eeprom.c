@@ -99,16 +99,6 @@ extern OSAL_SEM_DECLARE(temperatureReady);
 // *****************************************************************************
 // *****************************************************************************
 
-static void APP_I2C_EEPROM_ConsoleReadEventHandler (void* pBuffer)
-{
-    /* pBuffer always points to the starting address of the read buffer of the completed request */
-
-    if (pBuffer == &appEEPROMData.consoleData)
-    {
-        appEEPROMData.isTemperatureReadRequest = true;
-    }
-}
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Initialization and State Machine Functions
@@ -128,7 +118,6 @@ void APP_I2C_EEPROM_Initialize ( void )
     /* Place the App state machine in its initial state. */
     appEEPROMData.state = APP_I2C_EEPROM_STATE_INIT;
     appEEPROMData.currentWriteIndex = 0;
-    appEEPROMData.isTemperatureReadRequest = false;
 }
 
 /******************************************************************************
@@ -154,23 +143,7 @@ void APP_I2C_EEPROM_Tasks ( void )
 
             if(appEEPROMData.drvI2CHandle != DRV_HANDLE_INVALID)
             {
-                /* Register a callback with the console service for a read complete event */
-                SYS_CONSOLE_RegisterCallback(
-                    SYS_CONSOLE_INDEX_0,
-                    APP_I2C_EEPROM_ConsoleReadEventHandler,
-                    SYS_CONSOLE_EVENT_READ_COMPLETE
-                );
-
-                /* Submit a read request with the console service */
-                if (SYS_CONSOLE_Read(SYS_CONSOLE_INDEX_0, 0, &appEEPROMData.consoleData, 1) != 0)
-                {
-                    appEEPROMData.state = APP_I2C_EEPROM_STATE_WRITE;
-                }
-                else
-                {
-                    /* Console read request could not be submitted */
-                    appEEPROMData.state = APP_I2C_EEPROM_STATE_ERROR;
-                }
+                appEEPROMData.state = APP_I2C_EEPROM_STATE_WRITE;
             }
             else
             {
@@ -207,11 +180,10 @@ void APP_I2C_EEPROM_Tasks ( void )
             SYS_PRINT("Done!!!\r\n\r\n");
 
             /* Check if user requested to read the EEPROM data? */
-            if (appEEPROMData.isTemperatureReadRequest == true)
-            {
-                appEEPROMData.isTemperatureReadRequest = false;
-                appEEPROMData.state = APP_I2C_EEPROM_STATE_READ;
-            }
+			if (SYS_CONSOLE_Read(SYS_CONSOLE_INDEX_0, &appEEPROMData.consoleData, 1 ) == 1)
+			{
+				appEEPROMData.state = APP_I2C_EEPROM_STATE_READ;
+			}            
             break;
 
         case APP_I2C_EEPROM_STATE_READ:
@@ -242,17 +214,8 @@ void APP_I2C_EEPROM_Tasks ( void )
 
             SYS_PRINT("\r\n");
 
-            /* Submit another read request with the console service */
-            if (SYS_CONSOLE_Read(SYS_CONSOLE_INDEX_0, 0, &appEEPROMData.consoleData, 1) != 0)
-            {
-                /* Go back waiting for a temperature write request */
-                appEEPROMData.state = APP_I2C_EEPROM_STATE_WRITE;
-            }
-            else
-            {
-                /* Console read request could not be submitted */
-                appEEPROMData.state = APP_I2C_EEPROM_STATE_ERROR;   
-            }           
+            /* Go back waiting for a temperature write request */
+			appEEPROMData.state = APP_I2C_EEPROM_STATE_WRITE;      
             break;
 
         case APP_I2C_EEPROM_STATE_ERROR:

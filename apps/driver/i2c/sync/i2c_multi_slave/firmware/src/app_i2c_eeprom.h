@@ -128,10 +128,7 @@ typedef struct
     uint8_t rxBuffer[APP_EEPROM_NUM_TEMP_VALUES_TO_SAVE];
 
     /* Variable to hold the data read from the console */
-    uint8_t consoleData;
-
-    /* Flag to indicate if user requested to read the temperature values from EEPROM */
-    volatile bool isTemperatureReadRequest;
+    uint8_t consoleData;    
 
 } APP_I2C_EEPROM_DATA;
 

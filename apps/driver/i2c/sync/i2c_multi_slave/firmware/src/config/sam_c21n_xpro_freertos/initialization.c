@@ -159,8 +159,6 @@ const SYS_DEBUG_INIT debugInit =
 
 // <editor-fold defaultstate="collapsed" desc="SYS_CONSOLE Instance 0 Initialization Data">
 
-static QElement sysConsole0UARTRdQueueElements[SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX0];
-static QElement sysConsole0UARTWrQueueElements[SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX0];
 
 /* Declared in console device implementation (sys_console_uart.c) */
 extern const SYS_CONSOLE_DEV_DESC sysConsoleUARTDevDesc;
@@ -168,30 +166,16 @@ extern const SYS_CONSOLE_DEV_DESC sysConsoleUARTDevDesc;
 const SYS_CONSOLE_UART_PLIB_INTERFACE sysConsole0UARTPlibAPI =
 {
     .read = (SYS_CONSOLE_UART_PLIB_READ)SERCOM4_USART_Read,
+	.readCountGet = (SYS_CONSOLE_UART_PLIB_READ_COUNT_GET)SERCOM4_USART_ReadCountGet,
+	.readFreeBufferCountGet = (SYS_CONSOLE_UART_PLIB_READ_FREE_BUFFFER_COUNT_GET)SERCOM4_USART_ReadFreeBufferCountGet,
     .write = (SYS_CONSOLE_UART_PLIB_WRITE)SERCOM4_USART_Write,
-    .readCallbackRegister = (SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_READ)SERCOM4_USART_ReadCallbackRegister,
-    .writeCallbackRegister = (SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_WRITE)SERCOM4_USART_WriteCallbackRegister,
-    .errorGet = (SYS_CONSOLE_UART_PLIB_ERROR_GET)SERCOM4_USART_ErrorGet,
-};
-
-
-const SYS_CONSOLE_UART_INTERRUPT_SOURCES sysConsole0UARTInterruptSources =
-{
-    /* Peripheral has single interrupt vector */
-    .isSingleIntSrc                        = true,
-
-    /* Peripheral interrupt line */
-    .intSources.usartInterrupt             = SERCOM4_IRQn,
+	.writeCountGet = (SYS_CONSOLE_UART_PLIB_WRITE_COUNT_GET)SERCOM4_USART_WriteCountGet,
+	.writeFreeBufferCountGet = (SYS_CONSOLE_UART_PLIB_WRITE_FREE_BUFFER_COUNT_GET)SERCOM4_USART_WriteFreeBufferCountGet,
 };
 
 const SYS_CONSOLE_UART_INIT_DATA sysConsole0UARTInitData =
 {
-    .uartPLIB = &sysConsole0UARTPlibAPI,
-    .readQueueElementsArr = sysConsole0UARTRdQueueElements,
-    .writeQueueElementsArr = sysConsole0UARTWrQueueElements,
-    .readQueueDepth = SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX0,
-    .writeQueueDepth = SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX0,
-    .interruptSources = &sysConsole0UARTInterruptSources,
+    .uartPLIB = &sysConsole0UARTPlibAPI,    
 };
 
 const SYS_CONSOLE_INIT sysConsole0Init =
@@ -201,8 +185,18 @@ const SYS_CONSOLE_INIT sysConsole0Init =
     .deviceIndex = 0,
 };
 
+
+
 // </editor-fold>
 
+
+
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Local initialization functions
+// *****************************************************************************
+// *****************************************************************************
 
 
 
