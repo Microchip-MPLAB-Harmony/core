@@ -632,11 +632,6 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_eTaskGetState.setDescription("FreeRTOS - Include eTaskGetState")
     freeRtosSym_eTaskGetState.setDefaultValue(False)
 
-    freeRtosSym_xEventGroupSetBitFromIsr = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_INCLUDE_XEVENTGROUPSETBITFROMISR", freeRtosSymMenu_IncludeComponents)
-    freeRtosSym_xEventGroupSetBitFromIsr.setLabel("Include xEventGroupSetBitFromISR")
-    freeRtosSym_xEventGroupSetBitFromIsr.setDescription("FreeRTOS - Include xEventGroupSetBitFromISR")
-    freeRtosSym_xEventGroupSetBitFromIsr.setDefaultValue(False)
-
     freeRtosSym_xTimerPendFunctionCall = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_INCLUDE_XTIMERPENDFUNCTIONCALL", freeRtosSymMenu_IncludeComponents)
     freeRtosSym_xTimerPendFunctionCall.setLabel("Include xTimerPendFunctionCall")
     freeRtosSym_xTimerPendFunctionCall.setDescription("FreeRTOS - Include xTimerPendFunctionCall")
@@ -651,6 +646,26 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_xTaskGetHandle.setLabel("Include xTaskGetHandle")
     freeRtosSym_xTaskGetHandle.setDescription("FreeRTOS - Include xTaskGetHandle")
     freeRtosSym_xTaskGetHandle.setDefaultValue(False)
+
+    freeRtosSym_xQueueGetMutexHolder = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_INCLUDE_XQUEUEGETMUTEXHOLDER", freeRtosSymMenu_IncludeComponents)
+    freeRtosSym_xQueueGetMutexHolder.setLabel("Include xQueueGetMutexHolder")
+    freeRtosSym_xQueueGetMutexHolder.setDescription("FreeRTOS - Include xQueueGetMutexHolder")
+    freeRtosSym_xQueueGetMutexHolder.setDefaultValue(False)
+
+    freeRtosSym_xSemaphoreGetMutexHolder = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_INCLUDE_XSEMAPHOREGETMUTEXHOLDER", freeRtosSymMenu_IncludeComponents)
+    freeRtosSym_xSemaphoreGetMutexHolder.setLabel("Include xSemaphoreGetMutexHolder")
+    freeRtosSym_xSemaphoreGetMutexHolder.setDescription("FreeRTOS - Include xSemaphoreGetMutexHolder")
+    freeRtosSym_xSemaphoreGetMutexHolder.setDefaultValue(False)
+
+    freeRtosSym_uxTaskGetStackHighWaterMark2 = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_INCLUDE_UXTASKGETSTACKHIGHWATERMARK2", freeRtosSymMenu_IncludeComponents)
+    freeRtosSym_uxTaskGetStackHighWaterMark2.setLabel("Include uxTaskGetStackHighWaterMark2")
+    freeRtosSym_uxTaskGetStackHighWaterMark2.setDescription("FreeRTOS - Include uxTaskGetStackHighWaterMark2")
+    freeRtosSym_uxTaskGetStackHighWaterMark2.setDefaultValue(False)
+
+    freeRtosSym_xTaskResumeFromISR = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_INCLUDE_XTASKRESUMEFROMISR", freeRtosSymMenu_IncludeComponents)
+    freeRtosSym_xTaskResumeFromISR.setLabel("Include xTaskResumeFromISR")
+    freeRtosSym_xTaskResumeFromISR.setDescription("FreeRTOS - Include xTaskResumeFromISR")
+    freeRtosSym_xTaskResumeFromISR.setDefaultValue(False)
 
 ############################################################################
 #### Code Generation ####

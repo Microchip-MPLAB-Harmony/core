@@ -1,6 +1,6 @@
 /*
- * FreeRTOS Kernel V10.0.1
- * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel V10.2.0
+ * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -143,10 +143,13 @@
 #define INCLUDE_uxTaskGetStackHighWaterMark     <#if FREERTOS_INCLUDE_UXTASKGETSTACKHIGHWATERMARK == true>1<#else>0</#if>
 #define INCLUDE_xTaskGetIdleTaskHandle          <#if FREERTOS_INCLUDE_XTASKGETIDLETASKHANDLE == true>1<#else>0</#if>
 #define INCLUDE_eTaskGetState                   <#if FREERTOS_INCLUDE_ETASKGETSTATE == true>1<#else>0</#if>
-#define INCLUDE_xEventGroupSetBitFromISR        <#if FREERTOS_INCLUDE_XEVENTGROUPSETBITFROMISR == true>1<#else>0</#if>
 #define INCLUDE_xTimerPendFunctionCall          <#if FREERTOS_INCLUDE_XTIMERPENDFUNCTIONCALL == true>1<#else>0</#if>
 #define INCLUDE_xTaskAbortDelay                 <#if FREERTOS_INCLUDE_XTASKABORTDELAY == true>1<#else>0</#if>
 #define INCLUDE_xTaskGetHandle                  <#if FREERTOS_INCLUDE_XTASKGETHANDLE == true>1<#else>0</#if>
+#define INCLUDE_xQueueGetMutexHolder            <#if FREERTOS_INCLUDE_XQUEUEGETMUTEXHOLDER == true>1<#else>0</#if>
+#define INCLUDE_xSemaphoreGetMutexHolder        <#if FREERTOS_INCLUDE_XSEMAPHOREGETMUTEXHOLDER == true>1<#else>0</#if>
+#define INCLUDE_uxTaskGetStackHighWaterMark2    <#if FREERTOS_INCLUDE_UXTASKGETSTACKHIGHWATERMARK2 == true>1<#else>0</#if>
+#define INCLUDE_xTaskResumeFromISR              <#if FREERTOS_INCLUDE_XTASKRESUMEFROMISR == true>1<#else>0</#if>
 
 <#if FREERTOS_SETUP_TICK_INTERRUPT??>
     <#if core.COMPILER_CHOICE == "IAR">
