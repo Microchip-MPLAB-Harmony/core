@@ -120,7 +120,7 @@ freeRtosPortAsmHeader.setType("HEADER")
 freeRtosPortAsmHeader.setMarkup(False)
 
 freeRtosPortHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SAM_PORTMACRO_H", None)
-freeRtosPortHeader.setSourcePath("config/arch/arm/devices_cortex_m23/src/" + freeRtosDir + "/non_secure/portmacro.h")
+freeRtosPortHeader.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/" + freeRtosDir + "/non_secure/portmacro.h")
 freeRtosPortHeader.setOutputName("portmacro.h")
 freeRtosPortHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/" + freeRtosDir + "/non_secure")
 freeRtosPortHeader.setProjectPath("FreeRTOS/Source/portable/GCC/" + freeRtosDir + "/non_secure")
@@ -137,7 +137,7 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecureIncludeDirSym.setSecurity("SECURE")
 
     freeRtosSecureContextSource = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SECURE_CONTEXT_C", None)
-    freeRtosSecureContextSource.setSourcePath("config/arch/arm/devices_cortex_m23/src/ARM_CM23/secure/secure_context.c")
+    freeRtosSecureContextSource.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM23/secure/secure_context.c")
     freeRtosSecureContextSource.setOutputName("secure_context.c")
     freeRtosSecureContextSource.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM23/secure")
     freeRtosSecureContextSource.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM23/secure")
@@ -146,7 +146,7 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecureContextSource.setSecurity("SECURE")
 
     freeRtosSecureContextPortSource = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SECURE_CONTEXT_PORT_C", None)
-    freeRtosSecureContextPortSource.setSourcePath("config/arch/arm/devices_cortex_m23/src/ARM_CM23/secure/secure_context_port.c")
+    freeRtosSecureContextPortSource.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM23/secure/secure_context_port.c")
     freeRtosSecureContextPortSource.setOutputName("secure_context_port.c")
     freeRtosSecureContextPortSource.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM23/secure")
     freeRtosSecureContextPortSource.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM23/secure")
@@ -164,7 +164,7 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecureHeapSource.setSecurity("SECURE")
 
     freeRtosSecureInitSource = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SECURE_INIT_C", None)
-    freeRtosSecureInitSource.setSourcePath("config/arch/arm/devices_cortex_m23/src/ARM_CM23/secure/secure_init.c")
+    freeRtosSecureInitSource.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM23/secure/secure_init.c")
     freeRtosSecureInitSource.setOutputName("secure_init.c")
     freeRtosSecureInitSource.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM23/secure")
     freeRtosSecureInitSource.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM23/secure")
@@ -173,7 +173,7 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecureInitSource.setSecurity("SECURE")
 
     freeRtosSecureContextHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SECURE_CONTEXT_H", None)
-    freeRtosSecureContextHeader.setSourcePath("config/arch/arm/devices_cortex_m23/src/ARM_CM23/secure/secure_context.h")
+    freeRtosSecureContextHeader.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM23/secure/secure_context.h")
     freeRtosSecureContextHeader.setOutputName("secure_context.h")
     freeRtosSecureContextHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM23/secure")
     freeRtosSecureContextHeader.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM23/secure")
@@ -182,7 +182,7 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecureContextHeader.setSecurity("SECURE")
 
     freeRtosSecurePortMacrosHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SECURE_PORT_MACROS_H", None)
-    freeRtosSecurePortMacrosHeader.setSourcePath("config/arch/arm/devices_cortex_m23/src/ARM_CM23/secure/secure_port_macros.h")
+    freeRtosSecurePortMacrosHeader.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM23/secure/secure_port_macros.h")
     freeRtosSecurePortMacrosHeader.setOutputName("secure_port_macros.h")
     freeRtosSecurePortMacrosHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM23/secure")
     freeRtosSecurePortMacrosHeader.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM23/secure")
@@ -191,7 +191,7 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecurePortMacrosHeader.setSecurity("SECURE")
 
     freeRtosSecureHeapHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SECURE_HEAP_H", None)
-    freeRtosSecureHeapHeader.setSourcePath("config/arch/arm/devices_cortex_m23/src/ARM_CM23/secure/secure_heap.h")
+    freeRtosSecureHeapHeader.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM23/secure/secure_heap.h")
     freeRtosSecureHeapHeader.setOutputName("secure_heap.h")
     freeRtosSecureHeapHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM23/secure")
     freeRtosSecureHeapHeader.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM23/secure")
@@ -200,7 +200,7 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecureHeapHeader.setSecurity("SECURE")
 
     freeRtosSecureInitHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SECURE_INIT_H", None)
-    freeRtosSecureInitHeader.setSourcePath("config/arch/arm/devices_cortex_m23/src/ARM_CM23/secure/secure_init.h")
+    freeRtosSecureInitHeader.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM23/secure/secure_init.h")
     freeRtosSecureInitHeader.setOutputName("secure_init.h")
     freeRtosSecureInitHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM23/secure")
     freeRtosSecureInitHeader.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM23/secure")
