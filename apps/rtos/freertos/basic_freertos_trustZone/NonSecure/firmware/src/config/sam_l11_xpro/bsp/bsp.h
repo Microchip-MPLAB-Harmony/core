@@ -1,17 +1,19 @@
 /*******************************************************************************
-  System Initialization File
+  Board Support Package Header File.
+
+  Company:
+    Microchip Technology Inc.
 
   File Name:
-    initialization.c
+    bsp.h
 
   Summary:
-    This file contains source code necessary to initialize the system.
+    Board Support Package Header File 
 
   Description:
-    This file contains source code necessary to initialize the system.  It
-    implements the "SYS_Initialize" function, defines the configuration bits,
-    and allocates any necessary global system resources,
- *******************************************************************************/
+    This file contains constants, macros, type definitions and function
+    declarations 
+*******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -35,92 +37,83 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *******************************************************************************/
+*******************************************************************************/
 // DOM-IGNORE-END
+
+#ifndef _BSP_H
+#define _BSP_H
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-#include "configuration.h"
-#include "definitions.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdbool.h>
 #include "device.h"
 
-
-
-// ****************************************************************************
-// ****************************************************************************
-// Section: Configuration Bits
-// ****************************************************************************
-// ****************************************************************************
-
-
 // *****************************************************************************
 // *****************************************************************************
-// Section: Driver Initialization Data
+// Section: BSP Macros
 // *****************************************************************************
 // *****************************************************************************
 
+/*** LED Macros for LED ***/
+#define LED_Toggle()     (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 7)
+#define LED_On()         (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 7)
+#define LED_Off()        (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 7)
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: System Data
-// *****************************************************************************
-// *****************************************************************************
+/*** SWITCH Macros for SWITCH ***/
+#define SWITCH_Get()     ((PORT_REGS->GROUP[0].PORT_IN >> 27) & 0x01)
+#define SWITCH_STATE_PRESSED   0
+#define SWITCH_STATE_RELEASED  1
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Library/Stack Initialization Data
-// *****************************************************************************
-// *****************************************************************************
-
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: System Initialization
-// *****************************************************************************
-// *****************************************************************************
 
 
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Local initialization functions
+// Section: Interface Routines
 // *****************************************************************************
 // *****************************************************************************
 
-
-
-/*******************************************************************************
-  Function:
-    void SYS_Initialize ( void *data )
+// *****************************************************************************
+/* Function:
+    void BSP_Initialize(void)
 
   Summary:
-    Initializes the board, services, drivers, application and other modules.
+    Performs the necessary actions to initialize a board
+
+  Description:
+    This function initializes the LED and Switch ports on the board.  This
+    function must be called by the user before using any APIs present on this
+    BSP.
+
+  Precondition:
+    None.
+
+  Parameters:
+    None
+
+  Returns:
+    None.
+
+  Example:
+    <code>
+    //Initialize the BSP
+    BSP_Initialize();
+    </code>
 
   Remarks:
- */
+    None
+*/
 
-void SYS_Initialize ( void* data )
-{
-  
+void BSP_Initialize(void);
 
-
-
-	BSP_Initialize();
-
-
-
-
-    APP_Initialize();
-    APP1_Initialize();
-    APP2_Initialize();
-
-
-
-}
-
+#endif // _BSP_H
 
 /*******************************************************************************
  End of File

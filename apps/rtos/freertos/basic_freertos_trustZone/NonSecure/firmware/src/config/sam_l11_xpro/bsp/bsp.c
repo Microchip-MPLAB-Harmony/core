@@ -1,18 +1,20 @@
 /*******************************************************************************
-  System Definitions
+  Board Support Package Implementation
+
+  Company:
+    Microchip Technology Inc.
 
   File Name:
-    definitions.h
+    bsp.c
 
   Summary:
-    project system definitions.
+    Board Support Package implementation.
 
   Description:
-    This file contains the system-wide prototypes and definitions for a project.
+    This file contains routines that implement the board support package
+*******************************************************************************/
 
- *******************************************************************************/
-
-//DOM-IGNORE-BEGIN
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -34,97 +36,49 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *******************************************************************************/
-//DOM-IGNORE-END
-
-#ifndef DEFINITIONS_H
-#define DEFINITIONS_H
+*******************************************************************************/
+// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-#include <stdint.h>
-#include <stddef.h>
-#include <stdbool.h>
-#include "peripheral/nvmctrl/plib_nvmctrl.h"
-#include "peripheral/evsys/plib_evsys.h"
-#include "peripheral/port/plib_port.h"
-#include "peripheral/clock/plib_clock.h"
-#include "peripheral/nvic/plib_nvic.h"
-#include "peripheral/pm/plib_pm.h"
-#include "bsp/bsp.h"
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
 
-extern "C" {
-
-#endif
-// DOM-IGNORE-END
+#include "bsp.h"
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: System Functions
+// *****************************************************************************
+// Section: Interface Routines
 // *****************************************************************************
 // *****************************************************************************
 
 // *****************************************************************************
-/* System Initialization Function
-
-  Function:
-    void SYS_Initialize( void *data )
+/* Function:
+    void BSP_Initialize(void)
 
   Summary:
-    Function that initializes all modules in the system.
+    Performs the necessary actions to initialize a board
 
   Description:
-    This function initializes all modules in the system, including any drivers,
-    services, middleware, and applications.
-
-  Precondition:
-    None.
-
-  Parameters:
-    data            - Pointer to the data structure containing any data
-                      necessary to initialize the module. This pointer may
-                      be null if no data is required and default initialization
-                      is to be used.
-
-  Returns:
-    None.
-
-  Example:
-    <code>
-    SYS_Initialize ( NULL );
-
-    while ( true )
-    {
-        SYS_Tasks ( );
-    }
-    </code>
+    This function initializes the LED, Switch and other ports on the board.
+    This function must be called by the user before using any APIs present in
+    this BSP.
 
   Remarks:
-    This function will only be called once, after system reset.
+    Refer to bsp.h for usage information.
 */
 
-void SYS_Initialize( void *data );
+void BSP_Initialize(void )
+{
+
+    /* Switch off LEDs */
+    LED_Off();
 
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: extern declarations
-// *****************************************************************************
-// *****************************************************************************
-
-//DOM-IGNORE-BEGIN
-#ifdef __cplusplus
 }
-#endif
-//DOM-IGNORE-END
 
-#endif /* DEFINITIONS_H */
 /*******************************************************************************
  End of File
 */
-
