@@ -99,13 +99,6 @@ def instantiateComponent(commandComponent):
     commandPrintBufferSize.setMax(8192)
     commandPrintBufferSize.setDefaultValue(1024)
 
-    commandConsoleEnable = commandComponent.createBooleanSymbol("SYS_COMMAND_CONSOLE_ENABLE", None)
-    commandConsoleEnable.setLabel("Re-route Console Message/Print through Command Service ?")
-    commandConsoleEnable.setDefaultValue(True)
-
-    commandDebugEnable = commandComponent.createBooleanSymbol("SYS_COMMAND_DEBUG_ENABLE", None)
-    commandDebugEnable.setLabel("Re-route Debug Message/Print through Command Service ?")
-
     enable_rtos_settings = False
 
     if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
