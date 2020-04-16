@@ -53,6 +53,7 @@
 
 #include "system/system.h"
 #include "configuration.h"
+#include <stdbool.h>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
