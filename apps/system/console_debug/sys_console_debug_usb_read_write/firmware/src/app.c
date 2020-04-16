@@ -189,7 +189,7 @@ void APP_Tasks ( void )
             
             SYS_MESSAGE("\n\r\n\r***Echo Test*** \n\rEnter a character and it will be echoed back on USB Console Instance 1 \n\r");
                         
-            SYS_DEBUG_Remap(SYS_CONSOLE_INDEX_1);
+            SYS_DEBUG_Redirect(SYS_CONSOLE_INDEX_1);
             
             /* All SYS Debug APIs output will now be re-directed to Console Instance 1 */
             SYS_MESSAGE("\n\r Re-mapped Debug System Service to Console Instance - 1");
