@@ -32,6 +32,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
+#include "system/console/sys_console.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -60,8 +61,9 @@ extern "C" {
 
 typedef enum
 {
-    /* Application's state machine's initial state. */    
+    /* Application's state machine's initial state. */
     APP_STATE_WAIT_USB_CONSOLE_CONFIGURED = 0,
+    APP_STATE_GET_CONSOLE_HANDLE,
     APP_STATE_SWITCH_PRESS_WAIT,
     APP_STATE_DEMONSTRATE_DEBUG_APIS,
     APP_STATE_READ_FROM_CONSOLE,
@@ -92,6 +94,10 @@ typedef struct
 {
     /* The application's current state */
     APP_STATES state;
+
+    SYS_CONSOLE_HANDLE console0Handle;
+
+    SYS_CONSOLE_HANDLE console1Handle;
 
 } APP_DATA;
 

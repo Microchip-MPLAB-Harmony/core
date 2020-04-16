@@ -143,7 +143,16 @@ void APP_I2C_EEPROM_Tasks ( void )
 
             if(appEEPROMData.drvI2CHandle != DRV_HANDLE_INVALID)
             {
-                appEEPROMData.state = APP_I2C_EEPROM_STATE_WRITE;
+                appEEPROMData.consoleHandle = SYS_CONSOLE_HandleGet(SYS_CONSOLE_INDEX_0);
+                
+                if (appEEPROMData.consoleHandle != SYS_CONSOLE_HANDLE_INVALID)
+                {
+                    appEEPROMData.state = APP_I2C_EEPROM_STATE_WRITE;            
+                }
+                else
+                {
+                    appEEPROMData.state = APP_I2C_EEPROM_STATE_ERROR;
+                }                
             }
             else
             {
@@ -180,7 +189,7 @@ void APP_I2C_EEPROM_Tasks ( void )
             SYS_PRINT("Done!!!\r\n\r\n");
 
             /* Check if user requested to read the EEPROM data? */
-			if (SYS_CONSOLE_Read(SYS_CONSOLE_INDEX_0, &appEEPROMData.consoleData, 1 ) == 1)
+			if (SYS_CONSOLE_Read(appEEPROMData.consoleHandle, &appEEPROMData.consoleData, 1 ) == 1)
 			{
 				appEEPROMData.state = APP_I2C_EEPROM_STATE_READ;
 			}            

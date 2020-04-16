@@ -57,6 +57,7 @@
 #include <stdlib.h>
 #include "configuration.h"
 #include "driver/i2c/drv_i2c.h"
+#include "system/console/sys_console.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -117,6 +118,8 @@ typedef struct
     APP_I2C_EEPROM_STATES state;
 
     DRV_HANDLE drvI2CHandle;
+    
+    SYS_CONSOLE_HANDLE  consoleHandle;
 
     /* Buffer to hold the data to be written to the EEPROM */
     uint8_t txBuffer[2];

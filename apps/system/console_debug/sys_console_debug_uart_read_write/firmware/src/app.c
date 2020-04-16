@@ -29,7 +29,6 @@
 
 #include "app.h"
 #include "configuration.h"
-#include "system/console/sys_console.h"
 #include "system/debug/sys_debug.h"
 #include "user.h"
 
@@ -90,19 +89,19 @@ uint8_t uart_console_read_buffer[UART_CONSOLE_READ_BUFFER_SIZE];
 void APP_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
-    appData.state = APP_STATE_WAIT_UART_CONSOLE_CONFIGURED;    
+    appData.state = APP_STATE_WAIT_UART_CONSOLE_CONFIGURED;
 }
 
 static void APP_DebugAPIDemonstrate(void)
-{            
+{
     SYS_MESSAGE("***This is UART Console Instance 0***\n\r");
     SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, "\n\rTest Debug Message!");
     SYS_DEBUG_PRINT(SYS_ERROR_ERROR, "\n\rTest Debug Print %d", 1);
-    SYS_PRINT("\n\rSys Print test %d, %s", 1, "str1");        
-    SYS_PRINT("\n\rSys Print test %d, %s", 2, "str2");     
+    SYS_PRINT("\n\rSys Print test %d, %s", 1, "str1");
+    SYS_PRINT("\n\rSys Print test %d, %s", 2, "str2");
     /* Change the error level to only print the debug messages with error value set to SYS_ERROR_ERROR or lower */
     SYS_DEBUG_ErrorLevelSet(SYS_ERROR_ERROR);
-    
+
     /* The below message should not get printed as "SYS_ERROR_DEBUG" is higher than "SYS_ERROR_ERROR" */
     SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, "\n\rThis message should not be printed!");
 }
@@ -113,39 +112,51 @@ static void APP_DebugAPIDemonstrate(void)
   Remarks:
     See prototype in app.h.
  */
-
-uint32_t consoleIndex;
 void APP_Tasks ( void )
 {
     switch ( appData.state )
-    {        
+    {
         case APP_STATE_WAIT_UART_CONSOLE_CONFIGURED:
             if (SYS_CONSOLE_Status(SYS_CONSOLE_INDEX_0) == SYS_STATUS_READY)
-            {                                             
-                appData.state = APP_STATE_DEMONSTRATE_DEBUG_APIS;
+            {
+                appData.state = APP_STATE_GET_CONSOLE_HANDLE;
             }
             break;
-        
+
+        case APP_STATE_GET_CONSOLE_HANDLE:
+            /* Get handles to both the USB console instances */
+            appData.consoleHandle = SYS_CONSOLE_HandleGet(SYS_CONSOLE_INDEX_0);
+
+            if (appData.consoleHandle != SYS_CONSOLE_HANDLE_INVALID)
+            {
+                appData.state = APP_STATE_DEMONSTRATE_DEBUG_APIS;
+            }
+            else
+            {
+                appData.state = APP_STATE_ERROR;
+            }
+            break;
+
         case APP_STATE_DEMONSTRATE_DEBUG_APIS:
             APP_DebugAPIDemonstrate();
             appData.state = APP_STATE_READ_FROM_CONSOLE;
             break;
-            
+
         case APP_STATE_READ_FROM_CONSOLE:
-            SYS_PRINT("\n\rSYS_CONSOLE_INDEX_0: Free Space in RX Buffer = %d bytes", SYS_CONSOLE_ReadFreeBufferCountGet(SYS_CONSOLE_INDEX_0));   
+            SYS_PRINT("\n\rFree Space in RX Buffer = %d bytes", SYS_CONSOLE_ReadFreeBufferCountGet(appData.consoleHandle));
             SYS_PRINT("\n\rEnter %d characters:", UART_CONSOLE_NUM_BYTES_READ);
             appData.state = APP_STATE_WAIT_READ_COMPLETE;
             break;
-            
+
         case APP_STATE_WAIT_READ_COMPLETE:
             /* Demonstrate SYS_CONSOLE_ReadCountGet() and SYS_CONSOLE_Read() APIs */
-            
-            if (SYS_CONSOLE_ReadCountGet(SYS_CONSOLE_INDEX_0) >= UART_CONSOLE_NUM_BYTES_READ)
+
+            if (SYS_CONSOLE_ReadCountGet(appData.consoleHandle) >= UART_CONSOLE_NUM_BYTES_READ)
             {
-                SYS_PRINT("\n\rSYS_CONSOLE_INDEX_0: Free Space in RX Buffer = %d bytes", SYS_CONSOLE_ReadFreeBufferCountGet(SYS_CONSOLE_INDEX_0));   
-                
+                SYS_PRINT("\n\rFree Space in RX Buffer = %d bytes", SYS_CONSOLE_ReadFreeBufferCountGet(appData.consoleHandle));
+
                 /* UART_CONSOLE_NUM_BYTES_READ or more characters are available. Read the data in the application buffer. */
-                if (SYS_CONSOLE_Read(SYS_CONSOLE_INDEX_0, uart_console_read_buffer, UART_CONSOLE_NUM_BYTES_READ) == UART_CONSOLE_NUM_BYTES_READ)
+                if (SYS_CONSOLE_Read(appData.consoleHandle, uart_console_read_buffer, UART_CONSOLE_NUM_BYTES_READ) == UART_CONSOLE_NUM_BYTES_READ)
                 {
                     appData.state = APP_STATE_WRITE_RECEIVED_DATA;
                 }
@@ -153,42 +164,42 @@ void APP_Tasks ( void )
                 {
                     appData.state = APP_STATE_ERROR;
                 }
-            }                         
+            }
             break;
-            
+
         case APP_STATE_WRITE_RECEIVED_DATA:
-            /* Demonstrate SYS_CONSOLE_WriteFreeBufferCountGet() and SYS_CONSOLE_Write() APIs */                        
+            /* Demonstrate SYS_CONSOLE_WriteFreeBufferCountGet() and SYS_CONSOLE_Write() APIs */
             SYS_PRINT("\n\rReceived Characters:");
-            SYS_CONSOLE_Write(SYS_CONSOLE_INDEX_0, uart_console_read_buffer, UART_CONSOLE_NUM_BYTES_READ);             
-            appData.state = APP_STATE_WAIT_WRITE_BUFFER_EMPTY;                       
+            SYS_CONSOLE_Write(appData.consoleHandle, uart_console_read_buffer, UART_CONSOLE_NUM_BYTES_READ);
+            appData.state = APP_STATE_WAIT_WRITE_BUFFER_EMPTY;
             break;
-            
+
         case APP_STATE_WAIT_WRITE_BUFFER_EMPTY:
-            if (SYS_CONSOLE_WriteCountGet(SYS_CONSOLE_INDEX_0) == 0)
+            if (SYS_CONSOLE_WriteCountGet(appData.consoleHandle) == 0)
             {
-                SYS_PRINT("\n\rSYS_CONSOLE_INDEX_0: Free Space in TX Buffer = %d", SYS_CONSOLE_WriteFreeBufferCountGet(SYS_CONSOLE_INDEX_0));   
+                SYS_PRINT("\n\rFree Space in TX Buffer = %d", SYS_CONSOLE_WriteFreeBufferCountGet(appData.consoleHandle));
                 appData.state = APP_STATE_ECHO_TEST;
             }
             break;
-            
+
         case APP_STATE_ECHO_TEST:
-            
-            SYS_MESSAGE("\n\r\n\r***Echo Test*** \n\rEnter a character and it will be echoed back \n\r");                                               
-            appData.state = APP_STATE_CONSOLE_READ_WRITE;            
+
+            SYS_MESSAGE("\n\r\n\r***Echo Test*** \n\rEnter a character and it will be echoed back \n\r");
+            appData.state = APP_STATE_CONSOLE_READ_WRITE;
             break;
-            
-        case APP_STATE_CONSOLE_READ_WRITE:            
-            if (SYS_CONSOLE_Read(SYS_CONSOLE_INDEX_0, uart_console_read_buffer, 1) >= 1)
+
+        case APP_STATE_CONSOLE_READ_WRITE:
+            if (SYS_CONSOLE_Read(appData.consoleHandle, uart_console_read_buffer, 1) >= 1)
             {
                 LED_TOGGLE();
-                SYS_CONSOLE_Write(SYS_CONSOLE_INDEX_0, uart_console_read_buffer, 1);            
-            }            
+                SYS_CONSOLE_Write(appData.consoleHandle, uart_console_read_buffer, 1);
+            }
             break;
-            
+
         case APP_STATE_ERROR:
         default:
             break;
-            
+
     }
 }
 

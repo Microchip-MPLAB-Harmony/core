@@ -59,6 +59,7 @@
 #include <stdio.h>
 #include "configuration.h"
 #include "driver/i2c/drv_i2c.h"
+#include "system/console/sys_console.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -136,6 +137,8 @@ typedef struct
 
     /* I2C driver client handle */
     DRV_HANDLE i2cHandle;
+    
+    SYS_CONSOLE_HANDLE consoleHandle;
 
     /* I2C driver transfer handle */
     DRV_I2C_TRANSFER_HANDLE transferHandle;

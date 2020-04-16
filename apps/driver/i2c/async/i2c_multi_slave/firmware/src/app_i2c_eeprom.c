@@ -153,14 +153,24 @@ void APP_I2C_EEPROM_Tasks ( void )
         case APP_EEPROM_STATE_INIT:
 
             /* Open I2C driver client */
-            appEEPROMData.i2cHandle = DRV_I2C_Open( DRV_I2C_INDEX_0, DRV_IO_INTENT_READWRITE);
+            appEEPROMData.i2cHandle = DRV_I2C_Open( DRV_I2C_INDEX_0, DRV_IO_INTENT_READWRITE);             
 
             if(appEEPROMData.i2cHandle != DRV_HANDLE_INVALID)
             {
                 /* Register the I2C Driver client event callback */
-                DRV_I2C_TransferEventHandlerSet(appEEPROMData.i2cHandle, APP_I2C_EEPROM_EventHandler, 0);                
-
-                appEEPROMData.state = APP_EEPROM_STATE_WRITE;            
+                DRV_I2C_TransferEventHandlerSet(appEEPROMData.i2cHandle, APP_I2C_EEPROM_EventHandler, 0);       
+                
+                /* Get a handle to the console instance */
+                appEEPROMData.consoleHandle = SYS_CONSOLE_HandleGet(SYS_CONSOLE_INDEX_0);
+                
+                if (appEEPROMData.consoleHandle != SYS_CONSOLE_HANDLE_INVALID)
+                {
+                    appEEPROMData.state = APP_EEPROM_STATE_WRITE;            
+                }
+                else
+                {
+                    appEEPROMData.state = APP_EEPROM_STATE_ERROR;
+                }
             }
             else
             {
@@ -265,7 +275,7 @@ void APP_I2C_EEPROM_Tasks ( void )
             break;
 
         case APP_EEPROM_STATE_CHECK_READ_REQ:
-            if (SYS_CONSOLE_Read(SYS_CONSOLE_INDEX_0, &appEEPROMData.consoleData, 1 ) == 1)
+            if (SYS_CONSOLE_Read(appEEPROMData.consoleHandle, &appEEPROMData.consoleData, 1 ) == 1)
             {
                 SYS_PRINT("Reading last 5 temperature values from EEPROM...\r\n");
                 appEEPROMData.state = APP_EEPROM_STATE_READ;
