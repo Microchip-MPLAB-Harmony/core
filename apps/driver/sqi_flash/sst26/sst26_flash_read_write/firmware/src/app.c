@@ -179,7 +179,7 @@ void APP_Tasks ( void )
 
         case APP_STATE_ERASE_FLASH:
         {
-            if (DRV_SST26_SectorErase(appData.handle, (MEM_ADDRESS + erase_index) != true))
+            if (DRV_SST26_SectorErase(appData.handle, (MEM_ADDRESS + erase_index)) != true)
             {
                 appData.state = APP_STATE_ERROR;
             }
