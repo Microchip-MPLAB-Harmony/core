@@ -75,6 +75,10 @@ bool UART4_Read( void *buffer, const size_t size );
 
 UART_ERROR UART4_ErrorGet( void );
 
+bool UART4_AutoBaudQuery( void );
+
+void UART4_AutoBaudSet( bool enable );
+
 bool UART4_ReadIsBusy( void );
 
 size_t UART4_ReadCountGet( void );
