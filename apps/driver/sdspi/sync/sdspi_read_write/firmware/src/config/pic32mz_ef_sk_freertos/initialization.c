@@ -149,6 +149,7 @@ const DRV_SDSPI_PLIB_INTERFACE drvSDSPI0PlibAPI = {
 const uint32_t drvSDSPI0remapDataBits[]= { 0x00000000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000400 };
 const uint32_t drvSDSPI0remapClockPolarity[] = { 0x00000000, 0x00000040 };
 const uint32_t drvSDSPI0remapClockPhase[] = { 0x00000000, 0x00000100 };
+
 /* SDSPI Driver Initialization Data */
 const DRV_SDSPI_INIT drvSDSPI0InitData =
 {
@@ -161,6 +162,7 @@ const DRV_SDSPI_INIT drvSDSPI0InitData =
 
     .remapClockPhase        = drvSDSPI0remapClockPhase,
 
+
     /* SDSPI Number of clients */
     .numClients             = DRV_SDSPI_CLIENTS_NUMBER_IDX0,
 
@@ -171,7 +173,7 @@ const DRV_SDSPI_INIT drvSDSPI0InitData =
     .chipSelectPin          = DRV_SDSPI_CHIP_SELECT_PIN_IDX0,
 
     .sdcardSpeedHz          = DRV_SDSPI_SPEED_HZ_IDX0,
-    
+
     .pollingIntervalMs      = DRV_SDSPI_POLLING_INTERVAL_MS_IDX0,
 
     .writeProtectPin        = SYS_PORT_PIN_NONE,
@@ -234,6 +236,14 @@ const SYS_TIME_INIT sysTimeInitData =
 };
 
 // </editor-fold>
+
+
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Local initialization functions
+// *****************************************************************************
+// *****************************************************************************
 
 
 
