@@ -129,8 +129,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l10_xpro/peripheral/sercom/usart/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/sercom/usart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">C9C2EF4690DBFBADD7CD2E076358CA51</GeneratedChecksum>
-          <UserChecksum dnOrder="6">C9C2EF4690DBFBADD7CD2E076358CA51</UserChecksum>
+          <GeneratedChecksum dnOrder="5">767E29668862A71FB4491905AFC5D499</GeneratedChecksum>
+          <UserChecksum dnOrder="6">767E29668862A71FB4491905AFC5D499</UserChecksum>
         </File>
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
@@ -147,8 +147,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l10_xpro/system/console/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/console/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">DEE0A23058774982652876F8029D7D5F</GeneratedChecksum>
-          <UserChecksum dnOrder="6">DEE0A23058774982652876F8029D7D5F</UserChecksum>
+          <GeneratedChecksum dnOrder="5">9F75BC5DF449CEE8E66F1017526B57AE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">9F75BC5DF449CEE8E66F1017526B57AE</UserChecksum>
         </File>
         <File dnOrder="16">
           <Type dnOrder="0">SOURCE</Type>
@@ -192,8 +192,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l10_xpro/system/debug/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/debug/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">159931972673F2B2CBEB926B83C2118F</GeneratedChecksum>
-          <UserChecksum dnOrder="6">159931972673F2B2CBEB926B83C2118F</UserChecksum>
+          <GeneratedChecksum dnOrder="5">BD054FD39A17EFF445B35078217A90EE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">BD054FD39A17EFF445B35078217A90EE</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
@@ -723,8 +723,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l10_xpro/system/console/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/console/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">207615D941E24DEF44FAE48A73482D20</GeneratedChecksum>
-          <UserChecksum dnOrder="6">207615D941E24DEF44FAE48A73482D20</UserChecksum>
+          <GeneratedChecksum dnOrder="5">7C2920DC1BE1D6FD06A7D9981B29AC9B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">7C2920DC1BE1D6FD06A7D9981B29AC9B</UserChecksum>
         </File>
         <File dnOrder="80">
           <Type dnOrder="0">HEADER</Type>
@@ -732,8 +732,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l10_xpro/system/debug/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/debug/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">D0F744C364EFB96A28DACFE81CE16D90</GeneratedChecksum>
-          <UserChecksum dnOrder="6">D0F744C364EFB96A28DACFE81CE16D90</UserChecksum>
+          <GeneratedChecksum dnOrder="5">33F85B8B82ED7CA982F3291C4E541C0A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">33F85B8B82ED7CA982F3291C4E541C0A</UserChecksum>
         </File>
         <File dnOrder="81">
           <Type dnOrder="0">HEADER</Type>
@@ -853,11 +853,11 @@
     </Manifest>
     <Settings dnOrder="4">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAML10_DFP\3.1.62\atdf\ATSAML10E16A.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAML10_DFP\3.1.63\atdf\ATSAML10E16A.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bootloader;bsp;core;cryptoauthlib;csp;micrium_ucos3;touch;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bootloader;bsp;core;cryptoauthlib;csp;micrium_ucos3;net;touch;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>
