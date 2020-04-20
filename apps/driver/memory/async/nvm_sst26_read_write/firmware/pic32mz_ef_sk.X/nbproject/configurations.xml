@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="f1" displayName="Header Files" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mz_ef_sk" projectFiles="true">
           <logicalFolder name="f3" displayName="bsp" projectFiles="true">
@@ -41,6 +43,9 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
+            <logicalFolder name="f2" displayName="debug" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/system/debug/sys_debug.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/pic32mz_ef_sk/system/int/sys_int_mapping.h</itemPath>
@@ -72,12 +77,14 @@
       <itemPath>../src/app_nvm.h</itemPath>
       <itemPath>../src/app_monitor.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f4" displayName="Important Files" projectFiles="true">
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mz_ef_sk" projectFiles="true">
-          <logicalFolder name="f4" displayName="bsp" projectFiles="true">
+          <logicalFolder name="f1" displayName="bsp" projectFiles="true">
           </logicalFolder>
-          <logicalFolder name="f1" displayName="driver" projectFiles="true">
+          <logicalFolder name="f2" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="memory" projectFiles="true">
             </logicalFolder>
             <logicalFolder name="f2" displayName="sst26" projectFiles="true">
@@ -86,16 +93,16 @@
           <logicalFolder name="f3" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f3" displayName="evic" projectFiles="true">
+            <logicalFolder name="f2" displayName="evic" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f2" displayName="gpio" projectFiles="true">
+            <logicalFolder name="f3" displayName="gpio" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f5" displayName="nvm" projectFiles="true">
+            <logicalFolder name="f4" displayName="nvm" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f4" displayName="sqi" projectFiles="true">
+            <logicalFolder name="f5" displayName="sqi" projectFiles="true">
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="stdio" projectFiles="true">
+          <logicalFolder name="f4" displayName="stdio" projectFiles="true">
           </logicalFolder>
           <logicalFolder name="f5" displayName="system" projectFiles="true">
             <logicalFolder name="f1" displayName="int" projectFiles="true">
@@ -105,9 +112,13 @@
       </logicalFolder>
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
+    <logicalFolder name="LinkerScript"
+                   displayName="Linker Files"
+                   projectFiles="true">
     </logicalFolder>
-    <logicalFolder name="f3" displayName="Source Files" projectFiles="true">
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mz_ef_sk" projectFiles="true">
           <logicalFolder name="f4" displayName="bsp" projectFiles="true">
@@ -172,12 +183,14 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PKOBSKDEPlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.20</languageToolchainVersion>
+        <languageToolchainVersion>2.40</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MZ-EF_DFP" vendor="Microchip" version="1.0.20"/>
+        <pack name="PIC32MZ-EF_DFP" vendor="Microchip" version="1.2.51"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
@@ -211,7 +224,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP;../src/mips"/>
+                  value="../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -331,6 +344,7 @@
         <property key="mdtcm" value=""/>
         <property key="mitcm" value=""/>
         <property key="mstacktcm" value="false"/>
+        <property key="omit-pack-options" value="1"/>
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
@@ -561,7 +575,6 @@
         <property key="ToolFirmwareFilePath"
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="memories.configurationmemory" value="true"/>
         <property key="memories.dataflash" value="true"/>
         <property key="memories.eeprom" value="true"/>
