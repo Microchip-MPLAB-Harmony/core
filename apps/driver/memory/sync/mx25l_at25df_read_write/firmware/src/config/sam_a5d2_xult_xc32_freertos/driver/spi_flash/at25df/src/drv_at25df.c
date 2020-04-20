@@ -714,11 +714,10 @@ bool DRV_AT25DF_Read(
     gDrvAT25DFObj.bufferAddr = rxData;
     gDrvAT25DFObj.memoryAddr = address;
 
-    gDrvAT25DFObj.state = DRV_AT25DF_STATE_READ_CMD_ADDR;
+    gDrvAT25DFObj.state = DRV_AT25DF_STATE_READ_DATA;
 
     if (_DRV_AT25DF_WriteMemoryAddress(DRV_AT25DF_CMD_READ, address) == true)
     {
-        gDrvAT25DFObj.state = DRV_AT25DF_STATE_READ_DATA;
         isRequestAccepted = true;
     }
     else
@@ -776,6 +775,8 @@ DRV_AT25DF_TRANSFER_STATUS DRV_AT25DF_TransferStatusGet(const DRV_HANDLE handle)
 
 bool DRV_AT25DF_GeometryGet(const DRV_HANDLE handle, DRV_AT25DF_GEOMETRY *geometry)
 {
+    uint32_t flash_size = 0;
+
     if((handle == DRV_HANDLE_INVALID) || (handle > 0))
     {
         return false;
@@ -786,17 +787,33 @@ bool DRV_AT25DF_GeometryGet(const DRV_HANDLE handle, DRV_AT25DF_GEOMETRY *geomet
         return false;
     }
 
+    flash_size = gDrvAT25DFObj.flashSize;
+
+    if ((flash_size == 0) ||
+        (gDrvAT25DFObj.blockStartAddress >= flash_size))
+    {
+        return false;
+    }
+
+    flash_size = flash_size - gDrvAT25DFObj.blockStartAddress;
+
+    /* Flash size should be at-least of a Erase Block size */
+    if (flash_size < DRV_AT25DF_ERASE_SIZE)
+    {
+        return false;
+    }
+
     /* Read block size and number of blocks */
     geometry->readBlockSize = 1;
-    geometry->readNumBlocks = gDrvAT25DFObj.flashSize;
+    geometry->readNumBlocks = flash_size;
 
     /* Write block size and number of blocks */
     geometry->writeBlockSize = gDrvAT25DFObj.pageSize;
-    geometry->writeNumBlocks = gDrvAT25DFObj.flashSize/gDrvAT25DFObj.pageSize;
+    geometry->writeNumBlocks = (flash_size / gDrvAT25DFObj.pageSize);
 
     /* Erase block size and number of blocks */
     geometry->eraseBlockSize = DRV_AT25DF_ERASE_SIZE;
-    geometry->eraseNumBlocks = gDrvAT25DFObj.flashSize/DRV_AT25DF_ERASE_SIZE;
+    geometry->eraseNumBlocks = (flash_size / DRV_AT25DF_ERASE_SIZE);
 
     /* Number of regions */
     geometry->readNumRegions = 1;
