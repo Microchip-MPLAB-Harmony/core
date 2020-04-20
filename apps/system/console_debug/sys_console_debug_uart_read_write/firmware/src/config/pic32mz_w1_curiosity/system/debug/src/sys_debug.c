@@ -147,7 +147,7 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void)
     return gblErrLvl;
 }
 
-bool SYS_DEBUG_Remap(const SYS_MODULE_INDEX index)
+bool SYS_DEBUG_Redirect(const SYS_MODULE_INDEX index)
 {
     if (index < SYS_CONSOLE_DEVICE_MAX_INSTANCES)
     {
