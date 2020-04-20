@@ -156,8 +156,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult/peripheral/usart/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/usart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">557AE8D1BF4BD25F91E871382757ADC5</GeneratedChecksum>
-          <UserChecksum dnOrder="6">557AE8D1BF4BD25F91E871382757ADC5</UserChecksum>
+          <GeneratedChecksum dnOrder="5">43227F9EE236BB31B08EBA051D461CD3</GeneratedChecksum>
+          <UserChecksum dnOrder="6">43227F9EE236BB31B08EBA051D461CD3</UserChecksum>
         </File>
         <File dnOrder="17">
           <Type dnOrder="0">SOURCE</Type>
@@ -183,8 +183,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult/system/console/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/console/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">7DA3BA7FBE28DB9051D5A8C131EE3414</GeneratedChecksum>
-          <UserChecksum dnOrder="6">7DA3BA7FBE28DB9051D5A8C131EE3414</UserChecksum>
+          <GeneratedChecksum dnOrder="5">9F75BC5DF449CEE8E66F1017526B57AE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">9F75BC5DF449CEE8E66F1017526B57AE</UserChecksum>
         </File>
         <File dnOrder="20">
           <Type dnOrder="0">SOURCE</Type>
@@ -201,8 +201,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult/system/console/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/console/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">BA749CFFEEDC80079B1C8845FEA0EDF4</GeneratedChecksum>
-          <UserChecksum dnOrder="6">BA749CFFEEDC80079B1C8845FEA0EDF4</UserChecksum>
+          <GeneratedChecksum dnOrder="5">CA5E9B63704372DE5FBC0BDC006B16C3</GeneratedChecksum>
+          <UserChecksum dnOrder="6">CA5E9B63704372DE5FBC0BDC006B16C3</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">SOURCE</Type>
@@ -210,8 +210,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult/system/console/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/console/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">7463ACDA6830A79B39C2E8EDDA41F5E1</GeneratedChecksum>
-          <UserChecksum dnOrder="6">7463ACDA6830A79B39C2E8EDDA41F5E1</UserChecksum>
+          <GeneratedChecksum dnOrder="5">767495C6A39617A915D8107093DC1A72</GeneratedChecksum>
+          <UserChecksum dnOrder="6">767495C6A39617A915D8107093DC1A72</UserChecksum>
         </File>
         <File dnOrder="23">
           <Type dnOrder="0">SOURCE</Type>
@@ -228,8 +228,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult/system/debug/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/debug/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">310F44D37E7B3DD7CF26883E248AB57B</GeneratedChecksum>
-          <UserChecksum dnOrder="6">310F44D37E7B3DD7CF26883E248AB57B</UserChecksum>
+          <GeneratedChecksum dnOrder="5">BD054FD39A17EFF445B35078217A90EE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">BD054FD39A17EFF445B35078217A90EE</UserChecksum>
         </File>
         <File dnOrder="25">
           <Type dnOrder="0">SOURCE</Type>
@@ -849,8 +849,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult/system/console/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/console/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">5FB238A3C8F28D58C8C4533C8AC74D92</GeneratedChecksum>
-          <UserChecksum dnOrder="6">5FB238A3C8F28D58C8C4533C8AC74D92</UserChecksum>
+          <GeneratedChecksum dnOrder="5">7C2920DC1BE1D6FD06A7D9981B29AC9B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">7C2920DC1BE1D6FD06A7D9981B29AC9B</UserChecksum>
         </File>
         <File dnOrder="94">
           <Type dnOrder="0">HEADER</Type>
@@ -858,8 +858,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult/system/debug/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/debug/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">507D5A9BE3AC5911E2F8C77DF6F68322</GeneratedChecksum>
-          <UserChecksum dnOrder="6">507D5A9BE3AC5911E2F8C77DF6F68322</UserChecksum>
+          <GeneratedChecksum dnOrder="5">33F85B8B82ED7CA982F3291C4E541C0A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">33F85B8B82ED7CA982F3291C4E541C0A</UserChecksum>
         </File>
         <File dnOrder="95">
           <Type dnOrder="0">HEADER</Type>
@@ -1049,7 +1049,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bootloader;bsp;core;cryptoauthlib;csp;micrium_ucos3;touch;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="aws_cloud;bootloader;bsp;core;crypto;cryptoauthlib;csp;expresslogic_threadx;gfx;gfx_apps;net;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>
