@@ -252,9 +252,10 @@ ssize_t Console_UART_WriteCountGet(uint32_t index)
     return nPendingTxBytes;
 }
 
-void Console_UART_Flush(uint32_t index)
+bool Console_UART_Flush(uint32_t index)
 {
-    return;
+    /* Data is not buffered, nothing to flush */
+    return true;
 }
 
 SYS_CONSOLE_STATUS Console_UART_Status(uint32_t index)
