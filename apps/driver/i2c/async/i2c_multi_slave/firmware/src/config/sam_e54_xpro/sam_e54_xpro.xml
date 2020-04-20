@@ -42,72 +42,79 @@
             </Boolean>
           </Attributes>
         </Menu>
-        <KeyValueSet dnOrder="7" id="DEVICE_SECURITY">
+        <Menu dnOrder="7" id="CoreKEILMenu">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Menu>
+        <KeyValueSet dnOrder="8" id="DEVICE_SECURITY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="8" id="DEVICE_TCM_SIZE">
+        <KeyValueSet dnOrder="9" id="DEVICE_TCM_SIZE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="9" id="DPLL0_CLOCK_FREQ">
+        <Integer dnOrder="10" id="DPLL0_CLOCK_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="120000000"/>
           </Values>
         </Integer>
-        <Integer dnOrder="10" id="GCLK_0_FREQ">
+        <Integer dnOrder="11" id="GCLK_0_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="120000000"/>
           </Values>
         </Integer>
-        <KeyValueSet dnOrder="11" id="GCLK_0_SRC">
+        <KeyValueSet dnOrder="12" id="GCLK_0_SRC">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="7"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="12" id="GCLK_1_DIV">
+        <Integer dnOrder="13" id="GCLK_1_DIV">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="2"/>
           </Values>
         </Integer>
-        <Integer dnOrder="13" id="GCLK_1_DIVIDER_VALUE">
+        <Integer dnOrder="14" id="GCLK_1_DIVIDER_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="2"/>
           </Values>
         </Integer>
-        <Integer dnOrder="14" id="GCLK_1_FREQ">
+        <Integer dnOrder="15" id="GCLK_1_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="60000000"/>
           </Values>
         </Integer>
-        <KeyValueSet dnOrder="15" id="GCLK_1_SRC">
+        <KeyValueSet dnOrder="16" id="GCLK_1_SRC">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="6"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="16" id="GCLK_2_DIV">
+        <Integer dnOrder="17" id="GCLK_2_DIV">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="48"/>
           </Values>
         </Integer>
-        <Integer dnOrder="17" id="GCLK_2_DIVIDER_VALUE">
+        <Integer dnOrder="18" id="GCLK_2_DIVIDER_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="48"/>
           </Values>
         </Integer>
-        <Integer dnOrder="18" id="GCLK_2_FREQ">
+        <Integer dnOrder="19" id="GCLK_2_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1000000"/>
           </Values>
         </Integer>
-        <KeyValueSet dnOrder="19" id="GCLK_2_SRC">
+        <KeyValueSet dnOrder="20" id="GCLK_2_SRC">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="6"/>
           </Values>
         </KeyValueSet>
-        <ListEntry dnOrder="20" id="GCLK_CODE">
+        <ListEntry dnOrder="21" id="GCLK_CODE">
           <Attributes dnOrder="0">
             <StringArray dnOrder="0" id="values">
               <Values dnOrder="0">
@@ -120,745 +127,755 @@
             </StringArray>
           </Attributes>
         </ListEntry>
-        <Boolean dnOrder="21" id="GCLK_CYCLE_FORMED">
+        <Boolean dnOrder="22" id="GCLK_CYCLE_FORMED">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="22" id="GCLK_ID_1_CHEN">
+        <Boolean dnOrder="23" id="GCLK_ID_1_CHEN">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="23" id="GCLK_ID_1_FREQ">
+        <Integer dnOrder="24" id="GCLK_ID_1_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1000000"/>
           </Values>
         </Integer>
-        <KeyValueSet dnOrder="24" id="GCLK_ID_1_GENSEL">
+        <KeyValueSet dnOrder="25" id="GCLK_ID_1_GENSEL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="2"/>
           </Values>
         </KeyValueSet>
-        <Boolean dnOrder="25" id="GCLK_ID_23_CHEN">
+        <Boolean dnOrder="26" id="GCLK_ID_23_CHEN">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="26" id="GCLK_ID_23_FREQ">
+        <Integer dnOrder="27" id="GCLK_ID_23_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="60000000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="27" id="GCLK_ID_37_CHEN">
+        <Boolean dnOrder="28" id="GCLK_ID_37_CHEN">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="28" id="GCLK_ID_37_FREQ">
+        <Integer dnOrder="29" id="GCLK_ID_37_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="60000000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="29" id="GCLK_ID_9_CHEN">
+        <Boolean dnOrder="30" id="GCLK_ID_9_CHEN">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="30" id="GCLK_ID_9_FREQ">
+        <Integer dnOrder="31" id="GCLK_ID_9_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="60000000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="31" id="GCLK_INST_NUM1">
+        <Boolean dnOrder="32" id="GCLK_INST_NUM1">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="32" id="GCLK_INST_NUM2">
+        <Boolean dnOrder="33" id="GCLK_INST_NUM2">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="33" id="MAIN_CLOCK_FREQUENCY">
+        <String dnOrder="34" id="KEIL_STACK_HEAP_SIZE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x1200"/>
+          </Values>
+        </String>
+        <Integer dnOrder="35" id="MAIN_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="120000000"/>
           </Values>
         </Integer>
-        <String dnOrder="34" id="MCLK_APBA_INITIAL_VALUE">
+        <String dnOrder="36" id="MCLK_APBA_INITIAL_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x47ff"/>
           </Values>
         </String>
-        <String dnOrder="35" id="MCLK_APBB_INITIAL_VALUE">
+        <String dnOrder="37" id="MCLK_APBB_INITIAL_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x18256"/>
           </Values>
         </String>
-        <String dnOrder="36" id="MCLK_APBD_INITIAL_VALUE">
+        <String dnOrder="38" id="MCLK_APBD_INITIAL_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x8"/>
           </Values>
         </String>
-        <Boolean dnOrder="37" id="NVIC_107_0_ENABLE">
+        <Boolean dnOrder="39" id="NVIC_107_0_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
             <User dnOrder="1" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="38" id="NVIC_107_0_HANDLER">
+        <String dnOrder="40" id="NVIC_107_0_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="TC0_TimerInterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="39" id="NVIC_107_0_HANDLER_LOCK">
+        <Boolean dnOrder="41" id="NVIC_107_0_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="40" id="NVIC_54_0_ENABLE">
+        <Boolean dnOrder="42" id="NVIC_54_0_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="41" id="NVIC_54_0_HANDLER">
+        <String dnOrder="43" id="NVIC_54_0_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="SERCOM2_USART_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="42" id="NVIC_54_0_HANDLER_LOCK">
+        <Boolean dnOrder="44" id="NVIC_54_0_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="43" id="NVIC_55_0_ENABLE">
+        <Boolean dnOrder="45" id="NVIC_55_0_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="44" id="NVIC_55_0_HANDLER">
+        <String dnOrder="46" id="NVIC_55_0_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="SERCOM2_USART_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="45" id="NVIC_55_0_HANDLER_LOCK">
+        <Boolean dnOrder="47" id="NVIC_55_0_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="46" id="NVIC_56_0_ENABLE">
+        <Boolean dnOrder="48" id="NVIC_56_0_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="47" id="NVIC_56_0_HANDLER">
+        <String dnOrder="49" id="NVIC_56_0_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="SERCOM2_USART_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="48" id="NVIC_56_0_HANDLER_LOCK">
+        <Boolean dnOrder="50" id="NVIC_56_0_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="49" id="NVIC_57_0_ENABLE">
+        <Boolean dnOrder="51" id="NVIC_57_0_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="50" id="NVIC_57_0_HANDLER">
+        <String dnOrder="52" id="NVIC_57_0_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="SERCOM2_USART_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="51" id="NVIC_57_0_HANDLER_LOCK">
+        <Boolean dnOrder="53" id="NVIC_57_0_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="52" id="NVIC_74_0_ENABLE">
+        <Boolean dnOrder="54" id="NVIC_74_0_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="53" id="NVIC_74_0_HANDLER">
+        <String dnOrder="55" id="NVIC_74_0_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="SERCOM7_I2C_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="54" id="NVIC_74_0_HANDLER_LOCK">
+        <Boolean dnOrder="56" id="NVIC_74_0_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="55" id="NVIC_75_0_ENABLE">
+        <Boolean dnOrder="57" id="NVIC_75_0_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="56" id="NVIC_75_0_HANDLER">
+        <String dnOrder="58" id="NVIC_75_0_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="SERCOM7_I2C_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="57" id="NVIC_75_0_HANDLER_LOCK">
+        <Boolean dnOrder="59" id="NVIC_75_0_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="58" id="NVIC_76_0_ENABLE">
+        <Boolean dnOrder="60" id="NVIC_76_0_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="59" id="NVIC_76_0_HANDLER">
+        <String dnOrder="61" id="NVIC_76_0_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="SERCOM7_I2C_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="60" id="NVIC_76_0_HANDLER_LOCK">
+        <Boolean dnOrder="62" id="NVIC_76_0_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="61" id="NVIC_77_0_ENABLE">
+        <Boolean dnOrder="63" id="NVIC_77_0_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="62" id="NVIC_77_0_HANDLER">
+        <String dnOrder="64" id="NVIC_77_0_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="SERCOM7_I2C_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="63" id="NVIC_77_0_HANDLER_LOCK">
+        <Boolean dnOrder="65" id="NVIC_77_0_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="64" id="PIN_100_DIR">
+        <String dnOrder="66" id="PIN_100_DIR">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="65" id="PIN_100_FUNCTION_TYPE">
+        <String dnOrder="67" id="PIN_100_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="SERCOM2_PAD1"/>
           </Values>
         </String>
-        <String dnOrder="66" id="PIN_100_INEN">
+        <String dnOrder="68" id="PIN_100_INEN">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="67" id="PIN_100_LAT">
+        <String dnOrder="69" id="PIN_100_LAT">
           <Values dnOrder="0">
             <User dnOrder="0" value="High"/>
           </Values>
         </String>
-        <String dnOrder="68" id="PIN_100_MODE">
+        <String dnOrder="70" id="PIN_100_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="69" id="PIN_100_PERIPHERAL_FUNCTION">
+        <String dnOrder="71" id="PIN_100_PERIPHERAL_FUNCTION">
           <Values dnOrder="0">
             <User dnOrder="0" value="D"/>
           </Values>
         </String>
-        <String dnOrder="70" id="PIN_100_PULLEN">
+        <String dnOrder="72" id="PIN_100_PULLEN">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="71" id="PIN_101_DIR">
+        <String dnOrder="73" id="PIN_101_DIR">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="72" id="PIN_101_FUNCTION_TYPE">
+        <String dnOrder="74" id="PIN_101_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="SERCOM2_PAD0"/>
           </Values>
         </String>
-        <String dnOrder="73" id="PIN_101_INEN">
+        <String dnOrder="75" id="PIN_101_INEN">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="74" id="PIN_101_LAT">
+        <String dnOrder="76" id="PIN_101_LAT">
           <Values dnOrder="0">
             <User dnOrder="0" value="High"/>
           </Values>
         </String>
-        <String dnOrder="75" id="PIN_101_MODE">
+        <String dnOrder="77" id="PIN_101_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="76" id="PIN_101_PERIPHERAL_FUNCTION">
+        <String dnOrder="78" id="PIN_101_PERIPHERAL_FUNCTION">
           <Values dnOrder="0">
             <User dnOrder="0" value="D"/>
           </Values>
         </String>
-        <String dnOrder="77" id="PIN_101_PULLEN">
+        <String dnOrder="79" id="PIN_101_PULLEN">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="78" id="PIN_122_DIR">
+        <String dnOrder="80" id="PIN_122_DIR">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="79" id="PIN_122_INEN">
+        <String dnOrder="81" id="PIN_122_INEN">
           <Values dnOrder="0">
             <User dnOrder="0" value="True"/>
           </Values>
         </String>
-        <String dnOrder="80" id="PIN_122_LAT">
+        <String dnOrder="82" id="PIN_122_LAT">
           <Values dnOrder="0">
             <User dnOrder="0" value="High"/>
           </Values>
         </String>
-        <String dnOrder="81" id="PIN_122_PERIPHERAL_FUNCTION">
+        <String dnOrder="83" id="PIN_122_PERIPHERAL_FUNCTION">
           <Values dnOrder="0">
             <User dnOrder="0" value="SWITCH_AL"/>
           </Values>
         </String>
-        <String dnOrder="82" id="PIN_122_PULLEN">
+        <String dnOrder="84" id="PIN_122_PULLEN">
           <Values dnOrder="0">
             <User dnOrder="0" value="True"/>
           </Values>
         </String>
-        <String dnOrder="83" id="PIN_47_DIR">
+        <String dnOrder="85" id="PIN_47_DIR">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="84" id="PIN_47_FUNCTION_TYPE">
+        <String dnOrder="86" id="PIN_47_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="SERCOM7_PAD0"/>
           </Values>
         </String>
-        <String dnOrder="85" id="PIN_47_INEN">
+        <String dnOrder="87" id="PIN_47_INEN">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="86" id="PIN_47_LAT">
+        <String dnOrder="88" id="PIN_47_LAT">
           <Values dnOrder="0">
             <User dnOrder="0" value="High"/>
           </Values>
         </String>
-        <String dnOrder="87" id="PIN_47_MODE">
+        <String dnOrder="89" id="PIN_47_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="88" id="PIN_47_PERIPHERAL_FUNCTION">
+        <String dnOrder="90" id="PIN_47_PERIPHERAL_FUNCTION">
           <Values dnOrder="0">
             <User dnOrder="0" value="C"/>
           </Values>
         </String>
-        <String dnOrder="89" id="PIN_47_PULLEN">
+        <String dnOrder="91" id="PIN_47_PULLEN">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="90" id="PIN_48_DIR">
+        <String dnOrder="92" id="PIN_48_DIR">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="91" id="PIN_48_FUNCTION_TYPE">
+        <String dnOrder="93" id="PIN_48_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="SERCOM7_PAD1"/>
           </Values>
         </String>
-        <String dnOrder="92" id="PIN_48_INEN">
+        <String dnOrder="94" id="PIN_48_INEN">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="93" id="PIN_48_LAT">
+        <String dnOrder="95" id="PIN_48_LAT">
           <Values dnOrder="0">
             <User dnOrder="0" value="High"/>
           </Values>
         </String>
-        <String dnOrder="94" id="PIN_48_MODE">
+        <String dnOrder="96" id="PIN_48_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="95" id="PIN_48_PERIPHERAL_FUNCTION">
+        <String dnOrder="97" id="PIN_48_PERIPHERAL_FUNCTION">
           <Values dnOrder="0">
             <User dnOrder="0" value="C"/>
           </Values>
         </String>
-        <String dnOrder="96" id="PIN_48_PULLEN">
+        <String dnOrder="98" id="PIN_48_PULLEN">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="97" id="PIN_72_DIR">
+        <String dnOrder="99" id="PIN_72_DIR">
           <Values dnOrder="0">
             <User dnOrder="0" value="Out"/>
           </Values>
         </String>
-        <String dnOrder="98" id="PIN_72_INEN">
+        <String dnOrder="100" id="PIN_72_INEN">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="99" id="PIN_72_PERIPHERAL_FUNCTION">
+        <String dnOrder="101" id="PIN_72_PERIPHERAL_FUNCTION">
           <Values dnOrder="0">
             <User dnOrder="0" value="LED_AL"/>
           </Values>
         </String>
-        <String dnOrder="100" id="PIN_72_PULLEN">
+        <String dnOrder="102" id="PIN_72_PULLEN">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <Boolean dnOrder="101" id="PORT_GROUP_0">
+        <Boolean dnOrder="103" id="PORT_GROUP_0">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="102" id="PORT_GROUP_1">
+        <Boolean dnOrder="104" id="PORT_GROUP_1">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="103" id="PORT_GROUP_1_DIR">
+        <String dnOrder="105" id="PORT_GROUP_1_DIR">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <String dnOrder="104" id="PORT_GROUP_1_OUT">
+        <String dnOrder="106" id="PORT_GROUP_1_OUT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x83000000"/>
           </Values>
         </String>
-        <String dnOrder="105" id="PORT_GROUP_1_PAD_31">
+        <String dnOrder="107" id="PORT_GROUP_1_PAD_31">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="PB31"/>
           </Values>
         </String>
-        <String dnOrder="106" id="PORT_GROUP_1_PINCFG24">
+        <String dnOrder="108" id="PORT_GROUP_1_PINCFG24">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x1"/>
           </Values>
         </String>
-        <String dnOrder="107" id="PORT_GROUP_1_PINCFG25">
+        <String dnOrder="109" id="PORT_GROUP_1_PINCFG25">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x1"/>
           </Values>
         </String>
-        <String dnOrder="108" id="PORT_GROUP_1_PINCFG31">
+        <String dnOrder="110" id="PORT_GROUP_1_PINCFG31">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x6"/>
           </Values>
         </String>
-        <String dnOrder="109" id="PORT_GROUP_1_PMUX12">
+        <String dnOrder="111" id="PORT_GROUP_1_PMUX12">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x33"/>
           </Values>
         </String>
-        <String dnOrder="110" id="PORT_GROUP_1_PMUX15">
+        <String dnOrder="112" id="PORT_GROUP_1_PMUX15">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <Boolean dnOrder="111" id="PORT_GROUP_2">
+        <Boolean dnOrder="113" id="PORT_GROUP_2">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="112" id="PORT_GROUP_2_DIR">
+        <String dnOrder="114" id="PORT_GROUP_2_DIR">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x40000"/>
           </Values>
         </String>
-        <String dnOrder="113" id="PORT_GROUP_2_OUT">
+        <String dnOrder="115" id="PORT_GROUP_2_OUT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x40000"/>
           </Values>
         </String>
-        <String dnOrder="114" id="PORT_GROUP_2_PAD_18">
+        <String dnOrder="116" id="PORT_GROUP_2_PAD_18">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="PC18"/>
           </Values>
         </String>
-        <String dnOrder="115" id="PORT_GROUP_2_PINCFG18">
+        <String dnOrder="117" id="PORT_GROUP_2_PINCFG18">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <String dnOrder="116" id="PORT_GROUP_2_PMUX9">
+        <String dnOrder="118" id="PORT_GROUP_2_PMUX9">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <Boolean dnOrder="117" id="PORT_GROUP_3">
+        <Boolean dnOrder="119" id="PORT_GROUP_3">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="118" id="PORT_GROUP_3_DIR">
+        <String dnOrder="120" id="PORT_GROUP_3_DIR">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <String dnOrder="119" id="PORT_GROUP_3_OUT">
+        <String dnOrder="121" id="PORT_GROUP_3_OUT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x300"/>
           </Values>
         </String>
-        <String dnOrder="120" id="PORT_GROUP_3_PINCFG8">
+        <String dnOrder="122" id="PORT_GROUP_3_PINCFG8">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x1"/>
           </Values>
         </String>
-        <String dnOrder="121" id="PORT_GROUP_3_PINCFG9">
+        <String dnOrder="123" id="PORT_GROUP_3_PINCFG9">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x1"/>
           </Values>
         </String>
-        <String dnOrder="122" id="PORT_GROUP_3_PMUX4">
+        <String dnOrder="124" id="PORT_GROUP_3_PMUX4">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x22"/>
           </Values>
         </String>
-        <Integer dnOrder="123" id="QSPI_CLOCK_FREQUENCY">
+        <String dnOrder="125" id="PORT_REG_NAME">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="PORT"/>
+          </Values>
+        </String>
+        <Integer dnOrder="126" id="QSPI_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="124" id="SERCOM2_0_INTERRUPT_ENABLE">
+        <Boolean dnOrder="127" id="SERCOM2_0_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="125" id="SERCOM2_0_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="128" id="SERCOM2_0_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="126" id="SERCOM2_0_INTERRUPT_HANDLER">
+        <String dnOrder="129" id="SERCOM2_0_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="SERCOM2_USART_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="127" id="SERCOM2_0_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="130" id="SERCOM2_0_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="128" id="SERCOM2_1_INTERRUPT_ENABLE">
+        <Boolean dnOrder="131" id="SERCOM2_1_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="129" id="SERCOM2_1_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="132" id="SERCOM2_1_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="130" id="SERCOM2_1_INTERRUPT_HANDLER">
+        <String dnOrder="133" id="SERCOM2_1_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="SERCOM2_USART_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="131" id="SERCOM2_1_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="134" id="SERCOM2_1_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="132" id="SERCOM2_2_INTERRUPT_ENABLE">
+        <Boolean dnOrder="135" id="SERCOM2_2_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="133" id="SERCOM2_2_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="136" id="SERCOM2_2_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="134" id="SERCOM2_2_INTERRUPT_HANDLER">
+        <String dnOrder="137" id="SERCOM2_2_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="SERCOM2_USART_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="135" id="SERCOM2_2_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="138" id="SERCOM2_2_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="136" id="SERCOM2_CORE_CLOCK_ENABLE">
+        <Boolean dnOrder="139" id="SERCOM2_CORE_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="137" id="SERCOM2_CORE_CLOCK_FREQUENCY">
+        <Integer dnOrder="140" id="SERCOM2_CORE_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="60000000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="138" id="SERCOM2_OTHER_INTERRUPT_ENABLE">
+        <Boolean dnOrder="141" id="SERCOM2_OTHER_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="139" id="SERCOM2_OTHER_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="142" id="SERCOM2_OTHER_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="140" id="SERCOM2_OTHER_INTERRUPT_HANDLER">
+        <String dnOrder="143" id="SERCOM2_OTHER_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="SERCOM2_USART_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="141" id="SERCOM2_OTHER_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="144" id="SERCOM2_OTHER_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="142" id="SERCOM7_0_INTERRUPT_ENABLE">
+        <Boolean dnOrder="145" id="SERCOM7_0_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="143" id="SERCOM7_0_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="146" id="SERCOM7_0_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="144" id="SERCOM7_0_INTERRUPT_HANDLER">
+        <String dnOrder="147" id="SERCOM7_0_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="SERCOM7_I2C_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="145" id="SERCOM7_0_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="148" id="SERCOM7_0_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="146" id="SERCOM7_1_INTERRUPT_ENABLE">
+        <Boolean dnOrder="149" id="SERCOM7_1_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="147" id="SERCOM7_1_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="150" id="SERCOM7_1_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="148" id="SERCOM7_1_INTERRUPT_HANDLER">
+        <String dnOrder="151" id="SERCOM7_1_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="SERCOM7_I2C_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="149" id="SERCOM7_1_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="152" id="SERCOM7_1_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="150" id="SERCOM7_2_INTERRUPT_ENABLE">
+        <Boolean dnOrder="153" id="SERCOM7_2_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="151" id="SERCOM7_2_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="154" id="SERCOM7_2_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="152" id="SERCOM7_2_INTERRUPT_HANDLER">
+        <String dnOrder="155" id="SERCOM7_2_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="SERCOM7_I2C_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="153" id="SERCOM7_2_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="156" id="SERCOM7_2_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="154" id="SERCOM7_CORE_CLOCK_ENABLE">
+        <Boolean dnOrder="157" id="SERCOM7_CORE_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="155" id="SERCOM7_CORE_CLOCK_FREQUENCY">
+        <Integer dnOrder="158" id="SERCOM7_CORE_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="60000000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="156" id="SERCOM7_OTHER_INTERRUPT_ENABLE">
+        <Boolean dnOrder="159" id="SERCOM7_OTHER_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="157" id="SERCOM7_OTHER_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="160" id="SERCOM7_OTHER_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="158" id="SERCOM7_OTHER_INTERRUPT_HANDLER">
+        <String dnOrder="161" id="SERCOM7_OTHER_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="SERCOM7_I2C_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="159" id="SERCOM7_OTHER_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="162" id="SERCOM7_OTHER_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="160" id="SYSTICK_PERIOD">
+        <String dnOrder="163" id="SYSTICK_PERIOD">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x1d4c0"/>
           </Values>
         </String>
-        <Float dnOrder="161" id="SYSTICK_PERIOD_MS">
+        <Float dnOrder="164" id="SYSTICK_PERIOD_MS">
           <Attributes dnOrder="0">
             <Float dnOrder="0" id="max">
               <Value dnOrder="0">139.81012</Value>
             </Float>
           </Attributes>
         </Float>
-        <Integer dnOrder="162" id="SYSTICK_PERIOD_US">
+        <Integer dnOrder="165" id="SYSTICK_PERIOD_US">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="163" id="TC0_CLOCK_ENABLE">
+        <Boolean dnOrder="166" id="TC0_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="164" id="TC0_CLOCK_FREQUENCY">
+        <Integer dnOrder="167" id="TC0_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="60000000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="165" id="TC0_INTERRUPT_ENABLE">
+        <Boolean dnOrder="168" id="TC0_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="166" id="TC0_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="169" id="TC0_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="167" id="TC0_INTERRUPT_HANDLER">
+        <String dnOrder="170" id="TC0_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="TC0_TimerInterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="168" id="TC0_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="171" id="TC0_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="true"/>
           </Values>
@@ -1202,70 +1219,96 @@
     </UniqueComponent>
     <UniqueComponent dnOrder="8" id="sercom2">
       <Symbols dnOrder="0">
-        <Integer dnOrder="0" id="I2CM_BAUD">
+        <Hex dnOrder="0" id="I2CM_BAUD">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="sercom2" value="0"/>
+            <Dynamic dnOrder="0" id="sercom2" value="255"/>
+          </Values>
+        </Hex>
+        <Integer dnOrder="1" id="I2CS_SDASETUP_TIME_REG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="sercom2" value="1"/>
           </Values>
         </Integer>
-        <String dnOrder="1" id="RECEIVE_DATA_REGISTER">
+        <Boolean dnOrder="2" id="I2CS_SDASETUP_TIME_SUPPORT">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="sercom2" value="true"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="3" id="RECEIVE_DATA_REGISTER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="&amp;(SERCOM2_REGS-&gt;USART_INT.SERCOM_DATA)"/>
           </Values>
         </String>
-        <KeyValueSet dnOrder="2" id="SERCOM_MODE">
+        <KeyValueSet dnOrder="4" id="SERCOM_MODE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="0"/>
           </Values>
         </KeyValueSet>
-        <File dnOrder="3" id="SERCOM_USART_COMMON_HEADER">
+        <File dnOrder="5" id="SERCOM_USART_COMMON_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="4" id="SERCOM_USART_HEADER">
+        <File dnOrder="6" id="SERCOM_USART_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
+            <String dnOrder="1" id="source">
+              <Value dnOrder="0">../peripheral/sercom_u2201/templates/plib_sercom_usart_ring_buffer.h.ftl</Value>
+            </String>
           </Attributes>
         </File>
-        <File dnOrder="5" id="SERCOM_USART_SOURCE">
+        <File dnOrder="7" id="SERCOM_USART_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
+            <String dnOrder="1" id="source">
+              <Value dnOrder="0">../peripheral/sercom_u2201/templates/plib_sercom_usart_ring_buffer.c.ftl</Value>
+            </String>
           </Attributes>
         </File>
-        <Integer dnOrder="6" id="SPI_BAUD_REG_VALUE">
+        <Integer dnOrder="8" id="SPI_BAUD_REG_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="29"/>
           </Values>
         </Integer>
-        <String dnOrder="7" id="TRANSMIT_DATA_REGISTER">
+        <String dnOrder="9" id="TRANSMIT_DATA_REGISTER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="&amp;(SERCOM2_REGS-&gt;USART_INT.SERCOM_DATA)"/>
           </Values>
         </String>
-        <Integer dnOrder="8" id="USART_BAUD_VALUE">
+        <Integer dnOrder="10" id="USART_BAUD_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="63522"/>
           </Values>
         </Integer>
-        <KeyValueSet dnOrder="9" id="USART_RXPO">
+        <Boolean dnOrder="11" id="USART_RING_BUFFER_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="sercom2" value="true"/>
+          </Values>
+        </Boolean>
+        <KeyValueSet dnOrder="12" id="USART_RXPO">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="10" id="USART_SAMPLE_COUNT">
+        <Integer dnOrder="13" id="USART_SAMPLE_COUNT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="16"/>
           </Values>
         </Integer>
-        <Integer dnOrder="11" id="USART_SAMPLE_RATE">
+        <Integer dnOrder="14" id="USART_SAMPLE_RATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom2" value="0"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="15" id="USART_TX_RING_BUFFER_SIZE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="256"/>
           </Values>
         </Integer>
       </Symbols>
@@ -1298,68 +1341,90 @@
     </UniqueComponent>
     <UniqueComponent dnOrder="9" id="sercom7">
       <Symbols dnOrder="0">
-        <Integer dnOrder="0" id="I2CM_BAUD">
+        <Hex dnOrder="0" id="I2CM_BAUD">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="67"/>
           </Values>
+        </Hex>
+        <Integer dnOrder="1" id="I2CS_SDASETUP_TIME_REG_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="sercom7" value="1"/>
+          </Values>
         </Integer>
-        <Integer dnOrder="1" id="I2C_CLOCK_SPEED">
+        <Boolean dnOrder="2" id="I2CS_SDASETUP_TIME_SUPPORT">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="sercom7" value="true"/>
+          </Values>
+        </Boolean>
+        <Comment dnOrder="3" id="I2C_BAUD_ERROR_COMMENT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Comment>
+        <Integer dnOrder="4" id="I2C_CLOCK_SPEED">
           <Values dnOrder="0">
             <User dnOrder="0" value="400"/>
           </Values>
         </Integer>
-        <String dnOrder="2" id="RECEIVE_DATA_REGISTER">
+        <String dnOrder="5" id="RECEIVE_DATA_REGISTER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value=""/>
           </Values>
         </String>
-        <File dnOrder="3" id="SERCOM_I2CM_HEADER">
+        <File dnOrder="6" id="SERCOM_I2CM_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="4" id="SERCOM_I2CM_MASTER_HEADER">
+        <File dnOrder="7" id="SERCOM_I2CM_MASTER_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="5" id="SERCOM_I2CM_SOURCE">
+        <File dnOrder="8" id="SERCOM_I2CM_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <KeyValueSet dnOrder="6" id="SERCOM_MODE">
+        <KeyValueSet dnOrder="9" id="SERCOM_MODE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="2"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="7" id="SPI_BAUD_REG_VALUE">
+        <Integer dnOrder="10" id="SPI_BAUD_REG_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="29"/>
           </Values>
         </Integer>
-        <String dnOrder="8" id="TRANSMIT_DATA_REGISTER">
+        <String dnOrder="11" id="TRANSMIT_DATA_REGISTER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value=""/>
           </Values>
         </String>
-        <Integer dnOrder="9" id="USART_BAUD_VALUE">
+        <Integer dnOrder="12" id="USART_BAUD_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="63522"/>
           </Values>
         </Integer>
-        <Integer dnOrder="10" id="USART_SAMPLE_COUNT">
+        <KeyValueSet dnOrder="13" id="USART_FORM">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="sercom7" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <Integer dnOrder="14" id="USART_SAMPLE_COUNT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="16"/>
           </Values>
         </Integer>
-        <Integer dnOrder="11" id="USART_SAMPLE_RATE">
+        <Integer dnOrder="15" id="USART_SAMPLE_RATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom7" value="0"/>
           </Values>
@@ -1389,21 +1454,49 @@
       <Instances dnOrder="1">
         <InstanceComponent dnOrder="0" id="sys_console" instance="0">
           <Symbols dnOrder="0">
-            <String dnOrder="0" id="SYS_CONSOLE_DEVICE">
+            <Comment dnOrder="0" id="SYS_CONSOLE_BUFFER_CONFIG_COMMENT">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </Comment>
+            <String dnOrder="1" id="SYS_CONSOLE_DEVICE">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="sys_console_0" value="SERCOM2"/>
               </Values>
             </String>
-            <String dnOrder="1" id="SYS_CONSOLE_DEVICE_SET">
+            <String dnOrder="2" id="SYS_CONSOLE_DEVICE_SET">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="sys_console_0" value="UART"/>
               </Values>
             </String>
-            <Integer dnOrder="2" id="SYS_CONSOLE_DEVICE_UART_INDEX">
+            <Integer dnOrder="3" id="SYS_CONSOLE_DEVICE_UART_INDEX">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="sys_console" value="0"/>
               </Values>
             </Integer>
+            <File dnOrder="4" id="SYS_CONSOLE_UART_DEFINITIONS_HEADER">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+            <File dnOrder="5" id="SYS_CONSOLE_UART_HEADER">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+            <File dnOrder="6" id="SYS_CONSOLE_UART_SOURCE">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">true</Value>
+                </Boolean>
+              </Attributes>
+            </File>
           </Symbols>
           <Attachments dnOrder="1">
             <DirectDependency dnOrder="0" id="sys_console_UART_dependency">
@@ -1453,6 +1546,11 @@
             <Dynamic dnOrder="0" id="sys_time" value="TC0"/>
           </Values>
         </String>
+        <String dnOrder="1" id="SYS_TIME_REMOTE_COMPONENT_ID">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="sys_time" value="tc0"/>
+          </Values>
+        </String>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectDependency dnOrder="0" id="sys_time_TMR_dependency">
@@ -1469,36 +1567,46 @@
     </UniqueComponent>
     <UniqueComponent dnOrder="13" id="tc0">
       <Symbols dnOrder="0">
-        <Comment dnOrder="0" id="TC_COMPARE_PERIOD_COMMENT">
+        <String dnOrder="0" id="SYS_TIME_COMPONENT_ID">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="tc0" value="sys_time"/>
+          </Values>
+        </String>
+        <String dnOrder="1" id="SYS_TIME_PLIB_OPERATION_MODE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="tc0" value="SYS_TIME_PLIB_MODE_COMPARE"/>
+          </Values>
+        </String>
+        <Comment dnOrder="2" id="TC_COMPARE_PERIOD_COMMENT">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
-              <Value dnOrder="0">****&amp;#160;Compare&amp;#160;Period&amp;#160;is&amp;#160;204.8&amp;#160;us&amp;#160;****</Value>
+              <Value dnOrder="0">****&amp;#160;Compare&amp;#160;Period&amp;#160;is&amp;#160;102.4&amp;#160;us&amp;#160;****</Value>
             </String>
           </Attributes>
         </Comment>
-        <KeyValueSet dnOrder="1" id="TC_CTRLA_PRESCALER">
+        <KeyValueSet dnOrder="3" id="TC_CTRLA_PRESCALER">
           <Values dnOrder="0">
             <User dnOrder="0" value="6"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="2" id="TC_FREQUENCY">
+        <Integer dnOrder="4" id="TC_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="234375"/>
           </Values>
         </Integer>
-        <Comment dnOrder="3" id="TC_Resolution">
+        <Comment dnOrder="5" id="TC_Resolution">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
               <Value dnOrder="0">****Timer&amp;#160;resolution&amp;#160;is&amp;#160;4266.66666667&amp;#160;nS****</Value>
             </String>
           </Attributes>
         </Comment>
-        <Boolean dnOrder="4" id="TC_SYS_TIME_CONNECTED">
+        <Boolean dnOrder="6" id="TC_SYS_TIME_CONNECTED">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="5" id="TC_TIMER_INTENSET_MC1">
+        <Boolean dnOrder="7" id="TC_TIMER_INTENSET_MC1">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -1509,17 +1617,17 @@
             <User dnOrder="1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="6" id="TC_TIMER_INTENSET_OVF">
+        <Boolean dnOrder="8" id="TC_TIMER_INTENSET_OVF">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="false"/>
           </Values>
         </Boolean>
-        <Long dnOrder="7" id="TC_TIMER_PERIOD">
+        <Long dnOrder="9" id="TC_TIMER_PERIOD">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="234"/>
           </Values>
         </Long>
-        <Float dnOrder="8" id="TC_TIMER_TIME_MS">
+        <Float dnOrder="10" id="TC_TIMER_TIME_MS">
           <Attributes dnOrder="0">
             <Float dnOrder="0" id="max">
               <Value dnOrder="0">279.616</Value>
@@ -1545,7 +1653,8 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_E54_Xplained_Pro" x="310" y="60"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="1" y="76"/>
@@ -1563,6 +1672,5 @@
         <ElementPosition dnOrder="13" id="tc0" x="4" y="295"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
