@@ -87,6 +87,7 @@ bool I2C_BB_Read(uint16_t address, uint8_t *pdata, size_t length);
 
 bool I2C_BB_Write(uint16_t address, uint8_t *pdata, size_t length);
 
+
 bool I2C_BB_WriteRead(uint16_t address, uint8_t *wdata, size_t wlength, uint8_t *rdata, size_t rlength);
 
 I2CBB_ERROR I2C_BB_ErrorGet(void);

@@ -368,6 +368,7 @@ static void I2C_BB_eventHandler(uint32_t status, uintptr_t context)
     I2C_BB_tasks();
 }
 
+
 void I2C_BB_Initialize(void)
 {
     I2C_BB_INIT* pInitData =(I2C_BB_INIT*)&i2cBBInitData;
@@ -435,6 +436,7 @@ bool I2C_BB_Write(uint16_t address, uint8_t *pdata, size_t length)
     i2c_bbObj.I2CSWCounter = 9;
     return true;
 }
+
 
 bool I2C_BB_WriteRead(uint16_t address, uint8_t *wdata, size_t wlength, uint8_t *rdata, size_t rlength)
 {

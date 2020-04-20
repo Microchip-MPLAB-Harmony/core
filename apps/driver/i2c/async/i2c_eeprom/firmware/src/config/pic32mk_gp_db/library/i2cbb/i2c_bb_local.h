@@ -256,6 +256,7 @@ typedef struct _I2CBB_OBJ
 
     volatile              I2CBB_ERROR errorStatus;
 
+
     I2CBB_CALLBACK        callback;
 
     uintptr_t context;
