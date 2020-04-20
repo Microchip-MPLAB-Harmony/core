@@ -65,8 +65,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-
-
+  
 /*** Macros for APP_EEPROM2_WP pin ***/
 #define APP_EEPROM2_WP_Set()               (PORT_REGS->GROUP[2].PORT_OUTSET = 1 << 1)
 #define APP_EEPROM2_WP_Clear()             (PORT_REGS->GROUP[2].PORT_OUTCLR = 1 << 1)
