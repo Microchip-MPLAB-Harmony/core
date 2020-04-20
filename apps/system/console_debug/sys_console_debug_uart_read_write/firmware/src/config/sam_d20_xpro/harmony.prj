@@ -120,8 +120,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d20_xpro/peripheral/sercom/usart/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/sercom/usart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">DD94C04FC90A763F8CAE9EDFFBE060D0</GeneratedChecksum>
-          <UserChecksum dnOrder="6">DD94C04FC90A763F8CAE9EDFFBE060D0</UserChecksum>
+          <GeneratedChecksum dnOrder="5">75F66FF719A0038156860E438B1036B2</GeneratedChecksum>
+          <UserChecksum dnOrder="6">75F66FF719A0038156860E438B1036B2</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
@@ -138,8 +138,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d20_xpro/system/console/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/console/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">DEE0A23058774982652876F8029D7D5F</GeneratedChecksum>
-          <UserChecksum dnOrder="6">DEE0A23058774982652876F8029D7D5F</UserChecksum>
+          <GeneratedChecksum dnOrder="5">9F75BC5DF449CEE8E66F1017526B57AE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">9F75BC5DF449CEE8E66F1017526B57AE</UserChecksum>
         </File>
         <File dnOrder="15">
           <Type dnOrder="0">SOURCE</Type>
@@ -183,8 +183,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d20_xpro/system/debug/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/debug/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">159931972673F2B2CBEB926B83C2118F</GeneratedChecksum>
-          <UserChecksum dnOrder="6">159931972673F2B2CBEB926B83C2118F</UserChecksum>
+          <GeneratedChecksum dnOrder="5">BD054FD39A17EFF445B35078217A90EE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">BD054FD39A17EFF445B35078217A90EE</UserChecksum>
         </File>
         <File dnOrder="20">
           <Type dnOrder="0">SOURCE</Type>
@@ -615,8 +615,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d20_xpro/system/console/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/console/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">207615D941E24DEF44FAE48A73482D20</GeneratedChecksum>
-          <UserChecksum dnOrder="6">207615D941E24DEF44FAE48A73482D20</UserChecksum>
+          <GeneratedChecksum dnOrder="5">7C2920DC1BE1D6FD06A7D9981B29AC9B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">7C2920DC1BE1D6FD06A7D9981B29AC9B</UserChecksum>
         </File>
         <File dnOrder="68">
           <Type dnOrder="0">HEADER</Type>
@@ -624,8 +624,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d20_xpro/system/debug/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/debug/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">D0F744C364EFB96A28DACFE81CE16D90</GeneratedChecksum>
-          <UserChecksum dnOrder="6">D0F744C364EFB96A28DACFE81CE16D90</UserChecksum>
+          <GeneratedChecksum dnOrder="5">33F85B8B82ED7CA982F3291C4E541C0A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">33F85B8B82ED7CA982F3291C4E541C0A</UserChecksum>
         </File>
         <File dnOrder="69">
           <Type dnOrder="0">HEADER</Type>
@@ -731,7 +731,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bootloader;bsp;core;cryptoauthlib;csp;micrium_ucos3;touch;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bootloader;bsp;core;cryptoauthlib;csp;micrium_ucos3;net;touch;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>
