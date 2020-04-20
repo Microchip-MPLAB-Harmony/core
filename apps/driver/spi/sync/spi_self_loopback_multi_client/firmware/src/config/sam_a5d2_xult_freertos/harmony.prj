@@ -121,8 +121,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_a5d2_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">99CBDBAEA88BF9E5E1313DB78D5DCEA5</GeneratedChecksum>
-          <UserChecksum dnOrder="6">99CBDBAEA88BF9E5E1313DB78D5DCEA5</UserChecksum>
+          <GeneratedChecksum dnOrder="5">FC4989A508A3679C14197AB2ECEEDCDB</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FC4989A508A3679C14197AB2ECEEDCDB</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
@@ -130,8 +130,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_a5d2_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">8B97073F05E7F6A181B1DB746D64913A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">8B97073F05E7F6A181B1DB746D64913A</UserChecksum>
+          <GeneratedChecksum dnOrder="5">5AAB3DEDB077C139FBA57378333049BD</GeneratedChecksum>
+          <UserChecksum dnOrder="6">5AAB3DEDB077C139FBA57378333049BD</UserChecksum>
         </File>
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
@@ -166,8 +166,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_a5d2_xult_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">3CF5B8DC7DF9165C4DD98DD2E8808F5A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">3CF5B8DC7DF9165C4DD98DD2E8808F5A</UserChecksum>
+          <GeneratedChecksum dnOrder="5">C8696DB915DFA4BD204290B573F1F03B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C8696DB915DFA4BD204290B573F1F03B</UserChecksum>
         </File>
         <File dnOrder="18">
           <Type dnOrder="0">SOURCE</Type>
@@ -225,6 +225,15 @@
         </File>
         <File dnOrder="24">
           <Type dnOrder="0">SOURCE</Type>
+          <Name dnOrder="1">plib_xdmac0.c</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_a5d2_xult_freertos/peripheral/xdmac/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/xdmac/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">044DF42707C80B2F0230990BA94C6BCF</GeneratedChecksum>
+          <UserChecksum dnOrder="6">044DF42707C80B2F0230990BA94C6BCF</UserChecksum>
+        </File>
+        <File dnOrder="25">
+          <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">port.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">FreeRTOS/Source/portable/IAR/SAM/CA5</LogicalPath>
@@ -232,7 +241,7 @@
           <GeneratedChecksum dnOrder="5">E7FF43A802B6BBF1A79A3D6ADE245F84</GeneratedChecksum>
           <UserChecksum dnOrder="6">E7FF43A802B6BBF1A79A3D6ADE245F84</UserChecksum>
         </File>
-        <File dnOrder="25">
+        <File dnOrder="26">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">portASM.s</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -241,7 +250,7 @@
           <GeneratedChecksum dnOrder="5">A4C25D530EBEEBE5756FCA2C6A732049</GeneratedChecksum>
           <UserChecksum dnOrder="6">A4C25D530EBEEBE5756FCA2C6A732049</UserChecksum>
         </File>
-        <File dnOrder="26">
+        <File dnOrder="27">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">queue.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -250,7 +259,7 @@
           <GeneratedChecksum dnOrder="5">36E66DF7A9E3D95A0B79558D6EB93210</GeneratedChecksum>
           <UserChecksum dnOrder="6">36E66DF7A9E3D95A0B79558D6EB93210</UserChecksum>
         </File>
-        <File dnOrder="27">
+        <File dnOrder="28">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">stream_buffer.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -259,7 +268,7 @@
           <GeneratedChecksum dnOrder="5">162BBB1DB328D27F935CE22203D6A5BA</GeneratedChecksum>
           <UserChecksum dnOrder="6">162BBB1DB328D27F935CE22203D6A5BA</UserChecksum>
         </File>
-        <File dnOrder="28">
+        <File dnOrder="29">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">sys_cache.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -268,16 +277,16 @@
           <GeneratedChecksum dnOrder="5">2B6EF5AAF13176F5A5E93B547721DB50</GeneratedChecksum>
           <UserChecksum dnOrder="6">2B6EF5AAF13176F5A5E93B547721DB50</UserChecksum>
         </File>
-        <File dnOrder="29">
+        <File dnOrder="30">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">sys_dma.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_a5d2_xult_freertos/system/dma/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/dma/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">DBBC8FE07E165E5808B7D1D87C64009C</GeneratedChecksum>
-          <UserChecksum dnOrder="6">DBBC8FE07E165E5808B7D1D87C64009C</UserChecksum>
+          <GeneratedChecksum dnOrder="5">258910296745928CD76AF442145A71B4</GeneratedChecksum>
+          <UserChecksum dnOrder="6">258910296745928CD76AF442145A71B4</UserChecksum>
         </File>
-        <File dnOrder="30">
+        <File dnOrder="31">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">sys_int.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -286,16 +295,16 @@
           <GeneratedChecksum dnOrder="5">EB792180B2A9DB27A1F3E8B62BC2AE01</GeneratedChecksum>
           <UserChecksum dnOrder="6">EB792180B2A9DB27A1F3E8B62BC2AE01</UserChecksum>
         </File>
-        <File dnOrder="31">
+        <File dnOrder="32">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">tasks.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_a5d2_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">47408EF756D50131C536BCD447052AB8</GeneratedChecksum>
-          <UserChecksum dnOrder="6">47408EF756D50131C536BCD447052AB8</UserChecksum>
+          <GeneratedChecksum dnOrder="5">0A246841049A35382E6BE5D51DEF3977</GeneratedChecksum>
+          <UserChecksum dnOrder="6">0A246841049A35382E6BE5D51DEF3977</UserChecksum>
         </File>
-        <File dnOrder="32">
+        <File dnOrder="33">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">timers.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -304,7 +313,7 @@
           <GeneratedChecksum dnOrder="5">BFF63C63E613200CFC9D0E9593031787</GeneratedChecksum>
           <UserChecksum dnOrder="6">BFF63C63E613200CFC9D0E9593031787</UserChecksum>
         </File>
-        <File dnOrder="33">
+        <File dnOrder="34">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">FreeRTOS.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -313,7 +322,7 @@
           <GeneratedChecksum dnOrder="5">BCDC1865B923B79D6B4BB4A6606CB111</GeneratedChecksum>
           <UserChecksum dnOrder="6">BCDC1865B923B79D6B4BB4A6606CB111</UserChecksum>
         </File>
-        <File dnOrder="34">
+        <File dnOrder="35">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">FreeRTOSConfig.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -322,7 +331,7 @@
           <GeneratedChecksum dnOrder="5">CEB74EA1CF8648B74EF7291ADDD3106E</GeneratedChecksum>
           <UserChecksum dnOrder="6">CEB74EA1CF8648B74EF7291ADDD3106E</UserChecksum>
         </File>
-        <File dnOrder="35">
+        <File dnOrder="36">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">acc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -331,7 +340,7 @@
           <GeneratedChecksum dnOrder="5">13A60E9CE3622444C86CC695E221BAA7</GeneratedChecksum>
           <UserChecksum dnOrder="6">13A60E9CE3622444C86CC695E221BAA7</UserChecksum>
         </File>
-        <File dnOrder="36">
+        <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">adc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -340,7 +349,7 @@
           <GeneratedChecksum dnOrder="5">CBF53D7D5D11D7A49BABBD0DFF3808FB</GeneratedChecksum>
           <UserChecksum dnOrder="6">CBF53D7D5D11D7A49BABBD0DFF3808FB</UserChecksum>
         </File>
-        <File dnOrder="37">
+        <File dnOrder="38">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">aes.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -349,7 +358,7 @@
           <GeneratedChecksum dnOrder="5">399D4E816A5D6A1F481E1DA06FA4090B</GeneratedChecksum>
           <UserChecksum dnOrder="6">399D4E816A5D6A1F481E1DA06FA4090B</UserChecksum>
         </File>
-        <File dnOrder="38">
+        <File dnOrder="39">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">aesb.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -358,7 +367,7 @@
           <GeneratedChecksum dnOrder="5">458D434D61C56101DEE314940717187A</GeneratedChecksum>
           <UserChecksum dnOrder="6">458D434D61C56101DEE314940717187A</UserChecksum>
         </File>
-        <File dnOrder="39">
+        <File dnOrder="40">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">aic.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -367,7 +376,7 @@
           <GeneratedChecksum dnOrder="5">C58DDCAAAD44D1AB6F4D3BED9AE147A0</GeneratedChecksum>
           <UserChecksum dnOrder="6">C58DDCAAAD44D1AB6F4D3BED9AE147A0</UserChecksum>
         </File>
-        <File dnOrder="40">
+        <File dnOrder="41">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">atsama5d27.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -376,7 +385,7 @@
           <GeneratedChecksum dnOrder="5">FC2827A99B0DED891F41F6D940CFB875</GeneratedChecksum>
           <UserChecksum dnOrder="6">FC2827A99B0DED891F41F6D940CFB875</UserChecksum>
         </File>
-        <File dnOrder="41">
+        <File dnOrder="42">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">aximx.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -385,7 +394,7 @@
           <GeneratedChecksum dnOrder="5">93146853374CF9BAC41A2512B1F98A43</GeneratedChecksum>
           <UserChecksum dnOrder="6">93146853374CF9BAC41A2512B1F98A43</UserChecksum>
         </File>
-        <File dnOrder="42">
+        <File dnOrder="43">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">bsp.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -394,7 +403,7 @@
           <GeneratedChecksum dnOrder="5">785A3D8108B39B7F0ED8AE8B2D8E06A8</GeneratedChecksum>
           <UserChecksum dnOrder="6">785A3D8108B39B7F0ED8AE8B2D8E06A8</UserChecksum>
         </File>
-        <File dnOrder="43">
+        <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">chipid.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -403,7 +412,7 @@
           <GeneratedChecksum dnOrder="5">D370D12F33968245C8A7CAF3E3EFD629</GeneratedChecksum>
           <UserChecksum dnOrder="6">D370D12F33968245C8A7CAF3E3EFD629</UserChecksum>
         </File>
-        <File dnOrder="44">
+        <File dnOrder="45">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">classd.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -412,7 +421,7 @@
           <GeneratedChecksum dnOrder="5">363FC4B46782A380C5DF89A59F213BCF</GeneratedChecksum>
           <UserChecksum dnOrder="6">363FC4B46782A380C5DF89A59F213BCF</UserChecksum>
         </File>
-        <File dnOrder="45">
+        <File dnOrder="46">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_compiler.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -421,7 +430,7 @@
           <GeneratedChecksum dnOrder="5">0A03866A98E64A8AF74F5786C64C529F</GeneratedChecksum>
           <UserChecksum dnOrder="6">0A03866A98E64A8AF74F5786C64C529F</UserChecksum>
         </File>
-        <File dnOrder="46">
+        <File dnOrder="47">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_cp15.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -430,7 +439,7 @@
           <GeneratedChecksum dnOrder="5">0A327C3031D097409B602CA5B79B1358</GeneratedChecksum>
           <UserChecksum dnOrder="6">0A327C3031D097409B602CA5B79B1358</UserChecksum>
         </File>
-        <File dnOrder="47">
+        <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_gcc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -439,7 +448,7 @@
           <GeneratedChecksum dnOrder="5">99E691118C37648975EF62BCCAD98C7A</GeneratedChecksum>
           <UserChecksum dnOrder="6">99E691118C37648975EF62BCCAD98C7A</UserChecksum>
         </File>
-        <File dnOrder="48">
+        <File dnOrder="49">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_iccarm.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -448,16 +457,16 @@
           <GeneratedChecksum dnOrder="5">9856726CC7D811B5AE45F903F5727340</GeneratedChecksum>
           <UserChecksum dnOrder="6">9856726CC7D811B5AE45F903F5727340</UserChecksum>
         </File>
-        <File dnOrder="49">
+        <File dnOrder="50">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">configuration.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_a5d2_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">965078730C78B84F1D6BE4F9F884D71D</GeneratedChecksum>
-          <UserChecksum dnOrder="6">965078730C78B84F1D6BE4F9F884D71D</UserChecksum>
+          <GeneratedChecksum dnOrder="5">9D20F8E591678F711A8558C7E00EDF8E</GeneratedChecksum>
+          <UserChecksum dnOrder="6">9D20F8E591678F711A8558C7E00EDF8E</UserChecksum>
         </File>
-        <File dnOrder="50">
+        <File dnOrder="51">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">core_ca.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -466,7 +475,7 @@
           <GeneratedChecksum dnOrder="5">789BC94E81700B86004C6A43BAC0EFF2</GeneratedChecksum>
           <UserChecksum dnOrder="6">789BC94E81700B86004C6A43BAC0EFF2</UserChecksum>
         </File>
-        <File dnOrder="51">
+        <File dnOrder="52">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">croutine.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -475,16 +484,16 @@
           <GeneratedChecksum dnOrder="5">799499D320508B137A1F38041909EE57</GeneratedChecksum>
           <UserChecksum dnOrder="6">799499D320508B137A1F38041909EE57</UserChecksum>
         </File>
-        <File dnOrder="52">
+        <File dnOrder="53">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">definitions.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_a5d2_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">293555DD24BD382ED6496B2FB5C78805</GeneratedChecksum>
-          <UserChecksum dnOrder="6">293555DD24BD382ED6496B2FB5C78805</UserChecksum>
+          <GeneratedChecksum dnOrder="5">99B87B9782E73B0265F0767325C439CA</GeneratedChecksum>
+          <UserChecksum dnOrder="6">99B87B9782E73B0265F0767325C439CA</UserChecksum>
         </File>
-        <File dnOrder="53">
+        <File dnOrder="54">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">deprecated_definitions.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -493,7 +502,7 @@
           <GeneratedChecksum dnOrder="5">A87B8720A7388B92787B15BFE92911FB</GeneratedChecksum>
           <UserChecksum dnOrder="6">A87B8720A7388B92787B15BFE92911FB</UserChecksum>
         </File>
-        <File dnOrder="54">
+        <File dnOrder="55">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">device.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -502,7 +511,7 @@
           <GeneratedChecksum dnOrder="5">FAA04921E75A13B8730954676182E8F1</GeneratedChecksum>
           <UserChecksum dnOrder="6">FAA04921E75A13B8730954676182E8F1</UserChecksum>
         </File>
-        <File dnOrder="55">
+        <File dnOrder="56">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">device_cache.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -511,7 +520,7 @@
           <GeneratedChecksum dnOrder="5">8B1439D307BB1EF8238185097A0F9ACE</GeneratedChecksum>
           <UserChecksum dnOrder="6">8B1439D307BB1EF8238185097A0F9ACE</UserChecksum>
         </File>
-        <File dnOrder="56">
+        <File dnOrder="57">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">driver.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -520,7 +529,7 @@
           <GeneratedChecksum dnOrder="5">1D2094DFA60F847FFD4E8153B6E78027</GeneratedChecksum>
           <UserChecksum dnOrder="6">1D2094DFA60F847FFD4E8153B6E78027</UserChecksum>
         </File>
-        <File dnOrder="57">
+        <File dnOrder="58">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">driver_common.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -529,7 +538,7 @@
           <GeneratedChecksum dnOrder="5">CC7DFCC51CD25171A3E400E18969354F</GeneratedChecksum>
           <UserChecksum dnOrder="6">CC7DFCC51CD25171A3E400E18969354F</UserChecksum>
         </File>
-        <File dnOrder="58">
+        <File dnOrder="59">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_spi.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -538,7 +547,7 @@
           <GeneratedChecksum dnOrder="5">53AD078A2F507226A6BDA2DBFEA03430</GeneratedChecksum>
           <UserChecksum dnOrder="6">53AD078A2F507226A6BDA2DBFEA03430</UserChecksum>
         </File>
-        <File dnOrder="59">
+        <File dnOrder="60">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_spi_definitions.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -547,7 +556,7 @@
           <GeneratedChecksum dnOrder="5">0A25F1E0706985E1D58AACA1A07810CD</GeneratedChecksum>
           <UserChecksum dnOrder="6">0A25F1E0706985E1D58AACA1A07810CD</UserChecksum>
         </File>
-        <File dnOrder="60">
+        <File dnOrder="61">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">event_groups.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -556,7 +565,7 @@
           <GeneratedChecksum dnOrder="5">1A294D6AFEFA402C2F50C385FCA54D85</GeneratedChecksum>
           <UserChecksum dnOrder="6">1A294D6AFEFA402C2F50C385FCA54D85</UserChecksum>
         </File>
-        <File dnOrder="61">
+        <File dnOrder="62">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">flexcom.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -565,7 +574,7 @@
           <GeneratedChecksum dnOrder="5">284AF13592F623B71D6001065DD53F68</GeneratedChecksum>
           <UserChecksum dnOrder="6">284AF13592F623B71D6001065DD53F68</UserChecksum>
         </File>
-        <File dnOrder="62">
+        <File dnOrder="63">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">gmac.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -574,7 +583,7 @@
           <GeneratedChecksum dnOrder="5">EFB46BE21AF7D8FB2CDF7EE6AE23F8A7</GeneratedChecksum>
           <UserChecksum dnOrder="6">EFB46BE21AF7D8FB2CDF7EE6AE23F8A7</UserChecksum>
         </File>
-        <File dnOrder="63">
+        <File dnOrder="64">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">i2sc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -583,7 +592,7 @@
           <GeneratedChecksum dnOrder="5">2606C30711E5E8D403533480A61BDEA1</GeneratedChecksum>
           <UserChecksum dnOrder="6">2606C30711E5E8D403533480A61BDEA1</UserChecksum>
         </File>
-        <File dnOrder="64">
+        <File dnOrder="65">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">icm.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -592,7 +601,7 @@
           <GeneratedChecksum dnOrder="5">89A80F8241A74CFA2E13F620443414D9</GeneratedChecksum>
           <UserChecksum dnOrder="6">89A80F8241A74CFA2E13F620443414D9</UserChecksum>
         </File>
-        <File dnOrder="65">
+        <File dnOrder="66">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">isc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -601,7 +610,7 @@
           <GeneratedChecksum dnOrder="5">8CFC95424BEE8DD8E0427C032EE71193</GeneratedChecksum>
           <UserChecksum dnOrder="6">8CFC95424BEE8DD8E0427C032EE71193</UserChecksum>
         </File>
-        <File dnOrder="66">
+        <File dnOrder="67">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">l2cc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -610,7 +619,7 @@
           <GeneratedChecksum dnOrder="5">8A98669C175037D0F84E8BF286182375</GeneratedChecksum>
           <UserChecksum dnOrder="6">8A98669C175037D0F84E8BF286182375</UserChecksum>
         </File>
-        <File dnOrder="67">
+        <File dnOrder="68">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">lcdc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -619,7 +628,7 @@
           <GeneratedChecksum dnOrder="5">A78F8B278EFE45B7A0AB610535795F17</GeneratedChecksum>
           <UserChecksum dnOrder="6">A78F8B278EFE45B7A0AB610535795F17</UserChecksum>
         </File>
-        <File dnOrder="68">
+        <File dnOrder="69">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">list.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -628,7 +637,7 @@
           <GeneratedChecksum dnOrder="5">633C0BE7E6B4A86A0BC5A5A06C37F994</GeneratedChecksum>
           <UserChecksum dnOrder="6">633C0BE7E6B4A86A0BC5A5A06C37F994</UserChecksum>
         </File>
-        <File dnOrder="69">
+        <File dnOrder="70">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">matrix.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -637,7 +646,7 @@
           <GeneratedChecksum dnOrder="5">414253A5CFA000427448C446CB3EF221</GeneratedChecksum>
           <UserChecksum dnOrder="6">414253A5CFA000427448C446CB3EF221</UserChecksum>
         </File>
-        <File dnOrder="70">
+        <File dnOrder="71">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mcan.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -646,7 +655,7 @@
           <GeneratedChecksum dnOrder="5">5B6AE40E500B8678B2E8520AE94936A8</GeneratedChecksum>
           <UserChecksum dnOrder="6">5B6AE40E500B8678B2E8520AE94936A8</UserChecksum>
         </File>
-        <File dnOrder="71">
+        <File dnOrder="72">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">message_buffer.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -655,7 +664,7 @@
           <GeneratedChecksum dnOrder="5">5B3C83614640F65D96BFD11A151F946A</GeneratedChecksum>
           <UserChecksum dnOrder="6">5B3C83614640F65D96BFD11A151F946A</UserChecksum>
         </File>
-        <File dnOrder="72">
+        <File dnOrder="73">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mpddrc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -664,7 +673,7 @@
           <GeneratedChecksum dnOrder="5">7AD1D9F85C05378583517CF0E5BCCB61</GeneratedChecksum>
           <UserChecksum dnOrder="6">7AD1D9F85C05378583517CF0E5BCCB61</UserChecksum>
         </File>
-        <File dnOrder="73">
+        <File dnOrder="74">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mpu_prototypes.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -673,7 +682,7 @@
           <GeneratedChecksum dnOrder="5">7A1E563262A12E3B0C3B6A7F1EF4F0A6</GeneratedChecksum>
           <UserChecksum dnOrder="6">7A1E563262A12E3B0C3B6A7F1EF4F0A6</UserChecksum>
         </File>
-        <File dnOrder="74">
+        <File dnOrder="75">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mpu_wrappers.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -682,7 +691,7 @@
           <GeneratedChecksum dnOrder="5">B82455588D928776C2071B57DEBBC29C</GeneratedChecksum>
           <UserChecksum dnOrder="6">B82455588D928776C2071B57DEBBC29C</UserChecksum>
         </File>
-        <File dnOrder="75">
+        <File dnOrder="76">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -691,7 +700,7 @@
           <GeneratedChecksum dnOrder="5">F0AD88762263B7CB89B02AB4F5876059</GeneratedChecksum>
           <UserChecksum dnOrder="6">F0AD88762263B7CB89B02AB4F5876059</UserChecksum>
         </File>
-        <File dnOrder="76">
+        <File dnOrder="77">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal_definitions.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -700,7 +709,7 @@
           <GeneratedChecksum dnOrder="5">167A43EFF8A31441EBF85AC77958A30B</GeneratedChecksum>
           <UserChecksum dnOrder="6">167A43EFF8A31441EBF85AC77958A30B</UserChecksum>
         </File>
-        <File dnOrder="77">
+        <File dnOrder="78">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal_freertos.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -709,7 +718,7 @@
           <GeneratedChecksum dnOrder="5">0E6C60DFF74D4A0EC993971475F2CEAC</GeneratedChecksum>
           <UserChecksum dnOrder="6">0E6C60DFF74D4A0EC993971475F2CEAC</UserChecksum>
         </File>
-        <File dnOrder="78">
+        <File dnOrder="79">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">pdmic.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -718,7 +727,7 @@
           <GeneratedChecksum dnOrder="5">159E2FD70CC0B0C1EFA9A03A158CFE03</GeneratedChecksum>
           <UserChecksum dnOrder="6">159E2FD70CC0B0C1EFA9A03A158CFE03</UserChecksum>
         </File>
-        <File dnOrder="79">
+        <File dnOrder="80">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">pio.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -727,7 +736,7 @@
           <GeneratedChecksum dnOrder="5">97BB90F82D9D67982A2C3EA1AC1173A2</GeneratedChecksum>
           <UserChecksum dnOrder="6">97BB90F82D9D67982A2C3EA1AC1173A2</UserChecksum>
         </File>
-        <File dnOrder="80">
+        <File dnOrder="81">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">pit.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -736,7 +745,7 @@
           <GeneratedChecksum dnOrder="5">14F17104DD720B14C5484868D2FC6357</GeneratedChecksum>
           <UserChecksum dnOrder="6">14F17104DD720B14C5484868D2FC6357</UserChecksum>
         </File>
-        <File dnOrder="81">
+        <File dnOrder="82">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_aic.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -745,7 +754,7 @@
           <GeneratedChecksum dnOrder="5">7A8398DAB4C77A530FAFB842EFE6D1A2</GeneratedChecksum>
           <UserChecksum dnOrder="6">7A8398DAB4C77A530FAFB842EFE6D1A2</UserChecksum>
         </File>
-        <File dnOrder="82">
+        <File dnOrder="83">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_clk.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -754,7 +763,7 @@
           <GeneratedChecksum dnOrder="5">115B0136EFE9ED871D67D3B10CBEBDC8</GeneratedChecksum>
           <UserChecksum dnOrder="6">115B0136EFE9ED871D67D3B10CBEBDC8</UserChecksum>
         </File>
-        <File dnOrder="83">
+        <File dnOrder="84">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_l2cc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -763,7 +772,7 @@
           <GeneratedChecksum dnOrder="5">C7653A96ABF5D93E81B7C990671BE7CD</GeneratedChecksum>
           <UserChecksum dnOrder="6">C7653A96ABF5D93E81B7C990671BE7CD</UserChecksum>
         </File>
-        <File dnOrder="84">
+        <File dnOrder="85">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_matrix.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -772,7 +781,7 @@
           <GeneratedChecksum dnOrder="5">E8167D30D019275C8F2EEA14CD0EBC42</GeneratedChecksum>
           <UserChecksum dnOrder="6">E8167D30D019275C8F2EEA14CD0EBC42</UserChecksum>
         </File>
-        <File dnOrder="85">
+        <File dnOrder="86">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_mmu.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -781,7 +790,7 @@
           <GeneratedChecksum dnOrder="5">8187CF043E15265A5292B4AB63AB26CA</GeneratedChecksum>
           <UserChecksum dnOrder="6">8187CF043E15265A5292B4AB63AB26CA</UserChecksum>
         </File>
-        <File dnOrder="86">
+        <File dnOrder="87">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_pio.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -790,7 +799,7 @@
           <GeneratedChecksum dnOrder="5">BD7070F7B5C5FB98D2F4970E84F15861</GeneratedChecksum>
           <UserChecksum dnOrder="6">BD7070F7B5C5FB98D2F4970E84F15861</UserChecksum>
         </File>
-        <File dnOrder="87">
+        <File dnOrder="88">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_pit.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -799,7 +808,7 @@
           <GeneratedChecksum dnOrder="5">8C42B4141F511285D97A728D15A6E198</GeneratedChecksum>
           <UserChecksum dnOrder="6">8C42B4141F511285D97A728D15A6E198</UserChecksum>
         </File>
-        <File dnOrder="88">
+        <File dnOrder="89">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_spi1.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -808,7 +817,7 @@
           <GeneratedChecksum dnOrder="5">A066870621014D5D6BD0572E608FC18D</GeneratedChecksum>
           <UserChecksum dnOrder="6">A066870621014D5D6BD0572E608FC18D</UserChecksum>
         </File>
-        <File dnOrder="89">
+        <File dnOrder="90">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_spi_common.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -817,7 +826,25 @@
           <GeneratedChecksum dnOrder="5">44F3E8231AC238B3D96D13846D478AB2</GeneratedChecksum>
           <UserChecksum dnOrder="6">44F3E8231AC238B3D96D13846D478AB2</UserChecksum>
         </File>
-        <File dnOrder="90">
+        <File dnOrder="91">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_xdmac0.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_a5d2_xult_freertos/peripheral/xdmac/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/xdmac/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">8E4D2B209FD0BE9E697714972E28E434</GeneratedChecksum>
+          <UserChecksum dnOrder="6">8E4D2B209FD0BE9E697714972E28E434</UserChecksum>
+        </File>
+        <File dnOrder="92">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">plib_xdmac_common.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_a5d2_xult_freertos/peripheral/xdmac/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/xdmac/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">65A1BCFA79B2B2B9D3E8A38F6F0B882B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">65A1BCFA79B2B2B9D3E8A38F6F0B882B</UserChecksum>
+        </File>
+        <File dnOrder="93">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">pmc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -826,7 +853,7 @@
           <GeneratedChecksum dnOrder="5">D18869F984C2B79887FB064C736211AD</GeneratedChecksum>
           <UserChecksum dnOrder="6">D18869F984C2B79887FB064C736211AD</UserChecksum>
         </File>
-        <File dnOrder="91">
+        <File dnOrder="94">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">portASM.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -835,7 +862,7 @@
           <GeneratedChecksum dnOrder="5">5097A45D51834BE0B032A1DCC981E147</GeneratedChecksum>
           <UserChecksum dnOrder="6">5097A45D51834BE0B032A1DCC981E147</UserChecksum>
         </File>
-        <File dnOrder="92">
+        <File dnOrder="95">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">portable.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -844,7 +871,7 @@
           <GeneratedChecksum dnOrder="5">7E2FB0BA62F053F69CBB8F47A5D53D4D</GeneratedChecksum>
           <UserChecksum dnOrder="6">7E2FB0BA62F053F69CBB8F47A5D53D4D</UserChecksum>
         </File>
-        <File dnOrder="93">
+        <File dnOrder="96">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">portmacro.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -853,7 +880,7 @@
           <GeneratedChecksum dnOrder="5">A1F0B9BE642778F4D5DB8372176D0428</GeneratedChecksum>
           <UserChecksum dnOrder="6">A1F0B9BE642778F4D5DB8372176D0428</UserChecksum>
         </File>
-        <File dnOrder="94">
+        <File dnOrder="97">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">projdefs.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -862,7 +889,7 @@
           <GeneratedChecksum dnOrder="5">CC6A75BAE7BCC8E118B1ABA27E561393</GeneratedChecksum>
           <UserChecksum dnOrder="6">CC6A75BAE7BCC8E118B1ABA27E561393</UserChecksum>
         </File>
-        <File dnOrder="95">
+        <File dnOrder="98">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">ptc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -871,7 +898,7 @@
           <GeneratedChecksum dnOrder="5">1F85E6509FDC74904500EF250E27B19C</GeneratedChecksum>
           <UserChecksum dnOrder="6">1F85E6509FDC74904500EF250E27B19C</UserChecksum>
         </File>
-        <File dnOrder="96">
+        <File dnOrder="99">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">pwm.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -880,7 +907,7 @@
           <GeneratedChecksum dnOrder="5">3AB1BC6E3523D7ED06D6B59A74768883</GeneratedChecksum>
           <UserChecksum dnOrder="6">3AB1BC6E3523D7ED06D6B59A74768883</UserChecksum>
         </File>
-        <File dnOrder="97">
+        <File dnOrder="100">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">qspi.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -889,7 +916,7 @@
           <GeneratedChecksum dnOrder="5">60FB352C0C96BAEDBA9A353645C42D4D</GeneratedChecksum>
           <UserChecksum dnOrder="6">60FB352C0C96BAEDBA9A353645C42D4D</UserChecksum>
         </File>
-        <File dnOrder="98">
+        <File dnOrder="101">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">queue.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -898,7 +925,7 @@
           <GeneratedChecksum dnOrder="5">7013F827349D83B61B1A101DF2673C97</GeneratedChecksum>
           <UserChecksum dnOrder="6">7013F827349D83B61B1A101DF2673C97</UserChecksum>
         </File>
-        <File dnOrder="99">
+        <File dnOrder="102">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">rstc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -907,7 +934,7 @@
           <GeneratedChecksum dnOrder="5">7AF9C019160C9BE520E0C02498B0E4FB</GeneratedChecksum>
           <UserChecksum dnOrder="6">7AF9C019160C9BE520E0C02498B0E4FB</UserChecksum>
         </File>
-        <File dnOrder="100">
+        <File dnOrder="103">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">rtc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -916,7 +943,7 @@
           <GeneratedChecksum dnOrder="5">E23EDFD96DE15E08943A9E4A35F42A33</GeneratedChecksum>
           <UserChecksum dnOrder="6">E23EDFD96DE15E08943A9E4A35F42A33</UserChecksum>
         </File>
-        <File dnOrder="101">
+        <File dnOrder="104">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">rxlp.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -925,7 +952,7 @@
           <GeneratedChecksum dnOrder="5">B53220CE2D859E2FC506AE2E8FF0A502</GeneratedChecksum>
           <UserChecksum dnOrder="6">B53220CE2D859E2FC506AE2E8FF0A502</UserChecksum>
         </File>
-        <File dnOrder="102">
+        <File dnOrder="105">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sama5d27.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -934,7 +961,7 @@
           <GeneratedChecksum dnOrder="5">BFD84A76EEDE3AC82AA0A59F06F0ED33</GeneratedChecksum>
           <UserChecksum dnOrder="6">BFD84A76EEDE3AC82AA0A59F06F0ED33</UserChecksum>
         </File>
-        <File dnOrder="103">
+        <File dnOrder="106">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sckc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -943,7 +970,7 @@
           <GeneratedChecksum dnOrder="5">A439ECEB31AC909B5A88C37EE09E94D0</GeneratedChecksum>
           <UserChecksum dnOrder="6">A439ECEB31AC909B5A88C37EE09E94D0</UserChecksum>
         </File>
-        <File dnOrder="104">
+        <File dnOrder="107">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sdmmc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -952,7 +979,7 @@
           <GeneratedChecksum dnOrder="5">0BD2DF16732FBE697F477AC193F3CE0E</GeneratedChecksum>
           <UserChecksum dnOrder="6">0BD2DF16732FBE697F477AC193F3CE0E</UserChecksum>
         </File>
-        <File dnOrder="105">
+        <File dnOrder="108">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">secumod.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -961,7 +988,7 @@
           <GeneratedChecksum dnOrder="5">FFD2FC99D3D62C026508B70A2F4EDF13</GeneratedChecksum>
           <UserChecksum dnOrder="6">FFD2FC99D3D62C026508B70A2F4EDF13</UserChecksum>
         </File>
-        <File dnOrder="106">
+        <File dnOrder="109">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">semphr.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -970,7 +997,7 @@
           <GeneratedChecksum dnOrder="5">D3BFDCE21257586A7AF265AEC7BB0549</GeneratedChecksum>
           <UserChecksum dnOrder="6">D3BFDCE21257586A7AF265AEC7BB0549</UserChecksum>
         </File>
-        <File dnOrder="107">
+        <File dnOrder="110">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sfc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -979,7 +1006,7 @@
           <GeneratedChecksum dnOrder="5">FA8D8B6C14C061CF1AF2D75092F614E0</GeneratedChecksum>
           <UserChecksum dnOrder="6">FA8D8B6C14C061CF1AF2D75092F614E0</UserChecksum>
         </File>
-        <File dnOrder="108">
+        <File dnOrder="111">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sfr.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -988,7 +1015,7 @@
           <GeneratedChecksum dnOrder="5">06A15FE5AD3A6F3B9E018FBF39AE766A</GeneratedChecksum>
           <UserChecksum dnOrder="6">06A15FE5AD3A6F3B9E018FBF39AE766A</UserChecksum>
         </File>
-        <File dnOrder="109">
+        <File dnOrder="112">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sfrbu.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -997,7 +1024,7 @@
           <GeneratedChecksum dnOrder="5">958074F1FAA906C8B9546B957D74AE86</GeneratedChecksum>
           <UserChecksum dnOrder="6">958074F1FAA906C8B9546B957D74AE86</UserChecksum>
         </File>
-        <File dnOrder="110">
+        <File dnOrder="113">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sha.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1006,7 +1033,7 @@
           <GeneratedChecksum dnOrder="5">63BD92093EAF8F40147BA54D9F117E13</GeneratedChecksum>
           <UserChecksum dnOrder="6">63BD92093EAF8F40147BA54D9F117E13</UserChecksum>
         </File>
-        <File dnOrder="111">
+        <File dnOrder="114">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">shdwc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1015,7 +1042,7 @@
           <GeneratedChecksum dnOrder="5">294E746C820F01B89307F92FCCA6D3D5</GeneratedChecksum>
           <UserChecksum dnOrder="6">294E746C820F01B89307F92FCCA6D3D5</UserChecksum>
         </File>
-        <File dnOrder="112">
+        <File dnOrder="115">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">smc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1024,7 +1051,7 @@
           <GeneratedChecksum dnOrder="5">068260618E32C27599B62726EE1E7803</GeneratedChecksum>
           <UserChecksum dnOrder="6">068260618E32C27599B62726EE1E7803</UserChecksum>
         </File>
-        <File dnOrder="113">
+        <File dnOrder="116">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">spi.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1033,7 +1060,7 @@
           <GeneratedChecksum dnOrder="5">5BEEE7446B6CDE41ADCCD8503B6AAB0B</GeneratedChecksum>
           <UserChecksum dnOrder="6">5BEEE7446B6CDE41ADCCD8503B6AAB0B</UserChecksum>
         </File>
-        <File dnOrder="114">
+        <File dnOrder="117">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">ssc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1042,7 +1069,7 @@
           <GeneratedChecksum dnOrder="5">DC283184B9D8F5BC84CECCDB6C2906C0</GeneratedChecksum>
           <UserChecksum dnOrder="6">DC283184B9D8F5BC84CECCDB6C2906C0</UserChecksum>
         </File>
-        <File dnOrder="115">
+        <File dnOrder="118">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">stack_macros.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1051,7 +1078,7 @@
           <GeneratedChecksum dnOrder="5">E293DD24B919127AEB21635287F63255</GeneratedChecksum>
           <UserChecksum dnOrder="6">E293DD24B919127AEB21635287F63255</UserChecksum>
         </File>
-        <File dnOrder="116">
+        <File dnOrder="119">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">stream_buffer.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1060,7 +1087,7 @@
           <GeneratedChecksum dnOrder="5">B016FD7AB019D16F55470D987054A878</GeneratedChecksum>
           <UserChecksum dnOrder="6">B016FD7AB019D16F55470D987054A878</UserChecksum>
         </File>
-        <File dnOrder="117">
+        <File dnOrder="120">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_cache.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1069,7 +1096,7 @@
           <GeneratedChecksum dnOrder="5">AFAAF7D896D57569CA4CF73BB3339481</GeneratedChecksum>
           <UserChecksum dnOrder="6">AFAAF7D896D57569CA4CF73BB3339481</UserChecksum>
         </File>
-        <File dnOrder="118">
+        <File dnOrder="121">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_debug.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1078,7 +1105,7 @@
           <GeneratedChecksum dnOrder="5">33F85B8B82ED7CA982F3291C4E541C0A</GeneratedChecksum>
           <UserChecksum dnOrder="6">33F85B8B82ED7CA982F3291C4E541C0A</UserChecksum>
         </File>
-        <File dnOrder="119">
+        <File dnOrder="122">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_dma.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1087,16 +1114,16 @@
           <GeneratedChecksum dnOrder="5">391A028A0ECEAB07432B0C900D953B8C</GeneratedChecksum>
           <UserChecksum dnOrder="6">391A028A0ECEAB07432B0C900D953B8C</UserChecksum>
         </File>
-        <File dnOrder="120">
+        <File dnOrder="123">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_dma_mapping.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_a5d2_xult_freertos/system/dma/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/dma/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">D6141C37E3995B1B6C326EBA5F1FA067</GeneratedChecksum>
-          <UserChecksum dnOrder="6">D6141C37E3995B1B6C326EBA5F1FA067</UserChecksum>
+          <GeneratedChecksum dnOrder="5">8A1ADB79DDB03D33C7108EE270D88DFC</GeneratedChecksum>
+          <UserChecksum dnOrder="6">8A1ADB79DDB03D33C7108EE270D88DFC</UserChecksum>
         </File>
-        <File dnOrder="121">
+        <File dnOrder="124">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_int.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1105,7 +1132,7 @@
           <GeneratedChecksum dnOrder="5">1329D2DEB6E5AC9515AD4D165C60DC74</GeneratedChecksum>
           <UserChecksum dnOrder="6">1329D2DEB6E5AC9515AD4D165C60DC74</UserChecksum>
         </File>
-        <File dnOrder="122">
+        <File dnOrder="125">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_int_mapping.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1114,7 +1141,7 @@
           <GeneratedChecksum dnOrder="5">D5F3C8B8016B12FF575690A3CC761BFD</GeneratedChecksum>
           <UserChecksum dnOrder="6">D5F3C8B8016B12FF575690A3CC761BFD</UserChecksum>
         </File>
-        <File dnOrder="123">
+        <File dnOrder="126">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_ports.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1123,7 +1150,7 @@
           <GeneratedChecksum dnOrder="5">126F28958170084F3B3D401C401A14AE</GeneratedChecksum>
           <UserChecksum dnOrder="6">126F28958170084F3B3D401C401A14AE</UserChecksum>
         </File>
-        <File dnOrder="124">
+        <File dnOrder="127">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_ports_mapping.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1132,7 +1159,7 @@
           <GeneratedChecksum dnOrder="5">CAF280BE12C2D4F40321A45E88524D29</GeneratedChecksum>
           <UserChecksum dnOrder="6">CAF280BE12C2D4F40321A45E88524D29</UserChecksum>
         </File>
-        <File dnOrder="125">
+        <File dnOrder="128">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1141,7 +1168,7 @@
           <GeneratedChecksum dnOrder="5">BE95B4F134C5C929787B9DA6FDBF3501</GeneratedChecksum>
           <UserChecksum dnOrder="6">BE95B4F134C5C929787B9DA6FDBF3501</UserChecksum>
         </File>
-        <File dnOrder="126">
+        <File dnOrder="129">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_common.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1150,7 +1177,7 @@
           <GeneratedChecksum dnOrder="5">C3F5136D520DAC4416512EBFCCA023C3</GeneratedChecksum>
           <UserChecksum dnOrder="6">C3F5136D520DAC4416512EBFCCA023C3</UserChecksum>
         </File>
-        <File dnOrder="127">
+        <File dnOrder="130">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_module.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1159,7 +1186,7 @@
           <GeneratedChecksum dnOrder="5">1C75A8A6B60598A2FD0D533F57839B72</GeneratedChecksum>
           <UserChecksum dnOrder="6">1C75A8A6B60598A2FD0D533F57839B72</UserChecksum>
         </File>
-        <File dnOrder="128">
+        <File dnOrder="131">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">task.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1168,7 +1195,7 @@
           <GeneratedChecksum dnOrder="5">35732C76A4084A1B16C5F00B7728F645</GeneratedChecksum>
           <UserChecksum dnOrder="6">35732C76A4084A1B16C5F00B7728F645</UserChecksum>
         </File>
-        <File dnOrder="129">
+        <File dnOrder="132">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">tc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1177,7 +1204,7 @@
           <GeneratedChecksum dnOrder="5">8A7623D9BBE382CCFCFB9D088653C9FB</GeneratedChecksum>
           <UserChecksum dnOrder="6">8A7623D9BBE382CCFCFB9D088653C9FB</UserChecksum>
         </File>
-        <File dnOrder="130">
+        <File dnOrder="133">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">tdes.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1186,7 +1213,7 @@
           <GeneratedChecksum dnOrder="5">7062D7C8A5EE01E45694269B7E88EFF1</GeneratedChecksum>
           <UserChecksum dnOrder="6">7062D7C8A5EE01E45694269B7E88EFF1</UserChecksum>
         </File>
-        <File dnOrder="131">
+        <File dnOrder="134">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">timers.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1195,7 +1222,7 @@
           <GeneratedChecksum dnOrder="5">EE770378EC56991F295EF9771AEBE6DA</GeneratedChecksum>
           <UserChecksum dnOrder="6">EE770378EC56991F295EF9771AEBE6DA</UserChecksum>
         </File>
-        <File dnOrder="132">
+        <File dnOrder="135">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">toolchain_specifics.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1204,7 +1231,7 @@
           <GeneratedChecksum dnOrder="5">A212458783B2D2CDDE1C36F244D26D61</GeneratedChecksum>
           <UserChecksum dnOrder="6">A212458783B2D2CDDE1C36F244D26D61</UserChecksum>
         </File>
-        <File dnOrder="133">
+        <File dnOrder="136">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">trng.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1213,7 +1240,7 @@
           <GeneratedChecksum dnOrder="5">C0B9BB9AAE5726429D5D1FB452F648EC</GeneratedChecksum>
           <UserChecksum dnOrder="6">C0B9BB9AAE5726429D5D1FB452F648EC</UserChecksum>
         </File>
-        <File dnOrder="134">
+        <File dnOrder="137">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">twihs.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1222,7 +1249,7 @@
           <GeneratedChecksum dnOrder="5">E797F3BC415B23C05A070F2C4DBBEB00</GeneratedChecksum>
           <UserChecksum dnOrder="6">E797F3BC415B23C05A070F2C4DBBEB00</UserChecksum>
         </File>
-        <File dnOrder="135">
+        <File dnOrder="138">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">uart.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1231,7 +1258,7 @@
           <GeneratedChecksum dnOrder="5">870375AA9E376BADC852F8865B334404</GeneratedChecksum>
           <UserChecksum dnOrder="6">870375AA9E376BADC852F8865B334404</UserChecksum>
         </File>
-        <File dnOrder="136">
+        <File dnOrder="139">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">udphs.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1240,7 +1267,7 @@
           <GeneratedChecksum dnOrder="5">4D218C34C3023CD2402B0BA77C2A83E3</GeneratedChecksum>
           <UserChecksum dnOrder="6">4D218C34C3023CD2402B0BA77C2A83E3</UserChecksum>
         </File>
-        <File dnOrder="137">
+        <File dnOrder="140">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">uhphs.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1249,7 +1276,7 @@
           <GeneratedChecksum dnOrder="5">3476889C4CC5265C4049AC2585B0AA26</GeneratedChecksum>
           <UserChecksum dnOrder="6">3476889C4CC5265C4049AC2585B0AA26</UserChecksum>
         </File>
-        <File dnOrder="138">
+        <File dnOrder="141">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">wdt.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1258,7 +1285,7 @@
           <GeneratedChecksum dnOrder="5">8502F7C20E13991B9C71AFC3B93E5C8E</GeneratedChecksum>
           <UserChecksum dnOrder="6">8502F7C20E13991B9C71AFC3B93E5C8E</UserChecksum>
         </File>
-        <File dnOrder="139">
+        <File dnOrder="142">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">xdmac.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1267,7 +1294,7 @@
           <GeneratedChecksum dnOrder="5">2E27BD73477A4EC68C57D12757C483B9</GeneratedChecksum>
           <UserChecksum dnOrder="6">2E27BD73477A4EC68C57D12757C483B9</UserChecksum>
         </File>
-        <File dnOrder="140">
+        <File dnOrder="143">
           <Type dnOrder="0">LINKER</Type>
           <Name dnOrder="1">ddr.icf</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1279,12 +1306,12 @@
       </Files>
     </Manifest>
     <Settings dnOrder="5">
-      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.4.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAMA5D2_DFP\0.1.6\atdf\ATSAMA5D27.atdf"/>
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAMA5D2_DFP\1.2.30\atdf\ATSAMA5D27.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;expresslogic_threadx;micrium_ucos3;"/>
     </Settings>
   </Configurator>
 </Configuration>

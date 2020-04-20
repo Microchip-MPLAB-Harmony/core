@@ -2189,6 +2189,15 @@
                             </file>
                         </group>
                         <group>
+                            <name>xdmac</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\xdmac\plib_xdmac_common.h</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\xdmac\plib_xdmac0.h</name>
+                            </file>
+                        </group>
+                        <group>
                             <name>spi</name>
                             <file>
                                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\spi\plib_spi_common.h</name>
@@ -2627,6 +2636,12 @@
                             <name>aic</name>
                             <file>
                                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\aic\plib_aic.c</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>xdmac</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\xdmac\plib_xdmac0.c</name>
                             </file>
                         </group>
                         <group>

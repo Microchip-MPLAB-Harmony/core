@@ -143,7 +143,7 @@ void APP_Initialize ( void )
 
 void APP_Tasks ( void )
 {
-    SYS_FS_FORMAT_PARAM opt = { 0 };
+    SYS_FS_FORMAT_PARAM opt;
 
     /* Check the application's current state. */
     switch ( appData.state )

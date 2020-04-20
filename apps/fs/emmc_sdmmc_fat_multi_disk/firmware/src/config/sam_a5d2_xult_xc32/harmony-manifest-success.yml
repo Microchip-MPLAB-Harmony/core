@@ -4,11 +4,11 @@
 
 
 project: emmc_sdmmc_fat_multi_disk
-creation_date: 2020-04-20T22:38:15.321+05:30[Asia/Calcutta]	# ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-04-24T18:15:37.027+05:30[Asia/Calcutta]	# ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
-mhc_mode: Headless				# [IDE|Standalone|Headless]
-mplabx_version: -		# if MPLAB X plugin only
-plugin_version: -		# if MPLAB X plugin only
+mhc_mode: IDE				# [IDE|Standalone|Headless]
+mplabx_version: v5.35		# if MPLAB X plugin only
+plugin_version: v3.5.0		# if MPLAB X plugin only
 
 modules:
     - {name: "bsp", version: ""}

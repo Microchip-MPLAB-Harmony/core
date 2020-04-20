@@ -1912,7 +1912,7 @@ SYS_FS_RESULT SYS_FS_DirSearch
         }
 
         /* Firstly, match the file attribute with the requested attribute */
-        if (stat->fattrib & attr)
+        if ((stat->fattrib & attr) == attr)
         {
             if((stat->lfname != NULL) && (stat->lfname[0] != '\0'))
             {

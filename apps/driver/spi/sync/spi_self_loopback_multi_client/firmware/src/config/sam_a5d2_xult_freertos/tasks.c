@@ -89,7 +89,7 @@ void _APP_MONITOR_Tasks(  void *pvParameters  )
     while(1)
     {
         APP_MONITOR_Tasks();
-        vTaskDelay(10 / portTICK_PERIOD_MS);
+        vTaskDelay(500 / portTICK_PERIOD_MS);
     }
 }
 

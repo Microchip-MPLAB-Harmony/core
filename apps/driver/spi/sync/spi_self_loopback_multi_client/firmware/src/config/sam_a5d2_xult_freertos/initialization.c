@@ -181,6 +181,8 @@ void SYS_Initialize ( void* data )
 
     INT_Initialize();
     
+    XDMAC0_Initialize();
+
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
 
 	SPI1_Initialize();
