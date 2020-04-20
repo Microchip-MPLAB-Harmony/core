@@ -64,17 +64,6 @@ SYS_ERROR_LEVEL gblErrLvl;
 static char printBuffer[SYS_DEBUG_PRINT_BUFFER_SIZE] SYS_DEBUG_BUFFER_DMA_READY;
 static char tmpBuf[SYS_DEBUG_PRINT_BUFFER_SIZE] SYS_DEBUG_BUFFER_DMA_READY;
 
-/*
-char *errlvl[] =
-{
-    "SYS_ERROR_FATAL",
-    "SYS_ERROR_ERROR",
-    "SYS_ERROR_WARNING",
-    "SYS_ERROR_INFO",
-    "SYS_ERROR_DEBUG"
-};
-*/
-
 SYS_MODULE_OBJ SYS_DEBUG_Initialize(
     const SYS_MODULE_INDEX index,
     const SYS_MODULE_INIT* const init
@@ -110,7 +99,7 @@ SYS_STATUS SYS_DEBUG_Status ( SYS_MODULE_OBJ object )
 
 void SYS_DEBUG_Message(const char *message)
 {
-    SYS_CONSOLE_Write(sysDebugInstance.debugConsole, STDOUT_FILENO, message, strlen(message));
+    SYS_CONSOLE_Write(sysDebugInstance.debugConsole, message, strlen(message));
 }
 
 void SYS_DEBUG_Print(const char *format, ...)
@@ -135,7 +124,7 @@ void SYS_DEBUG_Print(const char *format, ...)
         }
 
         strcpy(&printBuffer[sysDebugInstance.prtBufPtr], tmpBuf);
-        SYS_CONSOLE_Write(sysDebugInstance.debugConsole, STDOUT_FILENO, &printBuffer[sysDebugInstance.prtBufPtr], len);
+        SYS_CONSOLE_Write(sysDebugInstance.debugConsole, &printBuffer[sysDebugInstance.prtBufPtr], len);
 
         padding = len % 4;
 
@@ -156,4 +145,17 @@ void SYS_DEBUG_ErrorLevelSet(SYS_ERROR_LEVEL level)
 SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void)
 {
     return gblErrLvl;
+}
+
+bool SYS_DEBUG_Redirect(const SYS_MODULE_INDEX index)
+{
+    if (index < SYS_CONSOLE_DEVICE_MAX_INSTANCES)
+    {
+        sysDebugInstance.debugConsole = index;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
