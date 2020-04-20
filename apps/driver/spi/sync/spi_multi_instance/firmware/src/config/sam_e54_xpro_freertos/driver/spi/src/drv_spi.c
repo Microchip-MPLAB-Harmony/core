@@ -49,6 +49,7 @@
 #include <string.h>
 #include "configuration.h"
 #include "driver/spi/drv_spi.h"
+#include "system/debug/sys_debug.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -306,13 +307,13 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     /* Validate the request */
     if(drvIndex >= DRV_SPI_INSTANCES_NUMBER)
     {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Invalid driver instance");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_ERROR, "Invalid driver instance");
         return SYS_MODULE_OBJ_INVALID;
     }
 
     if(gDrvSPIObj[drvIndex].inUse == true)
     {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Instance already in use");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_ERROR, "Instance already in use");
         return SYS_MODULE_OBJ_INVALID;
     }
 
@@ -390,7 +391,7 @@ SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object)
     /* Validate the request */
     if( (object == SYS_MODULE_OBJ_INVALID) || (object >= DRV_SPI_INSTANCES_NUMBER) )
     {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Invalid system object handle");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_ERROR, "Invalid system object handle");
         return SYS_STATUS_UNINITIALIZED;
     }
 
@@ -406,7 +407,7 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
     /* Validate the request */
     if (drvIndex >= DRV_SPI_INSTANCES_NUMBER)
     {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Instance");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_ERROR, "Invalid Driver Instance");
         return DRV_HANDLE_INVALID;
     }
 
@@ -414,7 +415,7 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
 
     if(dObj->status != SYS_STATUS_READY)
     {
-        SYS_DEBUG(SYS_ERROR_ERROR, "Was the driver initialized?");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_ERROR, "Was the driver initialized?");
         return DRV_HANDLE_INVALID;
     }
 
