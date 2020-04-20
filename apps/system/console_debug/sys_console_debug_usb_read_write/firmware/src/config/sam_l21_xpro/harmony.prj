@@ -156,8 +156,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l21_xpro/system/console/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/console/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">DEE0A23058774982652876F8029D7D5F</GeneratedChecksum>
-          <UserChecksum dnOrder="6">DEE0A23058774982652876F8029D7D5F</UserChecksum>
+          <GeneratedChecksum dnOrder="5">9F75BC5DF449CEE8E66F1017526B57AE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">9F75BC5DF449CEE8E66F1017526B57AE</UserChecksum>
         </File>
         <File dnOrder="17">
           <Type dnOrder="0">SOURCE</Type>
@@ -201,8 +201,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l21_xpro/system/debug/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/debug/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">159931972673F2B2CBEB926B83C2118F</GeneratedChecksum>
-          <UserChecksum dnOrder="6">159931972673F2B2CBEB926B83C2118F</UserChecksum>
+          <GeneratedChecksum dnOrder="5">BD054FD39A17EFF445B35078217A90EE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">BD054FD39A17EFF445B35078217A90EE</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">SOURCE</Type>
@@ -282,8 +282,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">B997E0AA2F21C1EB304E42A8D3910082</GeneratedChecksum>
-          <UserChecksum dnOrder="6">B997E0AA2F21C1EB304E42A8D3910082</UserChecksum>
+          <GeneratedChecksum dnOrder="5">F97754209C5103590FB323068CB1DE48</GeneratedChecksum>
+          <UserChecksum dnOrder="6">F97754209C5103590FB323068CB1DE48</UserChecksum>
         </File>
         <File dnOrder="31">
           <Type dnOrder="0">HEADER</Type>
@@ -291,8 +291,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">1C5A46ED34E04C704E1625D702400F70</GeneratedChecksum>
-          <UserChecksum dnOrder="6">1C5A46ED34E04C704E1625D702400F70</UserChecksum>
+          <GeneratedChecksum dnOrder="5">1FA52F06CFE8BABFEA45836C548A18E4</GeneratedChecksum>
+          <UserChecksum dnOrder="6">1FA52F06CFE8BABFEA45836C548A18E4</UserChecksum>
         </File>
         <File dnOrder="32">
           <Type dnOrder="0">HEADER</Type>
@@ -300,8 +300,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">5D620DBFD5587448E153E3F2C8BF6C4D</GeneratedChecksum>
-          <UserChecksum dnOrder="6">5D620DBFD5587448E153E3F2C8BF6C4D</UserChecksum>
+          <GeneratedChecksum dnOrder="5">7EE8903E67C6E8898501984E5EEC1EA3</GeneratedChecksum>
+          <UserChecksum dnOrder="6">7EE8903E67C6E8898501984E5EEC1EA3</UserChecksum>
         </File>
         <File dnOrder="33">
           <Type dnOrder="0">HEADER</Type>
@@ -318,10 +318,19 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">BF4BC5158298E16B0BC8A6E01C1D9A70</GeneratedChecksum>
-          <UserChecksum dnOrder="6">BF4BC5158298E16B0BC8A6E01C1D9A70</UserChecksum>
+          <GeneratedChecksum dnOrder="5">63622882A433DDEB3E69187A8019DEED</GeneratedChecksum>
+          <UserChecksum dnOrder="6">63622882A433DDEB3E69187A8019DEED</UserChecksum>
         </File>
         <File dnOrder="35">
+          <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">atsaml21j18b_compat.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">42289E5041E29DC7F07E3FFE53E0765A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">42289E5041E29DC7F07E3FFE53E0765A</UserChecksum>
+        </File>
+        <File dnOrder="36">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">bsp.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -330,16 +339,16 @@
           <GeneratedChecksum dnOrder="5">F54D36578EBEEC3F217901F47EA60B4C</GeneratedChecksum>
           <UserChecksum dnOrder="6">F54D36578EBEEC3F217901F47EA60B4C</UserChecksum>
         </File>
-        <File dnOrder="36">
+        <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">ccl.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">0E0E63E18394F5B8D4D02223A2AA4048</GeneratedChecksum>
-          <UserChecksum dnOrder="6">0E0E63E18394F5B8D4D02223A2AA4048</UserChecksum>
+          <GeneratedChecksum dnOrder="5">EB9DE5049F22B3FD8076F37D8C16A490</GeneratedChecksum>
+          <UserChecksum dnOrder="6">EB9DE5049F22B3FD8076F37D8C16A490</UserChecksum>
         </File>
-        <File dnOrder="37">
+        <File dnOrder="38">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_armcc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -348,7 +357,7 @@
           <GeneratedChecksum dnOrder="5">D0A91713174AE0A9464105CD4157DEC1</GeneratedChecksum>
           <UserChecksum dnOrder="6">D0A91713174AE0A9464105CD4157DEC1</UserChecksum>
         </File>
-        <File dnOrder="38">
+        <File dnOrder="39">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_armclang.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -357,7 +366,7 @@
           <GeneratedChecksum dnOrder="5">FB9082D52CC87C29BABCEC7CDA5DA8CD</GeneratedChecksum>
           <UserChecksum dnOrder="6">FB9082D52CC87C29BABCEC7CDA5DA8CD</UserChecksum>
         </File>
-        <File dnOrder="39">
+        <File dnOrder="40">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_armclang_ltm.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -366,7 +375,7 @@
           <GeneratedChecksum dnOrder="5">787D64C13CE3DCD1082EA06108F51EC6</GeneratedChecksum>
           <UserChecksum dnOrder="6">787D64C13CE3DCD1082EA06108F51EC6</UserChecksum>
         </File>
-        <File dnOrder="40">
+        <File dnOrder="41">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_compiler.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -375,7 +384,7 @@
           <GeneratedChecksum dnOrder="5">60385A5C6C9882B5D30709A1F6EAEC35</GeneratedChecksum>
           <UserChecksum dnOrder="6">60385A5C6C9882B5D30709A1F6EAEC35</UserChecksum>
         </File>
-        <File dnOrder="41">
+        <File dnOrder="42">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_gcc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -384,7 +393,7 @@
           <GeneratedChecksum dnOrder="5">B2E4B79E96D9481B139252F7F1C5924F</GeneratedChecksum>
           <UserChecksum dnOrder="6">B2E4B79E96D9481B139252F7F1C5924F</UserChecksum>
         </File>
-        <File dnOrder="42">
+        <File dnOrder="43">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_iccarm.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -393,7 +402,7 @@
           <GeneratedChecksum dnOrder="5">AF3CC89090034E070238E8A7BE343262</GeneratedChecksum>
           <UserChecksum dnOrder="6">AF3CC89090034E070238E8A7BE343262</UserChecksum>
         </File>
-        <File dnOrder="43">
+        <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_version.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -402,16 +411,16 @@
           <GeneratedChecksum dnOrder="5">8D06BEF47A08B8A7A91DE48D1C5DFDAB</GeneratedChecksum>
           <UserChecksum dnOrder="6">8D06BEF47A08B8A7A91DE48D1C5DFDAB</UserChecksum>
         </File>
-        <File dnOrder="44">
+        <File dnOrder="45">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">configuration.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l21_xpro/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">3EA29A01A3C7DF9CC0CBC7D4433D75D1</GeneratedChecksum>
-          <UserChecksum dnOrder="6">3EA29A01A3C7DF9CC0CBC7D4433D75D1</UserChecksum>
+          <GeneratedChecksum dnOrder="5">FFF462E3F16BA6ACCD1AC567696076E4</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FFF462E3F16BA6ACCD1AC567696076E4</UserChecksum>
         </File>
-        <File dnOrder="45">
+        <File dnOrder="46">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">core_cm0plus.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -420,16 +429,16 @@
           <GeneratedChecksum dnOrder="5">B0478E0DFBB919F587783E5CB5E6DBF3</GeneratedChecksum>
           <UserChecksum dnOrder="6">B0478E0DFBB919F587783E5CB5E6DBF3</UserChecksum>
         </File>
-        <File dnOrder="46">
+        <File dnOrder="47">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">dac.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">892D040F7BC7769A1F485DADB43D4F61</GeneratedChecksum>
-          <UserChecksum dnOrder="6">892D040F7BC7769A1F485DADB43D4F61</UserChecksum>
+          <GeneratedChecksum dnOrder="5">A60D205A61A1FC7D2428D426846A989B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A60D205A61A1FC7D2428D426846A989B</UserChecksum>
         </File>
-        <File dnOrder="47">
+        <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">definitions.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -438,16 +447,16 @@
           <GeneratedChecksum dnOrder="5">AB46C5DB1BB61D02DB009BA6AF94DEEA</GeneratedChecksum>
           <UserChecksum dnOrder="6">AB46C5DB1BB61D02DB009BA6AF94DEEA</UserChecksum>
         </File>
-        <File dnOrder="48">
+        <File dnOrder="49">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">device.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">2DEFC243061644CB9EE51572913780B6</GeneratedChecksum>
-          <UserChecksum dnOrder="6">2DEFC243061644CB9EE51572913780B6</UserChecksum>
+          <GeneratedChecksum dnOrder="5">FA1FC1E5A598DA60398C62E0A5C46F2B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FA1FC1E5A598DA60398C62E0A5C46F2B</UserChecksum>
         </File>
-        <File dnOrder="49">
+        <File dnOrder="50">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">device_cache.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -456,16 +465,16 @@
           <GeneratedChecksum dnOrder="5">85D3482D395C59BDFF268B01940CDDDE</GeneratedChecksum>
           <UserChecksum dnOrder="6">85D3482D395C59BDFF268B01940CDDDE</UserChecksum>
         </File>
-        <File dnOrder="50">
+        <File dnOrder="51">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">dmac.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">326C0F38ADF5F1141099620CEEA5B63B</GeneratedChecksum>
-          <UserChecksum dnOrder="6">326C0F38ADF5F1141099620CEEA5B63B</UserChecksum>
+          <GeneratedChecksum dnOrder="5">8BDA996431BC01A7D2B8AB8A19E178CE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">8BDA996431BC01A7D2B8AB8A19E178CE</UserChecksum>
         </File>
-        <File dnOrder="51">
+        <File dnOrder="52">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">driver.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -474,7 +483,7 @@
           <GeneratedChecksum dnOrder="5">1D2094DFA60F847FFD4E8153B6E78027</GeneratedChecksum>
           <UserChecksum dnOrder="6">1D2094DFA60F847FFD4E8153B6E78027</UserChecksum>
         </File>
-        <File dnOrder="52">
+        <File dnOrder="53">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">driver_common.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -483,7 +492,7 @@
           <GeneratedChecksum dnOrder="5">CC7DFCC51CD25171A3E400E18969354F</GeneratedChecksum>
           <UserChecksum dnOrder="6">CC7DFCC51CD25171A3E400E18969354F</UserChecksum>
         </File>
-        <File dnOrder="53">
+        <File dnOrder="54">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usb.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -492,7 +501,7 @@
           <GeneratedChecksum dnOrder="5">38148410A4C123F6D3C8D2A5684C2D2D</GeneratedChecksum>
           <UserChecksum dnOrder="6">38148410A4C123F6D3C8D2A5684C2D2D</UserChecksum>
         </File>
-        <File dnOrder="54">
+        <File dnOrder="55">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -501,7 +510,7 @@
           <GeneratedChecksum dnOrder="5">520DC1C088A41A16C28DCB58C92BDEC1</GeneratedChecksum>
           <UserChecksum dnOrder="6">520DC1C088A41A16C28DCB58C92BDEC1</UserChecksum>
         </File>
-        <File dnOrder="55">
+        <File dnOrder="56">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usbfsv1.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -510,7 +519,7 @@
           <GeneratedChecksum dnOrder="5">30777A59DDB7129E4144132BF7BE78D4</GeneratedChecksum>
           <UserChecksum dnOrder="6">30777A59DDB7129E4144132BF7BE78D4</UserChecksum>
         </File>
-        <File dnOrder="56">
+        <File dnOrder="57">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usbfsv1_local.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -519,7 +528,7 @@
           <GeneratedChecksum dnOrder="5">9433B6CA2E9EE8DEEA6C63B4FCB14AD2</GeneratedChecksum>
           <UserChecksum dnOrder="6">9433B6CA2E9EE8DEEA6C63B4FCB14AD2</UserChecksum>
         </File>
-        <File dnOrder="57">
+        <File dnOrder="58">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usbfsv1_variant_mapping.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -528,52 +537,52 @@
           <GeneratedChecksum dnOrder="5">B340871ED74D40F2CAF9222677F9C0A3</GeneratedChecksum>
           <UserChecksum dnOrder="6">B340871ED74D40F2CAF9222677F9C0A3</UserChecksum>
         </File>
-        <File dnOrder="58">
+        <File dnOrder="59">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">dsu.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">8519459B0BBF6DB01B6B818A1844E837</GeneratedChecksum>
-          <UserChecksum dnOrder="6">8519459B0BBF6DB01B6B818A1844E837</UserChecksum>
+          <GeneratedChecksum dnOrder="5">0B648AF54B1841AAEE09A3476D1697BC</GeneratedChecksum>
+          <UserChecksum dnOrder="6">0B648AF54B1841AAEE09A3476D1697BC</UserChecksum>
         </File>
-        <File dnOrder="59">
+        <File dnOrder="60">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">eic.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">C64CD726A69A99CD408516F2B6AC1165</GeneratedChecksum>
-          <UserChecksum dnOrder="6">C64CD726A69A99CD408516F2B6AC1165</UserChecksum>
+          <GeneratedChecksum dnOrder="5">B0A9FA86D791849AE5AB465FE98C3315</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B0A9FA86D791849AE5AB465FE98C3315</UserChecksum>
         </File>
-        <File dnOrder="60">
+        <File dnOrder="61">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">evsys.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">07FC14E27A91FD89857B764BAF0BE25D</GeneratedChecksum>
-          <UserChecksum dnOrder="6">07FC14E27A91FD89857B764BAF0BE25D</UserChecksum>
+          <GeneratedChecksum dnOrder="5">3CE4EBC419A86F2C084267DF7592F3F3</GeneratedChecksum>
+          <UserChecksum dnOrder="6">3CE4EBC419A86F2C084267DF7592F3F3</UserChecksum>
         </File>
-        <File dnOrder="61">
+        <File dnOrder="62">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">gclk.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">72C775AA034936F09E9B566BEDF63E05</GeneratedChecksum>
-          <UserChecksum dnOrder="6">72C775AA034936F09E9B566BEDF63E05</UserChecksum>
+          <GeneratedChecksum dnOrder="5">52E1A52DF4348C64A3748DBA56B11429</GeneratedChecksum>
+          <UserChecksum dnOrder="6">52E1A52DF4348C64A3748DBA56B11429</UserChecksum>
         </File>
-        <File dnOrder="62">
+        <File dnOrder="63">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mclk.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">58B77DA808A6F1D5C26103E305593716</GeneratedChecksum>
-          <UserChecksum dnOrder="6">58B77DA808A6F1D5C26103E305593716</UserChecksum>
+          <GeneratedChecksum dnOrder="5">31E13FD6249A42D53E7BC2D4761C58D4</GeneratedChecksum>
+          <UserChecksum dnOrder="6">31E13FD6249A42D53E7BC2D4761C58D4</UserChecksum>
         </File>
-        <File dnOrder="63">
+        <File dnOrder="64">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mpu_armv7.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -582,34 +591,34 @@
           <GeneratedChecksum dnOrder="5">A0246C3B848A6A45D54CE5DA8DF3B9C8</GeneratedChecksum>
           <UserChecksum dnOrder="6">A0246C3B848A6A45D54CE5DA8DF3B9C8</UserChecksum>
         </File>
-        <File dnOrder="64">
+        <File dnOrder="65">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">mtb.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">BB8593372DEADD41617BD926B5A9182B</GeneratedChecksum>
-          <UserChecksum dnOrder="6">BB8593372DEADD41617BD926B5A9182B</UserChecksum>
+          <GeneratedChecksum dnOrder="5">B73181A49282B8C7654471E868AC7E23</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B73181A49282B8C7654471E868AC7E23</UserChecksum>
         </File>
-        <File dnOrder="65">
+        <File dnOrder="66">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">nvmctrl.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">8C30B2A89E9A33CCB6E24F42B6ED78EE</GeneratedChecksum>
-          <UserChecksum dnOrder="6">8C30B2A89E9A33CCB6E24F42B6ED78EE</UserChecksum>
+          <GeneratedChecksum dnOrder="5">0587D4BDF8CF12580A539AD147CBAC5F</GeneratedChecksum>
+          <UserChecksum dnOrder="6">0587D4BDF8CF12580A539AD147CBAC5F</UserChecksum>
         </File>
-        <File dnOrder="66">
+        <File dnOrder="67">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">opamp.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">113929615F5F4F8FCD177084FA344DFD</GeneratedChecksum>
-          <UserChecksum dnOrder="6">113929615F5F4F8FCD177084FA344DFD</UserChecksum>
+          <GeneratedChecksum dnOrder="5">FA1F9BB244F36C1AB5019BB3485CCCA1</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FA1F9BB244F36C1AB5019BB3485CCCA1</UserChecksum>
         </File>
-        <File dnOrder="67">
+        <File dnOrder="68">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -618,7 +627,7 @@
           <GeneratedChecksum dnOrder="5">F0AD88762263B7CB89B02AB4F5876059</GeneratedChecksum>
           <UserChecksum dnOrder="6">F0AD88762263B7CB89B02AB4F5876059</UserChecksum>
         </File>
-        <File dnOrder="68">
+        <File dnOrder="69">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal_definitions.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -627,7 +636,7 @@
           <GeneratedChecksum dnOrder="5">0AC88C49E4585B606FD5AC6804F0C340</GeneratedChecksum>
           <UserChecksum dnOrder="6">0AC88C49E4585B606FD5AC6804F0C340</UserChecksum>
         </File>
-        <File dnOrder="69">
+        <File dnOrder="70">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal_impl_basic.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -636,34 +645,34 @@
           <GeneratedChecksum dnOrder="5">63FBE37825657165B9EA584BF05DBA43</GeneratedChecksum>
           <UserChecksum dnOrder="6">63FBE37825657165B9EA584BF05DBA43</UserChecksum>
         </File>
-        <File dnOrder="70">
+        <File dnOrder="71">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osc32kctrl.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">65836139FA57C32795DB9C7485AADA12</GeneratedChecksum>
-          <UserChecksum dnOrder="6">65836139FA57C32795DB9C7485AADA12</UserChecksum>
+          <GeneratedChecksum dnOrder="5">AF6EE69904FDF903934013641A876FEB</GeneratedChecksum>
+          <UserChecksum dnOrder="6">AF6EE69904FDF903934013641A876FEB</UserChecksum>
         </File>
-        <File dnOrder="71">
+        <File dnOrder="72">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">oscctrl.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">52BC5C47011286C12B279F5D97DD1A3D</GeneratedChecksum>
-          <UserChecksum dnOrder="6">52BC5C47011286C12B279F5D97DD1A3D</UserChecksum>
+          <GeneratedChecksum dnOrder="5">2CCB4890E7A1A4D66763691B23669D49</GeneratedChecksum>
+          <UserChecksum dnOrder="6">2CCB4890E7A1A4D66763691B23669D49</UserChecksum>
         </File>
-        <File dnOrder="72">
+        <File dnOrder="73">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">pac.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">608E787DC89D7C4AF1FC302E5CBFA559</GeneratedChecksum>
-          <UserChecksum dnOrder="6">608E787DC89D7C4AF1FC302E5CBFA559</UserChecksum>
+          <GeneratedChecksum dnOrder="5">F814287D77551E6D550625049AD08D43</GeneratedChecksum>
+          <UserChecksum dnOrder="6">F814287D77551E6D550625049AD08D43</UserChecksum>
         </File>
-        <File dnOrder="73">
+        <File dnOrder="74">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_clock.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -672,7 +681,7 @@
           <GeneratedChecksum dnOrder="5">78387EA60F98EE9F5602C2EB8CFEA8B3</GeneratedChecksum>
           <UserChecksum dnOrder="6">78387EA60F98EE9F5602C2EB8CFEA8B3</UserChecksum>
         </File>
-        <File dnOrder="74">
+        <File dnOrder="75">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_evsys.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -681,7 +690,7 @@
           <GeneratedChecksum dnOrder="5">CCAEF942C66AF995876DFD85CEFF611F</GeneratedChecksum>
           <UserChecksum dnOrder="6">CCAEF942C66AF995876DFD85CEFF611F</UserChecksum>
         </File>
-        <File dnOrder="75">
+        <File dnOrder="76">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_nvic.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -690,7 +699,7 @@
           <GeneratedChecksum dnOrder="5">E95AB23B866AA0CE6F0ABF637E9E2C83</GeneratedChecksum>
           <UserChecksum dnOrder="6">E95AB23B866AA0CE6F0ABF637E9E2C83</UserChecksum>
         </File>
-        <File dnOrder="76">
+        <File dnOrder="77">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_nvmctrl.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -699,7 +708,7 @@
           <GeneratedChecksum dnOrder="5">E94C2F2827F3CB08C565ADF200C747B6</GeneratedChecksum>
           <UserChecksum dnOrder="6">E94C2F2827F3CB08C565ADF200C747B6</UserChecksum>
         </File>
-        <File dnOrder="77">
+        <File dnOrder="78">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_pm.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -708,7 +717,7 @@
           <GeneratedChecksum dnOrder="5">2C6F9BA1BFA523200ED784A7D4FC3C81</GeneratedChecksum>
           <UserChecksum dnOrder="6">2C6F9BA1BFA523200ED784A7D4FC3C81</UserChecksum>
         </File>
-        <File dnOrder="78">
+        <File dnOrder="79">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_port.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -717,97 +726,97 @@
           <GeneratedChecksum dnOrder="5">0ADBD15C1930B8A2209724DD41A89F6C</GeneratedChecksum>
           <UserChecksum dnOrder="6">0ADBD15C1930B8A2209724DD41A89F6C</UserChecksum>
         </File>
-        <File dnOrder="79">
+        <File dnOrder="80">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">pm.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">E93EAF4F67BCCDE7A8002D877D85BA2B</GeneratedChecksum>
-          <UserChecksum dnOrder="6">E93EAF4F67BCCDE7A8002D877D85BA2B</UserChecksum>
+          <GeneratedChecksum dnOrder="5">36812E0F2DF076715B61E4A7A0457894</GeneratedChecksum>
+          <UserChecksum dnOrder="6">36812E0F2DF076715B61E4A7A0457894</UserChecksum>
         </File>
-        <File dnOrder="80">
+        <File dnOrder="81">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">port.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">468AED7E688679D609561C9EC3371E81</GeneratedChecksum>
-          <UserChecksum dnOrder="6">468AED7E688679D609561C9EC3371E81</UserChecksum>
+          <GeneratedChecksum dnOrder="5">E9BE97BE10E356980A63E898554DE57E</GeneratedChecksum>
+          <UserChecksum dnOrder="6">E9BE97BE10E356980A63E898554DE57E</UserChecksum>
         </File>
-        <File dnOrder="81">
+        <File dnOrder="82">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">ptc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">0F3DED44B7676A570331FD02EFDC81D5</GeneratedChecksum>
-          <UserChecksum dnOrder="6">0F3DED44B7676A570331FD02EFDC81D5</UserChecksum>
+          <GeneratedChecksum dnOrder="5">FCBD908689C0895911DB48DE6FCCD0A9</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FCBD908689C0895911DB48DE6FCCD0A9</UserChecksum>
         </File>
-        <File dnOrder="82">
+        <File dnOrder="83">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">rstc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">F4C57D2B497432950B05D785E3F008FA</GeneratedChecksum>
-          <UserChecksum dnOrder="6">F4C57D2B497432950B05D785E3F008FA</UserChecksum>
+          <GeneratedChecksum dnOrder="5">80BF2482BB89AE46FBD551B325139D6C</GeneratedChecksum>
+          <UserChecksum dnOrder="6">80BF2482BB89AE46FBD551B325139D6C</UserChecksum>
         </File>
-        <File dnOrder="83">
+        <File dnOrder="84">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">rtc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">2FD0F7C17C8D26864348A480159DC165</GeneratedChecksum>
-          <UserChecksum dnOrder="6">2FD0F7C17C8D26864348A480159DC165</UserChecksum>
+          <GeneratedChecksum dnOrder="5">26E1F27AB7977369D6132E3F0F936B99</GeneratedChecksum>
+          <UserChecksum dnOrder="6">26E1F27AB7977369D6132E3F0F936B99</UserChecksum>
         </File>
-        <File dnOrder="84">
+        <File dnOrder="85">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">saml21j18b.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/pio/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/pio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">892447EF16DB493A25B237AE2C985117</GeneratedChecksum>
-          <UserChecksum dnOrder="6">892447EF16DB493A25B237AE2C985117</UserChecksum>
+          <GeneratedChecksum dnOrder="5">1DDAA50EDB8561A4A4E83164B9D9EBB8</GeneratedChecksum>
+          <UserChecksum dnOrder="6">1DDAA50EDB8561A4A4E83164B9D9EBB8</UserChecksum>
         </File>
-        <File dnOrder="85">
+        <File dnOrder="86">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sercom.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">85F95D041259C74A831A77344C9DDAEB</GeneratedChecksum>
-          <UserChecksum dnOrder="6">85F95D041259C74A831A77344C9DDAEB</UserChecksum>
+          <GeneratedChecksum dnOrder="5">B07113FA8F24A61667019877B04C3F9F</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B07113FA8F24A61667019877B04C3F9F</UserChecksum>
         </File>
-        <File dnOrder="86">
+        <File dnOrder="87">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">supc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">8DA26B5163B49DAAFBCFD94202791751</GeneratedChecksum>
-          <UserChecksum dnOrder="6">8DA26B5163B49DAAFBCFD94202791751</UserChecksum>
+          <GeneratedChecksum dnOrder="5">7A8B2B599B61974ADF8C0BEC08495CA2</GeneratedChecksum>
+          <UserChecksum dnOrder="6">7A8B2B599B61974ADF8C0BEC08495CA2</UserChecksum>
         </File>
-        <File dnOrder="87">
+        <File dnOrder="88">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_console.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l21_xpro/system/console/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/console/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">207615D941E24DEF44FAE48A73482D20</GeneratedChecksum>
-          <UserChecksum dnOrder="6">207615D941E24DEF44FAE48A73482D20</UserChecksum>
+          <GeneratedChecksum dnOrder="5">7C2920DC1BE1D6FD06A7D9981B29AC9B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">7C2920DC1BE1D6FD06A7D9981B29AC9B</UserChecksum>
         </File>
-        <File dnOrder="88">
+        <File dnOrder="89">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_debug.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l21_xpro/system/debug/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/debug/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">D0F744C364EFB96A28DACFE81CE16D90</GeneratedChecksum>
-          <UserChecksum dnOrder="6">D0F744C364EFB96A28DACFE81CE16D90</UserChecksum>
+          <GeneratedChecksum dnOrder="5">33F85B8B82ED7CA982F3291C4E541C0A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">33F85B8B82ED7CA982F3291C4E541C0A</UserChecksum>
         </File>
-        <File dnOrder="89">
+        <File dnOrder="90">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_int.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -816,7 +825,7 @@
           <GeneratedChecksum dnOrder="5">1329D2DEB6E5AC9515AD4D165C60DC74</GeneratedChecksum>
           <UserChecksum dnOrder="6">1329D2DEB6E5AC9515AD4D165C60DC74</UserChecksum>
         </File>
-        <File dnOrder="90">
+        <File dnOrder="91">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_int_mapping.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -825,7 +834,7 @@
           <GeneratedChecksum dnOrder="5">00278F169FFB0CBBAB3A68B5D647F093</GeneratedChecksum>
           <UserChecksum dnOrder="6">00278F169FFB0CBBAB3A68B5D647F093</UserChecksum>
         </File>
-        <File dnOrder="91">
+        <File dnOrder="92">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -834,7 +843,7 @@
           <GeneratedChecksum dnOrder="5">BE95B4F134C5C929787B9DA6FDBF3501</GeneratedChecksum>
           <UserChecksum dnOrder="6">BE95B4F134C5C929787B9DA6FDBF3501</UserChecksum>
         </File>
-        <File dnOrder="92">
+        <File dnOrder="93">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_common.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -843,7 +852,7 @@
           <GeneratedChecksum dnOrder="5">C3F5136D520DAC4416512EBFCCA023C3</GeneratedChecksum>
           <UserChecksum dnOrder="6">C3F5136D520DAC4416512EBFCCA023C3</UserChecksum>
         </File>
-        <File dnOrder="93">
+        <File dnOrder="94">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_module.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -852,25 +861,25 @@
           <GeneratedChecksum dnOrder="5">1C75A8A6B60598A2FD0D533F57839B72</GeneratedChecksum>
           <UserChecksum dnOrder="6">1C75A8A6B60598A2FD0D533F57839B72</UserChecksum>
         </File>
-        <File dnOrder="94">
+        <File dnOrder="95">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">tc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">ABD378F62ACE6EAB4F2ABAAAE1FD43AD</GeneratedChecksum>
-          <UserChecksum dnOrder="6">ABD378F62ACE6EAB4F2ABAAAE1FD43AD</UserChecksum>
+          <GeneratedChecksum dnOrder="5">70BCE7ABAA610F80CD0772B62585B7C5</GeneratedChecksum>
+          <UserChecksum dnOrder="6">70BCE7ABAA610F80CD0772B62585B7C5</UserChecksum>
         </File>
-        <File dnOrder="95">
+        <File dnOrder="96">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">tcc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">8510F3D54307410C271FC3F1989C70D8</GeneratedChecksum>
-          <UserChecksum dnOrder="6">8510F3D54307410C271FC3F1989C70D8</UserChecksum>
+          <GeneratedChecksum dnOrder="5">EDB778CB74D0B77E8241601EB71892E8</GeneratedChecksum>
+          <UserChecksum dnOrder="6">EDB778CB74D0B77E8241601EB71892E8</UserChecksum>
         </File>
-        <File dnOrder="96">
+        <File dnOrder="97">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">toolchain_specifics.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -879,25 +888,25 @@
           <GeneratedChecksum dnOrder="5">5D5CDFD3AB0E678AACDD28A3276C8099</GeneratedChecksum>
           <UserChecksum dnOrder="6">5D5CDFD3AB0E678AACDD28A3276C8099</UserChecksum>
         </File>
-        <File dnOrder="97">
+        <File dnOrder="98">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">trng.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">494343CD125B00F4E7B955FEDB4B7E5F</GeneratedChecksum>
-          <UserChecksum dnOrder="6">494343CD125B00F4E7B955FEDB4B7E5F</UserChecksum>
+          <GeneratedChecksum dnOrder="5">EF7C1BC92B4A4F09BDDE6B2C14353A17</GeneratedChecksum>
+          <UserChecksum dnOrder="6">EF7C1BC92B4A4F09BDDE6B2C14353A17</UserChecksum>
         </File>
-        <File dnOrder="98">
+        <File dnOrder="99">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">3B613F879AD7C6528FFCCF6BD0B223B9</GeneratedChecksum>
-          <UserChecksum dnOrder="6">3B613F879AD7C6528FFCCF6BD0B223B9</UserChecksum>
+          <GeneratedChecksum dnOrder="5">0C2F11F755222A3153F4C84B4DBE9FED</GeneratedChecksum>
+          <UserChecksum dnOrder="6">0C2F11F755222A3153F4C84B4DBE9FED</UserChecksum>
         </File>
-        <File dnOrder="99">
+        <File dnOrder="100">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_cdc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -906,7 +915,7 @@
           <GeneratedChecksum dnOrder="5">04DE7427F2482FE11505CD10FDE14D53</GeneratedChecksum>
           <UserChecksum dnOrder="6">04DE7427F2482FE11505CD10FDE14D53</UserChecksum>
         </File>
-        <File dnOrder="100">
+        <File dnOrder="101">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_chapter_9.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -915,7 +924,7 @@
           <GeneratedChecksum dnOrder="5">39659CDE2CC726544BD68544FB7EF4B2</GeneratedChecksum>
           <UserChecksum dnOrder="6">39659CDE2CC726544BD68544FB7EF4B2</UserChecksum>
         </File>
-        <File dnOrder="101">
+        <File dnOrder="102">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_common.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -924,16 +933,16 @@
           <GeneratedChecksum dnOrder="5">2AAF1AB3341FB7F74004B6C7EFF8929C</GeneratedChecksum>
           <UserChecksum dnOrder="6">2AAF1AB3341FB7F74004B6C7EFF8929C</UserChecksum>
         </File>
-        <File dnOrder="102">
+        <File dnOrder="103">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_device.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l21_xpro/usb/</LogicalPath>
           <PhysicalPath dnOrder="4">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">ADA8E23F9930D84A8E1124A83E35CC3A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">ADA8E23F9930D84A8E1124A83E35CC3A</UserChecksum>
+          <GeneratedChecksum dnOrder="5">C3A6851F02AB3A2A5169A42F2EA459C6</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C3A6851F02AB3A2A5169A42F2EA459C6</UserChecksum>
         </File>
-        <File dnOrder="103">
+        <File dnOrder="104">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_device_cdc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -942,7 +951,7 @@
           <GeneratedChecksum dnOrder="5">EE6F55EAA31844DFFD1822493E3BE0FF</GeneratedChecksum>
           <UserChecksum dnOrder="6">EE6F55EAA31844DFFD1822493E3BE0FF</UserChecksum>
         </File>
-        <File dnOrder="104">
+        <File dnOrder="105">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_device_cdc_local.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -951,7 +960,7 @@
           <GeneratedChecksum dnOrder="5">EF212E3430B6EC748903C7DCE3124B6A</GeneratedChecksum>
           <UserChecksum dnOrder="6">EF212E3430B6EC748903C7DCE3124B6A</UserChecksum>
         </File>
-        <File dnOrder="105">
+        <File dnOrder="106">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_device_function_driver.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -960,7 +969,7 @@
           <GeneratedChecksum dnOrder="5">626BFDDD140B808E90C9DD2E4A27421E</GeneratedChecksum>
           <UserChecksum dnOrder="6">626BFDDD140B808E90C9DD2E4A27421E</UserChecksum>
         </File>
-        <File dnOrder="106">
+        <File dnOrder="107">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_device_local.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -969,7 +978,7 @@
           <GeneratedChecksum dnOrder="5">9B727D396CAEBD5FCB12F1F8264C4FD9</GeneratedChecksum>
           <UserChecksum dnOrder="6">9B727D396CAEBD5FCB12F1F8264C4FD9</UserChecksum>
         </File>
-        <File dnOrder="107">
+        <File dnOrder="108">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_device_mapping.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -978,7 +987,7 @@
           <GeneratedChecksum dnOrder="5">C8D4A1D9092FD842506F565CE9B8C265</GeneratedChecksum>
           <UserChecksum dnOrder="6">C8D4A1D9092FD842506F565CE9B8C265</UserChecksum>
         </File>
-        <File dnOrder="108">
+        <File dnOrder="109">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_external_dependencies.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -987,7 +996,7 @@
           <GeneratedChecksum dnOrder="5">6C4A6859DB16EA8C046F995C6B6C1C6F</GeneratedChecksum>
           <UserChecksum dnOrder="6">6C4A6859DB16EA8C046F995C6B6C1C6F</UserChecksum>
         </File>
-        <File dnOrder="109">
+        <File dnOrder="110">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_host.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -996,7 +1005,7 @@
           <GeneratedChecksum dnOrder="5">F127C67A3E33E5788C0F057F648EE57C</GeneratedChecksum>
           <UserChecksum dnOrder="6">F127C67A3E33E5788C0F057F648EE57C</UserChecksum>
         </File>
-        <File dnOrder="110">
+        <File dnOrder="111">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_host_client_driver.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1005,7 +1014,7 @@
           <GeneratedChecksum dnOrder="5">6EBC5E4D06FC96A02ADF3B7416957DD6</GeneratedChecksum>
           <UserChecksum dnOrder="6">6EBC5E4D06FC96A02ADF3B7416957DD6</UserChecksum>
         </File>
-        <File dnOrder="111">
+        <File dnOrder="112">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_host_hub_interface.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1014,7 +1023,7 @@
           <GeneratedChecksum dnOrder="5">757C8484C955543C893361992D11FD4C</GeneratedChecksum>
           <UserChecksum dnOrder="6">757C8484C955543C893361992D11FD4C</UserChecksum>
         </File>
-        <File dnOrder="112">
+        <File dnOrder="113">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_hub.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1023,7 +1032,7 @@
           <GeneratedChecksum dnOrder="5">3E3CC6BC9128194CB4D19F29C57E312B</GeneratedChecksum>
           <UserChecksum dnOrder="6">3E3CC6BC9128194CB4D19F29C57E312B</UserChecksum>
         </File>
-        <File dnOrder="113">
+        <File dnOrder="114">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">user.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1032,14 +1041,14 @@
           <GeneratedChecksum dnOrder="5"/>
           <UserChecksum dnOrder="6"/>
         </File>
-        <File dnOrder="114">
+        <File dnOrder="115">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">wdt.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML21J18B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML21J18B_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">F1C3C6C6F871EC51F6480CA360EADBFF</GeneratedChecksum>
-          <UserChecksum dnOrder="6">F1C3C6C6F871EC51F6480CA360EADBFF</UserChecksum>
+          <GeneratedChecksum dnOrder="5">EC25DFC549F407DD90485CB805261244</GeneratedChecksum>
+          <UserChecksum dnOrder="6">EC25DFC549F407DD90485CB805261244</UserChecksum>
         </File>
       </Files>
       <Settings dnOrder="1">
@@ -1051,11 +1060,11 @@
     </Manifest>
     <Settings dnOrder="4">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAML21_DFP\3.2.54\saml21b\atdf\ATSAML21J18B.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAML21_DFP\3.2.63\saml21b\atdf\ATSAML21J18B.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bootloader;bsp;core;cryptoauthlib;csp;micrium_ucos3;touch;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bootloader;bsp;core;cryptoauthlib;csp;micrium_ucos3;net;touch;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>
