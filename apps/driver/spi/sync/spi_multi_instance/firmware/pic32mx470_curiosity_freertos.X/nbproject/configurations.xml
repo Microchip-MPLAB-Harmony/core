@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="f1" displayName="Header Files" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1"
                        displayName="pic32mx470_curiosity_freertos"
@@ -37,6 +39,9 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
+            <logicalFolder name="f4" displayName="debug" projectFiles="true">
+              <itemPath>../src/config/pic32mx470_curiosity_freertos/system/debug/sys_debug.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f3" displayName="dma" projectFiles="true">
               <itemPath>../src/config/pic32mx470_curiosity_freertos/system/dma/sys_dma.h</itemPath>
               <itemPath>../src/config/pic32mx470_curiosity_freertos/system/dma/sys_dma_mapping.h</itemPath>
@@ -104,12 +109,18 @@
       <itemPath>../src/app_eeprom2.h</itemPath>
       <itemPath>../src/app_monitor.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f2" displayName="Important Files" projectFiles="true">
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="true">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder name="f3" displayName="Linker Files" projectFiles="true">
+    <logicalFolder name="LinkerScript"
+                   displayName="Linker Files"
+                   projectFiles="true">
     </logicalFolder>
-    <logicalFolder name="f4" displayName="Source Files" projectFiles="true">
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1"
                        displayName="pic32mx470_curiosity_freertos"
@@ -204,12 +215,14 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PKOBSKDEPlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.30</languageToolchainVersion>
+        <languageToolchainVersion>2.40</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.1.215"/>
+        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.2.228"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
@@ -243,7 +256,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/pic32mx470_curiosity_freertos;../src/packs/PIC32MX470F512H_DFP;../src/mips;../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include"/>
+                  value="../src;../src/config/pic32mx470_curiosity_freertos;../src/packs/PIC32MX470F512H_DFP;../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -365,6 +378,7 @@
         <property key="mdtcm" value=""/>
         <property key="mitcm" value=""/>
         <property key="mstacktcm" value="false"/>
+        <property key="omit-pack-options" value="1"/>
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
