@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="f1" displayName="Header Files" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <logicalFolder name="f2" displayName="ATSAMC21N18A_DFP" projectFiles="true">
+        <logicalFolder name="f1" displayName="ATSAMC21N18A_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
           </logicalFolder>
           <logicalFolder name="f2" displayName="pio" projectFiles="true">
           </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="f1"
+        <logicalFolder name="f2"
                        displayName="sam_c21n_xpro_freertos"
                        projectFiles="true">
           <logicalFolder name="f4" displayName="bsp" projectFiles="true">
@@ -17,10 +19,10 @@
           </logicalFolder>
           <logicalFolder name="f2" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="sdspi" projectFiles="true">
-              <itemPath>../src/config/sam_c21n_xpro_freertos/driver/sdspi/drv_sdspi.h</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/driver/sdspi/drv_sdspi_definitions.h</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/driver/sdspi/src/drv_sdspi_local.h</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/driver/sdspi/src/drv_sdspi_plib_interface.h</itemPath>
+              <itemPath>../src/config/sam_c21n_xpro_freertos/driver/sdspi/drv_sdspi.h</itemPath>
             </logicalFolder>
             <itemPath>../src/config/sam_c21n_xpro_freertos/driver/driver.h</itemPath>
             <itemPath>../src/config/sam_c21n_xpro_freertos/driver/driver_common.h</itemPath>
@@ -58,6 +60,9 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f3" displayName="system" projectFiles="true">
+            <logicalFolder name="f6" displayName="debug" projectFiles="true">
+              <itemPath>../src/config/sam_c21n_xpro_freertos/system/debug/sys_debug.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f5" displayName="dma" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro_freertos/system/dma/sys_dma.h</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/system/dma/sys_dma_mapping.h</itemPath>
@@ -65,21 +70,18 @@
             <logicalFolder name="f2" displayName="fs" projectFiles="true">
               <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
                 <logicalFolder name="f1" displayName="file_system" projectFiles="true">
-                  <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/fat_fs/src/file_system/ff.h</itemPath>
-                  <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/fat_fs/src/file_system/ffconf.h</itemPath>
+                  <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/fat_fs/file_system/ff.h</itemPath>
+                  <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/fat_fs/file_system/ffconf.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="hardware_access" projectFiles="true">
-                  <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/fat_fs/src/hardware_access/diskio.h</itemPath>
+                  <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/fat_fs/hardware_access/diskio.h</itemPath>
                 </logicalFolder>
-              </logicalFolder>
-              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
-                <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/mpfs/mpfs.h</itemPath>
-                <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/mpfs/src/mpfs_local.h</itemPath>
               </logicalFolder>
               <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/sys_fs.h</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/src/sys_fs_local.h</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/sys_fs_media_manager.h</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/src/sys_fs_media_manager_local.h</itemPath>
+              <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/sys_fs_fat_interface.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro_freertos/system/int/sys_int.h</itemPath>
@@ -143,22 +145,22 @@
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAMC21N18A_DFP" projectFiles="true">
-          <logicalFolder name="f4" displayName="bsp" projectFiles="true">
+          <logicalFolder name="f1" displayName="bsp" projectFiles="true">
           </logicalFolder>
-          <logicalFolder name="f1" displayName="component" projectFiles="true">
-            <logicalFolder name="f5" displayName="clock" projectFiles="true">
+          <logicalFolder name="f2" displayName="component" projectFiles="true">
+            <logicalFolder name="f1" displayName="clock" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f7" displayName="dmac" projectFiles="true">
+            <logicalFolder name="f2" displayName="dmac" projectFiles="true">
             </logicalFolder>
             <logicalFolder name="f3" displayName="evsys" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f6" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f4" displayName="nvic" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
+            <logicalFolder name="f5" displayName="nvmctrl" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f4" displayName="port" projectFiles="true">
+            <logicalFolder name="f6" displayName="port" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f2" displayName="sercom" projectFiles="true">
+            <logicalFolder name="f7" displayName="sercom" projectFiles="true">
               <logicalFolder name="f1" displayName="spim" projectFiles="true">
               </logicalFolder>
             </logicalFolder>
@@ -196,13 +198,13 @@
             <itemPath>../src/packs/ATSAMC21N18A_DFP/component/tsens.h</itemPath>
             <itemPath>../src/packs/ATSAMC21N18A_DFP/component/wdt.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="pio" projectFiles="true">
+          <logicalFolder name="f3" displayName="pio" projectFiles="true">
             <logicalFolder name="f1" displayName="sdspi" projectFiles="true">
             </logicalFolder>
             <itemPath>../src/packs/ATSAMC21N18A_DFP/pio/samc21n18a.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="system" projectFiles="true">
-            <logicalFolder name="f5" displayName="dma" projectFiles="true">
+          <logicalFolder name="f4" displayName="system" projectFiles="true">
+            <logicalFolder name="f1" displayName="dma" projectFiles="true">
             </logicalFolder>
             <logicalFolder name="f2" displayName="fs" projectFiles="true">
               <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
@@ -216,7 +218,7 @@
             </logicalFolder>
             <logicalFolder name="f4" displayName="ports" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f1" displayName="time" projectFiles="true">
+            <logicalFolder name="f5" displayName="time" projectFiles="true">
             </logicalFolder>
           </logicalFolder>
           <itemPath>../src/packs/ATSAMC21N18A_DFP/device.h</itemPath>
@@ -226,23 +228,15 @@
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm0plus.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
-              </logicalFolder>
-            </logicalFolder>
-            <logicalFolder name="f2" displayName="DSP" projectFiles="true">
-              <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_common_tables.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_const_structs.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_math.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
@@ -250,12 +244,18 @@
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f2" displayName="Important Files" projectFiles="true">
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="true">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder name="f3" displayName="Linker Files" projectFiles="true">
+    <logicalFolder name="LinkerScript"
+                   displayName="Linker Files"
+                   projectFiles="true">
     </logicalFolder>
-    <logicalFolder name="f4" displayName="Source Files" projectFiles="true">
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1"
                        displayName="sam_c21n_xpro_freertos"
@@ -263,7 +263,7 @@
           <logicalFolder name="f5" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_c21n_xpro_freertos/bsp/bsp.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="driver" projectFiles="true">
+          <logicalFolder name="f2" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="sdspi" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro_freertos/driver/sdspi/src/drv_sdspi.c</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/driver/sdspi/src/drv_sdspi_plib_interface.c</itemPath>
@@ -298,7 +298,7 @@
               <itemPath>../src/config/sam_c21n_xpro_freertos/peripheral/tc/plib_tc0.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="stdio" projectFiles="true">
+          <logicalFolder name="f3" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/sam_c21n_xpro_freertos/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
@@ -307,14 +307,17 @@
             </logicalFolder>
             <logicalFolder name="f2" displayName="fs" projectFiles="true">
               <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
-                <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/fat_fs/src/ff.c</itemPath>
-                <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/fat_fs/src/diskio.c</itemPath>
-              </logicalFolder>
-              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
-                <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/mpfs/src/mpfs.c</itemPath>
+                <logicalFolder name="f1" displayName="file_system" projectFiles="true">
+                  <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/fat_fs/file_system/ff.c</itemPath>
+                  <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/fat_fs/file_system/ffunicode.c</itemPath>
+                </logicalFolder>
+                <logicalFolder name="f2" displayName="hardware_access" projectFiles="true">
+                  <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/fat_fs/hardware_access/diskio.c</itemPath>
+                </logicalFolder>
               </logicalFolder>
               <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/src/sys_fs.c</itemPath>
               <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/src/sys_fs_media_manager.c</itemPath>
+              <itemPath>../src/config/sam_c21n_xpro_freertos/system/fs/src/sys_fs_fat_interface.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_c21n_xpro_freertos/system/int/src/sys_int.c</itemPath>
@@ -373,12 +376,14 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.20</languageToolchainVersion>
+        <languageToolchainVersion>2.30</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
         <pack name="SAMC21_DFP" vendor="Microchip" version="3.0.22"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
@@ -436,7 +441,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src/third_party/rtos/FreeRTOS/Source/Include;../src;../src/config/sam_c21n_xpro_freertos;../src/packs/ATSAMC21N18A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm;../src/third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM0;../src/third_party/rtos/FreeRTOS/Source/include"/>
+                  value="../src/third_party/rtos/FreeRTOS/Source/Include;../src;../src/config/sam_c21n_xpro_freertos;../src/packs/ATSAMC21N18A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/config/sam_c21n_xpro_freertos/system/fs/fat_fs/file_system;../src/config/sam_c21n_xpro_freertos/system/fs/fat_fs/hardware_access;../src/third_party/rtos/FreeRTOS/Source/include;../src/third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM0"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -579,6 +584,8 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-3ffff"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="D:/harmony/core/apps/fs/sdspi_fat/firmware/sam_c21n_xpro_freertos.X/debug/sam_c21n_xpro_freertos/sam_c21n_xpro_freertos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
