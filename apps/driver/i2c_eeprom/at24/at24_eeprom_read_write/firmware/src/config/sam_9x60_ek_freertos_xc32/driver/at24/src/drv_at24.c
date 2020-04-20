@@ -423,22 +423,40 @@ DRV_AT24_TRANSFER_STATUS DRV_AT24_TransferStatusGet(const DRV_HANDLE handle)
 
 bool DRV_AT24_GeometryGet(const DRV_HANDLE handle, DRV_AT24_GEOMETRY *geometry)
 {
+    uint32_t flash_size = 0;
+
     if((handle == DRV_HANDLE_INVALID) || (handle > 0))
+    {
+        return false;
+    }
+
+    flash_size = gDrvAT24Obj.flashSize;
+
+    if ((flash_size == 0) ||
+        (gDrvAT24Obj.blockStartAddress >= flash_size))
+    {
+        return false;
+    }
+
+    flash_size = flash_size - gDrvAT24Obj.blockStartAddress;
+
+    /* Flash size should be at-least of a Write Block size */
+    if (flash_size < gDrvAT24Obj.pageSize)
     {
         return false;
     }
 
     /* Read block size and number of blocks */
     geometry->readBlockSize = 1;
-    geometry->readNumBlocks = gDrvAT24Obj.flashSize;
+    geometry->readNumBlocks = flash_size;
 
     /* Write block size and number of blocks */
     geometry->writeBlockSize = gDrvAT24Obj.pageSize;
-    geometry->writeNumBlocks = gDrvAT24Obj.flashSize/gDrvAT24Obj.pageSize;
+    geometry->writeNumBlocks = (flash_size / gDrvAT24Obj.pageSize);
 
     /* Erase block size and number of blocks */
     geometry->eraseBlockSize = 1;
-    geometry->eraseNumBlocks = gDrvAT24Obj.flashSize;
+    geometry->eraseNumBlocks = flash_size;
 
     /* Number of regions */
     geometry->readNumRegions = 1;
