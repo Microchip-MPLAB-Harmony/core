@@ -53,6 +53,7 @@
 
 #include "system/system.h"
 #include "configuration.h"
+#include <stdbool.h>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -471,6 +472,40 @@ void SYS_DEBUG_ErrorLevelSet(SYS_ERROR_LEVEL level);
 
 SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 
+// *****************************************************************************
+/* Function:
+   bool SYS_DEBUG_Redirect(const SYS_MODULE_INDEX index)
+
+  Summary:
+    Allows re-direction of debug system service to another console instance
+
+  Description:
+    This function re-directs calls to the Debug Service APIs to a different console
+    instance.
+
+  Precondition:
+    None.
+
+  Parameters:
+    index - The index of the console to re-direct the debug system service calls to
+
+  Returns:
+    True - If operation is successful
+    False - In case of failure
+
+  Example:
+    <code>
+    // Re-direct debug system service calls to console index 1
+    if (SYS_DEBUG_Redirect(SYS_CONSOLE_INDEX_1) == true)
+    {
+        // SYS Debug output will now be re-directed to SYS Console Instance - 1
+    }
+    </code>
+
+  Remarks:
+    None.
+*/
+bool SYS_DEBUG_Redirect(const SYS_MODULE_INDEX index);
 
 // *****************************************************************************
 // *****************************************************************************
