@@ -455,6 +455,7 @@ typedef enum
 
 typedef enum
 {
+
     DRV_SDSPI_TASK_START_POLLING_TIMER,
 
     DRV_SDSPI_TASK_WAIT_POLLING_TIMER_EXPIRE,
@@ -1464,6 +1465,7 @@ typedef struct
     /* Linked list of buffer objects */
     uintptr_t                                       bufferObjList;
 
+
     /* PLIB API list that will be used by the driver to access the hardware */
     const DRV_SDSPI_PLIB_INTERFACE*                 spiPlib;
 
@@ -1472,6 +1474,24 @@ typedef struct
     const uint32_t*                                 remapClockPolarity;
 
     const uint32_t*                                 remapClockPhase;
+
+    /* Transmit DMA Channel */
+    SYS_DMA_CHANNEL                                 txDMAChannel;
+
+    /* Receive DMA Channel */
+    SYS_DMA_CHANNEL                                 rxDMAChannel;
+
+    /* This is the SPI transmit register address. Used for DMA operation. */
+    void*                                           txAddress;
+
+    /* This is the SPI receive register address. Used for DMA operation. */
+    void*                                           rxAddress;
+
+    /* Pointer to the common transmit dummy data array */
+    uint8_t*                                        txDummyData;
+
+    /* Dummy data is read into this variable by RX DMA */
+    uint32_t                                        rxDummyData;
 
     SYS_PORT_PIN                                    chipSelectPin;
 
@@ -1501,24 +1521,6 @@ typedef struct
 
     /* Tracks the command response */
     DRV_SDSPI_RESPONSE_PACKETS                      cmdResponse;
-
-    /* Transmit DMA Channel */
-    SYS_DMA_CHANNEL                                 txDMAChannel;
-
-    /* Receive DMA Channel */
-    SYS_DMA_CHANNEL                                 rxDMAChannel;
-
-    /* This is the SPI transmit register address. Used for DMA operation. */
-    void*                                           txAddress;
-
-    /* This is the SPI receive register address. Used for DMA operation. */
-    void*                                           rxAddress;
-
-    /* Pointer to the common transmit dummy data array */
-    uint8_t*                                        txDummyData;
-
-    /* Dummy data is read into this variable by RX DMA */
-    uint32_t                                        rxDummyData;
 
     /* Mutex to protect access to SDCard */
     OSAL_MUTEX_DECLARE(transferMutex);
