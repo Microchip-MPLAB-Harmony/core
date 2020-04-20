@@ -130,31 +130,23 @@ SYS_STATUS SYS_CONSOLE_Status ( SYS_MODULE_OBJ object )
     return ret;
 }
 
-SYS_MODULE_INDEX SYS_CONSOLE_IndexGet( SYS_CONSOLE_DEVICE devType)
+SYS_CONSOLE_HANDLE SYS_CONSOLE_HandleGet( const SYS_MODULE_INDEX index)
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj;
-    uint32_t index;
+	SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
 
-    for (index = 0; index < SYS_CONSOLE_DEVICE_MAX_INSTANCES; index++)
+    if (pConsoleObj)
     {
-        pConsoleObj = &consoleDeviceInstance[index];
-
-        if (pConsoleObj->devDesc != NULL)
-        {
-            if (pConsoleObj->devDesc->consoleDevice == devType)
-            {
-                /* Found first console supporting the requested devType */
-                return index;
-            }
-        }
-    }
-
-    return SYS_CONSOLE_DEVICE_MAX_INSTANCES;
+		return (SYS_CONSOLE_HANDLE) index;
+	}
+	else
+	{
+		return (SYS_CONSOLE_HANDLE)SYS_CONSOLE_HANDLE_INVALID;
+	}
 }
 
-SYS_CONSOLE_DEVICE SYS_CONSOLE_DeviceGet( SYS_MODULE_INDEX index)
+SYS_CONSOLE_DEVICE SYS_CONSOLE_DeviceGet( const SYS_CONSOLE_HANDLE handle)
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
 
     if (pConsoleObj)
     {
@@ -165,12 +157,11 @@ SYS_CONSOLE_DEVICE SYS_CONSOLE_DeviceGet( SYS_MODULE_INDEX index)
     }
 
     return SYS_CONSOLE_DEV_MAX;
-
 }
 
 void SYS_CONSOLE_Tasks ( SYS_MODULE_OBJ object )
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[(SYS_MODULE_INDEX)object];
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[object];
 
     if (pConsoleObj->devDesc == NULL)
     {
@@ -181,12 +172,12 @@ void SYS_CONSOLE_Tasks ( SYS_MODULE_OBJ object )
 }
 
 ssize_t SYS_CONSOLE_Read(
-    const SYS_MODULE_INDEX index,
+    const SYS_CONSOLE_HANDLE handle,
     void* buf,
     size_t count
 )
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
 
     if (pConsoleObj)
     {
@@ -204,9 +195,9 @@ ssize_t SYS_CONSOLE_Read(
 
 }
 
-ssize_t SYS_CONSOLE_ReadFreeBufferCountGet(const SYS_MODULE_INDEX index)
+ssize_t SYS_CONSOLE_ReadFreeBufferCountGet(const SYS_CONSOLE_HANDLE handle)
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
 
     if (pConsoleObj)
     {
@@ -223,9 +214,9 @@ ssize_t SYS_CONSOLE_ReadFreeBufferCountGet(const SYS_MODULE_INDEX index)
     }
 }
 
-ssize_t SYS_CONSOLE_ReadCountGet(const SYS_MODULE_INDEX index)
+ssize_t SYS_CONSOLE_ReadCountGet(const SYS_CONSOLE_HANDLE handle)
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
 
     if (pConsoleObj)
     {
@@ -243,12 +234,12 @@ ssize_t SYS_CONSOLE_ReadCountGet(const SYS_MODULE_INDEX index)
 }
 
 ssize_t SYS_CONSOLE_Write(
-    const SYS_MODULE_INDEX index,
+    const SYS_CONSOLE_HANDLE handle,
     const void* buf,
     size_t count
 )
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
 
     if (pConsoleObj)
     {
@@ -265,9 +256,9 @@ ssize_t SYS_CONSOLE_Write(
     }
 }
 
-ssize_t SYS_CONSOLE_WriteFreeBufferCountGet(const SYS_MODULE_INDEX index)
+ssize_t SYS_CONSOLE_WriteFreeBufferCountGet(const SYS_CONSOLE_HANDLE handle)
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
 
     if (pConsoleObj)
     {
@@ -284,9 +275,9 @@ ssize_t SYS_CONSOLE_WriteFreeBufferCountGet(const SYS_MODULE_INDEX index)
     }
 }
 
-ssize_t SYS_CONSOLE_WriteCountGet(const SYS_MODULE_INDEX index)
+ssize_t SYS_CONSOLE_WriteCountGet(const SYS_CONSOLE_HANDLE handle)
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
 
     if (pConsoleObj)
     {
@@ -303,9 +294,9 @@ ssize_t SYS_CONSOLE_WriteCountGet(const SYS_MODULE_INDEX index)
     }
 }
 
-bool SYS_CONSOLE_Flush(const SYS_MODULE_INDEX index)
+bool SYS_CONSOLE_Flush(const SYS_CONSOLE_HANDLE handle)
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
 
     if (pConsoleObj)
     {
