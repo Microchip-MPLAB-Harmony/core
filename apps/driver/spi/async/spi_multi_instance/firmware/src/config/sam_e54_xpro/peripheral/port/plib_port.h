@@ -65,8 +65,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-
-
+  
 /*** Macros for APP_EEPROM1_HOLD pin ***/
 #define APP_EEPROM1_HOLD_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 8)
 #define APP_EEPROM1_HOLD_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 8)
