@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="f1" displayName="Header Files" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <logicalFolder name="f2" displayName="ATSAME70Q21B_DFP" projectFiles="true">
+        <logicalFolder name="f1" displayName="ATSAME70Q21B_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
           </logicalFolder>
           <logicalFolder name="f2" displayName="pio" projectFiles="true">
           </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="f1" displayName="sam_e70_xult" projectFiles="true">
+        <logicalFolder name="f2" displayName="sam_e70_xult" projectFiles="true">
           <logicalFolder name="f1" displayName="bsp" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
@@ -52,6 +54,9 @@
             <logicalFolder name="f2" displayName="cache" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/system/cache/sys_cache.h</itemPath>
             </logicalFolder>
+            <logicalFolder name="f3" displayName="debug" projectFiles="true">
+              <itemPath>../src/config/sam_e70_xult/system/debug/sys_debug.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/system/int/sys_int_mapping.h</itemPath>
@@ -74,7 +79,7 @@
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAME70Q21B_DFP" projectFiles="true">
-          <logicalFolder name="f1" displayName="component" projectFiles="true">
+          <logicalFolder name="f4" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAME70Q21B_DFP/component/acc.h</itemPath>
             <itemPath>../src/packs/ATSAME70Q21B_DFP/component/aes.h</itemPath>
             <itemPath>../src/packs/ATSAME70Q21B_DFP/component/afec.h</itemPath>
@@ -112,29 +117,29 @@
             <itemPath>../src/packs/ATSAME70Q21B_DFP/component/wdt.h</itemPath>
             <itemPath>../src/packs/ATSAME70Q21B_DFP/component/xdmac.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="driver" projectFiles="true">
+          <logicalFolder name="f1" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="sst26" projectFiles="true">
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="pio" projectFiles="true">
-            <logicalFolder name="f2" displayName="clk" projectFiles="true">
+            <logicalFolder name="f1" displayName="clk" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f6" displayName="efc" projectFiles="true">
+            <logicalFolder name="f2" displayName="efc" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f5" displayName="mpu" projectFiles="true">
+            <logicalFolder name="f3" displayName="mpu" projectFiles="true">
             </logicalFolder>
             <logicalFolder name="f4" displayName="nvic" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f3" displayName="pio" projectFiles="true">
+            <logicalFolder name="f5" displayName="pio" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f1" displayName="qspi" projectFiles="true">
+            <logicalFolder name="f6" displayName="qspi" projectFiles="true">
             </logicalFolder>
             <itemPath>../src/packs/ATSAME70Q21B_DFP/pio/same70q21b.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f4" displayName="system" projectFiles="true">
-            <logicalFolder name="f2" displayName="cache" projectFiles="true">
+          <logicalFolder name="f3" displayName="system" projectFiles="true">
+            <logicalFolder name="f1" displayName="cache" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f1" displayName="int" projectFiles="true">
+            <logicalFolder name="f2" displayName="int" projectFiles="true">
             </logicalFolder>
           </logicalFolder>
           <itemPath>../src/packs/ATSAME70Q21B_DFP/device.h</itemPath>
@@ -160,44 +165,50 @@
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f4" displayName="Important Files" projectFiles="true">
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_e70_xult" projectFiles="true">
           <logicalFolder name="f1" displayName="bsp" projectFiles="true">
           </logicalFolder>
-          <logicalFolder name="f4" displayName="driver" projectFiles="true">
+          <logicalFolder name="f2" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="sst26" projectFiles="true">
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f2" displayName="clk" projectFiles="true">
+          <logicalFolder name="f3" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f1" displayName="clk" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f6" displayName="efc" projectFiles="true">
+            <logicalFolder name="f2" displayName="efc" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f5" displayName="mpu" projectFiles="true">
+            <logicalFolder name="f3" displayName="mpu" projectFiles="true">
             </logicalFolder>
             <logicalFolder name="f4" displayName="nvic" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f3" displayName="pio" projectFiles="true">
+            <logicalFolder name="f5" displayName="pio" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f1" displayName="qspi" projectFiles="true">
+            <logicalFolder name="f6" displayName="qspi" projectFiles="true">
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="stdio" projectFiles="true">
+          <logicalFolder name="f4" displayName="stdio" projectFiles="true">
           </logicalFolder>
           <logicalFolder name="f5" displayName="system" projectFiles="true">
-            <logicalFolder name="f2" displayName="cache" projectFiles="true">
+            <logicalFolder name="f1" displayName="cache" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f1" displayName="int" projectFiles="true">
+            <logicalFolder name="f2" displayName="int" projectFiles="true">
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
+    <logicalFolder name="LinkerScript"
+                   displayName="Linker Files"
+                   projectFiles="true">
     </logicalFolder>
-    <logicalFolder name="f3" displayName="Source Files" projectFiles="true">
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_e70_xult" projectFiles="true">
           <logicalFolder name="f1" displayName="bsp" projectFiles="true">
@@ -264,13 +275,15 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.30</languageToolchainVersion>
+        <languageToolchainVersion>2.40</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME70_DFP" vendor="Microchip" version="4.2.59"/>
+        <pack name="SAME70_DFP" vendor="Microchip" version="4.2.62"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
@@ -328,7 +341,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/sam_e70_xult;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
+                  value="../src;../src/config/sam_e70_xult;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
