@@ -85,7 +85,7 @@ extern "C" {
 #define SYS_CONSOLE_USB_CDC_RD_BUFFER_SIZE_IDX1    129
 
 /* TX buffer size has one additional element for the empty spot needed in circular buffer */
-#define SYS_CONSOLE_USB_CDC_WR_BUFFER_SIZE_IDX1    129
+#define SYS_CONSOLE_USB_CDC_WR_BUFFER_SIZE_IDX1    257
 
 
 
@@ -117,7 +117,7 @@ extern "C" {
 #define SYS_CONSOLE_USB_CDC_RD_BUFFER_SIZE_IDX0    129
 
 /* TX buffer size has one additional element for the empty spot needed in circular buffer */
-#define SYS_CONSOLE_USB_CDC_WR_BUFFER_SIZE_IDX0    129
+#define SYS_CONSOLE_USB_CDC_WR_BUFFER_SIZE_IDX0    257
 
 
 
