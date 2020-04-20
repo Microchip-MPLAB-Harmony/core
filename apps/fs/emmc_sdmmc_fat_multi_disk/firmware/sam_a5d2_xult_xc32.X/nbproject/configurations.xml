@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configurationDescriptor version="65">
   <logicalFolder displayName="root" name="root" projectFiles="true">
-    <logicalFolder displayName="Header Files" name="f1" projectFiles="true">
+    <logicalFolder displayName="Header Files" name="HeaderFiles" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_a5d2_xult_xc32" name="f1" projectFiles="true">
           <logicalFolder displayName="driver" name="f1" projectFiles="true">
@@ -51,17 +51,18 @@
             <logicalFolder displayName="fs" name="f2" projectFiles="true">
               <logicalFolder displayName="fat_fs" name="f1" projectFiles="true">
                 <logicalFolder displayName="file_system" name="f1" projectFiles="true">
-                  <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/fat_fs/src/file_system/ff.h</itemPath>
-                  <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/fat_fs/src/file_system/ffconf.h</itemPath>
+                  <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/fat_fs/file_system/ff.h</itemPath>
+                  <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/fat_fs/file_system/ffconf.h</itemPath>
                 </logicalFolder>
                 <logicalFolder displayName="hardware_access" name="f2" projectFiles="true">
-                  <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/fat_fs/src/hardware_access/diskio.h</itemPath>
+                  <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/fat_fs/hardware_access/diskio.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
               <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/sys_fs.h</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/src/sys_fs_local.h</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/sys_fs_media_manager.h</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/src/sys_fs_media_manager_local.h</itemPath>
+              <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/sys_fs_fat_interface.h</itemPath>
             </logicalFolder>
             <logicalFolder displayName="int" name="f3" projectFiles="true">
               <itemPath>../src/config/sam_a5d2_xult_xc32/system/int/sys_int.h</itemPath>
@@ -69,6 +70,9 @@
             </logicalFolder>
             <logicalFolder displayName="cache" name="f4" projectFiles="true">
               <itemPath>../src/config/sam_a5d2_xult_xc32/system/cache/sys_cache.h</itemPath>
+            </logicalFolder>
+            <logicalFolder displayName="debug" name="f5" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32/system/debug/sys_debug.h</itemPath>
             </logicalFolder>
             <itemPath>../src/config/sam_a5d2_xult_xc32/system/system.h</itemPath>
             <itemPath>../src/config/sam_a5d2_xult_xc32/system/system_common.h</itemPath>
@@ -108,7 +112,6 @@
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/mpddrc.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/pdmic.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/pio.h</itemPath>
-            <itemPath>../src/packs/ATSAMA5D27_DFP/component/pio_ctrl.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/pit.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/pmc.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/ptc.h</itemPath>
@@ -165,17 +168,17 @@
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Important Files" name="f2" projectFiles="true">
+    <logicalFolder displayName="Important Files" name="ExternalFiles" projectFiles="true">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Linker Files" name="f3" projectFiles="true">
+    <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_a5d2_xult_xc32" name="f1" projectFiles="true">
           <itemPath>../src/config/sam_a5d2_xult_xc32/ddr.ld</itemPath>
         </logicalFolder>
       </logicalFolder>
     </logicalFolder>
-    <logicalFolder displayName="Source Files" name="f4" projectFiles="true">
+    <logicalFolder displayName="Source Files" name="SourceFiles" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_a5d2_xult_xc32" name="f1" projectFiles="true">
           <logicalFolder displayName="driver" name="f1" projectFiles="true">
@@ -220,11 +223,17 @@
             </logicalFolder>
             <logicalFolder displayName="fs" name="f2" projectFiles="true">
               <logicalFolder displayName="fat_fs" name="f1" projectFiles="true">
-                <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/fat_fs/src/ff.c</itemPath>
-                <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/fat_fs/src/diskio.c</itemPath>
+                <logicalFolder displayName="file_system" name="f1" projectFiles="true">
+                  <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/fat_fs/file_system/ff.c</itemPath>
+                  <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/fat_fs/file_system/ffunicode.c</itemPath>
+                </logicalFolder>
+                <logicalFolder displayName="hardware_access" name="f2" projectFiles="true">
+                  <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/fat_fs/hardware_access/diskio.c</itemPath>
+                </logicalFolder>
               </logicalFolder>
               <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/src/sys_fs.c</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/src/sys_fs_media_manager.c</itemPath>
+              <itemPath>../src/config/sam_a5d2_xult_xc32/system/fs/src/sys_fs_fat_interface.c</itemPath>
             </logicalFolder>
             <logicalFolder displayName="int" name="f3" projectFiles="true">
               <itemPath>../src/config/sam_a5d2_xult_xc32/system/int/src/sys_int.c</itemPath>
@@ -321,7 +330,7 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value="../src;../src/config/sam_a5d2_xult_xc32;../src/packs/ATSAMA5D27_DFP;../src/packs/CMSIS/CMSIS/Core_A/Include;../src/packs/CMSIS/;../src/arm"/>
+        <property key="extra-include-directories" value="../src;../src/config/sam_a5d2_xult_xc32;../src/packs/ATSAMA5D27_DFP;../src/packs/CMSIS/CMSIS/Core_A/Include;../src/packs/CMSIS/;../src/config/sam_a5d2_xult_xc32/system/fs/fat_fs/file_system;../src/config/sam_a5d2_xult_xc32/system/fs/fat_fs/hardware_access"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
