@@ -45,10 +45,11 @@
 // Section: Include Files
 // *****************************************************************************
 // *****************************************************************************
-
 #include <string.h>
 #include "drv_sdspi_plib_interface.h"
+
 #include "drv_sdspi_local.h"
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -476,7 +477,7 @@ static void _DRV_SDSPI_CommandSend
             dObj->cmdRespTmrFlag = false;
 
             /* SD card follows big-endian format */
-            *((uint32_t*)endianArray) = *((uint32_t*)&address);
+            memcpy((void *)endianArray, (const void *)&address, sizeof(endianArray));
 
             /* Form the packet */
             dObj->pCmdResp[0] = (gDrvSDSPICmdTable[command].commandCode | DRV_SDSPI_TRANSMIT_SET);
@@ -1005,6 +1006,7 @@ static void _DRV_SDSPI_MediaInitialize ( SYS_MODULE_OBJ object )
 
             /* 400kHz. Initialize SPI port to <= 400kHz */
             _DRV_SDSPI_SPISpeedSetup(dObj, _DRV_SDSPI_SPI_INITIAL_SPEED);
+
             dObj->mediaInitState = DRV_SDSPI_INIT_RAMP_TIME;
 
             break;
@@ -1244,7 +1246,6 @@ static void _DRV_SDSPI_MediaInitialize ( SYS_MODULE_OBJ object )
                20Mbps SPI speeds. SD cards would typically operate at up to 25Mbps
                or higher SPI speeds.
              */
-            /* 400kHz. Initialize SPI port to <= 400kHz */
             _DRV_SDSPI_SPISpeedSetup(dObj, dObj->sdcardSpeedHz);
 
             /* Do a dummy read to ensure that the receiver buffer is cleared */
@@ -2141,14 +2142,6 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    dObj->status                = SYS_STATUS_UNINITIALIZED;
-    dObj->inUse                 = true;
-    dObj->nClients              = 0;
-    dObj->numClients            = sdSPIInit->numClients;
-    dObj->bufferObjPool         = sdSPIInit->bufferObjPool;
-    dObj->bufferObjPoolSize     = sdSPIInit->bufferObjPoolSize;
-    dObj->clientObjPool         = sdSPIInit->clientObjPool;
-    dObj->bufferObjList         = (uintptr_t)NULL;
     dObj->spiPlib               = sdSPIInit->spiPlib;
     dObj->remapClockPhase       = sdSPIInit->remapClockPhase;
     dObj->remapClockPolarity    = sdSPIInit->remapClockPolarity;
@@ -2157,6 +2150,16 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
     dObj->txDMAChannel          = sdSPIInit->txDMAChannel;
     dObj->txAddress             = sdSPIInit->txAddress;
     dObj->rxAddress             = sdSPIInit->rxAddress;
+
+    dObj->status                = SYS_STATUS_UNINITIALIZED;
+    dObj->inUse                 = true;
+    dObj->nClients              = 0;
+    dObj->numClients            = sdSPIInit->numClients;
+    dObj->bufferObjPool         = sdSPIInit->bufferObjPool;
+    dObj->bufferObjPoolSize     = sdSPIInit->bufferObjPoolSize;
+    dObj->clientObjPool         = sdSPIInit->clientObjPool;
+    dObj->bufferObjList         = (uintptr_t)NULL;
+
     dObj->writeProtectPin       = sdSPIInit->writeProtectPin;
     dObj->chipSelectPin         = sdSPIInit->chipSelectPin;
     dObj->sdcardSpeedHz         = sdSPIInit->sdcardSpeedHz;
@@ -2169,6 +2172,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
     dObj->mediaState            = SYS_MEDIA_DETACHED;
 
     dObj->taskState             = DRV_SDSPI_TASK_START_POLLING_TIMER;
+	dObj->taskBufferIOState		= DRV_SDSPI_BUFFER_IO_CHECK_DEVICE;
     dObj->cmdDetectState        = DRV_SDSPI_CMD_DETECT_START_INIT;
     dObj->mediaInitState        = DRV_SDSPI_INIT_CHIP_DESELECT;
     dObj->spiTransferStatus     = DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE;
@@ -2178,12 +2182,17 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
     dObj->pCsdData              = &gDrvSDSPICsdData[drvIndex][0];
     dObj->pCidData              = &gDrvSDSPICidData[drvIndex][0];
     dObj->pClkPulseData         = &gDrvSDSPIClkPulseData[drvIndex][0];
-    dObj->pDummyDataBuffer      = &gDrvSDSPIDummyBufferDMA[drvIndex][0];
 
     for (i = 0; i < MEDIA_INIT_ARRAY_SIZE; i++)
     {
         dObj->pClkPulseData[i] = 0xFF;
     }
+
+    /* De-assert Chip Select pin to begin with */
+    SYS_PORT_PinSet(dObj->chipSelectPin);
+
+    dObj->pDummyDataBuffer      = &gDrvSDSPIDummyBufferDMA[drvIndex][0];
+
 
 
     /* Register call-backs with the DMA System Service */

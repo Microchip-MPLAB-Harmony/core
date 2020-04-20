@@ -455,6 +455,7 @@ typedef enum
 
 typedef enum
 {
+
     DRV_SDSPI_TASK_START_POLLING_TIMER,
 
     DRV_SDSPI_TASK_WAIT_POLLING_TIMER_EXPIRE,
@@ -1464,6 +1465,7 @@ typedef struct
     /* Linked list of buffer objects */
     uintptr_t                                       bufferObjList;
 
+
     /* PLIB API list that will be used by the driver to access the hardware */
     const DRV_SDSPI_PLIB_INTERFACE*                 spiPlib;
 
@@ -1472,35 +1474,6 @@ typedef struct
     const uint32_t*                                 remapClockPolarity;
 
     const uint32_t*                                 remapClockPhase;
-
-    SYS_PORT_PIN                                    chipSelectPin;
-
-    SYS_PORT_PIN                                    writeProtectPin;
-
-    volatile DRV_SDSPI_SPI_TRANSFER_STATUS          spiTransferStatus;
-
-    /* This variable holds the current state of the DRV_SDSPI_Task */
-    DRV_SDSPI_TASK_STATES                           taskState;
-
-    DRV_SDSPI_BUFFER_IO_TASK_STATES                 nextTaskState;
-
-    /* This variable holds the current state of the DRV_SDSPI_Task */
-    DRV_SDSPI_BUFFER_IO_TASK_STATES                 taskBufferIOState;
-
-    /* Different stages of initialization */
-    DRV_SDSPI_CMD_DETECT_STATES                     cmdDetectState;
-
-    /* Different states in sending a command */
-    DRV_SDSPI_CMD_STATES                            cmdState;
-
-    /* Different stages in media initialization */
-    DRV_SDSPI_INIT_STATE                            mediaInitState;
-
-    /* SDCARD driver state: Command/status/idle states */
-    _DRV_SDSPI_TASK_STATE                           sdState;
-
-    /* Tracks the command response */
-    DRV_SDSPI_RESPONSE_PACKETS                      cmdResponse;
 
     /* Transmit DMA Channel */
     SYS_DMA_CHANNEL                                 txDMAChannel;
@@ -1532,6 +1505,35 @@ typedef struct
     /* Buffer for transmitting/receiving dummy data */
     uint8_t*                                        pDummyDataBuffer;
 
+
+    SYS_PORT_PIN                                    chipSelectPin;
+
+    SYS_PORT_PIN                                    writeProtectPin;
+
+    volatile DRV_SDSPI_SPI_TRANSFER_STATUS          spiTransferStatus;
+
+    /* This variable holds the current state of the DRV_SDSPI_Task */
+    DRV_SDSPI_TASK_STATES                           taskState;
+
+    DRV_SDSPI_BUFFER_IO_TASK_STATES                 nextTaskState;
+
+    /* This variable holds the current state of the DRV_SDSPI_Task */
+    DRV_SDSPI_BUFFER_IO_TASK_STATES                 taskBufferIOState;
+
+    /* Different stages of initialization */
+    DRV_SDSPI_CMD_DETECT_STATES                     cmdDetectState;
+
+    /* Different states in sending a command */
+    DRV_SDSPI_CMD_STATES                            cmdState;
+
+    /* Different stages in media initialization */
+    DRV_SDSPI_INIT_STATE                            mediaInitState;
+
+    /* SDCARD driver state: Command/status/idle states */
+    _DRV_SDSPI_TASK_STATE                           sdState;
+
+    /* Tracks the command response */
+    DRV_SDSPI_RESPONSE_PACKETS                      cmdResponse;
 
     /* Mutex to protect access to SDCard */
     OSAL_MUTEX_DECLARE(transferMutex);
