@@ -73,7 +73,7 @@ typedef struct
     /* Pointer to USART APIs used by the console system service*/
     const SYS_CONSOLE_UART_PLIB_INTERFACE* uartPLIB;
 
-    SYS_CONSOLE_STATUS status;    
+    SYS_CONSOLE_STATUS status;
 
     /* Mutex to protect access to the transfer objects */
     OSAL_MUTEX_DECLARE(mutexTransferObjects);
@@ -81,16 +81,15 @@ typedef struct
 } CONSOLE_UART_DATA;
 
 void Console_UART_Initialize(uint32_t index, const void* initData);
+SYS_CONSOLE_STATUS Console_UART_Status(uint32_t index);
+void Console_UART_Tasks(uint32_t index, SYS_MODULE_OBJ object);
 ssize_t Console_UART_Read(uint32_t index, void* pRdBuffer, size_t count);
 ssize_t Console_UART_ReadCountGet(uint32_t index);
 ssize_t Console_UART_ReadFreeBufferCountGet(uint32_t index);
 ssize_t Console_UART_Write(uint32_t index, const void* pWrBuffer, size_t count );
 ssize_t Console_UART_WriteFreeBufferCountGet(uint32_t index);
 ssize_t Console_UART_WriteCountGet(uint32_t index);
-void Console_UART_Flush(uint32_t index);
-SYS_CONSOLE_STATUS Console_UART_Status(uint32_t index);
-void Console_UART_Tasks(uint32_t index, SYS_MODULE_OBJ object);
-
+bool Console_UART_Flush(uint32_t index);
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus

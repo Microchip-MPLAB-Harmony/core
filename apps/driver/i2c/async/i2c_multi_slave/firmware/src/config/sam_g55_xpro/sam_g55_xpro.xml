@@ -802,6 +802,9 @@
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
+          <Values dnOrder="1">
+            <User dnOrder="0" value="256"/>
+          </Values>
         </Integer>
         <Boolean dnOrder="22" id="USE_USART_RX_DMA">
           <Attributes dnOrder="0">
@@ -1190,7 +1193,7 @@
         <ElementPosition dnOrder="2" id="cmsis" x="340" y="20"/>
         <ElementPosition dnOrder="3" id="core" x="240" y="20"/>
         <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_i2c" x="239" y="68"/>
+        <ElementPosition dnOrder="5" id="drv_i2c" x="239" y="67"/>
         <ElementPosition dnOrder="6" id="efc" x="480" y="20"/>
         <ElementPosition dnOrder="7" id="flexcom6" x="21" y="100"/>
         <ElementPosition dnOrder="8" id="flexcom7" x="379" y="179"/>
