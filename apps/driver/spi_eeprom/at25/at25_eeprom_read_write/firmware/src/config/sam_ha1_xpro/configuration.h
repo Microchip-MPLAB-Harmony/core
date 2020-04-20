@@ -94,8 +94,8 @@ extern "C" {
 #define DRV_AT25_EEPROM_FLASH_SIZE             262144
 #define DRV_AT25_EEPROM_PAGE_SIZE              256
 #define DRV_AT25_CHIP_SELECT_PIN_IDX           SYS_PORT_PIN_PA10
-#define DRV_AT25_HOLD_PIN_IDX                  SYS_PORT_PIN_PA18
-#define DRV_AT25_WP_PIN_IDX                    SYS_PORT_PIN_PB06
+#define DRV_AT25_HOLD_PIN_IDX                  SYS_PORT_PIN_PA17
+#define DRV_AT25_WP_PIN_IDX                    SYS_PORT_PIN_PB03
 
 
 // *****************************************************************************
