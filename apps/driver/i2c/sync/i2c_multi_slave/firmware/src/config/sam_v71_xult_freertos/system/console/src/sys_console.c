@@ -57,6 +57,8 @@
 
 static SYS_CONSOLE_OBJECT_INSTANCE consoleDeviceInstance[SYS_CONSOLE_DEVICE_MAX_INSTANCES];
 
+#define SYS_CONSOLE_GET_INSTANCE(index)    (index >= SYS_CONSOLE_DEVICE_MAX_INSTANCES)? NULL : &consoleDeviceInstance[index]
+
 SYS_MODULE_OBJ SYS_CONSOLE_Initialize(
     const SYS_MODULE_INDEX index,
     const SYS_MODULE_INIT* const init
@@ -128,9 +130,38 @@ SYS_STATUS SYS_CONSOLE_Status ( SYS_MODULE_OBJ object )
     return ret;
 }
 
+SYS_CONSOLE_HANDLE SYS_CONSOLE_HandleGet( const SYS_MODULE_INDEX index)
+{
+	SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
+
+    if (pConsoleObj)
+    {
+		return (SYS_CONSOLE_HANDLE) index;
+	}
+	else
+	{
+		return (SYS_CONSOLE_HANDLE)SYS_CONSOLE_HANDLE_INVALID;
+	}
+}
+
+SYS_CONSOLE_DEVICE SYS_CONSOLE_DeviceGet( const SYS_CONSOLE_HANDLE handle)
+{
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
+
+    if (pConsoleObj)
+    {
+        if (pConsoleObj->devDesc != NULL)
+        {
+            return pConsoleObj->devDesc->consoleDevice;
+        }
+    }
+
+    return SYS_CONSOLE_DEV_MAX;
+}
+
 void SYS_CONSOLE_Tasks ( SYS_MODULE_OBJ object )
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[(SYS_MODULE_INDEX)object];
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[object];
 
     if (pConsoleObj->devDesc == NULL)
     {
@@ -141,85 +172,145 @@ void SYS_CONSOLE_Tasks ( SYS_MODULE_OBJ object )
 }
 
 ssize_t SYS_CONSOLE_Read(
-    const SYS_MODULE_INDEX index,
-    int fd,
+    const SYS_CONSOLE_HANDLE handle,
     void* buf,
     size_t count
 )
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[index];
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
 
-    if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED
-            || pConsoleObj->devDesc == NULL)
+    if (pConsoleObj)
     {
-        return 0;
+        if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED || pConsoleObj->devDesc == NULL)
+        {
+            return -1;
+        }
+
+        return pConsoleObj->devDesc->read(pConsoleObj->devIndex, buf, count);
+    }
+    else
+    {
+        return -1;
     }
 
-    return pConsoleObj->devDesc->read(pConsoleObj->devIndex, buf, count);
 }
 
-ssize_t SYS_CONSOLE_ReadFreeBufferCountGet(const SYS_MODULE_INDEX index)
+ssize_t SYS_CONSOLE_ReadFreeBufferCountGet(const SYS_CONSOLE_HANDLE handle)
 {
-	SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[index];
-	
-	return pConsoleObj->devDesc->readFreeBufferCountGet(pConsoleObj->devIndex);
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
+
+    if (pConsoleObj)
+    {
+        if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED || pConsoleObj->devDesc == NULL)
+        {
+            return -1;
+        }
+
+        return pConsoleObj->devDesc->readFreeBufferCountGet(pConsoleObj->devIndex);
+    }
+    else
+    {
+        return -1;
+    }
 }
 
-ssize_t SYS_CONSOLE_ReadCountGet(const SYS_MODULE_INDEX index)
+ssize_t SYS_CONSOLE_ReadCountGet(const SYS_CONSOLE_HANDLE handle)
 {
-	SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[index];
-	
-	return pConsoleObj->devDesc->readCountGet(pConsoleObj->devIndex);
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
+
+    if (pConsoleObj)
+    {
+        if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED || pConsoleObj->devDesc == NULL)
+        {
+            return -1;
+        }
+
+        return pConsoleObj->devDesc->readCountGet(pConsoleObj->devIndex);
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 ssize_t SYS_CONSOLE_Write(
-    const SYS_MODULE_INDEX index,
-    int fd,
+    const SYS_CONSOLE_HANDLE handle,
     const void* buf,
     size_t count
 )
 {
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj;
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
 
-    if (index >= SYS_CONSOLE_DEVICE_MAX_INSTANCES)
+    if (pConsoleObj)
     {
-        return 0;
+        if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED || pConsoleObj->devDesc == NULL)
+        {
+            return -1;
+        }
+
+        return pConsoleObj->devDesc->write(pConsoleObj->devIndex, buf, count);
     }
-
-    pConsoleObj = &consoleDeviceInstance[index];
-
-    if ((pConsoleObj->status == SYS_STATUS_UNINITIALIZED) || (pConsoleObj->devDesc == NULL))
+    else
     {
-        return 0;
+        return -1;
     }
-
-    return pConsoleObj->devDesc->write(pConsoleObj->devIndex, buf, count);
 }
 
-ssize_t SYS_CONSOLE_WriteFreeBufferCountGet(const SYS_MODULE_INDEX index)
+ssize_t SYS_CONSOLE_WriteFreeBufferCountGet(const SYS_CONSOLE_HANDLE handle)
 {
-	SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[index];
-	
-	return pConsoleObj->devDesc->writeFreeBufferCountGet(pConsoleObj->devIndex);
-}
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
 
-ssize_t SYS_CONSOLE_WriteCountGet(const SYS_MODULE_INDEX index)
-{
-	SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[index];
-	
-	return pConsoleObj->devDesc->writeCountGet(pConsoleObj->devIndex);
-}
-
-void SYS_CONSOLE_Flush(const SYS_MODULE_INDEX index)
-{
-    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = &consoleDeviceInstance[index];
-
-    if (pConsoleObj->devDesc == NULL)
+    if (pConsoleObj)
     {
-        return;
-    }
+        if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED || pConsoleObj->devDesc == NULL)
+        {
+            return -1;
+        }
 
-    pConsoleObj->devDesc->flush(pConsoleObj->devIndex);
+        return pConsoleObj->devDesc->writeFreeBufferCountGet(pConsoleObj->devIndex);
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+ssize_t SYS_CONSOLE_WriteCountGet(const SYS_CONSOLE_HANDLE handle)
+{
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
+
+    if (pConsoleObj)
+    {
+        if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED || pConsoleObj->devDesc == NULL)
+        {
+            return -1;
+        }
+
+        return pConsoleObj->devDesc->writeCountGet(pConsoleObj->devIndex);
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+bool SYS_CONSOLE_Flush(const SYS_CONSOLE_HANDLE handle)
+{
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
+
+    if (pConsoleObj)
+    {
+        if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED || pConsoleObj->devDesc == NULL)
+        {
+            return false;
+        }
+
+        return pConsoleObj->devDesc->flush(pConsoleObj->devIndex);
+    }
+    else
+    {
+        return false;
+    }
 }
 
 
