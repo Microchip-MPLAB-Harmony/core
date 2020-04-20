@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="f1" displayName="Header Files" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <logicalFolder name="f2" displayName="ATSAML10E16A_DFP" projectFiles="true">
+        <logicalFolder name="f1" displayName="ATSAML10E16A_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
           </logicalFolder>
           <logicalFolder name="f2" displayName="pio" projectFiles="true">
           </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="f1" displayName="sam_l10_xpro" projectFiles="true">
+        <logicalFolder name="f2" displayName="sam_l10_xpro" projectFiles="true">
           <logicalFolder name="f2" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_l10_xpro/bsp/bsp.h</itemPath>
           </logicalFolder>
@@ -17,7 +19,7 @@
             <logicalFolder name="f5" displayName="clock" projectFiles="true">
               <itemPath>../src/config/sam_l10_xpro/peripheral/clock/plib_clock.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="evsys" projectFiles="true">
+            <logicalFolder name="f1" displayName="evsys" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
               </logicalFolder>
               <itemPath>../src/config/sam_l10_xpro/peripheral/evsys/plib_evsys.h</itemPath>
@@ -25,7 +27,7 @@
             <logicalFolder name="f6" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/sam_l10_xpro/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
+            <logicalFolder name="f2" displayName="nvmctrl" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
               </logicalFolder>
               <itemPath>../src/config/sam_l10_xpro/peripheral/nvmctrl/plib_nvmctrl.h</itemPath>
@@ -48,11 +50,14 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f3" displayName="system" projectFiles="true">
+            <logicalFolder name="f2" displayName="debug" projectFiles="true">
+              <itemPath>../src/config/sam_l10_xpro/system/debug/sys_debug.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_l10_xpro/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/sam_l10_xpro/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="time" projectFiles="true">
+            <logicalFolder name="f3" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_l10_xpro/system/time/sys_time.h</itemPath>
               <itemPath>../src/config/sam_l10_xpro/system/time/sys_time_definitions.h</itemPath>
               <itemPath>../src/config/sam_l10_xpro/system/time/src/sys_time_local.h</itemPath>
@@ -76,19 +81,19 @@
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAML10E16A_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
-            <logicalFolder name="f5" displayName="clock" projectFiles="true">
+            <logicalFolder name="f1" displayName="clock" projectFiles="true">
             </logicalFolder>
             <logicalFolder name="f2" displayName="evsys" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f6" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f3" displayName="nvic" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
+            <logicalFolder name="f4" displayName="nvmctrl" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f7" displayName="pm" projectFiles="true">
+            <logicalFolder name="f5" displayName="pm" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f4" displayName="port" projectFiles="true">
+            <logicalFolder name="f6" displayName="port" projectFiles="true">
             </logicalFolder>
-            <logicalFolder name="f3" displayName="sercom" projectFiles="true">
+            <logicalFolder name="f7" displayName="sercom" projectFiles="true">
               <logicalFolder name="f1" displayName="usart" projectFiles="true">
               </logicalFolder>
             </logicalFolder>
@@ -123,10 +128,10 @@
             <itemPath>../src/packs/ATSAML10E16A_DFP/component/trng.h</itemPath>
             <itemPath>../src/packs/ATSAML10E16A_DFP/component/wdt.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="pio" projectFiles="true">
+          <logicalFolder name="f3" displayName="pio" projectFiles="true">
             <itemPath>../src/packs/ATSAML10E16A_DFP/pio/saml10e16a.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="system" projectFiles="true">
+          <logicalFolder name="f2" displayName="system" projectFiles="true">
             <logicalFolder name="f1" displayName="int" projectFiles="true">
             </logicalFolder>
             <logicalFolder name="f2" displayName="time" projectFiles="true">
@@ -163,12 +168,18 @@
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="f4" displayName="Important Files" projectFiles="true">
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="true">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
+    <logicalFolder name="LinkerScript"
+                   displayName="Linker Files"
+                   projectFiles="true">
     </logicalFolder>
-    <logicalFolder name="f3" displayName="Source Files" projectFiles="true">
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_l10_xpro" projectFiles="true">
           <logicalFolder name="f2" displayName="bsp" projectFiles="true">
@@ -238,13 +249,15 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.20</languageToolchainVersion>
+        <languageToolchainVersion>2.40</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
-        <pack name="SAML10_DFP" vendor="Microchip" version="2.0.24"/>
+        <pack name="SAML10_DFP" vendor="Microchip" version="3.1.63"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
@@ -302,7 +315,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/sam_l10_xpro;../src/packs/ATSAML10E16A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
+                  value="../src;../src/config/sam_l10_xpro;../src/packs/ATSAML10E16A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -376,7 +389,7 @@
         <property key="no-startup-files" value="false"/>
         <property key="oXC32ld-extra-opts" value=""/>
         <property key="optimization-level" value=""/>
-        <property key="preprocessor-macros" value="SECURE"/>
+        <property key="preprocessor-macros" value=""/>
         <property key="remove-unused-sections" value="true"/>
         <property key="report-memory-usage" value="false"/>
         <property key="serial-length" value=""/>
@@ -422,15 +435,22 @@
         <property key="mdtcm" value=""/>
         <property key="mitcm" value=""/>
         <property key="mstacktcm" value="false"/>
+        <property key="omit-pack-options" value="1"/>
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
       </C32Global>
       <EdbgTool>
         <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="communication.activationmode" value="nohv"/>
         <property key="communication.interface" value="swd"/>
         <property key="communication.speed" value="2.000"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="firmware.path"
+                  value="Press to browse for a specific firmware version"/>
+        <property key="firmware.toolpack"
+                  value="Press to select which tool pack to use"/>
+        <property key="firmware.update.action" value="firmware.update.use.latest"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>
         <property key="memories.configurationmemory" value="true"/>
@@ -455,6 +475,10 @@
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.preserveuserid" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>
+        <property key="toolpack.updateoptions"
+                  value="toolpack.updateoptions.uselatestoolpack"/>
+        <property key="toolpack.updateoptions.packversion"
+                  value="Press to select which tool pack to use"/>
         <property key="voltagevalue" value=""/>
       </EdbgTool>
       <PICkit3PlatformTool>
