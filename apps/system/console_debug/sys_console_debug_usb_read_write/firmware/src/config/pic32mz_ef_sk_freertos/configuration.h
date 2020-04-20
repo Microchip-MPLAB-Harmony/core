@@ -85,7 +85,7 @@ extern "C" {
 #define SYS_CONSOLE_USB_CDC_RD_BUFFER_SIZE_IDX1    129
 
 /* TX buffer size has one additional element for the empty spot needed in circular buffer */
-#define SYS_CONSOLE_USB_CDC_WR_BUFFER_SIZE_IDX1    129
+#define SYS_CONSOLE_USB_CDC_WR_BUFFER_SIZE_IDX1    257
 
 /* Console Driver Instance 1 RTOS Configurations*/
 #define SYS_CONSOLE_RTOS_STACK_SIZE_IDX1               256
@@ -120,7 +120,7 @@ extern "C" {
 #define SYS_CONSOLE_USB_CDC_RD_BUFFER_SIZE_IDX0    129
 
 /* TX buffer size has one additional element for the empty spot needed in circular buffer */
-#define SYS_CONSOLE_USB_CDC_WR_BUFFER_SIZE_IDX0    129
+#define SYS_CONSOLE_USB_CDC_WR_BUFFER_SIZE_IDX0    257
 
 /* Console Driver Instance 0 RTOS Configurations*/
 #define SYS_CONSOLE_RTOS_STACK_SIZE_IDX0               256
