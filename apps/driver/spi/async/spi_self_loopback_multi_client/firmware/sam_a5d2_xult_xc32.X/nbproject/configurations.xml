@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configurationDescriptor version="65">
   <logicalFolder displayName="root" name="root" projectFiles="true">
-    <logicalFolder displayName="Header Files" name="f1" projectFiles="true">
+    <logicalFolder displayName="Header Files" name="HeaderFiles" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_a5d2_xult_xc32" name="f1" projectFiles="true">
           <logicalFolder displayName="bsp" name="f1" projectFiles="true">
@@ -55,6 +55,9 @@
               <itemPath>../src/config/sam_a5d2_xult_xc32/system/dma/sys_dma.h</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32/system/dma/sys_dma_mapping.h</itemPath>
             </logicalFolder>
+            <logicalFolder displayName="debug" name="f5" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32/system/debug/sys_debug.h</itemPath>
+            </logicalFolder>
             <itemPath>../src/config/sam_a5d2_xult_xc32/system/system.h</itemPath>
             <itemPath>../src/config/sam_a5d2_xult_xc32/system/system_common.h</itemPath>
             <itemPath>../src/config/sam_a5d2_xult_xc32/system/system_module.h</itemPath>
@@ -89,7 +92,6 @@
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/mpddrc.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/pdmic.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/pio.h</itemPath>
-            <itemPath>../src/packs/ATSAMA5D27_DFP/component/pio_ctrl.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/pit.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/pmc.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/ptc.h</itemPath>
@@ -148,17 +150,17 @@
       <itemPath>../src/app_client2.h</itemPath>
       <itemPath>../src/app_monitor.h</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Important Files" name="f2" projectFiles="true">
+    <logicalFolder displayName="Important Files" name="ExternalFiles" projectFiles="true">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Linker Files" name="f3" projectFiles="true">
+    <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_a5d2_xult_xc32" name="f1" projectFiles="true">
           <itemPath>../src/config/sam_a5d2_xult_xc32/ddr.ld</itemPath>
         </logicalFolder>
       </logicalFolder>
     </logicalFolder>
-    <logicalFolder displayName="Source Files" name="f4" projectFiles="true">
+    <logicalFolder displayName="Source Files" name="SourceFiles" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_a5d2_xult_xc32" name="f1" projectFiles="true">
           <logicalFolder displayName="bsp" name="f1" projectFiles="true">
@@ -296,7 +298,7 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value="../src;../src/config/sam_a5d2_xult_xc32;../src/packs/ATSAMA5D27_DFP;../src/packs/CMSIS/CMSIS/Core_A/Include;../src/packs/CMSIS/;../src/arm"/>
+        <property key="extra-include-directories" value="../src;../src/config/sam_a5d2_xult_xc32;../src/packs/ATSAMA5D27_DFP;../src/packs/CMSIS/CMSIS/Core_A/Include;../src/packs/CMSIS/"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
