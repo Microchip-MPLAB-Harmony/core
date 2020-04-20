@@ -1003,27 +1003,39 @@
     </UniqueComponent>
     <UniqueComponent dnOrder="2" id="core_timer">
       <Symbols dnOrder="0">
-        <Integer dnOrder="0" id="CORE_TIMER_FREQUENCY">
+        <Float dnOrder="0" id="CORE_TIMER_COMPARE_MS">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Float>
+        <Integer dnOrder="1" id="CORE_TIMER_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core_timer" value="100000000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="1" id="CORE_TIMER_INTERRUPT_MODE">
+        <Boolean dnOrder="2" id="CORE_TIMER_INTERRUPT_MODE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core_timer" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="2" id="CORE_TIMER_PERIODIC_INTERRUPT">
-          <Values dnOrder="0">
+        <Boolean dnOrder="3" id="CORE_TIMER_PERIODIC_INTERRUPT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="core_timer" value="false"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="3" id="CORE_TIMER_PERIOD_US">
+        <Integer dnOrder="4" id="CORE_TIMER_PERIOD_US">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core_timer" value="1000"/>
           </Values>
         </Integer>
-        <String dnOrder="4" id="CORE_TIMER_PERIOD_VALUE">
+        <String dnOrder="5" id="CORE_TIMER_PERIOD_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core_timer" value="0x186a0"/>
           </Values>
@@ -1060,36 +1072,162 @@
             </Boolean>
           </Attributes>
         </File>
-        <Boolean dnOrder="2" id="ENABLE_APP_FILE">
+        <File dnOrder="2" id="CONFIGURATION_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="3" id="DRIVER_COMMON">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="4" id="DRIVER_ROOT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Boolean dnOrder="5" id="ENABLE_APP_FILE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="3" id="ENABLE_DRV_COMMON">
+        <Boolean dnOrder="6" id="ENABLE_DRV_COMMON">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbhs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="4" id="ENABLE_OSAL">
+        <Boolean dnOrder="7" id="ENABLE_OSAL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="5" id="ENABLE_SYS_CACHE">
+        <Boolean dnOrder="8" id="ENABLE_SYS_CACHE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="6" id="ENABLE_SYS_COMMON">
+        <Boolean dnOrder="9" id="ENABLE_SYS_COMMON">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sys_time" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="7" id="ENABLE_SYS_INT">
+        <Boolean dnOrder="10" id="ENABLE_SYS_INT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
+        <File dnOrder="11" id="GEN_APP_TASKS">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Menu dnOrder="12" id="GEN_APP_TASK_MENU">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Menu>
+        <File dnOrder="13" id="INT_DEF">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="14" id="INT_HEADER">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="15" id="INT_MAPPING">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="16" id="INT_SOURCE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="17" id="OSAL_DEFINITIONS_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="18" id="OSAL_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="19" id="OSAL_IMPL_BASIC_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="20" id="OSAL_SYSDEF_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="21" id="SYSTEM_COMMON">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="22" id="SYSTEM_MODULE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="23" id="SYSTEM_ROOT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="24" id="TASKS_C">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="25" id="USER_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
       </Symbols>
     </UniqueComponent>
     <GeneratorComponent dnOrder="6" id="sys_console">
@@ -1142,26 +1280,47 @@
                 </Boolean>
               </Attributes>
             </Integer>
-            <File dnOrder="6" id="SYS_CONSOLE_USB_CDC_SOURCE">
+            <File dnOrder="6" id="SYS_CONSOLE_UART_DEFINITIONS_HEADER">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+            <File dnOrder="7" id="SYS_CONSOLE_UART_HEADER">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+            <File dnOrder="8" id="SYS_CONSOLE_UART_SOURCE">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+            <File dnOrder="9" id="SYS_CONSOLE_USB_CDC_SOURCE">
               <Attributes dnOrder="0">
                 <Boolean dnOrder="0" id="enabled">
                   <Value dnOrder="0">true</Value>
                 </Boolean>
               </Attributes>
             </File>
-            <File dnOrder="7" id="SYS_CONSOLE_USB_DEFINITIONS_HEADER">
+            <File dnOrder="10" id="SYS_CONSOLE_USB_DEFINITIONS_HEADER">
               <Attributes dnOrder="0">
                 <Boolean dnOrder="0" id="enabled">
                   <Value dnOrder="0">true</Value>
                 </Boolean>
               </Attributes>
             </File>
-            <String dnOrder="8" id="SYS_CONSOLE_USB_DEVICE_SPEED">
+            <String dnOrder="11" id="SYS_CONSOLE_USB_DEVICE_SPEED">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="sys_console_0" value="High Speed"/>
               </Values>
             </String>
-            <File dnOrder="9" id="SYS_CONSOLE_USB_HEADER">
+            <File dnOrder="12" id="SYS_CONSOLE_USB_HEADER">
               <Attributes dnOrder="0">
                 <Boolean dnOrder="0" id="enabled">
                   <Value dnOrder="0">true</Value>
@@ -1218,26 +1377,47 @@
                 </Boolean>
               </Attributes>
             </Integer>
-            <File dnOrder="6" id="SYS_CONSOLE_USB_CDC_SOURCE">
+            <File dnOrder="6" id="SYS_CONSOLE_UART_DEFINITIONS_HEADER">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+            <File dnOrder="7" id="SYS_CONSOLE_UART_HEADER">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+            <File dnOrder="8" id="SYS_CONSOLE_UART_SOURCE">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="enabled">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </File>
+            <File dnOrder="9" id="SYS_CONSOLE_USB_CDC_SOURCE">
               <Attributes dnOrder="0">
                 <Boolean dnOrder="0" id="enabled">
                   <Value dnOrder="0">true</Value>
                 </Boolean>
               </Attributes>
             </File>
-            <File dnOrder="7" id="SYS_CONSOLE_USB_DEFINITIONS_HEADER">
+            <File dnOrder="10" id="SYS_CONSOLE_USB_DEFINITIONS_HEADER">
               <Attributes dnOrder="0">
                 <Boolean dnOrder="0" id="enabled">
                   <Value dnOrder="0">true</Value>
                 </Boolean>
               </Attributes>
             </File>
-            <String dnOrder="8" id="SYS_CONSOLE_USB_DEVICE_SPEED">
+            <String dnOrder="11" id="SYS_CONSOLE_USB_DEVICE_SPEED">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="sys_console_1" value="High Speed"/>
               </Values>
             </String>
-            <File dnOrder="9" id="SYS_CONSOLE_USB_HEADER">
+            <File dnOrder="12" id="SYS_CONSOLE_USB_HEADER">
               <Attributes dnOrder="0">
                 <Boolean dnOrder="0" id="enabled">
                   <Value dnOrder="0">true</Value>
@@ -1289,7 +1469,15 @@
     <UniqueComponent dnOrder="8" id="sys_time">
       <Symbols dnOrder="0">
         <Combo dnOrder="0" id="SYS_TIME_OPERATING_MODE">
-          <Values dnOrder="0">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="readOnly">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+            <Boolean dnOrder="1" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="sys_time" value="TICKLESS"/>
           </Values>
         </Combo>
