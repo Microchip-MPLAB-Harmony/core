@@ -65,8 +65,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-
-
+  
 /*** Macros for APP_CLIENT2_CS pin ***/
 #define APP_CLIENT2_CS_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 6)
 #define APP_CLIENT2_CS_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 6)
