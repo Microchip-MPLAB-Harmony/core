@@ -18,7 +18,6 @@
             "..\\src\\packs\\SAM9X60_DFP", 
             "..\\src\\packs\\CMSIS\\CMSIS\\Core\\Include", 
             "..\\src\\packs\\CMSIS", 
-            "..\\src\\arm", 
             "..\\src\\third_party\\rtos\\FreeRTOS\\Source\\portable\\IAR\\SAM\\ARM926", 
             "..\\src\\third_party\\rtos\\FreeRTOS\\Source\\include", 
             "."
