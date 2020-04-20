@@ -111,7 +111,6 @@ const DRV_SST26_INIT drvSST26InitData =
 {
     .sst26Plib      = &drvSST26PlibAPI,
 };
-
 // </editor-fold>
 
 
