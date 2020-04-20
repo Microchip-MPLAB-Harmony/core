@@ -65,8 +65,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-
-
+  
 /*** Macros for APP_EEPROM1_CS pin ***/
 #define APP_EEPROM1_CS_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 5)
 #define APP_EEPROM1_CS_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 5)
