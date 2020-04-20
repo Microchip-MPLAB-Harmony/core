@@ -412,7 +412,7 @@ typedef enum
                 // Reset signaling was detected on the bus. The 
                 // application can find out the attach speed.
                 
-                attachedSpeed = USB_DEVICE_ActiveSpeedGet(usbDeviceHandle);
+                attachSpeed = USB_DEVICE_ActiveSpeedGet(usbDeviceHandle);
                 break;
 
             case USB_DEVICE_EVENT_DECONFIGURED :
@@ -461,13 +461,13 @@ typedef enum
                 // submit the buffer that would receive data in case of a
                 // control read transfer.
 
-                setupPacket = (USB_SETUP_PACKET *)pData;
+                setupEventData = (USB_SETUP_PACKET *)pData;
 
                 // Submit a buffer to receive 32 bytes in the  control write transfer.
                 USB_DEVICE_ControlReceive(usbDeviceHandle, data, 32); 
                 break;
 
-            case USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_RECEIVED:
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
 
                 // This means that data in the data stage of the control write
                 // transfer has been received. The application can either accept
@@ -480,14 +480,14 @@ typedef enum
                 USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
                 break;
 
-            case USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_SENT:
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT:
                 
                 // This means that data in the data stage of the control
                 // read transfer has been sent. 
 
                 break;
 
-            case USB_DEVICE_CONTROL_TRANSFER_EVENT_ABORTED:
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_ABORTED:
 
                 // This means the host has aborted the control transfer. The
                 // application can reset its control transfer state machine.
@@ -543,7 +543,7 @@ typedef enum
                 break;
         }
 
-        return USB_DEVICE_EVENT_REPONSE_NONE;
+        return USB_DEVICE_EVENT_RESPONSE_NONE;
     }
 
     </code>
@@ -2358,9 +2358,9 @@ void USB_DEVICE_RemoteWakeupStartTimed ( USB_DEVICE_HANDLE usbDeviceHandle );
     This function allows the application to specify the data that would be sent
     to host in the data stage of a control read transfer. It should be called
     when the application has received the
-    USB_DEVICE_CONTROL_TRANSFER_EVENT_SETUP_REQUEST event and has identified
+    USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST event and has identified
     this setup request as the setup stage of a control read transfer. The Device
-    Layer will generate a USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_SENT event when
+    Layer will generate a USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT event when
     the data stage has completed. The function can be called in the Application
     Control Transfer Event handler or can be called after the application has
     returned from the control transfer event handler. 
@@ -2394,7 +2394,7 @@ void USB_DEVICE_RemoteWakeupStartTimed ( USB_DEVICE_HANDLE usbDeviceHandle );
     <code>
     // The following code example shows an example of how the
     // USB_DEVICE_ControlSend() function is called in response to the
-    // USB_DEVICE_CONTROL_TRANSFER_EVENT_SETUP_REQUEST event to enable a control
+    // USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST event to enable a control
     // read transfer.
 
     void APP_USBDeviceEventHandler
@@ -2408,7 +2408,7 @@ void USB_DEVICE_RemoteWakeupStartTimed ( USB_DEVICE_HANDLE usbDeviceHandle );
 
         switch(event)
         {
-            case USB_DEVICE_CONTROL_TRANSFER_EVENT_SETUP_REQUEST:
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST:
 
                 setupPkt = (USB_SETUP_PACKET *)pData;
                 
@@ -2416,7 +2416,7 @@ void USB_DEVICE_RemoteWakeupStartTimed ( USB_DEVICE_HANDLE usbDeviceHandle );
                 USB_DEVICE_ControlSend(usbDeviceHandle, data, 32); 
                 break;
 
-            case USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_RECEIVED:
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
 
                 // This means that data in the data stage of the control
                 // write transfer has been received. The application can either
@@ -2429,7 +2429,7 @@ void USB_DEVICE_RemoteWakeupStartTimed ( USB_DEVICE_HANDLE usbDeviceHandle );
                 USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
                 break;
 
-            case USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_SENT:
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT:
                 
                 // This means that data in the data stage of the control
                 // read transfer has been sent. The application would typically
@@ -2440,7 +2440,7 @@ void USB_DEVICE_RemoteWakeupStartTimed ( USB_DEVICE_HANDLE usbDeviceHandle );
                 USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
                 break;
 
-            case USB_DEVICE_CONTROL_TRANSFER_EVENT_ABORTED:
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_ABORTED:
 
                 // This means the host has aborted the control transfer. The
                 // application can reset its control transfer state machine.
@@ -2477,7 +2477,7 @@ USB_DEVICE_CONTROL_TRANSFER_RESULT USB_DEVICE_ControlSend
     This function allows the application to specify the data buffer that would
     be needed to receive the data stage of a control write transfer. It should
     be called when the application receives the
-    USB_DEVICE_CONTROL_TRANSFER_EVENT_SETUP_REQUEST event and has identified
+    USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST event and has identified
     this setup request as the setup stage of a control write transfer. The
     function can be called in the Application Control Transfer Event handler or
     can be called after the application has returned from the control transfer
@@ -2512,7 +2512,7 @@ USB_DEVICE_CONTROL_TRANSFER_RESULT USB_DEVICE_ControlSend
     <code>
     // The following code example shows an example of how the
     // USB_DEVICE_ControlReceive function is called in response to the
-    // USB_DEVICE_CONTROL_TRANSFER_EVENT_SETUP_REQUEST event to enable a control
+    // USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST event to enable a control
     // write transfer.
 
     void APP_USBDeviceControlTransferEventHandler
@@ -2526,15 +2526,15 @@ USB_DEVICE_CONTROL_TRANSFER_RESULT USB_DEVICE_ControlSend
 
         switch(event)
         {
-            case USB_DEVICE_CONTROL_TRANSFER_EVENT_SETUP_REQUEST:
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST:
 
                 setupPkt = (uint8_t *)pData;
                 
                 // Submit a buffer to receive 32 bytes in the  control write transfer.
-                USB_DEVICE_ControlReceive(usbDeviceHandle, data, 32); 
+                // USB_DEVICE_ControlReceive(usbDeviceHandle, data, 32); 
                 break;
 
-            case USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_RECEIVED:
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
 
                 // This means that data in the data stage of the control
                 // write transfer has been received. The application can either
@@ -2547,7 +2547,7 @@ USB_DEVICE_CONTROL_TRANSFER_RESULT USB_DEVICE_ControlSend
                 USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
                 break;
 
-            case USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_SENT:
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT:
                 
                 // This means that data in the data stage of the control
                 // read transfer has been sent. The application would typically
@@ -2558,7 +2558,7 @@ USB_DEVICE_CONTROL_TRANSFER_RESULT USB_DEVICE_ControlSend
                 USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
                 break;
 
-            case USB_DEVICE_CONTROL_TRANSFER_EVENT_ABORTED:
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_ABORTED:
 
                 // This means the host has aborted the control transfer. The
                 // application can reset its control transfer state machine.
@@ -2638,8 +2638,8 @@ USB_DEVICE_CONTROL_TRANSFER_RESULT USB_DEVICE_ControlReceive
 
     // The following code example shows an example of how the
     // USB_DEVICE_ControlStatus() function is called in response to the
-    // USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_RECEIVED and
-    // USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_SENT event to complete the control
+    // USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED and
+    // USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT event to complete the control
     // transfer. Here, the application code acknowledges the status stage of the
     // control transfer.
 
@@ -2654,15 +2654,15 @@ USB_DEVICE_CONTROL_TRANSFER_RESULT USB_DEVICE_ControlReceive
 
         switch(event)
         {
-            case USB_DEVICE_CONTROL_TRANSFER_EVENT_SETUP_REQUEST:
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST:
 
                 setupPkt = (USB_SETUP_PACKET *)pData;
                 
                 // Submit a buffer to receive 32 bytes in the  control write transfer.
-                USB_DEVICE_ControlReceive(usbDeviceHandle, data, 32); 
+                // USB_DEVICE_ControlReceive(usbDeviceHandle, data, 32); 
                 break;
 
-            case USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_RECEIVED:
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
 
                 // This means that data in the data stage of the control
                 // write transfer has been received. The application can either
@@ -2675,7 +2675,7 @@ USB_DEVICE_CONTROL_TRANSFER_RESULT USB_DEVICE_ControlReceive
                 USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
                 break;
 
-            case USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_SENT:
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT:
                 
                 // This means that data in the data stage of the control
                 // read transfer has been sent. The application would typically
@@ -2686,7 +2686,7 @@ USB_DEVICE_CONTROL_TRANSFER_RESULT USB_DEVICE_ControlReceive
                 USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
                 break;
 
-            case USB_DEVICE_CONTROL_TRANSFER_EVENT_ABORTED:
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_ABORTED:
 
                 // This means the host has aborted the control transfer. The
                 // application can reset its control transfer state machine.
