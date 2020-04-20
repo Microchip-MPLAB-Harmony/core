@@ -204,7 +204,7 @@ int FATFS_open (
         }
     }
 
-    res = f_open(fp, path, mode);
+    res = f_open(fp, (const TCHAR *)path, mode);
 
     if (res != FR_OK)
     {
@@ -387,60 +387,6 @@ int FATFS_closedir (
     }
 
     return ((int)res);
-}
-
-
-int FATFS_findnext (
-    uintptr_t handle,       /* Pointer to the open directory object */
-    uintptr_t fileInfo  /* Pointer to the file information structure */
-)
-{
-    FRESULT res;
-
-    FATFS_DIR_OBJECT *ptr = (FATFS_DIR_OBJECT *)handle;
-    DIR *dp = &ptr->dirObj;
-
-    FILINFO *finfo = (FILINFO *)fileInfo;
-
-    res = f_findnext(dp, finfo);
-
-    return ((int)res);
-}
-
-int FATFS_findfirst (
-    uintptr_t handle,       /* Pointer to the blank directory object */
-    uintptr_t fileInfo,     /* Pointer to the file information structure */
-    const char* path,      /* Pointer to the directory to open */
-    const char* pattern    /* Pointer to the matching pattern */
-)
-{
-    FRESULT res;
-
-    FATFS_DIR_OBJECT *ptr = (FATFS_DIR_OBJECT *)handle;
-    DIR *dp = &ptr->dirObj;
-
-    FILINFO *finfo = (FILINFO *)fileInfo;
-
-    res = f_findfirst(dp, finfo, (const TCHAR *)path, (const TCHAR *)pattern);
-
-    return ((int)res);
-}
-
-int FATFS_forward (
-    uintptr_t handle,                        /* Pointer to the file object */
-    uint32_t(*func)(const uint8_t*, uint32_t), /* Pointer to the streaming function */
-    uint32_t btf,                       /* Number of bytes to forward */
-    uint32_t* bf                        /* Pointer to number of bytes forwarded */
-)
-{
-    FRESULT res;
-    FATFS_FILE_OBJECT *ptr = (FATFS_FILE_OBJECT *)handle;
-    FIL *fp = &ptr->fileObj;
-
-    res = f_forward(fp, (STREAM_FUNC)func, (UINT)btf, (UINT *)bf);
-
-    return ((int)res);
-
 }
 
 
@@ -706,7 +652,7 @@ int FATFS_getclusters (
     DWORD clst = 0;
     FRESULT res = FR_OK;
 
-    res = f_getfree(path, &clst, &fs);
+    res = f_getfree((const TCHAR *)path, &clst, &fs);
 
     if(res != FR_OK)
     {
@@ -731,19 +677,6 @@ int FATFS_getfree (
     FRESULT res;
 
     res = f_getfree((const TCHAR *)path, (DWORD *)nclst, fatfs);
-
-    return ((int)res);
-}
-
-int FATFS_expand (
-    FIL* fp,        /* Pointer to the file object */
-    uint32_t fsz,   /* File size to be expanded to */
-    uint8_t opt        /* Operation mode 0:Find and prepare or 1:Find and allocate */
-)
-{
-    FRESULT res;
-
-    res = f_expand(fp, (FSIZE_t)fsz, (BYTE)opt);
 
     return ((int)res);
 }
