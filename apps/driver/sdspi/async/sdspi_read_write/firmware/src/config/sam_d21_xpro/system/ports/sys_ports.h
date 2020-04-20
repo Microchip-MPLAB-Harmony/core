@@ -107,58 +107,123 @@ typedef enum
 
 typedef enum
 {
+      
     SYS_PORT_PIN_PA00 = 0,
+      
     SYS_PORT_PIN_PA01 = 1,
+      
     SYS_PORT_PIN_PA02 = 2,
+      
     SYS_PORT_PIN_PA03 = 3,
+      
     SYS_PORT_PIN_PA04 = 4,
+      
     SYS_PORT_PIN_PA05 = 5,
+      
     SYS_PORT_PIN_PA06 = 6,
+      
     SYS_PORT_PIN_PA07 = 7,
+      
     SYS_PORT_PIN_PA08 = 8,
+      
     SYS_PORT_PIN_PA09 = 9,
+      
     SYS_PORT_PIN_PA10 = 10,
+      
     SYS_PORT_PIN_PA11 = 11,
+      
     SYS_PORT_PIN_PA12 = 12,
+      
     SYS_PORT_PIN_PA13 = 13,
+      
     SYS_PORT_PIN_PA14 = 14,
+      
     SYS_PORT_PIN_PA15 = 15,
+      
     SYS_PORT_PIN_PA16 = 16,
+      
     SYS_PORT_PIN_PA17 = 17,
+      
     SYS_PORT_PIN_PA18 = 18,
+      
     SYS_PORT_PIN_PA19 = 19,
+      
     SYS_PORT_PIN_PA20 = 20,
+      
     SYS_PORT_PIN_PA21 = 21,
+      
     SYS_PORT_PIN_PA22 = 22,
+      
     SYS_PORT_PIN_PA23 = 23,
+      
     SYS_PORT_PIN_PA24 = 24,
+      
     SYS_PORT_PIN_PA25 = 25,
+      
+      
     SYS_PORT_PIN_PA27 = 27,
+      
     SYS_PORT_PIN_PA28 = 28,
+      
+      
     SYS_PORT_PIN_PA30 = 30,
+      
     SYS_PORT_PIN_PA31 = 31,
+      
     SYS_PORT_PIN_PB00 = 32,
+      
     SYS_PORT_PIN_PB01 = 33,
+      
     SYS_PORT_PIN_PB02 = 34,
+      
     SYS_PORT_PIN_PB03 = 35,
+      
     SYS_PORT_PIN_PB04 = 36,
+      
     SYS_PORT_PIN_PB05 = 37,
+      
     SYS_PORT_PIN_PB06 = 38,
+      
     SYS_PORT_PIN_PB07 = 39,
+      
     SYS_PORT_PIN_PB08 = 40,
+      
     SYS_PORT_PIN_PB09 = 41,
+      
     SYS_PORT_PIN_PB10 = 42,
+      
     SYS_PORT_PIN_PB11 = 43,
+      
     SYS_PORT_PIN_PB12 = 44,
+      
     SYS_PORT_PIN_PB13 = 45,
+      
     SYS_PORT_PIN_PB14 = 46,
+      
     SYS_PORT_PIN_PB15 = 47,
+      
     SYS_PORT_PIN_PB16 = 48,
+      
     SYS_PORT_PIN_PB17 = 49,
+      
+      
+      
+      
+      
     SYS_PORT_PIN_PB22 = 54,
+      
     SYS_PORT_PIN_PB23 = 55,
+      
+      
+      
+      
+      
+      
+      
     SYS_PORT_PIN_PB30 = 62,
+      
     SYS_PORT_PIN_PB31 = 63,
+      
     /* This element should not be used in any of the PORTS APIs.
        It will be used by other modules or application to denote that none of the PORT Pin is used */
     SYS_PORT_PIN_NONE = -1
