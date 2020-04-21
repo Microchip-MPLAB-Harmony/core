@@ -105,8 +105,7 @@ def instantiateComponent(at25Component):
     # Send message to core to get available pins
     availablePinDictionary = Database.sendMessage("core", "PIN_LIST", availablePinDictionary)
 
-    at25SymHoldPin.addKey("SYS_PORT_PIN_NONE", "-1", "None")
-    at25SymWriteProtectPin.addKey("SYS_PORT_PIN_NONE", "-1", "None")
+
 
     for pad in sort_alphanumeric(availablePinDictionary.values()):
         key = "SYS_PORT_PIN_" + pad
@@ -115,6 +114,9 @@ def instantiateComponent(at25Component):
         at25SymChipSelectPin.addKey(key, value, description)
         at25SymHoldPin.addKey(key, value, description)
         at25SymWriteProtectPin.addKey(key, value, description)
+
+    at25SymHoldPin.addKey("SYS_PORT_PIN_NONE", "-1", "None")
+    at25SymWriteProtectPin.addKey("SYS_PORT_PIN_NONE", "-1", "None")
 
     at25SymPinConfigComment = at25Component.createCommentSymbol("DRV_AT25_PINS_CONFIG_COMMENT", None)
     at25SymPinConfigComment.setLabel("***Above selected pins must be configured as GPIO Output in Pin Manager***")
