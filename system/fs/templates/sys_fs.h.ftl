@@ -140,22 +140,24 @@ typedef enum
 
 typedef enum
 {
+    /* Normal File */
+    SYS_FS_ATTR_FILE    = 0x00,
     /* Read only */
-    SYS_FS_ATTR_RDO =   0x01,
+    SYS_FS_ATTR_RDO     = 0x01,
     /* Hidden */
-    SYS_FS_ATTR_HID =   0x02,
+    SYS_FS_ATTR_HID     = 0x02,
     /* System */
-    SYS_FS_ATTR_SYS =   0x04,
+    SYS_FS_ATTR_SYS     = 0x04,
     /* Volume label */
-    SYS_FS_ATTR_VOL =   0x08,
+    SYS_FS_ATTR_VOL     = 0x08,
     /* LFN entry */
-    SYS_FS_ATTR_LFN =   0x0F,
+    SYS_FS_ATTR_LFN     = 0x0F,
     /* Directory */
-    SYS_FS_ATTR_DIR =   0x10,
+    SYS_FS_ATTR_DIR     = 0x10,
     /* Archive */
-    SYS_FS_ATTR_ARC =   0x20,
+    SYS_FS_ATTR_ARC     = 0x20,
     /* Mask of defined bits */
-    SYS_FS_ATTR_MASK =  0x3F
+    SYS_FS_ATTR_MASK    =  0x3F
 
 }SYS_FS_FILE_DIR_ATTR;
 
