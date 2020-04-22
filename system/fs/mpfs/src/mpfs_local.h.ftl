@@ -109,24 +109,47 @@ typedef struct
     uint32_t timestamp;// Timestamp of file
     uint32_t microtime;// Microtime stamp of file
     uint16_t flags;// Flags for this file
-	uint8_t	 dummy[10]; // Added to align the structure size to cache line size
+    uint8_t  dummy[10]; // Added to align the structure size to cache line size
 } MPFS_FILE_RECORD;
 
-/* File status structure (FILINFO) */
-typedef struct {
-    unsigned long	fsize;			/* File size */
-    unsigned short	fdate;			/* Last modified date */
-    unsigned short	ftime;			/* Last modified time */
-    unsigned char	fattrib;		/* Attribute */
-    /* Short file name (8.3 format) */
-    char        fname[13];
-#if SYS_FS_USE_LFN
-    /* Pointer to the LFN buffer */
-    char       *lfname;
-    /* Size of LFN buffer in TCHAR */
-    uint32_t    lfsize;
-#endif
-} MPFS_STATUS;
+<#if SYS_FS_FAT == true && SYS_FS_FAT_VERSION != "v0.11a">
+    <#lt>/* File status structure when using latest FAT-FS and MPFS Together*/
+    <#lt>typedef struct {
+    <#lt>    unsigned long	fsize;			/* File size */
+    <#lt>    unsigned short	fdate;			/* Last modified date */
+    <#lt>    unsigned short	ftime;			/* Last modified time */
+    <#lt>    unsigned char	fattrib;		/* Attribute */
+    <#lt>#if SYS_FS_USE_LFN
+    <#lt>    /* Alternate file name */
+    <#lt>    char        altname[13];
+    <#lt>    /* Primary file name */
+    <#lt>    char        fname[SYS_FS_FILE_NAME_LEN + 1];
+    <#lt>    /* Pointer to the LFN buffer */
+    <#lt>    char       *lfname;
+    <#lt>    /* Size of LFN buffer in TCHAR */
+    <#lt>    uint32_t    lfsize;
+    <#lt>#else
+    <#lt>    /* Short file name (8.3 format) */
+    <#lt>    char        fname[13];
+    <#lt>#endif
+    <#lt>} MPFS_STATUS;
+<#else>
+    <#lt>/* File status structure (FILINFO) */
+    <#lt>typedef struct {
+    <#lt>    unsigned long	fsize;			/* File size */
+    <#lt>    unsigned short	fdate;			/* Last modified date */
+    <#lt>    unsigned short	ftime;			/* Last modified time */
+    <#lt>    unsigned char	fattrib;		/* Attribute */
+    <#lt>    /* Short file name (8.3 format) */
+    <#lt>    char        fname[13];
+    <#lt>#if SYS_FS_USE_LFN
+    <#lt>    /* Pointer to the LFN buffer */
+    <#lt>    char       *lfname;
+    <#lt>    /* Size of LFN buffer in TCHAR */
+    <#lt>    uint32_t    lfsize;
+    <#lt>#endif
+    <#lt>} MPFS_STATUS;
+</#if>
 
 // Alias of MPFSGetPosition
 #define MPFSTell(a)	MPFSGetPosition(a)

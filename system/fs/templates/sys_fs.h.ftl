@@ -652,25 +652,58 @@ typedef void (* SYS_FS_EVENT_HANDLER)
   Remarks:
     None.
 */
-typedef struct
-{
-    /* File size */
-    uint32_t    fsize;
-    /* Last modified date */
-    uint16_t    fdate;
-    /* Last modified time */
-    uint16_t    ftime;
-    /* Attribute */
-    uint8_t     fattrib;
-    /* Short file name (8.3 format) */
-    char        fname[13];
-#if SYS_FS_USE_LFN
-    /* Pointer to the LFN buffer */
-    char       *lfname;
-    /* Size of LFN buffer in TCHAR */
-    uint32_t    lfsize;
-#endif
-} SYS_FS_FSTAT;
+<#if SYS_FS_FAT == true && SYS_FS_FAT_VERSION != "v0.11a">
+    <#lt>typedef struct
+    <#lt>{
+    <#lt>    /* File size */
+    <#lt>    uint32_t    fsize;
+    <#lt>    /* Last modified date */
+    <#lt>    uint16_t    fdate;
+    <#lt>    /* Last modified time */
+    <#lt>    uint16_t    ftime;
+    <#lt>    /* Attribute */
+    <#lt>    uint8_t     fattrib;
+    <#lt>#if SYS_FS_USE_LFN
+    <#lt>    /* Alternate file name */
+    <#lt>    char        altname[13];
+    <#lt>    /* Primary file name */
+    <#lt>    char        fname[SYS_FS_FILE_NAME_LEN + 1];
+
+    <#lt>    /* Retaining below members for portability.
+    <#lt>     * For FAT-FS lfname[0] will always be '\0'.
+    <#lt>     * Use fname instead
+    <#lt>    */
+    <#lt>    /* Pointer to the LFN buffer */
+    <#lt>    char       *lfname;
+    <#lt>    /* Size of LFN buffer */
+    <#lt>    uint32_t    lfsize;
+    <#lt>#else
+    <#lt>    /* Short file name (8.3 format) */
+    <#lt>    char        fname[13];
+    <#lt>#endif
+    <#lt>} SYS_FS_FSTAT;
+<#else>
+    <#lt>typedef struct
+    <#lt>{
+    <#lt>    /* File size */
+    <#lt>    uint32_t    fsize;
+    <#lt>    /* Last modified date */
+    <#lt>    uint16_t    fdate;
+    <#lt>    /* Last modified time */
+    <#lt>    uint16_t    ftime;
+    <#lt>    /* Attribute */
+    <#lt>    uint8_t     fattrib;
+    <#lt>    /* Short file name (8.3 format) */
+    <#lt>    char        fname[13];
+    <#lt>#if SYS_FS_USE_LFN
+    <#lt>    /* Pointer to the LFN buffer */
+    <#lt>    char       *lfname;
+    <#lt>    /* Size of LFN buffer */
+    <#lt>    uint32_t    lfsize;
+    <#lt>#endif
+    <#lt>} SYS_FS_FSTAT;
+</#if>
+
 
 // *****************************************************************************
 /* SYS FS File time structure

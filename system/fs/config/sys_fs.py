@@ -415,12 +415,14 @@ def instantiateComponent(sysFSComponent):
     sysFSMPFSHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_MPFS"])
 
     sysFSMPFSLocHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_MPFS_LOCAL_HEADER", None)
-    sysFSMPFSLocHeaderFile.setSourcePath("/system/fs/mpfs/src/mpfs_local.h")
+    sysFSMPFSLocHeaderFile.setSourcePath("/system/fs/mpfs/src/mpfs_local.h.ftl")
     sysFSMPFSLocHeaderFile.setOutputName("mpfs_local.h")
     sysFSMPFSLocHeaderFile.setDestPath("/system/fs/mpfs/")
     sysFSMPFSLocHeaderFile.setProjectPath("config/" + configName + "/system/fs/mpfs/")
     sysFSMPFSLocHeaderFile.setEnabled(sysFSMpfs.getValue())
     sysFSMPFSLocHeaderFile.setType("HEADER")
+    sysFSMPFSLocHeaderFile.setMarkup(True)
+    sysFSMPFSLocHeaderFile.setOverwrite(True)
     sysFSMPFSLocHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_MPFS"])
 
     sysFSSourceFile = sysFSComponent.createFileSymbol("SYS_FS_SOURCE", None)

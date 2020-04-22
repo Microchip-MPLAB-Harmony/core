@@ -68,6 +68,7 @@ int FATFS_mount ( uint8_t vol )
         for(index = 0; index != SYS_FS_MAX_FILES ; index++ )
         {
             FATFSFileObject[index].inUse = false;
+            FATFSDirObject[index].inUse = false;
         }
     }
 
@@ -129,22 +130,22 @@ int FATFS_unmount ( uint8_t vol )
         {
             if (FATFSFileObject[hFATfs].fileObj.obj.fs == NULL)
             {
-                FATFSFileObject[hFATfs].inUse = 0;
+                FATFSFileObject[hFATfs].inUse = false;
             }
             else if(VolToPart[vol].pd == FATFSFileObject[hFATfs].fileObj.obj.fs->pdrv)
             {
-                FATFSFileObject[hFATfs].inUse = 0;
+                FATFSFileObject[hFATfs].inUse = false;
             }
         }
         if(FATFSDirObject[hFATfs].inUse)
         {
             if (FATFSDirObject[hFATfs].dirObj.obj.fs == NULL)
             {
-                FATFSDirObject[hFATfs].inUse = 0;
+                FATFSDirObject[hFATfs].inUse = false;
             }
             else if(VolToPart[vol].pd == FATFSDirObject[hFATfs].dirObj.obj.fs->pdrv)
             {
-                FATFSDirObject[hFATfs].inUse = 0;
+                FATFSDirObject[hFATfs].inUse = false;
             }
         }
 <#else>
@@ -152,22 +153,22 @@ int FATFS_unmount ( uint8_t vol )
         {
             if (FATFSFileObject[hFATfs].fileObj.fs == NULL)
             {
-                FATFSFileObject[hFATfs].inUse = 0;
+                FATFSFileObject[hFATfs].inUse = false;
             }
             else if(VolToPart[vol].pd == FATFSFileObject[hFATfs].fileObj.fs->drv)
             {
-                FATFSFileObject[hFATfs].inUse = 0;
+                FATFSFileObject[hFATfs].inUse = false;
             }
         }
         if(FATFSDirObject[hFATfs].inUse)
         {
             if (FATFSDirObject[hFATfs].dirObj.fs == NULL)
             {
-                FATFSDirObject[hFATfs].inUse = 0;
+                FATFSDirObject[hFATfs].inUse = false;
             }
             else if(VolToPart[vol].pd == FATFSDirObject[hFATfs].dirObj.fs->drv)
             {
-                FATFSDirObject[hFATfs].inUse = 0;
+                FATFSDirObject[hFATfs].inUse = false;
             }
         }
 </#if>
@@ -324,13 +325,23 @@ int FATFS_lseek (
 
 int FATFS_stat (
     const char* path,   /* Pointer to the file path */
-    uintptr_t ptr       /* Pointer to file information to return */
+    uintptr_t fileInfo  /* Pointer to file information to return */
 )
 {
     FRESULT res;
-    FILINFO *finfo = (FILINFO *)ptr;
+    FILINFO *finfo = (FILINFO *)fileInfo;
 
     res = f_stat((const TCHAR *)path, finfo);
+
+<#if SYS_FS_FAT_VERSION != "v0.11a">
+    SYS_FS_FSTAT *fileStat = (SYS_FS_FSTAT *)fileInfo;
+
+    if ((res == FR_OK) && (fileStat->lfname != NULL))
+    {
+        /* Use fileStat->fname instead */
+        fileStat->lfname[0] = '\0';
+    }
+</#if>
 
     return ((int)res);
 }
@@ -382,7 +393,7 @@ int FATFS_opendir (
 
     for(index = 0; index < SYS_FS_MAX_FILES; index++)
     {
-        if(FATFSDirObject[index].inUse == true)
+        if(FATFSDirObject[index].inUse == false)
         {
             FATFSDirObject[index].inUse = true;
             dp = &FATFSDirObject[index].dirObj;
@@ -418,6 +429,16 @@ int FATFS_readdir (
     FILINFO *finfo = (FILINFO *)fileInfo;
 
     res = f_readdir(dp, finfo);
+
+<#if SYS_FS_FAT_VERSION != "v0.11a">
+    SYS_FS_FSTAT *fileStat = (SYS_FS_FSTAT *)fileInfo;
+
+    if ((res == FR_OK) && (fileStat->lfname != NULL))
+    {
+        /* Use fileStat->fname instead */
+        fileStat->lfname[0] = '\0';
+    }
+</#if>
 
     return ((int)res);
 }
