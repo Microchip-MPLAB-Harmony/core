@@ -128,15 +128,31 @@ SYSTEM_OBJECTS sysObj;
 // Section: Library/Stack Initialization Data
 // *****************************************************************************
 // *****************************************************************************
-/*** File System Initialization Data ***/
+// <editor-fold defaultstate="collapsed" desc="File System Initialization Data">
 
 
-const SYS_FS_MEDIA_MOUNT_DATA sysfsMountTable[SYS_FS_VOLUME_NUMBER] = 
+const SYS_FS_MEDIA_MOUNT_DATA sysfsMountTable[SYS_FS_VOLUME_NUMBER] =
 {
-	{NULL}
+    {NULL}
 };
 
 
+const SYS_FS_FUNCTIONS MPFSFunctions =
+{
+    .mount             = MPFS_Mount,
+    .unmount           = MPFS_Unmount,
+    .open              = MPFS_Open,
+    .read              = MPFS_Read,
+    .close             = MPFS_Close,
+    .seek              = MPFS_Seek,
+    .tell              = MPFS_GetPosition,
+    .eof               = MPFS_EOF,
+    .size              = MPFS_GetSize,
+    .fstat             = MPFS_Stat,
+    .openDir           = MPFS_DirOpen,
+    .readDir           = MPFS_DirRead,
+    .closeDir          = MPFS_DirClose,
+};
 
 const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
 {
@@ -146,13 +162,21 @@ const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     }
 };
 
-
+// </editor-fold>
 
 
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: System Initialization
+// *****************************************************************************
+// *****************************************************************************
+
+
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Local initialization functions
 // *****************************************************************************
 // *****************************************************************************
 
