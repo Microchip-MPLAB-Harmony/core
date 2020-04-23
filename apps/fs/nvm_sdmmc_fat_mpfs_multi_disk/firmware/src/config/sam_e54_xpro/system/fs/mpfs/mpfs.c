@@ -46,7 +46,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include "system/fs/mpfs/src/mpfs_local.h"
+#include "system/fs/mpfs/mpfs_local.h"
 #include "system/fs/sys_fs_media_manager.h"
 
 
@@ -161,8 +161,8 @@ static int MPFSFindFile
     uint8_t *ptr = NULL;
     int32_t index = 0;
     uint16_t hash = 0;
-    uint16_t __ALIGNED(CACHE_LINE_SIZE) hashBuffer[CACHE_LINE_SIZE] = {0};
-    uint8_t __ALIGNED(CACHE_LINE_SIZE) fileName[(SYS_FS_FILE_NAME_LEN + ((SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)? (CACHE_LINE_SIZE - (SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)) : 0))];
+    static uint16_t __ALIGNED(CACHE_LINE_SIZE) hashBuffer[CACHE_LINE_SIZE] = {0};
+    static uint8_t __ALIGNED(CACHE_LINE_SIZE) fileName[(SYS_FS_FILE_NAME_LEN + ((SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)? (CACHE_LINE_SIZE - (SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)) : 0))];
 
     /* Calculate the hash value for the file name. */
     ptr = file;
@@ -690,8 +690,8 @@ int MPFS_DirRead
     uint8_t diskNum = 0;
     uint32_t address = 0;
 
-    MPFS_FILE_RECORD __ALIGNED(CACHE_LINE_SIZE) fileRecord;
-    uint8_t __ALIGNED(CACHE_LINE_SIZE) fileName[(SYS_FS_FILE_NAME_LEN + ((SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)? (CACHE_LINE_SIZE - (SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)) : 0))];
+    static MPFS_FILE_RECORD __ALIGNED(CACHE_LINE_SIZE) fileRecord;
+    static uint8_t __ALIGNED(CACHE_LINE_SIZE) fileName[(SYS_FS_FILE_NAME_LEN + ((SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)? (CACHE_LINE_SIZE - (SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)) : 0))];
 
     MPFS_STATUS *stat = (MPFS_STATUS *)statPtr;
 

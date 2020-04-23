@@ -92,8 +92,7 @@ extern "C" {
 /* File System Service Configuration */
 
 #define SYS_FS_MEDIA_NUMBER               2
-
-#define SYS_FS_VOLUME_NUMBER              (1 + 1)
+#define SYS_FS_VOLUME_NUMBER              2
 
 #define SYS_FS_AUTOMOUNT_ENABLE           true
 #define SYS_FS_CLIENT_NUMBER              1
@@ -105,10 +104,11 @@ extern "C" {
 #define SYS_FS_FILE_NAME_LEN              255
 #define SYS_FS_CWD_STRING_LEN             1024
 
-#define FAT_FS_USE_LFN                    SYS_FS_USE_LFN
-#define FAT_FS_MAX_LFN                    SYS_FS_FILE_NAME_LEN
-#define FAT_FS_MAX_SS                     SYS_FS_MEDIA_MAX_BLOCK_SIZE
 
+#define SYS_FS_FAT_VERSION                "v0.14"
+#define SYS_FS_FAT_READONLY               false
+#define SYS_FS_FAT_CODE_PAGE              437
+#define SYS_FS_FAT_MAX_SS                 SYS_FS_MEDIA_MAX_BLOCK_SIZE
 
 
 

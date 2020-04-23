@@ -41,7 +41,7 @@
 
 #include "system/fs/src/sys_fs_media_manager_local.h"
 #include "system/fs/src/sys_fs_local.h"
-#include "system/fs/fat_fs/src/file_system/ff.h"
+#include "system/fs/fat_fs/file_system/ff.h"
 #include "system/fs/mpfs/mpfs.h"
 
 const char *gSYSFSVolumeName [] = {
@@ -586,6 +586,7 @@ static bool SYS_FS_MEDIA_MANAGER_IsFSFat
         case 0x04: // FAT16
         case 0x05: // Extended partition
         case 0x06: // FAT16
+        case 0x07: // exFAT for future enhancement
         case 0x0B: // FAT32
         case 0x0C: // FAT32
         case 0x0E: // FAT16

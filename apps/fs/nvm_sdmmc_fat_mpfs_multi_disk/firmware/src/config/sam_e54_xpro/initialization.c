@@ -198,40 +198,40 @@ const SYS_FS_MEDIA_MOUNT_DATA sysfsMountTable[SYS_FS_VOLUME_NUMBER] =
 
 const SYS_FS_FUNCTIONS FatFsFunctions =
 {
-    .mount             = f_mount,
-    .unmount           = f_unmount,
-    .open              = f_open,
-    .read              = f_read,
-    .write             = f_write,
-    .close             = f_close,
-    .seek              = f_lseek,
-    .tell              = f_tell,
-    .eof               = f_eof,
-    .size              = f_size,
-    .fstat             = f_stat,
-    .mkdir             = f_mkdir,
-    .chdir             = f_chdir,
-    .remove            = f_unlink,
-    .getlabel          = f_getlabel,
-    .setlabel          = f_setlabel,
-    .truncate          = f_truncate,
-    .currWD            = f_getcwd,
-    .chdrive           = f_chdrive,
-    .chmode            = f_chmod,
-    .chtime            = f_utime,
-    .rename            = f_rename,
-    .sync              = f_sync,
-    .getstrn           = f_gets,
-    .putchr            = f_putc,
-    .putstrn           = f_puts,
-    .formattedprint    = f_printf,
-    .testerror         = f_error,
-    .formatDisk        = f_mkfs,
-    .openDir           = f_opendir,
-    .readDir           = f_readdir,
-    .closeDir          = f_closedir,
-    .partitionDisk     = f_fdisk,
-    .getCluster        = f_getclusters
+    .mount             = FATFS_mount,
+    .unmount           = FATFS_unmount,
+    .open              = FATFS_open,
+    .read              = FATFS_read,
+    .close             = FATFS_close,
+    .seek              = FATFS_lseek,
+    .fstat             = FATFS_stat,
+    .getlabel          = FATFS_getlabel,
+    .currWD            = FATFS_getcwd,
+    .getstrn           = FATFS_gets,
+    .openDir           = FATFS_opendir,
+    .readDir           = FATFS_readdir,
+    .closeDir          = FATFS_closedir,
+    .write             = FATFS_write,
+    .tell              = FATFS_tell,
+    .eof               = FATFS_eof,
+    .size              = FATFS_size,
+    .mkdir             = FATFS_mkdir,
+    .chdir             = FATFS_chdir,
+    .remove            = FATFS_unlink,
+    .setlabel          = FATFS_setlabel,
+    .truncate          = FATFS_truncate,
+    .chdrive           = FATFS_chdrive,
+    .chmode            = FATFS_chmod,
+    .chtime            = FATFS_utime,
+    .rename            = FATFS_rename,
+    .sync              = FATFS_sync,
+    .putchr            = FATFS_putc,
+    .putstrn           = FATFS_puts,
+    .formattedprint    = FATFS_printf,
+    .testerror         = FATFS_error,
+    .formatDisk        = (FORMAT_DISK)FATFS_mkfs,
+    .partitionDisk     = FATFS_fdisk,
+    .getCluster        = FATFS_getclusters
 };
 
 const SYS_FS_FUNCTIONS MPFSFunctions =
@@ -240,36 +240,15 @@ const SYS_FS_FUNCTIONS MPFSFunctions =
     .unmount           = MPFS_Unmount,
     .open              = MPFS_Open,
     .read              = MPFS_Read,
-    .write             = NULL,
     .close             = MPFS_Close,
     .seek              = MPFS_Seek,
     .tell              = MPFS_GetPosition,
     .eof               = MPFS_EOF,
     .size              = MPFS_GetSize,
     .fstat             = MPFS_Stat,
-    .mkdir             = NULL,
-    .chdir             = NULL,
-    .remove            = NULL,
-    .getlabel          = NULL,
-    .setlabel          = NULL,
-    .truncate          = NULL,
-    .currWD            = NULL,
-    .chdrive           = NULL,
-    .chmode            = NULL,
-    .chtime            = NULL,
-    .rename            = NULL,
-    .sync              = NULL,
-    .getstrn           = NULL,
-    .putchr            = NULL,
-    .putstrn           = NULL,
-    .formattedprint    = NULL,
-    .testerror         = NULL,
-    .formatDisk        = NULL,
     .openDir           = MPFS_DirOpen,
     .readDir           = MPFS_DirRead,
     .closeDir          = MPFS_DirClose,
-    .partitionDisk     = NULL,
-    .getCluster        = NULL
 };
 
 const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
@@ -312,6 +291,14 @@ const SYS_TIME_INIT sysTimeInitData =
 };
 
 // </editor-fold>
+
+
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Local initialization functions
+// *****************************************************************************
+// *****************************************************************************
 
 
 
