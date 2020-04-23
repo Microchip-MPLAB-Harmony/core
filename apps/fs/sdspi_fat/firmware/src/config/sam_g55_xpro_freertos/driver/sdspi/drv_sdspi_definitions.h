@@ -64,7 +64,6 @@
 // Section: Data Types
 // *****************************************************************************
 // *****************************************************************************
-
 typedef enum
 {
     DRV_SDSPI_CLOCK_PHASE_VALID_TRAILING_EDGE = 0,
@@ -189,6 +188,7 @@ typedef struct
 
 } DRV_SDSPI_PLIB_INTERFACE;
 
+
 // *****************************************************************************
 /* SDSPI Driver Initialization Data
 
@@ -213,6 +213,7 @@ typedef struct
     const uint32_t*                 remapClockPolarity;
 
     const uint32_t*                 remapClockPhase;
+
 
 
     bool                            isFsEnabled;
