@@ -386,8 +386,15 @@ SYS_MODULE_OBJ DRV_AT25_Initialize(
 
     /* De-assert Chip Select, Hold and Write protect pin to begin with. */
     SYS_PORT_PinSet(gDrvAT25Obj.chipSelectPin);
-    SYS_PORT_PinSet(gDrvAT25Obj.holdPin);
-    SYS_PORT_PinSet(gDrvAT25Obj.writeProtectPin);
+
+    if (gDrvAT25Obj.holdPin != SYS_PORT_PIN_NONE)
+    {
+        SYS_PORT_PinSet(gDrvAT25Obj.holdPin);
+    }
+    if (gDrvAT25Obj.writeProtectPin != SYS_PORT_PIN_NONE)
+    {
+        SYS_PORT_PinSet(gDrvAT25Obj.writeProtectPin);
+    }
 
     /* Update the status */
     gDrvAT25Obj.status                = SYS_STATUS_READY;
@@ -520,22 +527,40 @@ DRV_AT25_TRANSFER_STATUS DRV_AT25_TransferStatusGet(const DRV_HANDLE handle)
 
 bool DRV_AT25_GeometryGet(const DRV_HANDLE handle, DRV_AT25_GEOMETRY *geometry)
 {
+    uint32_t flash_size = 0;
+
     if((handle == DRV_HANDLE_INVALID) || (handle > 0))
+    {
+        return false;
+    }
+
+    flash_size = gDrvAT25Obj.flashSize;
+
+    if ((flash_size == 0) ||
+        (gDrvAT25Obj.blockStartAddress >= flash_size))
+    {
+        return false;
+    }
+
+    flash_size = flash_size - gDrvAT25Obj.blockStartAddress;
+
+    /* Flash size should be at-least of a Write Block size */
+    if (flash_size < gDrvAT25Obj.pageSize)
     {
         return false;
     }
 
     /* Read block size and number of blocks */
     geometry->readBlockSize = 1;
-    geometry->readNumBlocks = gDrvAT25Obj.flashSize;
+    geometry->readNumBlocks = flash_size;
 
     /* Write block size and number of blocks */
     geometry->writeBlockSize = gDrvAT25Obj.pageSize;
-    geometry->writeNumBlocks = gDrvAT25Obj.flashSize/gDrvAT25Obj.pageSize;
+    geometry->writeNumBlocks = (flash_size / gDrvAT25Obj.pageSize);
 
     /* Erase block size and number of blocks */
     geometry->eraseBlockSize = 1;
-    geometry->eraseNumBlocks = gDrvAT25Obj.flashSize;;
+    geometry->eraseNumBlocks = flash_size;
 
     /* Number of regions */
     geometry->readNumRegions = 1;
