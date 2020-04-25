@@ -733,6 +733,11 @@
               <FilePath>..\src\config\sam_l10_xpro_keil\configuration.h</FilePath>
             </File>
             <File>
+              <FileName>sys_debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\src\config\sam_l10_xpro_keil\system\debug\sys_debug.h</FilePath>
+            </File>
+            <File>
               <FileName>plib_nvmctrl.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\src\config\sam_l10_xpro_keil\peripheral\nvmctrl\plib_nvmctrl.c</FilePath>
