@@ -823,6 +823,11 @@
               <FilePath>..\src\config\sam_c21n_xpro_freertos_keil\configuration.h</FilePath>
             </File>
             <File>
+              <FileName>sys_debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\src\config\sam_c21n_xpro_freertos_keil\system\debug\sys_debug.h</FilePath>
+            </File>
+            <File>
               <FileName>bsp.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\src\config\sam_c21n_xpro_freertos_keil\bsp\bsp.h</FilePath>
