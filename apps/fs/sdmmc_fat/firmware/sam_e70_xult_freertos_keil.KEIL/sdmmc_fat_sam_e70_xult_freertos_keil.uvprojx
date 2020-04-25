@@ -923,6 +923,11 @@
               <FilePath>..\src\config\sam_e70_xult_freertos_keil\configuration.h</FilePath>
             </File>
             <File>
+              <FileName>sys_debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\src\config\sam_e70_xult_freertos_keil\system\debug\sys_debug.h</FilePath>
+            </File>
+            <File>
               <FileName>drv_sdmmc_file_system.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\src\config\sam_e70_xult_freertos_keil\driver\sdmmc\src\drv_sdmmc_file_system.c</FilePath>
