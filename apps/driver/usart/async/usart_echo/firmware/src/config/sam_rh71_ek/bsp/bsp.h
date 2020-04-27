@@ -72,25 +72,25 @@
 #define PIOG_REGS       ((pio_group_registers_t*)(&(PIO_REGS->PIO_GROUP[6])))
 
 /*** LED Macros for LED0 ***/
-#define LED0_Toggle() do { PIOB_REGS->PIO_MSKR = (1<<19); (PIOB_REGS->PIO_ODSR ^= (1<<19)); } while (0)
+#define LED0_Toggle() do { PIOB_REGS->PIO_MSKR = (1U<<19); (PIOB_REGS->PIO_ODSR ^= (1U<<19)); } while (0)
 #define LED0_Get() ((PIOB_REGS->PIO_PDSR >> 19) & 0x1)
-#define LED0_On() (PIOB_REGS->PIO_SODR = (1<<19))
-#define LED0_Off() (PIOB_REGS->PIO_CODR = (1<<19))
+#define LED0_On() (PIOB_REGS->PIO_SODR = (1U<<19))
+#define LED0_Off() (PIOB_REGS->PIO_CODR = (1U<<19))
 /*** LED Macros for LED1 ***/
-#define LED1_Toggle() do { PIOB_REGS->PIO_MSKR = (1<<23); (PIOB_REGS->PIO_ODSR ^= (1<<23)); } while (0)
+#define LED1_Toggle() do { PIOB_REGS->PIO_MSKR = (1U<<23); (PIOB_REGS->PIO_ODSR ^= (1U<<23)); } while (0)
 #define LED1_Get() ((PIOB_REGS->PIO_PDSR >> 23) & 0x1)
-#define LED1_On() (PIOB_REGS->PIO_SODR = (1<<23))
-#define LED1_Off() (PIOB_REGS->PIO_CODR = (1<<23))
+#define LED1_On() (PIOB_REGS->PIO_SODR = (1U<<23))
+#define LED1_Off() (PIOB_REGS->PIO_CODR = (1U<<23))
 /*** LED Macros for LED2 ***/
-#define LED2_Toggle() do { PIOF_REGS->PIO_MSKR = (1<<19); (PIOF_REGS->PIO_ODSR ^= (1<<19)); } while (0)
+#define LED2_Toggle() do { PIOF_REGS->PIO_MSKR = (1U<<19); (PIOF_REGS->PIO_ODSR ^= (1U<<19)); } while (0)
 #define LED2_Get() ((PIOF_REGS->PIO_PDSR >> 19) & 0x1)
-#define LED2_On() (PIOF_REGS->PIO_SODR = (1<<19))
-#define LED2_Off() (PIOF_REGS->PIO_CODR = (1<<19))
+#define LED2_On() (PIOF_REGS->PIO_SODR = (1U<<19))
+#define LED2_Off() (PIOF_REGS->PIO_CODR = (1U<<19))
 /*** LED Macros for LED3 ***/
-#define LED3_Toggle() do { PIOF_REGS->PIO_MSKR = (1<<20); (PIOF_REGS->PIO_ODSR ^= (1<<20)); } while (0)
+#define LED3_Toggle() do { PIOF_REGS->PIO_MSKR = (1U<<20); (PIOF_REGS->PIO_ODSR ^= (1U<<20)); } while (0)
 #define LED3_Get() ((PIOF_REGS->PIO_PDSR >> 20) & 0x1)
-#define LED3_On() (PIOF_REGS->PIO_SODR = (1<<20))
-#define LED3_Off() (PIOF_REGS->PIO_CODR = (1<<20))
+#define LED3_On() (PIOF_REGS->PIO_SODR = (1U<<20))
+#define LED3_Off() (PIOF_REGS->PIO_CODR = (1U<<20))
 /*** SWITCH Macros for PB0 ***/
 #define PB0_Get() ((PIOC_REGS->PIO_PDSR >> 29) & 0x1)
 #define PB0_STATE_PRESSED 0
