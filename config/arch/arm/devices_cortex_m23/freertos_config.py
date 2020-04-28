@@ -48,6 +48,8 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSym_RunFreeRtosSecure.setReadOnly(True)
     freeRtosSym_SecureStackSize.setDefaultValue(1024)
     freeRtosSym_SecureTotalHeapSize.setDefaultValue(1024)
+else:
+    freeRtosSym_RunFreeRtosSecure.setValue(True)
 
 #Enable MPU
 freeRtosSym_EnableMpu.setVisible(True)
