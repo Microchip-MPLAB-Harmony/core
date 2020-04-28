@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configurationDescriptor version="65">
   <logicalFolder displayName="root" name="root" projectFiles="true">
-    <logicalFolder displayName="Header Files" name="f1" projectFiles="true">
+    <logicalFolder displayName="Header Files" name="HeaderFiles" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_a5d2_xult_xc32_freertos" name="f1" projectFiles="true">
           <logicalFolder displayName="bsp" name="f1" projectFiles="true">
             <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/bsp/bsp.h</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="peripheral" name="f2" projectFiles="true">
+          <logicalFolder displayName="driver" name="f2" projectFiles="true">
+            <logicalFolder displayName="sdspi" name="f1" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/sdspi/drv_sdspi_definitions.h</itemPath>
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/sdspi/src/drv_sdspi_local.h</itemPath>
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/sdspi/src/drv_sdspi_plib_interface.h</itemPath>
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/sdspi/drv_sdspi.h</itemPath>
+            </logicalFolder>
+            <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/driver.h</itemPath>
+            <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/driver_common.h</itemPath>
+          </logicalFolder>
+          <logicalFolder displayName="peripheral" name="f3" projectFiles="true">
             <logicalFolder displayName="pit" name="f1" projectFiles="true">
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/pit/plib_pit.h</itemPath>
             </logicalFolder>
@@ -42,16 +52,6 @@
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/tc/plib_tc_common.h</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder displayName="driver" name="f3" projectFiles="true">
-            <logicalFolder displayName="sdspi" name="f1" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/sdspi/drv_sdspi.h</itemPath>
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/sdspi/drv_sdspi_definitions.h</itemPath>
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/sdspi/src/drv_sdspi_local.h</itemPath>
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/sdspi/src/drv_sdspi_plib_interface.h</itemPath>
-            </logicalFolder>
-            <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/driver.h</itemPath>
-            <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/driver_common.h</itemPath>
-          </logicalFolder>
           <logicalFolder displayName="system" name="f4" projectFiles="true">
             <logicalFolder displayName="int" name="f1" projectFiles="true">
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/int/sys_int.h</itemPath>
@@ -68,7 +68,10 @@
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/dma/sys_dma.h</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/dma/sys_dma_mapping.h</itemPath>
             </logicalFolder>
-            <logicalFolder displayName="time" name="f5" projectFiles="true">
+            <logicalFolder displayName="debug" name="f5" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/debug/sys_debug.h</itemPath>
+            </logicalFolder>
+            <logicalFolder displayName="time" name="f6" projectFiles="true">
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/time/sys_time.h</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/time/sys_time_definitions.h</itemPath>
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/system/time/src/sys_time_local.h</itemPath>
@@ -109,7 +112,6 @@
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/mpddrc.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/pdmic.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/pio.h</itemPath>
-            <itemPath>../src/packs/ATSAMA5D27_DFP/component/pio_ctrl.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/pit.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/pmc.h</itemPath>
             <itemPath>../src/packs/ATSAMA5D27_DFP/component/ptc.h</itemPath>
@@ -197,23 +199,29 @@
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Important Files" name="f2" projectFiles="true">
+    <logicalFolder displayName="Important Files" name="ExternalFiles" projectFiles="true">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Linker Files" name="f3" projectFiles="true">
+    <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_a5d2_xult_xc32_freertos" name="f1" projectFiles="true">
           <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/ddr.ld</itemPath>
         </logicalFolder>
       </logicalFolder>
     </logicalFolder>
-    <logicalFolder displayName="Source Files" name="f4" projectFiles="true">
+    <logicalFolder displayName="Source Files" name="SourceFiles" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_a5d2_xult_xc32_freertos" name="f1" projectFiles="true">
           <logicalFolder displayName="bsp" name="f1" projectFiles="true">
             <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/bsp/bsp.c</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="peripheral" name="f2" projectFiles="true">
+          <logicalFolder displayName="driver" name="f2" projectFiles="true">
+            <logicalFolder displayName="sdspi" name="f1" projectFiles="true">
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/sdspi/src/drv_sdspi.c</itemPath>
+              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/sdspi/src/drv_sdspi_plib_interface.c</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder displayName="peripheral" name="f3" projectFiles="true">
             <logicalFolder displayName="pit" name="f1" projectFiles="true">
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/pit/plib_pit.c</itemPath>
             </logicalFolder>
@@ -245,14 +253,8 @@
               <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/peripheral/tc/plib_tc0.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder displayName="stdio" name="f3" projectFiles="true">
+          <logicalFolder displayName="stdio" name="f4" projectFiles="true">
             <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/stdio/xc32_monitor.c</itemPath>
-          </logicalFolder>
-          <logicalFolder displayName="driver" name="f4" projectFiles="true">
-            <logicalFolder displayName="sdspi" name="f1" projectFiles="true">
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/sdspi/src/drv_sdspi.c</itemPath>
-              <itemPath>../src/config/sam_a5d2_xult_xc32_freertos/driver/sdspi/src/drv_sdspi_plib_interface.c</itemPath>
-            </logicalFolder>
           </logicalFolder>
           <logicalFolder displayName="system" name="f5" projectFiles="true">
             <logicalFolder displayName="int" name="f1" projectFiles="true">
@@ -384,7 +386,7 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value="../src;../src/config/sam_a5d2_xult_xc32_freertos;../src/packs/ATSAMA5D27_DFP;../src/packs/CMSIS/CMSIS/Core_A/Include;../src/packs/CMSIS/;../src/arm;../src/third_party/rtos/FreeRTOS/Source/portable/XC32/SAM/CA5;../src/third_party/rtos/FreeRTOS/Source/include"/>
+        <property key="extra-include-directories" value="../src;../src/config/sam_a5d2_xult_xc32_freertos;../src/packs/ATSAMA5D27_DFP;../src/packs/CMSIS/CMSIS/Core_A/Include;../src/packs/CMSIS/;../src/third_party/rtos/FreeRTOS/Source/portable/XC32/SAM/CA5;../src/third_party/rtos/FreeRTOS/Source/include"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
