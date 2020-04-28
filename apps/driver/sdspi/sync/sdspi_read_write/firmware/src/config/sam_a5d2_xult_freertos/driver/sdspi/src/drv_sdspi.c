@@ -45,9 +45,10 @@
 // Section: Include Files
 // *****************************************************************************
 // *****************************************************************************
+#include <string.h>
 #include "drv_sdspi_plib_interface.h"
 #include "system/cache/sys_cache.h"
-#include <string.h>
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -1047,6 +1048,7 @@ static void _DRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
     switch(dObj->mediaInitState)
     {
         case DRV_SDSPI_INIT_SPI:
+
             _DRV_SDSPI_SPISpeedSetup(dObj, _DRV_SDSPI_SPI_INITIAL_SPEED);
             dObj->sdCardType = DRV_SDSPI_MODE_NORMAL;
             dObj->mediaInitState = DRV_SDSPI_INIT_RAMP_TIME;
@@ -1118,6 +1120,7 @@ static void _DRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
         case DRV_SDSPI_INIT_INCR_CLOCK_SPEED:
             /* Initialization complete. We can now operate at higher SPI speeds. */
             _DRV_SDSPI_SPISpeedSetup(dObj, dObj->sdcardSpeedHz);
+
             dObj->mediaInitState = DRV_SDSPI_INIT_READ_CSD;
             /* Fall through */
 
@@ -1378,6 +1381,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     dObj->nClients              = 0;
     dObj->nClientsMax           = sdSPIInit->numClients;
     dObj->clientObjPool         = sdSPIInit->clientObjPool;
+
     dObj->spiPlib               = sdSPIInit->spiPlib;
     dObj->remapClockPhase       = sdSPIInit->remapClockPhase;
     dObj->remapClockPolarity    = sdSPIInit->remapClockPolarity;
@@ -1386,6 +1390,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     dObj->txDMAChannel          = sdSPIInit->txDMAChannel;
     dObj->txAddress             = sdSPIInit->txAddress;
     dObj->rxAddress             = sdSPIInit->rxAddress;
+
     dObj->isFsEnabled           = sdSPIInit->isFsEnabled;
     dObj->writeProtectPin       = sdSPIInit->writeProtectPin;
     dObj->chipSelectPin         = sdSPIInit->chipSelectPin;
