@@ -498,8 +498,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML11E16A_DFP/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML11E16A_DFP/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">199F6CFF0943DA7C2EC69100CF968E52</GeneratedChecksum>
-          <UserChecksum dnOrder="6">199F6CFF0943DA7C2EC69100CF968E52</UserChecksum>
+          <GeneratedChecksum dnOrder="5">258E784AFD0D09B49F46197B99937FBF</GeneratedChecksum>
+          <UserChecksum dnOrder="6">258E784AFD0D09B49F46197B99937FBF</UserChecksum>
         </File>
         <File dnOrder="55">
           <Type dnOrder="0">HEADER</Type>
@@ -507,8 +507,8 @@
           <Security dnOrder="2">SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML11E16A_DFP/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML11E16A_DFP/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">199F6CFF0943DA7C2EC69100CF968E52</GeneratedChecksum>
-          <UserChecksum dnOrder="6">199F6CFF0943DA7C2EC69100CF968E52</UserChecksum>
+          <GeneratedChecksum dnOrder="5">258E784AFD0D09B49F46197B99937FBF</GeneratedChecksum>
+          <UserChecksum dnOrder="6">258E784AFD0D09B49F46197B99937FBF</UserChecksum>
         </File>
         <File dnOrder="56">
           <Type dnOrder="0">HEADER</Type>
@@ -1439,6 +1439,15 @@
         </File>
         <File dnOrder="159">
           <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">sys_debug.h</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_l11_xpro/system/debug/</LogicalPath>
+          <PhysicalPath dnOrder="4">/system/debug/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">33F85B8B82ED7CA982F3291C4E541C0A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">33F85B8B82ED7CA982F3291C4E541C0A</UserChecksum>
+        </File>
+        <File dnOrder="160">
+          <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">task.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">FreeRTOS/Source/include</LogicalPath>
@@ -1446,7 +1455,7 @@
           <GeneratedChecksum dnOrder="5">35732C76A4084A1B16C5F00B7728F645</GeneratedChecksum>
           <UserChecksum dnOrder="6">35732C76A4084A1B16C5F00B7728F645</UserChecksum>
         </File>
-        <File dnOrder="160">
+        <File dnOrder="161">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">tc.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1455,7 +1464,7 @@
           <GeneratedChecksum dnOrder="5">220872DFF585055136D7E194DA840196</GeneratedChecksum>
           <UserChecksum dnOrder="6">220872DFF585055136D7E194DA840196</UserChecksum>
         </File>
-        <File dnOrder="161">
+        <File dnOrder="162">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">tc.h</Name>
           <Security dnOrder="2">SECURE</Security>
@@ -1464,7 +1473,7 @@
           <GeneratedChecksum dnOrder="5">220872DFF585055136D7E194DA840196</GeneratedChecksum>
           <UserChecksum dnOrder="6">220872DFF585055136D7E194DA840196</UserChecksum>
         </File>
-        <File dnOrder="162">
+        <File dnOrder="163">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">timers.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1473,19 +1482,10 @@
           <GeneratedChecksum dnOrder="5">EE770378EC56991F295EF9771AEBE6DA</GeneratedChecksum>
           <UserChecksum dnOrder="6">EE770378EC56991F295EF9771AEBE6DA</UserChecksum>
         </File>
-        <File dnOrder="163">
-          <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">toolchain_specifics.h</Name>
-          <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">config/sam_l11_xpro/</LogicalPath>
-          <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">5D5CDFD3AB0E678AACDD28A3276C8099</GeneratedChecksum>
-          <UserChecksum dnOrder="6">5D5CDFD3AB0E678AACDD28A3276C8099</UserChecksum>
-        </File>
         <File dnOrder="164">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">toolchain_specifics.h</Name>
-          <Security dnOrder="2">SECURE</Security>
+          <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l11_xpro/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">5D5CDFD3AB0E678AACDD28A3276C8099</GeneratedChecksum>
@@ -1493,17 +1493,17 @@
         </File>
         <File dnOrder="165">
           <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">tram.h</Name>
-          <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">packs/ATSAML11E16A_DFP/component/</LogicalPath>
-          <PhysicalPath dnOrder="4">/../../packs/ATSAML11E16A_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">DB48B337DE47E505D4197137472BD828</GeneratedChecksum>
-          <UserChecksum dnOrder="6">DB48B337DE47E505D4197137472BD828</UserChecksum>
+          <Name dnOrder="1">toolchain_specifics.h</Name>
+          <Security dnOrder="2">SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_l11_xpro/</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">5D5CDFD3AB0E678AACDD28A3276C8099</GeneratedChecksum>
+          <UserChecksum dnOrder="6">5D5CDFD3AB0E678AACDD28A3276C8099</UserChecksum>
         </File>
         <File dnOrder="166">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">tram.h</Name>
-          <Security dnOrder="2">SECURE</Security>
+          <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML11E16A_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML11E16A_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">DB48B337DE47E505D4197137472BD828</GeneratedChecksum>
@@ -1511,17 +1511,17 @@
         </File>
         <File dnOrder="167">
           <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">trng.h</Name>
-          <Security dnOrder="2">NON_SECURE</Security>
+          <Name dnOrder="1">tram.h</Name>
+          <Security dnOrder="2">SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML11E16A_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML11E16A_DFP/component/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">E3ACEB61EB2985A8634AF081DECE1C5A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">E3ACEB61EB2985A8634AF081DECE1C5A</UserChecksum>
+          <GeneratedChecksum dnOrder="5">DB48B337DE47E505D4197137472BD828</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DB48B337DE47E505D4197137472BD828</UserChecksum>
         </File>
         <File dnOrder="168">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">trng.h</Name>
-          <Security dnOrder="2">SECURE</Security>
+          <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML11E16A_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML11E16A_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">E3ACEB61EB2985A8634AF081DECE1C5A</GeneratedChecksum>
@@ -1529,6 +1529,15 @@
         </File>
         <File dnOrder="169">
           <Type dnOrder="0">HEADER</Type>
+          <Name dnOrder="1">trng.h</Name>
+          <Security dnOrder="2">SECURE</Security>
+          <LogicalPath dnOrder="3">packs/ATSAML11E16A_DFP/component/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/ATSAML11E16A_DFP/component/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">E3ACEB61EB2985A8634AF081DECE1C5A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">E3ACEB61EB2985A8634AF081DECE1C5A</UserChecksum>
+        </File>
+        <File dnOrder="170">
+          <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">tz_context.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
@@ -1536,7 +1545,7 @@
           <GeneratedChecksum dnOrder="5">8710F2682DA1C97558850902DABA38BA</GeneratedChecksum>
           <UserChecksum dnOrder="6">8710F2682DA1C97558850902DABA38BA</UserChecksum>
         </File>
-        <File dnOrder="170">
+        <File dnOrder="171">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">tz_context.h</Name>
           <Security dnOrder="2">SECURE</Security>
@@ -1545,7 +1554,7 @@
           <GeneratedChecksum dnOrder="5">8710F2682DA1C97558850902DABA38BA</GeneratedChecksum>
           <UserChecksum dnOrder="6">8710F2682DA1C97558850902DABA38BA</UserChecksum>
         </File>
-        <File dnOrder="171">
+        <File dnOrder="172">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">user.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1554,7 +1563,7 @@
           <GeneratedChecksum dnOrder="5"/>
           <UserChecksum dnOrder="6"/>
         </File>
-        <File dnOrder="172">
+        <File dnOrder="173">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">veneer.h</Name>
           <Security dnOrder="2">SECURE</Security>
@@ -1563,7 +1572,7 @@
           <GeneratedChecksum dnOrder="5"/>
           <UserChecksum dnOrder="6"/>
         </File>
-        <File dnOrder="173">
+        <File dnOrder="174">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">veneer.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1572,7 +1581,7 @@
           <GeneratedChecksum dnOrder="5"/>
           <UserChecksum dnOrder="6"/>
         </File>
-        <File dnOrder="174">
+        <File dnOrder="175">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">wdt.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -1581,7 +1590,7 @@
           <GeneratedChecksum dnOrder="5">372F1877239211375C7213FE64266B25</GeneratedChecksum>
           <UserChecksum dnOrder="6">372F1877239211375C7213FE64266B25</UserChecksum>
         </File>
-        <File dnOrder="175">
+        <File dnOrder="176">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">wdt.h</Name>
           <Security dnOrder="2">SECURE</Security>
@@ -1612,11 +1621,11 @@
     </Manifest>
     <Settings dnOrder="4">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAML11_DFP\3.1.78\atdf\ATSAML11E16A.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAML11_DFP\3.2.81\atdf\ATSAML11E16A.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;expresslogic_threadx;micrium_ucos3;net;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="aerospace;aws_cloud;bootloader;bsp;bt;core;crypto;cryptoauthlib;cryptoauthlib_apps;csp;ethercat;expresslogic_threadx;gfx;gfx_apps;micrium_ucos3;motor_control;net;touch;usb;wireless;"/>
       <Setting dnOrder="6" key="TRUSTZONE" value="true"/>
     </Settings>
   </Configurator>
