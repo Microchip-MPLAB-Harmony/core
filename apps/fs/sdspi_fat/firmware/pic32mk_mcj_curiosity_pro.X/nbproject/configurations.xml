@@ -1,29 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="65">
-  <logicalFolder displayName="root" name="root" projectFiles="true">
-    <logicalFolder displayName="Header Files" name="HeaderFiles" projectFiles="true">
-      <logicalFolder displayName="config" name="f1" projectFiles="true">
-        <logicalFolder displayName="pic32mk_mcj_curiosity_pro" name="f1" projectFiles="true">
-          <logicalFolder displayName="peripheral" name="f1" projectFiles="true">
-            <logicalFolder displayName="coretimer" name="f1" projectFiles="true">
-              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/coretimer/plib_coretimer.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="clk" name="f2" projectFiles="true">
-              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/clk/plib_clk.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="gpio" name="f3" projectFiles="true">
-              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/gpio/plib_gpio.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="evic" name="f4" projectFiles="true">
-              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/evic/plib_evic.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="spi" name="f5" projectFiles="true">
-              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/spi/plib_spi_common.h</itemPath>
-              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/spi/plib_spi2.h</itemPath>
-            </logicalFolder>
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1"
+                       displayName="pic32mk_mcj_curiosity_pro"
+                       projectFiles="true">
+          <logicalFolder name="f4" displayName="bsp" projectFiles="true">
+            <itemPath>../src/config/pic32mk_mcj_curiosity_pro/bsp/bsp.h</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="driver" name="f2" projectFiles="true">
-            <logicalFolder displayName="sdspi" name="f1" projectFiles="true">
+          <logicalFolder name="f2" displayName="driver" projectFiles="true">
+            <logicalFolder name="f1" displayName="sdspi" projectFiles="true">
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/driver/sdspi/drv_sdspi_definitions.h</itemPath>
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/driver/sdspi/src/drv_sdspi_local.h</itemPath>
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/driver/sdspi/src/drv_sdspi_plib_interface.h</itemPath>
@@ -32,14 +21,39 @@
             <itemPath>../src/config/pic32mk_mcj_curiosity_pro/driver/driver.h</itemPath>
             <itemPath>../src/config/pic32mk_mcj_curiosity_pro/driver/driver_common.h</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="system" name="f3" projectFiles="true">
-            <logicalFolder displayName="fs" name="f1" projectFiles="true">
-              <logicalFolder displayName="fat_fs" name="f1" projectFiles="true">
-                <logicalFolder displayName="file_system" name="f1" projectFiles="true">
+          <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f2" displayName="clk" projectFiles="true">
+              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/clk/plib_clk.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="coretimer" projectFiles="true">
+              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/coretimer/plib_coretimer.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="evic" projectFiles="true">
+              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/evic/plib_evic.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="gpio" projectFiles="true">
+              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/gpio/plib_gpio.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="spi" projectFiles="true">
+              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/spi/plib_spi_common.h</itemPath>
+              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/spi/plib_spi2.h</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f3" displayName="system" projectFiles="true">
+            <logicalFolder name="f5" displayName="debug" projectFiles="true">
+              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/debug/sys_debug.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="dma" projectFiles="true">
+              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/dma/sys_dma.h</itemPath>
+              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/dma/sys_dma_mapping.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="fs" projectFiles="true">
+              <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
+                <logicalFolder name="f1" displayName="file_system" projectFiles="true">
                   <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/fs/fat_fs/file_system/ff.h</itemPath>
                   <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/fs/fat_fs/file_system/ffconf.h</itemPath>
                 </logicalFolder>
-                <logicalFolder displayName="hardware_access" name="f2" projectFiles="true">
+                <logicalFolder name="f2" displayName="hardware_access" projectFiles="true">
                   <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/fs/fat_fs/hardware_access/diskio.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
@@ -49,22 +63,15 @@
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/fs/src/sys_fs_media_manager_local.h</itemPath>
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/fs/sys_fs_fat_interface.h</itemPath>
             </logicalFolder>
-            <logicalFolder displayName="int" name="f2" projectFiles="true">
+            <logicalFolder name="f2" displayName="int" projectFiles="true">
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
-            <logicalFolder displayName="ports" name="f3" projectFiles="true">
+            <logicalFolder name="f3" displayName="ports" projectFiles="true">
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/ports/sys_ports.h</itemPath>
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/ports/sys_ports_mapping.h</itemPath>
             </logicalFolder>
-            <logicalFolder displayName="dma" name="f4" projectFiles="true">
-              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/dma/sys_dma.h</itemPath>
-              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/dma/sys_dma_mapping.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="debug" name="f5" projectFiles="true">
-              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/debug/sys_debug.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="time" name="f6" projectFiles="true">
+            <logicalFolder name="f6" displayName="time" projectFiles="true">
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/time/sys_time.h</itemPath>
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/time/sys_time_definitions.h</itemPath>
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/time/src/sys_time_local.h</itemPath>
@@ -74,66 +81,83 @@
             <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/system_module.h</itemPath>
             <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/system_media.h</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="bsp" name="f4" projectFiles="true">
-            <itemPath>../src/config/pic32mk_mcj_curiosity_pro/bsp/bsp.h</itemPath>
-          </logicalFolder>
           <itemPath>../src/config/pic32mk_mcj_curiosity_pro/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/pic32mk_mcj_curiosity_pro/definitions.h</itemPath>
           <itemPath>../src/config/pic32mk_mcj_curiosity_pro/user.h</itemPath>
           <itemPath>../src/config/pic32mk_mcj_curiosity_pro/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder displayName="packs" name="f2" projectFiles="true">
-        <logicalFolder displayName="PIC32MK0512MCJ064_DFP" name="f1" projectFiles="true">
-          <itemPath>../src/packs/PIC32MK0512MCJ064_DFP/device.h</itemPath>
-        </logicalFolder>
-      </logicalFolder>
-      <logicalFolder displayName="osal" name="f3" projectFiles="true">
+      <logicalFolder name="f3" displayName="osal" projectFiles="true">
         <itemPath>../src/config/pic32mk_mcj_curiosity_pro/osal/osal.h</itemPath>
         <itemPath>../src/config/pic32mk_mcj_curiosity_pro/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/pic32mk_mcj_curiosity_pro/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
+        <logicalFolder name="f1"
+                       displayName="PIC32MK0512MCJ064_DFP"
+                       projectFiles="true">
+          <itemPath>../src/packs/PIC32MK0512MCJ064_DFP/device.h</itemPath>
+        </logicalFolder>
+      </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Important Files" name="ExternalFiles" projectFiles="true">
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="true">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true"/>
-    <logicalFolder displayName="Source Files" name="SourceFiles" projectFiles="true">
-      <logicalFolder displayName="config" name="f1" projectFiles="true">
-        <logicalFolder displayName="pic32mk_mcj_curiosity_pro" name="f1" projectFiles="true">
-          <logicalFolder displayName="peripheral" name="f1" projectFiles="true">
-            <logicalFolder displayName="coretimer" name="f1" projectFiles="true">
-              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/coretimer/plib_coretimer.c</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="clk" name="f2" projectFiles="true">
-              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/clk/plib_clk.c</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="gpio" name="f3" projectFiles="true">
-              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/gpio/plib_gpio.c</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="evic" name="f4" projectFiles="true">
-              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/evic/plib_evic.c</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="spi" name="f5" projectFiles="true">
-              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/spi/plib_spi2.c</itemPath>
-            </logicalFolder>
+    <logicalFolder name="LinkerScript"
+                   displayName="Linker Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1"
+                       displayName="pic32mk_mcj_curiosity_pro"
+                       projectFiles="true">
+          <logicalFolder name="f5" displayName="bsp" projectFiles="true">
+            <itemPath>../src/config/pic32mk_mcj_curiosity_pro/bsp/bsp.c</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="driver" name="f2" projectFiles="true">
-            <logicalFolder displayName="sdspi" name="f1" projectFiles="true">
+          <logicalFolder name="f2" displayName="driver" projectFiles="true">
+            <logicalFolder name="f1" displayName="sdspi" projectFiles="true">
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/driver/sdspi/src/drv_sdspi.c</itemPath>
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/driver/sdspi/src/drv_sdspi_plib_interface.c</itemPath>
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/driver/sdspi/src/drv_sdspi_file_system.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder displayName="system" name="f3" projectFiles="true">
-            <logicalFolder displayName="fs" name="f1" projectFiles="true">
-              <logicalFolder displayName="fat_fs" name="f1" projectFiles="true">
-                <logicalFolder displayName="file_system" name="f1" projectFiles="true">
+          <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f2" displayName="clk" projectFiles="true">
+              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/clk/plib_clk.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="coretimer" projectFiles="true">
+              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/coretimer/plib_coretimer.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="evic" projectFiles="true">
+              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/evic/plib_evic.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="gpio" projectFiles="true">
+              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/gpio/plib_gpio.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="spi" projectFiles="true">
+              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/peripheral/spi/plib_spi2.c</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f4" displayName="stdio" projectFiles="true">
+            <itemPath>../src/config/pic32mk_mcj_curiosity_pro/stdio/xc32_monitor.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f3" displayName="system" projectFiles="true">
+            <logicalFolder name="f3" displayName="dma" projectFiles="true">
+              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/dma/sys_dma.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="fs" projectFiles="true">
+              <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
+                <logicalFolder name="f1" displayName="file_system" projectFiles="true">
                   <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/fs/fat_fs/file_system/ff.c</itemPath>
                   <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/fs/fat_fs/file_system/ffunicode.c</itemPath>
                 </logicalFolder>
-                <logicalFolder displayName="hardware_access" name="f2" projectFiles="true">
+                <logicalFolder name="f2" displayName="hardware_access" projectFiles="true">
                   <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/fs/fat_fs/hardware_access/diskio.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
@@ -141,21 +165,12 @@
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/fs/src/sys_fs_media_manager.c</itemPath>
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/fs/src/sys_fs_fat_interface.c</itemPath>
             </logicalFolder>
-            <logicalFolder displayName="int" name="f2" projectFiles="true">
+            <logicalFolder name="f2" displayName="int" projectFiles="true">
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
-            <logicalFolder displayName="dma" name="f3" projectFiles="true">
-              <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/dma/sys_dma.c</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="time" name="f4" projectFiles="true">
+            <logicalFolder name="f4" displayName="time" projectFiles="true">
               <itemPath>../src/config/pic32mk_mcj_curiosity_pro/system/time/src/sys_time.c</itemPath>
             </logicalFolder>
-          </logicalFolder>
-          <logicalFolder displayName="stdio" name="f4" projectFiles="true">
-            <itemPath>../src/config/pic32mk_mcj_curiosity_pro/stdio/xc32_monitor.c</itemPath>
-          </logicalFolder>
-          <logicalFolder displayName="bsp" name="f5" projectFiles="true">
-            <itemPath>../src/config/pic32mk_mcj_curiosity_pro/bsp/bsp.c</itemPath>
           </logicalFolder>
           <itemPath>../src/config/pic32mk_mcj_curiosity_pro/initialization.c</itemPath>
           <itemPath>../src/config/pic32mk_mcj_curiosity_pro/interrupts.c</itemPath>
@@ -176,15 +191,15 @@
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <targetDevice>PIC32MK0512MCJ064</targetDevice>
-        <targetHeader/>
-        <targetPluginBoard/>
+        <targetHeader></targetHeader>
+        <targetPluginBoard></targetPluginBoard>
         <platformTool>pkob4hybrid</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.30</languageToolchainVersion>
+        <languageToolchainVersion>2.40</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MK-MC_DFP" vendor="Microchip" version="1.2.80"/>
+        <pack name="PIC32MK-MC_DFP" vendor="Microchip" version="1.3.91"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -196,16 +211,16 @@
         <loading>
           <useAlternateLoadableFile>false</useAlternateLoadableFile>
           <parseOnProdLoad>false</parseOnProdLoad>
-          <alternateLoadableFile/>
+          <alternateLoadableFile></alternateLoadableFile>
         </loading>
         <subordinates>
         </subordinates>
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
-        <makeCustomizationPreStep/>
+        <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep/>
+        <makeCustomizationPostStep></makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
@@ -218,7 +233,8 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value="../src/config/pic32mk_mcj_curiosity_pro/system/fs/fat_fs/file_system;../src/config/pic32mk_mcj_curiosity_pro/system/fs/fat_fs/hardware_access;../src;../src/config/pic32mk_mcj_curiosity_pro;../src/packs/PIC32MK0512MCJ064_DFP"/>
+        <property key="extra-include-directories"
+                  value="../src/config/pic32mk_mcj_curiosity_pro/system/fs/fat_fs/file_system;../src/config/pic32mk_mcj_curiosity_pro/system/fs/fat_fs/hardware_access;../src;../src/config/pic32mk_mcj_curiosity_pro;../src/packs/PIC32MK0512MCJ064_DFP"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -338,6 +354,7 @@
         <property key="mdtcm" value=""/>
         <property key="mitcm" value=""/>
         <property key="mstacktcm" value="false"/>
+        <property key="omit-pack-options" value="1"/>
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
@@ -397,7 +414,8 @@
         <property key="TIMER7" value="true"/>
         <property key="TIMER8" value="true"/>
         <property key="TIMER9" value="true"/>
-        <property key="ToolFirmwareFilePath" value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
         <property key="UART1" value="true"/>
         <property key="UART2" value="true"/>
@@ -412,7 +430,8 @@
         <property key="memories.flashdata" value="true"/>
         <property key="memories.id" value="true"/>
         <property key="memories.instruction.ram" value="true"/>
-        <property key="memories.instruction.ram.ranges" value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.instruction.ram.ranges"
+                  value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="1d000000-1d003fff"/>
         <property key="poweroptions.powerenable" value="false"/>
@@ -421,7 +440,8 @@
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.pgmspeed" value="2"/>
         <property key="programoptions.preservedataflash" value="false"/>
-        <property key="programoptions.preservedataflash.ranges" value="${programoptions.preservedataflash.ranges}"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${programoptions.preservedataflash.ranges}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value=""/>
         <property key="programoptions.preserveprogram.ranges" value=""/>
@@ -488,8 +508,12 @@
         <property key="TIMER7" value="true"/>
         <property key="TIMER8" value="true"/>
         <property key="TIMER9" value="true"/>
-        <property key="ToolFirmwareFilePath" value="Press to browse for a specific firmware version"/>
-        <property key="ToolFirmwareOption.UpdateOptions" value="ToolFirmwareOption.UseLatest"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareOption.UpdateOptions"
+                  value="ToolFirmwareOption.UseLatest"/>
+        <property key="ToolFirmwareToolPack"
+                  value="Press to select which tool pack to use"/>
         <property key="UART1" value="true"/>
         <property key="UART2" value="true"/>
         <property key="communication.interface" value=""/>
@@ -505,16 +529,17 @@
         <property key="memories.exclude.configurationmemory" value="true"/>
         <property key="memories.flashdata" value="true"/>
         <property key="memories.id" value="true"/>
-        <property key="memories.instruction.ram.ranges" value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.instruction.ram.ranges"
+                  value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="1d000000-1d07ffff"/>
-        <property key="programmerToGoFilePath" value="D:/H3/core/apps/fs/sdspi_fat/firmware/pic32mk_mcj_curiosity_pro.X/debug/pic32mk_mcj_curiosity_pro/pic32mk_mcj_curiosity_pro_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.pgmentry.voltage" value="low"/>
         <property key="programoptions.pgmspeed" value="Med"/>
         <property key="programoptions.preservedataflash" value="false"/>
-        <property key="programoptions.preservedataflash.ranges" value="${memories.dataflash.default}"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${memories.dataflash.default}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value=""/>
         <property key="programoptions.preserveprogram.ranges" value="1d000000-1d07ffff"/>
@@ -523,6 +548,11 @@
         <property key="programoptions.programcalmem" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>
         <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
+        <property key="programoptionsedbg.eraseb4program" value="true"/>
+        <property key="toolpack.updateoptions"
+                  value="toolpack.updateoptions.uselatestoolpack"/>
+        <property key="toolpack.updateoptions.packversion"
+                  value="Press to select which tool pack to use"/>
       </pkob4hybrid>
     </conf>
   </confs>
