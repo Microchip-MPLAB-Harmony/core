@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configurationDescriptor version="65">
   <logicalFolder displayName="root" name="root" projectFiles="true">
-    <logicalFolder displayName="Header Files" name="f1" projectFiles="true">
+    <logicalFolder displayName="Header Files" name="HeaderFiles" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_rh71_ek" name="f1" projectFiles="true">
           <logicalFolder displayName="peripheral" name="f1" projectFiles="true">
@@ -21,6 +21,9 @@
           <logicalFolder displayName="system" name="f2" projectFiles="true">
             <logicalFolder displayName="cache" name="f1" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/system/cache/sys_cache.h</itemPath>
+            </logicalFolder>
+            <logicalFolder displayName="debug" name="f2" projectFiles="true">
+              <itemPath>../src/config/sam_rh71_ek/system/debug/sys_debug.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder displayName="bsp" name="f3" projectFiles="true">
@@ -130,11 +133,11 @@
       <itemPath>../src/app.h</itemPath>
       <itemPath>../src/app1.h</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Important Files" name="f2" projectFiles="true">
+    <logicalFolder displayName="Important Files" name="ExternalFiles" projectFiles="true">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Linker Files" name="f3" projectFiles="true"/>
-    <logicalFolder displayName="Source Files" name="f4" projectFiles="true">
+    <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true"/>
+    <logicalFolder displayName="Source Files" name="SourceFiles" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_rh71_ek" name="f1" projectFiles="true">
           <logicalFolder displayName="stdio" name="f1" projectFiles="true">
@@ -277,7 +280,7 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value="../src;../src/config/sam_rh71_ek;../src/packs/ATSAMRH71F20C_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm;../src/third_party/rtos/FreeRTOS/Source/include;../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/CM7"/>
+        <property key="extra-include-directories" value="../src;../src/config/sam_rh71_ek;../src/packs/ATSAMRH71F20C_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/third_party/rtos/FreeRTOS/Source/include;../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/CM7"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
