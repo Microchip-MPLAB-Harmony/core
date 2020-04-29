@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configurationDescriptor version="65">
   <logicalFolder displayName="root" name="root" projectFiles="true">
-    <logicalFolder displayName="Header Files" name="f1" projectFiles="true">
+    <logicalFolder displayName="Header Files" name="HeaderFiles" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_rh71_ek" name="f1" projectFiles="true">
-          <logicalFolder displayName="system" name="f1" projectFiles="true">
+          <logicalFolder displayName="driver" name="f1" projectFiles="true">
+            <logicalFolder displayName="sdspi" name="f1" projectFiles="true">
+              <itemPath>../src/config/sam_rh71_ek/driver/sdspi/drv_sdspi_definitions.h</itemPath>
+              <itemPath>../src/config/sam_rh71_ek/driver/sdspi/src/drv_sdspi_local.h</itemPath>
+              <itemPath>../src/config/sam_rh71_ek/driver/sdspi/src/drv_sdspi_plib_interface.h</itemPath>
+              <itemPath>../src/config/sam_rh71_ek/driver/sdspi/drv_sdspi.h</itemPath>
+            </logicalFolder>
+            <itemPath>../src/config/sam_rh71_ek/driver/driver.h</itemPath>
+            <itemPath>../src/config/sam_rh71_ek/driver/driver_common.h</itemPath>
+          </logicalFolder>
+          <logicalFolder displayName="system" name="f2" projectFiles="true">
             <logicalFolder displayName="fs" name="f1" projectFiles="true">
               <logicalFolder displayName="fat_fs" name="f1" projectFiles="true">
                 <logicalFolder displayName="file_system" name="f1" projectFiles="true">
-                  <itemPath>../src/config/sam_rh71_ek/system/fs/fat_fs/src/file_system/ff.h</itemPath>
-                  <itemPath>../src/config/sam_rh71_ek/system/fs/fat_fs/src/file_system/ffconf.h</itemPath>
+                  <itemPath>../src/config/sam_rh71_ek/system/fs/fat_fs/file_system/ff.h</itemPath>
+                  <itemPath>../src/config/sam_rh71_ek/system/fs/fat_fs/file_system/ffconf.h</itemPath>
                 </logicalFolder>
                 <logicalFolder displayName="hardware_access" name="f2" projectFiles="true">
-                  <itemPath>../src/config/sam_rh71_ek/system/fs/fat_fs/src/hardware_access/diskio.h</itemPath>
+                  <itemPath>../src/config/sam_rh71_ek/system/fs/fat_fs/hardware_access/diskio.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
               <itemPath>../src/config/sam_rh71_ek/system/fs/sys_fs.h</itemPath>
               <itemPath>../src/config/sam_rh71_ek/system/fs/src/sys_fs_local.h</itemPath>
               <itemPath>../src/config/sam_rh71_ek/system/fs/sys_fs_media_manager.h</itemPath>
               <itemPath>../src/config/sam_rh71_ek/system/fs/src/sys_fs_media_manager_local.h</itemPath>
+              <itemPath>../src/config/sam_rh71_ek/system/fs/sys_fs_fat_interface.h</itemPath>
             </logicalFolder>
             <logicalFolder displayName="int" name="f2" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/system/int/sys_int.h</itemPath>
@@ -35,7 +46,10 @@
               <itemPath>../src/config/sam_rh71_ek/system/dma/sys_dma.h</itemPath>
               <itemPath>../src/config/sam_rh71_ek/system/dma/sys_dma_mapping.h</itemPath>
             </logicalFolder>
-            <logicalFolder displayName="time" name="f6" projectFiles="true">
+            <logicalFolder displayName="debug" name="f6" projectFiles="true">
+              <itemPath>../src/config/sam_rh71_ek/system/debug/sys_debug.h</itemPath>
+            </logicalFolder>
+            <logicalFolder displayName="time" name="f7" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/system/time/sys_time.h</itemPath>
               <itemPath>../src/config/sam_rh71_ek/system/time/sys_time_definitions.h</itemPath>
               <itemPath>../src/config/sam_rh71_ek/system/time/src/sys_time_local.h</itemPath>
@@ -45,7 +59,7 @@
             <itemPath>../src/config/sam_rh71_ek/system/system_module.h</itemPath>
             <itemPath>../src/config/sam_rh71_ek/system/system_media.h</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="peripheral" name="f2" projectFiles="true">
+          <logicalFolder displayName="peripheral" name="f3" projectFiles="true">
             <logicalFolder displayName="clk" name="f1" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/peripheral/clk/plib_clk.h</itemPath>
             </logicalFolder>
@@ -72,16 +86,6 @@
                 <itemPath>../src/config/sam_rh71_ek/peripheral/flexcom/spi/plib_flexcom_spi_local.h</itemPath>
               </logicalFolder>
             </logicalFolder>
-          </logicalFolder>
-          <logicalFolder displayName="driver" name="f3" projectFiles="true">
-            <logicalFolder displayName="sdspi" name="f1" projectFiles="true">
-              <itemPath>../src/config/sam_rh71_ek/driver/sdspi/drv_sdspi.h</itemPath>
-              <itemPath>../src/config/sam_rh71_ek/driver/sdspi/drv_sdspi_definitions.h</itemPath>
-              <itemPath>../src/config/sam_rh71_ek/driver/sdspi/src/drv_sdspi_local.h</itemPath>
-              <itemPath>../src/config/sam_rh71_ek/driver/sdspi/src/drv_sdspi_plib_interface.h</itemPath>
-            </logicalFolder>
-            <itemPath>../src/config/sam_rh71_ek/driver/driver.h</itemPath>
-            <itemPath>../src/config/sam_rh71_ek/driver/driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder displayName="bsp" name="f4" projectFiles="true">
             <itemPath>../src/config/sam_rh71_ek/bsp/bsp.h</itemPath>
@@ -157,21 +161,34 @@
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Important Files" name="f2" projectFiles="true">
+    <logicalFolder displayName="Important Files" name="ExternalFiles" projectFiles="true">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Linker Files" name="f3" projectFiles="true"/>
-    <logicalFolder displayName="Source Files" name="f4" projectFiles="true">
+    <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true"/>
+    <logicalFolder displayName="Source Files" name="SourceFiles" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_rh71_ek" name="f1" projectFiles="true">
-          <logicalFolder displayName="system" name="f1" projectFiles="true">
+          <logicalFolder displayName="driver" name="f1" projectFiles="true">
+            <logicalFolder displayName="sdspi" name="f1" projectFiles="true">
+              <itemPath>../src/config/sam_rh71_ek/driver/sdspi/src/drv_sdspi.c</itemPath>
+              <itemPath>../src/config/sam_rh71_ek/driver/sdspi/src/drv_sdspi_plib_interface.c</itemPath>
+              <itemPath>../src/config/sam_rh71_ek/driver/sdspi/src/drv_sdspi_file_system.c</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder displayName="system" name="f2" projectFiles="true">
             <logicalFolder displayName="fs" name="f1" projectFiles="true">
               <logicalFolder displayName="fat_fs" name="f1" projectFiles="true">
-                <itemPath>../src/config/sam_rh71_ek/system/fs/fat_fs/src/ff.c</itemPath>
-                <itemPath>../src/config/sam_rh71_ek/system/fs/fat_fs/src/diskio.c</itemPath>
+                <logicalFolder displayName="file_system" name="f1" projectFiles="true">
+                  <itemPath>../src/config/sam_rh71_ek/system/fs/fat_fs/file_system/ff.c</itemPath>
+                  <itemPath>../src/config/sam_rh71_ek/system/fs/fat_fs/file_system/ffunicode.c</itemPath>
+                </logicalFolder>
+                <logicalFolder displayName="hardware_access" name="f2" projectFiles="true">
+                  <itemPath>../src/config/sam_rh71_ek/system/fs/fat_fs/hardware_access/diskio.c</itemPath>
+                </logicalFolder>
               </logicalFolder>
               <itemPath>../src/config/sam_rh71_ek/system/fs/src/sys_fs.c</itemPath>
               <itemPath>../src/config/sam_rh71_ek/system/fs/src/sys_fs_media_manager.c</itemPath>
+              <itemPath>../src/config/sam_rh71_ek/system/fs/src/sys_fs_fat_interface.c</itemPath>
             </logicalFolder>
             <logicalFolder displayName="int" name="f2" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/system/int/src/sys_int.c</itemPath>
@@ -186,10 +203,10 @@
               <itemPath>../src/config/sam_rh71_ek/system/time/src/sys_time.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder displayName="stdio" name="f2" projectFiles="true">
+          <logicalFolder displayName="stdio" name="f3" projectFiles="true">
             <itemPath>../src/config/sam_rh71_ek/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="peripheral" name="f3" projectFiles="true">
+          <logicalFolder displayName="peripheral" name="f4" projectFiles="true">
             <logicalFolder displayName="clk" name="f1" projectFiles="true">
               <itemPath>../src/config/sam_rh71_ek/peripheral/clk/plib_clk.c</itemPath>
             </logicalFolder>
@@ -212,13 +229,6 @@
               <logicalFolder displayName="spi" name="f1" projectFiles="true">
                 <itemPath>../src/config/sam_rh71_ek/peripheral/flexcom/spi/plib_flexcom2_spi.c</itemPath>
               </logicalFolder>
-            </logicalFolder>
-          </logicalFolder>
-          <logicalFolder displayName="driver" name="f4" projectFiles="true">
-            <logicalFolder displayName="sdspi" name="f1" projectFiles="true">
-              <itemPath>../src/config/sam_rh71_ek/driver/sdspi/src/drv_sdspi.c</itemPath>
-              <itemPath>../src/config/sam_rh71_ek/driver/sdspi/src/drv_sdspi_plib_interface.c</itemPath>
-              <itemPath>../src/config/sam_rh71_ek/driver/sdspi/src/drv_sdspi_file_system.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder displayName="bsp" name="f5" projectFiles="true">
@@ -311,7 +321,7 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value="../src;../src/config/sam_rh71_ek;../src/packs/ATSAMRH71F20C_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
+        <property key="extra-include-directories" value="../src/config/sam_rh71_ek/system/fs/fat_fs/file_system;../src/config/sam_rh71_ek/system/fs/fat_fs/hardware_access;../src;../src/config/sam_rh71_ek;../src/packs/ATSAMRH71F20C_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
