@@ -358,86 +358,100 @@
             <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="68" id="SYSTICK_PERIOD">
+        <Comment dnOrder="68" id="SYSTICK_COMMENT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Comment>
+        <String dnOrder="69" id="SYSTICK_PERIOD">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x7d00"/>
           </Values>
         </String>
-        <Integer dnOrder="69" id="SYSTICK_PERIOD_US">
+        <Integer dnOrder="70" id="SYSTICK_PERIOD_US">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1000"/>
           </Values>
         </Integer>
-        <String dnOrder="70" id="SYSTICK_SECURE_PERIOD">
+        <String dnOrder="71" id="SYSTICK_SECURE_PERIOD">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x7d00"/>
           </Values>
         </String>
-        <Integer dnOrder="71" id="SYSTICK_SECURE_PERIOD_US">
+        <Integer dnOrder="72" id="SYSTICK_SECURE_PERIOD_US">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="72" id="SysTick_INTERRUPT_ENABLE">
+        <Boolean dnOrder="73" id="SysTick_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="73" id="SysTick_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="74" id="SysTick_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="74" id="SysTick_INTERRUPT_HANDLER">
+        <String dnOrder="75" id="SysTick_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="xPortSysTickHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="75" id="SysTick_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="76" id="SysTick_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="FreeRTOS" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="76" id="WDT_SET_NON_SECURE">
+        <Boolean dnOrder="77" id="WDT_SET_NON_SECURE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Setting dnOrder="77" id="XC32_LINKER_MACRO_ANSC_SIZE">
+        <Setting dnOrder="78" id="XC32_LINKER_MACRO_ANSC_SIZE">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="value">
               <Value dnOrder="0">ANSC=0x400</Value>
             </String>
           </Attributes>
         </Setting>
-        <Setting dnOrder="78" id="XC32_LINKER_MACRO_AS_SIZE">
+        <Setting dnOrder="79" id="XC32_LINKER_MACRO_AS_SIZE">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="value">
               <Value dnOrder="0">AS=0x8000</Value>
             </String>
           </Attributes>
         </Setting>
-        <Setting dnOrder="79" id="XC32_LINKER_MACRO_AS_SIZE_NON_SECURE">
+        <Setting dnOrder="80" id="XC32_LINKER_MACRO_AS_SIZE_NON_SECURE">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="value">
               <Value dnOrder="0">AS=0x8000</Value>
             </String>
           </Attributes>
         </Setting>
-        <Setting dnOrder="80" id="XC32_LINKER_MACRO_RS_SIZE">
+        <Setting dnOrder="81" id="XC32_LINKER_MACRO_RS_SIZE">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="value">
               <Value dnOrder="0">RS=0x800</Value>
             </String>
           </Attributes>
         </Setting>
-        <Setting dnOrder="81" id="XC32_LINKER_MACRO_RS_SIZE_NON_SECURE">
+        <Setting dnOrder="82" id="XC32_LINKER_MACRO_RS_SIZE_NON_SECURE">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="value">
               <Value dnOrder="0">RS=0x800</Value>
             </String>
           </Attributes>
         </Setting>
+        <Boolean dnOrder="83" id="systickEnable">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
       </Symbols>
     </UniqueComponent>
     <UniqueComponent dnOrder="3" id="dfp"/>
@@ -710,7 +724,8 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_L11_Xplained_Pro" x="30" y="200"/>
         <ElementPosition dnOrder="1" id="FreeRTOS" x="170" y="120"/>
@@ -723,6 +738,5 @@
         <ElementPosition dnOrder="8" id="pm" x="330" y="60"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

@@ -215,6 +215,8 @@
         <pack name="SAML11_DFP" vendor="Microchip" version="3.1.75"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
@@ -362,7 +364,8 @@
         <property key="no-startup-files" value="false"/>
         <property key="oXC32ld-extra-opts" value=""/>
         <property key="optimization-level" value=""/>
-        <property key="preprocessor-macros" value="AS=0x8000;RS=0x800;BOOTPROT=0x0"/>
+        <property key="preprocessor-macros"
+                  value="AS=0x8000;RS=0x800;BOOTPROT=0x0;NONSECURE"/>
         <property key="remove-unused-sections" value="true"/>
         <property key="report-memory-usage" value="false"/>
         <property key="serial-length" value=""/>
@@ -439,6 +442,8 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-ffff"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="D:/H3/core/apps/rtos/freertos/basic_freertos_trustZone/NonSecure/firmware/sam_l11_xpro_NonSecure.X/debug/sam_l11_xpro/sam_l11_xpro_NonSecure_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
