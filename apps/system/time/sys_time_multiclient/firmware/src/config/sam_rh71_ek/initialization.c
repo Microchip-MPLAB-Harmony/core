@@ -127,7 +127,7 @@ const SYS_TIME_INIT sysTimeInitData =
 void SYS_Initialize ( void* data )
 {
   
-    CLK_Initialize();
+    CLOCK_Initialize();
 
 	PIO_Initialize();
 
