@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SPI_WriteTransferAdd Function</title>
+<title>DRV_SPI_TRANSFER_EVENT_HANDLER Type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00016.html" target="topic">Driver Libraries Help</a> &gt; <a href="00235.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00236.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00639.html" target="topic">DRV_SPI_WriteTransferAdd Function</a></div>
+<a href="00027.html" target="topic">Driver Libraries Help</a> &gt; <a href="00245.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00246.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00639.html" target="topic">DRV_SPI_TRANSFER_EVENT_HANDLER Type</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00615.html" target="topic">Previous</a> | <a href="00236.html" target="topic">Up</a> | <a href="00637.html" target="topic">Next</a></div>
+<a href="00640.html" target="topic">Previous</a> | <a href="00246.html" target="topic">Up</a> | <a href="00641.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_WriteTransferAdd@DRV_HANDLE@void*@size_t@DRV_SPI_TRANSFER_HANDLE * const Topic Title: DRV_SPI_WriteTransferAdd Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_TRANSFER_EVENT_HANDLER Topic Title: DRV_SPI_TRANSFER_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SPI_WriteTransferAdd Function</div>
+DRV_SPI_TRANSFER_EVENT_HANDLER Type</div>
 </div>
 </div>
 
@@ -49,38 +49,15 @@ DRV_SPI_WriteTransferAdd Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function schedules a non-blocking write operation. The function returns with a valid transfer handle in the transferHandle argument if the request was scheduled successfully. The function adds the request to the instance specific software queue and returns immediately. While the request is in the queue, the application buffer is owned by the driver and should not be modified. This API will write txSize bytes of data and the dummy data received will be ignored.&nbsp;</p>
+SPI Driver Transfer Event Handler Function Pointer&nbsp;</p>
 <p class="Element10">
-The function returns <a href="00625.html" target="topic">DRV_SPI_TRANSFER_HANDLE_INVALID</a> in the transferHandle argument:</p>
-<ul class="Element630">
-<li class="Element600">if pTransmitData is NULL.</li>
-<li class="Element600">if txSize is zero.</li>
-<li class="Element600">if the transfer handle is NULL.</li>
-<li class="Element600">if the queue size is full or queue depth is insufficient.</li>
-<li class="Element600">if the driver handle is invalid.</li>
-</ul><p class="Element10">
-&nbsp;</p>
+This data type defines the required function signature for the SPI driver transfer event handling callback function. A client must register a pointer using the transfer event handling function whose function signature (parameter and return value types) match the types specified by this function pointer in order to receive transfer related event calls back from the driver.&nbsp;</p>
 <p class="Element10">
-If the requesting client registered an event callback with the driver, the driver will issue a DRV_SPI_TRANSFER_EVENT_COMPLETE event if the transfer was processed successfully or DRV_SPI_TRANSFER_EVENT_ERROR event if the transfer was not processed successfully.</p></div>
+The parameters and return values are described here and a partial example implementation is provided.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_SPI_WriteTransferAdd</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00399.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">pTransmitData</span></strong>, 
-    size_t <strong><span style="color: #000000">txSize</span></strong>, 
-    <a href="00624.html" target="topic">DRV_SPI_TRANSFER_HANDLE</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">transferHandle</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-
-<ul class="Element630">
-<li class="Element600"><a href="00613.html" target="topic">DRV_SPI_Open</a> must have been called to obtain a valid opened device handle.</li>
-<li class="Element600"><a href="00634.html" target="topic">DRV_SPI_TransferSetup</a> must have been called if GPIO pin has to be used for chip select or any of the setup parameters has to be changed dynamically.</li>
-</ul></div>
-</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">DRV_SPI_TRANSFER_EVENT_HANDLER</span></strong>)(<a href="00633.html" target="topic">DRV_SPI_TRANSFER_EVENT</a> event, <a href="00640.html" target="topic">DRV_SPI_TRANSFER_HANDLE</a> transferHandle, uintptr_t context);</pre></div></div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
 <div class="Element11">
@@ -96,24 +73,19 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+event&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Handle of the communication channel as returned by the <a href="00613.html" target="topic">DRV_SPI_Open</a> function.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-*pTransmitData&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to the data which has to be transmitted. For 9 to 15bit mode, data should be right aligned in the 16 bit memory location.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-txSize&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Number of bytes to be transmitted. Always, size should be given in terms of bytes. For example, if 10 15-bit data are to be transmitted, the transmit size should be 20 bytes.&nbsp;</div></td></tr><tr>
+Identifies the type of event<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
 transferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Handle which is returned by transfer add function.&nbsp;</div></td></tr></table></div></div>
+Handle identifying the transfer to which the event relates<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Value identifying the context of the application that registered the event handling function.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -129,30 +101,57 @@ Remarks</div>
 <div class="Element10">
 
 <ul class="Element630">
-<li class="Element600">This function can be called from within the SPI Driver Transfer Event Handler that is registered by the client.</li>
-<li class="Element600">It should NOT be called in the event handler associated with another SPI driver instance or event handler of any other peripheral.</li>
-<li class="Element600">It should not be called directly in any ISR.</li>
+<li class="Element600">If the event is DRV_SPI_TRANSFER_EVENT_COMPLETE, it means that the data was transferred successfully.</li>
+</ul><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600">If the event is DRV_SPI_TRANSFER_EVENT_ERROR, it means that the data was not transferred successfully.</li>
+</ul><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600">The transferHandle parameter contains the transfer handle of the transfer request that is associated with the event.</li>
+</ul><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600">The context parameter contains the a handle to the client context, provided at the time the event handling function was registered using the <a href="00649.html" target="topic">DRV_SPI_TransferEventHandlerSet</a> function. This context handle value is passed back to the client as the &quot;context&quot; parameter. It can be any value necessary to identify the client context or instance (such as a pointer to the client's data) of the client that made the transfer add request.</li>
+</ul><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600">The event handler function executes in interrupt context of the peripheral. Hence it is recommended of the application to not perform process intensive or blocking operations with in this function.</li>
+</ul><p class="Element10">
+&nbsp;</p>
+
+<ul class="Element630">
+<li class="Element600">The <a href="00631.html" target="topic">DRV_SPI_ReadTransferAdd</a>, <a href="00655.html" target="topic">DRV_SPI_WriteTransferAdd</a> and <a href="00653.html" target="topic">DRV_SPI_WriteReadTransferAdd</a> functions can be called in the event handler to add a transfer request to the driver queue. These functions can only be called to add transfers to the driver instance whose event handler is running. For example, SPI2 driver transfer requests cannot be added in SPI1 driver event handler. Similarly, SPIx transfer requests should not be added in event handler of any other peripheral.</li>
 </ul></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-MY_APP_OBJ myAppObj;
-uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
-<a href="00624.html" target="topic">DRV_SPI_TRANSFER_HANDLE</a> transferHandle;
-
-<i><span style="color: #008000">// mySPIHandle is the handle returned by the DRV_SPI_Open function.</span></i>
-
-DRV_SPI_WriteTransferAdd(mySPIhandle, myTxBuffer, MY_TX_BUFFER_SIZE, &amp;transferHandle);
-
-<strong><span style="color: #000080">if</span></strong>(transferHandle == <a href="00625.html" target="topic">DRV_SPI_TRANSFER_HANDLE_INVALID</a>)
+<div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> APP_MyTransferEventHandler( <a href="00633.html" target="topic">DRV_SPI_TRANSFER_EVENT</a> event,
+                               <a href="00640.html" target="topic">DRV_SPI_TRANSFER_HANDLE</a> transferHandle,
+                               uintptr_t context )
 {
-    <i><span style="color: #008000">// Error handling here</span></i>
-}
+    MY_APP_DATA_STRUCT pAppData = (MY_APP_DATA_STRUCT) context;
 
-<i><span style="color: #008000">// Event is received when the transfer is processed.</span></i></pre></div></div>
+    <strong><span style="color: #000080">switch</span></strong>(event)
+    {
+        <strong><span style="color: #000080">case</span></strong> DRV_SPI_TRANSFER_EVENT_COMPLETE:
+
+            <i><span style="color: #008000">// Handle the completed transfer.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> DRV_SPI_TRANSFER_EVENT_ERROR:
+
+            <i><span style="color: #008000">// Handle error.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -160,7 +159,7 @@ DRV_SPI_WriteTransferAdd(mySPIhandle, myTxBuffer, MY_TX_BUFFER_SIZE, &amp;transf
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00016.html" target="topic">Driver Libraries Help</a> &gt; <a href="00235.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00236.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00639.html" target="topic">DRV_SPI_WriteTransferAdd Function</a></div>
+<a href="00027.html" target="topic">Driver Libraries Help</a> &gt; <a href="00245.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00246.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00639.html" target="topic">DRV_SPI_TRANSFER_EVENT_HANDLER Type</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -168,13 +167,13 @@ DRV_SPI_WriteTransferAdd(mySPIhandle, myTxBuffer, MY_TX_BUFFER_SIZE, &amp;transf
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00615.html" target="topic">Previous</a> | <a href="00236.html" target="topic">Up</a> | <a href="00637.html" target="topic">Next</a></div>
+<a href="00640.html" target="topic">Previous</a> | <a href="00246.html" target="topic">Up</a> | <a href="00641.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_WriteTransferAdd@DRV_HANDLE@void*@size_t@DRV_SPI_TRANSFER_HANDLE * const Topic Title: DRV_SPI_WriteTransferAdd Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_TRANSFER_EVENT_HANDLER Topic Title: DRV_SPI_TRANSFER_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

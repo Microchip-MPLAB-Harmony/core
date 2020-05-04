@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Configuring the Library</title>
+<title>Running The Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00865.html" target="topic">Software Libraries Help</a> &gt; <a href="00770.html" target="topic">I2C Bit Bang Library Help</a> &gt; <a href="00766.html" target="topic">Configuring the Library</a></div>
+<a href="00007.html" target="topic">Applications Help</a> &gt; <a href="00730.html" target="topic">File System Applications</a> &gt; <a href="00734.html" target="topic">nvm_sdmmc_fat_mpfs_multi_disk</a> &gt; <a href="00766.html" target="topic">Running The Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00769.html" target="topic">Previous</a> | <a href="00770.html" target="topic">Up</a> | <a href="00775.html" target="topic">Next</a></div>
+<a href="00764.html" target="topic">Previous</a> | <a href="00734.html" target="topic">Up</a> | <a href="00735.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: I2C Bit Bang Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS nvm_sdmmc_fat_mpfs_multi_disk Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Configuring the Library</div>
+Running The Application</div>
 </div>
 </div>
 
@@ -48,15 +48,57 @@ Configuring the Library</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
+
+<ol class="Element630">
+<li value="1" class="Element600">Connect a micro USB cable to the DEBUG port.</li>
+<li value="2" class="Element600">Build and Program the application using the MPLAB X IDE.</li>
+<li value="3" class="Element600">Insert the SD Card in the SD Card slot of the Device.</li>
+<li value="4" class="Element600">The LED is turned ON when
+<ol class="Element631">
+<li value="1" class="Element601">The content from the NVM media (<strong>HELLO WORLD !</strong>) is copied to SD Card successfully</li>
+<li value="2" class="Element601">Application has successfully written the last modified time stamp to SD Card</li>
+</ol></li>
+</ol><p class="Element10">
+&nbsp;</p>
 <p class="Element10">
-Configure the I2C bit bang library using the MHC.</p></div>
+The following table provides the LED name: </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element65" valign="top" width="77%">
+<div class="Element66">
+Kit Name&nbsp;</div></td><td class="Element65" valign="top" width="23%">
+<div class="Element66">
+LED Name&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="77%">
+<div class="Element68">
+SAM E54 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="23%">
+<div class="Element68">
+LED 0&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+
+<ol class="Element630">
+<li value="5" class="Element600">If Success, Insert the SD Card on to your host PC</li>
+<li value="6" class="Element600"><strong>FILE.txt</strong> should have the content</li>
+</ol><p class="Element10">
+<strong> HELLO WORLD !</strong>&nbsp;</p>
+<p class="Element10">
+<strong> File Modified on [dd/mm/yy hh:mm:ss]</strong>&nbsp;</p>
+<div class="Element15">
+Note:</div>
+
+<ol class="Element630">
+<li value="1" class="Element600">The time stamp mentioned above is the <strong>compile time of app.c file</strong></li>
+<li value="2" class="Element600">If step 3 is repeated then new timestamp is <strong>appended to the existing FILE.txt</strong></li>
+</ol></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00865.html" target="topic">Software Libraries Help</a> &gt; <a href="00770.html" target="topic">I2C Bit Bang Library Help</a> &gt; <a href="00766.html" target="topic">Configuring the Library</a></div>
+<a href="00007.html" target="topic">Applications Help</a> &gt; <a href="00730.html" target="topic">File System Applications</a> &gt; <a href="00734.html" target="topic">nvm_sdmmc_fat_mpfs_multi_disk</a> &gt; <a href="00766.html" target="topic">Running The Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -64,13 +106,13 @@ Configure the I2C bit bang library using the MHC.</p></div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00769.html" target="topic">Previous</a> | <a href="00770.html" target="topic">Up</a> | <a href="00775.html" target="topic">Next</a></div>
+<a href="00764.html" target="topic">Previous</a> | <a href="00734.html" target="topic">Up</a> | <a href="00735.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: I2C Bit Bang Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: FS nvm_sdmmc_fat_mpfs_multi_disk Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

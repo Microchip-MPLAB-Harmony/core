@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_USART_BufferStatusGet Function</title>
+<title>DRV_SST26_Status Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00016.html" target="topic">Driver Libraries Help</a> &gt; <a href="00297.html" target="topic">USART Driver Library Help</a> &gt; <a href="00298.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00679.html" target="topic">DRV_USART_BufferStatusGet Function</a></div>
+<a href="00027.html" target="topic">Driver Libraries Help</a> &gt; <a href="00267.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00279.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00280.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00679.html" target="topic">DRV_SST26_Status Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00677.html" target="topic">Previous</a> | <a href="00298.html" target="topic">Up</a> | <a href="00688.html" target="topic">Next</a></div>
+<a href="00676.html" target="topic">Previous</a> | <a href="00280.html" target="topic">Up</a> | <a href="00684.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_BufferStatusGet@DRV_USART_BUFFER_HANDLE Topic Title: DRV_USART_BufferStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_Status@SYS_MODULE_INDEX Topic Title: DRV_SST26_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_USART_BufferStatusGet Function</div>
+DRV_SST26_Status Function</div>
 </div>
 </div>
 
@@ -49,21 +49,19 @@ DRV_USART_BufferStatusGet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function can be used to poll the status of the queued buffer request if the application doesn't prefer to use the event handler (callback) function to get notified.</p></div>
+This routine provides the current status of the SST26 driver module.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00668.html" target="topic">DRV_USART_BUFFER_EVENT</a> <strong><span style="color: #000000">DRV_USART_BufferStatusGet</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00675.html" target="topic">DRV_USART_BUFFER_HANDLE</a> <strong><span style="color: #000000">bufferHandle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01417.html" target="topic">SYS_STATUS</a> <strong><span style="color: #000000">DRV_SST26_Status</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01388.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="00685.html" target="topic">DRV_USART_Open</a> must have been called to obtain a valid opened device handle.&nbsp;</p>
-<p class="Element10">
-Either the <a href="00687.html" target="topic">DRV_USART_ReadBufferAdd</a> or <a href="00693.html" target="topic">DRV_USART_WriteBufferAdd</a> function must have been called and a valid buffer handle returned.</p></div>
+Function <a href="00673.html" target="topic">DRV_SST26_Initialize</a> should have been called before calling this function.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -80,9 +78,9 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-bufferhandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+drvIndex&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Handle for the buffer of which the processed number of bytes to be obtained.&nbsp;</div></td></tr></table></div></div>
+Identifier for the instance used to initialize driver&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -90,56 +88,26 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Returns either pending, success or error event for the buffer. Pending means the buffer is queued but not serviced yet.</p></div>
+SYS_STATUS_READY - Indicates that the driver is ready and accept requests for new operations.&nbsp;</p>
+<p class="Element10">
+SYS_STATUS_UNINITIALIZED - Indicates the driver is not initialized.&nbsp;</p>
+<p class="Element10">
+SYS_STATUS_BUSY - Indicates the driver is in busy state.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function returns error event if the buffer handle is invalid.</p></div>
+None.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  <i><span style="color: #008000">// myAppObj is an application specific object.</span></i>
-  MY_APP_OBJ myAppObj;
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01417.html" target="topic">SYS_STATUS</a>          Status;
 
-  uint8_t mybuffer[MY_BUFFER_SIZE];
-  <a href="00675.html" target="topic">DRV_USART_BUFFER_HANDLE</a> bufferHandle;
-  <a href="00668.html" target="topic">DRV_USART_BUFFER_EVENT</a> event;
-
-  <i><span style="color: #008000">// myUSARTHandle is the handle returned</span></i>
-  <i><span style="color: #008000">// by the DRV_USART_Open function.</span></i>
-
-  <i><span style="color: #008000">// Client registers an event handler with driver. This is done once</span></i>
-
-  <a href="00678.html" target="topic">DRV_USART_BufferEventHandlerSet</a>(
-      myUSARTHandle,
-      APP_USARTBufferEventHandle,
-      (uintptr_t)&amp;myAppObj
-  );
-
-  <a href="00687.html" target="topic">DRV_USART_ReadBufferAdd</a>(
-      myUSARThandle,
-      myBuffer,
-      MY_BUFFER_SIZE,
-      bufferHandle
-  );
-
-  <strong><span style="color: #000080">if</span></strong>(bufferHandle == <a href="00676.html" target="topic">DRV_USART_BUFFER_HANDLE_INVALID</a>)
-  {
-      <i><span style="color: #008000">// Error handling here</span></i>
-  }
-
-  <i><span style="color: #008000">//Check the status of the buffer</span></i>
-  <i><span style="color: #008000">//This call can be used to wait until the buffer is processed.</span></i>
-
-  <strong><span style="color: #000080">while</span></strong> ((event = DRV_USART_BufferStatusGet(bufferHandle)) == DRV_USART_BUFFER_EVENT_PENDING);
-
-  <i><span style="color: #008000">//Buffer is processed, check the event variable to determine if the buffer request</span></i>
-  <i><span style="color: #008000">//is executed successfully or not.</span></i></pre></div></div>
+Status = DRV_SST26_Status(DRV_SST26_INDEX);</pre></div></div>
 </div>
 </div>
 </div>
@@ -147,7 +115,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00016.html" target="topic">Driver Libraries Help</a> &gt; <a href="00297.html" target="topic">USART Driver Library Help</a> &gt; <a href="00298.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00679.html" target="topic">DRV_USART_BufferStatusGet Function</a></div>
+<a href="00027.html" target="topic">Driver Libraries Help</a> &gt; <a href="00267.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00279.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00280.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00679.html" target="topic">DRV_SST26_Status Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -155,13 +123,13 @@ Example</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00016.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00677.html" target="topic">Previous</a> | <a href="00298.html" target="topic">Up</a> | <a href="00688.html" target="topic">Next</a></div>
+<a href="00676.html" target="topic">Previous</a> | <a href="00280.html" target="topic">Up</a> | <a href="00684.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_BufferStatusGet@DRV_USART_BUFFER_HANDLE Topic Title: DRV_USART_BufferStatusGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_Status@SYS_MODULE_INDEX Topic Title: DRV_SST26_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
