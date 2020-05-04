@@ -47,6 +47,10 @@ def instantiateComponent(sysFSComponent):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA")
         Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True)
 
+    if ("PIC32MZ" in Variables.get("__PROCESSOR")):
+        if (Database.getSymbolValue("core", "USE_CACHE_MAINTENANCE") == False):
+            Database.setSymbolValue("core", "USE_CACHE_MAINTENANCE", True)
+
     sysFSMenu = sysFSComponent.createMenuSymbol("SYS_FS_MENU", None)
     sysFSMenu.setLabel("File System settings")
     sysFSMenu.setDescription("File System settings")
@@ -310,8 +314,6 @@ def instantiateComponent(sysFSComponent):
     sysFSMpfs = sysFSComponent.createBooleanSymbol("SYS_FS_MPFS", sysFSMenu)
     sysFSMpfs.setLabel("Microchip File System")
     sysFSMpfs.setDefaultValue(False)
-    sysFSMpfs.setDependencies(enableSystemCache, ["SYS_FS_MPFS"])
-    Database.setSymbolValue("core", "USE_CACHE_MAINTENANCE", sysFSMpfs.getValue())
 
     sysFSNameLen = sysFSComponent.createIntegerSymbol("SYS_FS_FILE_NAME_LEN", sysFSMenu)
     sysFSNameLen.setLabel("File name length in bytes")
@@ -589,12 +591,6 @@ def sysFsFatCodePageShow(symbol, event):
 
     elif (event["id"] == "SYS_FS_FAT"):
         symbol.setVisible(event["value"])
-
-def enableSystemCache(symbol, event):
-    if (event["value"] == True):
-        Database.setSymbolValue("core", "USE_CACHE_MAINTENANCE", True)
-    else:
-        Database.setSymbolValue("core", "USE_CACHE_MAINTENANCE", False)
 
 def genRtosTask(symbol, event):
     if (event["value"] != "BareMetal"):
