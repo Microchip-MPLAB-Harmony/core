@@ -1161,10 +1161,8 @@ int32_t SYS_FS_FileSeek
 {
     int fileStatus = -1;
     SYS_FS_OBJ *obj = (SYS_FS_OBJ *)handle;
-<#if SYS_FS_FAT_READONLY == false>
     long tell = 0;
     uint32_t size = 0;
-</#if>
     int temp = 0;
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
 
@@ -1182,18 +1180,20 @@ int32_t SYS_FS_FileSeek
         return -1;
     }
 
-<#if SYS_FS_FAT_READONLY == false>
-    if ((obj->mountPoint->fsFunctions->seek == NULL) || 
-        (obj->mountPoint->fsFunctions->tell == NULL) ||
-        (obj->mountPoint->fsFunctions->size == NULL))
-<#else>
     if (obj->mountPoint->fsFunctions->seek == NULL)
     {
         /* The function is not supported in the native file system. */
         obj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
         return -1;
     }
-</#if>
+
+    if (((whence == SYS_FS_SEEK_CUR) && (obj->mountPoint->fsFunctions->tell == NULL)) || 
+        ((whence == SYS_FS_SEEK_END) && (obj->mountPoint->fsFunctions->size == NULL)))
+    {
+        /* The function is not supported in the native file system. */
+        obj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+        return -1;
+    }
 
     /* Clear out the error. */
     obj->errorValue = SYS_FS_ERROR_OK;
@@ -1205,7 +1205,6 @@ int32_t SYS_FS_FileSeek
         /* SYS_FS_SEEK_SET case. */
         temp = offset;
 
-<#if SYS_FS_FAT_READONLY == false>
         if (whence == SYS_FS_SEEK_CUR)
         {
             tell = obj->mountPoint->fsFunctions->tell(obj->nativeFSFileObj);
@@ -1216,7 +1215,6 @@ int32_t SYS_FS_FileSeek
             size = obj->mountPoint->fsFunctions->size(obj->nativeFSFileObj);
             temp = (offset + size);
         }
-</#if>
 
         fileStatus = obj->mountPoint->fsFunctions->seek(obj->nativeFSFileObj, temp);
 
@@ -1238,7 +1236,6 @@ int32_t SYS_FS_FileSeek
     return offset;
 }
 
-<#if SYS_FS_FAT_READONLY == false>
 //******************************************************************************
 /*Function:
     int32_t SYS_FS_FileTell
@@ -1445,7 +1442,6 @@ bool SYS_FS_FileEOF
 
     return status;
 }
-</#if>
 
 //******************************************************************************
 /* Function:
@@ -1998,7 +1994,8 @@ SYS_FS_RESULT SYS_FS_DirSearch
     return SYS_FS_RES_FAILURE;
 }
 
-<#if SYS_FS_FAT == true>
+<#-- /* This block is Generated when only FAT-FS is Enabled OR FAT-FS and MPFS both are Enabled */ -->
+<#if SYS_FS_FAT == true >
 //******************************************************************************
 /*Function:
     SYS_FS_RESULT SYS_FS_FileStringGet
@@ -2376,9 +2373,10 @@ SYS_FS_RESULT SYS_FS_DriveLabelGet
 
     return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
 }
-</#if>
+</#if> <#-- /* SYS_FS_FAT == true */ -->
 
-<#if SYS_FS_FAT == true  && SYS_FS_FAT_READONLY == false>
+<#-- /* This block is Generated when only FAT-FS is Enabled in Write Mode OR FAT-FS and MPFS both are Enabled */ -->
+<#if (SYS_FS_FAT == true)  && (SYS_FS_FAT_READONLY == false) >
 //******************************************************************************
 /* Function:
     size_t SYS_FS_FileWrite
@@ -3653,8 +3651,384 @@ SYS_FS_RESULT SYS_FS_DriveSectorGet
 
     return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
 }
+</#if> <#-- /* (SYS_FS_FAT == true)  && (SYS_FS_FAT_READONLY == false) */ -->
 
+<#-- /* This block is Generated when FAT-FS is Readonly OR Only MPFS is Enabled */ -->
+<#if ((SYS_FS_FAT == true)  && (SYS_FS_FAT_READONLY == true)) ||
+     ((SYS_FS_FAT == false) && (SYS_FS_MPFS == true)) >
+size_t SYS_FS_FileWrite
+(
+    SYS_FS_HANDLE handle,
+    const void *buffer,
+    size_t nbyte
+)
+{
+    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
+
+    /* Check if the handle is valid. */
+    if (handle == SYS_FS_HANDLE_INVALID)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+    }
+    else
+    {
+        /* The write operation is not supported by the Native FS. */
+        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+    }
+
+    return -1;
+}
+
+SYS_FS_RESULT SYS_FS_FileSync
+(
+    SYS_FS_HANDLE handle
+)
+{
+    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
+
+    /* Check if the handle is valid. */
+    if (handle == SYS_FS_HANDLE_INVALID)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+    }
+    else
+    {
+        /* The write operation is not supported by the Native FS. */
+        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+    }
+
+    return SYS_FS_RES_FAILURE;
+}
+
+SYS_FS_RESULT SYS_FS_FileTruncate
+(
+    SYS_FS_HANDLE handle
+)
+{
+     SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
+
+    /* Check if the handle is valid. */
+    if (handle == SYS_FS_HANDLE_INVALID)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+    }
+    else
+    {
+        /* The write operation is not supported by the Native FS. */
+        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+    }
+
+    return SYS_FS_RES_FAILURE;
+}
+
+SYS_FS_RESULT SYS_FS_FileCharacterPut
+(
+    SYS_FS_HANDLE handle, 
+    char data
+)
+{
+    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
+
+    /* Check if the handle is valid. */
+    if (handle == SYS_FS_HANDLE_INVALID)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+    }
+    else
+    {
+        /* The write operation is not supported by the Native FS. */
+        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+    }
+
+    return SYS_FS_RES_FAILURE;
+}
+
+SYS_FS_RESULT SYS_FS_FileStringPut
+(
+    SYS_FS_HANDLE handle, 
+    const char *string
+)
+{
+    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
+
+    /* Check if the handle is valid. */
+    if (handle == SYS_FS_HANDLE_INVALID)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+    }
+    else
+    {
+        /* The write operation is not supported by the Native FS. */
+        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+    }
+
+    return SYS_FS_RES_FAILURE;
+}
+
+SYS_FS_RESULT SYS_FS_FilePrintf
+(
+    SYS_FS_HANDLE handle, 
+    const char *string, 
+    ...
+)
+{
+    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
+
+    /* Check if the handle is valid. */
+    if (handle == SYS_FS_HANDLE_INVALID)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+    }
+    else
+    {
+        /* The write operation is not supported by the Native FS. */
+        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+    }
+
+    return SYS_FS_RES_FAILURE;
+}
+
+bool SYS_FS_FileTestError
+(
+    SYS_FS_HANDLE handle
+)
+{
+    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
+
+    /* Check if the handle is valid. */
+    if (handle == SYS_FS_HANDLE_INVALID)
+    {
+        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+    }
+    else
+    {
+        /* The write operation is not supported by the Native FS. */
+        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+    }
+
+    return true;
+}
+
+SYS_FS_RESULT SYS_FS_DirectoryMake
+(
+    const char* path
+)
+{
+    /* The write operation is not supported by the Native FS. */
+    errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+
+    return SYS_FS_RES_FAILURE;
+}
+
+SYS_FS_RESULT SYS_FS_FileDirectoryRemove
+(
+    const char* path
+)
+{
+    /* The write operation is not supported by the Native FS. */
+    errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+
+    return SYS_FS_RES_FAILURE;
+}
+
+SYS_FS_RESULT SYS_FS_FileDirectoryModeSet
+(
+    const char* fname,
+    SYS_FS_FILE_DIR_ATTR attr,
+    SYS_FS_FILE_DIR_ATTR mask
+)
+{
+    /* The write operation is not supported by the Native FS. */
+    errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+
+    return SYS_FS_RES_FAILURE;
+}
+
+SYS_FS_RESULT SYS_FS_FileDirectoryTimeSet
+(
+    const char* fname, 
+    SYS_FS_TIME *time
+)
+{
+    /* The write operation is not supported by the Native FS. */
+    errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+
+    return SYS_FS_RES_FAILURE;
+}
+
+SYS_FS_RESULT SYS_FS_FileDirectoryRenameMove
+(
+    const char *oldPath, 
+    const char *newPath
+)
+{
+    /* The write operation is not supported by the Native FS. */
+    errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+
+    return SYS_FS_RES_FAILURE;
+}
+
+SYS_FS_RESULT SYS_FS_CurrentDriveSet
+(
+    const char* path
+)
+{
+    /* The write operation is not supported by the Native FS. */
+    errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+
+    return SYS_FS_RES_FAILURE;
+}
+
+SYS_FS_RESULT SYS_FS_DriveLabelSet
+(
+    const char *drive, 
+    const char *label
+)
+{
+    /* The write operation is not supported by the Native FS. */
+    errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+
+    return SYS_FS_RES_FAILURE;
+}
+
+//******************************************************************************
+<#if SYS_FS_FAT == true && SYS_FS_FAT_VERSION != "v0.11a">
+    <#lt>SYS_FS_RESULT SYS_FS_DriveFormat
+    <#lt>(
+    <#lt>    const char* drive,
+    <#lt>    const SYS_FS_FORMAT_PARAM* opt,
+    <#lt>    void* work,
+    <#lt>    uint32_t len
+    <#lt>)
+<#else>
+    <#lt>SYS_FS_RESULT SYS_FS_DriveFormat
+    <#lt>(
+    <#lt>    const char* drive, 
+    <#lt>    SYS_FS_FORMAT fmt, 
+    <#lt>    uint32_t clusterSize
+    <#lt>)
 </#if>
+{
+    /* The write operation is not supported by the Native FS. */
+    errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+
+    return SYS_FS_RES_FAILURE;
+}
+
+SYS_FS_RESULT SYS_FS_DrivePartition
+(
+    const char *path,
+    const uint32_t partition[],
+    void *work
+)
+{
+    /* The write operation is not supported by the Native FS. */
+    errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+
+    return SYS_FS_RES_FAILURE;
+}
+
+SYS_FS_RESULT SYS_FS_DriveSectorGet
+(
+    const char* path,
+    uint32_t *totalSectors,
+    uint32_t *freeSectors
+)
+{
+    /* The write operation is not supported by the Native FS. */
+    errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+
+    return SYS_FS_RES_FAILURE;
+}
+
+<#-- /* This block is Generated when only MPFS is Enabled */ -->
+<#if SYS_FS_FAT == false && SYS_FS_MPFS == true>
+    <#lt>SYS_FS_RESULT SYS_FS_FileStringGet
+    <#lt>(
+    <#lt>    SYS_FS_HANDLE handle, 
+    <#lt>    char* buff, 
+    <#lt>    uint32_t len
+    <#lt>)
+    <#lt>{
+    <#lt>    SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
+
+    <#lt>    /* Check if the handle is valid. */
+    <#lt>    if (handle == SYS_FS_HANDLE_INVALID)
+    <#lt>    {
+    <#lt>        errorValue = SYS_FS_ERROR_INVALID_OBJECT;
+    <#lt>    }
+    <#lt>    else
+    <#lt>    {
+    <#lt>        /* The write operation is not supported by the Native FS. */
+    <#lt>        fileObj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+    <#lt>    }
+
+    <#lt>    return SYS_FS_RES_FAILURE;
+    <#lt>}
+
+    <#lt>SYS_FS_RESULT SYS_FS_DirectoryChange
+    <#lt>(
+    <#lt>    const char* path
+    <#lt>)
+    <#lt>{
+    <#lt>    /* The write operation is not supported by the Native FS. */
+    <#lt>    errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+
+    <#lt>    return SYS_FS_RES_FAILURE;
+    <#lt>}
+
+    <#lt>SYS_FS_RESULT SYS_FS_CurrentWorkingDirectoryGet
+    <#lt>(
+    <#lt>    char *buffer,
+    <#lt>    uint32_t len
+    <#lt>)
+    <#lt>{
+    <#lt>    /* The write operation is not supported by the Native FS. */
+    <#lt>    errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+
+    <#lt>    return SYS_FS_RES_FAILURE;
+    <#lt>}
+
+    <#lt>SYS_FS_RESULT SYS_FS_CurrentDriveGet
+    <#lt>(
+    <#lt>    char* buffer
+    <#lt>)
+    <#lt>{
+    <#lt>    if (buffer == NULL)
+    <#lt>    {
+    <#lt>        errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
+    <#lt>        return SYS_FS_RES_FAILURE;
+    <#lt>    }
+
+    <#lt>    if(gSYSFSCurrentMountPoint.inUse == false)
+    <#lt>    {
+    <#lt>        errorValue = SYS_FS_ERROR_NO_FILESYSTEM;
+    <#lt>        return SYS_FS_RES_FAILURE;
+    <#lt>    }
+
+    <#lt>    strcpy(buffer, "/mnt/");
+    <#lt>    strncpy(buffer + 5, gSYSFSCurrentMountPoint.currentDisk->mountName, gSYSFSCurrentMountPoint.currentDisk->mountNameLength);
+
+    <#lt>    return SYS_FS_RES_SUCCESS;
+    <#lt>}
+
+    <#lt>SYS_FS_RESULT SYS_FS_DriveLabelGet
+    <#lt>(
+    <#lt>    const char* drive, 
+    <#lt>    char *buff, 
+    <#lt>    uint32_t *sn
+    <#lt>)
+    <#lt>{
+    <#lt>    /* The write operation is not supported by the Native FS. */
+    <#lt>    errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+
+    <#lt>    return SYS_FS_RES_FAILURE;
+    <#lt>}
+</#if>
+
+</#if> <#-- /* ((SYS_FS_FAT == true)  && (SYS_FS_FAT_READONLY == true)) ||
+               ((SYS_FS_FAT == false) && (SYS_FS_MPFS == true)) */
+       -->
 /*************************************************************************
 * END OF sys_fs.c
 ***************************************************************************/

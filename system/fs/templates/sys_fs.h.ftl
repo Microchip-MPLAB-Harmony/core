@@ -211,83 +211,81 @@ typedef enum
 
 } SYS_FS_RESULT;
 
-<#if SYS_FS_FAT == true>
+// *****************************************************************************
+<#if SYS_FS_FAT == true && SYS_FS_FAT_VERSION != "v0.11a">
+    <#lt>/* File formating partition rule
+
+    <#lt>Summary:
+    <#lt>    Specifes the partitioning rule.
+
+    <#lt>Description:
+    <#lt>    This type specifies the partitioning rule. When SYS_FS_FORMAT_FAT* format
+    <#lt>    is specified, a primary partition occupying the entire disk space is
+    <#lt>    created and then an FAT volume is created on the partition. When SYS_FS_FORMAT_ANY
+    <#lt>    format is specified FAT FS code decides on the format. When SYS_FS_FORMAT_SFD
+    <#lt>    format is specified, the FAT volume starts from the first sector of the physical drive.
+
+    <#lt>    The SYS_FS_FORMAT_FAT* partitioning is usually used for hard disk, MMC,
+    <#lt>    SDC, CFC and U Disk. It can divide a physical drive into one or more
+    <#lt>    partitions with a partition table on the MBR. However Windows does not
+    <#lt>    support multiple partition on the removable media. The SYS_FS_FORMAT_SFD is
+    <#lt>    non-partitioned method. The FAT volume starts from the first sector on the
+    <#lt>    physical drive without partition table. It is usually used for floppy disk,
+    <#lt>    micro drive, optical disk, and super-floppy media.
+
+    <#lt>    Note: The Values mentioned below should be aligned with values in ff.h
+    <#lt>*/
+    <#lt>typedef enum
+    <#lt>{
+    <#lt>    SYS_FS_FORMAT_FAT      = 0x01,
+    <#lt>    SYS_FS_FORMAT_FAT32    = 0x02,
+    <#lt>    SYS_FS_FORMAT_EXFAT    = 0x04,
+    <#lt>    SYS_FS_FORMAT_ANY      = 0x07,
+    <#lt>    SYS_FS_FORMAT_SFD      = 0x08
+    <#lt>}SYS_FS_FORMAT;
+
     <#lt>// *****************************************************************************
-    <#if SYS_FS_FAT_VERSION != "v0.11a">
-        <#lt>/* File formating partition rule
-    
-        <#lt>Summary:
-        <#lt>    Specifes the partitioning rule.
-    
-        <#lt>Description:
-        <#lt>    This type specifies the partitioning rule. When SYS_FS_FORMAT_FAT* format
-        <#lt>    is specified, a primary partition occupying the entire disk space is
-        <#lt>    created and then an FAT volume is created on the partition. When SYS_FS_FORMAT_ANY
-        <#lt>    format is specified FAT FS code decides on the format. When SYS_FS_FORMAT_SFD
-        <#lt>    format is specified, the FAT volume starts from the first sector of the physical drive.
-    
-        <#lt>    The SYS_FS_FORMAT_FAT* partitioning is usually used for hard disk, MMC,
-        <#lt>    SDC, CFC and U Disk. It can divide a physical drive into one or more
-        <#lt>    partitions with a partition table on the MBR. However Windows does not
-        <#lt>    support multiple partition on the removable media. The SYS_FS_FORMAT_SFD is
-        <#lt>    non-partitioned method. The FAT volume starts from the first sector on the
-        <#lt>    physical drive without partition table. It is usually used for floppy disk,
-        <#lt>    micro drive, optical disk, and super-floppy media.
-    
-        <#lt>    Note: The Values mentioned below should be aligned with values in ff.h
-        <#lt>*/
-        <#lt>typedef enum
-        <#lt>{
-        <#lt>    SYS_FS_FORMAT_FAT      = 0x01,
-        <#lt>    SYS_FS_FORMAT_FAT32    = 0x02,
-        <#lt>    SYS_FS_FORMAT_EXFAT    = 0x04,
-        <#lt>    SYS_FS_FORMAT_ANY      = 0x07,
-        <#lt>    SYS_FS_FORMAT_SFD      = 0x08
-        <#lt>}SYS_FS_FORMAT;
-    
-        <#lt>// *****************************************************************************
-        <#lt>/* Format parameter structure */
-        <#lt>typedef struct {
-        <#lt>    /* Format option */
-        <#lt>    SYS_FS_FORMAT  fmt;
-        <#lt>    /* Number of FATs */
-        <#lt>    uint8_t  n_fat;
-        <#lt>    /* Data area alignment (sector) */
-        <#lt>    uint32_t align;
-        <#lt>    /* Number of root directory entries */
-        <#lt>    uint32_t n_root;
-        <#lt>    /* Cluster size (byte) */
-        <#lt>    uint32_t au_size;
-        <#lt>}SYS_FS_FORMAT_PARAM;
-    <#else>
-        <#lt>/* File formating partition rule
-        <#lt>
-        <#lt>Summary:
-        <#lt>    Specifes the partitioning rule.
-        <#lt>
-        <#lt>Description:
-        <#lt>    This type specifies the partitioning rule. When SYS_FS_FORMAT_FDISK format
-        <#lt>    is specified, a primary partition occupying the entire disk space is
-        <#lt>    created and then an FAT volume is created on the partition. When
-        <#lt>    SYS_FS_FORMAT_SFD format is specified, the FAT volume starts from the first
-        <#lt>    sector of the physical drive.
-        <#lt>
-        <#lt>    The SYS_FS_FORMAT_FDISK partitioning is usually used for hard disk, MMC,
-        <#lt>    SDC, CFC and U Disk. It can divide a physical drive into one or more
-        <#lt>    partitions with a partition table on the MBR. However Windows does not
-        <#lt>    support multiple partition on the removable media. The SYS_FS_FORMAT_SFD is
-        <#lt>    non-partitioned method. The FAT volume starts from the first sector on the
-        <#lt>    physical drive without partition table. It is usually used for floppy disk,
-        <#lt>    micro drive, optical disk, and super-floppy media.
-        <#lt>*/
-        <#lt>typedef enum
-        <#lt>{
-        <#lt>    /* Format disk with multiple partition */
-        <#lt>    SYS_FS_FORMAT_FDISK  = 0,
-        <#lt>    /* Format disk with single partition */
-        <#lt>    SYS_FS_FORMAT_SFD    = 1
-        <#lt>}SYS_FS_FORMAT;
-    </#if>
+    <#lt>/* Format parameter structure */
+    <#lt>typedef struct {
+    <#lt>    /* Format option */
+    <#lt>    SYS_FS_FORMAT  fmt;
+    <#lt>    /* Number of FATs */
+    <#lt>    uint8_t  n_fat;
+    <#lt>    /* Data area alignment (sector) */
+    <#lt>    uint32_t align;
+    <#lt>    /* Number of root directory entries */
+    <#lt>    uint32_t n_root;
+    <#lt>    /* Cluster size (byte) */
+    <#lt>    uint32_t au_size;
+    <#lt>}SYS_FS_FORMAT_PARAM;
+<#else>
+    <#lt>/* File formating partition rule
+    <#lt>
+    <#lt>Summary:
+    <#lt>    Specifes the partitioning rule.
+    <#lt>
+    <#lt>Description:
+    <#lt>    This type specifies the partitioning rule. When SYS_FS_FORMAT_FDISK format
+    <#lt>    is specified, a primary partition occupying the entire disk space is
+    <#lt>    created and then an FAT volume is created on the partition. When
+    <#lt>    SYS_FS_FORMAT_SFD format is specified, the FAT volume starts from the first
+    <#lt>    sector of the physical drive.
+    <#lt>
+    <#lt>    The SYS_FS_FORMAT_FDISK partitioning is usually used for hard disk, MMC,
+    <#lt>    SDC, CFC and U Disk. It can divide a physical drive into one or more
+    <#lt>    partitions with a partition table on the MBR. However Windows does not
+    <#lt>    support multiple partition on the removable media. The SYS_FS_FORMAT_SFD is
+    <#lt>    non-partitioned method. The FAT volume starts from the first sector on the
+    <#lt>    physical drive without partition table. It is usually used for floppy disk,
+    <#lt>    micro drive, optical disk, and super-floppy media.
+    <#lt>*/
+    <#lt>typedef enum
+    <#lt>{
+    <#lt>    /* Format disk with multiple partition */
+    <#lt>    SYS_FS_FORMAT_FDISK  = 0,
+    <#lt>    /* Format disk with single partition */
+    <#lt>    SYS_FS_FORMAT_SFD    = 1
+    <#lt>}SYS_FS_FORMAT;
 </#if>
 
 // *****************************************************************************
@@ -312,7 +310,6 @@ typedef enum
     */
     SYS_FS_FILE_OPEN_READ    =  0,
 
-<#if SYS_FS_FAT == true  && SYS_FS_FAT_READONLY == false>
     /*
     reading the file    =  not possible. Read operation returns error.
     writing to the file =  possible. If file exists, write happens from the
@@ -364,7 +361,6 @@ typedef enum
                            and data will be written into the newly created file.
     */
     SYS_FS_FILE_OPEN_APPEND_PLUS
-</#if>
 
 }SYS_FS_FILE_OPEN_ATTRIBUTES;
 
@@ -1452,7 +1448,6 @@ int32_t SYS_FS_FileSeek
     SYS_FS_FILE_SEEK_CONTROL whence
 );
 
-<#if SYS_FS_FAT_READONLY == false>
 //******************************************************************************
 /* Function:
     int32_t SYS_FS_FileTell
@@ -1623,7 +1618,6 @@ bool SYS_FS_FileEOF
 (
     SYS_FS_HANDLE handle
 );
-</#if>
 
 //******************************************************************************
 /* Function:
@@ -2171,7 +2165,6 @@ SYS_FS_RESULT SYS_FS_DirSearch
     SYS_FS_FSTAT *stat
 );
 
-<#if SYS_FS_FAT == true>
 //******************************************************************************
 /* Function:
     SYS_FS_RESULT SYS_FS_FileStringGet
@@ -2561,9 +2554,7 @@ SYS_FS_RESULT SYS_FS_DriveLabelGet
     char *buff,
     uint32_t *sn
 );
-</#if>
 
-<#if SYS_FS_FAT == true  && SYS_FS_FAT_READONLY == false>
 //******************************************************************************
 /* Function:
     size_t SYS_FS_FileWrite
@@ -3325,7 +3316,7 @@ SYS_FS_RESULT SYS_FS_DriveLabelSet
 );
 
 //******************************************************************************
-<#if SYS_FS_FAT_VERSION != "v0.11a">
+<#if SYS_FS_FAT == true && SYS_FS_FAT_VERSION != "v0.11a">
     <#lt>/* Function:
     <#lt>    SYS_FS_RESULT SYS_FS_DriveFormat
     <#lt>    (
@@ -3752,7 +3743,6 @@ SYS_FS_RESULT SYS_FS_DriveSectorGet
     uint32_t * totalSectors, 
     uint32_t * freeSectors
 );
-</#if>
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
