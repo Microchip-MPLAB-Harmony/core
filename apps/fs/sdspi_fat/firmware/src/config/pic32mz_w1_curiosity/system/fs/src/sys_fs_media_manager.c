@@ -42,6 +42,8 @@
 #include "system/fs/src/sys_fs_media_manager_local.h"
 #include "system/fs/src/sys_fs_local.h"
 #include "system/fs/fat_fs/file_system/ff.h"
+#include "system/cache/sys_cache.h"
+#include "sys/kmem.h"
 
 const char *gSYSFSVolumeName [] = {
     "nvm",
@@ -751,6 +753,12 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_SectorRead
          * */
     }
 
+    /* Perform Cache Invalidate on the client buffer if it is in cacheable address space */
+    if (IS_KVA0(dataBuffer) == true)
+    {
+        SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)dataBuffer, (numSectors * mediaReadBlockSize));
+    }
+
     mediaObj->commandStatus = SYS_FS_MEDIA_COMMAND_IN_PROGRESS;
     mediaObj->driverFunctions->sectorRead (mediaObj->driverHandle, &(mediaObj->commandHandle), dataBuffer, sector, numSectors);
 
@@ -807,6 +815,12 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_Read
 
     startAddress = mediaObj->driverFunctions->addressGet(mediaObj->driverHandle);
     address = (uint32_t)source - (uint32_t)startAddress;
+
+    /* Perform Cache Invalidate on the client buffer if it is in cacheable address space */
+    if (IS_KVA0(destination) == true)
+    {
+        SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)destination, nBytes);
+    }
 
     mediaObj->commandStatus = SYS_FS_MEDIA_COMMAND_IN_PROGRESS;
     mediaObj->driverFunctions->Read(mediaObj->driverHandle, &(mediaObj->commandHandle), destination, address, nBytes);
@@ -886,6 +900,11 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_SectorWrite
 
     if ((sectorsPerBlock == 1) || (blocksPerSector > 0))
     {
+        /* Perform Cache Clean on the client buffer if it is in cacheable address space */
+        if (IS_KVA0(dataBuffer) == true)
+        {
+            SYS_CACHE_CleanDCache_by_Addr((uint32_t *)dataBuffer, (numSectors * mediaWriteBlockSize));
+        }
         mediaObj->commandStatus = SYS_FS_MEDIA_COMMAND_IN_PROGRESS;
         mediaObj->driverFunctions->sectorWrite (mediaObj->driverHandle, &(mediaObj->commandHandle), dataBuffer, sector, numSectors);
         return (mediaObj->commandHandle);
@@ -944,6 +963,11 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_SectorWrite
                 /* Since the whole block is being updated, there is no need to
                  * perform a read-modify-write operation of the block. */
                 data = dataBuffer;
+                /* Perform Cache Clean on the client buffer if it is in cacheable address space */
+                if (IS_KVA0(dataBuffer) == true)
+                {
+                    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)dataBuffer, mediaWriteBlockSize);
+                }
             }
 
             if ((numSectors - numSectorsToWrite) == 0)

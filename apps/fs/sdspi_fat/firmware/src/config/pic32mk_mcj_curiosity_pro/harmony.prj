@@ -93,8 +93,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mk_mcj_curiosity_pro/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">5BDBE45E90A7A931C69474A6902710E2</GeneratedChecksum>
-          <UserChecksum dnOrder="6">5BDBE45E90A7A931C69474A6902710E2</UserChecksum>
+          <GeneratedChecksum dnOrder="5">E07EB201FBAA493DDF94CDB702764111</GeneratedChecksum>
+          <UserChecksum dnOrder="6">E07EB201FBAA493DDF94CDB702764111</UserChecksum>
         </File>
         <File dnOrder="10">
           <Type dnOrder="0">SOURCE</Type>
@@ -174,8 +174,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mk_mcj_curiosity_pro/system/fs/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/fs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">EB84B584E1B0856B3E349258138AA06D</GeneratedChecksum>
-          <UserChecksum dnOrder="6">EB84B584E1B0856B3E349258138AA06D</UserChecksum>
+          <GeneratedChecksum dnOrder="5">8A15CC53B14F63EE0CA63A9AB29791E1</GeneratedChecksum>
+          <UserChecksum dnOrder="6">8A15CC53B14F63EE0CA63A9AB29791E1</UserChecksum>
         </File>
         <File dnOrder="19">
           <Type dnOrder="0">SOURCE</Type>
@@ -183,8 +183,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mk_mcj_curiosity_pro/system/fs/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/fs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">AB781921C3F8BBA1FB639490FC5FDFBA</GeneratedChecksum>
-          <UserChecksum dnOrder="6">AB781921C3F8BBA1FB639490FC5FDFBA</UserChecksum>
+          <GeneratedChecksum dnOrder="5">E62E081A20EFF73AB7D56A3E353F8EAC</GeneratedChecksum>
+          <UserChecksum dnOrder="6">E62E081A20EFF73AB7D56A3E353F8EAC</UserChecksum>
         </File>
         <File dnOrder="20">
           <Type dnOrder="0">SOURCE</Type>
@@ -480,8 +480,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mk_mcj_curiosity_pro/system/fs/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/fs/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">142A5A13F2BF34D4AB4AFCA60961D312</GeneratedChecksum>
-          <UserChecksum dnOrder="6">142A5A13F2BF34D4AB4AFCA60961D312</UserChecksum>
+          <GeneratedChecksum dnOrder="5">67904617BD60BD3657328D85DC8C48F7</GeneratedChecksum>
+          <UserChecksum dnOrder="6">67904617BD60BD3657328D85DC8C48F7</UserChecksum>
         </File>
         <File dnOrder="53">
           <Type dnOrder="0">HEADER</Type>

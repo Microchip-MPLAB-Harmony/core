@@ -213,17 +213,17 @@ typedef enum
 
 // *****************************************************************************
 /* File formating partition rule
-    
+
 Summary:
     Specifes the partitioning rule.
-    
+
 Description:
     This type specifies the partitioning rule. When SYS_FS_FORMAT_FAT* format
     is specified, a primary partition occupying the entire disk space is
     created and then an FAT volume is created on the partition. When SYS_FS_FORMAT_ANY
     format is specified FAT FS code decides on the format. When SYS_FS_FORMAT_SFD
     format is specified, the FAT volume starts from the first sector of the physical drive.
-    
+
     The SYS_FS_FORMAT_FAT* partitioning is usually used for hard disk, MMC,
     SDC, CFC and U Disk. It can divide a physical drive into one or more
     partitions with a partition table on the MBR. However Windows does not
@@ -231,7 +231,7 @@ Description:
     non-partitioned method. The FAT volume starts from the first sector on the
     physical drive without partition table. It is usually used for floppy disk,
     micro drive, optical disk, and super-floppy media.
-    
+
     Note: The Values mentioned below should be aligned with values in ff.h
 */
 typedef enum
@@ -242,7 +242,7 @@ typedef enum
     SYS_FS_FORMAT_ANY      = 0x07,
     SYS_FS_FORMAT_SFD      = 0x08
 }SYS_FS_FORMAT;
-    
+
 // *****************************************************************************
 /* Format parameter structure */
 typedef struct {
