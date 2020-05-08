@@ -94,8 +94,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">22AED9169954030A7957BF6074018882</GeneratedChecksum>
-          <UserChecksum dnOrder="6">22AED9169954030A7957BF6074018882</UserChecksum>
+          <GeneratedChecksum dnOrder="5">998FC1E6F08F6D37C6FCA895B36996CB</GeneratedChecksum>
+          <UserChecksum dnOrder="6">998FC1E6F08F6D37C6FCA895B36996CB</UserChecksum>
         </File>
         <File dnOrder="10">
           <Type dnOrder="0">SOURCE</Type>
@@ -166,8 +166,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek/system/fs/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/fs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">EB84B584E1B0856B3E349258138AA06D</GeneratedChecksum>
-          <UserChecksum dnOrder="6">EB84B584E1B0856B3E349258138AA06D</UserChecksum>
+          <GeneratedChecksum dnOrder="5">8A15CC53B14F63EE0CA63A9AB29791E1</GeneratedChecksum>
+          <UserChecksum dnOrder="6">8A15CC53B14F63EE0CA63A9AB29791E1</UserChecksum>
         </File>
         <File dnOrder="18">
           <Type dnOrder="0">SOURCE</Type>
@@ -175,8 +175,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek/system/fs/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/fs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">AB781921C3F8BBA1FB639490FC5FDFBA</GeneratedChecksum>
-          <UserChecksum dnOrder="6">AB781921C3F8BBA1FB639490FC5FDFBA</UserChecksum>
+          <GeneratedChecksum dnOrder="5">E62E081A20EFF73AB7D56A3E353F8EAC</GeneratedChecksum>
+          <UserChecksum dnOrder="6">E62E081A20EFF73AB7D56A3E353F8EAC</UserChecksum>
         </File>
         <File dnOrder="19">
           <Type dnOrder="0">SOURCE</Type>
@@ -706,8 +706,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/SAM9X60_DFP/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/SAM9X60_DFP/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">558B18358909F14245E06C0FAD10DC1A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">558B18358909F14245E06C0FAD10DC1A</UserChecksum>
+          <GeneratedChecksum dnOrder="5">C942079F798490B528063B0DC283EC4E</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C942079F798490B528063B0DC283EC4E</UserChecksum>
         </File>
         <File dnOrder="78">
           <Type dnOrder="0">HEADER</Type>
@@ -823,8 +823,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek/system/fs/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/fs/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">142A5A13F2BF34D4AB4AFCA60961D312</GeneratedChecksum>
-          <UserChecksum dnOrder="6">142A5A13F2BF34D4AB4AFCA60961D312</UserChecksum>
+          <GeneratedChecksum dnOrder="5">67904617BD60BD3657328D85DC8C48F7</GeneratedChecksum>
+          <UserChecksum dnOrder="6">67904617BD60BD3657328D85DC8C48F7</UserChecksum>
         </File>
         <File dnOrder="91">
           <Type dnOrder="0">HEADER</Type>
