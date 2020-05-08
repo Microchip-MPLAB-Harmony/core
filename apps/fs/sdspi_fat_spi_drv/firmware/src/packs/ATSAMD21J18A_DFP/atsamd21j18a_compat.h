@@ -1,15 +1,17 @@
 /*******************************************************************************
-  Device Header File
+  Device compatibility Header File
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    device.h
+    atsamd21j18a_compat.h
 
   Summary:
-    This file includes the selected device from within the project.
-    The device will provide access to respective device packs.
+    This file includes deprecated macro names that are retained for the purpose
+    of compatibility with Harmony 3 Middleware. Users are discouraged from using
+    macros defined in this file. Recommend to use macros defined in the device
+    header file instead.
 
   Description:
     None
@@ -18,7 +20,7 @@
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -41,8 +43,22 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
-#include "atsamd21j18a.h"
-#include "device_cache.h"
-#include "atsamd21j18a_compat.h"
-#include "toolchain_specifics.h"
+#ifndef ATSAMD21J18A_COMPAT_H
 
+#ifndef DEVICE_DESC_BANK_NUMBER
+#define DEVICE_DESC_BANK_NUMBER USB_DEVICE_DESC_BANK_NUMBER
+#endif //DEVICE_DESC_BANK_NUMBER
+
+#ifndef HOST_DESC_BANK_NUMBER
+#define HOST_DESC_BANK_NUMBER USB_HOST_DESC_BANK_NUMBER
+#endif //HOST_DESC_BANK_NUMBER
+
+#ifndef DEVICE_ENDPOINT_NUMBER
+#define DEVICE_ENDPOINT_NUMBER USB_DEVICE_ENDPOINT_NUMBER
+#endif //DEVICE_ENDPOINT_NUMBER
+
+#ifndef HOST_PIPE_NUMBER
+#define HOST_PIPE_NUMBER USB_HOST_PIPE_NUMBER
+#endif //HOST_PIPE_NUMBER
+
+#endif //ATSAMD21J18A_COMPAT_H
