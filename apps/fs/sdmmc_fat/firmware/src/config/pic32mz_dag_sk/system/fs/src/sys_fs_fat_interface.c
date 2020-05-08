@@ -406,6 +406,33 @@ int FATFS_closedir (
     return ((int)res);
 }
 
+int FATFS_chdir (
+    const char* path   /* Pointer to the directory path */
+)
+{
+    FRESULT res;
+
+    res = f_chdir((const TCHAR *)path);
+
+    return ((int)res);
+}
+
+int FATFS_chdrive (
+    uint8_t drv     /* Drive number */
+)
+{
+    FRESULT res;
+    TCHAR path[3];
+
+    path[0] = '0' + drv;
+    path[1] = ':';
+    path[2] = '\0';
+
+    res = f_chdrive((const TCHAR *)&path);
+
+    return ((int)res);
+}
+
 
 int FATFS_write (
     uintptr_t handle,   /* Pointer to the file object */
@@ -458,17 +485,6 @@ int FATFS_mkdir (
     return ((int)res);
 }
 
-int FATFS_chdir (
-    const char* path   /* Pointer to the directory path */
-)
-{
-    FRESULT res;
-
-    res = f_chdir((const TCHAR *)path);
-
-    return ((int)res);
-}
-
 int FATFS_unlink (
     const char* path       /* Pointer to the file or directory path */
 )
@@ -501,22 +517,6 @@ int FATFS_truncate (
     FIL *fp = &ptr->fileObj;
 
     res = f_truncate(fp);
-
-    return ((int)res);
-}
-
-int FATFS_chdrive (
-    uint8_t drv     /* Drive number */
-)
-{
-    FRESULT res;
-    TCHAR path[3];
-
-    path[0] = '0' + drv;
-    path[1] = ':';
-    path[2] = '\0';
-
-    res = f_chdrive((const TCHAR *)&path);
 
     return ((int)res);
 }

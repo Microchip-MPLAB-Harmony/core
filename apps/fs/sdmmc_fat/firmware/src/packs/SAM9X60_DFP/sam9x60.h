@@ -76,12 +76,12 @@ typedef enum IRQn
 {
 /******  SAM9X60 specific Interrupt Numbers ***********************************/
   EXT_FIQ_IRQn              =   0, /**< 0   Advanced Interrupt Controller (AIC) */
-  PMC_IRQn                  =   1, /**< 1   Shared between PMC RSTC RTT PIT WDT RTC (PMC) */
-  RSTC_IRQn                 =   1, /**< 1   Shared between PMC RSTC RTT PIT WDT RTC (RSTC) */
-  RTT_IRQn                  =   1, /**< 1   Shared between PMC RSTC RTT PIT WDT RTC (RTT) */
-  PIT_IRQn                  =   1, /**< 1   Shared between PMC RSTC RTT PIT WDT RTC (PIT) */
-  WDT_IRQn                  =   1, /**< 1   Shared between PMC RSTC RTT PIT WDT RTC (WDT) */
   RTC_IRQn                  =   1, /**< 1   Shared between PMC RSTC RTT PIT WDT RTC (RTC) */
+  RTT_IRQn                  =   1, /**< 1   Shared between PMC RSTC RTT PIT WDT RTC (RTT) */
+  WDT_IRQn                  =   1, /**< 1   Shared between PMC RSTC RTT PIT WDT RTC (WDT) */
+  RSTC_IRQn                 =   1, /**< 1   Shared between PMC RSTC RTT PIT WDT RTC (RSTC) */
+  PMC_IRQn                  =   1, /**< 1   Shared between PMC RSTC RTT PIT WDT RTC (PMC) */
+  PIT_IRQn                  =   1, /**< 1   Shared between PMC RSTC RTT PIT WDT RTC (PIT) */
   PIOA_IRQn                 =   2, /**< 2   Parallel Input/Output Controller (PIOA) */
   PIOB_IRQn                 =   3, /**< 3   Parallel Input/Output Controller (PIOB) */
   PIOC_IRQn                 =   4, /**< 4   Parallel Input/Output Controller (PIOC) */
@@ -102,6 +102,7 @@ typedef enum IRQn
   ADC_IRQn                  =  19, /**< 19  Analog-to-Digital Converter (ADC)   */
   XDMAC_IRQn                =  20, /**< 20  Extensible DMA Controller (XDMAC)   */
   MATRIX_IRQn               =  21, /**< 21  AHB Bus Matrix (MATRIX)             */
+  UHPHS_IRQn                =  22, /**< 22  UHPHS (UHPHS)                       */
   UDPHS_IRQn                =  23, /**< 23  USB High Speed Device Port (UDPHS)  */
   EMAC0_IRQn                =  24, /**< 24  Ethernet MAC 10/100 (EMAC0)         */
   LCDC_IRQn                 =  25, /**< 25  LCD Controller (LCDC)               */
@@ -129,8 +130,8 @@ typedef enum IRQn
   DBGU_IRQn                 =  47, /**< 47  Debug Unit (DBGU)                   */
   PMECC_IRQn                =  48, /**< 48  Shared between PMECC PMERRLOC (PMECC) */
   PMERRLOC_IRQn             =  48, /**< 48  Shared between PMECC PMERRLOC (PMERRLOC) */
-  SDRAMC_IRQn               =  49, /**< 49  Shared between SDRAMC MPDDRC SMC (SDRAMC) */
   MPDDRC_IRQn               =  49, /**< 49  Shared between SDRAMC MPDDRC SMC (MPDDRC) */
+  SDRAMC_IRQn               =  49, /**< 49  Shared between SDRAMC MPDDRC SMC (SDRAMC) */
   SMC_IRQn                  =  49, /**< 49  Shared between SDRAMC MPDDRC SMC (SMC) */
 
   PERIPH_MAX_IRQn           =  49  /**< Max peripheral ID */

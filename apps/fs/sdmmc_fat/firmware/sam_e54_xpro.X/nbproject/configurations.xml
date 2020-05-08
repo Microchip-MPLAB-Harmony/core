@@ -135,6 +135,7 @@
             <itemPath>../src/packs/ATSAME54P20A_DFP/pio/same54p20a.h</itemPath>
           </logicalFolder>
           <itemPath>../src/packs/ATSAME54P20A_DFP/device.h</itemPath>
+          <itemPath>../src/packs/ATSAME54P20A_DFP/atsame54p20a_compat.h</itemPath>
           <itemPath>../src/packs/ATSAME54P20A_DFP/atsame54p20a.h</itemPath>
         </logicalFolder>
         <logicalFolder displayName="CMSIS" name="f2" projectFiles="true">
@@ -192,6 +193,8 @@
         </logicalFolder>
       </logicalFolder>
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_e54_xpro/harmony.prj</itemPath>
+      <itemPath>../../../../../../mhc/../core/apps/fs/sdmmc_fat/firmware/src/config/sam_e54_xpro/sam_e54_xpro.xml</itemPath>
     </logicalFolder>
     <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">

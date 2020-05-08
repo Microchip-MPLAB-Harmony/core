@@ -121,8 +121,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult_freertos_keil/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">624A6251950F64563B195881A26876D2</GeneratedChecksum>
-          <UserChecksum dnOrder="6">624A6251950F64563B195881A26876D2</UserChecksum>
+          <GeneratedChecksum dnOrder="5">4829A83E5B2CCBAD4D37F8056FA9D4D2</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4829A83E5B2CCBAD4D37F8056FA9D4D2</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
@@ -274,8 +274,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult_freertos_keil/system/fs/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/fs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">A8EAD4F4DF812FF22482B1E6CD2D450C</GeneratedChecksum>
-          <UserChecksum dnOrder="6">A8EAD4F4DF812FF22482B1E6CD2D450C</UserChecksum>
+          <GeneratedChecksum dnOrder="5">8FA22626E2C716F0749A4BA7D2294539</GeneratedChecksum>
+          <UserChecksum dnOrder="6">8FA22626E2C716F0749A4BA7D2294539</UserChecksum>
         </File>
         <File dnOrder="30">
           <Type dnOrder="0">SOURCE</Type>
@@ -283,8 +283,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult_freertos_keil/system/fs/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/fs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">AB781921C3F8BBA1FB639490FC5FDFBA</GeneratedChecksum>
-          <UserChecksum dnOrder="6">AB781921C3F8BBA1FB639490FC5FDFBA</UserChecksum>
+          <GeneratedChecksum dnOrder="5">E62E081A20EFF73AB7D56A3E353F8EAC</GeneratedChecksum>
+          <UserChecksum dnOrder="6">E62E081A20EFF73AB7D56A3E353F8EAC</UserChecksum>
         </File>
         <File dnOrder="31">
           <Type dnOrder="0">SOURCE</Type>
@@ -1075,8 +1075,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult_freertos_keil/system/fs/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/fs/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">142A5A13F2BF34D4AB4AFCA60961D312</GeneratedChecksum>
-          <UserChecksum dnOrder="6">142A5A13F2BF34D4AB4AFCA60961D312</UserChecksum>
+          <GeneratedChecksum dnOrder="5">67904617BD60BD3657328D85DC8C48F7</GeneratedChecksum>
+          <UserChecksum dnOrder="6">67904617BD60BD3657328D85DC8C48F7</UserChecksum>
         </File>
         <File dnOrder="119">
           <Type dnOrder="0">HEADER</Type>
@@ -1307,11 +1307,11 @@
     </Manifest>
     <Settings dnOrder="5">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAME70_DFP\4.2.62\same70b\atdf\ATSAME70Q21B.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAME70_DFP\4.3.67\same70b\atdf\ATSAME70Q21B.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
-      <Setting dnOrder="4" key="MERGE_STRATEGY" value="OVERWRITE"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;net;"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
+      <Setting dnOrder="5" key="PackageFilter" value="aws_cloud;bootloader;bsp;core;crypto;cryptoauthlib;csp;expresslogic_threadx;gfx;gfx_apps;net;usb;"/>
       <Setting dnOrder="6" key="TRUSTZONE" value="false"/>
     </Settings>
   </Configurator>
