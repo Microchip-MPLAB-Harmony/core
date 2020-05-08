@@ -50,6 +50,7 @@
 #include <stdbool.h>
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/gpio/plib_gpio.h"
+#include "peripheral/cache/plib_cache.h"
 #include "peripheral/evic/plib_evic.h"
 #include "driver/memory/drv_memory.h"
 #include "driver/sst26/drv_sst26.h"
@@ -68,6 +69,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "system/int/sys_int.h"
+#include "system/cache/sys_cache.h"
 #include "osal/osal.h"
 #include "app_sst26.h"
 #include "app_nvm.h"

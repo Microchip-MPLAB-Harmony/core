@@ -62,6 +62,10 @@ int FATFS_readdir (uintptr_t handle, uintptr_t fno);
 
 int FATFS_closedir (uintptr_t handle);
 
+int FATFS_chdir (const char* path);
+
+int FATFS_chdrive (uint8_t drv);
+
 int FATFS_write (uintptr_t handle, const void* buff, uint32_t btw, uint32_t* bw);
 
 int FATFS_getfree (const char* path, uint32_t* nclst, FATFS** fatfs);
@@ -74,15 +78,11 @@ uint32_t FATFS_size(uintptr_t handle);
 
 int FATFS_mkdir (const char* path);
 
-int FATFS_chdir (const char* path);
-
 int FATFS_unlink (const char* path);
 
 int FATFS_setlabel (const char* label);
 
 int FATFS_truncate (uintptr_t handle);
-
-int FATFS_chdrive (uint8_t drv);
 
 int FATFS_chmod (const char* path, uint8_t attr, uint8_t mask);
 
