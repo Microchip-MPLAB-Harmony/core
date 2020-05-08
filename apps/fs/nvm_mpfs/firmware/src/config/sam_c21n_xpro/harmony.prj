@@ -66,8 +66,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_c21n_xpro/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">D32C11F172CFECD729778868990FAEDB</GeneratedChecksum>
-          <UserChecksum dnOrder="6">D32C11F172CFECD729778868990FAEDB</UserChecksum>
+          <GeneratedChecksum dnOrder="5">B78FF8DBC0B0B62E9230F6E2FA72E014</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B78FF8DBC0B0B62E9230F6E2FA72E014</UserChecksum>
         </File>
         <File dnOrder="7">
           <Type dnOrder="0">SOURCE</Type>
@@ -156,8 +156,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_c21n_xpro/system/fs/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/fs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">2DE559A4374D6A8BE9A2F7F05107B333</GeneratedChecksum>
-          <UserChecksum dnOrder="6">2DE559A4374D6A8BE9A2F7F05107B333</UserChecksum>
+          <GeneratedChecksum dnOrder="5">2B95B9DCCF74E906AF348ED856C1B288</GeneratedChecksum>
+          <UserChecksum dnOrder="6">2B95B9DCCF74E906AF348ED856C1B288</UserChecksum>
         </File>
         <File dnOrder="17">
           <Type dnOrder="0">SOURCE</Type>
@@ -741,8 +741,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_c21n_xpro/system/fs/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/fs/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">60FF10EB243956656CE3A9E974A4FD88</GeneratedChecksum>
-          <UserChecksum dnOrder="6">60FF10EB243956656CE3A9E974A4FD88</UserChecksum>
+          <GeneratedChecksum dnOrder="5">46C0F4FD3C907FCA45FCE7ADEE784526</GeneratedChecksum>
+          <UserChecksum dnOrder="6">46C0F4FD3C907FCA45FCE7ADEE784526</UserChecksum>
         </File>
         <File dnOrder="82">
           <Type dnOrder="0">HEADER</Type>
