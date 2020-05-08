@@ -43,5 +43,6 @@
 
 #include "atsamda1j16b.h"
 #include "device_cache.h"
+#include "atsamda1j16b_compat.h"
 #include "toolchain_specifics.h"
 

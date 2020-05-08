@@ -1133,9 +1133,20 @@ int32_t SYS_FS_FileSeek
         return -1;
     }
 
-    if ((obj->mountPoint->fsFunctions->seek == NULL) || 
-        (obj->mountPoint->fsFunctions->tell == NULL) ||
-        (obj->mountPoint->fsFunctions->size == NULL))
+    if (obj->mountPoint->fsFunctions->seek == NULL)
+    {
+        /* The function is not supported in the native file system. */
+        obj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+        return -1;
+    }
+
+    if (((whence == SYS_FS_SEEK_CUR) && (obj->mountPoint->fsFunctions->tell == NULL)) || 
+        ((whence == SYS_FS_SEEK_END) && (obj->mountPoint->fsFunctions->size == NULL)))
+    {
+        /* The function is not supported in the native file system. */
+        obj->errorValue = SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS;
+        return -1;
+    }
 
     /* Clear out the error. */
     obj->errorValue = SYS_FS_ERROR_OK;
@@ -2313,8 +2324,7 @@ SYS_FS_RESULT SYS_FS_DriveLabelGet
 
     return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
 }
-
-//******************************************************************************
+ //******************************************************************************
 /* Function:
     size_t SYS_FS_FileWrite
     (
@@ -3551,8 +3561,7 @@ SYS_FS_RESULT SYS_FS_DriveSectorGet
 
     return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
 }
-
-/*************************************************************************
+  /*************************************************************************
 * END OF sys_fs.c
 ***************************************************************************/
 
