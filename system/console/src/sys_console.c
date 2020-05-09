@@ -54,8 +54,16 @@
 // *****************************************************************************
 
 #include "system/console/sys_console.h"
+#include "configuration.h"
+#include "osal/osal.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdarg.h>
 
 static SYS_CONSOLE_OBJECT_INSTANCE consoleDeviceInstance[SYS_CONSOLE_DEVICE_MAX_INSTANCES];
+static char consolePrintBuffer[SYS_CONSOLE_PRINT_BUFFER_SIZE];
+static bool isConsoleMutexCreated = false;
+static OSAL_MUTEX_DECLARE(consolePrintBufferMutex);
 
 #define SYS_CONSOLE_GET_INSTANCE(index)    (index >= SYS_CONSOLE_DEVICE_MAX_INSTANCES)? NULL : &consoleDeviceInstance[index]
 
@@ -66,6 +74,18 @@ SYS_MODULE_OBJ SYS_CONSOLE_Initialize(
 {
     const SYS_CONSOLE_INIT* initConfig = (const SYS_CONSOLE_INIT* )init;
     SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj;
+
+    if (isConsoleMutexCreated == false)
+    {
+        if(OSAL_MUTEX_Create(&(consolePrintBufferMutex)) != OSAL_RESULT_TRUE)
+        {
+            return SYS_MODULE_OBJ_INVALID;
+        }
+        else
+        {
+            isConsoleMutexCreated = true;
+        }
+    }
 
     /* Confirm valid arguments */
     if (index >= SYS_CONSOLE_DEVICE_MAX_INSTANCES || init == NULL)
@@ -132,16 +152,16 @@ SYS_STATUS SYS_CONSOLE_Status ( SYS_MODULE_OBJ object )
 
 SYS_CONSOLE_HANDLE SYS_CONSOLE_HandleGet( const SYS_MODULE_INDEX index)
 {
-	SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(index);
 
     if (pConsoleObj)
     {
-		return (SYS_CONSOLE_HANDLE) index;
-	}
-	else
-	{
-		return (SYS_CONSOLE_HANDLE)SYS_CONSOLE_HANDLE_INVALID;
-	}
+        return (SYS_CONSOLE_HANDLE) index;
+    }
+    else
+    {
+        return (SYS_CONSOLE_HANDLE)SYS_CONSOLE_HANDLE_INVALID;
+    }
 }
 
 SYS_CONSOLE_DEVICE SYS_CONSOLE_DeviceGet( const SYS_CONSOLE_HANDLE handle)
@@ -292,6 +312,63 @@ ssize_t SYS_CONSOLE_WriteCountGet(const SYS_CONSOLE_HANDLE handle)
     {
         return -1;
     }
+}
+
+void SYS_CONSOLE_Print(const SYS_CONSOLE_HANDLE handle, const char *format, ...)
+{
+    size_t len = 0;
+    va_list args = {0};
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
+
+    if (pConsoleObj == NULL)
+    {
+        return;
+    }
+
+    if ((pConsoleObj->status == SYS_STATUS_UNINITIALIZED) || (pConsoleObj->devDesc == NULL))
+    {
+        return;
+    }
+
+    /* Must protect the common print buffer from multiple threads */
+    if(OSAL_MUTEX_Lock(&consolePrintBufferMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
+    {
+        return;
+    }
+
+    /* Get the variable arguments in va_list */
+    va_start( args, format );
+
+    len = vsnprintf(consolePrintBuffer, SYS_CONSOLE_PRINT_BUFFER_SIZE, format, args);
+
+    va_end( args );
+
+    if ((len > 0) && (len < SYS_CONSOLE_PRINT_BUFFER_SIZE))
+    {
+        consolePrintBuffer[len] = '\0';
+
+        pConsoleObj->devDesc->write(pConsoleObj->devIndex, consolePrintBuffer, len);
+    }
+
+    /* Release mutex */
+    OSAL_MUTEX_Unlock(&consolePrintBufferMutex);
+}
+
+void SYS_CONSOLE_Message(const SYS_CONSOLE_HANDLE handle, const char *message)
+{
+    SYS_CONSOLE_OBJECT_INSTANCE* pConsoleObj = SYS_CONSOLE_GET_INSTANCE(handle);
+
+    if (pConsoleObj == NULL)
+    {
+        return;
+    }
+
+    if (pConsoleObj->status == SYS_STATUS_UNINITIALIZED || pConsoleObj->devDesc == NULL)
+    {
+        return;
+    }
+
+    pConsoleObj->devDesc->write(pConsoleObj->devIndex, message, strlen(message));
 }
 
 bool SYS_CONSOLE_Flush(const SYS_CONSOLE_HANDLE handle)

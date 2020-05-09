@@ -86,6 +86,12 @@ def instantiateComponent(consoleComponent):
     consoleUSBConnectionCounter.setUseSingleDynamicValue(True)
     consoleUSBConnectionCounter.setReadOnly(True)
 
+    consolePrintBufferSize = consoleComponent.createIntegerSymbol("SYS_CONSOLE_PRINT_BUFFER_SIZE", None)
+    consolePrintBufferSize.setLabel("Console Print Buffer Size (128-8192)")
+    consolePrintBufferSize.setMin(128)
+    consolePrintBufferSize.setMax(8192)
+    consolePrintBufferSize.setDefaultValue(200)
+
     consoleUARTConnectionEnable = consoleComponent.createBooleanSymbol("SYS_CONSOLE_UART_CONNECTION_COUNTER_UPDATE", None)
     consoleUARTConnectionEnable.setVisible(False)
     consoleUARTConnectionEnable.setDependencies(updateConsoleConnectionCounter, ["SYS_CONSOLE_UART_CONNECTION_COUNTER"])
