@@ -50,13 +50,7 @@ def instantiateComponent(debugComponent):
 
     debugLevel = debugComponent.createComboSymbol("SYS_DEBUG_LEVEL", None, ["SYS_ERROR_FATAL", "SYS_ERROR_ERROR", "SYS_ERROR_WARNING", "SYS_ERROR_INFO", "SYS_ERROR_DEBUG"])
     debugLevel.setLabel("Debug Level")
-    debugLevel.setDefaultValue("SYS_ERROR_DEBUG")
-
-    debugPrintBufferSize = debugComponent.createIntegerSymbol("SYS_DEBUG_PRINT_BUFFER_SIZE", None)
-    debugPrintBufferSize.setLabel("Debug Print Buffer Size (128-8192)")
-    debugPrintBufferSize.setMin(128)
-    debugPrintBufferSize.setMax(8192)
-    debugPrintBufferSize.setDefaultValue(200)
+    debugLevel.setDefaultValue("SYS_ERROR_DEBUG")   
 
     debugUseConsole = debugComponent.createBooleanSymbol("SYS_DEBUG_USE_CONSOLE", None)
     debugUseConsole.setLabel("Use Console for Debug ?")
