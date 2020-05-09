@@ -964,7 +964,7 @@ static int StringToArgs(char *pRawString, char *argv[]) {
     *pRawString++ = '\0';
   }
 
-  SYS_PRINT("\n\r Too many arguments. Maximum argus supported is %d!\r\n", MAX_CMD_ARGS);
+  SYS_CONSOLE_Print(_cmdInitData.consoleIndex, "\n\r Too many arguments. Maximum argus supported is %d!\r\n", MAX_CMD_ARGS);
 
   return (0);
 }
