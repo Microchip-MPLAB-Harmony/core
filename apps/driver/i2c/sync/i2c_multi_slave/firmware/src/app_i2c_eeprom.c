@@ -55,7 +55,6 @@
 #include "app_i2c_temp_sensor.h"
 #include "osal/osal.h"
 #include "system/console/sys_console.h"
-#include "system/debug/sys_debug.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -164,7 +163,7 @@ void APP_I2C_EEPROM_Tasks ( void )
             /* Wait for the temperature write request */
             OSAL_SEM_Pend( &temperatureReady, OSAL_WAIT_FOREVER );
 
-            SYS_PRINT("Writing temperature to EEPROM...");
+            SYS_CONSOLE_PRINT("Writing temperature to EEPROM...");
 
             appEEPROMData.txBuffer[0] = APP_EEPROM_START_MEMORY_ADDR + appEEPROMData.currentWriteIndex;
             appEEPROMData.txBuffer[1] = APP_TEMPERATURE_SENSOR_GetTemperature();
@@ -186,7 +185,7 @@ void APP_I2C_EEPROM_Tasks ( void )
             /* Poll the EEPROM status. Perform a dummy write. If EEPROM is busy, it will NACK the I2C transfer */
             while (DRV_I2C_WriteTransfer(appEEPROMData.drvI2CHandle, APP_EEPROM_AT30TSE75X_SLAVE_ADDR, (void *)&dummyData, 1 ) == false);
 
-            SYS_PRINT("Done!!!\r\n\r\n");
+            SYS_CONSOLE_PRINT("Done!!!\r\n\r\n");
 
             /* Check if user requested to read the EEPROM data? */
 			if (SYS_CONSOLE_Read(appEEPROMData.consoleHandle, &appEEPROMData.consoleData, 1 ) == 1)
@@ -197,7 +196,7 @@ void APP_I2C_EEPROM_Tasks ( void )
 
         case APP_I2C_EEPROM_STATE_READ:
 
-            SYS_PRINT("Reading last 5 temperature values from EEPROM...\r\n");
+            SYS_CONSOLE_PRINT("Reading last 5 temperature values from EEPROM...\r\n");
 
             /* Read back data from EEPROM */
             appEEPROMData.txBuffer[0] = APP_EEPROM_START_MEMORY_ADDR;
@@ -218,17 +217,17 @@ void APP_I2C_EEPROM_Tasks ( void )
             for (nTempDataPrinted = 0, i = appEEPROMData.currentWriteIndex; \
                     nTempDataPrinted < APP_EEPROM_NUM_TEMP_VALUES_TO_SAVE; i++, nTempDataPrinted++)
             {
-                SYS_PRINT("%d C\r\n", appEEPROMData.rxBuffer[(i%APP_EEPROM_NUM_TEMP_VALUES_TO_SAVE)]);
+                SYS_CONSOLE_PRINT("%d C\r\n", appEEPROMData.rxBuffer[(i%APP_EEPROM_NUM_TEMP_VALUES_TO_SAVE)]);
             }
 
-            SYS_PRINT("\r\n");
+            SYS_CONSOLE_PRINT("\r\n");
 
             /* Go back waiting for a temperature write request */
 			appEEPROMData.state = APP_I2C_EEPROM_STATE_WRITE;      
             break;
 
         case APP_I2C_EEPROM_STATE_ERROR:
-            SYS_PRINT("EEPROM Task Error \r\n");
+            SYS_CONSOLE_PRINT("EEPROM Task Error \r\n");
             appEEPROMData.state = APP_I2C_EEPROM_STATE_IDLE;   
             break;
             

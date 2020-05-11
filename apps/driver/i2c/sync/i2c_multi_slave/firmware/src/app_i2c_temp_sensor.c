@@ -52,7 +52,7 @@
 // *****************************************************************************
 
 #include "app_i2c_temp_sensor.h"
-#include "system/debug/sys_debug.h"
+#include "system/console/sys_console.h"
 #include "osal/osal.h"
 
 // *****************************************************************************
@@ -165,7 +165,7 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
             /* Read temperature readings every 1000 ms */
             vTaskDelay(APP_TEMP_READ_RATE_MS/portTICK_PERIOD_MS);
 
-            SYS_PRINT("Reading temperature from sensor...");
+            SYS_CONSOLE_PRINT("Reading temperature from sensor...");
 
             registerAddr = APP_TEMP_TEMPERATURE_REG_ADDR;
 
@@ -179,7 +179,7 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
                 temp = (temp >> 7) * 0.5;
                 appTempSensorData.temperature = (uint8_t)temp;
 
-                SYS_PRINT("%d C\r\n", appTempSensorData.temperature);
+                SYS_CONSOLE_PRINT("%d C\r\n", appTempSensorData.temperature);
 
                 /* Notify the EEPROM task to write the temperature value to EEPROM */
                 OSAL_SEM_Post(&temperatureReady);
@@ -191,7 +191,7 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
             break;
 
         case APP_I2C_TEMP_SENSOR_STATE_ERROR:
-            SYS_PRINT("Temperature Sensor Task Error \r\n");
+            SYS_CONSOLE_PRINT("Temperature Sensor Task Error \r\n");
             appTempSensorData.state = APP_I2C_TEMP_SENSOR_STATE_IDLE;            
             break;
             

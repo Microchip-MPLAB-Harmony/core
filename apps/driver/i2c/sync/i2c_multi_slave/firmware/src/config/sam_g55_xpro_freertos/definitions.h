@@ -56,7 +56,6 @@
 #include "peripheral/efc/plib_efc.h"
 #include "peripheral/flexcom/twi/plib_flexcom6_twi.h"
 #include "driver/i2c/drv_i2c.h"
-#include "system/debug/sys_debug.h"
 #include "bsp/bsp.h"
 #include "system/console/sys_console.h"
 #include "system/console/src/sys_console_uart_definitions.h"
@@ -190,8 +189,6 @@ typedef struct
 {
     /* I2C0 Driver Object */
     SYS_MODULE_OBJ drvI2C0;
-
-    SYS_MODULE_OBJ  sysDebug;
 
     SYS_MODULE_OBJ  sysConsole0;
 
