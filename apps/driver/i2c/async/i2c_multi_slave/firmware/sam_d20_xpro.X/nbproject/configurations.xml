@@ -132,6 +132,9 @@
                    displayName="Important Files"
                    projectFiles="true">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_d20_xpro/harmony.prj</itemPath>
+      <itemPath>../src/config/sam_d20_xpro/sam_d20_xpro.xml</itemPath>
+      <itemPath>../src/config/sam_d20_xpro/harmony.prj</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -183,21 +186,17 @@
             <itemPath>../src/config/sam_d20_xpro/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
-            <logicalFolder name="f3" displayName="console" projectFiles="true">
+            <logicalFolder name="f2" displayName="console" projectFiles="true">
               <itemPath>../src/config/sam_d20_xpro/system/console/src/sys_console.c</itemPath>
               <itemPath>../src/config/sam_d20_xpro/system/console/src/sys_console_local.h</itemPath>
               <itemPath>../src/config/sam_d20_xpro/system/console/src/sys_console_uart.h</itemPath>
               <itemPath>../src/config/sam_d20_xpro/system/console/src/sys_console_uart_definitions.h</itemPath>
               <itemPath>../src/config/sam_d20_xpro/system/console/src/sys_console_uart.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="debug" projectFiles="true">
-              <itemPath>../src/config/sam_d20_xpro/system/debug/src/sys_debug_local.h</itemPath>
-              <itemPath>../src/config/sam_d20_xpro/system/debug/src/sys_debug.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f4" displayName="int" projectFiles="true">
+            <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_d20_xpro/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="time" projectFiles="true">
+            <logicalFolder name="f1" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_d20_xpro/system/time/src/sys_time.c</itemPath>
             </logicalFolder>
           </logicalFolder>
@@ -232,7 +231,7 @@
       </toolsSet>
       <packs>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
-        <pack name="SAMD20_DFP" vendor="Microchip" version="3.2.51"/>
+        <pack name="SAMD20_DFP" vendor="Microchip" version="3.3.56"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -443,6 +442,8 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-3ffff"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="D:/harmony/core/apps/driver/i2c/async/i2c_multi_slave/firmware/sam_d20_xpro.X/debug/sam_d20_xpro/sam_d20_xpro_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"

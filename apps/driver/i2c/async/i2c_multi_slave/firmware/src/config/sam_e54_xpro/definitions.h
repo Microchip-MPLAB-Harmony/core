@@ -58,7 +58,6 @@
 #include "peripheral/cmcc/plib_cmcc.h"
 #include "peripheral/tc/plib_tc0.h"
 #include "driver/i2c/drv_i2c.h"
-#include "system/debug/sys_debug.h"
 #include "system/time/sys_time.h"
 #include "bsp/bsp.h"
 #include "system/console/sys_console.h"
@@ -191,8 +190,6 @@ typedef struct
 {
     /* I2C0 Driver Object */
     SYS_MODULE_OBJ drvI2C0;
-
-    SYS_MODULE_OBJ  sysDebug;
 
     SYS_MODULE_OBJ  sysTime;
     SYS_MODULE_OBJ  sysConsole0;

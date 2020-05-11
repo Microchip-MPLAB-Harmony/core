@@ -53,7 +53,7 @@
 // *****************************************************************************
 
 #include "app_i2c_temp_sensor.h"
-#include "system/debug/sys_debug.h"
+#include "system/console/sys_console.h"
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -200,7 +200,7 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
             {
                 appTempData.tmrExpired = false;
 
-                SYS_PRINT("Reading temperature from sensor...");
+                SYS_CONSOLE_PRINT("Reading temperature from sensor...");
 
                 /* Initiate a read transfer to read temperature value from temperature sensor */
                 appTempData.registerAddr = APP_TEMP_TEMPERATURE_REG_ADDR;
@@ -231,7 +231,7 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
                 temp = (temp >> 7) * 0.5;
                 appTempData.temperature = (uint8_t)temp;
 
-                SYS_PRINT("%d C\r\n", appTempData.temperature);
+                SYS_CONSOLE_PRINT("%d C\r\n", appTempData.temperature);
 
                 /* Notify EEPROM application that temperature data is available */
                 APP_EEPROM_Notify(appTempData.temperature);
@@ -241,7 +241,7 @@ void APP_I2C_TEMP_SENSOR_Tasks ( void )
             break;
 
         case APP_TEMP_STATE_ERROR:
-            SYS_PRINT("Temperature Sensor Task Error \r\n");
+            SYS_CONSOLE_PRINT("Temperature Sensor Task Error \r\n");
             appTempData.state = APP_TEMP_STATE_IDLE;
             break;
 

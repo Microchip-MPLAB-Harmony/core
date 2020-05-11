@@ -143,6 +143,8 @@
                    displayName="Important Files"
                    projectFiles="true">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_g55_xpro/harmony.prj</itemPath>
+      <itemPath>../src/config/sam_g55_xpro/sam_g55_xpro.xml</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -194,24 +196,20 @@
             <itemPath>../src/config/sam_g55_xpro/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
-            <logicalFolder name="f5" displayName="cache" projectFiles="true">
+            <logicalFolder name="f4" displayName="cache" projectFiles="true">
               <itemPath>../src/config/sam_g55_xpro/system/cache/sys_cache.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="console" projectFiles="true">
+            <logicalFolder name="f2" displayName="console" projectFiles="true">
               <itemPath>../src/config/sam_g55_xpro/system/console/src/sys_console.c</itemPath>
               <itemPath>../src/config/sam_g55_xpro/system/console/src/sys_console_local.h</itemPath>
               <itemPath>../src/config/sam_g55_xpro/system/console/src/sys_console_uart.h</itemPath>
               <itemPath>../src/config/sam_g55_xpro/system/console/src/sys_console_uart_definitions.h</itemPath>
               <itemPath>../src/config/sam_g55_xpro/system/console/src/sys_console_uart.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="debug" projectFiles="true">
-              <itemPath>../src/config/sam_g55_xpro/system/debug/src/sys_debug_local.h</itemPath>
-              <itemPath>../src/config/sam_g55_xpro/system/debug/src/sys_debug.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f4" displayName="int" projectFiles="true">
+            <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_g55_xpro/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="time" projectFiles="true">
+            <logicalFolder name="f1" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_g55_xpro/system/time/src/sys_time.c</itemPath>
             </logicalFolder>
           </logicalFolder>
@@ -458,7 +456,7 @@
         <property key="memories.programmemory.ranges" value="400000-47ffff"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programmerToGoFilePath"
-                  value="E:/projects/harmony_3/core/apps/driver/i2c/async/i2c_multi_slave/firmware/sam_g55_xpro.X/debug/sam_g55_xpro/sam_g55_xpro_ptg"/>
+                  value="D:/harmony/core/apps/driver/i2c/async/i2c_multi_slave/firmware/sam_g55_xpro.X/debug/sam_g55_xpro/sam_g55_xpro_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"

@@ -136,6 +136,8 @@
                    displayName="Important Files"
                    projectFiles="true">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_ha1_xpro/harmony.prj</itemPath>
+      <itemPath>../src/config/sam_ha1_xpro/sam_ha1_xpro.xml</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -187,21 +189,17 @@
             <itemPath>../src/config/sam_ha1_xpro/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
-            <logicalFolder name="f3" displayName="console" projectFiles="true">
+            <logicalFolder name="f2" displayName="console" projectFiles="true">
               <itemPath>../src/config/sam_ha1_xpro/system/console/src/sys_console.c</itemPath>
               <itemPath>../src/config/sam_ha1_xpro/system/console/src/sys_console_local.h</itemPath>
               <itemPath>../src/config/sam_ha1_xpro/system/console/src/sys_console_uart.h</itemPath>
               <itemPath>../src/config/sam_ha1_xpro/system/console/src/sys_console_uart_definitions.h</itemPath>
               <itemPath>../src/config/sam_ha1_xpro/system/console/src/sys_console_uart.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="debug" projectFiles="true">
-              <itemPath>../src/config/sam_ha1_xpro/system/debug/src/sys_debug_local.h</itemPath>
-              <itemPath>../src/config/sam_ha1_xpro/system/debug/src/sys_debug.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f4" displayName="int" projectFiles="true">
+            <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_ha1_xpro/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="time" projectFiles="true">
+            <logicalFolder name="f1" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_ha1_xpro/system/time/src/sys_time.c</itemPath>
             </logicalFolder>
           </logicalFolder>
@@ -229,7 +227,7 @@
         <targetDevice>ATSAMHA1G16AB</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>noID</platformTool>
+        <platformTool></platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.40</languageToolchainVersion>
         <platform>3</platform>
@@ -238,6 +236,8 @@
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
         <pack name="SAMHA1_DFP" vendor="Microchip" version="2.0.42"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>

@@ -120,6 +120,7 @@
             <itemPath>../src/packs/ATSAML21J18B_DFP/pio/saml21j18b.h</itemPath>
           </logicalFolder>
           <itemPath>../src/packs/ATSAML21J18B_DFP/device.h</itemPath>
+          <itemPath>../src/packs/ATSAML21J18B_DFP/atsaml21j18b_compat.h</itemPath>
           <itemPath>../src/packs/ATSAML21J18B_DFP/atsaml21j18b.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
@@ -147,6 +148,8 @@
                    displayName="Important Files"
                    projectFiles="true">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_l21_xpro/harmony.prj</itemPath>
+      <itemPath>../src/config/sam_l21_xpro/sam_l21_xpro.xml</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -201,21 +204,17 @@
             <itemPath>../src/config/sam_l21_xpro/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
-            <logicalFolder name="f3" displayName="console" projectFiles="true">
+            <logicalFolder name="f2" displayName="console" projectFiles="true">
               <itemPath>../src/config/sam_l21_xpro/system/console/src/sys_console.c</itemPath>
               <itemPath>../src/config/sam_l21_xpro/system/console/src/sys_console_local.h</itemPath>
               <itemPath>../src/config/sam_l21_xpro/system/console/src/sys_console_uart.h</itemPath>
               <itemPath>../src/config/sam_l21_xpro/system/console/src/sys_console_uart_definitions.h</itemPath>
               <itemPath>../src/config/sam_l21_xpro/system/console/src/sys_console_uart.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="debug" projectFiles="true">
-              <itemPath>../src/config/sam_l21_xpro/system/debug/src/sys_debug_local.h</itemPath>
-              <itemPath>../src/config/sam_l21_xpro/system/debug/src/sys_debug.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f4" displayName="int" projectFiles="true">
+            <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_l21_xpro/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="time" projectFiles="true">
+            <logicalFolder name="f1" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_l21_xpro/system/time/src/sys_time.c</itemPath>
             </logicalFolder>
           </logicalFolder>
@@ -249,8 +248,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
+        <pack name="SAML21_DFP" vendor="Microchip" version="3.2.62"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
-        <pack name="SAML21_DFP" vendor="Microchip" version="3.2.63"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
