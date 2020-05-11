@@ -166,6 +166,7 @@
                    displayName="Important Files"
                    projectFiles="true">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_e54_xpro/harmony.prj</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -481,7 +482,7 @@
         <property key="memories.programmemory.ranges" value="0-fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programmerToGoFilePath"
-                  value="E:/projects/harmony_3/core/apps/system/console_debug/sys_console_debug_usb_read_write/firmware/sam_e54_xpro.X/debug/sam_e54_xpro/sam_e54_xpro_ptg"/>
+                  value="D:/harmony/core/apps/system/console_debug/sys_console_debug_usb_read_write/firmware/sam_e54_xpro.X/debug/sam_e54_xpro/sam_e54_xpro_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"

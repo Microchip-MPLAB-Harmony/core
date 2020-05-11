@@ -53,6 +53,7 @@
 #include "app.h"
 #include "configuration.h"
 #include "system/debug/sys_debug.h"
+#include "system/console/sys_console.h"
 #include "bsp/bsp.h"
 
 // *****************************************************************************
@@ -119,16 +120,18 @@ void APP_Initialize ( void )
 
 static void APP_DebugAPIDemonstrate(void)
 {
-    SYS_MESSAGE("***This is USB Console Instance 0***\n\r");
-    SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, "\n\rTest Debug Message!");
-    SYS_DEBUG_PRINT(SYS_ERROR_ERROR, "\n\rTest Debug Print %d", 1);
-    SYS_PRINT("\n\rSys Print test %d, %s", 1, "str1");
-    SYS_PRINT("\n\rSys Print test %d, %s", 2, "str2");
+    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "***This is USB Console Instance 0***\n\r");
+    SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, "\n\rTest Debug Message!");    
+    SYS_DEBUG_PRINT(SYS_ERROR_ERROR, "\n\rSys Print test %d, %s", 1, "str1");
+    SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rSys Print test %d, %s", 2, "str2");
     /* Change the error level to only print the debug messages with error value set to SYS_ERROR_ERROR or lower */
     SYS_DEBUG_ErrorLevelSet(SYS_ERROR_ERROR);
 
     /* The below message should not get printed as "SYS_ERROR_DEBUG" is higher than "SYS_ERROR_ERROR" */
     SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, "\n\rThis message should not be printed!");
+    
+    /* Set the error level back to SYS_ERROR_DEBUG */
+    SYS_DEBUG_ErrorLevelSet(SYS_ERROR_DEBUG);
 }
 /******************************************************************************
   Function:
@@ -190,8 +193,9 @@ void APP_Tasks ( void )
             break;
 
         case APP_STATE_READ_FROM_CONSOLE:
-            SYS_PRINT("\n\rFree Space in RX Buffer = %d bytes", SYS_CONSOLE_ReadFreeBufferCountGet(appData.console0Handle));
-            SYS_PRINT("\n\rEnter %d characters:", USB_CONSOLE_NUM_BYTES_READ);
+            /* SYS_CONSOLE_PRINT and SYS_CONSOLE_MESSAGE print on the default console instance */
+            SYS_CONSOLE_PRINT("\n\rFree Space in RX Buffer = %d bytes", SYS_CONSOLE_ReadFreeBufferCountGet(appData.console0Handle));
+            SYS_CONSOLE_Print(appData.console0Handle, "\n\rEnter %d characters:", USB_CONSOLE_NUM_BYTES_READ);
             appData.state = APP_STATE_WAIT_READ_COMPLETE;
             break;
 
@@ -200,7 +204,7 @@ void APP_Tasks ( void )
 
             if (SYS_CONSOLE_ReadCountGet(appData.console0Handle) >= USB_CONSOLE_NUM_BYTES_READ)
             {
-                SYS_PRINT("\n\rFree Space in RX Buffer = %d bytes", SYS_CONSOLE_ReadFreeBufferCountGet(appData.console0Handle));
+                SYS_CONSOLE_PRINT("\n\rFree Space in RX Buffer = %d bytes", SYS_CONSOLE_ReadFreeBufferCountGet(appData.console0Handle));
 
                 /* USB_CONSOLE_NUM_BYTES_READ or more characters are available. Read the data in the application buffer. */
                 if (SYS_CONSOLE_Read(appData.console0Handle, usb_console_0_read_buffer, USB_CONSOLE_NUM_BYTES_READ) == USB_CONSOLE_NUM_BYTES_READ)
@@ -217,8 +221,8 @@ void APP_Tasks ( void )
         case APP_STATE_WRITE_RECEIVED_DATA:
             /* Demonstrate SYS_CONSOLE_WriteFreeBufferCountGet() and SYS_CONSOLE_Write() APIs */
 
-            SYS_PRINT("\n\rFree Space in TX Buffer = %d", SYS_CONSOLE_WriteFreeBufferCountGet(appData.console0Handle));
-            SYS_PRINT("\n\rReceived Characters:");
+            SYS_CONSOLE_PRINT("\n\rFree Space in TX Buffer = %d", SYS_CONSOLE_WriteFreeBufferCountGet(appData.console0Handle));
+            SYS_CONSOLE_MESSAGE("\n\rReceived Characters:");
             SYS_CONSOLE_Write(appData.console0Handle, usb_console_0_read_buffer, USB_CONSOLE_NUM_BYTES_READ);
 
             appData.state = APP_STATE_ECHO_TEST;
@@ -226,14 +230,14 @@ void APP_Tasks ( void )
 
         case APP_STATE_ECHO_TEST:
 
-            SYS_MESSAGE("\n\r\n\r***Echo Test*** \n\rEnter a character and it will be echoed back on USB Console Instance 1 \n\r");
+            SYS_CONSOLE_MESSAGE("\n\r\n\r***Echo Test*** \n\rEnter a character and it will be echoed back on USB Console Instance 1 \n\r");
 
             SYS_DEBUG_Redirect(SYS_CONSOLE_INDEX_1);
 
             /* All SYS Debug APIs output will now be re-directed to Console Instance 1 */
-            SYS_MESSAGE("\n\r Re-mapped Debug System Service to Console Instance - 1");
+            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\r Re-mapped Debug System Service to Console Instance - 1");
 
-            SYS_MESSAGE("\n\r\n\r***Echo Test*** \n\rEnter a character and it will be echoed back on USB Console Instance 0 \n\r");
+            SYS_CONSOLE_Message(appData.console1Handle, "\n\r\n\r***Echo Test*** \n\rEnter a character and it will be echoed back on USB Console Instance 0 \n\r");
 
             appData.state = APP_STATE_CONSOLE_READ_WRITE;
             break;

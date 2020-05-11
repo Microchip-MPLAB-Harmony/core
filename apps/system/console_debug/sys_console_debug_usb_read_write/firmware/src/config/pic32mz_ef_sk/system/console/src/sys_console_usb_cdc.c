@@ -114,6 +114,7 @@ USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
 {
     CONS_USB_CDC_INSTANCE* cdcInstance;
     USB_DEVICE_CDC_EVENT_DATA_READ_COMPLETE* eventDataRead;
+    USB_CDC_CONTROL_LINE_STATE* controlLineStateData;
 
     cdcInstance = (CONS_USB_CDC_INSTANCE *)userData;
 
@@ -148,7 +149,18 @@ USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
             /* This means the host is setting the control line state.
              * Read the control line state. We will accept this request
              * for now. */
-
+            
+            controlLineStateData = (USB_CDC_CONTROL_LINE_STATE *)pData;
+            
+            if (controlLineStateData->dtr == 1)
+            {
+                cdcInstance->isPortOpened = true;
+            }
+            else
+            {
+                cdcInstance->isPortOpened = false;                
+            }
+            
             USB_DEVICE_ControlStatus(gConsoleUSBCdcData.deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
 
             break;
@@ -224,7 +236,13 @@ void USBDeviceEventHandler
             break;
 
         case USB_DEVICE_EVENT_RESET:
-
+            
+            for (i = 0; i < SYS_CONSOLE_USB_CDC_MAX_INSTANCES; i++)
+            {
+                cdcInstance = CONSOLE_USB_CDC_GET_INSTANCE(i);
+                cdcInstance->isPortOpened = false;
+            }
+            
             gConsoleUSBCdcData.isConfigured = false;
 
             break;
@@ -240,14 +258,14 @@ void USBDeviceEventHandler
                  * Note how the cdcInstance object pointer is passed as the
                  * user data */
 
+                /* Mark that the device is now configured */
+                gConsoleUSBCdcData.isConfigured = true;
+                
                 for (i = 0; i < SYS_CONSOLE_USB_CDC_MAX_INSTANCES; i++)
                 {
                     cdcInstance = CONSOLE_USB_CDC_GET_INSTANCE(i);
                     USB_DEVICE_CDC_EventHandlerSet(cdcInstance->cdcInstanceIndex, USBDeviceCDCEventHandler, (uintptr_t)cdcInstance);
-                }
-
-                /* Mark that the device is now configured */
-                gConsoleUSBCdcData.isConfigured = true;
+                }                
             }
 
             break;
@@ -262,7 +280,15 @@ void USBDeviceEventHandler
         case USB_DEVICE_EVENT_POWER_REMOVED:
 
             /* VBUS is not available any more. Detach the device. */
-            USB_DEVICE_Detach(gConsoleUSBCdcData.deviceHandle);
+            USB_DEVICE_Detach(gConsoleUSBCdcData.deviceHandle);                       
+            
+            for (i = 0; i < SYS_CONSOLE_USB_CDC_MAX_INSTANCES; i++)
+            {
+                cdcInstance = CONSOLE_USB_CDC_GET_INSTANCE(i);
+                cdcInstance->isPortOpened = false;
+            }
+            
+            gConsoleUSBCdcData.isConfigured = false;
 
             break;
 
@@ -296,31 +322,23 @@ static void Console_USB_CDC_ResourceUnlock(CONS_USB_CDC_INSTANCE* cdcInstance)
     OSAL_MUTEX_Unlock(&(cdcInstance->mutexTransferObjects));
 }
 
-static bool Console_USB_CDC_Reset(void)
+static bool Console_USB_CDC_Reset(CONS_USB_CDC_INSTANCE* cdcInstance)
 {
     /* This function returns true if the device was reset  */
 
-    bool retVal;
-    CONS_USB_CDC_INSTANCE* cdcInstance;
-    uint32_t i;
+    bool retVal;    
 
     if(gConsoleUSBCdcData.isConfigured == false)
     {
-        /* Initialize all the USB CDC instances */
-        for (i = 0; i < SYS_CONSOLE_USB_CDC_MAX_INSTANCES; i++)
-        {
-            cdcInstance = CONSOLE_USB_CDC_GET_INSTANCE(i);
+        Console_USB_CDC_ResourceLock(cdcInstance);
 
-            Console_USB_CDC_ResourceLock(cdcInstance);
+        cdcInstance->state = CONSOLE_USB_CDC_STATE_WAIT_FOR_CONFIGURATION;
+        cdcInstance->readTransferHandle = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
+        cdcInstance->writeTransferHandle = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
+        cdcInstance->isReadComplete = true;
+        cdcInstance->isWriteComplete = true;
 
-            cdcInstance->state = CONSOLE_USB_CDC_STATE_WAIT_FOR_CONFIGURATION;
-            cdcInstance->readTransferHandle = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
-            cdcInstance->writeTransferHandle = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
-            cdcInstance->isReadComplete = true;
-            cdcInstance->isWriteComplete = true;
-
-            Console_USB_CDC_ResourceUnlock(cdcInstance);
-        }
+        Console_USB_CDC_ResourceUnlock(cdcInstance);
 
         retVal = true;
     }
@@ -765,6 +783,7 @@ void Console_USB_CDC_Initialize (uint32_t index, const void* initData)
     cdcInstance->writeTransferHandle    = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
     cdcInstance->isReadComplete         = true;
     cdcInstance->isWriteComplete        = true;
+	cdcInstance->isPortOpened			= false;
     cdcInstance->cdcReadBuffer          = consoleUSBCdcInitData->cdcReadBuffer;
     cdcInstance->cdcWriteBuffer         = consoleUSBCdcInitData->cdcWriteBuffer;
     cdcInstance->consoleReadBufferSize  = consoleUSBCdcInitData->consoleReadBufferSize;
@@ -844,7 +863,7 @@ void Console_USB_CDC_Tasks(uint32_t index, SYS_MODULE_OBJ object)
 
         case CONSOLE_USB_CDC_STATE_SCHEDULE_READ_WRITE:
 
-            if(Console_USB_CDC_Reset())
+            if(Console_USB_CDC_Reset(cdcInstance))
             {
                 break;
             }
@@ -868,7 +887,8 @@ void Console_USB_CDC_Tasks(uint32_t index, SYS_MODULE_OBJ object)
 
         case CONSOLE_USB_CDC_STATE_OPERATIONAL_ERROR:
             /* Try again */
-            cdcInstance->state = CONSOLE_USB_CDC_STATE_SCHEDULE_READ_WRITE;
+            Console_USB_CDC_Reset(cdcInstance);
+            cdcInstance->state = CONSOLE_USB_CDC_STATE_WAIT_FOR_CONFIGURATION;
             break;
 
         default:

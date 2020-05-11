@@ -145,6 +145,8 @@ typedef struct
     uint32_t                                rdOutIndex;
 
     bool                                    isWriteScheduled;
+	
+	bool									isPortOpened;
 
     /* Mutex to protect access to the shared variables from multiple threads */
     OSAL_MUTEX_DECLARE(mutexTransferObjects);

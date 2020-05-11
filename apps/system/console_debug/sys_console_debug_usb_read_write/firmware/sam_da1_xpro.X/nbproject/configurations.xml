@@ -144,6 +144,7 @@
                    displayName="Important Files"
                    projectFiles="true">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_da1_xpro/harmony.prj</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -240,8 +241,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAMDA1_DFP" vendor="Microchip" version="2.2.52"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
+        <pack name="SAMDA1_DFP" vendor="Microchip" version="2.2.52"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
