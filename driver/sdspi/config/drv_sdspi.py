@@ -721,7 +721,7 @@ def onAttachmentDisconnected(source, target):
             sdspiFsConnectionCounterDict = {}
             sdspiFsConnectionCounterDict = Database.sendMessage("drv_sdspi", "DRV_SDSPI_FS_CONNECTION_COUNTER_DEC", sdspiFsConnectionCounterDict)
 
-    localComponent.setSymbolValue("DRV_SDSPI_INTERFACE_TYPE", "")
+    
 
     # For Dependency Disonnected (SPI)
     if (connectID == "drv_sdspi_SPI_dependency"):
@@ -735,9 +735,11 @@ def onAttachmentDisconnected(source, target):
         plibUsed = localComponent.getSymbolByID("DRV_SDSPI_PLIB")
         plibUsed.clearValue()
         Database.setSymbolValue(remoteID.upper(), "SPI_DRIVER_CONTROLLED", False)
+        localComponent.setSymbolValue("DRV_SDSPI_INTERFACE_TYPE", "")
     elif (connectID == "drv_sdspi_DRV_SPI_dependency"):
 
         drvInstance = localComponent.getSymbolByID("DRV_SDSPI_SPI_DRIVER_INSTANCE")
         drvInstance.clearValue()
         result_dict = {}
         result_dict = Database.sendMessage("drv_sdspi", "DRV_SDSPI_SPI_DRIVER_CONNECTION_COUNTER_DEC", result_dict)
+        localComponent.setSymbolValue("DRV_SDSPI_INTERFACE_TYPE", "")
