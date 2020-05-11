@@ -210,8 +210,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mx470_curiosity_freertos/system/console/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/console/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">9F75BC5DF449CEE8E66F1017526B57AE</GeneratedChecksum>
-          <UserChecksum dnOrder="6">9F75BC5DF449CEE8E66F1017526B57AE</UserChecksum>
+          <GeneratedChecksum dnOrder="5">20C22A19D5DC74DEBFC4CCCA83B6F603</GeneratedChecksum>
+          <UserChecksum dnOrder="6">20C22A19D5DC74DEBFC4CCCA83B6F603</UserChecksum>
         </File>
         <File dnOrder="23">
           <Type dnOrder="0">SOURCE</Type>
@@ -255,8 +255,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mx470_curiosity_freertos/system/debug/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/debug/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">BD054FD39A17EFF445B35078217A90EE</GeneratedChecksum>
-          <UserChecksum dnOrder="6">BD054FD39A17EFF445B35078217A90EE</UserChecksum>
+          <GeneratedChecksum dnOrder="5">68C0D499B9EDAA3BFD7E131A48514212</GeneratedChecksum>
+          <UserChecksum dnOrder="6">68C0D499B9EDAA3BFD7E131A48514212</UserChecksum>
         </File>
         <File dnOrder="28">
           <Type dnOrder="0">SOURCE</Type>
@@ -264,8 +264,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mx470_curiosity_freertos/system/debug/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/debug/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">F742867E842AA6D9ECBFA4EFF7132402</GeneratedChecksum>
-          <UserChecksum dnOrder="6">F742867E842AA6D9ECBFA4EFF7132402</UserChecksum>
+          <GeneratedChecksum dnOrder="5">B8C6C7356AC7841AECC7C779040F745C</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B8C6C7356AC7841AECC7C779040F745C</UserChecksum>
         </File>
         <File dnOrder="29">
           <Type dnOrder="0">SOURCE</Type>
@@ -354,8 +354,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mx470_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">E33582E99C78AAA7904E3AF5E202B14F</GeneratedChecksum>
-          <UserChecksum dnOrder="6">E33582E99C78AAA7904E3AF5E202B14F</UserChecksum>
+          <GeneratedChecksum dnOrder="5">4855B5EA5BE394CEACBC41B6FEAD2183</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4855B5EA5BE394CEACBC41B6FEAD2183</UserChecksum>
         </File>
         <File dnOrder="39">
           <Type dnOrder="0">HEADER</Type>
@@ -597,8 +597,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mx470_curiosity_freertos/system/console/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/console/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">7C2920DC1BE1D6FD06A7D9981B29AC9B</GeneratedChecksum>
-          <UserChecksum dnOrder="6">7C2920DC1BE1D6FD06A7D9981B29AC9B</UserChecksum>
+          <GeneratedChecksum dnOrder="5">173FFB5CE5300E4EB8013158E3F9FDCC</GeneratedChecksum>
+          <UserChecksum dnOrder="6">173FFB5CE5300E4EB8013158E3F9FDCC</UserChecksum>
         </File>
         <File dnOrder="66">
           <Type dnOrder="0">HEADER</Type>
@@ -606,8 +606,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mx470_curiosity_freertos/system/debug/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/debug/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">62E6CEAF2E901E18DDC6DDEDABE5DAA4</GeneratedChecksum>
-          <UserChecksum dnOrder="6">62E6CEAF2E901E18DDC6DDEDABE5DAA4</UserChecksum>
+          <GeneratedChecksum dnOrder="5">6972608768DDBE6E37A2D81B83DF490B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">6972608768DDBE6E37A2D81B83DF490B</UserChecksum>
         </File>
         <File dnOrder="67">
           <Type dnOrder="0">HEADER</Type>
@@ -703,11 +703,11 @@
     </Manifest>
     <Settings dnOrder="4">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MX_DFP\1.2.228\atdf\PIC32MX470F512H.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MX_DFP\1.3.231\atdf\PIC32MX470F512H.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bootloader;bsp;core;cryptoauthlib;csp;micrium_ucos3;net;touch;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bootloader;bsp;core;crypto;cryptoauthlib;csp;micrium_ucos3;net;touch;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>

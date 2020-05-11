@@ -56,13 +56,11 @@
 #include "system/system.h"
 #include "system/console/sys_console.h"
 #include "sys_debug_local.h"
+#include "system/debug/sys_debug.h"
 
-SYS_DEBUG_INSTANCE sysDebugInstance;
+static SYS_DEBUG_INSTANCE sysDebugInstance;
 
 SYS_ERROR_LEVEL gblErrLvl;
-
-static char printBuffer[SYS_DEBUG_PRINT_BUFFER_SIZE] SYS_DEBUG_BUFFER_DMA_READY;
-static char tmpBuf[SYS_DEBUG_PRINT_BUFFER_SIZE] SYS_DEBUG_BUFFER_DMA_READY;
 
 SYS_MODULE_OBJ SYS_DEBUG_Initialize(
     const SYS_MODULE_INDEX index,
@@ -74,67 +72,20 @@ SYS_MODULE_OBJ SYS_DEBUG_Initialize(
     gblErrLvl = initConfig->errorLevel;
 
     sysDebugInstance.debugConsole = initConfig->consoleIndex;
-    sysDebugInstance.state = SYS_DEBUG_STATE_IDLE;
     sysDebugInstance.status = SYS_STATUS_READY;
-    sysDebugInstance.prtBufPtr = 0;
 
     return SYS_MODULE_OBJ_STATIC;
 }
 
-void SYS_DEBUG_Tasks(SYS_MODULE_OBJ object)
+
+SYS_MODULE_INDEX SYS_DEBUG_ConsoleInstanceGet(void)
 {
-    switch (sysDebugInstance.state)
-    {
-        case SYS_DEBUG_STATE_IDLE:
-            break;
-        default:
-            break;
-    }
+    return sysDebugInstance.debugConsole;
 }
 
 SYS_STATUS SYS_DEBUG_Status ( SYS_MODULE_OBJ object )
 {
     return ( sysDebugInstance.status );
-}
-
-void SYS_DEBUG_Message(const char *message)
-{
-    SYS_CONSOLE_Write(sysDebugInstance.debugConsole, message, strlen(message));
-}
-
-void SYS_DEBUG_Print(const char *format, ...)
-{
-    size_t len = 0;
-    size_t padding = 0;
-    va_list args = {0};
-
-    va_start( args, format );
-
-    len = vsnprintf(tmpBuf, SYS_DEBUG_PRINT_BUFFER_SIZE, format, args);
-
-    va_end( args );
-
-    if (len > 0 && len < SYS_DEBUG_PRINT_BUFFER_SIZE)
-    {
-        tmpBuf[len] = '\0';
-
-        if (len + sysDebugInstance.prtBufPtr >= SYS_DEBUG_PRINT_BUFFER_SIZE)
-        {
-            sysDebugInstance.prtBufPtr = 0;
-        }
-
-        strcpy(&printBuffer[sysDebugInstance.prtBufPtr], tmpBuf);
-        SYS_CONSOLE_Write(sysDebugInstance.debugConsole, &printBuffer[sysDebugInstance.prtBufPtr], len);
-
-        padding = len % 4;
-
-        if (padding > 0 )
-        {
-            padding = 4 - padding;
-        }
-
-        sysDebugInstance.prtBufPtr += len + padding;
-    }
 }
 
 void SYS_DEBUG_ErrorLevelSet(SYS_ERROR_LEVEL level)

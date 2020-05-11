@@ -103,6 +103,7 @@
             <itemPath>../src/packs/ATSAML21J18B_DFP/pio/saml21j18b.h</itemPath>
           </logicalFolder>
           <itemPath>../src/packs/ATSAML21J18B_DFP/device.h</itemPath>
+          <itemPath>../src/packs/ATSAML21J18B_DFP/atsaml21j18b_compat.h</itemPath>
           <itemPath>../src/packs/ATSAML21J18B_DFP/atsaml21j18b.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
@@ -129,6 +130,7 @@
                    displayName="Important Files"
                    projectFiles="true">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_l21_xpro/harmony.prj</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -215,8 +217,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
+        <pack name="SAML21_DFP" vendor="Microchip" version="3.2.62"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
-        <pack name="SAML21_DFP" vendor="Microchip" version="3.2.63"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>

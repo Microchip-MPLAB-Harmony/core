@@ -103,6 +103,7 @@
             <itemPath>../src/packs/ATSAML22N18A_DFP/pio/saml22n18a.h</itemPath>
           </logicalFolder>
           <itemPath>../src/packs/ATSAML22N18A_DFP/device.h</itemPath>
+          <itemPath>../src/packs/ATSAML22N18A_DFP/atsaml22n18a_compat.h</itemPath>
           <itemPath>../src/packs/ATSAML22N18A_DFP/atsaml22n18a.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
@@ -129,6 +130,7 @@
                    displayName="Important Files"
                    projectFiles="true">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_l22_xpro/harmony.prj</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -215,8 +217,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAML22_DFP" vendor="Microchip" version="3.2.43"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
+        <pack name="SAML22_DFP" vendor="Microchip" version="3.2.43"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>

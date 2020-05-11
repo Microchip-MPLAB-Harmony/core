@@ -165,6 +165,7 @@
                    displayName="Important Files"
                    projectFiles="true">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_e70_xult_freertos/harmony.prj</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -276,7 +277,7 @@
       </toolsSet>
       <packs>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
-        <pack name="SAME70_DFP" vendor="Microchip" version="4.2.62"/>
+        <pack name="SAME70_DFP" vendor="Microchip" version="4.2.59"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>

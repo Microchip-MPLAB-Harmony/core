@@ -94,6 +94,7 @@
             <itemPath>../src/packs/ATSAMDA1J16B_DFP/pio/samda1j16b.h</itemPath>
           </logicalFolder>
           <itemPath>../src/packs/ATSAMDA1J16B_DFP/device.h</itemPath>
+          <itemPath>../src/packs/ATSAMDA1J16B_DFP/atsamda1j16b_compat.h</itemPath>
           <itemPath>../src/packs/ATSAMDA1J16B_DFP/atsamda1j16b.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
@@ -120,6 +121,7 @@
                    displayName="Important Files"
                    projectFiles="true">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_da1_xpro/harmony.prj</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

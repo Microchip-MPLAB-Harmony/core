@@ -67,6 +67,8 @@
                    displayName="Important Files"
                    projectFiles="true">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/pic32mz_w1_curiosity/harmony.prj</itemPath>
+      <itemPath>../src/config/pic32mz_w1_curiosity/harmony.prj</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -141,7 +143,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MZ-W_DFP" vendor="Microchip" version="1.2.164"/>
+        <pack name="PIC32MZ-W_DFP" vendor="Microchip" version="1.2.153"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>

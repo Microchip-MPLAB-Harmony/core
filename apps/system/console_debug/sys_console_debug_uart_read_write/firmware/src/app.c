@@ -117,16 +117,18 @@ void APP_Initialize ( void )
 
 static void APP_DebugAPIDemonstrate(void)
 {
-    SYS_MESSAGE("***This is UART Console Instance 0***\n\r");
-    SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, "\n\rTest Debug Message!");
-    SYS_DEBUG_PRINT(SYS_ERROR_ERROR, "\n\rTest Debug Print %d", 1);
-    SYS_PRINT("\n\rSys Print test %d, %s", 1, "str1");
-    SYS_PRINT("\n\rSys Print test %d, %s", 2, "str2");
+    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "***This is UART Console Instance 0***\n\r");
+    SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, "\n\rTest Sys Debug Message!");
+    SYS_DEBUG_PRINT(SYS_ERROR_ERROR, "\n\rSys Debug Print test %d, %s", 1, "str1");
+    SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rSys Debug Print test %d, %s", 2, "str2");
     /* Change the error level to only print the debug messages with error value set to SYS_ERROR_ERROR or lower */
     SYS_DEBUG_ErrorLevelSet(SYS_ERROR_ERROR);
 
     /* The below message should not get printed as "SYS_ERROR_DEBUG" is higher than "SYS_ERROR_ERROR" */
     SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, "\n\rThis message should not be printed!");
+    
+    /* Set the error level back to SYS_ERROR_DEBUG */
+    SYS_DEBUG_ErrorLevelSet(SYS_ERROR_DEBUG);
 }
 /******************************************************************************
   Function:
@@ -166,8 +168,8 @@ void APP_Tasks ( void )
             break;
 
         case APP_STATE_READ_FROM_CONSOLE:
-            SYS_PRINT("\n\rFree Space in RX Buffer = %d bytes", SYS_CONSOLE_ReadFreeBufferCountGet(appData.consoleHandle));
-            SYS_PRINT("\n\rEnter %d characters:", UART_CONSOLE_NUM_BYTES_READ);
+            SYS_CONSOLE_PRINT("\n\rFree Space in RX Buffer = %d bytes", SYS_CONSOLE_ReadFreeBufferCountGet(appData.consoleHandle));
+            SYS_CONSOLE_Print(appData.consoleHandle, "\n\rEnter %d characters:", UART_CONSOLE_NUM_BYTES_READ);
             appData.state = APP_STATE_WAIT_READ_COMPLETE;
             break;
 
@@ -176,7 +178,7 @@ void APP_Tasks ( void )
 
             if (SYS_CONSOLE_ReadCountGet(appData.consoleHandle) >= UART_CONSOLE_NUM_BYTES_READ)
             {
-                SYS_PRINT("\n\rFree Space in RX Buffer = %d bytes", SYS_CONSOLE_ReadFreeBufferCountGet(appData.consoleHandle));
+                SYS_CONSOLE_PRINT("\n\rFree Space in RX Buffer = %d bytes", SYS_CONSOLE_ReadFreeBufferCountGet(appData.consoleHandle));
 
                 /* UART_CONSOLE_NUM_BYTES_READ or more characters are available. Read the data in the application buffer. */
                 if (SYS_CONSOLE_Read(appData.consoleHandle, uart_console_read_buffer, UART_CONSOLE_NUM_BYTES_READ) == UART_CONSOLE_NUM_BYTES_READ)
@@ -192,7 +194,7 @@ void APP_Tasks ( void )
 
         case APP_STATE_WRITE_RECEIVED_DATA:
             /* Demonstrate SYS_CONSOLE_WriteFreeBufferCountGet() and SYS_CONSOLE_Write() APIs */
-            SYS_PRINT("\n\rReceived Characters:");
+            SYS_CONSOLE_MESSAGE("\n\rReceived Characters:");
             SYS_CONSOLE_Write(appData.consoleHandle, uart_console_read_buffer, UART_CONSOLE_NUM_BYTES_READ);
             appData.state = APP_STATE_WAIT_WRITE_BUFFER_EMPTY;
             break;
@@ -200,14 +202,14 @@ void APP_Tasks ( void )
         case APP_STATE_WAIT_WRITE_BUFFER_EMPTY:
             if (SYS_CONSOLE_WriteCountGet(appData.consoleHandle) == 0)
             {
-                SYS_PRINT("\n\rFree Space in TX Buffer = %d", SYS_CONSOLE_WriteFreeBufferCountGet(appData.consoleHandle));
+                SYS_CONSOLE_PRINT("\n\rFree Space in TX Buffer = %d", SYS_CONSOLE_WriteFreeBufferCountGet(appData.consoleHandle));
                 appData.state = APP_STATE_ECHO_TEST;
             }
             break;
 
         case APP_STATE_ECHO_TEST:
 
-            SYS_MESSAGE("\n\r\n\r***Echo Test*** \n\rEnter a character and it will be echoed back \n\r");
+            SYS_CONSOLE_Message(appData.consoleHandle, "\n\r\n\r***Echo Test*** \n\rEnter a character and it will be echoed back \n\r");
             appData.state = APP_STATE_CONSOLE_READ_WRITE;
             break;
 

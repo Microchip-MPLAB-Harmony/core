@@ -129,6 +129,7 @@
                    displayName="Important Files"
                    projectFiles="true">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_l10_xpro/harmony.prj</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -215,7 +216,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAML10_DFP" vendor="Microchip" version="3.1.63"/>
+        <pack name="SAML10_DFP" vendor="Microchip" version="3.1.62"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
       </packs>
       <ScriptingSettings>
