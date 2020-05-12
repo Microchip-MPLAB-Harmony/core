@@ -156,6 +156,7 @@
                    displayName="Important Files"
                    projectFiles="true">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_a5d2_xult_xc32/harmony.prj</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -241,7 +242,7 @@
         <targetDevice>ATSAMA5D27</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>samice</platformTool>
+        <platformTool>jlink</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.40</languageToolchainVersion>
         <platform>3</platform>
@@ -332,6 +333,7 @@
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
         <property key="use-indirect-calls" value="false"/>
+        <appendMe value="-marm -cpu=cortex-a5 -mfpu=neon-vfpv4"/>
       </C32>
       <C32-AR>
         <property key="additional-options-chop-files" value="false"/>
@@ -935,6 +937,12 @@
       </Simulator>
       <jlink>
         <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="boot.entry_adr" value=""/>
+        <property key="boot.load_adr" value=""/>
+        <property key="boot.path"
+                  value="${ProjectDir}\..\at91bootstrap_sam_a5d2_xult.X\binaries\at91bootstrap.elf"/>
+        <property key="boot.prj" value=""/>
+        <property key="boot.use" value="true"/>
         <property key="communication.autoselectspeed" value="true"/>
         <property key="communication.interface" value="swd"/>
         <property key="communication.speed" value="4"/>
