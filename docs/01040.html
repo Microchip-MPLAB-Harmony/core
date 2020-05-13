@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_CONSOLE_Flush Function</title>
+<title>SYS_CONSOLE_DeviceGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01464.html" target="topic">System Service Libraries Help</a> &gt; <a href="00917.html" target="topic">Console System Service Library Help</a> &gt; <a href="00918.html" target="topic">Library Interface</a> &gt; b) Core Functions &gt; <a href="01040.html" target="topic">SYS_CONSOLE_Flush Function</a></div>
+<a href="01467.html" target="topic">System Service Libraries Help</a> &gt; <a href="00918.html" target="topic">Console System Service Library Help</a> &gt; <a href="00919.html" target="topic">Library Interface</a> &gt; b) Core Functions &gt; <a href="01040.html" target="topic">SYS_CONSOLE_DeviceGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01056.html" target="topic">Previous</a> | <a href="00918.html" target="topic">Up</a> | <a href="00889.html" target="topic">Next</a></div>
+<a href="01059.html" target="topic">Previous</a> | <a href="00919.html" target="topic">Up</a> | <a href="01044.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_Flush@SYS_CONSOLE_HANDLE Topic Title: SYS_CONSOLE_Flush Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_DeviceGet@SYS_CONSOLE_HANDLE Topic Title: SYS_CONSOLE_DeviceGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_CONSOLE_Flush Function</div>
+SYS_CONSOLE_DeviceGet Function</div>
 </div>
 </div>
 
@@ -49,19 +49,19 @@ SYS_CONSOLE_Flush Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function flushes the read and write buffers. Any on-going transfers will not be flushed.</p></div>
+This function returns the device type supported by the given console instance</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">SYS_CONSOLE_Flush</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01041.html" target="topic">SYS_CONSOLE_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01036.html" target="topic">SYS_CONSOLE_DEVICE</a> <strong><span style="color: #000000">SYS_CONSOLE_DeviceGet</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01042.html" target="topic">SYS_CONSOLE_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="01043.html" target="topic">SYS_CONSOLE_Initialize</a> function should have been called before calling this function.</p></div>
+The <a href="01045.html" target="topic">SYS_CONSOLE_Initialize</a> function should have been called before calling this function.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -80,7 +80,7 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Handle to the console instance&nbsp;</div></td></tr></table></div></div>
+A valid handle to the console instance&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,29 +88,23 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-true - If the operation is successful false - In case of failure</p></div>
+<a href="01036.html" target="topic">SYS_CONSOLE_DEVICE</a> - Returns console device type. Returns SYS_CONSOLE_DEV_MAX in case of an error.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This API may do nothing and return true, where the read and write are not buffered.</p></div>
+None.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01041.html" target="topic">SYS_CONSOLE_HANDLE</a> myConsoleHandle;
-<strong><span style="color: #000080">bool</span></strong> status;
-
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01042.html" target="topic">SYS_CONSOLE_HANDLE</a> myConsoleHandle;
+<a href="01036.html" target="topic">SYS_CONSOLE_DEVICE</a> myConsoleDevType
 <i><span style="color: #008000">// myConsoleHandle is assumed to be a valid console handle</span></i>
-
-status = SYS_CONSOLE_Flush(myConsoleHandle);
-<strong><span style="color: #000080">if</span></strong> (status == <strong><span style="color: #000080">false</span></strong>)
-{
-    <i><span style="color: #008000">// Handle error</span></i>
-}</pre></div></div>
+myConsoleDevType = SYS_CONSOLE_DeviceGet(myConsoleHandle);</pre></div></div>
 </div>
 </div>
 </div>
@@ -118,7 +112,7 @@ status = SYS_CONSOLE_Flush(myConsoleHandle);
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01464.html" target="topic">System Service Libraries Help</a> &gt; <a href="00917.html" target="topic">Console System Service Library Help</a> &gt; <a href="00918.html" target="topic">Library Interface</a> &gt; b) Core Functions &gt; <a href="01040.html" target="topic">SYS_CONSOLE_Flush Function</a></div>
+<a href="01467.html" target="topic">System Service Libraries Help</a> &gt; <a href="00918.html" target="topic">Console System Service Library Help</a> &gt; <a href="00919.html" target="topic">Library Interface</a> &gt; b) Core Functions &gt; <a href="01040.html" target="topic">SYS_CONSOLE_DeviceGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -129,10 +123,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01056.html" target="topic">Previous</a> | <a href="00918.html" target="topic">Up</a> | <a href="00889.html" target="topic">Next</a></div>
+<a href="01059.html" target="topic">Previous</a> | <a href="00919.html" target="topic">Up</a> | <a href="01044.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_Flush@SYS_CONSOLE_HANDLE Topic Title: SYS_CONSOLE_Flush Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_DeviceGet@SYS_CONSOLE_HANDLE Topic Title: SYS_CONSOLE_DeviceGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

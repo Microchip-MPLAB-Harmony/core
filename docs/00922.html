@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01464.html" target="topic">System Service Libraries Help</a> &gt; <a href="00917.html" target="topic">Console System Service Library Help</a> &gt; <a href="00922.html" target="topic">Using the Library</a></div>
+<a href="01467.html" target="topic">System Service Libraries Help</a> &gt; <a href="00918.html" target="topic">Console System Service Library Help</a> &gt; <a href="00922.html" target="topic">Using the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,7 +29,7 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00916.html" target="topic">Previous</a> | <a href="00917.html" target="topic">Up</a> | <a href="00910.html" target="topic">Next</a></div>
+<a href="00917.html" target="topic">Previous</a> | <a href="00918.html" target="topic">Up</a> | <a href="00911.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
 <a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
@@ -51,9 +51,9 @@ Using the Library</div>
 <p class="Element10">
 The Console System Service allows the application/middleware to route messages/debug information to a console running on a host computer.</p>
 <ul class="Element630">
-<li class="Element600">Depending on the application need, the size of the read and write queues can be configured to allow queuing of multiple requests</li>
-<li class="Element600">The read/write API called by the calling program returns immediately. The request is queued internally by the console device layer and the data is transferred by the state machine implemented by the console device layer</li>
-<li class="Element600">The application can register callback with the Console System Service to receive read/write completion/error related notifications</li>
+<li class="Element600">Depending on the application need, the size of the transmit and receive ring buffers can be configured</li>
+<li class="Element600">The read/write API called by the calling program returns immediately. For read requests, the read API returns the available bytes from the receive buffer. For write requests, the write API copies the application data to the transmit buffer.</li>
+<li class="Element600">For read, APIs are provided to query the number of bytes present in the receive buffer, the amount of free space available in the receive buffer and the size of the receive buffer. Similarly, for writes, APIs are provided to query the number of bytes pending transmission in the transmit buffer, the amount of free space in the transmit buffer and the size of the transmit buffer.</li>
 </ul></div>
 </div>
 <a name="546F70696373"></a><div class="Element14">
@@ -71,12 +71,12 @@ Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00910.html" target="topic">Abstraction Model</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00911.html" target="topic">Abstraction Model</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
 <span style="color: #000000">This library provides a set of functions that send and receive data to and from a console I/O device.</span>&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00914.html" target="topic">How the Library Works</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00915.html" target="topic">How the Library Works</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
 This topic describes the basic architecture of the Console System Service Library and provides information on its implementation.&nbsp;</div></td></tr></table></div></div>
 </div>
@@ -86,7 +86,7 @@ This topic describes the basic architecture of the Console System Service Librar
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01464.html" target="topic">System Service Libraries Help</a> &gt; <a href="00917.html" target="topic">Console System Service Library Help</a> &gt; <a href="00922.html" target="topic">Using the Library</a></div>
+<a href="01467.html" target="topic">System Service Libraries Help</a> &gt; <a href="00918.html" target="topic">Console System Service Library Help</a> &gt; <a href="00922.html" target="topic">Using the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -97,7 +97,7 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00916.html" target="topic">Previous</a> | <a href="00917.html" target="topic">Up</a> | <a href="00910.html" target="topic">Next</a></div>
+<a href="00917.html" target="topic">Previous</a> | <a href="00918.html" target="topic">Up</a> | <a href="00911.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
 <a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>

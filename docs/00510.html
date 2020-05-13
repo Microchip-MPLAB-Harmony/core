@@ -53,9 +53,9 @@ This routine initializes the Memory driver instance for the specified driver ind
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01394.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_MEMORY_Initialize</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01388.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="01389.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01398.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_MEMORY_Initialize</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01392.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="01393.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
@@ -94,7 +94,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If successful, returns a valid handle to a driver instance object. Otherwise it returns <a href="01395.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
+If successful, returns a valid handle to a driver instance object. Otherwise it returns <a href="01399.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -114,7 +114,7 @@ Example</div>
 <div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// This code snippet shows an example of initializing the Memory Driver</span></i>
 <i><span style="color: #008000">// with SST26 serial flash device attached and File system Enabled.</span></i>
 
-<a href="01394.html" target="topic">SYS_MODULE_OBJ</a>  objectHandle;
+<a href="01398.html" target="topic">SYS_MODULE_OBJ</a>  objectHandle;
 
 <strong><span style="color: #000080">static</span></strong> uint8_t gDrvMemory0EraseBuffer[DRV_MEMORY_ERASE_BUFFER_SIZE_IDX0] __attribute__((aligned(32)));
 
@@ -147,9 +147,9 @@ Example</div>
 };
 
 <i><span style="color: #008000">//usage of DRV_MEMORY_INDEX_0 indicates usage of Flash-related APIs</span></i>
-objectHandle = DRV_MEMORY_Initialize((<a href="01388.html" target="topic">SYS_MODULE_INDEX</a>)DRV_MEMORY_INDEX_0, (<a href="01389.html" target="topic">SYS_MODULE_INIT</a> *)&amp;drvMemory0InitData);
+objectHandle = DRV_MEMORY_Initialize((<a href="01392.html" target="topic">SYS_MODULE_INDEX</a>)DRV_MEMORY_INDEX_0, (<a href="01393.html" target="topic">SYS_MODULE_INIT</a> *)&amp;drvMemory0InitData);
 
-<strong><span style="color: #000080">if</span></strong> (<a href="01395.html" target="topic">SYS_MODULE_OBJ_INVALID</a> == objectHandle)
+<strong><span style="color: #000080">if</span></strong> (<a href="01399.html" target="topic">SYS_MODULE_OBJ_INVALID</a> == objectHandle)
 {
     <i><span style="color: #008000">// Handle error</span></i>
 }</pre></div></div>

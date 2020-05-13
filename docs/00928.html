@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01464.html" target="topic">System Service Libraries Help</a> &gt; <a href="00930.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00933.html" target="topic">Using the Library</a> &gt; <a href="00928.html" target="topic">How the Library Works</a></div>
+<a href="01467.html" target="topic">System Service Libraries Help</a> &gt; <a href="00930.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00933.html" target="topic">Using the Library</a> &gt; <a href="00928.html" target="topic">How the Library Works</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -55,17 +55,17 @@ How the Library Works</div>
 <p class="Element10">
 The following macros are available to output debug and error messages. The default implementation of these macros resolves to nothing by the preprocessor. This is to allow the developer to leave debug messaging in the released code without impacting code size or performance. Typically, the developer would define SYS_DEBUG_USE_CONSOLE macro through MHC configuration for debug builds, to map these macros to appropriate debug service implementation.</p>
 <ul class="Element630">
-<li class="Element600"><a href="01386.html" target="topic">SYS_MESSAGE</a>(message) prints a simple message string to the output device irrespective of the value of the global error level</li>
-<li class="Element600"><a href="01062.html" target="topic">SYS_DEBUG_MESSAGE</a>(level, message) prints a debug message to the console device if the global error level is equal to or lower than that specified by the &quot;level&quot; argument</li>
-<li class="Element600"><a href="01416.html" target="topic">SYS_PRINT</a>(fmt, ...) prints formatted messages to the console. The message formatting is the same as printf</li>
-<li class="Element600"><a href="01064.html" target="topic">SYS_DEBUG_PRINT</a>(level, fmt, ...) prints formatted messages to the console if the global error level is equal to or lower than that specified by the &quot;level&quot; argument. The message formatting is the same as printf</li>
+<li class="Element600">SYS_MESSAGE(message) prints a simple message string to the output device irrespective of the value of the global error level</li>
+<li class="Element600"><a href="01069.html" target="topic">SYS_DEBUG_MESSAGE</a>(level, message) prints a debug message to the console device if the global error level is equal to or lower than that specified by the &quot;level&quot; argument</li>
+<li class="Element600">SYS_PRINT(fmt, ...) prints formatted messages to the console. The message formatting is the same as printf</li>
+<li class="Element600"><a href="01070.html" target="topic">SYS_DEBUG_PRINT</a>(level, fmt, ...) prints formatted messages to the console if the global error level is equal to or lower than that specified by the &quot;level&quot; argument. The message formatting is the same as printf</li>
 </ul><p class="Element10">
 <strong>Changing the System Error Level</strong>&nbsp;</p>
 <p class="Element10">
 Two functions are provided to manipulate the global system error level at runtime. This may be useful when you want to increase the debug verbosity for a particular section of code, but not for the entire program</p>
 <ul class="Element630">
-<li class="Element600"><a href="01058.html" target="topic">SYS_DEBUG_ErrorLevelGet</a>() returns the current global system error level</li>
-<li class="Element600"><a href="01059.html" target="topic">SYS_DEBUG_ErrorLevelSet</a>(level) sets the current global system error level</li>
+<li class="Element600"><a href="01065.html" target="topic">SYS_DEBUG_ErrorLevelGet</a>() returns the current global system error level</li>
+<li class="Element600"><a href="01066.html" target="topic">SYS_DEBUG_ErrorLevelSet</a>(level) sets the current global system error level</li>
 </ul></div>
 </div>
 </div>
@@ -73,7 +73,7 @@ Two functions are provided to manipulate the global system error level at runtim
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01464.html" target="topic">System Service Libraries Help</a> &gt; <a href="00930.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00933.html" target="topic">Using the Library</a> &gt; <a href="00928.html" target="topic">How the Library Works</a></div>
+<a href="01467.html" target="topic">System Service Libraries Help</a> &gt; <a href="00930.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00933.html" target="topic">Using the Library</a> &gt; <a href="00928.html" target="topic">How the Library Works</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">

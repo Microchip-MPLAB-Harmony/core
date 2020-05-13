@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01464.html" target="topic">System Service Libraries Help</a> &gt; <a href="00930.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00931.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00002.html" target="topic">_SYS_DEBUG_PRINT Macro</a></div>
+<a href="01467.html" target="topic">System Service Libraries Help</a> &gt; <a href="00930.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00931.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00002.html" target="topic">_SYS_DEBUG_PRINT Macro</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -49,19 +49,19 @@ _SYS_DEBUG_PRINT Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Macro: _SYS_DEBUG_PRINT( <a href="01095.html" target="topic">SYS_ERROR_LEVEL</a> level, const char* format, ... )&nbsp;</p>
+Macro: _SYS_DEBUG_PRINT( <a href="01100.html" target="topic">SYS_ERROR_LEVEL</a> level, const char* format, ... )&nbsp;</p>
 <p class="Element10">
-This function formats and prints a debug message if the specified level is at or below the global system error level. It can be used to implement the <a href="01064.html" target="topic">SYS_DEBUG_PRINT</a> macro.</p></div>
+This function formats and prints a debug message if the specified level is at or below the global system error level. It can be used to implement the <a href="01070.html" target="topic">SYS_DEBUG_PRINT</a> macro.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">_SYS_DEBUG_PRINT</span></strong>(level, format, ...) <strong><span style="color: #000080">do</span></strong> { <strong><span style="color: #000080">if</span></strong>((level) &lt;= <a href="01058.html" target="topic">SYS_DEBUG_ErrorLevelGet</a>()) <a href="01065.html" target="topic">SYS_DEBUG_Print</a>(format, ##__VA_ARGS__); } <strong><span style="color: #000080">while</span></strong> (0)</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">_SYS_DEBUG_PRINT</span></strong>(level, format, ...) <strong><span style="color: #000080">do</span></strong> { <strong><span style="color: #000080">if</span></strong>((level) &lt;= <a href="01065.html" target="topic">SYS_DEBUG_ErrorLevelGet</a>()) <a href="01049.html" target="topic">SYS_CONSOLE_Print</a>(<a href="01064.html" target="topic">SYS_DEBUG_ConsoleInstanceGet</a>(), format, ##__VA_ARGS__); } <strong><span style="color: #000080">while</span></strong> (0)</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="01061.html" target="topic">SYS_DEBUG_Initialize</a> must have returned a valid object handle.</p></div>
+<a href="01068.html" target="topic">SYS_DEBUG_Initialize</a> must have returned a valid object handle.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -105,9 +105,9 @@ Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Do not call this macro directly. Call the <a href="01064.html" target="topic">SYS_DEBUG_PRINT</a> macro instead.&nbsp;</p>
+Do not call this macro directly. Call the <a href="01070.html" target="topic">SYS_DEBUG_PRINT</a> macro instead.&nbsp;</p>
 <p class="Element10">
-The default <a href="01064.html" target="topic">SYS_DEBUG_PRINT</a> macro definition removes the message and function call from the source code. To access and utilize the message, define the SYS_DEBUG_USE_CONSOLE macro or override the definition of the <a href="01064.html" target="topic">SYS_DEBUG_PRINT</a> macro.</p></div>
+The default <a href="01070.html" target="topic">SYS_DEBUG_PRINT</a> macro definition removes the message and function call from the source code. To access and utilize the message, define the SYS_DEBUG_USE_CONSOLE macro or override the definition of the <a href="01070.html" target="topic">SYS_DEBUG_PRINT</a> macro.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
@@ -122,7 +122,7 @@ Example</div>
 result = SomeOperation();
 <strong><span style="color: #000080">if</span></strong> (result &gt; MAX_VALUE)
 {
-    <a href="01064.html" target="topic">SYS_DEBUG_PRINT</a>(SYS_ERROR_WARNING, &quot;Result of %d exceeds max valuern&quot;, result);
+    <a href="01070.html" target="topic">SYS_DEBUG_PRINT</a>(SYS_ERROR_WARNING, &quot;Result of %d exceeds max valuern&quot;, result);
     <i><span style="color: #008000">// Take appropriate action</span></i>
 }</pre></div></div>
 </div>
@@ -132,7 +132,7 @@ result = SomeOperation();
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01464.html" target="topic">System Service Libraries Help</a> &gt; <a href="00930.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00931.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00002.html" target="topic">_SYS_DEBUG_PRINT Macro</a></div>
+<a href="01467.html" target="topic">System Service Libraries Help</a> &gt; <a href="00930.html" target="topic">Debug System Service Library Help</a> &gt; <a href="00931.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00002.html" target="topic">_SYS_DEBUG_PRINT Macro</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_DirRead Function</title>
+<title>SYS_FS_CurrentWorkingDirectoryGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01464.html" target="topic">System Service Libraries Help</a> &gt; <a href="00949.html" target="topic">File System Service Library Help</a> &gt; <a href="00950.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01108.html" target="topic">SYS_FS_DirRead Function</a></div>
+<a href="01467.html" target="topic">System Service Libraries Help</a> &gt; <a href="00949.html" target="topic">File System Service Library Help</a> &gt; <a href="00950.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01108.html" target="topic">SYS_FS_CurrentWorkingDirectoryGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01104.html" target="topic">Previous</a> | <a href="00950.html" target="topic">Up</a> | <a href="01109.html" target="topic">Next</a></div>
+<a href="01110.html" target="topic">Previous</a> | <a href="00950.html" target="topic">Up</a> | <a href="01180.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_DirRead@SYS_FS_HANDLE@SYS_FS_FSTAT * Topic Title: SYS_FS_DirRead Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_CurrentWorkingDirectoryGet@char *@uint32_t Topic Title: SYS_FS_CurrentWorkingDirectoryGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_DirRead Function</div>
+SYS_FS_CurrentWorkingDirectoryGet Function</div>
 </div>
 </div>
 
@@ -49,20 +49,20 @@ SYS_FS_DirRead Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function reads the files and directories specified in the open directory.</p></div>
+This function gets the current working directory path along with the working drive.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01325.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_DirRead</span></strong>(
-    <a href="01250.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <a href="01207.html" target="topic">SYS_FS_FSTAT</a> * <strong><span style="color: #000000">stat</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01330.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_CurrentWorkingDirectoryGet</span></strong>(
+    <strong><span style="color: #000080">char</span></strong> * <strong><span style="color: #000000">buff</span></strong>, 
+    uint32_t <strong><span style="color: #000000">len</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-A valid directory handle must be obtained before reading a directory.</p></div>
+At least one disk must be mounted.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -79,14 +79,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+buff&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Directory handle obtained during directory open.&nbsp;</div></td></tr><tr>
+Pointer to a buffer which will contain the name of the current working directory and drive, once the function completes.&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-stat&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+len&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to <a href="01207.html" target="topic">SYS_FS_FSTAT</a>, where the properties of the open directory will be populated after the SYS_FS_DirRead function returns successfully. If LFN is used, then the &quot;lfname&quot; member of the <a href="01207.html" target="topic">SYS_FS_FSTAT</a> structure should be initialized with the address of a suitable buffer and the &quot;lfsize&quot; should be initialized with the size of the buffer. Once the function returns, the buffer whose address is held in &quot;lfname&quot; will have the file name(long file name)<br>The file system supports 8.3 file name(Short File Name) and also long file name. 8.3 filenames are limited to at most eight characters, followed optionally by a filename extension consisting of a period . and at most three further characters. If the file name fits within the 8.3 limits then generally there will be no valid LFN for it.<br>The stat structure's fname field will contain the SFN and if there is a valid LFN entry for the file then the long file name will be copied into lfname member of the structure.&nbsp;</div></td></tr></table></div></div>
+Size of the buffer.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -94,9 +94,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS_FS_RES_SUCCESS - Indicates that the directory read operation was successful. End of the directory condition is indicated by setting the fname and lfname(if lfname is used) fields of the <a href="01207.html" target="topic">SYS_FS_FSTAT</a> structure to '0'&nbsp;</p>
-<p class="Element10">
-SYS_FS_RES_FAILURE - Indicates that the directory read operation was unsuccessful. The reason for the failure can be retrieved with <a href="01116.html" target="topic">SYS_FS_Error</a> or <a href="01180.html" target="topic">SYS_FS_FileError</a>.</p></div>
+SYS_FS_RES_SUCCESS - Get current working directory operation was successful. SYS_FS_RES_FAILURE - Get current working directory operation was unsucessful. The reason for the failure can be retrieved with <a href="01121.html" target="topic">SYS_FS_Error</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -109,41 +107,63 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01250.html" target="topic">SYS_FS_HANDLE</a> dirHandle;
-  <a href="01207.html" target="topic">SYS_FS_FSTAT</a> stat;
-  <strong><span style="color: #000080">char</span></strong> CACHE_ALIGN longFileName[300];
-  uintptr_t  longFileSize;
+<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01330.html" target="topic">SYS_FS_RESULT</a> res;
+  <strong><span style="color: #000080">char</span></strong> buffer[16];
 
-  dirHandle = <a href="01107.html" target="topic">SYS_FS_DirOpen</a>(&quot;/mnt/myDrive/Dir1&quot;);
-
-  <strong><span style="color: #000080">if</span></strong>(dirHandle != <a href="01251.html" target="topic">SYS_FS_HANDLE_INVALID</a>)
+  <strong><span style="color: #000080">switch</span></strong>(appState)
   {
-      <i><span style="color: #008000">// Directory open is successful</span></i>
+      <strong><span style="color: #000080">case</span></strong> TRY_MOUNT:
+          <strong><span style="color: #000080">if</span></strong>(<a href="01326.html" target="topic">SYS_FS_Mount</a>(&quot;/dev/mmcblka1&quot;, &quot;/mnt/myDrive&quot;, FAT, 0, NULL) != SYS_FS_RES_SUCCESS)
+          {
+              <i><span style="color: #008000">// Failure, try mounting again</span></i>
+          }
+          <strong><span style="color: #000080">else</span></strong>
+          {
+              <i><span style="color: #008000">// Mount was successful. Create a directory.</span></i>
+              appState = CREATE_DIR;
+          }
+          <strong><span style="color: #000080">break</span></strong>;
+
+      <strong><span style="color: #000080">case</span></strong> CREATE_DIR:
+          res = <a href="01111.html" target="topic">SYS_FS_DirectoryMake</a>(&quot;Dir1&quot;);
+          <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
+          {
+              <i><span style="color: #008000">// Directory creation failed</span></i>
+              appState = ERROR;
+          }
+          <strong><span style="color: #000080">else</span></strong>
+          {
+              <i><span style="color: #008000">// Directory creation was successful. Change to the new</span></i>
+              <i><span style="color: #008000">// directory.</span></i>
+              appState = CHANGE_DIR;
+          }
+          <strong><span style="color: #000080">break</span></strong>;
+
+      <strong><span style="color: #000080">case</span></strong> CHANGE_DIR:
+          res = <a href="01110.html" target="topic">SYS_FS_DirectoryChange</a>(&quot;Dir1&quot;);
+          <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
+          {
+              <i><span style="color: #008000">// Directory change failed</span></i>
+              appState = ERROR;
+          }
+          <strong><span style="color: #000080">else</span></strong>
+          {
+              <i><span style="color: #008000">// Directory change was successful. Get current working</span></i>
+              <i><span style="color: #008000">// directory</span></i>
+              appState = GET_CWD;
+          }
+          <strong><span style="color: #000080">break</span></strong>;
+
+      <strong><span style="color: #000080">case</span></strong> GET_CWD:
+          res = SYS_FS_CurrentWorkingDirectoryGet(buffer, 15);
+          <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
+          {
+              <i><span style="color: #008000">// Get current directory operation failed</span></i>
+              appState = ERROR;
+          }
+          <strong><span style="color: #000080">break</span></strong>;
   }
-
-  <i><span style="color: #008000">// If long file name is used, the following elements of the &quot;stat&quot;</span></i>
-  <i><span style="color: #008000">// structure needs to be initialized with address of proper buffer.</span></i>
-  <i><span style="color: #008000">// lfname is not applicable when latest FAT-FS is used. Use fname instead</span></i>
-  stat.lfname = longFileName;
-  stat.lfsize = 300;
-
-  <strong><span style="color: #000080">if</span></strong>(SYS_FS_DirRead(dirHandle, &amp;stat) == SYS_FS_RES_FAILURE)
-  {
-      <i><span style="color: #008000">// Directory read failed.</span></i>
-  }
-  <strong><span style="color: #000080">else</span></strong>
-  {
-      <i><span style="color: #008000">// Directory read succeeded.</span></i>
-      <strong><span style="color: #000080">if</span></strong> ((stat.lfname[0] == '0') &amp;&amp; (stat.fname[0] == '0'))
-      {
-          <i><span style="color: #008000">// reached the end of the directory.</span></i>
-      }
-      <strong><span style="color: #000080">else</span></strong>
-      {
-          <i><span style="color: #008000">// continue reading the directory.</span></i>
-      }
-
-  }</pre></div></div>
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -151,7 +171,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01464.html" target="topic">System Service Libraries Help</a> &gt; <a href="00949.html" target="topic">File System Service Library Help</a> &gt; <a href="00950.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01108.html" target="topic">SYS_FS_DirRead Function</a></div>
+<a href="01467.html" target="topic">System Service Libraries Help</a> &gt; <a href="00949.html" target="topic">File System Service Library Help</a> &gt; <a href="00950.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01108.html" target="topic">SYS_FS_CurrentWorkingDirectoryGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -162,10 +182,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01104.html" target="topic">Previous</a> | <a href="00950.html" target="topic">Up</a> | <a href="01109.html" target="topic">Next</a></div>
+<a href="01110.html" target="topic">Previous</a> | <a href="00950.html" target="topic">Up</a> | <a href="01180.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_DirRead@SYS_FS_HANDLE@SYS_FS_FSTAT * Topic Title: SYS_FS_DirRead Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_CurrentWorkingDirectoryGet@char *@uint32_t Topic Title: SYS_FS_CurrentWorkingDirectoryGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

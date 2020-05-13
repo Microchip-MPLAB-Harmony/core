@@ -51,32 +51,33 @@ Configuring the Library</div>
 <p class="Element10">
 <span style="color: #000000">The SDSPI driver library should be configured through the MHC. The following figures show the MHC configuration window for the SDHC driver and brief description.</span>&nbsp;</p>
 <p class="Element10" style="text-align: center;">
-<img src="drv_sdspi_sync_fs_mhc_config.png" border="0" alt="" title="">&nbsp;</p>
+<img src="drv_async_sdspi_plib.png" border="0" alt="" title="">&nbsp;</p>
 <p class="Element10" style="text-align: center;">
-<strong>Synchronous Mode with File-System</strong>&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="drv_sdspi_sync_mhc_config.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<strong>Synchronous Mode without File-System</strong></p><p class="Element10">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="drv_sdspi_async_fs_mhc_config.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<strong>Asynchronous Mode with File-System</strong>&nbsp;</p>
+<strong>Asynchronous Mode of SDSPI driver with SPI PLIB and File-System</strong>&nbsp;</p>
 <p class="Element10" style="text-align: center;">
 &nbsp;</p>
 <p class="Element10" style="text-align: center;">
-<img src="drv_sdspi_async_mhc_config.png" border="0" alt="" title="">&nbsp;</p>
+<img src="drv_async_sdspi_driver.png" border="0" alt="" title="">&nbsp;</p>
 <p class="Element10" style="text-align: center;">
-<strong>Asynchronous Mode without File-System</strong></p><div class="Element15">
+<strong>Asynchronous Mode of SDSPI driver with SPI Driver and File-System</strong></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="drv_sync_sdspi_plib.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<strong>Synchronous Mode of SDSPI driver with SPI PLIB and File-System</strong>&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="drv_sync_sdspi_driver.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<strong>Synchronous Mode of SDSPI driver with SPI Driver and File-System</strong></p><div class="Element15">
 Common User Configuration for all Instances</div>
 
 <ul class="Element630">
 <li class="Element600"><span style="color: #000000"><strong>Driver Mode:</strong></span>
 <ul class="Element631">
-<li class="Element601"><span style="color: #000000">Allows User to select the mode of driver(Asynchronous or Synchronous).This setting is common for all the instances</span></li>
+<li class="Element601"><span style="color: #000000">Allows User to select the mode of driver(Asynchronous or Synchronous).This setting is common for all the instances of the SDSPI driver.</span></li>
+<li class="Element601"><span style="color: #000000">When the SDSPI driver is used with SPI driver, the SPI driver inherits the driver mode from the SDSPI driver. That is, if the SDSPI driver is configured for Asynchronous mode then the SPI driver is automatically configured for Asynchronous mode and vice-versa.</span></li>
 </ul></li>
 </ul><p class="Element10">
 &nbsp;</p>
@@ -87,6 +88,10 @@ Instance Specific User Configurations</div>
 <li class="Element600"><span style="color: #000000"><strong>PLIB Used:</strong></span>
 <ul class="Element631">
 <li class="Element601"><span style="color: #000000">Indicates the SPI peripheral instance used by the SDSPI driver</span></li>
+</ul></li>
+<li class="Element600"><span style="color: #000000"><strong>SPI Driver Instance Used:</strong></span>
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000">Indicates the SPI driver instance used by the SDSPI driver</span></li>
 </ul></li>
 <li class="Element600"><span style="color: #000000"><strong>Number of Clients:</strong></span>
 <ul class="Element631">
@@ -120,7 +125,7 @@ Instance Specific User Configurations</div>
 </ul></li>
 <li class="Element600"><span style="color: #000000"><strong>Use DMA for Transmit and Receive?:</strong></span>
 <ul class="Element631">
-<li class="Element601"><span style="color: #000000">Enable/disable SDSPI driver to use DMA</span></li>
+<li class="Element601"><span style="color: #000000">Enable/disable DMA usage by the SDSPI driver. This option is available only when SDSPI driver is used with SPI PLIB. When SDSPI is used with SPI driver, the DMA must be configured in the SPI driver configuration.</span></li>
 <li class="Element601"><span style="color: #000000"><strong>DMA Channel For Transmit:</strong></span>
 <ul class="Element632">
 <li class="Element602"><span style="color: #000000">Indicates the DMA channel the SDSPI driver will use for transmission</span></li>
@@ -153,7 +158,9 @@ Instance Specific User Configurations</div>
 </ul><p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-<span style="color: #000000"><strong>Note: </strong>The Time System Service is used by the SDSPI driver to maintain the SD Card protocol timings, and hence must be enabled.</span></p></div>
+<span style="color: #000000"><strong>Note: </strong>The Time System Service is used by the SDSPI driver to maintain the SD Card protocol timings, and hence must be enabled.</span>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000"><strong>Note</strong>: The SDSPI driver should either be connected to SPI PLIB or SPI Driver. It should never be connected to both. Further all the instances of the SDSPI driver must either use the SPI PLIB or the SPI driver.</span></p></div>
 </div>
 </div>
 <!-- End Page Content -->

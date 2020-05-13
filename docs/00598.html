@@ -53,9 +53,9 @@ This routine initializes the SD Card driver, making it ready for clients to open
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01394.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_SDSPI_Initialize</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01388.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="01389.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01398.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_SDSPI_Initialize</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01392.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="01393.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
@@ -94,7 +94,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If successful, returns a valid handle to a driver object. Otherwise, it returns <a href="01395.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
+If successful, returns a valid handle to a driver object. Otherwise, it returns <a href="01399.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -112,7 +112,7 @@ Example</div>
 <div class="Element11">
 <div class="Element10">
 <div class="Element13"><div class="Element12"><pre class="Element12">DRV_SDSPI_INIT      drvSDSPI0InitData;
-<a href="01394.html" target="topic">SYS_MODULE_OBJ</a>      objectHandle;
+<a href="01398.html" target="topic">SYS_MODULE_OBJ</a>      objectHandle;
 
 DRV_SDSPI_PLIB_INTERFACE drvSDSPI0PlibAPI = {
     <i><span style="color: #008000">// SPI PLIB WriteRead function</span></i>
@@ -153,8 +153,8 @@ DRV_SDSPI_INIT drvSDSPI0InitData = {
     .rxAddress  = (<strong><span style="color: #000080">void</span></strong> *)&amp;(SPI0_REGS-&gt;SPI_RDR),
 };
 
-objectHandle = DRV_SDSPI_Initialize(DRV_SDSPI_INDEX_0, (<a href="01389.html" target="topic">SYS_MODULE_INIT</a> *)&amp;drvSDSPI0InitData);
-<strong><span style="color: #000080">if</span></strong> (objectHandle == <a href="01395.html" target="topic">SYS_MODULE_OBJ_INVALID</a>)
+objectHandle = DRV_SDSPI_Initialize(DRV_SDSPI_INDEX_0, (<a href="01393.html" target="topic">SYS_MODULE_INIT</a> *)&amp;drvSDSPI0InitData);
+<strong><span style="color: #000080">if</span></strong> (objectHandle == <a href="01399.html" target="topic">SYS_MODULE_OBJ_INVALID</a>)
 {
     <i><span style="color: #008000">// Handle error</span></i>
 }</pre></div></div>

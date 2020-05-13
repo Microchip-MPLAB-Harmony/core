@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_FileNameGet Function</title>
+<title>SYS_FS_FileDirectoryRemove Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01464.html" target="topic">System Service Libraries Help</a> &gt; <a href="00949.html" target="topic">File System Service Library Help</a> &gt; <a href="00950.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01181.html" target="topic">SYS_FS_FileNameGet Function</a></div>
+<a href="01467.html" target="topic">System Service Libraries Help</a> &gt; <a href="00949.html" target="topic">File System Service Library Help</a> &gt; <a href="00950.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01181.html" target="topic">SYS_FS_FileDirectoryRemove Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01180.html" target="topic">Previous</a> | <a href="00950.html" target="topic">Up</a> | <a href="01183.html" target="topic">Next</a></div>
+<a href="01180.html" target="topic">Previous</a> | <a href="00950.html" target="topic">Up</a> | <a href="01182.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileNameGet@SYS_FS_HANDLE@uint8_t*@uint16_t Topic Title: SYS_FS_FileNameGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileDirectoryRemove@char* Topic Title: SYS_FS_FileDirectoryRemove Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_FileNameGet Function</div>
+SYS_FS_FileDirectoryRemove Function</div>
 </div>
 </div>
 
@@ -49,21 +49,25 @@ SYS_FS_FileNameGet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function reads the file name of a file that is already open.</p></div>
+This function removes a file or directory as specified by the path.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">SYS_FS_FileNameGet</span></strong>(
-    <a href="01250.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    uint8_t* <strong><span style="color: #000000">cName</span></strong>, 
-    uint16_t <strong><span style="color: #000000">wLen</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01330.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_FileDirectoryRemove</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong>* <strong><span style="color: #000000">path</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The file handle referenced by handle is already open.</p></div>
+
+<ul class="Element630">
+<li class="Element600">The disk has to be mounted before a directory could be removed.</li>
+<li class="Element600">The file or directory to be removed has to present.</li>
+<li class="Element600">The file/sub-directory must not have read-only attribute (AM_RDO), or the function will be rejected with FR_DENIED.</li>
+<li class="Element600">The sub-directory must be empty and must not be current directory, or the function will be rejected with FR_DENIED.</li>
+<li class="Element600">The file/sub-directory must not be opened.</li>
+</ul></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -80,19 +84,9 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+path&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-File handle obtained during file Open.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-cName&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Where to store the name of the file.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-wLen&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-The maximum length of data to store in cName.&nbsp;</div></td></tr></table></div></div>
+Path of the File or directory to be removed.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -100,7 +94,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Returns true if the file name was read successfully. Returns false if the file name was not read successfully. The reason for the failure can be retrieved with <a href="01116.html" target="topic">SYS_FS_Error</a>.</p></div>
+SYS_FS_RES_SUCCESS - Indicates that the file or directory remove operation was successful. SYS_FS_RES_FAILURE - Indicates that the file or directory remove operation was unsuccessful. The reason for the failure can be retrieved with <a href="01121.html" target="topic">SYS_FS_Error</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -113,27 +107,16 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01250.html" target="topic">SYS_FS_HANDLE</a> fileHandle;
-  <strong><span style="color: #000080">bool</span></strong> stat;
-  uint8_t fileName[255];
+<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01330.html" target="topic">SYS_FS_RESULT</a> res;
 
-  fileHandle = <a href="01182.html" target="topic">SYS_FS_FileOpen</a>(&quot;/mnt/myDrive/FILE.JPG&quot;,
-          (SYS_FS_FILE_OPEN_READ));
+  res = SYS_FS_FileDirectoryRemove(&quot;Dir1&quot;);
 
-  <strong><span style="color: #000080">if</span></strong>(fileHandle != <a href="01251.html" target="topic">SYS_FS_HANDLE_INVALID</a>)
+  <strong><span style="color: #000080">if</span></strong>(res == SYS_FS_RES_FAILURE)
   {
-      <i><span style="color: #008000">// File open is successful</span></i>
+      <i><span style="color: #008000">// Directory remove operation failed</span></i>
   }
-  ...
-  ...
-
-  stat = SYS_FS_FileNameGet(fileHandle, fileName, 8 );
-
-  <strong><span style="color: #000080">if</span></strong>(stat == <strong><span style="color: #000080">false</span></strong>)
-  {
-      <i><span style="color: #008000">// file not located based on handle passed</span></i>
-      <i><span style="color: #008000">// Check the error state using SYS_FS_FileError</span></i>
-  }</pre></div></div>
+  <i><span style="color: #008000">//...</span></i>
+  <i><span style="color: #008000">//...</span></i></pre></div></div>
 </div>
 </div>
 </div>
@@ -141,7 +124,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01464.html" target="topic">System Service Libraries Help</a> &gt; <a href="00949.html" target="topic">File System Service Library Help</a> &gt; <a href="00950.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01181.html" target="topic">SYS_FS_FileNameGet Function</a></div>
+<a href="01467.html" target="topic">System Service Libraries Help</a> &gt; <a href="00949.html" target="topic">File System Service Library Help</a> &gt; <a href="00950.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01181.html" target="topic">SYS_FS_FileDirectoryRemove Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -152,10 +135,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01180.html" target="topic">Previous</a> | <a href="00950.html" target="topic">Up</a> | <a href="01183.html" target="topic">Next</a></div>
+<a href="01180.html" target="topic">Previous</a> | <a href="00950.html" target="topic">Up</a> | <a href="01182.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileNameGet@SYS_FS_HANDLE@uint8_t*@uint16_t Topic Title: SYS_FS_FileNameGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileDirectoryRemove@char* Topic Title: SYS_FS_FileDirectoryRemove Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

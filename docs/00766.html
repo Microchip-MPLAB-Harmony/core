@@ -89,8 +89,10 @@ LED 0&nbsp;</div></td></tr></table></div></div>
 Note:</div>
 
 <ol class="Element630">
-<li value="1" class="Element600">The time stamp mentioned above is the <strong>compile time of app.c file</strong></li>
-<li value="2" class="Element600">If step 3 is repeated then new timestamp is <strong>appended to the existing FILE.txt</strong></li>
+<li value="1" class="Element600">The initial time loaded into RTC is the <strong>compile time of app.c file</strong></li>
+<li value="2" class="Element600">The <strong>File Modified</strong> time stamp mentioned above is the RTC time retrieved after writing <strong>&quot;HELLO WORLD !&quot; </strong>to<strong> FILE.txt</strong></li>
+<li value="3" class="Element600">If step 3 is repeated then <strong>new timestamp</strong> along with <strong>&quot;HELLO WORLD !&quot;</strong> is <strong>appended </strong>to the existing<strong> FILE.txt</strong></li>
+<li value="4" class="Element600">If device is reset, RTC will be again loaded with <strong>compile time of app.c file</strong></li>
 </ol></div>
 </div>
 </div>
