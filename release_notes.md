@@ -3,6 +3,87 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.7.0
+
+### New Features
+
+- **New part support** - This release introduces support for
+[SAM L11](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-l-mcus/sam-l10-and-l11-microcontroller-family),
+[SAM RH71 Revison C](https://www.microchip.com/wwwproducts/en/SAMRH71)
+devices.
+
+- **New Features and Enhancements**
+  - Updated File System Framework to support FatFs R0.14
+  - Updated to support CMSIS FreeRTOS v10.3.0
+  - FreeRTOS support for Cortex-M23 with TrustZone
+  - Added support for USB CDC interface in Console System Service
+  - Updated SDSPI driver to use SPI driver optionally
+  - Added SPI mode support for SST26 driver
+  - Added IAR EWARM Projects for Cortex-M MCU, SAM A5D2 MPU and SAM 9X60 MPU devices
+  - Added KEIL MDK Projects for Cortex-M MCU devices
+  - Created group project with at91bootloader for SAM A5D2 MPU to debug with MPLAB X IDE
+
+- **Development kit and demo application support** - The following table provides number of application examples available for different development kits and toolchain.
+
+    | Development Kits                                                                                                                               | MPLAB X   | IAR EWARM |  KEIL MDK |
+    |------------------------------------------------------------------------------------------------------------------------------------------------|-----------|-----------|-----------|
+    | [SAM E70 Xplained Ultra Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ATSAME70-XULT)                   |    52     |           |     1     |
+    | [SAM V71 Xplained Ultra Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ATSAMV71-XULT)                   |    30     |           |           |
+    | [SAM C21N Xplained Pro Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/ATSAMC21N-XPRO)                               |    23     |           |     1     |
+    | [SAM D20 Xplained Pro Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ATSAMD20-XPRO)                     |     9     |           |           |
+    | [SAM D21 Xplained Pro Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ATSAMD21-XPRO)                     |    14     |           |           |
+    | [SAM E54 Xplained Pro Evaluation Kit](https://www.microchip.com/developmenttools/ProductDetails/ATSAME54-XPRO)                                 |    35     |           |     1     |
+    | [PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit](https://www.microchip.com/Developmenttools/ProductDetails/Dm320007)                  |    23     |           |           |
+    | [PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit (Crypto)](https://www.microchip.com/DevelopmentTools/ProductDetails/DM320010-C) |    17     |           |           |
+    | [PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM320010)     |     9     |           |           |
+    | [PIC32MZ Embedded Graphics with External DRAM (DA) Starter Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM320008)     |     2     |           |           |
+    | [PIC32MK GP Development Kit](https://www.microchip.com/developmenttools/ProductDetails/dm320106)                                               |    11     |           |           |
+    | [SAMA5D2 Xplained Ultra Evaluation Kit](https://www.microchip.com/developmenttools/ProductDetails/atsama5d2c-xult)                             |    37     |     36    |           |
+    | [SAM L21 Xplained Pro Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/ATSAML21-XPRO-B)                        |    10     |           |           |
+    | [SAM L22 Xplained Pro Evaluation Kit](https://www.microchip.com/developmenttools/ProductDetails/atsaml22-xpro-b)                               |     9     |           |           |
+    | [PIC32MX470 Curisoity Development Board](https://www.microchip.com/DevelopmentTools/ProductDetails/dm320103)                                   |    18     |           |           |
+    | [PIC32MX274 XLP Starter Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM320105)                                        |     7     |           |           |
+    | [ATSAM9X60-EK](https://www.microchip.com/design-centers/32-bit-mpus/microprocessors/sam9)                                                      |    27     |     27    |           |
+    | [SAM L10 Xplained Pro Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/dm320204)                                      |    10     |           |     1     |
+    | [SAM G55 Xplained Pro Evaluation Kit](https://www.microchip.com/developmenttools/ProductDetails/atsamg55-xpro)                                 |    14     |           |           |
+    | PIC32MK MCJ Curiosity Pro                                                                                                                      |    14     |           |           |
+    | [SAM DA1 Xplained Pro Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/ATSAMDA1-XPRO)                          |     8     |           |           |
+    | [PIC32 Ethernet Starter Kit II](https://www.microchip.com/DevelopmentTools/ProductDetails/dm320004-2)                                          |     3     |           |           |
+    | [SAMRH71 Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/SAMRH71F20-EK)                                       |    10     |           |           |
+    | PIC32MK MCM Curiosity Pro                                                                                                                      |    11     |           |           |
+    | PIC32MZ W1 Curiosity Board                                                                                                                     |    13     |           |           |
+    | [SAM HA1G16A Xplained Pro](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/ATSAMHA1G16A-XPRO)                                 |     9     |           |           |
+    | [SAM L11 Xplained Pro Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/dm320205)                                      |     1     |           |           |
+
+### **Known Issues**
+
+The current known issues are as follows:
+
+- ATSAMA5D2C and SAM9X60 example applications build with a warning message: ```Warning[Pe111]: statement is unreachable for return ( EXIT_FAILURE ); statement of main() in IAR```
+- The Console system service API signatures (and behavior) have changed but the Macros used to print console and debug messages remain unchanged.
+- When using MPLABx to program/debug SAMA5D27C projects
+
+  - "Run project" feature is not supported. Clicking on the "Run Project" button will not run the application on the target board.
+  - "Step out" feature is not supported. Clicking on the "Step Out" button (or pressing Ctrl + F7) while debugging an application will not move the program counter.
+
+- SYS_FS_DriveFormat API signature has changed with the latest Fat-FS code. Existing applications/middle-wares using the API with the latest Fat-FS, will need to update to the new API signature. An MHC option is provided to use the older version of Fat-FS code
+
+- SYS_FS_FSTAT structure has been modified to align with latest Fat-Fs code. For getting large file names applications/middlewares need to use fname parameter instead of lfname. Below are the affected API's
+  - SYS_FS_FileStat
+  - SYS_FS_DirRead
+  - SYS_FS_DirSearch
+
+### **Development Tools**
+
+- [MPLAB® X IDE v5.4](https://www.microchip.com/mplab/mplab-x-ide)
+- [MPLAB® XC32 C/C++ Compiler v2.41](https://www.microchip.com/mplab/compilers)
+- [IAR EWARM v8.50](https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
+- [KEIL MDK v5.29](https://www2.keil.com/mdk5)
+- MPLAB® X IDE plug-ins:
+  - MPLAB® Harmony Configurator (MHC) v3.5.0
+
+
+
 ## Core Release v3.6.1
 ### New Features
 - Regenerated PIC32MK MCJ Family Applications to work with updated BSP
@@ -19,7 +100,7 @@
 ## Core Release v3.6.0
 ### New Features
 
-- **New part support** - This release adds support for 
+- **New part support** - This release adds support for
 [SAM HA1](https://www.microchip.com/wwwproducts/en/ATSAMHA1G16A-B) and
 PIC32MZ W1 families of 32-bit microcontrollers.
 
@@ -145,7 +226,7 @@ families of 32-bit microcontrollers.
 
 The current known issues are as follows:
 
-- Configuration fuse macros are not generated for SAM D09/D11/D12 devices. 
+- Configuration fuse macros are not generated for SAM D09/D11/D12 devices.
 
 - PIC32MK GPK/GPL/MCM and SAM RH71 will be supported in the next version of MPLAB X IDE release.
 
