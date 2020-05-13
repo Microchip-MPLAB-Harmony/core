@@ -958,8 +958,6 @@ DRV_HANDLE DRV_MEMORY_Open
                 }
             }
 
-            SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, "DRV_MEMORY_Open(): Open successful.\n");
-
             break;
         }
     }
@@ -1000,8 +998,6 @@ void DRV_MEMORY_Close
 
         /* Release the instance specific mutex */
         OSAL_MUTEX_Unlock( &dObj->clientMutex );
-
-        SYS_DEBUG_MESSAGE (SYS_ERROR_DEBUG, "DRV_MEMORY_Close(): Close successful.\n");
     }
 }
 
