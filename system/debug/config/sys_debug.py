@@ -50,7 +50,7 @@ def instantiateComponent(debugComponent):
 
     debugLevel = debugComponent.createComboSymbol("SYS_DEBUG_LEVEL", None, ["SYS_ERROR_FATAL", "SYS_ERROR_ERROR", "SYS_ERROR_WARNING", "SYS_ERROR_INFO", "SYS_ERROR_DEBUG"])
     debugLevel.setLabel("Debug Level")
-    debugLevel.setDefaultValue("SYS_ERROR_DEBUG")   
+    debugLevel.setDefaultValue("SYS_ERROR_DEBUG")
 
     debugUseConsole = debugComponent.createBooleanSymbol("SYS_DEBUG_USE_CONSOLE", None)
     debugUseConsole.setLabel("Use Console for Debug ?")
@@ -60,7 +60,7 @@ def instantiateComponent(debugComponent):
     #### Code Generation ####
     ############################################################################
 
-    configName = Variables.get("__CONFIGURATION_NAME")    
+    configName = Variables.get("__CONFIGURATION_NAME")
 
     debugHeaderLocalFile = debugComponent.createFileSymbol("SYS_DEBUG_LOCAL", None)
     debugHeaderLocalFile.setSourcePath("system/debug/src/sys_debug_local.h")
@@ -77,12 +77,6 @@ def instantiateComponent(debugComponent):
     debugSourceFile.setProjectPath("config/" + configName + "/system/debug/")
     debugSourceFile.setType("SOURCE")
     debugSourceFile.setOverwrite(True)
-
-    debugSystemDefFile = debugComponent.createFileSymbol("SYS_CONSOLE_SYS_DEF", None)
-    debugSystemDefFile.setType("STRING")
-    debugSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-    debugSystemDefFile.setSourcePath("system/debug/templates/system/system_definitions.h.ftl")
-    debugSystemDefFile.setMarkup(True)
 
     debugSystemDefObjFile = debugComponent.createFileSymbol("SYS_CONSOLE_SYS_DEF_OBJ", None)
     debugSystemDefObjFile.setType("STRING")

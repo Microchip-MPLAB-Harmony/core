@@ -148,7 +148,7 @@ def instantiateComponent(harmonyCoreComponent):
     taskSourceFile.setType("SOURCE")
     taskSourceFile.setEnabled(False)
     taskSourceFile.setDependencies(genHarmonyFiles, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON", "ENABLE_APP_FILE"])
-    
+
     # generate sys_debug.h file
     debugHeaderFile = harmonyCoreComponent.createFileSymbol("SYS_DEBUG_HEADER", None)
     debugHeaderFile.setSourcePath("system/debug/templates/sys_debug.h.ftl")
@@ -159,7 +159,14 @@ def instantiateComponent(harmonyCoreComponent):
     debugHeaderFile.setOverwrite(True)
     debugHeaderFile.setMarkup(True)
     debugHeaderFile.setDependencies(genHarmonyFiles, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON", "ENABLE_APP_FILE"])
-    
+
+    debugSystemDefFile = harmonyCoreComponent.createFileSymbol("SYS_DEBUG_DEF_HEADER", None)
+    debugSystemDefFile.setType("STRING")
+    debugSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
+    debugSystemDefFile.setSourcePath("system/debug/templates/system/system_definitions.h.ftl")
+    debugSystemDefFile.setMarkup(True)
+    debugSystemDefFile.setDependencies(genHarmonyFiles, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON", "ENABLE_APP_FILE"])
+
 def onAttachmentConnected(source, target):
     localComponent = source["component"]
     remoteComponent = target["component"]
