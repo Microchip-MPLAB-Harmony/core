@@ -4,37 +4,15 @@
 
 
 project: nvm_fat
-creation_date: 2020-05-08T14:34:18.935+05:30[Asia/Calcutta]	# ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-05-14T08:30:25.725+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
-mhc_mode: Headless				# [IDE|Standalone|Headless]
-mplabx_version: -		# if MPLAB X plugin only
-plugin_version: -		# if MPLAB X plugin only
+mhc_mode: Headless              # [IDE|Standalone|Headless]
+mplabx_version:         # if MPLAB X plugin only
+plugin_version:         # if MPLAB X plugin only
 
 modules:
-    - {name: "aws_cloud", version: "unknown"}
-    - {name: "bootloader", version: "unknown"}
-    - {name: "bsp", version: "unknown"}
-    - {name: "CMSIS-FreeRTOS", version: "unknown"}
-    - {name: "contentmanager", version: "v1.3.1"}
-    - {name: "core", version: "unknown"}
-    - {name: "crypto", version: "v3.5.0"}
-    - {name: "cryptoauthlib", version: "unknown"}
-    - {name: "csp", version: "unknown"}
-    - {name: "dev_packs", version: "v3.7.0-rc.2"}
-    - {name: "doc_o_matic_h3", version: "unknown"}
-    - {name: "expresslogic_threadx", version: "v3.0.0"}
-    - {name: "gfx", version: "v3.6.0"}
-    - {name: "gfx_apps", version: "v3.6.0"}
-    - {name: "h3_apps_regenerator", version: "unknown"}
-    - {name: "h3_demo_regenerator", version: "unknown"}
-    - {name: "h3_dft_setup", version: "unknown"}
-    - {name: "mhc", version: "v3.4.0-rc.1"}
-    - {name: "mplabx_plugin", version: "v3.5.0-tc.1"}
-    - {name: "net", version: "unknown"}
-    - {name: "thirdparty_expresslogic", version: "unknown"}
-    - {name: "usb", version: "v3.5.0"}
-    - {name: "wolfMQTT", version: "v1.2.0"}
-    - {name: "wolfssh", version: "v1.4.0"}
-    - {name: "wolfssl", version: "v4.3.0"}
-    - {name: "zlib", version: "v1.2.11"}
-
+    - {name: "bsp", version: "v3.7.0"}
+    - {name: "core", version: "v3.7.0"}
+    - {name: "csp", version: "v3.7.0"}
+    - {name: "dev_packs", version: "v3.7.0"}
+    - {name: "mhc", version: "v3.4.0"}
