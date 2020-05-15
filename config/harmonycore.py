@@ -44,6 +44,8 @@ def enableAppFile(symbol, event):
     else:
         symbol.setValue(False)
 
+def genSysDebugHeader(symbol, event):
+    symbol.setEnabled(event["value"])
 
 def genHarmonyFiles(symbol, event):
     component = symbol.getComponent()
@@ -156,16 +158,18 @@ def instantiateComponent(harmonyCoreComponent):
     debugHeaderFile.setDestPath("system/debug/")
     debugHeaderFile.setProjectPath("config/" + configName + "/system/debug/")
     debugHeaderFile.setType("HEADER")
+    debugHeaderFile.setEnabled(False)
     debugHeaderFile.setOverwrite(True)
     debugHeaderFile.setMarkup(True)
-    debugHeaderFile.setDependencies(genHarmonyFiles, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON", "ENABLE_APP_FILE"])
+    debugHeaderFile.setDependencies(genSysDebugHeader, ["ENABLE_SYS_COMMON"])
 
     debugSystemDefFile = harmonyCoreComponent.createFileSymbol("SYS_DEBUG_DEF_HEADER", None)
     debugSystemDefFile.setType("STRING")
     debugSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
     debugSystemDefFile.setSourcePath("system/debug/templates/system/system_definitions.h.ftl")
     debugSystemDefFile.setMarkup(True)
-    debugSystemDefFile.setDependencies(genHarmonyFiles, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON", "ENABLE_APP_FILE"])
+    debugSystemDefFile.setEnabled(False)
+    debugSystemDefFile.setDependencies(genSysDebugHeader, ["ENABLE_SYS_COMMON"])
 
 def onAttachmentConnected(source, target):
     localComponent = source["component"]
