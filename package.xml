@@ -2,7 +2,7 @@
 <Package name="core">
     <Dependencies>
         <Dependency name="bsp" version="3.7.0"/>
-        <Dependency name="csp" version="3.7.0"/>
+        <Dependency name="csp" version="3.7.1"/>
         <Dependency name="CMSIS-FreeRTOS" version="v10.3.0"/>
     </Dependencies>
 </Package>
