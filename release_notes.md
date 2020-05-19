@@ -3,13 +3,26 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.7.1
+### New Features
+- N/A
+
+### Bug fixes
+- Updated dependent package version information
+
+### Known Issues
+- No changes from v3.7.0
+
+### Development Tools
+- No changes from v3.7.0
+
 ## Core Release v3.7.0
 
 ### New Features
 
 - **New part support** - This release introduces support for
 [SAM L11](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-l-mcus/sam-l10-and-l11-microcontroller-family),
-[SAM RH71 Revison C](https://www.microchip.com/wwwproducts/en/SAMRH71)
+[SAM RH71 Revision C](https://www.microchip.com/wwwproducts/en/SAMRH71)
 devices.
 
 - **New Features and Enhancements**
