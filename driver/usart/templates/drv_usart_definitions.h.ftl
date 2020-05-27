@@ -145,6 +145,7 @@ typedef void(*DRV_USART_PLIB_READ_CALLBACK_REG)(DRV_USART_PLIB_CALLBACK callback
 typedef bool(*DRV_USART_PLIB_READ)(void *buffer, const size_t size);
 typedef bool(*DRV_USART_PLIB_READ_IS_BUSY)(void);
 typedef size_t(*DRV_USART_PLIB_READ_COUNT_GET)(void);
+typedef bool (*DRV_USART_PLIB_READ_ABORT)(void);
 
 typedef void(*DRV_USART_PLIB_WRITE_CALLBACK_REG)(DRV_USART_PLIB_CALLBACK callback, uintptr_t context);
 typedef bool(*DRV_USART_PLIB_WRITE)(void *buffer, const size_t size);
@@ -160,6 +161,7 @@ typedef struct
     DRV_USART_PLIB_READ read;
     DRV_USART_PLIB_READ_IS_BUSY readIsBusy;
     DRV_USART_PLIB_READ_COUNT_GET readCountGet;
+	DRV_USART_PLIB_READ_ABORT readAbort;
 
     DRV_USART_PLIB_WRITE_CALLBACK_REG writeCallbackRegister;
     DRV_USART_PLIB_WRITE write;

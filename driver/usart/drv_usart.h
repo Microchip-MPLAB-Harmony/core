@@ -1111,7 +1111,8 @@ DRV_USART_BUFFER_EVENT DRV_USART_BufferStatusGet( const DRV_USART_BUFFER_HANDLE 
     bool DRV_USART_WriteQueuePurge( const DRV_HANDLE handle )
 
   Summary:
-    Removes all write requests from the queue for the given client.
+    Removes all write requests from the queue for the given client. This API does
+	not abort the on-going write transfer.
 
   Description:
     This function removes all the buffer requests from the queue.
@@ -1152,6 +1153,7 @@ DRV_USART_BUFFER_EVENT DRV_USART_BufferStatusGet( const DRV_USART_BUFFER_HANDLE 
   Remarks:
     This function is thread safe when used in an RTOS environment.
     Avoid this function call from within the callback.
+	This function does not abort the on-going write transfer.
 */
 
 bool DRV_USART_WriteQueuePurge( const DRV_HANDLE handle );
@@ -1161,10 +1163,12 @@ bool DRV_USART_WriteQueuePurge( const DRV_HANDLE handle );
     bool DRV_USART_ReadQueuePurge( const DRV_HANDLE handle )
 
   Summary:
-    Removes all buffer requests from the queue for the given client.
+    Removes all buffer requests from the queue for the given client and also aborts
+	the on-going read request.
 
   Description:
-    This function removes all the buffer requests from the queue.
+    This function removes all the buffer requests from the queue and aborts the 
+	on-going read request that is submitted to the PLIB.
     The client can use this function to purge the queue on timeout or to remove
     unwanted stalled buffer requests or in any other use case.
 
@@ -1205,6 +1209,57 @@ bool DRV_USART_WriteQueuePurge( const DRV_HANDLE handle );
 */
 
 bool DRV_USART_ReadQueuePurge( const DRV_HANDLE handle );
+
+// *****************************************************************************
+/* Function:
+    bool DRV_USART_ReadAbort(const DRV_HANDLE handle)
+
+  Summary:
+    Aborts an on-going read request
+
+  Description:
+    This function aborts an on-going read transfer. No callback is given for
+    the on-going request being aborted. When USART is configured for non-dma
+    transfers, application may call the DRV_USART_BufferCompletedBytesGet()
+    API (before calling the DRV_USART_ReadAbort API)to find out how many bytes
+    have been received for the on-going read request.
+
+  Precondition:
+    DRV_USART_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle - Handle of the communication channel as return by the
+    DRV_USART_Open function.
+
+  Returns:
+    true - operation was successful
+    false - error in running the API
+
+  Example:
+    <code>
+
+    // myUSARTHandle is the handle returned
+    // by the DRV_USART_Open function.
+
+    // For non-DMA based transfers DRV_USART_BufferCompletedBytesGet() can be
+    // called to find out the number of bytes received before aborting the
+    // request.
+
+    uint32_t processedBytes;
+
+    processedBytes= DRV_USART_BufferCompletedBytesGet(bufferHandle);
+
+    DRV_USART_ReadAbort(myUSARTHandle);
+    </code>
+
+  Remarks:
+    This function is thread safe in a RTOS application.
+    Calling this function does not have any impact on the read/write requests
+    that may be pending in the transfer queue. To purge the read/write request
+    queues call the DRV_USART_ReadQueuePurge() and DRV_USART_WriteQueuePurge()
+    APIs.
+*/
+bool DRV_USART_ReadAbort(const DRV_HANDLE handle);
 
 // *****************************************************************************
 // *****************************************************************************
