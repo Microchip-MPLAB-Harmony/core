@@ -73,6 +73,9 @@
     <#lt>                 (void        *)0,
     <#lt>                 (OS_OPT       )(${DRV_SDMMC_RTOS_TASK_OPTIONS}),
     <#lt>                 (OS_ERR      *)&os_err);
+<#elseif HarmonyCore.SELECT_RTOS == "MbedOS">
+    <#lt>    Thread DRV_SDMMC${INDEX?string}_thread((osPriority)(osPriorityNormal + (DRV_SDMMC_PRIORITY_IDX${INDEX?string} - 1)), DRV_SDMMC_STACK_SIZE_IDX${INDEX?string}, NULL, "_DRV_SDMMC${INDEX?string}_Tasks");
+    <#lt>    DRV_SDMMC${INDEX?string}_thread.start(callback(_DRV_SDMMC_${INDEX?string}_Tasks, (void *)NULL));
 </#if>
 
 

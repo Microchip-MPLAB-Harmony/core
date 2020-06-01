@@ -36,6 +36,8 @@ global osalSourceMicriumOSIIIFile
 global osalHeaderThreadXOSIIIFile
 global osalSourceThreadXOSIIIFile
 global osalSystemDefFile
+global osalHeaderMbedOSFile
+global osalSourceMbedOSFile
 
 def enableOSAL(symbol, event):
     drv_common = Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
@@ -56,6 +58,8 @@ def genOsalFiles(symbol, event):
     global osalHeaderMicriumOSIIIFile
     global osalSourceMicriumOSIIIFile
     global osalSystemDefFile
+    global osalHeaderMbedOSFile
+    global osalSourceMbedOSFile
 
     genOsal = Database.getSymbolValue("HarmonyCore", "ENABLE_OSAL")
 
@@ -70,6 +74,8 @@ def genOsalFiles(symbol, event):
         osalSourceMicriumOSIIIFile.setEnabled(osalSelectRTOS.getValue() == "MicriumOSIII")
         osalHeaderThreadXOSIIIFile.setEnabled(osalSelectRTOS.getValue() == "ThreadX")
         osalSourceThreadXOSIIIFile.setEnabled(osalSelectRTOS.getValue() == "ThreadX")
+        osalHeaderMbedOSFile.setEnabled(osalSelectRTOS.getValue() == "MbedOS")
+        osalSourceMbedOSFile.setEnabled(osalSelectRTOS.getValue() == "MbedOS")
     else:
         osalHeaderFile.setEnabled(False)
         osalHeaderDefFile.setEnabled(False)
@@ -81,6 +87,8 @@ def genOsalFiles(symbol, event):
         osalHeaderThreadXOSIIIFile.setEnabled(False)
         osalSourceThreadXOSIIIFile.setEnabled(False)
         osalSystemDefFile.setEnabled(False)
+        osalHeaderMbedOSFile.setEnabled(False)
+        osalSourceMbedOSFile.setEnabled(False)
 
 ############################################################################
 #### Code Generation ####
@@ -91,7 +99,7 @@ osal.setDefaultValue(False)
 osal.setDependencies(enableOSAL, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON"])
 
 
-osalSelectRTOS = harmonyCoreComponent.createComboSymbol("SELECT_RTOS", None, ["BareMetal", "FreeRTOS", "MicriumOSIII", "ThreadX"])
+osalSelectRTOS = harmonyCoreComponent.createComboSymbol("SELECT_RTOS", None, ["BareMetal", "FreeRTOS", "MicriumOSIII", "ThreadX", "MbedOS"])
 osalSelectRTOS.setLabel("Select any RTOS or Bare-metal")
 osalSelectRTOS.setDefaultValue("BareMetal")
 osalSelectRTOS.setReadOnly(True)
@@ -184,6 +192,26 @@ osalSourceThreadXOSIIIFile.setType("SOURCE")
 osalSourceThreadXOSIIIFile.setOverwrite(True)
 osalSourceThreadXOSIIIFile.setEnabled(False)
 osalSourceThreadXOSIIIFile.setMarkup(True)
+
+osalHeaderMbedOSFile = harmonyCoreComponent.createFileSymbol("OSAL_MBEDOS_H", None)
+osalHeaderMbedOSFile.setSourcePath("/osal/templates/osal_mbedos.h.ftl")
+osalHeaderMbedOSFile.setOutputName("osal_mbedos.h")
+osalHeaderMbedOSFile.setDestPath("osal/")
+osalHeaderMbedOSFile.setProjectPath("config/" + configName + "/osal/")
+osalHeaderMbedOSFile.setType("HEADER")
+osalHeaderMbedOSFile.setOverwrite(True)
+osalHeaderMbedOSFile.setEnabled(False)
+osalHeaderMbedOSFile.setMarkup(True)
+
+osalSourceMbedOSFile = harmonyCoreComponent.createFileSymbol("OSAL_MBEDOS_CPP", None)
+osalSourceMbedOSFile.setSourcePath("/osal/templates/osal_mbedos.cpp.ftl")
+osalSourceMbedOSFile.setOutputName("osal_mbedos.cpp")
+osalSourceMbedOSFile.setDestPath("osal/")
+osalSourceMbedOSFile.setProjectPath("config/" + configName + "/osal/")
+osalSourceMbedOSFile.setType("SOURCE")
+osalSourceMbedOSFile.setOverwrite(True)
+osalSourceMbedOSFile.setEnabled(False)
+osalSourceMbedOSFile.setMarkup(True)
 
 osalSystemDefFile = harmonyCoreComponent.createFileSymbol("OSAL_SYSDEF_H", None)
 osalSystemDefFile.setType("STRING")

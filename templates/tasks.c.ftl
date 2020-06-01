@@ -56,6 +56,10 @@
     <#lt>#include "configuration.h"
 </#if>
 #include "definitions.h"
+<#if SELECT_RTOS == "MbedOS">
+#include "mbed.h"
+#include "platform/mbed_thread.h"
+</#if>
 
 <#if SELECT_RTOS == "ThreadX">
     <#lt>/* ThreadX byte memory pool from which to allocate the thread stacks. */
@@ -93,6 +97,29 @@
         <#lt>    ${core.LIST_SYSTEM_RTOS_TASKS_C_GEN_APP}
     </#if>
     <#lt>}
+<#elseif SELECT_RTOS == "MbedOS">
+    <#lt>void mbed_start(void)
+    <#lt>{
+    <#lt>    /* Create and Initialize a Singleton Mutex object */
+    <#lt>    mbed_rtos_init_singleton_mutex();
+
+    <#lt>    /* Maintain system services */
+    <#lt>    ${core.LIST_SYSTEM_TASKS_C_CALL_SYSTEM_TASKS}
+
+    <#lt>    /* Maintain Device Drivers */
+    <#lt>    ${core.LIST_SYSTEM_TASKS_C_CALL_DRIVER_TASKS}
+
+    <#lt>    /* Maintain Middleware & Other Libraries */
+    <#lt>    ${core.LIST_SYSTEM_TASKS_C_CALL_LIB_TASKS}
+
+    <#if ENABLE_APP_FILE == true >
+        <#lt>    /* Maintain the application's state machine. */
+        <#lt>    ${core.LIST_SYSTEM_RTOS_TASKS_C_GEN_APP}
+    </#if>
+    <#lt>    while(1)
+    <#lt>    {
+    <#lt>    }
+    <#lt>}
 </#if>
 
 // *****************************************************************************
@@ -108,7 +135,7 @@
   Remarks:
     See prototype in system/common/sys_module.h.
 */
-<#if SELECT_RTOS == "ThreadX">
+<#if SELECT_RTOS == "ThreadX" || SELECT_RTOS == "MbedOS">
     <#lt>void SYS_Tasks ( void )
     <#lt>{
     <#lt>    ${core.LIST_SYSTEM_RTOS_TASKS_C_CALL_SCHEDULAR}

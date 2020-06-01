@@ -49,5 +49,8 @@
         <#lt>                 (void        *)0,
         <#lt>                 (OS_OPT       )(${DRV_MEMORY_RTOS_TASK_OPTIONS}),
         <#lt>                 (OS_ERR      *)&os_err);
+    <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "MbedOS">
+        <#lt>    Thread DRV_MEMORY_${INDEX?string}_thread((osPriority)(osPriorityNormal + (DRV_MEMORY_PRIORITY_IDX${INDEX?string} - 1)), DRV_MEMORY_STACK_SIZE_IDX${INDEX?string}, NULL, "_DRV_MEMORY_${INDEX?string}_Tasks");
+        <#lt>    DRV_MEMORY_${INDEX?string}_thread.start(callback(_DRV_MEMORY_${INDEX?string}_Tasks, (void *)NULL));
     </#if>
 </#if>

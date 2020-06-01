@@ -36,4 +36,7 @@
 <#if SELECT_RTOS == "ThreadX">
 #include "osal/osal_threadx.h"
 </#if>
+<#if SELECT_RTOS == "MbedOS">
+#include "osal/osal_mbedos.h"
+</#if>
 #endif//__OSAL_DEFINITIONS_H

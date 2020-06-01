@@ -65,6 +65,17 @@
     </#if>
     <#lt>    }
     <#lt>}
+<#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "MbedOS">
+    <#lt>void _SYS_FS_Tasks( void *pvParameters )
+    <#lt>{
+    <#lt>    while(1)
+    <#lt>    {
+    <#lt>        SYS_FS_Tasks();
+             <#if SYS_FS_RTOS_USE_DELAY == true>
+    <#lt>        thread_sleep_for((uint32_t)(${SYS_FS_RTOS_DELAY} / MBED_OS_TICK_PERIOD_MS));
+             </#if>
+    <#lt>    }
+    <#lt>}
 </#if>
 
 <#--

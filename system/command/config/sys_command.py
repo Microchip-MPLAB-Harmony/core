@@ -74,6 +74,8 @@ def getActiveRtos():
             return "ThreadX"
         elif (activeComponents[i] == "MicriumOSIII"):
             return "MicriumOSIII"
+        elif (activeComponents[i] == "MbedOS"):
+            return "MbedOS"
 
 def instantiateComponent(commandComponent):
 

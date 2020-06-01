@@ -64,4 +64,15 @@
     </#if>
     <#lt>    }
     <#lt>}
+<#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "MbedOS">
+    <#lt>void _DRV_SDMMC_${INDEX?string}_Tasks( void *pvParameters )
+    <#lt>{
+    <#lt>    while(1)
+    <#lt>    {
+    <#lt>        DRV_SDMMC_Tasks(sysObj.drvSDMMC${INDEX?string});
+    <#if DRV_SDMMC_RTOS_USE_DELAY == true>
+        <#lt>        thread_sleep_for((uint32_t)(DRV_SDMMC_RTOS_DELAY_IDX${INDEX?string} / MBED_OS_TICK_PERIOD_MS));
+    </#if>
+    <#lt>    }
+    <#lt>}
 </#if>

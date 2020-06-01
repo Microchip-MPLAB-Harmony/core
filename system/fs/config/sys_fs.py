@@ -800,6 +800,8 @@ def getActiveRtos():
             return "ThreadX"
         elif (activeComponents[i] == "MicriumOSIII"):
             return "MicriumOSIII"
+        elif (activeComponents[i] == "MbedOS"):
+            return "MbedOS"
 
 def destroyComponent(sysFSComponent):
     Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})

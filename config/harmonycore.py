@@ -31,7 +31,7 @@ global osalHeaderFreeRtosFile
 global osalSourceFreeRtosFile
 global osalSelectRTOS
 
-rtosIdTable = ["FreeRTOS", "ThreadX", "MicriumOSIII"]
+rtosIdTable = ["FreeRTOS", "ThreadX", "MicriumOSIII", "MbedOS"]
 
 # Function to serve Set/Clear requests of Harmony common symbols from other components
 def handleMessage(messageID, args):
@@ -96,6 +96,11 @@ def genHarmonyFiles(symbol, event):
     drv_common = component.getSymbolValue("ENABLE_DRV_COMMON")
     sys_common = component.getSymbolValue("ENABLE_SYS_COMMON")
     appfile = component.getSymbolValue("ENABLE_APP_FILE")
+
+    if (component.getSymbolValue("SELECT_RTOS") == "MbedOS"):
+        component.getSymbolByID("TASKS_C").setOutputName("tasks.cpp")
+    else:
+        component.getSymbolByID("TASKS_C").setOutputName("tasks.c")
 
     if ((drv_common == True) or (sys_common == True) or (appfile == True)):
         symbol.setEnabled(True)
@@ -210,7 +215,7 @@ def instantiateComponent(harmonyCoreComponent):
     taskSourceFile.setProjectPath("config/" + configName + "/")
     taskSourceFile.setType("SOURCE")
     taskSourceFile.setEnabled(False)
-    taskSourceFile.setDependencies(genHarmonyFiles, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON", "ENABLE_APP_FILE"])
+    taskSourceFile.setDependencies(genHarmonyFiles, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON", "ENABLE_APP_FILE", "SELECT_RTOS"])
 
     # generate sys_debug.h file
     debugHeaderFile = harmonyCoreComponent.createFileSymbol("SYS_DEBUG_HEADER", None)
@@ -250,6 +255,10 @@ def onAttachmentConnected(source, target):
     elif targetID == "ThreadX":
         localComponent.clearSymbolValue("SELECT_RTOS")
         localComponent.setSymbolValue("SELECT_RTOS", "ThreadX")
+    elif targetID == "MbedOS":
+        localComponent.clearSymbolValue("SELECT_RTOS")
+        localComponent.setSymbolValue("SELECT_RTOS", "MbedOS")
+        localComponent.getSymbolByID("TASKS_C").setOutputName("tasks.cpp")
 
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]
@@ -260,6 +269,7 @@ def onAttachmentDisconnected(source, target):
 
     print("unsatisfied: " + connectID + ", " + targetID)
 
-    if targetID == "FreeRTOS" or targetID == "MicriumOSIII" or targetID == "ThreadX":
+    if targetID == "FreeRTOS" or targetID == "MicriumOSIII" or targetID == "ThreadX" or targetID == "MbedOS":
         localComponent.clearSymbolValue("SELECT_RTOS")
         localComponent.setSymbolValue("SELECT_RTOS", "BareMetal")
+        localComponent.getSymbolByID("TASKS_C").setOutputName("tasks.c")

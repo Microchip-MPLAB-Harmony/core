@@ -189,6 +189,8 @@ def deactivateActiveRtos():
             res = Database.deactivateComponents(["MicriumOSIII"])
         if (activeComponents[i] == "ThreadX"):
             res = Database.deactivateComponents(["ThreadX"])
+        if (activeComponents[i] == "MbedOS"):
+            res = Database.deactivateComponents(["MbedOS"])
 
 def freeRtosIntConfig():
     if (coreArch == "MIPS"):

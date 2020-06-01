@@ -74,5 +74,8 @@
     <#lt>                 (void        *)0,
     <#lt>                 (OS_OPT       )(${SYS_CMD_RTOS_TASK_OPTIONS}),
     <#lt>                 (OS_ERR      *)&os_err);
+<#elseif HarmonyCore.SELECT_RTOS == "MbedOS">
+    <#lt>    Thread SYS_CMD_thread((osPriority)(osPriorityNormal + (SYS_CMD_RTOS_TASK_PRIORITY - 1)), SYS_CMD_RTOS_STACK_SIZE, NULL, "_SYS_CMD_Tasks");
+    <#lt>    SYS_CMD_thread.start(callback(_SYS_CMD_Tasks, (void *)NULL));
 </#if>
 
