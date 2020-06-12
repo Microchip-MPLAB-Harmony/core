@@ -28,7 +28,7 @@
 
 def selectDeviceSet(symbol, event):
     symbol.clearValue()
-    if ("USART" in event["value"]) or ("UART" in event["value"]) or ("SERCOM" in event["value"]) or ("FLEXCOM" in event["value"]):
+    if ("USART" in event["value"]) or ("UART" in event["value"]) or ("SERCOM" in event["value"]) or ("FLEXCOM" in event["value"]) or ("DBGU" in event["value"]):
         symbol.setValue("UART")
     elif "USB" in event["value"]:
         symbol.setValue("USB_CDC")
@@ -383,7 +383,7 @@ def onAttachmentConnected(source, target):
     deviceUsed = localComponent.getSymbolByID("SYS_CONSOLE_DEVICE")
 
     if connectID == "sys_console_UART_dependency" :
-        if "USART" or "UART" or "SERCOM" or "FLEXCOM" in remoteID:
+        if "USART" or "UART" or "SERCOM" or "FLEXCOM" or "DBGU" in remoteID:
             deviceUsed.setValue(remoteID.upper())
             console_uart_connection_counter_dict = {}
             ring_buffer_enable_dict = {}
@@ -411,7 +411,7 @@ def onAttachmentDisconnected(source, target):
     deviceUsed = localComponent.getSymbolByID("SYS_CONSOLE_DEVICE")
 
     if connectID == "sys_console_UART_dependency" :
-        if "USART" or "UART" or "SERCOM" or "FLEXCOM" in remoteID:
+        if "USART" or "UART" or "SERCOM" or "FLEXCOM" or "DBGU" in remoteID:
             deviceUsed.clearValue()
             console_uart_connection_counter_dict = {}
 
