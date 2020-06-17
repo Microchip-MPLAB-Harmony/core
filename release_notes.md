@@ -3,6 +3,19 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.7.2
+### New Features
+- N/A
+
+### Bug fixes
+- Updated the Console System Service to use the DBGU peripheral as UART console
+
+### Known Issues
+- No changes from v3.7.1
+
+### Development Tools
+- No changes from v3.7.1
+
 ## Core Release v3.7.1
 ### New Features
 - N/A
@@ -85,6 +98,8 @@ The current known issues are as follows:
   - SYS_FS_FileStat
   - SYS_FS_DirRead
   - SYS_FS_DirSearch
+  
+- Updating File System based applications created with Harmony Core v3.6.x for PIC32MZ devices to Harmony Core v3.7.x will require removing and adding the File System component in the MHC Project Graph 
 
 ### **Development Tools**
 
