@@ -140,7 +140,7 @@ typedef enum
 
 typedef enum
 {
-    /* Normal File */
+    /* Normal File. Should not be combined with other attributes */
     SYS_FS_ATTR_FILE    = 0x00,
     /* Read only */
     SYS_FS_ATTR_RDO     = 0x01,
