@@ -103,6 +103,9 @@ def onAttachmentConnected(source, target):
         plibUsed = localComponent.getSymbolByID("DRV_I2C_PLIB")
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper())
+        
+        dummyDict = Database.sendMessage(remoteID, "I2C_MODE_LOCK", dummyDict)
+        dummyDict = Database.sendMessage(remoteID, "I2C_MODE_SET_MASTER", dummyDict)
 
         # Check if the PLIB has the "I2C_INCLUDE_FORCED_WRITE_API" symbol or not
         plibForcedWriteAPISymVal = Database.getSymbolValue(remoteID, "I2C_INCLUDE_FORCED_WRITE_API")
@@ -128,6 +131,8 @@ def onAttachmentDisconnected(source, target):
     if connectID == "drv_i2c_I2C_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_I2C_PLIB")
         plibUsed.clearValue()
+        
+        dummyDict = Database.sendMessage(remoteID, "I2C_MODE_UNLOCK", dummyDict)
 
         # Check if the PLIB has the "I2C_INCLUDE_FORCED_WRITE_API" symbol or not
         plibForcedWriteAPISymVal = Database.getSymbolValue(remoteID, "I2C_INCLUDE_FORCED_WRITE_API")
