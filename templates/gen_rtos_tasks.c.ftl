@@ -2,7 +2,8 @@
     <#assign GEN_APP_TASK_NAME = "GEN_APP_TASK_NAME_" + i>
     <#assign GEN_APP_RTOS_TASK_USE_DELAY = "GEN_APP_RTOS_TASK_" + i + "_USE_DELAY">
     <#assign GEN_APP_RTOS_TASK_DELAY = "GEN_APP_RTOS_TASK_" + i + "_DELAY">
-    <#if SELECT_RTOS == "FreeRTOS">
+    <#assign GEN_APP_TASK_ENABLE = "GEN_APP_TASK_ENABLE_" + i>
+    <#if SELECT_RTOS == "FreeRTOS" && .vars[GEN_APP_TASK_ENABLE] == true>
         <#lt>/* Handle for the ${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks. */
         <#lt>TaskHandle_t x${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks;
 

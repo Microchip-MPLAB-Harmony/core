@@ -32,6 +32,7 @@ global genAppTaskConfMenu
 global genAppRtosTaskConfMenu
 global appHeaderFile
 global appSourceFile
+global genAppTaskEnable
 
 # Get the default selected OSAL
 global osalSelectRTOS
@@ -54,6 +55,7 @@ genAppRtosTaskUseDelay      = []
 genAppRtosTaskDelay         = []
 appSourceFile               = []
 appHeaderFile               = []
+genAppTaskEnable            = []
 
 ################################################################################
 #### Business Logic ####
@@ -129,7 +131,10 @@ def genAppSourceFile(symbol, event):
     if (appGenFiles == True):
         for count in range(0, appFileEnableCount):
             appName = component.getSymbolValue("GEN_APP_TASK_NAME_" + str(count))
-            appSourceFile[count].setEnabled(True)
+            if component.getSymbolValue("GEN_APP_TASK_ENABLE_" + str(count)) == False:
+                appSourceFile[count].setEnabled(False)
+            else:
+                appSourceFile[count].setEnabled(True)
             appSourceFile[count].setOutputName(appName.lower() + ".c")
 
 def genAppHeaderFile(symbol, event):
@@ -147,7 +152,10 @@ def genAppHeaderFile(symbol, event):
     if (appGenFiles == True):
         for count in range(0, appFileEnableCount):
             appName = component.getSymbolValue("GEN_APP_TASK_NAME_" + str(count))
-            appHeaderFile[count].setEnabled(True)
+            if component.getSymbolValue("GEN_APP_TASK_ENABLE_" + str(count)) == False:
+                appHeaderFile[count].setEnabled(False)
+            else:
+                appHeaderFile[count].setEnabled(True)
             appHeaderFile[count].setOutputName(appName.lower() + ".h")
 
 def genRtosMicriumOSIIIAppTaskVisible(symbol, event):
@@ -188,6 +196,12 @@ for count in range(0, genAppTaskMaxCount):
     else:
         genAppTaskConfMenu[count].setVisible(False)
 
+    genAppTaskEnable.append(count)
+    genAppTaskEnable[count] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_TASK_ENABLE_" + str(count), genAppTaskConfMenu[count])
+    genAppTaskEnable[count].setLabel("Enable Application " + str(count) + " Configuration")
+    genAppTaskEnable[count].setDescription("Enable Application " + str(count) + " Configuration")
+    genAppTaskEnable[count].setDefaultValue(True)
+
     genAppTaskName.append(count)
     genAppTaskName[count] = harmonyCoreComponent.createStringSymbol("GEN_APP_TASK_NAME_" + str(count), genAppTaskConfMenu[count])
     genAppTaskName[count].setLabel("Application Name")
@@ -216,7 +230,7 @@ for count in range(0, genAppTaskMaxCount):
     appSourceFile[count].setProjectPath("")
     appSourceFile[count].setType("SOURCE")
     appSourceFile[count].setEnabled(False)
-    appSourceFile[count].setDependencies(genAppSourceFile, ["ENABLE_APP_FILE", "GEN_APP_TASK_COUNT", "GEN_APP_TASK_NAME_" + str(count)])
+    appSourceFile[count].setDependencies(genAppSourceFile, ["ENABLE_APP_FILE", "GEN_APP_TASK_COUNT", "GEN_APP_TASK_NAME_" + str(count), "GEN_APP_TASK_ENABLE_" + str(count)])
     appSourceFile[count].addMarkupVariable("APP_NAME", "GEN_APP_TASK_NAME_" + str(count))
 
     # generate app.h
@@ -233,7 +247,7 @@ for count in range(0, genAppTaskMaxCount):
     appHeaderFile[count].setProjectPath("")
     appHeaderFile[count].setType("HEADER")
     appHeaderFile[count].setEnabled(False)
-    appHeaderFile[count].setDependencies(genAppHeaderFile, ["ENABLE_APP_FILE", "GEN_APP_TASK_COUNT", "GEN_APP_TASK_NAME_" + str(count)])
+    appHeaderFile[count].setDependencies(genAppHeaderFile, ["ENABLE_APP_FILE", "GEN_APP_TASK_COUNT", "GEN_APP_TASK_NAME_" + str(count), "GEN_APP_TASK_ENABLE_" + str(count)])
     appHeaderFile[count].addMarkupVariable("APP_NAME", "GEN_APP_TASK_NAME_" + str(count))
 
     # RTOS configurations
