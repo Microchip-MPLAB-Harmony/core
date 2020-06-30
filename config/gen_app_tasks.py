@@ -33,6 +33,7 @@ global genAppRtosTaskConfMenu
 global appHeaderFile
 global appSourceFile
 global genAppTaskEnable
+global genAppRtosTaskUseFPUContext
 
 # Get the default selected OSAL
 global osalSelectRTOS
@@ -56,6 +57,7 @@ genAppRtosTaskDelay         = []
 appSourceFile               = []
 appHeaderFile               = []
 genAppTaskEnable            = []
+genAppRtosTaskUseFPUContext = []
 
 ################################################################################
 #### Business Logic ####
@@ -160,6 +162,12 @@ def genAppHeaderFile(symbol, event):
 
 def genRtosMicriumOSIIIAppTaskVisible(symbol, event):
     if (event["value"] == "MicriumOSIII"):
+        symbol.setVisible(True)
+    else:
+        symbol.setVisible(False)
+
+def genRtosFreeRTOSAppTaskVisible(symbol, event):
+    if (event["value"] == "FreeRTOS"):
         symbol.setVisible(True)
     else:
         symbol.setVisible(False)
@@ -305,6 +313,15 @@ for count in range(0, genAppTaskMaxCount):
     genAppRtosTaskDelay[count].setDefaultValue(50)
     genAppRtosTaskDelay[count].setVisible(False)
     genAppRtosTaskDelay[count].setDependencies(genAppRtosTaskOptionsVisible, ["GEN_APP_RTOS_TASK_" + str(count) + "_USE_DELAY"])
+
+    if (coreArch == "CORTEX-A5" or ("PIC32MZ" in Database.getSymbolValue("core", "CoreSeries")) or ("PIC32MK" in Database.getSymbolValue("core", "CoreSeries"))):
+        genAppRtosTaskUseFPUContext.append(count)
+        genAppRtosTaskUseFPUContext[count] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_OPT_USE_FPU_CONTEXT", genAppRtosTaskConfMenu[count])
+        genAppRtosTaskUseFPUContext[count].setLabel("Use Floating point unit (FPU) context")
+        genAppRtosTaskUseFPUContext[count].setDescription("A task must create a floating point context for itself by calling portTASK_USES_FLOATING_POINT() before any floating point calculations are executed. It is only necessary to call portTASK_USES_FLOATING_POINT() once per task")
+        genAppRtosTaskUseFPUContext[count].setDefaultValue(False)
+        genAppRtosTaskUseFPUContext[count].setVisible(False)
+        genAppRtosTaskUseFPUContext[count].setDependencies(genRtosFreeRTOSAppTaskVisible, ["SELECT_RTOS"])
 
     genAppRtosTaskSpecificOpt.append(count)
     genAppRtosTaskSpecificOpt[count] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_OPT_NONE", genAppRtosTaskConfMenu[count])
