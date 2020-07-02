@@ -172,15 +172,13 @@ void ${APP_TASK_NAME?upper_case}_Initialize ( void );
 
 void ${APP_TASK_NAME?upper_case}_Tasks( void );
 
-
-
-#endif /* _${APP_TASK_NAME?upper_case}_H */
-
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
 #endif
 //DOM-IGNORE-END
+
+#endif /* _${APP_TASK_NAME?upper_case}_H */
 
 /*******************************************************************************
  End of File
