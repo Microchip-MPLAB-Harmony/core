@@ -107,6 +107,9 @@ def instantiateComponent(harmonyCoreComponent):
     # Harmony Core System Service DMA files
     execfile(Module.getPath() + "/system/dma/config/sys_dma.py")
 
+    # Harmony Core System Service Reset files
+    execfile(Module.getPath() + "/system/reset/config/sys_reset.py")
+
     # Harmony Core Operating System Abstraction Layer (OSAL) files
     execfile(Module.getPath() + "/osal/config/osal.py")
 
