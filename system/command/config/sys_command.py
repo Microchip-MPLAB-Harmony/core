@@ -56,6 +56,10 @@ def commandRtosMicriumOSIIIAppTaskVisibility(symbol, event):
 def commandRtosMicriumOSIIITaskOptVisibility(symbol, event):
     symbol.setVisible(event["value"])
 
+def commandSendMessageHeapSize(symbol, event):
+    dummyDict = {}
+    dummyDict = Database.sendMessage("core", "HEAP_SIZE", {"heap_size" : 1024})
+
 ################################################################################
 #### Component ####
 ################################################################################
@@ -84,10 +88,14 @@ def instantiateComponent(commandComponent):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
         Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
+    dummyDict = {}
+    dummyDict = Database.sendMessage("core", "HEAP_SIZE", {"heap_size" : 1024})
+
     commandConsoleDevice = commandComponent.createStringSymbol("SYS_CONSOLE_DEVICE", None)
     commandConsoleDevice.setLabel("Device Used")
     commandConsoleDevice.setReadOnly(True)
     commandConsoleDevice.setDefaultValue("")
+    commandConsoleDevice.setDependencies(commandSendMessageHeapSize, ["core.COMPILER_CHOICE"])
 
     commandConsoleIndex = commandComponent.createStringSymbol("SYS_CONSOLE_INDEX", None)
     commandConsoleIndex.setVisible(False)
