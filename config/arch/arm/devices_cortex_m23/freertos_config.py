@@ -77,6 +77,13 @@ SVCallInterruptPriorityLock = "NVIC_" + str(SVCallInterruptIndex) +"_0_PRIORITY_
 
 Database.clearSymbolValue("core", SVCallInterruptPriorityLock)
 Database.setSymbolValue("core", SVCallInterruptPriorityLock, True)
+if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+    #Set SysTick interrupt security mode as non-secure
+    Database.setSymbolValue("core", "NVIC_" + str(SysTickInterruptIndex) + "_0_SECURITY_TYPE", 1)
+    #Set SVCall interrupt security mode as non-secure
+    Database.setSymbolValue("core", "NVIC_" + str(SVCallInterruptIndex) + "_0_SECURITY_TYPE", 1)
+    #Set PendSV interrupt security mode as non-secure
+    Database.setSymbolValue("core", "NVIC_" + str(Interrupt.getInterruptIndex("PendSV")) + "_0_SECURITY_TYPE", 1)
 
 ############################################################################
 #### Code Generation ####
