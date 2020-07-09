@@ -56,6 +56,7 @@
 #include "system/command/sys_command.h"
 #include "system/console/sys_console.h"
 #include "system/debug/sys_debug.h"
+#include "system/reset/sys_reset.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -760,7 +761,7 @@ static void CommandReset(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv)
     const void* cmdIoParam = pCmdIO->cmdIoParam;
     (*pCmdIO->pCmdApi->msg)(cmdIoParam, LINE_TERM " *** System Reboot ***\r\n" );
 
-    // SYS_RESET_SoftwareReset();
+    SYS_RESET_SoftwareReset();
 
 }
 

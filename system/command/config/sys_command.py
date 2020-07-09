@@ -88,6 +88,9 @@ def instantiateComponent(commandComponent):
         Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
         Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
+    # Enable system reset service
+    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_RESET", True)
+
     dummyDict = {}
     dummyDict = Database.sendMessage("core", "HEAP_SIZE", {"heap_size" : 1024})
 
