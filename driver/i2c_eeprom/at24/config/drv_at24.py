@@ -28,6 +28,16 @@
 
 at24MemoryInterruptEnable = None
 
+def handleMessage(messageID, args):
+
+    result_dict = {}
+
+    if (messageID == "REQUEST_CONFIG_PARAMS"):
+        if args.get("localComponentID") != None:
+            result_dict = Database.sendMessage(args["localComponentID"], "I2C_MASTER_MODE", {"isReadOnly":True, "isEnabled":True})
+
+    return result_dict
+
 def updateEEPROMAddressLen(symbol, event):
     symObj=event["symbol"]
     if (symObj.getValue() > 256):
@@ -218,7 +228,6 @@ def onAttachmentConnected(source, target):
         plibUsed.clearValue()
         at24PlibId = remoteID.upper()
         plibUsed.setValue(at24PlibId)
-        Database.setSymbolValue(at24PlibId, "I2C_DRIVER_CONTROLLED", True)
 
 
 def onAttachmentDisconnected(source, target):
@@ -233,5 +242,6 @@ def onAttachmentDisconnected(source, target):
         plibUsed = localComponent.getSymbolByID("DRV_AT24_PLIB")
         plibUsed.clearValue()
         at24PlibId = remoteID.upper()
-        Database.setSymbolValue(at24PlibId, "I2C_DRIVER_CONTROLLED", False)
 
+        dummyDict = {}
+        dummyDict = Database.sendMessage(remoteID, "I2C_MASTER_MODE", {"isReadOnly":False})
