@@ -21,6 +21,16 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
+def handleMessage(messageID, args):
+
+    result_dict = {}
+
+    if (messageID == "REQUEST_CONFIG_PARAMS"):
+        if args.get("localComponentID") != None:
+            result_dict = Database.sendMessage(args["localComponentID"], "I2C_MASTER_MODE", {"isEnabled":True, "isReadOnly":True})
+
+    return result_dict
+
 
 def incrementCommonForcedWriteCounter(symbol, event):
     dummyDict = {}
@@ -92,20 +102,17 @@ def asyncModeOptions(symbol, event):
         symbol.setVisible(False)
 
 def onAttachmentConnected(source, target):
-    dummyDict = {}
     localComponent = source["component"]
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
     connectID = source["id"]
     targetID = target["id"]
+    dummyDict = {}
 
     if connectID == "drv_i2c_I2C_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_I2C_PLIB")
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper())
-        
-        dummyDict = Database.sendMessage(remoteID, "I2C_MODE_LOCK", dummyDict)
-        dummyDict = Database.sendMessage(remoteID, "I2C_MODE_SET_MASTER", dummyDict)
 
         # Check if the PLIB has the "I2C_INCLUDE_FORCED_WRITE_API" symbol or not
         plibForcedWriteAPISymVal = Database.getSymbolValue(remoteID, "I2C_INCLUDE_FORCED_WRITE_API")
@@ -121,18 +128,18 @@ def onAttachmentConnected(source, target):
                 dummyDict = Database.sendMessage("drv_i2c", "DRV_FORCE_WRITE_API_COUNTER_DEC", dummyDict)
 
 def onAttachmentDisconnected(source, target):
-    dummyDict = {}
     localComponent = source["component"]
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
     connectID = source["id"]
     targetID = target["id"]
+    dummyDict = {}
 
     if connectID == "drv_i2c_I2C_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_I2C_PLIB")
         plibUsed.clearValue()
-        
-        dummyDict = Database.sendMessage(remoteID, "I2C_MODE_UNLOCK", dummyDict)
+
+        dummyDict = Database.sendMessage(remoteID, "I2C_MASTER_MODE", {"isReadOnly":False})
 
         # Check if the PLIB has the "I2C_INCLUDE_FORCED_WRITE_API" symbol or not
         plibForcedWriteAPISymVal = Database.getSymbolValue(remoteID, "I2C_INCLUDE_FORCED_WRITE_API")
