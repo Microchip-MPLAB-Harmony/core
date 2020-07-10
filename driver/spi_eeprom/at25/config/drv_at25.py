@@ -30,6 +30,18 @@ at25MemoryInterruptEnable = None
 
 global sort_alphanumeric
 
+def handleMessage(messageID, args):
+
+    result_dict = {}
+
+    if (messageID == "REQUEST_CONFIG_PARAMS"):
+        if args.get("localComponentID") != None:
+            result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_MODE", {"isReadOnly":True, "isEnabled":True})
+            result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_INTERRUPT_MODE", {"isReadOnly":True, "isEnabled":True})
+            result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_HARDWARE_CS", {"isReadOnly":True, "isEnabled":False})
+
+    return result_dict
+
 def sort_alphanumeric(l):
     import re
     convert = lambda text: int(text) if text.isdigit() else text.lower()
@@ -222,7 +234,6 @@ def onAttachmentConnected(source, target):
         plibUsed.clearValue()
         at25PlibId = remoteID.upper()
         plibUsed.setValue(at25PlibId.upper())
-        Database.setSymbolValue(at25PlibId, "SPI_DRIVER_CONTROLLED", True)
 
 def onAttachmentDisconnected(source, target):
 
@@ -236,4 +247,8 @@ def onAttachmentDisconnected(source, target):
         plibUsed = localComponent.getSymbolByID("DRV_AT25_PLIB")
         plibUsed.clearValue()
         at25PlibId = remoteID.upper()
-        Database.setSymbolValue(at25PlibId, "SPI_DRIVER_CONTROLLED", False)
+
+        dummyDict = {}
+        dummyDict = Database.sendMessage(remoteID, "SPI_MASTER_MODE", {"isReadOnly":False})
+        dummyDict = Database.sendMessage(remoteID, "SPI_MASTER_INTERRUPT_MODE", {"isReadOnly":False})
+        dummyDict = Database.sendMessage(remoteID, "SPI_MASTER_HARDWARE_CS", {"isReadOnly":False})
