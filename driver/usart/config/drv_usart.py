@@ -27,6 +27,18 @@ global currentRxBufSize
 global drvUsartInstanceSpace
 global isDMAPresent
 
+def handleMessage(messageID, args):
+
+    result_dict = {}
+
+    if (messageID == "REQUEST_CONFIG_PARAMS"):
+        if args.get("localComponentID") != None:
+            result_dict = Database.sendMessage(args["localComponentID"], "UART_INTERRUPT_MODE", {"isEnabled":True, "isReadOnly":True})
+
+            result_dict = Database.sendMessage(args["localComponentID"], "UART_RING_BUFFER_MODE", {"isEnabled":False, "isReadOnly":True})
+
+    return result_dict
+
 def instantiateComponent(usartComponent, index):
     global currentTxBufSize
     global currentRxBufSize
@@ -197,11 +209,16 @@ def onAttachmentDisconnected(source, target):
     remoteID = remoteComponent.getID()
     connectID = source["id"]
     targetID = target["id"]
+    dummyDict = {}
 
     if connectID == "drv_usart_UART_dependency":
 
         dmaChannelSym = Database.getSymbolValue("core", "DMA_CH_FOR_" + remoteID.upper() + "_Transmit")
         dmaRequestSym = Database.getSymbolValue("core", "DMA_CH_NEEDED_FOR_" + remoteID.upper() + "_Transmit")
+
+        dummyDict = Database.sendMessage(remoteID, "UART_RING_BUFFER_MODE", {"isReadOnly":False})
+
+        dummyDict = Database.sendMessage(remoteID, "UART_INTERRUPT_MODE", {"isReadOnly":False})
 
         # Do not change the order as DMA Channels needs to be cleared
         # before clearing the plibUsed symbol
