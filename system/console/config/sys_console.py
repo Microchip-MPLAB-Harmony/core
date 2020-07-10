@@ -25,6 +25,18 @@
 ################################################################################
 #### Business Logic ####
 ################################################################################
+def handleMessage(messageID, args):
+
+    result_dict = {}
+
+    if (messageID == "REQUEST_CONFIG_PARAMS"):
+        if args.get("localComponentID") != None:
+
+            result_dict = Database.sendMessage(args["localComponentID"], "UART_INTERRUPT_MODE", {"isEnabled":True, "isReadOnly":True})
+
+            result_dict = Database.sendMessage(args["localComponentID"], "UART_RING_BUFFER_MODE", {"isEnabled":True, "isReadOnly":True})
+
+    return result_dict
 
 def selectDeviceSet(symbol, event):
     symbol.clearValue()
@@ -390,8 +402,6 @@ def onAttachmentConnected(source, target):
 
             console_uart_connection_counter_dict = Database.sendMessage("sys_console", "SYS_CONSOLE_UART_CONNECTION_COUNTER_INC", console_uart_connection_counter_dict)
 
-            console_uart_connection_counter_dict = Database.sendMessage(remoteID, "ENABLE_UART_RING_BUFFER_MODE", console_uart_connection_counter_dict)
-
     elif connectID == "sys_console_USB_DEVICE_CDC_dependency" :
         deviceUsed.setValue(remoteID.upper())
         consoleSymDeviceIndex = localComponent.getSymbolByID("SYS_CONSOLE_DEVICE_INDEX")
@@ -417,8 +427,9 @@ def onAttachmentDisconnected(source, target):
 
             console_uart_connection_counter_dict = Database.sendMessage("sys_console", "SYS_CONSOLE_UART_CONNECTION_COUNTER_DEC", console_uart_connection_counter_dict)
 
-            console_uart_connection_counter_dict = Database.sendMessage(remoteID,
-             "DISABLE_UART_RING_BUFFER_MODE", console_uart_connection_counter_dict)
+            console_uart_connection_counter_dict = Database.sendMessage(remoteID, "UART_INTERRUPT_MODE", {"isReadOnly":False})
+
+            console_uart_connection_counter_dict = Database.sendMessage(remoteID, "UART_RING_BUFFER_MODE", {"isReadOnly":False})
 
     elif connectID == "sys_console_USB_DEVICE_CDC_dependency" :
         deviceUsed.clearValue()
