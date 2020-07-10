@@ -24,6 +24,18 @@
 
 global isDMAPresent
 
+def handleMessage(messageID, args):
+
+    result_dict = {}
+
+    if (messageID == "REQUEST_CONFIG_PARAMS"):
+        if args.get("localComponentID") != None:
+            result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_MODE", {"isReadOnly":True, "isEnabled":True})
+            result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_INTERRUPT_MODE", {"isReadOnly":True, "isEnabled":True})
+            result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_HARDWARE_CS", {"isReadOnly":True, "isEnabled":False})
+
+    return result_dict
+
 def instantiateComponent(spiComponent, index):
     global drvSpiInstanceSpace
     global isDMAPresent
@@ -189,7 +201,6 @@ def onAttachmentConnected(source, target):
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper())
 
-        Database.setSymbolValue(remoteID, "SPI_DRIVER_CONTROLLED", True)
         dmaChannelSym = Database.getSymbolValue("core", "DMA_CH_FOR_" + remoteID.upper() + "_Transmit")
         dmaRequestSym = Database.getSymbolValue("core", "DMA_CH_NEEDED_FOR_" + remoteID.upper() + "_Transmit")
 
@@ -214,6 +225,11 @@ def onAttachmentDisconnected(source, target):
         dmaChannelSym = Database.getSymbolValue("core", "DMA_CH_FOR_" + remoteID.upper() + "_Transmit")
         dmaRequestSym = Database.getSymbolValue("core", "DMA_CH_NEEDED_FOR_" + remoteID.upper() + "_Transmit")
 
+        dummyDict = {}
+        dummyDict = Database.sendMessage(remoteID, "SPI_MASTER_MODE", {"isReadOnly":False})
+        dummyDict = Database.sendMessage(remoteID, "SPI_MASTER_INTERRUPT_MODE", {"isReadOnly":False})
+        dummyDict = Database.sendMessage(remoteID, "SPI_MASTER_HARDWARE_CS", {"isReadOnly":False})
+
         # Do not change the order as DMA Channels needs to be cleared
         # before clearing the plibUsed symbol
         # Both device and connected plib should support DMA
@@ -224,7 +240,6 @@ def onAttachmentDisconnected(source, target):
 
         plibUsed = localComponent.getSymbolByID("DRV_SPI_PLIB")
         plibUsed.clearValue()
-        Database.setSymbolValue(remoteID, "SPI_DRIVER_CONTROLLED", False)
 
 def requestAndAssignTxDMAChannel(symbol, event):
     global drvSpiInstanceSpace
