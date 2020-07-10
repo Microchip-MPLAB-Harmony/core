@@ -33,6 +33,18 @@ global sort_alphanumeric
 
 cardDetectMethodComboValues = ["Use Polling"]
 
+def handleMessage(messageID, args):
+
+    result_dict = {}
+
+    if (messageID == "REQUEST_CONFIG_PARAMS"):
+        if args.get("localComponentID") != None:
+            result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_MODE", {"isReadOnly":True, "isEnabled":True})
+            result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_INTERRUPT_MODE", {"isReadOnly":True, "isEnabled":True})
+            result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_HARDWARE_CS", {"isReadOnly":True, "isEnabled":False})
+
+    return result_dict
+
 def sort_alphanumeric(l):
     import re
     convert = lambda text: int(text) if text.isdigit() else text.lower()
@@ -676,15 +688,13 @@ def onAttachmentConnected(source, target):
             sdspiFsConnectionCounterDict = {}
             sdspiFsConnectionCounterDict = Database.sendMessage("drv_sdspi", "DRV_SDSPI_FS_CONNECTION_COUNTER_INC", sdspiFsConnectionCounterDict)
 
-    # For Dependency Connected (SPI)
+    # For Dependency Connected SPI PLIB
     if (connectID == "drv_sdspi_SPI_dependency"):
         plibUsed = localComponent.getSymbolByID("DRV_SDSPI_PLIB")
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper())
 
         localComponent.setSymbolValue("DRV_SDSPI_INTERFACE_TYPE", "SPI_PLIB")
-
-        Database.setSymbolValue(remoteID.upper(), "SPI_DRIVER_CONTROLLED", True)
 
         # Do not change the order as DMA Channels needs to be allocated
         # after setting the plibUsed symbol
@@ -721,10 +731,16 @@ def onAttachmentDisconnected(source, target):
             sdspiFsConnectionCounterDict = {}
             sdspiFsConnectionCounterDict = Database.sendMessage("drv_sdspi", "DRV_SDSPI_FS_CONNECTION_COUNTER_DEC", sdspiFsConnectionCounterDict)
 
-    
+
 
     # For Dependency Disonnected (SPI)
     if (connectID == "drv_sdspi_SPI_dependency"):
+
+        dummyDict = {}
+        dummyDict = Database.sendMessage(remoteID, "SPI_MASTER_MODE", {"isReadOnly":False})
+        dummyDict = Database.sendMessage(remoteID, "SPI_MASTER_INTERRUPT_MODE", {"isReadOnly":False})
+        dummyDict = Database.sendMessage(remoteID, "SPI_MASTER_HARDWARE_CS", {"isReadOnly":False})
+
         # Do not change the order as DMA Channels needs to be cleared
         # before clearing the plibUsed symbol
         if isDMAPresent == True:
@@ -734,7 +750,6 @@ def onAttachmentDisconnected(source, target):
 
         plibUsed = localComponent.getSymbolByID("DRV_SDSPI_PLIB")
         plibUsed.clearValue()
-        Database.setSymbolValue(remoteID.upper(), "SPI_DRIVER_CONTROLLED", False)
         localComponent.setSymbolValue("DRV_SDSPI_INTERFACE_TYPE", "")
     elif (connectID == "drv_sdspi_DRV_SPI_dependency"):
 
