@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Hardware Setup</title>
+<title>DRV_AT25DF_Initialize Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00007.html" target="topic">Applications Help</a> &gt; <a href="00006.html" target="topic">Driver Applications</a> &gt; <a href="00217.html" target="topic">SPI Driver Applications</a> &gt; Async &gt; <a href="00224.html" target="topic">spi_multi_slave</a> &gt; <a href="00226.html" target="topic">Hardware Setup</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00123.html" target="topic">SPI Flash Driver Libraries Help</a> &gt; <a href="00044.html" target="topic">AT25DF Driver Library Help</a> &gt; <a href="00045.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00226.html" target="topic">DRV_AT25DF_Initialize Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00227.html" target="topic">Previous</a> | <a href="00224.html" target="topic">Up</a> | <a href="00228.html" target="topic">Next</a></div>
+<a href="00045.html" target="topic">Previous</a> | <a href="00045.html" target="topic">Up</a> | <a href="00227.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SPI Async spi_multi_slave Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT25DF_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: DRV_AT25DF_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Hardware Setup</div>
+DRV_AT25DF_Initialize Function</div>
 </div>
 </div>
 
@@ -48,222 +48,86 @@ Hardware Setup</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-
-<ol class="Element630">
-<li value="1" class="Element600"> <strong>Project pic32mk_mcj_curiosity_pro.X</strong>
-<ul class="Element631">
-<li class="Element601"><strong>Hardware Used</strong>
-<ul class="Element632">
-<li class="Element602">PIC32MK MCJ Curiosity Pro Development Board</li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards</li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards</li>
-</ul></li>
-<li class="Element601"><strong>Hardware Setup</strong>
-<ul class="Element632">
-<li class="Element602">Install <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards on to the <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards</li>
-<li class="Element602">Connect <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards on to the &quot;EXT1&quot; and &quot;EXT2&quot; headers of the PIC32MK MCJ Curiosity Pro Development Board</li>
-<li class="Element602">Connect micro USB cable to the 'Debug USB' connector(J1) on the board to the computer.</li>
-</ul></li>
-</ul></li>
-</ol><p class="Element10">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="2" class="Element600"><strong>Project sam_e54_xpro.X.</strong>
-<ul class="Element631">
-<li class="Element601"><strong>Hardware Used:</strong>
-<ul class="Element632">
-<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsame54-xpro');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM E54 Xplained Pro Evaluation Kit</a></li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards</li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards</li>
-</ul></li>
-<li class="Element601"><strong>Hardware Setup:</strong>
-<ul class="Element632">
-<li class="Element602">Install <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards on to the <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards</li>
-<li class="Element602">Connect <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards on to the &quot;EXT2&quot; and &quot;EXT3&quot; headers of the <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsame54-xpro');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM E54 Xplained Pro Evaluation Kit</a></li>
-</ul></li>
-</ul></li>
-</ol><p class="Element10">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="3" class="Element600"><strong>Project</strong> <strong>sam_e70_xult.X.</strong></li>
-<li value="4" class="Element600"><strong>Project sam_e70_xult_freertos.X.</strong>
-<ul class="Element631">
-<li class="Element601"><strong>Hardware Used:</strong>
-<ul class="Element632">
-<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM320113');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM E70 Xplained Ultra Evaluation Kit</a></li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards</li>
-<li class="Element602">One <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> board</li>
-</ul></li>
-<li class="Element601"><strong>Hardware Setup:</strong>
-<ul class="Element632">
-<li class="Element602">Install one <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> board on to the click slot provided on <a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM320113');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM E70 Xplained Ultra Evaluation Kit</a></li>
-<li class="Element602">Install another <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> board on to the <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> board</li>
-<li class="Element602">Connect <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> board to the EXT2 headers of the <a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM320113');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM E70 Xplained Ultra Evaluation Kit</a></li>
-<li class="Element602">Connect a jumper between <strong>LED2</strong> and PB08 on J203 header of <a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM320113');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM E70 Xplained Ultra Evaluation Kit</a></li>
-</ul></li>
-</ul></li>
-</ol><p class="Element10">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="5" class="Element600"><strong>Project sam_g55_xpro.X.</strong>
-<ul class="Element631">
-<li class="Element601"><strong>Hardware Used:</strong>
-<ul class="Element632">
-<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsamg55-xpro');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM G55 Xplained Pro Evaluation Kit</a></li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards</li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards</li>
-</ul></li>
-<li class="Element601"><strong>Hardware Setup:</strong>
-<ul class="Element632">
-<li class="Element602">Install <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards on to the <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards</li>
-<li class="Element602">Connect <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards on to the &quot;EXT1&quot; and &quot;EXT3&quot; headers of the <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsamg55-xpro');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM G55 Xplained Pro Evaluation Kit</a></li>
-</ul></li>
-</ul></li>
-</ol><p class="Element10">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="6" class="Element600"><strong>Project sam_l10_xpro.X.</strong>
-<ul class="Element631">
-<li class="Element601"><strong>Hardware Used:</strong>
-<ul class="Element632">
-<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/dm320204');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM L10 Xplained Pro Evaluation Kit</a></li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards</li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards</li>
-</ul></li>
-<li class="Element601"><strong>Hardware Setup:</strong>
-<ul class="Element632">
-<li class="Element602">Install <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards on to the <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards</li>
-<li class="Element602">Connect <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards on to the &quot;EXT1&quot; and &quot;EXT2&quot; headers of the <a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/dm320204');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM L10 Xplained Pro Evaluation Kit</a></li>
-</ul></li>
-</ul></li>
-</ol><p class="Element10">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="7" class="Element600"><strong>Project sam_v71_xult.X.</strong></li>
-<li value="8" class="Element600"><strong>Project sam_v71_xult_freertos.X.</strong>
-<ul class="Element631">
-<li class="Element601"><strong>Hardware Used:</strong>
-<ul class="Element632">
-<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsamv71-xult');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM V71 Xplained Ultra Evaluation Kit</a></li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards</li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards</li>
-</ul></li>
-<li class="Element601"><strong>Hardware Setup:</strong>
-<ul class="Element632">
-<li class="Element602">Install <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards on to the <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards</li>
-<li class="Element602">Connect <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards on to the &quot;EXT1&quot; and &quot;EXT2&quot; headers of the <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsamv71-xult');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM V71 Xplained Ultra Evaluation Kit</a></li>
-</ul></li>
-</ul></li>
-</ol><p class="Element10">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="9" class="Element600"><strong>Project sam_a5d2_xult.IAR OR sam_a5d2_xult_xc32.X</strong></li>
-<li value="10" class="Element600"><strong>Project sam_a5d2_xult_freertos.IAR OR sam_a5d2_xult_xc32_freertos.X</strong>
-<ul class="Element631">
-<li class="Element601"><strong>Hardware Used</strong>
-<ul class="Element632">
-<li class="Element602"><a href="#" onclick="openExternalLink('http://www.microchip.com/DevelopmentTools/ProductDetails/ATSAMA5D2C-XULT');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM A5D2 Xplained Ultra board</a></li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards</li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> board</li>
-<li class="Element602">SD Card with FAT32 file system</li>
-</ul></li>
-<li class="Element601"><strong>Hardware Setup</strong>
-<ul class="Element632">
-<li class="Element602">Setup the SD card
-<ul class="Element633">
-<li class="Element603">Download harmony MPU bootstrap loader from this <a href="#" onclick="openExternalLink('http://github.com/Microchip-MPLAB-Harmony/at91bootstrap/blob/master/boot.bin');"><img src="indicator_external_link.gif" border="0" alt="" title="">location</a></li>
-<li class="Element603">Copy the downloaded boot loader binary( boot.bin) and generated application binary (harmony.bin)into the SD card</li>
-<li class="Element603">Insert the SD card into the SDMMC1 slot on the board</li>
-</ul></li>
-<li class="Element602">Install <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards on to the <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards</li>
-<li class="Element602">Connect <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards on to the &quot;EXT1&quot; and &quot;EXT2&quot; headers of the <a href="#" onclick="openExternalLink('http://www.microchip.com/DevelopmentTools/ProductDetails/ATSAMA5D2C-XULT');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM A5D2 Xplained Ultra board</a></li>
-<li class="Element602">Connect the Debug USB port (J14) on the board to the computer using a micro USB cable</li>
-</ul></li>
-</ul></li>
-</ol><p class="Element10">
-&nbsp;</p>
-
-<ol class="Element630">
-<li value="11" class="Element600"><strong>Project sam_9x60_ek.IAR OR sam_9x60_ek_xc32.X</strong></li>
-<li value="12" class="Element600"><strong>Project sam_9x60_ek_freertos.IAR OR sam_9x60_ek_freertos_xc32.X</strong></li>
-</ol>
-<ul class="Element630">
-<li class="Element600"><strong>Hardware Used</strong>
-<ul class="Element631">
-<li class="Element601">SAM 9X60 Evaluation Kit board (Rev. B)</li>
-<li class="Element601">Two <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards</li>
-<li class="Element601">SD Card with FAT32 file system</li>
-</ul></li>
-<li class="Element600"><strong>Hardware Setup</strong>
-<ul class="Element631">
-<li class="Element601">Setup the SD card
-<ul class="Element632">
-<li class="Element602">Download harmony MPU bootstrap loader from this <a href="#" onclick="openExternalLink('http://github.com/Microchip-MPLAB-Harmony/at91bootstrap/blob/sam9x60ek/boot.bin');"><img src="indicator_external_link.gif" border="0" alt="" title="">location</a></li>
-<li class="Element602">Copy the downloaded boot loader binary( boot.bin) and generated application binary (harmony.bin)into the SD card</li>
-<li class="Element602">Insert the SD card into the SDMMC connector J4 on the board</li>
-</ul></li>
-<li class="Element601">Insert one <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> board into MIKROBUS connector J14</li>
-<li class="Element601">Connect another <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> board to J16 connector as per below <strong>Pin Connections</strong> using jumper wires</li>
-<li class="Element601">Connect the USB port J22 on board to the computer using a micro USB cable (to enable debug com port)</li>
-<li class="Element601">Connect the USB port J7 on board to the computer using a micro USB cable (to power the board)</li>
-<li class="Element601">Note: Reset push button on SAM9X60 EK is labeled as SW3</li>
-</ul></li>
-<li class="Element600"><strong>Pin Connections</strong></li>
-</ul><div class="Element63">
+<p class="Element10">
+This routine initializes the AT25DF FLASH device driver making it ready for clients to open and use. The initialization data is specified by the init parameter. It is a single instance driver, so this API should be called only once.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01135.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_AT25DF_Initialize</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01129.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="01130.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table4">
+<table cellspacing="0" class="Table2">
 <tr>
-<td class="Element65" valign="top" width="61%">
-<div class="Element66">
-J16 Connector Pins&nbsp;</div></td><td class="Element65" valign="top" width="39%">
-<div class="Element66">
-EEPROM 4 CLICK Pins&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="61%">
-<div class="Element68">
-PIN 15&nbsp;</div></td><td class="Element67" valign="top" width="39%">
-<div class="Element68">
-HLD&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="61%">
-<div class="Element68">
-PIN 24&nbsp;</div></td><td class="Element67" valign="top" width="39%">
-<div class="Element68">
-WP&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="61%">
-<div class="Element68">
-PIN 26&nbsp;</div></td><td class="Element67" valign="top" width="39%">
-<div class="Element68">
-CS&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="61%">
-<div class="Element68">
-PIN 23&nbsp;</div></td><td class="Element67" valign="top" width="39%">
-<div class="Element68">
-SCK&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="61%">
-<div class="Element68">
-PIN 19&nbsp;</div></td><td class="Element67" valign="top" width="39%">
-<div class="Element68">
-SDI&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="61%">
-<div class="Element68">
-PIN 21&nbsp;</div></td><td class="Element67" valign="top" width="39%">
-<div class="Element68">
-SDO&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="61%">
-<div class="Element68">
-PIN 6&nbsp;</div></td><td class="Element67" valign="top" width="39%">
-<div class="Element68">
-GND&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="61%">
-<div class="Element68">
-PIN 1&nbsp;</div></td><td class="Element67" valign="top" width="39%">
-<div class="Element68">
-3V3&nbsp;</div></td></tr></table></div></div>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+drvIndex&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Identifier for the instance to be initialized.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the init data structure containing any data necessary to initialize the driver.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+If successful, returns a valid handle to a driver instance object. Otherwise, returns <a href="01136.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This routine must be called before any other DRV_AT25DF routine is called. This routine should only be called once during system initialization.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="01135.html" target="topic">SYS_MODULE_OBJ</a>   sysObjDrvAT25DF;
+
+DRV_AT25DF_PLIB_INTERFACE drvAT25DFPlibAPI = {
+.writeRead = (DRV_AT25DF_PLIB_WRITE_READ)SPI0_WriteRead,
+.write = (DRV_AT25DF_PLIB_WRITE)SPI0_Write,
+.read = (DRV_AT25DF_PLIB_READ)SPI0_Read,
+.isBusy = (DRV_AT25DF_PLIB_IS_BUSY)SPI0_IsBusy,
+.callbackRegister = (DRV_AT25DF_PLIB_CALLBACK_REGISTER)SPI0_CallbackRegister,
+};
+
+DRV_AT25DF_INIT drvAT25DFInitData = {
+    .spiPlib = &amp;drvAT25DFPlibAPI,
+    .numClients = DRV_AT25DF_CLIENTS_NUMBER_IDX,
+    .pageSize = DRV_AT25DF_PAGE_SIZE,
+    .flashSize = DRV_AT25DF_FLASH_SIZE,
+    .blockStartAddress = 0x0,
+    .chipSelectPin  = DRV_AT25DF_CHIP_SELECT_PIN_IDX
+};
+
+sysObjDrvAT25DF = DRV_AT25DF_Initialize(DRV_AT25DF_INDEX, (<a href="01130.html" target="topic">SYS_MODULE_INIT</a> *)&amp;drvAT25DFInitData);
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -271,7 +135,7 @@ PIN 1&nbsp;</div></td><td class="Element67" valign="top" width="39%">
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00007.html" target="topic">Applications Help</a> &gt; <a href="00006.html" target="topic">Driver Applications</a> &gt; <a href="00217.html" target="topic">SPI Driver Applications</a> &gt; Async &gt; <a href="00224.html" target="topic">spi_multi_slave</a> &gt; <a href="00226.html" target="topic">Hardware Setup</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00123.html" target="topic">SPI Flash Driver Libraries Help</a> &gt; <a href="00044.html" target="topic">AT25DF Driver Library Help</a> &gt; <a href="00045.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00226.html" target="topic">DRV_AT25DF_Initialize Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -279,13 +143,13 @@ PIN 1&nbsp;</div></td><td class="Element67" valign="top" width="39%">
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00227.html" target="topic">Previous</a> | <a href="00224.html" target="topic">Up</a> | <a href="00228.html" target="topic">Next</a></div>
+<a href="00045.html" target="topic">Previous</a> | <a href="00045.html" target="topic">Up</a> | <a href="00227.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SPI Async spi_multi_slave Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT25DF_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: DRV_AT25DF_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_AT25DF_Open Function</title>
+<title>DRV_SDMMC_EVENT_HANDLER Type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00027.html" target="topic">Driver Libraries Help</a> &gt; <a href="00243.html" target="topic">SPI Flash Driver Libraries Help</a> &gt; <a href="00077.html" target="topic">AT25DF Driver Library Help</a> &gt; <a href="00078.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00397.html" target="topic">DRV_AT25DF_Open Function</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00097.html" target="topic">SDMMC Driver Library</a> &gt; <a href="00098.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00397.html" target="topic">DRV_SDMMC_EVENT_HANDLER Type</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00396.html" target="topic">Previous</a> | <a href="00078.html" target="topic">Up</a> | <a href="00381.html" target="topic">Next</a></div>
+<a href="00394.html" target="topic">Previous</a> | <a href="00098.html" target="topic">Up</a> | <a href="00387.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT25DF_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_AT25DF_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDMMC_EVENT_HANDLER Topic Title: DRV_SDMMC_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_AT25DF_Open Function</div>
+DRV_SDMMC_EVENT_HANDLER Type</div>
 </div>
 </div>
 
@@ -49,23 +49,15 @@ DRV_AT25DF_Open Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This routine opens the specified AT25DF driver instance and provides a handle that must be provided to all other client-level operations to identify the caller and the instance of the driver. The ioIntent parameter defines how the client interacts with this driver instance.&nbsp;</p>
+SDMMC Driver Event Handler Function Pointer&nbsp;</p>
 <p class="Element10">
-This driver is a single client driver, so DRV_AT25DF_Open API should be called only once until driver is closed.</p></div>
+This data type defines the required function signature for the SDMMC event handling callback function. A client must register a pointer to an event handling function whose function signature (parameter and return value types) match the types specified by this function pointer in order to receive event calls back from the driver.&nbsp;</p>
+<p class="Element10">
+The parameters and return values are described here and a partial example implementation is provided.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00415.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">DRV_AT25DF_Open</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01392.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="00447.html" target="topic">DRV_IO_INTENT</a> <strong><span style="color: #000000">ioIntent</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-Function <a href="00396.html" target="topic">DRV_AT25DF_Initialize</a> must have been called before calling this function.</p></div>
-</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <a href="01106.html" target="topic">SYS_MEDIA_EVENT_HANDLER</a> <strong><span style="color: #000000">DRV_SDMMC_EVENT_HANDLER</span></strong>;</pre></div></div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
 <div class="Element11">
@@ -81,14 +73,19 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-drvIndex&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+event&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Identifier for the object instance to be opened<br>&nbsp;</div></td></tr><tr>
+Identifies the type of event<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-ioIntent&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+commandHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Zero or more of the values from the enumeration <a href="00447.html" target="topic">DRV_IO_INTENT</a> &quot;ORed&quot; together to indicate the intended use of the driver.&nbsp;</div></td></tr></table></div></div>
+Handle returned from the Read/Write requests<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Value identifying the context of the application that registered the event handling function&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -96,34 +93,45 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If successful, the routine returns a valid open-instance handle (a number identifying both the caller and the module instance).&nbsp;</p>
-<p class="Element10">
-If an error occurs, the return value is <a href="00416.html" target="topic">DRV_HANDLE_INVALID</a>. Error can occur</p>
-<ul class="Element630">
-<li class="Element600">if the driver has been already opened once and in use.</li>
-<li class="Element600">if the driver instance being opened is not initialized or is invalid.</li>
-</ul></div>
+None.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This driver ignores the ioIntent argument.&nbsp;</p>
+If the event is DRV_SDMMC_EVENT_COMMAND_COMPLETE, it means that the write or a read operation was completed successfully.&nbsp;</p>
 <p class="Element10">
-The handle returned is valid until the <a href="00381.html" target="topic">DRV_AT25DF_Close</a> routine is called.</p></div>
+If the event is DRV_SDMMC_EVENT_COMMAND_ERROR, it means that the operation was not completed successfully.&nbsp;</p>
+<p class="Element10">
+The context parameter contains the handle to the client context, provided at the time the event handling function was registered using the <a href="00398.html" target="topic">DRV_SDMMC_EventHandlerSet</a> function. This context handle value is passed back to the client as the &quot;context&quot; parameter. It can be any value necessary to identify the client context or instance (such as a pointer to the client's data) instance of the client that made the read/write request.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><a href="00415.html" target="topic">DRV_HANDLE</a> handle;
-
-handle = DRV_AT25DF_Open(DRV_AT25DF_INDEX, DRV_IO_INTENT_READWRITE);
-<strong><span style="color: #000080">if</span></strong> (handle == <a href="00416.html" target="topic">DRV_HANDLE_INVALID</a>)
+<div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> APP_MySDMMCEventHandler
+(
+    <a href="00394.html" target="topic">DRV_SDMMC_EVENT</a> event,
+    <a href="00386.html" target="topic">DRV_SDMMC_COMMAND_HANDLE</a> commandHandle,
+    uintptr_t context
+)
 {
-    <i><span style="color: #008000">// Unable to open the driver</span></i>
-    <i><span style="color: #008000">// May be the driver is not initialized</span></i>
+    MY_APP_DATA_STRUCT* pAppData = (MY_APP_DATA_STRUCT* ) context;
+
+    <strong><span style="color: #000080">switch</span></strong>(event)
+    {
+        <strong><span style="color: #000080">case</span></strong> DRV_SDMMC_EVENT_COMMAND_COMPLETE:
+
+            <i><span style="color: #008000">// Handle the completed buffer.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> DRV_SDMMC_EVENT_COMMAND_ERROR:
+        <strong><span style="color: #000080">default</span></strong>:
+
+            <i><span style="color: #008000">// Handle error.</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+    }
 }</pre></div></div>
 </div>
 </div>
@@ -132,7 +140,7 @@ handle = DRV_AT25DF_Open(DRV_AT25DF_INDEX, DRV_IO_INTENT_READWRITE);
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00027.html" target="topic">Driver Libraries Help</a> &gt; <a href="00243.html" target="topic">SPI Flash Driver Libraries Help</a> &gt; <a href="00077.html" target="topic">AT25DF Driver Library Help</a> &gt; <a href="00078.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00397.html" target="topic">DRV_AT25DF_Open Function</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00097.html" target="topic">SDMMC Driver Library</a> &gt; <a href="00098.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00397.html" target="topic">DRV_SDMMC_EVENT_HANDLER Type</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -140,13 +148,13 @@ handle = DRV_AT25DF_Open(DRV_AT25DF_INDEX, DRV_IO_INTENT_READWRITE);
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00396.html" target="topic">Previous</a> | <a href="00078.html" target="topic">Up</a> | <a href="00381.html" target="topic">Next</a></div>
+<a href="00394.html" target="topic">Previous</a> | <a href="00098.html" target="topic">Up</a> | <a href="00387.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT25DF_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_AT25DF_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDMMC_EVENT_HANDLER Topic Title: DRV_SDMMC_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

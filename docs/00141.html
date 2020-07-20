@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Configuring the Library</title>
+<title>Library Interface</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00027.html" target="topic">Driver Libraries Help</a> &gt; <a href="00146.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00141.html" target="topic">Configuring the Library</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00131.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00140.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00141.html" target="topic">Library Interface</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00144.html" target="topic">Previous</a> | <a href="00146.html" target="topic">Up</a> | <a href="00140.html" target="topic">Next</a></div>
+<a href="00134.html" target="topic">Previous</a> | <a href="00140.html" target="topic">Up</a> | <a href="00498.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Memory Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SST26 Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Configuring the Library</div>
+Library Interface</div>
 </div>
 </div>
 
@@ -49,78 +49,218 @@ Configuring the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<span style="color: #000000">The Memory driver library should be configured through the MHC. The following figures show the MHC configuration window for the Memory driver and brief description.</span>&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="drv_memory_async_fs_mhc_config.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<strong>Asynchronous Mode with RTOS and File-System</strong></p><p class="Element10">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="drv_memory_sync_mhc_config.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<strong>Synchronous Mode with RTOS and without File System</strong></p><p class="Element10">
-&nbsp;</p>
-<div class="Element15">
-Common User Configuration for all Instances</div>
-
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000"><strong>Driver Mode:</strong></span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">Allows User to select the mode of driver(Asynchronous or Synchronous). This setting is common for all the instances.</span></li>
-</ul></li>
-</ul><p class="Element10">
-&nbsp;</p>
-<div class="Element15">
-Instance Specific User Configurations</div>
-
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000"><strong>Number Of Clients:</strong></span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">Specifies number of clients to access the specific instance of the driver</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000"><strong>Buffer Queue Size:</strong></span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">Specifies maximum number of requests to be buffered in queue</span></li>
-<li class="Element601"><span style="color: #000000">When Connected to File system this value is set to 1 and non modifiable</span></li>
-<li class="Element601"><span style="color: #000000">This Configuration is displayed only in Asynchronous mode</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000"><strong>Memory Device Type:</strong></span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">Specifies the type of the device connected when the File system is connected to this instance</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000"><strong>Memory Device Used:</strong></span>
-<ul class="Element631">
-<li class="Element601"> Specifies the Media device connected</li>
-</ul></li>
-<li class="Element600"><strong>Memory Device Status Polling Rate Microseconds:</strong>
-<ul class="Element631">
-<li class="Element601">Specifies the interval to poll for the transfer status</li>
-<li class="Element601">Option is displayed only in synchronous mode and when Memory device used does not support interrupt mode</li>
-</ul></li>
-<li class="Element600"><strong>RTOS Settings:</strong>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">This configuration is displayed only in asynchronous mode</span></li>
-<li class="Element601"><strong>Stack Size:</strong>
-<ul class="Element632">
-<li class="Element602">Specifies the number of bytes to be allocated on the stack</li>
-</ul></li>
-<li class="Element601"><strong>Task Priority:</strong>
-<ul class="Element632">
-<li class="Element602">Specifies priority for the Memory driver task thread</li>
-</ul></li>
-<li class="Element601"><strong>Task Delay:</strong>
-<ul class="Element632">
-<li class="Element602">Specifies delay to sleep for the Memory task thread after every call.</li>
-</ul></li>
-</ul></li>
-</ul></div>
+This section describes the Application Programming Interface (API) functions of the SST26 driver<span style="color: #0000FF">.</span></p></div>
+</div>
+<a name="61292053797374656D2046756E6374696F6E73"></a><div class="Element14">
+a) System Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00498.html" target="topic">DRV_SST26_Initialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Initializes the SST26 Driver&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="622920436F726520436C69656E742046756E6374696F6E73"></a><div class="Element14">
+b) Core Client Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00499.html" target="topic">DRV_SST26_Open</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Opens the specified SST26 driver instance and returns a handle to it&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00483.html" target="topic">DRV_SST26_Close</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Closes an opened-instance of the SST26 driver&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00485.html" target="topic">DRV_SST26_EventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Allows a client to identify a transfer event handling function for the driver to call back when the requested transfer has finished.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="6329205472616E736665722046756E6374696F6E73"></a><div class="Element14">
+c) Transfer Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00510.html" target="topic">DRV_SST26_UnlockFlash</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Unlocks the flash device for Erase and Program operations.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00502.html" target="topic">DRV_SST26_ReadJedecId</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Reads JEDEC-ID of the flash device.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00503.html" target="topic">DRV_SST26_SectorErase</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Erase the sector from the specified block start address.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00481.html" target="topic">DRV_SST26_BulkErase</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Erase a block from the specified block start address.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00482.html" target="topic">DRV_SST26_ChipErase</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Erase entire flash memory.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00500.html" target="topic">DRV_SST26_PageWrite</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Writes one page of data starting at the specified address.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00501.html" target="topic">DRV_SST26_Read</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Reads n bytes of data from the specified start address of flash memory.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00504.html" target="topic">DRV_SST26_Status</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Gets the current status of the SST26 driver module.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00509.html" target="topic">DRV_SST26_TransferStatusGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Gets the current status of the transfer request.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="642920426C6F636B20496E746572666163652046756E6374696F6E73"></a><div class="Element14">
+d) Block Interface Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00497.html" target="topic">DRV_SST26_GeometryGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Returns the geometry of the device.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="6529204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
+e) Data Types and Constants</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00486.html" target="topic">DRV_SST26_GEOMETRY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+SST26 Device Geometry data.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00505.html" target="topic">DRV_SST26_TRANSFER_STATUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+SST26 Driver Transfer Status&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00484.html" target="topic">DRV_SST26_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Pointer to a SST26 Driver Event handler function&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00027.html" target="topic">Driver Libraries Help</a> &gt; <a href="00146.html" target="topic">Memory Driver Library Help</a> &gt; <a href="00141.html" target="topic">Configuring the Library</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00131.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00140.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00141.html" target="topic">Library Interface</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -128,13 +268,13 @@ Instance Specific User Configurations</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00144.html" target="topic">Previous</a> | <a href="00146.html" target="topic">Up</a> | <a href="00140.html" target="topic">Next</a></div>
+<a href="00134.html" target="topic">Previous</a> | <a href="00140.html" target="topic">Up</a> | <a href="00498.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Memory Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SST26 Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

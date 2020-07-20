@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Configuring the Library</title>
+<title>DRV_AT25_Open Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00027.html" target="topic">Driver Libraries Help</a> &gt; <a href="00205.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00199.html" target="topic">Configuring the Library</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00122.html" target="topic">SPI EEPROM Driver Libraries Help</a> &gt; <a href="00031.html" target="topic">AT25 Driver Library Help</a> &gt; <a href="00032.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00199.html" target="topic">DRV_AT25_Open Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00203.html" target="topic">Previous</a> | <a href="00205.html" target="topic">Up</a> | <a href="00198.html" target="topic">Next</a></div>
+<a href="00202.html" target="topic">Previous</a> | <a href="00032.html" target="topic">Up</a> | <a href="00183.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDSPI Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT25_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_AT25_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Configuring the Library</div>
+DRV_AT25_Open Function</div>
 </div>
 </div>
 
@@ -49,125 +49,90 @@ Configuring the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<span style="color: #000000">The SDSPI driver library should be configured through the MHC. The following figures show the MHC configuration window for the SDHC driver and brief description.</span>&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="drv_async_sdspi_plib.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<strong>Asynchronous Mode of SDSPI driver with SPI PLIB and File-System</strong>&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="drv_async_sdspi_driver.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<strong>Asynchronous Mode of SDSPI driver with SPI Driver and File-System</strong></p><p class="Element10">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="drv_sync_sdspi_plib.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<strong>Synchronous Mode of SDSPI driver with SPI PLIB and File-System</strong>&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="drv_sync_sdspi_driver.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<strong>Synchronous Mode of SDSPI driver with SPI Driver and File-System</strong></p><div class="Element15">
-Common User Configuration for all Instances</div>
-
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000"><strong>Driver Mode:</strong></span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">Allows User to select the mode of driver(Asynchronous or Synchronous).This setting is common for all the instances of the SDSPI driver.</span></li>
-<li class="Element601"><span style="color: #000000">When the SDSPI driver is used with SPI driver, the SPI driver inherits the driver mode from the SDSPI driver. That is, if the SDSPI driver is configured for Asynchronous mode then the SPI driver is automatically configured for Asynchronous mode and vice-versa.</span></li>
-</ul></li>
-</ul><p class="Element10">
-&nbsp;</p>
-<div class="Element15">
-Instance Specific User Configurations</div>
-
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000"><strong>PLIB Used:</strong></span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">Indicates the SPI peripheral instance used by the SDSPI driver</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000"><strong>SPI Driver Instance Used:</strong></span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">Indicates the SPI driver instance used by the SDSPI driver</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000"><strong>Number of Clients:</strong></span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">Indicates the number of clients to the given SDSPI driver instance</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000"><strong>SD Card Speed (Hz):</strong></span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">The maximum SPI speed at which the SDSPI driver interacts with the SD Card</span></li>
-<li class="Element601"><span style="color: #000000">SDSPI driver overrides the SPI PLIB clock speed settings</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000"><strong>Card Detection Method:</strong></span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">Card detection method used. For SDSPI driver command-response based polling method is used for card insertion/removal</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000"><strong>Polling Interval (ms):</strong></span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">Rate at which the SDSPI driver checks for card insertion and removal</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000"><strong>File System For SDSPI Driver Enabled:</strong></span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">Indicates whether SDSPI driver will register its services with the file system or not</span></li>
-<li class="Element601"><span style="color: #000000">This option is automatically checked when the file system is connected to the SDSPI driver</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000"><strong>Chip Select Pin:</strong></span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">The SD Card chip select pin</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000"><strong>Use Write Protect Pin (Active High)?</strong></span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">Enable write protection check. The selected write protect pin must be configured as GPIO input under the Pin Settings window</span></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000"><strong>Use DMA for Transmit and Receive?:</strong></span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000">Enable/disable DMA usage by the SDSPI driver. This option is available only when SDSPI driver is used with SPI PLIB. When SDSPI is used with SPI driver, the DMA must be configured in the SPI driver configuration.</span></li>
-<li class="Element601"><span style="color: #000000"><strong>DMA Channel For Transmit:</strong></span>
-<ul class="Element632">
-<li class="Element602"><span style="color: #000000">Indicates the DMA channel the SDSPI driver will use for transmission</span></li>
-</ul></li>
-<li class="Element601"><span style="color: #000000"><strong>DMA Channel For Receive:</strong></span>
-<ul class="Element632">
-<li class="Element602"><span style="color: #000000">Indicates the DMA channel the SDSPI driver will use for reception</span></li>
-</ul></li>
-</ul></li>
-<li class="Element600"><span style="color: #000000"><strong>RTOS Settings:</strong></span>
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000"><strong>Stack Size:</strong></span>
-<ul class="Element632">
-<li class="Element602"><span style="color: #000000">The stack size of the SDSPI RTOS thread</span></li>
-</ul></li>
-<li class="Element601"><span style="color: #000000"><strong>Task Priority:</strong></span>
-<ul class="Element632">
-<li class="Element602"><span style="color: #000000">The priority of the SDSPI RTOS thread</span></li>
-</ul></li>
-<li class="Element601"><span style="color: #000000"><strong>Use Task Delay?:</strong></span>
-<ul class="Element632">
-<li class="Element602"><span style="color: #000000">Indicates whether the Task Delay is used to yield the SDSPI RTOS thread</span></li>
-</ul></li>
-<li class="Element601"><span style="color: #000000"><strong>Task Delay (ms):</strong></span>
-<ul class="Element632">
-<li class="Element602"><span style="color: #000000">Indicates the amount of time for which the SDSPI RTOS thread is put in blocked state by the scheduler before it is run again</span></li>
-<li class="Element602"><span style="color: #000000">This inturn controls the rate at which the SDSPI driver checks for the SD Card attach/detach status</span></li>
-</ul></li>
-</ul></li>
-</ul><p class="Element10">
-&nbsp;</p>
+This routine opens the specified AT25 driver instance and provides a handle that must be provided to all other client-level operations to identify the caller and the instance of the driver. The ioIntent parameter defines how the client interacts with this driver instance.&nbsp;</p>
 <p class="Element10">
-<span style="color: #000000"><strong>Note: </strong>The Time System Service is used by the SDSPI driver to maintain the SD Card protocol timings, and hence must be enabled.</span>&nbsp;</p>
+This driver is a single client driver, so DRV_AT25_Open API should be called only once until driver is closed.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00245.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">DRV_AT25_Open</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01129.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="00277.html" target="topic">DRV_IO_INTENT</a> <strong><span style="color: #000000">ioIntent</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
 <p class="Element10">
-<span style="color: #000000"><strong>Note</strong>: The SDSPI driver should either be connected to SPI PLIB or SPI Driver. It should never be connected to both. Further all the instances of the SDSPI driver must either use the SPI PLIB or the SPI driver.</span></p></div>
+Function <a href="00198.html" target="topic">DRV_AT25_Initialize</a> must have been called before calling this function.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+drvIndex&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Identifier for the object instance to be opened<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+ioIntent&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Zero or more of the values from the enumeration <a href="00277.html" target="topic">DRV_IO_INTENT</a> &quot;ORed&quot; together to indicate the intended use of the driver.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+If successful, the routine returns a valid open-instance handle (a number identifying both the caller and the module instance).&nbsp;</p>
+<p class="Element10">
+If an error occurs, the return value is <a href="00246.html" target="topic">DRV_HANDLE_INVALID</a>. Error can occur</p>
+<ul class="Element630">
+<li class="Element600">if the driver has been already opened once and in use.</li>
+<li class="Element600">if the driver instance being opened is not initialized or is invalid.</li>
+</ul></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This driver ignores the ioIntent argument.&nbsp;</p>
+<p class="Element10">
+The handle returned is valid until the <a href="00183.html" target="topic">DRV_AT25_Close</a> routine is called.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="00245.html" target="topic">DRV_HANDLE</a> handle;
+
+handle = DRV_AT25_Open(DRV_AT25_INDEX, DRV_IO_INTENT_READWRITE);
+<strong><span style="color: #000080">if</span></strong> (handle == <a href="00246.html" target="topic">DRV_HANDLE_INVALID</a>)
+{
+    <i><span style="color: #008000">// Unable to open the driver</span></i>
+    <i><span style="color: #008000">// May be the driver is not initialized</span></i>
+}</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00027.html" target="topic">Driver Libraries Help</a> &gt; <a href="00205.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00199.html" target="topic">Configuring the Library</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00122.html" target="topic">SPI EEPROM Driver Libraries Help</a> &gt; <a href="00031.html" target="topic">AT25 Driver Library Help</a> &gt; <a href="00032.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00199.html" target="topic">DRV_AT25_Open Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -175,13 +140,13 @@ Instance Specific User Configurations</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00203.html" target="topic">Previous</a> | <a href="00205.html" target="topic">Up</a> | <a href="00198.html" target="topic">Next</a></div>
+<a href="00202.html" target="topic">Previous</a> | <a href="00032.html" target="topic">Up</a> | <a href="00183.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDSPI Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT25_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: DRV_AT25_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

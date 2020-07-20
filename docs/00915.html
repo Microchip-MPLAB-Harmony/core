@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>How the Library Works</title>
+<title>SYS_FS_FileCharacterPut Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01467.html" target="topic">System Service Libraries Help</a> &gt; <a href="00918.html" target="topic">Console System Service Library Help</a> &gt; <a href="00922.html" target="topic">Using the Library</a> &gt; <a href="00915.html" target="topic">How the Library Works</a></div>
+<a href="01204.html" target="topic">System Service Libraries Help</a> &gt; <a href="00686.html" target="topic">File System Service Library Help</a> &gt; <a href="00687.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="00915.html" target="topic">SYS_FS_FileCharacterPut Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00911.html" target="topic">Previous</a> | <a href="00922.html" target="topic">Up</a> | <a href="00913.html" target="topic">Next</a></div>
+<a href="00916.html" target="topic">Previous</a> | <a href="00687.html" target="topic">Up</a> | <a href="00921.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileCharacterPut@SYS_FS_HANDLE@char Topic Title: SYS_FS_FileCharacterPut Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-How the Library Works</div>
+SYS_FS_FileCharacterPut Function</div>
 </div>
 </div>
 
@@ -49,32 +49,87 @@ How the Library Works</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Each supported console device has its own implementation of the Console System service APIs. Function pointers to the console device implementations are provided in the console device descriptor registered to each console instance. This allows the user to utilize the same API for all console devices, making application code more portable across different devices.&nbsp;</p>
+This function writes a character to a file.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01067.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_FileCharacterPut</span></strong>(
+    <a href="00992.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <strong><span style="color: #000080">char</span></strong> <strong><span style="color: #000000">data</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
 <p class="Element10">
-&nbsp;</p>
+The file into which a character has to be written, has to be present and should have been opened.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+file handle to which the character is to be written.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+data&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+character to be written to the file.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
 <p class="Element10">
-<strong>Note</strong>: Currently UART and USB CDC Console Devices are supported.&nbsp;</p>
+SYS_FS_RES_SUCCESS - Write operation was successful. SYS_FS_RES_FAILURE - Write operation was unsuccessful. The reason for the failure can be retrieved with <a href="00858.html" target="topic">SYS_FS_Error</a> or <a href="00922.html" target="topic">SYS_FS_FileError</a>.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
 <p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Read</strong>&nbsp;</p>
-<p class="Element10">
-The console device layer saves the received data in an internal receive ring buffer. The size of the receive buffer is user configurable. When the application submits a read request, the console device layer copies the available data from the receive buffer to the application buffer and returns the number of bytes copied. The application must check the return value to verify the number of bytes copied. If the return value is less than the one requested, the application should retry again after some time. Additional APIs let application query the number of bytes available in the receive buffer and the free space in the receive buffer. It is the application's responsibility to ensure it reads the data out from the receive buffer at regular intervals to avoid receive buffer overflow and hence loss of data.&nbsp;</p>
-<p class="Element10">
-<strong>Write</strong>&nbsp;</p>
-<p class="Element10">
-For the write requests, the console device layer copies the application data into the transmit ring buffer. The size of the transmit buffer is user configurable. The number of bytes actually copied in the transmit buffer is indicated by the return value of the write API. Depending on the free space available in the transmit buffer; the application data may be completely or partially copied. It is the application's responsibility to check the return value. If the return value is less than the one requested, the application should retry sending the remaining characters after some time. Additional APIs, let application query the free space available in the transmit buffer. APIs are provided to query the number of bytes pending transmission and the configured size of the transmit buffer.&nbsp;</p>
-<p class="Element10">
-<strong>State Machine</strong>&nbsp;</p>
-<p class="Element10">
-For UART the read and write state machines are run from the interrupt context in both bare-metal and RTOS environment. For USB CDC console, the read and write state machine is run from a while(1) loop along with other tasks. In RTOS environment, a separate RTOS thread runs the USB CDC console state machine.</p></div>
+None.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01067.html" target="topic">SYS_FS_RESULT</a> res;
+  <a href="00992.html" target="topic">SYS_FS_HANDLE</a> fileHandle;
+
+  fileHandle = <a href="00924.html" target="topic">SYS_FS_FileOpen</a>(&quot;/mnt/myDrive/FILE.JPG&quot;, (SYS_FS_FILE_OPEN_WRITE_PLUS));
+  <strong><span style="color: #000080">if</span></strong>(fileHandle != <a href="00993.html" target="topic">SYS_FS_HANDLE_INVALID</a>)
+  {
+      <i><span style="color: #008000">// File open is successful</span></i>
+  }
+
+  <i><span style="color: #008000">// Write a character to the file.</span></i>
+  res = SYS_FS_FileCharacterPut(fileHandle, 'c');
+  <strong><span style="color: #000080">if</span></strong>(res != SYS_FS_RES_SUCCESS)
+  {
+      <i><span style="color: #008000">// Character write operation failed.</span></i>
+  }</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01467.html" target="topic">System Service Libraries Help</a> &gt; <a href="00918.html" target="topic">Console System Service Library Help</a> &gt; <a href="00922.html" target="topic">Using the Library</a> &gt; <a href="00915.html" target="topic">How the Library Works</a></div>
+<a href="01204.html" target="topic">System Service Libraries Help</a> &gt; <a href="00686.html" target="topic">File System Service Library Help</a> &gt; <a href="00687.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="00915.html" target="topic">SYS_FS_FileCharacterPut Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -82,13 +137,13 @@ For UART the read and write state machines are run from the interrupt context in
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00911.html" target="topic">Previous</a> | <a href="00922.html" target="topic">Up</a> | <a href="00913.html" target="topic">Next</a></div>
+<a href="00916.html" target="topic">Previous</a> | <a href="00687.html" target="topic">Up</a> | <a href="00921.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileCharacterPut@SYS_FS_HANDLE@char Topic Title: SYS_FS_FileCharacterPut Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

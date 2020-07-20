@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Hardware Setup</title>
+<title>DRV_I2C_ForcedWriteTransferAdd Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00007.html" target="topic">Applications Help</a> &gt; <a href="00006.html" target="topic">Driver Applications</a> &gt; <a href="00217.html" target="topic">SPI Driver Applications</a> &gt; Sync &gt; <a href="00248.html" target="topic">spi_multi_instance</a> &gt; <a href="00250.html" target="topic">Hardware Setup</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00058.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00059.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00250.html" target="topic">DRV_I2C_ForcedWriteTransferAdd Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00251.html" target="topic">Previous</a> | <a href="00248.html" target="topic">Up</a> | <a href="00252.html" target="topic">Next</a></div>
+<a href="00248.html" target="topic">Previous</a> | <a href="00059.html" target="topic">Up</a> | <a href="00263.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SPI Sync spi_multi_instance_freertos Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2C_ForcedWriteTransferAdd@DRV_HANDLE@uint16_t@void * const@size_t@DRV_I2C_TRANSFER_HANDLE * const Topic Title: DRV_I2C_ForcedWriteTransferAdd Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Hardware Setup</div>
+DRV_I2C_ForcedWriteTransferAdd Function</div>
 </div>
 </div>
 
@@ -48,66 +48,122 @@ Hardware Setup</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-
-<ol class="Element630">
-<li value="1" class="Element600"><strong>Project pic32mx_470_curiosity_freertos.X</strong>
-<ul class="Element631">
-<li class="Element601"><strong>Hardware Used</strong>
-<ul class="Element632">
-<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/dm320103');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MX470 Curiosity Development Board</a></li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards</li>
-</ul></li>
-<li class="Element601"><strong>Hardware Setup</strong>
-<ul class="Element632">
-<li class="Element602">Connect mini USB cable to the 'Debug USB' connector(J3) on the board to the computer.</li>
-<li class="Element602">Install two <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards on to the two mikroBUS sockets(J5 &amp; J10) of PIC32MX Curiosity Development Board.</li>
-<li class="Element602"><strong>Note</strong>: Ensure that the series resistors on the mikroBUS headers are of value <strong>0 Ohms</strong>.</li>
-</ul></li>
-</ul></li>
-</ol><p class="Element10">
+<p class="Element10">
+I2C Master calls this function to transmit the entire buffer to the slave even if the slave ACKs or NACKs the address or any of the data bytes. This is typically used for slaves that have to initiate a reset sequence by sending a dummy I2C transaction. Since the slave is still in reset, any or all the bytes can be NACKed. In the normal operation of the driver if the address or data byte is NACKed, then the transmission is aborted and a STOP condition is asserted on the bus.&nbsp;</p>
+<p class="Element10">
+This function schedules a non-blocking write operation. The function returns with a valid transfer handle in the transferHandle argument if the write request was scheduled successfully. The function adds the request to the driver instance transfer queue and returns immediately. While the request is in the queue, the application buffer is owned by the driver and should not be modified. On returning, the transferHandle parameter may be <a href="00264.html" target="topic">DRV_I2C_TRANSFER_HANDLE_INVALID</a> for the following reasons:</p>
+<ul class="Element630">
+<li class="Element600">if a transfer buffer could not be allocated to the request</li>
+<li class="Element600">if the input buffer pointer is NULL</li>
+<li class="Element600">if the buffer size is 0</li>
+</ul><p class="Element10">
 &nbsp;</p>
+<p class="Element10">
+If the requesting client registered an event callback with the driver, the driver will issue a DRV_I2C_TRANSFER_EVENT_COMPLETE event if the buffer was processed successfully or a DRV_I2C_TRANSFER_EVENT_ERROR event if the buffer was not processed successfully.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_I2C_ForcedWriteTransferAdd</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00245.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> uint16_t <strong><span style="color: #000000">address</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">buffer</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> size_t <strong><span style="color: #000000">size</span></strong>, 
+    <a href="00263.html" target="topic">DRV_I2C_TRANSFER_HANDLE</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">transferHandle</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+<a href="00252.html" target="topic">DRV_I2C_Open</a> must have been called to obtain a valid opened device handle.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A valid open-instance handle, returned from the driver's open routine <a href="00252.html" target="topic">DRV_I2C_Open</a> function.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+address&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Slave address<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+buffer&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Data to be written.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+size&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Transfer size in bytes.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+transferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to an argument that will contain the return transfer handle. This will be <a href="00264.html" target="topic">DRV_I2C_TRANSFER_HANDLE_INVALID</a> if the function was not successful.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This API is generated only if the underlying peripheral and the peripheral library supports forced write feature that ignore the NACK from a slave during transfer and the forced write feature is enabled in one of the connected periphreal library.&nbsp;</p>
+<p class="Element10">
+This API must be used only if the underlying PLIB is enabled to generate the Forced write API. If the PLIB is not enabled to generate the Forced Write API, the API will return an invalid transfer handle (<a href="00264.html" target="topic">DRV_I2C_TRANSFER_HANDLE_INVALID</a>).&nbsp;</p>
+<p class="Element10">
+This function is thread safe in a RTOS application. It can be called from within the I2C Driver Transfer Event Handler that is registered by this client. It should not be called in the event handler associated with another I2C driver instance. It should not otherwise be called directly in an ISR. This function is available only in the asynchronous mode.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">uint8_t myBuffer[MY_BUFFER_SIZE];
+<a href="00263.html" target="topic">DRV_I2C_TRANSFER_HANDLE</a> transferHandle;
 
-<ol class="Element630">
-<li value="2" class="Element600"><strong>Project sam_c21n_xpro_freertos.X.</strong>
-<ul class="Element631">
-<li class="Element601"><strong>Hardware Used:</strong>
-<ul class="Element632">
-<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsamc21n-xpro');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM C21N Xplained Pro Evaluation Kit</a></li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards</li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards</li>
-</ul></li>
-<li class="Element601"><strong>Hardware Setup:</strong>
-<ul class="Element632">
-<li class="Element602">Install two <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards on to the two <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards</li>
-<li class="Element602">Connect two <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards to the &quot;EXT1&quot; and &quot;EXT2&quot; headers of the <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsamc21n-xpro');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM C21N Xplained Pro Evaluation Kit</a></li>
-</ul></li>
-</ul></li>
-</ol><p class="Element10">
-&nbsp;</p>
+<i><span style="color: #008000">// myI2CHandle is the handle returned</span></i>
+<i><span style="color: #008000">// by the DRV_I2C_Open function.</span></i>
 
-<ol class="Element630">
-<li value="3" class="Element600"><strong>Project</strong> <strong>sam_e54_xpro_freertos.X.</strong>
-<ul class="Element631">
-<li class="Element601"><strong>Hardware Used:</strong>
-<ul class="Element632">
-<li class="Element602"><a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsame54-xpro');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM E54 Xplained Pro Evaluation Kit</a></li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards</li>
-<li class="Element602">Two <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards</li>
-</ul></li>
-<li class="Element601"><strong>Hardware Setup:</strong>
-<ul class="Element632">
-<li class="Element602">Install two <a href="#" onclick="openExternalLink('https://www.mikroe.com/eeprom-4-click');"><img src="indicator_external_link.gif" border="0" alt="" title="">EEPROM 4 Click</a> boards on to the two <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards</li>
-<li class="Element602">Connect two <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATMBUSADAPTER-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">mikroBUS Xplained Pro</a> boards to the &quot;EXT1&quot; and &quot;EXT2&quot; headers of the <a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsame54-xpro');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM E54 Xplained Pro Evaluation Kit</a></li>
-</ul></li>
-</ul></li>
-</ol></div>
+<i><span style="color: #008000">// slaveAddress is address of I2C slave device</span></i>
+<i><span style="color: #008000">// to which data is to be written</span></i>
+
+DRV_I2C_ForcedWriteTransferAdd(myI2CHandle, slaveAddress, myBuffer, MY_BUFFER_SIZE, &amp;transferHandle);
+
+<strong><span style="color: #000080">if</span></strong>(transferHandle == <a href="00264.html" target="topic">DRV_I2C_TRANSFER_HANDLE_INVALID</a>)
+{
+    <i><span style="color: #008000">// Error handling here</span></i>
+}
+
+<i><span style="color: #008000">// Event is received when the buffer is processed.</span></i></pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00007.html" target="topic">Applications Help</a> &gt; <a href="00006.html" target="topic">Driver Applications</a> &gt; <a href="00217.html" target="topic">SPI Driver Applications</a> &gt; Sync &gt; <a href="00248.html" target="topic">spi_multi_instance</a> &gt; <a href="00250.html" target="topic">Hardware Setup</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00058.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00059.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00250.html" target="topic">DRV_I2C_ForcedWriteTransferAdd Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -115,13 +171,13 @@ Hardware Setup</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00251.html" target="topic">Previous</a> | <a href="00248.html" target="topic">Up</a> | <a href="00252.html" target="topic">Next</a></div>
+<a href="00248.html" target="topic">Previous</a> | <a href="00059.html" target="topic">Up</a> | <a href="00263.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SPI Sync spi_multi_instance_freertos Hardware Setup Topic Title: Hardware Setup)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2C_ForcedWriteTransferAdd@DRV_HANDLE@uint16_t@void * const@size_t@DRV_I2C_TRANSFER_HANDLE * const Topic Title: DRV_I2C_ForcedWriteTransferAdd Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

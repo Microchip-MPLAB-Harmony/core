@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_FileDirectoryTimeSet Function</title>
+<title>SYS_TIME_Initialize Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01467.html" target="topic">System Service Libraries Help</a> &gt; <a href="00949.html" target="topic">File System Service Library Help</a> &gt; <a href="00950.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01183.html" target="topic">SYS_FS_FileDirectoryTimeSet Function</a></div>
+<a href="01204.html" target="topic">System Service Libraries Help</a> &gt; <a href="00706.html" target="topic">Time System Service Library Help</a> &gt; <a href="00707.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="01183.html" target="topic">SYS_TIME_Initialize Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01182.html" target="topic">Previous</a> | <a href="00950.html" target="topic">Up</a> | <a href="01121.html" target="topic">Next</a></div>
+<a href="00707.html" target="topic">Previous</a> | <a href="00707.html" target="topic">Up</a> | <a href="01188.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileDirectoryTimeSet@char*@SYS_FS_TIME * Topic Title: SYS_FS_FileDirectoryTimeSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: SYS_TIME_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_FileDirectoryTimeSet Function</div>
+SYS_TIME_Initialize Function</div>
 </div>
 </div>
 
@@ -49,21 +49,14 @@ SYS_FS_FileDirectoryTimeSet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function sets or change the time for a file or directory.</p></div>
+This function initializes the instance of the System Time module.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01330.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_FileDirectoryTimeSet</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong>* <strong><span style="color: #000000">path</span></strong>, 
-    <a href="01334.html" target="topic">SYS_FS_TIME</a> * <strong><span style="color: #000000">time</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01135.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">SYS_TIME_Initialize</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01129.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="01130.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
 );</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-The file/directory for which time is to be set must exist.</p></div>
-</div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
 <div class="Element11">
@@ -79,14 +72,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-path&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A path for the file/directory, for which the time is to be set.&nbsp;</div></td></tr><tr>
+Index for the instance to be initialized<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-ptr&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to the structure of type <a href="01334.html" target="topic">SYS_FS_TIME</a>, which contains the time data to be set.&nbsp;</div></td></tr></table></div></div>
+Pointer to a data structure containing data necessary to initialize the module.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -94,40 +87,43 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS_FS_RES_SUCCESS - Set time operation was successful. SYS_FS_RES_FAILURE - Set time operation was unsucessful. The reason for the failure can be retrieved with <a href="01121.html" target="topic">SYS_FS_Error</a>.</p></div>
+If successful, returns a valid handle to an object. Otherwise, it returns <a href="01136.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+This routine should normally only be called once during system initialization.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  <strong><span style="color: #000080">void</span></strong> setTime(<strong><span style="color: #000080">void</span></strong>)
-  {
-      <a href="01330.html" target="topic">SYS_FS_RESULT</a> res;
-      <a href="01334.html" target="topic">SYS_FS_TIME</a> time;
+<div class="Element13"><div class="Element12"><pre class="Element12">
+<strong><span style="color: #000080">const</span></strong> SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
+    .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)TC0_CH0_TimerCallbackRegister,
+    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC0_CH0_TimerCounterGet,
+    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC0_CH0_TimerPeriodSet,
+    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC0_CH0_TimerFrequencyGet,
+    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC0_CH0_TimerCompareSet,
+    .timerStart = (SYS_TIME_PLIB_START)TC0_CH0_TimerStart,
+    .timerStop = (SYS_TIME_PLIB_STOP)TC0_CH0_TimerStop
+};
 
-      time.packedTime = 0;
+<strong><span style="color: #000080">const</span></strong> <a href="01182.html" target="topic">SYS_TIME_INIT</a> sysTimeInitData =
+{
+    .timePlib = &amp;sysTimePlibAPI,
+    .hwTimerIntNum = TC0_CH0_IRQn,
+};
 
-      <i><span style="color: #008000">// All FAT FS times are calculated based on 0 = 1980</span></i>
-      time.discreteTime.year = (2013 - 1980);  <i><span style="color: #008000">// Year is 2013</span></i>
-      time.discreteTime.month = 8;             <i><span style="color: #008000">// Month (August)</span></i>
-      time.discreteTime.day = 9;               <i><span style="color: #008000">// Day (9)</span></i>
-      time.discreteTime.hour = 15;             <i><span style="color: #008000">// 3 PM</span></i>
-      time.discreteTime.minute = 06;           <i><span style="color: #008000">// 06 minutes</span></i>
-      time.discreteTime.second = 00;           <i><span style="color: #008000">// 00 seconds</span></i>
+<a href="01135.html" target="topic">SYS_MODULE_OBJ</a>  objSysTime;
 
-      res = SYS_FS_FileDirectoryTimeSet(&quot;file.txt&quot;, &amp;time);
-      <strong><span style="color: #000080">if</span></strong>( res != SYS_FS_RES_SUCCESS)
-      {
-          <i><span style="color: #008000">// time change has gone wrong</span></i>
-      }
-  }</pre></div></div>
+objSysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (<a href="01130.html" target="topic">SYS_MODULE_INIT</a> *)&amp;sysTimeInitData);
+<strong><span style="color: #000080">if</span></strong> (objSysTime == <a href="01136.html" target="topic">SYS_MODULE_OBJ_INVALID</a>)
+{
+    <i><span style="color: #008000">// Handle error</span></i>
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -135,7 +131,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01467.html" target="topic">System Service Libraries Help</a> &gt; <a href="00949.html" target="topic">File System Service Library Help</a> &gt; <a href="00950.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="01183.html" target="topic">SYS_FS_FileDirectoryTimeSet Function</a></div>
+<a href="01204.html" target="topic">System Service Libraries Help</a> &gt; <a href="00706.html" target="topic">Time System Service Library Help</a> &gt; <a href="00707.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="01183.html" target="topic">SYS_TIME_Initialize Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -143,13 +139,13 @@ Example</div>
 MPLAB Harmony Core Help</div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00027.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01182.html" target="topic">Previous</a> | <a href="00950.html" target="topic">Up</a> | <a href="01121.html" target="topic">Next</a></div>
+<a href="00707.html" target="topic">Previous</a> | <a href="00707.html" target="topic">Up</a> | <a href="01188.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileDirectoryTimeSet@char*@SYS_FS_TIME * Topic Title: SYS_FS_FileDirectoryTimeSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: SYS_TIME_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
