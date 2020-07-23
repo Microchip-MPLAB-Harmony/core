@@ -130,7 +130,7 @@ OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID);
 void* OSAL_Malloc(size_t size);
 void OSAL_Free(void* pData);
 
-OSAL_RESULT OSAL_Initialize();
+OSAL_RESULT OSAL_Initialize(void);
 
 // *****************************************************************************
 /* Function: const char* OSAL_Name()
