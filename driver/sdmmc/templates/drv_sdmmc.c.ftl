@@ -443,12 +443,12 @@ static void _DRV_SDMMC_InitCardContext ( uint32_t drvIndex, DRV_SDHOST_CARD_CTXT
 static void _DRV_SDMMC_ParseCSD (
     uint8_t* csdPtr,
     DRV_SDHOST_CARD_CTXT* cardCtxt,
-    DRV_SDMMC_PROTOCOL protocol    
+    DRV_SDMMC_PROTOCOL protocol
 )
 {
     static const uint32_t TRAN_SPEED_UNIT_TABLE[] = {100000, 1000000, 10000000,
                                                      100000000, 0, 0, 0, 0};
-    
+
     static const uint32_t TRAN_SPEED_MULT_TABLE[] = {0, 10, 12, 13,
                                                      15, 20, 26, 30,
                                                      35, 40, 45, 52,
@@ -459,14 +459,14 @@ static void _DRV_SDMMC_ParseCSD (
     uint32_t mult = 0;
 
     /* NOTE: As per JEDEC/SDMMC standard, Response to CMD9 recieved in R2 should be
-   128 bit in size (16 bytes index from 0 to 15). Host controller does not 
+   128 bit in size (16 bytes index from 0 to 15). Host controller does not
    include the last byte(CRC byte) in the response data structure. Hence
    effective response length is 15 bytes(indexed from 0 to 14) */
-    
+
     if(protocol == DRV_SDMMC_PROTOCOL_SD)
     {
         cardCtxt->defaultSpeed = DRV_SDMMC_CLOCK_FREQ_DS_25_MHZ;
-        
+
         /* Note: The structure format depends on if it is a CSD V1 or V2 device.
            Therefore, need to first determine version of the specs that the card
            is designed for, before interpreting the individual fields.
@@ -514,15 +514,15 @@ static void _DRV_SDMMC_ParseCSD (
     else
     {
         /* Get maximum supported speed (non HS mode) */
-        cardCtxt->defaultSpeed = (TRAN_SPEED_MULT_TABLE[DRV_SDMMC_TRAN_SPEED_MULT_VAL(csdPtr[11])] 
+        cardCtxt->defaultSpeed = (TRAN_SPEED_MULT_TABLE[DRV_SDMMC_TRAN_SPEED_MULT_VAL(csdPtr[11])]
                   * TRAN_SPEED_UNIT_TABLE[DRV_SDMMC_TRAN_SPEED_UNIT_VAL(csdPtr[11])])
                      / 10;
-        
+
         /* Get card capacity ( size is stored in units of 512 byte pages ) */
         uint32_t readBlockLength = (csdPtr[9] & 0x0F);
-        uint32_t cSize =  ((csdPtr[8] & 0x03) << 10) | (csdPtr[7] << 2) | ((csdPtr[6] & 0xC0) >> 6);
+        uint32_t cSizeVal =  ((csdPtr[8] & 0x03) << 10) | (csdPtr[7] << 2) | ((csdPtr[6] & 0xC0) >> 6);
         uint32_t cSizeMult = ((csdPtr[5] & 0x03) << 1) | ((csdPtr[4] & 0x80) >> 7);
-        cardCtxt->discCapacity = ((cSize + 1) * (1 << (cSizeMult + 2)) * (1 << readBlockLength)) / 512;
+        cardCtxt->discCapacity = ((cSizeVal + 1) * (1 << (cSizeMult + 2)) * (1 << readBlockLength)) / 512;
     }
 }
 
@@ -657,7 +657,7 @@ static void _DRV_SDMMC_MediaInitialize (
                 if (dObj->clockState == DRV_SDMMC_CLOCK_SET_COMPLETE)
 <#else>
                 if (dObj->sdmmcPlib->sdhostSetClock(DRV_SDMMC_CLOCK_FREQ_400_KHZ) == true)
-</#if>    
+</#if>
                 {
                     dObj->cardCtxt.currentSpeed = DRV_SDMMC_CLOCK_FREQ_400_KHZ;
                 }
@@ -709,10 +709,10 @@ static void _DRV_SDMMC_MediaInitialize (
         case DRV_SDMMC_INIT_RESET_DELAY:
             /* Delay has elapsed. */
             if (SYS_TIME_DelayIsComplete(dObj->tmrHandle) == true)
-            {   
+            {
                 /* For SD check the interface condition */
                 if(dObj->protocol == DRV_SDMMC_PROTOCOL_SD)
-                {                
+                {
                     dObj->initState = DRV_SDMMC_INIT_CHK_IFACE_CONDITION;
                 }
                 /* For EMMC send the supported op conditions */
@@ -855,7 +855,7 @@ static void _DRV_SDMMC_MediaInitialize (
                 }
             }
             break;
-                    
+
         case DRV_SDMMC_INIT_SEND_OP_COND:
             /* Ask devices to send its operating conditions (CMD1)*/
             _DRV_SDMMC_CommandSend (dObj,
@@ -873,21 +873,21 @@ static void _DRV_SDMMC_MediaInitialize (
                     dObj->sdmmcPlib->sdhostReadResponse(
                                         DRV_SDMMC_READ_RESP_REG_0,
                                         (uint32_t *)&response);
-                    
+
                     /* Device is not busy */
                     if (0 != (response & DRV_SDMMC_OCR_NBUSY))
 					{
-                        /* If card supports sector access, card is of high 
+                        /* If card supports sector access, card is of high
                           capacity */
                         dObj->cardCtxt.cardType = \
                         ((response & DRV_SDMMC_OCR_ACCESS_MODE) == DRV_SDMMC_OCR_ACCESS_SECTOR) ? \
                         DRV_SDMMC_CARD_TYPE_HC : DRV_SDMMC_CARD_TYPE_STANDARD;
-                   
+
                         /* Move on to next state */
                         dObj->initState = DRV_SDMMC_INIT_ALL_SEND_CID;
                     }
                     /* Retry until the device is free or we timeout (1 second of
-                       of timeout implemented as 20 steps of 50ms each) */       
+                       of timeout implemented as 20 steps of 50ms each) */
                     else if (dObj->trials > 0)
                     {
                         dObj->trials--;
@@ -899,23 +899,23 @@ static void _DRV_SDMMC_MediaInitialize (
                     }
                      /* Ran out of retries waiting for card to be free  */
                     else
-                    {			
+                    {
                         dObj->initState = DRV_SDMMC_INIT_ERROR;
                     }
                 }
                 /* Command execution failed  */
                 else
-                {			
+                {
                     dObj->initState = DRV_SDMMC_INIT_ERROR;
                 }
             }
             break;
-        
+
         case DRV_SDMMC_INIT_OP_COND_BUSY_RETRY:
             /* retry  timer expired, try again  */
             if (SYS_TIME_DelayIsComplete(dObj->tmrHandle) == true)
             {
-          
+
                 dObj->initState = DRV_SDMMC_INIT_SEND_OP_COND;
             }
             break;
@@ -980,7 +980,7 @@ static void _DRV_SDMMC_MediaInitialize (
                 }
             }
             break;
-        
+
         case DRV_SDMMC_INIT_SET_RELATIVE_ADDR:
            /* Assign relative address to the device (CMD3) */
             _DRV_SDMMC_CommandSend (dObj,
@@ -996,7 +996,7 @@ static void _DRV_SDMMC_MediaInitialize (
                 {
                      /* Read command response */
                     dObj->sdmmcPlib->sdhostReadResponse(DRV_SDMMC_READ_RESP_REG_0, &response);
-                    
+
                     /* Check for possible errors */
                     if (0 != (response & DRV_SDMMC_SET_RELATIVE_ADDR_ERROR))
                     {
@@ -1174,23 +1174,23 @@ static void _DRV_SDMMC_MediaInitialize (
               dObj->dataTransferFlags.isDataPresent = true;
               dObj->dataTransferFlags.transferDir = DRV_SDMMC_DATA_TRANSFER_DIR_READ;
               dObj->dataTransferFlags.transferType = DRV_SDMMC_DATA_TRANSFER_TYPE_SINGLE;
-              
-              dObj->sdmmcPlib->sdhostSetBlockCount (0); 
+
+              dObj->sdmmcPlib->sdhostSetBlockCount (0);
               dObj->sdmmcPlib->sdhostSetBlockSize(DRV_SDMMC_EXT_CSD_RESP_SIZE);
-			  
+
 		    <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
               /* Invalidate the cache to force the CPU to read the latest data
                * from the main memory. */
               SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)dObj->cardCtxt.extCSDBuffer, DRV_SDMMC_EXT_CSD_RESP_SIZE);
             </#if>
-			  
+
               dObj->sdmmcPlib->sdhostSetupDma (dObj->cardCtxt.extCSDBuffer,
                                                DRV_SDMMC_EXT_CSD_RESP_SIZE,
                                                DRV_SDMMC_OPERATION_TYPE_READ);
               dObj->initState = DRV_SDMMC_INIT_READ_EXT_CSD;
               break;
           }
-		
+
 		case DRV_SDMMC_INIT_READ_EXT_CSD:
 			{
 				_DRV_SDMMC_CommandSend (dObj,
@@ -1201,9 +1201,9 @@ static void _DRV_SDMMC_MediaInitialize (
 				if (dObj->cmdState == DRV_SDMMC_CMD_EXEC_IS_COMPLETE)
 				{
                     dObj->dataTransferFlags.isDataPresent = false;
-                    
+
 					if (dObj->commandStatus == DRV_SDMMC_COMMAND_STATUS_SUCCESS)
-					{						
+					{
 						dObj->initState = DRV_SDMMC_INIT_WAIT_EXT_CSD;
 					}
 					else
@@ -1213,7 +1213,7 @@ static void _DRV_SDMMC_MediaInitialize (
 				}
 				break;
 			}
-            
+
          case DRV_SDMMC_INIT_WAIT_EXT_CSD:
             {
 				if (dObj->cardCtxt.isDataCompleted == true)
@@ -1256,7 +1256,7 @@ static void _DRV_SDMMC_MediaInitialize (
 
         case DRV_SDMMC_INIT_CARD_VER_CHECK:
 
-            /* SD card and Host supports HS mode */  
+            /* SD card and Host supports HS mode */
             if ((dObj->protocol == DRV_SDMMC_PROTOCOL_SD) &&
                 (dObj->cardCtxt.scrBuffer[0] & 0x0F) &&
                 (dObj->speedMode == DRV_SDMMC_SPEED_MODE_HIGH))
@@ -1267,7 +1267,7 @@ static void _DRV_SDMMC_MediaInitialize (
             }
             /* EMMC and Host supports HS mode */
             else if((dObj->protocol == DRV_SDMMC_PROTOCOL_EMMC) &&
-                    DRV_SDMMC_EXT_CSD_GET_HS_SUPPORT(dObj->cardCtxt.extCSDBuffer) && 
+                    DRV_SDMMC_EXT_CSD_GET_HS_SUPPORT(dObj->cardCtxt.extCSDBuffer) &&
                     (dObj->speedMode == DRV_SDMMC_SPEED_MODE_HIGH))
             {
                 dObj->initState = DRV_SDMMC_INIT_SET_EMMC_HS_FREQ;
@@ -1363,7 +1363,7 @@ static void _DRV_SDMMC_MediaInitialize (
                 }
             }
             break;
-            
+
         case DRV_SDMMC_INIT_SET_EMMC_HS_FREQ:
 			{
                 _DRV_SDMMC_CommandSend (dObj,
@@ -1966,7 +1966,7 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
                 }
 
             }
-            /* Either eMMC protocol or host does not support card detection */ 
+            /* Either eMMC protocol or host does not support card detection */
             else
             {
                 _DRV_SDMMC_InitCardContext((uint32_t)object, &dObj->cardCtxt);
