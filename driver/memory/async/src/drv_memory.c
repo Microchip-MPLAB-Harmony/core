@@ -1073,6 +1073,7 @@ MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_TransferStatusGet
 {
     DRV_MEMORY_CLIENT_OBJECT *clientObj = NULL;
     DRV_MEMORY_OBJECT *dObj = NULL;
+    uint32_t status;
 
     /* Get the Client object from the handle passed */
     clientObj = DRV_MEMORY_DriverHandleValidate(handle);
@@ -1086,7 +1087,9 @@ MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_TransferStatusGet
 
     dObj = &gDrvMemoryObj[clientObj->drvIndex];
 
-    return ((MEMORY_DEVICE_TRANSFER_STATUS)dObj->memoryDevice->TransferStatusGet(dObj->memDevHandle));
+    status = dObj->memoryDevice->TransferStatusGet(dObj->memDevHandle);
+
+    return ((MEMORY_DEVICE_TRANSFER_STATUS)status);
 }
 
 DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
