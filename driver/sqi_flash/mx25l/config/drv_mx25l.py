@@ -50,6 +50,13 @@ def instantiateComponent(mx25lComponent):
     mx25lPLIB.setLabel("PLIB Used")
     mx25lPLIB.setReadOnly(True)
 
+    mx25lNumClients = mx25lComponent.createIntegerSymbol("DRV_MX25L_NUM_CLIENTS", None)
+    mx25lNumClients.setLabel("Number of Clients")
+    mx25lNumClients.setReadOnly(True)
+    mx25lNumClients.setMin(1)
+    mx25lNumClients.setMax(64)
+    mx25lNumClients.setDefaultValue(1)
+
     ##### Do not modify below symbol names as they are used by Memory Driver #####
     mx25lMemoryDriver = mx25lComponent.createBooleanSymbol("DRV_MEMORY_CONNECTED", None)
     mx25lMemoryDriver.setLabel("Memory Driver Connected")

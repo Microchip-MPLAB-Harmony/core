@@ -55,8 +55,6 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#define DRV_MX25L_PAGE_SIZE   256
-#define DRV_MX25L_ERASE_SIZE  4096
 #define TOTAL_DEVICE          1
 
 static DRV_MX25L_OBJECT gDrvMX25LObj;
@@ -340,7 +338,7 @@ bool DRV_MX25L_GeometryGet( const DRV_HANDLE handle, DRV_MX25L_GEOMETRY *geometr
     flash_size = flash_size - DRV_MX25L_START_ADDRESS;
 
     /* Flash size should be at-least of a Erase Block size */
-    if (flash_size < DRV_MX25L_ERASE_SIZE)
+    if (flash_size < DRV_MX25L_ERASE_BUFFER_SIZE)
     {
         return false;
     }
@@ -354,8 +352,8 @@ bool DRV_MX25L_GeometryGet( const DRV_HANDLE handle, DRV_MX25L_GEOMETRY *geometr
     geometry->write_numBlocks = (flash_size / DRV_MX25L_PAGE_SIZE);
 
     /* Erase block size and number of blocks */
-    geometry->erase_blockSize = DRV_MX25L_ERASE_SIZE;
-    geometry->erase_numBlocks = (flash_size / DRV_MX25L_ERASE_SIZE);
+    geometry->erase_blockSize = DRV_MX25L_ERASE_BUFFER_SIZE;
+    geometry->erase_numBlocks = (flash_size / DRV_MX25L_ERASE_BUFFER_SIZE);
 
     geometry->numReadRegions = 1;
     geometry->numWriteRegions = 1;
@@ -368,15 +366,26 @@ bool DRV_MX25L_GeometryGet( const DRV_HANDLE handle, DRV_MX25L_GEOMETRY *geometr
 
 DRV_HANDLE DRV_MX25L_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
 {
-    if (dObj->status != SYS_STATUS_READY)
+    if ((dObj->status != SYS_STATUS_READY) ||
+        (dObj->nClients >= DRV_MX25L_CLIENTS_NUMBER))
+    {
         return DRV_HANDLE_INVALID;
+    }
+
+    dObj->nClients++;
+
+    dObj->ioIntent = ioIntent;
 
     return ((DRV_HANDLE)drvIndex);
 }
 
 void DRV_MX25L_Close( const DRV_HANDLE handle )
 {
-
+    if ( (handle != DRV_HANDLE_INVALID) &&
+         (dObj->nClients > 0))
+    {
+        dObj->nClients--;
+    }
 }
 
 SYS_MODULE_OBJ DRV_MX25L_Initialize
@@ -397,6 +406,7 @@ SYS_MODULE_OBJ DRV_MX25L_Initialize
 
     /* Indicate that this object is in use */
     dObj->inUse = true;
+    dObj->nClients  = 0;
 
     /* Assign to the local pointer the init data passed */
     mx25lInit = (DRV_MX25L_INIT *)init;
