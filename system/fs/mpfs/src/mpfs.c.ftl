@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    sys_fs_mpfs.c
+    mpfs.c
 
   Summary:
     Microchip File System (MPFS) APIs.
@@ -15,6 +15,7 @@
     accessing web pages and other files from internal program memory or an
     external serial EEPROM memory.
 *******************************************************************************/
+
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
@@ -558,11 +559,13 @@ int MPFS_Stat
     const char* file = filewithDisk + 3;
     uint16_t fileLen = 0;
     uint8_t diskNum = 0;
+    uint8_t volumeNum = 0;
     MPFS_FILE_RECORD fileRecord;
 
     MPFS_STATUS *stat = (MPFS_STATUS *)stat_str;
 
-    diskNum = filewithDisk[0] - '0';
+    volumeNum = filewithDisk[0] - '0';
+    diskNum = MPFS_VolToPart[volumeNum].pd;
 
     if ((diskNum > SYS_FS_VOLUME_NUMBER) || (diskNum != gSysMpfsObj.diskNum))
     {
@@ -646,12 +649,15 @@ int MPFS_DirOpen
 )
 {
     uint8_t diskNum = 0;
+    uint8_t volumeNum = 0;
+
     if (path == NULL)
     {
         return MPFS_INVALID_PARAMETER;
     }
 
-    diskNum = path[0] - '0';
+    volumeNum = path[0] - '0';
+    diskNum = MPFS_VolToPart[volumeNum].pd;
 
     if ((diskNum > SYS_FS_VOLUME_NUMBER) || (diskNum != gSysMpfsObj.diskNum))
     {
