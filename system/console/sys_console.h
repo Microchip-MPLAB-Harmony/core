@@ -879,16 +879,16 @@ ssize_t SYS_CONSOLE_WriteCountGet(const SYS_CONSOLE_HANDLE handle);
   Example:
     <code>
 	SYS_CONSOLE_HANDLE myConsoleHandle;
-	
+
 	myConsoleHandle = SYS_CONSOLE_HandleGet(SYS_CONSOLE_INDEX_0);
-	
+
 	uint8_t num_bytes_to_enter = 10;
-    
+
 	if (myConsoleHandle != SYS_CONSOLE_HANDLE_INVALID)
     {
         // Found a valid handle to the console instance
         SYS_CONSOLE_Print(myConsoleHandle, "Enter %d characters", num_bytes_to_enter);
-    }	    
+    }
     </code>
 
   Remarks:
@@ -896,7 +896,7 @@ ssize_t SYS_CONSOLE_WriteCountGet(const SYS_CONSOLE_HANDLE handle);
     Call SYS_CONSOLE_PRINT macro to print on the default console instance 0
 */
 
-void SYS_CONSOLE_Print(const SYS_CONSOLE_HANDLE handle, const char *format, ...);
+void SYS_CONSOLE_Print(const SYS_CONSOLE_HANDLE handle, const char *format, ...) FORMAT_ATTRIBUTE(printf, 2, 3);
 
 // *****************************************************************************
 /* Function:
@@ -920,11 +920,11 @@ void SYS_CONSOLE_Print(const SYS_CONSOLE_HANDLE handle, const char *format, ...)
 
   Example:
     <code>
-	
+
 	SYS_CONSOLE_HANDLE myConsoleHandle;
-	
+
 	myConsoleHandle = SYS_CONSOLE_HandleGet(SYS_CONSOLE_INDEX_0);
-	
+
 	if (myConsoleHandle != SYS_CONSOLE_HANDLE_INVALID)
 	{
 		SYS_CONSOLE_Message(myConsoleHandle, "Printing using SYS_Message");
