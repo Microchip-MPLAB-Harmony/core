@@ -98,6 +98,22 @@ def instantiateComponent(sdspiComponentCommon):
     res = Database.activateComponents(["HarmonyCore"])
     res = Database.activateComponents(["sys_time"])
 
+    # Enable "Generate Harmony Driver Common Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
+
+    # Enable "Generate Harmony System Service Common Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
+
+    # Enable "Generate Harmony System Port Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_PORTS", {"isEnabled":True})
+
+    # Enable "Generate Harmony System Media File" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_MEDIA", {"isEnabled":True})
+
+    # Enable "Generate Harmony System DMA Files" option in MHC
+    if Database.getSymbolValue("core", "DMA_ENABLE") != None:
+        Database.sendMessage("HarmonyCore", "ENABLE_SYS_DMA", {"isEnabled":True})
+
     rtos_mode = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
 
     sdspi_default_mode = "Asynchronous"
@@ -160,3 +176,12 @@ def instantiateComponent(sdspiComponentCommon):
     sdspiSymSystemDefIncFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
     sdspiSymSystemDefIncFile.setSourcePath("driver/sdspi/templates/system/system_definitions.h.ftl")
     sdspiSymSystemDefIncFile.setMarkup(True)
+
+def destroyComponent(sdspiComponentCommon):
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_PORTS", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_MEDIA", {"isEnabled":False})
+
+    if Database.getSymbolValue("core", "DMA_ENABLE") != None:
+        Database.sendMessage("HarmonyCore", "ENABLE_SYS_DMA", {"isEnabled":False})

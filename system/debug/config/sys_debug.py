@@ -30,14 +30,11 @@ def instantiateComponent(debugComponent):
 
     res = Database.activateComponents(["HarmonyCore"])
 
-    # Enable dependent Harmony core components
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
+    # Enable "Generate Harmony Driver Common Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
 
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
+    # Enable "Generate Harmony System Service Common Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
 
     debugConsoleDevice = debugComponent.createStringSymbol("SYS_CONSOLE_DEVICE", None)
     debugConsoleDevice.setLabel("Device Used")
@@ -134,3 +131,7 @@ def onAttachmentDisconnected(source, target):
 
         deviceUsed.clearValue()
         deviceConsoleIndex.clearValue()
+
+def destroyComponent(debugComponent):
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})

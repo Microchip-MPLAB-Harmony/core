@@ -61,12 +61,10 @@ def instantiateComponent(i2cComponentCommon):
     res = Database.activateComponents(["HarmonyCore"])
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
 
     rtos_mode = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
 
@@ -159,3 +157,7 @@ def instantiateComponent(i2cComponentCommon):
     i2cSyncSymHeaderLocalFile.setOverwrite(True)
     i2cSyncSymHeaderLocalFile.setEnabled((i2cMode.getValue() == "Synchronous"))
     i2cSyncSymHeaderLocalFile.setDependencies(syncFileGen, ["DRV_I2C_MODE"])
+
+def destroyComponent(i2cComponentCommon):
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})

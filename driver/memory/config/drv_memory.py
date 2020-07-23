@@ -127,19 +127,6 @@ def instantiateComponent(memoryComponent, index):
     global memoryPlibUsed
     global memoryFsEnable
 
-    # Enable dependent Harmony core components
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
-
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
-
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA") == False):
-        Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True)
-
     memoryIndex = memoryComponent.createIntegerSymbol("INDEX", None)
     memoryIndex.setVisible(False)
     memoryIndex.setDefaultValue(index)

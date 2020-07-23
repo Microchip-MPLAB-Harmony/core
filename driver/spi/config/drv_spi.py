@@ -42,27 +42,10 @@ def instantiateComponent(spiComponent, index):
 
     drvSpiInstanceSpace = "drv_spi_" + str(index)
 
-    # Enable "Generate Harmony Driver Common Files" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
-
-    # Enable "Generate Harmony System Service Common Files" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
-
-    # Enable "Enable System Ports" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True)
-
-    # Enable "ENABLE_SYS_DMA" option in MHC
     if Database.getSymbolValue("core", "DMA_ENABLE") == None:
         isDMAPresent = False
     else:
         isDMAPresent = True
-
-        # Enable "Enable System DMA" option in MHC
-        if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_DMA") == False):
-            Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True)
 
     spiSymIndex = spiComponent.createIntegerSymbol("INDEX", None)
     spiSymIndex.setVisible(False)

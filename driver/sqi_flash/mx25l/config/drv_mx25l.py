@@ -37,14 +37,10 @@ def instantiateComponent(mx25lComponent):
     res = Database.activateComponents(["HarmonyCore"])
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
 
     mx25lPLIB = mx25lComponent.createStringSymbol("DRV_MX25L_PLIB", None)
     mx25lPLIB.setLabel("PLIB Used")
@@ -183,3 +179,7 @@ def onAttachmentDisconnected(source, target):
     if connectID == "drv_mx25l_SQI_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_MX25L_PLIB")
         plibUsed.clearValue()
+
+def destroyComponent(mx25lComponent):
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})

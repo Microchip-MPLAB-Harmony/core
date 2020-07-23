@@ -71,6 +71,15 @@ def instantiateComponent(sdmmcCommonComponent):
     res = Database.activateComponents(["HarmonyCore"])
     res = Database.activateComponents(["sys_time"])
 
+    # Enable "Generate Harmony Driver Common Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
+
+    # Enable "Generate Harmony System Service Common Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
+
+    # Enable "Generate Harmony System Media File" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_MEDIA", {"isEnabled":True})
+
     rtos_mode = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
 
     sdmmc_default_mode = "Asynchronous"
@@ -134,3 +143,8 @@ def instantiateComponent(sdmmcCommonComponent):
     sdmmcCommonSymCommonSysCfgFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_DRIVER_CONFIGURATION")
     sdmmcCommonSymCommonSysCfgFile.setSourcePath("driver/sdmmc/templates/system/system_config_common.h.ftl")
     sdmmcCommonSymCommonSysCfgFile.setMarkup(True)
+
+def destroyComponent(sdmmcCommonComponent):
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_MEDIA", {"isEnabled":False})

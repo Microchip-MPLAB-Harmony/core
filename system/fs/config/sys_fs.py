@@ -34,18 +34,13 @@ def instantiateComponent(sysFSComponent):
     res = Database.activateComponents(["HarmonyCore"])
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
 
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA") == False):
-        Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True)
+    # Enable "Generate Harmony System Media File" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_MEDIA", {"isEnabled":True})
 
     if ("PIC32MZ" in Variables.get("__PROCESSOR")):
         if (Database.getSymbolValue("core", "USE_CACHE_MAINTENANCE") == False):
@@ -746,3 +741,8 @@ def getActiveRtos():
             return "ThreadX"
         elif (activeComponents[i] == "MicriumOSIII"):
             return "MicriumOSIII"
+
+def destroyComponent(sysFSComponent):
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_MEDIA", {"isEnabled":False})

@@ -72,6 +72,12 @@ def instantiateComponent(consoleComponent):
 
     res = Database.activateComponents(["HarmonyCore"])
 
+    # Enable "Generate Harmony Driver Common Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
+
+    # Enable "Generate Harmony System Service Common Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
+
     consoleUARTConnectionCounter = consoleComponent.createIntegerSymbol("SYS_CONSOLE_UART_CONNECTION_COUNTER", None)
     consoleUARTConnectionCounter.setLabel("Number of Instances Using UART")
     consoleUARTConnectionCounter.setVisible(True)
@@ -145,3 +151,7 @@ def instantiateComponent(consoleComponent):
     consoleSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
     consoleSystemDefFile.setSourcePath("system/console/templates/system/system_definitions.h.ftl")
     consoleSystemDefFile.setMarkup(True)
+
+def destroyComponent(consoleComponent):
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})

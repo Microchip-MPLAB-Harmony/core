@@ -79,17 +79,14 @@ def instantiateComponent(commandComponent):
 
     res = Database.activateComponents(["HarmonyCore"])
 
-    # Enable dependent Harmony core components
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
+    # Enable "Generate Harmony Driver Common Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
 
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
+    # Enable "Generate Harmony System Service Common Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
 
-    # Enable system reset service
-    Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_RESET", True)
+    # Enable "Generate Harmony System Reset File" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_RESET", {"isEnabled":True})
 
     dummyDict = {}
     dummyDict = Database.sendMessage("core", "HEAP_SIZE", {"heap_size" : 1024})
@@ -278,3 +275,9 @@ def onAttachmentDisconnected(source, target):
 
         deviceUsed.clearValue()
         deviceConsoleIndex.clearValue()
+
+def destroyComponent(commandComponent):
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_RESET", {"isEnabled":False})
+

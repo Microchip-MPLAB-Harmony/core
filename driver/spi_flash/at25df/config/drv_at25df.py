@@ -58,16 +58,13 @@ def instantiateComponent(at25dfComponent):
     res = Database.activateComponents(["HarmonyCore"])
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
 
-    # Enable "Enable System Ports" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True)
+    # Enable "Generate Harmony System Port Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_PORTS", {"isEnabled":True})
 
     at25dfSymNumInst = at25dfComponent.createIntegerSymbol("DRV_AT25DF_NUM_INSTANCES", None)
     at25dfSymNumInst.setLabel("Number of Instances")
@@ -240,3 +237,8 @@ def onAttachmentDisconnected(source, target):
         dummyDict = Database.sendMessage(remoteID, "SPI_MASTER_MODE", {"isReadOnly":False})
         dummyDict = Database.sendMessage(remoteID, "SPI_MASTER_INTERRUPT_MODE", {"isReadOnly":False})
         dummyDict = Database.sendMessage(remoteID, "SPI_MASTER_HARDWARE_CS", {"isReadOnly":False})
+
+def destroyComponent(at25dfComponent):
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_PORTS", {"isEnabled":False})

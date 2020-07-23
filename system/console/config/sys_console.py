@@ -135,15 +135,6 @@ def consoleRtosMicriumOSIIITaskOptVisibility(symbol, event):
 def instantiateComponent(consoleComponent, index):
     global consoleBufferConfigComment
 
-    # Enable dependent Harmony core components
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
-
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
-
     consoleIndex = consoleComponent.createIntegerSymbol("INDEX", None)
     consoleIndex.setVisible(False)
     consoleIndex.setDefaultValue(index)

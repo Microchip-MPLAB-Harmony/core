@@ -218,38 +218,10 @@ def instantiateComponent(sdspiComponent, index):
 
     drvSdspiInstanceSpace = "drv_sdspi_" + str(index)
 
-    # Enable "Generate Harmony Driver Common Files" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
-
-    # Enable "Generate Harmony System Service Common Files" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
-
-    # Enable "Enable System Interrupt" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_INT") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True)
-
-    # Enable "Enable System Ports" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True)
-
-    # Enable "Enable OSAL" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_OSAL") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True)
-
-    # Enable "ENABLE_SYS_MEDIA" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True)
-
     if Database.getSymbolValue("core", "DMA_ENABLE") == None:
         isDMAPresent = False
     else:
         isDMAPresent = True
-
-        # Enable "Enable System DMA" option in MHC
-        if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_DMA") == False):
-            Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_DMA", True)
 
     availablePinDictionary = {}
 
@@ -657,8 +629,6 @@ def instantiateComponent(sdspiComponent, index):
     sdspiSyncSymDriverInterfaceHeaderFile.setDependencies(syncFileGenration, ["drv_sdspi.DRV_SDSPI_COMMON_MODE", "DRV_SDSPI_INTERFACE_TYPE"])
 
 
-
-
 def destroyComponent(sdspiComponent):
     global drvSdspiInstanceSpace
     spiPeripheral = Database.getSymbolValue(drvSdspiInstanceSpace, "DRV_SPI_PLIB")
@@ -730,8 +700,6 @@ def onAttachmentDisconnected(source, target):
             sdspiFsEnable.setValue(False)
             sdspiFsConnectionCounterDict = {}
             sdspiFsConnectionCounterDict = Database.sendMessage("drv_sdspi", "DRV_SDSPI_FS_CONNECTION_COUNTER_DEC", sdspiFsConnectionCounterDict)
-
-
 
     # For Dependency Disonnected (SPI)
     if (connectID == "drv_sdspi_SPI_dependency"):

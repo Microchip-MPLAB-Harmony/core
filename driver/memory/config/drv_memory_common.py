@@ -79,6 +79,15 @@ def instantiateComponent(memoryCommonComponent):
 
     res = Database.activateComponents(["HarmonyCore"])
 
+    # Enable "Generate Harmony Driver Common Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
+
+    # Enable "Generate Harmony System Service Common Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
+
+    # Enable "Generate Harmony System Media File" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_MEDIA", {"isEnabled":True})
+
     rtos_mode = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
 
     memory_default_mode = "Asynchronous"
@@ -174,3 +183,8 @@ def instantiateComponent(memoryCommonComponent):
     memoryCommonSymCommonSysCfgFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_DRIVER_CONFIGURATION")
     memoryCommonSymCommonSysCfgFile.setSourcePath("driver/memory/templates/system/configuration_common.h.ftl")
     memoryCommonSymCommonSysCfgFile.setMarkup(True)
+
+def destroyComponent(memoryCommonComponent):
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_MEDIA", {"isEnabled":False})

@@ -177,16 +177,6 @@ def instantiateComponent(sdmmcComponent, index):
     global sdmmcCardDetectionMethod
     global sdmmcPLIB
 
-    # Enable dependent Harmony core components
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
-
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
-
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_MEDIA", True)
-
     sdmmcIndex = sdmmcComponent.createIntegerSymbol("INDEX", None)
     sdmmcIndex.setVisible(False)
     sdmmcIndex.setDefaultValue(index)
@@ -515,7 +505,3 @@ def onAttachmentDisconnected(source, target):
         
         #Update UI
         updateUI(localComponent)
-
-
-
-

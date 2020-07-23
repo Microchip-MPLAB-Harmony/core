@@ -151,6 +151,7 @@ def setVisibility(symbol, event):
         symbol.setVisible(True)
     else:
         symbol.setVisible(False)
+
 ################################################################################
 #### Component ####
 ################################################################################
@@ -168,10 +169,8 @@ def instantiateComponent(sysTimeComponent):
 
     Log.writeInfoMessage("Loading System Time Module...")
 
-    # Enable dependent Harmony core components
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False):
-        Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
+    # Enable "Generate Harmony System Service Common Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
 
     sysTimePLIB = sysTimeComponent.createStringSymbol("SYS_TIME_PLIB", None)
     sysTimePLIB.setLabel("PLIB Used")
@@ -336,7 +335,6 @@ def onAttachmentConnected(source, target):
         plibUsed.setValue(remoteID.upper())
         #Request PLIB to publish it's capabilities
         sysTimeDict = Database.sendMessage(remoteID, "SYS_TIME_PUBLISH_CAPABILITIES", sysTimeDict)
-        print "RemoteComponentID = " + remoteID
 
 def onAttachmentDisconnected(source, target):
     global sysTimeAchievableTickRateMsComment
@@ -359,4 +357,6 @@ def onAttachmentDisconnected(source, target):
         sysTimeTickRateMs.setVisible(False)
         sysTimeAchievableTickRateMsComment.setVisible(False)
         sysTimePLIBErrorComment.setVisible(False)
-        print "RemoteComponentID = None"
+
+def destroyComponent(sysTimeComponent):
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})

@@ -33,6 +33,49 @@ global osalSelectRTOS
 
 rtosIdTable = ["FreeRTOS", "ThreadX", "MicriumOSIII"]
 
+# Function to serve Set/Clear requests of Harmony common symbols from other components
+def handleMessage(messageID, args):
+
+    result_dict = {}
+
+    if (args.get("isEnabled") == None):
+        return result_dict
+
+    counterValue = 0
+    HarmonycoreEnabled = "FALSE"
+
+    component = Database.getComponentByID("HarmonyCore")
+    commonSymbolCounter = component.getSymbolByID("COMMON_SYMBOL_CNTR")
+
+    # Read the Current Common symbols counter value and if it was enabled by Harmmony Core
+    for i in range(0, commonSymbolCounter.getKeyCount()):
+        if (messageID == commonSymbolCounter.getKey(i)):
+            counterValue       = int(commonSymbolCounter.getKeyValue(i))
+            HarmonycoreEnabled  = commonSymbolCounter.getKeyDescription(i)
+
+    if (args["isEnabled"] == True):
+        if (component.getSymbolValue(messageID) == False):
+            component.getSymbolByID(messageID).setReadOnly(True)
+            component.getSymbolByID(messageID).setValue(True)
+
+            # Indicate that the Symbol was set by HarmonyCore component
+            commonSymbolCounter.setKeyDescription(messageID, "TRUE")
+
+        counterValue = str(counterValue + 1)
+        commonSymbolCounter.setKeyValue(messageID, counterValue)
+    else :
+        if (counterValue > 0):
+            counterValue = counterValue - 1
+            commonSymbolCounter.setKeyValue(messageID, str(counterValue))
+
+        if (counterValue == 0):
+            # Check if the Symbol was set by HarmonyCore component
+            if (HarmonycoreEnabled == "TRUE"):
+                component.getSymbolByID(messageID).setReadOnly(False)
+                component.getSymbolByID(messageID).setValue(False)
+
+    return result_dict
+
 def enableAppFile(symbol, event):
     component = symbol.getComponent()
 
@@ -80,6 +123,21 @@ def instantiateComponent(harmonyCoreComponent):
     if (checkActiveRtos() == False):
         autoComponentIDTable = ["FreeRTOS"]
         res = Database.activateComponents(autoComponentIDTable)
+
+    # Symbol to maintain counter for harmony core common symbols
+    # [Symbol Name, Counter, Enabled by Harmony Core component]
+    harmonyCommonSymbolCntr = harmonyCoreComponent.createKeyValueSetSymbol("COMMON_SYMBOL_CNTR", None)
+    harmonyCommonSymbolCntr.setLabel("Harmony Core Common Symbol Counter")
+    harmonyCommonSymbolCntr.addKey("ENABLE_DRV_COMMON"  , "0", "FALSE")
+    harmonyCommonSymbolCntr.addKey("ENABLE_SYS_COMMON"  , "0", "FALSE")
+    harmonyCommonSymbolCntr.addKey("ENABLE_SYS_MEDIA"   , "0", "FALSE")
+    harmonyCommonSymbolCntr.addKey("ENABLE_SYS_PORTS"   , "0", "FALSE")
+    harmonyCommonSymbolCntr.addKey("ENABLE_SYS_DMA"     , "0", "FALSE")
+    harmonyCommonSymbolCntr.addKey("ENABLE_SYS_RESET"   , "0", "FALSE")
+    harmonyCommonSymbolCntr.setOutputMode("Value")
+    harmonyCommonSymbolCntr.setDisplayMode("Key")
+    harmonyCommonSymbolCntr.setVisible(False)
+    harmonyCommonSymbolCntr.setDefaultValue(0)
 
     harmonyAppFile = harmonyCoreComponent.createBooleanSymbol("ENABLE_APP_FILE", None)
     harmonyAppFile.setLabel("Generate Harmony Application Files")

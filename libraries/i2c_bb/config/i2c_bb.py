@@ -86,9 +86,8 @@ def instantiateComponent(i2cbbComponent):
 
     res = Database.activateComponents(["HarmonyCore"])
 
-    # Enable "Enable System Ports" option in MHC
-    if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS") == False):
-        Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True)
+    # Enable "Generate Harmony System Port Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_PORTS", {"isEnabled":True})
 
     # Clock speed
     i2cbbSymClockSpeed = i2cbbComponent.createIntegerSymbol("I2C_CLOCK_SPEED", None)
@@ -188,3 +187,7 @@ def instantiateComponent(i2cbbComponent):
     i2cbbSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
     i2cbbSystemDefFile.setSourcePath("/libraries/i2c_bb/templates/system/definitions.h.ftl")
     i2cbbSystemDefFile.setMarkup(True)
+
+def destroyComponent(memoryComponent):
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_PORTS", {"isEnabled":False})
+

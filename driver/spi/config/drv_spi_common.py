@@ -64,6 +64,19 @@ def instantiateComponent(spiComponentCommon):
 
     res = Database.activateComponents(["HarmonyCore"])
 
+    # Enable "Generate Harmony Driver Common Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
+
+    # Enable "Generate Harmony System Service Common Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
+
+    # Enable "Generate Harmony System Port Files" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_PORTS", {"isEnabled":True})
+
+    # Enable "Generate Harmony System DMA Files" option in MHC
+    if Database.getSymbolValue("core", "DMA_ENABLE") != None:
+        Database.sendMessage("HarmonyCore", "ENABLE_SYS_DMA", {"isEnabled":True})
+
     rtos_mode = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
 
     spi_default_mode = "Asynchronous"
@@ -139,3 +152,11 @@ def instantiateComponent(spiComponentCommon):
     spiSyncSymHeaderLocalFile.setOverwrite(True)
     spiSyncSymHeaderLocalFile.setEnabled(spiMode.getValue() == "Synchronous")
     spiSyncSymHeaderLocalFile.setDependencies(syncFileGen, ["DRV_SPI_COMMON_MODE"])
+
+def destroyComponent(spiComponentCommon):
+    Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_PORTS", {"isEnabled":False})
+
+    if Database.getSymbolValue("core", "DMA_ENABLE") != None:
+        Database.sendMessage("HarmonyCore", "ENABLE_SYS_DMA", {"isEnabled":False})

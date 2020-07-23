@@ -37,13 +37,11 @@ def genSystemFiles(symbol, event):
 
 genSystemCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_COMMON", None)
 genSystemCommonFiles.setLabel("Generate Harmony System Service Common Files")
-genSystemCommonFiles.setVisible(False)
 genSystemCommonFiles.setDefaultValue(False)
 
 genSystemMediaFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_MEDIA", None)
 genSystemMediaFiles.setLabel("Generate Harmony System Media Files")
 genSystemMediaFiles.setDefaultValue(False)
-genSystemMediaFiles.setVisible(False)
 
 systemHeaderRootFile = harmonyCoreComponent.createFileSymbol("SYSTEM_ROOT", None)
 systemHeaderRootFile.setSourcePath("system/system.h")
