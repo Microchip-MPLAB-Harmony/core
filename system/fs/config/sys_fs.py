@@ -311,6 +311,12 @@ def instantiateComponent(sysFSComponent):
     sysFSFatCodePage.setVisible(sysFSFat.getValue())
     sysFSFatCodePage.setDependencies(sysFsFatCodePageShow, ["SYS_FS_FAT", "SYS_FS_FAT_VERSION"])
 
+    sysFSFatExFAT = sysFSComponent.createBooleanSymbol("SYS_FS_FAT_EXFAT_ENABLE", sysFSFat)
+    sysFSFatExFAT.setLabel("Enable exFAT File System Support")
+    sysFSFatExFAT.setDefaultValue(False)
+    sysFSFatExFAT.setVisible(sysFSFat.getValue())
+    sysFSFatExFAT.setDependencies(sysFSFatExFATShow, ["SYS_FS_FAT", "SYS_FS_FAT_VERSION"])
+
     sysFSMpfs = sysFSComponent.createBooleanSymbol("SYS_FS_MPFS", sysFSMenu)
     sysFSMpfs.setLabel("Microchip File System")
     sysFSMpfs.setDefaultValue(False)
@@ -588,6 +594,16 @@ def sysFsFatCodePageShow(symbol, event):
         else:
             component.getSymbolByID("SYS_FS_FAT_CODE_PAGE").setKeyValue("CODE_PAGE_0"  , "0")
             component.getSymbolByID("SYS_FS_FAT_CODE_PAGE").setKeyDescription("CODE_PAGE_0", "All")
+
+    elif (event["id"] == "SYS_FS_FAT"):
+        symbol.setVisible(event["value"])
+
+def sysFSFatExFATShow(symbol, event):
+    if (event["id"] == "SYS_FS_FAT_VERSION"):
+        if (event["value"] == "v0.11a"):
+            symbol.setVisible(False)
+        else:
+            symbol.setVisible(True)
 
     elif (event["id"] == "SYS_FS_FAT"):
         symbol.setVisible(event["value"])
