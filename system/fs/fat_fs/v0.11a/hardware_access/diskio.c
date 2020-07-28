@@ -7,17 +7,17 @@
 /* storage control modules to the FatFs module with a defined API.       */
 /*-----------------------------------------------------------------------*/
 
-#include "diskio.h"
+#include "diskio.h"        /* FatFs lower layer API */
 #include "system/fs/sys_fs_media_manager.h"
 #include <string.h>
 
-#define ALIGN_32_BYTE_MASK  0x0000001F
+#define CACHE_ALIGN_CHECK  (CACHE_LINE_SIZE - 1)
 
 typedef struct
 {
+    uint8_t alignedBuffer[_MAX_SS] __ALIGNED(CACHE_LINE_SIZE);
     SYS_FS_MEDIA_COMMAND_STATUS commandStatus;
     SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE commandHandle;
-    uint8_t alignedBuffer[_MAX_SS] __ALIGNED(32);
 } SYS_FS_DISK_DATA;
 
 static SYS_FS_DISK_DATA CACHE_ALIGN gSysFsDiskData[SYS_FS_MEDIA_NUMBER];
@@ -130,7 +130,7 @@ DRESULT disk_read
     gSysFsDiskData[pdrv].commandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
 
     /* Use aligned buffer to read if the received buffer address is not Aligned to 32 Bytes */
-    if (((uint32_t)buff & ALIGN_32_BYTE_MASK) != 0)
+    if (((uint32_t)buff & CACHE_ALIGN_CHECK) != 0)
     {
         /* Read One Sector at a Time */
         for (i = 0; i < count; i++)
@@ -192,7 +192,7 @@ DRESULT disk_write
     gSysFsDiskData[pdrv].commandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
 
     /* Use aligned buffer to write if the received buffer address is not Aligned to 32 Bytes */
-    if (((uint32_t)buff & ALIGN_32_BYTE_MASK) != 0)
+    if (((uint32_t)buff & CACHE_ALIGN_CHECK) != 0)
     {
         for (i = 0; i < count; i++)
         {
