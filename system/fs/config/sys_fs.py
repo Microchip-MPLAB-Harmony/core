@@ -316,6 +316,12 @@ def instantiateComponent(sysFSComponent):
     sysFSMpfs.setLabel("Microchip File System")
     sysFSMpfs.setDefaultValue(False)
 
+    sysFSLFNEnable = sysFSComponent.createBooleanSymbol("SYS_FS_LFN_ENABLE", sysFSMenu)
+    sysFSLFNEnable.setLabel("Enable Long File Name Support")
+    sysFSLFNEnable.setDefaultValue(True)
+    sysFSLFNEnable.setReadOnly(sysFSFatExFAT.getValue())
+    sysFSLFNEnable.setDependencies(sysFSLFNSet, ["SYS_FS_FAT_EXFAT_ENABLE"])
+
     sysFSNameLen = sysFSComponent.createIntegerSymbol("SYS_FS_FILE_NAME_LEN", sysFSMenu)
     sysFSNameLen.setLabel("File name length in bytes")
     sysFSNameLen.setDefaultValue(255)
@@ -575,6 +581,9 @@ def sysFsFatSymbolShow(symbol, event):
         component.getSymbolByID("SYS_FS_DISKIO_HEADER").setSourcePath("/system/fs/fat_fs/" + event["value"] + "/hardware_access/diskio.h")
         if (event["value"] != "v0.11a"):
             component.getSymbolByID("SYS_FS_FAT_UNICODE_SOURCE").setSourcePath("system/fs/fat_fs/" + event["value"] + "/file_system/ffunicode.c")
+            component.getSymbolByID("SYS_FS_FAT_UNICODE_SOURCE").setEnabled(True)
+        elif (event["value"] == "v0.11a"):
+            component.getSymbolByID("SYS_FS_FAT_UNICODE_SOURCE").setEnabled(False)
 
     elif (event["id"] == "SYS_FS_FAT"):
         symbol.setVisible(event["value"])
@@ -602,6 +611,13 @@ def sysFSFatExFATShow(symbol, event):
 
     elif (event["id"] == "SYS_FS_FAT"):
         symbol.setVisible(event["value"])
+
+def sysFSLFNSet(symbol, event):
+    if (event["value"] == True):
+        symbol.setReadOnly(True)
+        symbol.setValue(True)
+    else:
+        symbol.setReadOnly(False)
 
 def genRtosTask(symbol, event):
     if (event["value"] != "BareMetal"):

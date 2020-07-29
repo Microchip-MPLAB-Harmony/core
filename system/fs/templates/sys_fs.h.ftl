@@ -657,24 +657,24 @@ typedef void (* SYS_FS_EVENT_HANDLER)
     <#lt>    uint16_t    ftime;
     <#lt>    /* Attribute */
     <#lt>    uint8_t     fattrib;
-    <#lt>#if SYS_FS_USE_LFN
-    <#lt>    /* Alternate file name */
-    <#lt>    char        altname[13];
-    <#lt>    /* Primary file name */
-    <#lt>    char        fname[SYS_FS_FILE_NAME_LEN + 1];
+    <#if SYS_FS_LFN_ENABLE == true>
+        <#lt>    /* Alternate file name */
+        <#lt>    char        altname[13];
+        <#lt>    /* Primary file name */
+        <#lt>    char        fname[SYS_FS_FILE_NAME_LEN + 1];
 
-    <#lt>    /* Retaining below members for portability.
-    <#lt>     * For FAT-FS lfname[0] will always be '\0'.
-    <#lt>     * Use fname instead
-    <#lt>    */
-    <#lt>    /* Pointer to the LFN buffer */
-    <#lt>    char       *lfname;
-    <#lt>    /* Size of LFN buffer */
-    <#lt>    uint32_t    lfsize;
-    <#lt>#else
-    <#lt>    /* Short file name (8.3 format) */
-    <#lt>    char        fname[13];
-    <#lt>#endif
+        <#lt>    /* Retaining below members for portability.
+        <#lt>     * For FAT-FS lfname[0] will always be '\0'.
+        <#lt>     * Use fname instead
+        <#lt>    */
+        <#lt>    /* Pointer to the LFN buffer */
+        <#lt>    char       *lfname;
+        <#lt>    /* Size of LFN buffer */
+        <#lt>    uint32_t    lfsize;
+    <#else>
+        <#lt>    /* Short file name (8.3 format) */
+        <#lt>    char        fname[13];
+    </#if>
     <#lt>} SYS_FS_FSTAT;
 <#else>
     <#lt>typedef struct
@@ -689,12 +689,12 @@ typedef void (* SYS_FS_EVENT_HANDLER)
     <#lt>    uint8_t     fattrib;
     <#lt>    /* Short file name (8.3 format) */
     <#lt>    char        fname[13];
-    <#lt>#if SYS_FS_USE_LFN
-    <#lt>    /* Pointer to the LFN buffer */
-    <#lt>    char       *lfname;
-    <#lt>    /* Size of LFN buffer */
-    <#lt>    uint32_t    lfsize;
-    <#lt>#endif
+    <#if SYS_FS_LFN_ENABLE == true>
+        <#lt>    /* Pointer to the LFN buffer */
+        <#lt>    char       *lfname;
+        <#lt>    /* Size of LFN buffer */
+        <#lt>    uint32_t    lfsize;
+    </#if>
     <#lt>} SYS_FS_FSTAT;
 </#if>
 

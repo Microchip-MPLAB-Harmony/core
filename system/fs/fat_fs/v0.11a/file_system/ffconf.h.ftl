@@ -96,8 +96,11 @@
 /   950 - Traditional Chinese (DBCS)
 */
 
-
-#define	_USE_LFN	1
+<#if SYS_FS_LFN_ENABLE == true>
+    <#lt>#define	_USE_LFN	1
+<#else>
+    <#lt>#define	_USE_LFN	0
+</#if>
 #define	_MAX_LFN	${SYS_FS_FILE_NAME_LEN}
 /* The _USE_LFN option switches the LFN feature.
 /

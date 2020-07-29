@@ -119,19 +119,19 @@ typedef struct
     <#lt>    unsigned short	fdate;			/* Last modified date */
     <#lt>    unsigned short	ftime;			/* Last modified time */
     <#lt>    unsigned char	fattrib;		/* Attribute */
-    <#lt>#if SYS_FS_USE_LFN
-    <#lt>    /* Alternate file name */
-    <#lt>    char        altname[13];
-    <#lt>    /* Primary file name */
-    <#lt>    char        fname[SYS_FS_FILE_NAME_LEN + 1];
-    <#lt>    /* Pointer to the LFN buffer */
-    <#lt>    char       *lfname;
-    <#lt>    /* Size of LFN buffer in TCHAR */
-    <#lt>    uint32_t    lfsize;
-    <#lt>#else
-    <#lt>    /* Short file name (8.3 format) */
-    <#lt>    char        fname[13];
-    <#lt>#endif
+    <#if SYS_FS_LFN_ENABLE == true>
+        <#lt>    /* Alternate file name */
+        <#lt>    char        altname[13];
+        <#lt>    /* Primary file name */
+        <#lt>    char        fname[SYS_FS_FILE_NAME_LEN + 1];
+        <#lt>    /* Pointer to the LFN buffer */
+        <#lt>    char       *lfname;
+        <#lt>    /* Size of LFN buffer in TCHAR */
+        <#lt>    uint32_t    lfsize;
+    <#else>
+        <#lt>    /* Short file name (8.3 format) */
+        <#lt>    char        fname[13];
+    </#if>
     <#lt>} MPFS_STATUS;
 <#else>
     <#lt>/* File status structure (FILINFO) */
@@ -142,12 +142,12 @@ typedef struct
     <#lt>    unsigned char	fattrib;		/* Attribute */
     <#lt>    /* Short file name (8.3 format) */
     <#lt>    char        fname[13];
-    <#lt>#if SYS_FS_USE_LFN
-    <#lt>    /* Pointer to the LFN buffer */
-    <#lt>    char       *lfname;
-    <#lt>    /* Size of LFN buffer in TCHAR */
-    <#lt>    uint32_t    lfsize;
-    <#lt>#endif
+    <#if SYS_FS_LFN_ENABLE == true>
+        <#lt>    /* Pointer to the LFN buffer */
+        <#lt>    char       *lfname;
+        <#lt>    /* Size of LFN buffer in TCHAR */
+        <#lt>    uint32_t    lfsize;
+    </#if>
     <#lt>} MPFS_STATUS;
 </#if>
 

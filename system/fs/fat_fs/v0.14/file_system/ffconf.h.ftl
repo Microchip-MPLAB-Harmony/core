@@ -104,7 +104,11 @@
 */
 
 
-#define FF_USE_LFN		1
+<#if SYS_FS_LFN_ENABLE == true>
+    <#lt>#define FF_USE_LFN		1
+<#else>
+    <#lt>#define FF_USE_LFN		0
+</#if>
 #define FF_MAX_LFN		${SYS_FS_FILE_NAME_LEN}
 /* The FF_USE_LFN switches the support for LFN (long file name).
 /
@@ -234,10 +238,11 @@
 /  Instead of private sector buffer eliminated from the file object, common sector
 /  buffer in the filesystem object (FATFS) is used for the file data transfer. */
 
+
 <#if SYS_FS_FAT_EXFAT_ENABLE == true>
-    <#lt>#define FF_FS_EXFAT	1
+    <#lt>#define FF_FS_EXFAT		1
 <#else>
-    <#lt>#define FF_FS_EXFAT	0
+    <#lt>#define FF_FS_EXFAT		0
 </#if>
 /* This option switches support for exFAT filesystem. (0:Disable or 1:Enable)
 /  To enable exFAT, also LFN needs to be enabled. (FF_USE_LFN >= 1)

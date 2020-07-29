@@ -576,7 +576,7 @@ int MPFS_Stat
     {
         fileLen = strlen (file);
 
-#if SYS_FS_USE_LFN
+<#if SYS_FS_LFN_ENABLE == true>
         if (stat->lfname && stat->lfsize)
         {
             if (fileLen > stat->lfsize)
@@ -590,7 +590,7 @@ int MPFS_Stat
                 stat->lfname[fileLen] = '\0';
             }
         }
-#endif
+</#if>
 
         /* Check if the name of the file is longer than the SFN 8.3 format. */
         if (fileLen > 12)
@@ -758,7 +758,7 @@ int MPFS_DirRead
 
         fileLen = strlen ((const char *)fileName);
 
-#if SYS_FS_USE_LFN
+<#if SYS_FS_LFN_ENABLE == true>
         if (stat->lfname && stat->lfsize)
         {
             if ((fileLen + 1) > stat->lfsize)
@@ -772,7 +772,7 @@ int MPFS_DirRead
                 stat->lfname[fileLen] = '\0';
             }
         }
-#endif
+</#if>
         /* Check if the name of the file is longer than the SFN 8.3 format. */
         if (fileLen > 12)
         {
@@ -796,15 +796,14 @@ int MPFS_DirRead
         /* Reached the end of the directory. Reset the directory file index. */
         gSysMpfsObj.fileIndex = 0;
 
-        /* Set fname[0] and lfname[0](if LFN is enabled) to '\0' to indicate
-         * the end of the directory condition. */
+        /* Set first character to '\0' to indicate the end of the directory condition. */
         stat->fname[0] = '\0';
-#if SYS_FS_USE_LFN
+<#if SYS_FS_LFN_ENABLE == true>
         if (stat->lfname && stat->lfsize)
         {
             stat->lfname[0] = '\0';
         }
-#endif
+</#if>
     }
 
     return MPFS_OK;

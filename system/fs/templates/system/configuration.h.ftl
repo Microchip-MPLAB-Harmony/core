@@ -54,7 +54,11 @@
 #define SYS_FS_MAX_FILE_SYSTEM_TYPE       ${SYS_FS_MAX_FILE_SYSTEM_TYPE}
 #define SYS_FS_MEDIA_MAX_BLOCK_SIZE       ${SYS_FS_MEDIA_MAX_BLOCK_SIZE}
 #define SYS_FS_MEDIA_MANAGER_BUFFER_SIZE  ${SYS_FS_MEDIA_MANAGER_BUFFER_SIZE}
-#define SYS_FS_USE_LFN                    1
+<#if SYS_FS_LFN_ENABLE == true>
+    <#lt>#define SYS_FS_USE_LFN                    1
+<#else>
+    <#lt>#define SYS_FS_USE_LFN                    0
+</#if>
 #define SYS_FS_FILE_NAME_LEN              ${SYS_FS_FILE_NAME_LEN}
 #define SYS_FS_CWD_STRING_LEN             ${SYS_FS_CWD_STRING_LEN}
 

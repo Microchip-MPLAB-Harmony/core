@@ -1954,6 +1954,7 @@ SYS_FS_RESULT SYS_FS_DirSearch
         }
 
         /* If we have come to end of directory */
+<#if SYS_FS_LFN_ENABLE == true>
         if (stat->lfname != NULL)
         {
             /* If LFN is Enabled but filename fits into Short file name */
@@ -1964,6 +1965,9 @@ SYS_FS_RESULT SYS_FS_DirSearch
             }
         }
         else if (stat->fname[0] == '\0')
+<#else>
+        if (stat->fname[0] == '\0')
+</#if>
         {
             errorValue = SYS_FS_ERROR_NO_FILE;
             return SYS_FS_RES_FAILURE;
@@ -1973,12 +1977,14 @@ SYS_FS_RESULT SYS_FS_DirSearch
         if ((stat->fattrib & attr) ||
             (attr == SYS_FS_ATTR_FILE))
         {
+<#if SYS_FS_LFN_ENABLE == true>
             if((stat->lfname != NULL) && (stat->lfname[0] != '\0'))
             {
                 /* File name is LFN */
                 fileName = stat->lfname;
             }
             else
+</#if>
             {
                 /* File name fits in 8.3 format */
                 fileName = stat->fname;
