@@ -43,15 +43,6 @@ def genRtosTask(symbol, event):
 def setVisible(symbol, event):
     symbol.setVisible(event["value"])
 
-def setBufferSize(symbol, event):
-    if (event["value"] == True):
-        symbol.clearValue()
-        symbol.setValue(1)
-        symbol.setReadOnly(True)
-    else:
-        symbol.setReadOnly(False)
-
-
 def setCDMethod(symbol, event):
     plibName = event["source"].getSymbolValue("DRV_SDMMC_PLIB")
     protocol = event["source"].getSymbolValue("DRV_SDMMC_PROTOCOL_SUPPORT")
@@ -289,9 +280,6 @@ def instantiateComponent(sdmmcComponent, index):
     sdmmcFsEnable = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_FS_ENABLE", None)
     sdmmcFsEnable.setLabel("File system for SDMMC Driver Enabled")
     sdmmcFsEnable.setReadOnly(True)
-
-    sdmmcBufferObjects.setReadOnly((sdmmcFsEnable.getValue() == True))
-    sdmmcBufferObjects.setDependencies(setBufferSize, ["DRV_SDMMC_FS_ENABLE"])
 
     # RTOS Settings
     sdmmcRTOSMenu = sdmmcComponent.createMenuSymbol("DRV_SDMMC_RTOS_MENU", None)

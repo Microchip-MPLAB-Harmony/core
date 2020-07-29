@@ -88,13 +88,6 @@ def setMemoryBuffer(symbol, event):
             symbol.setVisible(True)
         elif(event["value"] == "Synchronous"):
             symbol.setVisible(False)
-    else:
-        if (event["value"] == True):
-            symbol.clearValue()
-            symbol.setValue(1)
-            symbol.setReadOnly(True)
-        else:
-            symbol.setReadOnly(False)
 
 def memoryRtosMicriumOSIIIAppTaskVisibility(symbol, event):
     if (event["value"] == "MicriumOSIII"):
@@ -148,8 +141,7 @@ def instantiateComponent(memoryComponent, index):
     memorySymBufPool.setMax(64)
     memorySymBufPool.setDefaultValue(1)
     memorySymBufPool.setVisible((Database.getSymbolValue("drv_memory", "DRV_MEMORY_COMMON_MODE") == "Asynchronous"))
-    memorySymBufPool.setReadOnly((memoryFsEnable.getValue() == True))
-    memorySymBufPool.setDependencies(setMemoryBuffer, ["DRV_MEMORY_FS_ENABLE", "drv_memory.DRV_MEMORY_COMMON_MODE"])
+    memorySymBufPool.setDependencies(setMemoryBuffer, ["drv_memory.DRV_MEMORY_COMMON_MODE"])
 
     memoryDeviceMediaType = memoryComponent.createComboSymbol("DRV_MEMORY_DEVICE_TYPE", None, mediaTypes)
     memoryDeviceMediaType.setLabel("Memory Device Type")
@@ -434,7 +426,7 @@ def onAttachmentDisconnected(source, target):
     # For Capability Disconnected (drv_media)
     if (connectID == "drv_media"):
         if (remoteID == "sys_fs"):
-            memoryFsEnable.setValue(False, 1)
+            memoryFsEnable.setValue(False)
             memoryFsConnectionCounterDict = {}
             memoryFsConnectionCounterDict = Database.sendMessage("drv_memory", "DRV_MEMORY_FS_CONNECTION_COUNTER_DEC", memoryFsConnectionCounterDict)
 
