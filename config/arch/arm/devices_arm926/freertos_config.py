@@ -73,7 +73,7 @@ configName  = Variables.get("__CONFIGURATION_NAME")
 
 compiler_choice = Database.getComponentByID("core").getSymbolByID("COMPILER_CHOICE")
 
-#IAR port files 
+#IAR port files
 freeRtosdefSym_iar = thirdPartyFreeRTOS.createSettingSymbol("FREERTOS_IAR_INCLUDE_DIRS", None)
 freeRtosdefSym_iar.setCategory("C32")
 freeRtosdefSym_iar.setKey("extra-include-directories")
@@ -122,7 +122,7 @@ freeRtosPortTickSource_iar.setMarkup(False)
 freeRtosPortTickSource_iar.setEnabled(compiler_choice.getSelectedKey() == "IAR")
 freeRtosPortTickSource_iar.setDependencies(lambda symbol, event: symbol.setEnabled(event["symbol"].getSelectedKey() == "IAR"), ["core.COMPILER_CHOICE"])
 
-#XC32 port files 
+#XC32 port files
 freeRtosdefSym_xc32 = thirdPartyFreeRTOS.createSettingSymbol("FREERTOS_XC32_INCLUDE_DIRS", None)
 freeRtosdefSym_xc32.setCategory("C32")
 freeRtosdefSym_xc32.setKey("extra-include-directories")
@@ -130,6 +130,14 @@ freeRtosdefSym_xc32.setValue("../src/third_party/rtos/FreeRTOS/Source/portable/X
 freeRtosdefSym_xc32.setAppend(True, ";")
 freeRtosdefSym_xc32.setEnabled(compiler_choice.getSelectedKey() == "XC32")
 freeRtosdefSym_xc32.setDependencies(lambda symbol, event: symbol.setEnabled(event["symbol"].getSelectedKey() == "XC32"), ['core.COMPILER_CHOICE'])
+
+freeRtosdefSym_xc32cpp = thirdPartyFreeRTOS.createSettingSymbol("FREERTOS_XC32CPP_INCLUDE_DIRS", None)
+freeRtosdefSym_xc32cpp.setCategory("C32CPP")
+freeRtosdefSym_xc32cpp.setKey("extra-include-directories")
+freeRtosdefSym_xc32cpp.setValue(freeRtosdefSym_xc32.getValue())
+freeRtosdefSym_xc32cpp.setAppend(True, ";")
+freeRtosdefSym_xc32cpp.setEnabled(compiler_choice.getSelectedKey() == "XC32")
+freeRtosdefSym_xc32cpp.setDependencies(lambda symbol, event: symbol.setEnabled(event["symbol"].getSelectedKey() == "XC32"), ['core.COMPILER_CHOICE'])
 
 freeRtosPortSource_xc32 = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_XC32_SAM_PORT_C", None)
 freeRtosPortSource_xc32.setSourcePath("config/arch/arm/devices_arm926/src/port.c")

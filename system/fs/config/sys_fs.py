@@ -553,6 +553,14 @@ def instantiateComponent(sysFSComponent):
     sysFSFatIncludePath.setEnabled(sysFSFat.getValue())
     sysFSFatIncludePath.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
+    sysFSFatXc32cppIncludePath = sysFSComponent.createSettingSymbol("SYS_FS_FAT_XC32CPP_INCLUDE_PATH", None)
+    sysFSFatXc32cppIncludePath.setCategory("C32CPP")
+    sysFSFatXc32cppIncludePath.setKey("extra-include-directories")
+    sysFSFatXc32cppIncludePath.setValue(sysFSFatIncludePath.getValue())
+    sysFSFatXc32cppIncludePath.setAppend(True, ";")
+    sysFSFatXc32cppIncludePath.setEnabled(sysFSFat.getValue())
+    sysFSFatXc32cppIncludePath.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
+
 ###########################################################################################################
 deviceNames = { 'SYS_FS_MEDIA_TYPE_NVM' : '/dev/nvma',
     'SYS_FS_MEDIA_TYPE_MSD' : '/dev/sda',

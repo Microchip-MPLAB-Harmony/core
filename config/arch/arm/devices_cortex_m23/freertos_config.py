@@ -104,6 +104,12 @@ freeRtosdefSym.setKey("extra-include-directories")
 freeRtosdefSym.setValue("../src/third_party/rtos/FreeRTOS/Source/portable/GCC/" + freeRtosDir + "/non_secure;" + freeRtosSecureInc + "../src/third_party/rtos/FreeRTOS/Source/include;")
 freeRtosdefSym.setAppend(True, ";")
 
+freeRtosdefXc32cppSym = thirdPartyFreeRTOS.createSettingSymbol("FREERTOS_XC32CPP_INCLUDE_DIRS", None)
+freeRtosdefXc32cppSym.setCategory("C32CPP")
+freeRtosdefXc32cppSym.setKey("extra-include-directories")
+freeRtosdefXc32cppSym.setValue(freeRtosdefSym.getValue())
+freeRtosdefXc32cppSym.setAppend(True, ";")
+
 freeRtosPortSource = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SAM_PORT_C", None)
 freeRtosPortSource.setSourcePath("config/arch/arm/devices_cortex_m23/src/" + freeRtosDir + "/non_secure/port.c")
 freeRtosPortSource.setOutputName("port.c")
@@ -144,6 +150,13 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecureIncludeDirSym.setValue("../src/third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM23/secure;../src/third_party/rtos/FreeRTOS/Source/include;../../../NonSecure/firmware/src/config/" + configName + ";")
     freeRtosSecureIncludeDirSym.setAppend(True, ";")
     freeRtosSecureIncludeDirSym.setSecurity("SECURE")
+
+    freeRtosSecureIncludeDirXc32cppSym = thirdPartyFreeRTOS.createSettingSymbol("FREERTOS_XC32CPP_SECURE_INCLUDE_DIRS", None)
+    freeRtosSecureIncludeDirXc32cppSym.setCategory("C32CPP")
+    freeRtosSecureIncludeDirXc32cppSym.setKey("extra-include-directories")
+    freeRtosSecureIncludeDirXc32cppSym.setValue(freeRtosSecureIncludeDirSym.getValue())
+    freeRtosSecureIncludeDirXc32cppSym.setAppend(True, ";")
+    freeRtosSecureIncludeDirXc32cppSym.setSecurity("SECURE")
 
     freeRtosSecureContextSource = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SECURE_CONTEXT_C", None)
     freeRtosSecureContextSource.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM23/secure/secure_context.c")

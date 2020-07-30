@@ -59,6 +59,12 @@
 #include "system/system_media.h"
 #include "driver/sdmmc/drv_sdmmc_definitions.h"
 
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+extern "C" {
+
+#endif
+
 // *****************************************************************************
 /* SDMMC Driver command handle.
 
@@ -1045,6 +1051,10 @@ bool DRV_SDMMC_IsWriteProtected
 (
     const DRV_HANDLE handle
 );
+
+#ifdef __cplusplus
+}
+#endif
 
 #include "driver/sdmmc/src/drv_sdmmc_local.h"
 

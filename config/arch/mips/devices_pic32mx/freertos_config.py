@@ -63,6 +63,12 @@ freeRtosdefSym.setKey("extra-include-directories")
 freeRtosdefSym.setValue("../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;")
 freeRtosdefSym.setAppend(True, ";")
 
+freeRtosdefXc32cppSym = thirdPartyFreeRTOS.createSettingSymbol("FREERTOS_XC32CPP_INCLUDE_DIRS", None)
+freeRtosdefXc32cppSym.setCategory("C32CPP")
+freeRtosdefXc32cppSym.setKey("extra-include-directories")
+freeRtosdefXc32cppSym.setValue(freeRtosdefSym.getValue())
+freeRtosdefXc32cppSym.setAppend(True, ";")
+
 freeRtosIncDirForAsm = thirdPartyFreeRTOS.createSettingSymbol("FREERTOS_XC32_AS_INCLUDE_DIRS", None)
 freeRtosIncDirForAsm.setCategory("C32-AS")
 freeRtosIncDirForAsm.setKey("extra-include-directories-for-assembler")
