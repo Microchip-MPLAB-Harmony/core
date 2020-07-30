@@ -715,7 +715,7 @@ static void _DRV_SDMMC_MediaInitialize (
                 {
                     dObj->initState = DRV_SDMMC_INIT_CHK_IFACE_CONDITION;
                 }
-                /* For EMMC send the supported op conditions */
+                /* For eMMC send the supported op conditions */
                 else
                 {
                     dObj->initState = DRV_SDMMC_INIT_SEND_OP_COND;
@@ -868,7 +868,7 @@ static void _DRV_SDMMC_MediaInitialize (
             {
                 /* Command executed successfully */
                 if(dObj->commandStatus == DRV_SDMMC_COMMAND_STATUS_SUCCESS)
-	            {
+                {
                     /* Read command response */
                     dObj->sdmmcPlib->sdhostReadResponse(
                                         DRV_SDMMC_READ_RESP_REG_0,
@@ -876,7 +876,7 @@ static void _DRV_SDMMC_MediaInitialize (
 
                     /* Device is not busy */
                     if (0 != (response & DRV_SDMMC_OCR_NBUSY))
-					{
+                    {
                         /* If card supports sector access, card is of high
                           capacity */
                         dObj->cardCtxt.cardType = \
@@ -1178,7 +1178,7 @@ static void _DRV_SDMMC_MediaInitialize (
               dObj->sdmmcPlib->sdhostSetBlockCount (0);
               dObj->sdmmcPlib->sdhostSetBlockSize(DRV_SDMMC_EXT_CSD_RESP_SIZE);
 
-		    <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
+            <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
               /* Invalidate the cache to force the CPU to read the latest data
                * from the main memory. */
               SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)dObj->cardCtxt.extCSDBuffer, DRV_SDMMC_EXT_CSD_RESP_SIZE);
@@ -1191,32 +1191,32 @@ static void _DRV_SDMMC_MediaInitialize (
               break;
           }
 
-		case DRV_SDMMC_INIT_READ_EXT_CSD:
-			{
-				_DRV_SDMMC_CommandSend (dObj,
+        case DRV_SDMMC_INIT_READ_EXT_CSD:
+            {
+                _DRV_SDMMC_CommandSend (dObj,
                                         DRV_SDMMC_CMD_SEND_EXT_CSD,
                                         DRV_SDMMC_CMD_ARG_NULL,
                                         DRV_SDMMC_CMD_RESP_R1,
                                         &dObj->dataTransferFlags);
-				if (dObj->cmdState == DRV_SDMMC_CMD_EXEC_IS_COMPLETE)
-				{
+                if (dObj->cmdState == DRV_SDMMC_CMD_EXEC_IS_COMPLETE)
+                {
                     dObj->dataTransferFlags.isDataPresent = false;
 
-					if (dObj->commandStatus == DRV_SDMMC_COMMAND_STATUS_SUCCESS)
-					{
-						dObj->initState = DRV_SDMMC_INIT_WAIT_EXT_CSD;
-					}
-					else
-					{
-						dObj->initState = DRV_SDMMC_INIT_ERROR;
-					}
-				}
-				break;
-			}
+                    if (dObj->commandStatus == DRV_SDMMC_COMMAND_STATUS_SUCCESS)
+                    {
+                        dObj->initState = DRV_SDMMC_INIT_WAIT_EXT_CSD;
+                    }
+                    else
+                    {
+                        dObj->initState = DRV_SDMMC_INIT_ERROR;
+                    }
+                }
+                break;
+            }
 
          case DRV_SDMMC_INIT_WAIT_EXT_CSD:
             {
-				if (dObj->cardCtxt.isDataCompleted == true)
+                if (dObj->cardCtxt.isDataCompleted == true)
                 {
                     dObj->cardCtxt.discCapacity = DRV_SDMMC_EXT_CSD_GET_SEC_COUNT(dObj->cardCtxt.extCSDBuffer);
                     dObj->initState = DRV_SDMMC_INIT_SET_BUS_WIDTH;
@@ -1265,7 +1265,7 @@ static void _DRV_SDMMC_MediaInitialize (
                 dObj->cardCtxt.cmd6Mode = 0;
                 dObj->initState = DRV_SDMMC_INIT_PRE_SWITCH_CMD;
             }
-            /* EMMC and Host supports HS mode */
+            /* eMMC and Host supports HS mode */
             else if((dObj->protocol == DRV_SDMMC_PROTOCOL_EMMC) &&
                     DRV_SDMMC_EXT_CSD_GET_HS_SUPPORT(dObj->cardCtxt.extCSDBuffer) &&
                     (dObj->speedMode == DRV_SDMMC_SPEED_MODE_HIGH))
@@ -1365,7 +1365,7 @@ static void _DRV_SDMMC_MediaInitialize (
             break;
 
         case DRV_SDMMC_INIT_SET_EMMC_HS_FREQ:
-			{
+            {
                 _DRV_SDMMC_CommandSend (dObj,
                                         DRV_SDMMC_CMD_SWITCH,
                                         DRV_SDMMC_SWITCH_HS_ARGU,
@@ -1390,14 +1390,14 @@ static void _DRV_SDMMC_MediaInitialize (
                         {
                             dObj->initState = DRV_SDMMC_INIT_ERROR;
                         }
-					}
+                    }
                     else
                     {
                         dObj->initState = DRV_SDMMC_INIT_ERROR;
                     }
-				}
-				break;
-			}
+                }
+                break;
+            }
 
         case DRV_SDMMC_INIT_SET_HS_FREQ:
 <#if __PROCESSOR?contains("PIC32MZ")>
@@ -1532,6 +1532,7 @@ SYS_MODULE_OBJ DRV_SDMMC_Initialize (
     dObj->bufferObjList                     = (uintptr_t)NULL;
     dObj->isExclusive                       = false;
     dObj->isCmdTimerExpired                 = false;
+    dObj->sleepWhenIdle                     = sdmmcInit->sleepWhenIdle;
 
     /* Register a callback with the underlying SDMMC PLIB */
     dObj->sdmmcPlib->sdhostCallbackRegister(_DRV_SDMMC_PlibCallbackHandler, (uintptr_t)dObj);
@@ -2013,6 +2014,9 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
             _DRV_SDMMC_MediaInitialize (dObj);
             if (dObj->initState == DRV_SDMMC_INIT_DONE)
             {
+                /* Initial state (card in wakeup mode) after media initialization */
+                dObj->emmcSleepWakeState = DRV_SDMMC_EMMC_STATE_WAKE;
+
                 /* Check and update the card's write protected status */
                 if (dObj->isWriteProtectCheckEnabled == true)
                 {
@@ -2146,12 +2150,40 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
                     }
                 }
 
-                dObj->taskState = DRV_SDMMC_TASK_SELECT_CARD;
+                if (dObj->cardDetectionMethod == DRV_SDMMC_CD_METHOD_NONE)
+                {
+                    /* For eMMC card, first wakeup and then select the card */
+                    if ((dObj->protocol == DRV_SDMMC_PROTOCOL_EMMC) && (dObj->emmcSleepWakeState == DRV_SDMMC_EMMC_STATE_SLEEP))
+                    {
+                        /* Wake up the eMMC card */
+                        dObj->emmcSleepWakeState = DRV_SDMMC_EMMC_STATE_WAKE;
+                        dObj->taskState = DRV_SDMMC_TASK_SLEEP_WAKE_CARD;
+                    }
+                    else
+                    {
+                        dObj->taskState = DRV_SDMMC_TASK_SELECT_CARD;
+                    }
+                }
+                else
+                {
+                    dObj->taskState = DRV_SDMMC_TASK_SELECT_CARD;
+                }
             }
             else
             {
             <#if DRV_SDMMC_PLIB == "HSMCI">
-                if (dObj->cardDetectionMethod == DRV_SDMMC_CD_METHOD_POLLING)
+                if (dObj->cardDetectionMethod == DRV_SDMMC_CD_METHOD_NONE)
+                {
+                    if ((dObj->protocol == DRV_SDMMC_PROTOCOL_EMMC) && (dObj->sleepWhenIdle == true))
+                    {
+                        if (dObj->emmcSleepWakeState == DRV_SDMMC_EMMC_STATE_WAKE)
+                        {
+                            dObj->emmcSleepWakeState = DRV_SDMMC_EMMC_STATE_SLEEP;
+                            dObj->taskState = DRV_SDMMC_TASK_SLEEP_WAKE_CARD;
+                        }
+                    }
+                }
+                else if (dObj->cardDetectionMethod == DRV_SDMMC_CD_METHOD_POLLING)
                 {
                     /* Periodically check if the card is still attached. Start a timer first. */
                     if (dObj->generalTimerHandle == SYS_TIME_HANDLE_INVALID)
@@ -2173,7 +2205,18 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
                     }
                 }
             <#else>
-                if (dObj->cardDetectionMethod == DRV_SDMMC_CD_METHOD_POLLING)
+                if (dObj->cardDetectionMethod == DRV_SDMMC_CD_METHOD_NONE)
+                {
+                    if ((dObj->protocol == DRV_SDMMC_PROTOCOL_EMMC) && (dObj->sleepWhenIdle == true))
+                    {
+                        if (dObj->emmcSleepWakeState == DRV_SDMMC_EMMC_STATE_WAKE)
+                        {
+                            dObj->emmcSleepWakeState = DRV_SDMMC_EMMC_STATE_SLEEP;
+                            dObj->taskState = DRV_SDMMC_TASK_SLEEP_WAKE_CARD;
+                        }
+                    }
+                }
+                else if (dObj->cardDetectionMethod == DRV_SDMMC_CD_METHOD_POLLING)
                 {
                     /* Periodically check if the card is still attached. Start a timer first. */
                     if (dObj->generalTimerHandle == SYS_TIME_HANDLE_INVALID)
@@ -2205,6 +2248,34 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
                 }
             </#if>
 
+            }
+            break;
+
+
+        case DRV_SDMMC_TASK_SLEEP_WAKE_CARD:
+
+            dObj->dataTransferFlags.isDataPresent = false;
+
+            _DRV_SDMMC_CommandSend (dObj, DRV_SDMMC_CMD_SLEEP_WAKE, ((dObj->cardCtxt.rca << 16) | (dObj->emmcSleepWakeState << 15)), DRV_SDMMC_CMD_RESP_R1B, &dObj->dataTransferFlags);
+            if (dObj->cmdState == DRV_SDMMC_CMD_EXEC_IS_COMPLETE)
+            {
+                if (dObj->commandStatus == DRV_SDMMC_COMMAND_STATUS_SUCCESS)
+                {
+                    if (dObj->emmcSleepWakeState == DRV_SDMMC_EMMC_STATE_SLEEP)
+                    {
+                        /* Card is now in sleep mode. Go back checking for any transfer requests */
+                        dObj->taskState = DRV_SDMMC_TASK_PROCESS_QUEUE;
+                    }
+                    else
+                    {
+                        /* Card is in wake mode now, select the card and proceed with data transfers */
+                        dObj->taskState = DRV_SDMMC_TASK_SELECT_CARD;
+                    }
+                }
+                else
+                {
+                    dObj->taskState = DRV_SDMMC_TASK_HANDLE_CARD_DETACH;
+                }
             }
             break;
 

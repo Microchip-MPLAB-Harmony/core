@@ -93,9 +93,9 @@
 #define DRV_SDMMC_SCR_BUFFER_LEN                 (32)
 #define DRV_SDMMC_SWITCH_STATUS_BUFFER_LEN       (64)
 
-// Section: OCR register bits 
-#define DRV_SDMMC_OCR_VDD_170_195     (1U <<  7)	
-#define DRV_SDMMC_OCR_VDD_200_270     (0x7F1U << 8)	
+// Section: OCR register bits
+#define DRV_SDMMC_OCR_VDD_170_195     (1U <<  7)
+#define DRV_SDMMC_OCR_VDD_200_270     (0x7F1U << 8)
 #define DRV_SDMMC_OCR_VDD_27_28       (1U << 15)
 #define DRV_SDMMC_OCR_VDD_28_29       (1U << 16)
 #define DRV_SDMMC_OCR_VDD_29_30       (1U << 17)
@@ -105,9 +105,9 @@
 #define DRV_SDMMC_OCR_VDD_33_34       (1U << 21)
 #define DRV_SDMMC_OCR_VDD_34_35       (1U << 22)
 #define DRV_SDMMC_OCR_VDD_35_36       (1U << 23)
-#define DRV_SDMMC_OCR_ACCESS_MODE     (3U << 29)	
-#define DRV_SDMMC_OCR_ACCESS_SECTOR   (2U << 29)	
-#define DRV_SDMMC_OCR_NBUSY           (1U << 31)  
+#define DRV_SDMMC_OCR_ACCESS_MODE     (3U << 29)
+#define DRV_SDMMC_OCR_ACCESS_SECTOR   (2U << 29)
+#define DRV_SDMMC_OCR_NBUSY           (1U << 31)
 
 /* R1 error bits for eMMC */
 #define DRV_SDMMC_R1_E_ADDRESS_OUT_OF_RANGE   (1U << 31)
@@ -159,30 +159,30 @@
 
 
 
-#define DRV_SDMMC_EXT_CSD_CMD_SET_NORMAL		    (1<<0)
-#define DRV_SDMMC_EXT_CSD_CMD_SET_SECURE		    (1<<1)
-#define DRV_SDMMC_EXT_CSD_CMD_SET_CPSECURE	        (1<<2)
+#define DRV_SDMMC_EXT_CSD_CMD_SET_NORMAL            (1<<0)
+#define DRV_SDMMC_EXT_CSD_CMD_SET_SECURE            (1<<1)
+#define DRV_SDMMC_EXT_CSD_CMD_SET_CPSECURE          (1<<2)
 
-#define DRV_SDMMC_EXT_CSD_BUS_WIDTH		            183	/* R/W */
-#define DRV_SDMMC_EXT_CSD_HS_TIMING		            185	/* R/W */
+#define DRV_SDMMC_EXT_CSD_BUS_WIDTH                 183 /* R/W */
+#define DRV_SDMMC_EXT_CSD_HS_TIMING                 185 /* R/W */
 
-#define DRV_SDMMC_EXT_CSD_BUS_WIDTH_1	            0	/* Card is in 1 bit mode */
-#define DRV_SDMMC_EXT_CSD_BUS_WIDTH_4	            1	/* Card is in 4 bit mode */
-#define DRV_SDMMC_EXT_CSD_BUS_WIDTH_8	            2	/* Card is in 8 bit mode */
-#define DRV_SDMMC_EXT_CSD_DDR_BUS_WIDTH_4	        5	/* Card is in 4 bit DDR mode */
-#define DRV_SDMMC_EXT_CSD_DDR_BUS_WIDTH_8	        6	/* Card is in 8 bit DDR mode */
-#define DRV_SDMMC_EXT_CSD_BUS_WIDTH_STROBE BIT(7)	/* Enhanced strobe mode */
+#define DRV_SDMMC_EXT_CSD_BUS_WIDTH_1               0   /* Card is in 1 bit mode */
+#define DRV_SDMMC_EXT_CSD_BUS_WIDTH_4               1   /* Card is in 4 bit mode */
+#define DRV_SDMMC_EXT_CSD_BUS_WIDTH_8               2   /* Card is in 8 bit mode */
+#define DRV_SDMMC_EXT_CSD_DDR_BUS_WIDTH_4           5   /* Card is in 4 bit DDR mode */
+#define DRV_SDMMC_EXT_CSD_DDR_BUS_WIDTH_8           6   /* Card is in 8 bit DDR mode */
+#define DRV_SDMMC_EXT_CSD_BUS_WIDTH_STROBE BIT(7)   /* Enhanced strobe mode */
 
-#define DRV_SDMMC_EXT_CSD_TIMING_BC	                0	/* Backwards compatility */
-#define DRV_SDMMC_EXT_CSD_TIMING_HS	                1	/* High speed */
-#define DRV_SDMMC_EXT_CSD_TIMING_HS200	            2	/* HS200 */
-#define DRV_SDMMC_EXT_CSD_TIMING_HS400	            3	/* HS400 */
-#define DRV_SDMMC_EXT_CSD_DRV_STR_SHIFT	            4	/* Driver Strength shift */
+#define DRV_SDMMC_EXT_CSD_TIMING_BC                 0   /* Backwards compatility */
+#define DRV_SDMMC_EXT_CSD_TIMING_HS                 1   /* High speed */
+#define DRV_SDMMC_EXT_CSD_TIMING_HS200              2   /* HS200 */
+#define DRV_SDMMC_EXT_CSD_TIMING_HS400              3   /* HS400 */
+#define DRV_SDMMC_EXT_CSD_DRV_STR_SHIFT             4   /* Driver Strength shift */
 
-#define DRV_SDMMC_SWITCH_MODE_CMD_SET		0x00	/* Change the command set */
-#define DRV_SDMMC_SWITCH_MODE_SET_BITS	0x01	/* Set bits which are 1 in value */
-#define DRV_SDMMC_SWITCH_MODE_CLEAR_BITS	0x02	/* Clear bits which are 1 in value */
-#define DRV_SDMMC_SWITCH_MODE_WRITE_BYTE	0x03	/* Set target to value */
+#define DRV_SDMMC_SWITCH_MODE_CMD_SET       0x00    /* Change the command set */
+#define DRV_SDMMC_SWITCH_MODE_SET_BITS  0x01    /* Set bits which are 1 in value */
+#define DRV_SDMMC_SWITCH_MODE_CLEAR_BITS    0x02    /* Clear bits which are 1 in value */
+#define DRV_SDMMC_SWITCH_MODE_WRITE_BYTE    0x03    /* Set target to value */
 
 #define DRV_SDMMC_EXT_CSD_GET_HS_SUPPORT(extcsdPtr) (0 != (extcsdPtr[196] & 0x01))
 #define DRV_SDMMC_EXT_CSD_GET_SEC_COUNT(extcsdPtr)   ((uint32_t)(extcsdPtr[215] << 24) |\
@@ -191,10 +191,10 @@
                                                       (uint32_t)(extcsdPtr[212]))
 
 #define CMD6_EXT_CSD_MODE_ARGU(set, index, value) \
-		((DRV_SDMMC_SWITCH_MODE_WRITE_BYTE << 24) | \
-		  (index << 16) | \
-		  (value << 8) | \
-		  set)
+        ((DRV_SDMMC_SWITCH_MODE_WRITE_BYTE << 24) | \
+          (index << 16) | \
+          (value << 8) | \
+          set)
 
 #define DRV_SDMMC_SWITCH_HS_ARGU CMD6_EXT_CSD_MODE_ARGU(DRV_SDMMC_EXT_CSD_CMD_SET_NORMAL,\
                                                         DRV_SDMMC_EXT_CSD_HS_TIMING,\
@@ -211,10 +211,10 @@
 #define DRV_SDMMC_CLOCK_FREQ_400_KHZ           (400000)
 #define DRV_SDMMC_CLOCK_FREQ_DS_25_MHZ         (25000000)
 #define DRV_SDMMC_CLOCK_FREQ_HS_50_MHZ         (50000000)
-          
+
 #define DRV_SDMMC_CLOCK_FREQ_DS_26_MHZ         (26000000)
 #define DRV_SDMMC_CLOCK_FREQ_HS_52_MHZ         (52000000)
-          
+
 // *****************************************************************************
 /* SDMMC Read/Write/Erase Region Index Numbers
 
@@ -306,6 +306,7 @@ typedef enum
     DRV_SDMMC_TASK_WAIT_CD_LINE_DEBOUNCE_TIMEOUT,
     DRV_SDMMC_TASK_MEDIA_INIT,
     DRV_SDMMC_TASK_PROCESS_QUEUE,
+    DRV_SDMMC_TASK_SLEEP_WAKE_CARD,
     DRV_SDMMC_TASK_CHECK_CARD_DETACH,
     DRV_SDMMC_TASK_SELECT_CARD,
     DRV_SDMMC_TASK_SETUP_XFER,
@@ -336,13 +337,16 @@ typedef enum
 
     /* Command to eMMC device to set its relative addressas specified by host */
     DRV_SDMMC_CMD_SET_RELATIVE_ADDR = 3,
-    
+
+    /* Command to eMMC device to enter in and out of sleep mode */
+    DRV_SDMMC_CMD_SLEEP_WAKE = 5,
+
     /* ACMD6 sets the card's bus width between 1-bit and 4-bit, only available when the card is unlocked */
     DRV_SDMMC_CMD_SWITCH_FUNCTION = 6,
 
     /* ACMD6 sets the card's bus width between 1-bit and 4-bit, only available when the card is unlocked */
     DRV_SDMMC_CMD_SET_BUS_WIDTH  = 6,
-    
+
     /* Command to switch modes of EMMC device */
     DRV_SDMMC_CMD_SWITCH = 6,
 
@@ -443,6 +447,13 @@ typedef enum
     DRV_SDMMC_CLOCK_SET_COMPLETE
 
 } DRV_SDMMC_CLOCK_STATES;
+
+typedef enum
+{
+    DRV_SDMMC_EMMC_STATE_WAKE = 0,
+    DRV_SDMMC_EMMC_STATE_SLEEP,
+
+} DRV_SDMMC_EMMC_STATE;
 
 typedef struct
 {
@@ -653,6 +664,12 @@ typedef struct
 
     /* Timer command state. */
     bool                            isCmdTimerExpired;
+
+    /* Indicates if the eMMC card is put to sleep mode when it is idle */
+    bool                            sleepWhenIdle;
+
+    /* Indicates the status of eMMC card - either in Sleep or Wake state */
+    DRV_SDMMC_EMMC_STATE            emmcSleepWakeState;
 
     /* Variable used to track the number of trials of a particular operation */
     uint16_t                        trials;

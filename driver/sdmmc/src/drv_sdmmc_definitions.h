@@ -247,7 +247,7 @@ typedef struct _DRV_SDMMC_INIT
     uintptr_t                   bufferObjPool;
 
     /* SDMMC Protocol */
-    DRV_SDMMC_PROTOCOL       	  protocol;
+    DRV_SDMMC_PROTOCOL            protocol;
 
     /* Rate at which card insertion/removal is checked if polling method is selected */
     uint32_t                    cardDetectionPollingIntervalMs;
@@ -269,6 +269,9 @@ typedef struct _DRV_SDMMC_INIT
 
     /* Whether the driver should register its services with the file system */
     bool                        isFsEnabled;
+
+    /* Indicates if the eMMC card is put to sleep mode when it is idle */
+    bool                        sleepWhenIdle;
 } DRV_SDMMC_INIT;
 
 

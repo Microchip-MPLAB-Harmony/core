@@ -83,6 +83,7 @@ const DRV_SDMMC_INIT drvSDMMC${INDEX?string}InitData =
     .isWriteProtectCheckEnabled     = ${DRV_SDMMC_WP_CHECK_ENABLE?c},
     .speedMode                      = DRV_SDMMC_CONFIG_SPEED_MODE_IDX${INDEX?string},
     .busWidth                       = DRV_SDMMC_CONFIG_BUS_WIDTH_IDX${INDEX?string},
+	.sleepWhenIdle 					= ${DRV_SDMMC_SLEEP_WHEN_IDLE?c},
 <#if DRV_SDMMC_FS_ENABLE == true>
     <#lt>    .isFsEnabled                    = true,
 <#else>
