@@ -235,20 +235,18 @@ typedef enum
 
     <#lt>    Note: The Values mentioned below should be aligned with values in ff.h
     <#lt>*/
-    <#lt>typedef enum
-    <#lt>{
-    <#lt>    SYS_FS_FORMAT_FAT      = 0x01,
-    <#lt>    SYS_FS_FORMAT_FAT32    = 0x02,
-    <#lt>    SYS_FS_FORMAT_EXFAT    = 0x04,
-    <#lt>    SYS_FS_FORMAT_ANY      = 0x07,
-    <#lt>    SYS_FS_FORMAT_SFD      = 0x08
-    <#lt>}SYS_FS_FORMAT;
+
+    <#lt>#define SYS_FS_FORMAT_FAT      0x01
+    <#lt>#define SYS_FS_FORMAT_FAT32    0x02
+    <#lt>#define SYS_FS_FORMAT_EXFAT    0x04
+    <#lt>#define SYS_FS_FORMAT_ANY      0x07
+    <#lt>#define SYS_FS_FORMAT_SFD      0x08
 
     <#lt>// *****************************************************************************
     <#lt>/* Format parameter structure */
     <#lt>typedef struct {
     <#lt>    /* Format option */
-    <#lt>    SYS_FS_FORMAT  fmt;
+    <#lt>    uint8_t  fmt;
     <#lt>    /* Number of FATs */
     <#lt>    uint8_t  n_fat;
     <#lt>    /* Data area alignment (sector) */
@@ -3350,7 +3348,7 @@ SYS_FS_RESULT SYS_FS_DriveLabelSet
     <#lt>    opt           - Specifies the structure holding format options. If a null
     <#lt>                    pointer is given, fat code gives the function all options in default
     <#lt>                    value. The format option structure has five members described below:
-    <#lt>                    fmt     - Specifies combination of FAT type flags, SYS_FS_FORMAT.
+    <#lt>                    fmt     - Specifies combination of FAT type flags, SYS_FS_FORMAT_XXX.
     <#lt>                              These flags specify which FAT type to be created on the volume.
     <#lt>                              If two or more types are specified, one out of them will be
     <#lt>                              selected depends on the volume size and au_size.
