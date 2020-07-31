@@ -81,6 +81,11 @@
     <#lt>#define SYS_FS_FAT_READONLY               ${SYS_FS_FAT_READONLY?c}
     <#lt>#define SYS_FS_FAT_CODE_PAGE              ${SYS_FS_FAT_CODE_PAGE}
     <#lt>#define SYS_FS_FAT_MAX_SS                 SYS_FS_MEDIA_MAX_BLOCK_SIZE
+    <#if SYS_FS_ALIGNED_BUFFER_ENABLE?? && SYS_FS_ALIGNED_BUFFER_ENABLE == true>
+        <#if SYS_FS_ALIGNED_BUFFER_LEN??>
+            <#lt>#define SYS_FS_FAT_ALIGNED_BUFFER_LEN     ${SYS_FS_ALIGNED_BUFFER_LEN}
+        </#if>
+    </#if>
 </#if>
 
 <#--

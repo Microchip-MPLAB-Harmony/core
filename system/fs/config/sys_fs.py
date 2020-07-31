@@ -312,6 +312,33 @@ def instantiateComponent(sysFSComponent):
     sysFSFatExFAT.setVisible(sysFSFat.getValue())
     sysFSFatExFAT.setDependencies(sysFSFatExFATShow, ["SYS_FS_FAT", "SYS_FS_FAT_VERSION"])
 
+    createAlignedBufferSymbols = False
+
+    # Check if Cache is present on the device
+    if (Database.getSymbolValue("core", "DATA_CACHE_ENABLE") != None):
+        if (Database.getSymbolValue("core", "CoreArchitecture") != "CORTEX-M4"):
+            createAlignedBufferSymbols = True
+
+    if (createAlignedBufferSymbols == True):
+        sysFSFatAlignedBufferEnableDesc = "File system will use this aligned buffer to submit the request to Media if the input buffer for the read/Write operations is not aligned to Cache Line Size. \
+        If the underlying media driver uses DMA and device has cache enabled the buffer submitted to the driver has to be aligned to cache line size as the drivers will perform Cache Maintenance operations on the buffer. \
+        When file system aligned buffer will be used then the total number of sectors to be read/written will be divided by the aligned buffer size and will be sent to drivers in iterations. As the total sectors are now divided into chunks it may effect the overall throughput. \
+        Increasing the length of the buffer will increase the throughput but consume more RAM memory."
+
+        sysFSFatAlignedBufferEnable = sysFSComponent.createBooleanSymbol("SYS_FS_ALIGNED_BUFFER_ENABLE", sysFSFat)
+        sysFSFatAlignedBufferEnable.setLabel("Enable Cache Line Aligned Buffer for Cache Management")
+        sysFSFatAlignedBufferEnable.setDefaultValue(True)
+        sysFSFatAlignedBufferEnable.setDescription(sysFSFatAlignedBufferEnableDesc)
+        sysFSFatAlignedBufferEnable.setVisible(sysFSFat.getValue())
+        sysFSFatAlignedBufferEnable.setDependencies(sysFsFatSymbolShow, ["SYS_FS_FAT"])
+
+        sysFSFatAlignedBufferLen = sysFSComponent.createIntegerSymbol("SYS_FS_ALIGNED_BUFFER_LEN", sysFSFatAlignedBufferEnable)
+        sysFSFatAlignedBufferLen.setLabel("Aligned Buffer Length in Multiple of 512 Bytes")
+        sysFSFatAlignedBufferLen.setDefaultValue(512)
+        sysFSFatAlignedBufferLen.setMin(512)
+        sysFSFatAlignedBufferLen.setVisible(sysFSFatAlignedBufferEnable.getValue())
+        sysFSFatAlignedBufferLen.setDependencies(sysFsFatSymbolShow, ["SYS_FS_ALIGNED_BUFFER_ENABLE"])
+
     sysFSMpfs = sysFSComponent.createBooleanSymbol("SYS_FS_MPFS", sysFSMenu)
     sysFSMpfs.setLabel("Microchip File System")
     sysFSMpfs.setDefaultValue(False)
@@ -333,12 +360,6 @@ def instantiateComponent(sysFSComponent):
     sysFSPathLen.setDefaultValue(1024)
     sysFSPathLen.setMin(1)
     sysFSPathLen.setMax(1024)
-
-    sysFSMBR = sysFSComponent.createBooleanSymbol("SYS_FS_USE_MBR", sysFSMenu)
-    sysFSMBR.setLabel("Use MBR")
-    sysFSMBR.setDefaultValue(False)
-    sysFSMBR.setReadOnly(True)
-
 
 ############################################Generate Files#################################################
 
@@ -482,11 +503,13 @@ def instantiateComponent(sysFSComponent):
     sysFSUnicodeSourceFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
     sysFSDiskIOFile = sysFSComponent.createFileSymbol("SYS_FS_DISKIO_SOURCE", None)
-    sysFSDiskIOFile.setSourcePath("/system/fs/fat_fs/" + sysFSFatVersion.getValue() + "/hardware_access/diskio.c")
+    sysFSDiskIOFile.setSourcePath("/system/fs/fat_fs/" + sysFSFatVersion.getValue() + "/hardware_access/diskio.c.ftl")
     sysFSDiskIOFile.setOutputName("diskio.c")
     sysFSDiskIOFile.setDestPath("/system/fs/fat_fs/hardware_access/")
     sysFSDiskIOFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/hardware_access/")
     sysFSDiskIOFile.setType("SOURCE")
+    sysFSDiskIOFile.setMarkup(True)
+    sysFSDiskIOFile.setOverwrite(True)
     sysFSDiskIOFile.setEnabled(sysFSFat.getValue())
     sysFSDiskIOFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
@@ -585,7 +608,7 @@ def sysFsFatSymbolShow(symbol, event):
         component.getSymbolByID("SYS_FS_FAT_SOURCE").setSourcePath("system/fs/fat_fs/" + event["value"] + "/file_system/ff.c")
         component.getSymbolByID("SYS_FS_FAT_HEADER").setSourcePath("/system/fs/fat_fs/" + event["value"] + "/file_system/ff.h")
         component.getSymbolByID("SYS_FS_FAT_CONF_HEADER").setSourcePath("/system/fs/fat_fs/" + event["value"] + "/file_system/ffconf.h.ftl")
-        component.getSymbolByID("SYS_FS_DISKIO_SOURCE").setSourcePath("/system/fs/fat_fs/" + event["value"] + "/hardware_access/diskio.c")
+        component.getSymbolByID("SYS_FS_DISKIO_SOURCE").setSourcePath("/system/fs/fat_fs/" + event["value"] + "/hardware_access/diskio.c.ftl")
         component.getSymbolByID("SYS_FS_DISKIO_HEADER").setSourcePath("/system/fs/fat_fs/" + event["value"] + "/hardware_access/diskio.h")
         if (event["value"] != "v0.11a"):
             component.getSymbolByID("SYS_FS_FAT_UNICODE_SOURCE").setSourcePath("system/fs/fat_fs/" + event["value"] + "/file_system/ffunicode.c")
@@ -594,6 +617,9 @@ def sysFsFatSymbolShow(symbol, event):
             component.getSymbolByID("SYS_FS_FAT_UNICODE_SOURCE").setEnabled(False)
 
     elif (event["id"] == "SYS_FS_FAT"):
+        symbol.setVisible(event["value"])
+
+    elif (event["id"] == "SYS_FS_ALIGNED_BUFFER_ENABLE"):
         symbol.setVisible(event["value"])
 
 def sysFsFatCodePageShow(symbol, event):
