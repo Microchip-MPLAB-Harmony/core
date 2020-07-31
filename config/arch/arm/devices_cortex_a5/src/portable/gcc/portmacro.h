@@ -28,6 +28,8 @@
 #ifndef PORTMACRO_H
 #define PORTMACRO_H
 
+#include "device.h"
+
 #ifdef __cplusplus
     extern "C" {
 #endif
@@ -94,8 +96,6 @@ extern uint32_t ulPortYieldRequired;            \
 
 extern void vPortEnterCritical( void );
 extern void vPortExitCritical( void );
-
-#include "core_ca.h"
 
 #define portENTER_CRITICAL()        vPortEnterCritical();
 #define portEXIT_CRITICAL()         vPortExitCritical();
