@@ -49,9 +49,6 @@
 
 #include "system/fs/mpfs/mpfs_local.h"
 #include "system/fs/sys_fs_media_manager.h"
-<#if __PROCESSOR?matches("PIC32MZ.*") == true>
-#include "system/cache/sys_cache.h"
-</#if>
 
 
 /****************************************************************************
@@ -165,8 +162,8 @@ static int MPFSFindFile
     uint8_t *ptr = NULL;
     int32_t index = 0;
     uint16_t hash = 0;
-    static uint16_t __ALIGNED(CACHE_LINE_SIZE) hashBuffer[CACHE_LINE_SIZE] = {0};
-    static uint8_t __ALIGNED(CACHE_LINE_SIZE) fileName[(SYS_FS_FILE_NAME_LEN + ((SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)? (CACHE_LINE_SIZE - (SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)) : 0))];
+    static uint16_t CACHE_ALIGN hashBuffer[CACHE_LINE_SIZE] = {0};
+    static uint8_t CACHE_ALIGN fileName[(SYS_FS_FILE_NAME_LEN + ((SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)? (CACHE_LINE_SIZE - (SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)) : 0))];
 
     /* Calculate the hash value for the file name. */
     ptr = file;
@@ -189,9 +186,6 @@ static int MPFSFindFile
             {
                 temp = 8;
             }
-<#if __PROCESSOR?matches("PIC32MZ.*") == true>
-            SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)hashBuffer, temp << 1);
-</#if>
 
             if (MPFSGetArray (diskNum, address, temp << 1, (uint8_t *)hashBuffer) == false)
             {
@@ -203,15 +197,10 @@ static int MPFSFindFile
         if (hashBuffer[index & 0x07] == hash)
         {
             address = 8 + (gSysMpfsObj.numFiles * 2) + (index * 22);
-<#if __PROCESSOR?matches("PIC32MZ.*") == true>
-            SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)fileRecord, 22);
-</#if>
+
             MPFSGetArray (diskNum, address, 22, (uint8_t *)fileRecord);
             temp = strlen ((const char *)file);
 
-<#if __PROCESSOR?matches("PIC32MZ.*") == true>
-            SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)fileName, temp);
-</#if>
             if (MPFSGetArray (diskNum, fileRecord->fileNameOffset, temp, (uint8_t *)fileName) == false)
             {
                 return -1;
@@ -560,7 +549,7 @@ int MPFS_Stat
     uint16_t fileLen = 0;
     uint8_t diskNum = 0;
     uint8_t volumeNum = 0;
-    MPFS_FILE_RECORD fileRecord;
+    static MPFS_FILE_RECORD CACHE_ALIGN fileRecord;
 
     MPFS_STATUS *stat = (MPFS_STATUS *)stat_str;
 
@@ -708,8 +697,8 @@ int MPFS_DirRead
     uint8_t diskNum = 0;
     uint32_t address = 0;
 
-    static MPFS_FILE_RECORD __ALIGNED(CACHE_LINE_SIZE) fileRecord;
-    static uint8_t __ALIGNED(CACHE_LINE_SIZE) fileName[(SYS_FS_FILE_NAME_LEN + ((SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)? (CACHE_LINE_SIZE - (SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)) : 0))];
+    static MPFS_FILE_RECORD CACHE_ALIGN fileRecord;
+    static uint8_t CACHE_ALIGN fileName[(SYS_FS_FILE_NAME_LEN + ((SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)? (CACHE_LINE_SIZE - (SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)) : 0))];
 
     MPFS_STATUS *stat = (MPFS_STATUS *)statPtr;
 
@@ -736,9 +725,7 @@ int MPFS_DirRead
     {
         /* Fetch the file record. */
         address = 8 + (gSysMpfsObj.numFiles * 2) + (gSysMpfsObj.fileIndex * 22);
-<#if __PROCESSOR?matches("PIC32MZ.*") == true>
-        SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)&fileRecord, 22);
-</#if>
+
         if (MPFSGetArray (diskNum, address, 22, (uint8_t *)&fileRecord) == false)
         {
             /* Failed to fetch the file record. */
@@ -747,9 +734,6 @@ int MPFS_DirRead
 
         /* Since the length of the file is not known, fetch SYS_FS_FILE_NAME_LEN
          * number of bytes starting the from the file name offset. */
-<#if __PROCESSOR?matches("PIC32MZ.*") == true>
-        SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)fileName, SYS_FS_FILE_NAME_LEN);
-</#if>
         if (MPFSGetArray (diskNum, fileRecord.fileNameOffset, SYS_FS_FILE_NAME_LEN, (uint8_t *)fileName) == false)
         {
             /* Failed to fetch the file name. */
