@@ -31,6 +31,11 @@ protocolUsed    = ["SQI", "SPI"]
 
 global sort_alphanumeric
 
+def handleMessage(messageID, args):
+    result_dict = {}
+
+    return result_dict
+
 def sort_alphanumeric(l):
     import re
     convert = lambda text: int(text) if text.isdigit() else text.lower()
@@ -90,6 +95,19 @@ def setBuffDescriptor(symbol, event):
     else:
         symbol.setVisible(False)
 
+def setLaneMode(symbol, event):
+    component = symbol.getComponent()
+
+    if (event["id"] == "DRV_SST26_PLIB"):
+        if ("SQI" in event["value"]):
+            symbol.setVisible(True)
+        else:
+            symbol.setVisible(False)
+    elif (event["id"] == "LANE_MODE"):
+        plibID = component.getSymbolByID("DRV_SST26_PLIB").getValue().lower()
+
+        Database.sendMessage(plibID, "SET_SQI_LANE_MODE", {"laneMode":event["value"], "isReadOnly":True})
+
 def instantiateComponent(sst26Component):
 
     res = Database.activateComponents(["HarmonyCore"])
@@ -122,6 +140,12 @@ def instantiateComponent(sst26Component):
     sst26NumBufDesc.setDefaultValue(10)
     sst26NumBufDesc.setVisible(False)
     sst26NumBufDesc.setDependencies(setBuffDescriptor, ["DRV_SST26_PLIB"])
+
+    sst26SqiLaneMode = sst26Component.createComboSymbol("LANE_MODE", None, ["SINGLE", "QUAD"])
+    sst26SqiLaneMode.setLabel("SQI Lane Mode")
+    sst26SqiLaneMode.setDefaultValue("QUAD")
+    sst26SqiLaneMode.setVisible(False)
+    sst26SqiLaneMode.setDependencies(setLaneMode, ["DRV_SST26_PLIB", "LANE_MODE"])
 
     sst26ChipSelect = sst26Component.createComboSymbol("CHIP_SELECT", None, ChipSelect)
     sst26ChipSelect.setLabel("SQI Chip Select")
@@ -277,9 +301,13 @@ def onAttachmentConnected(source, target):
         localComponent.getSymbolByID("DRV_SST26_PLIB").setValue(sst26PlibID)
 
         if ("sqi" in remoteID):
-            remoteComponent.getSymbolByID("SQI_FLASH_STATUS_CHECK").setReadOnly(True)
             localComponent.getSymbolByID("CHIP_SELECT").setVisible(True)
             localComponent.getSymbolByID("CHIP_SELECT_COMMENT").setVisible(True)
+
+            laneMode = localComponent.getSymbolByID("LANE_MODE").getValue()
+
+            Database.sendMessage(sst26PlibID.lower(), "SET_SQI_FLASH_STATUS_CHECK", {"isReadOnly":True})
+            Database.sendMessage(sst26PlibID.lower(), "SET_SQI_LANE_MODE", {"laneMode":laneMode, "isReadOnly":True})
 
         localComponent.setCapabilityEnabled(spiCapabilityId, False)
 
@@ -298,8 +326,7 @@ def onAttachmentConnected(source, target):
         localComponent.setCapabilityEnabled(sqiCapabilityId, False)
 
         # Enable "Enable System Ports" option in MHC
-        if (Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS") == False):
-            Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_PORTS", True)
+        Database.sendMessage("HarmonyCore", "ENABLE_SYS_PORTS", {"isEnabled":True})
 
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]
@@ -315,9 +342,11 @@ def onAttachmentDisconnected(source, target):
 
     if connectID == "drv_sst26_SQI_dependency" :
         if ("sqi" in remoteID):
-            remoteComponent.getSymbolByID("SQI_FLASH_STATUS_CHECK").setReadOnly(False)
             localComponent.getSymbolByID("CHIP_SELECT").setVisible(False)
             localComponent.getSymbolByID("CHIP_SELECT_COMMENT").setVisible(False)
+
+            Database.sendMessage(sst26PlibID.lower(), "SET_SQI_FLASH_STATUS_CHECK", {"isReadOnly":False})
+            Database.sendMessage(sst26PlibID.lower(), "SET_SQI_LANE_MODE", {"isReadOnly":False})
 
         localComponent.getSymbolByID("DRV_SST26_PLIB").clearValue()
 
@@ -334,6 +363,8 @@ def onAttachmentDisconnected(source, target):
         localComponent.getSymbolByID("INTERRUPT_ENABLE").setValue(False)
 
         localComponent.setCapabilityEnabled(sqiCapabilityId, True)
+
+        Database.sendMessage("HarmonyCore", "ENABLE_SYS_PORTS", {"isEnabled":False})
 
 def destroyComponent(sst26Component):
     Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})

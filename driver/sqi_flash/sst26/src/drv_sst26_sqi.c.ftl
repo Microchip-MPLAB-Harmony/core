@@ -62,8 +62,10 @@
     <#lt>#define SQI_CHIP_SELECT         SQI_BDCTRL_SQICS_CS1
 </#if>
 
+#define SQI_LANE_MODE           SQI_BDCTRL_MODE_${LANE_MODE}_LANE
+
 #define CMD_DESC_NUMBER         5
-#define DUMMY_BYTE              0x0
+#define DUMMY_BYTE              0xFF
 
 static DRV_SST26_OBJECT gDrvSST26Obj;
 static DRV_SST26_OBJECT *dObj = &gDrvSST26Obj;
@@ -135,6 +137,8 @@ static void DRV_SST26_ResetFlash(void)
 
     dObj->curOpType = DRV_SST26_OPERATION_TYPE_CMD;
 
+    sqi_cmd_rsten               = SST26_CMD_FLASH_RESET_ENABLE;
+
     sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(1) | SQI_BDCTRL_PKTINTEN |
                                     SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
                                     SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
@@ -150,6 +154,8 @@ static void DRV_SST26_ResetFlash(void)
 
     dObj->isTransferDone = false;
 
+    sqi_cmd_rst                 = SST26_CMD_FLASH_RESET;
+    
     sqiCmdDesc[1].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(1) | SQI_BDCTRL_PKTINTEN |
                                     SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
                                     SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
@@ -164,29 +170,35 @@ static void DRV_SST26_ResetFlash(void)
     while(dObj->isTransferDone == false);
 }
 
-static void DRV_SST26_EnableQuadIO(void)
-{
-    dObj->isTransferDone = false;
+<#if LANE_MODE == "QUAD" >
+    <#lt>static void DRV_SST26_EnableQuadIO(void)
+    <#lt>{
+    <#lt>    dObj->isTransferDone = false;
 
-    sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(1) | SQI_BDCTRL_PKTINTEN |
-                                    SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
-                                    SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
-                                    SQI_BDCTRL_DESCEN);
+    <#lt>    sqi_cmd_eqio                = SST26_CMD_ENABLE_QUAD_IO;
 
-    sqiCmdDesc[0].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_eqio);
-    sqiCmdDesc[0].bd_stat       = 0;
-    sqiCmdDesc[0].bd_nxtptr     = 0x00000000;
+    <#lt>    sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(1) | SQI_BDCTRL_PKTINTEN |
+    <#lt>                                    SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
+    <#lt>                                    SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
+    <#lt>                                    SQI_BDCTRL_DESCEN);
 
-    dObj->curOpType = DRV_SST26_OPERATION_TYPE_CMD;
+    <#lt>    sqiCmdDesc[0].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_eqio);
+    <#lt>    sqiCmdDesc[0].bd_stat       = 0;
+    <#lt>    sqiCmdDesc[0].bd_nxtptr     = 0x00000000;
 
-    dObj->sst26Plib->DMATransfer((sqi_dma_desc_t *)KVA_TO_PA(&sqiCmdDesc[0]));
+    <#lt>    dObj->curOpType = DRV_SST26_OPERATION_TYPE_CMD;
 
-    while(dObj->isTransferDone == false);
-}
+    <#lt>    dObj->sst26Plib->DMATransfer((sqi_dma_desc_t *)KVA_TO_PA(&sqiCmdDesc[0]));
+
+    <#lt>    while(dObj->isTransferDone == false);
+    <#lt>}
+</#if>
 
 static void DRV_SST26_WriteEnable(void)
 {
-    sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(1) | SQI_BDCTRL_MODE_QUAD_LANE |
+    sqi_cmd_wren                = SST26_CMD_WRITE_ENABLE;
+
+    sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(1) | SQI_LANE_MODE |
                                     SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
                                     SQI_BDCTRL_DESCEN);
 
@@ -224,9 +236,11 @@ bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle )
 
     DRV_SST26_WriteEnable();
 
+    sqi_cmd_ULBPR               = SST26_CMD_UNPROTECT_GLOBAL;
+
     sqiCmdDesc[1].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(1) | SQI_BDCTRL_PKTINTEN |
                                     SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
-                                    SQI_BDCTRL_MODE_QUAD_LANE | SQI_CHIP_SELECT |
+                                    SQI_LANE_MODE | SQI_CHIP_SELECT |
                                     SQI_BDCTRL_DEASSERT | SQI_BDCTRL_DESCEN);
 
     sqiCmdDesc[1].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_ULBPR);
@@ -251,10 +265,18 @@ bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id)
 
     dObj->isTransferDone = false;
 
-    sqi_cmd_jedec[1] = DUMMY_BYTE;
+<#if LANE_MODE == "QUAD" >
+    sqi_cmd_jedec[0]            = SST26_CMD_QUAD_JEDEC_ID_READ;
+    sqi_cmd_jedec[1]            = DUMMY_BYTE;
 
-    sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(2) | SQI_BDCTRL_MODE_QUAD_LANE |
+    sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(2) | SQI_LANE_MODE |
                                     SQI_CHIP_SELECT | SQI_BDCTRL_DESCEN);
+<#else>
+    sqi_cmd_jedec[0]            = SST26_CMD_JEDEC_ID_READ;
+
+    sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(1) | SQI_LANE_MODE |
+                                    SQI_CHIP_SELECT | SQI_BDCTRL_DESCEN);
+</#if>
 
     sqiCmdDesc[0].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_jedec);
     sqiCmdDesc[0].bd_stat       = 0;
@@ -262,7 +284,7 @@ bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id)
 
     sqiBufDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(4) | SQI_BDCTRL_PKTINTEN |
                                     SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
-                                    SQI_BDCTRL_MODE_QUAD_LANE | SQI_BDCTRL_DIR_READ |
+                                    SQI_LANE_MODE | SQI_BDCTRL_DIR_READ |
                                     SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
                                     SQI_BDCTRL_DESCEN);
 
@@ -291,10 +313,17 @@ bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_d
 
     dObj->isTransferDone = false;
 
-    sqi_cmd_rdsr[1] = DUMMY_BYTE;
+    sqi_cmd_rdsr[0]             = SST26_CMD_READ_STATUS_REG;
 
-    sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(2) | SQI_BDCTRL_MODE_QUAD_LANE |
+<#if LANE_MODE == "QUAD" >
+    sqi_cmd_rdsr[1]             = DUMMY_BYTE;
+
+    sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(2) | SQI_LANE_MODE |
                                     SQI_CHIP_SELECT | SQI_BDCTRL_DESCEN);
+<#else>
+    sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(1) | SQI_LANE_MODE |
+                                    SQI_CHIP_SELECT | SQI_BDCTRL_DESCEN);
+</#if>
 
     sqiCmdDesc[0].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_rdsr);
     sqiCmdDesc[0].bd_stat       = 0;
@@ -302,7 +331,7 @@ bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_d
 
     sqiBufDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(rx_data_length) | SQI_BDCTRL_PKTINTEN |
                                     SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
-                                    SQI_BDCTRL_MODE_QUAD_LANE | SQI_BDCTRL_DIR_READ |
+                                    SQI_LANE_MODE | SQI_BDCTRL_DIR_READ |
                                     SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
                                     SQI_BDCTRL_DESCEN);
 
@@ -363,24 +392,32 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     dObj->isTransferDone = false;
 
     // Construct parameters to issue read command
+    sqi_cmd_hsr[0] = SST26_CMD_HIGH_SPEED_READ;
     sqi_cmd_hsr[1] = (0xff & (address>>16));
     sqi_cmd_hsr[2] = (0xff & (address>>8));
     sqi_cmd_hsr[3] = (0xff & (address>>0));
-    sqi_cmd_hsr[4] = 0;
+    sqi_cmd_hsr[4] = DUMMY_BYTE;
 
-    sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(5) | SQI_BDCTRL_MODE_QUAD_LANE |
+    sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(5) | SQI_LANE_MODE |
                                     SQI_CHIP_SELECT | SQI_BDCTRL_DESCEN);
 
     sqiCmdDesc[0].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_hsr);
     sqiCmdDesc[0].bd_stat       = 0;
+<#if LANE_MODE == "QUAD" >
     sqiCmdDesc[0].bd_nxtptr     = (sqi_dma_desc_t *)KVA_TO_PA(&sqiCmdDesc[1]);
 
-    sqiCmdDesc[1].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(2) | SQI_BDCTRL_MODE_QUAD_LANE |
+    sqi_cmd_dummy[0]            = DUMMY_BYTE;
+    sqi_cmd_dummy[1]            = DUMMY_BYTE;
+
+    sqiCmdDesc[1].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(2) | SQI_LANE_MODE |
                                     SQI_CHIP_SELECT | SQI_BDCTRL_DESCEN);
 
     sqiCmdDesc[1].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_dummy);
     sqiCmdDesc[1].bd_stat       = 0;
     sqiCmdDesc[1].bd_nxtptr     = (sqi_dma_desc_t *)KVA_TO_PA(&sqiBufDesc[0]);
+<#else>
+    sqiCmdDesc[0].bd_nxtptr     = (sqi_dma_desc_t *)KVA_TO_PA(&sqiBufDesc[0]);
+</#if>
 
     for (i = 0; (i < DRV_SST26_BUFF_DESC_NUMBER) && (pendingBytes > 0); i++)
     {
@@ -394,7 +431,7 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
         }
 
         sqiBufDesc[i].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(numBytes) | SQI_BDCTRL_PKTINTEN |
-                                        SQI_BDCTRL_MODE_QUAD_LANE | SQI_BDCTRL_DIR_READ |
+                                        SQI_LANE_MODE | SQI_BDCTRL_DIR_READ |
                                         SQI_CHIP_SELECT | SQI_BDCTRL_DESCEN);
 
         sqiBufDesc[i].bd_bufaddr    = (uint32_t *)KVA_TO_PA(readBuffer);
@@ -431,11 +468,12 @@ bool DRV_SST26_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
     DRV_SST26_WriteEnable();
 
     // Construct parameters to issue page program command
+    sqi_cmd_pp[0] = SST26_CMD_PAGE_PROGRAM;
     sqi_cmd_pp[1] = (0xff & (address>>16));
     sqi_cmd_pp[2] = (0xff & (address>>8));
     sqi_cmd_pp[3] = (0xff & (address>>0));
 
-    sqiCmdDesc[1].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(4) | SQI_BDCTRL_MODE_QUAD_LANE |
+    sqiCmdDesc[1].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(4) | SQI_LANE_MODE |
                                     SQI_CHIP_SELECT | SQI_BDCTRL_DESCEN);
 
     sqiCmdDesc[1].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_pp);
@@ -444,7 +482,7 @@ bool DRV_SST26_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
 
     sqiBufDesc[0].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(DRV_SST26_PAGE_SIZE) | SQI_BDCTRL_PKTINTEN |
                                     SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
-                                    SQI_BDCTRL_MODE_QUAD_LANE | SQI_BDCTRL_SCHECK |
+                                    SQI_LANE_MODE | SQI_BDCTRL_SCHECK |
                                     SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
                                     SQI_BDCTRL_DESCEN);
 
@@ -468,7 +506,7 @@ static bool DRV_SST26_Erase( uint8_t *instruction, uint32_t length )
 
     sqiCmdDesc[1].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(length) | SQI_BDCTRL_PKTINTEN |
                                     SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
-                                    SQI_BDCTRL_MODE_QUAD_LANE | SQI_BDCTRL_SCHECK |
+                                    SQI_LANE_MODE | SQI_BDCTRL_SCHECK |
                                     SQI_CHIP_SELECT | SQI_BDCTRL_DEASSERT |
                                     SQI_BDCTRL_DESCEN);
 
@@ -490,6 +528,7 @@ bool DRV_SST26_SectorErase( const DRV_HANDLE handle, uint32_t address )
         return false;
     }
 
+    sqi_cmd_se[0] = SST26_CMD_SECTOR_ERASE;
     sqi_cmd_se[1] = (0xff & (address>>16));
     sqi_cmd_se[2] = (0xff & (address>>8));
     sqi_cmd_se[3] = (0xff & (address>>0));
@@ -504,6 +543,7 @@ bool DRV_SST26_BulkErase( const DRV_HANDLE handle, uint32_t address )
         return false;
     }
 
+    sqi_cmd_be[0] = SST26_CMD_BULK_ERASE_64K;
     sqi_cmd_be[1] = (0xff & (address>>16));
     sqi_cmd_be[2] = (0xff & (address>>8));
     sqi_cmd_be[3] = (0xff & (address>>0));
@@ -517,6 +557,8 @@ bool DRV_SST26_ChipErase( const DRV_HANDLE handle )
     {
         return false;
     }
+
+    sqi_cmd_ce = SST26_CMD_CHIP_ERASE;
 
     return (DRV_SST26_Erase(&sqi_cmd_ce, 1));
 }
@@ -578,8 +620,10 @@ DRV_HANDLE DRV_SST26_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
     /* Reset SST26 Flash device */
     DRV_SST26_ResetFlash();
 
+<#if LANE_MODE == "QUAD" >
     /* Put SST26 Flash device on QUAD IO Mode */
     DRV_SST26_EnableQuadIO();
+</#if>
 
     if ((ioIntent & DRV_IO_INTENT_WRITE) == (DRV_IO_INTENT_WRITE))
     {
@@ -631,19 +675,6 @@ SYS_MODULE_OBJ DRV_SST26_Initialize
 
     /* Initialize the attached memory device functions */
     dObj->sst26Plib = sst26Init->sst26Plib;
-
-    sqi_cmd_jedec[0]    = SST26_CMD_QUAD_JEDEC_ID_READ;
-    sqi_cmd_eqio        = SST26_CMD_ENABLE_QUAD_IO;
-    sqi_cmd_rsten       = SST26_CMD_FLASH_RESET_ENABLE;
-    sqi_cmd_rst         = SST26_CMD_FLASH_RESET;
-    sqi_cmd_wren        = SST26_CMD_WRITE_ENABLE;
-    sqi_cmd_rdsr[0]     = SST26_CMD_READ_STATUS_REG;
-    sqi_cmd_ce          = SST26_CMD_CHIP_ERASE;
-    sqi_cmd_be[0]       = SST26_CMD_BULK_ERASE_64K;
-    sqi_cmd_se[0]       = SST26_CMD_SECTOR_ERASE;
-    sqi_cmd_pp[0]       = SST26_CMD_PAGE_PROGRAM;
-    sqi_cmd_hsr[0]      = SST26_CMD_HIGH_SPEED_READ;
-    sqi_cmd_ULBPR       = SST26_CMD_UNPROTECT_GLOBAL;
 
     dObj->sst26Plib->RegisterCallback(DRV_SST26_EventHandler, (uintptr_t)dObj);
 
