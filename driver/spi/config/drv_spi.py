@@ -232,6 +232,10 @@ def requestAndAssignTxDMAChannel(symbol, event):
 
     dmaChannelID = "DMA_CH_FOR_" + str(spiPeripheral) + "_Transmit"
     dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
+
+    # Clear the DMA symbol. Done for backward compatibility.
+    Database.clearSymbolValue("core", dmaRequestID)
+
     dummyDict = {}
 
     if event["value"] == False:
@@ -254,6 +258,10 @@ def requestAndAssignRxDMAChannel(symbol, event):
 
     dmaChannelID = "DMA_CH_FOR_" + str(spiPeripheral) + "_Receive"
     dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
+
+    # Clear the DMA symbol. Done for backward compatibility.
+    Database.clearSymbolValue("core", dmaRequestID)
+
     dummyDict = {}
 
     if event["value"] == False:
@@ -276,19 +284,6 @@ def requestDMAComment(symbol, event):
         event["symbol"].setVisible(False)
     else:
         symbol.setVisible(False)
-
-def destroyComponent(spiComponent):
-    global drvSpiInstanceSpace
-
-    if isDMAPresent:
-        spiPeripheral = Database.getSymbolValue(drvSpiInstanceSpace, "DRV_SPI_PLIB")
-
-        dmaTxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
-        dmaRxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
-
-        dummyDict = {}
-        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_DISABLE", {"dma_channel":dmaTxID})
-        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_DISABLE", {"dma_channel":dmaRxID})
 
 def asyncModeOptions(symbol, event):
     if (event["value"] == "Asynchronous"):
