@@ -111,6 +111,9 @@ def requestAndAssignDMAChannel(symbol, event):
     # Control visibility
     symbol.setVisible(event["value"])
 
+    # Clear the DMA symbol. Done for backward compatibility.
+    Database.clearSymbolValue("core", dmaRequestID)
+
     dummyDict = {}
 
     if event["value"] == False:
@@ -627,19 +630,6 @@ def instantiateComponent(sdspiComponent, index):
     sdspiSyncSymDriverInterfaceHeaderFile.setMarkup(True)
     sdspiSyncSymDriverInterfaceHeaderFile.setEnabled((Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE") == "Synchronous") and (sdspiInterfaceType.getValue() == "SPI_DRV"))
     sdspiSyncSymDriverInterfaceHeaderFile.setDependencies(syncFileGenration, ["drv_sdspi.DRV_SDSPI_COMMON_MODE", "DRV_SDSPI_INTERFACE_TYPE"])
-
-
-def destroyComponent(sdspiComponent):
-    global drvSdspiInstanceSpace
-    spiPeripheral = Database.getSymbolValue(drvSdspiInstanceSpace, "DRV_SPI_PLIB")
-
-    if (spiPeripheral != ""):
-        dmaTxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
-        dmaRxID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
-
-        dummyDict = {}
-        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_DISABLE", {"dma_channel":dmaTxID})
-        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_DISABLE", {"dma_channel":dmaRxID})
 
 def onAttachmentConnected(source, target):
     global sdcardFsEnable
