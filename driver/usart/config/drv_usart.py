@@ -228,6 +228,10 @@ def requestAndAssignTxDMAChannel(symbol, event):
 
     dmaChannelID = "DMA_CH_FOR_" + str(usartPeripheral) + "_Transmit"
     dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(usartPeripheral) + "_Transmit"
+
+    # Clear the DMA symbol. Done for backward compatibility.
+    Database.clearSymbolValue("core", dmaRequestID)
+
     dummyDict = {}
 
     if event["value"] == False:
@@ -250,6 +254,10 @@ def requestAndAssignRxDMAChannel(symbol, event):
 
     dmaChannelID = "DMA_CH_FOR_" + str(usartPeripheral) + "_Receive"
     dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(usartPeripheral) + "_Receive"
+
+    # Clear the DMA symbol. Done for backward compatibility.
+    Database.clearSymbolValue("core", dmaRequestID)
+
     dummyDict = {}
 
     if event["value"] == False:
@@ -281,19 +289,6 @@ def requestRxDMAComment(symbol, event):
         event["symbol"].setVisible(False)
     else:
         symbol.setVisible(False)
-
-def destroyComponent(usartComponent):
-    global drvUsartInstanceSpace
-
-    if isDMAPresent:
-        usartPeripheral = Database.getSymbolValue(drvUsartInstanceSpace, "DRV_USART_PLIB")
-
-        dmaTxID = "DMA_CH_NEEDED_FOR_" + str(usartPeripheral) + "_Transmit"
-        dmaRxID = "DMA_CH_NEEDED_FOR_" + str(usartPeripheral) + "_Receive"
-
-        dummyDict = {}
-        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_DISABLE", {"dma_channel":dmaTxID})
-        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_DISABLE", {"dma_channel":dmaRxID})
 
 def asyncModeOptions(symbol, event):
     if event["value"] == "Asynchronous":
