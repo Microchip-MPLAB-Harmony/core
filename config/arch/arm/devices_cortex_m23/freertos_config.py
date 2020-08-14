@@ -147,7 +147,7 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecureIncludeDirSym = thirdPartyFreeRTOS.createSettingSymbol("FREERTOS_XC32_SECURE_INCLUDE_DIRS", None)
     freeRtosSecureIncludeDirSym.setCategory("C32")
     freeRtosSecureIncludeDirSym.setKey("extra-include-directories")
-    freeRtosSecureIncludeDirSym.setValue("../src/third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM23/secure;../src/third_party/rtos/FreeRTOS/Source/include;../../../NonSecure/firmware/src/config/" + configName + ";")
+    freeRtosSecureIncludeDirSym.setValue("../src/third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM23/secure;../src/third_party/rtos/FreeRTOS/Source/include;")
     freeRtosSecureIncludeDirSym.setAppend(True, ";")
     freeRtosSecureIncludeDirSym.setSecurity("SECURE")
 
@@ -229,3 +229,11 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecureInitHeader.setType("HEADER")
     freeRtosSecureInitHeader.setMarkup(False)
     freeRtosSecureInitHeader.setSecurity("SECURE")
+
+    freeRtosSecureConfHeaderFile = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_CONFIG_SECURE_H", None)
+    freeRtosSecureConfHeaderFile.setSourcePath("templates/FreeRTOSConfig.h.ftl")
+    freeRtosSecureConfHeaderFile.setOutputName("FreeRTOSConfig.h")
+    freeRtosSecureConfHeaderFile.setProjectPath("config/" + configName + "")
+    freeRtosSecureConfHeaderFile.setType("HEADER")
+    freeRtosSecureConfHeaderFile.setMarkup(True)
+    freeRtosSecureConfHeaderFile.setSecurity("SECURE")
