@@ -149,18 +149,18 @@ USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
             /* This means the host is setting the control line state.
              * Read the control line state. We will accept this request
              * for now. */
-            
+
             controlLineStateData = (USB_CDC_CONTROL_LINE_STATE *)pData;
-            
+
             if (controlLineStateData->dtr == 1)
             {
                 cdcInstance->isPortOpened = true;
             }
             else
             {
-                cdcInstance->isPortOpened = false;                
+                cdcInstance->isPortOpened = false;
             }
-            
+
             USB_DEVICE_ControlStatus(gConsoleUSBCdcData.deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
 
             break;
@@ -236,13 +236,13 @@ void USBDeviceEventHandler
             break;
 
         case USB_DEVICE_EVENT_RESET:
-            
+
             for (i = 0; i < SYS_CONSOLE_USB_CDC_MAX_INSTANCES; i++)
             {
                 cdcInstance = CONSOLE_USB_CDC_GET_INSTANCE(i);
                 cdcInstance->isPortOpened = false;
             }
-            
+
             gConsoleUSBCdcData.isConfigured = false;
 
             break;
@@ -260,12 +260,12 @@ void USBDeviceEventHandler
 
                 /* Mark that the device is now configured */
                 gConsoleUSBCdcData.isConfigured = true;
-                
+
                 for (i = 0; i < SYS_CONSOLE_USB_CDC_MAX_INSTANCES; i++)
                 {
                     cdcInstance = CONSOLE_USB_CDC_GET_INSTANCE(i);
                     USB_DEVICE_CDC_EventHandlerSet(cdcInstance->cdcInstanceIndex, USBDeviceCDCEventHandler, (uintptr_t)cdcInstance);
-                }                
+                }
             }
 
             break;
@@ -280,14 +280,14 @@ void USBDeviceEventHandler
         case USB_DEVICE_EVENT_POWER_REMOVED:
 
             /* VBUS is not available any more. Detach the device. */
-            USB_DEVICE_Detach(gConsoleUSBCdcData.deviceHandle);                       
-            
+            USB_DEVICE_Detach(gConsoleUSBCdcData.deviceHandle);
+
             for (i = 0; i < SYS_CONSOLE_USB_CDC_MAX_INSTANCES; i++)
             {
                 cdcInstance = CONSOLE_USB_CDC_GET_INSTANCE(i);
                 cdcInstance->isPortOpened = false;
             }
-            
+
             gConsoleUSBCdcData.isConfigured = false;
 
             break;
@@ -326,7 +326,7 @@ static bool Console_USB_CDC_Reset(CONS_USB_CDC_INSTANCE* cdcInstance)
 {
     /* This function returns true if the device was reset  */
 
-    bool retVal;    
+    bool retVal;
 
     if(gConsoleUSBCdcData.isConfigured == false)
     {
@@ -783,7 +783,7 @@ void Console_USB_CDC_Initialize (uint32_t index, const void* initData)
     cdcInstance->writeTransferHandle    = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
     cdcInstance->isReadComplete         = true;
     cdcInstance->isWriteComplete        = true;
-	cdcInstance->isPortOpened			= false;
+    cdcInstance->isPortOpened           = false;
     cdcInstance->cdcReadBuffer          = consoleUSBCdcInitData->cdcReadBuffer;
     cdcInstance->cdcWriteBuffer         = consoleUSBCdcInitData->cdcWriteBuffer;
     cdcInstance->consoleReadBufferSize  = consoleUSBCdcInitData->consoleReadBufferSize;
@@ -815,19 +815,22 @@ void Console_USB_CDC_Tasks(uint32_t index, SYS_MODULE_OBJ object)
             /* Open the device layer */
             if (gConsoleUSBCdcData.deviceHandle == USB_DEVICE_HANDLE_INVALID)
             {
-                gConsoleUSBCdcData.deviceHandle = USB_DEVICE_Open(USB_DEVICE_INDEX_0, DRV_IO_INTENT_READWRITE );
-
-                if(gConsoleUSBCdcData.deviceHandle != USB_DEVICE_HANDLE_INVALID)
+                if (USB_DEVICE_Status(USB_DEVICE_INDEX_0) == SYS_STATUS_READY)
                 {
-                    /* Register a callback with device layer to get event notification (for end point 0) */
-                    USB_DEVICE_EventHandlerSet(gConsoleUSBCdcData.deviceHandle, USBDeviceEventHandler, 0);
+                    gConsoleUSBCdcData.deviceHandle = USB_DEVICE_Open(USB_DEVICE_INDEX_0, DRV_IO_INTENT_READWRITE );
 
-                    cdcInstance->state = CONSOLE_USB_CDC_STATE_WAIT_FOR_CONFIGURATION;
-                }
-                else
-                {
-                    /* The Device Layer is not ready to be opened. We should try
-                     * again later. */
+                    if(gConsoleUSBCdcData.deviceHandle != USB_DEVICE_HANDLE_INVALID)
+                    {
+                        /* Register a callback with device layer to get event notification (for end point 0) */
+                        USB_DEVICE_EventHandlerSet(gConsoleUSBCdcData.deviceHandle, USBDeviceEventHandler, 0);
+
+                        cdcInstance->state = CONSOLE_USB_CDC_STATE_WAIT_FOR_CONFIGURATION;
+                    }
+                    else
+                    {
+                        /* The Device Layer is not ready to be opened. We should try
+                         * again later. */
+                    }
                 }
             }
             else
