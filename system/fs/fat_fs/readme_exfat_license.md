@@ -1,0 +1,5 @@
+Extended File Allocation Table (exFAT) is Microsoft-patented file system. exFAT can handle extremely large file sizes and enables seamless file exchange between devices that use removable storage, regardless of device or operating system. Combining wide interoperability with the capacity to handle files at virtually unlimited scale, exFAT is a must-have for companies seeking an efficient file storage and transfer solution.
+
+exFAT allows devices to handle growing requirements for media file storage, increasing volume capacity into the terabytes. exFAT also allows for single files to exceed 4GB, a limitation of FAT32. It allows efficient storage and seamless data portability between desktop PCs and consumer electronic devices, enabling easy interchange between the two. Inheriting its base from FAT32, another Microsoft file system, exFAT can be implemented with minimal effort. 
+
+Companies need to [obtain a license](https://www.microsoft.com/en-us/legal/intellectualproperty/tech-licensing/programs?activetab=pivot1:primaryr5) for exFAT from Microsoft to ship products using the patented file system.
