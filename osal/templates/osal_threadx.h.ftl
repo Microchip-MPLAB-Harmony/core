@@ -1,3 +1,20 @@
+/*******************************************************************************
+  Azure RTOS ThreadX OSAL Header
+
+  Company:
+    Microchip Technology Inc.
+
+  File Name:
+    osal_threadx.h
+
+  Summary:
+    OSAL Azure RTOS ThreadX implementation interface file
+
+  Description:
+    Interface file to allow Azure RTOS ThreadX to be used with the OSAL
+
+*******************************************************************************/
+
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.

@@ -1,5 +1,5 @@
 /*******************************************************************************
-  ThreadX OSAL compatibility layer
+  Azure RTOS ThreadX OSAL compatibility layer
 
   Company:
     Microchip Technology Inc.
@@ -8,10 +8,10 @@
     osal_threadx.c
 
   Summary:
-    Provide OSAL mappings for the FreeRTOS(tm) Real-time operating system
+    Provide OSAL mappings for the Azure RTOS ThreadX Real-time operating system
 
   Description:
-    This file contains functional implementations of the OSAL for FreeRTOS.
+    This file contains functional implementations of the OSAL for Azure RTOS ThreadX.
 
 *******************************************************************************/
 
@@ -99,8 +99,8 @@
     perform task locking or completely disable all interrupts.
 
    NOTE -
-    In FreeRTOS only interrupts below configMAX_SYSCALL_INTERRUPT_PRIORITY are
-    disabled.  FreeRTOS will handle nesting of this function is scheduler is
+    In Azure RTOS ThreadX only interrupts below configMAX_SYSCALL_INTERRUPT_PRIORITY are
+    disabled. Azure RTOS ThreadX will handle nesting of this function is scheduler is
     running.
  */
 <#if core.CoreArchitecture == "MIPS" >
@@ -111,12 +111,13 @@ OSAL_CRITSECT_DATA_TYPE OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity)
 {
   TX_INTERRUPT_SAVE_AREA;
 
+  /* This is the name of the variable created from TX_INTERRUPT_SAVE_AREA macro above */
+  interrupt_save = 0;
+
   switch (severity)
   {
     case OSAL_CRIT_TYPE_LOW:
-      /*this is the name of the variable created from TX_INTERRUPT macro above*/
-      interrupt_save = 0;
-      /*global variable ThreadX uses to disable pre-emption, equivalent to disabling scheduler*/
+      /*global variable Azure RTOS ThreadX uses to disable pre-emption, equivalent to disabling scheduler*/
       _tx_thread_preempt_disable++;
     break;
 
@@ -181,7 +182,7 @@ void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
   switch (severity)
   {
     case OSAL_CRIT_TYPE_LOW:
-      /* decrement pre-emption flag for ThreadX, effectively resumes scheduler, if 0 */
+      /* decrement pre-emption flag for Azure RTOS ThreadX, effectively resumes scheduler, if 0 */
       _tx_thread_preempt_disable--;
     break;
 
@@ -355,7 +356,7 @@ OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS)
 {
   ULONG rtos_wait_option;
 
-  /*translate OSAL defines to applicable threadx defines */
+  /* Translate OSAL defines to applicable Azure RTOS ThreadX defines */
   if(waitMS == OSAL_WAIT_FOREVER)
     rtos_wait_option = TX_WAIT_FOREVER;
   else if(waitMS == 0)
