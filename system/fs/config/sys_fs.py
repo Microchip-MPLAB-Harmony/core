@@ -604,12 +604,15 @@ def sysFsFileGen(symbol, event):
 def sysFsFatSymbolShow(symbol, event):
     component = symbol.getComponent()
 
-    if (event["id"] == "SYS_FS_FAT_VERSION"):
+    fatFsEnabled = component.getSymbolByID("SYS_FS_FAT").getValue()
+
+    if ((event["id"] == "SYS_FS_FAT_VERSION") and (fatFsEnabled == True)):
         component.getSymbolByID("SYS_FS_FAT_SOURCE").setSourcePath("system/fs/fat_fs/" + event["value"] + "/file_system/ff.c")
         component.getSymbolByID("SYS_FS_FAT_HEADER").setSourcePath("/system/fs/fat_fs/" + event["value"] + "/file_system/ff.h")
         component.getSymbolByID("SYS_FS_FAT_CONF_HEADER").setSourcePath("/system/fs/fat_fs/" + event["value"] + "/file_system/ffconf.h.ftl")
         component.getSymbolByID("SYS_FS_DISKIO_SOURCE").setSourcePath("/system/fs/fat_fs/" + event["value"] + "/hardware_access/diskio.c.ftl")
         component.getSymbolByID("SYS_FS_DISKIO_HEADER").setSourcePath("/system/fs/fat_fs/" + event["value"] + "/hardware_access/diskio.h")
+
         if (event["value"] != "v0.11a"):
             component.getSymbolByID("SYS_FS_FAT_UNICODE_SOURCE").setSourcePath("system/fs/fat_fs/" + event["value"] + "/file_system/ffunicode.c")
             component.getSymbolByID("SYS_FS_FAT_UNICODE_SOURCE").setEnabled(True)
@@ -625,7 +628,9 @@ def sysFsFatSymbolShow(symbol, event):
 def sysFsFatCodePageShow(symbol, event):
     component = symbol.getComponent()
 
-    if (event["id"] == "SYS_FS_FAT_VERSION"):
+    fatFsEnabled = component.getSymbolByID("SYS_FS_FAT").getValue()
+
+    if ((event["id"] == "SYS_FS_FAT_VERSION") and (fatFsEnabled == True)):
         if (event["value"] == "v0.11a"):
             component.getSymbolByID("SYS_FS_FAT_CODE_PAGE").setKeyValue("CODE_PAGE_0"  , "1")
             component.getSymbolByID("SYS_FS_FAT_CODE_PAGE").setKeyDescription("CODE_PAGE_0", "ASCII (No extended character. Non-LFN cfg only)")
@@ -637,7 +642,11 @@ def sysFsFatCodePageShow(symbol, event):
         symbol.setVisible(event["value"])
 
 def sysFSFatExFATShow(symbol, event):
-    if (event["id"] == "SYS_FS_FAT_VERSION"):
+    component = symbol.getComponent()
+
+    fatFsEnabled = component.getSymbolByID("SYS_FS_FAT").getValue()
+
+    if ((event["id"] == "SYS_FS_FAT_VERSION") and (fatFsEnabled == True)):
         if (event["value"] == "v0.11a"):
             symbol.setVisible(False)
         else:
