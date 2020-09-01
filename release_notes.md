@@ -2,6 +2,44 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB® Harmony 3 Release Notes
+## Core Release v3.8.0
+
+### New Features
+
+- **New Features and Enhancements**
+  - eMMC support for MCU devices with SDHC/SDMMC peripheral viz., PIC32MZ DA, SAM D5x/E5x and SAM E70
+  - Added support for exFAT file system
+  - Added Reset System Service
+  - Added support for Single-lane mode in SST26 QSPI Flash driver
+  - Added support for CMSIS FreeRTOS v10.3.1
+
+- **Applications**
+  - MPLAB Harmony provides large number of application examples to accelerate learning and reduce the development cycles for your embeeded systems with reusable software components. The application examples are moved to the [product family specific repository](apps/readme.md).
+
+
+
+### Known Issues
+
+The current known issues are as follows:
+  -  Default linker file is added to the MPLAB X projects. The applications that uses custom linker script must disable the linker file generation.
+  -  The following product family requires newer DFP version to be downloaded from packs server and to be used in the MPLAB project to build with MPLAB X IDE v5.4.
+     -  **SAM L21 Family**: SAML21_DFP v3.4.80
+     -  **SAM L22 Family**: SAML22_DFP v3.4.59
+     -  **SAM L10/L11 Family**: SAML10_DFP v3.3.82, SAML11_DFP v4.0.114
+     -  **PIC32CM JH00/JH01 Family**: PIC32CM-JH_DFP v1.0.59
+     -  **PIC32CM LE/LS Family**: PIC32CM-LE_DFP v1.0.88, PIC32CM-LS_DFP v1.0.88
+     -  **PIC32CM MC00 Family**: PIC32CM-MC_DFP v1.0.32
+     -  **PIC32MK MCM/GPK Family**: PIC32MK-GP_DFP v1.4.117, PIC32MK-MC_DFP v1.5.115
+
+
+### Development Tools
+
+- [MPLAB® X IDE v5.40](https://www.microchip.com/mplab/mplab-x-ide)
+- [MPLAB® XC32 C/C++ Compiler v2.41](https://www.microchip.com/mplab/compilers)
+- [IAR EWARM v8.50](https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
+- [KEIL MDK v5.29](https://www2.keil.com/mdk5)
+- MPLAB® X IDE plug-ins:
+  - MPLAB® Harmony Configurator (MHC) v3.6.0
 
 ## Core Release v3.7.2
 ### New Features
