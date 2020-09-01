@@ -21,5 +21,5 @@ Microchip MPLAB Harmony provides several application examples for most supported
 | [core_apps_sam_l22](https://github.com/Microchip-MPLAB-Harmony/core_apps_sam_l22) | Application examples for SAM L22 family |
 | [core_apps_sam_rh71](https://github.com/Microchip-MPLAB-Harmony/core_apps_sam_rh71) | Application examples for SAMRH71 family |
 | [core_apps_pic32cm_jh00_jh01](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cm_jh00_jh01) | Application examples for PIC32CM JH00/JH01 family |
-| [core_apps_pic32cm_le00_ls00](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cm_le00_ls00) | Application examples for PIC32CM LE00/LS00 family |
+| [core_apps_pic32cm_le_ls](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cm_le_ls) | Application examples for PIC32CM LE/LS family |
 | [core_apps_pic32cm_mc00](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cm_mc00) | Application examples for PIC32CM MC00 family |
