@@ -110,7 +110,7 @@ The context parameter contains the a handle to the client context, provided at t
 <p class="Element10">
 The event handler function executes in the peripheral's interrupt context. It is recommended of the application to not perform process intensive or blocking operations within this function.&nbsp;</p>
 <p class="Element10">
-The <a href="00530.html" target="topic">DRV_USART_ReadBufferAdd</a> and <a href="00536.html" target="topic">DRV_USART_WriteBufferAdd</a> functions can be called in the event handler to add a buffer to the driver queue. These functions can only be called to add buffers to the driver whose event handler is running. For example, USART2 driver buffers cannot be added in USART1 driver event handler.</p></div>
+The <a href="00531.html" target="topic">DRV_USART_ReadBufferAdd</a> and <a href="00537.html" target="topic">DRV_USART_WriteBufferAdd</a> functions can be called in the event handler to add a buffer to the driver queue. These functions can only be called to add buffers to the driver whose event handler is running. For example, USART2 driver buffers cannot be added in USART1 driver event handler.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>

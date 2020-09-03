@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_FileCharacterPut Function</title>
+<title>SYS_FS_FILE_SYSTEM_TYPE Enumeration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01204.html" target="topic">System Service Libraries Help</a> &gt; <a href="00686.html" target="topic">File System Service Library Help</a> &gt; <a href="00687.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="00915.html" target="topic">SYS_FS_FileCharacterPut Function</a></div>
+<a href="01209.html" target="topic">System Service Libraries Help</a> &gt; <a href="00687.html" target="topic">File System Service Library Help</a> &gt; <a href="00688.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="00915.html" target="topic">SYS_FS_FILE_SYSTEM_TYPE Enumeration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00916.html" target="topic">Previous</a> | <a href="00687.html" target="topic">Up</a> | <a href="00921.html" target="topic">Next</a></div>
+<a href="00904.html" target="topic">Previous</a> | <a href="00688.html" target="topic">Up</a> | <a href="00996.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileCharacterPut@SYS_FS_HANDLE@char Topic Title: SYS_FS_FileCharacterPut Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FILE_SYSTEM_TYPE Topic Title: SYS_FS_FILE_SYSTEM_TYPE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_FileCharacterPut Function</div>
+SYS_FS_FILE_SYSTEM_TYPE Enumeration</div>
 </div>
 </div>
 
@@ -49,52 +49,46 @@ SYS_FS_FileCharacterPut Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function writes a character to a file.</p></div>
+File System type&nbsp;</p>
+<p class="Element10">
+These enumerated values identify the native file system supported by the SYS FS.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01067.html" target="topic">SYS_FS_RESULT</a> <strong><span style="color: #000000">SYS_FS_FileCharacterPut</span></strong>(
-    <a href="00992.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">char</span></strong> <strong><span style="color: #000000">data</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000">UNSUPPORTED_FS</span></strong> = 0,
+  <strong><span style="color: #000000">FAT</span></strong>,
+  <strong><span style="color: #000000">MPFS2</span></strong>
+} SYS_FS_FILE_SYSTEM_TYPE;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The file into which a character has to be written, has to be present and should have been opened.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
+<div class="Element272">
 <div class="TableDiv">
-<table cellspacing="0" class="Table2">
+<table cellspacing="0" class="Table3">
 <tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-file handle to which the character is to be written.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-data&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-character to be written to the file.&nbsp;</div></td></tr></table></div></div>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+UNSUPPORTED_FS = 0&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Unsupported File System&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+FAT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+FAT FS native File system&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+MPFS2&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+MPFS2 native File system&nbsp;</div></td></tr></table></div></div>
 </div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-SYS_FS_RES_SUCCESS - Write operation was successful. SYS_FS_RES_FAILURE - Write operation was unsuccessful. The reason for the failure can be retrieved with <a href="00858.html" target="topic">SYS_FS_Error</a> or <a href="00922.html" target="topic">SYS_FS_FileError</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -103,33 +97,12 @@ Remarks</div>
 <p class="Element10">
 None.</p></div>
 </div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  <a href="01067.html" target="topic">SYS_FS_RESULT</a> res;
-  <a href="00992.html" target="topic">SYS_FS_HANDLE</a> fileHandle;
-
-  fileHandle = <a href="00924.html" target="topic">SYS_FS_FileOpen</a>(&quot;/mnt/myDrive/FILE.JPG&quot;, (SYS_FS_FILE_OPEN_WRITE_PLUS));
-  <strong><span style="color: #000080">if</span></strong>(fileHandle != <a href="00993.html" target="topic">SYS_FS_HANDLE_INVALID</a>)
-  {
-      <i><span style="color: #008000">// File open is successful</span></i>
-  }
-
-  <i><span style="color: #008000">// Write a character to the file.</span></i>
-  res = SYS_FS_FileCharacterPut(fileHandle, 'c');
-  <strong><span style="color: #000080">if</span></strong>(res != SYS_FS_RES_SUCCESS)
-  {
-      <i><span style="color: #008000">// Character write operation failed.</span></i>
-  }</pre></div></div>
-</div>
-</div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01204.html" target="topic">System Service Libraries Help</a> &gt; <a href="00686.html" target="topic">File System Service Library Help</a> &gt; <a href="00687.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="00915.html" target="topic">SYS_FS_FileCharacterPut Function</a></div>
+<a href="01209.html" target="topic">System Service Libraries Help</a> &gt; <a href="00687.html" target="topic">File System Service Library Help</a> &gt; <a href="00688.html" target="topic">Library Interface</a> &gt; d) File System Data Types and Constants &gt; <a href="00915.html" target="topic">SYS_FS_FILE_SYSTEM_TYPE Enumeration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -140,10 +113,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00916.html" target="topic">Previous</a> | <a href="00687.html" target="topic">Up</a> | <a href="00921.html" target="topic">Next</a></div>
+<a href="00904.html" target="topic">Previous</a> | <a href="00688.html" target="topic">Up</a> | <a href="00996.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileCharacterPut@SYS_FS_HANDLE@char Topic Title: SYS_FS_FileCharacterPut Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FILE_SYSTEM_TYPE Topic Title: SYS_FS_FILE_SYSTEM_TYPE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

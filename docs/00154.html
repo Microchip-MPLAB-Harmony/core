@@ -79,7 +79,7 @@ Initializes the USART instance for the specified driver index.&nbsp;</div></td><
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00534.html" target="topic">DRV_USART_Status</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00535.html" target="topic">DRV_USART_Status</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
 Gets the current status of the USART driver module.&nbsp;</div></td></tr></table></div></div>
 </div>
@@ -134,7 +134,7 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00533.html" target="topic">DRV_USART_SerialSetup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00534.html" target="topic">DRV_USART_SerialSetup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
 Sets the USART serial communication settings dynamically.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
@@ -148,28 +148,28 @@ Allows a client to identify a buffer event handling function for the driver to c
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00529.html" target="topic">DRV_USART_ReadBuffer</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00530.html" target="topic">DRV_USART_ReadBuffer</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
 This is a blocking function that reads data over USART.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00530.html" target="topic">DRV_USART_ReadBufferAdd</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00531.html" target="topic">DRV_USART_ReadBufferAdd</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
 Queues a read operation.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00535.html" target="topic">DRV_USART_WriteBuffer</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00536.html" target="topic">DRV_USART_WriteBuffer</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
 This is a blocking function that writes data over USART.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00536.html" target="topic">DRV_USART_WriteBufferAdd</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00537.html" target="topic">DRV_USART_WriteBufferAdd</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
 Queues a write operation.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
@@ -190,23 +190,30 @@ Returns the transmit/receive request status.&nbsp;</div></td></tr><tr>
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00531.html" target="topic">DRV_USART_ReadQueuePurge</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00532.html" target="topic">DRV_USART_ReadQueuePurge</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Removes all buffer requests from the queue for the given client.&nbsp;</div></td></tr><tr>
+Removes all buffer requests from the queue for the given client and also aborts the on-going read request.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00537.html" target="topic">DRV_USART_WriteQueuePurge</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00538.html" target="topic">DRV_USART_WriteQueuePurge</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Removes all write requests from the queue for the given client.&nbsp;</div></td></tr><tr>
+Removes all write requests from the queue for the given client. This API does not abort the on-going write transfer.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
 <a href="00525.html" target="topic">DRV_USART_ErrorGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Gets the USART hardware errors associated with the transfer request.&nbsp;</div></td></tr></table></div></div>
+Gets the USART hardware errors associated with the transfer request.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00529.html" target="topic">DRV_USART_ReadAbort</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Aborts an on-going read request&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="6429204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
@@ -270,7 +277,7 @@ Definition of an invalid buffer handle.&nbsp;</div></td></tr><tr>
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00532.html" target="topic">DRV_USART_SERIAL_SETUP</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00533.html" target="topic">DRV_USART_SERIAL_SETUP</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
 Defines the data required to dynamically set the serial settings.&nbsp;</div></td></tr></table></div></div>
 </div>

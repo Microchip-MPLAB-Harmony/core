@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Using the Library</title>
+<title>Console Device Configuration Options</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01204.html" target="topic">System Service Libraries Help</a> &gt; <a href="00655.html" target="topic">Console System Service Library Help</a> &gt; <a href="00659.html" target="topic">Using the Library</a></div>
+<a href="01209.html" target="topic">System Service Libraries Help</a> &gt; <a href="00656.html" target="topic">Console System Service Library Help</a> &gt; <a href="00651.html" target="topic">Configuring the Library</a> &gt; <a href="00659.html" target="topic">Console Device Configuration Options</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00654.html" target="topic">Previous</a> | <a href="00655.html" target="topic">Up</a> | <a href="00648.html" target="topic">Next</a></div>
+<a href="00651.html" target="topic">Previous</a> | <a href="00651.html" target="topic">Up</a> | <a href="00650.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE UART Console Device Configuration Options Topic Title: Console Device Configuration Options)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Using the Library</div>
+Console Device Configuration Options</div>
 </div>
 </div>
 
@@ -49,44 +49,51 @@ Using the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The Console System Service allows the application/middleware to route messages/debug information to a console running on a host computer.</p>
+The Console System Service library should be configured through the MHC.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong><u>UART Console:</u></strong>&nbsp;</p>
+<p class="Element10">
+The following figure shows the MHC configuration window for configuring the UART Console Device and a brief description of various configuration options. The console system service requires the connected UART peripheral library to be configured in the interrupt mode. </p><p class="Element10" style="text-align: center;">
+<img src="sys_console_uart.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="sys_console_uart_sercom.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+Configuration Options:</div>
+
 <ul class="Element630">
-<li class="Element600">Depending on the application need, the size of the transmit and receive ring buffers can be configured</li>
-<li class="Element600">The read/write API called by the calling program returns immediately. For read requests, the read API returns the available bytes from the receive buffer. For write requests, the write API copies the application data to the transmit buffer.</li>
-<li class="Element600">For read, APIs are provided to query the number of bytes present in the receive buffer, the amount of free space available in the receive buffer and the size of the receive buffer. Similarly, for writes, APIs are provided to query the number of bytes pending transmission in the transmit buffer, the amount of free space in the transmit buffer and the size of the transmit buffer.</li>
+<li class="Element600"><strong>Device Used:</strong>
+<ul class="Element631">
+<li class="Element601">Indicates the hardware UART Peripheral Library instance used by the Console System Service. The underlying USART/SERCOM/FLEXCOM PLIB must be configured in interrupt mode.</li>
+</ul></li>
+</ul><p class="Element10">
+Note: The TX/RX ring buffers must be configured in the attached PLIB as shown above. In the above example, the TX and RX ring buffer sizes are configured in the attached SERCOM3 PLIB.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong><u>USB Console:</u></strong>&nbsp;</p>
+<p class="Element10">
+The following figure shows the MHC configuration window for configuring the USB Console Device and a brief description of various configuration options. </p><p class="Element10" style="text-align: center;">
+<img src="sys_console_usb.png" border="0" alt="" title=""></p><div class="Element15">
+Configuration Options:</div>
+
+<ul class="Element630">
+<li class="Element600"><strong>Device Used:</strong>
+<ul class="Element631">
+<li class="Element601">Indicates the USB CDC Instance used by the Console System Service.</li>
+<li class="Element601">Transmit Buffer Size (1-4096): Size of the transmit ring buffer</li>
+<li class="Element601">Receive Buffer Size (1-4096): Size of the receive ring buffer</li>
+</ul></li>
 </ul></div>
-</div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00648.html" target="topic">Abstraction Model</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-<span style="color: #000000">This library provides a set of functions that send and receive data to and from a console I/O device.</span>&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00652.html" target="topic">How the Library Works</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This topic describes the basic architecture of the Console System Service Library and provides information on its implementation.&nbsp;</div></td></tr></table></div></div>
-</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01204.html" target="topic">System Service Libraries Help</a> &gt; <a href="00655.html" target="topic">Console System Service Library Help</a> &gt; <a href="00659.html" target="topic">Using the Library</a></div>
+<a href="01209.html" target="topic">System Service Libraries Help</a> &gt; <a href="00656.html" target="topic">Console System Service Library Help</a> &gt; <a href="00651.html" target="topic">Configuring the Library</a> &gt; <a href="00659.html" target="topic">Console Device Configuration Options</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -97,10 +104,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00654.html" target="topic">Previous</a> | <a href="00655.html" target="topic">Up</a> | <a href="00648.html" target="topic">Next</a></div>
+<a href="00651.html" target="topic">Previous</a> | <a href="00651.html" target="topic">Up</a> | <a href="00650.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE UART Console Device Configuration Options Topic Title: Console Device Configuration Options)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

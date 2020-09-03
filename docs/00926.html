@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_FS_FileRead Function</title>
+<title>SYS_FS_FileError Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01204.html" target="topic">System Service Libraries Help</a> &gt; <a href="00686.html" target="topic">File System Service Library Help</a> &gt; <a href="00687.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="00926.html" target="topic">SYS_FS_FileRead Function</a></div>
+<a href="01209.html" target="topic">System Service Libraries Help</a> &gt; <a href="00687.html" target="topic">File System Service Library Help</a> &gt; <a href="00688.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="00926.html" target="topic">SYS_FS_FileError Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00925.html" target="topic">Previous</a> | <a href="00687.html" target="topic">Up</a> | <a href="00927.html" target="topic">Next</a></div>
+<a href="00925.html" target="topic">Previous</a> | <a href="00688.html" target="topic">Up</a> | <a href="00927.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileRead@SYS_FS_HANDLE@void *@size_t Topic Title: SYS_FS_FileRead Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileError@SYS_FS_HANDLE Topic Title: SYS_FS_FileError Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_FS_FileRead Function</div>
+SYS_FS_FileError Function</div>
 </div>
 </div>
 
@@ -49,21 +49,21 @@ SYS_FS_FileRead Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function attempts to read nbyte bytes of data from the file associated with the file handle into the buffer pointed to by buf.</p></div>
+For file system functions which accepts valid handle, any error happening in those functions could be retrieved with SYS_FS_FileError. This function returns errors which are file specific.&nbsp;</p>
+<p class="Element10">
+Please note that if an invalid handle is passed to a file system function, in such a case, SYS_FS_FileError will not return the correct type of error, as the handle was invalid. Therefore, it would be prudent to check the errors using the <a href="00862.html" target="topic">SYS_FS_Error</a> function.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100">size_t <strong><span style="color: #000000">SYS_FS_FileRead</span></strong>(
-    <a href="00992.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">buf</span></strong>, 
-    size_t <strong><span style="color: #000000">nbyte</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00863.html" target="topic">SYS_FS_ERROR</a> <strong><span style="color: #000000">SYS_FS_FileError</span></strong>(
+    <a href="00996.html" target="topic">SYS_FS_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-A valid file handle must be obtained before reading a file.</p></div>
+This function has to be called immediately after a failure is observed while doing a file operation. Any subsequent failure will overwrite the cause of previous failure.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -82,17 +82,7 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-File handle obtained during file open.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-buf&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to buffer into which data is read.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-nbyte&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Number of bytes to be read&nbsp;</div></td></tr></table></div></div>
+A valid file handle&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -100,7 +90,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-On success returns the number of bytes read successfully(0 or positive number). On failure returns -1. The reason for the failure can be retrieved with <a href="00858.html" target="topic">SYS_FS_Error</a> or <a href="00922.html" target="topic">SYS_FS_FileError</a>.</p></div>
+Error code of type <a href="00863.html" target="topic">SYS_FS_ERROR</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -113,15 +103,22 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">  ...
-  <strong><span style="color: #000080">char</span></strong> CACHE_ALIGN buf[256];
+<div class="Element13"><div class="Element12"><pre class="Element12">   ...
+  <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong> *buf = &quot;Hello World&quot;;
   size_t nbytes;
-  size_t bytes_read;
-  <a href="00992.html" target="topic">SYS_FS_HANDLE</a> fd;
+  size_t bytes_written;
+  <a href="00996.html" target="topic">SYS_FS_HANDLE</a> fd;
+  <a href="00863.html" target="topic">SYS_FS_ERROR</a> err;
   ...
-  nbytes = <strong><span style="color: #000080">sizeof</span></strong>(buf);
-  bytes_read = SYS_FS_FileRead(fd, buf, nbytes);
-  ...</pre></div></div>
+
+  bytes_written = <a href="00940.html" target="topic">SYS_FS_FileWrite</a>((<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">void</span></strong> *)buf, nbytes, fd);
+
+  <strong><span style="color: #000080">if</span></strong>(bytes_written == -1)
+  {
+      <i><span style="color: #008000">// error while writing file</span></i>
+      <i><span style="color: #008000">// find the type (reason) of error</span></i>
+      err = SYS_FS_FileError(fd);
+  }</pre></div></div>
 </div>
 </div>
 </div>
@@ -129,7 +126,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01204.html" target="topic">System Service Libraries Help</a> &gt; <a href="00686.html" target="topic">File System Service Library Help</a> &gt; <a href="00687.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="00926.html" target="topic">SYS_FS_FileRead Function</a></div>
+<a href="01209.html" target="topic">System Service Libraries Help</a> &gt; <a href="00687.html" target="topic">File System Service Library Help</a> &gt; <a href="00688.html" target="topic">Library Interface</a> &gt; a) File and Directory Operation Functions &gt; <a href="00926.html" target="topic">SYS_FS_FileError Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -140,10 +137,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00925.html" target="topic">Previous</a> | <a href="00687.html" target="topic">Up</a> | <a href="00927.html" target="topic">Next</a></div>
+<a href="00925.html" target="topic">Previous</a> | <a href="00688.html" target="topic">Up</a> | <a href="00927.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileRead@SYS_FS_HANDLE@void *@size_t Topic Title: SYS_FS_FileRead Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_FS_FileError@SYS_FS_HANDLE Topic Title: SYS_FS_FileError Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

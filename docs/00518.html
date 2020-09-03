@@ -51,7 +51,7 @@ DRV_USART_BUFFER_HANDLE Type</div>
 <p class="Element10">
 USART Driver Buffer Handle&nbsp;</p>
 <p class="Element10">
-A buffer handle value is returned by a call to the <a href="00530.html" target="topic">DRV_USART_ReadBufferAdd</a> or <a href="00536.html" target="topic">DRV_USART_WriteBufferAdd</a> functions. This handle is associated with the buffer passed into the function and it allows the application to track the completion of the data from (or into) that buffer. The buffer handle value returned from the &quot;buffer add&quot; function is returned back to the client by the &quot;event handler callback&quot; function registered with the driver.&nbsp;</p>
+A buffer handle value is returned by a call to the <a href="00531.html" target="topic">DRV_USART_ReadBufferAdd</a> or <a href="00537.html" target="topic">DRV_USART_WriteBufferAdd</a> functions. This handle is associated with the buffer passed into the function and it allows the application to track the completion of the data from (or into) that buffer. The buffer handle value returned from the &quot;buffer add&quot; function is returned back to the client by the &quot;event handler callback&quot; function registered with the driver.&nbsp;</p>
 <p class="Element10">
 The buffer handle assigned to a client request expires when the client has been notified of the completion of the buffer transfer (after event handler function that notifies the client returns) or after the buffer has been retired by the driver if no event handler callback was set.</p></div>
 </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_TIME_Initialize Function</title>
+<title>SYS_TIME_DelayUS Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01204.html" target="topic">System Service Libraries Help</a> &gt; <a href="00706.html" target="topic">Time System Service Library Help</a> &gt; <a href="00707.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="01183.html" target="topic">SYS_TIME_Initialize Function</a></div>
+<a href="01209.html" target="topic">System Service Libraries Help</a> &gt; <a href="00711.html" target="topic">Time System Service Library Help</a> &gt; <a href="00712.html" target="topic">Library Interface</a> &gt; c) Callback and Delay Functions &gt; <a href="01183.html" target="topic">SYS_TIME_DelayUS Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00707.html" target="topic">Previous</a> | <a href="00707.html" target="topic">Up</a> | <a href="01188.html" target="topic">Next</a></div>
+<a href="01182.html" target="topic">Previous</a> | <a href="00712.html" target="topic">Up</a> | <a href="01181.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: SYS_TIME_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_DelayUS@uint32_t@SYS_TIME_HANDLE* Topic Title: SYS_TIME_DelayUS Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_TIME_Initialize Function</div>
+SYS_TIME_DelayUS Function</div>
 </div>
 </div>
 
@@ -49,14 +49,21 @@ SYS_TIME_Initialize Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function initializes the instance of the System Time module.</p></div>
+The function will internally create a single shot timer which will be auto deleted when the application calls <a href="01181.html" target="topic">SYS_TIME_DelayIsComplete</a> routine and the delay has expired. The function will return immediately, requiring the caller to use <a href="01181.html" target="topic">SYS_TIME_DelayIsComplete</a> routine to check the delay timer's status.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01135.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">SYS_TIME_Initialize</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01129.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="01130.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01190.html" target="topic">SYS_TIME_RESULT</a> <strong><span style="color: #000000">SYS_TIME_DelayUS</span></strong>(
+    uint32_t <strong><span style="color: #000000">us</span></strong>, 
+    <a href="01185.html" target="topic">SYS_TIME_HANDLE</a>* <strong><span style="color: #000000">handle</span></strong>
 );</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The <a href="01188.html" target="topic">SYS_TIME_Initialize</a> function must have been called before calling this function.</p></div>
+</div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
 <div class="Element11">
@@ -72,14 +79,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+us&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Index for the instance to be initialized<br>&nbsp;</div></td></tr><tr>
+The desired number of microseconds to delay.<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to a data structure containing data necessary to initialize the module.&nbsp;</div></td></tr></table></div></div>
+Address of the variable to receive the timer handle value.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -87,42 +94,36 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If successful, returns a valid handle to an object. Otherwise, it returns <a href="01136.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
+SYS_TIME_SUCCESS - If the call succeeded.&nbsp;</p>
+<p class="Element10">
+SYS_TIME_ERROR - If the call failed, either because the requested delay is zero, or the passed handle is invalid or there is not enough room to queue in the request in the SYS Time's internal queue.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This routine should normally only be called once during system initialization.</p></div>
+Will delay the requested number of microseconds or longer depending on system performance. In tick-based mode, the requested delay will be ceiled to the next timer tick. For example, if the timer tick is set to 1 msec and the requested delay is 1500 usec, a delay of 2 msec will be generated.&nbsp;</p>
+<p class="Element10">
+Delay values of 0 will return SYS_TIME_ERROR.&nbsp;</p>
+<p class="Element10">
+Will return SYS_TIME_ERROR if timer handle pointer is NULL.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
 <div class="Element13"><div class="Element12"><pre class="Element12">
-<strong><span style="color: #000080">const</span></strong> SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
-    .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)TC0_CH0_TimerCallbackRegister,
-    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC0_CH0_TimerCounterGet,
-    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC0_CH0_TimerPeriodSet,
-    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC0_CH0_TimerFrequencyGet,
-    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC0_CH0_TimerCompareSet,
-    .timerStart = (SYS_TIME_PLIB_START)TC0_CH0_TimerStart,
-    .timerStop = (SYS_TIME_PLIB_STOP)TC0_CH0_TimerStop
-};
+<a href="01185.html" target="topic">SYS_TIME_HANDLE</a> timer = <a href="01186.html" target="topic">SYS_TIME_HANDLE_INVALID</a>;
 
-<strong><span style="color: #000080">const</span></strong> <a href="01182.html" target="topic">SYS_TIME_INIT</a> sysTimeInitData =
-{
-    .timePlib = &amp;sysTimePlibAPI,
-    .hwTimerIntNum = TC0_CH0_IRQn,
-};
-
-<a href="01135.html" target="topic">SYS_MODULE_OBJ</a>  objSysTime;
-
-objSysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (<a href="01130.html" target="topic">SYS_MODULE_INIT</a> *)&amp;sysTimeInitData);
-<strong><span style="color: #000080">if</span></strong> (objSysTime == <a href="01136.html" target="topic">SYS_MODULE_OBJ_INVALID</a>)
+<strong><span style="color: #000080">if</span></strong> (SYS_TIME_DelayUS(50, &amp;timer) != SYS_TIME_SUCCESS)
 {
     <i><span style="color: #008000">// Handle error</span></i>
+}
+<strong><span style="color: #000080">else</span></strong> <strong><span style="color: #000080">if</span></strong> (<a href="01181.html" target="topic">SYS_TIME_DelayIsComplete</a>(timer) != <strong><span style="color: #000080">true</span></strong>)
+{
+    <i><span style="color: #008000">// Wait till the delay has not expired</span></i>
+    <strong><span style="color: #000080">while</span></strong> (<a href="01181.html" target="topic">SYS_TIME_DelayIsComplete</a>(timer) == <strong><span style="color: #000080">false</span></strong>);
 }</pre></div></div>
 </div>
 </div>
@@ -131,7 +132,7 @@ objSysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (<a href="01130.html" target=
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01204.html" target="topic">System Service Libraries Help</a> &gt; <a href="00706.html" target="topic">Time System Service Library Help</a> &gt; <a href="00707.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="01183.html" target="topic">SYS_TIME_Initialize Function</a></div>
+<a href="01209.html" target="topic">System Service Libraries Help</a> &gt; <a href="00711.html" target="topic">Time System Service Library Help</a> &gt; <a href="00712.html" target="topic">Library Interface</a> &gt; c) Callback and Delay Functions &gt; <a href="01183.html" target="topic">SYS_TIME_DelayUS Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -142,10 +143,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00707.html" target="topic">Previous</a> | <a href="00707.html" target="topic">Up</a> | <a href="01188.html" target="topic">Next</a></div>
+<a href="01182.html" target="topic">Previous</a> | <a href="00712.html" target="topic">Up</a> | <a href="01181.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: SYS_TIME_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_DelayUS@uint32_t@SYS_TIME_HANDLE* Topic Title: SYS_TIME_DelayUS Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
