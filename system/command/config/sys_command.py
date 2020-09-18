@@ -85,6 +85,9 @@ def instantiateComponent(commandComponent):
     # Enable "Generate Harmony System Service Common Files" option in MHC
     Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
 
+    # Enable "Generate Harmony System Reset File" option in MHC
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_RESET", {"isEnabled":True})
+
     dummyDict = {}
     dummyDict = Database.sendMessage("core", "HEAP_SIZE", {"heap_size" : 1024})
 
@@ -276,4 +279,4 @@ def onAttachmentDisconnected(source, target):
 def destroyComponent(commandComponent):
     Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
     Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
-
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_RESET", {"isEnabled":False})
