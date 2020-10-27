@@ -167,10 +167,6 @@ static bool _DRV_SPI_StartDMATransfer(
     }
     else
     {
-        /* If its DMA mode and SPI data bits is other than 8 bit, then divide transmit and receive sizes by 2 */
-        rxSize = rxSize >> 1;
-        txSize = txSize >> 1;
-
         SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
     }
@@ -268,10 +264,6 @@ static bool _DRV_SPI_StartDMATransfer(
     }
     else
     {
-        /* If its DMA mode and SPI data bits is other than 8 bit, then divide transmit and receive sizes by 2 */
-        rxSize = rxSize >> 1;
-        txSize = txSize >> 1;
-
         SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
     }
@@ -838,6 +830,13 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
 
             /* Active client allows de-asserting the chip select line in ISR routine */
             dObj->activeClient = (uintptr_t)clientObj;
+
+            if(clientObj->setup.dataBits != DRV_SPI_DATA_BITS_8)
+            {
+                /* Both SPI and DMA PLIB expect size in terms of bytes, hence multiply transmit and receive sizes by 2 */
+                rxSize = rxSize << 1;
+                txSize = txSize << 1;
+            }
 
 <#if core.DMA_ENABLE?has_content>
             if((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && ((dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)))
