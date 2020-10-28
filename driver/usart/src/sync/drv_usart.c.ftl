@@ -247,6 +247,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     dObj->remapParity           = usartInit->remapParity;
     dObj->remapStopBits         = usartInit->remapStopBits;
     dObj->remapError            = usartInit->remapError;
+    dObj->dataWidth             = usartInit->dataWidth;
 
     if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FALSE)
     {
@@ -464,6 +465,10 @@ bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* set
             /* Clock source cannot be modified dynamically, so passing the '0' to pick
              * the configured clock source value */
             isSuccess = dObj->usartPlib->serialSetup(&setupRemap, 0);
+            if (isSuccess == true)
+            {
+                dObj->dataWidth = setup->dataWidth;
+            }
         }
     }
     return isSuccess;
@@ -552,13 +557,28 @@ bool DRV_USART_WriteBuffer
                 SYS_CACHE_CleanDCache_by_Addr((uint32_t *)buffer, numbytes);
 </#if>
 </#if>
+                if (dObj->dataWidth > DRV_USART_DATA_8_BIT)
+                {
+                    SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
 
-                SYS_DMA_ChannelTransfer(
-                    dObj->txDMAChannel,
-                    (const void *)buffer,
-                    (const void *)dObj->txAddress,
-                    numbytes
-                );
+                    SYS_DMA_ChannelTransfer(
+                        dObj->txDMAChannel,
+                        (const void *)buffer,
+                        (const void *)dObj->txAddress,
+                        (numbytes << 1)
+                    );
+                }
+                else
+                {
+                    SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_8_BIT);
+
+                    SYS_DMA_ChannelTransfer(
+                        dObj->txDMAChannel,
+                        (const void *)buffer,
+                        (const void *)dObj->txAddress,
+                        numbytes
+                    );
+                }
             }
             else
             {
@@ -618,13 +638,28 @@ bool DRV_USART_ReadBuffer
                 SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)buffer, numbytes);
 </#if>
 </#if>
+                if (dObj->dataWidth > DRV_USART_DATA_8_BIT)
+                {
+                    SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
 
-                SYS_DMA_ChannelTransfer(
-                    dObj->rxDMAChannel,
-                    (const void *)dObj->rxAddress,
-                    (const void *)buffer,
-                    numbytes
-                );
+                    SYS_DMA_ChannelTransfer(
+                        dObj->rxDMAChannel,
+                        (const void *)dObj->rxAddress,
+                        (const void *)buffer,
+                        (numbytes << 1)
+                    );
+                }
+                else
+                {
+                    SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);
+
+                    SYS_DMA_ChannelTransfer(
+                        dObj->rxDMAChannel,
+                        (const void *)dObj->rxAddress,
+                        (const void *)buffer,
+                        numbytes
+                    );
+                }
             }
             else
             {

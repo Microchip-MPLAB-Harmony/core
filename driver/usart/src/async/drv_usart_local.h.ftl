@@ -282,6 +282,8 @@ typedef struct
 
     bool                                    dmaInterruptStatus;
 
+    DRV_USART_DATA_BIT                      dataWidth;
+
 } DRV_USART_OBJ;
 
 typedef struct _DRV_USART_CLIENT_OBJ

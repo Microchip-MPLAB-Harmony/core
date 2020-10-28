@@ -132,7 +132,7 @@ typedef struct
 
     /* Keep track of the number of clients
      * that have opened this driver
-	 */
+     */
     size_t nClients;
 
     /* Maximum number of clients */
@@ -200,6 +200,8 @@ typedef struct
     const uint32_t* remapStopBits;
 
     const uint32_t* remapError;
+
+    DRV_USART_DATA_BIT dataWidth;
 
 } DRV_USART_OBJ;
 
