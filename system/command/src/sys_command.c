@@ -154,7 +154,7 @@ typedef void (*_keySeqProcess)(SYS_CMD_IO_DCPT* pCmdIO, const struct _KEY_SEQ_DC
 
 typedef struct _KEY_SEQ_DCPT
 {
-    char*           keyCode;    // pointer to the key code sequence
+    const char*     keyCode;    // pointer to the key code sequence
     _keySeqProcess  keyFnc;     // key processing functions
     int             keySize;    // # of characters in the sequence
 }KEY_SEQ_DCPT;
@@ -200,7 +200,7 @@ static histCmdNode* CmdRemoveTail(histCmdList* pL);
 static void     CmdAdjustPointers(SYS_CMD_IO_DCPT* pCmdIO);
 
 static void SendCommandMessage(const void* cmdIoParam, const char* str);
-static void SendCommandPrint(const void* cmdIoParam, const char* format, ...);
+static void SendCommandPrint(const void* cmdIoParam, const char* format, ...) FORMAT_ATTRIBUTE(printf, 2, 3);
 static void SendCommandCharacter(const void* cmdIoParam, char c);
 static int IsCommandReady(const void* cmdIoParam);
 static char GetCommandCharacter(const void* cmdIoParam);
@@ -209,7 +209,7 @@ static void RunCmdTask(SYS_CMD_IO_DCPT* pCmdIO);
 const SYS_CMD_API sysConsoleApi =
 {
     .msg = SendCommandMessage,
-    .print = SendCommandPrint,
+    .print = (SYS_CMD_PRINT_FNC)SendCommandPrint,
     .putc = SendCommandCharacter,
     .isRdy = IsCommandReady,
     .getc = GetCommandCharacter,
@@ -345,7 +345,7 @@ bool SYS_CMD_Tasks(void)
 static void RunCmdTask(SYS_CMD_IO_DCPT* pCmdIO)
 {
     char newCh;
-    int ix;
+    int ix, len;
     const KEY_SEQ_DCPT *pKeyDcpt, *pFoundSeq;
     const SYS_CMD_API* pCmdApi = pCmdIO->devNode.pCmdApi;
     const void* cmdIoParam = pCmdIO->devNode.cmdIoParam;
@@ -423,7 +423,6 @@ static void RunCmdTask(SYS_CMD_IO_DCPT* pCmdIO)
         {
             if(pCmdIO->cmdEnd > pCmdIO->cmdPnt)
             {
-                int ix, len;
                 char* pSrc = pCmdIO->cmdPnt; // current
                 char* pDst = pCmdIO->cmdPnt - 1;
                 len = pCmdIO->cmdEnd - pSrc;
@@ -448,7 +447,6 @@ static void RunCmdTask(SYS_CMD_IO_DCPT* pCmdIO)
     {   // delete
         if(pCmdIO->cmdEnd > pCmdIO->cmdPnt)
         {
-            int ix, len;
             char* pSrc = pCmdIO->cmdPnt + 1;
             char* pDst = pCmdIO->cmdPnt;
             len = pCmdIO->cmdEnd - pSrc;
@@ -470,7 +468,6 @@ static void RunCmdTask(SYS_CMD_IO_DCPT* pCmdIO)
     }
     else if(pCmdIO->cmdEnd - pCmdIO->cmdBuff < sizeof(pCmdIO->cmdBuff) - 1)
     {   // valid char; insert and echo it back
-        int ix;
         int n_chars = pCmdIO->cmdEnd - pCmdIO->cmdPnt;  // existent chars
         if(n_chars != 0)
         {   // move the existing chars to the right, for insertion...
