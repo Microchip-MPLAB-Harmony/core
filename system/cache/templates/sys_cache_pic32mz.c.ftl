@@ -140,7 +140,7 @@ void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 {
     if (CACHE_CacheCoherencyGet() != CACHE_DISABLE) // If Data Cache is enabled
     {
-        DCACHE_CLEAN_INVALIDATE_BY_ADDR((uint32_t)addr, (size_t)size);
+        DCACHE_INVALIDATE_BY_ADDR((uint32_t)addr, (size_t)size);
     }
 }
 
