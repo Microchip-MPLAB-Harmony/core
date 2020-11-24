@@ -74,19 +74,24 @@ typedef uint32_t (*SYS_TIME_PLIB_FREQUENCY_GET)(void);
 typedef void (*SYS_TIME_PLIB_START)(void);
 typedef void (*SYS_TIME_PLIB_STOP)(void);
 
-#if (SYS_TIME_HW_COUNTER_WIDTH == 8)
+<#if SYS_TIME_USE_SYSTICK == true>
+typedef void (*SYS_TIME_PLIB_INTERRUPT_ENABLE)(void);
+typedef void (*SYS_TIME_PLIB_INTERRUPT_DISABLE)(void);
+</#if>
+
+<#if .vars["${SYS_TIME_PLIB?lower_case}"].TIMER_WIDTH == 8>
 typedef void (*SYS_TIME_PLIB_PERIOD_SET)(uint8_t period);
 typedef void (*SYS_TIME_PLIB_COMPARE_SET) (uint8_t compare);
 typedef uint8_t (*SYS_TIME_PLIB_COUNTER_GET)(void);
-#elif (SYS_TIME_HW_COUNTER_WIDTH == 16)
+<#elseif .vars["${SYS_TIME_PLIB?lower_case}"].TIMER_WIDTH == 16>
 typedef void (*SYS_TIME_PLIB_PERIOD_SET)(uint16_t period);
 typedef void (*SYS_TIME_PLIB_COMPARE_SET) (uint16_t compare);
 typedef uint16_t (*SYS_TIME_PLIB_COUNTER_GET)(void);
-#else
+<#else>
 typedef void (*SYS_TIME_PLIB_PERIOD_SET)(uint32_t period);
 typedef void (*SYS_TIME_PLIB_COMPARE_SET) (uint32_t compare);
 typedef uint32_t (*SYS_TIME_PLIB_COUNTER_GET)(void);
-#endif
+</#if>
 
 typedef struct
 {
@@ -95,6 +100,10 @@ typedef struct
     SYS_TIME_PLIB_STOP                  timerStop;
     SYS_TIME_PLIB_FREQUENCY_GET         timerFrequencyGet;
     SYS_TIME_PLIB_PERIOD_SET            timerPeriodSet;
+<#if SYS_TIME_USE_SYSTICK == true>
+    SYS_TIME_PLIB_INTERRUPT_ENABLE      timerInterruptEnable;
+    SYS_TIME_PLIB_INTERRUPT_DISABLE     timerInterruptDisable;
+</#if>
 <#if SYS_TIME_OPERATING_MODE == "TICKLESS">
     SYS_TIME_PLIB_COMPARE_SET           timerCompareSet;
     SYS_TIME_PLIB_COUNTER_GET           timerCounterGet;

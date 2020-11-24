@@ -32,5 +32,5 @@
 </#if>
 <#else>
 <#assign SYS_TICK_FREQ = (SYS_TIME_ACHIEVABLE_TICK_RATE_HZ/100000)>
-#define SYS_TIME_TICK_FREQ_IN_HZ                    (${SYS_TICK_FREQ?string["0"]})
+#define SYS_TIME_TICK_FREQ_IN_HZ                    (${SYS_TICK_FREQ?string["0.#####"]})
 </#if>

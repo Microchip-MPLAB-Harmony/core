@@ -43,10 +43,14 @@ def handleMessage(messageID, args):
     global sysTimeRemoteComponentId
     global sysTimeAchievableTickRateMsComment
     global sysTimePLIBErrorComment
+    global sysTimeUseSystick
 
     sysTickRate = {"sys_time_tick_ms" : 0.0}
     sysTimePLIBConfig = dict()
     dummy_dict = dict()
+
+    if sysTimeUseSystick.getValue() == True:
+        sysTimeRemoteComponentId.setValue("core")
 
     if messageID == "SYS_TIME_PLIB_CAPABILITY":
         if args["plib_mode"] == "PERIOD_MODE":
@@ -103,7 +107,7 @@ def sysTimeOperatingModeCallback(symbol, event):
     dummyDict = {}
     sysTickRate = {"sys_time_tick_ms" : 0.0}
 
-    if sysTimeRemoteComponentId != "":
+    if sysTimeRemoteComponentId.getValue() != "":
         if event["value"] == "TICKLESS":
             dummyDict = Database.sendMessage(sysTimeRemoteComponentId.getValue(), "SYS_TIME_PLIB_MODE_COMPARE", dummyDict)
         else:
@@ -124,7 +128,7 @@ def sysTimeTickRateCallback(symbol, event):
             symbol.setVisible(False)
 
     elif (event["id"] == "SYS_TIME_TICK_RATE_MS"):
-        if sysTimeRemoteComponentId != "" :
+        if sysTimeRemoteComponentId.getValue() != "" :
             sysTickRate["sys_time_tick_ms"] = float(symbol.getValue())
             dummyDict = Database.sendMessage(sysTimeRemoteComponentId.getValue(), "SYS_TIME_TICK_RATE_CHANGED", sysTickRate)
 
@@ -152,6 +156,42 @@ def setVisibility(symbol, event):
     else:
         symbol.setVisible(False)
 
+def onSysTimeUseSystickChange(symbol, event):
+    global sysTimePLIB
+
+    localComponent = symbol.getComponent()
+
+    if event["id"] == "SYS_TIME_USE_SYSTICK":
+        if event["value"] == True:
+            localComponent.getSymbolByID("SYS_TIME_REMOTE_COMPONENT_ID").setValue("core")
+            localComponent.setDependencyEnabled("sys_time_TMR_dependency", False)
+            #Request PLIB to publish it's capabilities
+            Database.sendMessage("core", "SYS_TIME_PUBLISH_CAPABILITIES", {"ID":"sys_time"})
+            sysTimePLIB.setValue("core")
+            sysTimePLIB.setVisible(False)
+        else:
+            localComponent.getSymbolByID("SYS_TIME_REMOTE_COMPONENT_ID").setValue("")
+            localComponent.setDependencyEnabled("sys_time_TMR_dependency", True)
+            #Let sys_tick PLIB know that SYS Time no longer uses sys_tick PLIB
+            Database.sendMessage("core", "SYS_TIME_PUBLISH_CAPABILITIES", {"ID":"None"})
+            sysTimePLIB.setValue("")
+            sysTimePLIB.setVisible(True)
+            sysTimeOperatingMode.setVisible(False)
+            sysTimeTickRateMs.setVisible(False)
+            sysTimeAchievableTickRateMsComment.setVisible(False)
+            sysTimePLIBErrorComment.setVisible(False)
+    else:
+        if event["value"] == "BareMetal":
+            symbol.setVisible(True)
+        else:
+            #Let sys_tick PLIB know that SYS Time no longer uses sys_tick PLIB
+            if symbol.getValue() == True:
+                symbol.setReadOnly(True)
+                symbol.setValue(False)
+                symbol.setReadOnly(False)
+            symbol.setVisible(False)
+
+
 ################################################################################
 #### Component ####
 ################################################################################
@@ -164,6 +204,7 @@ def instantiateComponent(sysTimeComponent):
     global sysTimeTickRateMs
     global sysTimeAchievableTickRateMsComment
     global sysTimePLIBErrorComment
+    global sysTimeUseSystick
 
     res = Database.activateComponents(["HarmonyCore"])
 
@@ -171,6 +212,14 @@ def instantiateComponent(sysTimeComponent):
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
     Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
+
+    systickNode = ATDF.getNode('/avr-tools-device-file/modules/module@[name="SysTick"]')
+
+    sysTimeUseSystick = sysTimeComponent.createBooleanSymbol("SYS_TIME_USE_SYSTICK", None)
+    sysTimeUseSystick.setLabel("Use Systick?")
+    sysTimeUseSystick.setDefaultValue(False)
+    sysTimeUseSystick.setVisible(systickNode != None and Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") == "BareMetal")
+    sysTimeUseSystick.setDependencies(onSysTimeUseSystickChange, ["SYS_TIME_USE_SYSTICK", "HarmonyCore.SELECT_RTOS"])
 
     sysTimePLIB = sysTimeComponent.createStringSymbol("SYS_TIME_PLIB", None)
     sysTimePLIB.setLabel("PLIB Used")
@@ -206,7 +255,7 @@ def instantiateComponent(sysTimeComponent):
     sysTimeAchievableTickRateHz = sysTimeComponent.createLongSymbol("SYS_TIME_ACHIEVABLE_TICK_RATE_HZ", None)
     sysTimeAchievableTickRateHz.setDefaultValue(1)
     sysTimeAchievableTickRateHz.setVisible(False)
-    
+
     sysTimeUseFloatingPtCalculations = sysTimeComponent.createBooleanSymbol("SYS_TIME_USE_FLOATING_POINT_CALCULATIONS", None)
     sysTimeUseFloatingPtCalculations.setLabel("Use Floating Point Calculations?")
     sysTimeUseFloatingPtCalculations.setDefaultValue(False)
@@ -360,3 +409,7 @@ def onAttachmentDisconnected(source, target):
 
 def destroyComponent(sysTimeComponent):
     Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
+    if sysTimeComponent.getSymbolByID("SYS_TIME_USE_SYSTICK").getValue() == True:
+        # Let the core.systick know that SYS Time is no longer using the systick module
+        sysTimeDict = {"ID":"None"}
+        sysTimeDict = Database.sendMessage("core", "SYS_TIME_PUBLISH_CAPABILITIES", sysTimeDict)

@@ -100,7 +100,11 @@ static bool SYS_TIME_ResourceLock(void)
 
         if(OSAL_MUTEX_Lock(&gSystemCounterObj.timerMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
         {
+<#if SYS_TIME_USE_SYSTICK == true>
+            gSystemCounterObj.timePlib->timerInterruptDisable();
+<#else>
             SYS_INT_SourceDisable(gSystemCounterObj.hwTimerIntNum);
+</#if>
             return true;
         }
         else
@@ -119,7 +123,11 @@ static bool SYS_TIME_ResourceLock(void)
 
 static void SYS_TIME_ResourceUnlock(void)
 {
+<#if SYS_TIME_USE_SYSTICK == true>
+    gSystemCounterObj.timePlib->timerInterruptEnable();
+<#else>
     SYS_INT_SourceEnable(gSystemCounterObj.hwTimerIntNum);
+</#if>
 
     if(gSystemCounterObj.interruptNestingCount == 0)
     {
@@ -409,8 +417,8 @@ static void SYS_TIME_PLIBCallback(uint32_t status, uintptr_t context)
 {
     SYS_TIME_COUNTER_OBJ* counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
     SYS_TIME_TIMER_OBJ* tmrActive = counterObj->tmrActive;
-	
-	SYS_TIME_Counter64Update();
+
+    SYS_TIME_Counter64Update();
 
     if (tmrActive != NULL)
     {
@@ -420,7 +428,7 @@ static void SYS_TIME_PLIBCallback(uint32_t status, uintptr_t context)
 
         counterObj->interruptNestingCount--;
     }
-    
+
 }
 
 static SYS_TIME_HANDLE SYS_TIME_TimerObjectCreate(
@@ -477,13 +485,12 @@ static void SYS_TIME_CounterInit(SYS_MODULE_INIT* init)
     SYS_TIME_INIT* initData = (SYS_TIME_INIT *)init;
 
     counterObj->timePlib = initData->timePlib;
-<#if SYS_TIME_USE_FLOATING_POINT_CALCULATIONS == true>		
+<#if SYS_TIME_USE_FLOATING_POINT_CALCULATIONS == true>
     counterObj->hwTimerTickFreq = SYS_TIME_TICK_FREQ_IN_HZ;
 <#else>
-	counterObj->hwTimerTickFreq = (uint32_t)SYS_TIME_TICK_FREQ_IN_HZ;
-</#if>	
+    counterObj->hwTimerTickFreq = (uint32_t)SYS_TIME_TICK_FREQ_IN_HZ;
+</#if>
     counterObj->hwTimerIntNum = initData->hwTimerIntNum;
-    counterObj->hwTimerPeriodValue = counterObj->timePlib->timerFrequencyGet()/SYS_TIME_TICK_FREQ_IN_HZ;
 
     counterObj->swCounter64Low = 0;
     counterObj->swCounter64High = 0;
@@ -491,10 +498,6 @@ static void SYS_TIME_CounterInit(SYS_MODULE_INIT* init)
     counterObj->interruptNestingCount = 0;
 
     counterObj->timePlib->timerCallbackSet(SYS_TIME_PLIBCallback, 0);
-    if (counterObj->timePlib->timerPeriodSet != NULL)
-    {
-        counterObj->timePlib->timerPeriodSet(counterObj->hwTimerPeriodValue);
-    }
     counterObj->timePlib->timerStart();
 }
 
@@ -620,28 +623,28 @@ uint32_t  SYS_TIME_CountToMS ( uint32_t count )
 
 uint32_t SYS_TIME_USToCount ( uint32_t us )
 {
-<#if SYS_TIME_USE_FLOATING_POINT_CALCULATIONS == true>		
+<#if SYS_TIME_USE_FLOATING_POINT_CALCULATIONS == true>
     float count = ((us * gSystemCounterObj.hwTimerTickFreq) / 1000000);
 
     return (uint32_t) ((uint32_t)count + ((count - (uint32_t)count) > 0));
 <#else>
-	uint32_t count = (((uint64_t)us * gSystemCounterObj.hwTimerTickFreq) / 1000000);   
-		
-	return count;
-</#if>	
+    uint32_t count = (((uint64_t)us * gSystemCounterObj.hwTimerTickFreq) / 1000000);
+
+    return count;
+</#if>
 }
 
 uint32_t SYS_TIME_MSToCount ( uint32_t ms )
 {
-<#if SYS_TIME_USE_FLOATING_POINT_CALCULATIONS == true>		
+<#if SYS_TIME_USE_FLOATING_POINT_CALCULATIONS == true>
     float count = ((ms * gSystemCounterObj.hwTimerTickFreq) / 1000);
 
     return (uint32_t) ((uint32_t)count + ((count - (uint32_t)count) > 0));
-<#else>	
-	uint32_t count = (((uint64_t)ms * gSystemCounterObj.hwTimerTickFreq) / 1000);
-	
-	return count;
-</#if>		
+<#else>
+    uint32_t count = (((uint64_t)ms * gSystemCounterObj.hwTimerTickFreq) / 1000);
+
+    return count;
+</#if>
 }
 
 // *****************************************************************************
