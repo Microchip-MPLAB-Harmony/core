@@ -51,6 +51,7 @@
 // *****************************************************************************
 // *****************************************************************************
 #include "system/int/sys_int.h"
+#include "peripheral/nvic/plib_nvic.h"
 
 
 // *****************************************************************************
@@ -62,42 +63,17 @@
 // *****************************************************************************
 void SYS_INT_Enable( void )
 {
-    __DMB();
-    __enable_irq();
-
-    return;
+    NVIC_INT_Enable();
 }
 
-
-// *****************************************************************************
 bool SYS_INT_Disable( void )
 {
-    bool processorStatus;
-
-    processorStatus = (bool) (__get_PRIMASK() == 0);
-
-    __disable_irq();
-    __DMB();
-
-    return processorStatus;
+    return NVIC_INT_Disable();
 }
 
-
-// *****************************************************************************
 void SYS_INT_Restore( bool state )
 {
-    if( state == true )
-    {
-        __DMB();
-        __enable_irq();
-    }
-    else
-    {
-        __disable_irq();
-        __DMB();
-    }
-
-    return;
+    NVIC_INT_Restore(state);
 }
 
 bool SYS_INT_SourceDisable( INT_SOURCE source )

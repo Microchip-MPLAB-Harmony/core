@@ -47,6 +47,7 @@
 // *****************************************************************************
 
 #include "system/int/sys_int.h"
+#include "peripheral/evic/plib_evic.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -56,27 +57,18 @@
 
 void SYS_INT_Enable( void )
 {
-    __builtin_enable_interrupts();
+    EVIC_INT_Enable();
 }
 
 bool SYS_INT_Disable( void )
 {
-    uint32_t processorStatus;
-
-    /* Save the processor status and then Disable the global interrupt */
-    processorStatus = ( uint32_t )__builtin_disable_interrupts();
-
     /* return the interrupt status */
-    return (bool)(processorStatus & 0x01);
+    return EVIC_INT_Disable();
 }
 
 void SYS_INT_Restore( bool state )
 {
-    if (state)
-    {
-        /* restore the state of CP0 Status register before the disable occurred */
-        __builtin_enable_interrupts();
-    }
+    EVIC_INT_Restore(state);
 }
 
 bool SYS_INT_SourceDisable( INT_SOURCE source )
