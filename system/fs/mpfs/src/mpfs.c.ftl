@@ -162,7 +162,7 @@ static int MPFSFindFile
     uint8_t *ptr = NULL;
     int32_t index = 0;
     uint16_t hash = 0;
-    static uint16_t CACHE_ALIGN hashBuffer[CACHE_LINE_SIZE] = {0};
+    static uint16_t CACHE_ALIGN hashBuffer[32] = {0};
     static uint8_t CACHE_ALIGN fileName[(SYS_FS_FILE_NAME_LEN + ((SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)? (CACHE_LINE_SIZE - (SYS_FS_FILE_NAME_LEN%CACHE_LINE_SIZE)) : 0))];
 
     /* Calculate the hash value for the file name. */
