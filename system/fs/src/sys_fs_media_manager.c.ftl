@@ -337,8 +337,10 @@ static void _SYS_FS_MEDIA_MANAGER_HandleMediaDetach
     <#lt>    const uint8_t *volumeName
     <#lt>)
     <#lt>{
-    <#lt>    uint8_t volumeIndex = 0;
-    <#lt>    uint8_t handlerIndex = 0;
+    <#lt>    uint8_t volumeIndex    = 0;
+    <#lt>    uint8_t handlerIndex   = 0;
+    <#lt>    SYS_FS_EVENT fsEvent   = SYS_FS_EVENT_ERROR;
+
     <#lt>    const SYS_FS_MEDIA_MOUNT_DATA *fsMount = (const SYS_FS_MEDIA_MOUNT_DATA *)&gSYSFSMediaManagerObj.fsMountTable[0];
 
     <#lt>    for (volumeIndex = 0; volumeIndex < SYS_FS_VOLUME_NUMBER; volumeIndex++)
@@ -353,16 +355,25 @@ static void _SYS_FS_MEDIA_MANAGER_HandleMediaDetach
     <#lt>            continue;
     <#lt>        }
 
-    <#lt>        if (SYS_FS_RES_SUCCESS == SYS_FS_Mount(fsMount[volumeIndex].devName, fsMount[volumeIndex].mountName, fsMount[volumeIndex].fsType, 0, NULL))
+    <#lt>        if (SYS_FS_Mount(fsMount[volumeIndex].devName, fsMount[volumeIndex].mountName, fsMount[volumeIndex].fsType, 0, NULL) == SYS_FS_RES_SUCCESS)
     <#lt>        {
-    <#lt>            for (handlerIndex = 0; handlerIndex < SYS_FS_CLIENT_NUMBER; handlerIndex++)
+    <#lt>            fsEvent = SYS_FS_EVENT_MOUNT;
+
+    <#lt>            // Check If mount has passed with no file system on Media
+    <#lt>            if (SYS_FS_Error() == SYS_FS_ERROR_NO_FILESYSTEM)
     <#lt>            {
-    <#lt>                if (gSYSFSEventHandler[handlerIndex].eventHandler)
-    <#lt>                {
-    <#lt>                    gSYSFSEventHandler[handlerIndex].eventHandler(SYS_FS_EVENT_MOUNT,
-    <#lt>                            (void*)fsMount[volumeIndex].mountName,
-    <#lt>                            gSYSFSEventHandler[handlerIndex].context);
-    <#lt>                }
+    <#lt>                fsEvent = SYS_FS_EVENT_MOUNT_WITH_NO_FILESYSTEM;
+    <#lt>            }
+    <#lt>        }
+
+    <#lt>        // Call all the registered event handlers with updated fsEvent
+    <#lt>        for (handlerIndex = 0; handlerIndex < SYS_FS_CLIENT_NUMBER; handlerIndex++)
+    <#lt>        {
+    <#lt>            if (gSYSFSEventHandler[handlerIndex].eventHandler != NULL)
+    <#lt>            {
+    <#lt>                gSYSFSEventHandler[handlerIndex].eventHandler(fsEvent,
+    <#lt>                        (void*)fsMount[volumeIndex].mountName,
+    <#lt>                        gSYSFSEventHandler[handlerIndex].context);
     <#lt>            }
     <#lt>        }
 
@@ -502,10 +513,7 @@ static void _SYS_FS_MEDIA_MANAGER_PopulateVolume
 
 <#if SYS_FS_AUTO_MOUNT == true>
         /* Mount the Media */
-        if (fsType != 0xFF)
-        {
-            _SYS_FS_MountVolume (mediaObj->mediaType, (const uint8_t *)(volumeObj->volumeName));
-        }
+        _SYS_FS_MountVolume (mediaObj->mediaType, (const uint8_t *)(volumeObj->volumeName));
 </#if>
 
         /* Continue if there is more than one partition on media */

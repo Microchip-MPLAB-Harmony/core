@@ -453,11 +453,17 @@ typedef enum
 {
    /* Media has been mounted successfully. */
     SYS_FS_EVENT_MOUNT,
+
+   /* Media has been mounted successfully.
+    * Media has to be formatted as there is no filesystem present.
+    */
+    SYS_FS_EVENT_MOUNT_WITH_NO_FILESYSTEM,
+
     /* Media has been unmounted successfully. */
-    SYS_FS_EVENT_UNMOUNT,       
+    SYS_FS_EVENT_UNMOUNT,
+
     /* There was an error during the operation */
     SYS_FS_EVENT_ERROR
-
 } SYS_FS_EVENT;
 
 <#if SYS_FS_FAT == true && SYS_FS_FAT_VERSION != "v0.11a">
@@ -900,13 +906,19 @@ void SYS_FS_Tasks
       There is no mechanism available for the application to know if the
       specified volume (devName) is really attached or not. The only available
       possibility is to keep trying to mount the volume (with the devname),
-      until success is achieved.
+      until success is achieved or use the Automount feature.
       
       It is prudent that the application code implements a time-out mechanism
       while trying to mount a volume (by calling SYS_FS_Mount). The trial for
       mount should continue at least 10 times before before assuming that the
       mount will never succeed. This has to be done for every new volume to be
       mounted.
+
+      Once the mount is successful the application needs to use SYS_FS_Error()
+      API to know if the mount was successful with valid filesystem on media
+      or not. If SYS_FS_ERROR_NO_FILESYSTEM is returned application needs to
+      Format the media using the SYS_FS_DriveFormat() API before performing 
+      any operations.
 
       The standard names for volumes (devName) used in the MPLAB Harmony file
       system is as follows:
@@ -976,6 +988,13 @@ void SYS_FS_Tasks
                 else
                 {
                     // Mount was successful. Do further file operations
+
+                    if (SYS_FS_Error() == SYS_FS_ERROR_NO_FILESYSTEM)
+                    {
+                        //Perform Driver Format operation as there is no filesystem on media
+                        SYS_FS_DriveFormat(...);
+                    }
+
                     appState = DO_FURTHER_STUFFS;
                 }
             break;
@@ -3394,7 +3413,10 @@ SYS_FS_RESULT SYS_FS_DriveLabelSet
     <#lt>                else
     <#lt>                {
     <#lt>                    // Mount was successful. Format now.
-    <#lt>                    appState = FORMAT_DRIVE;
+    <#lt>                    if (SYS_FS_Error() == SYS_FS_ERROR_NO_FILESYSTEM)
+    <#lt>                    {
+    <#lt>                        appState = FORMAT_DRIVE;
+    <#lt>                    }
     <#lt>                }
     <#lt>                break;
 
@@ -3481,7 +3503,10 @@ SYS_FS_RESULT SYS_FS_DriveLabelSet
     <#lt>                else
     <#lt>                {
     <#lt>                    // Mount was successful. Format now.
-    <#lt>                    appState = FORMAT_DRIVE;
+    <#lt>                    if (SYS_FS_Error() == SYS_FS_ERROR_NO_FILESYSTEM)
+    <#lt>                    {
+    <#lt>                        appState = FORMAT_DRIVE;
+    <#lt>                    }
     <#lt>                }
     <#lt>                break;
 

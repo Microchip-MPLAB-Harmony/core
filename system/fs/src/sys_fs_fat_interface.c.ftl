@@ -94,7 +94,7 @@ int FATFS_mount ( uint8_t vol )
 
     res = f_mount(fs, (const TCHAR *)&path, opt);
 
-    if (res == FR_OK)
+    if ((res == FR_OK) || (res == FR_NO_FILESYSTEM))
     {
         FATFSVolume[vol].inUse = true;
     }
@@ -119,66 +119,69 @@ int FATFS_unmount ( uint8_t vol )
     {
         return FR_INVALID_DRIVE;
     }
-    
-    // free the volume
-    FATFSVolume[vol].inUse = false;
-
-    for(hFATfs = 0; hFATfs < SYS_FS_MAX_FILES; hFATfs++)
-    {
-<#if SYS_FS_FAT_VERSION != "v0.11a">
-        if(FATFSFileObject[hFATfs].inUse)
-        {
-            if (FATFSFileObject[hFATfs].fileObj.obj.fs == NULL)
-            {
-                FATFSFileObject[hFATfs].inUse = false;
-            }
-            else if(VolToPart[vol].pd == FATFSFileObject[hFATfs].fileObj.obj.fs->pdrv)
-            {
-                FATFSFileObject[hFATfs].inUse = false;
-            }
-        }
-        if(FATFSDirObject[hFATfs].inUse)
-        {
-            if (FATFSDirObject[hFATfs].dirObj.obj.fs == NULL)
-            {
-                FATFSDirObject[hFATfs].inUse = false;
-            }
-            else if(VolToPart[vol].pd == FATFSDirObject[hFATfs].dirObj.obj.fs->pdrv)
-            {
-                FATFSDirObject[hFATfs].inUse = false;
-            }
-        }
-<#else>
-        if(FATFSFileObject[hFATfs].inUse)
-        {
-            if (FATFSFileObject[hFATfs].fileObj.fs == NULL)
-            {
-                FATFSFileObject[hFATfs].inUse = false;
-            }
-            else if(VolToPart[vol].pd == FATFSFileObject[hFATfs].fileObj.fs->drv)
-            {
-                FATFSFileObject[hFATfs].inUse = false;
-            }
-        }
-        if(FATFSDirObject[hFATfs].inUse)
-        {
-            if (FATFSDirObject[hFATfs].dirObj.fs == NULL)
-            {
-                FATFSDirObject[hFATfs].inUse = false;
-            }
-            else if(VolToPart[vol].pd == FATFSDirObject[hFATfs].dirObj.fs->drv)
-            {
-                FATFSDirObject[hFATfs].inUse = false;
-            }
-        }
-</#if>
-    }
 
     path[0] = '0' + vol;
     path[1] = ':';
     path[2] = '\0';
 
     res = f_mount(NULL, (const TCHAR *)&path, opt);
+
+    if (res == FR_OK)
+    {
+        // free the volume
+        FATFSVolume[vol].inUse = false;
+
+        for(hFATfs = 0; hFATfs < SYS_FS_MAX_FILES; hFATfs++)
+        {
+<#if SYS_FS_FAT_VERSION != "v0.11a">
+            if(FATFSFileObject[hFATfs].inUse)
+            {
+                if (FATFSFileObject[hFATfs].fileObj.obj.fs == NULL)
+                {
+                    FATFSFileObject[hFATfs].inUse = false;
+                }
+                else if(VolToPart[vol].pd == FATFSFileObject[hFATfs].fileObj.obj.fs->pdrv)
+                {
+                    FATFSFileObject[hFATfs].inUse = false;
+                }
+            }
+            if(FATFSDirObject[hFATfs].inUse)
+            {
+                if (FATFSDirObject[hFATfs].dirObj.obj.fs == NULL)
+                {
+                    FATFSDirObject[hFATfs].inUse = false;
+                }
+                else if(VolToPart[vol].pd == FATFSDirObject[hFATfs].dirObj.obj.fs->pdrv)
+                {
+                    FATFSDirObject[hFATfs].inUse = false;
+                }
+            }
+<#else>
+            if(FATFSFileObject[hFATfs].inUse)
+            {
+                if (FATFSFileObject[hFATfs].fileObj.fs == NULL)
+                {
+                    FATFSFileObject[hFATfs].inUse = false;
+                }
+                else if(VolToPart[vol].pd == FATFSFileObject[hFATfs].fileObj.fs->drv)
+                {
+                    FATFSFileObject[hFATfs].inUse = false;
+                }
+            }
+            if(FATFSDirObject[hFATfs].inUse)
+            {
+                if (FATFSDirObject[hFATfs].dirObj.fs == NULL)
+                {
+                    FATFSDirObject[hFATfs].inUse = false;
+                }
+                else if(VolToPart[vol].pd == FATFSDirObject[hFATfs].dirObj.fs->drv)
+                {
+                    FATFSDirObject[hFATfs].inUse = false;
+                }
+            }
+</#if>
+        }
+    }
 
     return ((int)res);
 }

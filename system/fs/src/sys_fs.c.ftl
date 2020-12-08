@@ -455,13 +455,19 @@ void SYS_FS_Tasks ( void )
     There is no mechanism available for the application to know if the
     specified volume (devName) is really attached or not. The only available
     possibility is to keep trying to mount the volume (with the devname), until
-    success is achieved.
+    success is achieved or use the Automount feature.
 
     It is prudent that the application code implements a time-out mechanism
     while trying to mount a volume (by calling SYS_FS_Mount). The trial for
     mount should continue at least 10 times before before assuming that the
     mount will never succeed. This has to be done for every new volume to be
     mounted.
+
+    Once the mount is successful the application needs to use SYS_FS_Error()
+    API to know if the mount was successful with valid filesystem on media
+    or not. If SYS_FS_ERROR_NO_FILESYSTEM is returned application needs to
+    Format the media using the SYS_FS_DriveFormat() API before performing 
+    any operations.
 
     The standard names for volumes (devName) used in the MPLAB Harmony file
     system is as follows:
@@ -517,6 +523,7 @@ SYS_FS_RESULT SYS_FS_Mount
 
     (void)mountflags;
     (void)data;
+
     /* Validate the parameters. */
     if ((devName == NULL) || (mountName == NULL) || ((filesystemtype != FAT) && (filesystemtype != MPFS2)))
     {
