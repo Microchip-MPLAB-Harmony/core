@@ -36,12 +36,17 @@ freeRtosSym_CpuClockHz.setDefaultValue(cpuclk)
 #Default Heap size
 freeRtosSym_TotalHeapSize.setDefaultValue(40960)
 
+#Number of Bits used for Priority Levels
+priorityBits = int(ATDF.getNode("/avr-tools-device-file/devices/device/parameters/param@[name=\"__NVIC_PRIO_BITS\"]").getAttribute("value"))
+
 #Setup Kernel Priority
-freeRtosSym_KernelIntrPrio.setDefaultValue(7)
+freeRtosSym_KernelIntrPrio.setDefaultValue((2**priorityBits)-1)
 freeRtosSym_KernelIntrPrio.setReadOnly(True)
 
 #Setup Sys Call Priority
 freeRtosSym_MaxSysCalIntrPrio.setDefaultValue(1)
+
+freeRtosSym_ConfigPriorityBits.setDefaultValue(priorityBits)
 
 #Set SysTick Priority and Lock the Priority
 SysTickInterruptIndex        = Interrupt.getInterruptIndex("SysTick")

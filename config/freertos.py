@@ -575,6 +575,13 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_MaxSysCalIntrPrio.setMin(0)
     freeRtosSym_MaxSysCalIntrPrio.setMax(7)
 
+    if (coreArch != "MIPS") and (coreArch != "CORTEX-A5") and (coreArch != "ARM926EJS"):
+        freeRtosSym_ConfigPriorityBits = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_CONFIG_PRIORITY_BITS", freeRtosSymMenu)
+        freeRtosSym_ConfigPriorityBits.setLabel("Number of Bits used for Priority Levels")
+        freeRtosSym_ConfigPriorityBits.setMin(2)
+        freeRtosSym_ConfigPriorityBits.setMax(4)
+        freeRtosSym_ConfigPriorityBits.setVisible(False)
+
     freeRtosSymMenu_IncludeComponents = thirdPartyFreeRTOS.createMenuSymbol("FREERTOS_INCLUDE_COMPONENTS", freeRtosSymMenu)
     freeRtosSymMenu_IncludeComponents.setLabel("Include components")
     freeRtosSymMenu_IncludeComponents.setDescription("Explicitly include or exclude FreeRTOS components from the build.")

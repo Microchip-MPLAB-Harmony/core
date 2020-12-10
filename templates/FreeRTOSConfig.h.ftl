@@ -113,13 +113,15 @@
 </#if>
 
 /* Interrupt nesting behaviour configuration. */
-<#if core.CoreArchitecture != "MIPS" >
+<#if core.CoreArchitecture != "MIPS">
+  <#if core.CoreArchitecture != "CORTEX-A5" && core.CoreArchitecture != "ARM926EJS">
     <#lt>/* The priority at which the tick interrupt runs.  This should probably be kept at lowest priority. */
-    <#lt>#define configKERNEL_INTERRUPT_PRIORITY         (${FREERTOS_KERNEL_INTERRUPT_PRIORITY}<<5)
+    <#lt>#define configKERNEL_INTERRUPT_PRIORITY         (${FREERTOS_KERNEL_INTERRUPT_PRIORITY} << (8 - ${FREERTOS_CONFIG_PRIORITY_BITS}))
     <#lt>
     <#lt>/* The maximum interrupt priority from which FreeRTOS.org API functions can be called.
     <#lt> * Only API functions that end in ...FromISR() can be used within interrupts. */
-    <#lt>#define configMAX_SYSCALL_INTERRUPT_PRIORITY    (${FREERTOS_MAX_SYSCALL_INTERRUPT_PRIORITY}<<5)
+    <#lt>#define configMAX_SYSCALL_INTERRUPT_PRIORITY    (${FREERTOS_MAX_SYSCALL_INTERRUPT_PRIORITY} << (8 - ${FREERTOS_CONFIG_PRIORITY_BITS}))
+  </#if>
 <#else>
     <#lt>#define configPERIPHERAL_CLOCK_HZ               ( ${FREERTOS_PERIPHERAL_CLOCK_HZ?number?c}UL )
     <#lt>#define configISR_STACK_SIZE                    ( ${FREERTOS_ISR_STACK_SIZE} )
