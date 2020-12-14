@@ -132,8 +132,8 @@ __STATIC_INLINE OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID);
 __STATIC_INLINE OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS);
 __STATIC_INLINE OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID);
 
-void* OSAL_Malloc(size_t size);
-void OSAL_Free(void* pData);
+__STATIC_INLINE void* OSAL_Malloc(size_t size);
+__STATIC_INLINE void OSAL_Free(void* pData);
 
 OSAL_RESULT OSAL_Initialize(void);
 
@@ -289,16 +289,21 @@ static OSAL_RESULT __attribute__((always_inline)) OSAL_MUTEX_Unlock(OSAL_MUTEX_H
   return OSAL_RESULT_TRUE;
 }
 
-// Miscellaneous functions
 // *****************************************************************************
 /* Function: void* OSAL_Malloc(size_t size)
  */
-#define OSAL_Malloc(size)                               (malloc(size))
+static void* __attribute__((always_inline)) OSAL_Malloc(size_t size)
+{
+    return malloc(size);
+}
 
 // *****************************************************************************
 /* Function: void OSAL_Free(void* pData)
  */
-#define OSAL_Free(pData)                                (free(pData))
+static void __attribute__((always_inline)) OSAL_Free(void* pData)
+{
+    free(pData);
+}
 
 // Initialization and Diagnostics
 // *****************************************************************************

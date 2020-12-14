@@ -730,6 +730,102 @@ OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 }
 
 // *****************************************************************************
+/* Function:
+    void* OSAL_Malloc(size_t size)
+
+  Summary:
+    Allocates memory using the OSAL default allocator.
+
+  Description:
+     This function allocates a block of memory from the default allocator from
+     the underlying RTOS. If no RTOS is present, it defaults to malloc.
+     Many operating systems incorporate their own memory allocation scheme, using
+     pools, blocks or by wrapping the standard C library functions in a critical
+     section. Since an Harmony application may not know what target OS is being used
+     (if any), this function ensures that the correct thread safe memory
+     allocator will be used.
+
+  Precondition:
+    None.
+
+  Parameters:
+    size      - Size of the requested memory block in bytes
+
+  Returns:
+     Pointer to the block of allocated memory. NULL is returned if memory could
+     not be allocated.
+
+  Example:
+    <code>
+    // create a working array
+    uint8_t* pData;
+
+     pData = OSAL_Malloc(32);
+     if (pData != NULL)
+     {
+        ...
+     }
+    </code>
+
+  Remarks:
+    None.
+
+ */
+void* OSAL_Malloc(size_t size)
+{
+    return pvPortMalloc(size);
+}
+
+// *****************************************************************************
+/* Function:
+    void OSAL_Free(void* pData)
+
+  Summary:
+    Deallocates a block of memory and return to the default pool.
+
+  Description:
+     This function deallocates memory and returns it to the default pool.
+     In an RTOS-based application, the memory may have been allocated from
+     multiple pools or simply from the heap.
+     In non-RTOS applications, this function calls the C standard function
+     free.
+
+  Precondition:
+    None.
+
+  Parameters:
+    pData      - Pointer to the memory block to be set free
+
+  Returns:
+    None.
+
+  Example:
+    <code>
+    // create a working array
+    uint8_t* pData;
+
+     pData = OSAL_Malloc(32);
+     if (pData != NULL)
+     {
+        ...
+
+        // deallocate the memory
+        OSAL_Free(pData);
+        // and prevent it accidentally being used again
+        pData = NULL;
+     }
+    </code>
+
+  Remarks:
+    None.
+
+ */
+void OSAL_Free(void* pData)
+{
+    vPortFree(pData);
+}
+
+// *****************************************************************************
 /* Function: OSAL_RESULT OSAL_Initialize()
 
   Summary:

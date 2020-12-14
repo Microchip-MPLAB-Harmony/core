@@ -180,22 +180,6 @@ __STATIC_INLINE __attribute__((always_inline)) const char* OSAL_Name (void)
  */
 #define OSAL_ASSERT(test, message)      test
 
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Interface Routines
-// *****************************************************************************
-// *****************************************************************************
-/* These function declarations help map OSAL function calls into specific
-   FreeRTOS calls or OSAL translation layer functions
-   Each OSAL should fully implement the functions listed in osal.h so only
-   deviations from that interface are required here.
- */
-
-#define OSAL_Malloc   pvPortMalloc
-
-#define OSAL_Free     vPortFree
-
 #ifdef __cplusplus
 }
 #endif

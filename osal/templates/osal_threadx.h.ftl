@@ -69,6 +69,8 @@ typedef uint32_t                        OSAL_CRITSECT_DATA_TYPE;
 typedef TX_SEMAPHORE                    OSAL_SEM_HANDLE_TYPE;
 typedef TX_MUTEX                        OSAL_MUTEX_HANDLE_TYPE;
 
+extern TX_BYTE_POOL byte_pool_0;
+
 #define OSAL_WAIT_FOREVER               0xFFFF
 #define OSAL_SEM_DECLARE(semID)         TX_SEMAPHORE semID
 #define OSAL_MUTEX_DECLARE(mutexID)     TX_MUTEX mutexID

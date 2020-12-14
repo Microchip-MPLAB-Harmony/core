@@ -179,22 +179,6 @@ __STATIC_INLINE __attribute__((always_inline)) const char* OSAL_Name (void)
  */
 #define OSAL_ASSERT(test, message)      test
 
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Interface Routines
-// *****************************************************************************
-// *****************************************************************************
-/* These function declarations help map OSAL function calls into specific
-   MbedOS calls or OSAL translation layer functions
-   Each OSAL should fully implement the functions listed in osal.h so only
-   deviations from that interface are required here.
- */
-
-#define OSAL_Malloc(size)   MEM_ALLOC(size)
-
-#define OSAL_Free(pData)    MEM_FREE(pData)
-
 #ifdef __cplusplus
 }
 #endif
