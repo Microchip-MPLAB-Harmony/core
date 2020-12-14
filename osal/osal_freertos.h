@@ -192,9 +192,9 @@ __STATIC_INLINE __attribute__((always_inline)) const char* OSAL_Name (void)
    deviations from that interface are required here.
  */
 
-#define OSAL_Malloc(size)   pvPortMalloc(size)
+#define OSAL_Malloc   pvPortMalloc
 
-#define OSAL_Free(pData)    vPortFree(pData)
+#define OSAL_Free     vPortFree
 
 #ifdef __cplusplus
 }
