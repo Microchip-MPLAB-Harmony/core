@@ -166,18 +166,18 @@ static void SYS_TIME_HwTimerCompareUpdate(void)
     {
         if (tmrActive->relativeTimePending > SYS_TIME_HW_COUNTER_HALF_PERIOD)
         {
-            nextHwCounterValue = counterObj->hwTimerCurrentValue + SYS_TIME_HW_COUNTER_HALF_PERIOD;
+            nextHwCounterValue = (uint64_t)counterObj->hwTimerCurrentValue + SYS_TIME_HW_COUNTER_HALF_PERIOD;
         }
         else
         {
             /* Use a non-volatile intermediate to prevent dual volatile access in single statement */
             uint32_t relativeTimePending = tmrActive->relativeTimePending;
-            nextHwCounterValue = counterObj->hwTimerCurrentValue + relativeTimePending;
+            nextHwCounterValue = (uint64_t)counterObj->hwTimerCurrentValue + relativeTimePending;
         }
     }
     else
     {
-        nextHwCounterValue = counterObj->hwTimerCurrentValue + SYS_TIME_HW_COUNTER_HALF_PERIOD;
+        nextHwCounterValue = (uint64_t)counterObj->hwTimerCurrentValue + SYS_TIME_HW_COUNTER_HALF_PERIOD;
     }
 
     currHwCounterValue = counterObj->timePlib->timerCounterGet();
