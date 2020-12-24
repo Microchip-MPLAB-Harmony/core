@@ -551,14 +551,14 @@ bool DRV_USART_WriteBuffer
 <#if core.DMA_ENABLE?has_content>
             if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
             {
+                if (dObj->dataWidth > DRV_USART_DATA_8_BIT)
+                {
 <#if __PROCESSOR?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
                 /* Clean the write buffer to push the data to the main memory */
-                SYS_CACHE_CleanDCache_by_Addr((uint32_t *)buffer, numbytes);
+                    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)buffer, (numbytes << 1));
 </#if>
 </#if>
-                if (dObj->dataWidth > DRV_USART_DATA_8_BIT)
-                {
                     SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
 
                     SYS_DMA_ChannelTransfer(
@@ -570,6 +570,12 @@ bool DRV_USART_WriteBuffer
                 }
                 else
                 {
+<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+                /* Clean the write buffer to push the data to the main memory */
+                    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)buffer, numbytes);
+</#if>
+</#if>
                     SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_8_BIT);
 
                     SYS_DMA_ChannelTransfer(
@@ -632,14 +638,14 @@ bool DRV_USART_ReadBuffer
 <#if core.DMA_ENABLE?has_content>
             if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
             {
+                if (dObj->dataWidth > DRV_USART_DATA_8_BIT)
+                {
 <#if __PROCESSOR?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
                 /* Invalidate the receive buffer to force the CPU to read from the main memory */
-                SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)buffer, numbytes);
+                    SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)buffer, (numbytes << 1));
 </#if>
 </#if>
-                if (dObj->dataWidth > DRV_USART_DATA_8_BIT)
-                {
                     SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
 
                     SYS_DMA_ChannelTransfer(
@@ -651,6 +657,12 @@ bool DRV_USART_ReadBuffer
                 }
                 else
                 {
+<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+                /* Invalidate the receive buffer to force the CPU to read from the main memory */
+                    SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)buffer, numbytes);
+</#if>
+</#if>
                     SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);
 
                     SYS_DMA_ChannelTransfer(

@@ -609,14 +609,14 @@ static void _DRV_USART_WriteSubmit( DRV_USART_OBJ* dObj )
 <#if core.DMA_ENABLE?has_content>
     if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
-<#if __PROCESSOR?matches("PIC32M.*") == false>
-<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-        // Clean cache to load new data from cache to main memory for DMA
-        SYS_CACHE_CleanDCache_by_Addr((uint32_t *)bufferObj->buffer, bufferObj->size);
-</#if>
-</#if>
         if (dObj->dataWidth > DRV_USART_DATA_8_BIT)
         {
+<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+			// Clean cache to load new data from cache to main memory for DMA
+			SYS_CACHE_CleanDCache_by_Addr((uint32_t *)bufferObj->buffer, (bufferObj->size << 1));
+</#if>
+</#if>
             SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
 
             SYS_DMA_ChannelTransfer(
@@ -628,6 +628,12 @@ static void _DRV_USART_WriteSubmit( DRV_USART_OBJ* dObj )
         }
         else
         {
+<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+			// Clean cache to load new data from cache to main memory for DMA
+			SYS_CACHE_CleanDCache_by_Addr((uint32_t *)bufferObj->buffer, bufferObj->size);
+</#if>
+</#if>
             SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_8_BIT);
 
             SYS_DMA_ChannelTransfer(
@@ -671,17 +677,17 @@ static void _DRV_USART_ReadSubmit( DRV_USART_OBJ* dObj )
 <#if core.DMA_ENABLE?has_content>
     if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
-<#if __PROCESSOR?matches("PIC32M.*") == false>
-<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
-        SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)bufferObj->buffer, bufferObj->size);
-</#if>
-</#if>
         /* UART errors (if any) must be cleared before initiating a new DMA request */
         errorMask = dObj->usartPlib->errorGet();
         (void)errorMask;
 
         if (dObj->dataWidth > DRV_USART_DATA_8_BIT)
         {
+<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
+			SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)bufferObj->buffer, (bufferObj->size << 1));
+</#if>
+</#if>
             SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
 
             SYS_DMA_ChannelTransfer(
@@ -693,6 +699,11 @@ static void _DRV_USART_ReadSubmit( DRV_USART_OBJ* dObj )
         }
         else
         {
+<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
+			SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)bufferObj->buffer, bufferObj->size);
+</#if>
+</#if>
             SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);
 
             SYS_DMA_ChannelTransfer(
