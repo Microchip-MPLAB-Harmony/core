@@ -33,9 +33,13 @@ def handleMessage(messageID, args):
 
     if (messageID == "REQUEST_CONFIG_PARAMS"):
         if args.get("localComponentID") != None:
-            result_dict = Database.sendMessage(args["localComponentID"], "UART_INTERRUPT_MODE", {"isEnabled":True, "isReadOnly":True})
 
-            result_dict = Database.sendMessage(args["localComponentID"], "UART_RING_BUFFER_MODE", {"isEnabled":False, "isReadOnly":True})
+            # Send the messages in the increasing order of features
+            result_dict = Database.sendMessage(args["localComponentID"], "UART_NON_BLOCKING_MODE", {"isEnabled":True, "isReadOnly":True})
+
+            result_dict = Database.sendMessage(args["localComponentID"], "UART_NON_BLOCKING_FIFO_MODE", {"isEnabled":True, "isReadOnly":True})
+
+            result_dict = Database.sendMessage(args["localComponentID"], "UART_NON_BLOCKING_DMA_TX_RX_MODE", {"isEnabled":True, "isReadOnly":True})
 
     return result_dict
 
@@ -203,9 +207,12 @@ def onAttachmentDisconnected(source, target):
         dmaChannelSym = Database.getSymbolValue("core", "DMA_CH_FOR_" + remoteID.upper() + "_Transmit")
         dmaRequestSym = Database.getSymbolValue("core", "DMA_CH_NEEDED_FOR_" + remoteID.upper() + "_Transmit")
 
-        dummyDict = Database.sendMessage(remoteID, "UART_RING_BUFFER_MODE", {"isReadOnly":False})
+        dummyDict = Database.sendMessage(remoteID, "UART_NON_BLOCKING_MODE", {"isReadOnly":False})
 
-        dummyDict = Database.sendMessage(remoteID, "UART_INTERRUPT_MODE", {"isReadOnly":False})
+        dummyDict = Database.sendMessage(remoteID, "UART_NON_BLOCKING_FIFO_MODE", {"isReadOnly":False})
+
+        dummyDict = Database.sendMessage(remoteID, "UART_NON_BLOCKING_DMA_TX_RX_MODE", {"isReadOnly":False})
+
 
         # Do not change the order as DMA Channels needs to be cleared
         # before clearing the plibUsed symbol
