@@ -32,9 +32,9 @@ def handleMessage(messageID, args):
     if (messageID == "REQUEST_CONFIG_PARAMS"):
         if args.get("localComponentID") != None:
 
-            result_dict = Database.sendMessage(args["localComponentID"], "UART_INTERRUPT_MODE", {"isEnabled":True, "isReadOnly":True})
-
             result_dict = Database.sendMessage(args["localComponentID"], "UART_RING_BUFFER_MODE", {"isEnabled":True, "isReadOnly":True})
+
+            result_dict = Database.sendMessage(args["localComponentID"], "UART_RING_BUFFER_FIFO_MODE", {"isEnabled":True, "isReadOnly":True})
 
     return result_dict
 
@@ -420,9 +420,9 @@ def onAttachmentDisconnected(source, target):
 
             console_uart_connection_counter_dict = Database.sendMessage("sys_console", "SYS_CONSOLE_UART_CONNECTION_COUNTER_DEC", console_uart_connection_counter_dict)
 
-            console_uart_connection_counter_dict = Database.sendMessage(remoteID, "UART_INTERRUPT_MODE", {"isReadOnly":False})
-
             console_uart_connection_counter_dict = Database.sendMessage(remoteID, "UART_RING_BUFFER_MODE", {"isReadOnly":False})
+
+            console_uart_connection_counter_dict = Database.sendMessage(remoteID, "UART_RING_BUFFER_FIFO_MODE", {"isReadOnly":False})
 
     elif connectID == "sys_console_USB_DEVICE_CDC_dependency" :
         deviceUsed.clearValue()
