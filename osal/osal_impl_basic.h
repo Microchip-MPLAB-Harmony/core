@@ -60,6 +60,7 @@ extern "C" {
 // *****************************************************************************
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include "system/int/sys_int.h"
 #include "device.h"
 
