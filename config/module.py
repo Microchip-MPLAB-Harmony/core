@@ -22,6 +22,21 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
+USBNamesList        = ["USB", "USBHS"]
+SDHCNamesList       = ["HSMCI", "SDHC", "SDMMC"]
+SQINamesList        = ["QSPI", "SQI"]
+
+def hasPeripheral(peripheralList):
+    periphNode          = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals")
+    peripherals         = periphNode.getChildren()
+
+    for module in range (0, len(peripherals)):
+        periphName = str(peripherals[module].getAttribute("name"))
+
+        if ((any(x == periphName for x in peripheralList) == True)):
+            return True
+    return False
+
 def loadModule():
 
     i2c_bbComponent = Module.CreateComponent("i2c_bb", "I2C_BB", "/Libraries/i2c_bb/", "/libraries/i2c_bb/config/i2c_bb.py")
@@ -33,7 +48,7 @@ def loadModule():
     coreComponents = [
         {"name":"time", "label": "TIME", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_TIME"], "capability_type":"generic", "dependency":[  "TMR"], "condition": "True"},
 
-        {"name":"console", "label": "CONSOLE", "type":"system", "display_path":"", "actual_path":"", "instance":"multi", "capability":["SYS_CONSOLE"], "capability_type":"multi", "dependency":["UART", "USB_DEVICE_CDC"], "condition":"True", "is_dependency_required": "False"},
+        {"name":"console", "label": "CONSOLE", "type":"system", "display_path":"", "actual_path":"", "instance":"multi", "capability":["SYS_CONSOLE"], "capability_type":"multi", "dependency":["UART", "USB_DEVICE_CDC"] if hasPeripheral(USBNamesList) else ["UART"], "condition":"True", "is_dependency_required": "False"},
 
         {"name":"command", "label": "COMMAND", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_COMMAND"], "capability_type":"generic", "dependency":["SYS_CONSOLE"], "condition":"True"},
 
@@ -45,7 +60,7 @@ def loadModule():
 
         {"name":"memory", "label": "MEMORY", "type":"driver", "display_path":"", "actual_path":"", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["MEMORY"], "condition":"True"},
 
-        {"name":"sst26", "label": "SST26", "type":"driver", "display_path":"SQI Flash", "actual_path":"sqi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SQI", "SPI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "SAMD5", "SAME5", "PIC32MZ", "SAMA5D2", "SAM9X60"])'},
+        {"name":"sst26", "label": "SST26", "type":"driver", "display_path":"SQI Flash", "actual_path":"sqi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SQI", "SPI"] if hasPeripheral(SQINamesList) else ["SPI"], "condition":"True"},
 
         {"name":"mx25l", "label": "MX25L", "type":"driver", "display_path":"SQI Flash", "actual_path":"sqi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SQI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "SAMD5", "SAME5", "SAMA5D2", "SAM9X60"])'},
 
@@ -59,7 +74,7 @@ def loadModule():
 
         {"name":"at25df", "label": "AT25DF", "type":"driver", "display_path":"SPI FLASH", "actual_path":"spi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SPI"], "condition":"True"},
 
-        {"name":"sdmmc", "label":"SDMMC", "type":"driver", "display_path":"SDCARD", "actual_path":"", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["SDHC", "SYS_TIME"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "SAMD5", "SAME5", "SAMA5D2", "PIC32MZ", "SAM9X60"])'},
+        {"name":"sdmmc", "label":"SDMMC", "type":"driver", "display_path":"SDCARD", "actual_path":"", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["SDHC", "SYS_TIME"], "condition":'hasPeripheral(SDHCNamesList)'},
 
         {"name":"sdspi", "label": "SD Card (SPI)", "type":"driver", "display_path":"SDCARD", "actual_path":"", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["SPI", "DRV_SPI", "SYS_TIME"], "condition":"True", "is_dependency_required": "False"},
 
