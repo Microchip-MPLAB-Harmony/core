@@ -101,13 +101,7 @@ int FATFS_chdrive (uint8_t drv);
 
     <#lt>bool FATFS_error(uintptr_t handle);
 
-    <#if SYS_FS_FAT_VERSION != "v0.11a">
-        <#lt>int FATFS_mkfs (uint8_t vol, const MKFS_PARM* opt, void* work, uint32_t len);
-
-        <#lt>int FATFS_expand (FIL* fp, uint32_t fsz, uint8_t opt);
-    <#else>
-        <#lt>int FATFS_mkfs (uint8_t vol, uint8_t sfd, uint32_t au);
-    </#if>
+    <#lt>int FATFS_mkfs (uint8_t vol, const MKFS_PARM* opt, void* work, uint32_t len);
 
     <#lt>int FATFS_fdisk (uint8_t pdrv, const uint32_t szt[], void* work);
 

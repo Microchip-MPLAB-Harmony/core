@@ -112,7 +112,7 @@ typedef struct
     uint8_t  dummy[10]; // Added to align the structure size to cache line size
 } MPFS_FILE_RECORD;
 
-<#if SYS_FS_FAT == true && SYS_FS_FAT_VERSION != "v0.11a">
+<#if SYS_FS_FAT == true>
     <#lt>/* File status structure when using latest FAT-FS and MPFS Together*/
     <#lt>typedef struct {
     <#lt>    unsigned long	fsize;			/* File size */

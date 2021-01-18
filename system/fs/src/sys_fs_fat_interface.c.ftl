@@ -133,7 +133,6 @@ int FATFS_unmount ( uint8_t vol )
 
         for(hFATfs = 0; hFATfs < SYS_FS_MAX_FILES; hFATfs++)
         {
-<#if SYS_FS_FAT_VERSION != "v0.11a">
             if(FATFSFileObject[hFATfs].inUse)
             {
                 if (FATFSFileObject[hFATfs].fileObj.obj.fs == NULL)
@@ -156,30 +155,6 @@ int FATFS_unmount ( uint8_t vol )
                     FATFSDirObject[hFATfs].inUse = false;
                 }
             }
-<#else>
-            if(FATFSFileObject[hFATfs].inUse)
-            {
-                if (FATFSFileObject[hFATfs].fileObj.fs == NULL)
-                {
-                    FATFSFileObject[hFATfs].inUse = false;
-                }
-                else if(VolToPart[vol].pd == FATFSFileObject[hFATfs].fileObj.fs->drv)
-                {
-                    FATFSFileObject[hFATfs].inUse = false;
-                }
-            }
-            if(FATFSDirObject[hFATfs].inUse)
-            {
-                if (FATFSDirObject[hFATfs].dirObj.fs == NULL)
-                {
-                    FATFSDirObject[hFATfs].inUse = false;
-                }
-                else if(VolToPart[vol].pd == FATFSDirObject[hFATfs].dirObj.fs->drv)
-                {
-                    FATFSDirObject[hFATfs].inUse = false;
-                }
-            }
-</#if>
         }
     }
 
@@ -197,61 +172,32 @@ int FATFS_open (
     FIL *fp = NULL;
 
     /* Convert the SYS_FS file open attributes to FAT FS attributes */
-<#if SYS_FS_FAT_VERSION == "v0.11a">
-    <#lt>    switch(mode)
-    <#lt>    {
-    <#lt>        case SYS_FS_FILE_OPEN_READ:
-    <#lt>            mode = FA_READ;
-    <#lt>            break;
-    <#if SYS_FS_FAT_READONLY == false>
-        <#lt>        case SYS_FS_FILE_OPEN_WRITE:
-        <#lt>            mode = FA_WRITE | FA_OPEN_ALWAYS | FA_CREATE_ALWAYS;
-        <#lt>            break;
-        <#lt>        case SYS_FS_FILE_OPEN_APPEND:
-        <#lt>            mode = FA_WRITE | FA_OPEN_ALWAYS;
-        <#lt>            break;
-        <#lt>        case SYS_FS_FILE_OPEN_READ_PLUS:
-        <#lt>            mode = FA_READ | FA_WRITE;
-        <#lt>            break;
-        <#lt>        case SYS_FS_FILE_OPEN_WRITE_PLUS:
-        <#lt>            mode = FA_READ | FA_WRITE | FA_OPEN_ALWAYS;
-        <#lt>            break;
-        <#lt>        case SYS_FS_FILE_OPEN_APPEND_PLUS:
-        <#lt>            mode = FA_READ | FA_WRITE | FA_OPEN_ALWAYS;
-        <#lt>            break;
-    </#if>
-    <#lt>        default:
-    <#lt>            return ((int)res);
-    <#lt>            break;
-    <#lt>    }
-<#else>
-    <#lt>    switch(mode)
-    <#lt>    {
-    <#lt>        case SYS_FS_FILE_OPEN_READ:
-    <#lt>            mode = FA_READ;
-    <#lt>            break;
-    <#if SYS_FS_FAT_READONLY == false>
-        <#lt>        case SYS_FS_FILE_OPEN_WRITE:
-        <#lt>            mode = FA_WRITE | FA_CREATE_ALWAYS;
-        <#lt>            break;
-        <#lt>        case SYS_FS_FILE_OPEN_APPEND:
-        <#lt>            mode = FA_WRITE | FA_OPEN_APPEND;
-        <#lt>            break;
-        <#lt>        case SYS_FS_FILE_OPEN_READ_PLUS:
-        <#lt>            mode = FA_READ | FA_WRITE;
-        <#lt>            break;
-        <#lt>        case SYS_FS_FILE_OPEN_WRITE_PLUS:
-        <#lt>            mode = FA_READ | FA_WRITE | FA_CREATE_ALWAYS;
-        <#lt>            break;
-        <#lt>        case SYS_FS_FILE_OPEN_APPEND_PLUS:
-        <#lt>            mode = FA_READ | FA_WRITE | FA_OPEN_APPEND;
-        <#lt>            break;
-    </#if>
-    <#lt>        default:
-    <#lt>            return ((int)res);
-    <#lt>            break;
-    <#lt>    }
+    switch(mode)
+    {
+        case SYS_FS_FILE_OPEN_READ:
+            mode = FA_READ;
+            break;
+<#if SYS_FS_FAT_READONLY == false>
+        case SYS_FS_FILE_OPEN_WRITE:
+            mode = FA_WRITE | FA_CREATE_ALWAYS;
+            break;
+        case SYS_FS_FILE_OPEN_APPEND:
+            mode = FA_WRITE | FA_OPEN_APPEND;
+            break;
+        case SYS_FS_FILE_OPEN_READ_PLUS:
+            mode = FA_READ | FA_WRITE;
+            break;
+        case SYS_FS_FILE_OPEN_WRITE_PLUS:
+            mode = FA_READ | FA_WRITE | FA_CREATE_ALWAYS;
+            break;
+        case SYS_FS_FILE_OPEN_APPEND_PLUS:
+            mode = FA_READ | FA_WRITE | FA_OPEN_APPEND;
+            break;
 </#if>
+        default:
+            return ((int)res);
+            break;
+    }
 
     for (index = 0; index < SYS_FS_MAX_FILES; index++)
     {
@@ -336,7 +282,7 @@ int FATFS_stat (
 
     res = f_stat((const TCHAR *)path, finfo);
 
-<#if SYS_FS_FAT_VERSION != "v0.11a" && SYS_FS_LFN_ENABLE == true>
+<#if SYS_FS_LFN_ENABLE == true>
     SYS_FS_FSTAT *fileStat = (SYS_FS_FSTAT *)fileInfo;
 
     if ((res == FR_OK) && (fileStat->lfname != NULL))
@@ -433,7 +379,7 @@ int FATFS_readdir (
 
     res = f_readdir(dp, finfo);
 
-<#if SYS_FS_FAT_VERSION != "v0.11a" && SYS_FS_LFN_ENABLE == true>
+<#if SYS_FS_LFN_ENABLE == true>
     SYS_FS_FSTAT *fileStat = (SYS_FS_FSTAT *)fileInfo;
 
     if ((res == FR_OK) && (fileStat->lfname != NULL))
@@ -679,56 +625,31 @@ bool FATFS_error(uintptr_t handle)
     return ((bool)f_error(fp));
 }
 
-<#if SYS_FS_FAT_VERSION != "v0.11a">
-    <#lt>int FATFS_mkfs (
-    <#lt>    uint8_t vol,            /* Logical drive number */
-    <#lt>    const MKFS_PARM* opt,   /* Format options */
-    <#lt>    void* work,             /* Pointer to working buffer (null: use heap memory) */
-    <#lt>    uint32_t len            /* Size of working buffer [byte] */
-    <#lt>)
-    <#lt>{
-    <#lt>    FRESULT res;
-    <#lt>    TCHAR path[3];
+int FATFS_mkfs (
+    uint8_t vol,            /* Logical drive number */
+    const MKFS_PARM* opt,   /* Format options */
+    void* work,             /* Pointer to working buffer (null: use heap memory) */
+    uint32_t len            /* Size of working buffer [byte] */
+)
+{
+    FRESULT res;
+    TCHAR path[3];
 
-    <#lt>    /* Check if the drive number is valid */
-    <#lt>    if (vol >= SYS_FS_VOLUME_NUMBER)
-    <#lt>    {
-    <#lt>        return FR_INVALID_DRIVE;
-    <#lt>    }
+    /* Check if the drive number is valid */
+    if (vol >= SYS_FS_VOLUME_NUMBER)
+    {
+        return FR_INVALID_DRIVE;
+    }
 
-    <#lt>    path[0] = '0' + vol;
-    <#lt>    path[1] = ':';
-    <#lt>    path[2] = '\0';
+    path[0] = '0' + vol;
+    path[1] = ':';
+    path[2] = '\0';
 
-    <#lt>    res = f_mkfs((const TCHAR *)&path, opt, work, (UINT)len);
+    res = f_mkfs((const TCHAR *)&path, opt, work, (UINT)len);
 
-    <#lt>    return ((int)res);
-    <#lt>}
-<#else>
-    <#lt>int FATFS_mkfs (
-    <#lt>    uint8_t vol,        /* Logical drive number */
-    <#lt>    uint8_t sfd,        /* Partitioning rule 0:FDISK, 1:SFD */
-    <#lt>    uint32_t au         /* Size of allocation unit in unit of byte or sector */
-    <#lt>)
-    <#lt>{
-    <#lt>    FRESULT res;
-    <#lt>    TCHAR path[3];
+    return ((int)res);
+}
 
-    <#lt>    /* Check if the drive number is valid */
-    <#lt>    if (vol >= SYS_FS_VOLUME_NUMBER)
-    <#lt>    {
-    <#lt>        return FR_INVALID_DRIVE;
-    <#lt>    }
-
-    <#lt>    path[0] = '0' + vol;
-    <#lt>    path[1] = ':';
-    <#lt>    path[2] = '\0';
-
-    <#lt>    res = f_mkfs((const TCHAR *)&path, (BYTE)sfd, (DWORD)au);
-
-    <#lt>    return ((int)res);
-    <#lt>}
-</#if>
 
 int FATFS_fdisk (
     uint8_t pdrv,           /* Physical drive number */

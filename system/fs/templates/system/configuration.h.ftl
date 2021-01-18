@@ -6,7 +6,7 @@
     Microchip Technology Inc.
 
   File Name:
-    sys_devcon.h
+    configuration.h.ftl
 
   Summary:
    File System Service Freemarker Template File
