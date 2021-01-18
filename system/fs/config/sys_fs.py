@@ -23,7 +23,7 @@
 *****************************************************************************"""
 
 def instantiateComponent(sysFSComponent):
-    fatFsVersion = ["v0.14", "v0.11a"]
+    fatFsVersion = ["v0.14a", "v0.11a"]
     fsTypes = ["FAT","MPFS2"]
     mediaTypes =  ["SYS_FS_MEDIA_TYPE_NVM",
                     "SYS_FS_MEDIA_TYPE_MSD",
@@ -263,7 +263,7 @@ def instantiateComponent(sysFSComponent):
 
     sysFSFatVersion = sysFSComponent.createComboSymbol("SYS_FS_FAT_VERSION", sysFSFat, fatFsVersion)
     sysFSFatVersion.setLabel("FAT File System Version")
-    sysFSFatVersion.setDefaultValue("v0.14")
+    sysFSFatVersion.setDefaultValue("v0.14a")
     sysFSFatVersion.setVisible(sysFSFat.getValue())
     sysFSFatVersion.setDependencies(sysFsFatSymbolShow, ["SYS_FS_FAT", "SYS_FS_FAT_VERSION"])
 
@@ -275,7 +275,7 @@ def instantiateComponent(sysFSComponent):
 
     sysFSFatCodePage = sysFSComponent.createKeyValueSetSymbol("SYS_FS_FAT_CODE_PAGE", sysFSFat)
     sysFSFatCodePage.setLabel("OEM code page to be used")
-    if (sysFSFatVersion.getValue() == "v0.14"):
+    if (sysFSFatVersion.getValue() == "v0.14a"):
         sysFSFatCodePage.addKey("CODE_PAGE_0"  , "0"  , "All")
     else:
         sysFSFatCodePage.addKey("CODE_PAGE_1"  , "1"  , "ASCII (No extended character. Non-LFN cfg only)")

@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------*/
-/* Low level disk I/O module skeleton for FatFs     (C)ChaN, 2014        */
+/* Low level disk I/O module SKELETON for FatFs     (C)ChaN, 2019        */
 /*-----------------------------------------------------------------------*/
 /* If a working storage control module is available, it should be        */
 /* attached to the FatFs via a glue function rather than modifying it.   */
@@ -86,9 +86,9 @@ static DRESULT disk_checkCommandStatus(uint8_t pdrv)
 }
 
 /* Definitions of physical drive number for each drive */
-#define ATA     0   /* Example: Map ATA harddisk to physical drive 0 */
-#define MMC     1   /* Example: Map MMC/SD card to physical drive 1 */
-#define USB     2   /* Example: Map USB MSD to physical drive 2 */
+#define DEV_RAM		0	/* Example: Map Ramdisk to physical drive 0 */
+#define DEV_MMC		1	/* Example: Map MMC/SD card to physical drive 1 */
+#define DEV_USB		2	/* Example: Map USB MSD to physical drive 2 */
 
 
 /*-----------------------------------------------------------------------*/
