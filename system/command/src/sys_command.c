@@ -189,8 +189,8 @@ static void     CommandReset(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv)
 static void     CommandQuit(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv);              // command quit
 static void     CommandHelp(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv);              // help
 
-static int      StringToArgs(char *pRawString, char *argv[]); // Convert string to argc & argv[]
-static bool     ParseCmdBuffer(SYS_CMD_IO_DCPT* pCmdIO);      // parse the command buffer
+static int      StringToArgs(char *str, char *argv[], size_t argvSize); 
+static void     ParseCmdBuffer(SYS_CMD_IO_DCPT* pCmdIO);      // parse the command buffer
 
 static void     DisplayNodeMsg(SYS_CMD_IO_DCPT* pCmdIO, histCmdNode* pNext);
 
@@ -209,7 +209,7 @@ static void RunCmdTask(SYS_CMD_IO_DCPT* pCmdIO);
 const SYS_CMD_API sysConsoleApi =
 {
     .msg = SendCommandMessage,
-    .print = (SYS_CMD_PRINT_FNC)SendCommandPrint,
+    .print = SendCommandPrint,
     .putc = SendCommandCharacter,
     .isRdy = IsCommandReady,
     .getc = GetCommandCharacter,
@@ -855,10 +855,10 @@ static void CommandHelp(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv)
 
 }
 
-static bool ParseCmdBuffer(SYS_CMD_IO_DCPT* pCmdIO)
+static void ParseCmdBuffer(SYS_CMD_IO_DCPT* pCmdIO)
 {
     int  argc = 0;
-    char *argv[MAX_CMD_ARGS + 1] = {0};
+    char *argv[MAX_CMD_ARGS] = {0};
     char saveCmd[SYS_CMD_MAX_LENGTH + 1];
     const void* cmdIoParam = pCmdIO->devNode.cmdIoParam;
 
@@ -868,41 +868,51 @@ static bool ParseCmdBuffer(SYS_CMD_IO_DCPT* pCmdIO)
     strncpy(saveCmd, pCmdIO->cmdBuff, sizeof(saveCmd));     // make a copy of the command
 
     // parse a command string to *argv[]
-    argc = StringToArgs(saveCmd, argv);
+    argc = StringToArgs(saveCmd, argv, MAX_CMD_ARGS);
 
-    if(argc != 0)
-    {   // ok, there's smth here
+    if(argc > MAX_CMD_ARGS)
+    {
+        (*pCmdIO->devNode.pCmdApi->print)(cmdIoParam, "\n\r Too many arguments. Maximum args supported: %d!\r\n", MAX_CMD_ARGS);
+    }
+    else if(argc == 0)
+    {
+        (*pCmdIO->devNode.pCmdApi->msg)(cmdIoParam, " *** Command Processor: Please type in a command***" LINE_TERM);
+    }
+    else
+    {
+        if(argc > 0)
+        {   // ok, there's smth here
+            // add it to the history list
+            histCmdNode* pN = CmdRemoveTail(&pCmdIO->histList);
+            strncpy(pN->cmdBuff, pCmdIO->cmdBuff, sizeof(saveCmd)); // Need save non-parsed string
+            CmdAddHead(&pCmdIO->histList, pN);
+            pCmdIO->currHistN = 0;
 
-        // add it to the history list
-        histCmdNode* pN = CmdRemoveTail(&pCmdIO->histList);
-        strncpy(pN->cmdBuff, pCmdIO->cmdBuff, sizeof(saveCmd)); // Need save non-parsed string
-        CmdAddHead(&pCmdIO->histList, pN);
-        pCmdIO->currHistN = 0;
-
-        // try built-in commands first
-        for(ix = 0, pDcpt = _builtinCmdTbl; ix < sizeof(_builtinCmdTbl)/sizeof(*_builtinCmdTbl); ix++, pDcpt++)
-        {
-            if(!strcmp(argv[0], pDcpt->cmdStr))
-            {   // command found
-                (*pDcpt->cmdFnc)(&pCmdIO->devNode, argc, argv);     // call command handler
-                return true;
-            }
-        }
-        // search user commands
-        for (grp_ix=0; grp_ix < MAX_CMD_GROUP; grp_ix++)
-        {
-            if (_usrCmdTbl[grp_ix].pCmd == 0)
-            {
-               continue;
-            }
-
-            for(ix = 0, pDcpt = _usrCmdTbl[grp_ix].pCmd; ix < _usrCmdTbl[grp_ix].nCmds; ix++, pDcpt++)
+            // try built-in commands first
+            for(ix = 0, pDcpt = _builtinCmdTbl; ix < sizeof(_builtinCmdTbl)/sizeof(*_builtinCmdTbl); ix++, pDcpt++)
             {
                 if(!strcmp(argv[0], pDcpt->cmdStr))
+                {   // command found
+                    (*pDcpt->cmdFnc)(&pCmdIO->devNode, argc, argv);     // call command handler
+                    return;
+                }
+            }
+            // search user commands
+            for (grp_ix=0; grp_ix < MAX_CMD_GROUP; grp_ix++)
+            {
+                if (_usrCmdTbl[grp_ix].pCmd == 0)
                 {
-                    // command found
-                    (*pDcpt->cmdFnc)(&pCmdIO->devNode, argc, argv);
-                    return true;
+                    continue;
+                }
+
+                for(ix = 0, pDcpt = _usrCmdTbl[grp_ix].pCmd; ix < _usrCmdTbl[grp_ix].nCmds; ix++, pDcpt++)
+                {
+                    if(!strcmp(argv[0], pDcpt->cmdStr))
+                    {
+                        // command found
+                        (*pDcpt->cmdFnc)(&pCmdIO->devNode, argc, argv);
+                        return;
+                    }
                 }
             }
         }
@@ -910,61 +920,65 @@ static bool ParseCmdBuffer(SYS_CMD_IO_DCPT* pCmdIO)
         // command not found
         (*pCmdIO->devNode.pCmdApi->msg)(cmdIoParam, " *** Command Processor: unknown command. ***\r\n");
     }
-    else
-    {
-        (*pCmdIO->devNode.pCmdApi->msg)(cmdIoParam, " *** Command Processor: Please type in a command***" LINE_TERM);
-    }
-
-    return false;
 }
 
 /*
-  parse a string into '*argv[]', delimitor is space or tab
-  param pRawString, the whole line of command string
-  param argv, parsed argument string array
-  return number of parsed argument
+  parse a string into '*argv[]' tokens
+  token delimitor is space, tab or comma
+  parts within quotes (") are parsed as a single token
+  return number of parsed tokens
+  < 0 if error
 */
-static int StringToArgs(char *pRawString, char *argv[]) {
-  int argc = 0, i = 0, strsize = 0;
+static int StringToArgs(char *str, char *argv[], size_t argvSize) 
+{
+    char* pTkn;
+    char* qStart, *qEnd;   // special char '"' starting position;  
+    int nArgs = 0;
+    
+    while(str)
+    {
+        qStart = strchr(str, '"');
+        if(qStart != 0)
+        {
+            *qStart = 0;
+        }
 
-  if(pRawString == NULL)
-    return 0;
+        // parse until quote
+        while((pTkn = strtok(str, " \t,")) != 0)
+        {
+            str = 0;
+            if(nArgs < argvSize)
+            {
+                argv[nArgs] = pTkn;
+            }
+            nArgs++;
+        }
 
-  strsize = strlen(pRawString);
+        if(qStart == 0)
+        {   // done
+            break;
+        }
 
-  while(argc < MAX_CMD_ARGS) {
+        // get end quote
+        qStart++;
+        qEnd = strchr(qStart, '"');
+        if(qEnd == 0 || qEnd - qStart == 0)
+        {   // no matching quote end or empty string within quotes
+            return -1;
+        }
+        *qEnd = 0;
+        if(nArgs < argvSize)
+        {
+            argv[nArgs] = qStart;
+        }
+        nArgs++;
 
-    // skip white space characters of string head
-    while ((*pRawString == ' ') || (*pRawString == '\t')) {
-      ++pRawString;
-      if (++i >= strsize) {
-        return (argc);
-      }
+        // continue parsing
+        str = qEnd + 1;
     }
 
-    if (*pRawString == '\0') {
-      argv[argc] = NULL;
-      return (argc);
-    }
 
-    argv[argc++] = pRawString;
-
-    // find end of string
-    while (*pRawString && (*pRawString != ' ') && (*pRawString != '\t')) {
-      ++pRawString;
-    }
-
-    if (*pRawString == '\0') {
-    argv[argc] = NULL;
-    return (argc);
-    }
-
-    *pRawString++ = '\0';
-  }
-
-  SYS_CONSOLE_Print(_cmdInitData.consoleIndex, "\n\r Too many arguments. Maximum argus supported is %d!\r\n", MAX_CMD_ARGS);
-
-  return (0);
+    return nArgs;
 }
 
 static void _keyUpProcess(SYS_CMD_IO_DCPT* pCmdIO, const KEY_SEQ_DCPT* pSeqDcpt)
