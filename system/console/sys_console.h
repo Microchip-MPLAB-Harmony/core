@@ -896,7 +896,7 @@ ssize_t SYS_CONSOLE_WriteCountGet(const SYS_CONSOLE_HANDLE handle);
     Call SYS_CONSOLE_PRINT macro to print on the default console instance 0
 */
 
-void SYS_CONSOLE_Print(const SYS_CONSOLE_HANDLE handle, const char *format, ...)  FORMAT_ATTRIBUTE(printf, 2, 3);
+void SYS_CONSOLE_Print(const SYS_CONSOLE_HANDLE handle, const char *format, ...);
 
 // *****************************************************************************
 /* Function:
