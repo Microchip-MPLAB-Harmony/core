@@ -200,7 +200,7 @@ static histCmdNode* CmdRemoveTail(histCmdList* pL);
 static void     CmdAdjustPointers(SYS_CMD_IO_DCPT* pCmdIO);
 
 static void SendCommandMessage(const void* cmdIoParam, const char* str);
-static void SendCommandPrint(const void* cmdIoParam, const char* format, ...) FORMAT_ATTRIBUTE(printf, 2, 3);
+static void SendCommandPrint(const void* cmdIoParam, const char* format, ...);
 static void SendCommandCharacter(const void* cmdIoParam, char c);
 static int IsCommandReady(const void* cmdIoParam);
 static char GetCommandCharacter(const void* cmdIoParam);

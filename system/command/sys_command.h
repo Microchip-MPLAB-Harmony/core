@@ -693,7 +693,7 @@ void    SYS_CMD_MESSAGE(const char* message);
     None.
 */
 #ifdef SYS_CMD_ENABLE
-void    SYS_CMD_PRINT(const char *format, ...) FORMAT_ATTRIBUTE(printf, 1, 2);
+void    SYS_CMD_PRINT(const char *format, ...);
 #endif
 
 // *****************************************************************************
