@@ -174,7 +174,8 @@ def onSysTimeUseSystickChange(symbol, event):
             localComponent.setDependencyEnabled("sys_time_TMR_dependency", True)
             #Let sys_tick PLIB know that SYS Time no longer uses sys_tick PLIB
             Database.sendMessage("core", "SYS_TIME_PUBLISH_CAPABILITIES", {"ID":"None"})
-            sysTimePLIB.setValue("")
+            if sysTimePLIB.getValue() == "core":
+                sysTimePLIB.setValue("")
             sysTimePLIB.setVisible(True)
             sysTimeOperatingMode.setVisible(False)
             sysTimeTickRateMs.setVisible(False)

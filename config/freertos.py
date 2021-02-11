@@ -198,17 +198,14 @@ def freeRtosIntConfig():
         SWI0InterruptEnable     = "CORE_SOFTWARE_0_INTERRUPT_ENABLE"
 
         if (Database.getSymbolValue("core", Timer1InterruptEnable) == False):
-            Database.clearSymbolValue("core", Timer1InterruptEnable)
-            Database.setSymbolValue("core", Timer1InterruptEnable, True)
+            Database.sendMessage("core", Timer1InterruptEnable, {"isEnabled":True})
 
         #Enable TMR1 Peripheral Clock for FreeRTOS Tick Interrupt Generation
         if (Database.getSymbolValue("core", "TMR1_CLOCK_ENABLE") == False):
-            Database.clearSymbolValue("core", "TMR1_CLOCK_ENABLE")
-            Database.setSymbolValue("core", "TMR1_CLOCK_ENABLE", True)
+            Database.sendMessage("core", "TMR1_CLOCK_ENABLE", {"isEnabled":True})
 
         if (Database.getSymbolValue("core", SWI0InterruptEnable) == False):
-            Database.clearSymbolValue("core", SWI0InterruptEnable)
-            Database.setSymbolValue("core", SWI0InterruptEnable, True)
+            Database.sendMessage("core", SWI0InterruptEnable, {"isEnabled":True})
 
     else:
         SysTickInterruptEnable      = "SysTick_INTERRUPT_ENABLE"
@@ -216,48 +213,51 @@ def freeRtosIntConfig():
         SysTickInterruptHandlerLock = "SysTick_INTERRUPT_HANDLER_LOCK"
 
         if (Database.getSymbolValue("core", SysTickInterruptEnable) == False):
-            Database.clearSymbolValue("core", SysTickInterruptEnable)
-            Database.setSymbolValue("core", SysTickInterruptEnable, True)
+            Database.sendMessage("core", SysTickInterruptEnable, {"isEnabled":True})
 
         if (Database.getSymbolValue("core", SysTickInterruptHandler) != "xPortSysTickHandler"):
-            Database.clearSymbolValue("core", SysTickInterruptHandler)
-            Database.setSymbolValue("core", SysTickInterruptHandler, "xPortSysTickHandler")
+            Database.sendMessage("core", SysTickInterruptHandler, {"intHandler":"xPortSysTickHandler"})
 
         if (Database.getSymbolValue("core", SysTickInterruptHandlerLock) == False):
-            Database.clearSymbolValue("core", SysTickInterruptHandlerLock)
-            Database.setSymbolValue("core", SysTickInterruptHandlerLock, True)
+            Database.sendMessage("core", SysTickInterruptHandlerLock, {"isEnabled":True})
 
         PendSVInterruptEnable       = "PendSV_INTERRUPT_ENABLE"
         PendSVInterruptHandler      = "PendSV_INTERRUPT_HANDLER"
         PendSVInterruptHandlerLock  = "PendSV_INTERRUPT_HANDLER_LOCK"
 
         if (Database.getSymbolValue("core", PendSVInterruptEnable) == False):
-            Database.clearSymbolValue("core", PendSVInterruptEnable)
-            Database.setSymbolValue("core", PendSVInterruptEnable, True)
+            Database.sendMessage("core", PendSVInterruptEnable, {"isEnabled":True})
 
         if (Database.getSymbolValue("core", PendSVInterruptHandler) != "xPortPendSVHandler"):
-            Database.clearSymbolValue("core", PendSVInterruptHandler)
-            Database.setSymbolValue("core", PendSVInterruptHandler, "xPortPendSVHandler")
+            Database.sendMessage("core", PendSVInterruptHandler, {"intHandler":"xPortPendSVHandler"})
 
         if (Database.getSymbolValue("core", PendSVInterruptHandlerLock) == False):
-            Database.clearSymbolValue("core", PendSVInterruptHandlerLock)
-            Database.setSymbolValue("core", PendSVInterruptHandlerLock, True)
+            Database.sendMessage("core", PendSVInterruptHandlerLock, {"isEnabled":True})
 
         SVCallInterruptEnable       = "SVCall_INTERRUPT_ENABLE"
         SVCallInterruptHandler      = "SVCall_INTERRUPT_HANDLER"
         SVCallInterruptHandlerLock  = "SVCall_INTERRUPT_HANDLER_LOCK"
 
         if (Database.getSymbolValue("core", SVCallInterruptEnable) == False):
-            Database.clearSymbolValue("core", SVCallInterruptEnable)
-            Database.setSymbolValue("core", SVCallInterruptEnable, True)
+            Database.sendMessage("core", SVCallInterruptEnable, {"isEnabled":True})
 
         if (Database.getSymbolValue("core", SVCallInterruptHandler) != "vPortSVCHandler"):
-            Database.clearSymbolValue("core", SVCallInterruptHandler)
-            Database.setSymbolValue("core", SVCallInterruptHandler, "vPortSVCHandler")
+            Database.sendMessage("core", SVCallInterruptHandler, {"intHandler":"vPortSVCHandler"})
 
         if (Database.getSymbolValue("core", SVCallInterruptHandlerLock) == False):
-            Database.clearSymbolValue("core", SVCallInterruptHandlerLock)
-            Database.setSymbolValue("core", SVCallInterruptHandlerLock, True)
+            Database.sendMessage("core", SVCallInterruptHandlerLock, {"isEnabled":True})
+
+def destroyComponent(thirdPartyFreeRTOS):
+    if coreArch == "MIPS":
+        Database.sendMessage("core", "TIMER_1_INTERRUPT_ENABLE", {"isEnabled":False})
+        Database.sendMessage("core", "TMR1_CLOCK_ENABLE", {"isEnabled":False})
+        Database.sendMessage("core", "CORE_SOFTWARE_0_INTERRUPT_ENABLE", {"isEnabled":False})
+    else:
+        Database.sendMessage("core", "SysTick_INTERRUPT_ENABLE", {"isEnabled":False})
+        Database.sendMessage("core", "SysTick_INTERRUPT_HANDLER", {"intHandler":"SysTick_Handler"})
+        Database.sendMessage("core", "SysTick_INTERRUPT_HANDLER_LOCK", {"isEnabled":False})
+        Database.sendMessage("core", "PendSV_INTERRUPT_HANDLER", {"intHandler":"PendSV_Handler"})
+        Database.sendMessage("core", "SVCall_INTERRUPT_HANDLER", {"intHandler":"SVCall_Handler"})
 
 # Instatntiate FreeRTOS Component
 def instantiateComponent(thirdPartyFreeRTOS):
