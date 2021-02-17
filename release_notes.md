@@ -2,6 +2,42 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB® Harmony 3 Release Notes
+
+## Core Release v3.9.0
+
+### New Features
+
+- **New Features and Enhancements**
+  - Added compatibility with C++
+  - Added NAND Flash driver support on SAM 9X60
+  - Added Mbed OS 6 RTOS support for Cortex M0+, M4 and M7
+  - Updated Fat-fs code to version R0.14a and removed support for older Fat-fs version R0.11a
+  - Updated Time System Service to work with Systick
+
+- **Applications**
+  - MPLAB Harmony provides large number of application examples to accelerate learning and reduce the development cycles for your embedded systems with reusable software components. The application examples are available in the respective [product family specific repository](apps/readme.md).
+
+### Known Issues
+
+The current known issues are as follows:
+  -  Any File system based project which runs into Fat-Fs file path error during regeneration needs to remove and add file system component in MHC project graph
+  -  The clock PLIB on SAM D20 is updated to use DFLL in closed loop mode by default. This requires enabling the internal 8 MHZ Oscillator clock source for GLCK1 in MHC Clock configurator, which is used as a reference clock for DFLL.
+  -  Removed weak declaration for interrupts that are enabled in NVIC. Build error will occur if unused interrupts are enabled in the NVIC.
+  -  The following product family requires newer DFP version to be downloaded from packs server and to be used in the MPLAB project to build with MPLAB X IDE v5.45.
+     -  **SAM 9X6 Family**: SAM9X6 DFP v1.5.50
+     -  **SAM A5D2 Family**: SAMA5D2 DFP 1.5.53
+     -  **PIC32MZ-W Family**: PIC32MZ-W DFP v1.4.193
+
+
+### Development Tools
+
+- [MPLAB® X IDE v5.45](https://www.microchip.com/mplab/mplab-x-ide)
+- [MPLAB® XC32 C/C++ Compiler v2.50](https://www.microchip.com/mplab/compilers)
+- [IAR EWARM v8.50](https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
+- [KEIL MDK v5.31](https://www2.keil.com/mdk5)
+- MPLAB® X IDE plug-ins:
+  - MPLAB® Harmony Configurator (MHC) v3.7.0
+
 ## Core Release v3.8.1
 ### New Features
 - Updated supported product families
