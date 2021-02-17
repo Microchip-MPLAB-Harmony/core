@@ -56,7 +56,7 @@ Memory Driver Common Features:</div>
 <ul class="Element630">
 <li class="Element600"><span style="color: #000000">Each instance of the driver has its own buffer queue which allows the capability to not block other media operations</span></li>
 <li class="Element600">Each instance of the driver can either have File-system as client or an application as client</li>
-<li class="Element600">Every transfer request expects data in blocks. Block details (<strong>Size and number of blocks</strong>) can be retrieved by <a href="00327.html" target="topic">DRV_MEMORY_GeometryGet</a>()</li>
+<li class="Element600">Every transfer request expects data in blocks. Block details (<strong>Size and number of blocks</strong>) can be retrieved by <a href="00339.html" target="topic">DRV_MEMORY_GeometryGet</a>()</li>
 <li class="Element600">Driver provides feature to register call back for transfer complete event, which can used by clients to get notified</li>
 <li class="Element600">When the Memory driver is connected to the File System, the buffer queue is disabled as it is a blocking interface</li>
 </ul><p class="Element10">
@@ -94,7 +94,7 @@ API's return with a valid handle which can be used to check whether transfer req
 API's return true or false to indicate whether the whole transfer is completed.&nbsp;</div></td></tr><tr>
 <td class="Element67" valign="top" width="50%">
 <div class="Element68">
-<strong>Bare-Metal:</strong><br>A dedicated task routine <a href="00350.html" target="topic">DRV_MEMORY_Tasks</a>() is called from SYS_Tasks() to process the data from the instance queue.<br><strong>RTOS:</strong><br>A dedicated thread is created for task routine <a href="00350.html" target="topic">DRV_MEMORY_Tasks</a>() to process the data from the instance queue.&nbsp;</div></td><td class="Element67" valign="top" width="50%">
+<strong>Bare-Metal:</strong><br>A dedicated task routine <a href="00362.html" target="topic">DRV_MEMORY_Tasks</a>() is called from SYS_Tasks() to process the data from the instance queue.<br><strong>RTOS:</strong><br>A dedicated thread is created for task routine <a href="00362.html" target="topic">DRV_MEMORY_Tasks</a>() to process the data from the instance queue.&nbsp;</div></td><td class="Element67" valign="top" width="50%">
 <div class="Element68">
 As the Driver works in complete blocking behavior there is no task routine generated.&nbsp;</div></td></tr><tr>
 <td class="Element67" valign="top" width="50%">
@@ -107,9 +107,9 @@ A Client specific handler will be called to indicate the status of transfer befo
 <div class="Element15">
 How to plugin Media's to Memory Driver</div>
 <p class="Element10">
-The <a href="00328.html" target="topic">DRV_MEMORY_INIT</a> data structure allows a Media driver Or Media peripheral library to be plugged into the Memory block driver.&nbsp;</p>
+The <a href="00340.html" target="topic">DRV_MEMORY_INIT</a> data structure allows a Media driver Or Media peripheral library to be plugged into the Memory block driver.&nbsp;</p>
 <p class="Element10">
-Any media that needs to be plugged into the Memory block driver needs to implement the interface (function pointer signatures) specified by the <a href="00305.html" target="topic">DRV_MEMORY_DEVICE_INTERFACE</a> type.&nbsp;</p>
+Any media that needs to be plugged into the Memory block driver needs to implement the interface (function pointer signatures) specified by the <a href="00317.html" target="topic">DRV_MEMORY_DEVICE_INTERFACE</a> type.&nbsp;</p>
 <p class="Element10">
 &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">static</span></strong> uint8_t gDrvMemory0EraseBuffer[DRV_SST26_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
 

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_I2C_ForcedWriteTransfer Function</title>
+<title>DRV_AT25DF_Write Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00058.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00059.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00249.html" target="topic">DRV_I2C_ForcedWriteTransfer Function</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00135.html" target="topic">SPI Flash Driver Libraries Help</a> &gt; <a href="00044.html" target="topic">AT25DF Driver Library Help</a> &gt; <a href="00045.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00249.html" target="topic">DRV_AT25DF_Write Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00267.html" target="topic">Previous</a> | <a href="00059.html" target="topic">Up</a> | <a href="00248.html" target="topic">Next</a></div>
+<a href="00248.html" target="topic">Previous</a> | <a href="00045.html" target="topic">Up</a> | <a href="00237.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2C_ForcedWriteTransfer@DRV_HANDLE@uint16_t@void* const@size_t Topic Title: DRV_I2C_ForcedWriteTransfer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT25DF_Write@DRV_HANDLE@void *@uint32_t@uint32_t Topic Title: DRV_AT25DF_Write Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_I2C_ForcedWriteTransfer Function</div>
+DRV_AT25DF_Write Function</div>
 </div>
 </div>
 
@@ -49,27 +49,24 @@ DRV_I2C_ForcedWriteTransfer Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-I2C Master calls this function to transmit the entire buffer to the slave even if the slave ACKs or NACKs the address or any of the data bytes. This is typically used for slaves that have to initiate a reset sequence by sending a dummy I2C transaction. Since the slave is still in reset, any or all the bytes can be NACKed. In the normal operation of the driver if the address or data byte is NACKed, then the transmission is aborted and a STOP condition is asserted on the bus.&nbsp;</p>
+This function schedules a non-blocking write operation for writing txDataLength bytes of data starting from given address of FLASH.&nbsp;</p>
 <p class="Element10">
-This function does a blocking write operation. The function blocks till the write is complete or error has occurred during write. Function will return false to report failure. The failure will occur for the following reasons:</p>
-<ul class="Element630">
-<li class="Element600">Invalid input parameters</li>
-</ul></div>
+The requesting client should call <a href="00248.html" target="topic">DRV_AT25DF_TransferStatusGet</a> API to know the current status of the request OR the requesting client can register a callback function with the driver to get notified of the status.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_I2C_ForcedWriteTransfer</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00245.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    uint16_t <strong><span style="color: #000000">address</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">buffer</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> size_t <strong><span style="color: #000000">size</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_AT25DF_Write</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00257.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">txData</span></strong>, 
+    uint32_t <strong><span style="color: #000000">txDataLength</span></strong>, 
+    uint32_t <strong><span style="color: #000000">address</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="00252.html" target="topic">DRV_I2C_Open</a> must have been called to obtain a valid opened device handle.</p></div>
+<a href="00239.html" target="topic">DRV_AT25DF_Open</a> must have been called to obtain a valid opened device handle.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -77,7 +74,7 @@ Parameters</div>
 <div class="Element10">
 <div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table2">
+<table cellspacing="0" class="Table3">
 <tr>
 <td class="Element300" valign="top" width="35%">
 <div class="Element301">
@@ -88,22 +85,22 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open routine <a href="00252.html" target="topic">DRV_I2C_Open</a> function.<br>&nbsp;</div></td></tr><tr>
+A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+txData&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+The source buffer containing data to be programmed into AT25DF FLASH<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+txDataLength&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Total number of bytes to be written.<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
 address&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Slave Address<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-buffer&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Source buffer containing data to be written.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-size&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Size in bytes of data to be written.&nbsp;</div></td></tr></table></div></div>
+Memory start address from where the data should be written&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -111,34 +108,50 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-true - write is successful false - error has occurred</p></div>
+false</p>
+<ul class="Element630">
+<li class="Element600">if handle is invalid</li>
+<li class="Element600">if the pointer to transmit buffer is NULL or number of bytes to write is 0</li>
+<li class="Element600">if the driver is busy handling another transfer request</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+true</p>
+<ul class="Element630">
+<li class="Element600">if the write request is accepted.</li>
+</ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This API must be used only if the underlying PLIB is enabled to generate the Forced write API. If the PLIB is not enabled to generate the Forced Write API, the API will return false.&nbsp;</p>
-<p class="Element10">
-This function is thread safe in a RTOS application. This function should not be called from an interrupt context. This function is available only in the synchronous mode.</p></div>
+None.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
+<div class="Element13"><div class="Element12"><pre class="Element12">
+<strong><span style="color: #000080">#define</span></strong> PAGE_SIZE    256
+<strong><span style="color: #000080">#define</span></strong> BUFFER_SIZE  1024
+<strong><span style="color: #000080">#define</span></strong> MEM_ADDRESS  0x00
 
-<i><span style="color: #008000">// myI2CHandle is the handle returned</span></i>
-<i><span style="color: #008000">// by the DRV_I2C_Open function.</span></i>
+uint8_t writeBuffer[BUFFER_SIZE];
 
-<i><span style="color: #008000">// slaveAddress is address of I2C slave device</span></i>
-<i><span style="color: #008000">// to which data is to be written</span></i>
+<i><span style="color: #008000">// myHandle is the handle returned from DRV_AT25DF_Open API.</span></i>
+<i><span style="color: #008000">// In the below example, the transfer status is polled. However, application can</span></i>
+<i><span style="color: #008000">// register a callback and get notified when the transfer is complete.</span></i>
 
-<strong><span style="color: #000080">if</span></strong> (DRV_I2C_ForcedWriteTransfer(myI2CHandle, slaveAddress, myTxBuffer, MY_TX_BUFFER_SIZE) == <strong><span style="color: #000080">false</span></strong>)
+<strong><span style="color: #000080">if</span></strong> (DRV_AT25DF_Write(myHandle, writeBuffer, BUFFER_SIZE, MEM_ADDRESS) != <strong><span style="color: #000080">true</span></strong>)
 {
     <i><span style="color: #008000">// Error handling here</span></i>
 }
-</pre></div></div>
+<strong><span style="color: #000080">else</span></strong>
+{
+    <i><span style="color: #008000">// Wait for write to be completed</span></i>
+    <strong><span style="color: #000080">while</span></strong>(<a href="00248.html" target="topic">DRV_AT25DF_TransferStatusGet</a>(myHandle) == DRV_AT25DF_TRANSFER_STATUS_BUSY);
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -146,7 +159,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00058.html" target="topic">I2C Driver Library Help</a> &gt; <a href="00059.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00249.html" target="topic">DRV_I2C_ForcedWriteTransfer Function</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00135.html" target="topic">SPI Flash Driver Libraries Help</a> &gt; <a href="00044.html" target="topic">AT25DF Driver Library Help</a> &gt; <a href="00045.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00249.html" target="topic">DRV_AT25DF_Write Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -157,10 +170,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00267.html" target="topic">Previous</a> | <a href="00059.html" target="topic">Up</a> | <a href="00248.html" target="topic">Next</a></div>
+<a href="00248.html" target="topic">Previous</a> | <a href="00045.html" target="topic">Up</a> | <a href="00237.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_I2C_ForcedWriteTransfer@DRV_HANDLE@uint16_t@void* const@size_t Topic Title: DRV_I2C_ForcedWriteTransfer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_AT25DF_Write@DRV_HANDLE@void *@uint32_t@uint32_t Topic Title: DRV_AT25DF_Write Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

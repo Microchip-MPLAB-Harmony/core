@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Introduction</title>
+<title>DRV_USART_WriteQueuePurge Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00578.html" target="topic">OSAL Library Help</a> &gt; <a href="00586.html" target="topic">Introduction</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00165.html" target="topic">USART Driver Library Help</a> &gt; <a href="00166.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00586.html" target="topic">DRV_USART_WriteQueuePurge Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00578.html" target="topic">Previous</a> | <a href="00578.html" target="topic">Up</a> | <a href="00597.html" target="topic">Next</a></div>
+<a href="00580.html" target="topic">Previous</a> | <a href="00166.html" target="topic">Up</a> | <a href="00573.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_WriteQueuePurge@DRV_HANDLE Topic Title: DRV_USART_WriteQueuePurge Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Introduction</div>
+DRV_USART_WriteQueuePurge Function</div>
 </div>
 </div>
 
@@ -48,50 +48,76 @@ Introduction</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10" style="text-align: justify;">
-The OSAL provides the interface to commonly available Real-Time Operating Systems (RTOS) such that MPLAB Harmony libraries may be written using a single interface to a minimal set of OS features needed to provide thread safety. The OSAL interface can be implemented appropriately to support almost any desired RTOS. For systems where no RTOS is available, or desired, a bare version of the OSAL supports either polled or interrupt-driven environments running directly on the hardware. This allows applications designed using MPLAB Harmony libraries to be executed in all three common embedded environments: polled (shared multi-tasking), interrupt-driven, or RTOS-based.</p><div class="Element63">
+<p class="Element10">
+This function removes all the buffer requests from the queue. The client can use this function to purge the queue on timeout or to remove unwanted stalled buffer requests or in any other use case.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_USART_WriteQueuePurge</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00257.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+<a href="00576.html" target="topic">DRV_USART_Open</a> must have been called to obtain a valid opened device handle.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table1">
+<table cellspacing="0" class="Table3">
 <tr>
-<td class="Element67" valign="top" width="10%" style="border:none;">
-<div class="Element68">
-<img src="Note Icon.png" border="0" alt="" title=""> <strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
-<div class="Element68">
-It is possible to make RTOS independent applications using the OSAL. However, as explained in the following section, that is not its purpose. Use and selection of an RTOS is usually determined by the availability of its unique features. And, utilizing those features will, of course, make an application OS-specific.&nbsp;</div></td></tr></table></div></div>
-<p class="Element10" style="text-align: center;">
-<img src="isp_architecture.png" border="0" alt="" title=""></p><div class="Element15">
-Scope</div>
-<p class="Element10" style="text-align: justify;">
-By design, the OSAL is a minimal API intended only to enable thread-safe operation for MPLAB Harmony libraries. It only exposes a very small subset of the capabilities of an operating system so that MPLAB Harmony libraries can use semaphores, mutexes, and critical sections (and a few other things) necessary to protect shared resources (data structures, peripheral registers, and other memory objects) from corruption by unsynchronized access by multiple threads. This is done to allow MPLAB Harmony libraries to be made compatible with the largest variety of operating systems, by using a minimal subset of some of the most common OS features. The OSAL is not intended to provide a complete abstraction of an RTOS, which is what you would normally do to implement a complete application. Abstracting an entire operating system is a much more complex task that is roughly equivalent to defining your own RTOS.&nbsp;</p>
-<p class="Element10" style="text-align: justify;">
-The OSAL is not designed to replace a commercial kernel, and therefore, the user is encouraged to use any of the specific features of their chosen RTOS in order to achieve best performance. As such, the OSAL can be considered to be an Operating System Compatibility Layer offering MPLAB Harmony-compliant libraries the required common functions to ensure correct operation in both RTOS and non-RTOS environments.&nbsp;</p>
-<p class="Element10" style="text-align: justify;">
-The common interface presented by the OSAL is designed to offer a set of services typically found on micro-kernel and mini-scheduler systems. Because of this it has no aspirations to provide an equivalent set of capabilities as those found on large multi-tasking systems such as <span style="color: #000000">µ</span>CLinux™. The common services are designed to allow MPLAB Harmony to implement thread-safe Drivers and Middleware. The design intention is that drivers will use the minimal set of OSAL features necessary to ensure that they can safely operate in a multi-threaded environment yet can also compile and run correctly when no underlying RTOS is present. The range of features used by a driver is typically limited to these OSAL features (see the <a href="00587.html" target="topic">Library Interface</a> section):</p>
-<ul class="Element630">
-<li class="Element600">Semaphore Functions</li>
-<li class="Element600">Mutex Functions</li>
-<li class="Element600">Critical Section Functions</li>
-</ul><div class="Element15">
-Supported RTOS</div>
-<div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table4">
-<tr>
-<td class="Element65" valign="top" width="57%">
-<div class="Element66">
-RTOS&nbsp;</div></td><td class="Element65" valign="top" width="43%">
-<div class="Element66">
-Release Type&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="57%">
-<div class="Element68">
-FreeRTOS v10.0.1&nbsp;</div></td><td class="Element67" valign="top" width="43%">
-<div class="Element68">
-Production&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="57%">
-<div class="Element68">
-Micrium OS III v3.07.03&nbsp;</div></td><td class="Element67" valign="top" width="43%">
-<div class="Element68">
-Production&nbsp;</div></td></tr></table></div></div>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Handle of the communication channel as returned by the <a href="00576.html" target="topic">DRV_USART_Open</a> function.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+true - Write queue purge is successful.&nbsp;</p>
+<p class="Element10">
+false - Write queue purge has failed.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function is thread safe when used in an RTOS environment. Avoid this function call from within the callback. This function does not abort the on-going write transfer.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// myUSARTHandle is the handle returned by the DRV_USART_Open function.</span></i>
+<i><span style="color: #008000">// Use DRV_USART_WriteBufferAdd to queue write requests</span></i>
+
+<i><span style="color: #008000">// Application timeout function, where remove queued buffers.</span></i>
+<strong><span style="color: #000080">void</span></strong> APP_TimeOut(<strong><span style="color: #000080">void</span></strong>)
+{
+    <strong><span style="color: #000080">if</span></strong>(DRV_USART_WriteQueuePurge(myUSARThandle) == <strong><span style="color: #000080">false</span></strong>)
+    {
+        <i><span style="color: #008000">//Couldn't purge the write queue, try again.</span></i>
+    }
+    <strong><span style="color: #000080">else</span></strong>
+    {
+        <i><span style="color: #008000">//Queue purge successful.</span></i>
+    }
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -99,7 +125,7 @@ Production&nbsp;</div></td></tr></table></div></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00578.html" target="topic">OSAL Library Help</a> &gt; <a href="00586.html" target="topic">Introduction</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00165.html" target="topic">USART Driver Library Help</a> &gt; <a href="00166.html" target="topic">Library Interface</a> &gt; c) Data Transfer Functions &gt; <a href="00586.html" target="topic">DRV_USART_WriteQueuePurge Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -110,10 +136,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00578.html" target="topic">Previous</a> | <a href="00578.html" target="topic">Up</a> | <a href="00597.html" target="topic">Next</a></div>
+<a href="00580.html" target="topic">Previous</a> | <a href="00166.html" target="topic">Up</a> | <a href="00573.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: OSAL Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_USART_WriteQueuePurge@DRV_HANDLE Topic Title: DRV_USART_WriteQueuePurge Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

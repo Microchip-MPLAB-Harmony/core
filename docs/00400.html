@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SDMMC_Initialize Function</title>
+<title>DRV_NAND_FLASH_FeatureGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00097.html" target="topic">SDMMC Driver Library</a> &gt; <a href="00098.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00400.html" target="topic">DRV_SDMMC_Initialize Function</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00096.html" target="topic">NAND Flash Driver Library Help</a> &gt; <a href="00097.html" target="topic">Library Interface</a> &gt; c) Transaction Functions &gt; <a href="00400.html" target="topic">DRV_NAND_FLASH_FeatureGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00098.html" target="topic">Previous</a> | <a href="00098.html" target="topic">Up</a> | <a href="00404.html" target="topic">Next</a></div>
+<a href="00430.html" target="topic">Previous</a> | <a href="00097.html" target="topic">Up</a> | <a href="00401.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDMMC_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT* const Topic Title: DRV_SDMMC_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_NAND_FLASH_FeatureGet@DRV_HANDLE@uint8_t *@uint8_t@uint8_t Topic Title: DRV_NAND_FLASH_FeatureGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SDMMC_Initialize Function</div>
+DRV_NAND_FLASH_FeatureGet Function</div>
 </div>
 </div>
 
@@ -49,20 +49,22 @@ DRV_SDMMC_Initialize Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This routine initializes the SD Card driver, making it ready for clients to open and use the driver.</p></div>
+This routine reads target specific features from NAND Flash.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01139.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_SDMMC_Initialize</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01133.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="01134.html" target="topic">SYS_MODULE_INIT</a>* <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_NAND_FLASH_FeatureGet</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00257.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    uint8_t * <strong><span style="color: #000000">featureData</span></strong>, 
+    uint8_t <strong><span style="color: #000000">featureDataSize</span></strong>, 
+    uint8_t <strong><span style="color: #000000">featureAddress</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+The <a href="00414.html" target="topic">DRV_NAND_FLASH_Open</a>() routine must have been called for the specified NAND FLASH driver instance.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -70,7 +72,7 @@ Parameters</div>
 <div class="Element10">
 <div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table2">
+<table cellspacing="0" class="Table3">
 <tr>
 <td class="Element300" valign="top" width="35%">
 <div class="Element301">
@@ -79,14 +81,24 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-drvIndex&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Index for the driver instance to be initialized<br>&nbsp;</div></td></tr><tr>
+A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+featureData&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to a data structure containing any data necessary to initialize the driver. This pointer may be null if no data is required because static overrides have been provided.&nbsp;</div></td></tr></table></div></div>
+Pointer to destination buffer into which subfeature data to be placed from NAND Flash&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+featureDataSize&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Total number of subfeature data bytes to be read&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+featureAddress&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Specific feature address to be send after command cycle.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -94,30 +106,36 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If successful, returns a valid handle to a driver object. Otherwise, it returns <a href="01140.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
+false</p>
+<ul class="Element630">
+<li class="Element600">If invalid handle</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+true</p>
+<ul class="Element630">
+<li class="Element600">If specific feature is read successfully from the flash</li>
+</ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This routine must be called before any other SD Card routine is called. This routine should only be called once during system initialization.&nbsp;</p>
-<p class="Element10">
-This routine will NEVER block for hardware access. The system must use <a href="00404.html" target="topic">DRV_SDMMC_Status</a> to find out when the driver is in the ready state.</p></div>
+This routine will block for hardware access.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">DRV_SDMMC_INIT      init;
-<a href="01139.html" target="topic">SYS_MODULE_OBJ</a>      objectHandle;
+<div class="Element13"><div class="Element12"><pre class="Element12">i.e. Read NAND Flash ECC controller <strong><span style="color: #000080">if</span></strong> NAND Flash supports <strong><span style="color: #000080">internal</span></strong> ECC controller
+<strong><span style="color: #000080">#define</span></strong> NAND_FLASH_TARGET_DISABLE_INTERNAL_ECC    0x90
+uint8_t featureData[4];
+<a href="00257.html" target="topic">DRV_HANDLE</a> handle;  <i><span style="color: #008000">// Returned from DRV_NAND_FLASH_Open</span></i>
 
-<i><span style="color: #008000">// Populate the SD Card initialization structure</span></i>
-
-objectHandle = DRV_SDMMC_Initialize(DRV_SDMMC_INDEX_0, (<a href="01134.html" target="topic">SYS_MODULE_INIT</a>*)&amp;init);
-<strong><span style="color: #000080">if</span></strong> (objectHandle == <a href="01140.html" target="topic">SYS_MODULE_OBJ_INVALID</a>)
+<strong><span style="color: #000080">if</span></strong> (DRV_NAND_FLASH_FeatureGet(handle, featureData, <strong><span style="color: #000080">sizeof</span></strong>(featureData), NAND_FLASH_TARGET_DISABLE_INTERNAL_ECC))
 {
-    <i><span style="color: #008000">// Handle error</span></i>
+    <i><span style="color: #008000">// Feature data read successfully</span></i>
 }</pre></div></div>
 </div>
 </div>
@@ -126,7 +144,7 @@ objectHandle = DRV_SDMMC_Initialize(DRV_SDMMC_INDEX_0, (<a href="01134.html" tar
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00097.html" target="topic">SDMMC Driver Library</a> &gt; <a href="00098.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00400.html" target="topic">DRV_SDMMC_Initialize Function</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00096.html" target="topic">NAND Flash Driver Library Help</a> &gt; <a href="00097.html" target="topic">Library Interface</a> &gt; c) Transaction Functions &gt; <a href="00400.html" target="topic">DRV_NAND_FLASH_FeatureGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -137,10 +155,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00098.html" target="topic">Previous</a> | <a href="00098.html" target="topic">Up</a> | <a href="00404.html" target="topic">Next</a></div>
+<a href="00430.html" target="topic">Previous</a> | <a href="00097.html" target="topic">Up</a> | <a href="00401.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDMMC_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT* const Topic Title: DRV_SDMMC_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_NAND_FLASH_FeatureGet@DRV_HANDLE@uint8_t *@uint8_t@uint8_t Topic Title: DRV_NAND_FLASH_FeatureGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

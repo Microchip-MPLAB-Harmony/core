@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_CONSOLE_DEVICE Enumeration</title>
+<title>SYS_CMD_ADDGRP Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01209.html" target="topic">System Service Libraries Help</a> &gt; <a href="00656.html" target="topic">Console System Service Library Help</a> &gt; <a href="00657.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00778.html" target="topic">SYS_CONSOLE_DEVICE Enumeration</a></div>
+<a href="01259.html" target="topic">System Service Libraries Help</a> &gt; <a href="00691.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00692.html" target="topic">Library Interface</a> &gt; a) System Interaction Functions &gt; <a href="00778.html" target="topic">SYS_CMD_ADDGRP Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00630.html" target="topic">Previous</a> | <a href="00657.html" target="topic">Up</a> | <a href="00784.html" target="topic">Next</a></div>
+<a href="00692.html" target="topic">Previous</a> | <a href="00692.html" target="topic">Up</a> | <a href="00790.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_DEVICE Topic Title: SYS_CONSOLE_DEVICE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CMD_ADDGRP@SYS_CMD_DESCRIPTOR*@int@char*@char* Topic Title: SYS_CMD_ADDGRP Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_CONSOLE_DEVICE Enumeration</div>
+SYS_CMD_ADDGRP Function</div>
 </div>
 </div>
 
@@ -49,17 +49,33 @@ SYS_CONSOLE_DEVICE Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Console device enumeration&nbsp;</p>
-<p class="Element10">
-This enumeration lists all of the available console devices. A console device is a physical peripheral used by the console service to send and receive data.</p></div>
+Client modules may call this function to add command process to the Command Processor System Service.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">SYS_CONSOLE_DEV_USART</span></strong>,
-  <strong><span style="color: #000000">SYS_CONSOLE_DEV_USB_CDC</span></strong>,
-  <strong><span style="color: #000000">SYS_CONSOLE_DEV_MAX</span></strong>
-} SYS_CONSOLE_DEVICE;</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">SYS_CMD_ADDGRP</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00791.html" target="topic">SYS_CMD_DESCRIPTOR</a>* <strong><span style="color: #000000">pCmdTbl</span></strong>, 
+    <strong><span style="color: #000080">int</span></strong> <strong><span style="color: #000000">nCmds</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong>* <strong><span style="color: #000000">groupName</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">char</span></strong>* <strong><span style="color: #000000">menuStr</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+<a href="00809.html" target="topic">SYS_CMD_Initialize</a> was successfully run once.</p></div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+
+<ul class="Element630">
+<li class="Element600">true - Indicates success</li>
+<li class="Element600">false - Indicates an error occurred</li>
+</ul></div>
+</div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
@@ -67,12 +83,21 @@ Remarks</div>
 <p class="Element10">
 None.</p></div>
 </div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+static const <a href="00791.html" target="topic">SYS_CMD_DESCRIPTOR</a> cmdTbl[]= { {&quot;command_as_typed_at_the_prompt&quot;, _Function_Name_That_Supports_The_Command, &quot;: Helpful description of the command for the user&quot;}, };&nbsp;</p>
+<p class="Element10">
+bool APP_AddCommandFunction() { if (!SYS_CMD_ADDGRP(cmdTbl, sizeof(cmdTbl)/sizeof(*cmdTbl), &quot;Command Group Name&quot;, &quot;: Command Group Description&quot;)) { return false; } return true; }</p></div>
+</div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01209.html" target="topic">System Service Libraries Help</a> &gt; <a href="00656.html" target="topic">Console System Service Library Help</a> &gt; <a href="00657.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00778.html" target="topic">SYS_CONSOLE_DEVICE Enumeration</a></div>
+<a href="01259.html" target="topic">System Service Libraries Help</a> &gt; <a href="00691.html" target="topic">Command Processor System Service Library Help</a> &gt; <a href="00692.html" target="topic">Library Interface</a> &gt; a) System Interaction Functions &gt; <a href="00778.html" target="topic">SYS_CMD_ADDGRP Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -83,10 +108,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00630.html" target="topic">Previous</a> | <a href="00657.html" target="topic">Up</a> | <a href="00784.html" target="topic">Next</a></div>
+<a href="00692.html" target="topic">Previous</a> | <a href="00692.html" target="topic">Up</a> | <a href="00790.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CONSOLE_DEVICE Topic Title: SYS_CONSOLE_DEVICE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_CMD_ADDGRP@SYS_CMD_DESCRIPTOR*@int@char*@char* Topic Title: SYS_CMD_ADDGRP Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

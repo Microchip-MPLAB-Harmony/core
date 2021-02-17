@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SPI_WriteTransfer Function</title>
+<title>DRV_SDSPI_Tasks Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00125.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00126.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00479.html" target="topic">DRV_SPI_WriteTransfer Function</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00122.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00123.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00479.html" target="topic">DRV_SDSPI_Tasks Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00455.html" target="topic">Previous</a> | <a href="00126.html" target="topic">Up</a> | <a href="00477.html" target="topic">Next</a></div>
+<a href="00476.html" target="topic">Previous</a> | <a href="00123.html" target="topic">Up</a> | <a href="00474.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_WriteTransfer@DRV_HANDLE@void*@size_t Topic Title: DRV_SPI_WriteTransfer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDSPI_Tasks@SYS_MODULE_OBJ Topic Title: DRV_SDSPI_Tasks Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SPI_WriteTransfer Function</div>
+DRV_SDSPI_Tasks Function</div>
 </div>
 </div>
 
@@ -49,29 +49,19 @@ DRV_SPI_WriteTransfer Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function does a blocking write operation. The function blocks till the data transmit is complete. Function will return true if the transmit is successful or false in case of an error. The failure will occur for the following reasons:</p>
-<ul class="Element630">
-<li class="Element600">if the handle is invalid</li>
-<li class="Element600">if the pointer to the transmit buffer is NULL</li>
-<li class="Element600">if the transmit size is 0</li>
-</ul></div>
+This routine is used to maintain the driver's internal state machine. For synchronous driver, the task routine periodically checks for SD card attach/detach event and initializes the SD card.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_SPI_WriteTransfer</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00245.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong>* <strong><span style="color: #000000">pTransmitData</span></strong>, 
-    size_t <strong><span style="color: #000000">txSize</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_SDSPI_Tasks</span></strong>(
+    <a href="01189.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">object</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600"><a href="00454.html" target="topic">DRV_SPI_Open</a> must have been called to obtain a valid opened device handle.</li>
-<li class="Element600"><a href="00475.html" target="topic">DRV_SPI_TransferSetup</a> must have been called if GPIO pin has to be used for chip select or any of the setup parameters has to be changed dynamically.</li>
-</ul></div>
+<p class="Element10">
+The <a href="00471.html" target="topic">DRV_SDSPI_Initialize</a> routine must have been called for the specified SDSPI driver instance.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -79,7 +69,7 @@ Parameters</div>
 <div class="Element10">
 <div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table2">
+<table cellspacing="0" class="Table3">
 <tr>
 <td class="Element300" valign="top" width="35%">
 <div class="Element301">
@@ -88,54 +78,38 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+object&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Handle of the communication channel as returned by the <a href="00454.html" target="topic">DRV_SPI_Open</a> function.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-*pTransmitData&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to the data which has to be transmitted. For 9 to 15bit mode, data should be right aligned in the 16 bit memory location.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-txSize&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Number of bytes to be transmitted. Always, size should be given in terms of bytes. For example, if 10 15-bit data are to be transmitted, the transmit size should be 20 bytes.&nbsp;</div></td></tr></table></div></div>
+Object handle for the specified driver instance (returned from <a href="00471.html" target="topic">DRV_SDSPI_Initialize</a>)&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
 Returns</div>
 <div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600">true - transfer is successful</li>
-<li class="Element600">false - error has occurred</li>
-</ul></div>
+<p class="Element10">
+None</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600">This function is thread safe in a RTOS application.</li>
-<li class="Element600">This function should not be called from an interrupt context.</li>
-</ul></div>
+<p class="Element10">
+This routine is normally not called directly by an application. For synchronous driver with RTOS, this routine is called from a separate RTOS thread.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-MY_APP_OBJ myAppObj;
-uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">//sysObj.drvSDSPI0 is returned by the driver initialization routine</span></i>
 
-<i><span style="color: #008000">// mySPIHandle is the handle returned by the DRV_SPI_Open function.</span></i>
-
-<strong><span style="color: #000080">if</span></strong> (DRV_SPI_WriteTransfer(mySPIhandle, myTxBuffer, MY_TX_BUFFER_SIZE) == <strong><span style="color: #000080">false</span></strong>)
+<i><span style="color: #008000">//For synchronous driver</span></i>
+<strong><span style="color: #000080">while</span></strong>(1)
 {
-    <i><span style="color: #008000">// Handle error here</span></i>
+    DRV_SDSPI_Tasks(sysObj.drvSDSPI0);
+
+    <i><span style="color: #008000">// Yield and allow other threads to run</span></i>
+    vTaskDelay(100 / portTICK_PERIOD_MS);
 }</pre></div></div>
 </div>
 </div>
@@ -144,7 +118,7 @@ uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00125.html" target="topic">SPI Driver Library Help</a> &gt; <a href="00126.html" target="topic">Library Interface</a> &gt; c) Transfer Functions &gt; <a href="00479.html" target="topic">DRV_SPI_WriteTransfer Function</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00122.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00123.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="00479.html" target="topic">DRV_SDSPI_Tasks Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -155,10 +129,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00455.html" target="topic">Previous</a> | <a href="00126.html" target="topic">Up</a> | <a href="00477.html" target="topic">Next</a></div>
+<a href="00476.html" target="topic">Previous</a> | <a href="00123.html" target="topic">Up</a> | <a href="00474.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_WriteTransfer@DRV_HANDLE@void*@size_t Topic Title: DRV_SPI_WriteTransfer Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDSPI_Tasks@SYS_MODULE_OBJ Topic Title: DRV_SDSPI_Tasks Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SDSPI_GeometryGet Function</title>
+<title>DRV_NAND_FLASH_SkipBlock_PageRead Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00110.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00111.html" target="topic">Library Interface</a> &gt; d) Status Functions &gt; <a href="00422.html" target="topic">DRV_SDSPI_GeometryGet Function</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00096.html" target="topic">NAND Flash Driver Library Help</a> &gt; <a href="00097.html" target="topic">Library Interface</a> &gt; c) Transaction Functions &gt; <a href="00422.html" target="topic">DRV_NAND_FLASH_SkipBlock_PageRead Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00425.html" target="topic">Previous</a> | <a href="00111.html" target="topic">Up</a> | <a href="00409.html" target="topic">Next</a></div>
+<a href="00421.html" target="topic">Previous</a> | <a href="00097.html" target="topic">Up</a> | <a href="00423.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDSPI_GeometryGet@DRV_HANDLE Topic Title: DRV_SDSPI_GeometryGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_NAND_FLASH_SkipBlock_PageRead@DRV_HANDLE@uint16_t@uint16_t@uint8_t *@uint8_t *@bool Topic Title: DRV_NAND_FLASH_SkipBlock_PageRead Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SDSPI_GeometryGet Function</div>
+DRV_NAND_FLASH_SkipBlock_PageRead Function</div>
 </div>
 </div>
 
@@ -49,26 +49,24 @@ DRV_SDSPI_GeometryGet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This API gives the following geometrical details of the SD Card.</p>
-<ul class="Element630">
-<li class="Element600">Media Property</li>
-<li class="Element600">Number of Read/Write/Erase regions in the SD Card</li>
-<li class="Element600">Number of Blocks and their size in each region of the device</li>
-</ul></div>
+This function schedules a blocking operation for reading the data and/or the spare area of a page of given block from NAND Flash.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01111.html" target="topic">SYS_MEDIA_GEOMETRY</a> * <strong><span style="color: #000000">DRV_SDSPI_GeometryGet</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="00245.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">DRV_NAND_FLASH_SkipBlock_PageRead</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00257.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    uint16_t <strong><span style="color: #000000">blockNum</span></strong>, 
+    uint16_t <strong><span style="color: #000000">pageNum</span></strong>, 
+    uint8_t * <strong><span style="color: #000000">data</span></strong>, 
+    uint8_t * <strong><span style="color: #000000">spare</span></strong>, 
+    <strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">disableBlockCheck</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="00423.html" target="topic">DRV_SDSPI_Initialize</a> routine must have been called for the specified SDSPI driver instance.&nbsp;</p>
-<p class="Element10">
-The <a href="00426.html" target="topic">DRV_SDSPI_Open</a> routine must have been called to obtain a valid opened device handle.</p></div>
+The <a href="00414.html" target="topic">DRV_NAND_FLASH_Open</a>() routine must have been called for the specified NAND FLASH driver instance.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -76,7 +74,7 @@ Parameters</div>
 <div class="Element10">
 <div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table2">
+<table cellspacing="0" class="Table3">
 <tr>
 <td class="Element300" valign="top" width="35%">
 <div class="Element301">
@@ -87,7 +85,37 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-A valid open-instance handle, returned from the driver's open function&nbsp;</div></td></tr></table></div></div>
+A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+blockNum&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Block number to read page from&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+pageNum&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Page number to read inside the given block&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+data&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to destination data buffer&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+spare&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to destination spare buffer.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+disableBlockCheck&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+0 - Block will be checked as good before reading a page.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+1&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Block will not check before reading a page.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -95,35 +123,38 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="01111.html" target="topic">SYS_MEDIA_GEOMETRY</a> - Pointer to structure which holds the media geometry information.</p></div>
+false</p>
+<ul class="Element630">
+<li class="Element600">If Page read fails</li>
+</ul><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+true</p>
+<ul class="Element630">
+<li class="Element600">If Page read is successfully completed</li>
+</ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Refer to the &quot;system/system_media.h&quot; for the declaration of the <a href="01111.html" target="topic">SYS_MEDIA_GEOMETRY</a> structure.</p></div>
+This routine will block waiting until read request is completed successfully.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
 <div class="Element13"><div class="Element12"><pre class="Element12">
-<a href="01111.html" target="topic">SYS_MEDIA_GEOMETRY</a> * SDSPIGeometry;
-uint32_t readBlockSize, writeBlockSize, eraseBlockSize;
-uint32_t nReadBlocks, nReadRegions, totalSize;
+<a href="00257.html" target="topic">DRV_HANDLE</a> handle;  <i><span style="color: #008000">// Returned from DRV_NAND_FLASH_Open</span></i>
+uint16_t blockNum = 3;
+uint16_t pageNum = 0;
+<strong><span style="color: #000080">static</span></strong> uint8_t pageBuffer[4096 + 224];
 
-<i><span style="color: #008000">// mySDSPIHandle is the handle returned by the DRV_SDSPI_Open function.</span></i>
-SDSPIGeometry = DRV_SDSPI_GeometryGet(mySDSPIHandle);
-
-readBlockSize  = SDSPIGeometry-&gt;geometryTable-&gt;blockSize;
-nReadBlocks = SDSPIGeometry-&gt;geometryTable-&gt;numBlocks;
-nReadRegions = SDSPIGeometry-&gt;numReadRegions;
-
-writeBlockSize  = (SDSPIGeometry-&gt;geometryTable +1)-&gt;blockSize;
-eraseBlockSize  = (SDSPIGeometry-&gt;geometryTable +2)-&gt;blockSize;
-
-totalSize = readBlockSize * nReadBlocks * nReadRegions;
+<strong><span style="color: #000080">if</span></strong> (DRV_NAND_FLASH_SkipBlock_PageRead(handle, blockNum, pageNum, pageBuffer, 0, 0))
+{
+    <i><span style="color: #008000">// Page read successfully completed</span></i>
+}
 </pre></div></div>
 </div>
 </div>
@@ -132,7 +163,7 @@ totalSize = readBlockSize * nReadBlocks * nReadRegions;
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00110.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00111.html" target="topic">Library Interface</a> &gt; d) Status Functions &gt; <a href="00422.html" target="topic">DRV_SDSPI_GeometryGet Function</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00096.html" target="topic">NAND Flash Driver Library Help</a> &gt; <a href="00097.html" target="topic">Library Interface</a> &gt; c) Transaction Functions &gt; <a href="00422.html" target="topic">DRV_NAND_FLASH_SkipBlock_PageRead Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -143,10 +174,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00425.html" target="topic">Previous</a> | <a href="00111.html" target="topic">Up</a> | <a href="00409.html" target="topic">Next</a></div>
+<a href="00421.html" target="topic">Previous</a> | <a href="00097.html" target="topic">Up</a> | <a href="00423.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SDSPI_GeometryGet@DRV_HANDLE Topic Title: DRV_SDSPI_GeometryGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_NAND_FLASH_SkipBlock_PageRead@DRV_HANDLE@uint16_t@uint16_t@uint8_t *@uint8_t *@bool Topic Title: DRV_NAND_FLASH_SkipBlock_PageRead Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

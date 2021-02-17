@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>How the Library Works</title>
+<title>Introduction</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00110.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00114.html" target="topic">Using the Library</a> &gt; <a href="00108.html" target="topic">How the Library Works</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00109.html" target="topic">SDMMC Driver Library</a> &gt; <a href="00108.html" target="topic">Introduction</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00102.html" target="topic">Previous</a> | <a href="00114.html" target="topic">Up</a> | <a href="00104.html" target="topic">Next</a></div>
+<a href="00109.html" target="topic">Previous</a> | <a href="00109.html" target="topic">Up</a> | <a href="00113.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDSPI How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDMMC Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-How the Library Works</div>
+Introduction</div>
 </div>
 </div>
 
@@ -48,20 +48,23 @@ How the Library Works</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-
-<ul class="Element630">
-<li class="Element600">The SDSPI driver Library registers an event handler with the underlying SPI peripheral library or the SPI Driver instance. This event handler is called by the SPI PLIB or the SPI driver from the interrupt context to notify the SDSPI driver that the requested transfer is complete</li>
-<li class="Element600">When DMA is enabled and SPI PLIB is used, the SDSPI Driver registers an event handler with the DMA peripheral library. This event handler is called by by the DMA PLIB from the interrupt context once the DMA transfer is complete. When using SPI driver, the DMA operations are handled internally by the SPI driver. In this case, the SDSPI registers a callback with the SPI driver which in turn registers a callback with the DMA peripheral library.</li>
-<li class="Element600">The SD Card driver state machine checks for SD Card attach/detach status using command-response mechanism. Once a SD Card is detected, the state machine initializes the SD Card making it ready for the client to submit read/write requests. After the SD Card is initialized, the state machine periodically checks if the SD Card is still connected using command/response mechanism. The rate at which the SD card driver checks for the SD Card attach/detach event can be specified via an MHC configuration option. In case RTOS is enabled, the RTOS Task Delay value for the SDSPI Driver task also affects the rate at which the SD Card attach/detach is checked.</li>
-<li class="Element600">In Asynchronous mode, the SD Card driver state machine checks the driver instance queue for any pending requests. If a request is pending, then the corresponding request is executed. Once the request is execution is complete, a callback is given to the application if it is registered by the application client. In Synchronous mode, the application request is executed in blocking mode, which means it is executed in the context of the caller/application thread.</li>
-</ul></div>
+<p class="Element10">
+<span style="color: #000000">The SDMMC driver is a multi-client multi-instance buffer model based block driver interface which can be used to communicate with SD or eMMC cards.</span>&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000"><strong>Key Features of the SDMMC driver:</strong></span></p>
+<ol class="Element630">
+<li value="1" class="Element600"><span style="color: #000000">Supports Asynchronous (non-blocking) mode of operation.</span></li>
+<li value="2" class="Element600"><span style="color: #000000">It works in both Bare Metal and RTOS environment.</span></li>
+</ol></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00110.html" target="topic">SD Card (SPI) Driver Library</a> &gt; <a href="00114.html" target="topic">Using the Library</a> &gt; <a href="00108.html" target="topic">How the Library Works</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00109.html" target="topic">SDMMC Driver Library</a> &gt; <a href="00108.html" target="topic">Introduction</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -72,10 +75,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00102.html" target="topic">Previous</a> | <a href="00114.html" target="topic">Up</a> | <a href="00104.html" target="topic">Next</a></div>
+<a href="00109.html" target="topic">Previous</a> | <a href="00109.html" target="topic">Up</a> | <a href="00113.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDSPI How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV SDMMC Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00131.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00084.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00088.html" target="topic">Using the Library</a> &gt; <a href="00082.html" target="topic">How the Library Works</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00143.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00084.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00088.html" target="topic">Using the Library</a> &gt; <a href="00082.html" target="topic">How the Library Works</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -50,15 +50,15 @@ How the Library Works</div>
 <div class="Element10">
 
 <ul class="Element630">
-<li class="Element600"><span style="color: #000000">The MX25L Driver performs initialization and puts the driver to ready state. This status of the driver can be checked using <a href="00377.html" target="topic">DRV_MX25L_Status</a>()</span></li>
-<li class="Element600"><span style="color: #000000">The MX25L driver library performs set of flash operations during <a href="00371.html" target="topic">DRV_MX25L_Open</a>(). If any of the below flash operations fails, an invalid Handle will be returned. <a href="00371.html" target="topic">DRV_MX25L_Open</a>() can be repeatedly called until it returns a valid handle.</span>
+<li class="Element600"><span style="color: #000000">The MX25L Driver performs initialization and puts the driver to ready state. This status of the driver can be checked using <a href="00389.html" target="topic">DRV_MX25L_Status</a>()</span></li>
+<li class="Element600"><span style="color: #000000">The MX25L driver library performs set of flash operations during <a href="00383.html" target="topic">DRV_MX25L_Open</a>(). If any of the below flash operations fails, an invalid Handle will be returned. <a href="00383.html" target="topic">DRV_MX25L_Open</a>() can be repeatedly called until it returns a valid handle.</span>
 <ul class="Element631">
 <li class="Element601"><span style="color: #000000">Resets the Flash</span></li>
 <li class="Element601"><span style="color: #000000">Configures the flash device to QUAD IO Mode</span></li>
 <li class="Element601"><span style="color: #000000">Unlocks the flash</span></li>
 </ul></li>
 <li class="Element600">When the client requests for device geometry, it queries for the JEDEC-Id and populates the geometry table DRV_<span style="color: #000000">MX25L</span>_GEOMETRY appropriately</li>
-<li class="Element600"><span style="color: #000000">The driver does not support queuing of more than one requests. The application must check and ensure that any previous request is completed before submitting a new one. This can be done by polling the status of data transfer using <a href="00382.html" target="topic">DRV_MX25L_TransferStatusGet</a>()</span></li>
+<li class="Element600"><span style="color: #000000">The driver does not support queuing of more than one requests. The application must check and ensure that any previous request is completed before submitting a new one. This can be done by polling the status of data transfer using <a href="00394.html" target="topic">DRV_MX25L_TransferStatusGet</a>()</span></li>
 </ul></div>
 </div>
 </div>
@@ -66,7 +66,7 @@ How the Library Works</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00131.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00084.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00088.html" target="topic">Using the Library</a> &gt; <a href="00082.html" target="topic">How the Library Works</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00143.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00084.html" target="topic">MX25L Driver Library Help</a> &gt; <a href="00088.html" target="topic">Using the Library</a> &gt; <a href="00082.html" target="topic">How the Library Works</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
