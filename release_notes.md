@@ -20,13 +20,16 @@
 ### Known Issues
 
 The current known issues are as follows:
-  -  Any File system based project which runs into Fat-Fs file path error during regeneration needs to remove and add file system component in MHC project graph
-  -  The clock PLIB on SAM D20 is updated to use DFLL in closed loop mode by default. This requires enabling the internal 8 MHZ Oscillator clock source for GLCK1 in MHC Clock configurator, which is used as a reference clock for DFLL.
-  -  Removed weak declaration for interrupts that are enabled in NVIC. Build error will occur if unused interrupts are enabled in the NVIC.
-  -  The following product family requires newer DFP version to be downloaded from packs server and to be used in the MPLAB project to build with MPLAB X IDE v5.45.
-     -  **SAM 9X6 Family**: SAM9X6 DFP v1.5.50
-     -  **SAM A5D2 Family**: SAMA5D2 DFP 1.5.53
-     -  **PIC32MZ-W Family**: PIC32MZ-W DFP v1.4.193
+-  Any File system based project which runs into Fat-Fs file path error during regeneration needs to remove and add file system component in MHC project graph
+-  The clock PLIB on SAM D20 is updated to use DFLL in closed loop mode by default. This requires enabling the internal 8 MHZ Oscillator clock source for GLCK1 in MHC Clock configurator, which is used as a reference clock for DFLL.
+- The following product families specifically requires the below mentioned DFP versions to be [installed](https://microchipdeveloper.com/mplabx:projects-packs)  with MPLABX v5.45. It is always recommended to use the latest version of DFPs for all products provided by Microchip.
+     -  **SAM 9X6 Family**: SAM9X6 DFP v1.5.50 or higher
+     -  **SAM A5D2 Family**: SAMA5D2 DFP 1.5.53 or higher
+     -  **SAM D51 Family**: SAMD51 DFP v3.4.91 or higher
+     -  **SAM E51 Family**: SAME51 DFP v3.4.98 or higher
+     -  **SAM E53 Family**: SAME53 DFP v3.4.79 or higher
+     -  **SAM E54 Family**: SAME54 DFP v3.5.87 or higher
+     -  **PIC32MZ-W Family**: PIC32MZ-W DFP v1.4.193 or higher
 
 
 ### Development Tools
@@ -37,6 +40,11 @@ The current known issues are as follows:
 - [KEIL MDK v5.31](https://www2.keil.com/mdk5)
 - MPLAB® X IDE plug-ins:
   - MPLAB® Harmony Configurator (MHC) v3.7.0
+
+
+### Notes
+
+-  Removed weak declaration for interrupts that are enabled in NVIC to enforce definition of interrupt handlers for MISRA C Required rules compliance. Any interrupts that are enabled without a corresponding interrupt handler will result in build error and hence the unused interrupts must be disabled.
 
 ## Core Release v3.8.1
 ### New Features
