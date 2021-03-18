@@ -300,12 +300,12 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_ExpectedIdleTime.setVisible(False)
     freeRtosSym_ExpectedIdleTime.setDependencies(freeRtosExpIdleTimeVisibility, ["FREERTOS_TICKLESS_IDLE_CHOICE"])
 
-    freeRtosSym_CpuClockHz = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_CPU_CLOCK_HZ", freeRtosSymMenu)
-    freeRtosSym_CpuClockHz.setLabel("CPU Clock Speed (Hz)")
-    freeRtosSym_CpuClockHz.setDescription("This is the CPU clock speed obtained from the Clock System Service configuration.")
-    freeRtosSym_CpuClockHz.setReadOnly(True)
-
-    if (coreArch == "MIPS"):
+    if (coreArch != "MIPS"):
+        freeRtosSym_CpuClockHz = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_CPU_CLOCK_HZ", freeRtosSymMenu)
+        freeRtosSym_CpuClockHz.setLabel("CPU Clock Speed (Hz)")
+        freeRtosSym_CpuClockHz.setDescription("This is the CPU clock speed obtained from the Clock System Service configuration.")
+        freeRtosSym_CpuClockHz.setReadOnly(True)
+    else:
         freeRtosSym_PerClockHz = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_PERIPHERAL_CLOCK_HZ", freeRtosSymMenu)
         freeRtosSym_PerClockHz.setLabel("Peripheral Clock Speed (Hz)")
         freeRtosSym_PerClockHz.setDescription("This is the frequency in Hz at which the Timer peripherals are clocked (PBCLK), obtained from the Clock System Service configuration.")

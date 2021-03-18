@@ -47,7 +47,9 @@
 <#if FREERTOS_TICKLESS_IDLE_CHOICE == "Tickless_Idle">
     <#lt>#define configEXPECTED_IDLE_TIME_BEFORE_SLEEP   ${FREERTOS_EXPECTED_IDLE_TIME_BEFORE_SLEEP}
 </#if>
+<#if core.CoreArchitecture != "MIPS">
 #define configCPU_CLOCK_HZ                      ( ${FREERTOS_CPU_CLOCK_HZ?number?c}UL )
+</#if>
 #define configTICK_RATE_HZ                      ( ( TickType_t ) ${FREERTOS_TICK_RATE_HZ} )
 #define configMAX_PRIORITIES                    ( ${FREERTOS_MAX_PRIORITIES}UL )
 #define configMINIMAL_STACK_SIZE                ( ${FREERTOS_MINIMAL_STACK_SIZE} )

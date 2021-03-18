@@ -26,18 +26,12 @@
 ############### MIPS Architecture specific configuration ##############
 ############################################################################
 
-#CPU Clock Frequency
-cpuclk = Database.getSymbolValue("core", "SYS_CLK_FREQ")
-cpuclk = int(cpuclk)
-
-freeRtosSym_CpuClockHz.setDefaultValue(cpuclk)
-freeRtosSym_CpuClockHz.setDependencies(freeRtosCpuClockHz, ["core.SYS_CLK_FREQ"])
-
-perclk = Database.getSymbolValue("core", "CONFIG_SYS_CLK_PBCLK2_FREQ")
+#TMR1 Clock Frequency
+perclk = Database.getSymbolValue("core", "TMR1_CLOCK_FREQUENCY")
 perclk = int(perclk)
 
 freeRtosSym_PerClockHz.setDefaultValue(perclk)
-freeRtosSym_PerClockHz.setDependencies(freeRtosCpuClockHz, ["core.CONFIG_SYS_CLK_PBCLK2_FREQ"])
+freeRtosSym_PerClockHz.setDependencies(freeRtosCpuClockHz, ["core.TMR1_CLOCK_FREQUENCY"])
 freeRtosSym_PerClockHz.setReadOnly(True)
 
 freeRtosSym_DynMemAloc.setReadOnly(True)
