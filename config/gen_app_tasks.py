@@ -137,7 +137,10 @@ def genAppSourceFile(symbol, event):
                 appSourceFile[count].setEnabled(False)
             else:
                 appSourceFile[count].setEnabled(True)
-            appSourceFile[count].setOutputName(appName.lower() + ".c")
+            if Database.getSymbolValue("core", "CPLUSPLUS_PROJECT") == True:
+                appSourceFile[count].setOutputName(appName.lower() + ".cpp")
+            else:
+                appSourceFile[count].setOutputName(appName.lower() + ".c")
 
 def genAppHeaderFile(symbol, event):
     global appHeaderFile
@@ -227,10 +230,14 @@ for count in range(0, genAppTaskMaxCount):
     appSourceFile.append(count)
     appSourceFile[count] = harmonyCoreComponent.createFileSymbol("APP" + str(count) + "_C", None)
     appSourceFile[count].setSourcePath("templates/app.c.ftl")
-    if (count == 0):
-        appSourceFile[count].setOutputName("app.c")
+    if Database.getSymbolValue("core", "CPLUSPLUS_PROJECT") == True:
+        appSourceFileExtension = ".cpp"
     else:
-        appSourceFile[count].setOutputName("app" + str(count) + ".c")
+        appSourceFileExtension = ".c"
+    if (count == 0):
+        appSourceFile[count].setOutputName("app" + appSourceFileExtension)
+    else:
+        appSourceFile[count].setOutputName("app" + str(count) + appSourceFileExtension)
 
     appSourceFile[count].setMarkup(True)
     appSourceFile[count].setOverwrite(False)
@@ -238,7 +245,7 @@ for count in range(0, genAppTaskMaxCount):
     appSourceFile[count].setProjectPath("")
     appSourceFile[count].setType("SOURCE")
     appSourceFile[count].setEnabled(False)
-    appSourceFile[count].setDependencies(genAppSourceFile, ["ENABLE_APP_FILE", "GEN_APP_TASK_COUNT", "GEN_APP_TASK_NAME_" + str(count), "GEN_APP_TASK_ENABLE_" + str(count)])
+    appSourceFile[count].setDependencies(genAppSourceFile, ["ENABLE_APP_FILE", "GEN_APP_TASK_COUNT", "GEN_APP_TASK_NAME_" + str(count), "GEN_APP_TASK_ENABLE_" + str(count), "core.CPLUSPLUS_PROJECT"])
     appSourceFile[count].addMarkupVariable("APP_NAME", "GEN_APP_TASK_NAME_" + str(count))
 
     # generate app.h
