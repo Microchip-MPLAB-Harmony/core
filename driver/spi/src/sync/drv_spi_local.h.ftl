@@ -137,7 +137,7 @@ typedef struct
     /* This is the SPI receive register address. Used for DMA operation. */
     void*                               rxAddress;
 
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
     /* Pointer to the buffer where the received data needs to be copied */
     void*                               pReceiveData;
 

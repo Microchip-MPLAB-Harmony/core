@@ -41,7 +41,7 @@ def instantiateComponent(sysFSComponent):
     # Enable "Generate Harmony System Media File" option in MHC
     Database.sendMessage("HarmonyCore", "ENABLE_SYS_MEDIA", {"isEnabled":True})
 
-    if ("PIC32MZ" in Variables.get("__PROCESSOR")):
+    if ("PIC32MZ" in Database.getSymbolValue("core", "PRODUCT_FAMILY")):
         if (Database.getSymbolValue("core", "USE_CACHE_MAINTENANCE") == False):
             Database.setSymbolValue("core", "USE_CACHE_MAINTENANCE", True)
 

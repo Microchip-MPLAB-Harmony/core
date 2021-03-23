@@ -321,7 +321,10 @@ for count in range(0, genAppTaskMaxCount):
     genAppRtosTaskDelay[count].setVisible(False)
     genAppRtosTaskDelay[count].setDependencies(genAppRtosTaskOptionsVisible, ["GEN_APP_RTOS_TASK_" + str(count) + "_USE_DELAY"])
 
-    if (coreArch == "CORTEX-A5" or ("PIC32MZ" in Database.getSymbolValue("core", "CoreSeries")) or ("PIC32MK" in Database.getSymbolValue("core", "CoreSeries"))):
+    if (coreArch == "CORTEX-A5" or 
+    ("PIC32MZEF" == Database.getSymbolValue("core", "PRODUCT_FAMILY")) or
+    ("PIC32MZDA" == Database.getSymbolValue("core", "PRODUCT_FAMILY")) or
+    ("PIC32MK" in Database.getSymbolValue("core", "PRODUCT_FAMILY"))):
         genAppRtosTaskUseFPUContext.append(count)
         genAppRtosTaskUseFPUContext[count] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_OPT_USE_FPU_CONTEXT", genAppRtosTaskConfMenu[count])
         genAppRtosTaskUseFPUContext[count].setLabel("Use Floating point unit (FPU) context")

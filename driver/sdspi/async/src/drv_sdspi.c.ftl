@@ -47,7 +47,7 @@
 // *****************************************************************************
 #include <string.h>
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
-<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
 #include "system/cache/sys_cache.h"
 </#if>
@@ -66,7 +66,7 @@
 // Section: File Scope Variables
 // *****************************************************************************
 // *****************************************************************************
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
 static CACHE_ALIGN uint8_t gDrvSDSPICmdResponseBuffer [DRV_SDSPI_INSTANCES_NUMBER][16] ;
 static CACHE_ALIGN uint8_t gDrvSDSPIClkPulseData [DRV_SDSPI_INSTANCES_NUMBER][10];
 static CACHE_ALIGN uint8_t gDrvSDSPICsdData [DRV_SDSPI_INSTANCES_NUMBER][20];
@@ -82,7 +82,7 @@ static CACHE_ALIGN uint8_t gDrvSDSPITempCidData [DRV_SDSPI_INSTANCES_NUMBER][32]
 
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
 <#if core.DMA_ENABLE?has_content>
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
 static CACHE_ALIGN uint8_t gDrvSDSPIDummyBufferDMA [DRV_SDSPI_INSTANCES_NUMBER][DMA_DUMMY_BUFFER_SIZE];
 <#else>
 /* Dummy data transmitted by TX DMA, common to all driver instances. */
@@ -2270,7 +2270,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
 
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
 <#if core.DMA_ENABLE?has_content>
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
     dObj->pDummyDataBuffer      = &gDrvSDSPIDummyBufferDMA[drvIndex][0];
 </#if>
 </#if>
@@ -2278,7 +2278,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
 
 
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
-<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DMA_ENABLE?has_content>
     /* Each driver instance points to the common dummy data array. */
     dObj->txDummyData            = txCommonDummyData;
@@ -2305,7 +2305,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
     /* Register call-backs with the DMA System Service */
     if (dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE && dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
         SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);
 
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_8_BIT);

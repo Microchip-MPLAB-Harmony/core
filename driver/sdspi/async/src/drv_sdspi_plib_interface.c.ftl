@@ -48,7 +48,7 @@
 
 #include <string.h>
 #include "drv_sdspi_plib_interface.h"
-<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DMA_ENABLE?has_content>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
 #include "system/cache/sys_cache.h"
@@ -101,7 +101,7 @@ void _DRV_SDSPI_SPIPlibCallbackHandler( uintptr_t context )
 }
 
 <#if core.DMA_ENABLE?has_content>
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
 // *****************************************************************************
 /* SDSPI RX DMA Event Handler
 

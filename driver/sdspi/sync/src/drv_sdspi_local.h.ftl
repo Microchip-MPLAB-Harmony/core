@@ -620,7 +620,7 @@ typedef struct
     /* Pointer to the buffer used during sending commands and receiving responses
      * on the SPI bus. Buffer must be cache line aligned when using DMA with cache or
      * the buffer must be in coherent memory region */
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
     volatile uint8_t                    cmdRespBuffer[32];
 <#else>
     volatile CACHE_ALIGN  uint8_t       cmdRespBuffer[32];
@@ -759,7 +759,7 @@ typedef struct
     /* This is the SPI receive register address. Used for DMA operation. */
     void*                               rxAddress;
 
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
     /*Pointer to the buffer where the received data needs to be copied */
     void*                               pReceiveData;
 

@@ -47,7 +47,7 @@
 <#if SYS_FS_MPFS == true>
     <#lt>#include "system/fs/mpfs/mpfs.h"
 </#if>
-<#if __PROCESSOR?matches("PIC32MZ.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32MZ.*") == true>
     <#lt>#include "system/cache/sys_cache.h"
     <#lt>#include "sys/kmem.h"
 </#if>
@@ -937,7 +937,7 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_SectorRead
          * */
     }
 
-<#if __PROCESSOR?matches("PIC32MZ.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32MZ.*") == true>
     /* Perform Cache Invalidate on the client buffer if it is in cacheable address space */
     if (IS_KVA0(dataBuffer) == true)
     {
@@ -1002,7 +1002,7 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_Read
     startAddress = mediaObj->driverFunctions->addressGet(mediaObj->driverHandle);
     address = (uint32_t)source - (uint32_t)startAddress;
 
-<#if __PROCESSOR?matches("PIC32MZ.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32MZ.*") == true>
     /* Perform Cache Invalidate on the client buffer if it is in cacheable address space */
     if (IS_KVA0(destination) == true)
     {
@@ -1088,7 +1088,7 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_SectorWrite
 
     if ((sectorsPerBlock == 1) || (blocksPerSector > 0))
     {
-<#if __PROCESSOR?matches("PIC32MZ.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32MZ.*") == true>
         /* Perform Cache Clean on the client buffer if it is in cacheable address space */
         if (IS_KVA0(dataBuffer) == true)
         {
@@ -1153,7 +1153,7 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_SectorWrite
                 /* Since the whole block is being updated, there is no need to
                  * perform a read-modify-write operation of the block. */
                 data = dataBuffer;
-<#if __PROCESSOR?matches("PIC32MZ.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32MZ.*") == true>
                 /* Perform Cache Clean on the client buffer if it is in cacheable address space */
                 if (IS_KVA0(dataBuffer) == true)
                 {

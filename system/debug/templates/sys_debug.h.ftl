@@ -661,7 +661,7 @@ SYS_MODULE_INDEX SYS_DEBUG_ConsoleInstanceGet(void);
 
 
 #if defined(__DEBUG)
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
 #define SYS_DEBUG_BreakPoint()  __asm__ volatile (" sdbbp 0")
 <#else>
 #define SYS_DEBUG_BreakPoint()  __asm__ __volatile__ ("bkpt #0");

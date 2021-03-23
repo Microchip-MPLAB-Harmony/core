@@ -21,10 +21,10 @@
 <#if core.CoreArchitecture == "CORTEX-M4">
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES    (188)
 </#if>
-<#if __PROCESSOR?contains("PIC32MZ") || __PROCESSOR?contains("PIC32MK") >
+<#if core.PRODUCT_FAMILY?contains("PIC32MZ") || core.PRODUCT_FAMILY?contains("PIC32MK") >
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES    (620)
 </#if>
-<#if __PROCESSOR?contains("PIC32MX")>
+<#if core.PRODUCT_FAMILY?contains("PIC32MX")>
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES    (460)
 </#if>
 <#if core.CoreArchitecture == "ARM926EJS">

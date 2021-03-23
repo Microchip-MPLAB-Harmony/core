@@ -12,7 +12,7 @@
 #include "system/fs/sys_fs_media_manager.h"
 
 <#if SYS_FS_ALIGNED_BUFFER_ENABLE?? && SYS_FS_ALIGNED_BUFFER_ENABLE == true>
-    <#if __PROCESSOR?matches("PIC32MZ.*") == true>
+    <#if core.PRODUCT_FAMILY?matches("PIC32MZ.*") == true>
         <#lt>#include "sys/kmem.h"
     </#if>
 
@@ -143,7 +143,7 @@ DRESULT disk_read
     uint32_t currentXferLen     = 0;
     uint32_t sectorXferCntr     = 0;
 
-    <#if __PROCESSOR?matches("PIC32MZ.*") == true>
+    <#if core.PRODUCT_FAMILY?matches("PIC32MZ.*") == true>
         <#lt>    /* Use Aligned Buffer if input buffer is in Cacheable address space and
         <#lt>     * is not aligned to cache line size */
         <#lt>    if ((IS_KVA0((uint8_t *)buff) == true) && (((uint32_t)buff & CACHE_ALIGN_CHECK) != 0))
@@ -238,7 +238,7 @@ DRESULT disk_write
     uint32_t currentXferLen     = 0;
     uint32_t sectorXferCntr     = 0;
 
-    <#if __PROCESSOR?matches("PIC32MZ.*") == true>
+    <#if core.PRODUCT_FAMILY?matches("PIC32MZ.*") == true>
         <#lt>    /* Use Aligned Buffer if input buffer is in Cacheable address space and
         <#lt>     * is not aligned to cache line size */
         <#lt>    if ((IS_KVA0((uint8_t *)buff) == true) && (((uint32_t)buff & CACHE_ALIGN_CHECK) != 0))

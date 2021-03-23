@@ -152,7 +152,7 @@ typedef struct _DRV_SPI_TRANSFER_OBJ
     /* Number of bytes to be read */
     size_t                          rxSize;
 
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
     /* Number of bytes pending to be written */
     size_t                          txPending;
 
@@ -251,7 +251,7 @@ typedef struct
     /* This is the SPI receive register address. Used for DMA operation. */
     void*                           rxAddress;
 
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
     /* Buffer for transmitting/receiving dummy data */
     uint8_t __ALIGNED(4)            dummyDataBuffer[256];
 <#else>

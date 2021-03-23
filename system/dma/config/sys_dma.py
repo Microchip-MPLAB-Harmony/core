@@ -49,7 +49,7 @@ def enableDependencySymbols(symbol, event):
 
 deviceFile = ""
 
-if("PIC32M" in Variables.get("__PROCESSOR")):
+if("PIC32M" in Database.getSymbolValue("core", "PRODUCT_FAMILY")):
     deviceFile = "_pic32m"
 
 genSysDMACommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_DMA", None)

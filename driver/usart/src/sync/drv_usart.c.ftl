@@ -50,7 +50,7 @@
 #include "driver/usart/drv_usart.h"
 #include "drv_usart_local.h"
 
-<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
 #include "system/cache/sys_cache.h"
 </#if>
@@ -290,7 +290,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
 <#if core.DMA_ENABLE?has_content>
     if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
         SYS_DMA_AddressingModeSetup(
             dObj->txDMAChannel,
             SYS_DMA_SOURCE_ADDRESSING_MODE_INCREMENTED,
@@ -313,7 +313,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
 <#if core.DMA_ENABLE?has_content>
     if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
         SYS_DMA_AddressingModeSetup(
             dObj->rxDMAChannel,
             SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED,
@@ -553,7 +553,7 @@ bool DRV_USART_WriteBuffer
             {
                 if (dObj->dataWidth > DRV_USART_DATA_8_BIT)
                 {
-<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
                 /* Clean the write buffer to push the data to the main memory */
                     SYS_CACHE_CleanDCache_by_Addr((uint32_t *)buffer, (numbytes << 1));
@@ -570,7 +570,7 @@ bool DRV_USART_WriteBuffer
                 }
                 else
                 {
-<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
                 /* Clean the write buffer to push the data to the main memory */
                     SYS_CACHE_CleanDCache_by_Addr((uint32_t *)buffer, numbytes);
@@ -640,7 +640,7 @@ bool DRV_USART_ReadBuffer
             {
                 if (dObj->dataWidth > DRV_USART_DATA_8_BIT)
                 {
-<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
                 /* Invalidate the receive buffer to force the CPU to read from the main memory */
                     SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)buffer, (numbytes << 1));
@@ -657,7 +657,7 @@ bool DRV_USART_ReadBuffer
                 }
                 else
                 {
-<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
                 /* Invalidate the receive buffer to force the CPU to read from the main memory */
                     SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)buffer, numbytes);

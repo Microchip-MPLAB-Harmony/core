@@ -48,7 +48,7 @@
 #include <string.h>
 #include "configuration.h"
 #include "driver/spi/drv_spi.h"
-<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DMA_ENABLE?has_content>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
 #include "system/cache/sys_cache.h"
@@ -64,7 +64,7 @@
 // *****************************************************************************
 
 /* This is the driver instance object array. */
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
 static CACHE_ALIGN DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER];
 <#else>
 static DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER];
@@ -453,7 +453,7 @@ static void _DRV_SPI_RemoveClientTransfersFromList(
 }
 
 <#if core.DMA_ENABLE?has_content>
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
 static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ* transferObj)
 {
     DRV_SPI_CLIENT_OBJ* clientObj;
@@ -754,7 +754,7 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
 }
 
 <#if core.DMA_ENABLE?has_content>
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
 void _DRV_SPI_TX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
@@ -1027,7 +1027,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize (
     DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ*)NULL;
     DRV_SPI_INIT* spiInit = (DRV_SPI_INIT*)init;
 
-<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DMA_ENABLE?has_content>
     size_t  txDummyDataIdx;
 </#if>
@@ -1085,7 +1085,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize (
     dObj->remapClockPhase           = spiInit->remapClockPhase;
     dObj->interruptSources          = spiInit->interruptSources;
 
-<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DMA_ENABLE?has_content>
     for (txDummyDataIdx = 0; txDummyDataIdx < sizeof(txDummyData); txDummyDataIdx++)
     {

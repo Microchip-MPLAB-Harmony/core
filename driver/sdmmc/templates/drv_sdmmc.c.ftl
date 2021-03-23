@@ -59,7 +59,7 @@
 
 static DRV_SDMMC_OBJ gDrvSDMMCObj[DRV_SDMMC_INSTANCES_NUMBER];
 
-<#if __PROCESSOR?contains("PIC32MZ")>
+<#if core.PRODUCT_FAMILY?contains("PIC32MZ")>
 static uint8_t __COHERENT __ALIGNED(32) gScrBuffer[DRV_SDMMC_INSTANCES_NUMBER][DRV_SDMMC_SCR_BUFFER_LEN];
 static uint8_t __COHERENT __ALIGNED(32) gSwitchStatusBuffer[DRV_SDMMC_INSTANCES_NUMBER][DRV_SDMMC_SWITCH_STATUS_BUFFER_LEN];
 static uint8_t __COHERENT __ALIGNED(32) gExtCSDBuffer[DRV_SDMMC_INSTANCES_NUMBER][DRV_SDMMC_EXT_CSD_RESP_SIZE];
@@ -318,7 +318,7 @@ static void _DRV_SDMMC_UpdateGeometry( DRV_SDMMC_OBJ* dObj )
     dObj->mediaGeometryObj.geometryTable = (SYS_MEDIA_REGION_GEOMETRY *)dObj->mediaGeometryTable;
 }
 
-<#if __PROCESSOR?contains("PIC32MZ")>
+<#if core.PRODUCT_FAMILY?contains("PIC32MZ")>
 static void _DRV_SDMMC_SetClock (
     DRV_SDMMC_OBJ* dObj,
     uint32_t clock
@@ -428,7 +428,7 @@ static void _DRV_SDMMC_InitCardContext ( uint32_t drvIndex, DRV_SDHOST_CARD_CTXT
     cardCtxt->isLocked              = false;
     cardCtxt->errorFlag             = 0;
 
-<#if __PROCESSOR?contains("PIC32MZ")>
+<#if core.PRODUCT_FAMILY?contains("PIC32MZ")>
     cardCtxt->scrBuffer             = &gScrBuffer[drvIndex][0];
     cardCtxt->switchStatusBuffer    = &gSwitchStatusBuffer[drvIndex][0];
     cardCtxt->extCSDBuffer          = &gExtCSDBuffer[drvIndex][0];
@@ -652,7 +652,7 @@ static void _DRV_SDMMC_MediaInitialize (
         case DRV_SDMMC_INIT_SET_INIT_SPEED:
             if (dObj->cardCtxt.currentSpeed != DRV_SDMMC_CLOCK_FREQ_400_KHZ)
             {
-<#if __PROCESSOR?contains("PIC32MZ")>
+<#if core.PRODUCT_FAMILY?contains("PIC32MZ")>
                 _DRV_SDMMC_SetClock (dObj, DRV_SDMMC_CLOCK_FREQ_400_KHZ);
                 if (dObj->clockState == DRV_SDMMC_CLOCK_SET_COMPLETE)
 <#else>
@@ -1038,7 +1038,7 @@ static void _DRV_SDMMC_MediaInitialize (
             break;
 
         case DRV_SDMMC_INIT_CHANGE_CLK_FREQ:
-<#if __PROCESSOR?contains("PIC32MZ")>
+<#if core.PRODUCT_FAMILY?contains("PIC32MZ")>
             _DRV_SDMMC_SetClock (dObj, dObj->cardCtxt.defaultSpeed);
             if (dObj->clockState == DRV_SDMMC_CLOCK_SET_COMPLETE)
 <#else>
@@ -1375,7 +1375,7 @@ static void _DRV_SDMMC_MediaInitialize (
                 {
                     if (dObj->commandStatus == DRV_SDMMC_COMMAND_STATUS_SUCCESS)
                     {
-<#if __PROCESSOR?contains("PIC32MZ")>
+<#if core.PRODUCT_FAMILY?contains("PIC32MZ")>
                         _DRV_SDMMC_SetClock (dObj, DRV_SDMMC_CLOCK_FREQ_HS_52_MHZ);
                         if (dObj->clockState == DRV_SDMMC_CLOCK_SET_COMPLETE)
 <#else>
@@ -1400,7 +1400,7 @@ static void _DRV_SDMMC_MediaInitialize (
             }
 
         case DRV_SDMMC_INIT_SET_HS_FREQ:
-<#if __PROCESSOR?contains("PIC32MZ")>
+<#if core.PRODUCT_FAMILY?contains("PIC32MZ")>
             _DRV_SDMMC_SetClock (dObj, DRV_SDMMC_CLOCK_FREQ_HS_50_MHZ);
             if (dObj->clockState == DRV_SDMMC_CLOCK_SET_COMPLETE)
             {

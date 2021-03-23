@@ -459,7 +459,7 @@ typedef struct
 {
     uint8_t __ALIGNED(4)            cidBuffer[DRV_SDMMC_CID_BUFFER_LEN];
     uint8_t __ALIGNED(4)            csdBuffer[DRV_SDMMC_CSD_BUFFER_LEN];
-<#if __PROCESSOR?contains("PIC32MZ")>
+<#if core.PRODUCT_FAMILY?contains("PIC32MZ")>
     uint8_t*                        scrBuffer;
     uint8_t*                        switchStatusBuffer;
     uint8_t*                        extCSDBuffer;

@@ -52,7 +52,7 @@
 
 <#if __PROCESSOR?matches("ATSAMA5.*") ||  __PROCESSOR?matches("SAM9X6.*") >
 <#else>
-    <#if __PROCESSOR?matches("PIC32M.*") == false>
+    <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
         <#lt>#define SYS_INT_IsEnabled()                 ( __get_PRIMASK() == 0 )
         <#lt>#define SYS_INT_SourceEnable( source )      NVIC_EnableIRQ( source )
         <#lt>#define SYS_INT_SourceIsEnabled( source )   NVIC_GetEnableIRQ( source )

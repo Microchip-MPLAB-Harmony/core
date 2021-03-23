@@ -49,7 +49,7 @@
 #include <string.h>
 #include "configuration.h"
 #include "driver/spi/drv_spi.h"
-<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DMA_ENABLE?has_content>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
 #include "system/cache/sys_cache.h"
@@ -65,7 +65,7 @@
 // *****************************************************************************
 
 /* This is the driver instance object array. */
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
 static CACHE_ALIGN DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER];
 <#else>
 static DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER];
@@ -135,7 +135,7 @@ static DRV_SPI_CLIENT_OBJ* _DRV_SPI_DriverHandleValidate(DRV_HANDLE handle)
 }
 
 <#if core.DMA_ENABLE?has_content>
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
 static bool _DRV_SPI_StartDMATransfer(
     DRV_SPI_OBJ* dObj,
     void* pTransmitData,
@@ -349,7 +349,7 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
 }
 
 <#if core.DMA_ENABLE?has_content>
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
 void _DRV_SPI_TX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
@@ -505,7 +505,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
 {
     DRV_SPI_OBJ* dObj     = (DRV_SPI_OBJ *)NULL;
     DRV_SPI_INIT* spiInit = (DRV_SPI_INIT *)init;
-<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DMA_ENABLE?has_content>
     size_t  txDummyDataIdx;
 </#if>
@@ -545,7 +545,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->remapClockPolarity    = spiInit->remapClockPolarity;
     dObj->remapClockPhase       = spiInit->remapClockPhase;
 
-<#if __PROCESSOR?matches("PIC32M.*") == false>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DMA_ENABLE?has_content>
     for (txDummyDataIdx = 0; txDummyDataIdx < sizeof(txDummyData); txDummyDataIdx++)
     {
@@ -841,7 +841,7 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
 <#if core.DMA_ENABLE?has_content>
             if((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && ((dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)))
             {
-<#if __PROCESSOR?matches("PIC32M.*") == true>
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
                 dObj->pReceiveData = pReceiveData;
                 dObj->pTransmitData = pTransmitData;
 </#if>
