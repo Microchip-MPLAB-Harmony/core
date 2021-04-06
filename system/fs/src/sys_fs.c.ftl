@@ -2251,7 +2251,7 @@ SYS_FS_RESULT SYS_FS_CurrentWorkingDirectoryGet
         ptr = buffer;
         memset (ptr, 0, len);
 
-        strncpy (ptr, "/mnt/", 5);
+        memcpy (ptr, "/mnt/", 5);
         ptr += 5;
 
         strncpy (ptr, disk->mountName, disk->mountNameLength);
