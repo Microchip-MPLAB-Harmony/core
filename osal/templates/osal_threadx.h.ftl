@@ -140,9 +140,6 @@ void OSAL_Free(void* pData);
 
 OSAL_RESULT OSAL_Initialize();
 
-<#if core.CoreArchitecture == "MIPS" >
-__inline__ const char* OSAL_Name(void);
-<#else>
 // *****************************************************************************
 /* Function: const char* OSAL_Name()
 
@@ -178,7 +175,6 @@ __STATIC_INLINE __attribute__((always_inline)) const char* OSAL_Name (void)
 {
     return "ThreadX";
 }
-</#if>
 
 #ifdef __cplusplus
 }
