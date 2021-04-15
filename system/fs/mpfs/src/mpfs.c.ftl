@@ -575,7 +575,7 @@ int MPFS_Stat
             else
             {
                 /* Populate the file details. */
-                strncpy (stat->lfname, file, fileLen);
+                memcpy (stat->lfname, file, fileLen);
                 stat->lfname[fileLen] = '\0';
             }
         }
@@ -752,7 +752,7 @@ int MPFS_DirRead
             else
             {
                 /* Populate the file details. */
-                strncpy (stat->lfname, (const char *)fileName, fileLen);
+                memcpy (stat->lfname, (const char *)fileName, fileLen);
                 stat->lfname[fileLen] = '\0';
             }
         }

@@ -432,7 +432,7 @@ static void _SYS_FS_MEDIA_MANAGER_PopulateVolume
         mediaObj->numVolumes++;
 
         volumeNameLen = strlen(gSYSFSVolumeName[mediaObj->mediaType]);
-        strncpy (volumeObj->volumeName, gSYSFSVolumeName[mediaObj->mediaType], volumeNameLen);
+        memcpy (volumeObj->volumeName, gSYSFSVolumeName[mediaObj->mediaType], volumeNameLen);
 
         /* Store the volume name */
         volumeObj->volumeName[volumeNameLen++] = mediaObj->mediaId;
