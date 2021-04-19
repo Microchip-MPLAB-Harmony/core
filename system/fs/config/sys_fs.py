@@ -309,33 +309,6 @@ def instantiateComponent(sysFSComponent):
     sysFSFatExFAT.setVisible(sysFSFat.getValue())
     sysFSFatExFAT.setDependencies(sysFsFatSymbolShow, ["SYS_FS_FAT"])
 
-    createAlignedBufferSymbols = False
-
-    # Check if Cache is present on the device
-    if (Database.getSymbolValue("core", "DATA_CACHE_ENABLE") != None):
-        if (Database.getSymbolValue("core", "CoreArchitecture") != "CORTEX-M4"):
-            createAlignedBufferSymbols = True
-
-    if (createAlignedBufferSymbols == True):
-        sysFSFatAlignedBufferEnableDesc = "File system will use this aligned buffer to submit the request to Media if the input buffer for the read/Write operations is not aligned to Cache Line Size. \
-        If the underlying media driver uses DMA and device has cache enabled the buffer submitted to the driver has to be aligned to cache line size as the drivers will perform Cache Maintenance operations on the buffer. \
-        When file system aligned buffer will be used then the total number of sectors to be read/written will be divided by the aligned buffer size and will be sent to drivers in iterations. As the total sectors are now divided into chunks it may effect the overall throughput. \
-        Increasing the length of the buffer will increase the throughput but consume more RAM memory."
-
-        sysFSFatAlignedBufferEnable = sysFSComponent.createBooleanSymbol("SYS_FS_ALIGNED_BUFFER_ENABLE", sysFSFat)
-        sysFSFatAlignedBufferEnable.setLabel("Enable Cache Line Aligned Buffer for Cache Management")
-        sysFSFatAlignedBufferEnable.setDefaultValue(True)
-        sysFSFatAlignedBufferEnable.setDescription(sysFSFatAlignedBufferEnableDesc)
-        sysFSFatAlignedBufferEnable.setVisible(sysFSFat.getValue())
-        sysFSFatAlignedBufferEnable.setDependencies(sysFsFatSymbolShow, ["SYS_FS_FAT"])
-
-        sysFSFatAlignedBufferLen = sysFSComponent.createIntegerSymbol("SYS_FS_ALIGNED_BUFFER_LEN", sysFSFatAlignedBufferEnable)
-        sysFSFatAlignedBufferLen.setLabel("Aligned Buffer Length in Multiple of 512 Bytes")
-        sysFSFatAlignedBufferLen.setDefaultValue(512)
-        sysFSFatAlignedBufferLen.setMin(512)
-        sysFSFatAlignedBufferLen.setVisible(sysFSFatAlignedBufferEnable.getValue())
-        sysFSFatAlignedBufferLen.setDependencies(sysFsFatSymbolShow, ["SYS_FS_ALIGNED_BUFFER_ENABLE"])
-
     sysFSMpfs = sysFSComponent.createBooleanSymbol("SYS_FS_MPFS", sysFSMenu)
     sysFSMpfs.setLabel("Microchip File System")
     sysFSMpfs.setDefaultValue(False)
@@ -357,6 +330,33 @@ def instantiateComponent(sysFSComponent):
     sysFSPathLen.setDefaultValue(1024)
     sysFSPathLen.setMin(1)
     sysFSPathLen.setMax(1024)
+
+    createAlignedBufferSymbols = False
+
+    # Check if Cache is present on the device
+    if (Database.getSymbolValue("core", "DATA_CACHE_ENABLE") != None):
+        if (Database.getSymbolValue("core", "CoreArchitecture") != "CORTEX-M4"):
+            createAlignedBufferSymbols = True
+
+    if (createAlignedBufferSymbols == True):
+        sysFSFatAlignedBufferEnableDesc = "File system will use this aligned buffer to submit the request to Media if the input buffer for the read/Write operations is not aligned to Cache Line Size. \
+        If the underlying media driver uses DMA and device has cache enabled the buffer submitted to the driver has to be aligned to cache line size as the drivers will perform Cache Maintenance operations on the buffer. \
+        When file system aligned buffer will be used then the total number of sectors/nBytes to be read/written will be divided by the aligned buffer size and will be sent to drivers in iterations. As the total sectors/nbytes are now divided into chunks it may effect the overall throughput. \
+        Increasing the length of the buffer will increase the throughput but consume more RAM memory."
+
+        sysFSAlignedBufferEnable = sysFSComponent.createBooleanSymbol("SYS_FS_ALIGNED_BUFFER_ENABLE", sysFSMenu)
+        sysFSAlignedBufferEnable.setLabel("Enable Cache Line Aligned Buffer for Cache Management")
+        sysFSAlignedBufferEnable.setDefaultValue(True)
+        sysFSAlignedBufferEnable.setDescription(sysFSFatAlignedBufferEnableDesc)
+        sysFSAlignedBufferEnable.setVisible(True)
+        sysFSAlignedBufferEnable.setDependencies(sysFsAlignedBufferShow, ["SYS_FS_FAT", "SYS_FS_MPFS"])
+
+        sysFSAlignedBufferLen = sysFSComponent.createIntegerSymbol("SYS_FS_ALIGNED_BUFFER_LEN", sysFSAlignedBufferEnable)
+        sysFSAlignedBufferLen.setLabel("Aligned Buffer Length in Multiple of 512 Bytes")
+        sysFSAlignedBufferLen.setDefaultValue(512)
+        sysFSAlignedBufferLen.setMin(512)
+        sysFSAlignedBufferLen.setVisible(sysFSAlignedBufferEnable.getValue())
+        sysFSAlignedBufferLen.setDependencies(sysFsFatSymbolShow, ["SYS_FS_ALIGNED_BUFFER_ENABLE"])
 
 ############################################Generate Files#################################################
 
@@ -594,6 +594,15 @@ def sysFsFileGen(symbol, event):
 
 def sysFsFatSymbolShow(symbol, event):
     symbol.setVisible(event["value"])
+
+def sysFsAlignedBufferShow(symbol, event):
+    component = symbol.getComponent()
+
+    fatEnabled = component.getSymbolValue("SYS_FS_FAT")
+    mpfsEnabled = component.getSymbolValue("SYS_FS_MPFS")
+
+    if ((fatEnabled == True) or (mpfsEnabled == True)):
+        symbol.setVisible(True)
 
 def sysFSLFNSet(symbol, event):
     if (event["value"] == True):

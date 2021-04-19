@@ -55,6 +55,16 @@
   Section: Module-Only Globals and Functions
   ***************************************************************************/
 
+<#if SYS_FS_ALIGNED_BUFFER_ENABLE?? && SYS_FS_ALIGNED_BUFFER_ENABLE == true>
+    <#if __PROCESSOR?matches("PIC32MZ.*") == true>
+        <#lt>#include "sys/kmem.h"
+    </#if>
+
+    <#lt>#define CACHE_ALIGN_CHECK  (CACHE_LINE_SIZE - 1)
+
+    <#lt>uint8_t CACHE_ALIGN mpfsAlignedBuffer[SYS_FS_ALIGNED_BUFFER_LEN] __ALIGNED(CACHE_LINE_SIZE);
+</#if>
+
 /* Array of File Objects. */
 static MPFS_FILE_OBJ CACHE_ALIGN gSysMpfsFileObj[SYS_FS_MAX_FILES];
 
@@ -228,20 +238,87 @@ static bool MPFSDiskRead
     SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE commandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
     SYS_FS_MEDIA_COMMAND_STATUS commandStatus = SYS_FS_MEDIA_COMMAND_UNKNOWN;
 
-    commandHandle = SYS_FS_MEDIA_MANAGER_Read (diskNum, destination, source, nBytes);
+<#if SYS_FS_ALIGNED_BUFFER_ENABLE?? && SYS_FS_ALIGNED_BUFFER_ENABLE == true>
+    uint32_t bytesToTransfer    = nBytes;
+    uint32_t currentXferLen     = 0;
 
-    if (commandHandle == SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
+    <#if __PROCESSOR?matches("PIC32MZ.*") == true>
+        <#lt>    /* Use Aligned Buffer if input buffer is in Cacheable address space and
+        <#lt>     * is not aligned to cache line size */
+        <#lt>    if ((IS_KVA0((uint8_t *)destination) == true) && (((uint32_t)destination & CACHE_ALIGN_CHECK) != 0))
+    <#else>
+        <#lt>    /* Use Aligned Buffer if input buffer is not aligned to cache line size */
+        <#lt>    if (((uint32_t)destination & CACHE_ALIGN_CHECK) != 0)
+    </#if>
     {
-        return false;
+        /* When aligned buffer is used the total number of bytes will be divided by the aligned
+         * buffer size and will be sent to drivers in iterations.
+         * As the total number of bytes are now divided into chunks it may effect the overall throughput.
+         * Increasing the length of the buffer will increase the throughput but consume more RAM memory.
+        */
+
+        while (bytesToTransfer > 0)
+        {
+            /* Calculate the number of bytes to be transferred with current request */
+            if (bytesToTransfer > SYS_FS_ALIGNED_BUFFER_LEN)
+            {
+                currentXferLen  = SYS_FS_ALIGNED_BUFFER_LEN;
+            }
+            else
+            {
+                currentXferLen  = bytesToTransfer;
+            }
+
+            commandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
+            commandStatus = SYS_FS_MEDIA_COMMAND_IN_PROGRESS;
+
+            commandHandle = SYS_FS_MEDIA_MANAGER_Read (diskNum, mpfsAlignedBuffer, source, currentXferLen);
+
+            if (commandHandle == SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
+            {
+                return false;
+            }
+
+            commandStatus = SYS_FS_MEDIA_MANAGER_CommandStatusGet(diskNum, commandHandle);
+
+            while ( (commandStatus == SYS_FS_MEDIA_COMMAND_IN_PROGRESS) ||
+                    (commandStatus == SYS_FS_MEDIA_COMMAND_QUEUED))
+            {
+                SYS_FS_MEDIA_MANAGER_TransferTask (diskNum);
+                commandStatus = SYS_FS_MEDIA_MANAGER_CommandStatusGet(diskNum, commandHandle);
+            }
+
+            if (commandStatus != SYS_FS_MEDIA_COMMAND_COMPLETED)
+            {
+                return false;
+            }
+
+            /* Copy the received data from aligned buffer to actual buffer */
+            memcpy(destination, mpfsAlignedBuffer, currentXferLen);
+
+            bytesToTransfer -= currentXferLen;
+            destination     += currentXferLen;
+            source          += currentXferLen;
+        }
     }
-
-    commandStatus = SYS_FS_MEDIA_MANAGER_CommandStatusGet(diskNum, commandHandle);
-
-    while ( (commandStatus == SYS_FS_MEDIA_COMMAND_IN_PROGRESS) ||
-            (commandStatus == SYS_FS_MEDIA_COMMAND_QUEUED))
+    else
+</#if>
     {
-        SYS_FS_MEDIA_MANAGER_TransferTask (diskNum);
+        commandHandle = SYS_FS_MEDIA_MANAGER_Read (diskNum, destination, source, nBytes);
+
+        if (commandHandle == SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
+        {
+            return false;
+        }
+
         commandStatus = SYS_FS_MEDIA_MANAGER_CommandStatusGet(diskNum, commandHandle);
+
+        while ( (commandStatus == SYS_FS_MEDIA_COMMAND_IN_PROGRESS) ||
+                (commandStatus == SYS_FS_MEDIA_COMMAND_QUEUED))
+        {
+            SYS_FS_MEDIA_MANAGER_TransferTask (diskNum);
+            commandStatus = SYS_FS_MEDIA_MANAGER_CommandStatusGet(diskNum, commandHandle);
+        }
     }
 
     return (commandStatus == SYS_FS_MEDIA_COMMAND_COMPLETED) ? true : false;
@@ -588,7 +665,7 @@ int MPFS_Stat
         }
 
         /* Populate the file details. */
-        strncpy (stat->fname, file, fileLen);
+        memcpy (stat->fname, file, fileLen);
         stat->fname[fileLen] = '\0';
 
         stat->fattrib = fileRecord.flags;
@@ -764,7 +841,7 @@ int MPFS_DirRead
         }
 
         /* Populate the file details. */
-        strncpy (stat->fname, (const char *)fileName, fileLen);
+        memcpy (stat->fname, (const char *)fileName, fileLen);
         stat->fname[fileLen] = '\0';
 
         stat->fattrib = fileRecord.flags;
