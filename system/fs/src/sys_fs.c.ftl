@@ -224,7 +224,7 @@ static bool SYS_FS_GetDisk
 
             if (pathLength)
             {
-                strncpy((char *)buffer, (const char *)ptr, pathLength);
+                memcpy((char *)buffer, (const char *)ptr, pathLength);
                 pathLength ++;
             }
 
@@ -2254,10 +2254,10 @@ SYS_FS_RESULT SYS_FS_CurrentWorkingDirectoryGet
         memcpy (ptr, "/mnt/", 5);
         ptr += 5;
 
-        strncpy (ptr, disk->mountName, disk->mountNameLength);
+        memcpy (ptr, disk->mountName, disk->mountNameLength);
         ptr += disk->mountNameLength;
 
-        strncpy (ptr, cwd, strlen(cwd));
+        memcpy (ptr, cwd, strlen(cwd));
 
         return SYS_FS_RES_SUCCESS;
     }
@@ -2302,7 +2302,7 @@ SYS_FS_RESULT SYS_FS_CurrentDriveGet
     }
 
     strcpy(buffer, "/mnt/");
-    strncpy(buffer + 5, gSYSFSCurrentMountPoint.currentDisk->mountName, gSYSFSCurrentMountPoint.currentDisk->mountNameLength);
+    memcpy(buffer + 5, gSYSFSCurrentMountPoint.currentDisk->mountName, gSYSFSCurrentMountPoint.currentDisk->mountNameLength);
 
     return SYS_FS_RES_SUCCESS;
 }
@@ -3973,7 +3973,7 @@ SYS_FS_RESULT SYS_FS_DriveSectorGet
     <#lt>    }
 
     <#lt>    strcpy(buffer, "/mnt/");
-    <#lt>    strncpy(buffer + 5, gSYSFSCurrentMountPoint.currentDisk->mountName, gSYSFSCurrentMountPoint.currentDisk->mountNameLength);
+    <#lt>    memcpy(buffer + 5, gSYSFSCurrentMountPoint.currentDisk->mountName, gSYSFSCurrentMountPoint.currentDisk->mountNameLength);
 
     <#lt>    return SYS_FS_RES_SUCCESS;
     <#lt>}
