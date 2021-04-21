@@ -244,11 +244,12 @@ static bool MPFSDiskRead
 
     <#if __PROCESSOR?matches("PIC32MZ.*") == true>
         <#lt>    /* Use Aligned Buffer if input buffer is in Cacheable address space and
-        <#lt>     * is not aligned to cache line size */
-        <#lt>    if ((IS_KVA0((uint8_t *)destination) == true) && (((uint32_t)destination & CACHE_ALIGN_CHECK) != 0))
+        <#lt>     * is not aligned to cache line size OR if the input buffer is in Cacheable address and the size is not a multiple of cache line */
+        <#lt>    if (((IS_KVA0((uint8_t *)destination) == true) && (((uint32_t)destination & CACHE_ALIGN_CHECK) != 0)) ||
+        <#lt>       ((IS_KVA0((uint8_t *)destination) == true) && ((nBytes % CACHE_LINE_SIZE) != 0)))
     <#else>
-        <#lt>    /* Use Aligned Buffer if input buffer is not aligned to cache line size */
-        <#lt>    if (((uint32_t)destination & CACHE_ALIGN_CHECK) != 0)
+        <#lt>    /* Use Aligned Buffer if input buffer is not aligned to cache line size OR if the input buffer is not a multiple of cache line size */
+        <#lt>    if ((((uint32_t)destination & CACHE_ALIGN_CHECK) != 0) || ((nBytes % CACHE_LINE_SIZE) != 0))
     </#if>
     {
         /* When aligned buffer is used the total number of bytes will be divided by the aligned
