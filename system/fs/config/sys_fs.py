@@ -355,8 +355,8 @@ def instantiateComponent(sysFSComponent):
         sysFSAlignedBufferLen.setLabel("Aligned Buffer Length in Multiple of 512 Bytes")
         sysFSAlignedBufferLen.setDefaultValue(512)
         sysFSAlignedBufferLen.setMin(512)
-        sysFSAlignedBufferLen.setVisible(sysFSAlignedBufferEnable.getValue())
-        sysFSAlignedBufferLen.setDependencies(sysFsFatSymbolShow, ["SYS_FS_ALIGNED_BUFFER_ENABLE"])
+        sysFSAlignedBufferLen.setVisible((sysFSAlignedBufferEnable.getValue() == True) and (sysFSFat.getValue() == True))
+        sysFSAlignedBufferLen.setDependencies(sysFsAlignedBufferLenSymbolShow, ["SYS_FS_ALIGNED_BUFFER_ENABLE", "SYS_FS_FAT"])
 
 ############################################Generate Files#################################################
 
@@ -594,6 +594,14 @@ def sysFsFileGen(symbol, event):
 
 def sysFsFatSymbolShow(symbol, event):
     symbol.setVisible(event["value"])
+
+def sysFsAlignedBufferLenSymbolShow(symbol, event):
+    component = symbol.getComponent()
+
+    fatEnabled = component.getSymbolValue("SYS_FS_FAT")
+    alignedBufferEnabled = component.getSymbolValue("SYS_FS_ALIGNED_BUFFER_ENABLE")
+
+    symbol.setVisible((fatEnabled == True) and (alignedBufferEnabled == True))
 
 def sysFsAlignedBufferShow(symbol, event):
     component = symbol.getComponent()

@@ -20,7 +20,7 @@
 
     <#lt>typedef struct
     <#lt>{
-    <#lt>    uint8_t alignedBuffer[SYS_FS_ALIGNED_BUFFER_LEN] __ALIGNED(CACHE_LINE_SIZE);
+    <#lt>    uint8_t alignedBuffer[SYS_FS_FAT_ALIGNED_BUFFER_LEN] __ALIGNED(CACHE_LINE_SIZE);
     <#lt>    SYS_FS_MEDIA_COMMAND_STATUS commandStatus;
     <#lt>    SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE commandHandle;
     <#lt>} SYS_FS_DISK_DATA;
@@ -163,10 +163,10 @@ DRESULT disk_read
         while (bytesToTransfer > 0)
         {
             /* Calculate the number of sectors to be transferred with current request */
-            if (bytesToTransfer > SYS_FS_ALIGNED_BUFFER_LEN)
+            if (bytesToTransfer > SYS_FS_FAT_ALIGNED_BUFFER_LEN)
             {
-                sectorXferCntr  = (SYS_FS_ALIGNED_BUFFER_LEN / SYS_FS_FAT_MAX_SS);
-                currentXferLen  = SYS_FS_ALIGNED_BUFFER_LEN;
+                sectorXferCntr  = (SYS_FS_FAT_ALIGNED_BUFFER_LEN / SYS_FS_FAT_MAX_SS);
+                currentXferLen  = SYS_FS_FAT_ALIGNED_BUFFER_LEN;
             }
             else
             {
@@ -258,10 +258,10 @@ DRESULT disk_write
         while (bytesToTransfer > 0)
         {
             /* Calculate the number of sectors to be transferred with current request */
-            if (bytesToTransfer > SYS_FS_ALIGNED_BUFFER_LEN)
+            if (bytesToTransfer > SYS_FS_FAT_ALIGNED_BUFFER_LEN)
             {
-                sectorXferCntr  = (SYS_FS_ALIGNED_BUFFER_LEN / SYS_FS_FAT_MAX_SS);
-                currentXferLen  = SYS_FS_ALIGNED_BUFFER_LEN;
+                sectorXferCntr  = (SYS_FS_FAT_ALIGNED_BUFFER_LEN / SYS_FS_FAT_MAX_SS);
+                currentXferLen  = SYS_FS_FAT_ALIGNED_BUFFER_LEN;
             }
             else
             {

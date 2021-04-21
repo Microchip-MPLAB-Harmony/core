@@ -62,7 +62,7 @@
 
     <#lt>#define CACHE_ALIGN_CHECK  (CACHE_LINE_SIZE - 1)
 
-    <#lt>uint8_t CACHE_ALIGN mpfsAlignedBuffer[SYS_FS_ALIGNED_BUFFER_LEN] __ALIGNED(CACHE_LINE_SIZE);
+    <#lt>uint8_t CACHE_ALIGN mpfsAlignedBuffer[CACHE_LINE_SIZE] __ALIGNED(CACHE_LINE_SIZE);
 </#if>
 
 /* Array of File Objects. */
@@ -227,7 +227,7 @@ static int MPFSFindFile
     return -1;
 }
 
-static bool MPFSDiskRead
+static bool MPFSDiskReadAligned
 (
     uint16_t diskNum,
     uint8_t *destination,
@@ -235,94 +235,113 @@ static bool MPFSDiskRead
     const uint32_t nBytes
 )
 {
-    SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE commandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
+	SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE commandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
     SYS_FS_MEDIA_COMMAND_STATUS commandStatus = SYS_FS_MEDIA_COMMAND_UNKNOWN;
+	
+	commandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
+	commandStatus = SYS_FS_MEDIA_COMMAND_IN_PROGRESS;
 
+	commandHandle = SYS_FS_MEDIA_MANAGER_Read (diskNum, destination, source, nBytes);
+
+	if (commandHandle == SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
+	{
+		return false;
+	}
+
+	commandStatus = SYS_FS_MEDIA_MANAGER_CommandStatusGet(diskNum, commandHandle);
+
+	while ( (commandStatus == SYS_FS_MEDIA_COMMAND_IN_PROGRESS) ||
+			(commandStatus == SYS_FS_MEDIA_COMMAND_QUEUED))
+	{
+		SYS_FS_MEDIA_MANAGER_TransferTask (diskNum);
+		commandStatus = SYS_FS_MEDIA_MANAGER_CommandStatusGet(diskNum, commandHandle);
+	}
+
+	if (commandStatus != SYS_FS_MEDIA_COMMAND_COMPLETED)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+static bool MPFSDiskRead
+(
+    uint16_t diskNum,
+    uint8_t *destination,
+    uint8_t *source,
+    const uint32_t nBytes
+)
+{    
 <#if SYS_FS_ALIGNED_BUFFER_ENABLE?? && SYS_FS_ALIGNED_BUFFER_ENABLE == true>
-    uint32_t bytesToTransfer    = nBytes;
-    uint32_t currentXferLen     = 0;
+    uint32_t nBytesPending = nBytes;
+	uint32_t nBytesRead = 0;
+	uint32_t nReadChunk = 0;
 
     <#if __PROCESSOR?matches("PIC32MZ.*") == true>
         <#lt>    /* Use Aligned Buffer if input buffer is in Cacheable address space and
         <#lt>     * is not aligned to cache line size OR if the input buffer is in Cacheable address and the size is not a multiple of cache line */
         <#lt>    if (((IS_KVA0((uint8_t *)destination) == true) && (((uint32_t)destination & CACHE_ALIGN_CHECK) != 0)) ||
-        <#lt>       ((IS_KVA0((uint8_t *)destination) == true) && ((nBytes % CACHE_LINE_SIZE) != 0)))
+        <#lt>       ((IS_KVA0((uint8_t *)destination) == true) && ((nBytes & CACHE_ALIGN_CHECK) != 0)))
     <#else>
         <#lt>    /* Use Aligned Buffer if input buffer is not aligned to cache line size OR if the input buffer is not a multiple of cache line size */
-        <#lt>    if ((((uint32_t)destination & CACHE_ALIGN_CHECK) != 0) || ((nBytes % CACHE_LINE_SIZE) != 0))
+        <#lt>    if ((((uint32_t)destination & CACHE_ALIGN_CHECK) != 0) || ((nBytes & CACHE_ALIGN_CHECK) != 0))
     </#if>
-    {
-        /* When aligned buffer is used the total number of bytes will be divided by the aligned
-         * buffer size and will be sent to drivers in iterations.
-         * As the total number of bytes are now divided into chunks it may effect the overall throughput.
-         * Increasing the length of the buffer will increase the throughput but consume more RAM memory.
-        */
+    {        		
+		/* First, copy data till the destination address becomes aligned to cache line */
+		if ((((uint32_t)destination) & CACHE_ALIGN_CHECK) != 0)
+		{
+			nReadChunk = CACHE_LINE_SIZE - ((uint32_t)destination & CACHE_ALIGN_CHECK);
+			
+			nReadChunk = nReadChunk > nBytesPending ? nBytesPending : nReadChunk;
+			
+			if (MPFSDiskReadAligned(diskNum,  mpfsAlignedBuffer, source, nReadChunk) == false)
+			{
+				return false;
+			}
+			/* Copy the received data from aligned buffer to actual buffer */
+			memcpy(destination, mpfsAlignedBuffer, nReadChunk);		
+		}	
+		
+		nBytesRead += nReadChunk;
+		source += nReadChunk;
+		nBytesPending -= nReadChunk;
+		
+		nReadChunk = nBytesPending - (nBytesPending & CACHE_ALIGN_CHECK);
+		
+		if (nReadChunk > 0)
+		{
+			/* As the destination is aligned now, and nReadChunk is a multiple of CACHE_LINE_SIZE, read directly into actual buffer */
+			if (MPFSDiskReadAligned(diskNum, &destination[nBytesRead], source, nReadChunk) == false)
+			{
+				return false;
+			}
+		}
+		
+		nBytesRead += nReadChunk;
+		source += nReadChunk;
+		nBytesPending -= nReadChunk;
+		
+		/* Lastly, read the pending bytes */
+		if (nBytesPending > 0)
+		{
+			if (MPFSDiskReadAligned(diskNum,  mpfsAlignedBuffer, source, nBytesPending) == false)
+			{
+				return false;
+			}
+			/* Copy the received data from aligned buffer to actual buffer */
+			memcpy(&destination[nBytesRead], mpfsAlignedBuffer, nBytesPending);								
+		}
 
-        while (bytesToTransfer > 0)
-        {
-            /* Calculate the number of bytes to be transferred with current request */
-            if (bytesToTransfer > SYS_FS_ALIGNED_BUFFER_LEN)
-            {
-                currentXferLen  = SYS_FS_ALIGNED_BUFFER_LEN;
-            }
-            else
-            {
-                currentXferLen  = bytesToTransfer;
-            }
-
-            commandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
-            commandStatus = SYS_FS_MEDIA_COMMAND_IN_PROGRESS;
-
-            commandHandle = SYS_FS_MEDIA_MANAGER_Read (diskNum, mpfsAlignedBuffer, source, currentXferLen);
-
-            if (commandHandle == SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
-            {
-                return false;
-            }
-
-            commandStatus = SYS_FS_MEDIA_MANAGER_CommandStatusGet(diskNum, commandHandle);
-
-            while ( (commandStatus == SYS_FS_MEDIA_COMMAND_IN_PROGRESS) ||
-                    (commandStatus == SYS_FS_MEDIA_COMMAND_QUEUED))
-            {
-                SYS_FS_MEDIA_MANAGER_TransferTask (diskNum);
-                commandStatus = SYS_FS_MEDIA_MANAGER_CommandStatusGet(diskNum, commandHandle);
-            }
-
-            if (commandStatus != SYS_FS_MEDIA_COMMAND_COMPLETED)
-            {
-                return false;
-            }
-
-            /* Copy the received data from aligned buffer to actual buffer */
-            memcpy(destination, mpfsAlignedBuffer, currentXferLen);
-
-            bytesToTransfer -= currentXferLen;
-            destination     += currentXferLen;
-            source          += currentXferLen;
-        }
+		return true;
     }
     else
 </#if>
     {
-        commandHandle = SYS_FS_MEDIA_MANAGER_Read (diskNum, destination, source, nBytes);
-
-        if (commandHandle == SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
-        {
-            return false;
-        }
-
-        commandStatus = SYS_FS_MEDIA_MANAGER_CommandStatusGet(diskNum, commandHandle);
-
-        while ( (commandStatus == SYS_FS_MEDIA_COMMAND_IN_PROGRESS) ||
-                (commandStatus == SYS_FS_MEDIA_COMMAND_QUEUED))
-        {
-            SYS_FS_MEDIA_MANAGER_TransferTask (diskNum);
-            commandStatus = SYS_FS_MEDIA_MANAGER_CommandStatusGet(diskNum, commandHandle);
-        }
+		return MPFSDiskReadAligned(diskNum, destination, source, nBytes);        
     }
-
-    return (commandStatus == SYS_FS_MEDIA_COMMAND_COMPLETED) ? true : false;
 }
 
 /* Wrapper for the MPFSDiskRead (). */
