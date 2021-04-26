@@ -3,6 +3,20 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.9.1
+
+### New Features
+- N/A
+
+### Bug fixes
+- Fixed issues reported by MPLAB XC32 Compiler v3.00 in File System and OSAL
+
+### Known Issues
+- No changes from v3.9.0
+
+### Development Tools
+- No changes from v3.9.0
+
 ## Core Release v3.9.0
 
 ### New Features
