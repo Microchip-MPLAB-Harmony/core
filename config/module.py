@@ -37,7 +37,7 @@ def hasPeripheral(peripheralList):
             return True
     return False
 
-def eeprom_emulator_condition():
+def emulated_eeprom_condition():
     arch = ATDF.getNode( "/avr-tools-device-file/devices/device" ).getAttribute( "architecture" )
     if arch == "CORTEX-M0PLUS" or arch == "CORTEX-M4" or arch == "CORTEX-M7":
         return True
@@ -82,7 +82,7 @@ def loadModule():
 
         {"name":"nand_flash", "label": "NAND FLASH", "type":"driver", "display_path":"SMC FLASH", "actual_path":"smc_flash", "instance":"single", "dependency":["NAND_CS"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAM9X60"])'},
 
-        {"name":"eeprom_emulator", "label": "EEPROM Emulator", "type":"library", "display_path":"", "actual_path":"", "instance":"single", "dependency":["MEMORY"], "condition":'eeprom_emulator_condition()'},
+        {"name":"emulated_eeprom", "label": "Emulated EEPROM", "type":"library", "display_path":"", "actual_path":"", "instance":"single", "dependency":["MEMORY"], "condition":'emulated_eeprom_condition()'},
 
         {"name":"i2c_bb", "label": "I2C_BB", "type":"library", "display_path":"", "actual_path":"", "instance":"single", "capability":["I2C"], "dependency":["TMR"], "condition":'True'},
 
