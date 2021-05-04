@@ -37,12 +37,14 @@ def hasPeripheral(peripheralList):
             return True
     return False
 
-def loadModule():
+def eeprom_emulator_condition():
+    arch = ATDF.getNode( "/avr-tools-device-file/devices/device" ).getAttribute( "architecture" )
+    if arch == "CORTEX-M0PLUS" or arch == "CORTEX-M4" or arch == "CORTEX-M7":
+        return True
+    else:
+        return False
 
-    i2c_bbComponent = Module.CreateComponent("i2c_bb", "I2C_BB", "/Libraries/i2c_bb/", "/libraries/i2c_bb/config/i2c_bb.py")
-    i2c_bbComponent.setDisplayType("I2C BIT BANG")
-    i2c_bbComponent.addCapability("I2C", "I2C", False)
-    i2c_bbComponent.addDependency("TMR", "TMR", False, True)
+def loadModule():
 
     #define drivers and system services
     coreComponents = [
@@ -78,7 +80,11 @@ def loadModule():
 
         {"name":"sdspi", "label": "SD Card (SPI)", "type":"driver", "display_path":"SDCARD", "actual_path":"", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["SPI", "DRV_SPI", "SYS_TIME"], "condition":"True", "is_dependency_required": "False"},
 
-        {"name":"nand_flash", "label": "NAND FLASH", "type":"driver", "display_path":"SMC FLASH", "actual_path":"smc_flash", "instance":"single", "dependency":["NAND_CS"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAM9X60"])'}
+        {"name":"nand_flash", "label": "NAND FLASH", "type":"driver", "display_path":"SMC FLASH", "actual_path":"smc_flash", "instance":"single", "dependency":["NAND_CS"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAM9X60"])'},
+
+        {"name":"eeprom_emulator", "label": "EEPROM Emulator", "type":"library", "display_path":"", "actual_path":"", "instance":"single", "dependency":["MEMORY"], "condition":'eeprom_emulator_condition()'},
+
+        {"name":"i2c_bb", "label": "I2C_BB", "type":"library", "display_path":"", "actual_path":"", "instance":"single", "capability":["I2C"], "dependency":["TMR"], "condition":'True'},
 
         ]
 

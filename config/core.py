@@ -75,7 +75,7 @@ for coreComponent in coreComponents:
                     else:
                         if "is_dependency_required" in coreComponent:
                             Component.addDependency("sys_" + Name + "_" + dep + "_dependency", dep, False, eval(coreComponent['is_dependency_required']))
-                        else:                        
+                        else:
                             Component.addDependency("sys_" + Name + "_" + dep + "_dependency", dep, False, True)
 
             Component.setDisplayType("System Service")
@@ -84,7 +84,7 @@ for coreComponent in coreComponents:
             Component.addDependency("sys_" + Name + "_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
 
         #create driver component
-        else:
+        elif coreComponent['type'] == "driver":
             print("create component: " + Name.upper() + " Driver")
 
             actualPath  = "driver/" + coreComponent['actual_path'] + "/"
@@ -126,3 +126,47 @@ for coreComponent in coreComponents:
 
             # Add Generic Dependency on Core Service
             Component.addDependency("drv_" + Name + "_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
+
+        #create library component
+        elif coreComponent['type'] == "library":
+            print("create component: " + Name.upper() + " Library")
+
+            actualPath  = "libraries/" + coreComponent['actual_path'] + "/"
+            displayPath = "/Libraries/" + coreComponent['display_path']
+
+            if coreComponent['instance'] == "multi":
+                Component = Module.CreateGeneratorComponent("lib_" + Name, Label, displayPath, actualPath + Name + "/config/lib_" + Name + "_common.py", actualPath + Name + "/config/lib_" + Name + ".py")
+            elif coreComponent['instance'] == "single":
+                Component = Module.CreateComponent("lib_" + Name, Label, displayPath, actualPath + Name + "/config/lib_" + Name + ".py")
+
+            if "capability" in coreComponent:
+                for capability in coreComponent['capability']:
+                    if "capability_type" in coreComponent:
+                        if coreComponent['capability_type'] == "multi":
+                            Component.addMultiCapability(capability.lower(), capability, capability)
+                        else:
+                            Component.addCapability(capability.lower(), capability)
+                    else:
+                        Component.addCapability(capability.lower(), capability)
+
+            if "dependency" in coreComponent:
+                for dep in coreComponent['dependency']:
+                    if (dep == "SYS_TIME"):
+                        # Add generic dependency on Timer System Service
+                        Component.addDependency("lib_" + Name + "_" + dep + "_dependency", dep, True, True)
+                    else:
+                        if "dependency_type" in coreComponent:
+                            if coreComponent['dependency_type'] == "multi":
+                                Component.addMultiDependency("lib_" + Name + "_" + dep + "_dependency", dep, dep, True)
+                            else:
+                                Component.addDependency("lib_" + Name + "_" + dep + "_dependency", dep, False, True)
+                        else:
+                            if "is_dependency_required" in coreComponent:
+                                Component.addDependency("lib_" + Name + "_" + dep + "_dependency", dep, False, eval(coreComponent['is_dependency_required']))
+                            else:
+                                Component.addDependency("lib_" + Name + "_" + dep + "_dependency", dep, False, True)
+
+            Component.setDisplayType("Library")
+
+            # Add Generic Dependency on Core Service
+            Component.addDependency("lib_" + Name + "_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
