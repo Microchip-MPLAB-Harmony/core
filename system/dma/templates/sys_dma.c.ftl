@@ -63,7 +63,50 @@
 void SYS_DMA_AddressingModeSetup(SYS_DMA_CHANNEL channel, SYS_DMA_SOURCE_ADDRESSING_MODE sourceAddrMode, SYS_DMA_DESTINATION_ADDRESSING_MODE destAddrMode)
 {
 <#if (core.DMA_ENABLE?has_content) && (core.DMA_ENABLE = true)>
-    uint32_t config;
+<#if core.DMA_IP?? && core.DMA_IP == "dma_03639">
+	uint32_t config;
+	uint32_t ras_value;
+	uint32_t was_value;
+	
+	config = (uint32_t)${core.DMA_INSTANCE_NAME}_ChannelSettingsGet((${core.DMA_NAME}_CHANNEL)channel);
+	
+	ras_value = (config & 0x70) >> 4;
+	was_value = config & 0x07;
+	
+	if (sourceAddrMode == SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED)
+	{
+		if (ras_value < 3)
+		{
+			ras_value += 3;			
+		}		
+	}
+	else
+	{
+		if (ras_value >= 3)
+		{
+			ras_value -= 3;			
+		}	
+	}	 
+		
+	if (destAddrMode == SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED)
+	{
+		if (was_value < 3)
+		{
+			was_value += 3;			
+		}		
+	}
+	else
+	{
+		if (was_value >= 3)
+		{
+			was_value -= 3;			
+		}	
+	}	 
+	config = (config & ~0x77) | ( (ras_value << 4) | was_value );
+	${core.DMA_INSTANCE_NAME}_ChannelSettingsSet((${core.DMA_NAME}_CHANNEL)channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
+	
+<#else>
+	uint32_t config;
 
     config = (uint32_t)${core.DMA_INSTANCE_NAME}_ChannelSettingsGet((${core.DMA_NAME}_CHANNEL)channel);
     config &= ~(${core.DMA_SRC_AM_MASK} | ${core.DMA_DST_AM_MASK});
@@ -71,7 +114,8 @@ void SYS_DMA_AddressingModeSetup(SYS_DMA_CHANNEL channel, SYS_DMA_SOURCE_ADDRESS
     config |= (uint32_t)sourceAddrMode | (uint32_t)destAddrMode;
 
     ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet((${core.DMA_NAME}_CHANNEL)channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
-</#if>
+</#if>	
+</#if>	
 }
 
 //******************************************************************************
@@ -87,7 +131,41 @@ void SYS_DMA_AddressingModeSetup(SYS_DMA_CHANNEL channel, SYS_DMA_SOURCE_ADDRESS
 void SYS_DMA_DataWidthSetup(SYS_DMA_CHANNEL channel, SYS_DMA_WIDTH dataWidth)
 {
 <#if (core.DMA_ENABLE?has_content) && (core.DMA_ENABLE = true)>
-    uint32_t config;
+<#if core.DMA_IP?? && core.DMA_IP == "dma_03639">
+
+	uint32_t config;
+	uint32_t ras_value;
+	uint32_t was_value;
+	
+	config = (uint32_t)${core.DMA_INSTANCE_NAME}_ChannelSettingsGet((${core.DMA_NAME}_CHANNEL)channel);
+	
+	ras_value = (config & 0x70) >> 4;
+	was_value = config & 0x07;
+
+	if (ras_value < 3)
+	{		
+		ras_value = dataWidth;		
+	}	
+	else
+	{	
+		ras_value = 0x03 + dataWidth;
+	}
+	
+	if (was_value < 3)
+	{		
+		was_value = dataWidth;		
+	}	
+	else
+	{	
+		was_value = 0x03 + dataWidth;
+	}
+	
+	
+	config = (config & ~0x77) | ( (ras_value << 4) | was_value );
+	${core.DMA_INSTANCE_NAME}_ChannelSettingsSet((${core.DMA_NAME}_CHANNEL)channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
+	    
+<#else>
+	uint32_t config;
 
     config = (uint32_t)${core.DMA_INSTANCE_NAME}_ChannelSettingsGet((${core.DMA_NAME}_CHANNEL)channel);
 
@@ -95,5 +173,6 @@ void SYS_DMA_DataWidthSetup(SYS_DMA_CHANNEL channel, SYS_DMA_WIDTH dataWidth)
     config |= (uint32_t)dataWidth;
 
     ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet((${core.DMA_NAME}_CHANNEL)channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
-</#if>
+</#if>	
+</#if>	
 }
