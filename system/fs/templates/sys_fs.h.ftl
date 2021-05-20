@@ -121,7 +121,10 @@ typedef enum
     FAT,
 
     /* MPFS2 native File system */
-    MPFS2
+    MPFS2,
+
+    /*  LittleFS native File system */
+    LITTLEFS
 
 } SYS_FS_FILE_SYSTEM_TYPE;
 
@@ -398,9 +401,41 @@ typedef enum
     SYS_FS_ERROR_FS_NOT_SUPPORTED,
     /* (22) Requested native file system does not match the format of volume */
     SYS_FS_ERROR_FS_NOT_MATCH_WITH_VOLUME,
+<#if SYS_FS_LFS == true>
     /* (23) Function not supported in native file system layer */
-    SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS
-
+    SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS,
+    /* (-5) Error during device operation*/       
+    SYS_FS_ERROR_IO          = -5, 
+    /* (-84) Corrupted*/     
+    SYS_FS_ERROR_CORRUPT     = -84, 
+    /* (-2) No directory entry*/     
+    SYS_FS_ERROR_NOENT       = -2,
+    /* (-17) Entry already exists*/     
+    SYS_FS_ERROR_ALREADY_EXIST       = -17,
+    /* (-20) Entry is not a dir*/     
+    SYS_FS_ERROR_NOTDIR      = -20, 
+    /* (-21) Entry is a dir*/     
+    SYS_FS_ERROR_ISDIR       = -21, 
+    /* (-39) Dir is not empty*/     
+    SYS_FS_ERROR_NOTEMPTY    = -39, 
+    /* (-9) Bad file number*/     
+    SYS_FS_ERROR_BADF        = -9,
+    /* (-27) File too large*/     
+    SYS_FS_ERROR_FBIG        = -27, 
+    /* (-22) Invalid parameter*/     
+    SYS_FS_ERROR_INVAL       = -22, 
+    /* (-28) No space left on device*/     
+    SYS_FS_ERROR_NOSPC       = -28,  
+    /* (-12) No more memory available*/     
+    SYS_FS_ERROR_NOMEM       = -12,  
+    /* (-61) No data/attr available*/     
+    SYS_FS_ERROR_NOATTR      = -61, 
+    /* (-36) File name too long*/     
+    SYS_FS_ERROR_NAMETOOLONG = -36
+<#else>
+    <#lt>/* (23) Function not supported in native file system layer */
+    <#lt>SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS
+</#if>
 } SYS_FS_ERROR;
 
 // *****************************************************************************

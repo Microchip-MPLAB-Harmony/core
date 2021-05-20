@@ -9,3 +9,6 @@
 <#if SYS_FS_MPFS == true>
     <#lt>#include "system/fs/mpfs/mpfs.h"
 </#if>
+<#if SYS_FS_LFS == true>
+    <#lt>#include "system/fs/sys_fs_littlefs_interface.h"
+</#if>

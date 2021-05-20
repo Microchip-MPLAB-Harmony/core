@@ -755,6 +755,23 @@ static uint8_t _SYS_FS_MEDIA_MANAGER_AnalyzeFileSystem
         fsType = 'M';
     }
 </#if>
+<#if SYS_FS_FAT == true && SYS_FS_LFS == true>
+    else if (0 == memcmp(&firstSector[8], "littlefs", 8))
+<#elseif SYS_FS_MPFS == true && SYS_FS_LFS == true>
+    else if (0 == memcmp(&firstSector[8], "littlefs", 8))
+<#elseif SYS_FS_LFS == true>
+    if (0 == memcmp(&firstSector[8], "littlefs", 8))
+</#if>
+<#if SYS_FS_LFS == true>
+    {
+        /* No partitions in littlefs, hence, go to other state */
+        /* allocate a new volume to each partition */
+        (*numPartition) = 1;
+        /* This is 0x4C which also mean file system Primary QNX POSIX volume on disk */
+        /* Need to find an unused value from the partition type*/
+        fsType = 'L';
+    }
+</#if>
     else /* If MBR is not detected, make media as unsupported */
     {
         /* File system either not present or not supported */
@@ -1388,6 +1405,17 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
                 {
                     /* MPFS File System */
                     property->fsType = MPFS2;
+                }
+</#if>
+<#if (SYS_FS_FAT == true || SYS_FS_MPFS == true) && SYS_FS_LFS == true>
+                else if (volumeObj->fsType == 'L')
+<#elseif SYS_FS_LFS == true>
+                if (volumeObj->fsType == 'L')				
+</#if>
+<#if SYS_FS_LFS == true>
+                {
+                    /* LFS File System */
+                    property->fsType = LITTLEFS;
                 }
 </#if>
                 else

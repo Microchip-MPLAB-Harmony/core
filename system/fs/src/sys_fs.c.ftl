@@ -525,7 +525,7 @@ SYS_FS_RESULT SYS_FS_Mount
     (void)data;
 
     /* Validate the parameters. */
-    if ((devName == NULL) || (mountName == NULL) || ((filesystemtype != FAT) && (filesystemtype != MPFS2)))
+    if ((devName == NULL) || (mountName == NULL) || ((filesystemtype != FAT) && (filesystemtype != MPFS2) && (filesystemtype != LITTLEFS)))
     {
         errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
         return SYS_FS_RES_FAILURE;
@@ -643,8 +643,11 @@ SYS_FS_RESULT SYS_FS_Mount
     {
         fileStatus = disk->fsFunctions->mount(disk->diskNumber);
         errorValue = (SYS_FS_ERROR)fileStatus;
-
+<#if SYS_FS_LFS == true >
+        if (fileStatus == SYS_FS_ERROR_NO_FILESYSTEM || (fileStatus == SYS_FS_ERROR_CORRUPT && disk->fsType == LITTLEFS))
+<#else>
         if (fileStatus == SYS_FS_ERROR_NO_FILESYSTEM)
+</#if>
         {
             fileStatus = 0;
         }
@@ -2387,7 +2390,7 @@ SYS_FS_RESULT SYS_FS_DriveLabelGet
 </#if> <#-- /* SYS_FS_FAT == true */ -->
 
 <#-- /* This block is Generated when only FAT-FS is Enabled in Write Mode OR FAT-FS and MPFS both are Enabled */ -->
-<#if (SYS_FS_FAT == true)  && (SYS_FS_FAT_READONLY == false) >
+<#if ((SYS_FS_FAT == true)  && (SYS_FS_FAT_READONLY == false)) || (SYS_FS_LFS == true) >
 //******************************************************************************
 /* Function:
     size_t SYS_FS_FileWrite
@@ -3294,7 +3297,7 @@ SYS_FS_RESULT SYS_FS_CurrentDriveSet
         return SYS_FS_RES_FAILURE;
     }
 
-    if (disk->fsType == MPFS2)
+    if (disk->fsType == MPFS2 || disk->fsType == LITTLEFS)
     {
         gSYSFSCurrentMountPoint.currentDisk = disk;
         return SYS_FS_RES_SUCCESS;
@@ -3471,7 +3474,18 @@ SYS_FS_RESULT SYS_FS_DriveFormat
     osalResult = OSAL_MUTEX_Lock(&(disk->mutexDiskVolume), OSAL_WAIT_FOREVER);
     if (osalResult == OSAL_RESULT_TRUE)
     {
+<#if SYS_FS_LFS == true >
+
+        fileStatus = disk->fsFunctions->unmount(disk->diskNumber);
+        
         fileStatus = disk->fsFunctions->formatDisk((uint8_t)disk->diskNumber, opt, work, len);
+        if (fileStatus == 0)
+            fileStatus = disk->fsFunctions->mount(disk->diskNumber);
+<#else>
+	fileStatus = disk->fsFunctions->formatDisk((uint8_t)disk->diskNumber, opt, work, len);
+</#if>
+
+        
 
         OSAL_MUTEX_Unlock(&(disk->mutexDiskVolume));
 
