@@ -48,9 +48,6 @@ static LITTLEFS_FILE_OBJECT CACHE_ALIGN LFSFileObject[SYS_FS_MAX_FILES];
 static LITTLEFS_DIR_OBJECT CACHE_ALIGN LFSDirObject[SYS_FS_MAX_FILES];
 static uint8_t startupflag = 0;
 
-
-//typedef UINT(*STREAM_FUNC)(const BYTE*,UINT);
-
 #define     LFS_READ_SIZE   512
 #define     LFS_PROG_SIZE   512
 #define     LFS_BLOCK_SIZE   512
@@ -80,9 +77,7 @@ static const struct lfs_config cfg = {
 int LITTLEFS_mount ( uint8_t vol )
 {
     lfs_t *fs = NULL;
-    enum lfs_error res = LFS_ERR_INVAL;
-
-    
+    enum lfs_error res = LFS_ERR_INVAL; 
     uint8_t index = 0;
 
     if(0 == startupflag)
@@ -115,13 +110,10 @@ int LITTLEFS_mount ( uint8_t vol )
         fs = &LITTLEFSVolume[vol].volObj;
     }
 
-        bd.disk_num = vol;
+    bd.disk_num = vol;
         
-
-
     lfs_bd_initilize(0);	/* Initialize the physical drive */
     
-    //res = lfs_format(fs, &cfg);
     res = lfs_mount(fs, &cfg);
     
 
@@ -181,7 +173,6 @@ int LITTLEFS_open (
     uint8_t mode        /* Access mode and file open mode flags */
 )
 {
-    printf("[%s] path = %s\n", __func__, path);
     uint8_t volumeNum = 0;
     int flags;
     lfs_t *fs = NULL;
@@ -191,8 +182,6 @@ int LITTLEFS_open (
     
     fs = &LITTLEFSVolume[volumeNum].volObj;
 
-#if 1
-    //FRESULT res = FR_INT_ERR;
     enum lfs_error res = LFS_ERR_NOATTR;
     uint32_t index = 0;
     
@@ -235,17 +224,13 @@ int LITTLEFS_open (
     }
 
     res = lfs_file_open(fs, fp, (const char *)path + 2, flags);
-    //res = f_open(fp, (const TCHAR *)path, mode);
 
     if (res != 0)
     {
         LFSFileObject[index].inUse = false;
     }
-    printf("[%s] res = %d\n", __func__, res);
+ 
     return ((int)res);
-#endif 
-
-
 }
 
 int LITTLEFS_read (
@@ -279,7 +264,6 @@ int LITTLEFS_close (
     uintptr_t handle /* Pointer to the file object to be closed */
 )
 {
-
     lfs_t *fs = NULL;
     enum lfs_error res = LFS_ERR_OK;
     LITTLEFS_FILE_OBJECT *ptr = (LITTLEFS_FILE_OBJECT *)handle;
@@ -343,9 +327,6 @@ int LITTLEFS_stat (
 
     res = lfs_stat(fs, (const char *)path + 3, &info);
     
-    printf("[%s] name = %s, size = %d, type = %d, file name len = %d\r\n",  __func__, info.name, (int) info.size,  (int) info.type, (int) strlen(info.name));
-    
-    
     fileLen = strlen (info.name);
 
 <#if SYS_FS_LFN_ENABLE == true>
@@ -380,51 +361,6 @@ int LITTLEFS_stat (
 
 }
 
-int LITTLEFS_getlabel (
-    const char* path,  /* Path name of the logical drive number */
-    char* label,       /* Pointer to a buffer to return the volume label */
-    uint32_t* vsn           /* Pointer to a variable to return the volume serial number */
-)
-{
-    #if 0
-    FRESULT res;
-
-    res = f_getlabel((const TCHAR *)path, (TCHAR *)label, (DWORD *)vsn);
-
-    return ((int)res);
-#endif
-    return 0;
-}
-
-int LITTLEFS_getcwd (
-    char* buff,    /* Pointer to the directory path */
-    uint32_t len    /* Size of path */
-)
-{
-    #if 0 
-    FRESULT res;
-    res = f_getcwd((TCHAR *)buff, (UINT)len);
-
-    return ((int)res);
-#endif
-    return 0;
-}
-
-char* LITTLEFS_gets (
-    char* buff,    /* Pointer to the string buffer to read */
-    int len,        /* Size of string buffer (characters) */
-    uintptr_t handle/* Pointer to the file object */
-)
-{
-    #if 0 
-    LITTLEFS_FILE_OBJECT *ptr = (LITTLEFS_FILE_OBJECT *)handle;
-    FIL *fp = &ptr->fileObj;
-
-    return ((char *)f_gets((TCHAR *)buff, len, fp));
-#endif
-    return 0;
-}
-
 int LITTLEFS_opendir (
     uintptr_t handle,           /* Pointer to directory object to create */
     const char* path   /* Pointer to the directory path */
@@ -436,7 +372,6 @@ int LITTLEFS_opendir (
     lfs_dir_t *dp = NULL;
     
     fs = &LITTLEFSVolume[0].volObj;
-
 
     for(index = 0; index < SYS_FS_MAX_FILES; index++)
     {
@@ -476,7 +411,7 @@ int LITTLEFS_readdir (
     lfs_dir_t *dp = &ptr->dirObj;
     struct lfs_info    info;
     SYS_FS_FSTAT *fileStat = (SYS_FS_FSTAT *)fileInfo;
-	uint16_t fileLen = 0;
+    uint16_t fileLen = 0;
     
     fs = &LITTLEFSVolume[0].volObj;
     
@@ -560,40 +495,6 @@ int LITTLEFS_closedir (
     return ((int)res);
 }
 
-int LITTLEFS_chdir (
-    const char* path   /* Pointer to the directory path */
-)
-{
-    #if 0 
-    FRESULT res;
-
-    res = f_chdir((const TCHAR *)path);
-
-    return ((int)res);
-#endif
-    return 0;
-}
-
-int LITTLEFS_chdrive (
-    uint8_t drv     /* Drive number */
-)
-{
-    #if 0 
-    FRESULT res;
-    TCHAR path[3];
-
-    path[0] = '0' + drv;
-    path[1] = ':';
-    path[2] = '\0';
-
-    res = f_chdrive((const TCHAR *)&path);
-
-    return ((int)res);
-#endif
-    return 0;
-}
-
-
 int LITTLEFS_write (
     uintptr_t handle,   /* Pointer to the file object */
     const void *buff,   /* Pointer to the data to be written */
@@ -601,7 +502,6 @@ int LITTLEFS_write (
     uint32_t* bw        /* Pointer to number of bytes written */
 )
 {
-
     lfs_t *fs = NULL;
     enum lfs_error res = LFS_ERR_OK;
     LITTLEFS_FILE_OBJECT *ptr = (LITTLEFS_FILE_OBJECT *)handle;
@@ -618,7 +518,6 @@ int LITTLEFS_write (
     }
    
     return ((int)res);
-
 }
 
 uint32_t LITTLEFS_tell(uintptr_t handle)
@@ -688,20 +587,6 @@ int LITTLEFS_remove (
     return ((int)res);
 }
 
-int LITTLEFS_setlabel (
-    const char* label  /* Volume label to set with heading logical drive number */
-)
-{
-    #if 0 
-    FRESULT res;
-
-    res = f_setlabel((const TCHAR *)label);
-
-    return ((int)res);
-#endif
-    return 0;
-}
-
 int LITTLEFS_truncate (
     uintptr_t handle /* Pointer to the file object */
 )
@@ -720,39 +605,6 @@ int LITTLEFS_truncate (
         res = lfs_file_truncate(fs, fp, fpos);
 
     return ((int)res);
-}
-
-int LITTLEFS_chmod (
-    const char* path,  /* Pointer to the file path */
-    uint8_t attr,       /* Attribute bits */
-    uint8_t mask        /* Attribute mask to change */
-)
-{
-    #if 0 
-    FRESULT res;
-
-    res = f_chmod((const TCHAR *)path, (BYTE)attr, (BYTE)mask);
-
-    return ((int)res);
-#endif
-    return 0;
-}
-
-int LITTLEFS_utime (
-    const char* path,  /* Pointer to the file/directory name */
-    const uintptr_t ptr /* Pointer to the time stamp to be set */
-)
-{
-    #if 0 
-    FRESULT res;
-
-    FILINFO *finfo = (FILINFO *)ptr;
-
-    res = f_utime((const TCHAR *)path, finfo);
-
-    return ((int)res);
-#endif
-    return 0;
 }
 
 int LITTLEFS_rename (
@@ -786,61 +638,6 @@ int LITTLEFS_sync (
     return ((int)res);
 }
 
-int LITTLEFS_putc (
-    char c,    /* A character to be output */
-    uintptr_t handle/* Pointer to the file object */
-)
-{
-    #if 0 
-    LITTLEFS_FILE_OBJECT *ptr = (LITTLEFS_FILE_OBJECT *)handle;
-    FIL *fp = &ptr->fileObj;
-
-    return (f_putc((TCHAR)c, fp));
-#endif
-    return 0;
-}
-
-int LITTLEFS_puts (
-    const char* str,   /* Pointer to the string to be output */
-    uintptr_t handle    /* Pointer to the file object */
-)
-{
-    #if 0 
-    LITTLEFS_FILE_OBJECT *ptr = (LITTLEFS_FILE_OBJECT *)handle;
-    FIL *fp = &ptr->fileObj;
-
-    return (f_puts((const TCHAR *)str, fp));
-#endif
-    return 0;
-}
-
-int LITTLEFS_printf (
-    uintptr_t handle,           /* Pointer to the file object */
-    const char* fmt,   /* Pointer to the format string */
-    va_list argList                 /* Optional arguments... */
-)
-{
-    #if 0 
-    LITTLEFS_FILE_OBJECT *ptr = (LITTLEFS_FILE_OBJECT *)handle;
-    FIL *fp = &ptr->fileObj;
-
-    return (f_printf(fp, (const TCHAR *)fmt, argList));
-#endif
-    return 0;
-}
-
-bool LITTLEFS_error(uintptr_t handle)
-{
-    #if 0 
-    LITTLEFS_FILE_OBJECT *ptr = (LITTLEFS_FILE_OBJECT *)handle;
-    FIL *fp = &ptr->fileObj;
-
-    return ((bool)f_error(fp));
-#endif
-    return 0;
-}
-
-
 int LITTLEFS_mkfs (
     uint8_t vol,            /* Logical drive number */
     void* opt,   /* this value is not used */
@@ -864,72 +661,4 @@ int LITTLEFS_mkfs (
     return ((int)res);
 
 }
-
-
-int LITTLEFS_fdisk (
-    uint8_t pdrv,           /* Physical drive number */
-    const uint32_t ptbl[],  /* Pointer to the size table for each partitions */
-    void* work          /* Pointer to the working buffer */
-)
-{
-    #if 0 
-    FRESULT res;
-
-    res = f_fdisk((BYTE)pdrv, (const LBA_t *)ptbl, work);
-
-    return ((int)res);
-#endif
-    return 0;
-}
-
-/*-----------------------------------------------------------------------*/
-/* Function below written separately.                                    */
-/* Not from standard FAT FS code. It is added to allow compatibility with*/
-/* other FS, as this function does not need "FATFS **fatfs"              */
-/*-----------------------------------------------------------------------*/
-
-int LITTLEFS_getclusters (
-    const char *path,
-    uint32_t *tot_sec,
-    uint32_t *free_sec
-)
-{
-    #if 0 
-    FATFS *fs = (FATFS *)NULL;
-    DWORD clst = 0;
-    FRESULT res = FR_OK;
-
-    res = f_getfree((const TCHAR *)path, &clst, &fs);
-
-    if(res != FR_OK)
-    {
-        *tot_sec = 0;
-        *free_sec = 0;
-        return (int)res;
-    }
-
-    /* Get total sectors and free sectors */
-    *tot_sec = (fs->n_fatent - 2) * fs->csize;
-    *free_sec = clst * fs->csize;
-
-    return ((int)res);
-#endif
-    return 0;
-}
-#if 0 
-int LITTLEFS_getfree (
-
-    const char* path,  /* Path name of the logical drive number */
-    uint32_t* nclst,        /* Pointer to a variable to return number of free clusters */
-    FATFS** fatfs       /* Pointer to return pointer to corresponding file system object */
-)
-{
-    FRESULT res;
-
-    res = f_getfree((const TCHAR *)path, (DWORD *)nclst, fatfs);
-
-    return ((int)res);
-
-}
-#endif
 

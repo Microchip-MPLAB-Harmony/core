@@ -70,21 +70,11 @@ int LITTLEFS_lseek (uintptr_t handle, uint32_t ofs);
 
 int LITTLEFS_stat (const char* path, uintptr_t ptr);
 
-int LITTLEFS_getlabel (const char* path, char* label, uint32_t* vsn);
-
-int LITTLEFS_getcwd (char* buff, uint32_t len);
-
-char* LITTLEFS_gets (char* buff, int len, uintptr_t handle);
-
 int LITTLEFS_opendir (uintptr_t handle, const char* path);
 
 int LITTLEFS_readdir (uintptr_t handle, uintptr_t fno);
 
 int LITTLEFS_closedir (uintptr_t handle);
-
-int LITTLEFS_chdir (const char* path);
-
-int LITTLEFS_chdrive (uint8_t drv);
 
 int LITTLEFS_write (uintptr_t handle, const void* buff, uint32_t btw, uint32_t* bw);
 
@@ -100,34 +90,13 @@ int LITTLEFS_mkdir (const char* path);
 
 int LITTLEFS_remove (const char* path);
 
-int LITTLEFS_setlabel (const char* label);
-
 int LITTLEFS_truncate (uintptr_t handle);
-
-int LITTLEFS_chmod (const char* path, uint8_t attr, uint8_t mask);
-
-int LITTLEFS_utime (const char* path, const uintptr_t fno);
 
 int LITTLEFS_rename (const char* path_old, const char* path_new);
 
 int LITTLEFS_sync (uintptr_t handle);
 
-int LITTLEFS_putc (char c, uintptr_t handle);
-
-int LITTLEFS_puts (const char* str, uintptr_t handle);
-
-int LITTLEFS_printf (uintptr_t handle, const char* str, va_list argList);
-
-bool LITTLEFS_error(uintptr_t handle);
-
 int LITTLEFS_mkfs (uint8_t vol, void* opt, void* work, uint32_t len);
-
-//int LITTLEFS_expand (FIL* fp, uint32_t fsz, uint8_t opt);
-
-int LITTLEFS_fdisk (uint8_t pdrv, const uint32_t szt[], void* work);
-
-int LITTLEFS_getclusters (const char *path, uint32_t *tot_sec, uint32_t *free_sec);
-
 
 #ifdef __cplusplus
 }

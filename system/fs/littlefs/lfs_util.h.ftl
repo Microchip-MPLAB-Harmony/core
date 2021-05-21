@@ -43,16 +43,12 @@ extern "C"
 {
 #endif
 
-<#if core.PRODUCT_FAMILY?matches("PIC32MZ.*") == true>
-#include <xc.h>
-</#if>
-
 
 // Macros, may be replaced by system specific wrappers. Arguments to these
 // macros must not have side-effects as the macros can be removed for a smaller
 // code footprint
 
-#define LFS_YES_TRACE
+//#define LFS_YES_TRACE
 // Logging functions
 #ifndef LFS_TRACE
 #ifdef LFS_YES_TRACE
@@ -224,16 +220,11 @@ uint32_t lfs_crc(uint32_t crc, const void *buffer, size_t size);
 // Note, memory must be 64-bit aligned
 static inline void *lfs_malloc(size_t size) {
 #ifndef LFS_NO_MALLOC
-    printf("[%s] size = %d\r\n", __func__, (int) size);
-<#if core.PRODUCT_FAMILY?matches("PIC32MZ.*") == true>
-    void * ptr = __pic32_alloc_coherent(size);      // use uncached memory
-<#else>
+
     void * ptr = malloc(size);
-</#if>
+
     if (ptr == NULL)
         LFS_DEBUG("[%s] fail to allocate memory...\r\n", __func__);
-    
-    printf("[%s] size = %d, ptr = 0x%p\r\n", __func__, (int) size, ptr);
     
     return ptr;
 #else
@@ -245,13 +236,7 @@ static inline void *lfs_malloc(size_t size) {
 // Deallocate memory, only used if buffers are not provided to littlefs
 static inline void lfs_free(void *p) {
 #ifndef LFS_NO_MALLOC
-    printf("[%s] ptr = 0x%p\r\n", __func__, p);
-<#if core.PRODUCT_FAMILY?matches("PIC32MZ.*") == true>
-    __pic32_free_coherent(p);   // release uncached memory
-<#else>
     free(p);
-</#if>
-
 #else
     (void)p;
 #endif

@@ -554,28 +554,26 @@ static int lfs_alloc(lfs_t *lfs, lfs_block_t *block) {
                 return 0;
             }
         }
-        printf("[%s] log1\r\n", __func__);
+
         // check if we have looked at all blocks since last ack
         if (lfs->free.ack == 0) {
             LFS_ERROR("No more free space %"PRIu32,
                     lfs->free.i + lfs->free.off);
             return LFS_ERR_NOSPC;
         }
-        printf("[%s] log2\r\n", __func__);
+
         lfs->free.off = (lfs->free.off + lfs->free.size)
                 % lfs->cfg->block_count;
         lfs->free.size = lfs_min(8*lfs->cfg->lookahead_size, lfs->free.ack);
         lfs->free.i = 0;
-        printf("[%s] log3\r\n", __func__);
+
         // find mask of free blocks from tree
         memset(lfs->free.buffer, 0, lfs->cfg->lookahead_size);
         int err = lfs_fs_rawtraverse(lfs, lfs_alloc_lookahead, lfs, true);
         if (err) {
             lfs_alloc_drop(lfs);
-            printf("[%s] log4\r\n", __func__);
             return err;
         }
-        printf("[%s] log5\r\n", __func__);
     }
 }
 #endif
@@ -1443,7 +1441,6 @@ static int lfs_dir_commitcrc(lfs_t *lfs, struct lfs_commit *commit) {
 
 #ifndef LFS_READONLY
 static int lfs_dir_alloc(lfs_t *lfs, lfs_mdir_t *dir) {
-    printf("[%s] log1\r\n", __func__);
     // allocate pair of dir blocks (backwards, so we write block 1 first)
     for (int i = 0; i < 2; i++) {
         int err = lfs_alloc(lfs, &dir->pair[(i+1)%2]);
@@ -1451,7 +1448,7 @@ static int lfs_dir_alloc(lfs_t *lfs, lfs_mdir_t *dir) {
             return err;
         }
     }
-    printf("[%s] log2\r\n", __func__);
+
     // zero for reproducability in case initial block is unreadable
     dir->rev = 0;
 
@@ -1464,7 +1461,7 @@ static int lfs_dir_alloc(lfs_t *lfs, lfs_mdir_t *dir) {
     if (err && err != LFS_ERR_CORRUPT) {
         return err;
     }
-    printf("[%s] log3\r\n", __func__);
+
     // to make sure we don't immediately evict, align the new revision count
     // to our block_cycles modulus, see lfs_dir_compact for why our modulus
     // is tweaked this way
@@ -2033,14 +2030,13 @@ static int lfs_rawmkdir(lfs_t *lfs, const char *path) {
     if (!(err == LFS_ERR_NOENT && id != 0x3ff)) {
         return (err < 0) ? err : LFS_ERR_EXIST;
     }
-    
-    printf("[%s] log1\r\n", __func__);
+
     // check that name fits
     lfs_size_t nlen = strlen(path);
     if (nlen > lfs->name_max) {
         return LFS_ERR_NAMETOOLONG;
     }
-    printf("[%s] log2\r\n", __func__);
+
     // build up new directory
     lfs_alloc_ack(lfs);
     lfs_mdir_t dir;
@@ -2048,7 +2044,7 @@ static int lfs_rawmkdir(lfs_t *lfs, const char *path) {
     if (err) {
         return err;
     }
-    printf("[%s] log3\r\n", __func__);
+
     // find end of list
     lfs_mdir_t pred = cwd.m;
     while (pred.split) {
@@ -2057,7 +2053,7 @@ static int lfs_rawmkdir(lfs_t *lfs, const char *path) {
             return err;
         }
     }
-    printf("[%s] log4\r\n", __func__);
+
     // setup dir
     lfs_pair_tole32(pred.tail);
     err = lfs_dir_commit(lfs, &dir, LFS_MKATTRS(
@@ -2066,7 +2062,7 @@ static int lfs_rawmkdir(lfs_t *lfs, const char *path) {
     if (err) {
         return err;
     }
-    printf("[%s] log5\r\n", __func__);
+
     // current block end of list?
     if (cwd.m.split) {
         // update tails, this creates a desync
@@ -2074,7 +2070,7 @@ static int lfs_rawmkdir(lfs_t *lfs, const char *path) {
         if (err) {
             return err;
         }
-        printf("[%s] log6\r\n", __func__);
+
         // it's possible our predecessor has to be relocated, and if
         // our parent is our predecessor's predecessor, this could have
         // caused our parent to go out of date, fortunately we can hook
@@ -2091,7 +2087,7 @@ static int lfs_rawmkdir(lfs_t *lfs, const char *path) {
             lfs->mlist = cwd.next;
             return err;
         }
-        printf("[%s] log7\r\n", __func__);
+
         lfs->mlist = cwd.next;
         err = lfs_fs_preporphans(lfs, -1);
         if (err) {
@@ -3518,7 +3514,6 @@ static int lfs_init(lfs_t *lfs, const struct lfs_config *cfg) {
     } else {
         lfs->rcache.buffer = lfs_malloc(lfs->cfg->cache_size);
         if (!lfs->rcache.buffer) {
-            printf("[%s] log1\r\n", __func__);
             err = LFS_ERR_NOMEM;
             goto cleanup;
         }
@@ -3530,7 +3525,6 @@ static int lfs_init(lfs_t *lfs, const struct lfs_config *cfg) {
     } else {
         lfs->pcache.buffer = lfs_malloc(lfs->cfg->cache_size);
         if (!lfs->pcache.buffer) {
-            printf("[%s] log2\r\n", __func__);
             err = LFS_ERR_NOMEM;
             goto cleanup;
         }
@@ -3549,7 +3543,6 @@ static int lfs_init(lfs_t *lfs, const struct lfs_config *cfg) {
     } else {
         lfs->free.buffer = lfs_malloc(lfs->cfg->lookahead_size);
         if (!lfs->free.buffer) {
-            printf("[%s] log3\r\n", __func__);
             err = LFS_ERR_NOMEM;
             goto cleanup;
         }
@@ -3683,6 +3676,7 @@ static int lfs_rawmount(lfs_t *lfs, const struct lfs_config *cfg) {
     if (err) {
         return err;
     }
+
     // scan directory blocks for superblock and any global updates
     lfs_mdir_t dir = {.tail = {0, 1}};
     lfs_block_t cycle = 0;
@@ -3815,7 +3809,7 @@ int lfs_fs_rawtraverse(lfs_t *lfs,
         bool includeorphans) {
     // iterate over metadata pairs
     lfs_mdir_t dir = {.tail = {0, 1}};
-    printf("[%s] log1\r\n", __func__);
+
 #ifdef LFS_MIGRATE
     // also consider v1 blocks during migration
     if (lfs->lfs1) {
@@ -3836,23 +3830,22 @@ int lfs_fs_rawtraverse(lfs_t *lfs,
             return LFS_ERR_CORRUPT;
         }
         cycle += 1;
-        printf("[%s] log2\r\n", __func__);
+
         for (int i = 0; i < 2; i++) {
             int err = cb(data, dir.tail[i]);
             if (err) {
                 return err;
             }
         }
-        printf("[%s] log3\r\n", __func__);
+
         // iterate through ids in directory
         int err = lfs_dir_fetch(lfs, &dir, dir.tail);
         if (err) {
             return err;
         }
-        printf("[%s] log4\r\n", __func__);
+
         for (uint16_t id = 0; id < dir.count; id++) {
             struct lfs_ctz ctz;
-            printf("[%s] log5\r\n", __func__);
             lfs_stag_t tag = lfs_dir_get(lfs, &dir, LFS_MKTAG(0x700, 0x3ff, 0),
                     LFS_MKTAG(LFS_TYPE_STRUCT, id, sizeof(ctz)), &ctz);
             if (tag < 0) {
@@ -5094,11 +5087,10 @@ int lfs_file_open(lfs_t *lfs, lfs_file_t *file, const char *path, int flags) {
     if (err) {
         return err;
     }
-    printf("[%s], lfs_file_open(%p, %p, \"%s\", %x)\r\n", __func__, (void*)lfs, (void*)file, path, flags);
     LFS_TRACE("lfs_file_open(%p, %p, \"%s\", %x)",
             (void*)lfs, (void*)file, path, flags);
     LFS_ASSERT(!lfs_mlist_isopen(lfs->mlist, (struct lfs_mlist*)file));
-    
+
     err = lfs_file_rawopen(lfs, file, path, flags);
 
     LFS_TRACE("lfs_file_open -> %d", err);

@@ -316,10 +316,7 @@ def instantiateComponent(sysFSComponent):
     sysFSLFS = sysFSComponent.createBooleanSymbol("SYS_FS_LFS", sysFSMenu)
     sysFSLFS.setLabel("LittleFS File System")
     sysFSLFS.setDefaultValue(False)
-    
-    dummyDict = {}
-    dummyDict = Database.sendMessage("core", "HEAP_SIZE", {"heap_size" : 3072})
-    
+
     symOptions = sysFSComponent.createSettingSymbol(None, None)
     symOptions.setCategory("C32")
     symOptions.setKey("appendMe")
@@ -595,11 +592,13 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSSourceFile.setDependencies(sysFsFileGen, ["SYS_FS_LFS"])
 
     sysFSLFSBDSourceFile = sysFSComponent.createFileSymbol("SYS_FS_LFS_BD_SOURCE", None)
-    sysFSLFSBDSourceFile.setSourcePath("system/fs/littlefs/lfs_bd.c")
+    sysFSLFSBDSourceFile.setSourcePath("/system/fs/littlefs/lfs_bd.c.ftl")
     sysFSLFSBDSourceFile.setOutputName("lfs_bd.c")
-    sysFSLFSBDSourceFile.setDestPath("system/fs/littlefs/")
+    sysFSLFSBDSourceFile.setDestPath("/system/fs/littlefs/")
     sysFSLFSBDSourceFile.setProjectPath("config/" + configName + "/system/fs/littlefs/")
     sysFSLFSBDSourceFile.setType("SOURCE")
+    sysFSLFSBDSourceFile.setMarkup(True)
+    sysFSLFSBDSourceFile.setOverwrite(True)
     sysFSLFSBDSourceFile.setEnabled(sysFSFat.getValue())
     sysFSLFSBDSourceFile.setDependencies(sysFsFileGen, ["SYS_FS_LFS"])
 
