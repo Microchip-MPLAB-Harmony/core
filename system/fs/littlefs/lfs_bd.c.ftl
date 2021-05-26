@@ -82,6 +82,31 @@ static BDSTATUS bd_checkCommandStatus(uint8_t pdrv)
     return result;
 }
 
+static BDSTATUS disk_read_aligned
+(
+    uint8_t pdrv,   /* Physical drive nmuber (0..) */
+    uint8_t *buff,  /* Data buffer to store read data */
+    uint32_t sector,/* Sector address (LBA) */
+    uint32_t sector_count   /* Number of sectors to read (1..128) */
+)
+{
+    BDSTATUS result = RES_ERROR;
+
+    gSysFsDiskData[pdrv].commandStatus = SYS_FS_MEDIA_COMMAND_IN_PROGRESS;
+
+    gSysFsDiskData[pdrv].commandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
+
+    /* Submit the read request to media */
+    gSysFsDiskData[pdrv].commandHandle = SYS_FS_MEDIA_MANAGER_SectorRead(pdrv /* DISK Number */ ,
+            buff /* Destination Buffer*/,
+            sector /* Source Sector */,
+            sector_count /* Number of Sectors */);
+
+    result = bd_checkCommandStatus(pdrv);
+
+    return result;
+}
+
 BDSTATUS lfs_bd_initilize (
     uint8_t pdrv                /* Physical drive nmuber to identify the drive */
 )
@@ -102,14 +127,15 @@ int lfs_bd_read(const struct lfs_config *cfg, lfs_block_t block,
     
     BDSTATUS result = RES_ERROR;
     BLOCK_DEV *bd = cfg->context;
+    uint32_t sector = block * (cfg->block_size/ SYS_FS_LFS_MAX_SS);
+    uint32_t count = size/ SYS_FS_LFS_MAX_SS;
 
 <#if SYS_FS_ALIGNED_BUFFER_ENABLE?? && SYS_FS_ALIGNED_BUFFER_ENABLE == true>
-    uint8_t* data;    
-    uint32_t bytesToTransfer    = 0;
-    uint32_t currentXferLen     = 0;
-    uint32_t sectorXferCntr     = 0;
-    
-    data = (uint8_t*) buffer;
+    uint32_t i = 0;
+    uint32_t sector_aligned_index = 0;
+    uint8_t (*sector_ptr)[SYS_FS_LFS_MAX_SS] = (uint8_t (*)[])buffer;
+    uint8_t *buff_prt = (uint8_t*) buffer;
+	
 
     <#if core.PRODUCT_FAMILY?matches("PIC32MZ.*") == true>
         <#lt>    /* Use Aligned Buffer if input buffer is in Cacheable address space and
@@ -120,58 +146,58 @@ int lfs_bd_read(const struct lfs_config *cfg, lfs_block_t block,
         <#lt>    if (((uint32_t)buffer & CACHE_ALIGN_CHECK) != 0)
     </#if>
     {
-        bytesToTransfer = size;
-
-        while (bytesToTransfer > 0)
+        /* For unaligned buffers, if count is > 2, then always read the first sector into the internal aligned buffer since the starting address of app buffer is unaligned.
+         * After this, find the first 512 byte aligned address in the app buffer and copy the remaining (count-1) sectors into the app buffer directly.
+         * After this, move the count-1 sectors in app buffer to the end (i.e. start of 1st sector) in app buffer.
+         * Finally, copy the first sector from internal aligned buffer to app buffer.
+         * For unaligned buffers, if count is < 2, then directly use the internal aligned buffer and then copy it to app buffer as there is no gain in following the above logic.
+        */
+        if (count > 2)
         {
-            /* Calculate the number of sectors to be transferred with current request */
-            if (bytesToTransfer > SYS_FS_ALIGNED_BUFFER_LEN)
+            /* Read first sector from media into internal aligned buffer */
+            result = disk_read_aligned(bd->disk_num, gSysFsDiskData[bd->disk_num].alignedBuffer, sector, 1);
+
+            if (result == RES_OK)
             {
-                sectorXferCntr  = (SYS_FS_ALIGNED_BUFFER_LEN / SYS_FS_LFS_MAX_SS);
-                currentXferLen  = SYS_FS_ALIGNED_BUFFER_LEN;
+                /* Find the first sector aligned address in the application buffer and read (count - 1) sectors into the aligned application buffer directly */
+
+                sector_aligned_index = SYS_FS_LFS_MAX_SS - ((uint32_t)buffer & (SYS_FS_LFS_MAX_SS - 1));
+
+                result = disk_read_aligned(bd->disk_num, &buff_prt[sector_aligned_index], (sector + 1), (count - 1));
+
+                if (result == RES_OK)
+                {
+                    /* Move (count - 1) sectors to the end (i.e. start of 1st sector) in the application buffer */
+                    memmove(&sector_ptr[1], &buff_prt[sector_aligned_index], (count - 1)*SYS_FS_LFS_MAX_SS);
+
+                    /* Copy the first sector from the internal aligned buffer to the start of the application buffer */
+                    memcpy(&sector_ptr[0], gSysFsDiskData[bd->disk_num].alignedBuffer, SYS_FS_LFS_MAX_SS);
+                }
             }
-            else
-            {
-                sectorXferCntr  = (bytesToTransfer / SYS_FS_LFS_MAX_SS);
-                currentXferLen  = bytesToTransfer;
-            }
-
-            gSysFsDiskData[bd->disk_num].commandStatus = SYS_FS_MEDIA_COMMAND_IN_PROGRESS;
-
-            gSysFsDiskData[bd->disk_num].commandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
-
-            /* Submit the read request to media */
-            gSysFsDiskData[bd->disk_num].commandHandle = SYS_FS_MEDIA_MANAGER_SectorRead(bd->disk_num /* DISK Number */ ,
-                    gSysFsDiskData[bd->disk_num].alignedBuffer /* Destination Buffer*/,
-                    block* (cfg->block_size/ cfg->read_size) /* Source Sector */,
-                    sectorXferCntr /* Number of Sectors */);
-
-            result = bd_checkCommandStatus(bd->disk_num);
-
-            if (result != RES_OK)
-            {
-                break;
-            }
-
-            /* Copy the received data from aligned buffer to actual buffer */
-            memcpy(data, gSysFsDiskData[bd->disk_num].alignedBuffer, currentXferLen);
-
-            bytesToTransfer -= currentXferLen;
-            data            += currentXferLen;
-            block          += sectorXferCntr;
         }
+		else
+        {
+            for (i = 0; i < count; i++)
+            {
+                result = disk_read_aligned(bd->disk_num, gSysFsDiskData[bd->disk_num].alignedBuffer, (sector + i), 1);
+
+                if (result == RES_OK)
+                {
+                    /* Copy the read data from the internal aligned buffer to the start of the application buffer */
+                    memcpy(&sector_ptr[i], gSysFsDiskData[bd->disk_num].alignedBuffer, SYS_FS_LFS_MAX_SS);
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }		
     }
     else
 </#if>
     {
-        gSysFsDiskData[bd->disk_num].commandStatus = SYS_FS_MEDIA_COMMAND_IN_PROGRESS;
-        gSysFsDiskData[bd->disk_num].commandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
-
-        LFS_TRACE("[%s] block = %d, size = %d, off = %d\r\n", __func__, (int) block, (int) size, (int) off );
-        gSysFsDiskData[bd->disk_num].commandHandle =  SYS_FS_MEDIA_MANAGER_SectorRead(bd->disk_num, (uint8_t*) buffer, block* (cfg->block_size/ cfg->read_size),  (size/cfg->read_size) );
-
-       result = bd_checkCommandStatus(bd->disk_num);
-
+        result = disk_read_aligned(bd->disk_num, buffer, sector, count);
+		
         if (result != RES_OK)
         {
             return LFS_ERR_IO;

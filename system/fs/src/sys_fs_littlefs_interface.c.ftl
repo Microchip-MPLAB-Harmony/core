@@ -192,6 +192,7 @@ int LITTLEFS_open (
         case SYS_FS_FILE_OPEN_READ:
             flags = LFS_O_RDONLY;
             break;
+<#if SYS_FS_LFS_READONLY == false>
         case SYS_FS_FILE_OPEN_WRITE:
             flags = LFS_O_WRONLY | LFS_O_CREAT;
             break;
@@ -207,6 +208,7 @@ int LITTLEFS_open (
         case SYS_FS_FILE_OPEN_APPEND_PLUS:
             flags = LFS_O_RDWR | LFS_O_APPEND;
             break;
+</#if>
         default:
             return ((int)res);
             break;
@@ -495,6 +497,7 @@ int LITTLEFS_closedir (
     return ((int)res);
 }
 
+<#if SYS_FS_LFS_READONLY == false>
 int LITTLEFS_write (
     uintptr_t handle,   /* Pointer to the file object */
     const void *buff,   /* Pointer to the data to be written */
@@ -519,6 +522,7 @@ int LITTLEFS_write (
    
     return ((int)res);
 }
+</#if>
 
 uint32_t LITTLEFS_tell(uintptr_t handle)
 {
@@ -560,6 +564,7 @@ uint32_t LITTLEFS_size(uintptr_t handle)
 
 }
 
+<#if SYS_FS_LFS_READONLY == false>
 int LITTLEFS_mkdir (
     const char* path       /* Pointer to the directory path */
 )
@@ -661,4 +666,5 @@ int LITTLEFS_mkfs (
     return ((int)res);
 
 }
+</#if>
 

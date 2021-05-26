@@ -317,11 +317,27 @@ def instantiateComponent(sysFSComponent):
     sysFSLFS.setLabel("LittleFS File System")
     sysFSLFS.setDefaultValue(False)
 
-    symOptions = sysFSComponent.createSettingSymbol(None, None)
-    symOptions.setCategory("C32")
-    symOptions.setKey("appendMe")
-    symOptions.setValue("-std=c99")
-    symOptions.setAppend(True, " ")
+    sysFSLFSReadonly = sysFSComponent.createBooleanSymbol("SYS_FS_LFS_READONLY", sysFSLFS)
+    sysFSLFSReadonly.setLabel("Make LittleFS File System Read-only")
+    sysFSLFSReadonly.setDefaultValue(False)
+    sysFSLFSReadonly.setVisible(sysFSLFS.getValue())
+    sysFSLFSReadonly.setDependencies(sysFsLFSSymbolShow, ["SYS_FS_LFS"])
+
+    symOptionsLFS = sysFSComponent.createSettingSymbol("SYM_OPTIONS_LFS", None)
+    symOptionsLFS.setCategory("C32")
+    symOptionsLFS.setKey("appendMe")
+    symOptionsLFS.setValue("-std=c99")
+    symOptionsLFS.setAppend(True, " ")
+    symOptionsLFS.setEnabled(sysFSLFS.getValue())
+    symOptionsLFS.setDependencies(sysFsFileGen, ["SYS_FS_LFS"])
+
+    preProcMacrosLFS = sysFSComponent.createSettingSymbol("PRE_PROC_MACROS_LFS", None)
+    preProcMacrosLFS.setCategory("C32")
+    preProcMacrosLFS.setKey("preprocessor-macros")
+    preProcMacrosLFS.setValue("LFS_READONLY")
+    preProcMacrosLFS.setAppend(True, ";")
+    preProcMacrosLFS.setEnabled(sysFSLFSReadonly.getValue())
+    preProcMacrosLFS.setDependencies(sysFsFileGen, ["SYS_FS_LFS_READONLY"])
 
     sysFSLFNEnable = sysFSComponent.createBooleanSymbol("SYS_FS_LFN_ENABLE", sysFSMenu)
     sysFSLFNEnable.setLabel("Enable Long File Name Support")
@@ -470,7 +486,7 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSIntHeaderFile.setType("HEADER")
     sysFSLFSIntHeaderFile.setMarkup(True)
     sysFSLFSIntHeaderFile.setOverwrite(True)
-    sysFSLFSIntHeaderFile.setEnabled(sysFSFat.getValue())
+    sysFSLFSIntHeaderFile.setEnabled(sysFSLFS.getValue())
     sysFSLFSIntHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_LFS"])
 
     sysFSLFSHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_LFS_HEADER", None)
@@ -478,7 +494,7 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSHeaderFile.setOutputName("lfs.h")
     sysFSLFSHeaderFile.setDestPath("/system/fs/littlefs/")
     sysFSLFSHeaderFile.setProjectPath("config/" + configName + "/system/fs/littlefs/")
-    sysFSLFSHeaderFile.setEnabled(sysFSMpfs.getValue())
+    sysFSLFSHeaderFile.setEnabled(sysFSLFS.getValue())
     sysFSLFSHeaderFile.setType("HEADER")
     sysFSLFSHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_LFS"])
 
@@ -487,7 +503,7 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSBDHeaderFile.setOutputName("lfs_bd.h")
     sysFSLFSBDHeaderFile.setDestPath("/system/fs/littlefs/")
     sysFSLFSBDHeaderFile.setProjectPath("config/" + configName + "/system/fs/littlefs/")
-    sysFSLFSBDHeaderFile.setEnabled(sysFSMpfs.getValue())
+    sysFSLFSBDHeaderFile.setEnabled(sysFSLFS.getValue())
     sysFSLFSBDHeaderFile.setType("HEADER")
     sysFSLFSBDHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_LFS"])
 
@@ -496,7 +512,7 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSUTILHeaderFile.setOutputName("lfs_util.h")
     sysFSLFSUTILHeaderFile.setDestPath("/system/fs/littlefs/")
     sysFSLFSUTILHeaderFile.setProjectPath("config/" + configName + "/system/fs/littlefs/")
-    sysFSLFSUTILHeaderFile.setEnabled(sysFSMpfs.getValue())
+    sysFSLFSUTILHeaderFile.setEnabled(sysFSLFS.getValue())
     sysFSLFSUTILHeaderFile.setType("HEADER")
     sysFSLFSUTILHeaderFile.setMarkup(True)
     sysFSLFSUTILHeaderFile.setOverwrite(True)
@@ -579,7 +595,7 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSIntSourceFile.setType("SOURCE")
     sysFSLFSIntSourceFile.setMarkup(True)
     sysFSLFSIntSourceFile.setOverwrite(True)
-    sysFSLFSIntSourceFile.setEnabled(sysFSFat.getValue())
+    sysFSLFSIntSourceFile.setEnabled(sysFSLFS.getValue())
     sysFSLFSIntSourceFile.setDependencies(sysFsFileGen, ["SYS_FS_LFS"])
 
     sysFSLFSSourceFile = sysFSComponent.createFileSymbol("SYS_FS_LFS_SOURCE", None)
@@ -588,7 +604,7 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSSourceFile.setDestPath("system/fs/littlefs/")
     sysFSLFSSourceFile.setProjectPath("config/" + configName + "/system/fs/littlefs/")
     sysFSLFSSourceFile.setType("SOURCE")
-    sysFSLFSSourceFile.setEnabled(sysFSFat.getValue())
+    sysFSLFSSourceFile.setEnabled(sysFSLFS.getValue())
     sysFSLFSSourceFile.setDependencies(sysFsFileGen, ["SYS_FS_LFS"])
 
     sysFSLFSBDSourceFile = sysFSComponent.createFileSymbol("SYS_FS_LFS_BD_SOURCE", None)
@@ -599,7 +615,7 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSBDSourceFile.setType("SOURCE")
     sysFSLFSBDSourceFile.setMarkup(True)
     sysFSLFSBDSourceFile.setOverwrite(True)
-    sysFSLFSBDSourceFile.setEnabled(sysFSFat.getValue())
+    sysFSLFSBDSourceFile.setEnabled(sysFSLFS.getValue())
     sysFSLFSBDSourceFile.setDependencies(sysFsFileGen, ["SYS_FS_LFS"])
 
     sysFSLFSUTILSourceFile = sysFSComponent.createFileSymbol("SYS_FS_LFS_UTIL_SOURCE", None)
@@ -608,7 +624,7 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSUTILSourceFile.setDestPath("system/fs/littlefs/")
     sysFSLFSUTILSourceFile.setProjectPath("config/" + configName + "/system/fs/littlefs/")
     sysFSLFSUTILSourceFile.setType("SOURCE")
-    sysFSLFSUTILSourceFile.setEnabled(sysFSFat.getValue())
+    sysFSLFSUTILSourceFile.setEnabled(sysFSLFS.getValue())
     sysFSLFSUTILSourceFile.setDependencies(sysFsFileGen, ["SYS_FS_LFS"])
 
     sysFSSystemInitdataFile = sysFSComponent.createFileSymbol("sysFSInitDataFile", None)
@@ -671,6 +687,14 @@ def instantiateComponent(sysFSComponent):
     sysFSFatXc32cppIncludePath.setEnabled(sysFSFat.getValue())
     sysFSFatXc32cppIncludePath.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
+    sysFSLFSIncludePath = sysFSComponent.createSettingSymbol("SYS_FS_LFS_XC32_INCLUDE_PATH", None)
+    sysFSLFSIncludePath.setCategory("C32")
+    sysFSLFSIncludePath.setKey("extra-include-directories")
+    sysFSLFSIncludePath.setValue(";../src/config/" + configName + "/system/fs/littlefs")
+    sysFSLFSIncludePath.setAppend(True, ";")
+    sysFSLFSIncludePath.setEnabled(sysFSLFS.getValue())
+    sysFSLFSIncludePath.setDependencies(sysFsFileGen, ["SYS_FS_LFS"])
+
 ###########################################################################################################
 deviceNames = { 'SYS_FS_MEDIA_TYPE_NVM' : '/dev/nvma',
     'SYS_FS_MEDIA_TYPE_MSD' : '/dev/sda',
@@ -683,6 +707,9 @@ def sysFsFileGen(symbol, event):
     symbol.setEnabled(event["value"])
 
 def sysFsFatSymbolShow(symbol, event):
+    symbol.setVisible(event["value"])
+
+def sysFsLFSSymbolShow(symbol, event):
     symbol.setVisible(event["value"])
 
 def sysFsAlignedBufferLenSymbolShow(symbol, event):

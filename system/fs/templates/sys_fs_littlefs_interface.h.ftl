@@ -76,15 +76,14 @@ int LITTLEFS_readdir (uintptr_t handle, uintptr_t fno);
 
 int LITTLEFS_closedir (uintptr_t handle);
 
-int LITTLEFS_write (uintptr_t handle, const void* buff, uint32_t btw, uint32_t* bw);
-
-//int LITTLEFS_getfree (const char* path, uint32_t* nclst, FATFS** fatfs);
-
 uint32_t LITTLEFS_tell(uintptr_t handle);
 
 bool LITTLEFS_eof(uintptr_t handle);
 
 uint32_t LITTLEFS_size(uintptr_t handle);
+
+<#if SYS_FS_LFS_READONLY == false>
+int LITTLEFS_write (uintptr_t handle, const void* buff, uint32_t btw, uint32_t* bw);
 
 int LITTLEFS_mkdir (const char* path);
 
@@ -94,9 +93,10 @@ int LITTLEFS_truncate (uintptr_t handle);
 
 int LITTLEFS_rename (const char* path_old, const char* path_new);
 
-int LITTLEFS_sync (uintptr_t handle);
-
 int LITTLEFS_mkfs (uint8_t vol, void* opt, void* work, uint32_t len);
+
+int LITTLEFS_sync (uintptr_t handle);
+</#if>
 
 #ifdef __cplusplus
 }
