@@ -1,11 +1,45 @@
-/*
- * Testing block device, wraps filebd and rambd while providing a bunch
- * of hooks for testing littlefs in various conditions.
- *
- * Copyright (c) 2017, Arm Limited. All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause
- */
-#include "lfs_bd.h"
+/*******************************************************************************
+  Low Level Block Deivce Interface Implementation.
+
+  Company:
+    Microchip Technology Inc.
+
+  File Name:
+    lfs_bdio.c
+
+  Summary:
+    This file contains implementation of Low Level Block Deivce Interface functions 
+    which hooking to LFS library.
+
+  Description:
+    This file contains implementation of Low Level Block Deivce Interface functions 
+    which hooking to LFS library.
+*******************************************************************************/
+
+/*******************************************************************************
+* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+ *******************************************************************************/
+ 
+#include "lfs_bdio.h"
 
 #include <stdlib.h>
 #include "system/fs/sys_fs_media_manager.h"
@@ -107,7 +141,7 @@ static BDSTATUS disk_read_aligned
     return result;
 }
 
-BDSTATUS lfs_bd_initilize (
+BDSTATUS lfs_bdio_initilize (
     uint8_t pdrv                /* Physical drive nmuber to identify the drive */
 )
 {
@@ -122,7 +156,7 @@ BDSTATUS lfs_bd_initilize (
 }
 
 /// block device API ///
-int lfs_bd_read(const struct lfs_config *cfg, lfs_block_t block,
+int lfs_bdio_read(const struct lfs_config *cfg, lfs_block_t block,
         lfs_off_t off, void *buffer, lfs_size_t size) {
     
     BDSTATUS result = RES_ERROR;
@@ -207,7 +241,7 @@ int lfs_bd_read(const struct lfs_config *cfg, lfs_block_t block,
     return LFS_ERR_OK;
 }
 
-int lfs_bd_prog(const struct lfs_config *cfg, lfs_block_t block,
+int lfs_bdio_prog(const struct lfs_config *cfg, lfs_block_t block,
         lfs_off_t off, const void *buffer, lfs_size_t size) {
     
     BDSTATUS result = RES_ERROR;
@@ -288,7 +322,7 @@ int lfs_bd_prog(const struct lfs_config *cfg, lfs_block_t block,
     return 0;
 }
 
-int lfs_bd_erase(const struct lfs_config *cfg, lfs_block_t block) {
+int lfs_bdio_erase(const struct lfs_config *cfg, lfs_block_t block) {
     BDSTATUS result = RES_ERROR;
     BLOCK_DEV *bd = cfg->context;
     uint8_t buffer[SYS_FS_LFS_MAX_SS];
@@ -308,7 +342,7 @@ int lfs_bd_erase(const struct lfs_config *cfg, lfs_block_t block) {
     return result;
 }
 
-int lfs_bd_sync(const struct lfs_config *cfg) {
+int lfs_bdio_sync(const struct lfs_config *cfg) {
     
     LFS_TRACE("[%s] In\r\n", __func__);
     return 0;

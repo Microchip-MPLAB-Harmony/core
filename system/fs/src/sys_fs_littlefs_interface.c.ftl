@@ -22,7 +22,7 @@
  *******************************************************************************/
 
 #include "system/fs/sys_fs_littlefs_interface.h"
-#include "system/fs/littlefs/lfs_bd.h"
+#include "system/fs/littlefs/lfs_bdio.h"
 #include "system/fs/sys_fs.h"
 
 typedef struct
@@ -56,14 +56,17 @@ static uint8_t startupflag = 0;
 #define     LFS_CACHE_SIZE   512
 #define     LFS_LOOKAHEAD_SIZE   64
 
+uint8_t ReadBuf[LFS_CACHE_SIZE] = {0};
+uint8_t ProgBuf[LFS_CACHE_SIZE] = {0};
+uint8_t LookaheadBuf[LFS_LOOKAHEAD_SIZE] = {0};
 
 BLOCK_DEV bd;
 static const struct lfs_config cfg = {
         .context        = &bd,
-        .read           = lfs_bd_read,
-        .prog           = lfs_bd_prog,
-        .erase          = lfs_bd_erase,
-        .sync           = lfs_bd_sync,
+        .read           = lfs_bdio_read,
+        .prog           = lfs_bdio_prog,
+        .erase          = lfs_bdio_erase,
+        .sync           = lfs_bdio_sync,
         .read_size      = LFS_READ_SIZE,
         .prog_size      = LFS_PROG_SIZE,
         .block_size     = LFS_BLOCK_SIZE,
@@ -71,6 +74,9 @@ static const struct lfs_config cfg = {
         .block_cycles   = LFS_BLOCK_CYCLES,
         .cache_size     = LFS_CACHE_SIZE,
         .lookahead_size = LFS_LOOKAHEAD_SIZE,
+        .read_buffer    = ReadBuf,
+        .prog_buffer    = ProgBuf,
+        .lookahead_buffer = LookaheadBuf,
     };
 
 
@@ -112,7 +118,7 @@ int LITTLEFS_mount ( uint8_t vol )
 
     bd.disk_num = vol;
         
-    lfs_bd_initilize(0);	/* Initialize the physical drive */
+    lfs_bdio_initilize(0);	/* Initialize the physical drive */
     
     res = lfs_mount(fs, &cfg);
     
