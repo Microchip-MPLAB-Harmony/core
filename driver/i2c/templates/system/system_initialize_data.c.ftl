@@ -51,6 +51,8 @@ const DRV_I2C_PLIB_INTERFACE drvI2C${INDEX?string}PLibAPI = {
         <#assign I2C_PLIB_INT_INDEX1 = "core." + I2C_PLIB?eval + "_I2C_1_INT_SRC">
         <#assign I2C_PLIB_INT_INDEX2 = "core." + I2C_PLIB?eval + "_I2C_2_INT_SRC">
         <#assign I2C_PLIB_INT_INDEX3 = "core." + I2C_PLIB?eval + "_I2C_3_INT_SRC">
+		<#assign I2C_PLIB_INT_INDEX4 = "core." + I2C_PLIB?eval + "_I2C_4_INT_SRC">
+		<#assign I2C_PLIB_INT_INDEX5 = "core." + I2C_PLIB?eval + "_I2C_5_INT_SRC">
     </#if>
 
 const DRV_I2C_INTERRUPT_SOURCES drvI2C${INDEX?string}InterruptSources =
