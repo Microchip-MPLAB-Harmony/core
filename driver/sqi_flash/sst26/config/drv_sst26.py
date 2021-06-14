@@ -70,6 +70,7 @@ def sst26HeaderFileGen(symbol, event):
 def sst26SourceFileGen(symbol, event):
     component = symbol.getComponent()
 
+    coreArch = Database.getSymbolValue("core", "CoreArchitecture")
     protocolUsed = component.getSymbolByID("DRV_SST26_PROTOCOL").getValue()
     plib_used = event["value"]
 
@@ -81,7 +82,10 @@ def sst26SourceFileGen(symbol, event):
                 symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_qspi.c")
                 symbol.setMarkup(False)
             elif ("SQI" in plib_used):
-                symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_sqi.c.ftl")
+                if "CORTEX" in coreArch:
+                    symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_sqi_arm.c.ftl")
+                else:
+                    symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_sqi_pic.c.ftl")
                 symbol.setMarkup(True)
         elif (protocolUsed == "SPI"):
             symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_qspi_spi.c")
