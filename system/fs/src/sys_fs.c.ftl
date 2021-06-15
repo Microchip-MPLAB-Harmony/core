@@ -2389,8 +2389,8 @@ SYS_FS_RESULT SYS_FS_DriveLabelGet
 }
 </#if> <#-- /* SYS_FS_FAT == true */ -->
 
-<#-- /* This block is Generated when only FAT-FS is Enabled in Write Mode OR FAT-FS and MPFS both are Enabled */ -->
-<#if ((SYS_FS_FAT == true)  && (SYS_FS_FAT_READONLY == false)) || (SYS_FS_LFS == true) >
+<#-- /* This block is Generated when only FAT-FS is Enabled in Write Mode OR LFS-FS is Enabled in Write Mode */ -->
+<#if ((SYS_FS_FAT == true)  && (SYS_FS_FAT_READONLY == false)) || ((SYS_FS_LFS == true) && (SYS_FS_LFS_READONLY == false))>
 //******************************************************************************
 /* Function:
     size_t SYS_FS_FileWrite

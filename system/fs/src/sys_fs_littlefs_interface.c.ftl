@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -26,7 +26,13 @@
 #include "system/fs/sys_fs.h"
 
 // include littlefs license in the binary
-const char*  szLicense __attribute__ ((keep)) =\
+<#if core.COMPILER_CHOICE == "IAR">
+__root const char* szLicense =\
+<#elseif core.COMPILER_CHOICE == "KEIL">
+const char* szLicense __attribute__ ((used)) =\
+<#else>
+const char* szLicense __attribute__ ((keep)) =\
+</#if>
 "Copyright (c) 2017, Arm Limited. All rights reserved.\
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:\
 \
@@ -98,6 +104,46 @@ static const struct lfs_config cfg = {
         .lookahead_buffer = LookaheadBuf,
     };
 
+static SYS_FS_ERROR LFS_Err_To_SYSFS_Err(enum lfs_error err)
+{
+    switch (err)
+    {
+        case LFS_ERR_OK:
+            return SYS_FS_ERROR_OK;
+        case LFS_ERR_IO:
+            return SYS_FS_ERROR_IO;
+        case LFS_ERR_CORRUPT:
+            return SYS_FS_ERROR_CORRUPT;
+        case LFS_ERR_NOENT:
+            return SYS_FS_ERROR_NOENT;
+        case LFS_ERR_EXIST:
+            return SYS_FS_ERROR_EXIST;
+        case LFS_ERR_NOTDIR:
+            return SYS_FS_ERROR_NOTDIR;
+        case LFS_ERR_ISDIR:
+            return SYS_FS_ERROR_ISDIR;
+        case LFS_ERR_NOTEMPTY:
+            return SYS_FS_ERROR_NOTEMPTY;
+        case LFS_ERR_BADF:
+            return SYS_FS_ERROR_BADF;
+        case LFS_ERR_FBIG:
+            return SYS_FS_ERROR_FBIG;
+        case LFS_ERR_INVAL:
+            return SYS_FS_ERROR_INVAL;
+        case LFS_ERR_NOSPC:
+            return SYS_FS_ERROR_NOSPC;
+        case LFS_ERR_NOMEM:
+            return SYS_FS_ERROR_NOMEM;
+        case LFS_ERR_NOATTR:
+            return SYS_FS_ERROR_NOATTR;
+        case LFS_ERR_NAMETOOLONG:
+            return SYS_FS_ERROR_NAMETOOLONG;
+        default:
+            return SYS_FS_ERROR_INVAL;
+            
+    }
+    return SYS_FS_ERROR_INVAL;
+}
 
 int LITTLEFS_mount ( uint8_t vol )
 {
@@ -147,7 +193,7 @@ int LITTLEFS_mount ( uint8_t vol )
         LITTLEFSVolume[vol].inUse = true;
     }
 
-    return ((int)res);
+    return (LFS_Err_To_SYSFS_Err(res));
 }
 
 int LITTLEFS_unmount ( uint8_t vol )
@@ -189,7 +235,7 @@ int LITTLEFS_unmount ( uint8_t vol )
 
     res = lfs_unmount(fs);
 
-    return ((int)res);
+    return (LFS_Err_To_SYSFS_Err(res));
 }
 
 int LITTLEFS_open (
@@ -235,7 +281,7 @@ int LITTLEFS_open (
             break;
 </#if>
         default:
-            return ((int)res);
+            return (LFS_Err_To_SYSFS_Err(res));
             break;
     }
 
@@ -257,7 +303,7 @@ int LITTLEFS_open (
         LFSFileObject[index].inUse = false;
     }
  
-    return ((int)res);
+    return (LFS_Err_To_SYSFS_Err(res));
 }
 
 int LITTLEFS_read (
@@ -309,7 +355,7 @@ int LITTLEFS_close (
     {
         ptr->inUse = false;
     }
-    return ((int)res);
+    return (LFS_Err_To_SYSFS_Err(res));
 
 }
 
@@ -333,7 +379,7 @@ int LITTLEFS_lseek (
     else
         res = LFS_ERR_IO;
     
-    return ((int)res);
+    return (LFS_Err_To_SYSFS_Err(res));
 }
 
 int LITTLEFS_stat (
@@ -384,7 +430,7 @@ int LITTLEFS_stat (
     stat->fsize = info.size;
 
     
-    return ((int)res);
+    return (LFS_Err_To_SYSFS_Err(res));
 
 }
 
@@ -423,7 +469,7 @@ int LITTLEFS_opendir (
         LFSDirObject[index].inUse = false;
     }
 
-    return ((int)res);
+    return (LFS_Err_To_SYSFS_Err(res));
 
 }
 
@@ -519,7 +565,7 @@ int LITTLEFS_closedir (
         ptr->inUse = false;
     }
 
-    return ((int)res);
+    return (LFS_Err_To_SYSFS_Err(res));
 }
 
 <#if SYS_FS_LFS_READONLY == false>
@@ -545,7 +591,7 @@ int LITTLEFS_write (
         *bw = 0;
     }
    
-    return ((int)res);
+    return (LFS_Err_To_SYSFS_Err(res));
 }
 </#if>
 
@@ -600,7 +646,7 @@ int LITTLEFS_mkdir (
     fs = &LITTLEFSVolume[0].volObj;
     res = lfs_mkdir(fs, path+2);
 
-    return ((int)res);
+    return (LFS_Err_To_SYSFS_Err(res));
 }
 
 int LITTLEFS_remove (
@@ -614,7 +660,7 @@ int LITTLEFS_remove (
 
     res = lfs_remove(fs, path+2);
 
-    return ((int)res);
+    return (LFS_Err_To_SYSFS_Err(res));
 }
 
 int LITTLEFS_truncate (
@@ -634,7 +680,7 @@ int LITTLEFS_truncate (
     if (fpos >=0)
         res = lfs_file_truncate(fs, fp, fpos);
 
-    return ((int)res);
+    return (LFS_Err_To_SYSFS_Err(res));
 }
 
 int LITTLEFS_rename (
@@ -649,7 +695,7 @@ int LITTLEFS_rename (
     
     res = lfs_rename(fs, path_old, path_new);
 
-    return ((int)res);
+    return (LFS_Err_To_SYSFS_Err(res));
 }
 
 int LITTLEFS_sync (
@@ -665,7 +711,7 @@ int LITTLEFS_sync (
 
     res = lfs_file_sync(fs, fp);
     
-    return ((int)res);
+    return (LFS_Err_To_SYSFS_Err(res));
 }
 
 int LITTLEFS_mkfs (
@@ -688,7 +734,7 @@ int LITTLEFS_mkfs (
 
     res = lfs_format(fs, &cfg );
 
-    return ((int)res);
+    return (LFS_Err_To_SYSFS_Err(res));
 
 }
 </#if>

@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Low Level Block Deivce Interface Implementation.
+  Low Level Block Device Interface Implementation.
 
   Company:
     Microchip Technology Inc.
@@ -8,7 +8,7 @@
     lfs_bdio.h
 
   Summary:
-    Low Level Block Deivce Interface declarations and types.
+    Low Level Block Device Interface declarations and types.
 
   Description:
     This file contains function and type declarations required to interact
@@ -16,7 +16,7 @@
 *******************************************************************************/
 
 /*******************************************************************************
-* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
