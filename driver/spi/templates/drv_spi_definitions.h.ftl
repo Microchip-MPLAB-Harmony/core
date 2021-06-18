@@ -151,7 +151,7 @@ typedef bool (*DRV_SPI_PLIB_SETUP) (DRV_SPI_TRANSFER_SETUP *, uint32_t);
 
 typedef bool (*DRV_SPI_PLIB_WRITE_READ)(void*, size_t, void *, size_t);
 
-typedef bool (*DRV_SPI_PLIB_IS_BUSY)(void);
+typedef bool (*DRV_SPI_PLIB_TRANSMITTER_IS_BUSY)(void);
 
 typedef void (* DRV_SPI_PLIB_CALLBACK_REGISTER)(DRV_SPI_PLIB_CALLBACK, uintptr_t);
 
@@ -206,7 +206,7 @@ typedef struct
     DRV_SPI_PLIB_WRITE_READ              writeRead;
 
     /* SPI PLIB Transfer status API */
-    DRV_SPI_PLIB_IS_BUSY                 isBusy;
+    DRV_SPI_PLIB_TRANSMITTER_IS_BUSY     isTransmitterBusy;
 
     /* SPI PLIB callback register API */
     DRV_SPI_PLIB_CALLBACK_REGISTER       callbackRegister;
