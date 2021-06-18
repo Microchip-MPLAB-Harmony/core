@@ -22,7 +22,7 @@ const DRV_SDSPI_PLIB_INTERFACE drvSDSPI${INDEX?string}PlibAPI = {
     .read = (DRV_SDSPI_PLIB_READ)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Read,
 
     /* SPI PLIB Transfer Status function */
-    .isBusy = (DRV_SDSPI_PLIB_IS_BUSY)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_IsBusy,
+    .isTransmitterBusy = (DRV_SPI_PLIB_TRANSMITTER_IS_BUSY)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_IsTransmitterBusy,
 
     .transferSetup = (DRV_SDSPI_PLIB_SETUP)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_TransferSetup,
 

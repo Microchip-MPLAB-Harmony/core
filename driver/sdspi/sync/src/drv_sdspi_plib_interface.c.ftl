@@ -605,7 +605,7 @@ bool _DRV_SDSPI_SPIBlockWrite(
     }
 
     /* Make sure all the bytes have shifted out before de-asserting the CS */
-    while(dObj->spiPlib->isBusy());
+    while(dObj->spiPlib->isTransmitterBusy());
 
     SYS_PORT_PinSet(dObj->chipSelectPin);
     return isSuccess;
@@ -671,7 +671,7 @@ bool _DRV_SDSPI_SPIWrite(
     }
 
     /* Make sure all the bytes have shifted out before de-asserting the CS */
-    while(dObj->spiPlib->isBusy());
+    while(dObj->spiPlib->isTransmitterBusy());
 
     SYS_PORT_PinSet(dObj->chipSelectPin);
     return isSuccess;
@@ -740,7 +740,7 @@ bool _DRV_SDSPI_SPIBlockRead(
     }
 
     /* Make sure all the bytes have shifted out before de-asserting the CS */
-    while(dObj->spiPlib->isBusy());
+    while(dObj->spiPlib->isTransmitterBusy());
 
     SYS_PORT_PinSet(dObj->chipSelectPin);
 
@@ -808,7 +808,7 @@ bool _DRV_SDSPI_SPIRead(
     }
 
     /* Make sure all the bytes have shifted out before de-asserting the CS */
-    while(dObj->spiPlib->isBusy());
+    while(dObj->spiPlib->isTransmitterBusy());
 
     SYS_PORT_PinSet(dObj->chipSelectPin);
 

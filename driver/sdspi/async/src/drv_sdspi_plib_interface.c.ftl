@@ -192,7 +192,7 @@ void _DRV_SDSPI_RX_DMA_CallbackHandler(
         {
             dObj->spiTransferStatus = DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE;
             /* Make sure that the last byte is shifted out before CS is de-asserted */
-            while (dObj->spiPlib->isBusy());
+            while (dObj->spiPlib->isTransmitterBusy());
             SYS_PORT_PinSet(dObj->chipSelectPin);
         }
     }
@@ -200,7 +200,7 @@ void _DRV_SDSPI_RX_DMA_CallbackHandler(
     {
         dObj->spiTransferStatus = DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR;
         /* Make sure that the last byte is shifted out before CS is de-asserted */
-        while (dObj->spiPlib->isBusy());
+        while (dObj->spiPlib->isTransmitterBusy());
         SYS_PORT_PinSet(dObj->chipSelectPin);
     }
 }
@@ -377,7 +377,7 @@ void _DRV_SDSPI_RX_DMA_CallbackHandler(
     }
 
     /* Make sure that the last byte is shifted out before CS is de-asserted */
-    while (dObj->spiPlib->isBusy());
+    while (dObj->spiPlib->isTransmitterBusy());
     SYS_PORT_PinSet(dObj->chipSelectPin);
 }
 
