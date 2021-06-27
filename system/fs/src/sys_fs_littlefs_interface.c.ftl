@@ -76,7 +76,7 @@ static uint8_t startupflag = 0;
 #define     LFS_READ_SIZE   512
 #define     LFS_PROG_SIZE   512
 #define     LFS_BLOCK_SIZE   512
-#define     LFS_BLOCK_COUNT   128
+#define     LFS_BLOCK_COUNT   (${SYS_FS_LFS_SIZE}*1024/512)
 #define     LFS_BLOCK_CYCLES   16
 #define     LFS_CACHE_SIZE   512
 #define     LFS_LOOKAHEAD_SIZE   64

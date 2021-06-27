@@ -323,6 +323,12 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSReadonly.setVisible(sysFSLFS.getValue())
     sysFSLFSReadonly.setDependencies(sysFsLFSSymbolShow, ["SYS_FS_LFS"])
 
+    sysFSLFSSize = sysFSComponent.createIntegerSymbol("SYS_FS_LFS_SIZE", sysFSLFS)
+    sysFSLFSSize.setLabel("Size Of LFS image (in KB)")
+    sysFSLFSSize.setDefaultValue(64)
+    sysFSLFSSize.setVisible(sysFSLFS.getValue())
+    sysFSLFSSize.setDependencies(sysFsLFSSymbolShow, ["SYS_FS_LFS"])
+    
     symOptionsLFS = sysFSComponent.createSettingSymbol("SYM_OPTIONS_LFS", None)
     symOptionsLFS.setCategory("C32")
     symOptionsLFS.setKey("appendMe")
