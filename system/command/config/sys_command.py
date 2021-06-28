@@ -108,6 +108,18 @@ def instantiateComponent(commandComponent):
     commandPrintBufferSize.setMin(512)
     commandPrintBufferSize.setMax(8192)
     commandPrintBufferSize.setDefaultValue(1024)
+    
+    commandMaxGroups = commandComponent.createIntegerSymbol("SYS_COMMAND_MAX_CMD_GROUPS", None)
+    commandMaxGroups.setLabel("Maximum Command Groups")
+    commandMaxGroups.setMin(1)
+    commandMaxGroups.setMax(65535)
+    commandMaxGroups.setDefaultValue(8)
+    
+    commandMaxArgsPerCmd = commandComponent.createIntegerSymbol("SYS_COMMAND_MAX_CMD_ARGS", None)
+    commandMaxArgsPerCmd.setLabel("Maximum Arguments Per Command")
+    commandMaxArgsPerCmd.setMin(1)
+    commandMaxArgsPerCmd.setMax(65535)
+    commandMaxArgsPerCmd.setDefaultValue(8)
 
     enable_rtos_settings = False
 
@@ -191,12 +203,13 @@ def instantiateComponent(commandComponent):
     configName = Variables.get("__CONFIGURATION_NAME")
 
     commandHeaderFile = commandComponent.createFileSymbol("SYS_COMMAND_HEADER", None)
-    commandHeaderFile.setSourcePath("system/command/sys_command.h")
+    commandHeaderFile.setSourcePath("system/command/templates/system/sys_command.h.ftl")
     commandHeaderFile.setOutputName("sys_command.h")
     commandHeaderFile.setDestPath("system/command/")
     commandHeaderFile.setProjectPath("config/" + configName + "/system/command/")
     commandHeaderFile.setType("HEADER")
     commandHeaderFile.setOverwrite(True)
+    commandHeaderFile.setMarkup(True)
 
     commandSourceFile = commandComponent.createFileSymbol("SYS_COMMAND_SOURCE", None)
     commandSourceFile.setSourcePath("system/command/src/sys_command.c")

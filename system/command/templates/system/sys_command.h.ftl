@@ -143,7 +143,7 @@
     None.
 
 */
-#define         MAX_CMD_GROUP   8
+#define         MAX_CMD_GROUP   ${SYS_COMMAND_MAX_CMD_GROUPS}
 
 
 // *****************************************************************************
@@ -159,7 +159,7 @@
     None.
 
 */
-#define         MAX_CMD_ARGS    8
+#define         MAX_CMD_ARGS    ${SYS_COMMAND_MAX_CMD_ARGS}
 
 
 // *****************************************************************************
