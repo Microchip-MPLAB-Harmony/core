@@ -3,6 +3,20 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.9.2
+
+### New Features
+- Added MHC UI option to configure maximum command groups and command arguments in Command System Service 
+
+### Bug fixes
+- N/A
+
+### Known Issues
+- No changes from v3.9.0
+
+### Development Tools
+- No changes from v3.9.0
+
 ## Core Release v3.9.1
 
 ### New Features
