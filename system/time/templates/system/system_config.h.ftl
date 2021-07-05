@@ -24,7 +24,7 @@
 <#if core.PRODUCT_FAMILY?contains("PIC32MZ") || core.PRODUCT_FAMILY?contains("PIC32MK") >
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES    (620)
 </#if>
-<#if core.PRODUCT_FAMILY?contains("PIC32MX")>
+<#if core.PRODUCT_FAMILY?contains("PIC32MX") || core.PRODUCT_FAMILY?contains("PIC32MM")>
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES    (460)
 </#if>
 <#if core.CoreArchitecture == "ARM926EJS">
