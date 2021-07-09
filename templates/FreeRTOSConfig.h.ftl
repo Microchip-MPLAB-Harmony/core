@@ -69,7 +69,13 @@
 #define configUSE_QUEUE_SETS                    <#if FREERTOS_USE_QUEUE_SETS == true>1<#else>0</#if>
 #define configUSE_TIME_SLICING                  <#if FREERTOS_USE_TIME_SLICING == true>1<#else>0</#if>
 #define configUSE_NEWLIB_REENTRANT              <#if FREERTOS_USE_NEWLIB_REENTRANT == true>1<#else>0</#if>
+<#if core.CoreArchitecture == "CORTEX-A7">
+<#if FREERTOS_USE_TASK_FPU_SUPPORT == true>
+#define configUSE_TASK_FPU_SUPPORT              1
+</#if>
+<#else>
 #define configUSE_TASK_FPU_SUPPORT              <#if FREERTOS_USE_TASK_FPU_SUPPORT == true>1<#else>0</#if>
+</#if>
 
 <#if core.CoreArchitecture == "CORTEX-M23">
 #define configENABLE_FPU                        <#if FREERTOS_ENABLE_FPU == true>1<#else>0</#if>
@@ -116,7 +122,7 @@
 
 /* Interrupt nesting behaviour configuration. */
 <#if core.CoreArchitecture != "MIPS">
-  <#if core.CoreArchitecture != "CORTEX-A5" && core.CoreArchitecture != "ARM926EJS">
+  <#if core.CoreArchitecture != "CORTEX-A5" && core.CoreArchitecture != "ARM926EJS" && core.CoreArchitecture != "CORTEX-A7">
     <#lt>/* The priority at which the tick interrupt runs.  This should probably be kept at lowest priority. */
     <#lt>#define configKERNEL_INTERRUPT_PRIORITY         (${FREERTOS_KERNEL_INTERRUPT_PRIORITY} << (8 - ${FREERTOS_CONFIG_PRIORITY_BITS}))
     <#lt>
@@ -133,6 +139,19 @@
     <#lt>/* The maximum interrupt priority from which FreeRTOS.org API functions can be called.
     <#lt> *Only API functions that end in ...FromISR() can be used within interrupts. */
     <#lt>#define configMAX_SYSCALL_INTERRUPT_PRIORITY    (${FREERTOS_MAX_SYSCALL_INTERRUPT_PRIORITY})
+</#if>
+
+<#if FREERTOS_CONFIG_INTERRUPT_CONTROLLER_BASE_ADDRESS??>
+    <#lt>#define configINTERRUPT_CONTROLLER_BASE_ADDRESS         ${FREERTOS_CONFIG_INTERRUPT_CONTROLLER_BASE_ADDRESS}
+</#if>
+<#if FREERTOS_CONFIG_INTERRUPT_CONTROLLER_CPU_INTERFACE_OFFSET??>
+    <#lt>#define configINTERRUPT_CONTROLLER_CPU_INTERFACE_OFFSET ${FREERTOS_CONFIG_INTERRUPT_CONTROLLER_CPU_INTERFACE_OFFSET}
+</#if>
+<#if FREERTOS_CONFIG_UNIQUE_INTERRUPT_PRIORITIES??>
+    <#lt>#define configUNIQUE_INTERRUPT_PRIORITIES               ${FREERTOS_CONFIG_UNIQUE_INTERRUPT_PRIORITIES}
+</#if>
+<#if FREERTOS_CONFIG_MAX_API_CALL_INTERRUPT_PRIORITY??>
+    <#lt>#define configMAX_API_CALL_INTERRUPT_PRIORITY           ${FREERTOS_CONFIG_MAX_API_CALL_INTERRUPT_PRIORITY}
 </#if>
 
 /* Optional functions - most linkers will remove unused functions anyway. */

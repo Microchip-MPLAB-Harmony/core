@@ -575,12 +575,25 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_MaxSysCalIntrPrio.setMin(0)
     freeRtosSym_MaxSysCalIntrPrio.setMax(7)
 
-    if (coreArch != "MIPS") and (coreArch != "CORTEX-A5") and (coreArch != "ARM926EJS"):
+    if (coreArch != "MIPS") and (coreArch != "CORTEX-A5") and (coreArch != "ARM926EJS") and (coreArch != "CORTEX-A7"):
         freeRtosSym_ConfigPriorityBits = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_CONFIG_PRIORITY_BITS", freeRtosSymMenu)
         freeRtosSym_ConfigPriorityBits.setLabel("Number of Bits used for Priority Levels")
         freeRtosSym_ConfigPriorityBits.setMin(2)
         freeRtosSym_ConfigPriorityBits.setMax(4)
         freeRtosSym_ConfigPriorityBits.setVisible(False)
+
+    if (coreArch == "CORTEX-A7"):
+        freeRtosSym_ConfigUniqueInterruptPriority = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_CONFIG_UNIQUE_INTERRUPT_PRIORITIES", freeRtosSymMenu)
+        freeRtosSym_ConfigUniqueInterruptPriority.setLabel("Number of unique interrupt priorities")
+        freeRtosSym_ConfigUniqueInterruptPriority.setDefaultValue(32)
+        freeRtosSym_ConfigUniqueInterruptPriority.setMin(1)
+        freeRtosSym_ConfigUniqueInterruptPriority.setMax(256)
+
+        freeRtosSym_ConfigMaxApiCallInterruptPriority = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_CONFIG_MAX_API_CALL_INTERRUPT_PRIORITY", freeRtosSymMenu)
+        freeRtosSym_ConfigMaxApiCallInterruptPriority.setLabel("Number of maximum API call interrupt priorities")
+        freeRtosSym_ConfigMaxApiCallInterruptPriority.setDefaultValue(((freeRtosSym_ConfigUniqueInterruptPriority.getValue() / 2) + 1))
+        freeRtosSym_ConfigMaxApiCallInterruptPriority.setMin(1)
+        freeRtosSym_ConfigMaxApiCallInterruptPriority.setMax((freeRtosSym_ConfigUniqueInterruptPriority.getMax() - 2))
 
     freeRtosSymMenu_IncludeComponents = thirdPartyFreeRTOS.createMenuSymbol("FREERTOS_INCLUDE_COMPONENTS", freeRtosSymMenu)
     freeRtosSymMenu_IncludeComponents.setLabel("Include components")
