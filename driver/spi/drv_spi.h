@@ -613,22 +613,23 @@ bool DRV_SPI_TransferSetup ( DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * setup )
     handle -    Handle of the communication channel as returned by the
                 DRV_SPI_Open function.
 
-    *pTransmitData- Pointer to the data which has to be transmitted. if it is
-                    NULL, that means only data receiving is expected. For 9
-                    to 15bit mode, data should be right aligned in the 16 bit
-                    memory location.
-    txSize-         Number of bytes to be transmitted. Always, size should be
-                    given in terms of bytes. For example, if 10 15-bit data
-                    are to be transmitted, the transmit size should be 20 bytes.
+    *pTransmitData- Pointer to the data which has to be transmitted. If it is
+                    NULL, that means only data receiving is expected.
+    txSize-         Number of bytes to be transmitted. The size must be specified
+                    in terms of the SPI data width. For example, if the data width
+                    is 8-bits, and if 10 bytes are being transmitted, then the txSize
+                    must be set to 10. If the data width is 16-bits then transmitting
+                    10 bytes requires specifying the txSize as 10 (meaning 10 16-bit words).
     *pReceiveData-  Pointer to the location where received data has to be stored.
                     It is user's responsibility to ensure pointed location has
                     sufficient memory to store the read data.
                     if it is NULL, that means only data transmission is expected.
-                    For 9 to 15bit mode, received data will be right aligned in
-                    the 16 bit memory location.
-    rxSize-         Number of bytes to be received. Always, size should be
-                    given in terms of bytes. For example, if 10 15-bit data
-                    are to be received, the receive size should be 20 bytes.
+
+    rxSize-         Number of bytes to be received. The size must be specified
+                    in terms of the SPI data width. For example, if the data width
+                    is 8-bits, and if 10 bytes are being received, then the rxSize
+                    must be set to 10. If the data width is 16-bits then receiving
+                    10 bytes requires specifying the rxSize as 10 (meaning 10 16-bit words).
                     If "n" number of bytes has to be received AFTER transmitting
                     "m" number of bytes, then "txSize" should be set as "m" and
                     "rxSize" should be set as "m+n".
@@ -720,12 +721,13 @@ void DRV_SPI_WriteReadTransferAdd(
     handle -    Handle of the communication channel as returned by the
                 DRV_SPI_Open function.
 
-    *pTransmitData- Pointer to the data which has to be transmitted. For 9
-                    to 15bit mode, data should be right aligned in the 16 bit
-                    memory location.
-    txSize-         Number of bytes to be transmitted. Always, size should be
-                    given in terms of bytes. For example, if 10 15-bit data
-                    are to be transmitted, the transmit size should be 20 bytes.
+    *pTransmitData- Pointer to the data which has to be transmitted.
+
+    txSize-         Number of bytes to be transmitted. The size must be specified
+                    in terms of the SPI data width. For example, if the data width
+                    is 8-bits, and if 10 bytes are being transmitted, then the txSize
+                    must be set to 10. If the data width is 16-bits then transmitting
+                    10 bytes requires specifying the txSize as 10 (meaning 10 16-bit words).
     transferHandle - Handle which is returned by transfer add function.
 
   Returns:
@@ -811,11 +813,12 @@ void DRV_SPI_WriteTransferAdd(
     *pReceiveData-  Pointer to the location where received data has to be stored.
                     It is user's responsibility to ensure pointed location has
                     sufficient memory to store the read data.
-                    For 9 to 15bit mode, received data will be right aligned in
-                    the 16 bit memory location.
-    rxSize-         Number of bytes to be received. Always, size should be
-                    given in terms of bytes. For example, if 10 15-bit data
-                    are to be received, the receive size should be 20 bytes.
+    rxSize-         Number of bytes to be received. The size must be specified
+                    in terms of the SPI data width. For example, if the data width
+                    is 8-bits, and if 10 bytes are being received, then the rxSize
+                    must be set to 10. If the data width is 16-bits then receiving
+                    10 bytes requires specifying the rxSize as 10 (meaning 10 16-bit words).
+
 
     transferHandle - Handle which is returned by transfer add function.
 
@@ -1048,13 +1051,13 @@ DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE t
     handle -    Handle of the communication channel as returned by the
                 DRV_SPI_Open function.
 
-    *pTransmitData- Pointer to the data which has to be transmitted. For 9
-                    to 15bit mode, data should be right aligned in the 16 bit
-                    memory location.
+    *pTransmitData- Pointer to the data which has to be transmitted.
 
-    txSize-         Number of bytes to be transmitted. Always, size should be
-                    given in terms of bytes. For example, if 10 15-bit data
-                    are to be transmitted, the transmit size should be 20 bytes.
+    txSize-         Number of bytes to be transmitted. The size must be specified
+                    in terms of the SPI data width. For example, if the data width
+                    is 8-bits, and if 10 bytes are being transmitted, then the txSize
+                    must be set to 10. If the data width is 16-bits then transmitting
+                    10 bytes requires specifying the txSize as 10 (meaning 10 16-bit words).
 
   Returns:
     - true - transfer is successful
@@ -1110,13 +1113,13 @@ bool DRV_SPI_WriteTransfer(const DRV_HANDLE handle, void* pTransmitData,  size_t
     handle -    Handle of the communication channel as returned by the
                 DRV_SPI_Open function.
 
-    *pReceiveData-  Pointer to the buffer where the data is to be received. For
-                    9 to 15bit mode, data should be right aligned in the 16 bit
-                    memory location.
+    *pReceiveData-  Pointer to the buffer where the data is to be received.
 
-    rxSize-         Number of bytes to be received. Always, size should be
-                    given in terms of bytes. For example, if 10 15-bit data
-                    are to be received, the receive size should be 20 bytes.
+    rxSize-         Number of bytes to be received. The size must be specified
+                    in terms of the SPI data width. For example, if the data width
+                    is 8-bits, and if 10 bytes are being received, then the rxSize
+                    must be set to 10. If the data width is 16-bits then receiving
+                    10 bytes requires specifying the rxSize as 10 (meaning 10 16-bit words).
 
   Returns:
     - true - receive is successful
@@ -1173,21 +1176,23 @@ bool DRV_SPI_ReadTransfer(const DRV_HANDLE handle, void* pReceiveData,  size_t r
   Parameters:
     handle -    Handle of the communication channel as returned by the
                 DRV_SPI_Open function.
-    *pTransmitData- Pointer to the data which has to be transmitted. For 9
-                    to 15bit mode, data should be right aligned in the 16 bit
-                    memory location.
+    *pTransmitData- Pointer to the data which has to be transmitted. If it is
+                    NULL, that means only data receiving is expected.
 
-    txSize-         Number of bytes to be transmitted. Always, size should be
-                    given in terms of bytes. For example, if 10 15-bit data
-                    are to be transmitted, the transmit size should be 20 bytes.
+    txSize-         Number of bytes to be transmitted. The size must be specified
+                    in terms of the SPI data width. For example, if the data width
+                    is 8-bits, and if 10 bytes are being transmitted, then the txSize
+                    must be set to 10. If the data width is 16-bits then transmitting
+                    10 bytes requires specifying the txSize as 10 (meaning 10 16-bit words).
 
-    *pReceiveData-  Pointer to the buffer where the data is to be received. For 9
-                    to 15bit mode, data should be right aligned in the 16 bit
-                    memory location.
+    *pReceiveData-  Pointer to the buffer where the data is to be received. If it is
+                    NULL, that means only data transmission is expected.
 
-    rxSize-         Number of bytes to be received. Always, size should be
-                    given in terms of bytes. For example, if 10 15-bit data
-                    are to be received, the receive size should be 20 bytes.
+    rxSize-         Number of bytes to be received. The size must be specified
+                    in terms of the SPI data width. For example, if the data width
+                    is 8-bits, and if 10 bytes are being received, then the rxSize
+                    must be set to 10. If the data width is 16-bits then receiving
+                    10 bytes requires specifying the rxSize as 10 (meaning 10 16-bit words).
                     If "n" number of bytes has to be received AFTER transmitting
                     "m" number of bytes, then "txSize" should be set as "m" and
                     "rxSize" should be set as "m+n".
