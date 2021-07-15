@@ -236,7 +236,7 @@ typedef struct
     /* To identify if we are running from interrupt context or not */
     uint8_t                                 interruptNestingCount;
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
     /* TX DMA Channel */
     volatile SYS_DMA_CHANNEL                txDMAChannel;
 

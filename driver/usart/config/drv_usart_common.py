@@ -22,6 +22,24 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
+def handleMessage(messageID, args):
+    global usartSymSYSDMACodeEnable
+    global usartSymSYSDMAEnableCntr
+
+    result_dict = {}
+
+    if (messageID == "DRV_USART_DMA_ENABLED"):
+        usartSymSYSDMAEnableCntr.setValue(usartSymSYSDMAEnableCntr.getValue() + 1)
+        usartSymSYSDMACodeEnable.setValue(True)
+    if (messageID == "DRV_USART_DMA_DISABLED"):
+        if usartSymSYSDMAEnableCntr.getValue() > 0:
+            usartSymSYSDMAEnableCntr.setValue(usartSymSYSDMAEnableCntr.getValue() - 1)
+        if usartSymSYSDMAEnableCntr.getValue() == 0:
+            usartSymSYSDMACodeEnable.setValue(False)
+
+    return result_dict
+
+
 def syncFileGen(symbol, event):
     if event["value"] == "Synchronous":
        symbol.setEnabled(True)
@@ -43,12 +61,18 @@ def setCommonMode(symbol, event):
         else:
             symbol.setValue("Synchronous")
 
+def sysDMAEnabled(symbol, event):
+    if symbol.getValue() != event["value"]:
+        symbol.setValue(event["value"])
+        if Database.getSymbolValue("core", "DMA_ENABLE") != None:
+            Database.sendMessage("HarmonyCore", "ENABLE_SYS_DMA", {"isEnabled":event["value"]})
 ################################################################################
 #### Component ####
 ################################################################################
 
 def instantiateComponent(usartComponentCommon):
-
+    global usartSymSYSDMACodeEnable
+    global usartSymSYSDMAEnableCntr
     res = Database.activateComponents(["HarmonyCore"])
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
@@ -56,10 +80,6 @@ def instantiateComponent(usartComponentCommon):
 
     # Enable "Generate Harmony System Service Common Files" option in MHC
     Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
-
-    # Enable "Generate Harmony System DMA Files" option in MHC
-    if Database.getSymbolValue("core", "DMA_ENABLE") != None:
-        Database.sendMessage("HarmonyCore", "ENABLE_SYS_DMA", {"isEnabled":True})
 
     rtos_mode = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
 
@@ -79,6 +99,19 @@ def instantiateComponent(usartComponentCommon):
     usartSymBufPool.setDefaultValue(1)
     usartSymBufPool.setUseSingleDynamicValue(True)
     usartSymBufPool.setVisible(False)
+
+    usartSymSYSDMAEnableCntr = usartComponentCommon.createIntegerSymbol("DRV_USART_SYS_DMA_ENABLE_CNTR", None)
+    usartSymSYSDMAEnableCntr.setDefaultValue(0)
+    usartSymSYSDMAEnableCntr.setVisible(False)
+
+    usartSymSYSDMACodeEnable = usartComponentCommon.createBooleanSymbol("DRV_USART_SYS_DMA_CODE_ENABLE", None)
+    usartSymSYSDMACodeEnable.setDefaultValue(False)
+    usartSymSYSDMACodeEnable.setVisible(False)
+
+    usartSymSYSDMAEnable = usartComponentCommon.createBooleanSymbol("DRV_USART_SYS_DMA_ENABLE", None)
+    usartSymSYSDMAEnable.setDefaultValue(False)
+    usartSymSYSDMAEnable.setVisible(False)
+    usartSymSYSDMAEnable.setDependencies(sysDMAEnabled, ["DRV_USART_SYS_DMA_CODE_ENABLE"])
 
     ############################################################################
     #### Code Generation ####

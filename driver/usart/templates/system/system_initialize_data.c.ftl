@@ -127,7 +127,7 @@ const uint32_t drvUsart${INDEX?string}remapError[] = {
 </@compress>
 
 <#if drv_usart.DRV_USART_COMMON_MODE == "Asynchronous">
-    <#if core.DMA_ENABLE?has_content>
+    <#if core.DMA_ENABLE?has_content && drv_usart.DRV_USART_SYS_DMA_ENABLE == true>
         <#assign DMA_PLIB = "core.DMA_INSTANCE_NAME">
         <#assign DMA_PLIB_MULTI_IRQn = "core." + DMA_PLIB?eval + "_MULTI_IRQn">
         <#if DMA_PLIB_MULTI_IRQn?eval??>
@@ -185,7 +185,7 @@ const DRV_USART_INTERRUPT_SOURCES drvUSART${INDEX?string}InterruptSources =
             <#lt>    .intSources.usartInterrupt             = ${DRV_USART_PLIB}_IRQn,
         </#if>
     </#if>
-    <#if core.DMA_ENABLE?has_content>
+    <#if core.DMA_ENABLE?has_content && drv_usart.DRV_USART_SYS_DMA_ENABLE == true>
         <#if DMA_PLIB_MULTI_IRQn?eval??>
             <#if DRV_USART_TX_DMA == true>
                 <#lt>    /* DMA Tx interrupt line */
@@ -215,7 +215,7 @@ const DRV_USART_INIT drvUsart${INDEX?string}InitData =
     /* USART Client Objects Pool */
     .clientObjPool = (uintptr_t)&drvUSART${INDEX?string}ClientObjPool[0],
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_usart.DRV_USART_SYS_DMA_ENABLE == true>
     <#if DRV_USART_TX_DMA == true>
         <#lt>    .dmaChannelTransmit = DRV_USART_XMIT_DMA_CH_IDX${INDEX?string},
 

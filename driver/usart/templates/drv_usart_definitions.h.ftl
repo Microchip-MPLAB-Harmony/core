@@ -50,7 +50,7 @@
 // *****************************************************************************
 
 #include "system/int/sys_int.h"
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
 #include "system/dma/sys_dma.h"
 </#if>
 
@@ -179,7 +179,7 @@ typedef struct
     int32_t         usartTxCompleteInt;
     int32_t         usartRxCompleteInt;
     int32_t         usartErrorInt;
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
     int32_t         dmaTxChannelInt;
     int32_t         dmaRxChannelInt;
 </#if>
@@ -189,7 +189,7 @@ typedef union
 {
     DRV_USART_MULTI_INT_SRC             multi;
     int32_t                             usartInterrupt;
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
     int32_t                             dmaInterrupt;
 </#if>
 } DRV_USART_INT_SRC;
@@ -215,7 +215,7 @@ struct _DRV_USART_INIT
     /* Memory Pool for Client Objects */
     uintptr_t                               clientObjPool;
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
     /* This is the USART transmit DMA channel. */
     SYS_DMA_CHANNEL                         dmaChannelTransmit;
 
@@ -245,10 +245,10 @@ struct _DRV_USART_INIT
     /* Pointer to the transmit and receive buffer pool */
     uintptr_t                               bufferObjPool;
 
-    const DRV_USART_INTERRUPT_SOURCES*      interruptSources;    
+    const DRV_USART_INTERRUPT_SOURCES*      interruptSources;
 </#if>
-	
-	DRV_USART_DATA_BIT                      dataWidth;
+
+    DRV_USART_DATA_BIT                      dataWidth;
 };
 
 //DOM-IGNORE-BEGIN

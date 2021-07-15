@@ -135,7 +135,7 @@ static void _DRV_USART_RX_PLIB_CallbackHandler( uintptr_t context )
     OSAL_SEM_PostISR(&dObj->rxTransferDone);
 }
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
 static void _DRV_USART_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
 {
     DRV_USART_OBJ *dObj = (DRV_USART_OBJ *)context;
@@ -237,7 +237,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     dObj->currentTxClient       = (uintptr_t)NULL;
     dObj->isExclusive           = false;
     dObj->usartTokenCount       = 1;
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
     dObj->txDMAChannel          = usartInit->dmaChannelTransmit;
     dObj->rxDMAChannel          = usartInit->dmaChannelReceive;
     dObj->txAddress             = usartInit->usartTransmitAddress;
@@ -287,7 +287,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     /* Register a callback with either DMA or USART PLIB based on configuration.
      * dObj is used as a context parameter, that will be used to distinguish the
      * events for different driver instances. */
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
     if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
@@ -310,7 +310,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     dObj->usartPlib->writeCallbackRegister(_DRV_USART_TX_PLIB_CallbackHandler, (uintptr_t)dObj);
 </#if>
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
     if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
@@ -548,7 +548,7 @@ bool DRV_USART_WriteBuffer
 
             dObj->currentTxClient = (uintptr_t)clientObj;
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
             if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
             {
                 if (dObj->dataWidth > DRV_USART_DATA_8_BIT)
@@ -635,7 +635,7 @@ bool DRV_USART_ReadBuffer
 
             dObj->currentRxClient = (uintptr_t)clientObj;
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
             if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
             {
                 if (dObj->dataWidth > DRV_USART_DATA_8_BIT)

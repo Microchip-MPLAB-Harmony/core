@@ -147,7 +147,7 @@ typedef struct
     /* Memory pool for Client Objects */
     uintptr_t clientObjPool;
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
     /* TX DMA Channel */
     SYS_DMA_CHANNEL txDMAChannel;
 

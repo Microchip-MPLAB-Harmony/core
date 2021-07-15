@@ -43,6 +43,16 @@ def handleMessage(messageID, args):
 
     return result_dict
 
+def updateDMAEnableCntr(symbol, event):
+    result_dict = {}
+
+    if symbol.getValue() != event["value"]:
+        symbol.setValue(event["value"])
+        if symbol.getValue() == True:
+            result_dict = Database.sendMessage("drv_usart", "DRV_USART_DMA_ENABLED", result_dict)
+        else:
+            result_dict = Database.sendMessage("drv_usart", "DRV_USART_DMA_DISABLED", result_dict)
+
 def instantiateComponent(usartComponent, index):
     global currentTxBufSize
     global currentRxBufSize
@@ -85,6 +95,11 @@ def instantiateComponent(usartComponent, index):
     usartTXDMA.setVisible(isDMAPresent)
     usartTXDMA.setReadOnly(True)
 
+    usartTXDMAEn = usartComponent.createBooleanSymbol("DRV_USART_TX_DMA_EN", None)
+    usartTXDMAEn.setVisible(False)
+    usartTXDMAEn.setDefaultValue(False)
+    usartTXDMAEn.setDependencies(updateDMAEnableCntr, ["DRV_USART_TX_DMA"])
+
     global usartTXDMAChannel
     usartTXDMAChannel = usartComponent.createIntegerSymbol("DRV_USART_TX_DMA_CHANNEL", None)
     usartTXDMAChannel.setLabel("DMA Channel For Transmit")
@@ -104,6 +119,11 @@ def instantiateComponent(usartComponent, index):
     usartRXDMA.setLabel("Use DMA for Receive ?")
     usartRXDMA.setVisible(isDMAPresent)
     usartRXDMA.setReadOnly(True)
+
+    usartRXDMAEn = usartComponent.createBooleanSymbol("DRV_USART_RX_DMA_EN", None)
+    usartRXDMAEn.setVisible(False)
+    usartRXDMAEn.setDefaultValue(False)
+    usartRXDMAEn.setDependencies(updateDMAEnableCntr, ["DRV_USART_RX_DMA"])
 
     global usartRXDMAChannel
     usartRXDMAChannel = usartComponent.createIntegerSymbol("DRV_USART_RX_DMA_CHANNEL", None)

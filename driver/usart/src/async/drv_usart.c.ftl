@@ -136,7 +136,7 @@ static void _DRV_USART_DisableInterrupts(DRV_USART_OBJ* dObj)
         /* Disable USART interrupt */
         dObj->usartInterruptStatus = SYS_INT_SourceDisable((INT_SOURCE)intInfo->intSources.usartInterrupt);
 
-        <#if core.DMA_ENABLE?has_content>
+        <#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
             <#lt>        /* Disable DMA interrupt */
             <#lt>        if((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) || (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
             <#lt>        {
@@ -167,7 +167,7 @@ static void _DRV_USART_DisableInterrupts(DRV_USART_OBJ* dObj)
             dObj->usartErrorIntStatus = SYS_INT_SourceDisable((INT_SOURCE)multiVector->usartErrorInt);
         }
 
-        <#if core.DMA_ENABLE?has_content>
+        <#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
             <#lt>        /* Disable DMA interrupt sources */
             <#lt>        if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
             <#lt>        {
@@ -197,7 +197,7 @@ static void _DRV_USART_EnableInterrupts(DRV_USART_OBJ* dObj)
         /* Enable USART interrupt */
         SYS_INT_SourceRestore((INT_SOURCE)intInfo->intSources.usartInterrupt, dObj->usartInterruptStatus);
 
-        <#if core.DMA_ENABLE?has_content>
+        <#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
             <#lt>        /* Enable DMA interrupt */
             <#lt>        if((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) || (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
             <#lt>        {
@@ -228,7 +228,7 @@ static void _DRV_USART_EnableInterrupts(DRV_USART_OBJ* dObj)
             SYS_INT_SourceRestore((INT_SOURCE)multiVector->usartErrorInt, dObj->usartErrorIntStatus);
         }
 
-        <#if core.DMA_ENABLE?has_content>
+        <#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
             <#lt>        /* Enable DMA interrupt sources */
             <#lt>        if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
             <#lt>        {
@@ -535,7 +535,7 @@ static void _DRV_USART_ReadAbort(DRV_USART_OBJ* dObj, DRV_USART_CLIENT_OBJ* clie
     if ((bufferObj->clientHandle == clientObj->clientHandle) && (bufferObj->currentState == DRV_USART_BUFFER_IS_PROCESSING))
     {
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
         if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
         {
             /* Abort DMA operation by disabling the RX channel */
@@ -606,15 +606,15 @@ static void _DRV_USART_WriteSubmit( DRV_USART_OBJ* dObj )
 
     bufferObj->currentState = DRV_USART_BUFFER_IS_PROCESSING;
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
     if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
         if (dObj->dataWidth > DRV_USART_DATA_8_BIT)
         {
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-			// Clean cache to load new data from cache to main memory for DMA
-			SYS_CACHE_CleanDCache_by_Addr((uint32_t *)bufferObj->buffer, (bufferObj->size << 1));
+            // Clean cache to load new data from cache to main memory for DMA
+            SYS_CACHE_CleanDCache_by_Addr((uint32_t *)bufferObj->buffer, (bufferObj->size << 1));
 </#if>
 </#if>
             SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
@@ -630,8 +630,8 @@ static void _DRV_USART_WriteSubmit( DRV_USART_OBJ* dObj )
         {
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-			// Clean cache to load new data from cache to main memory for DMA
-			SYS_CACHE_CleanDCache_by_Addr((uint32_t *)bufferObj->buffer, bufferObj->size);
+            // Clean cache to load new data from cache to main memory for DMA
+            SYS_CACHE_CleanDCache_by_Addr((uint32_t *)bufferObj->buffer, bufferObj->size);
 </#if>
 </#if>
             SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_8_BIT);
@@ -655,7 +655,7 @@ static void _DRV_USART_WriteSubmit( DRV_USART_OBJ* dObj )
 
 static void _DRV_USART_ReadSubmit( DRV_USART_OBJ* dObj )
 {
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
     uint32_t errorMask;
 </#if>
     // Get the buffer object at the top of the list
@@ -674,7 +674,7 @@ static void _DRV_USART_ReadSubmit( DRV_USART_OBJ* dObj )
 
     bufferObj->currentState = DRV_USART_BUFFER_IS_PROCESSING;
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
     if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
         /* UART errors (if any) must be cleared before initiating a new DMA request */
@@ -684,8 +684,8 @@ static void _DRV_USART_ReadSubmit( DRV_USART_OBJ* dObj )
         if (dObj->dataWidth > DRV_USART_DATA_8_BIT)
         {
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
-<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
-			SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)bufferObj->buffer, (bufferObj->size << 1));
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
+            SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)bufferObj->buffer, (bufferObj->size << 1));
 </#if>
 </#if>
             SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
@@ -700,8 +700,8 @@ static void _DRV_USART_ReadSubmit( DRV_USART_OBJ* dObj )
         else
         {
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
-<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
-			SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)bufferObj->buffer, bufferObj->size);
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
+            SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)bufferObj->buffer, bufferObj->size);
 </#if>
 </#if>
             SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);
@@ -759,7 +759,7 @@ static void _DRV_USART_BufferQueueTask(
 
         if(bufferObj->status == DRV_USART_BUFFER_EVENT_ERROR)
         {
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
             if( (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
             {
                 /* DMA mode doesn't return number of bytes completed in case of error
@@ -854,7 +854,7 @@ static void _DRV_USART_RX_PLIB_CallbackHandler( uintptr_t context )
     return;
 }
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
 static void _DRV_USART_TX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
@@ -945,7 +945,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize(
     dObj->receiveObjList        = (DRV_USART_BUFFER_OBJ*)NULL;
     dObj->interruptNestingCount = 0;
     dObj->interruptSources      = usartInit->interruptSources;
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
     dObj->txDMAChannel          = usartInit->dmaChannelTransmit;
     dObj->rxDMAChannel          = usartInit->dmaChannelReceive;
     dObj->txAddress             = usartInit->usartTransmitAddress;
@@ -960,7 +960,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize(
     /* Register a callback with either DMA or USART PLIB based on configuration.
      * dObj is used as a context parameter, that will be used to distinguish the
      * events for different driver instances. */
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
     if(dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
@@ -983,7 +983,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize(
     dObj->usartPlib->writeCallbackRegister(_DRV_USART_TX_PLIB_CallbackHandler, (uintptr_t)dObj);
 </#if>
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
     if(dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
