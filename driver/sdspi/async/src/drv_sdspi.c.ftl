@@ -81,7 +81,7 @@ static CACHE_ALIGN uint8_t gDrvSDSPITempCidData [DRV_SDSPI_INSTANCES_NUMBER][32]
 </#if>
 
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
 static CACHE_ALIGN uint8_t gDrvSDSPIDummyBufferDMA [DRV_SDSPI_INSTANCES_NUMBER][DMA_DUMMY_BUFFER_SIZE];
 <#else>
@@ -1501,19 +1501,19 @@ static void _DRV_SDSPI_AttachDetachTasks
 
     switch ( dObj->taskState )
     {
-<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">	
-		case DRV_SDSPI_TASK_OPEN_SPI:
-			/* Open the SPI driver */			
-			dObj->spiDrvHandle = DRV_SPI_Open(dObj->spiDrvIndex, DRV_IO_INTENT_READWRITE);
-			if (dObj->spiDrvHandle != DRV_HANDLE_INVALID)
-			{
-				/* Register a callback with the SPI driver */
-				DRV_SPI_TransferEventHandlerSet(dObj->spiDrvHandle, _DRV_SDSPI_SPIDriverEventHandler, (uintptr_t)dObj);
-				
-				dObj->taskState = DRV_SDSPI_TASK_START_POLLING_TIMER;
-			}			
-			break;
-</#if>			
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
+        case DRV_SDSPI_TASK_OPEN_SPI:
+            /* Open the SPI driver */
+            dObj->spiDrvHandle = DRV_SPI_Open(dObj->spiDrvIndex, DRV_IO_INTENT_READWRITE);
+            if (dObj->spiDrvHandle != DRV_HANDLE_INVALID)
+            {
+                /* Register a callback with the SPI driver */
+                DRV_SPI_TransferEventHandlerSet(dObj->spiDrvHandle, _DRV_SDSPI_SPIDriverEventHandler, (uintptr_t)dObj);
+
+                dObj->taskState = DRV_SDSPI_TASK_START_POLLING_TIMER;
+            }
+            break;
+</#if>
         case DRV_SDSPI_TASK_START_POLLING_TIMER:
             if (_DRV_SDSPI_CardDetectPollingTimerStart(dObj, dObj->pollingIntervalMs) == true)
             {
@@ -2213,7 +2213,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
     dObj->remapClockPhase       = sdSPIInit->remapClockPhase;
     dObj->remapClockPolarity    = sdSPIInit->remapClockPolarity;
     dObj->remapDataBits         = sdSPIInit->remapDataBits;
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
     dObj->rxDMAChannel          = sdSPIInit->rxDMAChannel;
     dObj->txDMAChannel          = sdSPIInit->txDMAChannel;
     dObj->txAddress             = sdSPIInit->txAddress;
@@ -2244,12 +2244,12 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
     dObj->isAttachedLastStatus  = DRV_SDSPI_IS_DETACHED;
     dObj->mediaState            = SYS_MEDIA_DETACHED;
 
-<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">	
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
     dObj->taskState             = DRV_SDSPI_TASK_START_POLLING_TIMER;
 <#else>
-	dObj->taskState             = DRV_SDSPI_TASK_OPEN_SPI;
-</#if>	
-	dObj->taskBufferIOState		= DRV_SDSPI_BUFFER_IO_CHECK_DEVICE;
+    dObj->taskState             = DRV_SDSPI_TASK_OPEN_SPI;
+</#if>
+    dObj->taskBufferIOState     = DRV_SDSPI_BUFFER_IO_CHECK_DEVICE;
     dObj->cmdDetectState        = DRV_SDSPI_CMD_DETECT_START_INIT;
     dObj->mediaInitState        = DRV_SDSPI_INIT_CHIP_DESELECT;
     dObj->spiTransferStatus     = DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE;
@@ -2269,7 +2269,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
     SYS_PORT_PinSet(dObj->chipSelectPin);
 
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
     dObj->pDummyDataBuffer      = &gDrvSDSPIDummyBufferDMA[drvIndex][0];
 </#if>
@@ -2279,7 +2279,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
 
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
     /* Each driver instance points to the common dummy data array. */
     dObj->txDummyData            = txCommonDummyData;
 
@@ -2288,7 +2288,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
         txCommonDummyData[i] = 0xFF;
     }
 </#if>
-<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     if (dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
         /* Ensure txCommonDummyData (0xFF) is pushed to the main memory for the DMA.
@@ -2301,7 +2301,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
 </#if>
 
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
     /* Register call-backs with the DMA System Service */
     if (dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE && dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)
     {

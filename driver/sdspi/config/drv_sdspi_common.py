@@ -50,6 +50,8 @@ def handleSPIDrvInstanceChange(symbol, event):
 def handleMessage(messageID, args):
     global fsCounter
     global sdspiCommonSPIDrvInstancesCnt
+    global sdspiSymSYSDMACodeEnable
+    global sdspiSymSYSDMAEnableCntr
 
     result_dict = {}
 
@@ -66,8 +68,22 @@ def handleMessage(messageID, args):
     if (messageID == "DRV_SDSPI_SPI_DRIVER_CONNECTION_COUNTER_DEC"):
         if (sdspiCommonSPIDrvInstancesCnt.getValue() != 0):
             sdspiCommonSPIDrvInstancesCnt.setValue(sdspiCommonSPIDrvInstancesCnt.getValue() - 1)
+    if (messageID == "DRV_SDSPI_DMA_ENABLED"):
+        sdspiSymSYSDMAEnableCntr.setValue(sdspiSymSYSDMAEnableCntr.getValue() + 1)
+        sdspiSymSYSDMACodeEnable.setValue(True)
+    if (messageID == "DRV_SDSPI_DMA_DISABLED"):
+        if sdspiSymSYSDMAEnableCntr.getValue() > 0:
+            sdspiSymSYSDMAEnableCntr.setValue(sdspiSymSYSDMAEnableCntr.getValue() - 1)
+        if sdspiSymSYSDMAEnableCntr.getValue() == 0:
+            sdspiSymSYSDMACodeEnable.setValue(False)
 
     return result_dict
+
+def sysDMAEnabled(symbol, event):
+    if symbol.getValue() != event["value"]:
+        symbol.setValue(event["value"])
+        if Database.getSymbolValue("core", "DMA_ENABLE") != None:
+            Database.sendMessage("HarmonyCore", "ENABLE_SYS_DMA", {"isEnabled":event["value"]})
 
 def aSyncFileGen(symbol, event):
     if(event["value"] == "Asynchronous"):
@@ -94,6 +110,8 @@ def setCommonMode(symbol, event):
 def instantiateComponent(sdspiComponentCommon):
     global sdspiCommonFsEnable
     global sdspiCommonSPIDrvInstancesCnt
+    global sdspiSymSYSDMACodeEnable
+    global sdspiSymSYSDMAEnableCntr
 
     res = Database.activateComponents(["HarmonyCore"])
     res = Database.activateComponents(["sys_time"])
@@ -109,10 +127,6 @@ def instantiateComponent(sdspiComponentCommon):
 
     # Enable "Generate Harmony System Media File" option in MHC
     Database.sendMessage("HarmonyCore", "ENABLE_SYS_MEDIA", {"isEnabled":True})
-
-    # Enable "Generate Harmony System DMA Files" option in MHC
-    if Database.getSymbolValue("core", "DMA_ENABLE") != None:
-        Database.sendMessage("HarmonyCore", "ENABLE_SYS_DMA", {"isEnabled":True})
 
     rtos_mode = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
 
@@ -136,6 +150,19 @@ def instantiateComponent(sdspiComponentCommon):
     sdspiCommonSPIDrvInstancesCnt.setDefaultValue(0)
     sdspiCommonSPIDrvInstancesCnt.setVisible(False)
     sdspiCommonSPIDrvInstancesCnt.setDependencies(handleSPIDrvInstanceChange, ["DRV_SDSPI_COMMON_SPI_DRV_INSTANCE_CNT", "DRV_SDSPI_COMMON_MODE"])
+
+    sdspiSymSYSDMAEnableCntr = sdspiComponentCommon.createIntegerSymbol("DRV_SDSPI_SYS_DMA_ENABLE_CNTR", None)
+    sdspiSymSYSDMAEnableCntr.setDefaultValue(0)
+    sdspiSymSYSDMAEnableCntr.setVisible(False)
+
+    sdspiSymSYSDMACodeEnable = sdspiComponentCommon.createBooleanSymbol("DRV_SDSPI_SYS_DMA_CODE_ENABLE", None)
+    sdspiSymSYSDMACodeEnable.setDefaultValue(False)
+    sdspiSymSYSDMACodeEnable.setVisible(False)
+
+    sdspiSymSYSDMAEnable = sdspiComponentCommon.createBooleanSymbol("DRV_SDSPI_SYS_DMA_ENABLE", None)
+    sdspiSymSYSDMAEnable.setDefaultValue(False)
+    sdspiSymSYSDMAEnable.setVisible(False)
+    sdspiSymSYSDMAEnable.setDependencies(sysDMAEnabled, ["DRV_SDSPI_SYS_DMA_CODE_ENABLE"])
 
     ############################################################################
     #### Code Generation ####

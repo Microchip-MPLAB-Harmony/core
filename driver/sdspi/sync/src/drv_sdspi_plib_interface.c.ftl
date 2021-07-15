@@ -49,7 +49,7 @@
 #include <string.h>
 #include "drv_sdspi_plib_interface.h"
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
 #include "system/cache/sys_cache.h"
 </#if>
@@ -117,7 +117,7 @@ void _DRV_SDSPI_SPIPlibCallbackHandler( uintptr_t context )
     }
 }
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
 // *****************************************************************************
 /* SDSPI RX DMA Event Handler
@@ -226,7 +226,7 @@ void _DRV_SDSPI_RX_DMA_CallbackHandler(
             OSAL_SEM_PostISR( &dObj->transferDone);
         }
     }
-    
+
 }
 
 // *****************************************************************************
@@ -570,7 +570,7 @@ bool _DRV_SDSPI_SPIBlockWrite(
     dObj->sdcardSPITransferType = DRV_SDSPI_SPI_TRANSFER_TYPE_BLOCK;
     dObj->spiTransferStatus = DRV_SDSPI_SPI_TRANSFER_STATUS_IN_PROGRESS;
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
     /* If enabled, used DMA for block transfers */
     if ((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE ))
     {
@@ -636,7 +636,7 @@ bool _DRV_SDSPI_SPIWrite(
     dObj->sdcardSPITransferType = DRV_SDSPI_SPI_TRANSFER_TYPE_BYTE;
     dObj->spiTransferStatus = DRV_SDSPI_SPI_TRANSFER_STATUS_IN_PROGRESS;
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
     /* If enabled, used DMA */
     if ((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE ))
     {
@@ -704,7 +704,7 @@ bool _DRV_SDSPI_SPIBlockRead(
     dObj->sdcardSPITransferType = DRV_SDSPI_SPI_TRANSFER_TYPE_BLOCK;
     dObj->spiTransferStatus = DRV_SDSPI_SPI_TRANSFER_STATUS_IN_PROGRESS;
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
     /* If enabled, used DMA for block transfers */
     if ((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE ))
     {
@@ -772,7 +772,7 @@ bool _DRV_SDSPI_SPIRead(
     dObj->sdcardSPITransferType = DRV_SDSPI_SPI_TRANSFER_TYPE_BYTE;
     dObj->spiTransferStatus = DRV_SDSPI_SPI_TRANSFER_STATUS_IN_PROGRESS;
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
     /* If enabled, used DMA */
     if ((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE ))
     {
@@ -828,7 +828,7 @@ bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
     dObj->sdcardSPITransferType = DRV_SDSPI_SPI_TRANSFER_TYPE_BYTE;
     dObj->spiTransferStatus = DRV_SDSPI_SPI_TRANSFER_STATUS_IN_PROGRESS;
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
     /* If enabled, used DMA */
     if ((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE ))
     {

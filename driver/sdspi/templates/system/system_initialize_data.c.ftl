@@ -153,7 +153,7 @@ const DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
     .isFsEnabled            = ${DRV_SDSPI_FS_ENABLE?c},
 
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
     <#if DRV_SDSPI_TX_RX_DMA == true>
         <#lt>    /* DMA Channel for Transmit */
         <#lt>    .txDMAChannel           = DRV_SDSPI_XMIT_DMA_CH_IDX${INDEX?string},

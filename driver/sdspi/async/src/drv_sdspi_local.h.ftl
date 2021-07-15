@@ -54,7 +54,7 @@
 #include <stddef.h>
 
 #include "configuration.h"
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
     <#lt>#include "system/dma/sys_dma.h"
 </#if>
 #include "driver/sdspi/drv_sdspi.h"
@@ -457,9 +457,9 @@ typedef enum
 
 typedef enum
 {
-<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">	
-	/* Open the SPI Driver instance */
-	DRV_SDSPI_TASK_OPEN_SPI,
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
+    /* Open the SPI Driver instance */
+    DRV_SDSPI_TASK_OPEN_SPI,
 </#if>
 
     DRV_SDSPI_TASK_START_POLLING_TIMER,
@@ -1489,7 +1489,7 @@ typedef struct
 </#if>
 
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
     /* Transmit DMA Channel */
     SYS_DMA_CHANNEL                                 txDMAChannel;
 

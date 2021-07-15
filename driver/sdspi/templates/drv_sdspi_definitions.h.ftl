@@ -50,7 +50,7 @@
 // *****************************************************************************
 
 #include "system/ports/sys_ports.h"
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
     <#lt>#include "system/dma/sys_dma.h"
 </#if>
 
@@ -220,7 +220,7 @@ typedef struct
 
     const uint32_t*                 remapClockPhase;
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
     /* Transmit DMA Channel */
     SYS_DMA_CHANNEL                 txDMAChannel;
 

@@ -73,7 +73,7 @@
 
 void _DRV_SDSPI_SPIPlibCallbackHandler( uintptr_t context );
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
 // *****************************************************************************
 /* SDSPI RX DMA Event Handler
 

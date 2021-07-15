@@ -49,7 +49,7 @@
 // *****************************************************************************
 
 #include "configuration.h"
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
     <#lt>#include "system/dma/sys_dma.h"
 </#if>
 #include "driver/sdspi/drv_sdspi.h"
@@ -166,9 +166,9 @@ typedef enum
 /* SD Card Driver read task Status. */
 typedef enum
 {
-<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">	
-	/* Open the SPI Driver instance */
-	DRV_SDSPI_TASK_OPEN_SPI,
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
+    /* Open the SPI Driver instance */
+    DRV_SDSPI_TASK_OPEN_SPI,
 </#if>
 
     /* Initial state of the task, check for SD card attach/detach */
@@ -698,10 +698,10 @@ typedef struct
 
     const uint32_t*                     remapClockPhase;
 <#else>
-	/* SPI Driver Instance used by the SDSPI driver */
-	uint32_t							spiDrvIndex;
-	
-	DRV_HANDLE							spiDrvHandle;
+    /* SPI Driver Instance used by the SDSPI driver */
+    uint32_t                            spiDrvIndex;
+
+    DRV_HANDLE                          spiDrvHandle;
 </#if>
 
     SYS_PORT_PIN                        chipSelectPin;
@@ -746,7 +746,7 @@ typedef struct
     SYS_MEDIA_REGION_GEOMETRY           mediaGeometryTable[3];
 
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_sdspi.DRV_SDSPI_SYS_DMA_ENABLE == true>
     /* Transmit DMA Channel */
     SYS_DMA_CHANNEL                     txDMAChannel;
 

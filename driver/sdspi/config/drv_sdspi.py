@@ -212,6 +212,16 @@ def syncFileGenration(symbol, event):
         else:
             symbol.setEnabled(True)
 
+def updateDMAEnableCntr(symbol, event):
+    result_dict = {}
+
+    if symbol.getValue() != event["value"]:
+        symbol.setValue(event["value"])
+        if symbol.getValue() == True:
+            result_dict = Database.sendMessage("drv_sdspi", "DRV_SDSPI_DMA_ENABLED", result_dict)
+        else:
+            result_dict = Database.sendMessage("drv_sdspi", "DRV_SDSPI_DMA_DISABLED", result_dict)
+
 def instantiateComponent(sdspiComponent, index):
     global drvSdspiInstanceSpace
     global sdspiFsEnable
@@ -319,6 +329,11 @@ def instantiateComponent(sdspiComponent, index):
     sdspiTXRXDMA.setVisible(isDMAPresent and sdspiInterfaceType.getValue() == "SPI_PLIB")
     sdspiTXRXDMA.setReadOnly(True)
     sdspiTXRXDMA.setDependencies(setPLIBOptionsVisibility, ["DRV_SDSPI_INTERFACE_TYPE"])
+
+    sdspiTXRXDMAEn = sdspiComponent.createBooleanSymbol("DRV_SDSPI_TX_RX_DMA_EN", None)
+    sdspiTXRXDMAEn.setVisible(False)
+    sdspiTXRXDMAEn.setDefaultValue(False)
+    sdspiTXRXDMAEn.setDependencies(updateDMAEnableCntr, ["DRV_SDSPI_TX_RX_DMA"])
 
     sdspiTXDMAChannel = sdspiComponent.createIntegerSymbol("DRV_SDSPI_TX_DMA_CHANNEL", None)
     sdspiTXDMAChannel.setLabel("DMA Channel For Transmit")
