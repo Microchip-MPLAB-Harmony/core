@@ -206,14 +206,14 @@ def instantiateComponent(sysFSComponent):
         sysFSMediaNVM[i].setLabel("Create FAT12 in NVM")
         sysFSMediaNVM[i].setDefaultValue(False)
         sysFSMediaNVM[i].setVisible(False)
-        sysFSMediaNVM[i].setDependencies(showMediaNVMFAT12, ["SYS_FS_TYPE_DEFINE_IDX" + str(i), "SYS_FS_MEDIA_TYPE_DEFINE_IDX" + str(i)])
+#        sysFSMediaNVM[i].setDependencies(showMediaNVMFAT12, ["SYS_FS_TYPE_DEFINE_IDX" + str(i), "SYS_FS_MEDIA_TYPE_DEFINE_IDX" + str(i)])
 
         sysFSMediaSRAM.append(i)
         sysFSMediaSRAM[i] = sysFSComponent.createBooleanSymbol("SYS_FS_USE_SRAM_MBR" + str(i), sysFSMediaConfMenu[i])
         sysFSMediaSRAM[i].setLabel("Create FAT12 in SRAM")
         sysFSMediaSRAM[i].setDefaultValue(False)
         sysFSMediaSRAM[i].setVisible(False)
-        sysFSMediaSRAM[i].setDependencies(showMediaSRAMFAT12, ["SYS_FS_TYPE_DEFINE_IDX" + str(i), "SYS_FS_MEDIA_TYPE_DEFINE_IDX" + str(i)])
+#        sysFSMediaSRAM[i].setDependencies(showMediaSRAMFAT12, ["SYS_FS_TYPE_DEFINE_IDX" + str(i), "SYS_FS_MEDIA_TYPE_DEFINE_IDX" + str(i)])
 
         sysFSMediaVol.append(i)
         sysFSMediaVol[i] = sysFSComponent.createIntegerSymbol("SYS_FS_VOLUME_INSTANCES_NUMBER_IDX" + str(i), sysFSMediaConfMenu[i])
