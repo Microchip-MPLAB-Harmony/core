@@ -124,7 +124,7 @@ typedef struct
     /* PLIB API list that will be used by the driver to access the hardware */
     const DRV_SPI_PLIB_INTERFACE*       spiPlib;
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
     /* Transmit DMA Channel */
     SYS_DMA_CHANNEL                     txDMAChannel;
 

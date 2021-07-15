@@ -238,7 +238,7 @@ typedef struct
      * decide whether or not to update the client specific SPI parameters. */
     DRV_HANDLE                      lastClientHandle;
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
     /* Transmit DMA Channel */
     SYS_DMA_CHANNEL                 txDMAChannel;
 
@@ -250,6 +250,10 @@ typedef struct
 
     /* This is the SPI receive register address. Used for DMA operation. */
     void*                           rxAddress;
+
+    bool                            dmaRxChannelIntStatus;
+    bool                            dmaTxChannelIntStatus;
+    bool                            dmaInterruptStatus;
 
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
     /* Buffer for transmitting/receiving dummy data */
@@ -275,10 +279,9 @@ typedef struct
     bool                            spiTxReadyIntStatus;
     bool                            spiTxCompleteIntStatus;
     bool                            spiRxIntStatus;
-    bool                            dmaRxChannelIntStatus;
-    bool                            dmaTxChannelIntStatus;
+
     bool                            spiInterruptStatus;
-    bool                            dmaInterruptStatus;
+
 
     const DRV_SPI_INTERRUPT_SOURCES*      interruptSources;
 

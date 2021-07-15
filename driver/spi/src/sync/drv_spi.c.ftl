@@ -50,7 +50,7 @@
 #include "configuration.h"
 #include "driver/spi/drv_spi.h"
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
 #include "system/cache/sys_cache.h"
 </#if>
@@ -69,7 +69,7 @@
 static CACHE_ALIGN DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER];
 <#else>
 static DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER];
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
 /* Dummy data being transmitted by TX DMA */
 static CACHE_ALIGN uint8_t txDummyData[32];
 </#if>
@@ -134,7 +134,7 @@ static DRV_SPI_CLIENT_OBJ* _DRV_SPI_DriverHandleValidate(DRV_HANDLE handle)
     return(clientObj);
 }
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
 static bool _DRV_SPI_StartDMATransfer(
     DRV_SPI_OBJ* dObj,
@@ -348,7 +348,7 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
     OSAL_SEM_PostISR( &dObj->transferDone);
 }
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
 void _DRV_SPI_TX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
@@ -506,7 +506,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     DRV_SPI_OBJ* dObj     = (DRV_SPI_OBJ *)NULL;
     DRV_SPI_INIT* spiInit = (DRV_SPI_INIT *)init;
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
     size_t  txDummyDataIdx;
 </#if>
 </#if>
@@ -535,7 +535,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->activeClient          = (uintptr_t)NULL;
     dObj->spiTokenCount         = 1;
     dObj->isExclusive           = false;
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
     dObj->txDMAChannel          = spiInit->dmaChannelTransmit;
     dObj->rxDMAChannel          = spiInit->dmaChannelReceive;
     dObj->txAddress             = spiInit->spiTransmitAddress;
@@ -546,14 +546,14 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->remapClockPhase       = spiInit->remapClockPhase;
 
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
     for (txDummyDataIdx = 0; txDummyDataIdx < sizeof(txDummyData); txDummyDataIdx++)
     {
         txDummyData[txDummyDataIdx] = 0xFF;
     }
 </#if>
 
-<#if core.DMA_ENABLE?has_content && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+<#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     if (dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE)
     {
         /* Clean cache lines having source buffer before submitting a transfer
@@ -585,7 +585,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
         return SYS_MODULE_OBJ_INVALID;
     }
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
     if((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
     {
         /* Register call-backs with the DMA System Service */
@@ -838,7 +838,7 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
                 txSize = txSize << 1;
             }
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
             if((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && ((dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)))
             {
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>

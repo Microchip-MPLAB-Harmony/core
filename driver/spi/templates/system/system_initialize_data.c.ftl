@@ -100,7 +100,7 @@ const uint32_t drvSPI${INDEX?string}remapClockPhase[] =
 </@compress>
 
 <#if DRV_SPI_MODE == "Asynchronous">
-    <#if core.DMA_ENABLE?has_content>
+    <#if core.DMA_ENABLE?has_content && drv_spi.DRV_SPI_SYS_DMA_ENABLE == true>
         <#assign DMA_PLIB = "core.DMA_INSTANCE_NAME">
         <#assign DMA_PLIB_MULTI_IRQn = "core." + DMA_PLIB?eval + "_MULTI_IRQn">
         <#if DMA_PLIB_MULTI_IRQn?eval??>
@@ -153,7 +153,7 @@ const DRV_SPI_INTERRUPT_SOURCES drvSPI${INDEX?string}InterruptSources =
             <#lt>    .intSources.spiInterrupt             = ${DRV_SPI_PLIB}_IRQn,
         </#if>
     </#if>
-    <#if core.DMA_ENABLE?has_content>
+    <#if core.DMA_ENABLE?has_content && drv_spi.DRV_SPI_SYS_DMA_ENABLE == true>
         <#if DMA_PLIB_MULTI_IRQn?eval??>
             <#if DRV_SPI_TX_RX_DMA == true>
                 <#lt>    /* DMA Tx interrupt line */
@@ -189,7 +189,7 @@ const DRV_SPI_INIT drvSPI${INDEX?string}InitData =
     /* SPI Client Objects Pool */
     .clientObjPool = (uintptr_t)&drvSPI${INDEX?string}ClientObjPool[0],
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && drv_spi.DRV_SPI_SYS_DMA_ENABLE == true>
 <#if DRV_SPI_TX_RX_DMA == true>
     /* DMA Channel for Transmit */
     .dmaChannelTransmit = DRV_SPI_XMIT_DMA_CH_IDX${INDEX?string},

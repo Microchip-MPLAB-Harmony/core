@@ -52,7 +52,7 @@
 #include <device.h>
 #include "system/int/sys_int.h"
 #include "system/ports/sys_ports.h"
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
 #include "system/dma/sys_dma.h"
 </#if>
 
@@ -161,7 +161,7 @@ typedef struct
     int32_t         spiTxReadyInt;
     int32_t         spiTxCompleteInt;
     int32_t         spiRxInt;
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
     int32_t         dmaTxChannelInt;
     int32_t         dmaRxChannelInt;
 </#if>
@@ -171,7 +171,7 @@ typedef union
 {
     DRV_SPI_MULTI_INT_SRC               multi;
     int32_t                             spiInterrupt;
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
     int32_t                             dmaInterrupt;
 </#if>
 } DRV_SPI_INT_SRC;
@@ -232,7 +232,7 @@ typedef struct
      * peripheral. */
     const DRV_SPI_PLIB_INTERFACE*   spiPlib;
 
-<#if core.DMA_ENABLE?has_content>
+<#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
     /* SPI transmit DMA channel. */
     SYS_DMA_CHANNEL                 dmaChannelTransmit;
 
@@ -257,7 +257,7 @@ typedef struct
 
     const uint32_t*                 remapClockPhase;
 
-<#if DRV_SPI_MODE == "Asynchronous">
+<#if DRV_SPI_COMMON_MODE == "Asynchronous">
     /* Size of buffer objects queue */
     uint32_t                        transferObjPoolSize;
 

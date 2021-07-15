@@ -31,9 +31,20 @@ def handleMessage(messageID, args):
     if (messageID == "REQUEST_CONFIG_PARAMS"):
         if args.get("localComponentID") != None:
             result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_MODE", {"isReadOnly":True, "isEnabled":True})
-            result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_INTERRUPT_MODE", {"isReadOnly":True, "isEnabled":True})            
+            result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_INTERRUPT_MODE", {"isReadOnly":True, "isEnabled":True})
 
     return result_dict
+
+def updateDMAEnableCntr(symbol, event):
+    result_dict = {}
+
+    if symbol.getValue() != event["value"]:
+        symbol.setValue(event["value"])
+        if symbol.getValue() == True:
+            result_dict = Database.sendMessage("drv_spi", "DRV_SPI_DMA_ENABLED", result_dict)
+        else:
+            result_dict = Database.sendMessage("drv_spi", "DRV_SPI_DMA_DISABLED", result_dict)
+
 
 def instantiateComponent(spiComponent, index):
     global drvSpiInstanceSpace
@@ -81,6 +92,11 @@ def instantiateComponent(spiComponent, index):
     spiTXRXDMA.setVisible(isDMAPresent)
     spiTXRXDMA.setReadOnly(True)
 
+    spiTXRXDMAEn = spiComponent.createBooleanSymbol("DRV_SPI_TX_RX_DMA_EN", None)
+    spiTXRXDMAEn.setVisible(False)
+    spiTXRXDMAEn.setDefaultValue(False)
+    spiTXRXDMAEn.setDependencies(updateDMAEnableCntr, ["DRV_SPI_TX_RX_DMA"])
+
     global spiTXDMAChannel
     spiTXDMAChannel = spiComponent.createIntegerSymbol("DRV_SPI_TX_DMA_CHANNEL", None)
     spiTXDMAChannel.setLabel("DMA Channel For Transmit")
@@ -119,23 +135,7 @@ def instantiateComponent(spiComponent, index):
 
     configName = Variables.get("__CONFIGURATION_NAME")
 
-    # Global Header Files
-    spiSymHeaderFile = spiComponent.createFileSymbol("DRV_SPI_HEADER", None)
-    spiSymHeaderFile.setSourcePath("driver/spi/drv_spi.h")
-    spiSymHeaderFile.setOutputName("drv_spi.h")
-    spiSymHeaderFile.setDestPath("driver/spi/")
-    spiSymHeaderFile.setProjectPath("config/" + configName + "/driver/spi/")
-    spiSymHeaderFile.setType("HEADER")
-    spiSymHeaderFile.setOverwrite(True)
 
-    spiSymHeaderDefFile = spiComponent.createFileSymbol("DRV_SPI_DEF", None)
-    spiSymHeaderDefFile.setSourcePath("driver/spi/templates/drv_spi_definitions.h.ftl")
-    spiSymHeaderDefFile.setOutputName("drv_spi_definitions.h")
-    spiSymHeaderDefFile.setDestPath("driver/spi")
-    spiSymHeaderDefFile.setProjectPath("config/" + configName + "/driver/spi/")
-    spiSymHeaderDefFile.setType("HEADER")
-    spiSymHeaderDefFile.setMarkup(True)
-    spiSymHeaderDefFile.setOverwrite(True)
 
     # System Template Files
     spiSymSystemDefObjFile = spiComponent.createFileSymbol("DRV_SPI_SYSTEM_DEF_OBJECT", None)

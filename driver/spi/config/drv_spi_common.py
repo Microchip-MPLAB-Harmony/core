@@ -24,6 +24,8 @@
 
 def handleMessage(messageID, args):
     global spiMode
+    global spiSymSYSDMACodeEnable
+    global spiSymSYSDMAEnableCntr
 
     result_dict = {}
 
@@ -35,6 +37,14 @@ def handleMessage(messageID, args):
         spiMode.setReadOnly(True)
     if (messageID == "DRV_SDSPI_DISCONNECTED"):
         spiMode.setReadOnly(False)
+    if (messageID == "DRV_SPI_DMA_ENABLED"):
+        spiSymSYSDMAEnableCntr.setValue(spiSymSYSDMAEnableCntr.getValue() + 1)
+        spiSymSYSDMACodeEnable.setValue(True)
+    if (messageID == "DRV_SPI_DMA_DISABLED"):
+        if spiSymSYSDMAEnableCntr.getValue() > 0:
+            spiSymSYSDMAEnableCntr.setValue(spiSymSYSDMAEnableCntr.getValue() - 1)
+        if spiSymSYSDMAEnableCntr.getValue() == 0:
+            spiSymSYSDMACodeEnable.setValue(False)
 
     return result_dict
 
@@ -59,8 +69,16 @@ def setCommonMode(symbol, event):
         else:
             symbol.setValue("Synchronous")
 
+def sysDMAEnabled(symbol, event):
+    if symbol.getValue() != event["value"]:
+        symbol.setValue(event["value"])
+        if Database.getSymbolValue("core", "DMA_ENABLE") != None:
+            Database.sendMessage("HarmonyCore", "ENABLE_SYS_DMA", {"isEnabled":event["value"]})
+
 def instantiateComponent(spiComponentCommon):
     global spiMode
+    global spiSymSYSDMACodeEnable
+    global spiSymSYSDMAEnableCntr
 
     res = Database.activateComponents(["HarmonyCore"])
 
@@ -73,10 +91,6 @@ def instantiateComponent(spiComponentCommon):
     # Enable "Generate Harmony System Port Files" option in MHC
     Database.sendMessage("HarmonyCore", "ENABLE_SYS_PORTS", {"isEnabled":True})
 
-    # Enable "Generate Harmony System DMA Files" option in MHC
-    if Database.getSymbolValue("core", "DMA_ENABLE") != None:
-        Database.sendMessage("HarmonyCore", "ENABLE_SYS_DMA", {"isEnabled":True})
-
     rtos_mode = Database.getSymbolValue("HarmonyCore", "SELECT_RTOS")
 
     spi_default_mode = "Asynchronous"
@@ -88,6 +102,19 @@ def instantiateComponent(spiComponentCommon):
     spiMode.setLabel("Driver Mode")
     spiMode.setDefaultValue(spi_default_mode)
     spiMode.setDependencies(setCommonMode, ["HarmonyCore.SELECT_RTOS"])
+
+    spiSymSYSDMAEnableCntr = spiComponentCommon.createIntegerSymbol("DRV_SPI_SYS_DMA_ENABLE_CNTR", None)
+    spiSymSYSDMAEnableCntr.setDefaultValue(0)
+    spiSymSYSDMAEnableCntr.setVisible(False)
+
+    spiSymSYSDMACodeEnable = spiComponentCommon.createBooleanSymbol("DRV_SPI_SYS_DMA_CODE_ENABLE", None)
+    spiSymSYSDMACodeEnable.setDefaultValue(False)
+    spiSymSYSDMACodeEnable.setVisible(False)
+
+    spiSymSYSDMAEnable = spiComponentCommon.createBooleanSymbol("DRV_SPI_SYS_DMA_ENABLE", None)
+    spiSymSYSDMAEnable.setDefaultValue(False)
+    spiSymSYSDMAEnable.setVisible(False)
+    spiSymSYSDMAEnable.setDependencies(sysDMAEnabled, ["DRV_SPI_SYS_DMA_CODE_ENABLE"])
 
     ############################################################################
     #### Code Generation ####
@@ -152,6 +179,24 @@ def instantiateComponent(spiComponentCommon):
     spiSyncSymHeaderLocalFile.setOverwrite(True)
     spiSyncSymHeaderLocalFile.setEnabled(spiMode.getValue() == "Synchronous")
     spiSyncSymHeaderLocalFile.setDependencies(syncFileGen, ["DRV_SPI_COMMON_MODE"])
+
+    # Global Header Files
+    spiSymHeaderFile = spiComponentCommon.createFileSymbol("DRV_SPI_HEADER", None)
+    spiSymHeaderFile.setSourcePath("driver/spi/drv_spi.h")
+    spiSymHeaderFile.setOutputName("drv_spi.h")
+    spiSymHeaderFile.setDestPath("driver/spi/")
+    spiSymHeaderFile.setProjectPath("config/" + configName + "/driver/spi/")
+    spiSymHeaderFile.setType("HEADER")
+    spiSymHeaderFile.setOverwrite(True)
+
+    spiSymHeaderDefFile = spiComponentCommon.createFileSymbol("DRV_SPI_DEF", None)
+    spiSymHeaderDefFile.setSourcePath("driver/spi/templates/drv_spi_definitions.h.ftl")
+    spiSymHeaderDefFile.setOutputName("drv_spi_definitions.h")
+    spiSymHeaderDefFile.setDestPath("driver/spi")
+    spiSymHeaderDefFile.setProjectPath("config/" + configName + "/driver/spi/")
+    spiSymHeaderDefFile.setType("HEADER")
+    spiSymHeaderDefFile.setMarkup(True)
+    spiSymHeaderDefFile.setOverwrite(True)
 
 def destroyComponent(spiComponentCommon):
     Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
