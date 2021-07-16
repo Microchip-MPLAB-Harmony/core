@@ -667,7 +667,14 @@ static void _DRV_SPI_UpdateTransferSetupAndAssertCS(
     /* Assert chip select if configured */
     if(clientObj->setup.chipSelect != SYS_PORT_PIN_NONE)
     {
-        SYS_PORT_PinWrite(clientObj->setup.chipSelect, (bool)(clientObj->setup.csPolarity));
+        if (clientObj->setup.csPolarity == DRV_SPI_CS_POLARITY_ACTIVE_LOW)
+        {
+            SYS_PORT_PinClear(clientObj->setup.chipSelect);
+        }
+        else
+        {
+            SYS_PORT_PinSet(clientObj->setup.chipSelect);
+        }
     }
 }
 
@@ -696,7 +703,14 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
     /* De-assert Chip Select if it is defined by user */
     if(clientObj->setup.chipSelect != SYS_PORT_PIN_NONE)
     {
-        SYS_PORT_PinWrite(clientObj->setup.chipSelect, !((bool)(clientObj->setup.csPolarity)));
+        if (clientObj->setup.csPolarity == DRV_SPI_CS_POLARITY_ACTIVE_LOW)
+        {
+            SYS_PORT_PinSet(clientObj->setup.chipSelect);
+        }
+        else
+        {
+            SYS_PORT_PinClear(clientObj->setup.chipSelect);
+        }
     }
 
     /* Check if the client that submitted the request is active? */
@@ -827,7 +841,14 @@ void _DRV_SPI_RX_DMA_CallbackHandler(
         /* Transfer complete. De-assert Chip Select if it is defined by user. */
         if(clientObj->setup.chipSelect != SYS_PORT_PIN_NONE)
         {
-            SYS_PORT_PinWrite(clientObj->setup.chipSelect, !((bool)(clientObj->setup.csPolarity)));
+            if (clientObj->setup.csPolarity == DRV_SPI_CS_POLARITY_ACTIVE_LOW)
+            {
+                SYS_PORT_PinSet(clientObj->setup.chipSelect);
+            }
+            else
+            {
+                SYS_PORT_PinClear(clientObj->setup.chipSelect);
+            }
         }
 
         /* Check if the client that submitted the request is active? */
@@ -952,7 +973,14 @@ void _DRV_SPI_RX_DMA_CallbackHandler(
         /* De-assert Chip Select if it is defined by user */
         if(clientObj->setup.chipSelect != SYS_PORT_PIN_NONE)
         {
-            SYS_PORT_PinWrite(clientObj->setup.chipSelect, !((bool)(clientObj->setup.csPolarity)));
+            if (clientObj->setup.csPolarity == DRV_SPI_CS_POLARITY_ACTIVE_LOW)
+            {
+                SYS_PORT_PinSet(clientObj->setup.chipSelect);
+            }
+            else
+            {
+                SYS_PORT_PinClear(clientObj->setup.chipSelect);
+            }
         }
 
         /* Check if the client that submitted the request is active? */

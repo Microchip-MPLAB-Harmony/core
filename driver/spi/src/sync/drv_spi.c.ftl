@@ -339,7 +339,14 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
     if(clientObj->setup.chipSelect != SYS_PORT_PIN_NONE)
     {
         /* De-assert Chip Select if it is defined by user */
-        SYS_PORT_PinWrite(clientObj->setup.chipSelect, !((bool)(clientObj->setup.csPolarity)));
+        if (clientObj->setup.csPolarity == DRV_SPI_CS_POLARITY_ACTIVE_LOW)
+        {
+            SYS_PORT_PinSet(clientObj->setup.chipSelect);
+        }
+        else
+        {
+            SYS_PORT_PinClear(clientObj->setup.chipSelect);
+        }
     }
 
     dObj->transferStatus = DRV_SPI_TRANSFER_STATUS_COMPLETE;
@@ -416,7 +423,14 @@ void _DRV_SPI_RX_DMA_CallbackHandler(
         /* De-assert Chip Select if it is defined by user */
         if(clientObj->setup.chipSelect != SYS_PORT_PIN_NONE)
         {
-            SYS_PORT_PinWrite(clientObj->setup.chipSelect, !((bool)(clientObj->setup.csPolarity)));
+            if (clientObj->setup.csPolarity == DRV_SPI_CS_POLARITY_ACTIVE_LOW)
+            {
+                SYS_PORT_PinSet(clientObj->setup.chipSelect);
+            }
+            else
+            {
+                SYS_PORT_PinClear(clientObj->setup.chipSelect);
+            }
         }
 
         if(event == SYS_DMA_TRANSFER_COMPLETE)
@@ -477,7 +491,14 @@ void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
         /* De-assert Chip Select if it is defined by user */
         if(clientObj->setup.chipSelect != SYS_PORT_PIN_NONE)
         {
-            SYS_PORT_PinWrite(clientObj->setup.chipSelect, !((bool)(clientObj->setup.csPolarity)));
+            if (clientObj->setup.csPolarity == DRV_SPI_CS_POLARITY_ACTIVE_LOW)
+            {
+                SYS_PORT_PinSet(clientObj->setup.chipSelect);
+            }
+            else
+            {
+                SYS_PORT_PinClear(clientObj->setup.chipSelect);
+            }
         }
 
         if(event == SYS_DMA_TRANSFER_COMPLETE)
@@ -825,7 +846,14 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
             if(clientObj->setup.chipSelect != SYS_PORT_PIN_NONE)
             {
                 /* Assert Chip Select if it is defined by user */
-                SYS_PORT_PinWrite(clientObj->setup.chipSelect, (bool)(clientObj->setup.csPolarity));
+                if (clientObj->setup.csPolarity == DRV_SPI_CS_POLARITY_ACTIVE_LOW)
+                {
+                    SYS_PORT_PinClear(clientObj->setup.chipSelect);
+                }
+                else
+                {
+                    SYS_PORT_PinSet(clientObj->setup.chipSelect);
+                }
             }
 
             /* Active client allows de-asserting the chip select line in ISR routine */
