@@ -1229,6 +1229,53 @@ bool DRV_SPI_WriteReadTransfer(
     void* pReceiveData,
     size_t rxSize);
 
+// *****************************************************************************
+/* Function:
+    bool DRV_SPI_Lock( const DRV_HANDLE handle, bool lock )
+
+  Summary:
+    Use this API to lock the SPI driver for exclusive use by a client.
+
+  Description:
+    This function provides exclusive access to the calling SPI driver client. Once
+    a client acquires exclusive access, SPI read/write requests from other clients
+    are not accepted by the driver until the client gives up the exclusive use of the
+    SPI driver.
+
+  Precondition:
+    - DRV_SPI_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle -    Handle of the communication channel as returned by the
+                DRV_SPI_Open function.
+    lock - true - lock the spi driver
+         - false - unlock the spi driver
+
+  Returns:
+    - true - driver instance successfully acquired for exclusive access
+    - false - failed to acquire driver instance in exclusive mode
+
+  Example:
+    <code>
+
+    // mySPIHandle is the handle returned by the DRV_SPI_Open function.
+
+    bool DRV_SPI_Lock( mySPIHandle, true );
+
+    </code>
+
+  Remarks:
+    - When a client successfully acquires the lock for the first time,
+      the lock count is set to one. Every time a client relocks this driver instance,
+      the lock count is incremented by one. Each time the client unlocks the driver instance,
+      the lock count is decremented by one. When the lock count reaches zero, the driver
+      instance becomes available for other clients.
+      If a client attempts to unlock the driver instance that it has not locked then the lock
+      count is not decremented.
+    - This API must not be called from an interrupt handler as it may block on a RTOS mutex
+*/
+bool DRV_SPI_Lock( const DRV_HANDLE handle, bool lock );
+
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }

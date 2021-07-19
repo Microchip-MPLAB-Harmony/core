@@ -189,6 +189,13 @@ typedef struct
 
     const uint32_t*                     remapClockPhase;
 
+    /* Handle to the client that owns the exclusive use mutex */
+    DRV_HANDLE                          exclusiveUseClientHandle;
+
+    bool                                drvInExclusiveMode;
+
+    uint32_t                            exclusiveUseCntr;
+
     /* Mutex to protect access to PLIB */
     OSAL_MUTEX_DECLARE(transferMutex);
 
@@ -197,6 +204,9 @@ typedef struct
 
     /* Semaphore to wait for data exchange to complete. This is released from ISR */
     OSAL_SEM_DECLARE(transferDone);
+
+    /* Mutex to lock SPI driver instance for exclusive use by a client */
+    OSAL_MUTEX_DECLARE(mutexExclusiveUse);
 
 } DRV_SPI_OBJ;
 

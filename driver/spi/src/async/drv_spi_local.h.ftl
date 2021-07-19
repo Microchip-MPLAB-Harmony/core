@@ -285,11 +285,21 @@ typedef struct
 
     const DRV_SPI_INTERRUPT_SOURCES*      interruptSources;
 
+    /* Handle to the client that owns the exclusive use mutex */
+    DRV_HANDLE                      exclusiveUseClientHandle;
+
+    bool                            drvInExclusiveMode;
+
+    uint32_t                        exclusiveUseCntr;
+
     /* Mutex to protect access to the client objects */
     OSAL_MUTEX_DECLARE(mutexClientObjects);
 
     /* Mutex to protect access to the transfer objects */
     OSAL_MUTEX_DECLARE(mutexTransferObjects);
+
+    /* Mutex to lock SPI driver instance for exclusive use by a client */
+    OSAL_MUTEX_DECLARE(mutexExclusiveUse);
 
 } DRV_SPI_OBJ;
 
