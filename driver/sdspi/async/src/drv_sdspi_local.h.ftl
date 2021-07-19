@@ -749,6 +749,8 @@ typedef enum
     /* Check whether the card has been detached. */
     DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH,
 
+    DRV_SDSPI_CMD_DETECT_CHECK_FOR_CMD_SEND,
+
     DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_READ_CID_DATA,
 
     DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_PROCESS_CID_DATA,
@@ -788,6 +790,8 @@ typedef enum
 
     /* Temporary state */
     DRV_SDSPI_CMD_CONFIRM_COMPLETE,
+
+    DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR,
 
     /* Error state */
     DRV_SDSPI_CMD_EXEC_ERROR,

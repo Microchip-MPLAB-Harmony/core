@@ -523,10 +523,17 @@ static void _DRV_SDSPI_CommandSend
 
         case DRV_SDSPI_CMD_SEND_PACKET:
 
+            <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
+            if (_DRV_SDSPI_SPIExclusiveAccess(dObj, true) == false)
+            {
+                break;
+            }
+            </#if>
+
             /* Write the framed packet to the card */
             if (_DRV_SDSPI_SPIWrite(dObj, dObj->pCmdResp, DRV_SDSPI_PACKET_SIZE) == false)
             {
-                dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
                 break;
             }
 
@@ -551,12 +558,12 @@ static void _DRV_SDSPI_CommandSend
                 }
                 else
                 {
-                    dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                    dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
                 }
             }
             else if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR)
             {
-                dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
             }
             break;
 
@@ -571,12 +578,12 @@ static void _DRV_SDSPI_CommandSend
                 }
                 else
                 {
-                    dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                    dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
                 }
             }
             else if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR)
             {
-                dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
             }
             break;
 
@@ -593,7 +600,7 @@ static void _DRV_SDSPI_CommandSend
                     if (dObj->ncrTries == 0)
                     {
                         /* Abort the command operation. */
-                        dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                        dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
                     }
                     else
                     {
@@ -617,7 +624,7 @@ static void _DRV_SDSPI_CommandSend
                         }
                         else
                         {
-                            dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                            dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
                         }
                         break;
 
@@ -634,7 +641,7 @@ static void _DRV_SDSPI_CommandSend
                         }
                         else
                         {
-                            dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                            dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
                         }
                         break;
 
@@ -654,7 +661,7 @@ static void _DRV_SDSPI_CommandSend
                         }
                         else
                         {
-                            dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                            dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
                         }
                         break;
 
@@ -670,7 +677,7 @@ static void _DRV_SDSPI_CommandSend
                         }
                         else
                         {
-                            dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                            dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
                         }
                         break;
 
@@ -681,7 +688,7 @@ static void _DRV_SDSPI_CommandSend
             }
             else if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR)
             {
-                dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
             }
             break;
 
@@ -701,7 +708,7 @@ static void _DRV_SDSPI_CommandSend
                        CS may be high or low */
                     if (_DRV_SDSPI_SPIWrite(dObj, dObj->pClkPulseData, _DRV_SDSPI_SEND_8_CLOCKS) == false)
                     {
-                        dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                        dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
                     }
                     else
                     {
@@ -714,7 +721,7 @@ static void _DRV_SDSPI_CommandSend
                     {
                         if (_DRV_SDSPI_CmdResponseTimerStart(dObj, _DRV_SDSPI_R1B_RESP_TIMEOUT) == false)
                         {
-                            dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                            dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
                             break;
                         }
                         dObj->cmdRespTmrFlag = true;
@@ -723,7 +730,7 @@ static void _DRV_SDSPI_CommandSend
                     if (dObj->cmdRespTmrExpired == true)
                     {
                         /* Abort the command operation. */
-                        dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                        dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
                         dObj->cmdRespTmrFlag = false;
                         break;
                     }
@@ -736,13 +743,13 @@ static void _DRV_SDSPI_CommandSend
                     {
                         _DRV_SDSPI_CmdResponseTimerStop(dObj);
                         dObj->cmdRespTmrFlag = false;
-                        dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                        dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
                     }
                 }
             }
             else if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR)
             {
-                dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
             }
             break;
 
@@ -756,7 +763,7 @@ static void _DRV_SDSPI_CommandSend
                    CS may be high or low */
                 if (_DRV_SDSPI_SPIWrite(dObj, dObj->pClkPulseData, _DRV_SDSPI_SEND_8_CLOCKS) == false)
                 {
-                    dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                    dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
                 }
                 else
                 {
@@ -765,7 +772,7 @@ static void _DRV_SDSPI_CommandSend
             }
             else if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR)
             {
-                dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
             }
             break;
 
@@ -788,7 +795,7 @@ static void _DRV_SDSPI_CommandSend
                    CS may be high or low */
                 if (_DRV_SDSPI_SPIWrite(dObj, dObj->pClkPulseData, _DRV_SDSPI_SEND_8_CLOCKS) == false)
                 {
-                    dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                    dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
                 }
                 else
                 {
@@ -797,7 +804,7 @@ static void _DRV_SDSPI_CommandSend
             }
             else if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR)
             {
-                dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
             }
             break;
 
@@ -809,12 +816,22 @@ static void _DRV_SDSPI_CommandSend
             }
             else if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR)
             {
-                dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+                dObj->cmdState = DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR;
             }
             break;
 
         case DRV_SDSPI_CMD_CONFIRM_COMPLETE:
             dObj->cmdState = DRV_SDSPI_CMD_EXEC_IS_COMPLETE;
+            <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
+            _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+            </#if>
+            break;
+
+        case DRV_SDSPI_CMD_CONFIRM_EXEC_ERROR:
+            dObj->cmdState = DRV_SDSPI_CMD_EXEC_ERROR;
+            <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
+            _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+            </#if>
             break;
 
         case DRV_SDSPI_CMD_EXEC_ERROR:
@@ -876,6 +893,18 @@ static DRV_SDSPI_ATTACH _DRV_SDSPI_MediaCommandDetect
                terminated before it completed normally, the card might not have
                received the required clocking following the transfer. */
 
+<#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
+            if (_DRV_SDSPI_SPIExclusiveAccess(dObj, true) == true)
+            {
+                dObj->sdState = TASK_STATE_CARD_STATUS;
+
+                if (_DRV_SDSPI_SPIWriteWithChipSelectDisabled(dObj, dObj->pClkPulseData,
+                            MEDIA_INIT_ARRAY_SIZE) == true)
+                {
+                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_WAIT_TRANSFER_COMPLETE;
+                }
+            }
+<#else>
             dObj->sdState = TASK_STATE_CARD_STATUS;
 
             if (_DRV_SDSPI_SPIWriteWithChipSelectDisabled(dObj, dObj->pClkPulseData,
@@ -883,6 +912,7 @@ static DRV_SDSPI_ATTACH _DRV_SDSPI_MediaCommandDetect
             {
                 dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_WAIT_TRANSFER_COMPLETE;
             }
+</#if>
             break;
 
         case DRV_SDSPI_CMD_DETECT_WAIT_TRANSFER_COMPLETE:
@@ -942,31 +972,46 @@ static DRV_SDSPI_ATTACH _DRV_SDSPI_MediaCommandDetect
             {
                 /* Here the default state of the card is attached */
                 cardStatus = DRV_SDSPI_IS_ATTACHED;
-                dObj->sdState = TASK_STATE_CARD_STATUS;
-
-                /* CMD10: Read CID data structure */
-                _DRV_SDSPI_CommandSend (object, DRV_SDSPI_SEND_CID, 0x00);
-
-                /* Change from this state only on completion of command execution */
-                if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_IS_COMPLETE)
+                <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
+                if (_DRV_SDSPI_SPIExclusiveAccess(dObj, true) == true)
                 {
-                    if (dObj->cmdResponse.response1.byte == 0x00)
-                    {
-                        dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_READ_CID_DATA;
-                    }
-                    else
-                    {
-                        dObj->sdState = TASK_STATE_IDLE;
-                        dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
-                        cardStatus = DRV_SDSPI_IS_DETACHED;
-                    }
+                    dObj->sdState = TASK_STATE_CARD_STATUS;
+                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CMD_SEND;
                 }
-                else if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_ERROR)
+                <#else>
+                dObj->sdState = TASK_STATE_CARD_STATUS;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CMD_SEND;
+                </#if>
+            }
+            break;
+
+        case DRV_SDSPI_CMD_DETECT_CHECK_FOR_CMD_SEND:
+
+            /* Here the default state of the card is attached */
+            cardStatus = DRV_SDSPI_IS_ATTACHED;
+
+            /* CMD10: Read CID data structure */
+            _DRV_SDSPI_CommandSend (object, DRV_SDSPI_SEND_CID, 0x00);
+
+            /* Change from this state only on completion of command execution */
+            if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_IS_COMPLETE)
+            {
+                if (dObj->cmdResponse.response1.byte == 0x00)
+                {
+                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_READ_CID_DATA;
+                }
+                else
                 {
                     dObj->sdState = TASK_STATE_IDLE;
                     dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
                     cardStatus = DRV_SDSPI_IS_DETACHED;
                 }
+            }
+            else if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_ERROR)
+            {
+                dObj->sdState = TASK_STATE_IDLE;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+                cardStatus = DRV_SDSPI_IS_DETACHED;
             }
             break;
 
@@ -1312,7 +1357,14 @@ static void _DRV_SDSPI_MediaInitialize ( SYS_MODULE_OBJ object )
 
             if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE)
             {
+                <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
+                if (_DRV_SDSPI_SPIExclusiveAccess(dObj, true) == true)
+                {
+                    dObj->mediaInitState = DRV_SDSPI_INIT_READ_CSD;
+                }
+                <#else>
                 dObj->mediaInitState = DRV_SDSPI_INIT_READ_CSD;
+                </#if>
             }
             else if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR)
             {
@@ -1421,6 +1473,9 @@ static void _DRV_SDSPI_MediaInitialize ( SYS_MODULE_OBJ object )
 
             if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE)
             {
+                <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
+                _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+                </#if>
                 dObj->mediaInitState = DRV_SDSPI_INIT_TURN_OFF_CRC;
             }
             else if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR)
@@ -1475,6 +1530,9 @@ static void _DRV_SDSPI_MediaInitialize ( SYS_MODULE_OBJ object )
             break;
 
         case DRV_SDSPI_INIT_ERROR:
+            <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
+            _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+            </#if>
             dObj->mediaInitState = DRV_SDSPI_INIT_CHIP_DESELECT;
             break;
 
@@ -1550,9 +1608,15 @@ static void _DRV_SDSPI_AttachDetachTasks
                     /* SD Card seems to have been removed, check for attach */
                     dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_START_INIT;
                 }
+                <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
+                _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+                </#if>
             }
             else if (dObj->sdState == TASK_STATE_IDLE)
             {
+                <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
+                _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+                </#if>
                 dObj->taskState = DRV_SDSPI_TASK_START_POLLING_TIMER;
             }
             break;
@@ -1641,6 +1705,13 @@ static void _DRV_SDSPI_BufferIOTasks
                 dObj->taskBufferIOState = DRV_SDSPI_BUFFER_IO_CHECK_DEVICE;
                 break;
             }
+
+            <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
+            if (_DRV_SDSPI_SPIExclusiveAccess(dObj, true) == false)
+            {
+                break;
+            }
+            </#if>
 
             dObj->sdState = TASK_STATE_CARD_COMMAND;
 
@@ -2129,6 +2200,10 @@ static void _DRV_SDSPI_BufferIOTasks
                 currentBufObj->status = DRV_SDSPI_COMMAND_ERROR_UNKNOWN;
                 evtStatus = DRV_SDSPI_EVENT_COMMAND_ERROR;
             }
+
+            <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
+            _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+            </#if>
 
             /* Get the client object that owns this buffer */
             clientObj = &((DRV_SDSPI_CLIENT_OBJ *)dObj->clientObjPool)[currentBufObj->clientHandle & _DRV_SDSPI_INDEX_MASK];

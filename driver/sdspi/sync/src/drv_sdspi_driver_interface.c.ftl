@@ -259,6 +259,26 @@ bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
     return isSuccess;
 }
 
+
+// *****************************************************************************
+/* SD Card SPI driver exclusive access lock
+
+  Summary:
+    Locks the SPI driver for exclusive use by the SDSPI driver
+
+  Description:
+    SDSPI driver calls this API to lock the SPI driver during the entire command-response
+    sequence.
+
+  Remarks:
+    None
+*/
+
+bool _DRV_SDSPI_SPIExclusiveAccess(DRV_SDSPI_OBJ* const dObj, bool isExclusive)
+{
+    return DRV_SPI_Lock(dObj->spiDrvHandle, isExclusive);
+}
+
 // *****************************************************************************
 /* Card detection polling timer Start
 
