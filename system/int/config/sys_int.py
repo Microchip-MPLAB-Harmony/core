@@ -56,9 +56,11 @@ sysIntCFileStem = "sys_int_nvic"
 
 if "SAMA5" in processor or "SAM9X6" in processor:
     sysIntCFileStem = "sys_int_aic"
+elif "SAMA7" in processor:
+    sysIntCFileStem = "sys_int_gic"
 elif "PIC32M" in Database.getSymbolValue("core", "PRODUCT_FAMILY"):
-	sysIntCFileStem = "sys_int_pic32"
-	sysIntHeaderFile = "sys_int_pic32"
+    sysIntCFileStem = "sys_int_pic32"
+    sysIntHeaderFile = "sys_int_pic32"
 
 intHeaderFile = harmonyCoreComponent.createFileSymbol("INT_HEADER", None)
 intHeaderFile.setSourcePath("system/int/" + sysIntHeaderFile + ".h")

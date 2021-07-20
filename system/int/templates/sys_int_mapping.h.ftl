@@ -51,6 +51,13 @@
 // *****************************************************************************
 
 <#if __PROCESSOR?matches("ATSAMA5.*") ||  __PROCESSOR?matches("SAM9X6.*") >
+<#elseif __PROCESSOR?matches("SAMA7.*") >
+	<#lt>#define SYS_INT_IsEnabled()                 ((CPSR_I_Msk & __get_CPSR()) == 0)
+	<#lt>#define SYS_INT_SourceEnable( source )      GIC_EnableIRQ( source )
+	<#lt>#define SYS_INT_SourceIsEnabled( source )   GIC_GetEnableIRQ( source )
+	<#lt>#define SYS_INT_SourceStatusGet( source )   GIC_GetPendingIRQ( source )
+	<#lt>#define SYS_INT_SourceStatusSet( source )   GIC_SetPendingIRQ( source )
+	<#lt>#define SYS_INT_SourceStatusClear( source ) GIC_ClearPendingIRQ( source )
 <#else>
     <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
         <#lt>#define SYS_INT_IsEnabled()                 ( __get_PRIMASK() == 0 )
