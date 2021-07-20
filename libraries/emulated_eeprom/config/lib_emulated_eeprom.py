@@ -23,7 +23,7 @@
 *****************************************************************************"""
 coreArch = Database.getSymbolValue("core", "CoreArchitecture")
 
-if coreArch == "CORTEX-M0PLUS":
+if coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23":
     execfile(Module.getPath() + "/libraries/emulated_eeprom/config/" + "lib_emulated_eeprom_cortex_m0.py")
 elif coreArch == "CORTEX-M4" or coreArch == "CORTEX-M7":
     execfile(Module.getPath() + "/libraries/emulated_eeprom/config/" + "lib_emulated_eeprom_cortex_m4_m7.py")

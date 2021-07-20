@@ -23,9 +23,12 @@
 *****************************************************************************"""
 global rwwEEPROMStartAddr
 global EEPROMEmulatorAddrSpaces
+global isRWW_EEPROM_Available
+
+isRWW_EEPROM_Available = False
 
 NvmMemoryNames      = ["NVMCTRL"]
-SupportedAddrSpaces = ["Main Array (EEPROM Emulator)", "RWWEE"]
+SupportedAddrSpaces = ["Main Array", "RWWEE", "Data Flash"]
 EEPROMEmulatorAddrSpaces = []
 
 periphNode          = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals")
@@ -75,6 +78,11 @@ def updateEEPROMSize(symbol, event):
 
     if event["id"] == "EEPROM_EMULATOR_MAIN_ARRAY_ENABLED" or event["id"] == "EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED":
         symbol.setVisible(is_dependency_satisfied == True and is_main_array_enabled == True)
+    elif event["id"] == "EEPROM_EMULATOR_MAIN_ARRAY_NUM_ROWS":
+        page_size = localComponent.getSymbolValue("EEPROM_EMULATOR_PAGE_SIZE")
+        pages_per_row = localComponent.getSymbolValue("EEPROM_EMULATOR_PAGES_PER_ROW")
+        num_rows = event["value"]
+        symbol.setValue(num_rows * pages_per_row * page_size)
     else:
         symbol.setValue(getSelectedEEPROMSize())
 
@@ -93,8 +101,8 @@ def updateLogicalEEPROMSize (symbol, event):
             symbol.setValue(0)
     else:
         is_main_array_enabled = localComponent.getSymbolValue("EEPROM_EMULATOR_MAIN_ARRAY_ENABLED")
-        is_rww_enabled = localComponent.getSymbolValue("EEPROM_EMULATOR_RWWEE_ENABLED")
-        symbol.setVisible(is_dependency_satisfied == True and (is_rww_enabled == True or is_main_array_enabled == True))
+        is_rwwee_enabled = localComponent.getSymbolValue("EEPROM_EMULATOR_RWWEE_ENABLED")
+        symbol.setVisible(is_dependency_satisfied == True and (is_rwwee_enabled == True or is_main_array_enabled == True))
 
 def updateEEPROMStartAddr(symbol, event):
     localComponent = symbol.getComponent()
@@ -188,8 +196,8 @@ def updateRWWEEEnable(symbol, event):
     is_dependency_satisfied = localComponent.getSymbolValue("EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED")
     selected_address_space = localComponent.getSymbolValue("EEPROM_EMULATOR_ADDRESS_SPACE")
 
-    symbol.setVisible(is_dependency_satisfied == True and selected_address_space == "RWWEE")
-    symbol.setValue(selected_address_space == "RWWEE")
+    symbol.setVisible(is_dependency_satisfied == True and (selected_address_space == "Data Flash" or selected_address_space == "RWWEE"))
+    symbol.setValue(selected_address_space == "Data Flash" or selected_address_space == "RWWEE")
 
 def updateEEPROMAddressSpace(symbol, event):
     symbol.setVisible(event["value"])
@@ -210,7 +218,13 @@ def enableVisibility(symbol, event):
 
     symbol.setVisible(is_dependency_satisfied == True and is_rww_enabled == True)
 
+def updateNumRows(symbol, event):
+    localComponent = symbol.getComponent()
 
+    is_dependency_satisfied = localComponent.getSymbolValue("EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED")
+    is_main_array_enabled = localComponent.getSymbolValue("EEPROM_EMULATOR_MAIN_ARRAY_ENABLED")
+
+    symbol.setVisible(is_dependency_satisfied == True and is_main_array_enabled == True)
 
 def fileGeneration(emulated_eeprom):
     configName = Variables.get("__CONFIGURATION_NAME")
@@ -278,12 +292,20 @@ def fileGeneration(emulated_eeprom):
 
 
 def instantiateComponent(emulated_eeprom):
-
+    global isRWW_EEPROM_Available
     EEPROMEmulatorAddrSpaces.append(SupportedAddrSpaces[0])
 
     nvmctrlRWWEEPROMNode = ATDF.getNode("/avr-tools-device-file/devices/device/address-spaces/address-space/memory-segment@[name=\"RWW\"]")
+    nvmctrlDataFlashNode = ATDF.getNode("/avr-tools-device-file/devices/device/address-spaces/address-space/memory-segment@[name=\"DATAFLASH\"]")
+    nvmctrlEepromSizeFuseNode = ATDF.getNode("/avr-tools-device-file/modules/module@[name=\"FUSES\"]/register-group@[name=\"USER_FUSES\"]/register@[name=\"USER_WORD_0\"]/bitfield@[name=\"NVMCTRL_EEPROM_SIZE\"]")
+
     if nvmctrlRWWEEPROMNode != None:
         EEPROMEmulatorAddrSpaces.append(SupportedAddrSpaces[1])
+    elif nvmctrlDataFlashNode != None:
+        EEPROMEmulatorAddrSpaces.append(SupportedAddrSpaces[2])
+
+    if nvmctrlRWWEEPROMNode != None or nvmctrlDataFlashNode != None:
+        isRWW_EEPROM_Available = True
 
     # As various flash symbols are read from the underlying NVMCTRL PLIB, the EEPROM Emulator configuration options are made visible only if the NVM PLIB dependency is satisfied
     eep_emu_IsDependencySatisfied = emulated_eeprom.createBooleanSymbol("EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", None)
@@ -309,15 +331,21 @@ def instantiateComponent(emulated_eeprom):
     eep_emu_MainArrayEnable.setVisible(False)
     eep_emu_MainArrayEnable.setDependencies(updateMainArrayEnable, ["EEPROM_EMULATOR_ADDRESS_SPACE", "EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED"])
 
-    eep_emu_EEPROMSizeConfigComment1 = emulated_eeprom.createCommentSymbol("EEPROM_EMULATOR_EEPROM_SIZE_CONFIG_COMMENT1", eep_emu_MainArrayEnable)
-    eep_emu_EEPROMSizeConfigComment1.setLabel("*** Configure EEPROM Size under NVMCTRL Fuse Configuration in System component ***")
-    eep_emu_EEPROMSizeConfigComment1.setVisible(False)
-    eep_emu_EEPROMSizeConfigComment1.setDependencies(enableCommentVisibility, ["EEPROM_EMULATOR_MAIN_ARRAY_ENABLED"])
+    if nvmctrlEepromSizeFuseNode != None:
+        eep_emu_EEPROMSizeConfigComment1 = emulated_eeprom.createCommentSymbol("EEPROM_EMULATOR_EEPROM_SIZE_CONFIG_COMMENT1", eep_emu_MainArrayEnable)
+        eep_emu_EEPROMSizeConfigComment1.setLabel("*** Configure EEPROM Size under NVMCTRL Fuse Configuration in System component ***")
+        eep_emu_EEPROMSizeConfigComment1.setVisible(False)
+        eep_emu_EEPROMSizeConfigComment1.setDependencies(enableCommentVisibility, ["EEPROM_EMULATOR_MAIN_ARRAY_ENABLED"])
 
     eep_emu_EEPROMSizeConfigComment2 = emulated_eeprom.createCommentSymbol("EEPROM_EMULATOR_EEPROM_SIZE_CONFIG_COMMENT_2", eep_emu_MainArrayEnable)
     eep_emu_EEPROMSizeConfigComment2.setLabel("*** Make sure EEPROM size is greater than or equal to 512 Bytes (2 Rows) ***")
     eep_emu_EEPROMSizeConfigComment2.setVisible(False)
     eep_emu_EEPROMSizeConfigComment2.setDependencies(enableCommentVisibility, ["EEPROM_EMULATOR_MAIN_ARRAY_ENABLED"])
+
+    eep_emu_EEPROMSizeConfigComment3 = emulated_eeprom.createCommentSymbol("EEPROM_EMULATOR_EEPROM_SIZE_CONFIG_COMMENT_3", eep_emu_MainArrayEnable)
+    eep_emu_EEPROMSizeConfigComment3.setLabel("*** Make sure NVM PLIB is configured with \"Manual\" write policy ***")
+    eep_emu_EEPROMSizeConfigComment3.setVisible(False)
+    eep_emu_EEPROMSizeConfigComment3.setDependencies(enableCommentVisibility, ["EEPROM_EMULATOR_MAIN_ARRAY_ENABLED"])
 
     eep_emu_FlashRowSize = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_ROW_SIZE", eep_emu_MainArrayEnable)
     eep_emu_FlashRowSize.setLabel("Flash Row Size")
@@ -359,32 +387,41 @@ def instantiateComponent(emulated_eeprom):
     eep_emu_EEPROMStartAddr.setVisible(False)
     eep_emu_EEPROMStartAddr.setDependencies(updateEEPROMStartAddr, ["EEPROM_EMULATOR_EEPROM_SIZE", "EEPROM_EMULATOR_MAIN_ARRAY_SIZE", "EEPROM_EMULATOR_MAIN_ARRAY_ENABLED", "EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED"])
 
+    #--<UI>--Number of Rows selected for EEPROM Emulation
+    if nvmctrlEepromSizeFuseNode == None:
+        eep_emu_NumRows = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_MAIN_ARRAY_NUM_ROWS", eep_emu_MainArrayEnable)
+        eep_emu_NumRows.setLabel("EEPROM Rows")
+        eep_emu_NumRows.setDefaultValue(2)
+        eep_emu_NumRows.setDependencies(updateNumRows, ["EEPROM_EMULATOR_MAIN_ARRAY_ENABLED", "EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED"])
+
     #--<UI>--Size of EEPROM Emulator memory in Main Array (configured through fuse setting)
     eep_emu_EEPROMSize = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_EEPROM_SIZE", eep_emu_MainArrayEnable)
-    eep_emu_EEPROMSize.setLabel("EEPROM Size")
-    eep_emu_EEPROMSize.setDefaultValue(getSelectedEEPROMSize())
+    eep_emu_EEPROMSize.setLabel("EEPROM Size (Bytes)")
     eep_emu_EEPROMSize.setReadOnly(True)
     eep_emu_EEPROMSize.setVisible(False)
-    eep_emu_EEPROMSize.setDependencies(updateEEPROMSize, ["core.DEVICE_NVMCTRL_EEPROM_SIZE", "EEPROM_EMULATOR_MAIN_ARRAY_ENABLED", "EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED"])
+    if nvmctrlEepromSizeFuseNode != None:
+        eep_emu_EEPROMSize.setDefaultValue(getSelectedEEPROMSize())
+        eep_emu_EEPROMSize.setDependencies(updateEEPROMSize, ["core.DEVICE_NVMCTRL_EEPROM_SIZE", "EEPROM_EMULATOR_MAIN_ARRAY_ENABLED", "EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED"])
+    else:
+        eep_emu_EEPROMSize.setDefaultValue(eep_emu_FlashRowSize.getValue() * 2)
+        eep_emu_EEPROMSize.setDependencies(updateEEPROMSize, ["EEPROM_EMULATOR_MAIN_ARRAY_NUM_ROWS", "EEPROM_EMULATOR_MAIN_ARRAY_ENABLED", "EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED"])
 
     #Main Array physical pages
     eep_emu_NumPhysicalPages = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_MAIN_ARRAY_NUM_PHYSICAL_PAGES", eep_emu_MainArrayEnable)
     eep_emu_NumPhysicalPages.setLabel("Num Physical Pages")
-    eep_emu_NumPhysicalPages.setDefaultValue(0)
+    eep_emu_NumPhysicalPages.setDefaultValue(eep_emu_EEPROMSize.getValue()/eep_emu_FlashPageSize.getValue())
     eep_emu_NumPhysicalPages.setVisible(False)
     eep_emu_NumPhysicalPages.setDependencies(updateMainArrayPhysicalPages, ["EEPROM_EMULATOR_EEPROM_SIZE"])
 
     #------RWWEE Configuration Options----------------------------------------------------------------------------------------------#
 
-    #RWWEE Is Available?
-    eep_emu_RWWEEMemAvailable = emulated_eeprom.createBooleanSymbol("EEPROM_EMULATOR_RWWEE_AVAILABLE", None)
-    eep_emu_RWWEEMemAvailable.setLabel("RWWEE Available?")
-    eep_emu_RWWEEMemAvailable.setDefaultValue(nvmctrlRWWEEPROMNode != None)
-    eep_emu_RWWEEMemAvailable.setVisible(False)
+    eep_emu_RWWEEMemName = emulated_eeprom.createStringSymbol("EEPROM_EMULATOR_RWWEE_MEM_NAME", None)
+    eep_emu_RWWEEMemName.setDefaultValue(EEPROMEmulatorAddrSpaces[1])
+    eep_emu_RWWEEMemName.setVisible(False)
 
     #--<UI>--RWWEE Is Enabled?
     eep_emu_RWWEEMemEnable = emulated_eeprom.createBooleanSymbol("EEPROM_EMULATOR_RWWEE_ENABLED", None)
-    eep_emu_RWWEEMemEnable.setLabel("Use RWWEE memory for EEPROM Emulator ?")
+    eep_emu_RWWEEMemEnable.setLabel("Use " + EEPROMEmulatorAddrSpaces[1] + " memory for EEPROM Emulator ?")
     eep_emu_RWWEEMemEnable.setDefaultValue(False)
     eep_emu_RWWEEMemEnable.setReadOnly(True)
     eep_emu_RWWEEMemEnable.setVisible(False)
@@ -392,7 +429,7 @@ def instantiateComponent(emulated_eeprom):
 
     #--<UI>--RWWEE Start Address
     eep_emu_RWWEEStartAddr = emulated_eeprom.createHexSymbol("EEPROM_EMULATOR_RWWEE_START_ADDRESS", eep_emu_RWWEEMemEnable)
-    eep_emu_RWWEEStartAddr.setLabel("RWWEE Start Address")
+    eep_emu_RWWEEStartAddr.setLabel(EEPROMEmulatorAddrSpaces[1] +  " Start Address")
     eep_emu_RWWEEStartAddr.setDefaultValue(0)
     eep_emu_RWWEEStartAddr.setReadOnly(True)
     eep_emu_RWWEEStartAddr.setVisible(False)
@@ -400,7 +437,7 @@ def instantiateComponent(emulated_eeprom):
 
     #--<UI>--RWWEE Size
     eep_emu_RWWEESize = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_RWWEE_SIZE", eep_emu_RWWEEMemEnable)
-    eep_emu_RWWEESize.setLabel("RWWEE Size")
+    eep_emu_RWWEESize.setLabel(EEPROMEmulatorAddrSpaces[1] + " Size")
     eep_emu_RWWEESize.setDefaultValue(0)
     eep_emu_RWWEESize.setReadOnly(True)
     eep_emu_RWWEESize.setVisible(False)
@@ -408,10 +445,11 @@ def instantiateComponent(emulated_eeprom):
 
     #RWWEE Physical Pages
     eep_emu_RWWEENumPhyPages = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_RWWEE_NUM_PHYSICAL_PAGES", eep_emu_RWWEEMemEnable)
-    eep_emu_RWWEENumPhyPages.setLabel("RWWEE Physical Pages")
+    eep_emu_RWWEENumPhyPages.setLabel(EEPROMEmulatorAddrSpaces[1] + " Physical Pages")
     eep_emu_RWWEENumPhyPages.setDefaultValue(0)
     eep_emu_RWWEENumPhyPages.setReadOnly(True)
     eep_emu_RWWEENumPhyPages.setVisible(False)
+
 
     #-------Final Configuration Snapshot-------------------------------------------------------------------------------------------#
 
@@ -433,7 +471,7 @@ def instantiateComponent(emulated_eeprom):
 
     #--<UI>--Total Logical Size (Main Array or RWWEE or Main Array + RWWEE)
     eep_emu_UsableEEPROMSpace = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_EEPROM_LOGICAL_SIZE", None)
-    eep_emu_UsableEEPROMSpace.setLabel("Logical EEPROM Size")
+    eep_emu_UsableEEPROMSpace.setLabel("Logical EEPROM Size (Bytes)")
     eep_emu_UsableEEPROMSpace.setDefaultValue(0)
     eep_emu_UsableEEPROMSpace.setReadOnly(True)
     eep_emu_UsableEEPROMSpace.setVisible(False)
@@ -443,6 +481,9 @@ def instantiateComponent(emulated_eeprom):
 
 def onAttachmentConnected(source, target):
     global rwwEEPROMStartAddr
+    global isRWW_EEPROM_Available
+
+    rwwEEPROMSize = 0
 
     localComponent = source["component"]
     remoteComponent = target["component"]
@@ -456,13 +497,17 @@ def onAttachmentConnected(source, target):
         main_array_start_addr = int(Database.getSymbolValue(remoteID, "FLASH_START_ADDRESS")[2:], 16)
         main_array_size = int(Database.getSymbolValue(remoteID, "FLASH_SIZE")[2:], 16)
 
-        if Database.getSymbolValue(remoteID, "FLASH_RWWEEPROM_START_ADDRESS") != None:
-            rwwEEPROMStartAddr = int(Database.getSymbolValue(remoteID, "FLASH_RWWEEPROM_START_ADDRESS")[2:], 16)
-            rwwEEPROMSize = int(Database.getSymbolValue(remoteID, "FLASH_RWWEEPROM_SIZE")[2:], 16)
-            localComponent.setSymbolValue("EEPROM_EMULATOR_RWWEE_AVAILABLE", True)
+        if isRWW_EEPROM_Available == True:
+            if EEPROMEmulatorAddrSpaces[1] == "RWWEE":
+                if Database.getSymbolValue(remoteID, "FLASH_RWWEEPROM_START_ADDRESS") != None:
+                    rwwEEPROMStartAddr = int(Database.getSymbolValue(remoteID, "FLASH_RWWEEPROM_START_ADDRESS")[2:], 16)
+                    rwwEEPROMSize = int(Database.getSymbolValue(remoteID, "FLASH_RWWEEPROM_SIZE")[2:], 16)
+            elif EEPROMEmulatorAddrSpaces[1] == "Data Flash":
+                if Database.getSymbolValue(remoteID, "FLASH_DATAFLASH_START_ADDRESS") != None:
+                    rwwEEPROMStartAddr = int(Database.getSymbolValue(remoteID, "FLASH_DATAFLASH_START_ADDRESS")[2:], 16)
+                    rwwEEPROMSize = int(Database.getSymbolValue(remoteID, "FLASH_DATAFLASH_SIZE")[2:], 16)
             localComponent.setSymbolValue("EEPROM_EMULATOR_RWWEE_SIZE", rwwEEPROMSize)
             localComponent.setSymbolValue("EEPROM_EMULATOR_RWWEE_NUM_PHYSICAL_PAGES", (rwwEEPROMSize/page_size))
-
 
         total_eeprom_size = localComponent.getSymbolValue("EEPROM_EMULATOR_EEPROM_SIZE")
         localComponent.setSymbolValue("EEPROM_EMULATOR_NVM_PLIB", remoteID.upper())

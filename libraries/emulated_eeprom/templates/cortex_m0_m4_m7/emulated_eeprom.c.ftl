@@ -122,17 +122,25 @@ static void EMU_EEPROM_NVMRowErase(const uint16_t row)
     EEPROM_PAGE* flashAddr = EMU_EEPROM_PageToAddrTranslation(physical_page);
 
 <#if EEPROM_EMULATOR_MAIN_ARRAY_ENABLED?? && EEPROM_EMULATOR_RWWEE_ENABLED??>
-    <#if EEPROM_EMULATOR_MAIN_ARRAY_ENABLED == true && EEPROM_EMULATOR_RWWEE_ENABLED == true>
+    <#if EEPROM_EMULATOR_MAIN_ARRAY_ENABLED == true && EEPROM_EMULATOR_RWWEE_ENABLED == true && core.CoreArchitecture != "CORTEX-M23">
         <#lt>   if (physical_page >= EEPROM_EMULATOR_NUM_MAIN_ARRAY_PHY_PAGES)
         <#lt>   {
-        <#lt>       ${EEPROM_EMULATOR_NVM_PLIB}_RWWEEPROM_RowErase((uint32_t)flashAddr);
+        <#if EEPROM_EMULATOR_RWWEE_MEM_NAME == "RWWEE">
+            <#lt>   ${EEPROM_EMULATOR_NVM_PLIB}_RWWEEPROM_RowErase((uint32_t)flashAddr);
+        <#elseif EEPROM_EMULATOR_RWWEE_MEM_NAME == "Data Flash">
+            <#lt>   ${EEPROM_EMULATOR_NVM_PLIB}_DATA_FLASH_RowErase((uint32_t)flashAddr);
+        </#if>
         <#lt>   }
         <#lt>   else
         <#lt>   {
         <#lt>       ${EEPROM_EMULATOR_NVM_PLIB}_RowErase((uint32_t)flashAddr);
         <#lt>   }
-    <#elseif EEPROM_EMULATOR_RWWEE_ENABLED == true>
-        <#lt>   ${EEPROM_EMULATOR_NVM_PLIB}_RWWEEPROM_RowErase((uint32_t)flashAddr);
+    <#elseif EEPROM_EMULATOR_RWWEE_ENABLED == true && core.CoreArchitecture != "CORTEX-M23">
+        <#if EEPROM_EMULATOR_RWWEE_MEM_NAME == "RWWEE">
+            <#lt>   ${EEPROM_EMULATOR_NVM_PLIB}_RWWEEPROM_RowErase((uint32_t)flashAddr);
+        <#elseif EEPROM_EMULATOR_RWWEE_MEM_NAME == "Data Flash">
+            <#lt>   ${EEPROM_EMULATOR_NVM_PLIB}_DATA_FLASH_RowErase((uint32_t)flashAddr);
+        </#if>
     <#else>
         <#lt>   ${EEPROM_EMULATOR_NVM_PLIB}_RowErase((uint32_t)flashAddr);
     </#if>
@@ -567,6 +575,9 @@ static EMU_EEPROM_STATUS EMU_EEPROM_MoveDataToSpare( const uint16_t row_number, 
         _eeprom_instance.page_map[page_trans[c].logical_page] = new_page;
         _eeprom_instance.cache_active = true;
     }
+
+    /* Commit any cached data to physical non-volatile memory */
+    EMU_EEPROM_CachedDataCommit();
 
     /* Erase the row that was moved and set it as the new spare row */
     EMU_EEPROM_NVMRowErase(row_number);

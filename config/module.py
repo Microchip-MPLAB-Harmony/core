@@ -39,7 +39,7 @@ def hasPeripheral(peripheralList):
 
 def emulated_eeprom_condition():
     arch = ATDF.getNode( "/avr-tools-device-file/devices/device" ).getAttribute( "architecture" )
-    if arch == "CORTEX-M0PLUS" or arch == "CORTEX-M4" or arch == "CORTEX-M7":
+    if arch == "CORTEX-M0PLUS" or arch == "CORTEX-M4" or arch == "CORTEX-M7" or arch == "CORTEX-M23":
         return True
     else:
         return False
