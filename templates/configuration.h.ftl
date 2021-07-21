@@ -56,7 +56,7 @@
 */
 ${core.LIST_SYSTEM_CONFIG_H_GLOBAL_INCLUDES}
 #include "user.h"
-#include "toolchain_specifics.h"
+#include "device.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
