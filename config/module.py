@@ -46,6 +46,11 @@ def emulated_eeprom_condition():
 
 def loadModule():
 
+    i2c_bbComponent = Module.CreateComponent("i2c_bb", "I2C_BB", "/Libraries/", "/libraries/i2c_bb/config/lib_i2c_bb.py")
+    i2c_bbComponent.setDisplayType("I2C BIT BANG")
+    i2c_bbComponent.addCapability("I2C", "I2C", False)
+    i2c_bbComponent.addDependency("TMR", "TMR", False, True)
+
     #define drivers and system services
     coreComponents = [
         {"name":"time", "label": "TIME", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_TIME"], "capability_type":"generic", "dependency":[  "TMR"], "condition": "True"},
@@ -83,8 +88,6 @@ def loadModule():
         {"name":"nand_flash", "label": "NAND FLASH", "type":"driver", "display_path":"SMC FLASH", "actual_path":"smc_flash", "instance":"single", "dependency":["NAND_CS"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAM9X60"])'},
 
         {"name":"emulated_eeprom", "label": "Emulated EEPROM", "type":"library", "display_path":"", "actual_path":"", "instance":"single", "dependency":["MEMORY"], "condition":'emulated_eeprom_condition()'},
-
-        {"name":"i2c_bb", "label": "I2C_BB", "type":"library", "display_path":"", "actual_path":"", "instance":"single", "capability":["I2C"], "dependency":["TMR"], "condition":'True'},
 
         ]
 

@@ -34,7 +34,7 @@ def onAttachmentConnected(source, target):
     connectID = source["id"]
     targetID = target["id"]
         
-    if connectID == "lib_i2c_bb_TMR_dependency":
+    if localComponent.getID() == "i2c_bb" and connectID == "TMR":
         i2cbbTimerDep.setValue(remoteID.upper())
 
 
@@ -48,7 +48,7 @@ def onAttachmentDisconnected(source, target):
     connectID = source["id"]
     targetID = target["id"]
 
-    if connectID == "lib_i2c_bb_TMR_dependency":
+    if localComponent.getID() == "i2c_bb" and connectID == "TMR":
         i2cbbTimerDep.clearValue(remoteID.upper())
 
 
@@ -67,8 +67,7 @@ def instantiateComponent(i2cbbComponent):
 
     i2cbbInstanceName = i2cbbComponent.createStringSymbol("I2CBB_INSTANCE_NAME", None)
     i2cbbInstanceName.setVisible(False)
-    # Hard-coded instance name to maintain backward compatibility
-    i2cbbInstanceName.setDefaultValue("I2C_BB")
+    i2cbbInstanceName.setDefaultValue(i2cbbComponent.getID().upper())
 
     availablePinDictionary = {}
 
@@ -191,4 +190,3 @@ def instantiateComponent(i2cbbComponent):
 
 def destroyComponent(memoryComponent):
     Database.sendMessage("HarmonyCore", "ENABLE_SYS_PORTS", {"isEnabled":False})
-
