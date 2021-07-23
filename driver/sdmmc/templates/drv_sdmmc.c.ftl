@@ -504,8 +504,8 @@ static void _DRV_SDMMC_ParseCSD (
             cSize |= csdPtr[6] >> 6;
 
             /* C_SIZE_MULT Bits 49:47 (3-bit) */
-            cSizeMultiplier = (csdPtr[4] & 0x03) << 1;
-            cSizeMultiplier |= csdPtr[3] >> 7;
+            cSizeMultiplier = (csdPtr[5] & 0x03) << 1;
+            cSizeMultiplier |= csdPtr[4] >> 7;
 
             mult = 1 << (cSizeMultiplier + 2);
             cardCtxt->discCapacity = (((uint32_t)(cSize + 1) * mult) * blockLength);
