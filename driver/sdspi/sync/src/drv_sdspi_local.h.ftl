@@ -623,7 +623,7 @@ typedef struct
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
     volatile uint8_t                    cmdRespBuffer[32];
 <#else>
-    volatile CACHE_ALIGN  uint8_t       cmdRespBuffer[32];
+    volatile CACHE_ALIGN  uint8_t       cmdRespBuffer[CACHE_LINE_SIZE];
 </#if>
 
     /* Flag to indicate this object is in use  */
