@@ -27,7 +27,6 @@ global drv_spi_counter
 fsCounter = 0
 
 def enableFileSystemIntegration(symbol, event):
-    print(event["value"])
     symbol.setEnabled(event["value"])
 
 def handleSPIDrvInstanceChange(symbol, event):

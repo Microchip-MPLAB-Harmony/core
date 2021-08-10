@@ -113,7 +113,7 @@ typedef enum
 typedef enum
 {
     /* Data was transferred successfully. */
-    SYS_DMA_TRANSFER_COMPLETE,
+    SYS_DMA_TRANSFER_COMPLETE = 1,
 
     /* Error while processing the request */
     SYS_DMA_TRANSFER_ERROR
