@@ -70,7 +70,7 @@ static CACHE_ALIGN DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER];
 static DRV_SPI_OBJ gDrvSPIObj[DRV_SPI_INSTANCES_NUMBER];
 <#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
 /* Dummy data being transmitted by TX DMA */
-static CACHE_ALIGN uint8_t txDummyData[CACHE_LINE_SIZE];
+static CACHE_ALIGN uint8_t txDummyData[CACHE_ALIGNED_SIZE_GET(4)];
 </#if>
 </#if>
 
