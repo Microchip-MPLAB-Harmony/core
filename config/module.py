@@ -22,7 +22,7 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
-USBNamesList        = ["USB", "USBHS"]
+USBNamesList        = ["USB", "USBHS", "UDP"]
 SDHCNamesList       = ["HSMCI", "SDHC", "SDMMC"]
 SQINamesList        = ["QSPI", "SQI"]
 
