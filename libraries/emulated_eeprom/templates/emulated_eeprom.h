@@ -285,7 +285,7 @@ EMU_EEPROM_STATUS EMU_EEPROM_PageWrite(
     before calling this function.
 
   Parameters:
-    logical_page - Logical EEPROM page number to write to
+    logical_page - Logical EEPROM page number to read from
     data -  Pointer to the destination data buffer to fill
 
   Returns:
@@ -369,9 +369,9 @@ EMU_EEPROM_STATUS EMU_EEPROM_BufferWrite(
     before calling this function.
 
   Parameters:
-    offset - Starting byte offset to write to, in emulated EEPROM memory space
+    offset - Starting byte offset to read from, in emulated EEPROM memory space
     data - Pointer to the destination data buffer to fill
-    length - Length of the data to write, in bytes
+    length - Length of the data to read, in bytes
 
   Returns:
     EMU_EEPROM_STATUS - Enum of type EMU_EEPROM_STATUS. Status code indicating
