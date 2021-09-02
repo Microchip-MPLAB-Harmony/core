@@ -57,6 +57,7 @@
 #include "system/console/sys_console.h"
 #include "system/debug/sys_debug.h"
 #include "system/reset/sys_reset.h"
+#include "osal/osal.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -605,11 +606,12 @@ SYS_CMD_DEVICE_NODE* SYS_CMDIO_ADD(const SYS_CMD_API* opApi, const void* cmdIoPa
     // Create new node
     SYS_CMD_IO_DCPT* pNewIo;
 
-    pNewIo = (SYS_CMD_IO_DCPT*)calloc(1, sizeof(*pNewIo));
+    pNewIo = (SYS_CMD_IO_DCPT*)OSAL_Malloc(sizeof(*pNewIo));
     if (!pNewIo)
     {
         return 0;
     }
+	memset(pNewIo, 0, sizeof(*pNewIo));
     pNewIo->devNode.pCmdApi = opApi;
     pNewIo->devNode.cmdIoParam = cmdIoParam;
     pNewIo->cmdPnt = pNewIo->cmdEnd = pNewIo->cmdBuff;
