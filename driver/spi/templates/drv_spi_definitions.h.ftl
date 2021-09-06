@@ -101,6 +101,7 @@ typedef enum
     DRV_SPI_DATA_BITS_14 = 6,
     DRV_SPI_DATA_BITS_15 = 7,
     DRV_SPI_DATA_BITS_16 = 8,
+	DRV_SPI_DATA_BITS_32 = 9,
 
     /* Force the compiler to reserve 32-bit memory space for each enum */
     DRV_SPI_DATA_BITS_INVALID = 0xFFFFFFFF

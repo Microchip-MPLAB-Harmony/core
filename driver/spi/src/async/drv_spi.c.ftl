@@ -488,11 +488,16 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ* transferObj)
         SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_8_BIT);
     }
-    else
+    else if (clientObj->setup.dataBits <= DRV_SPI_DATA_BITS_16)
     {
         SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
     }
+	else
+	{
+		SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_32_BIT);
+        SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_32_BIT);
+	}
 
     if ((transferObj->txPending > 0) && (transferObj->rxPending > 0))
     {
@@ -593,11 +598,16 @@ static void _DRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ* transferObj)
         SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_8_BIT);
     }
-    else
+    else if (clientObj->setup.dataBits <= DRV_SPI_DATA_BITS_16)
     {
         SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
     }
+	else
+	{
+		SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_32_BIT);
+        SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_32_BIT);
+	}
 
     if (transferObj->rxSize == 0)
     {
@@ -1533,7 +1543,12 @@ void DRV_SPI_WriteReadTransferAdd (
         transferObj->event          = DRV_SPI_TRANSFER_EVENT_PENDING;
         transferObj->clientHandle   = handle;
 
-        if (clientObj->setup.dataBits != DRV_SPI_DATA_BITS_8)
+		if (clientObj->setup.dataBits == DRV_SPI_DATA_BITS_8)
+		{
+			transferObj->txSize = txSize;
+            transferObj->rxSize = rxSize;
+		}
+        else if (clientObj->setup.dataBits <= DRV_SPI_DATA_BITS_16)
         {
             /* Both SPI and DMA PLIB expect size to be in terms of bytes */
             transferObj->txSize = txSize << 1;
@@ -1541,8 +1556,9 @@ void DRV_SPI_WriteReadTransferAdd (
         }
         else
         {
-            transferObj->txSize = txSize;
-            transferObj->rxSize = rxSize;
+            /* Both SPI and DMA PLIB expect size to be in terms of bytes */
+            transferObj->txSize = txSize << 2;
+            transferObj->rxSize = rxSize << 2;
         }
 
         /* Update the unique transfer handle in output parameter.This handle can

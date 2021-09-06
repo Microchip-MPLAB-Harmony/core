@@ -76,7 +76,13 @@ const uint32_t drvSPI${INDEX?string}remapDataBits[]=
     </#if>
 
     <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_16_BIT_MASK?has_content>
-        ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_16_BIT_MASK}
+        ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_16_BIT_MASK},
+    <#else>
+        0xFFFFFFFF,
+    </#if>
+	
+	<#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_32_BIT_MASK?has_content>
+        ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_32_BIT_MASK}
     <#else>
         0xFFFFFFFF
     </#if>
