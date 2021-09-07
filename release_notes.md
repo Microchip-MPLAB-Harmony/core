@@ -3,6 +3,42 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.10.0
+
+### New Features
+
+- **New Features and Enhancements**
+  - Emulated EEPROM support for ARM Cortex based MCUs
+  - Optimized read transfer with unaligned buffers in MPFS/FatFS
+  - Added littleFS support in File System Service
+  - RAM media support in File System Service
+  - Lock and Unlock support in SPI driver to transfer multiple SPI frames without preemption
+
+- **Applications**
+  - MPLAB Harmony provides large number of application examples to accelerate learning and reduce the development cycles for your embedded systems with reusable software components. The application examples are available in the respective [product family specific repository](apps/readme.md).
+
+### Known Issues
+
+The current known issues are as follows:
+- The following product families specifically requires the below mentioned DFP versions to be [installed](https://microchipdeveloper.com/mplabx:projects-packs)  with MPLABX v5.50. It is always recommended to use the latest version of DFPs for all products provided by Microchip.
+     -  **SAM L11 Family**: SAML11 DFP v4.3.139 or higher
+     -  **SAM RH707 Family**: SAMRH707 DFP 1.0.28 or higher
+
+
+### Development Tools
+
+- [MPLAB® X IDE v5.50](https://www.microchip.com/mplab/mplab-x-ide)
+- [MPLAB® XC32 C/C++ Compiler v3.10](https://www.microchip.com/mplab/compilers)
+- [IAR EWARM v8.50](https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
+- [KEIL MDK v5.31](https://www2.keil.com/mdk5)
+- MPLAB® X IDE plug-ins:
+  - MPLAB® Harmony Configurator (MHC) v3.8.0
+
+
+### Notes
+
+-  None
+
 ## Core Release v3.9.2
 
 ### New Features
