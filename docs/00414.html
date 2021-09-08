@@ -61,7 +61,7 @@ This handle must be provided to all other client-level operations to identify th
 <a name="43"></a><div class="Element99">
 C</div>
 <div class="Element101"><div class="Element100"><pre class="Element100"><a href="00257.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">DRV_NAND_FLASH_Open</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01183.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="01209.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
     <strong><span style="color: #000080">const</span></strong> <a href="00289.html" target="topic">DRV_IO_INTENT</a> <strong><span style="color: #000000">ioIntent</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
@@ -129,7 +129,7 @@ Example</div>
 <div class="Element10">
 <div class="Element13"><div class="Element12"><pre class="Element12"><a href="00257.html" target="topic">DRV_HANDLE</a> handle;
 
-handle = DRV_NAND_FLASH_Open((<a href="01183.html" target="topic">SYS_MODULE_INDEX</a>)DRV_NAND_FLASH_INDEX, DRV_IO_INTENT_READWRITE);
+handle = DRV_NAND_FLASH_Open((<a href="01209.html" target="topic">SYS_MODULE_INDEX</a>)DRV_NAND_FLASH_INDEX, DRV_IO_INTENT_READWRITE);
 <strong><span style="color: #000080">if</span></strong> (<a href="00258.html" target="topic">DRV_HANDLE_INVALID</a> == handle)
 {
     <i><span style="color: #008000">// Unable to open the driver</span></i>

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>SYS_TIME_Initialize Function</title>
+<title>SYS_STATUS Enumeration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01259.html" target="topic">System Service Libraries Help</a> &gt; <a href="00759.html" target="topic">Time System Service Library Help</a> &gt; <a href="00760.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="01238.html" target="topic">SYS_TIME_Initialize Function</a></div>
+<a href="01285.html" target="topic">System Service Libraries Help</a> &gt; <a href="00726.html" target="topic">Common System Services Help</a> &gt; b) Module System Services &gt; <a href="01238.html" target="topic">SYS_STATUS Enumeration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00760.html" target="topic">Previous</a> | <a href="00760.html" target="topic">Up</a> | <a href="01243.html" target="topic">Next</a></div>
+<a href="01210.html" target="topic">Previous</a> | <a href="00726.html" target="topic">Up</a> | <a href="01209.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: SYS_TIME_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_STATUS Topic Title: SYS_STATUS Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-SYS_TIME_Initialize Function</div>
+SYS_STATUS Enumeration</div>
 </div>
 </div>
 
@@ -49,89 +49,78 @@ SYS_TIME_Initialize Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function initializes the instance of the System Time module.</p></div>
+System Module Status&nbsp;</p>
+<p class="Element10">
+This enumeration identifies the current status/state of a system module (including device drivers).</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01189.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">SYS_TIME_Initialize</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01183.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="01184.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
-);</pre></div></div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000">SYS_STATUS_ERROR_EXTENDED</span></strong> = -10,
+  <strong><span style="color: #000000">SYS_STATUS_ERROR</span></strong> = -1,
+  <strong><span style="color: #000000">SYS_STATUS_UNINITIALIZED</span></strong> = 0,
+  <strong><span style="color: #000000">SYS_STATUS_BUSY</span></strong> = 1,
+  <strong><span style="color: #000000">SYS_STATUS_READY</span></strong> = 2,
+  <strong><span style="color: #000000">SYS_STATUS_READY_EXTENDED</span></strong> = 10
+} SYS_STATUS;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element312">
+<div class="Element272">
 <div class="TableDiv">
-<table cellspacing="0" class="Table3">
+<table cellspacing="0" class="Table1">
 <tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-index&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Index for the instance to be initialized<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to a data structure containing data necessary to initialize the module.&nbsp;</div></td></tr></table></div></div>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_STATUS_ERROR_EXTENDED = -10&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Indicates that a non-system defined error has occurred. The caller must call the extended status routine for the module in question to identify the error.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_STATUS_ERROR = -1&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+An unspecified error has occurred.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_STATUS_UNINITIALIZED = 0&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+The module has not yet been initialized&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_STATUS_BUSY = 1&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+An operation is currently in progress&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_STATUS_READY = 2&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Any previous operations have succeeded and the module is ready for additional operations&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+SYS_STATUS_READY_EXTENDED = 10&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Indicates that the module is in a non-system defined ready/run state. The caller must call the extended status routine for the module in question to identify the state.&nbsp;</div></td></tr></table></div></div>
 </div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-If successful, returns a valid handle to an object. Otherwise, it returns <a href="01190.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This routine should normally only be called once during system initialization.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-<strong><span style="color: #000080">const</span></strong> SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
-    .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)TC0_CH0_TimerCallbackRegister,
-    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC0_CH0_TimerCounterGet,
-    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC0_CH0_TimerPeriodSet,
-    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC0_CH0_TimerFrequencyGet,
-    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC0_CH0_TimerCompareSet,
-    .timerStart = (SYS_TIME_PLIB_START)TC0_CH0_TimerStart,
-    .timerStop = (SYS_TIME_PLIB_STOP)TC0_CH0_TimerStop
-};
-
-<strong><span style="color: #000080">const</span></strong> <a href="01237.html" target="topic">SYS_TIME_INIT</a> sysTimeInitData =
-{
-    .timePlib = &amp;sysTimePlibAPI,
-    .hwTimerIntNum = TC0_CH0_IRQn,
-};
-
-<a href="01189.html" target="topic">SYS_MODULE_OBJ</a>  objSysTime;
-
-objSysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (<a href="01184.html" target="topic">SYS_MODULE_INIT</a> *)&amp;sysTimeInitData);
-<strong><span style="color: #000080">if</span></strong> (objSysTime == <a href="01190.html" target="topic">SYS_MODULE_OBJ_INVALID</a>)
-{
-    <i><span style="color: #008000">// Handle error</span></i>
-}</pre></div></div>
-</div>
+This enumeration is the return type for the system-level status routine defined by each device driver or system module (for example, <a href="00267.html" target="topic">DRV_I2C_Status</a>).</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01259.html" target="topic">System Service Libraries Help</a> &gt; <a href="00759.html" target="topic">Time System Service Library Help</a> &gt; <a href="00760.html" target="topic">Library Interface</a> &gt; a) System Functions &gt; <a href="01238.html" target="topic">SYS_TIME_Initialize Function</a></div>
+<a href="01285.html" target="topic">System Service Libraries Help</a> &gt; <a href="00726.html" target="topic">Common System Services Help</a> &gt; b) Module System Services &gt; <a href="01238.html" target="topic">SYS_STATUS Enumeration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -142,10 +131,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00760.html" target="topic">Previous</a> | <a href="00760.html" target="topic">Up</a> | <a href="01243.html" target="topic">Next</a></div>
+<a href="01210.html" target="topic">Previous</a> | <a href="00726.html" target="topic">Up</a> | <a href="01209.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_TIME_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: SYS_TIME_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS_STATUS Topic Title: SYS_STATUS Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

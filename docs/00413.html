@@ -56,9 +56,9 @@ This routine initializes the NAND FLASH driver making it ready for client to use
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01189.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_NAND_FLASH_Initialize</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01183.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="01184.html" target="topic">SYS_MODULE_INIT</a> *<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01215.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_NAND_FLASH_Initialize</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01209.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">drvIndex</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="01210.html" target="topic">SYS_MODULE_INIT</a> *<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
@@ -97,7 +97,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If successful, returns a valid handle to a driver instance object. Otherwise it returns <a href="01190.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
+If successful, returns a valid handle to a driver instance object. Otherwise it returns <a href="01216.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -115,7 +115,7 @@ Example</div>
 <div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// This code snippet shows an example of initializing the NAND FLASH Driver</span></i>
 <i><span style="color: #008000">// with NAND FLASH device attached.</span></i>
 
-<a href="01189.html" target="topic">SYS_MODULE_OBJ</a>  objectHandle;
+<a href="01215.html" target="topic">SYS_MODULE_OBJ</a>  objectHandle;
 
 <strong><span style="color: #000080">const</span></strong> DRV_NAND_FLASH_PLIB_INTERFACE drvNandFlashPlibAPI = {
     .DataAddressGet              = SMC_DataAddressGet,
@@ -143,9 +143,9 @@ Example</div>
     .nandFlashPlib         = &amp;drvNandFlashPlibAPI,
 };
 
-objectHandle = DRV_NAND_FLASH_Initialize((<a href="01183.html" target="topic">SYS_MODULE_INDEX</a>)DRV_NAND_FLASH_INDEX, (<a href="01184.html" target="topic">SYS_MODULE_INIT</a> *)&amp;drvNandFlashInitData);
+objectHandle = DRV_NAND_FLASH_Initialize((<a href="01209.html" target="topic">SYS_MODULE_INDEX</a>)DRV_NAND_FLASH_INDEX, (<a href="01210.html" target="topic">SYS_MODULE_INIT</a> *)&amp;drvNandFlashInitData);
 
-<strong><span style="color: #000080">if</span></strong> (<a href="01190.html" target="topic">SYS_MODULE_OBJ_INVALID</a> == objectHandle)
+<strong><span style="color: #000080">if</span></strong> (<a href="01216.html" target="topic">SYS_MODULE_OBJ_INVALID</a> == objectHandle)
 {
     <i><span style="color: #008000">// Handle error</span></i>
 }</pre></div></div>

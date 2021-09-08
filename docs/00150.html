@@ -50,15 +50,15 @@ How the Library Works</div>
 <div class="Element10">
 
 <ul class="Element630">
-<li class="Element600"><span style="color: #000000">The SST26 Driver performs initialization and puts the driver to ready state. This status of the driver can be checked using <a href="00552.html" target="topic">DRV_SST26_Status</a>()</span></li>
-<li class="Element600"><span style="color: #000000">The SST26 driver library performs set of flash operations during <a href="00547.html" target="topic">DRV_SST26_Open</a>(). If any of the below flash operations fails, an invalid Handle will be returned. <a href="00547.html" target="topic">DRV_SST26_Open</a>() can be repeatedly called until it returns a valid handle.</span>
+<li class="Element600"><span style="color: #000000">The SST26 Driver performs initialization and puts the driver to ready state. This status of the driver can be checked using <a href="00553.html" target="topic">DRV_SST26_Status</a>()</span></li>
+<li class="Element600"><span style="color: #000000">The SST26 driver library performs set of flash operations during <a href="00548.html" target="topic">DRV_SST26_Open</a>(). If any of the below flash operations fails, an invalid Handle will be returned. <a href="00548.html" target="topic">DRV_SST26_Open</a>() can be repeatedly called until it returns a valid handle.</span>
 <ul class="Element631">
 <li class="Element601"><span style="color: #000000">Resets the Flash</span></li>
 <li class="Element601"><span style="color: #000000">Configures the flash device to QUAD IO Mode if underlying peripheral library is running in QSPI/SQI mode</span></li>
 <li class="Element601"><span style="color: #000000">Unlocks the flash</span></li>
 </ul></li>
-<li class="Element600">When the client requests for device geometry, it queries for the JEDEC-Id and populates the geometry table <a href="00534.html" target="topic">DRV_SST26_GEOMETRY</a> appropriately</li>
-<li class="Element600"><span style="color: #000000">The driver does not support queuing of more than one requests. The application must check and ensure that any previous request is completed before submitting a new one. This can be done by polling the status of data transfer using <a href="00557.html" target="topic">DRV_SST26_TransferStatusGet</a>()</span></li>
+<li class="Element600">When the client requests for device geometry, it queries for the JEDEC-Id and populates the geometry table <a href="00535.html" target="topic">DRV_SST26_GEOMETRY</a> appropriately</li>
+<li class="Element600"><span style="color: #000000">The driver does not support queuing of more than one requests. The application must check and ensure that any previous request is completed before submitting a new one. This can be done by polling the status of data transfer using <a href="00558.html" target="topic">DRV_SST26_TransferStatusGet</a>()</span></li>
 </ul></div>
 </div>
 </div>

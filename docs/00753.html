@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Building the Library</title>
+<title>Library Interface</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01259.html" target="topic">System Service Libraries Help</a> &gt; <a href="00759.html" target="topic">Time System Service Library Help</a> &gt; <a href="00753.html" target="topic">Building the Library</a></div>
+<a href="01285.html" target="topic">System Service Libraries Help</a> &gt; <a href="00752.html" target="topic">Direct Memory Access (DMA) System Service Library Help</a> &gt; <a href="00753.html" target="topic">Library Interface</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00755.html" target="topic">Previous</a> | <a href="00759.html" target="topic">Up</a> | <a href="00760.html" target="topic">Next</a></div>
+<a href="00751.html" target="topic">Previous</a> | <a href="00752.html" target="topic">Up</a> | <a href="00895.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS TIME Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS DMA Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Building the Library</div>
+Library Interface</div>
 </div>
 </div>
 
@@ -48,15 +48,144 @@ Building the Library</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element63">
+<p class="Element10">
+This section describes the APIs of the DMA System Service Library.&nbsp;</p>
+<p class="Element10">
+Refer to each section for a detailed description.</p></div>
+</div>
+<a name="61292053657475702046756E6374696F6E"></a><div class="Element14">
+a) Setup Function</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
 <div class="TableDiv">
-<table cellspacing="0" class="Table2">
+<table cellspacing="0" class="Table0">
 <tr>
-<td class="Element67" valign="top" width="10%" style="border:none;">
-<div class="Element68">
-<img src="MHC_Logo_Medium.png" border="0" alt="" title="">&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
-<div class="Element68">
-<span style="color: #008000"><strong><i>All of the required files are automatically added into the MPLAB X IDE project by the MHC when the library is selected for use.</i></strong></span>&nbsp;</div></td></tr></table></div></div>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00895.html" target="topic">SYS_DMA_ChannelCallbackRegister</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function allows a DMA client to set an event handler.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00899.html" target="topic">SYS_DMA_DataWidthSetup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Setup data width of selected DMA channel.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00889.html" target="topic">SYS_DMA_AddressingModeSetup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Setup addressing mode of selected DMA channel.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="6229205472616E736665722046756E6374696F6E73"></a><div class="Element14">
+b) Transfer Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00898.html" target="topic">SYS_DMA_ChannelTransfer</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Adds a data transfer to a DMA channel and enables the channel to start data transfer.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00896.html" target="topic">SYS_DMA_ChannelDisable</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Disables the specified channel.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00897.html" target="topic">SYS_DMA_ChannelIsBusy</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Returns the busy status of a specific DMA Channel.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="6329204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
+c) Data Types and Constants</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00908.html" target="topic">SYS_DMA_TRANSFER_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Enumeration of possible DMA transfer events.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00890.html" target="topic">SYS_DMA_CHANNEL</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This lists the set of channels available for data transfer using DMA.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00894.html" target="topic">SYS_DMA_CHANNEL_CALLBACK</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Pointer to a DMA Transfer Event handler function.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00900.html" target="topic">SYS_DMA_DESTINATION_ADDRESSING_MODE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Enumeration of possible DMA destination addressing modes.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00904.html" target="topic">SYS_DMA_SOURCE_ADDRESSING_MODE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Enumeration of possible DMA source addressing modes.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00911.html" target="topic">SYS_DMA_WIDTH</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Enumeration of possible DMA data width&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -64,7 +193,7 @@ Building the Library</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01259.html" target="topic">System Service Libraries Help</a> &gt; <a href="00759.html" target="topic">Time System Service Library Help</a> &gt; <a href="00753.html" target="topic">Building the Library</a></div>
+<a href="01285.html" target="topic">System Service Libraries Help</a> &gt; <a href="00752.html" target="topic">Direct Memory Access (DMA) System Service Library Help</a> &gt; <a href="00753.html" target="topic">Library Interface</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -75,10 +204,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00755.html" target="topic">Previous</a> | <a href="00759.html" target="topic">Up</a> | <a href="00760.html" target="topic">Next</a></div>
+<a href="00751.html" target="topic">Previous</a> | <a href="00752.html" target="topic">Up</a> | <a href="00895.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS TIME Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS DMA Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

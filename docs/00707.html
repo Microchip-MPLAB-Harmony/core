@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Console Device Configuration Options</title>
+<title>STDIN_FILENO Macro</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="01259.html" target="topic">System Service Libraries Help</a> &gt; <a href="00704.html" target="topic">Console System Service Library Help</a> &gt; <a href="00699.html" target="topic">Configuring the Library</a> &gt; <a href="00707.html" target="topic">Console Device Configuration Options</a></div>
+<a href="01285.html" target="topic">System Service Libraries Help</a> &gt; <a href="00734.html" target="topic">Console System Service Library Help</a> &gt; <a href="00735.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00707.html" target="topic">STDIN_FILENO Macro</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00699.html" target="topic">Previous</a> | <a href="00699.html" target="topic">Up</a> | <a href="00698.html" target="topic">Next</a></div>
+<a href="00706.html" target="topic">Previous</a> | <a href="00735.html" target="topic">Up</a> | <a href="00708.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE UART Console Device Configuration Options Topic Title: Console Device Configuration Options)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: STDIN_FILENO Topic Title: STDIN_FILENO Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Console Device Configuration Options</div>
+STDIN_FILENO Macro</div>
 </div>
 </div>
 
@@ -49,51 +49,17 @@ Console Device Configuration Options</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The Console System Service library should be configured through the MHC.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong><u>UART Console:</u></strong>&nbsp;</p>
-<p class="Element10">
-The following figure shows the MHC configuration window for configuring the UART Console Device and a brief description of various configuration options. The console system service requires the connected UART peripheral library to be configured in the interrupt mode. </p><p class="Element10" style="text-align: center;">
-<img src="sys_console_uart.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="sys_console_uart_sercom.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
-&nbsp;</p>
-<div class="Element15">
-Configuration Options:</div>
-
-<ul class="Element630">
-<li class="Element600"><strong>Device Used:</strong>
-<ul class="Element631">
-<li class="Element601">Indicates the hardware UART Peripheral Library instance used by the Console System Service. The underlying USART/SERCOM/FLEXCOM PLIB must be configured in interrupt mode.</li>
-</ul></li>
-</ul><p class="Element10">
-Note: The TX/RX ring buffers must be configured in the attached PLIB as shown above. In the above example, the TX and RX ring buffer sizes are configured in the attached SERCOM3 PLIB.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong><u>USB Console:</u></strong>&nbsp;</p>
-<p class="Element10">
-The following figure shows the MHC configuration window for configuring the USB Console Device and a brief description of various configuration options. </p><p class="Element10" style="text-align: center;">
-<img src="sys_console_usb.png" border="0" alt="" title=""></p><div class="Element15">
-Configuration Options:</div>
-
-<ul class="Element630">
-<li class="Element600"><strong>Device Used:</strong>
-<ul class="Element631">
-<li class="Element601">Indicates the USB CDC Instance used by the Console System Service.</li>
-<li class="Element601">Transmit Buffer Size (1-4096): Size of the transmit ring buffer</li>
-<li class="Element601">Receive Buffer Size (1-4096): Size of the receive ring buffer</li>
-</ul></li>
-</ul></div>
+These are in unistd.h</p></div>
 </div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">STDIN_FILENO</span></strong> 0</pre></div></div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="01259.html" target="topic">System Service Libraries Help</a> &gt; <a href="00704.html" target="topic">Console System Service Library Help</a> &gt; <a href="00699.html" target="topic">Configuring the Library</a> &gt; <a href="00707.html" target="topic">Console Device Configuration Options</a></div>
+<a href="01285.html" target="topic">System Service Libraries Help</a> &gt; <a href="00734.html" target="topic">Console System Service Library Help</a> &gt; <a href="00735.html" target="topic">Library Interface</a> &gt; c) Data Types and Constants &gt; <a href="00707.html" target="topic">STDIN_FILENO Macro</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -104,10 +70,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00699.html" target="topic">Previous</a> | <a href="00699.html" target="topic">Up</a> | <a href="00698.html" target="topic">Next</a></div>
+<a href="00706.html" target="topic">Previous</a> | <a href="00735.html" target="topic">Up</a> | <a href="00708.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: SYS CONSOLE UART Console Device Configuration Options Topic Title: Console Device Configuration Options)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: STDIN_FILENO Topic Title: STDIN_FILENO Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

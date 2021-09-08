@@ -29,7 +29,7 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00138.html" target="topic">Previous</a> | <a href="00138.html" target="topic">Up</a> | <a href="00505.html" target="topic">Next</a></div>
+<a href="00138.html" target="topic">Previous</a> | <a href="00138.html" target="topic">Up</a> | <a href="00506.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
 <a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: DRV_SPI_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
@@ -53,9 +53,9 @@ This routine initializes the SPI driver instance for the specified driver index,
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01189.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_SPI_Initialize</span></strong>(
-    <strong><span style="color: #000080">const</span></strong> <a href="01183.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
-    <strong><span style="color: #000080">const</span></strong> <a href="01184.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01215.html" target="topic">SYS_MODULE_OBJ</a> <strong><span style="color: #000000">DRV_SPI_Initialize</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="01209.html" target="topic">SYS_MODULE_INDEX</a> <strong><span style="color: #000000">index</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <a href="01210.html" target="topic">SYS_MODULE_INIT</a> * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
@@ -94,7 +94,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If successful, returns a valid handle to a driver instance object. Otherwise, returns <a href="01190.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
+If successful, returns a valid handle to a driver instance object. Otherwise, returns <a href="01216.html" target="topic">SYS_MODULE_OBJ_INVALID</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -113,7 +113,7 @@ Example</div>
 <div class="Element10">
 <div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// The following code snippet shows an example SPI driver initialization.</span></i>
 
-<a href="01189.html" target="topic">SYS_MODULE_OBJ</a>   objectHandle;
+<a href="01215.html" target="topic">SYS_MODULE_OBJ</a>   objectHandle;
 
 <strong><span style="color: #000080">const</span></strong> DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
 
@@ -170,8 +170,8 @@ Example</div>
     .transferObjPool = (uintptr_t)&amp;drvSPI0TransferObjPool[0],
 };
 
-objectHandle = DRV_SPI_Initialize(DRV_SPI_INDEX_0,(<a href="01184.html" target="topic">SYS_MODULE_INIT</a>*)&amp;drvSPI0InitData);
-<strong><span style="color: #000080">if</span></strong> (objectHandle == <a href="01190.html" target="topic">SYS_MODULE_OBJ_INVALID</a>)
+objectHandle = DRV_SPI_Initialize(DRV_SPI_INDEX_0,(<a href="01210.html" target="topic">SYS_MODULE_INIT</a>*)&amp;drvSPI0InitData);
+<strong><span style="color: #000080">if</span></strong> (objectHandle == <a href="01216.html" target="topic">SYS_MODULE_OBJ_INVALID</a>)
 {
     <i><span style="color: #008000">// Handle error</span></i>
 }</pre></div></div>
@@ -193,7 +193,7 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00138.html" target="topic">Previous</a> | <a href="00138.html" target="topic">Up</a> | <a href="00505.html" target="topic">Next</a></div>
+<a href="00138.html" target="topic">Previous</a> | <a href="00138.html" target="topic">Up</a> | <a href="00506.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
 <a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SPI_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: DRV_SPI_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>

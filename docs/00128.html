@@ -51,7 +51,7 @@ Asynchronous Mode</div>
 <p class="Element10">
 Asynchronous mode of SPI driver allows user to use the library in non-blocking manner. This mode is supported in both RTOS and Bare-Metal environments. Transfer APIs of this mode return a transfer handle. Application can check the transfer completion status in two ways:</p>
 <ol class="Element630">
-<li value="1" class="Element600"><strong>Callback</strong>: Callback can be registered with the driver using <a href="00522.html" target="topic">DRV_SPI_TransferEventHandlerSet</a> API and it needs to be registered prior to calling the transfer API . Here is the example of SPI write using callback:</li>
+<li value="1" class="Element600"><strong>Callback</strong>: Callback can be registered with the driver using <a href="00523.html" target="topic">DRV_SPI_TransferEventHandlerSet</a> API and it needs to be registered prior to calling the transfer API . Here is the example of SPI write using callback:</li>
 </ol><p class="Element10">
 &nbsp;</p>
 <div class="Element13"><div class="Element12"><pre class="Element12">    DRV_SPI_TRANSFER_HANDLE transferHandle1;
@@ -110,7 +110,7 @@ Asynchronous mode of SPI driver allows user to use the library in non-blocking m
 &nbsp;</p>
 
 <ol class="Element630">
-<li value="2" class="Element600"><strong>Polling</strong>: Data transfer status polling can be done using <a href="00524.html" target="topic">DRV_SPI_TransferStatusGet</a> API. Here is the example of SPI write using status polling:</li>
+<li value="2" class="Element600"><strong>Polling</strong>: Data transfer status polling can be done using <a href="00525.html" target="topic">DRV_SPI_TransferStatusGet</a> API. Here is the example of SPI write using status polling:</li>
 </ol><p class="Element10">
 &nbsp;</p>
 <div class="Element13"><div class="Element12"><pre class="Element12">    DRV_SPI_TRANSFER_HANDLE transferHandle1;

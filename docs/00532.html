@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>DRV_SST26_EVENT_HANDLER Type</title>
+<title>DRV_SST26_Close Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00143.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00152.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00153.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00532.html" target="topic">DRV_SST26_EVENT_HANDLER Type</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00143.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00152.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00153.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00532.html" target="topic">DRV_SST26_Close Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00553.html" target="topic">Previous</a> | <a href="00153.html" target="topic">Up</a> | <a href="00165.html" target="topic">Next</a></div>
+<a href="00548.html" target="topic">Previous</a> | <a href="00153.html" target="topic">Up</a> | <a href="00534.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_EVENT_HANDLER Topic Title: DRV_SST26_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_Close@DRV_HANDLE Topic Title: DRV_SST26_Close Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-DRV_SST26_EVENT_HANDLER Type</div>
+DRV_SST26_Close Function</div>
 </div>
 </div>
 
@@ -49,19 +49,20 @@ DRV_SST26_EVENT_HANDLER Type</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SST26 Driver Transfer Event Handler Function Pointer&nbsp;</p>
-<p class="Element10">
-This data type defines the required function signature for the SST26 driver event handling callback function. A client must register a pointer using the event handling function whose function signature (parameter and return value types) match the types specified by this function pointer in order to receive transfer related event calls back from the driver.&nbsp;</p>
-<p class="Element10">
-This data type is only supported when sst26 driver is using</p>
-<ul class="Element630">
-<li class="Element600">QSPI PLIB in SPI mode</li>
-<li class="Element600">SPI PLIB</li>
-</ul></div>
+This routine closes an opened-instance of the SST26 driver, invalidating the handle.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">DRV_SST26_EVENT_HANDLER</span></strong>)(<a href="00553.html" target="topic">DRV_SST26_TRANSFER_STATUS</a> event, uintptr_t context);</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">DRV_SST26_Close</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> <a href="00257.html" target="topic">DRV_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+<a href="00548.html" target="topic">DRV_SST26_Open</a> must have been called to obtain a valid opened device handle.</p></div>
+</div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
 <div class="Element11">
@@ -77,14 +78,9 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-event&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Identifies the type of event<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Value identifying the context of the application that registered the event handling function.&nbsp;</div></td></tr></table></div></div>
+A valid open-instance handle, returned from the driver's open routine&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -92,43 +88,24 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+None</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-If the event is DRV_SST26_TRANSFER_COMPLETED, it means that the data was transferred successfully.&nbsp;</p>
+After calling this routine, the handle passed in &quot;handle&quot; must not be used with any of the remaining driver routines. A new handle must be obtained by calling <a href="00548.html" target="topic">DRV_SST26_Open</a> before the caller may use the driver again.&nbsp;</p>
 <p class="Element10">
-If the event is DRV_SST26_TRANSFER_ERROR_UNKNOWN, it means that the data was not transferred successfully.&nbsp;</p>
-<p class="Element10">
-The context parameter contains the handle to the client context, provided at the time the event handling function was registered using the <a href="00533.html" target="topic">DRV_SST26_EventHandlerSet</a> function. This context handle value is passed back to the client as the &quot;context&quot; parameter. It can be any value necessary to identify the client context or instance (such as a pointer to the client's data) instance of the client that made the buffer add request.&nbsp;</p>
-<p class="Element10">
-The event handler function executes in the driver's interrupt context. It is recommended of the application to not perform process intensive or blocking operations with in this function.</p></div>
+Usually there is no need for the driver client to verify that the Close operation has completed.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> APP_MyTransferEventHandler( <a href="00553.html" target="topic">DRV_SST26_TRANSFER_STATUS</a> event, uintptr_t context )
-{
-    MY_APP_DATA_STRUCT* pAppData = (MY_APP_DATA_STRUCT*) context;
+<div class="Element13"><div class="Element12"><pre class="Element12"><a href="00257.html" target="topic">DRV_HANDLE</a> handle;  <i><span style="color: #008000">// Returned from DRV_SST26_Open</span></i>
 
-    <strong><span style="color: #000080">switch</span></strong>(event)
-    {
-        <strong><span style="color: #000080">case</span></strong> DRV_SST26_TRANSFER_COMPLETED:
-
-            <i><span style="color: #008000">// Handle the transfer complete event.</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> DRV_SST26_TRANSFER_ERROR_UNKNOWN:
-        <strong><span style="color: #000080">default</span></strong>:
-
-            <i><span style="color: #008000">// Handle error.</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-}</pre></div></div>
+DRV_SST26_Close(handle);</pre></div></div>
 </div>
 </div>
 </div>
@@ -136,7 +113,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00143.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00152.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00153.html" target="topic">Library Interface</a> &gt; e) Data Types and Constants &gt; <a href="00532.html" target="topic">DRV_SST26_EVENT_HANDLER Type</a></div>
+<a href="00007.html" target="topic">Driver Libraries Help</a> &gt; <a href="00143.html" target="topic">SQI Flash Driver Libraries Help</a> &gt; <a href="00152.html" target="topic">SST26 Driver Library Help</a> &gt; <a href="00153.html" target="topic">Library Interface</a> &gt; b) Core Client Functions &gt; <a href="00532.html" target="topic">DRV_SST26_Close Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -147,10 +124,10 @@ MPLAB Harmony Core Help</div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00553.html" target="topic">Previous</a> | <a href="00153.html" target="topic">Up</a> | <a href="00165.html" target="topic">Next</a></div>
+<a href="00548.html" target="topic">Previous</a> | <a href="00153.html" target="topic">Up</a> | <a href="00534.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_EVENT_HANDLER Topic Title: DRV_SST26_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV_SST26_Close@DRV_HANDLE Topic Title: DRV_SST26_Close Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,0 +1,347 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>Using The Library</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00618.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00705.html" target="topic">Software Libraries Help</a> &gt; <a href="00614.html" target="topic">Emulated EEPROM Library Help</a> &gt; <a href="00618.html" target="topic">Using The Library</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony Core Help</div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00613.html" target="topic">Previous</a> | <a href="00614.html" target="topic">Up</a> | <a href="00607.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Emulated EEPROM Using the Library Topic Title: Using The Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Using The Library</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The Emulated EEPROM library builds on top of NVM or EFC PLIB and provides uniform interface to read/write to the Emulated EEPROM memory space.&nbsp;</p>
+<p class="Element10">
+The library provides APIs to read and write data from/to a logical page. It also provides APIs to read/write variable number of data across page boundaries.&nbsp;</p>
+<p class="Element10">
+In addition, it also provides APIs to format (initialize) the Emulated EEPROM memory region and status API that lets the application know if the Emulated EEPROM region is formatted and valid or not.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">#define</span></strong> SIZEOF(s, m) ((size_t) <strong><span style="color: #000080">sizeof</span></strong>(((s *)0)-&gt;m))
+
+<strong><span style="color: #000080">#define</span></strong> EMU_EEPROM_READ(MEM, DEST) EMU_EEPROM_BufferRead(offsetof(EEPROM_DATA, MEM), (uint8_t*)DEST, SIZEOF(EEPROM_DATA, MEM))
+
+<strong><span style="color: #000080">#define</span></strong> EMU_EEPROM_WRITE(MEM, DATA) EMU_EEPROM_BufferWrite(offsetof(EEPROM_DATA, MEM), (<strong><span style="color: #000080">const</span></strong> uint8_t*)DATA, SIZEOF(EEPROM_DATA, MEM))
+
+APP_DATA appData;
+EEPROM_DATA appTestData = {0};
+EEPROM_DATA appRAMCopy = {0};
+
+<strong><span style="color: #000080">void</span></strong> APP_BufferFill(uint8_t* buffer, uint32_t nBytes)
+{
+    uint32_t i;
+
+    <strong><span style="color: #000080">for</span></strong> (i = 0; i &lt; nBytes; i++)
+    {
+        buffer[i] = i;
+    }
+}
+
+<strong><span style="color: #000080">void</span></strong> APP_Initialize ( <strong><span style="color: #000080">void</span></strong> )
+{
+    <i><span style="color: #008000">/* Place the App state machine in its initial state. */</span></i>
+    appData.state = APP_STATE_INIT;
+}
+
+<strong><span style="color: #000080">void</span></strong> APP_Tasks ( <strong><span style="color: #000080">void</span></strong> )
+{
+    EMU_EEPROM_STATUS libStatus;
+
+    <i><span style="color: #008000">/* Check the application's current state. */</span></i>
+    <strong><span style="color: #000080">switch</span></strong> ( appData.state )
+    {
+        <i><span style="color: #008000">/* Application's initial state. */</span></i>
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_INIT:
+
+            libStatus = EMU_EEPROM_StatusGet();
+
+            <strong><span style="color: #000080">if</span></strong> (libStatus == EMU_EEPROM_STATUS_OK)
+            {
+                appData.state = APP_STATE_WRITE_DATA;
+            }
+            <strong><span style="color: #000080">else</span></strong> <strong><span style="color: #000080">if</span></strong> ((libStatus == EMU_EEPROM_STATUS_ERR_BAD_FORMAT) || (libStatus == EMU_EEPROM_STATUS_ERR_NOT_INITIALIZED))
+            {
+                <i><span style="color: #008000">/* Format EEPROM memory space */</span></i>
+                EMU_EEPROM_FormatMemory();
+                appData.state = APP_STATE_LIB_STATUS_VERIFY;
+            }
+            <strong><span style="color: #000080">else</span></strong>
+            {
+                appData.state = APP_STATE_ERROR;
+            }
+
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_LIB_STATUS_VERIFY:
+
+            <i><span style="color: #008000">/* Make sure the EEPROM Emulator is initialized successfully after it was formatted */</span></i>
+            libStatus = EMU_EEPROM_StatusGet();
+
+            <strong><span style="color: #000080">if</span></strong> (libStatus == EMU_EEPROM_STATUS_OK)
+            {
+                appData.state = APP_STATE_WRITE_DATA;
+            }
+            <strong><span style="color: #000080">else</span></strong>
+            {
+                appData.state = APP_STATE_ERROR;
+            }
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_WRITE_DATA:
+
+            <i><span style="color: #008000">/* For demonstration purpose, write some random values to EEPROM memory region */</span></i>
+            appTestData.var_1 = 0x0A;
+
+            EMU_EEPROM_WRITE(var_1, &amp;appTestData.var_1);
+
+            appTestData.var_2 = 0x1234;
+
+            EMU_EEPROM_WRITE(var_2, &amp;appTestData.var_2);
+
+            appTestData.var_3 = 0x33445566;
+
+            EMU_EEPROM_WRITE(var_3, &amp;appTestData.var_3);
+
+            appTestData.var_7 = 0x3189AB1C;
+
+            EMU_EEPROM_WRITE(var_7, &amp;appTestData.var_7);
+
+            appTestData.var_7 = 0x9A7BC123;
+
+            EMU_EEPROM_WRITE(var_7, &amp;appTestData.var_7);
+
+            appTestData.var_2 = 0x1256;
+
+            EMU_EEPROM_WRITE(var_2, &amp;appTestData.var_2);
+
+            appTestData.var_7 = 0x882B7C9A;
+
+            EMU_EEPROM_WRITE(var_7, &amp;appTestData.var_7);
+
+            appTestData.var_2 = 0x7788;
+
+            EMU_EEPROM_WRITE(var_2, &amp;appTestData.var_2);
+
+            APP_BufferFill(appTestData.buffer_1, <strong><span style="color: #000080">sizeof</span></strong> (appTestData.buffer_1));
+
+            EMU_EEPROM_WRITE(buffer_1, &amp;appTestData.buffer_1);
+
+            appTestData.var_11 = 0x7498AFDD;
+
+            EMU_EEPROM_WRITE(var_11, &amp;appTestData.var_11);
+
+            appTestData.var_7 = 0x1788BB8D;
+
+            EMU_EEPROM_WRITE(var_7, &amp;appTestData.var_7);
+
+            appTestData.var_10 = 0x7744AABB;
+
+            EMU_EEPROM_WRITE(var_10, &amp;appTestData.var_10);
+
+            appTestData.var_2 = 0x9922;
+
+            EMU_EEPROM_WRITE(var_2, &amp;appTestData.var_2);
+
+            appTestData.var_5 = 0x59AF;
+
+            EMU_EEPROM_WRITE(var_5, &amp;appTestData.var_5);
+
+            appTestData.var_9 = 0x99AA;
+
+            EMU_EEPROM_WRITE(var_9, &amp;appTestData.var_9);
+
+            appTestData.var_10 = 0x88888888;
+
+            EMU_EEPROM_WRITE(var_10, &amp;appTestData.var_10);
+
+            appTestData.var_12 = 0x5577;
+
+            EMU_EEPROM_WRITE(var_12, &amp;appTestData.var_12);
+
+            appTestData.var_10 = 0x1AC87439;
+
+            EMU_EEPROM_WRITE(var_10, &amp;appTestData.var_10);
+
+            appTestData.var_8 = 0x752B9ACE;
+
+            EMU_EEPROM_WRITE(var_8, &amp;appTestData.var_8);
+
+            appTestData.var_2 = 0xA765;
+
+            EMU_EEPROM_WRITE(var_2, &amp;appTestData.var_2);
+
+            appTestData.var_4 = 0xA7;
+
+            EMU_EEPROM_WRITE(var_4, &amp;appTestData.var_4);
+
+            appTestData.var_9 = 0xEEF1;
+
+            EMU_EEPROM_WRITE(var_9, &amp;appTestData.var_9);
+
+            appTestData.var_6 = 0xF497;
+
+            EMU_EEPROM_WRITE(var_6, &amp;appTestData.var_6);
+
+            <i><span style="color: #008000">/* Commit any data that may be in EEPROM Emulator library's cache to physical memory */</span></i>
+            EMU_EEPROM_PageBufferCommit();
+
+            appData.state = APP_STATE_READ_DATA;
+
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_READ_DATA:
+
+            <i><span style="color: #008000">/* Randomly read back the written values */</span></i>
+            EMU_EEPROM_READ(var_2, &amp;appRAMCopy.var_2);
+
+            EMU_EEPROM_READ(var_3, &amp;appRAMCopy.var_3);
+
+            EMU_EEPROM_READ(var_7, &amp;appRAMCopy.var_7);
+
+            EMU_EEPROM_READ(var_9, &amp;appRAMCopy.var_9);
+
+            EMU_EEPROM_READ(var_10, &amp;appRAMCopy.var_10);
+
+            EMU_EEPROM_READ(var_12, &amp;appRAMCopy.var_12);
+
+            EMU_EEPROM_READ(var_1, &amp;appRAMCopy.var_1);
+
+            EMU_EEPROM_READ(var_6, &amp;appRAMCopy.var_6);
+
+            EMU_EEPROM_READ(var_8, &amp;appRAMCopy.var_8);
+
+            EMU_EEPROM_READ(var_11, &amp;appRAMCopy.var_11);
+
+            EMU_EEPROM_READ(buffer_1, &amp;appRAMCopy.buffer_1);
+
+            EMU_EEPROM_READ(var_4, &amp;appRAMCopy.var_4);
+
+            EMU_EEPROM_READ(var_5, &amp;appRAMCopy.var_5);
+
+            appData.state = APP_STATE_VERIFY;
+
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_VERIFY:
+            <strong><span style="color: #000080">if</span></strong> (memcmp((<strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000080">const</span></strong>*)&amp;appRAMCopy, (<strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000080">const</span></strong>*)&amp;appTestData, <strong><span style="color: #000080">sizeof</span></strong> (EEPROM_DATA)) == 0)
+            {
+                LED_On();
+            }
+            <strong><span style="color: #000080">else</span></strong>
+            {
+                LED_Off();
+            }
+
+            appData.state = APP_STATE_IDLE;
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_IDLE:
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_ERROR:
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <i><span style="color: #008000">/* TODO: implement your application state machine.*/</span></i>
+
+
+        <i><span style="color: #008000">/* The default state should never be executed. */</span></i>
+        <strong><span style="color: #000080">default</span></strong>:
+        {
+            <i><span style="color: #008000">/* TODO: Handle error in application's state machine. */</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+        }
+    }
+}</pre></div></div>
+</div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00607.html" target="topic">Abstraction Model</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes how the abstraction is modeled in software and introduces the library's interface.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00612.html" target="topic">How The Library Works</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the basic architecture of the <span style="color: #0000FF">&lt;library_name&gt;</span> driver library and provides information on its use.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00705.html" target="topic">Software Libraries Help</a> &gt; <a href="00614.html" target="topic">Emulated EEPROM Library Help</a> &gt; <a href="00618.html" target="topic">Using The Library</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony Core Help</div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00007.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00613.html" target="topic">Previous</a> | <a href="00614.html" target="topic">Up</a> | <a href="00607.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Emulated EEPROM Using the Library Topic Title: Using The Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>
