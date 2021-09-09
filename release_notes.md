@@ -16,6 +16,7 @@
 
 - **Applications**
   - MPLAB Harmony provides large number of application examples to accelerate learning and reduce the development cycles for your embedded systems with reusable software components. The application examples are available in the respective [product family specific repository](apps/readme.md).
+  - All MPLAB X applications are updated to work with both MHC and MCC tools.
 
 ### Known Issues
 
@@ -28,7 +29,7 @@ The current known issues are as follows:
 ### Development Tools
 
 - [MPLAB® X IDE v5.50](https://www.microchip.com/mplab/mplab-x-ide)
-- [MPLAB® XC32 C/C++ Compiler v3.10](https://www.microchip.com/mplab/compilers)
+- [MPLAB® XC32 C/C++ Compiler v3.01](https://www.microchip.com/mplab/compilers)
 - [IAR EWARM v8.50](https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
 - [KEIL MDK v5.31](https://www2.keil.com/mdk5)
 - MPLAB® X IDE plug-ins:
