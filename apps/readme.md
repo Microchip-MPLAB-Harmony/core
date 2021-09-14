@@ -3,6 +3,7 @@ Microchip MPLAB Harmony provides several application examples for most supported
 | Repository | Product family |
 | ---------- | -------------- |
 | [core_apps_pic32mk](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32mk) | Application examples for: <br> PIC32MK GENERAL PURPOSE AND MOTOR CONTROL (GP/MC) family <br> PIC32MK GENERAL PURPOSE AND MOTOR CONTROL (GPG/MCJ) WITH CAN FD family <br> PIC32MK GENERAL PURPOSE AND MOTOR CONTROL (GPK/MCM) WITH CAN FD family |
+| [core_apps_pic32mm](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32mm) | Application examples for PIC32MM family |
 | [core_apps_pic32mx](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32mx) | Application examples for: <br> PIC32MX330/350/370/430/450/470 family <br> PIC32MX1XX/2XX/5XX 64/100-PIN family <br> PIC32MX1XX/2XX 28/36/44-PIN family <br> PIC32MX1XX/2XX 28/44-PIN XLP family <br> PIC32MX5XX/6XX/7XX  family |
 | [core_apps_pic32mz_da](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32mz_da) | Application examples for: <br> PIC32MZ Graphics (DA) Family <br> PIC32MZ Graphics (DAK/DAL/DAR/DAS) Family |
 | [core_apps_pic32mz_ef](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32mz_ef) | Application examples for PIC32MZ Embedded Connectivity with Floating Point Unit (EF) Family |
