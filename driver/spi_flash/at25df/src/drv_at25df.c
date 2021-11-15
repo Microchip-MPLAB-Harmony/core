@@ -55,7 +55,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#define TOTAL_DEVICE           1
+#define TOTAL_DEVICE           2
 #define DRV_AT25DF_ERASE_SIZE  4096
 
 /* This is the driver instance object array. */
@@ -63,7 +63,8 @@ static DRV_AT25DF_OBJ gDrvAT25DFObj;
 
 /* Flash Device ID Table*/
 static uint32_t gAt25dfDeviceIdTable [TOTAL_DEVICE] = {
-    0x0001471F
+    0x0001471F, 	//AT25DF321A
+	0x0101451F		//AT25DF081A
 };
 
 // *****************************************************************************
