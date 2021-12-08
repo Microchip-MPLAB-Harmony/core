@@ -1920,7 +1920,17 @@ SYS_FS_RESULT SYS_FS_DirSearch
     SYS_FS_DIR_OBJ *fileObj = (SYS_FS_DIR_OBJ *)handle;
     char *fileName = NULL;
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
-
+<#if SYS_FS_LFS == true >
+	uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
+    
+	SYS_FS_MOUNT_POINT *disk = (SYS_FS_MOUNT_POINT *) NULL;
+	
+	if (SYS_FS_GetDisk(name, &disk, pathWithDiskNo) == false)
+    {
+        /* "errorValue" contains the reason for failure. */
+        return SYS_FS_RES_FAILURE;
+    }
+</#if>
     if ((handle == SYS_FS_HANDLE_INVALID) || (name == NULL) || (stat == NULL))
     {
         errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
@@ -1981,7 +1991,11 @@ SYS_FS_RESULT SYS_FS_DirSearch
         }
 
         /* Firstly, match the file attribute with the requested attribute */
-        if ((stat->fattrib & attr) ||
+<#if SYS_FS_LFS == true >
+		if ((disk->fsType == LITTLEFS) || (stat->fattrib & attr) ||
+<#else>
+		if ((stat->fattrib & attr) ||
+</#if>		
             (attr == SYS_FS_ATTR_FILE))
         {
 <#if SYS_FS_LFN_ENABLE == true>
