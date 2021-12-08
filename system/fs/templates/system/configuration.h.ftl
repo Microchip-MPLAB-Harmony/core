@@ -89,12 +89,10 @@
 </#if>
 
 <#if SYS_FS_LFS == true>
-    <#lt>#define SYS_FS_LFS_MAX_SS                 SYS_FS_MEDIA_MAX_BLOCK_SIZE
-    <#if SYS_FS_ALIGNED_BUFFER_ENABLE?? && SYS_FS_ALIGNED_BUFFER_ENABLE == true>
-        <#if SYS_FS_ALIGNED_BUFFER_LEN??>
-            <#lt>#define SYS_FS_ALIGNED_BUFFER_LEN     ${SYS_FS_ALIGNED_BUFFER_LEN}
-        </#if>
-    </#if>
+    <#lt>#define SYS_FS_LFS_MAX_SS                	SYS_FS_MEDIA_MAX_BLOCK_SIZE
+	<#if SYS_FS_ALIGNED_BUFFER_ENABLE?? && SYS_FS_ALIGNED_BUFFER_ENABLE == true>
+		<#lt>#define SYS_FS_ALIGNED_BUFFER_LEN      	2048
+	</#if>
 </#if>
 
 <#--

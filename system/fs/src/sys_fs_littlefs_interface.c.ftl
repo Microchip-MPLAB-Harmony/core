@@ -73,12 +73,12 @@ static LITTLEFS_FILE_OBJECT CACHE_ALIGN LFSFileObject[SYS_FS_MAX_FILES];
 static LITTLEFS_DIR_OBJECT CACHE_ALIGN LFSDirObject[SYS_FS_MAX_FILES];
 static uint8_t startupflag = 0;
 
-#define     LFS_READ_SIZE   512
-#define     LFS_PROG_SIZE   512
-#define     LFS_BLOCK_SIZE   512
-#define     LFS_BLOCK_COUNT   (${SYS_FS_LFS_SIZE}*1024/512)
+#define     LFS_READ_SIZE   2048
+#define     LFS_PROG_SIZE   2048
+#define     LFS_BLOCK_SIZE   2048
+#define     LFS_BLOCK_COUNT   (${SYS_FS_LFS_SIZE}*1024/2048)
 #define     LFS_BLOCK_CYCLES   16
-#define     LFS_CACHE_SIZE   512
+#define     LFS_CACHE_SIZE   2048
 #define     LFS_LOOKAHEAD_SIZE   64
 
 uint8_t ReadBuf[LFS_CACHE_SIZE] = {0};

@@ -302,7 +302,7 @@ int lfs_bdio_prog(const struct lfs_config *cfg, lfs_block_t block,
 
             bytesToTransfer -= currentXferLen;
             data            += currentXferLen;
-            block          += sectorXferCntr;
+            block           += currentXferLen/cfg->block_size;
         }
     }
     else
