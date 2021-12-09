@@ -226,6 +226,20 @@ def updateNumRows(symbol, event):
 
     symbol.setVisible(is_dependency_satisfied == True and is_main_array_enabled == True)
 
+def calculateROMLength (symbol, event):
+    localComponent = symbol.getComponent()
+
+    is_main_array_enabled = localComponent.getSymbolValue("EEPROM_EMULATOR_MAIN_ARRAY_ENABLED")
+    total_eeprom_size = localComponent.getSymbolValue("EEPROM_EMULATOR_EEPROM_SIZE")
+    flash_size = localComponent.getSymbolValue("EEPROM_EMULATOR_MAIN_ARRAY_SIZE")
+    
+    if is_main_array_enabled == True:
+        rom_length = flash_size - total_eeprom_size
+    else:
+        rom_length = flash_size
+    
+    symbol.setValue("ROM_LENGTH=" + str(hex(rom_length)))    
+
 def fileGeneration(emulated_eeprom):
     configName = Variables.get("__CONFIGURATION_NAME")
 
@@ -294,6 +308,8 @@ def fileGeneration(emulated_eeprom):
 def instantiateComponent(emulated_eeprom):
     global isRWW_EEPROM_Available
     EEPROMEmulatorAddrSpaces.append(SupportedAddrSpaces[0])
+    
+    coreComponent = Database.getComponentByID("core")
 
     nvmctrlRWWEEPROMNode = ATDF.getNode("/avr-tools-device-file/devices/device/address-spaces/address-space/memory-segment@[name=\"RWW\"]")
     nvmctrlDataFlashNode = ATDF.getNode("/avr-tools-device-file/devices/device/address-spaces/address-space/memory-segment@[name=\"DATAFLASH\"]")
@@ -386,6 +402,13 @@ def instantiateComponent(emulated_eeprom):
     eep_emu_EEPROMStartAddr.setReadOnly(True)
     eep_emu_EEPROMStartAddr.setVisible(False)
     eep_emu_EEPROMStartAddr.setDependencies(updateEEPROMStartAddr, ["EEPROM_EMULATOR_EEPROM_SIZE", "EEPROM_EMULATOR_MAIN_ARRAY_SIZE", "EEPROM_EMULATOR_MAIN_ARRAY_ENABLED", "EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED"])
+    
+    #XC32 Linker macor - ROM Length 
+    xc32LinkerMacroROMLength = emulated_eeprom.createSettingSymbol("XC32_LINKER_MACRO_ROM_LENGTH", None)
+    xc32LinkerMacroROMLength.setCategory("C32-LD")
+    xc32LinkerMacroROMLength.setKey("preprocessor-macros")
+    xc32LinkerMacroROMLength.setAppend(True, ";=")
+    xc32LinkerMacroROMLength.setDependencies(calculateROMLength, ["EEPROM_EMULATOR_MAIN_ARRAY_ENABLED", "EEPROM_EMULATOR_EEPROM_SIZE", "EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED"])
 
     #--<UI>--Number of Rows selected for EEPROM Emulation
     if nvmctrlEepromSizeFuseNode == None:
@@ -400,7 +423,6 @@ def instantiateComponent(emulated_eeprom):
     eep_emu_EEPROMSize.setReadOnly(True)
     eep_emu_EEPROMSize.setVisible(False)
     if nvmctrlEepromSizeFuseNode != None:
-        coreComponent = Database.getComponentByID("core")
         eep_size_sym =  coreComponent.getSymbolValue("DEVICE_NVMCTRL_EEPROM_SIZE")
         if eep_size_sym != None:
             eep_emu_EEPROMSize.setDefaultValue(getSelectedEEPROMSize("DEVICE_NVMCTRL_EEPROM_SIZE"))

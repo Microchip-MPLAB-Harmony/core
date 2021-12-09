@@ -128,6 +128,16 @@ def updateEEPROMSizeBytes(symbol, event):
     else:
         symbol.setVisible(event["value"])
 
+def calculateROMLength (symbol, event):
+    localComponent = symbol.getComponent()
+
+    total_eeprom_size = localComponent.getSymbolValue("EEPROM_EMULATOR_EEPROM_SIZE")
+    flash_size = localComponent.getSymbolValue("EEPROM_EMULATOR_FLASH_SIZE")
+    
+    rom_length = flash_size - total_eeprom_size
+    
+    symbol.setValue("ROM_LENGTH=" + str(hex(rom_length)))  
+
 def fileGeneration(emulated_eeprom):
     configName = Variables.get("__CONFIGURATION_NAME")
 
@@ -259,6 +269,13 @@ def instantiateComponent(emulated_eeprom):
     eep_emu_EEPROMStartAddr.setDefaultValue(0)
     eep_emu_EEPROMStartAddr.setVisible(False)
     eep_emu_EEPROMStartAddr.setDependencies(updateEEPROMStartAddr, ["EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", "EEPROM_EMULATOR_EEPROM_SIZE"])
+    
+    #XC32 Linker macor - ROM Length 
+    xc32LinkerMacroROMLength = emulated_eeprom.createSettingSymbol("XC32_LINKER_MACRO_ROM_LENGTH", None)
+    xc32LinkerMacroROMLength.setCategory("C32-LD")
+    xc32LinkerMacroROMLength.setKey("preprocessor-macros")
+    xc32LinkerMacroROMLength.setAppend(True, ";=")
+    xc32LinkerMacroROMLength.setDependencies(calculateROMLength, ["EEPROM_EMULATOR_EEPROM_SIZE", "EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED"])
 
     #-------Final Configuration Snapshot-------------------------------------------------------------------------------------------#
 
