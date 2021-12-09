@@ -57,10 +57,10 @@ def activateAndConnectDependencies(componentID):
     res = Database.activateComponents(eep_emu_ActivateTable)
     res = Database.connectDependencies(eep_emu_ConnectTable)
 
-def getSelectedEEPROMSize():
+def getSelectedEEPROMSize(eep_size_sym):
     selectedKeyIndex = 0
     coreComponent = Database.getComponentByID("core")
-    eepromSizeSym = coreComponent.getSymbolByID("DEVICE_NVMCTRL_EEPROM_SIZE")
+    eepromSizeSym = coreComponent.getSymbolByID(eep_size_sym)
     selectedKey = eepromSizeSym.getSelectedKey()
 
     for index in range(eepromSizeSym.getKeyCount()):
@@ -84,7 +84,7 @@ def updateEEPROMSize(symbol, event):
         num_rows = event["value"]
         symbol.setValue(num_rows * pages_per_row * page_size)
     else:
-        symbol.setValue(getSelectedEEPROMSize())
+        symbol.setValue(getSelectedEEPROMSize(event["id"]))
 
 def updateLogicalEEPROMSize (symbol, event):
     localComponent = symbol.getComponent()
@@ -400,8 +400,13 @@ def instantiateComponent(emulated_eeprom):
     eep_emu_EEPROMSize.setReadOnly(True)
     eep_emu_EEPROMSize.setVisible(False)
     if nvmctrlEepromSizeFuseNode != None:
-        eep_emu_EEPROMSize.setDefaultValue(getSelectedEEPROMSize())
-        eep_emu_EEPROMSize.setDependencies(updateEEPROMSize, ["core.DEVICE_NVMCTRL_EEPROM_SIZE", "EEPROM_EMULATOR_MAIN_ARRAY_ENABLED", "EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED"])
+        coreComponent = Database.getComponentByID("core")
+        eep_size_sym =  coreComponent.getSymbolValue("DEVICE_NVMCTRL_EEPROM_SIZE")
+        if eep_size_sym != None:
+            eep_emu_EEPROMSize.setDefaultValue(getSelectedEEPROMSize("DEVICE_NVMCTRL_EEPROM_SIZE"))
+        else:
+            eep_emu_EEPROMSize.setDefaultValue(getSelectedEEPROMSize("FUSE_SYMBOL_VALUE1"))        
+        eep_emu_EEPROMSize.setDependencies(updateEEPROMSize, ["core.DEVICE_NVMCTRL_EEPROM_SIZE", "core.FUSE_SYMBOL_VALUE1", "EEPROM_EMULATOR_MAIN_ARRAY_ENABLED", "EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED"])
     else:
         eep_emu_EEPROMSize.setDefaultValue(eep_emu_FlashRowSize.getValue() * 2)
         eep_emu_EEPROMSize.setDependencies(updateEEPROMSize, ["EEPROM_EMULATOR_MAIN_ARRAY_NUM_ROWS", "EEPROM_EMULATOR_MAIN_ARRAY_ENABLED", "EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED"])
