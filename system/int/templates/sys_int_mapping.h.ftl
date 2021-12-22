@@ -50,7 +50,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-<#if __PROCESSOR?matches("ATSAMA5.*") ||  __PROCESSOR?matches("SAM9X6.*") >
+<#if __PROCESSOR?matches("ATSAMA5.*") ||  __PROCESSOR?matches("SAM9X.*") >
 <#elseif __PROCESSOR?matches("SAMA7.*") >
 	<#lt>#define SYS_INT_IsEnabled()                 ((CPSR_I_Msk & __get_CPSR()) == 0)
 	<#lt>#define SYS_INT_SourceEnable( source )      GIC_EnableIRQ( source )
