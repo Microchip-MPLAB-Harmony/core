@@ -85,7 +85,7 @@ extern "C" {
     has been retired by the driver if no event handler callback was set.
 
   Remarks:
-    None.
+    Refer sys_media.h for definition of SYS_MEDIA_BLOCK_COMMAND_HANDLE..
 */
 typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE DRV_SDMMC_COMMAND_HANDLE;
 
@@ -102,7 +102,7 @@ typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE DRV_SDMMC_COMMAND_HANDLE;
     accepted.
 
   Remarks:
-    None.
+    Refer sys_media.h for definition of SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID..
 */
 
 #define DRV_SDMMC_COMMAND_HANDLE_INVALID SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID
@@ -117,10 +117,12 @@ typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE DRV_SDMMC_COMMAND_HANDLE;
     This enumeration identifies the possible events that can result from a
     read or a write request issued by the client.
 
-   Remarks:
     One of these values is passed in the "event" parameter of the event
     handling callback function that client registered with the driver by
     calling the DRV_SDMMC_EventHandlerSet function when a request is completed.
+
+   Remarks:
+    Refer sys_media.h for SYS_MEDIA_XXX definitions.
 */
 
 typedef enum
@@ -144,8 +146,10 @@ typedef enum
     This enumeration identifies the possible status values of a read or write
     buffer request submitted to the driver.
 
-   Remarks:
     One of these values is returned by the DRV_SDMMC_CommandStatus routine.
+
+   Remarks:
+    Refer sys_media.h for SYS_MEDIA_XXX definitions.
 */
 typedef enum
 {
@@ -177,8 +181,19 @@ typedef enum
     types) match the types specified by this function pointer in order to
     receive event calls back from the driver.
 
-    The parameters and return values are described here and a partial example
-    implementation is provided.
+    If the event is DRV_SDMMC_EVENT_COMMAND_COMPLETE, it means that the
+    write or a read operation was completed successfully.
+
+    If the event is DRV_SDMMC_EVENT_COMMAND_ERROR, it means that the operation
+    was not completed successfully.
+
+    The context parameter contains the handle to the client context, provided
+    at the time the event handling function was  registered using the
+    DRV_SDMMC_EventHandlerSet function. This context handle value is
+    passed back to the client as the "context" parameter.  It can be any value
+    necessary to identify the client context or instance (such as a pointer to
+    the client's data) instance of the client that made the read/write
+    request.
 
   Parameters:
     event           - Identifies the type of event
@@ -205,33 +220,23 @@ typedef enum
         switch(event)
         {
             case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
-
+            {
                 // Handle the completed buffer.
                 break;
+            }
 
             case DRV_SDMMC_EVENT_COMMAND_ERROR:
             default:
-
+            {
                 // Handle error.
                 break;
+            }
         }
     }
     </code>
 
   Remarks:
-    If the event is DRV_SDMMC_EVENT_COMMAND_COMPLETE, it means that the
-    write or a read operation was completed successfully.
-
-    If the event is DRV_SDMMC_EVENT_COMMAND_ERROR, it means that the operation
-    was not completed successfully.
-
-    The context parameter contains the handle to the client context, provided
-    at the time the event handling function was  registered using the
-    DRV_SDMMC_EventHandlerSet function. This context handle value is
-    passed back to the client as the "context" parameter.  It can be any value
-    necessary to identify the client context or instance (such as a pointer to
-    the client's data) instance of the client that made the read/write
-    request.
+    Refer sys_media.h for definition of SYS_MEDIA_EVENT_HANDLER.
 */
 typedef SYS_MEDIA_EVENT_HANDLER DRV_SDMMC_EVENT_HANDLER;
 
@@ -413,7 +418,7 @@ void DRV_SDMMC_Tasks
     Opens the specified SD Card driver instance and returns a handle to it.
 
   Description:
-    This routine opens the specified SD Card driver instance and provides a
+    This routine opens the specified SDMMC driver instance and provides a
     handle that must be provided to all other client-level operations to
     identify the caller and the instance of the driver.
 
@@ -566,7 +571,7 @@ void DRV_SDMMC_Close
   Example:
     <code>
 
-    uint8_t myBuffer[MY_BUFFER_SIZE];
+    uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
 
     // address should be block aligned.
     uint32_t blockStart = 0x00;
@@ -663,13 +668,44 @@ void DRV_SDMMC_AsyncRead
   Example:
     <code>
 
-    uint8_t myBuffer[MY_BUFFER_SIZE];
+    uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
 
     // address should be block aligned.
     uint32_t blockStart = 0x00;
     uint32_t nBlock = 2;
     DRV_SDMMC_COMMAND_HANDLE commandHandle;
     MY_APP_OBJ myAppObj;
+
+    // Event is received when the buffer is processed.
+
+    void APP_SDMMCEventHandler(
+        DRV_SDMMC_EVENT event,
+        DRV_SDMMC_COMMAND_HANDLE commandHandle,
+        uintptr_t contextHandle
+    )
+    {
+        // contextHandle points to myAppObj.
+
+        switch(event)
+        {
+            case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
+            {
+                // This means the data was transferred successfully
+                break;
+            }
+
+            case DRV_SDMMC_EVENT_COMMAND_ERROR:
+            {
+                // Error handling here
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+    }
 
     // mySDMMCHandle is the handle returned
     // by the DRV_SDMMC_Open function.
@@ -683,34 +719,6 @@ void DRV_SDMMC_AsyncRead
     if(commandHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
     {
         // Error handling here
-    }
-
-    // Event is received when
-    // the buffer is processed.
-
-    void APP_SDMMCEventHandler(
-        DRV_SDMMC_EVENT event,
-        DRV_SDMMC_COMMAND_HANDLE commandHandle,
-        uintptr_t contextHandle
-    )
-    {
-        // contextHandle points to myAppObj.
-
-        switch(event)
-        {
-            case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
-
-                // This means the data was transferred successfully
-                break;
-
-            case DRV_SDMMC_EVENT_COMMAND_ERROR:
-
-                // Error handling here
-                break;
-
-            default:
-                break;
-        }
     }
 
     </code>
@@ -837,7 +845,7 @@ DRV_SDMMC_COMMAND_STATUS DRV_SDMMC_CommandStatus
     </code>
 
   Remarks:
-    None.
+    Refer sys_media.h for definition of SYS_MEDIA_GEOMETRY.
 */
 
 SYS_MEDIA_GEOMETRY* DRV_SDMMC_GeometryGet
@@ -898,23 +906,9 @@ SYS_MEDIA_GEOMETRY* DRV_SDMMC_GeometryGet
     // myAppObj is an application specific state data object.
     MY_APP_OBJ myAppObj;
 
-    uint8_t myBuffer[MY_BUFFER_SIZE];
+    uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
     uint32_t blockStart, nBlock;
     DRV_SDMMC_COMMAND_HANDLE commandHandle;
-
-    // drvSDMMCHandle is the handle returned
-    // by the DRV_SDMMC_Open function.
-
-    // Client registers an event handler with driver. This is done once.
-
-    DRV_SDMMC_EventHandlerSet(drvSDMMCHandle, APP_SDMMCEventHandler, (uintptr_t)&myAppObj);
-
-    DRV_SDMMC_AsyncRead(drvSDMMCHandle, &commandHandle, &myBuffer[0], blockStart, nBlock);
-
-    if(commandHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
-    {
-        // Error handling here
-    }
 
     // Event Processing Technique. Event is received when operation is done.
 
@@ -932,19 +926,38 @@ SYS_MEDIA_GEOMETRY* DRV_SDMMC_GeometryGet
         switch(event)
         {
             case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
-
+            {
                 // This means the data was transferred successfully
                 break;
+            }
 
             case DRV_SDMMC_EVENT_COMMAND_ERROR:
-
+            {
                 // Error handling here
                 break;
+            }
 
             default:
+            {
                 break;
+            }
         }
     }
+
+    // drvSDMMCHandle is the handle returned
+    // by the DRV_SDMMC_Open function.
+
+    // Client registers an event handler with driver. This is done once.
+
+    DRV_SDMMC_EventHandlerSet(drvSDMMCHandle, APP_SDMMCEventHandler, (uintptr_t)&myAppObj);
+
+    DRV_SDMMC_AsyncRead(drvSDMMCHandle, &commandHandle, &myBuffer[0], blockStart, nBlock);
+
+    if(commandHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
+    {
+        // Error handling here
+    }
+
     </code>
 
   Remarks:
@@ -1033,6 +1046,7 @@ bool DRV_SDMMC_IsAttached
 
   Returns:
     Returns true if the attached SD Card is write protected.
+
     Returns false if the handle is not valid, or if the SD Card is not write protected,
     or if the write protection check is not enabled.
   Example:

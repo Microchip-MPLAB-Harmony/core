@@ -402,11 +402,9 @@ SYS_STATUS DRV_NAND_FLASH_Status( const SYS_MODULE_INDEX drvIndex );
                    open routine
 
   Returns:
-    false
-    - Flash reset is failed
+    true - Flash reset is completed successfully
 
-    true
-    - Flash reset is completed successfully
+    false - Flash reset is failed
 
   Example:
     <code>
@@ -494,11 +492,9 @@ DRV_NAND_FLASH_TRANSFER_STATUS DRV_NAND_FLASH_TransferStatusGet(const DRV_HANDLE
     address         - Address to be send after command cycle. Address 0x20 is used for ONFI compliant Flash.
 
   Returns:
-    false
-    - If invalid handle
+    true - If ID read successfully from the flash
 
-    true
-    - If ID read successfully from the flash
+    false  - If invalid handle
 
   Example:
     <code>
@@ -541,11 +537,9 @@ bool DRV_NAND_FLASH_IdRead(const DRV_HANDLE handle, uint32_t *readId, uint8_t ad
     featureAddress  - Specific feature address to be send after command cycle.
 
   Returns:
-    false
-    - If invalid handle
+    true - If specific feature is enabled or disabled successfully to the flash
 
-    true
-    - If specific feature is enabled or disabled successfully to the flash
+    false  - If invalid handle
 
   Example:
     <code>
@@ -588,11 +582,9 @@ bool DRV_NAND_FLASH_FeatureSet(const DRV_HANDLE handle, uint8_t *featureData, ui
     featureAddress  - Specific feature address to be send after command cycle.
 
   Returns:
-    false
-    - If invalid handle
+    true - If specific feature is read successfully from the flash
 
-    true
-    - If specific feature is read successfully from the flash
+    false - If invalid handle
 
   Example:
     <code>
@@ -636,11 +628,9 @@ bool DRV_NAND_FLASH_FeatureGet(const DRV_HANDLE handle, uint8_t *featureData, ui
     size              - Total number of parameter page data bytes to be read
 
   Returns:
-    false
-    - If parameter page read is failed
+    true - If parameter page is successfully read from the NAND Flash
 
-    true
-    - If parameter page is successfully read from the NAND Flash
+    false - If parameter page read is failed
 
   Example:
     <code>
@@ -689,11 +679,9 @@ bool DRV_NAND_FLASH_ParameterPageRead(const DRV_HANDLE handle, uint8_t *paramete
     geometry          - Pointer to destination geometry buffer into which geometry to be placed
 
   Returns:
-    false
-    - If geometry read is failed
+    true - If geometry is successfully read from the NAND Flash
 
-    true
-    - If geometry is successfully read from the NAND Flash
+    false  - If geometry read is failed
 
   Example:
     <code>
@@ -733,11 +721,9 @@ bool DRV_NAND_FLASH_GeometryGet( const DRV_HANDLE handle, DRV_NAND_FLASH_GEOMETR
     blockNum        - Block number to check
 
   Returns:
-    false
-    - If block is bad
+    true - If block is good
 
-    true
-    - If block is good
+    false - If block is bad
 
   Example:
     <code>
@@ -778,11 +764,9 @@ bool DRV_NAND_FLASH_SkipBlock_BlockCheck(const DRV_HANDLE handle, uint16_t block
                       0 - If block to be tagged as good block.
 
   Returns:
-    false
-    - If failed to tag a block
+    true - If given block is tagged as bad or good
 
-    true
-    - If given block is tagged as bad or good
+    false - If failed to tag a block
 
   Example:
     <code>
@@ -823,11 +807,9 @@ bool DRV_NAND_FLASH_SkipBlock_BlockTag(const DRV_HANDLE handle, uint16_t blockNu
                         1 - Block will not check before erasing a given block.
 
   Returns:
-    false
-    - If block erase fails
+    true - If the block erase is successfully completed
 
-    true
-    - If the block erase is successfully completed
+    false - If block erase fails
 
   Example:
     <code>
@@ -852,7 +834,14 @@ bool DRV_NAND_FLASH_SkipBlock_BlockErase(const DRV_HANDLE handle, uint16_t block
 
 // *****************************************************************************
 /* Function:
-    bool DRV_NAND_FLASH_SkipBlock_PageRead(const DRV_HANDLE handle, uint16_t blockNum, uint16_t pageNum, uint8_t *data, uint8_t *spare, bool disableBlockCheck)
+    bool DRV_NAND_FLASH_SkipBlock_PageRead(
+        const DRV_HANDLE handle,
+        uint16_t blockNum,
+        uint16_t pageNum,
+        uint8_t *data,
+        uint8_t *spare,
+        bool disableBlockCheck
+    );
 
   Summary:
     Reads the data and/or the spare area of a page of given block from NAND Flash.
@@ -876,11 +865,9 @@ bool DRV_NAND_FLASH_SkipBlock_BlockErase(const DRV_HANDLE handle, uint16_t block
                         1 - Block will not check before reading a page.
 
   Returns:
-    false
-    - If Page read fails
+    true  - If Page read is successfully completed
 
-    true
-    - If Page read is successfully completed
+    false - If Page read fails
 
   Example:
     <code>
@@ -901,7 +888,14 @@ bool DRV_NAND_FLASH_SkipBlock_BlockErase(const DRV_HANDLE handle, uint16_t block
     This routine will block waiting until read request is completed successfully.
 */
 
-bool DRV_NAND_FLASH_SkipBlock_PageRead(const DRV_HANDLE handle, uint16_t blockNum, uint16_t pageNum, uint8_t *data, uint8_t *spare, bool disableBlockCheck);
+bool DRV_NAND_FLASH_SkipBlock_PageRead(
+    const DRV_HANDLE handle,
+    uint16_t blockNum,
+    uint16_t pageNum,
+    uint8_t *data,
+    uint8_t *spare,
+    bool disableBlockCheck
+);
 
 // *****************************************************************************
 /* Function:
@@ -926,11 +920,9 @@ bool DRV_NAND_FLASH_SkipBlock_PageRead(const DRV_HANDLE handle, uint16_t blockNu
                         1 - Block will not check before reading a given block.
 
   Returns:
-    false
-    - If Block read fails
+    true - If Block read is successfully completed
 
-    true
-    - If Block read is successfully completed
+    false - If Block read fails
 
   Example:
     <code>
@@ -954,7 +946,14 @@ bool DRV_NAND_FLASH_SkipBlock_BlockRead(const DRV_HANDLE handle, uint16_t blockN
 
 // *****************************************************************************
 /* Function:
-    bool DRV_NAND_FLASH_SkipBlock_PageWrite(const DRV_HANDLE handle, uint16_t blockNum, uint16_t pageNum, uint8_t *data, uint8_t *spare, bool disableBlockCheck)
+    bool DRV_NAND_FLASH_SkipBlock_PageWrite(
+        const DRV_HANDLE handle,
+        uint16_t blockNum,
+        uint16_t pageNum,
+        uint8_t *data,
+        uint8_t *spare,
+        bool disableBlockCheck
+    );
 
   Summary:
     Writes the data and/or the spare area of a page of given block to NAND Flash.
@@ -977,11 +976,9 @@ bool DRV_NAND_FLASH_SkipBlock_BlockRead(const DRV_HANDLE handle, uint16_t blockN
                         1 - Block will not check before writing a page.
 
   Returns:
-    false
-    - If Page write fails
+    true - If Page write is successfully completed
 
-    true
-    - If Page write is successfully completed
+    false - If Page write fails
 
   Example:
     <code>
@@ -1005,7 +1002,14 @@ bool DRV_NAND_FLASH_SkipBlock_BlockRead(const DRV_HANDLE handle, uint16_t blockN
     Client should wait until write is complete to send next transfer request.
 */
 
-bool DRV_NAND_FLASH_SkipBlock_PageWrite(const DRV_HANDLE handle, uint16_t blockNum, uint16_t pageNum, uint8_t *data, uint8_t *spare, bool disableBlockCheck);
+bool DRV_NAND_FLASH_SkipBlock_PageWrite(
+    const DRV_HANDLE handle,
+    uint16_t blockNum,
+    uint16_t pageNum,
+    uint8_t *data,
+    uint8_t *spare,
+    bool disableBlockCheck
+);
 
 // *****************************************************************************
 /* Function:
@@ -1029,11 +1033,9 @@ bool DRV_NAND_FLASH_SkipBlock_PageWrite(const DRV_HANDLE handle, uint16_t blockN
                         1 - Block will not check before writing a given block.
 
   Returns:
-    false
-    - If Block write fails
+    true  - If Block write is successfully completed
 
-    true
-    - If Block write is successfully completed
+    false - If Block write fails
 
   Example:
     <code>

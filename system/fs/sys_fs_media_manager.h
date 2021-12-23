@@ -74,7 +74,7 @@ File System Service Media Manager Interface Declarations and Types
     the driver if no event handler callback was set.
 
   Remarks:
-    None.
+    Refer to sys_media.h for actual definition..
 */
 
 typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE  SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE;
@@ -122,7 +122,7 @@ typedef uintptr_t SYS_FS_MEDIA_HANDLE;
     returned by read/write/erase routines when the request could not be taken.
 
   Remarks:
-    None.
+    Refer to sys_media.h for actual definition.
 */
 
 #define SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID
@@ -137,10 +137,12 @@ typedef uintptr_t SYS_FS_MEDIA_HANDLE;
     This enumeration identifies the possible events that can result from a
     media.
 
-   Remarks:
     One of these values is passed in the "event" parameter of the event
     handling callback function that client registered with the driver by
     setting the event handler when a block request is completed.
+
+   Remarks:
+    Refer to sys_media.h for actual enumerations.
 */
 
 typedef enum
@@ -162,9 +164,11 @@ typedef enum
   Description:
     This structure contains the information of property of a media device.
 
-  Remarks:
     For a device, if multiple properties are applicable, they can be ORed
     together and used.
+
+  Remarks:
+    Refer to sys_media.h for actual enumerations.
 */
 
 typedef enum
@@ -268,7 +272,7 @@ typedef enum
     /* Media is of type RAM */
     SYS_FS_MEDIA_TYPE_RAM,
     
-    /* Media is of type SPI Flash */
+    /* Media is of type SPI/QSPI Flash, SPI/I2C EEPROM */
     SYS_FS_MEDIA_TYPE_SPIFLASH
 
 } SYS_FS_MEDIA_TYPE;
@@ -283,7 +287,7 @@ typedef enum
     This enumeration contains the various status of buffer.
 
   Remarks:
-    None.
+    Refer to sys_media.h for actual enumerations.
 */
 typedef enum
 {
@@ -310,10 +314,12 @@ typedef enum
   Description:
     This structure contains the information of a sys media region.
 
-  Remarks:
     A media can have multiple regions. Sum of size of all the regions is the
     total memory size of the media. Each region is further divided into blocks
     of identical size.
+
+  Remarks:
+    Refer to sys_media.h for actual definition.
 */
 
 typedef SYS_MEDIA_REGION_GEOMETRY SYS_FS_MEDIA_REGION_GEOMETRY;
@@ -329,9 +335,11 @@ typedef SYS_MEDIA_REGION_GEOMETRY SYS_FS_MEDIA_REGION_GEOMETRY;
     the structure also has property of the media like media is one time
     programmable (OTP) or Read Only etc.
 
-  Remarks:
     A memory device can have multiple erase block regions. Sum of all the
     regions is the total memory size of the device.
+
+  Remarks:
+    Refer to sys_media.h for actual definition.
 */
 
 typedef SYS_MEDIA_GEOMETRY SYS_FS_MEDIA_GEOMETRY;
@@ -458,7 +466,7 @@ typedef struct
     None.
 
   Remarks:
-    None.
+    Refer to sys_media.h for actual definition.
 */
 typedef SYS_MEDIA_EVENT_HANDLER SYS_FS_MEDIA_EVENT_HANDLER;
 
@@ -551,6 +559,9 @@ SYS_FS_MEDIA_HANDLE SYS_FS_MEDIA_MANAGER_Register
     (
             SYS_FS_MEDIA_HANDLE    handle
     )
+
+  Summary:
+    Function to De-register media drivers with the media manager.
 
   Description:
     Function called by a media to deregister itself to the media manager. For
@@ -793,10 +804,6 @@ uintptr_t SYS_FS_MEDIA_MANAGER_AddressGet
   Summary:
     Register the event handler for Mount/Un-Mount events.
 
-  Parameters:
-    eventHandler - FS Client event handler pointer
-    context - FS Client context
-
   Description:
     This function is used to register a FS client event handler for notifying the
     Mount/Un-Mount events when AutoMount feature is enabled for File system.
@@ -805,14 +812,21 @@ uintptr_t SYS_FS_MEDIA_MANAGER_AddressGet
     The client should check if the mount name passed when event handler is called
     is the one it is expecting and then proceed.
 
-  Note:
+  Parameters:
+    eventHandler - FS Client event handler pointer
+    context - FS Client context
+
+  Returns:
+    None.
+
+  Remarks:
     This API should not be called directly from Application. Application should use
     SYS_FS_EventHandlerSet() instead.
 
     This API is Available only when SYS_FS_AUTOMOUNT_ENABLE is set to true.
 
     See sys_fs.h for usage information.
-***************************************************************************/
+*/
 void SYS_FS_MEDIA_MANAGER_EventHandlerSet
 (
     const void * eventHandler,
@@ -839,7 +853,7 @@ void SYS_FS_MEDIA_MANAGER_EventHandlerSet
     eventHandler - Event handler pointer.
  
   Returns:
-    Pointer to the media geometry on Success else NULL.
+    None.
 */
 void SYS_FS_MEDIA_MANAGER_RegisterTransferHandler
 (

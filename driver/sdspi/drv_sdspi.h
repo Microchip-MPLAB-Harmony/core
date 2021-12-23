@@ -86,6 +86,9 @@
     One of these values is passed in the "event" parameter of the event
     handling callback function that client registered with the driver by
     calling the DRV_SDSPI_EventHandlerSet function when a request is completed.
+
+  Remarks:
+    Refer sys_media.h for definition of SYS_MEDIA_XXX.
 */
 
 typedef enum
@@ -97,6 +100,22 @@ typedef enum
     DRV_SDSPI_EVENT_COMMAND_ERROR = SYS_MEDIA_EVENT_BLOCK_COMMAND_ERROR
 
 } DRV_SDSPI_EVENT;
+
+// *****************************************************************************
+/* SDSPI Driver Events
+
+   Summary
+    Identifies the possible events that can result from a request.
+
+   Description
+    This enumeration identifies the possible status values of a read or write
+    buffer request submitted to the driver.
+
+    One of these values is returned by the DRV_SDSPI_CommandStatusGet routine.
+
+   Remarks:
+    Refer sys_media.h for SYS_MEDIA_XXX definitions.
+*/
 
 typedef enum
 {
@@ -114,6 +133,28 @@ typedef enum
 
 } DRV_SDSPI_COMMAND_STATUS;
 
+// *****************************************************************************
+/* SDSPI Driver command handle.
+
+  Summary:
+    Handle identifying commands queued in the driver.
+
+  Description:
+    A command handle is returned by a call to the Read or Write
+    functions. This handle allows the application to track the completion
+    of the operation. This command handle is also returned to the client
+    along with the event that has occurred with respect to the command.
+    This allows the application to connect the event to a specific
+    command in case where multiple commands are queued.
+
+    The command handle associated with the command request expires when the
+    client has been notified of the completion of the command (after event
+    handler function that notifies the client returns) or after the command
+    has been retired by the driver if no event handler callback was set.
+
+  Remarks:
+    Refer sys_media.h for definition of SYS_MEDIA_BLOCK_COMMAND_HANDLE..
+*/
 typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE  DRV_SDSPI_COMMAND_HANDLE;
 
 // *****************************************************************************
@@ -128,7 +169,7 @@ typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE  DRV_SDSPI_COMMAND_HANDLE;
     accepted.
 
   Remarks:
-    None.
+    Refer sys_media.h for definition of SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID.
 */
 
 #define DRV_SDSPI_COMMAND_HANDLE_INVALID SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID
@@ -146,8 +187,19 @@ typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE  DRV_SDSPI_COMMAND_HANDLE;
     types) match the types specified by this function pointer in order to
     receive event calls back from the driver.
 
-    The parameters and return values are described here and a partial example
-    implementation is provided.
+    If the event is DRV_SDSPI_EVENT_COMMAND_COMPLETE, it means that the
+    write or a erase operation was completed successfully.
+
+    If the event is DRV_SDSPI_EVENT_COMMAND_ERROR, it means that the scheduled
+    operation was not completed successfully.
+
+    The context parameter contains the handle to the client context, provided
+    at the time the event handling function was  registered using the
+    DRV_SDSPI_EventHandlerSet function. This context handle value is
+    passed back to the client as the "context" parameter.  It can be any value
+    necessary to identify the client context or instance (such as a pointer to
+    the client's data) instance of the client that made the read/write/erase
+    request.
 
   Parameters:
     event           - Identifies the type of event
@@ -162,45 +214,38 @@ typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE  DRV_SDSPI_COMMAND_HANDLE;
 
   Example:
     <code>
-    void APP_MySDSPIEventHandler
-    (
+    void APP_SDSPIEventHandler(
         DRV_SDSPI_EVENT event,
         DRV_SDSPI_COMMAND_HANDLE commandHandle,
-        uintptr_t context
+        uintptr_t contextHandle
     )
     {
-        MY_APP_DATA_STRUCT* pAppData = (MY_APP_DATA_STRUCT*) context;
+        // contextHandle points to myAppObj.
 
         switch(event)
         {
             case DRV_SDSPI_EVENT_COMMAND_COMPLETE:
-
-                // Handle the completed buffer.
+            {
+                // This means the data was transferred successfully
                 break;
+            }
 
             case DRV_SDSPI_EVENT_COMMAND_ERROR:
-            default:
-
-                // Handle error.
+            {
+                // Error handling here
                 break;
+            }
+
+            default:
+            {
+                break;
+            }
         }
     }
     </code>
 
   Remarks:
-    If the event is DRV_SDSPI_EVENT_COMMAND_COMPLETE, it means that the
-    write or a erase operation was completed successfully.
-
-    If the event is DRV_SDSPI_EVENT_COMMAND_ERROR, it means that the scheduled
-    operation was not completed successfully.
-
-    The context parameter contains the handle to the client context, provided
-    at the time the event handling function was  registered using the
-    DRV_SDSPI_EventHandlerSet function. This context handle value is
-    passed back to the client as the "context" parameter.  It can be any value
-    necessary to identify the client context or instance (such as a pointer to
-    the client's data) instance of the client that made the read/write/erase
-    request.
+    Refer sys_media.h for definition of SYS_MEDIA_EVENT_HANDLER.
 */
 typedef SYS_MEDIA_EVENT_HANDLER     DRV_SDSPI_EVENT_HANDLER;
 
@@ -542,7 +587,7 @@ void DRV_SDSPI_Tasks ( SYS_MODULE_OBJ object );
   Example:
     <code>
     #define MY_BUFFER_SIZE 1024
-    uint8_t myBuffer[MY_BUFFER_SIZE];
+    uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
 
     // Address must be block aligned.
     uint32_t blockStart = 0x00;
@@ -625,13 +670,45 @@ bool DRV_SDSPI_SyncRead (
 
   Example:
     <code>
-    uint8_t myBuffer[MY_BUFFER_SIZE];
+    uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
 
     // address should be block aligned.
     uint32_t blockStart = 0x00;
     uint32_t nBlock = 2;
     DRV_SDSPI_COMMAND_HANDLE commandHandle;
     MY_APP_OBJ myAppObj;
+
+    // Event is received when
+    // the buffer is processed.
+
+    void APP_SDSPIEventHandler(
+        DRV_SDSPI_EVENT event,
+        DRV_SDSPI_COMMAND_HANDLE commandHandle,
+        uintptr_t contextHandle
+    )
+    {
+        // contextHandle points to myAppObj.
+
+        switch(event)
+        {
+            case DRV_SDSPI_EVENT_COMMAND_COMPLETE:
+            {
+                // This means the data was transferred successfully
+                break;
+            }
+
+            case DRV_SDSPI_EVENT_COMMAND_ERROR:
+            {
+                // Error handling here
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+    }
 
     // mySDSPIHandle is the handle returned
     // by the DRV_SDSPI_Open function.
@@ -649,35 +726,6 @@ bool DRV_SDSPI_SyncRead (
     {
         // Read Successfully queued
     }
-
-    // Event is received when
-    // the buffer is processed.
-
-    void APP_SDSPIEventHandler(
-        DRV_SDSPI_EVENT event,
-        DRV_SDSPI_COMMAND_HANDLE commandHandle,
-        uintptr_t contextHandle
-    )
-    {
-        // contextHandle points to myAppObj.
-
-        switch(event)
-        {
-            case DRV_SDSPI_EVENT_COMMAND_COMPLETE:
-
-                // This means the data was transferred successfully
-                break;
-
-            case DRV_SDSPI_EVENT_COMMAND_ERROR:
-
-                // Error handling here
-                break;
-
-            default:
-                break;
-        }
-    }
-
     </code>
 
   Remarks:
@@ -742,7 +790,7 @@ void DRV_SDSPI_AsyncRead
     <code>
 
     #define MY_BUFFER_SIZE          1024
-    uint8_t myBuffer[MY_BUFFER_SIZE];
+    uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
 
     // Address must be block aligned.
     uint32_t blockStart = 0x00;
@@ -831,26 +879,13 @@ bool DRV_SDSPI_SyncWrite(
   Example:
     <code>
 
-    uint8_t myBuffer[MY_BUFFER_SIZE];
+    uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
 
     // address should be block aligned.
     uint32_t blockStart = 0x00;
     uint32_t nBlock = 2;
     DRV_SDSPI_COMMAND_HANDLE commandHandle;
     MY_APP_OBJ myAppObj;
-
-    // mySDSPIHandle is the handle returned
-    // by the DRV_SDSPI_Open function.
-
-    // Client registers an event handler with driver
-    DRV_SDSPI_EventHandlerSet(mySDSPIHandle, APP_SDSPIEventHandler, (uintptr_t)&myAppObj);
-
-    DRV_SDSPI_AsyncWrite(mySDSPIHandle, &commandHandle, &myBuffer[0], blockStart, nBlock);
-
-    if(commandHandle == DRV_SDSPI_COMMAND_HANDLE_INVALID)
-    {
-        // Error handling here
-    }
 
     // Event is received when
     // the buffer is processed.
@@ -866,18 +901,35 @@ bool DRV_SDSPI_SyncWrite(
         switch(event)
         {
             case DRV_SDSPI_EVENT_COMMAND_COMPLETE:
-
+            {
                 // This means the data was transferred successfully
                 break;
+            }
 
             case DRV_SDSPI_EVENT_COMMAND_ERROR:
-
+            {
                 // Error handling here
                 break;
+            }
 
             default:
+            {
                 break;
+            }
         }
+    }
+
+    // mySDSPIHandle is the handle returned
+    // by the DRV_SDSPI_Open function.
+
+    // Client registers an event handler with driver
+    DRV_SDSPI_EventHandlerSet(mySDSPIHandle, APP_SDSPIEventHandler, (uintptr_t)&myAppObj);
+
+    DRV_SDSPI_AsyncWrite(mySDSPIHandle, &commandHandle, &myBuffer[0], blockStart, nBlock);
+
+    if(commandHandle == DRV_SDSPI_COMMAND_HANDLE_INVALID)
+    {
+        // Error handling here
     }
     </code>
 
@@ -1049,8 +1101,7 @@ bool DRV_SDSPI_IsWriteProtected( const DRV_HANDLE handle );
     </code>
 
   Remarks:
-    Refer to the "system/system_media.h" for the declaration of the SYS_MEDIA_GEOMETRY
-    structure.
+    Refer sys_media.h for definition of SYS_MEDIA_GEOMETRY.
 */
 SYS_MEDIA_GEOMETRY * DRV_SDSPI_GeometryGet ( const DRV_HANDLE handle );
 
@@ -1104,12 +1155,50 @@ SYS_MEDIA_GEOMETRY * DRV_SDSPI_GeometryGet ( const DRV_HANDLE handle );
     None.
 
   Example:
-    None.
+    <code>
+    // Event is received when
+    // the buffer is processed.
+
+    void APP_SDSPIEventHandler(
+        DRV_SDSPI_EVENT event,
+        DRV_SDSPI_COMMAND_HANDLE commandHandle,
+        uintptr_t contextHandle
+    )
+    {
+        // contextHandle points to myAppObj.
+
+        switch(event)
+        {
+            case DRV_SDSPI_EVENT_COMMAND_COMPLETE:
+            {
+                // This means the data was transferred successfully
+                break;
+            }
+
+            case DRV_SDSPI_EVENT_COMMAND_ERROR:
+            {
+                // Error handling here
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+    }
+
+    // mySDSPIHandle is the handle returned
+    // by the DRV_SDSPI_Open function.
+
+    // Client registers an event handler with driver
+    DRV_SDSPI_EventHandlerSet(mySDSPIHandle, APP_SDSPIEventHandler, (uintptr_t)&myAppObj);
+    </code>
 
   Remarks:
     If the client does not want to be notified when the queued operation
     has completed, it does not need to register a callback.
-	This API may not be used in applications using the SDSPI Driver in synchronous mode.
+    This API may not be used in applications using the SDSPI Driver in synchronous mode.
 */
 void DRV_SDSPI_EventHandlerSet
 (

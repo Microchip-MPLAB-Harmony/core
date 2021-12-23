@@ -109,7 +109,7 @@ typedef uintptr_t DRV_I2C_TRANSFER_HANDLE;
     None
 */
 
-#define DRV_I2C_TRANSFER_HANDLE_INVALID /*DOM-IGNORE-BEGIN*/((DRV_I2C_TRANSFER_HANDLE)(-1))/*DOM-IGNORE-END*/
+#define DRV_I2C_TRANSFER_HANDLE_INVALID  ((DRV_I2C_TRANSFER_HANDLE)(-1))
 
 // *****************************************************************************
 /* I2C Driver Transfer Events
@@ -187,15 +187,17 @@ typedef enum
         switch(event)
         {
             case DRV_I2C_TRANSFER_EVENT_COMPLETE:
-
+            {
                 // Handle the completed buffer.
                 break;
+            }
 
             case DRV_I2C_TRANSFER_EVENT_ERROR:
             default:
-
+            {
                 // Handle error.
                 break;
+            }
         }
     }
     </code>
@@ -230,7 +232,7 @@ typedef enum
     driver buffers cannot be added in I2C1 driver event handler.
 */
 
-typedef void ( *DRV_I2C_TRANSFER_EVENT_HANDLER )( DRV_I2C_TRANSFER_EVENT event, DRV_I2C_TRANSFER_HANDLE transferHandle, uintptr_t context );
+typedef void (*DRV_I2C_TRANSFER_EVENT_HANDLER )( DRV_I2C_TRANSFER_EVENT event, DRV_I2C_TRANSFER_HANDLE transferHandle, uintptr_t context );
 
 
 // *****************************************************************************
@@ -344,6 +346,7 @@ SYS_MODULE_OBJ DRV_I2C_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     SYS_STATUS          i2cStatus;
 
     i2cStatus = DRV_I2C_Status(object);
+
     if (i2cStatus == SYS_STATUS_READY)
     {
         // This means the driver can be opened using the
@@ -415,6 +418,7 @@ SYS_STATUS DRV_I2C_Status( const SYS_MODULE_OBJ object);
     DRV_HANDLE handle;
 
     handle = DRV_I2C_Open(DRV_I2C_INDEX_0, DRV_IO_INTENT_EXCLUSIVE);
+
     if (handle == DRV_HANDLE_INVALID)
     {
         // Unable to open the driver
@@ -985,6 +989,35 @@ void DRV_I2C_WriteReadTransferAdd (
     uint8_t myBuffer[MY_BUFFER_SIZE];
     DRV_I2C_TRANSFER_HANDLE transferHandle;
 
+    // The registered event handler is called when the transfer is completed.
+
+    void APP_I2CTransferEventHandler(DRV_I2C_TRANSFER_EVENT event, DRV_I2C_TRANSFER_HANDLE handle, uintptr_t context)
+    {
+        // The context handle was set to an application specific
+        // object. It is now retrievable easily in the event handler.
+        MY_APP_OBJ* pMyAppObj = (MY_APP_OBJ *) context;
+
+        switch(event)
+        {
+            case DRV_I2C_TRANSFER_EVENT_COMPLETE:
+            {
+                // This means the data was transferred.
+                break;
+            }
+
+            case DRV_I2C_TRANSFER_EVENT_ERROR:
+            {
+                // Error handling here.
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+    }
+
     // myI2CHandle is the handle returned
     // by the DRV_I2C_Open function.
 
@@ -999,28 +1032,6 @@ void DRV_I2C_WriteReadTransferAdd (
         // Error handling here
     }
 
-    // The registered event handler is called when the transfer is completed.
-
-    void APP_I2CTransferEventHandler(DRV_I2C_TRANSFER_EVENT event, DRV_I2C_TRANSFER_HANDLE handle, uintptr_t context)
-    {
-        // The context handle was set to an application specific
-        // object. It is now retrievable easily in the event handler.
-        MY_APP_OBJ* pMyAppObj = (MY_APP_OBJ *) context;
-
-        switch(event)
-        {
-            case DRV_I2C_TRANSFER_EVENT_COMPLETE:
-                // This means the data was transferred.
-                break;
-
-            case DRV_I2C_TRANSFER_EVENT_ERROR:
-                // Error handling here.
-                break;
-
-            default:
-                break;
-        }
-    }
     </code>
 
   Remarks:

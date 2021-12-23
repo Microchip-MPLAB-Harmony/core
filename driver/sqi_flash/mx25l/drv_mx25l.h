@@ -319,6 +319,11 @@ void DRV_MX25L_Close( const DRV_HANDLE handle );
     SYS_STATUS          Status;
 
     Status = DRV_MX25L_Status(DRV_MX25L_INDEX);
+
+    if (status == SYS_STATUS_READY)
+    {
+        // MX25L driver is initialized and ready to accept requests.
+    }
     </code>
 
   Remarks:
@@ -348,15 +353,13 @@ SYS_STATUS DRV_MX25L_Status( const SYS_MODULE_INDEX drvIndex );
                    open routine
 
   Returns:
-    false
-    - if Reset-Enable or Reset flash command itself fails
+    true - if the reset is successfully completed
 
-    true
-    - if the reset is successfully completed
+    false - if Reset-Enable or Reset flash command itself fails
 
   Example:
     <code>
-    if(true != DRV_MX25L_ResetFlash())
+    if(DRV_MX25L_ResetFlash() == false)
     {
         // Error handling here
     }
@@ -391,11 +394,9 @@ bool DRV_MX25L_ResetFlash(void);
                    open routine
 
   Returns:
-    false
-    - if read jedec-id command fails
+    true - if the read is successfully completed
 
-    true
-    - if the read is successfully completed
+    false - if read jedec-id command fails
 
   Example:
     <code>
@@ -403,7 +404,7 @@ bool DRV_MX25L_ResetFlash(void);
     DRV_HANDLE handle;  // Returned from DRV_MX25L_Open
     uint32_t jedec_id = 0;
 
-    if(true != DRV_MX25L_ReadJedecId(handle, &jedec_id))
+    if(DRV_MX25L_ReadJedecId(handle, &jedec_id) == false)
     {
         // Error handling here
     }
@@ -443,26 +444,25 @@ bool DRV_MX25L_ReadJedecId( const DRV_HANDLE handle, void *jedec_id );
     address       - block start address from where a sector needs to be erased.
 
   Returns:
-    false
-    - if Write enable fails before sending sector erase command to flash
-    - if sector erase command itself fails
-
     true
-    - if the erase request is successfully sent to the flash
+        - if the erase request is successfully sent to the flash
 
+    false
+        - if Write enable fails before sending sector erase command to flash
+        - if sector erase command itself fails
   Example:
     <code>
 
     DRV_HANDLE handle;  // Returned from DRV_MX25L_Open
     uint32_t sectorStart = 0;
 
-    if(false == DRV_MX25L_SectorErase(handle, sectorStart))
+    if(DRV_MX25L_SectorErase(handle, sectorStart) == false)
     {
         // Error handling here
     }
 
     // Wait for erase to be completed
-    while(DRV_MX25L_TRANSFER_BUSY == DRV_MX25L_TransferStatusGet(handle));
+    while(DRV_MX25L_TransferStatusGet(handle) == DRV_MX25L_TRANSFER_BUSY);
 
     </code>
 
@@ -501,12 +501,12 @@ bool DRV_MX25L_SectorErase( const DRV_HANDLE handle, uint32_t address );
     address       - block start address to be erased.
 
   Returns:
-    false
-    - if Write enable fails before sending sector erase command to flash
-    - if block erase command itself fails
-
     true
-    - if the erase request is successfully sent to the flash
+        - if the erase request is successfully sent to the flash
+
+    false
+        - if Write enable fails before sending sector erase command to flash
+        - if block erase command itself fails
 
   Example:
     <code>
@@ -514,13 +514,13 @@ bool DRV_MX25L_SectorErase( const DRV_HANDLE handle, uint32_t address );
     DRV_HANDLE handle;  // Returned from DRV_MX25L_Open
     uint32_t blockStart = 0;
 
-    if(false == DRV_MX25L_SectorErase(handle, blockStart))
+    if(DRV_MX25L_SectorErase(handle, blockStart) == false)
     {
         // Error handling here
     }
 
     // Wait for erase to be completed
-    while(DRV_MX25L_TRANSFER_BUSY == DRV_MX25L_TransferStatusGet(handle));
+    while(DRV_MX25L_TransferStatusGet(handle) == DRV_MX25L_TRANSFER_BUSY);
 
     </code>
 
@@ -556,25 +556,25 @@ bool DRV_MX25L_BlockErase( const DRV_HANDLE handle, uint32_t address );
                     open routine
 
   Returns:
-    false
-    - if Write enable fails before sending sector erase command to flash
-    - if chip erase command itself fails
-
     true
-    - if the erase request is successfully sent to the flash
+        - if the erase request is successfully sent to the flash
+
+    false
+        - if Write enable fails before sending sector erase command to flash
+        - if chip erase command itself fails
 
   Example:
     <code>
 
     DRV_HANDLE handle;  // Returned from DRV_MX25L_Open
 
-    if(false == DRV_MX25L_ChipErase(handle))
+    if(DRV_MX25L_ChipErase(handle) == false)
     {
         // Error handling here
     }
 
     // Wait for erase to be completed
-    while(DRV_MX25L_TRANSFER_BUSY == DRV_MX25L_TransferStatusGet(handle));
+    while(DRV_MX25L_TransferStatusGet(handle) == DRV_MX25L_TRANSFER_BUSY);
 
     </code>
 
@@ -616,11 +616,9 @@ bool DRV_MX25L_ChipErase( const DRV_HANDLE handle );
                       read.
 
   Returns:
-    false
-    - if read command itself fails
+    true - if number of bytes requested are read from flash memory
 
-    true
-    - if number of bytes requested are read from flash memory
+    false - if read command itself fails
 
   Example:
     <code>
@@ -629,9 +627,9 @@ bool DRV_MX25L_ChipErase( const DRV_HANDLE handle );
     #define MEM_ADDRESS  0x0
 
     DRV_HANDLE handle;  // Returned from DRV_MX25L_Open
-    uint8_t readBuffer[BUFFER_SIZE];
+    uint8_t CACHE_ALIGN readBuffer[BUFFER_SIZE];
 
-    if (true != DRV_MX25L_Read(handle, (void *)&readBuffer, BUFFER_SIZE, MEM_ADDRESS))
+    if (DRV_MX25L_Read(handle, (void *)&readBuffer, BUFFER_SIZE, MEM_ADDRESS) == false)
     {
         // Error handling here
     }
@@ -683,12 +681,12 @@ bool DRV_MX25L_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
                       written
 
   Returns:
-    false
-    - if Write enable fails before sending sector erase command to flash
-    - if write command itself fails
-
     true
-    - if the write request is successfully sent to the flash
+        - if the write request is successfully sent to the flash
+
+    false
+        - if Write enable fails before sending sector erase command to flash
+        - if write command itself fails
 
   Example:
     <code>
@@ -701,24 +699,24 @@ bool DRV_MX25L_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     uint8_t writeBuffer[BUFFER_SIZE];
     bool status = false;
 
-    if(false == DRV_MX25L_SectorErase(handle))
+    if(DRV_MX25L_SectorErase(handle) == false)
     {
         // Error handling here
     }
 
     // Wait for erase to be completed
-    while(DRV_MX25L_TRANSFER_BUSY == DRV_MX25L_TransferStatusGet(handle));
+    while(DRV_MX25L_TransferStatusGet(handle) == DRV_MX25L_TRANSFER_BUSY);
 
     for (uint32_t j = 0; j < BUFFER_SIZE; j += PAGE_SIZE)
     {
-        if (true != DRV_MX25L_PageWrite(handle, (void *)&writeBuffer[j], (MEM_ADDRESS + j)))
+        if (DRV_MX25L_PageWrite(handle, (void *)&writeBuffer[j], (MEM_ADDRESS + j)) == false)
         {
             status = false;
             break;
         }
 
         // Wait for write to be completed
-        while(DRV_MX25L_TRANSFER_BUSY == DRV_MX25L_TransferStatusGet(handle));
+        while(DRV_MX25L_TransferStatusGet(handle) == DRV_MX25L_TRANSFER_BUSY);
         status = true;
     }
 
@@ -758,21 +756,18 @@ bool DRV_MX25L_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
                       open routine
 
   Returns:
-    DRV_MX25L_TRANSFER_ERROR_UNKNOWN
-    - If the flash status register read request fails
+    DRV_MX25L_TRANSFER_ERROR_UNKNOWN - If the flash status register read request fails
 
-    DRV_MX25L_TRANSFER_BUSY
-    - If the current transfer request is still being processed
+    DRV_MX25L_TRANSFER_BUSY - If the current transfer request is still being processed
 
-    DRV_MX25L_TRANSFER_COMPLETED
-    - If the transfer request is completed
+    DRV_MX25L_TRANSFER_COMPLETED - If the transfer request is completed
 
   Example:
     <code>
 
     DRV_HANDLE handle;  // Returned from DRV_MX25L_Open
 
-    if (DRV_MX25L_TRANSFER_COMPLETED == DRV_MX25L_TransferStatusGet(handle))
+    if (DRV_MX25L_TransferStatusGet(handle) == DRV_MX25L_TRANSFER_COMPLETED)
     {
         // Operation Done
     }
@@ -807,11 +802,9 @@ DRV_MX25L_TRANSFER_STATUS DRV_MX25L_TransferStatusGet( const DRV_HANDLE handle )
     *geometry_table   - pointer to flash device geometry table instance
 
   Returns:
-    false
-    - if read device id fails
+    true - if able to get the geometry details of the flash
 
-    true
-    - if able to get the geometry details of the flash
+    false - if read device id fails
 
   Example:
     <code>

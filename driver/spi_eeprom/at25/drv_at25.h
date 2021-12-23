@@ -202,7 +202,8 @@ typedef struct
     called in the event handler to submit a request to the driver.
 */
 
-typedef void ( *DRV_AT25_EVENT_HANDLER )( DRV_AT25_TRANSFER_STATUS event, uintptr_t context );
+typedef void (*DRV_AT25_EVENT_HANDLER )( DRV_AT25_TRANSFER_STATUS event, uintptr_t context );
+
 // *****************************************************************************
 /* Function:
     SYS_MODULE_OBJ DRV_AT25_Initialize(
@@ -237,11 +238,11 @@ typedef void ( *DRV_AT25_EVENT_HANDLER )( DRV_AT25_TRANSFER_STATUS event, uintpt
     SYS_MODULE_OBJ   sysObjDrvAT25;
 
     DRV_AT25_PLIB_INTERFACE drvAT25PlibAPI = {
-    .writeRead = (DRV_AT25_PLIB_WRITE_READ)SPI0_WriteRead,
-    .write = (DRV_AT25_PLIB_WRITE)SPI0_Write,
-    .read = (DRV_AT25_PLIB_READ)SPI0_Read,
-    .isBusy = (DRV_AT25_PLIB_IS_BUSY)SPI0_IsBusy,
-    .callbackRegister = (DRV_AT25_PLIB_CALLBACK_REGISTER)SPI0_CallbackRegister,
+        .writeRead = (DRV_AT25_PLIB_WRITE_READ)SPI0_WriteRead,
+        .write = (DRV_AT25_PLIB_WRITE)SPI0_Write,
+        .read = (DRV_AT25_PLIB_READ)SPI0_Read,
+        .isBusy = (DRV_AT25_PLIB_IS_BUSY)SPI0_IsBusy,
+        .callbackRegister = (DRV_AT25_PLIB_CALLBACK_REGISTER)SPI0_CallbackRegister,
     };
 
     DRV_AT25_INIT drvAT25InitData = {
@@ -294,6 +295,11 @@ SYS_MODULE_OBJ DRV_AT25_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_M
     SYS_STATUS status;
 
     status = DRV_AT25_Status(DRV_AT25_INDEX);
+
+    if (status == SYS_STATUS_READY)
+    {
+        // AT25 driver is initialized and ready to accept requests.
+    }
     </code>
 
   Remarks:
@@ -422,13 +428,13 @@ void DRV_AT25_Close( const DRV_HANDLE handle );
     address        - Memory start address from where the data should be read.
 
   Returns:
-    false
-    - if handle is invalid
-    - if the pointer to the receive buffer is NULL or number of bytes to read is 0
-    - if the driver is busy handling another transfer request
-
     true
-    - if the read request is accepted.
+        - if the read request is accepted.
+
+    false
+        - if handle is invalid
+        - if the pointer to the receive buffer is NULL or number of bytes to read is 0
+        - if the driver is busy handling another transfer request
 
   Example:
     <code>
@@ -489,13 +495,14 @@ bool DRV_AT25_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength,
     address        - Memory start address from where the data should be written
 
   Returns:
-    false
-    - if handle is invalid
-    - if the pointer to transmit buffer is NULL or number of bytes to write is 0
-    - if the driver is busy handling another transfer request
-
     true
-    - if the write request is accepted.
+        - if the write request is accepted.
+
+    false
+        - if handle is invalid
+        - if the pointer to transmit buffer is NULL or number of bytes to write is 0
+        - if the driver is busy handling another transfer request
+
 
   Example:
     <code>
@@ -504,7 +511,7 @@ bool DRV_AT25_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength,
     #define BUFFER_SIZE  1024
     #define MEM_ADDRESS  0x00
 
-    uint8_t writeBuffer[BUFFER_SIZE];
+    uint8_t CACHE_ALIGN writeBuffer[BUFFER_SIZE];
 
     // myHandle is the handle returned from DRV_AT25_Open API.
     // In the below example, the transfer status is polled. However, application can
@@ -559,13 +566,13 @@ bool DRV_AT25_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength
                       the data in the beginning of the page.
 
   Returns:
-    false
-    - if handle is invalid
-    - if the pointer to the transmit data is NULL
-    - if the driver is busy handling another transfer request
-
     true
-    - if the write request is accepted.
+        - if the write request is accepted.
+
+    false
+        - if handle is invalid
+        - if the pointer to the transmit data is NULL
+        - if the driver is busy handling another transfer request
 
   Example:
     <code>
@@ -573,7 +580,7 @@ bool DRV_AT25_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength
     #define PAGE_SIZE  256
     #define MEM_ADDRESS  0x0
 
-    uint8_t writeBuffer[PAGE_SIZE];
+    uint8_t CACHE_ALIGN writeBuffer[PAGE_SIZE];
 
     // myHandle is the handle returned from DRV_AT25_Open API.
     // In the below example, the transfer status is polled. However, application can
@@ -653,11 +660,9 @@ DRV_AT25_TRANSFER_STATUS DRV_AT25_TransferStatusGet(const DRV_HANDLE handle);
     geometry    - Pointer to flash device geometry table instance
 
   Returns:
-    false
-    - if handle is invalid
+    true - if able to get the geometry details of the flash
 
-    true
-    - if able to get the geometry details of the flash
+    false - if handle is invalid
 
   Example:
     <code>
@@ -758,15 +763,21 @@ bool DRV_AT25_GeometryGet(const DRV_HANDLE handle, DRV_AT25_GEOMETRY *geometry);
         switch(event)
         {
             case DRV_AT25_TRANSFER_STATUS_COMPLETED:
+            {
                 // This means the data was transferred.
                 break;
+            }
 
             case DRV_AT25_TRANSFER_STATUS_ERROR:
+            {
                 // Error handling here.
                 break;
+            }
 
             default:
+            {
                 break;
+            }
         }
     }
     </code>

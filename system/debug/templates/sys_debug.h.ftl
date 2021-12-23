@@ -240,17 +240,20 @@ SYS_MODULE_OBJ SYS_DEBUG_Initialize(
     object    - Debug module object handle, returned from SYS_DEBUG_Initialize
 
   Returns:
-    * SYS_STATUS_READY          - Indicates that the module is running and
+    SYS_STATUS_READY          - Indicates that the module is running and
                                   ready to service requests.  Any value greater
                                   than SYS_STATUS_READY is also a normal
                                   running state in which the module is ready
                                   to accept new operations.
-    * SYS_STATUS_BUSY           - Indicates that the module is busy with a
+
+    SYS_STATUS_BUSY           - Indicates that the module is busy with a
                                   previous system level operation.
-    * SYS_STATUS_ERROR          - Indicates that the module is in an error
+
+    SYS_STATUS_ERROR          - Indicates that the module is in an error
                                   state.  Any value less than SYS_STATUS_ERROR
                                   is also an error state.
-    * SYS_STATUS_UNINITIALIZED  - Indicates that the module has not been
+
+    SYS_STATUS_UNINITIALIZED  - Indicates that the module has not been
                                   initialized.
 
   Example:
@@ -375,6 +378,36 @@ SYS_ERROR_LEVEL SYS_DEBUG_ErrorLevelGet(void);
 */
 bool SYS_DEBUG_Redirect(const SYS_MODULE_INDEX index);
 
+// *****************************************************************************
+/* Function:
+   SYS_MODULE_INDEX SYS_DEBUG_ConsoleInstanceGet(void)
+
+  Summary:
+    Returns console instance used by debug system service
+
+  Description:
+    This function returns console instance used by debug system service.
+
+  Precondition:
+    None.
+
+  Parameters:
+    None.
+
+  Returns:
+    SYS_MODULE_INDEX - Instance of console system service
+
+  Example:
+    <code>
+    uint32_t index;
+
+    index = SYS_DEBUG_ConsoleInstanceGet();
+
+    </code>
+
+  Remarks:
+    None.
+*/
 SYS_MODULE_INDEX SYS_DEBUG_ConsoleInstanceGet(void);
 
 // *****************************************************************************
@@ -518,7 +551,7 @@ SYS_MODULE_INDEX SYS_DEBUG_ConsoleInstanceGet(void);
 
 
 // *****************************************************************************
-/* Function:
+/* Macro:
     SYS_DEBUG_MESSAGE(SYS_ERROR_LEVEL level, const char* message )
 
   Summary:

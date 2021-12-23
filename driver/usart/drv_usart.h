@@ -109,7 +109,7 @@ typedef uintptr_t DRV_USART_BUFFER_HANDLE;
     None
 */
 
-#define DRV_USART_BUFFER_HANDLE_INVALID /*DOM-IGNORE-BEGIN*/((DRV_USART_BUFFER_HANDLE)(-1))/*DOM-IGNORE-END*/
+#define DRV_USART_BUFFER_HANDLE_INVALID  ((DRV_USART_BUFFER_HANDLE)(-1))
 
 // *****************************************************************************
 /* USART Driver Buffer Events
@@ -233,26 +233,34 @@ typedef struct _DRV_USART_INIT DRV_USART_INIT;
 
   Example:
     <code>
-    void APP_MyBufferEventHandler(
+    void APP_USARTBufferEventHandler(
         DRV_USART_BUFFER_EVENT event,
-        DRV_USART_BUFFER_HANDLE bufferHandle,
+        DRV_USART_BUFFER_HANDLE handle,
         uintptr_t context
     )
     {
-        MY_APP_DATA_STRUCT* pAppData = (MY_APP_DATA_STRUCT* ) context;
+        // The context handle was set to an application specific
+        // object. It is now retrievable easily in the event handler.
+        MY_APP_OBJ* myAppObj = (MY_APP_OBJ *) context;
 
         switch(event)
         {
             case DRV_USART_BUFFER_EVENT_COMPLETE:
-
-                // Handle the completed buffer.
+            {
+                // This means the data was transferred.
                 break;
+            }
 
             case DRV_USART_BUFFER_EVENT_ERROR:
-            default:
-
-                // Handle error.
+            {
+                // Error handling here.
                 break;
+            }
+
+            default:
+            {
+                break;
+            }
         }
     }
     </code>
@@ -288,7 +296,7 @@ typedef struct _DRV_USART_INIT DRV_USART_INIT;
     USART1 driver event handler.
 */
 
-typedef void ( *DRV_USART_BUFFER_EVENT_HANDLER )( DRV_USART_BUFFER_EVENT event, DRV_USART_BUFFER_HANDLE bufferHandle, uintptr_t context );
+typedef void (*DRV_USART_BUFFER_EVENT_HANDLER )( DRV_USART_BUFFER_EVENT event, DRV_USART_BUFFER_HANDLE bufferHandle, uintptr_t context );
 
 // *****************************************************************************
 // *****************************************************************************
@@ -694,6 +702,39 @@ bool DRV_USART_SerialSetup(const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* setu
     uint8_t mybuffer[MY_BUFFER_SIZE];
     DRV_USART_BUFFER_HANDLE bufferHandle;
 
+    // Event is received when the buffer is processed.
+
+    void APP_USARTBufferEventHandler(
+        DRV_USART_BUFFER_EVENT event,
+        DRV_USART_BUFFER_HANDLE handle,
+        uintptr_t context
+    )
+    {
+        // The context handle was set to an application specific
+        // object. It is now retrievable easily in the event handler.
+        MY_APP_OBJ* myAppObj = (MY_APP_OBJ *) context;
+
+        switch(event)
+        {
+            case DRV_USART_BUFFER_EVENT_COMPLETE:
+            {
+                // This means the data was transferred.
+                break;
+            }
+
+            case DRV_USART_BUFFER_EVENT_ERROR:
+            {
+                // Error handling here.
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+    }
+
     // myUSARTHandle is the handle returned
     // by the DRV_USART_Open function.
 
@@ -717,32 +758,6 @@ bool DRV_USART_SerialSetup(const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* setu
         // Error handling here
     }
 
-    // Event is received when the buffer is processed.
-
-    void APP_USARTBufferEventHandler(
-        DRV_USART_BUFFER_EVENT event,
-        DRV_USART_BUFFER_HANDLE handle,
-        uintptr_t context
-    )
-    {
-        // The context handle was set to an application specific
-        // object. It is now retrievable easily in the event handler.
-        MY_APP_OBJ* myAppObj = (MY_APP_OBJ *) context;
-
-        switch(event)
-        {
-            case DRV_USART_BUFFER_EVENT_COMPLETE:
-                // This means the data was transferred.
-                break;
-
-            case DRV_USART_BUFFER_EVENT_ERROR:
-                // Error handling here.
-                break;
-
-            default:
-                break;
-        }
-    }
     </code>
 
   Remarks:
@@ -966,28 +981,6 @@ void DRV_USART_ReadBufferAdd( const DRV_HANDLE handle, void* buffer, const size_
     uint8_t mybuffer[MY_BUFFER_SIZE];
     DRV_USART_BUFFER_HANDLE bufferHandle;
 
-    // myUSARTHandle is the handle returned
-    // by the DRV_USART_Open function.
-
-    // Client registers an event handler with driver. This is done once
-    DRV_USART_BufferEventHandlerSet(
-        myUSARTHandle,
-        APP_USARTBufferEventHandle,
-        (uintptr_t)&myAppObj
-    );
-
-    DRV_USART_ReadBufferAdd(
-        myUSARThandle,
-        myBuffer,
-        MY_BUFFER_SIZE,
-        bufferHandle
-    );
-
-    if(bufferHandle == DRV_USART_BUFFER_HANDLE_INVALID)
-    {
-        // Error handling here
-    }
-
     // Event Processing Technique. Event is received when
     // the buffer is processed.
 
@@ -1006,20 +999,49 @@ void DRV_USART_ReadBufferAdd( const DRV_HANDLE handle, void* buffer, const size_
         switch(event)
         {
             case DRV_USART_BUFFER_EVENT_COMPLETE:
+            {
                 // This means the data was transferred.
                 break;
+            }
 
             case DRV_USART_BUFFER_EVENT_ERROR:
+            {
                 // Error handling here.
                 // We can find out how many bytes have been processed in this
                 // buffer request prior to the error.
                 processedBytes= DRV_USART_BufferCompletedBytesGet(bufferHandle);
                 break;
+            }
 
             default:
+            {
                 break;
+            }
         }
     }
+
+    // myUSARTHandle is the handle returned
+    // by the DRV_USART_Open function.
+
+    // Client registers an event handler with driver. This is done once
+    DRV_USART_BufferEventHandlerSet(
+        myUSARTHandle,
+        APP_USARTBufferEventHandler,
+        (uintptr_t)&myAppObj
+    );
+
+    DRV_USART_ReadBufferAdd(
+        myUSARThandle,
+        myBuffer,
+        MY_BUFFER_SIZE,
+        bufferHandle
+    );
+
+    if(bufferHandle == DRV_USART_BUFFER_HANDLE_INVALID)
+    {
+        // Error handling here
+    }
+
     </code>
 
   Remarks:
@@ -1070,14 +1092,6 @@ size_t DRV_USART_BufferCompletedBytesGet( DRV_USART_BUFFER_HANDLE bufferHandle )
     // myUSARTHandle is the handle returned
     // by the DRV_USART_Open function.
 
-    // Client registers an event handler with driver. This is done once
-
-    DRV_USART_BufferEventHandlerSet(
-        myUSARTHandle,
-        APP_USARTBufferEventHandle,
-        (uintptr_t)&myAppObj
-    );
-
     DRV_USART_ReadBufferAdd(
         myUSARThandle,
         myBuffer,
@@ -1112,7 +1126,7 @@ DRV_USART_BUFFER_EVENT DRV_USART_BufferStatusGet( const DRV_USART_BUFFER_HANDLE 
 
   Summary:
     Removes all write requests from the queue for the given client. This API does
-	not abort the on-going write transfer.
+    not abort the on-going write transfer.
 
   Description:
     This function removes all the buffer requests from the queue.
@@ -1153,7 +1167,7 @@ DRV_USART_BUFFER_EVENT DRV_USART_BufferStatusGet( const DRV_USART_BUFFER_HANDLE 
   Remarks:
     This function is thread safe when used in an RTOS environment.
     Avoid this function call from within the callback.
-	This function does not abort the on-going write transfer.
+    This function does not abort the on-going write transfer.
 */
 
 bool DRV_USART_WriteQueuePurge( const DRV_HANDLE handle );
@@ -1164,11 +1178,11 @@ bool DRV_USART_WriteQueuePurge( const DRV_HANDLE handle );
 
   Summary:
     Removes all buffer requests from the queue for the given client and also aborts
-	the on-going read request.
+    the on-going read request.
 
   Description:
     This function removes all the buffer requests from the queue and aborts the 
-	on-going read request that is submitted to the PLIB.
+    on-going read request that is submitted to the PLIB.
     The client can use this function to purge the queue on timeout or to remove
     unwanted stalled buffer requests or in any other use case.
 

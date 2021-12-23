@@ -156,7 +156,7 @@ typedef void (*DRV_MEMORY_DEVICE_EVENT_HANDLER_SET) ( const DRV_HANDLE handle, D
 
 /* 
  Summary:
-    Memory Device API.
+    Memory Device API Interface.
 
  Description:
     This Data Structure is used by attached media to populate the

@@ -203,10 +203,13 @@ typedef struct
 */
 
 
-typedef void ( *DRV_AT24_EVENT_HANDLER )( DRV_AT24_TRANSFER_STATUS event, uintptr_t context );
+typedef void (*DRV_AT24_EVENT_HANDLER )( DRV_AT24_TRANSFER_STATUS event, uintptr_t context );
 // *****************************************************************************
 /* Function:
-    SYS_MODULE_OBJ DRV_AT24_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT * const init)
+    SYS_MODULE_OBJ DRV_AT24_Initialize(
+        const SYS_MODULE_INDEX drvIndex,
+        const SYS_MODULE_INIT * const init
+    )
 
   Summary:
     Initializes the AT24 EEPROM device
@@ -235,21 +238,21 @@ typedef void ( *DRV_AT24_EVENT_HANDLER )( DRV_AT24_TRANSFER_STATUS event, uintpt
     SYS_MODULE_OBJ   sysObjDrvAT24;
 
     DRV_AT24_PLIB_INTERFACE drvAT24PlibAPI = {
-    .writeRead = (DRV_AT24_PLIB_WRITE_READ)TWIHS0_WriteRead,
-    .write = (DRV_AT24_PLIB_WRITE)TWIHS0_Write,
-    .read = (DRV_AT24_PLIB_READ)TWIHS0_Read,
-    .isBusy = (DRV_AT24_PLIB_IS_BUSY)TWIHS0_IsBusy,
-    .errorGet = (DRV_AT24_PLIB_ERROR_GET)TWIHS0_ErrorGet,
-    .callbackRegister = (DRV_AT24_PLIB_CALLBACK_REGISTER)TWIHS0_CallbackRegister,
+        .writeRead = (DRV_AT24_PLIB_WRITE_READ)TWIHS0_WriteRead,
+        .write = (DRV_AT24_PLIB_WRITE)TWIHS0_Write,
+        .read = (DRV_AT24_PLIB_READ)TWIHS0_Read,
+        .isBusy = (DRV_AT24_PLIB_IS_BUSY)TWIHS0_IsBusy,
+        .errorGet = (DRV_AT24_PLIB_ERROR_GET)TWIHS0_ErrorGet,
+        .callbackRegister = (DRV_AT24_PLIB_CALLBACK_REGISTER)TWIHS0_CallbackRegister,
 };
 
     DRV_AT24_INIT drvAT24InitData = {
-    .i2cPlib = &drvAT24PlibAPI,
-    .slaveAddress = 0x57,
-    .pageSize = DRV_AT24_EEPROM_PAGE_SIZE,
-    .flashSize = DRV_AT24_EEPROM_FLASH_SIZE,
-    .numClients = DRV_AT24_CLIENTS_NUMBER_IDX,
-    .blockStartAddress =    0x0,
+        .i2cPlib = &drvAT24PlibAPI,
+        .slaveAddress = 0x57,
+        .pageSize = DRV_AT24_EEPROM_PAGE_SIZE,
+        .flashSize = DRV_AT24_EEPROM_FLASH_SIZE,
+        .numClients = DRV_AT24_CLIENTS_NUMBER_IDX,
+        .blockStartAddress =    0x0,
 };
 
     sysObjDrvAT24 = DRV_AT24_Initialize(DRV_AT24_INDEX, (SYS_MODULE_INIT *)&drvAT24InitData);
@@ -405,7 +408,7 @@ void DRV_AT24_Close(const DRV_HANDLE handle);
 
   Description:
     This function schedules a non-blocking read operation for the requested number
-    of data bytes from given address of EEPROM.
+    of data bytes from the given address of the EEPROM.
 
     The requesting client should call DRV_AT24_TransferStatusGet API to know
     the current status of the request OR the requesting client can register a
@@ -418,21 +421,20 @@ void DRV_AT24_Close(const DRV_HANDLE handle);
     handle         - A valid open-instance handle, returned from the driver's
                       open routine
     rxData         - Buffer pointer into which the data read from the DRV_AT24
-                      Flash memory will be placed.
+                     Flash memory will be placed.
 
     rxDataLength   - Total number of bytes to be read.
 
-    address        - Memory start address from where the data should be
-                      read.
+    address        - Memory start address from where the data should be read.
 
   Returns:
-    false
-    - if handle is not right
-    - if the receive buffer pointer is NULL or number of bytes to read is zero
-    - if the driver is busy handling another transfer request
-
     true
-    - if the read request is accepted.
+        - if the read request is accepted.
+
+    false
+        - if handle is invalid
+        - if the pointer to the receive buffer is NULL or number of bytes to read is 0
+        - if the driver is busy handling another transfer request
 
   Example:
     <code>
@@ -443,7 +445,6 @@ void DRV_AT24_Close(const DRV_HANDLE handle);
     uint8_t readBuffer[BUFFER_SIZE];
 
     // myHandle is the handle returned from DRV_AT24_Open API.
-
     // In the below example, the transfer status is polled. However, application can
     // register a callback and get notified when the transfer is complete.
 
@@ -467,7 +468,7 @@ bool DRV_AT24_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength,
 
 // *****************************************************************************
 /* Function:
-    bool DRV_AT24_Write(const DRV_HANDLE handle, void* txData, uint32_t txDataLength, uint32_t address)
+    bool DRV_AT24_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength, uint32_t address)
 
   Summary:
     Writes 'n' bytes of data starting at the specified address.
@@ -494,13 +495,14 @@ bool DRV_AT24_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength,
     address        - Memory start address from where the data should be written
 
   Returns:
-    false
-    - if handle is not right
-    - if the pointer to the buffer to be written is NULL or number of bytes to write is zero
-    - if the driver is busy handling another transfer request
-
     true
-    - if the write request is accepted.
+        - if the write request is accepted.
+
+    false
+        - if handle is invalid
+        - if the pointer to transmit buffer is NULL or number of bytes to write is 0
+        - if the driver is busy handling another transfer request
+
 
   Example:
     <code>
@@ -508,7 +510,7 @@ bool DRV_AT24_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength,
     #define BUFFER_SIZE  1024
     #define MEM_ADDRESS  0x00
 
-    uint8_t writeBuffer[BUFFER_SIZE];
+    uint8_t CACHE_ALIGN writeBuffer[BUFFER_SIZE];
 
     // myHandle is the handle returned from DRV_AT24_Open API.
     // In the below example, the transfer status is polled. However, application can
@@ -529,18 +531,18 @@ bool DRV_AT24_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength,
     None.
 */
 
-bool DRV_AT24_Write(const DRV_HANDLE handle, void* txData, uint32_t txDataLength, uint32_t address );
+bool DRV_AT24_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength, uint32_t address );
 
 // *****************************************************************************
 /* Function:
-    bool DRV_AT24_PageWrite(const DRV_HANDLE handle, void* txData, uint32_t address)
+    bool DRV_AT24_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t address)
 
   Summary:
     Writes one page of data starting at the specified address.
 
   Description:
     This function schedules a non-blocking write operation for writing
-    one page of data starting from given address of EEPROM.
+    one page of data starting from the given address of the EEPROM.
 
     The requesting client should call DRV_AT24_TransferStatusGet API to know
     the current status of the request OR the requesting client can register a
@@ -555,20 +557,21 @@ bool DRV_AT24_Write(const DRV_HANDLE handle, void* txData, uint32_t txDataLength
   Parameters:
     handle         - A valid open-instance handle, returned from the driver's
                       open routine
-    txData         - The source buffer containing data to be programmed into AT24
+    txData         - The source buffer containing data to be written to the AT24
                       EEPROM
-    address        - Memory start address from where the data should be written.
+    address        - Write memory start address from where the data should be
+                      written.
                      It must be page boundary aligned in order to avoid overwriting
-                     the data in the beginning of the page.
+                      the data in the beginning of the page.
 
   Returns:
-    false
-    - if handle is not right
-    - if the pointer to the transmit data buffer is NULL
-    - if the driver is busy handling another transfer request
-
     true
-    - if the write request is accepted.
+        - if the write request is accepted.
+
+    false
+        - if handle is invalid
+        - if the pointer to the transmit data is NULL
+        - if the driver is busy handling another transfer request
 
   Example:
     <code>
@@ -576,7 +579,7 @@ bool DRV_AT24_Write(const DRV_HANDLE handle, void* txData, uint32_t txDataLength
     #define BUFFER_SIZE  1024
     #define MEM_ADDRESS  0x00
 
-    uint8_t writeBuffer[BUFFER_SIZE];
+    uint8_t CACHE_ALIGN writeBuffer[PAGE_SIZE];
 
     // myHandle is the handle returned from DRV_AT24_Open API.
     // In the below example, the transfer status is polled. However, application can
@@ -610,12 +613,12 @@ bool DRV_AT24_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t address 
     This routine gets the current status of the transfer request.
 
   Preconditions:
-    DRV_AT24_PageWrite or DRV_AT24_Read must have been called to obtain the
+    DRV_AT24_PageWrite, DRV_AT24_Write or DRV_AT24_Read must have been called to obtain the
     status of transfer.
 
   Parameters:
-    handle - A valid open-instance handle, returned from the driver's
-    open routine
+    handle      - A valid open-instance handle, returned from the driver's
+                   open routine
 
   Returns:
     One of the status element from the enum DRV_AT24_TRANSFER_STATUS.
@@ -707,15 +710,21 @@ DRV_AT24_TRANSFER_STATUS DRV_AT24_TransferStatusGet(const DRV_HANDLE handle);
         switch(event)
         {
             case DRV_AT24_TRANSFER_STATUS_COMPLETED:
+            {
                 // This means the data was transferred.
                 break;
+            }
 
             case DRV_AT24_TRANSFER_STATUS_ERROR:
+            {
                 // Error handling here.
                 break;
+            }
 
             default:
+            {
                 break;
+            }
         }
     }
     </code>
@@ -751,11 +760,9 @@ void DRV_AT24_EventHandlerSet(
     geometry    - Pointer to flash device geometry table instance
 
   Returns:
-    false
-    - if handle is invalid
+    true - if able to get the geometry details of the flash
 
-    true
-    - if able to get the geometry details of the flash
+    false - if handle is invalid
 
   Example:
     <code>

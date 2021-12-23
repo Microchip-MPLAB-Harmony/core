@@ -198,6 +198,7 @@ bool EMU_EEPROM_FormatMemory(void);
 */
 EMU_EEPROM_STATUS EMU_EEPROM_ParametersGet( EMU_EEPROM_PARAMETERS *const parameters);
 
+// *****************************************************************************
 /* Function:
     EMU_EEPROM_STATUS EMU_EEPROM_PageBufferCommit(void)
 
@@ -230,6 +231,7 @@ EMU_EEPROM_STATUS EMU_EEPROM_ParametersGet( EMU_EEPROM_PARAMETERS *const paramet
 */
 EMU_EEPROM_STATUS EMU_EEPROM_PageBufferCommit(void);
 
+// *****************************************************************************
 /* Function:
     EMU_EEPROM_STATUS EMU_EEPROM_PageWrite(
         const uint8_t logical_page,
@@ -269,6 +271,7 @@ EMU_EEPROM_STATUS EMU_EEPROM_PageWrite(
         const uint8_t logical_page,
         const uint8_t *const data);
 
+// *****************************************************************************
 /* Function:
     EMU_EEPROM_STATUS EMU_EEPROM_PageRead(
         const uint8_t logical_page,
@@ -306,6 +309,7 @@ EMU_EEPROM_STATUS EMU_EEPROM_PageRead(
         const uint8_t logical_page,
         uint8_t *const data);
 
+// *****************************************************************************
 /* Function:
     EMU_EEPROM_STATUS EMU_EEPROM_BufferWrite(
         const uint16_t offset,
@@ -350,6 +354,7 @@ EMU_EEPROM_STATUS EMU_EEPROM_BufferWrite(
         const uint8_t *const data,
         const uint16_t length);
 
+// *****************************************************************************
 /* Function:
     EMU_EEPROM_STATUS EMU_EEPROM_BufferRead(
         const uint16_t offset,

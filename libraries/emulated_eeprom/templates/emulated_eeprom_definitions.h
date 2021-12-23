@@ -50,6 +50,18 @@
 extern "C" {
 #endif
 
+// *****************************************************************************
+/* Emulated EEPROM Status
+
+  Summary:
+    Identifies the current status/state of EEPROM operation.
+
+  Description:
+    This enumeration identifies the current status/state of the EEPROM operation
+
+  Remarks:
+    None
+*/
 
 typedef enum
 {
@@ -66,7 +78,21 @@ typedef enum
 
 }EMU_EEPROM_STATUS;
 
+// *****************************************************************************
+/* Emulated EEPROM parameters
 
+  Summary:
+    Provides different Emulated EEPROM configuration paramters
+
+  Description:
+    This structure provides configuration parameters for the Emulated EEPROM.
+
+    This structure object has to be passed to EMU_EEPROM_ParametersGet() API
+    to retreive the current configured parameters
+
+  Remarks:
+    None
+*/
 typedef struct
 {
     /** Number of bytes per emulated EEPROM page */
