@@ -26,6 +26,8 @@
 #### Component ####
 ################################################################################
 
+drv_sst26_mcc_helpkeyword = "mcc_h3_drv_sst26_configurations"
+
 ChipSelect      = ["Chip Select 0", "Chip Select 1"]
 protocolUsed    = ["SQI", "SPI"]
 
@@ -124,6 +126,7 @@ def instantiateComponent(sst26Component):
 
     sst26PLIB = sst26Component.createStringSymbol("DRV_SST26_PLIB", None)
     sst26PLIB.setLabel("PLIB Used")
+    sst26PLIB.setHelp(drv_sst26_mcc_helpkeyword)
     sst26PLIB.setReadOnly(True)
 
     sst26Protocol = sst26Component.createComboSymbol("DRV_SST26_PROTOCOL", None, protocolUsed)
@@ -133,6 +136,7 @@ def instantiateComponent(sst26Component):
 
     sst26NumClients = sst26Component.createIntegerSymbol("DRV_SST26_NUM_CLIENTS", None)
     sst26NumClients.setLabel("Number of Clients")
+    sst26NumClients.setHelp(drv_sst26_mcc_helpkeyword)
     sst26NumClients.setReadOnly(True)
     sst26NumClients.setMin(1)
     sst26NumClients.setMax(64)
@@ -140,6 +144,7 @@ def instantiateComponent(sst26Component):
 
     sst26NumBufDesc = sst26Component.createIntegerSymbol("DRV_SST26_NUM_BUFFER_DESC", None)
     sst26NumBufDesc.setLabel("Number of Buffer Descriptors")
+    sst26NumBufDesc.setHelp(drv_sst26_mcc_helpkeyword)
     sst26NumBufDesc.setMin(1)
     sst26NumBufDesc.setDefaultValue(10)
     sst26NumBufDesc.setVisible(False)
@@ -147,12 +152,14 @@ def instantiateComponent(sst26Component):
 
     sst26SqiLaneMode = sst26Component.createComboSymbol("LANE_MODE", None, ["SINGLE", "QUAD"])
     sst26SqiLaneMode.setLabel("SQI Lane Mode")
+    sst26SqiLaneMode.setHelp(drv_sst26_mcc_helpkeyword)
     sst26SqiLaneMode.setDefaultValue("QUAD")
     sst26SqiLaneMode.setVisible(False)
     sst26SqiLaneMode.setDependencies(setLaneMode, ["DRV_SST26_PLIB", "LANE_MODE"])
 
     sst26ChipSelect = sst26Component.createComboSymbol("CHIP_SELECT", None, ChipSelect)
     sst26ChipSelect.setLabel("SQI Chip Select")
+    sst26ChipSelect.setHelp(drv_sst26_mcc_helpkeyword)
     sst26ChipSelect.setVisible(False)
     sst26ChipSelect.setDefaultValue("Chip Select 1")
 
@@ -162,6 +169,7 @@ def instantiateComponent(sst26Component):
 
     sst26spiChipSelectPin = sst26Component.createKeyValueSetSymbol("SPI_CHIP_SELECT_PIN", None)
     sst26spiChipSelectPin.setLabel("Chip Select Pin")
+    sst26spiChipSelectPin.setHelp(drv_sst26_mcc_helpkeyword)
     sst26spiChipSelectPin.setOutputMode("Key")
     sst26spiChipSelectPin.setDisplayMode("Description")
     sst26spiChipSelectPin.setVisible(False)
@@ -189,6 +197,7 @@ def instantiateComponent(sst26Component):
 
     sst26MemoryStartAddr = sst26Component.createHexSymbol("START_ADDRESS", None)
     sst26MemoryStartAddr.setLabel("SST26 Start Address")
+    sst26MemoryStartAddr.setHelp(drv_sst26_mcc_helpkeyword)
     sst26MemoryStartAddr.setVisible(True)
     sst26MemoryStartAddr.setDefaultValue(0x0000000)
 
@@ -206,6 +215,7 @@ def instantiateComponent(sst26Component):
 
     sst26MemoryEraseBufferSize = sst26Component.createIntegerSymbol("ERASE_BUFFER_SIZE", None)
     sst26MemoryEraseBufferSize.setLabel("SST26 Erase Buffer Size")
+    sst26MemoryEraseBufferSize.setHelp(drv_sst26_mcc_helpkeyword)
     sst26MemoryEraseBufferSize.setVisible(False)
     sst26MemoryEraseBufferSize.setDefaultValue(4096)
     sst26MemoryEraseBufferSize.setDependencies(sst26SetMemoryDependency, ["DRV_MEMORY_CONNECTED", "ERASE_ENABLE"])

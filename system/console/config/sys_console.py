@@ -22,6 +22,8 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
+sys_console_mcc_helpkeyword = "mcc_h3_sys_console_configurations"
+
 ################################################################################
 #### Business Logic ####
 ################################################################################
@@ -143,6 +145,7 @@ def instantiateComponent(consoleComponent, index):
 
     consoleDevice = consoleComponent.createStringSymbol("SYS_CONSOLE_DEVICE", None)
     consoleDevice.setLabel("Device Used")
+    consoleDevice.setHelp(sys_console_mcc_helpkeyword)
     consoleDevice.setReadOnly(True)
     consoleDevice.setDefaultValue("")
 
@@ -164,6 +167,7 @@ def instantiateComponent(consoleComponent, index):
 
     consoleSymTXQueueSize = consoleComponent.createIntegerSymbol("SYS_CONSOLE_TX_BUFFER_SIZE", None)
     consoleSymTXQueueSize.setLabel("Transmit Buffer Size (1-4096)")
+    consoleSymTXQueueSize.setHelp(sys_console_mcc_helpkeyword)
     consoleSymTXQueueSize.setMin(1)
     consoleSymTXQueueSize.setMax(4096)
     consoleSymTXQueueSize.setDefaultValue(128)
@@ -172,6 +176,7 @@ def instantiateComponent(consoleComponent, index):
 
     consoleSymRXQueueSize = consoleComponent.createIntegerSymbol("SYS_CONSOLE_RX_BUFFER_SIZE", None)
     consoleSymRXQueueSize.setLabel("Receive Buffer Size (1-4096)")
+    consoleSymRXQueueSize.setHelp(sys_console_mcc_helpkeyword)
     consoleSymRXQueueSize.setMin(1)
     consoleSymRXQueueSize.setMax(4096)
     consoleSymRXQueueSize.setDefaultValue(128)
@@ -201,16 +206,19 @@ def instantiateComponent(consoleComponent, index):
     # RTOS Settings
     consoleRTOSMenu = consoleComponent.createMenuSymbol("SYS_CONSOLE_RTOS_MENU", None)
     consoleRTOSMenu.setLabel("RTOS settings")
+    consoleRTOSMenu.setHelp(sys_console_mcc_helpkeyword)
     consoleRTOSMenu.setDescription("RTOS settings")
     consoleRTOSMenu.setVisible(enable_rtos_settings)
     consoleRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS", "SYS_CONSOLE_DEVICE_SET" ])
 
     consoleRTOSStackSize = consoleComponent.createIntegerSymbol("SYS_CONSOLE_RTOS_STACK_SIZE", consoleRTOSMenu)
     consoleRTOSStackSize.setLabel("Stack Size (in bytes)")
+    consoleRTOSStackSize.setHelp(sys_console_mcc_helpkeyword)
     consoleRTOSStackSize.setDefaultValue(1024)
 
     consoleRTOSMsgQSize = consoleComponent.createIntegerSymbol("SYS_CONSOLE_RTOS_TASK_MSG_QTY", consoleRTOSMenu)
     consoleRTOSMsgQSize.setLabel("Maximum Message Queue Size")
+    consoleRTOSMsgQSize.setHelp(sys_console_mcc_helpkeyword)
     consoleRTOSMsgQSize.setDescription("A µC/OS-III task contains an optional internal message queue (if OS_CFG_TASK_Q_EN is set to DEF_ENABLED in os_cfg.h). This argument specifies the maximum number of messages that the task can receive through this message queue. The user may specify that the task is unable to receive messages by setting this argument to 0")
     consoleRTOSMsgQSize.setDefaultValue(0)
     consoleRTOSMsgQSize.setVisible(getActiveRtos() == "MicriumOSIII")
@@ -218,6 +226,7 @@ def instantiateComponent(consoleComponent, index):
 
     consoleRTOSTaskTimeQuanta = consoleComponent.createIntegerSymbol("SYS_CONSOLE_RTOS_TASK_TIME_QUANTA", consoleRTOSMenu)
     consoleRTOSTaskTimeQuanta.setLabel("Task Time Quanta")
+    consoleRTOSTaskTimeQuanta.setHelp(sys_console_mcc_helpkeyword)
     consoleRTOSTaskTimeQuanta.setDescription("The amount of time (in clock ticks) for the time quanta when Round Robin is enabled. If you specify 0, then the default time quanta will be used which is the tick rate divided by 10.")
     consoleRTOSTaskTimeQuanta.setDefaultValue(0)
     consoleRTOSTaskTimeQuanta.setVisible(getActiveRtos() == "MicriumOSIII")
@@ -225,20 +234,24 @@ def instantiateComponent(consoleComponent, index):
 
     consoleRTOSTaskPriority = consoleComponent.createIntegerSymbol("SYS_CONSOLE_RTOS_TASK_PRIORITY", consoleRTOSMenu)
     consoleRTOSTaskPriority.setLabel("Task Priority")
+    consoleRTOSTaskPriority.setHelp(sys_console_mcc_helpkeyword)
     consoleRTOSTaskPriority.setDefaultValue(1)
 
     consoleRTOSTaskDelay = consoleComponent.createBooleanSymbol("SYS_CONSOLE_RTOS_USE_DELAY", consoleRTOSMenu)
     consoleRTOSTaskDelay.setLabel("Use Task Delay ?")
+    consoleRTOSTaskDelay.setHelp(sys_console_mcc_helpkeyword)
     consoleRTOSTaskDelay.setDefaultValue(True)
 
     consoleRTOSTaskDelayVal = consoleComponent.createIntegerSymbol("SYS_CONSOLE_RTOS_DELAY", consoleRTOSMenu)
     consoleRTOSTaskDelayVal.setLabel("Task Delay")
+    consoleRTOSTaskDelayVal.setHelp(sys_console_mcc_helpkeyword)
     consoleRTOSTaskDelayVal.setDefaultValue(10)
     consoleRTOSTaskDelayVal.setVisible((consoleRTOSTaskDelay.getValue() == True))
     consoleRTOSTaskDelayVal.setDependencies(updateTaskDelayVisiblity, ["SYS_CONSOLE_RTOS_USE_DELAY"])
 
     consoleRTOSTaskSpecificOpt = consoleComponent.createBooleanSymbol("SYS_CONSOLE_RTOS_TASK_OPT_NONE", consoleRTOSMenu)
     consoleRTOSTaskSpecificOpt.setLabel("Task Specific Options")
+    consoleRTOSTaskSpecificOpt.setHelp(sys_console_mcc_helpkeyword)
     consoleRTOSTaskSpecificOpt.setDescription("Contains task-specific options. Each option consists of one bit. The option is selected when the bit is set. The current version of µC/OS-III supports the following options:")
     consoleRTOSTaskSpecificOpt.setDefaultValue(True)
     consoleRTOSTaskSpecificOpt.setVisible(getActiveRtos() == "MicriumOSIII")
@@ -246,24 +259,28 @@ def instantiateComponent(consoleComponent, index):
 
     consoleRTOSTaskStkChk = consoleComponent.createBooleanSymbol("SYS_CONSOLE_RTOS_TASK_OPT_STK_CHK", consoleRTOSTaskSpecificOpt)
     consoleRTOSTaskStkChk.setLabel("Stack checking is allowed for the task")
+    consoleRTOSTaskStkChk.setHelp(sys_console_mcc_helpkeyword)
     consoleRTOSTaskStkChk.setDescription("Specifies whether stack checking is allowed for the task")
     consoleRTOSTaskStkChk.setDefaultValue(True)
     consoleRTOSTaskStkChk.setDependencies(consoleRtosMicriumOSIIITaskOptVisibility, ["SYS_CONSOLE_RTOS_TASK_OPT_NONE"])
 
     consoleRTOSTaskStkClr = consoleComponent.createBooleanSymbol("SYS_CONSOLE_RTOS_TASK_OPT_STK_CLR", consoleRTOSTaskSpecificOpt)
     consoleRTOSTaskStkClr.setLabel("Stack needs to be cleared")
+    consoleRTOSTaskStkClr.setHelp(sys_console_mcc_helpkeyword)
     consoleRTOSTaskStkClr.setDescription("Specifies whether the stack needs to be cleared")
     consoleRTOSTaskStkClr.setDefaultValue(True)
     consoleRTOSTaskStkClr.setDependencies(consoleRtosMicriumOSIIITaskOptVisibility, ["SYS_CONSOLE_RTOS_TASK_OPT_NONE"])
 
     consoleRTOSTaskSaveFp = consoleComponent.createBooleanSymbol("SYS_CONSOLE_RTOS_TASK_OPT_SAVE_FP", consoleRTOSTaskSpecificOpt)
     consoleRTOSTaskSaveFp.setLabel("Floating-point registers needs to be saved")
+    consoleRTOSTaskSaveFp.setHelp(sys_console_mcc_helpkeyword)
     consoleRTOSTaskSaveFp.setDescription("Specifies whether floating-point registers are saved. This option is only valid if the processor has floating-point hardware and the processor-specific code saves the floating-point registers")
     consoleRTOSTaskSaveFp.setDefaultValue(False)
     consoleRTOSTaskSaveFp.setDependencies(consoleRtosMicriumOSIIITaskOptVisibility, ["SYS_CONSOLE_RTOS_TASK_OPT_NONE"])
 
     consoleRTOSTaskNoTls = consoleComponent.createBooleanSymbol("SYS_CONSOLE_RTOS_TASK_OPT_NO_TLS", consoleRTOSTaskSpecificOpt)
     consoleRTOSTaskNoTls.setLabel("TLS (Thread Local Storage) support needed for the task")
+    consoleRTOSTaskNoTls.setHelp(sys_console_mcc_helpkeyword)
     consoleRTOSTaskNoTls.setDescription("If the caller doesn’t want or need TLS (Thread Local Storage) support for the task being created. If you do not include this option, TLS will be supported by default. TLS support was added in V3.03.00")
     consoleRTOSTaskNoTls.setDefaultValue(False)
     consoleRTOSTaskNoTls.setDependencies(consoleRtosMicriumOSIIITaskOptVisibility, ["SYS_CONSOLE_RTOS_TASK_OPT_NONE"])

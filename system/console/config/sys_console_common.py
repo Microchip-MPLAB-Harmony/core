@@ -22,6 +22,8 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
+sys_console_mcc_helpkeyword = "mcc_h3_sys_console_configurations"
+
 ################################################################################
 #### Business Logic ####
 ################################################################################
@@ -80,6 +82,7 @@ def instantiateComponent(consoleComponent):
 
     consoleUARTConnectionCounter = consoleComponent.createIntegerSymbol("SYS_CONSOLE_UART_CONNECTION_COUNTER", None)
     consoleUARTConnectionCounter.setLabel("Number of Instances Using UART")
+    consoleUARTConnectionCounter.setHelp(sys_console_mcc_helpkeyword)
     consoleUARTConnectionCounter.setVisible(True)
     consoleUARTConnectionCounter.setDefaultValue(0)
     consoleUARTConnectionCounter.setUseSingleDynamicValue(True)
@@ -87,6 +90,7 @@ def instantiateComponent(consoleComponent):
 
     consoleUSBConnectionCounter = consoleComponent.createIntegerSymbol("SYS_CONSOLE_USB_CONNECTION_COUNTER", None)
     consoleUSBConnectionCounter.setLabel("Number of Instances Using USB")
+    consoleUSBConnectionCounter.setHelp(sys_console_mcc_helpkeyword)
     consoleUSBConnectionCounter.setVisible(True)
     consoleUSBConnectionCounter.setDefaultValue(0)
     consoleUSBConnectionCounter.setUseSingleDynamicValue(True)
@@ -94,6 +98,7 @@ def instantiateComponent(consoleComponent):
 
     consolePrintBufferSize = consoleComponent.createIntegerSymbol("SYS_CONSOLE_PRINT_BUFFER_SIZE", None)
     consolePrintBufferSize.setLabel("Console Print Buffer Size (128-8192)")
+    consolePrintBufferSize.setHelp(sys_console_mcc_helpkeyword)
     consolePrintBufferSize.setMin(128)
     consolePrintBufferSize.setMax(8192)
     consolePrintBufferSize.setDefaultValue(200)

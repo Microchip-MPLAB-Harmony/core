@@ -36,6 +36,7 @@ def genDriverHeaderCommonFile(symbol, event):
 ############################################################################
 genDriverCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_DRV_COMMON", None)
 genDriverCommonFiles.setLabel("Generate Harmony Driver Common Files")
+genDriverCommonFiles.setHelp(harmony_core_mcc_helpkeyword)
 genDriverCommonFiles.setDefaultValue(False)
 
 driverHeaderRootFile = harmonyCoreComponent.createFileSymbol("DRIVER_ROOT", None)

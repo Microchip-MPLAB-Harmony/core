@@ -27,6 +27,8 @@ global currentRxBufSize
 global drvUsartInstanceSpace
 global isDMAPresent
 
+drv_usart_mcc_helpkeyword = "mcc_h3_drv_usart_configurations"
+
 def handleMessage(messageID, args):
 
     result_dict = {}
@@ -73,17 +75,20 @@ def instantiateComponent(usartComponent, index):
 
     usartPLIB = usartComponent.createStringSymbol("DRV_USART_PLIB", None)
     usartPLIB.setLabel("PLIB Used")
+    usartPLIB.setHelp(drv_usart_mcc_helpkeyword)
     usartPLIB.setReadOnly(True)
     usartPLIB.setDefaultValue("")
 
     usartNumClients = usartComponent.createIntegerSymbol("DRV_USART_CLIENTS_NUM", None)
     usartNumClients.setLabel("Number of Clients")
+    usartNumClients.setHelp(drv_usart_mcc_helpkeyword)
     usartNumClients.setMax(10)
     usartNumClients.setVisible(True)
     usartNumClients.setDefaultValue(1)
 
     usartTXQueueSize = usartComponent.createIntegerSymbol("DRV_USART_QUEUE_SIZE", None)
     usartTXQueueSize.setLabel("Transfer Queue Size")
+    usartTXQueueSize.setHelp(drv_usart_mcc_helpkeyword)
     usartTXQueueSize.setMax(64)
     usartTXQueueSize.setDefaultValue(5)
     usartTXQueueSize.setVisible((Database.getSymbolValue("drv_usart", "DRV_USART_COMMON_MODE") == "Asynchronous"))
@@ -92,6 +97,7 @@ def instantiateComponent(usartComponent, index):
     global usartTXDMA
     usartTXDMA = usartComponent.createBooleanSymbol("DRV_USART_TX_DMA", None)
     usartTXDMA.setLabel("Use DMA for Transmit ?")
+    usartTXDMA.setHelp(drv_usart_mcc_helpkeyword)
     usartTXDMA.setVisible(isDMAPresent)
     usartTXDMA.setReadOnly(True)
 
@@ -103,6 +109,7 @@ def instantiateComponent(usartComponent, index):
     global usartTXDMAChannel
     usartTXDMAChannel = usartComponent.createIntegerSymbol("DRV_USART_TX_DMA_CHANNEL", None)
     usartTXDMAChannel.setLabel("DMA Channel For Transmit")
+    usartTXDMAChannel.setHelp(drv_usart_mcc_helpkeyword)
     usartTXDMAChannel.setDefaultValue(0)
     usartTXDMAChannel.setVisible(False)
     usartTXDMAChannel.setReadOnly(True)
@@ -117,6 +124,7 @@ def instantiateComponent(usartComponent, index):
     global usartRXDMA
     usartRXDMA = usartComponent.createBooleanSymbol("DRV_USART_RX_DMA", None)
     usartRXDMA.setLabel("Use DMA for Receive ?")
+    usartRXDMA.setHelp(drv_usart_mcc_helpkeyword)
     usartRXDMA.setVisible(isDMAPresent)
     usartRXDMA.setReadOnly(True)
 
@@ -128,6 +136,7 @@ def instantiateComponent(usartComponent, index):
     global usartRXDMAChannel
     usartRXDMAChannel = usartComponent.createIntegerSymbol("DRV_USART_RX_DMA_CHANNEL", None)
     usartRXDMAChannel.setLabel("DMA Channel For Receive")
+    usartRXDMAChannel.setHelp(drv_usart_mcc_helpkeyword)
     usartRXDMAChannel.setDefaultValue(1)
     usartRXDMAChannel.setVisible(False)
     usartRXDMAChannel.setReadOnly(True)

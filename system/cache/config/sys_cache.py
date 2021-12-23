@@ -57,6 +57,7 @@ coreArch  = Database.getSymbolValue("core", "CoreArchitecture");
 
 genSysCacheCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_CACHE", None)
 genSysCacheCommonFiles.setLabel("Enable System Cache")
+genSysCacheCommonFiles.setHelp(harmony_core_mcc_helpkeyword)
 if (("PIC32MZ" in Database.getSymbolValue("core", "PRODUCT_FAMILY")) or ("CORTEX-M4" in coreArch)):
     genSysCacheCommonFiles.setDefaultValue(False)
 elif (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23"):

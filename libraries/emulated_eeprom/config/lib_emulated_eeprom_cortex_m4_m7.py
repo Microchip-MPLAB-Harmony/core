@@ -22,8 +22,7 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
-
-
+emulated_eeprom_mcc_helpkeyword = "mcc_h3_emulated_eeprom_configurations"
 
 NvmMemoryNames      = ["NVMCTRL", "EFC"]
 
@@ -249,6 +248,7 @@ def instantiateComponent(emulated_eeprom):
     #--<UI>--Size of EEPROM Emulator memory in units of erase blocks (must be atleast 2 erase blocks)
     eep_emu_EEPROMSize = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_EEPROM_SIZE_IN_BLOCKS", None)
     eep_emu_EEPROMSize.setLabel("EEPROM Size (in Erase Sectors)")
+    eep_emu_EEPROMSize.setHelp(emulated_eeprom_mcc_helpkeyword)
     eep_emu_EEPROMSize.setMin(2)
     eep_emu_EEPROMSize.setDefaultValue(2)
     eep_emu_EEPROMSize.setVisible(False)
@@ -258,6 +258,7 @@ def instantiateComponent(emulated_eeprom):
     default_eeprom_size = eep_emu_EEPROMSize.getValue() * eep_emu_FlashRowSize.getValue()
     eep_emu_EEPROMSize = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_EEPROM_SIZE", None)
     eep_emu_EEPROMSize.setLabel("EEPROM Size (Bytes)")
+    eep_emu_EEPROMSize.setHelp(emulated_eeprom_mcc_helpkeyword)
     eep_emu_EEPROMSize.setDefaultValue(default_eeprom_size)
     eep_emu_EEPROMSize.setVisible(False)
     eep_emu_EEPROMSize.setReadOnly(True)
@@ -266,6 +267,7 @@ def instantiateComponent(emulated_eeprom):
     #--<UI>--EEPROM Emulator Start Address
     eep_emu_EEPROMStartAddr = emulated_eeprom.createHexSymbol("EEPROM_EMULATOR_EEPROM_START_ADDRESS", None)
     eep_emu_EEPROMStartAddr.setLabel("EEPROM Emulation Start Address")
+    eep_emu_EEPROMStartAddr.setHelp(emulated_eeprom_mcc_helpkeyword)
     eep_emu_EEPROMStartAddr.setDefaultValue(0)
     eep_emu_EEPROMStartAddr.setVisible(False)
     eep_emu_EEPROMStartAddr.setDependencies(updateEEPROMStartAddr, ["EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", "EEPROM_EMULATOR_EEPROM_SIZE"])
@@ -282,6 +284,7 @@ def instantiateComponent(emulated_eeprom):
     #--<UI>--Total Physical Pages
     eep_emu_NumPhysicalPages = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_NUM_PHYSICAL_PAGES", None)
     eep_emu_NumPhysicalPages.setLabel("Number of Physical Pages")
+    eep_emu_NumPhysicalPages.setHelp(emulated_eeprom_mcc_helpkeyword)
     eep_emu_NumPhysicalPages.setDefaultValue(0)
     eep_emu_NumPhysicalPages.setReadOnly(True)
     eep_emu_NumPhysicalPages.setVisible(False)
@@ -290,6 +293,7 @@ def instantiateComponent(emulated_eeprom):
     #--<UI>--Total Logical Pages
     eep_emu_NumLogicalPages = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_NUM_LOGICAL_PAGES", None)
     eep_emu_NumLogicalPages.setLabel("Number of Logical Pages")
+    eep_emu_NumLogicalPages.setHelp(emulated_eeprom_mcc_helpkeyword)
     eep_emu_NumLogicalPages.setDefaultValue(0)
     eep_emu_NumLogicalPages.setReadOnly(True)
     eep_emu_NumLogicalPages.setVisible(False)
@@ -298,6 +302,7 @@ def instantiateComponent(emulated_eeprom):
     #--<UI>--Total Logical Size
     eep_emu_UsableEEPROMSpace = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_EEPROM_LOGICAL_SIZE", None)
     eep_emu_UsableEEPROMSpace.setLabel("Logical EEPROM Size (Bytes)")
+    eep_emu_UsableEEPROMSpace.setHelp(emulated_eeprom_mcc_helpkeyword)
     eep_emu_UsableEEPROMSpace.setDefaultValue(0)
     eep_emu_UsableEEPROMSpace.setReadOnly(True)
     eep_emu_UsableEEPROMSpace.setVisible(False)

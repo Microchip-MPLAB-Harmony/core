@@ -31,6 +31,8 @@ global osalHeaderFreeRtosFile
 global osalSourceFreeRtosFile
 global osalSelectRTOS
 
+harmony_core_mcc_helpkeyword = "mcc_h3_harmony_core_configurations"
+
 rtosIdTable = ["FreeRTOS", "ThreadX", "MicriumOSIII", "MbedOS"]
 
 # Function to serve Set/Clear requests of Harmony common symbols from other components
@@ -146,6 +148,7 @@ def instantiateComponent(harmonyCoreComponent):
 
     harmonyAppFile = harmonyCoreComponent.createBooleanSymbol("ENABLE_APP_FILE", None)
     harmonyAppFile.setLabel("Generate Harmony Application Files")
+    harmonyAppFile.setHelp(harmony_core_mcc_helpkeyword)
     harmonyAppFile.setDefaultValue(False)
     harmonyAppFile.setDependencies(enableAppFile, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON"])
 

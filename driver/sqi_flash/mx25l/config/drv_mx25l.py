@@ -26,6 +26,8 @@
 #### Component ####
 ################################################################################
 
+drv_mx25l_mcc_helpkeyword = "mcc_h3_drv_mx25l_configurations"
+
 def mx25lSetMemoryDependency(symbol, event):
     if (event["value"] == True):
         symbol.setVisible(True)
@@ -44,10 +46,12 @@ def instantiateComponent(mx25lComponent):
 
     mx25lPLIB = mx25lComponent.createStringSymbol("DRV_MX25L_PLIB", None)
     mx25lPLIB.setLabel("PLIB Used")
+    mx25lPLIB.setHelp(drv_mx25l_mcc_helpkeyword)
     mx25lPLIB.setReadOnly(True)
 
     mx25lNumClients = mx25lComponent.createIntegerSymbol("DRV_MX25L_NUM_CLIENTS", None)
     mx25lNumClients.setLabel("Number of Clients")
+    mx25lNumClients.setHelp(drv_mx25l_mcc_helpkeyword)
     mx25lNumClients.setReadOnly(True)
     mx25lNumClients.setMin(1)
     mx25lNumClients.setMax(64)
@@ -61,6 +65,7 @@ def instantiateComponent(mx25lComponent):
 
     mx25lMemoryStartAddr = mx25lComponent.createHexSymbol("START_ADDRESS", None)
     mx25lMemoryStartAddr.setLabel("MX25L Start Address")
+    mx25lMemoryStartAddr.setHelp(drv_mx25l_mcc_helpkeyword)
     mx25lMemoryStartAddr.setVisible(True)
     mx25lMemoryStartAddr.setDefaultValue(0x0000000)
 
@@ -78,6 +83,7 @@ def instantiateComponent(mx25lComponent):
 
     mx25lMemoryEraseBufferSize = mx25lComponent.createIntegerSymbol("ERASE_BUFFER_SIZE", None)
     mx25lMemoryEraseBufferSize.setLabel("MX25L Erase Buffer Size")
+    mx25lMemoryEraseBufferSize.setHelp(drv_mx25l_mcc_helpkeyword)
     mx25lMemoryEraseBufferSize.setVisible(False)
     mx25lMemoryEraseBufferSize.setDefaultValue(4096)
     mx25lMemoryEraseBufferSize.setDependencies(mx25lSetMemoryDependency, ["DRV_MEMORY_CONNECTED", "ERASE_ENABLE"])

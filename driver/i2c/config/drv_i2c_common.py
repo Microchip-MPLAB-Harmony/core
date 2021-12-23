@@ -22,6 +22,8 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
+drv_i2c_mcc_helpkeyword = "mcc_h3_drv_i2c_configurations"
+
 def handleMessage(messageID, args):
     global i2cForcedWriteAPIGenerateCntr
 
@@ -79,6 +81,7 @@ def instantiateComponent(i2cComponentCommon):
 
     i2cMode = i2cComponentCommon.createComboSymbol("DRV_I2C_MODE", None, ["Asynchronous", "Synchronous"])
     i2cMode.setLabel("Driver Mode")
+    i2cMode.setHelp(drv_i2c_mcc_helpkeyword)
     i2cMode.setDefaultValue(i2c_default_mode)
     i2cMode.setDependencies(setCommonMode, ["HarmonyCore.SELECT_RTOS"])
 

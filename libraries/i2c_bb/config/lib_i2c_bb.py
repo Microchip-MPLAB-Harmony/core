@@ -24,6 +24,7 @@
 
 global sort_alphanumeric
 
+i2c_bb_mcc_helpkeyword = "mcc_h3_i2c_bb_configurations"
 
 def onAttachmentConnected(source, target):
     global i2cbbTimerDep
@@ -79,8 +80,8 @@ def instantiateComponent(i2cbbComponent):
     opModeValues = ["MASTER"]
 
     i2cbbOpMode = i2cbbComponent.createComboSymbol("I2CBB_OPMODE", None, opModeValues)
-
     i2cbbOpMode.setLabel("I2CBB Operation Mode")
+    i2cbbOpMode.setHelp(i2c_bb_mcc_helpkeyword)
     i2cbbOpMode.setDefaultValue("MASTER")
     i2cbbOpMode.setReadOnly(True)
 
@@ -92,6 +93,7 @@ def instantiateComponent(i2cbbComponent):
     # Clock speed
     i2cbbSymClockSpeed = i2cbbComponent.createIntegerSymbol("I2C_CLOCK_SPEED", None)
     i2cbbSymClockSpeed.setLabel("I2CBB_Clock Speed")
+    i2cbbSymClockSpeed.setHelp(i2c_bb_mcc_helpkeyword)
     i2cbbSymClockSpeed.setDefaultValue(1000)
     i2cbbSymClockSpeed.setMax(50000)
 
@@ -102,12 +104,14 @@ def instantiateComponent(i2cbbComponent):
 
     i2cbbSymDataPin = i2cbbComponent.createKeyValueSetSymbol("I2CBB_SDA_PIN", None)
     i2cbbSymDataPin.setLabel("I2CBB Data Pin")
+    i2cbbSymDataPin.setHelp(i2c_bb_mcc_helpkeyword)
     i2cbbSymDataPin.setDefaultValue(0)
     i2cbbSymDataPin.setOutputMode("Key")
     i2cbbSymDataPin.setDisplayMode("Description")
 
     i2cbbSymClockPin = i2cbbComponent.createKeyValueSetSymbol("I2CBB_SCL_PIN", None)
     i2cbbSymClockPin.setLabel("I2CBB Clock Pin")
+    i2cbbSymClockPin.setHelp(i2c_bb_mcc_helpkeyword)
     i2cbbSymClockPin.setDefaultValue(0)
     i2cbbSymClockPin.setOutputMode("Key")
     i2cbbSymClockPin.setDisplayMode("Description")
@@ -115,6 +119,7 @@ def instantiateComponent(i2cbbComponent):
     #I2C Forced Write API Inclusion
     i2cbbSymForcedWriteAPIGen = i2cbbComponent.createBooleanSymbol("I2C_INCLUDE_FORCED_WRITE_API", None)
     i2cbbSymForcedWriteAPIGen.setLabel("Include Force Write I2C Function (Master Mode Only - Ignore NACK from Slave)")
+    i2cbbSymForcedWriteAPIGen.setHelp(i2c_bb_mcc_helpkeyword)
     i2cbbSymForcedWriteAPIGen.setDefaultValue(False)
     i2cbbSymForcedWriteAPIGen.setVisible(True)
 

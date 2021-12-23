@@ -33,6 +33,8 @@ global sysTimeRemoteComponentId
 global sysTimeOperatingMode
 global sysTimePLIB
 
+sys_time_mcc_helpkeyword = "mcc_h3_sys_time_configurations"
+
 sysTimeOperatingModeList = ["TICKLESS", "TICK BASED"]
 
 def handleMessage(messageID, args):
@@ -218,18 +220,21 @@ def instantiateComponent(sysTimeComponent):
 
     sysTimeUseSystick = sysTimeComponent.createBooleanSymbol("SYS_TIME_USE_SYSTICK", None)
     sysTimeUseSystick.setLabel("Use Systick?")
+    sysTimeUseSystick.setHelp(sys_time_mcc_helpkeyword)
     sysTimeUseSystick.setDefaultValue(False)
     sysTimeUseSystick.setVisible(systickNode != None and Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") == "BareMetal")
     sysTimeUseSystick.setDependencies(onSysTimeUseSystickChange, ["SYS_TIME_USE_SYSTICK", "HarmonyCore.SELECT_RTOS"])
 
     sysTimePLIB = sysTimeComponent.createStringSymbol("SYS_TIME_PLIB", None)
     sysTimePLIB.setLabel("PLIB Used")
+    sysTimePLIB.setHelp(sys_time_mcc_helpkeyword)
     sysTimePLIB.setReadOnly(True)
     sysTimePLIB.setDefaultValue("")
     # Used onDependencyComponentAdd\Remove callbacks to get connected PLIB
 
     sysTimeObjects = sysTimeComponent.createIntegerSymbol("SYS_TIME_MAX_TIMERS", None)
     sysTimeObjects.setLabel("Number of Clients")
+    sysTimeObjects.setHelp(sys_time_mcc_helpkeyword)
     sysTimeObjects.setMax(50)
     sysTimeObjects.setMin(1)
     sysTimeObjects.setDefaultValue(5)
@@ -241,12 +246,14 @@ def instantiateComponent(sysTimeComponent):
 
     sysTimeOperatingMode = sysTimeComponent.createComboSymbol("SYS_TIME_OPERATING_MODE", None, sysTimeOperatingModeList)
     sysTimeOperatingMode.setLabel("Operating Mode")
+    sysTimeOperatingMode.setHelp(sys_time_mcc_helpkeyword)
     sysTimeOperatingMode.setDefaultValue(sysTimeOperatingModeList[0])
     sysTimeOperatingMode.setVisible(False)
     sysTimeOperatingMode.setDependencies(sysTimeOperatingModeCallback, ["SYS_TIME_OPERATING_MODE"])
 
     sysTimeTickRateMs = sysTimeComponent.createFloatSymbol("SYS_TIME_TICK_RATE_MS", None)
     sysTimeTickRateMs.setLabel("Tick Rate (ms)")
+    sysTimeTickRateMs.setHelp(sys_time_mcc_helpkeyword)
     sysTimeTickRateMs.setMax(5000)          #5 seconds
     sysTimeTickRateMs.setMin(0.1)           #100 usec
     sysTimeTickRateMs.setDefaultValue(1)
@@ -259,6 +266,7 @@ def instantiateComponent(sysTimeComponent):
 
     sysTimeUseFloatingPtCalculations = sysTimeComponent.createBooleanSymbol("SYS_TIME_USE_FLOATING_POINT_CALCULATIONS", None)
     sysTimeUseFloatingPtCalculations.setLabel("Use Floating Point Calculations?")
+    sysTimeUseFloatingPtCalculations.setHelp(sys_time_mcc_helpkeyword)
     sysTimeUseFloatingPtCalculations.setDefaultValue(False)
     sysTimeUseFloatingPtCalculations.setVisible(False)
     sysTimeUseFloatingPtCalculations.setDependencies(setVisibility, ["SYS_TIME_OPERATING_MODE"])

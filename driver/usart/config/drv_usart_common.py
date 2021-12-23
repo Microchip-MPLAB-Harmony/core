@@ -22,6 +22,8 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
+drv_usart_mcc_helpkeyword = "mcc_h3_drv_usart_configurations"
+
 def handleMessage(messageID, args):
     global usartSymSYSDMACodeEnable
     global usartSymSYSDMAEnableCntr
@@ -90,6 +92,7 @@ def instantiateComponent(usartComponentCommon):
 
     usartMode = usartComponentCommon.createComboSymbol("DRV_USART_COMMON_MODE", None, ["Asynchronous", "Synchronous"])
     usartMode.setLabel("Driver Mode")
+    usartMode.setHelp(drv_usart_mcc_helpkeyword)
     usartMode.setDefaultValue(usart_default_mode)
     usartMode.setDependencies(setCommonMode, ["HarmonyCore.SELECT_RTOS"])
 

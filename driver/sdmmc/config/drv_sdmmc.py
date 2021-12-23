@@ -27,6 +27,8 @@ global sdmmcWPCheckEnable
 global sdmmcCardDetectionMethod
 global sdmmcPLIB
 
+drv_sdmmc_mcc_helpkeyword = "mcc_h3_drv_sdmmc_configurations"
+
 cardDetectMethodList1ComboValues = ["Use Polling", "Use SDCD Pin"]
 cardDetectMethodList2ComboValues = ["Use Polling"]
 
@@ -179,28 +181,33 @@ def instantiateComponent(sdmmcComponent, index):
 
     sdmmcPLIB = sdmmcComponent.createStringSymbol("DRV_SDMMC_PLIB", None)
     sdmmcPLIB.setLabel("PLIB Used")
+    sdmmcPLIB.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcPLIB.setReadOnly(True)
     sdmmcPLIB.setDefaultValue("None")
 
     sdmmcClients = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_CLIENTS_NUMBER", None)
     sdmmcClients.setLabel("Number of Clients")
+    sdmmcClients.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcClients.setMin(1)
     sdmmcClients.setMax(10)
     sdmmcClients.setDefaultValue(1)
 
     sdmmcBufferObjects = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_BUFFER_OBJECT_NUMBER", None)
     sdmmcBufferObjects.setLabel("Transfer Queue Size")
+    sdmmcBufferObjects.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcBufferObjects.setMin(1)
     sdmmcBufferObjects.setMax(64)
     sdmmcBufferObjects.setDefaultValue(2)
 
     sdmmcBusWidth8Bit = sdmmcComponent.createComboSymbol("DRV_SDMMC_TRANSFER_BUS_WIDTH_8BIT", None,["1-bit", "4-bit", "8-bit"])
     sdmmcBusWidth8Bit.setLabel("Data Transfer Bus Width")
+    sdmmcBusWidth8Bit.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcBusWidth8Bit.setVisible(False)
     sdmmcBusWidth8Bit.setDefaultValue("8-bit")
 
     sdmmcBusWidth4Bit = sdmmcComponent.createComboSymbol("DRV_SDMMC_TRANSFER_BUS_WIDTH_4BIT", None, ["1-bit", "4-bit"])
     sdmmcBusWidth4Bit.setLabel("Data Transfer Bus Width")
+    sdmmcBusWidth4Bit.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcBusWidth4Bit.setVisible(True)
     sdmmcBusWidth4Bit.setDefaultValue("4-bit")
     sdmmcBusWidth4Bit.setReadOnly(False)
@@ -213,16 +220,19 @@ def instantiateComponent(sdmmcComponent, index):
 
     sdmmcBusSpeed= sdmmcComponent.createComboSymbol("DRV_SDMMC_BUS_SPEED", None,["DEFAULT_SPEED", "HIGH_SPEED"])
     sdmmcBusSpeed.setLabel("Bus Speed")
+    sdmmcBusSpeed.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcBusSpeed.setDefaultValue("DEFAULT_SPEED")
 
     sdmmcProtocol= sdmmcComponent.createComboSymbol("DRV_SDMMC_PROTOCOL_SUPPORT", None,["SD", "eMMC"])
     sdmmcProtocol.setLabel("Protocol")
+    sdmmcProtocol.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcProtocol.setDefaultValue("SD")
     sdmmcProtocol.setReadOnly(True)
     sdmmcProtocol.setDependencies(UpdateProtocol, ["DRV_SDMMC_PROTOCOL_SUPPORT"])
 
     sdmmcSleepWhenIdle= sdmmcComponent.createBooleanSymbol("DRV_SDMMC_SLEEP_WHEN_IDLE", None)
     sdmmcSleepWhenIdle.setLabel("Sleep when idle?")
+    sdmmcSleepWhenIdle.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcSleepWhenIdle.setDescription("eMMC is put to sleep mode when no read/write request is pending")
     sdmmcSleepWhenIdle.setVisible(sdmmcProtocol.getValue() == "eMMC")
     sdmmcSleepWhenIdle.setDefaultValue(False)
@@ -230,6 +240,7 @@ def instantiateComponent(sdmmcComponent, index):
 
     sdmmcCardDetectionMethodsList1 = sdmmcComponent.createComboSymbol("DRV_SDMMC_CARD_DETECTION_METHODS_LIST1", None, cardDetectMethodList1ComboValues)
     sdmmcCardDetectionMethodsList1.setLabel("Card Detection Method")
+    sdmmcCardDetectionMethodsList1.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcCardDetectionMethodsList1.setDefaultValue(cardDetectMethodList1ComboValues[1])
     sdmmcCardDetectionMethodsList1.setReadOnly(True)
     sdmmcCardDetectionMethodsList1.setVisible(False)
@@ -262,6 +273,7 @@ def instantiateComponent(sdmmcComponent, index):
 
     sdmmcPollingInterval = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_POLLING_INTERVAL", None)
     sdmmcPollingInterval.setLabel("Polling Interval (ms)")
+    sdmmcPollingInterval.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcPollingInterval.setVisible(False)
     sdmmcPollingInterval.setMin(1)
     sdmmcPollingInterval.setDefaultValue(100)
@@ -274,6 +286,7 @@ def instantiateComponent(sdmmcComponent, index):
 
     sdmmcWPCheckEnable = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_WP_CHECK_ENABLE", None)
     sdmmcWPCheckEnable.setLabel("Enable Write Protection Check?")
+    sdmmcWPCheckEnable.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcWPCheckEnable.setDefaultValue(False)
     sdmmcWPCheckEnable.setReadOnly(True)
     sdmmcWPCheckEnable.setVisible(False)
@@ -291,12 +304,14 @@ def instantiateComponent(sdmmcComponent, index):
 
     sdmmcFsEnable = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_FS_ENABLE", None)
     sdmmcFsEnable.setLabel("File system for SDMMC Driver Enabled")
+    sdmmcFsEnable.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcFsEnable.setReadOnly(True)
 
     # RTOS Settings
     sdmmcRTOSMenu = sdmmcComponent.createMenuSymbol("DRV_SDMMC_RTOS_MENU", None)
     sdmmcRTOSMenu.setLabel("RTOS Configuration")
     sdmmcRTOSMenu.setDescription("RTOS Configuration")
+    sdmmcRTOSMenu.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcRTOSMenu.setVisible((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"))
     sdmmcRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS"])
 
@@ -307,10 +322,12 @@ def instantiateComponent(sdmmcComponent, index):
 
     sdmmcRTOSTaskSize = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_RTOS_STACK_SIZE", sdmmcRTOSMenu)
     sdmmcRTOSTaskSize.setLabel("Stack Size (in bytes)")
+    sdmmcRTOSTaskSize.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcRTOSTaskSize.setDefaultValue(4096)
 
     sdmmcRTOSMsgQSize = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_RTOS_TASK_MSG_QTY", sdmmcRTOSMenu)
     sdmmcRTOSMsgQSize.setLabel("Maximum Message Queue Size")
+    sdmmcRTOSMsgQSize.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcRTOSMsgQSize.setDescription("A µC/OS-III task contains an optional internal message queue (if OS_CFG_TASK_Q_EN is set to DEF_ENABLED in os_cfg.h). This argument specifies the maximum number of messages that the task can receive through this message queue. The user may specify that the task is unable to receive messages by setting this argument to 0")
     sdmmcRTOSMsgQSize.setDefaultValue(0)
     sdmmcRTOSMsgQSize.setVisible(getActiveRtos() == "MicriumOSIII")
@@ -318,6 +335,7 @@ def instantiateComponent(sdmmcComponent, index):
 
     sdmmcRTOSTaskTimeQuanta = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_RTOS_TASK_TIME_QUANTA", sdmmcRTOSMenu)
     sdmmcRTOSTaskTimeQuanta.setLabel("Task Time Quanta")
+    sdmmcRTOSTaskTimeQuanta.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcRTOSTaskTimeQuanta.setDescription("The amount of time (in clock ticks) for the time quanta when Round Robin is enabled. If you specify 0, then the default time quanta will be used which is the tick rate divided by 10.")
     sdmmcRTOSTaskTimeQuanta.setDefaultValue(0)
     sdmmcRTOSTaskTimeQuanta.setVisible(getActiveRtos() == "MicriumOSIII")
@@ -325,20 +343,24 @@ def instantiateComponent(sdmmcComponent, index):
 
     sdmmcRTOSTaskPriority = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_RTOS_TASK_PRIORITY", sdmmcRTOSMenu)
     sdmmcRTOSTaskPriority.setLabel("Task Priority")
+    sdmmcRTOSTaskPriority.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcRTOSTaskPriority.setDefaultValue(1)
 
     sdmmcRTOSTaskDelay = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_RTOS_USE_DELAY", sdmmcRTOSMenu)
     sdmmcRTOSTaskDelay.setLabel("Use Task Delay?")
+    sdmmcRTOSTaskDelay.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcRTOSTaskDelay.setDefaultValue(True)
 
     sdmmcRTOSTaskDelayVal = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_RTOS_DELAY", sdmmcRTOSMenu)
     sdmmcRTOSTaskDelayVal.setLabel("Task Delay")
+    sdmmcRTOSTaskDelayVal.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcRTOSTaskDelayVal.setDefaultValue(10)
     sdmmcRTOSTaskDelayVal.setVisible(sdmmcRTOSTaskDelay.getValue())
     sdmmcRTOSTaskDelayVal.setDependencies(setVisible, ["DRV_SDMMC_RTOS_USE_DELAY"])
 
     sdmmcRTOSTaskSpecificOpt = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_RTOS_TASK_OPT_NONE", sdmmcRTOSMenu)
     sdmmcRTOSTaskSpecificOpt.setLabel("Task Specific Options")
+    sdmmcRTOSTaskSpecificOpt.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcRTOSTaskSpecificOpt.setDescription("Contains task-specific options. Each option consists of one bit. The option is selected when the bit is set. The current version of µC/OS-III supports the following options:")
     sdmmcRTOSTaskSpecificOpt.setDefaultValue(True)
     sdmmcRTOSTaskSpecificOpt.setVisible(getActiveRtos() == "MicriumOSIII")
@@ -346,24 +368,28 @@ def instantiateComponent(sdmmcComponent, index):
 
     sdmmcRTOSTaskStkChk = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_RTOS_TASK_OPT_STK_CHK", sdmmcRTOSTaskSpecificOpt)
     sdmmcRTOSTaskStkChk.setLabel("Stack checking is allowed for the task")
+    sdmmcRTOSTaskStkChk.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcRTOSTaskStkChk.setDescription("Specifies whether stack checking is allowed for the task")
     sdmmcRTOSTaskStkChk.setDefaultValue(True)
     sdmmcRTOSTaskStkChk.setDependencies(sdmmcRtosMicriumOSIIITaskOptVisibility, ["DRV_SDMMC_RTOS_TASK_OPT_NONE"])
 
     sdmmcRTOSTaskStkClr = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_RTOS_TASK_OPT_STK_CLR", sdmmcRTOSTaskSpecificOpt)
     sdmmcRTOSTaskStkClr.setLabel("Stack needs to be cleared")
+    sdmmcRTOSTaskStkClr.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcRTOSTaskStkClr.setDescription("Specifies whether the stack needs to be cleared")
     sdmmcRTOSTaskStkClr.setDefaultValue(True)
     sdmmcRTOSTaskStkClr.setDependencies(sdmmcRtosMicriumOSIIITaskOptVisibility, ["DRV_SDMMC_RTOS_TASK_OPT_NONE"])
 
     sdmmcRTOSTaskSaveFp = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_RTOS_TASK_OPT_SAVE_FP", sdmmcRTOSTaskSpecificOpt)
     sdmmcRTOSTaskSaveFp.setLabel("Floating-point registers needs to be saved")
+    sdmmcRTOSTaskSaveFp.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcRTOSTaskSaveFp.setDescription("Specifies whether floating-point registers are saved. This option is only valid if the processor has floating-point hardware and the processor-specific code saves the floating-point registers")
     sdmmcRTOSTaskSaveFp.setDefaultValue(False)
     sdmmcRTOSTaskSaveFp.setDependencies(sdmmcRtosMicriumOSIIITaskOptVisibility, ["DRV_SDMMC_RTOS_TASK_OPT_NONE"])
 
     sdmmcRTOSTaskNoTls = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_RTOS_TASK_OPT_NO_TLS", sdmmcRTOSTaskSpecificOpt)
     sdmmcRTOSTaskNoTls.setLabel("TLS (Thread Local Storage) support needed for the task")
+    sdmmcRTOSTaskNoTls.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcRTOSTaskNoTls.setDescription("If the caller doesn’t want or need TLS (Thread Local Storage) support for the task being created. If you do not include this option, TLS will be supported by default. TLS support was added in V3.03.00")
     sdmmcRTOSTaskNoTls.setDefaultValue(False)
     sdmmcRTOSTaskNoTls.setDependencies(sdmmcRtosMicriumOSIIITaskOptVisibility, ["DRV_SDMMC_RTOS_TASK_OPT_NONE"])

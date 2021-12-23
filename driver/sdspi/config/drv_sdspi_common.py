@@ -24,6 +24,8 @@
 global fsCounter
 global drv_spi_counter
 
+drv_sdspi_mcc_helpkeyword = "mcc_h3_drv_sdspi_configurations"
+
 fsCounter = 0
 
 def enableFileSystemIntegration(symbol, event):
@@ -137,6 +139,7 @@ def instantiateComponent(sdspiComponentCommon):
 
     sdspiCommonMode = sdspiComponentCommon.createComboSymbol("DRV_SDSPI_COMMON_MODE", None, ["Asynchronous", "Synchronous"])
     sdspiCommonMode.setLabel("Driver Mode")
+    sdspiCommonMode.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiCommonMode.setDefaultValue(sdspi_default_mode)
     sdspiCommonMode.setDependencies(setCommonMode, ["HarmonyCore.SELECT_RTOS"])
 

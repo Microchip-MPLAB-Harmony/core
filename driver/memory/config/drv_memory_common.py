@@ -26,6 +26,8 @@ global fsCounter
 
 fsCounter = 0
 
+drv_memory_mcc_helpkeyword = "mcc_h3_drv_memory_configurations"
+
 def enableFileSystemIntegration(symbol, event):
     symbol.setEnabled(event["value"])
 
@@ -97,6 +99,7 @@ def instantiateComponent(memoryCommonComponent):
 
     memoryCommonMode = memoryCommonComponent.createComboSymbol("DRV_MEMORY_COMMON_MODE", None, ["Asynchronous", "Synchronous"])
     memoryCommonMode.setLabel("Driver Mode")
+    memoryCommonMode.setHelp(drv_memory_mcc_helpkeyword)
     memoryCommonMode.setDefaultValue(memory_default_mode)
     memoryCommonMode.setDependencies(setCommonMode, ["HarmonyCore.SELECT_RTOS"])
 

@@ -26,6 +26,8 @@
 #### Component ####
 ################################################################################
 
+drv_nand_flash_mcc_helpkeyword = "mcc_h3_drv_nand_flash_configurations"
+
 def nandFlashFileSymbolEnable(symbol, event):
     symbol.setEnabled(event["value"])
 
@@ -77,10 +79,12 @@ def instantiateComponent(nandFlashComponent):
 
     nandFlashPLIB = nandFlashComponent.createStringSymbol("DRV_NAND_FLASH_PLIB", None)
     nandFlashPLIB.setLabel("PLIB Used")
+    nandFlashPLIB.setHelp(drv_nand_flash_mcc_helpkeyword)
     nandFlashPLIB.setReadOnly(True)
 
     nandFlashNumClients = nandFlashComponent.createIntegerSymbol("DRV_NAND_FLASH_NUM_CLIENTS", None)
     nandFlashNumClients.setLabel("Number of Clients")
+    nandFlashNumClients.setHelp(drv_nand_flash_mcc_helpkeyword)
     nandFlashNumClients.setReadOnly(True)
     nandFlashNumClients.setMin(1)
     nandFlashNumClients.setMax(64)
@@ -88,24 +92,28 @@ def instantiateComponent(nandFlashComponent):
 
     nandFlashChipSelect = nandFlashComponent.createIntegerSymbol("DRV_NAND_FLASH_CHIP_SELECT", None)
     nandFlashChipSelect.setLabel("Chip Select")
+    nandFlashChipSelect.setHelp(drv_nand_flash_mcc_helpkeyword)
     nandFlashChipSelect.setReadOnly(True)
     nandFlashChipSelect.setMin(0)
     nandFlashChipSelect.setDefaultValue(3)
 
     nandEnablePMECC = nandFlashComponent.createBooleanSymbol("DRV_NAND_FLASH_PMECC_ENABLE", None)
     nandEnablePMECC.setLabel("Enable Error Correction Code (PMECC)")
+    nandEnablePMECC.setHelp(drv_nand_flash_mcc_helpkeyword)
     nandEnablePMECC.setDefaultValue(True)
     nandEnablePMECC.setDependencies(UpdateDependentPmeccSym, ["DRV_NAND_FLASH_PMECC_ENABLE"])
 
     if Database.getSymbolValue("core", "DMA_ENABLE") != None:
         nandTXRXDMA = nandFlashComponent.createBooleanSymbol("DRV_NAND_FLASH_TX_RX_DMA", None)
         nandTXRXDMA.setLabel("Use DMA for Transmit and Receive ?")
+        nandTXRXDMA.setHelp(drv_nand_flash_mcc_helpkeyword)
         nandTXRXDMA.setDefaultValue(False)
         nandTXRXDMA.setDependencies(enableSysDMA, ["DRV_NAND_FLASH_TX_RX_DMA"])
 
         nandTXRXDMAChannel = nandFlashComponent.createIntegerSymbol("DRV_NAND_FLASH_TX_RX_DMA_CHANNEL", nandTXRXDMA)
         nandTXRXDMAChannel.setLabel("DMA Channel For Transmit and Receive")
         nandTXRXDMAChannel.setDefaultValue(0)
+        nandTXRXDMAChannel.setHelp(drv_nand_flash_mcc_helpkeyword)
         nandTXRXDMAChannel.setVisible(False)
         nandTXRXDMAChannel.setReadOnly(True)
         nandTXRXDMAChannel.setDependencies(requestAndAssignDMAChannel, ["DRV_NAND_FLASH_TX_RX_DMA"])

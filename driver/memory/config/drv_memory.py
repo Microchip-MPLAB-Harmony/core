@@ -36,6 +36,8 @@ memoryPlibHeaderFile        = None
 memoryPlibSystemDefFile     = None
 memoryFsEnable              = None
 
+drv_memory_mcc_helpkeyword = "mcc_h3_drv_memory_configurations"
+
 mediaTypes =  ["SYS_FS_MEDIA_TYPE_NVM",
                 "SYS_FS_MEDIA_TYPE_RAM",
                 "SYS_FS_MEDIA_TYPE_SPIFLASH"]
@@ -128,6 +130,7 @@ def instantiateComponent(memoryComponent, index):
 
     memorySymNumClients = memoryComponent.createIntegerSymbol("DRV_MEMORY_NUM_CLIENTS", None)
     memorySymNumClients.setLabel("Number of Clients")
+    memorySymNumClients.setHelp(drv_memory_mcc_helpkeyword)
     memorySymNumClients.setMin(1)
     memorySymNumClients.setMax(10)
     memorySymNumClients.setDefaultValue(1)
@@ -135,10 +138,12 @@ def instantiateComponent(memoryComponent, index):
 
     memoryFsEnable = memoryComponent.createBooleanSymbol("DRV_MEMORY_FS_ENABLE", None)
     memoryFsEnable.setLabel("File system Enabled for Memory Driver")
+    memoryFsEnable.setHelp(drv_memory_mcc_helpkeyword)
     memoryFsEnable.setReadOnly(True)
 
     memorySymBufPool = memoryComponent.createIntegerSymbol("DRV_MEMORY_BUFFER_QUEUE_SIZE", None)
     memorySymBufPool.setLabel("Buffer Queue Size")
+    memorySymBufPool.setHelp(drv_memory_mcc_helpkeyword)
     memorySymBufPool.setMin(1)
     memorySymBufPool.setMax(64)
     memorySymBufPool.setDefaultValue(1)
@@ -147,12 +152,14 @@ def instantiateComponent(memoryComponent, index):
 
     memoryDeviceMediaType = memoryComponent.createComboSymbol("DRV_MEMORY_DEVICE_TYPE", None, mediaTypes)
     memoryDeviceMediaType.setLabel("Memory Device Type")
+    memoryDeviceMediaType.setHelp(drv_memory_mcc_helpkeyword)
     memoryDeviceMediaType.setDefaultValue("SYS_FS_MEDIA_TYPE_SPIFLASH")
     memoryDeviceMediaType.setVisible((memoryFsEnable.getValue() == True))
     memoryDeviceMediaType.setDependencies(setVisible, ["DRV_MEMORY_FS_ENABLE"])
 
     memoryDeviceUsed = memoryComponent.createStringSymbol("DRV_MEMORY_DEVICE", None)
     memoryDeviceUsed.setLabel("Memory Device Used")
+    memoryDeviceUsed.setHelp(drv_memory_mcc_helpkeyword)
     memoryDeviceUsed.setReadOnly(True)
 
     memoryDeviceComment = memoryComponent.createCommentSymbol("DRV_MEMORY_DEVICE_COMMENT", None)
@@ -175,6 +182,7 @@ def instantiateComponent(memoryComponent, index):
 
     memoryDevicePollUs = memoryComponent.createIntegerSymbol("DRV_MEMORY_DEVICE_POLL_US", None)
     memoryDevicePollUs.setLabel("Memory Device Status Polling Rate MicroSeconds")
+    memoryDevicePollUs.setHelp(drv_memory_mcc_helpkeyword)
     memoryDevicePollUs.setMin(0)
     memoryDevicePollUs.setDefaultValue(500)
     memoryDevicePollUs.setVisible(enable_poll)
@@ -201,6 +209,7 @@ def instantiateComponent(memoryComponent, index):
     # RTOS Settings
     memoryRTOSMenu = memoryComponent.createMenuSymbol("DRV_MEMORY_RTOS_MENU", None)
     memoryRTOSMenu.setLabel("RTOS settings")
+    memoryRTOSMenu.setHelp(drv_memory_mcc_helpkeyword)
     memoryRTOSMenu.setDescription("RTOS settings")
     memoryRTOSMenu.setVisible(enable_rtos_settings)
     memoryRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS", "drv_memory.DRV_MEMORY_COMMON_MODE"])
@@ -212,11 +221,13 @@ def instantiateComponent(memoryComponent, index):
 
     memoryRTOSStackSize = memoryComponent.createIntegerSymbol("DRV_MEMORY_RTOS_STACK_SIZE", memoryRTOSMenu)
     memoryRTOSStackSize.setLabel("Stack Size (in bytes)")
+    memoryRTOSStackSize.setHelp(drv_memory_mcc_helpkeyword)
     memoryRTOSStackSize.setDefaultValue(4096)
     memoryRTOSStackSize.setReadOnly(True)
 
     memoryRTOSMsgQSize = memoryComponent.createIntegerSymbol("DRV_MEMORY_RTOS_TASK_MSG_QTY", memoryRTOSMenu)
     memoryRTOSMsgQSize.setLabel("Maximum Message Queue Size")
+    memoryRTOSMsgQSize.setHelp(drv_memory_mcc_helpkeyword)
     memoryRTOSMsgQSize.setDescription("A µC/OS-III task contains an optional internal message queue (if OS_CFG_TASK_Q_EN is set to DEF_ENABLED in os_cfg.h). This argument specifies the maximum number of messages that the task can receive through this message queue. The user may specify that the task is unable to receive messages by setting this argument to 0")
     memoryRTOSMsgQSize.setDefaultValue(0)
     memoryRTOSMsgQSize.setVisible(getActiveRtos() == "MicriumOSIII")
@@ -224,6 +235,7 @@ def instantiateComponent(memoryComponent, index):
 
     memoryRTOSTaskTimeQuanta = memoryComponent.createIntegerSymbol("DRV_MEMORY_RTOS_TASK_TIME_QUANTA", memoryRTOSMenu)
     memoryRTOSTaskTimeQuanta.setLabel("Task Time Quanta")
+    memoryRTOSTaskTimeQuanta.setHelp(drv_memory_mcc_helpkeyword)
     memoryRTOSTaskTimeQuanta.setDescription("The amount of time (in clock ticks) for the time quanta when Round Robin is enabled. If you specify 0, then the default time quanta will be used which is the tick rate divided by 10.")
     memoryRTOSTaskTimeQuanta.setDefaultValue(0)
     memoryRTOSTaskTimeQuanta.setVisible(getActiveRtos() == "MicriumOSIII")
@@ -231,20 +243,24 @@ def instantiateComponent(memoryComponent, index):
 
     memoryRTOSTaskPriority = memoryComponent.createIntegerSymbol("DRV_MEMORY_RTOS_TASK_PRIORITY", memoryRTOSMenu)
     memoryRTOSTaskPriority.setLabel("Task Priority")
+    memoryRTOSTaskPriority.setHelp(drv_memory_mcc_helpkeyword)
     memoryRTOSTaskPriority.setDefaultValue(1)
 
     memoryRTOSTaskDelay = memoryComponent.createBooleanSymbol("DRV_MEMORY_RTOS_USE_DELAY", memoryRTOSMenu)
     memoryRTOSTaskDelay.setLabel("Use Task Delay?")
+    memoryRTOSTaskDelay.setHelp(drv_memory_mcc_helpkeyword)
     memoryRTOSTaskDelay.setDefaultValue(True)
 
     memoryRTOSTaskDelayVal = memoryComponent.createIntegerSymbol("DRV_MEMORY_RTOS_DELAY", memoryRTOSMenu)
     memoryRTOSTaskDelayVal.setLabel("Task Delay")
+    memoryRTOSTaskDelayVal.setHelp(drv_memory_mcc_helpkeyword)
     memoryRTOSTaskDelayVal.setDefaultValue(10)
     memoryRTOSTaskDelayVal.setVisible((memoryRTOSTaskDelay.getValue() == True))
     memoryRTOSTaskDelayVal.setDependencies(setVisible, ["DRV_MEMORY_RTOS_USE_DELAY"])
 
     memoryRTOSTaskSpecificOpt = memoryComponent.createBooleanSymbol("DRV_MEMORY_RTOS_TASK_OPT_NONE", memoryRTOSMenu)
     memoryRTOSTaskSpecificOpt.setLabel("Task Specific Options")
+    memoryRTOSTaskSpecificOpt.setHelp(drv_memory_mcc_helpkeyword)
     memoryRTOSTaskSpecificOpt.setDescription("Contains task-specific options. Each option consists of one bit. The option is selected when the bit is set. The current version of µC/OS-III supports the following options:")
     memoryRTOSTaskSpecificOpt.setDefaultValue(True)
     memoryRTOSTaskSpecificOpt.setVisible(getActiveRtos() == "MicriumOSIII")
@@ -252,24 +268,28 @@ def instantiateComponent(memoryComponent, index):
 
     memoryRTOSTaskStkChk = memoryComponent.createBooleanSymbol("DRV_MEMORY_RTOS_TASK_OPT_STK_CHK", memoryRTOSTaskSpecificOpt)
     memoryRTOSTaskStkChk.setLabel("Stack checking is allowed for the task")
+    memoryRTOSTaskStkChk.setHelp(drv_memory_mcc_helpkeyword)
     memoryRTOSTaskStkChk.setDescription("Specifies whether stack checking is allowed for the task")
     memoryRTOSTaskStkChk.setDefaultValue(True)
     memoryRTOSTaskStkChk.setDependencies(memoryRtosMicriumOSIIITaskOptVisibility, ["DRV_MEMORY_RTOS_TASK_OPT_NONE"])
 
     memoryRTOSTaskStkClr = memoryComponent.createBooleanSymbol("DRV_MEMORY_RTOS_TASK_OPT_STK_CLR", memoryRTOSTaskSpecificOpt)
     memoryRTOSTaskStkClr.setLabel("Stack needs to be cleared")
+    memoryRTOSTaskStkClr.setHelp(drv_memory_mcc_helpkeyword)
     memoryRTOSTaskStkClr.setDescription("Specifies whether the stack needs to be cleared")
     memoryRTOSTaskStkClr.setDefaultValue(True)
     memoryRTOSTaskStkClr.setDependencies(memoryRtosMicriumOSIIITaskOptVisibility, ["DRV_MEMORY_RTOS_TASK_OPT_NONE"])
 
     memoryRTOSTaskSaveFp = memoryComponent.createBooleanSymbol("DRV_MEMORY_RTOS_TASK_OPT_SAVE_FP", memoryRTOSTaskSpecificOpt)
     memoryRTOSTaskSaveFp.setLabel("Floating-point registers needs to be saved")
+    memoryRTOSTaskSaveFp.setHelp(drv_memory_mcc_helpkeyword)
     memoryRTOSTaskSaveFp.setDescription("Specifies whether floating-point registers are saved. This option is only valid if the processor has floating-point hardware and the processor-specific code saves the floating-point registers")
     memoryRTOSTaskSaveFp.setDefaultValue(False)
     memoryRTOSTaskSaveFp.setDependencies(memoryRtosMicriumOSIIITaskOptVisibility, ["DRV_MEMORY_RTOS_TASK_OPT_NONE"])
 
     memoryRTOSTaskNoTls = memoryComponent.createBooleanSymbol("DRV_MEMORY_RTOS_TASK_OPT_NO_TLS", memoryRTOSTaskSpecificOpt)
     memoryRTOSTaskNoTls.setLabel("TLS (Thread Local Storage) support needed for the task")
+    memoryRTOSTaskNoTls.setHelp(drv_memory_mcc_helpkeyword)
     memoryRTOSTaskNoTls.setDescription("If the caller doesn’t want or need TLS (Thread Local Storage) support for the task being created. If you do not include this option, TLS will be supported by default. TLS support was added in V3.03.00")
     memoryRTOSTaskNoTls.setDefaultValue(False)
     memoryRTOSTaskNoTls.setDependencies(memoryRtosMicriumOSIIITaskOptVisibility, ["DRV_MEMORY_RTOS_TASK_OPT_NONE"])

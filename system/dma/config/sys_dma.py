@@ -54,6 +54,7 @@ if("PIC32M" in Database.getSymbolValue("core", "PRODUCT_FAMILY")):
 
 genSysDMACommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_DMA", None)
 genSysDMACommonFiles.setLabel("Enable System DMA")
+genSysDMACommonFiles.setHelp(harmony_core_mcc_helpkeyword)
 
 enableDependency = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_DMA_DEPENDENCY", None)
 enableDependency.setLabel("Enable System DMA Dependencies")

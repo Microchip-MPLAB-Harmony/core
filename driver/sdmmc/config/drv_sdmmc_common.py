@@ -26,6 +26,8 @@ global fsCounter
 
 fsCounter = 0
 
+drv_sdmmc_mcc_helpkeyword = "mcc_h3_drv_sdmmc_configurations"
+
 def enableFileSystemIntegration(symbol, event):
     symbol.setEnabled(event["value"])
 
@@ -86,6 +88,7 @@ def instantiateComponent(sdmmcCommonComponent):
 
     sdmmcCommonMode = sdmmcCommonComponent.createComboSymbol("DRV_SDMMC_COMMON_MODE", None, ["Asynchronous", "Synchronous"])
     sdmmcCommonMode.setLabel("Driver Mode")
+    sdmmcCommonMode.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcCommonMode.setDefaultValue(sdmmc_default_mode)
     sdmmcCommonMode.setReadOnly(True)
 

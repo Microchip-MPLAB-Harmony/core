@@ -21,6 +21,9 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
+
+drv_i2c_mcc_helpkeyword = "mcc_h3_drv_i2c_configurations"
+
 def handleMessage(messageID, args):
 
     result_dict = {}
@@ -48,16 +51,19 @@ def instantiateComponent(i2cComponent, index):
 
     i2cSymPLIB = i2cComponent.createStringSymbol("DRV_I2C_PLIB", None)
     i2cSymPLIB.setLabel("PLIB Used")
+    i2cSymPLIB.setHelp(drv_i2c_mcc_helpkeyword)
     i2cSymPLIB.setReadOnly(True)
     i2cSymPLIB.setDefaultValue("")
 
     i2cSymNumClients = i2cComponent.createIntegerSymbol("DRV_I2C_NUM_CLIENTS", None)
     i2cSymNumClients.setLabel("Number of clients")
+    i2cSymNumClients.setHelp(drv_i2c_mcc_helpkeyword)
     i2cSymNumClients.setMax(10)
     i2cSymNumClients.setDefaultValue(1)
 
     i2cSymQueueSize = i2cComponent.createIntegerSymbol("DRV_I2C_QUEUE_SIZE", None)
     i2cSymQueueSize.setLabel("Transfer Queue Size")
+    i2cSymQueueSize.setHelp(drv_i2c_mcc_helpkeyword)
     i2cSymQueueSize.setMax(64)
     i2cSymQueueSize.setVisible((Database.getSymbolValue("drv_i2c", "DRV_I2C_MODE") == "Asynchronous"))
     i2cSymQueueSize.setDefaultValue(2)

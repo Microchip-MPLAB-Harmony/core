@@ -41,6 +41,7 @@ def genPortsSystemDefFile(symbol, event):
 ############################################################################
 genSysPortsCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_PORTS", None)
 genSysPortsCommonFiles.setLabel("Enable System Ports")
+genSysPortsCommonFiles.setHelp(harmony_core_mcc_helpkeyword)
 genSysPortsCommonFiles.setDefaultValue(False)
 
 portsHeaderFile = harmonyCoreComponent.createFileSymbol("PORTS_HEADER", None)

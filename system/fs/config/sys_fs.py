@@ -22,6 +22,8 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
+sys_fs_mcc_helpkeyword = "mcc_h3_sys_fs_configurations"
+
 def instantiateComponent(sysFSComponent):
     fsTypes = ["FAT","MPFS2"]
     mediaTypes =  ["SYS_FS_MEDIA_TYPE_NVM",
@@ -47,12 +49,14 @@ def instantiateComponent(sysFSComponent):
 
     sysFSMenu = sysFSComponent.createMenuSymbol("SYS_FS_MENU", None)
     sysFSMenu.setLabel("File System settings")
+    sysFSMenu.setHelp(sys_fs_mcc_helpkeyword)
     sysFSMenu.setDescription("File System settings")
     sysFSMenu.setVisible(True)
 
     # RTOS Settings
     sysFSRTOSMenu = sysFSComponent.createMenuSymbol("SYS_FS_RTOS_MENU", None)
     sysFSRTOSMenu.setLabel("RTOS settings")
+    sysFSRTOSMenu.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSMenu.setDescription("RTOS settings")
     sysFSRTOSMenu.setVisible((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"))
     sysFSRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS"])
@@ -64,10 +68,12 @@ def instantiateComponent(sysFSComponent):
 
     sysFSRTOSStackSize = sysFSComponent.createIntegerSymbol("SYS_FS_RTOS_STACK_SIZE", sysFSRTOSMenu)
     sysFSRTOSStackSize.setLabel("Stack Size (in bytes)")
+    sysFSRTOSStackSize.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSStackSize.setDefaultValue(4096)
 
     sysFSRTOSMsgQSize = sysFSComponent.createIntegerSymbol("SYS_FS_RTOS_TASK_MSG_QTY", sysFSRTOSMenu)
     sysFSRTOSMsgQSize.setLabel("Maximum Message Queue Size")
+    sysFSRTOSMsgQSize.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSMsgQSize.setDescription("A µC/OS-III task contains an optional internal message queue (if OS_CFG_TASK_Q_EN is set to DEF_ENABLED in os_cfg.h). This argument specifies the maximum number of messages that the task can receive through this message queue. The user may specify that the task is unable to receive messages by setting this argument to 0")
     sysFSRTOSMsgQSize.setDefaultValue(0)
     sysFSRTOSMsgQSize.setVisible(getActiveRtos() == "MicriumOSIII")
@@ -75,6 +81,7 @@ def instantiateComponent(sysFSComponent):
 
     sysFSRTOSTaskTimeQuanta = sysFSComponent.createIntegerSymbol("SYS_FS_RTOS_TASK_TIME_QUANTA", sysFSRTOSMenu)
     sysFSRTOSTaskTimeQuanta.setLabel("Task Time Quanta")
+    sysFSRTOSTaskTimeQuanta.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSTaskTimeQuanta.setDescription("The amount of time (in clock ticks) for the time quanta when Round Robin is enabled. If you specify 0, then the default time quanta will be used which is the tick rate divided by 10.")
     sysFSRTOSTaskTimeQuanta.setDefaultValue(0)
     sysFSRTOSTaskTimeQuanta.setVisible(getActiveRtos() == "MicriumOSIII")
@@ -82,19 +89,23 @@ def instantiateComponent(sysFSComponent):
 
     sysFSRTOSTaskPriority = sysFSComponent.createIntegerSymbol("SYS_FS_RTOS_TASK_PRIORITY", sysFSRTOSMenu)
     sysFSRTOSTaskPriority.setLabel("Task Priority")
+    sysFSRTOSTaskPriority.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSTaskPriority.setDefaultValue(1)
 
     sysFSRTOSTaskDelay = sysFSComponent.createBooleanSymbol("SYS_FS_RTOS_USE_DELAY", sysFSRTOSMenu)
     sysFSRTOSTaskDelay.setLabel("Use Task Delay?")
+    sysFSRTOSTaskDelay.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSTaskDelay.setDefaultValue(True)
 
     sysFSRTOSTaskDelayVal = sysFSComponent.createIntegerSymbol("SYS_FS_RTOS_DELAY", sysFSRTOSMenu)
     sysFSRTOSTaskDelayVal.setLabel("Task Delay")
+    sysFSRTOSTaskDelayVal.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSTaskDelayVal.setDefaultValue(10)
     sysFSRTOSTaskDelayVal.setDependencies(showRTOSTaskDel, ["SYS_FS_RTOS_USE_DELAY"])
 
     sysFSRTOSTaskSpecificOpt = sysFSComponent.createBooleanSymbol("SYS_FS_RTOS_TASK_OPT_NONE", sysFSRTOSMenu)
     sysFSRTOSTaskSpecificOpt.setLabel("Task Specific Options")
+    sysFSRTOSTaskSpecificOpt.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSTaskSpecificOpt.setDescription("Contains task-specific options. Each option consists of one bit. The option is selected when the bit is set. The current version of µC/OS-III supports the following options:")
     sysFSRTOSTaskSpecificOpt.setDefaultValue(True)
     sysFSRTOSTaskSpecificOpt.setVisible(getActiveRtos() == "MicriumOSIII")
@@ -102,52 +113,62 @@ def instantiateComponent(sysFSComponent):
 
     sysFSRTOSTaskStkChk = sysFSComponent.createBooleanSymbol("SYS_FS_RTOS_TASK_OPT_STK_CHK", sysFSRTOSTaskSpecificOpt)
     sysFSRTOSTaskStkChk.setLabel("Stack checking is allowed for the task")
+    sysFSRTOSTaskStkChk.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSTaskStkChk.setDescription("Specifies whether stack checking is allowed for the task")
     sysFSRTOSTaskStkChk.setDefaultValue(True)
     sysFSRTOSTaskStkChk.setDependencies(sysFsRtosMicriumOSIIITaskOptVisibility, ["SYS_FS_RTOS_TASK_OPT_NONE"])
 
     sysFSRTOSTaskStkClr = sysFSComponent.createBooleanSymbol("SYS_FS_RTOS_TASK_OPT_STK_CLR", sysFSRTOSTaskSpecificOpt)
     sysFSRTOSTaskStkClr.setLabel("Stack needs to be cleared")
+    sysFSRTOSTaskStkClr.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSTaskStkClr.setDescription("Specifies whether the stack needs to be cleared")
     sysFSRTOSTaskStkClr.setDefaultValue(True)
     sysFSRTOSTaskStkClr.setDependencies(sysFsRtosMicriumOSIIITaskOptVisibility, ["SYS_FS_RTOS_TASK_OPT_NONE"])
 
     sysFSRTOSTaskSaveFp = sysFSComponent.createBooleanSymbol("SYS_FS_RTOS_TASK_OPT_SAVE_FP", sysFSRTOSTaskSpecificOpt)
     sysFSRTOSTaskSaveFp.setLabel("Floating-point registers needs to be saved")
+    sysFSRTOSTaskSaveFp.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSTaskSaveFp.setDescription("Specifies whether floating-point registers are saved. This option is only valid if the processor has floating-point hardware and the processor-specific code saves the floating-point registers")
     sysFSRTOSTaskSaveFp.setDefaultValue(False)
     sysFSRTOSTaskSaveFp.setDependencies(sysFsRtosMicriumOSIIITaskOptVisibility, ["SYS_FS_RTOS_TASK_OPT_NONE"])
 
     sysFSRTOSTaskNoTls = sysFSComponent.createBooleanSymbol("SYS_FS_RTOS_TASK_OPT_NO_TLS", sysFSRTOSTaskSpecificOpt)
     sysFSRTOSTaskNoTls.setLabel("TLS (Thread Local Storage) support needed for the task")
+    sysFSRTOSTaskNoTls.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSTaskNoTls.setDescription("If the caller doesn’t want or need TLS (Thread Local Storage) support for the task being created. If you do not include this option, TLS will be supported by default. TLS support was added in V3.03.00")
     sysFSRTOSTaskNoTls.setDefaultValue(False)
     sysFSRTOSTaskNoTls.setDependencies(sysFsRtosMicriumOSIIITaskOptVisibility, ["SYS_FS_RTOS_TASK_OPT_NONE"])
 
     sysFSMaxFiles = sysFSComponent.createIntegerSymbol("SYS_FS_MAX_FILES", sysFSMenu)
     sysFSMaxFiles.setLabel("Maximum Simultaneous File Access")
+    sysFSMaxFiles.setHelp(sys_fs_mcc_helpkeyword)
     sysFSMaxFiles.setDefaultValue(1)
 
     sysFSBlockSize = sysFSComponent.createIntegerSymbol("SYS_FS_MEDIA_MAX_BLOCK_SIZE", sysFSMenu)
     sysFSBlockSize.setLabel("Size Of Block")
+    sysFSBlockSize.setHelp(sys_fs_mcc_helpkeyword)
     sysFSBlockSize.setDefaultValue(512)
     sysFSBlockSize.setReadOnly(True)
 
     sysFSBufferSize = sysFSComponent.createIntegerSymbol("SYS_FS_MEDIA_MANAGER_BUFFER_SIZE", sysFSMenu)
     sysFSBufferSize.setLabel("Size Of Media Manager Buffer")
+    sysFSBufferSize.setHelp(sys_fs_mcc_helpkeyword)
     sysFSBufferSize.setDefaultValue(2048)
 
     sysFSAutoMount = sysFSComponent.createBooleanSymbol("SYS_FS_AUTO_MOUNT", sysFSMenu)
     sysFSAutoMount.setLabel("Use File System Auto Mount Feature?")
+    sysFSAutoMount.setHelp(sys_fs_mcc_helpkeyword)
     sysFSAutoMount.setDefaultValue(False)
 
     sysFSMedia = sysFSComponent.createIntegerSymbol("SYS_FS_INSTANCES_NUMBER", sysFSMenu)
     sysFSMedia.setLabel("Total Number Of Media")
+    sysFSMedia.setHelp(sys_fs_mcc_helpkeyword)
     sysFSMedia.setDefaultValue(1)
     sysFSMedia.setMax(4)
 
     sysFSVol = sysFSComponent.createIntegerSymbol("SYS_FS_VOLUME_NUMBER", sysFSMenu)
     sysFSVol.setLabel("Total Number Of Volumes")
+    sysFSVol.setHelp(sys_fs_mcc_helpkeyword)
     sysFSVol.setDefaultValue(1)
     sysFSVol.setDependencies(showFSVol, ["SYS_FS_AUTO_MOUNT"])
 
@@ -157,6 +178,7 @@ def instantiateComponent(sysFSComponent):
 
     sysFSClientNum = sysFSComponent.createIntegerSymbol("SYS_FS_CLIENT_NUMBER", sysFSMenu)
     sysFSClientNum.setLabel("Total Number File System Clients")
+    sysFSClientNum.setHelp(sys_fs_mcc_helpkeyword)
     sysFSClientNum.setDescription("Indicates Number of clients who want to receive events on Mount or Unmount of volumes")
     sysFSClientNum.setDefaultValue(1)
     sysFSClientNum.setVisible(False)
@@ -180,6 +202,7 @@ def instantiateComponent(sysFSComponent):
         sysFSMedia.append(i)
         sysFSMedia[i] = sysFSComponent.createBooleanSymbol("SYS_FS_IDX" + str(i), sysFSMenu)
         sysFSMedia[i].setLabel("Media" + str(i))
+        sysFSMedia[i].setHelp(sys_fs_mcc_helpkeyword)
         sysFSMedia[i].setDefaultValue(i == 0)
         sysFSMedia[i].setVisible(i == 0)
         sysFSMedia[i].setDependencies(showMedia, ["SYS_FS_INSTANCES_NUMBER"])
@@ -187,6 +210,7 @@ def instantiateComponent(sysFSComponent):
         sysFSMediaConfMenu.append(i)
         sysFSMediaConfMenu[i] = sysFSComponent.createMenuSymbol("MEDIA_CONF_MENU" + str(i), sysFSMedia[i])
         sysFSMediaConfMenu[i].setLabel("Media configuration" + str(i))
+        sysFSMediaConfMenu[i].setHelp(sys_fs_mcc_helpkeyword)
         sysFSMediaConfMenu[i].setDescription("Media configuration" + str(i))
         sysFSMediaConfMenu[i].setVisible(False)
         sysFSMediaConfMenu[i].setDependencies(showMediaConfMenu, ["SYS_FS_IDX" + str(i), "SYS_FS_AUTO_MOUNT"])
@@ -194,11 +218,13 @@ def instantiateComponent(sysFSComponent):
         sysFSMediaType.append(i)
         sysFSMediaType[i] = sysFSComponent.createComboSymbol("SYS_FS_MEDIA_TYPE_DEFINE_IDX" + str(i), sysFSMediaConfMenu[i], mediaTypes)
         sysFSMediaType[i].setLabel("Media Type")
+        sysFSMediaType[i].setHelp(sys_fs_mcc_helpkeyword)
         sysFSMediaType[i].setDefaultValue("SYS_FS_MEDIA_TYPE_SD_CARD")
 
         sysFSMediaFsType.append(i)
         sysFSMediaFsType[i] = sysFSComponent.createComboSymbol("SYS_FS_TYPE_DEFINE_IDX" + str(i) , sysFSMediaConfMenu[i], fsTypes)
         sysFSMediaFsType[i].setLabel("File System Type")
+        sysFSMediaFsType[i].setHelp(sys_fs_mcc_helpkeyword)
         sysFSMediaFsType[i].setDefaultValue("FAT")
 
         sysFSMediaNVM.append(i)
@@ -218,6 +244,7 @@ def instantiateComponent(sysFSComponent):
         sysFSMediaVol.append(i)
         sysFSMediaVol[i] = sysFSComponent.createIntegerSymbol("SYS_FS_VOLUME_INSTANCES_NUMBER_IDX" + str(i), sysFSMediaConfMenu[i])
         sysFSMediaVol[i].setLabel("Number Of Volumes")
+        sysFSMediaVol[i].setHelp(sys_fs_mcc_helpkeyword)
         sysFSMediaVol[i].setDefaultValue(1)
         sysFSMediaVol[i].setMax(4)
         sysFSMediaVol[i].setDependencies(totalNumberOfVolumes, ["SYS_FS_VOLUME_INSTANCES_NUMBER_IDX" + str(i), "SYS_FS_IDX" + str(i), "SYS_FS_AUTO_MOUNT", "SYS_FS_VOLUME_NUMBER"])
@@ -227,6 +254,7 @@ def instantiateComponent(sysFSComponent):
             sysFSMediaxVOL.append(pos)
             sysFSMediaxVOL[pos] = sysFSComponent.createBooleanSymbol("SYS_FS_VOL_" + str(j+1) + "_IDX" + str(i), sysFSMediaConfMenu[i])
             sysFSMediaxVOL[pos].setLabel("Volume" + str(j))
+            sysFSMediaxVOL[pos].setHelp(sys_fs_mcc_helpkeyword)
             sysFSMediaxVOL[pos].setDefaultValue(pos % 4 == 0)
             sysFSMediaxVOL[pos].setVisible(pos % 4 == 0)
             sysFSMediaxVOL[pos].setDependencies(showMediaVOL[i], ["SYS_FS_VOLUME_INSTANCES_NUMBER_IDX"  + str(i)])
@@ -234,6 +262,7 @@ def instantiateComponent(sysFSComponent):
             sysFSMediaxVolConfMenu.append(pos)
             sysFSMediaxVolConfMenu[pos] = sysFSComponent.createMenuSymbol("VOL_CONF_MENU" + str(pos) , sysFSMediaxVOL[pos])
             sysFSMediaxVolConfMenu[pos].setLabel("Volume configuration" + str(j) )
+            sysFSMediaxVolConfMenu[pos].setHelp(sys_fs_mcc_helpkeyword)
             sysFSMediaxVolConfMenu[pos].setDescription("Volume configuration" + str(j))
             sysFSMediaxVolConfMenu[pos].setVisible(True)
             sysFSMediaxVolConfMenu[pos].setDependencies(showMediaVolMenu, ["SYS_FS_VOL_" + str(j+1) + "_IDX" + str(i)])
@@ -241,6 +270,7 @@ def instantiateComponent(sysFSComponent):
             sysFSMediaxVOLDeviceName.append(pos)
             sysFSMediaxVOLDeviceName[pos] = sysFSComponent.createStringSymbol("SYS_FS_MEDIA_DEVICE_" + str(j+1) + "_NAME_IDX"  + str(i), sysFSMediaxVolConfMenu[pos])
             sysFSMediaxVOLDeviceName[pos].setLabel("Device Name")
+            sysFSMediaxVOLDeviceName[pos].setHelp(sys_fs_mcc_helpkeyword)
             sysFSMediaxVOLDeviceName[pos].setDefaultValue("/dev/mmcblka" + str(j+1))
             sysFSMediaxVOLDeviceName[pos].setVisible(True)
             sysFSMediaxVOLDeviceName[pos].setDependencies(mediaDeviceName[i], ["SYS_FS_MEDIA_TYPE_DEFINE_IDX" + str(i)])
@@ -248,20 +278,24 @@ def instantiateComponent(sysFSComponent):
             sysFSMediaxVOLMountName.append(pos)
             sysFSMediaxVOLMountName[pos] = sysFSComponent.createStringSymbol("SYS_FS_MEDIA_MOUNT_" + str(j+1) + "_NAME_IDX"  + str(i), sysFSMediaxVolConfMenu[pos])
             sysFSMediaxVOLMountName[pos].setLabel("Media Mount Name")
+            sysFSMediaxVOLMountName[pos].setHelp(sys_fs_mcc_helpkeyword)
             sysFSMediaxVOLMountName[pos].setDefaultValue("/mnt/myDrive" + str(j+1))
             sysFSMediaxVOLMountName[pos].setVisible(True)
 
     sysFSFileType = sysFSComponent.createIntegerSymbol("SYS_FS_MAX_FILE_SYSTEM_TYPE", sysFSMenu)
     sysFSFileType.setLabel("File System Types")
+    sysFSFileType.setHelp(sys_fs_mcc_helpkeyword)
     sysFSFileType.setDefaultValue(1)
     sysFSFileType.setMax(3)
 
     sysFSFat = sysFSComponent.createBooleanSymbol("SYS_FS_FAT", sysFSMenu)
     sysFSFat.setLabel("FAT File System")
+    sysFSFat.setHelp(sys_fs_mcc_helpkeyword)
     sysFSFat.setDefaultValue(True)
 
     sysFSFatVersion = sysFSComponent.createStringSymbol("SYS_FS_FAT_VERSION", sysFSFat)
     sysFSFatVersion.setLabel("FAT File System Version")
+    sysFSFatVersion.setHelp(sys_fs_mcc_helpkeyword)
     sysFSFatVersion.setDefaultValue("v0.14a")
     sysFSFatVersion.setVisible(sysFSFat.getValue())
     sysFSFatVersion.setReadOnly(True)
@@ -269,12 +303,14 @@ def instantiateComponent(sysFSComponent):
 
     sysFSFatReadonly = sysFSComponent.createBooleanSymbol("SYS_FS_FAT_READONLY", sysFSFat)
     sysFSFatReadonly.setLabel("Make FAT File System Read-only")
+    sysFSFatReadonly.setHelp(sys_fs_mcc_helpkeyword)
     sysFSFatReadonly.setDefaultValue(False)
     sysFSFatReadonly.setVisible(sysFSFat.getValue())
     sysFSFatReadonly.setDependencies(sysFsFatSymbolShow, ["SYS_FS_FAT"])
 
     sysFSFatCodePage = sysFSComponent.createKeyValueSetSymbol("SYS_FS_FAT_CODE_PAGE", sysFSFat)
     sysFSFatCodePage.setLabel("OEM code page to be used")
+    sysFSFatCodePage.setHelp(sys_fs_mcc_helpkeyword)
     sysFSFatCodePage.addKey("CODE_PAGE_0"  , "0"  , "All")
     sysFSFatCodePage.addKey("CODE_PAGE_437", "437", "U.S.")
     sysFSFatCodePage.addKey("CODE_PAGE_720", "720", "Arabic")
@@ -305,26 +341,31 @@ def instantiateComponent(sysFSComponent):
 
     sysFSFatExFAT = sysFSComponent.createBooleanSymbol("SYS_FS_FAT_EXFAT_ENABLE", sysFSFat)
     sysFSFatExFAT.setLabel("Enable exFAT File System Support")
+    sysFSFatExFAT.setHelp(sys_fs_mcc_helpkeyword)
     sysFSFatExFAT.setDefaultValue(False)
     sysFSFatExFAT.setVisible(sysFSFat.getValue())
     sysFSFatExFAT.setDependencies(sysFsFatSymbolShow, ["SYS_FS_FAT"])
 
     sysFSMpfs = sysFSComponent.createBooleanSymbol("SYS_FS_MPFS", sysFSMenu)
     sysFSMpfs.setLabel("Microchip File System")
+    sysFSMpfs.setHelp(sys_fs_mcc_helpkeyword)
     sysFSMpfs.setDefaultValue(False)
 
     sysFSLFS = sysFSComponent.createBooleanSymbol("SYS_FS_LFS", sysFSMenu)
     sysFSLFS.setLabel("LittleFS File System")
+    sysFSLFS.setHelp(sys_fs_mcc_helpkeyword)
     sysFSLFS.setDefaultValue(False)
 
     sysFSLFSReadonly = sysFSComponent.createBooleanSymbol("SYS_FS_LFS_READONLY", sysFSLFS)
     sysFSLFSReadonly.setLabel("Make LittleFS File System Read-only")
+    sysFSLFSReadonly.setHelp(sys_fs_mcc_helpkeyword)
     sysFSLFSReadonly.setDefaultValue(False)
     sysFSLFSReadonly.setVisible(sysFSLFS.getValue())
     sysFSLFSReadonly.setDependencies(sysFsLFSSymbolShow, ["SYS_FS_LFS"])
 
     sysFSLFSSize = sysFSComponent.createIntegerSymbol("SYS_FS_LFS_SIZE", sysFSLFS)
     sysFSLFSSize.setLabel("Size Of LFS image (in KB)")
+    sysFSLFSSize.setHelp(sys_fs_mcc_helpkeyword)
     sysFSLFSSize.setDefaultValue(64)
     sysFSLFSSize.setVisible(sysFSLFS.getValue())
     sysFSLFSSize.setDependencies(sysFsLFSSymbolShow, ["SYS_FS_LFS"])
@@ -347,18 +388,21 @@ def instantiateComponent(sysFSComponent):
 
     sysFSLFNEnable = sysFSComponent.createBooleanSymbol("SYS_FS_LFN_ENABLE", sysFSMenu)
     sysFSLFNEnable.setLabel("Enable Long File Name Support")
+    sysFSLFNEnable.setHelp(sys_fs_mcc_helpkeyword)
     sysFSLFNEnable.setDefaultValue(True)
     sysFSLFNEnable.setReadOnly(sysFSFatExFAT.getValue())
     sysFSLFNEnable.setDependencies(sysFSLFNSet, ["SYS_FS_FAT_EXFAT_ENABLE"])
 
     sysFSNameLen = sysFSComponent.createIntegerSymbol("SYS_FS_FILE_NAME_LEN", sysFSMenu)
     sysFSNameLen.setLabel("File name length in bytes")
+    sysFSNameLen.setHelp(sys_fs_mcc_helpkeyword)
     sysFSNameLen.setDefaultValue(255)
     sysFSNameLen.setMin(12)
     sysFSNameLen.setMax(255)
 
     sysFSPathLen = sysFSComponent.createIntegerSymbol("SYS_FS_CWD_STRING_LEN", sysFSMenu)
     sysFSPathLen.setLabel("Current working directory scratch buffer length in bytes")
+    sysFSPathLen.setHelp(sys_fs_mcc_helpkeyword)
     sysFSPathLen.setDefaultValue(1024)
     sysFSPathLen.setMin(1)
     sysFSPathLen.setMax(1024)
@@ -378,6 +422,7 @@ def instantiateComponent(sysFSComponent):
 
         sysFSAlignedBufferEnable = sysFSComponent.createBooleanSymbol("SYS_FS_ALIGNED_BUFFER_ENABLE", sysFSMenu)
         sysFSAlignedBufferEnable.setLabel("Enable Cache Line Aligned Buffer for Cache Management")
+        sysFSAlignedBufferEnable.setHelp(sys_fs_mcc_helpkeyword)
         sysFSAlignedBufferEnable.setDefaultValue(True)
         sysFSAlignedBufferEnable.setDescription(sysFSFatAlignedBufferEnableDesc)
         sysFSAlignedBufferEnable.setVisible(True)
@@ -385,6 +430,7 @@ def instantiateComponent(sysFSComponent):
 
         sysFSAlignedBufferLen = sysFSComponent.createIntegerSymbol("SYS_FS_ALIGNED_BUFFER_LEN", sysFSAlignedBufferEnable)
         sysFSAlignedBufferLen.setLabel("Aligned Buffer Length in Multiple of 512 Bytes")
+        sysFSAlignedBufferLen.setHelp(sys_fs_mcc_helpkeyword)
         sysFSAlignedBufferLen.setDefaultValue(512)
         sysFSAlignedBufferLen.setMin(512)
         sysFSAlignedBufferLen.setVisible((sysFSAlignedBufferEnable.getValue() == True) and (sysFSFat.getValue() == True))

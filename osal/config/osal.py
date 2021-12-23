@@ -39,6 +39,8 @@ global osalSystemDefFile
 global osalHeaderMbedOSFile
 global osalSourceMbedOSFile
 
+osal_mcc_helpkeyword = "mcc_h3_osal_configurations"
+
 def enableOSAL(symbol, event):
     drv_common = Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
     sys_common = Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
@@ -95,6 +97,7 @@ def genOsalFiles(symbol, event):
 ############################################################################
 osal = harmonyCoreComponent.createBooleanSymbol("ENABLE_OSAL", None)
 osal.setLabel("Enable OSAL")
+osal.setHelp(harmony_core_mcc_helpkeyword)
 osal.setDefaultValue(False)
 osal.setDependencies(enableOSAL, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON"])
 

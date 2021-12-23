@@ -35,6 +35,7 @@ def genResetFiles(symbol, event):
 ############################################################################
 genSysResetCommonFiles = harmonyCoreComponent.createBooleanSymbol("ENABLE_SYS_RESET", None)
 genSysResetCommonFiles.setLabel("Enable System Reset")
+genSysResetCommonFiles.setHelp(harmony_core_mcc_helpkeyword)
 genSysResetCommonFiles.setDefaultValue(False)
 
 resetHeaderFile = harmonyCoreComponent.createFileSymbol("RESET_HEADER", None)

@@ -30,6 +30,8 @@ at25MemoryInterruptEnable = None
 
 global sort_alphanumeric
 
+drv_at25_mcc_helpkeyword = "mcc_h3_drv_at25_configurations"
+
 def handleMessage(messageID, args):
 
     result_dict = {}
@@ -79,33 +81,40 @@ def instantiateComponent(at25Component):
 
     at25PLIB = at25Component.createStringSymbol("DRV_AT25_PLIB", None)
     at25PLIB.setLabel("PLIB Used")
+    at25PLIB.setHelp(drv_at25_mcc_helpkeyword)
     at25PLIB.setReadOnly(True)
 
     at25SymNumClients = at25Component.createIntegerSymbol("DRV_AT25_NUM_CLIENTS", None)
     at25SymNumClients.setLabel("Number of Clients")
+    at25SymNumClients.setHelp(drv_at25_mcc_helpkeyword)
     at25SymNumClients.setReadOnly(True)
     at25SymNumClients.setDefaultValue(1)
 
     at25EEPROMPageSize = at25Component.createIntegerSymbol("EEPROM_PAGE_SIZE", None)
     at25EEPROMPageSize.setLabel("EEPROM Page Size")
+    at25EEPROMPageSize.setHelp(drv_at25_mcc_helpkeyword)
     at25EEPROMPageSize.setDefaultValue(256)
 
     at25EEPROMFlashSize = at25Component.createIntegerSymbol("EEPROM_FLASH_SIZE", None)
     at25EEPROMFlashSize.setLabel("EEPROM Flash Size")
+    at25EEPROMFlashSize.setHelp(drv_at25_mcc_helpkeyword)
     at25EEPROMFlashSize.setDefaultValue(262144)
 
     at25SymChipSelectPin = at25Component.createKeyValueSetSymbol("DRV_AT25_CHIP_SELECT_PIN", None)
     at25SymChipSelectPin.setLabel("Chip Select Pin")
+    at25SymChipSelectPin.setHelp(drv_at25_mcc_helpkeyword)
     at25SymChipSelectPin.setOutputMode("Key")
     at25SymChipSelectPin.setDisplayMode("Description")
 
     at25SymHoldPin = at25Component.createKeyValueSetSymbol("DRV_AT25_HOLD_PIN", None)
     at25SymHoldPin.setLabel("Hold Pin")
+    at25SymHoldPin.setHelp(drv_at25_mcc_helpkeyword)
     at25SymHoldPin.setOutputMode("Key")
     at25SymHoldPin.setDisplayMode("Description")
 
     at25SymWriteProtectPin = at25Component.createKeyValueSetSymbol("DRV_AT25_WRITE_PROTECT_PIN", None)
     at25SymWriteProtectPin.setLabel("Write Protect Pin")
+    at25SymWriteProtectPin.setHelp(drv_at25_mcc_helpkeyword)
     at25SymWriteProtectPin.setOutputMode("Key")
     at25SymWriteProtectPin.setDisplayMode("Description")
 
@@ -145,6 +154,7 @@ def instantiateComponent(at25Component):
 
     at25MemoryStartAddr = at25Component.createHexSymbol("START_ADDRESS", None)
     at25MemoryStartAddr.setLabel("AT25 EEPROM Start Address")
+    at25MemoryStartAddr.setHelp(drv_at25_mcc_helpkeyword)
     at25MemoryStartAddr.setDefaultValue(0x0000000)
 
     ############################################################################

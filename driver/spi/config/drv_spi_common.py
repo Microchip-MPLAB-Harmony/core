@@ -22,6 +22,8 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
+drv_spi_mcc_helpkeyword = "mcc_h3_drv_spi_configurations"
+
 def handleMessage(messageID, args):
     global spiMode
     global spiSymSYSDMACodeEnable
@@ -100,6 +102,7 @@ def instantiateComponent(spiComponentCommon):
 
     spiMode = spiComponentCommon.createComboSymbol("DRV_SPI_COMMON_MODE", None, ["Asynchronous", "Synchronous"])
     spiMode.setLabel("Driver Mode")
+    spiMode.setHelp(drv_spi_mcc_helpkeyword)
     spiMode.setDefaultValue(spi_default_mode)
     spiMode.setDependencies(setCommonMode, ["HarmonyCore.SELECT_RTOS"])
 

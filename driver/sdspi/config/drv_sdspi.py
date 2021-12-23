@@ -31,6 +31,8 @@ sdspiFsEnable = None
 global isDMAPresent
 global sort_alphanumeric
 
+drv_sdspi_mcc_helpkeyword = "mcc_h3_drv_sdspi_configurations"
+
 cardDetectMethodComboValues = ["Use Polling"]
 
 def handleMessage(messageID, args):
@@ -253,6 +255,7 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiSymPLIB = sdspiComponent.createStringSymbol("DRV_SDSPI_PLIB", None)
     sdspiSymPLIB.setLabel("PLIB Used")
+    sdspiSymPLIB.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiSymPLIB.setReadOnly(True)
     sdspiSymPLIB.setDefaultValue("")
     sdspiSymPLIB.setVisible(False)
@@ -267,18 +270,21 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiSymNumClients = sdspiComponent.createIntegerSymbol("DRV_SDSPI_NUM_CLIENTS", None)
     sdspiSymNumClients.setLabel("Number of Clients")
+    sdspiSymNumClients.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiSymNumClients.setMin(1)
     sdspiSymNumClients.setMax(10)
     sdspiSymNumClients.setDefaultValue(1)
 
     sdspiSymNumClients = sdspiComponent.createIntegerSymbol("DRV_SDSPI_SPEED_HZ", None)
     sdspiSymNumClients.setLabel("SD Card Speed (Hz)")
+    sdspiSymNumClients.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiSymNumClients.setMin(1)
     sdspiSymNumClients.setMax(25000000)
     sdspiSymNumClients.setDefaultValue(5000000)
 
     sdspiQueueSize = sdspiComponent.createIntegerSymbol("DRV_SDSPI_QUEUE_SIZE", None)
     sdspiQueueSize.setLabel("Transfer Queue Size")
+    sdspiQueueSize.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiQueueSize.setMin(1)
     sdspiQueueSize.setMax(64)
     sdspiQueueSize.setVisible((Database.getSymbolValue("drv_sdspi", "DRV_SDSPI_COMMON_MODE") == "Asynchronous"))
@@ -287,20 +293,24 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiCardDetectionMethod = sdspiComponent.createComboSymbol("DRV_SDSPI_CARD_DETECTION_METHOD", None, cardDetectMethodComboValues)
     sdspiCardDetectionMethod.setLabel("Card Detection Method")
+    sdspiCardDetectionMethod.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiCardDetectionMethod.setDefaultValue("Use Polling")
     sdspiCardDetectionMethod.setReadOnly(True)
 
     sdspiPollingInterval = sdspiComponent.createIntegerSymbol("DRV_SDSPI_POLLING_INTERVAL", None)
     sdspiPollingInterval.setLabel("Polling Interval (ms)")
+    sdspiPollingInterval.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiPollingInterval.setMin(1)
     sdspiPollingInterval.setDefaultValue(1000)
 
     sdspiFsEnable = sdspiComponent.createBooleanSymbol("DRV_SDSPI_FS_ENABLE", None)
     sdspiFsEnable.setLabel("File system for SDSPI Driver Enabled")
+    sdspiFsEnable.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiFsEnable.setReadOnly(True)
 
     sdspiSymChipSelectPin = sdspiComponent.createKeyValueSetSymbol("DRV_SDSPI_CHIP_SELECT_PIN", None)
     sdspiSymChipSelectPin.setLabel("Chip Select Pin")
+    sdspiSymChipSelectPin.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiSymChipSelectPin.setDefaultValue(0)
     sdspiSymChipSelectPin.setOutputMode("Key")
     sdspiSymChipSelectPin.setDisplayMode("Description")
@@ -310,9 +320,11 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiSymWriteProtect = sdspiComponent.createBooleanSymbol("DRV_SDSPI_ENABLE_WRITE_PROTECT_CHECKING", None)
     sdspiSymWriteProtect.setLabel("Use Write Protect Pin (Active High)?")
+    sdspiSymWriteProtect.setHelp(drv_sdspi_mcc_helpkeyword)
 
     sdspiSymWriteProtectPin = sdspiComponent.createKeyValueSetSymbol("DRV_SDSPI_WRITE_PROTECT_PIN", sdspiSymWriteProtect)
     sdspiSymWriteProtectPin.setLabel("Write Protect Pin (Active High)")
+    sdspiSymWriteProtectPin.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiSymWriteProtectPin.setDefaultValue(0)
     sdspiSymWriteProtectPin.setOutputMode("Key")
     sdspiSymWriteProtectPin.setDisplayMode("Description")
@@ -326,6 +338,7 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiTXRXDMA = sdspiComponent.createBooleanSymbol("DRV_SDSPI_TX_RX_DMA", None)
     sdspiTXRXDMA.setLabel("Use DMA for Transmit and Receive ?")
+    sdspiTXRXDMA.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiTXRXDMA.setVisible(isDMAPresent and sdspiInterfaceType.getValue() == "SPI_PLIB")
     sdspiTXRXDMA.setReadOnly(True)
     sdspiTXRXDMA.setDependencies(setPLIBOptionsVisibility, ["DRV_SDSPI_INTERFACE_TYPE"])
@@ -337,6 +350,7 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiTXDMAChannel = sdspiComponent.createIntegerSymbol("DRV_SDSPI_TX_DMA_CHANNEL", None)
     sdspiTXDMAChannel.setLabel("DMA Channel For Transmit")
+    sdspiTXDMAChannel.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiTXDMAChannel.setDefaultValue(0)
     sdspiTXDMAChannel.setVisible(False)
     sdspiTXDMAChannel.setReadOnly(True)
@@ -349,6 +363,7 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiRXDMAChannel = sdspiComponent.createIntegerSymbol("DRV_SDSPI_RX_DMA_CHANNEL", None)
     sdspiRXDMAChannel.setLabel("DMA Channel For Receive")
+    sdspiRXDMAChannel.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiRXDMAChannel.setDefaultValue(1)
     sdspiRXDMAChannel.setVisible(False)
     sdspiRXDMAChannel.setReadOnly(True)
@@ -366,6 +381,7 @@ def instantiateComponent(sdspiComponent, index):
     # RTOS Settings
     sdspiRTOSMenu = sdspiComponent.createMenuSymbol("DRV_SDSPI_RTOS_MENU", None)
     sdspiRTOSMenu.setLabel("RTOS settings")
+    sdspiRTOSMenu.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiRTOSMenu.setDescription("RTOS settings")
     sdspiRTOSMenu.setVisible((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"))
     sdspiRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS"])
@@ -377,10 +393,12 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiRTOSStackSize = sdspiComponent.createIntegerSymbol("DRV_SDSPI_RTOS_STACK_SIZE", sdspiRTOSMenu)
     sdspiRTOSStackSize.setLabel("Stack Size (in bytes)")
+    sdspiRTOSStackSize.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiRTOSStackSize.setDefaultValue(1024)
 
     sdspiRTOSMsgQSize = sdspiComponent.createIntegerSymbol("DRV_SDSPI_RTOS_TASK_MSG_QTY", sdspiRTOSMenu)
     sdspiRTOSMsgQSize.setLabel("Maximum Message Queue Size")
+    sdspiRTOSMsgQSize.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiRTOSMsgQSize.setDescription("A µC/OS-III task contains an optional internal message queue (if OS_CFG_TASK_Q_EN is set to DEF_ENABLED in os_cfg.h). This argument specifies the maximum number of messages that the task can receive through this message queue. The user may specify that the task is unable to receive messages by setting this argument to 0")
     sdspiRTOSMsgQSize.setDefaultValue(0)
     sdspiRTOSMsgQSize.setVisible(getActiveRtos() == "MicriumOSIII")
@@ -388,6 +406,7 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiRTOSTaskTimeQuanta = sdspiComponent.createIntegerSymbol("DRV_SDSPI_RTOS_TASK_TIME_QUANTA", sdspiRTOSMenu)
     sdspiRTOSTaskTimeQuanta.setLabel("Task Time Quanta")
+    sdspiRTOSTaskTimeQuanta.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiRTOSTaskTimeQuanta.setDescription("The amount of time (in clock ticks) for the time quanta when Round Robin is enabled. If you specify 0, then the default time quanta will be used which is the tick rate divided by 10.")
     sdspiRTOSTaskTimeQuanta.setDefaultValue(0)
     sdspiRTOSTaskTimeQuanta.setVisible(getActiveRtos() == "MicriumOSIII")
@@ -395,16 +414,19 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiRTOSTaskPriority = sdspiComponent.createIntegerSymbol("DRV_SDSPI_RTOS_TASK_PRIORITY", sdspiRTOSMenu)
     sdspiRTOSTaskPriority.setLabel("Task Priority")
+    sdspiRTOSTaskPriority.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiRTOSTaskPriority.setDefaultValue(1)
 
     sdspiRTOSTaskDelay = sdspiComponent.createBooleanSymbol("DRV_SDSPI_RTOS_USE_DELAY", sdspiRTOSMenu)
     sdspiRTOSTaskDelay.setLabel("Use Task Delay?")
+    sdspiRTOSTaskDelay.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiRTOSTaskDelay.setDefaultValue(True)
     sdspiRTOSTaskDelay.setVisible(True)
     sdspiRTOSTaskDelay.setReadOnly(True)
 
     sdspiRTOSTaskDelayVal = sdspiComponent.createIntegerSymbol("DRV_SDSPI_RTOS_DELAY", sdspiRTOSMenu)
     sdspiRTOSTaskDelayVal.setLabel("Task Delay (ms)")
+    sdspiRTOSTaskDelayVal.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiRTOSTaskDelayVal.setMin(1)
     sdspiRTOSTaskDelayVal.setMax(10000)
     sdspiRTOSTaskDelayVal.setDefaultValue(10)
@@ -413,6 +435,7 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiRTOSTaskSpecificOpt = sdspiComponent.createBooleanSymbol("DRV_SDSPI_RTOS_TASK_OPT_NONE", sdspiRTOSMenu)
     sdspiRTOSTaskSpecificOpt.setLabel("Task Specific Options")
+    sdspiRTOSTaskSpecificOpt.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiRTOSTaskSpecificOpt.setDescription("Contains task-specific options. Each option consists of one bit. The option is selected when the bit is set. The current version of µC/OS-III supports the following options:")
     sdspiRTOSTaskSpecificOpt.setDefaultValue(True)
     sdspiRTOSTaskSpecificOpt.setVisible(getActiveRtos() == "MicriumOSIII")
@@ -420,24 +443,28 @@ def instantiateComponent(sdspiComponent, index):
 
     sdspiRTOSTaskStkChk = sdspiComponent.createBooleanSymbol("DRV_SDSPI_RTOS_TASK_OPT_STK_CHK", sdspiRTOSTaskSpecificOpt)
     sdspiRTOSTaskStkChk.setLabel("Stack checking is allowed for the task")
+    sdspiRTOSTaskStkChk.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiRTOSTaskStkChk.setDescription("Specifies whether stack checking is allowed for the task")
     sdspiRTOSTaskStkChk.setDefaultValue(True)
     sdspiRTOSTaskStkChk.setDependencies(sdspiRtosMicriumOSIIITaskOptVisibility, ["DRV_SDSPI_RTOS_TASK_OPT_NONE"])
 
     sdspiRTOSTaskStkClr = sdspiComponent.createBooleanSymbol("DRV_SDSPI_RTOS_TASK_OPT_STK_CLR", sdspiRTOSTaskSpecificOpt)
     sdspiRTOSTaskStkClr.setLabel("Stack needs to be cleared")
+    sdspiRTOSTaskStkClr.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiRTOSTaskStkClr.setDescription("Specifies whether the stack needs to be cleared")
     sdspiRTOSTaskStkClr.setDefaultValue(True)
     sdspiRTOSTaskStkClr.setDependencies(sdspiRtosMicriumOSIIITaskOptVisibility, ["DRV_SDSPI_RTOS_TASK_OPT_NONE"])
 
     sdspiRTOSTaskSaveFp = sdspiComponent.createBooleanSymbol("DRV_SDSPI_RTOS_TASK_OPT_SAVE_FP", sdspiRTOSTaskSpecificOpt)
     sdspiRTOSTaskSaveFp.setLabel("Floating-point registers needs to be saved")
+    sdspiRTOSTaskSaveFp.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiRTOSTaskSaveFp.setDescription("Specifies whether floating-point registers are saved. This option is only valid if the processor has floating-point hardware and the processor-specific code saves the floating-point registers")
     sdspiRTOSTaskSaveFp.setDefaultValue(False)
     sdspiRTOSTaskSaveFp.setDependencies(sdspiRtosMicriumOSIIITaskOptVisibility, ["DRV_SDSPI_RTOS_TASK_OPT_NONE"])
 
     sdspiRTOSTaskNoTls = sdspiComponent.createBooleanSymbol("DRV_SDSPI_RTOS_TASK_OPT_NO_TLS", sdspiRTOSTaskSpecificOpt)
     sdspiRTOSTaskNoTls.setLabel("TLS (Thread Local Storage) support needed for the task")
+    sdspiRTOSTaskNoTls.setHelp(drv_sdspi_mcc_helpkeyword)
     sdspiRTOSTaskNoTls.setDescription("If the caller doesn’t want or need TLS (Thread Local Storage) support for the task being created. If you do not include this option, TLS will be supported by default. TLS support was added in V3.03.00")
     sdspiRTOSTaskNoTls.setDefaultValue(False)
     sdspiRTOSTaskNoTls.setDependencies(sdspiRtosMicriumOSIIITaskOptVisibility, ["DRV_SDSPI_RTOS_TASK_OPT_NONE"])

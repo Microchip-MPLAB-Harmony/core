@@ -22,6 +22,8 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
+sys_debug_mcc_helpkeyword = "mcc_h3_sys_debug_configurations"
+
 ################################################################################
 #### Component ####
 ################################################################################
@@ -38,6 +40,7 @@ def instantiateComponent(debugComponent):
 
     debugConsoleDevice = debugComponent.createStringSymbol("SYS_CONSOLE_DEVICE", None)
     debugConsoleDevice.setLabel("Device Used")
+    debugConsoleDevice.setHelp(sys_debug_mcc_helpkeyword)
     debugConsoleDevice.setReadOnly(True)
     debugConsoleDevice.setDefaultValue("")
 
@@ -47,10 +50,12 @@ def instantiateComponent(debugComponent):
 
     debugLevel = debugComponent.createComboSymbol("SYS_DEBUG_LEVEL", None, ["SYS_ERROR_FATAL", "SYS_ERROR_ERROR", "SYS_ERROR_WARNING", "SYS_ERROR_INFO", "SYS_ERROR_DEBUG"])
     debugLevel.setLabel("Debug Level")
+    debugLevel.setHelp(sys_debug_mcc_helpkeyword)
     debugLevel.setDefaultValue("SYS_ERROR_DEBUG")
 
     debugUseConsole = debugComponent.createBooleanSymbol("SYS_DEBUG_USE_CONSOLE", None)
     debugUseConsole.setLabel("Use Console for Debug ?")
+    debugUseConsole.setHelp(sys_debug_mcc_helpkeyword)
     debugUseConsole.setDefaultValue(True)
 
     ############################################################################

@@ -28,6 +28,8 @@
 
 at24MemoryInterruptEnable = None
 
+drv_at24_mcc_helpkeyword = "mcc_h3_drv_at24_configurations"
+
 def handleMessage(messageID, args):
 
     result_dict = {}
@@ -79,20 +81,24 @@ def instantiateComponent(at24Component):
 
     at24PLIB = at24Component.createStringSymbol("DRV_AT24_PLIB", None)
     at24PLIB.setLabel("PLIB Used")
+    at24PLIB.setHelp(drv_at24_mcc_helpkeyword)
     at24PLIB.setReadOnly(True)
 
     at24SymNumClients = at24Component.createIntegerSymbol("DRV_AT24_NUM_CLIENTS", None)
     at24SymNumClients.setLabel("Number of Clients")
+    at24SymNumClients.setHelp(drv_at24_mcc_helpkeyword)
     at24SymNumClients.setReadOnly(True)
     at24SymNumClients.setDefaultValue(1)
 
     at24EEPROMPageSize = at24Component.createIntegerSymbol("EEPROM_PAGE_SIZE", None)
     at24EEPROMPageSize.setLabel("EEPROM Page Size")
+    at24EEPROMPageSize.setHelp(drv_at24_mcc_helpkeyword)
     at24EEPROMPageSize.setVisible(True)
     at24EEPROMPageSize.setDefaultValue(16)
 
     at24EEPROMFlashSize = at24Component.createIntegerSymbol("EEPROM_FLASH_SIZE", None)
     at24EEPROMFlashSize.setLabel("EEPROM Flash Size")
+    at24EEPROMFlashSize.setHelp(drv_at24_mcc_helpkeyword)
     at24EEPROMFlashSize.setVisible(True)
     at24EEPROMFlashSize.setDefaultValue(256)
 
@@ -104,6 +110,7 @@ def instantiateComponent(at24Component):
 
     at24EEPROMAddress = at24Component.createHexSymbol("I2C_EEPROM_ADDDRESS", None)
     at24EEPROMAddress.setLabel("EEPROM Address")
+    at24EEPROMAddress.setHelp(drv_at24_mcc_helpkeyword)
     at24EEPROMAddress.setVisible(True)
     at24EEPROMAddress.setDefaultValue(0x57)
 
@@ -127,6 +134,7 @@ def instantiateComponent(at24Component):
 
     at24MemoryStartAddr = at24Component.createHexSymbol("START_ADDRESS", None)
     at24MemoryStartAddr.setLabel("AT24 EEPROM Start Address")
+    at24MemoryStartAddr.setHelp(drv_at24_mcc_helpkeyword)
     at24MemoryStartAddr.setVisible(True)
     at24MemoryStartAddr.setDefaultValue(0x0000000)
 

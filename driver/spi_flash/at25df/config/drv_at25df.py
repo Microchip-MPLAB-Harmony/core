@@ -30,6 +30,8 @@ at25dfMemoryInterruptEnable = None
 
 global sort_alphanumeric
 
+drv_at25df_mcc_helpkeyword = "mcc_h3_drv_at25df_configurations"
+
 def handleMessage(messageID, args):
 
     result_dict = {}
@@ -73,23 +75,28 @@ def instantiateComponent(at25dfComponent):
 
     at25dfPLIB = at25dfComponent.createStringSymbol("DRV_AT25DF_PLIB", None)
     at25dfPLIB.setLabel("PLIB Used")
+    at25dfPLIB.setHelp(drv_at25df_mcc_helpkeyword)
     at25dfPLIB.setReadOnly(True)
 
     at25dfSymNumClients = at25dfComponent.createIntegerSymbol("DRV_AT25DF_NUM_CLIENTS", None)
     at25dfSymNumClients.setLabel("Number of Clients")
+    at25dfSymNumClients.setHelp(drv_at25df_mcc_helpkeyword)
     at25dfSymNumClients.setReadOnly(True)
     at25dfSymNumClients.setDefaultValue(1)
 
     at25dfFLASHPageSize = at25dfComponent.createIntegerSymbol("PAGE_SIZE", None)
     at25dfFLASHPageSize.setLabel("Page Size")
+    at25dfFLASHPageSize.setHelp(drv_at25df_mcc_helpkeyword)
     at25dfFLASHPageSize.setDefaultValue(256)
 
     at25dfFLASHFlashSize = at25dfComponent.createIntegerSymbol("FLASH_SIZE", None)
     at25dfFLASHFlashSize.setLabel("Flash Size")
+    at25dfFLASHFlashSize.setHelp(drv_at25df_mcc_helpkeyword)
     at25dfFLASHFlashSize.setDefaultValue(4194304)
 
     at25dfSymChipSelectPin = at25dfComponent.createKeyValueSetSymbol("DRV_AT25DF_CHIP_SELECT_PIN", None)
     at25dfSymChipSelectPin.setLabel("Chip Select Pin")
+    at25dfSymChipSelectPin.setHelp(drv_at25df_mcc_helpkeyword)
     at25dfSymChipSelectPin.setOutputMode("Key")
     at25dfSymChipSelectPin.setDisplayMode("Description")
 
@@ -125,10 +132,12 @@ def instantiateComponent(at25dfComponent):
 
     at25dfMemoryStartAddr = at25dfComponent.createHexSymbol("START_ADDRESS", None)
     at25dfMemoryStartAddr.setLabel("FLASH Start Address")
+    at25dfMemoryStartAddr.setHelp(drv_at25df_mcc_helpkeyword)
     at25dfMemoryStartAddr.setDefaultValue(0x0000000)
 
     at25dfMemoryEraseBufferSize = at25dfComponent.createIntegerSymbol("ERASE_BUFFER_SIZE", None)
     at25dfMemoryEraseBufferSize.setLabel("AT25DF Erase Buffer Size")
+    at25dfMemoryEraseBufferSize.setHelp(drv_at25df_mcc_helpkeyword)
     at25dfMemoryEraseBufferSize.setVisible(False)
     at25dfMemoryEraseBufferSize.setDefaultValue(4096)
     at25dfMemoryEraseBufferSize.setDependencies(at25dfSetMemoryDependency, ["DRV_MEMORY_CONNECTED", "ERASE_ENABLE"])

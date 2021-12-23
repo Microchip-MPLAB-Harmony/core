@@ -24,6 +24,8 @@
 
 global isDMAPresent
 
+drv_spi_mcc_helpkeyword = "mcc_h3_drv_spi_configurations"
+
 def handleMessage(messageID, args):
 
     result_dict = {}
@@ -63,6 +65,7 @@ def instantiateComponent(spiComponent, index):
 
     spiSymPLIB = spiComponent.createStringSymbol("DRV_SPI_PLIB", None)
     spiSymPLIB.setLabel("PLIB Used")
+    spiSymPLIB.setHelp(drv_spi_mcc_helpkeyword)
     spiSymPLIB.setReadOnly(True)
     spiSymPLIB.setDefaultValue("")
 
@@ -74,12 +77,14 @@ def instantiateComponent(spiComponent, index):
 
     spiSymNumClients = spiComponent.createIntegerSymbol("DRV_SPI_NUM_CLIENTS", None)
     spiSymNumClients.setLabel("Number of Clients")
+    spiSymNumClients.setHelp(drv_spi_mcc_helpkeyword)
     spiSymNumClients.setMin(1)
     spiSymNumClients.setMax(10)
     spiSymNumClients.setDefaultValue(1)
 
     spiSymQueueSize = spiComponent.createIntegerSymbol("DRV_SPI_QUEUE_SIZE", None)
     spiSymQueueSize.setLabel("Transfer Queue Size")
+    spiSymQueueSize.setHelp(drv_spi_mcc_helpkeyword)
     spiSymQueueSize.setMin(1)
     spiSymQueueSize.setMax(64)
     spiSymQueueSize.setVisible((Database.getSymbolValue("drv_spi", "DRV_SPI_COMMON_MODE") == "Asynchronous"))
@@ -89,6 +94,7 @@ def instantiateComponent(spiComponent, index):
     global spiTXRXDMA
     spiTXRXDMA = spiComponent.createBooleanSymbol("DRV_SPI_TX_RX_DMA", None)
     spiTXRXDMA.setLabel("Use DMA for Transmit and Receive?")
+    spiTXRXDMA.setHelp(drv_spi_mcc_helpkeyword)
     spiTXRXDMA.setVisible(isDMAPresent)
     spiTXRXDMA.setReadOnly(True)
 
@@ -100,6 +106,7 @@ def instantiateComponent(spiComponent, index):
     global spiTXDMAChannel
     spiTXDMAChannel = spiComponent.createIntegerSymbol("DRV_SPI_TX_DMA_CHANNEL", None)
     spiTXDMAChannel.setLabel("DMA Channel For Transmit")
+    spiTXDMAChannel.setHelp(drv_spi_mcc_helpkeyword)
     spiTXDMAChannel.setDefaultValue(0)
     spiTXDMAChannel.setVisible(False)
     spiTXDMAChannel.setReadOnly(True)
@@ -114,6 +121,7 @@ def instantiateComponent(spiComponent, index):
     global spiRXDMAChannel
     spiRXDMAChannel = spiComponent.createIntegerSymbol("DRV_SPI_RX_DMA_CHANNEL", None)
     spiRXDMAChannel.setLabel("DMA Channel For Receive")
+    spiRXDMAChannel.setHelp(drv_spi_mcc_helpkeyword)
     spiRXDMAChannel.setDefaultValue(1)
     spiRXDMAChannel.setVisible(False)
     spiRXDMAChannel.setReadOnly(True)
