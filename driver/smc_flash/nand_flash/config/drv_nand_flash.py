@@ -236,9 +236,9 @@ def onAttachmentDisconnected(source, target):
     if connectID == "drv_nand_flash_NAND_CS_dependency" :
         plibUsed = localComponent.getSymbolByID("DRV_NAND_FLASH_PLIB")
         plibUsed.clearValue()
-        localComponent.getSymbolByID("DRV_NAND_FLASH_CHIP_SELECT").clearValue()
         # Chip select of dependent plib
         Database.sendMessage(remoteID, "SMC_CS_ENABLE_" + str(localComponent.getSymbolByID("DRV_NAND_FLASH_CHIP_SELECT").getValue()), {"isReadOnly":False})
+        localComponent.getSymbolByID("DRV_NAND_FLASH_CHIP_SELECT").clearValue()
         # PMECC control enable value
         Database.sendMessage(remoteID, "PMECC_CTRL_ENABLE", {"isReadOnly":False})
         # PMECC interrupt
