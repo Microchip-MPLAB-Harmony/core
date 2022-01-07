@@ -117,8 +117,7 @@ typedef struct{
     uint32_t                        hwTimerPeriodValue;
     volatile uint32_t               hwTimerCompareValue;
     uint32_t                        hwTimerCompareMargin;
-    volatile uint32_t               swCounter64Low;           /* Software counter */
-    volatile uint32_t               swCounter64High;          /* Software 64-bit counter */
+    volatile uint64_t               swCounter64;           /* Software 64-bit counter */
     uint8_t                         interruptNestingCount;
     SYS_TIME_TIMER_OBJ*             tmrActive;
     /* Mutex to protect access to the shared resources */

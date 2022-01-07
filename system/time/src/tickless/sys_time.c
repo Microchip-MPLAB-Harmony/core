@@ -207,38 +207,6 @@ static void SYS_TIME_HwTimerCompareUpdate(void)
     counterObj->timePlib->timerCompareSet(counterObj->hwTimerCompareValue);
 }
 
-static uint32_t SYS_TIME_Counter32Update(uint32_t elapsedCount, uint8_t* isSwCounter32Oveflow)
-{
-    SYS_TIME_COUNTER_OBJ* counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
-    uint32_t prevSwCounter32Bit = counterObj->swCounter64Low;
-    uint32_t newSwCounter32Bit;
-
-    *isSwCounter32Oveflow = false;
-
-    newSwCounter32Bit = prevSwCounter32Bit + elapsedCount;
-
-    if (newSwCounter32Bit < prevSwCounter32Bit)
-    {
-        *isSwCounter32Oveflow = true;
-    }
-
-    return newSwCounter32Bit;
-}
-
-static void SYS_TIME_Counter64Update(uint32_t elapsedCount)
-{
-    SYS_TIME_COUNTER_OBJ* counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
-    uint8_t isSwCounter32Oveflow = false;
-
-    counterObj->swCounter64Low = SYS_TIME_Counter32Update(elapsedCount, &isSwCounter32Oveflow);
-
-    if (isSwCounter32Oveflow == true)
-    {
-        /* Update high counter for 64 bit on each 32 bit counter overflow */
-        counterObj->swCounter64High++;
-    }
-}
-
 static bool SYS_TIME_RemoveFromList(SYS_TIME_TIMER_OBJ* delTimer)
 {
     SYS_TIME_COUNTER_OBJ* counter = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
@@ -355,16 +323,17 @@ static uint32_t SYS_TIME_GetElapsedCount(uint32_t hwTimerCurrentValue)
 {
     SYS_TIME_COUNTER_OBJ* counterObj = (SYS_TIME_COUNTER_OBJ* )&gSystemCounterObj;
     uint32_t elapsedCount = 0;
+	uint32_t hwTimerPreviousValue = counterObj->hwTimerPreviousValue;
 
     /* Calculate the elapsed time since the last time the timers in the list
      * were updated. */
-    if (hwTimerCurrentValue > counterObj->hwTimerPreviousValue)
+    if (hwTimerCurrentValue > hwTimerPreviousValue)
     {
-        elapsedCount = hwTimerCurrentValue - counterObj->hwTimerPreviousValue;
+        elapsedCount = hwTimerCurrentValue - hwTimerPreviousValue;
     }
     else
     {
-        elapsedCount = (SYS_TIME_HW_COUNTER_PERIOD - counterObj->hwTimerPreviousValue) + hwTimerCurrentValue + 1;
+        elapsedCount = (SYS_TIME_HW_COUNTER_PERIOD - hwTimerPreviousValue) + hwTimerCurrentValue + 1;
     }
 
     return elapsedCount;
@@ -457,7 +426,9 @@ static void SYS_TIME_TimerAdd(SYS_TIME_TIMER_OBJ* newTimer)
 
     SYS_TIME_UpdateTimerList(elapsedCount);
 
-    SYS_TIME_Counter64Update(elapsedCount);
+	interruptState = SYS_INT_Disable();	
+    counterObj->swCounter64 = counterObj->swCounter64 + elapsedCount;  
+	SYS_INT_Restore(interruptState);
 
     isHeadTimerUpdated = SYS_TIME_AddToList(newTimer);
 
@@ -557,7 +528,7 @@ static void SYS_TIME_PLIBCallback(uint32_t status, uintptr_t context)
 
     elapsedCount = SYS_TIME_GetElapsedCount(counterObj->hwTimerCurrentValue);
 	
-	SYS_TIME_Counter64Update(elapsedCount);
+	counterObj->swCounter64 = counterObj->swCounter64 + elapsedCount;  
 
     if (tmrActive != NULL)
     {
@@ -640,8 +611,7 @@ static void SYS_TIME_CounterInit(SYS_MODULE_INIT* init)
     counterObj->hwTimerPeriodValue = SYS_TIME_HW_COUNTER_PERIOD;
     counterObj->hwTimerCompareValue = SYS_TIME_HW_COUNTER_HALF_PERIOD;
 
-    counterObj->swCounter64Low = 0;
-    counterObj->swCounter64High = 0;
+    counterObj->swCounter64 = 0;
     counterObj->tmrActive = NULL;
     counterObj->interruptNestingCount = 0;
 
@@ -724,29 +694,17 @@ uint32_t SYS_TIME_FrequencyGet ( void )
 uint64_t SYS_TIME_Counter64Get ( void )
 {
     SYS_TIME_COUNTER_OBJ * counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
-    uint64_t counter64 = 0;
-    uint32_t counter32 = 0;
+    uint64_t counter64 = 0;    
     uint32_t elapsedCount;
-    uint8_t isSwCounter32Oveflow = false;
-
-    if (SYS_TIME_ResourceLock() == false)
-    {
-        return counter64;
-    }
-
+	bool interruptState;
+    
     elapsedCount = SYS_TIME_GetElapsedCount(counterObj->timePlib->timerCounterGet());
 
-    counter32 = SYS_TIME_Counter32Update(elapsedCount, &isSwCounter32Oveflow);
-    counter64 = counterObj->swCounter64High;
+	interruptState = SYS_INT_Disable();	
+	
+    counter64 = counterObj->swCounter64 + elapsedCount;
 
-    if (isSwCounter32Oveflow == true)
-    {
-        counter64++;
-    }
-
-    counter64 = ((counter64 << 32) + counter32);
-
-    SYS_TIME_ResourceUnlock();
+    SYS_INT_Restore(interruptState);
 
     return counter64;
 }
@@ -762,15 +720,13 @@ uint32_t SYS_TIME_CounterGet ( void )
 
 void SYS_TIME_CounterSet ( uint32_t count )
 {
-    if (SYS_TIME_ResourceLock() == false)
-    {
-        return;
-    }
+    bool interruptState;
 
-    gSystemCounterObj.swCounter64Low = count;
-    gSystemCounterObj.swCounter64High = 0;
+    interruptState = SYS_INT_Disable();	
 
-    SYS_TIME_ResourceUnlock();
+    gSystemCounterObj.swCounter64 = count;
+
+    SYS_INT_Restore(interruptState);
 }
 
 uint32_t  SYS_TIME_CountToUS ( uint32_t count )
