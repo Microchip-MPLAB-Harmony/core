@@ -1,5 +1,5 @@
 /*
- * FreeRTOS Kernel V10.2.0
+ * FreeRTOS Kernel V10.3.0
  * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -25,10 +25,9 @@
  * 1 tab == 4 spaces!
  */
 
-#ifndef FREERTOS_H
-#define FREERTOS_H
 
-
+#ifndef FREERTOS_CONFIG_H
+#define FREERTOS_CONFIG_H
 
 /*-----------------------------------------------------------
  * Application specific definitions.
@@ -39,7 +38,7 @@
  * THESE PARAMETERS ARE DESCRIBED WITHIN THE 'CONFIGURATION' SECTION OF THE
  * FreeRTOS API DOCUMENTATION AVAILABLE ON THE FreeRTOS.org WEB SITE.
  *
- * See http://www.freertos.org/a00110.html.
+ * See http://www.freertos.org/a00110.html
  *----------------------------------------------------------*/
 #define configUSE_PREEMPTION                    <#if FREERTOS_SCHEDULER == "Preemptive">1<#else>0</#if>
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION <#if FREERTOS_TASK_SELECTION == "Port_Optimized">1<#else>0</#if>
@@ -218,4 +217,4 @@ void ${FREERTOS_TRACE_MALLOC_FNC}(void *pAddr, size_t size);
 void ${FREERTOS_TRACE_FREE_FNC}(void *pAddr, size_t size);
 #endif
 </#if>
-#endif /* FREERTOS_H */
+#endif /* FREERTOS_CONFIG_H */
