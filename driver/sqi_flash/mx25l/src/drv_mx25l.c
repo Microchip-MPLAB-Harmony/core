@@ -55,7 +55,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#define TOTAL_DEVICE          1
+#define TOTAL_DEVICE          13
 
 static DRV_MX25L_OBJECT gDrvMX25LObj;
 static DRV_MX25L_OBJECT *dObj = &gDrvMX25LObj;
@@ -64,9 +64,23 @@ static qspi_command_xfer_t qspi_command_xfer = { 0 };
 static qspi_register_xfer_t qspi_register_xfer = { 0 };
 static qspi_memory_xfer_t qspi_memory_xfer = { 0 };
 
+static bool EnableFourByteAddressMode = false;
+
 /* Table mapping the Flash ID's to their sizes. */
 static uint32_t gSstFlashIdSizeTable [TOTAL_DEVICE][2] = {
-    {0x19, 0x2000000} /* 256 MBit */
+    {0x1C, 0x10000000}, /*   2 GBit */
+    {0x1B, 0x08000000}, /*   1 GBit */
+    {0x1A, 0x04000000}, /* 512 MBit */
+    {0x19, 0x02000000}, /* 256 MBit */
+    {0x18, 0x01000000}, /* 128 MBit */
+    {0x17, 0x00800000}, /*  64 MBit */
+    {0x16, 0x00400000}, /*  32 MBit */
+    {0x15, 0x00200000}, /*  16 MBit */
+    {0x14, 0x00100000}, /*   8 MBit */
+    {0x13, 0x00080000}, /*   4 MBit */
+    {0x12, 0x00040000}, /*   2 MBit */
+    {0x11, 0x00020000}, /*   1 MBit */
+    {0x10, 0x00010000}  /* 512 KBit */
 };
 
 // *****************************************************************************
@@ -151,6 +165,20 @@ static bool DRV_MX25L_WriteEnable(void)
     memset((void *)&qspi_command_xfer, 0, sizeof(qspi_command_xfer_t));
 
     qspi_command_xfer.instruction = MX25L_CMD_WRITE_ENABLE;
+    qspi_command_xfer.width = QUAD_CMD;
+
+    status  = dObj->mx25lPlib->CommandWrite(&qspi_command_xfer, 0);
+
+    return status;
+}
+
+static bool DRV_MX25L_EnterFourByteAddressMode(void)
+{
+    bool status = false;
+
+    memset((void *)&qspi_command_xfer, 0, sizeof(qspi_command_xfer_t));
+
+    qspi_command_xfer.instruction = MX25L_CMD_ENTER_4_BYTE_ADDR_MODE;
     qspi_command_xfer.width = QUAD_CMD;
 
     status  = dObj->mx25lPlib->CommandWrite(&qspi_command_xfer, 0);
@@ -249,6 +277,10 @@ bool DRV_MX25L_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     qspi_memory_xfer.instruction = MX25L_CMD_HIGH_SPEED_QREAD;
     qspi_memory_xfer.width = QUAD_CMD;
     qspi_memory_xfer.dummy_cycles = 6;
+    if (EnableFourByteAddressMode)
+    {
+        qspi_memory_xfer.addr_len = ADDRL_32_BIT;
+    }
 
     status = dObj->mx25lPlib->MemoryRead(&qspi_memory_xfer, (uint32_t *)rx_data, rx_data_length, address);
 
@@ -270,6 +302,10 @@ bool DRV_MX25L_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
 
     qspi_memory_xfer.instruction = MX25L_CMD_PAGE_PROGRAM;
     qspi_memory_xfer.width = QUAD_CMD;
+    if (EnableFourByteAddressMode)
+    {
+        qspi_memory_xfer.addr_len = ADDRL_32_BIT;
+    }
 
     status = dObj->mx25lPlib->MemoryWrite(&qspi_memory_xfer, (uint32_t *)tx_data, DRV_MX25L_PAGE_SIZE, address);
 
@@ -293,6 +329,10 @@ static bool DRV_MX25L_Erase( uint8_t instruction, uint32_t address )
     if (instruction != MX25L_CMD_CHIP_ERASE)
     {
         qspi_command_xfer.addr_en = 1;
+        if (EnableFourByteAddressMode)
+        {
+            qspi_command_xfer.addr_len = ADDRL_32_BIT;
+        }
     }
 
     status = dObj->mx25lPlib->CommandWrite(&qspi_command_xfer, address);
@@ -366,10 +406,47 @@ bool DRV_MX25L_GeometryGet( const DRV_HANDLE handle, DRV_MX25L_GEOMETRY *geometr
 
 DRV_HANDLE DRV_MX25L_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
 {
+    uint8_t jedec_id[3] = {0};
+
     if ((dObj->status != SYS_STATUS_READY) ||
         (dObj->nClients >= DRV_MX25L_CLIENTS_NUMBER))
     {
         return DRV_HANDLE_INVALID;
+    }
+
+    /* Put MX25L Flash device on SPI Mode */
+    if (DRV_MX25L_ResetQuadIO() == false)
+    {
+        return DRV_HANDLE_INVALID;
+    }
+
+    /* Unlock the Flash */
+    if (DRV_MX25L_UnlockFlash() == false)
+    {
+        return DRV_HANDLE_INVALID;
+    }
+
+    /* Put MX25L Flash device on QUAD IO Mode */
+    if (DRV_MX25L_EnableQuadIO() == false)
+    {
+        return DRV_HANDLE_INVALID;
+    }
+
+    /* Read JEDEC ID */
+    if (DRV_MX25L_ReadJedecId((DRV_HANDLE)drvIndex, (void *)&jedec_id) == false)
+    {
+        return DRV_HANDLE_INVALID;
+    }
+
+    /* Check if Flash size is greater than 128 MBit */
+    if (DRV_MX25L_GetFlashSize(jedec_id[2]) > 0x01000000)
+    {
+        /* Enter 4 Byte Address Mode */
+        if (DRV_MX25L_EnterFourByteAddressMode() == false)
+        {
+            return DRV_HANDLE_INVALID;
+        }
+        EnableFourByteAddressMode = true;
     }
 
     dObj->nClients++;
@@ -413,24 +490,6 @@ SYS_MODULE_OBJ DRV_MX25L_Initialize
 
     /* Initialize the attached memory device functions */
     dObj->mx25lPlib = mx25lInit->mx25lPlib;
-
-    /* Put MX25L Flash device on SPI Mode */
-    if (DRV_MX25L_ResetQuadIO() == false)
-    {
-        return SYS_MODULE_OBJ_INVALID;
-    }
-
-    /* Unlock the Flash */
-    if (DRV_MX25L_UnlockFlash() == false)
-    {
-        return SYS_MODULE_OBJ_INVALID;
-    }
-
-    /* Put MX25L Flash device on QUAD IO Mode */
-    if (DRV_MX25L_EnableQuadIO() == false)
-    {
-        return SYS_MODULE_OBJ_INVALID;
-    }
 
     dObj->status = SYS_STATUS_READY;
 

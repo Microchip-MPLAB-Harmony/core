@@ -119,7 +119,10 @@ typedef enum
     MX25L_CMD_CHIP_ERASE         = 0xC7,
 
     /* Command to unlock the flash device. */
-    MX25L_CMD_UNPROTECT_GLOBAL   = 0x98
+    MX25L_CMD_UNPROTECT_GLOBAL   = 0x98,
+
+    /* Command to enter 4 byte address mode */
+    MX25L_CMD_ENTER_4_BYTE_ADDR_MODE = 0xB7
 
 } MX25L_CMD;
 
