@@ -269,6 +269,11 @@ def instantiateComponent(thirdPartyFreeRTOS):
     #FreeRTOS Interrupt Handlers configurations
     freeRtosIntConfig()
 
+    if (coreArch == "MIPS"):
+        rtosSet = thirdPartyFreeRTOS.createStringSymbol("SET_RTOS", None)
+        rtosSet.setVisible(False)
+        rtosSet.setValue("FreeRTOS")
+
     #FreeRTOS Configuration Menu
     freeRtosSymMenu = thirdPartyFreeRTOS.createMenuSymbol("FREERTOS_MENU", None)
     freeRtosSymMenu.setLabel("RTOS Configuration")
