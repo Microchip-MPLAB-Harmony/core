@@ -32,6 +32,9 @@ const DRV_I2C_PLIB_INTERFACE drvI2C${INDEX?string}PLibAPI = {
     /* I2C PLib Transfer Write Read Add function */
     .writeRead = (DRV_I2C_PLIB_WRITE_READ)${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_WriteRead,
 
+    /*I2C PLib Tranfer Abort function */
+    .transferAbort = (DRV_I2C_PLIB_TRANSFER_ABORT)${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_TransferAbort,
+
     /* I2C PLib Transfer Status function */
     .errorGet = (DRV_I2C_PLIB_ERROR_GET)${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_ErrorGet,
 
@@ -51,8 +54,8 @@ const DRV_I2C_PLIB_INTERFACE drvI2C${INDEX?string}PLibAPI = {
         <#assign I2C_PLIB_INT_INDEX1 = "core." + I2C_PLIB?eval + "_I2C_1_INT_SRC">
         <#assign I2C_PLIB_INT_INDEX2 = "core." + I2C_PLIB?eval + "_I2C_2_INT_SRC">
         <#assign I2C_PLIB_INT_INDEX3 = "core." + I2C_PLIB?eval + "_I2C_3_INT_SRC">
-		<#assign I2C_PLIB_INT_INDEX4 = "core." + I2C_PLIB?eval + "_I2C_4_INT_SRC">
-		<#assign I2C_PLIB_INT_INDEX5 = "core." + I2C_PLIB?eval + "_I2C_5_INT_SRC">
+        <#assign I2C_PLIB_INT_INDEX4 = "core." + I2C_PLIB?eval + "_I2C_4_INT_SRC">
+        <#assign I2C_PLIB_INT_INDEX5 = "core." + I2C_PLIB?eval + "_I2C_5_INT_SRC">
     </#if>
 
 const DRV_I2C_INTERRUPT_SOURCES drvI2C${INDEX?string}InterruptSources =

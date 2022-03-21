@@ -344,13 +344,108 @@ static void _DRV_I2C_RemoveClientTransfersFromList(
     }
 }
 
+static void _DRV_I2C_ClientCallback(DRV_I2C_OBJ* dObj, DRV_I2C_CLIENT_OBJ* clientObj, DRV_I2C_TRANSFER_OBJ* transferObj)
+{
+    DRV_I2C_TRANSFER_EVENT event;
+    DRV_I2C_TRANSFER_HANDLE transferHandle;
+
+    transferObj->errors = dObj->i2cPlib->errorGet();
+
+    if(transferObj->errors == DRV_I2C_ERROR_NONE)
+    {
+        transferObj->event = DRV_I2C_TRANSFER_EVENT_COMPLETE;
+    }
+    else
+    {
+        transferObj->event = DRV_I2C_TRANSFER_EVENT_ERROR;
+    }
+
+    /* Save the transfer handle and event locally before freeing the transfer object*/
+    event = transferObj->event;
+    transferHandle = transferObj->transferHandle;
+
+    /* Free the completed buffer.
+     * This is done before giving callback to allow application to use the freed
+     * buffer and queue in a new request from within the callback */
+
+    _DRV_I2C_RemoveTransferObjFromList(dObj);
+
+    if(clientObj->eventHandler != NULL)
+    {
+        dObj->interruptNestingCount ++;
+
+        clientObj->eventHandler(event, transferHandle, clientObj->context);
+
+        dObj->interruptNestingCount -- ;
+    }
+}
+
+static void _DRV_I2C_NextTransferInitiate(DRV_I2C_OBJ* dObj, DRV_I2C_CLIENT_OBJ* clientObj)
+{
+    DRV_I2C_TRANSFER_OBJ* transferObj = NULL;
+    bool transferStatus = true;
+
+    do
+    {
+        transferStatus = true;
+
+        /* Get the transfer object at the head of the list */
+        transferObj = _DRV_I2C_TransferObjListGet(dObj);
+
+        /* Process the next transfer buffer */
+        if((transferObj != NULL) && (transferObj->currentState == DRV_I2C_TRANSFER_OBJ_IS_IN_QUEUE))
+        {
+            // Get the client object that owns this buffer
+            clientObj = &((DRV_I2C_CLIENT_OBJ *)gDrvI2CObj[((transferObj->clientHandle & DRV_I2C_INSTANCE_MASK) >> 8)].clientObjPool)
+                        [transferObj->clientHandle & DRV_I2C_INDEX_MASK];
+
+            /* Check if the transfer setup for this client is different than the current transfer setup */
+            if (dObj->currentTransferSetup.clockSpeed != clientObj->transferSetup.clockSpeed)
+            {
+                /* Set the new transfer setup */
+                dObj->i2cPlib->transferSetup(&clientObj->transferSetup, 0);
+
+                dObj->currentTransferSetup.clockSpeed = clientObj->transferSetup.clockSpeed;
+            }
+
+            switch(transferObj->flag)
+            {
+                case DRV_I2C_TRANSFER_OBJ_FLAG_READ:
+                    transferObj->currentState = DRV_I2C_TRANSFER_OBJ_IS_PROCESSING;
+                    transferStatus = dObj->i2cPlib->read(transferObj->slaveAddress, transferObj->readBuffer, transferObj->readSize);
+                    break;
+
+                case DRV_I2C_TRANSFER_OBJ_FLAG_WRITE:
+                    transferObj->currentState = DRV_I2C_TRANSFER_OBJ_IS_PROCESSING;
+                    transferStatus = dObj->i2cPlib->write(transferObj->slaveAddress, transferObj->writeBuffer, transferObj->writeSize);
+                    break;
+    <#if DRV_I2C_FORCED_WRITE_API_GENERATE != 0>
+                case DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_FORCED:
+                    transferObj->currentState = DRV_I2C_TRANSFER_OBJ_IS_PROCESSING;
+                    transferStatus = dObj->i2cPlib->writeForced(transferObj->slaveAddress, transferObj->writeBuffer, transferObj->writeSize);
+                    break;
+    </#if>
+                case DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_READ:
+                    transferObj->currentState = DRV_I2C_TRANSFER_OBJ_IS_PROCESSING;
+                    transferStatus = dObj->i2cPlib->writeRead(transferObj->slaveAddress, transferObj->writeBuffer, transferObj->writeSize, transferObj->readBuffer, transferObj->readSize);
+                    break;
+                default:
+                    /* Execution should never enter the default case */
+                    break;
+            }
+            if (transferStatus == false)
+            {
+                _DRV_I2C_ClientCallback(dObj, clientObj, transferObj);
+            }
+        }
+    }while(transferStatus == false);
+}
+
 static void _DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
 {
     DRV_I2C_OBJ* dObj = (DRV_I2C_OBJ *)contextHandle;
     DRV_I2C_CLIENT_OBJ* clientObj = NULL;
     DRV_I2C_TRANSFER_OBJ* transferObj = NULL;
-    DRV_I2C_TRANSFER_EVENT event;
-    DRV_I2C_TRANSFER_HANDLE transferHandle;
 
     if((dObj->inUse == false) || (dObj->status != SYS_STATUS_READY))
     {
@@ -369,35 +464,7 @@ static void _DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
     /* Check if the client that submitted the request is active? */
     if (clientObj->clientHandle == transferObj->clientHandle)
     {
-        transferObj->errors = dObj->i2cPlib->errorGet();
-
-        if(transferObj->errors == DRV_I2C_ERROR_NONE)
-        {
-            transferObj->event = DRV_I2C_TRANSFER_EVENT_COMPLETE;
-        }
-        else
-        {
-            transferObj->event = DRV_I2C_TRANSFER_EVENT_ERROR;
-        }
-
-        /* Save the transfer handle and event locally before freeing the transfer object*/
-        event = transferObj->event;
-        transferHandle = transferObj->transferHandle;
-
-        /* Free the completed buffer.
-         * This is done before giving callback to allow application to use the freed
-         * buffer and queue in a new request from within the callback */
-
-        _DRV_I2C_RemoveTransferObjFromList(dObj);
-
-        if(clientObj->eventHandler != NULL)
-        {
-            dObj->interruptNestingCount ++;
-
-            clientObj->eventHandler(event, transferHandle, clientObj->context);
-
-            dObj->interruptNestingCount -- ;
-        }
+        _DRV_I2C_ClientCallback(dObj, clientObj, transferObj);
     }
     else
     {
@@ -405,51 +472,7 @@ static void _DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
         _DRV_I2C_RemoveTransferObjFromList(dObj);
     }
 
-    /* Get the transfer object at the head of the list */
-    transferObj = _DRV_I2C_TransferObjListGet(dObj);
-
-    /* Process the next transfer buffer */
-    if((transferObj != NULL) && (transferObj->currentState == DRV_I2C_TRANSFER_OBJ_IS_IN_QUEUE))
-    {
-        // Get the client object that owns this buffer
-        clientObj = &((DRV_I2C_CLIENT_OBJ *)gDrvI2CObj[((transferObj->clientHandle & DRV_I2C_INSTANCE_MASK) >> 8)].clientObjPool)
-                    [transferObj->clientHandle & DRV_I2C_INDEX_MASK];
-
-        /* Check if the transfer setup for this client is different than the current transfer setup */
-        if (dObj->currentTransferSetup.clockSpeed != clientObj->transferSetup.clockSpeed)
-        {
-            /* Set the new transfer setup */
-            dObj->i2cPlib->transferSetup(&clientObj->transferSetup, 0);
-
-            dObj->currentTransferSetup.clockSpeed = clientObj->transferSetup.clockSpeed;
-        }
-
-        switch(transferObj->flag)
-        {
-            case DRV_I2C_TRANSFER_OBJ_FLAG_READ:
-                transferObj->currentState = DRV_I2C_TRANSFER_OBJ_IS_PROCESSING;
-                dObj->i2cPlib->read(transferObj->slaveAddress, transferObj->readBuffer, transferObj->readSize);
-                break;
-
-            case DRV_I2C_TRANSFER_OBJ_FLAG_WRITE:
-                transferObj->currentState = DRV_I2C_TRANSFER_OBJ_IS_PROCESSING;
-                dObj->i2cPlib->write(transferObj->slaveAddress, transferObj->writeBuffer, transferObj->writeSize);
-                break;
-<#if DRV_I2C_FORCED_WRITE_API_GENERATE != 0>
-            case DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_FORCED:
-                transferObj->currentState = DRV_I2C_TRANSFER_OBJ_IS_PROCESSING;
-                dObj->i2cPlib->writeForced(transferObj->slaveAddress, transferObj->writeBuffer, transferObj->writeSize);
-                break;
-</#if>
-            case DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_READ:
-                transferObj->currentState = DRV_I2C_TRANSFER_OBJ_IS_PROCESSING;
-                dObj->i2cPlib->writeRead(transferObj->slaveAddress, transferObj->writeBuffer, transferObj->writeSize, transferObj->readBuffer, transferObj->readSize);
-                break;
-            default:
-                /* Execution should never enter the default case */
-                break;
-        }
-    }
+    _DRV_I2C_NextTransferInitiate(dObj, clientObj);
 }
 
 // *****************************************************************************
@@ -778,6 +801,7 @@ static void _DRV_I2C_WriteReadTransferAdd (
     DRV_I2C_CLIENT_OBJ* clientObj = NULL;
     DRV_I2C_OBJ* dObj = NULL;
     DRV_I2C_TRANSFER_OBJ* transferObj = NULL;
+    bool transferError = false;
 
     /* Validate the transfer handle */
     if (transferHandle == NULL)
@@ -876,39 +900,68 @@ static void _DRV_I2C_WriteReadTransferAdd (
 
         if (transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_READ)
         {
-            dObj->i2cPlib->read(
+            if (dObj->i2cPlib->read(
                 transferObj->slaveAddress,
                 transferObj->readBuffer,
                 transferObj->readSize
-            );
+            ) == false)
+            {
+                transferError = true;
+            }
         }
         else if (transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_WRITE)
         {
-            dObj->i2cPlib->write(
+            if (dObj->i2cPlib->write(
                 transferObj->slaveAddress,
                 transferObj->writeBuffer,
                 transferObj->writeSize
-            );
+            ) == false)
+            {
+                transferError = true;
+            }
         }
 <#if DRV_I2C_FORCED_WRITE_API_GENERATE != 0>
         else if (transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_FORCED)
         {
-            dObj->i2cPlib->writeForced(
+            if (dObj->i2cPlib->writeForced(
                 transferObj->slaveAddress,
                 transferObj->writeBuffer,
                 transferObj->writeSize
-            );
+            ) == false)
+            {
+                transferError = true;
+            }
         }
 </#if>
         else
         {
-            dObj->i2cPlib->writeRead(
+            if (dObj->i2cPlib->writeRead(
                 transferObj->slaveAddress,
                 transferObj->writeBuffer,
                 transferObj->writeSize,
                 transferObj->readBuffer,
                 transferObj->readSize
-            );
+            ) == false)
+            {
+                transferError = true;
+            }
+        }
+
+        if (transferError == true)
+        {
+            *transferHandle = DRV_I2C_TRANSFER_HANDLE_INVALID;
+            transferObj->errors = dObj->i2cPlib->errorGet();
+
+            if(transferObj->errors == DRV_I2C_ERROR_NONE)
+            {
+                transferObj->event = DRV_I2C_TRANSFER_EVENT_COMPLETE;
+            }
+            else
+            {
+                transferObj->event = DRV_I2C_TRANSFER_EVENT_ERROR;
+            }
+
+            _DRV_I2C_RemoveTransferObjFromList(dObj);
         }
     }
 
@@ -965,6 +1018,55 @@ void DRV_I2C_WriteReadTransferAdd (
 {
     _DRV_I2C_WriteReadTransferAdd(handle, address, writeBuffer, writeSize,
         readBuffer, readSize, transferHandle, DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_READ);
+}
+
+void DRV_I2C_QueuePurge(const DRV_HANDLE handle)
+{
+    DRV_I2C_TRANSFER_OBJ* transferObj = NULL;
+    DRV_I2C_CLIENT_OBJ* clientObj = NULL;
+    DRV_I2C_OBJ* dObj = NULL;
+    bool topOfQueueUpdated = false;
+
+    clientObj = _DRV_I2C_DriverHandleValidate(handle);
+
+    if(clientObj == NULL)
+    {
+        return;
+    }
+
+    /* Get the driver object from the client handle */
+    dObj = &gDrvI2CObj[clientObj->drvIndex];
+
+    if(_DRV_I2C_ResourceLock(dObj) == false)
+    {
+        return;
+    }
+
+    // Get the transfer object at the head of the list
+    transferObj = _DRV_I2C_TransferObjListGet(dObj);
+
+    /* Make sure the ongoing request belongs to the client that called this API and is currently with the PLIB */
+    if ( (transferObj != NULL) && (transferObj->clientHandle == clientObj->clientHandle) && (transferObj->currentState == DRV_I2C_TRANSFER_OBJ_IS_PROCESSING) )
+    {
+        /* Abort the ongoing transfer with the PLIB */
+        dObj->i2cPlib->transferAbort();
+
+        /* Remove the transfer object at the top of the list */
+        _DRV_I2C_RemoveTransferObjFromList(dObj);
+
+        topOfQueueUpdated = true;
+    }
+
+    /* Remove all the transfers belonging to this client from the linked list */
+    _DRV_I2C_RemoveClientTransfersFromList(dObj, clientObj);
+
+    if (topOfQueueUpdated == true)
+    {
+        /* Since top of the queue is updated, force start the next transfer in the queue if any */
+        _DRV_I2C_NextTransferInitiate(dObj, clientObj);
+    }
+
+    _DRV_I2C_ResourceUnlock(dObj);
 }
 
 DRV_I2C_TRANSFER_EVENT DRV_I2C_TransferStatusGet(

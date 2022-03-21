@@ -503,6 +503,20 @@ static bool _DRV_I2C_WriteReadTransfer (
                 }
             }
         }
+        else
+        {
+            /* Update error into the client object*/
+            clientObj->errors = hDriver->i2cPlib->errorGet();
+
+            if(clientObj->errors == DRV_I2C_ERROR_NONE)
+            {
+                hDriver->transferStatus = DRV_I2C_TRANSFER_STATUS_COMPLETE;
+            }
+            else
+            {
+                hDriver->transferStatus = DRV_I2C_TRANSFER_STATUS_ERROR;
+            }
+        }
 
         /* Release the mutex to allow other threads to access the PLIB */
         OSAL_MUTEX_Unlock(&hDriver->transferMutex);

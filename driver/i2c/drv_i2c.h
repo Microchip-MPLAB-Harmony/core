@@ -1396,6 +1396,48 @@ bool DRV_I2C_WriteReadTransfer (
     const size_t readSize
 );
 
+// *****************************************************************************
+/* Function:
+    void DRV_I2C_QueuePurge(const DRV_HANDLE handle)
+
+  Summary:
+    This function removes the queued requests fo the given I2C client.
+
+  Description:
+    This function removes the queued requests fo the given I2C client and aborts the ongoing
+    transfer. This API may be used in an event when the I2C slave is not responding. The API
+    removes all the queued requests of the client calling this API. Also, if the on-going request
+    belongs to the client calling this API, then it aborts the on-going transfer and frees the
+    resources used by the ongoing transfer. In case of multiple clients (for example if there
+    are more than one I2C clients interfaced on the same I2C bus), to remove all the transfer
+    requests queued to this driver instance, this API must be called by each client to remove
+    the transfers queued by that client.
+
+  Precondition:
+    DRV_I2C_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle - A valid open-instance handle, returned from the driver's open routine
+    DRV_I2C_Open function.
+
+  Returns:
+    None
+
+  Example:
+    <code>
+
+    // myI2CHandle is the handle returned
+    // by the DRV_I2C_Open function.
+
+    DRV_I2C_QueuePurge(myI2CHandle);
+
+    </code>
+
+  Remarks:
+    None
+*/
+void DRV_I2C_QueuePurge(const DRV_HANDLE handle);
+
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
