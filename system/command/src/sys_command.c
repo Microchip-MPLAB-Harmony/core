@@ -271,8 +271,6 @@ bool SYS_CMD_Initialize(const SYS_MODULE_INIT * const init )
 
     cmdIODevList.head = cmdIODevList.tail = 0;
 
-    SYS_CMDIO_ADD(&sysConsoleApi, &initConfig->consoleCmdIOParam, initConfig->consoleCmdIOParam);
-
     _cmdInitData.consoleIndex = initConfig->consoleIndex;
 
     return true;
@@ -335,6 +333,20 @@ bool  SYS_CMD_ADDGRP(const SYS_CMD_DESCRIPTOR* pCmdTbl, int nCmds, const char* g
 bool SYS_CMD_Tasks(void)
 {
     SYS_CMD_IO_DCPT* pCmdIO;
+    static bool error_reported = false;
+
+    if (cmdIODevList.head == 0)
+    {
+        if(SYS_CMDIO_ADD(&sysConsoleApi, &_cmdInitData.consoleCmdIOParam, _cmdInitData.consoleCmdIOParam) == 0)
+        {
+            if(error_reported == false)
+            {
+                SYS_ERROR_PRINT(SYS_ERROR_WARNING, "Failed to create the Console API\r\n");
+                error_reported = true;
+            }
+        }
+    }
+
     for(pCmdIO = cmdIODevList.head; pCmdIO != 0; pCmdIO = pCmdIO->next)
     {
         RunCmdTask(pCmdIO);
