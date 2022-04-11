@@ -434,7 +434,7 @@ def instantiateComponent(emulated_eeprom):
         if eep_size_sym != None:
             eep_emu_EEPROMSize.setDefaultValue(getSelectedEEPROMSize("DEVICE_NVMCTRL_EEPROM_SIZE"))
         else:
-            eep_emu_EEPROMSize.setDefaultValue(getSelectedEEPROMSize("FUSE_SYMBOL_VALUE1"))        
+            eep_emu_EEPROMSize.setDefaultValue(getSelectedEEPROMSize("FUSE_SYMBOL_VALUE1"))
         eep_emu_EEPROMSize.setDependencies(updateEEPROMSize, ["core.DEVICE_NVMCTRL_EEPROM_SIZE", "core.FUSE_SYMBOL_VALUE1", "EEPROM_EMULATOR_MAIN_ARRAY_ENABLED", "EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED"])
     else:
         eep_emu_EEPROMSize.setDefaultValue(eep_emu_FlashRowSize.getValue() * 2)
@@ -450,12 +450,18 @@ def instantiateComponent(emulated_eeprom):
     #------RWWEE Configuration Options----------------------------------------------------------------------------------------------#
 
     eep_emu_RWWEEMemName = emulated_eeprom.createStringSymbol("EEPROM_EMULATOR_RWWEE_MEM_NAME", None)
-    eep_emu_RWWEEMemName.setDefaultValue(EEPROMEmulatorAddrSpaces[1])
+    if nvmctrlRWWEEPROMNode != None:
+        eep_emu_RWWEEMemName.setDefaultValue(EEPROMEmulatorAddrSpaces[1])
+    else:
+        eep_emu_RWWEEMemName.setDefaultValue("")
     eep_emu_RWWEEMemName.setVisible(False)
 
     #--<UI>--RWWEE Is Enabled?
     eep_emu_RWWEEMemEnable = emulated_eeprom.createBooleanSymbol("EEPROM_EMULATOR_RWWEE_ENABLED", None)
-    eep_emu_RWWEEMemEnable.setLabel("Use " + EEPROMEmulatorAddrSpaces[1] + " memory for EEPROM Emulator ?")
+    if nvmctrlRWWEEPROMNode != None:
+        eep_emu_RWWEEMemEnable.setLabel("Use " + EEPROMEmulatorAddrSpaces[1] + " memory for EEPROM Emulator ?")
+    else:
+        eep_emu_RWWEEMemEnable.setLabel("")
     eep_emu_RWWEEMemEnable.setHelp(emulated_eeprom_mcc_helpkeyword)
     eep_emu_RWWEEMemEnable.setDefaultValue(False)
     eep_emu_RWWEEMemEnable.setReadOnly(True)
@@ -464,7 +470,10 @@ def instantiateComponent(emulated_eeprom):
 
     #--<UI>--RWWEE Start Address
     eep_emu_RWWEEStartAddr = emulated_eeprom.createHexSymbol("EEPROM_EMULATOR_RWWEE_START_ADDRESS", eep_emu_RWWEEMemEnable)
-    eep_emu_RWWEEStartAddr.setLabel(EEPROMEmulatorAddrSpaces[1] +  " Start Address")
+    if nvmctrlRWWEEPROMNode != None:
+        eep_emu_RWWEEStartAddr.setLabel(EEPROMEmulatorAddrSpaces[1] +  " Start Address")
+    else:
+        eep_emu_RWWEEStartAddr.setLabel("")
     eep_emu_RWWEEStartAddr.setHelp(emulated_eeprom_mcc_helpkeyword)
     eep_emu_RWWEEStartAddr.setDefaultValue(0)
     eep_emu_RWWEEStartAddr.setReadOnly(True)
@@ -473,7 +482,10 @@ def instantiateComponent(emulated_eeprom):
 
     #--<UI>--RWWEE Size
     eep_emu_RWWEESize = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_RWWEE_SIZE", eep_emu_RWWEEMemEnable)
-    eep_emu_RWWEESize.setLabel(EEPROMEmulatorAddrSpaces[1] + " Size")
+    if nvmctrlRWWEEPROMNode != None:
+        eep_emu_RWWEESize.setLabel(EEPROMEmulatorAddrSpaces[1] + " Size")
+    else:
+        eep_emu_RWWEESize.setLabel("")
     eep_emu_RWWEESize.setHelp(emulated_eeprom_mcc_helpkeyword)
     eep_emu_RWWEESize.setDefaultValue(0)
     eep_emu_RWWEESize.setReadOnly(True)
@@ -482,7 +494,10 @@ def instantiateComponent(emulated_eeprom):
 
     #RWWEE Physical Pages
     eep_emu_RWWEENumPhyPages = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_RWWEE_NUM_PHYSICAL_PAGES", eep_emu_RWWEEMemEnable)
-    eep_emu_RWWEENumPhyPages.setLabel(EEPROMEmulatorAddrSpaces[1] + " Physical Pages")
+    if nvmctrlRWWEEPROMNode != None:
+        eep_emu_RWWEENumPhyPages.setLabel(EEPROMEmulatorAddrSpaces[1] + " Physical Pages")
+    else:
+        eep_emu_RWWEENumPhyPages.setLabel("")
     eep_emu_RWWEENumPhyPages.setDefaultValue(0)
     eep_emu_RWWEENumPhyPages.setReadOnly(True)
     eep_emu_RWWEENumPhyPages.setVisible(False)
